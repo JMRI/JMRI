@@ -4,9 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import jmri.NmraPacket;
-import jmri.ProgListener;
-import jmri.ProgrammerException;
-import jmri.ProgrammingMode;
+import jmri.*;
 import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -572,6 +570,7 @@ public class SlotManagerTest {
         // not clear what to wait for here; content doesn't change
         JUnitUtil.waitFor(releaseTestDelay);
         log.debug("checking..");
+        JUnitUtil.waitFor(() -> status == 0, "reply status");
         assertEquals( 0, status, "reply status");
         assertEquals( -1, value, "reply value");
 
@@ -595,6 +594,7 @@ public class SlotManagerTest {
         // provide LONG_ACK: Function not implemented, no reply will follow.
         slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x7F}));
         JUnitUtil.waitFor(releaseTestDelay);
+        JUnitUtil.waitFor(() -> status == 0, "reply status");
         assertEquals( 0, status, "reply status");
         assertEquals( -1, value, "reply value");
 
@@ -618,6 +618,7 @@ public class SlotManagerTest {
         // LONG_ACK: The Slot Write command was accepted blind (no response will be sent).
         slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x40}));
         JUnitUtil.waitFor(releaseTestDelay);
+        JUnitUtil.waitFor(() -> status == 0, "reply status");
         assertEquals( 0, status, "reply status");
         assertEquals( -1, value, "reply value");
 
@@ -718,6 +719,7 @@ public class SlotManagerTest {
         assertEquals( -999, status, "initial status");
 
         // check that final CV write happened
+        JUnitUtil.waitFor(() -> lnis.outbound.size() == 3, "final CV write has happened");
         assertEquals( 3, lnis.outbound.size(), "three messages sent");
         assertEquals( "EF 0E 7C 6B 00 00 00 00 10 00 37 7F 7F 00",
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
@@ -742,6 +744,7 @@ public class SlotManagerTest {
         assertEquals( -999, status, "no immediate reply");
         JUnitUtil.waitFor(releaseTestDelay);
         log.debug("checking..");
+        JUnitUtil.waitFor(() -> status == 0, "reply status");
         assertEquals( 0, status, "reply status");
         assertEquals( -1, value, "reply value");
         assertEquals( 3, lnis.outbound.size(), "three messages sent");
@@ -864,6 +867,7 @@ public class SlotManagerTest {
         assertEquals( -999, status, "no immediate reply");
         JUnitUtil.waitFor(releaseTestDelay);
         log.debug("checking..");
+        JUnitUtil.waitFor(() -> status == 0, "reply status");
         assertEquals( 0, status, "reply status");
         assertEquals( 55, value, "reply value");
 
@@ -916,6 +920,7 @@ public class SlotManagerTest {
         startedLongTimer = false;
         slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x0, 0x24}));
         JUnitUtil.waitFor(releaseTestDelay);
+        JUnitUtil.waitFor(() -> status == 4, "reply status");
         assertEquals( 4, status, "post-LACK status is fail");
         assertFalse( startedShortTimer, "didn't start short timer");
         assertFalse( startedLongTimer, "didn't start long timer");

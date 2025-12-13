@@ -1,8 +1,14 @@
 package jmri.jmrix.lenz;
 
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,9 +24,9 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
     /**
      * Local test class to make XNetPacketizer more felicitous to test
      */
-    class StoppingXNetPacketizer extends XNetPacketizer {
+    static class StoppingXNetPacketizer extends XNetPacketizer {
 
-        public StoppingXNetPacketizer(jmri.jmrix.lenz.LenzCommandStation p) {
+        StoppingXNetPacketizer(jmri.jmrix.lenz.LenzCommandStation p) {
             super(p);
         }
 
@@ -39,7 +45,7 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
     }
 
     @Test
-    public void testOutbound() throws Exception {
+    public void testOutbound() throws IOException {
         XNetPacketizer c = (XNetPacketizer) tc;
         // connect to iostream via port controller scaffold
         tc.connectPort(port);
@@ -48,18 +54,18 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
         c.sendXNetMessage(m, null);
 
         port.flush();
-        jmri.util.JUnitUtil.waitFor(() -> port.tostream.available() == 4, "total length 4");
+        JUnitUtil.waitFor(() -> port.tostream.available() == 4, "total length 4");
 
-        Assert.assertEquals("total length ", 4, port.tostream.available());
-        Assert.assertEquals("Char 0", 0x52, port.tostream.readByte() & 0xff);
-        Assert.assertEquals("Char 1", 0x05, port.tostream.readByte() & 0xff);
-        Assert.assertEquals("Char 2", 0x8A, port.tostream.readByte() & 0xff);
-        Assert.assertEquals("parity", 0xDD, port.tostream.readByte() & 0xff);
-        Assert.assertEquals("remaining ", 0, port.tostream.available());
+        assertEquals( 4, port.tostream.available(), "total length ");
+        assertEquals( 0x52, port.tostream.readByte() & 0xff, "Char 0");
+        assertEquals( 0x05, port.tostream.readByte() & 0xff, "Char 1");
+        assertEquals( 0x8A, port.tostream.readByte() & 0xff, "Char 2");
+        assertEquals( 0xDD, port.tostream.readByte() & 0xff, "parity");
+        assertEquals( 0, port.tostream.available(), "remaining ");
     }
 
     @Test
-    public void testInbound() throws Exception {
+    public void testInbound() throws IOException {
         XNetPacketizer c = (XNetPacketizer) tc;
         // connect to iostream via port controller scaffold
         tc.connectPort(port);
@@ -75,15 +81,15 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
         port.tistream.write(0x52);
 
         port.flush();
-        jmri.util.JUnitUtil.waitFor(() -> l.rcvdRply != null, "reply received");
+        JUnitUtil.waitFor(() -> l.rcvdRply != null, "reply received");
 
         // check that the message was picked up by the read thread.
-        Assert.assertNotNull("reply received ", l.rcvdRply);
-        Assert.assertEquals("first char of reply ", 0x52, l.rcvdRply.getElement(0));
+        assertNotNull( l.rcvdRply, "reply received ");
+        assertEquals( 0x52, l.rcvdRply.getElement(0), "first char of reply ");
     }
 
     @Test
-    public void testInterference() throws Exception {
+    public void testInterference() throws IOException {
         // This test checks to make sure that when two listeners register for events
         // at the same time, the first listener is still the active listener until
         // it receives a message.
@@ -114,11 +120,11 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
             port.tistream.write(0x42);
 
             port.flush();
-            jmri.util.JUnitUtil.waitFor(() -> l.rcvdRply != null, "reply received");
+            JUnitUtil.waitFor(() -> l.rcvdRply != null, "reply received");
 
             // check that the message was picked up by the read thread.
-            Assert.assertNotNull("iteration " + i + " reply received ", l.rcvdRply);
-            Assert.assertEquals("iteration " + i + " first char of broadcast reply to l", 0x42, l.rcvdRply.getElement(0));
+            assertNotNull( l.rcvdRply, "iteration " + i + " reply received ");
+            assertEquals( 0x42, l.rcvdRply.getElement(0), "iteration " + i + " first char of broadcast reply to l");
 
             // now we need to send a message with both the second and third listeners
             // as reply receiver.
@@ -131,7 +137,7 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
             port.flush();
 
             // and now we verify l1 is the last sender.
-            jmri.util.JUnitUtil.waitFor(() -> l1 == c.getLastSender(), "iteration " + i + " Last Sender l1, before l1 reply");
+            JUnitUtil.waitFor(() -> l1 == c.getLastSender(), "iteration " + i + " Last Sender l1, before l1 reply");
 
             l.rcvdRply = null;
             l1.rcvdRply = null;
@@ -143,18 +149,18 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
             port.tistream.write(0x05);
 
             port.flush();
-            jmri.util.JUnitUtil.waitFor(() -> l1.rcvdRply != null, "iteration " + i + " reply received ");
+            JUnitUtil.waitFor(() -> l1.rcvdRply != null, "iteration " + i + " reply received ");
 
             // check that the message was picked up by the read thread.
-            Assert.assertNotNull("iteration " + i + " reply received ", l1.rcvdRply);
-            Assert.assertEquals("iteration " + i + " first char of reply to l1", 0x01, l1.rcvdRply.getElement(0));
+            assertNotNull( l1.rcvdRply, "iteration " + i + " reply received ");
+            assertEquals( 0x01, l1.rcvdRply.getElement(0), "iteration " + i + " first char of reply to l1");
 
-            Assert.assertNotNull("iteration " + i + " broadcast reply after l1 message", l.rcvdRply);
-            Assert.assertNotNull("iteration " + i + " l1 reply after l1 message", l1.rcvdRply);
-            Assert.assertNull("iteration " + i + " l2 reply after l1 message", l2.rcvdRply);
+            assertNotNull( l.rcvdRply, "iteration " + i + " broadcast reply after l1 message");
+            assertNotNull( l1.rcvdRply, "iteration " + i + " l1 reply after l1 message");
+            assertNull( l2.rcvdRply, "iteration " + i + " l2 reply after l1 message");
 
             // and now we verify l2 is the last sender.
-            jmri.util.JUnitUtil.waitFor(() -> l2 == c.getLastSender(), "Last Sender l2");
+            JUnitUtil.waitFor(() -> l2 == c.getLastSender(), "Last Sender l2");
 
             l.rcvdRply = null;
             l1.rcvdRply = null;
@@ -165,21 +171,21 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
             port.tistream.write(0x05);
 
             port.flush();
-            jmri.util.JUnitUtil.waitFor(() -> l2.rcvdRply != null, "iteration " + i + " reply received ");
+            JUnitUtil.waitFor(() -> l2.rcvdRply != null, "iteration " + i + " reply received ");
 
             // check that the message was picked up by the read thread.
-            Assert.assertNotNull("iteration " + i + " reply received ", l2.rcvdRply);
+            assertNotNull( l2.rcvdRply, "iteration " + i + " reply received ");
 
-            Assert.assertEquals("iteration " + i + " first char of reply to l2", 0x01, l2.rcvdRply.getElement(0));
+            assertEquals( 0x01, l2.rcvdRply.getElement(0), "iteration " + i + " first char of reply to l2");
 
-            Assert.assertNotNull("iteration " + i + " broadcast reply after l2 message", l.rcvdRply);
-            Assert.assertNull("iteration " + i + " l1 reply after l2 message", l1.rcvdRply);
-            Assert.assertNotNull("iteration " + i + " l2 reply after l2 message", l2.rcvdRply);
+            assertNotNull( l.rcvdRply, "iteration " + i + " broadcast reply after l2 message");
+            assertNull( l1.rcvdRply, "iteration " + i + " l1 reply after l2 message");
+            assertNotNull( l2.rcvdRply, "iteration " + i + " l2 reply after l2 message");
 
             l.rcvdRply = null;
             l1.rcvdRply = null;
             l2.rcvdRply = null;
-            Assert.assertEquals("iteration " + i + " l received count ", 3 * (i + 1), l.rcvCount);
+            assertEquals( 3 * (i + 1), l.getRcvCount(), "iteration " + i + " l received count ");
         }
 
     }
@@ -190,11 +196,7 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
         JUnitUtil.setUp();
         LenzCommandStation lcs = new LenzCommandStation();
         tc = new StoppingXNetPacketizer(lcs);
-        try {
-           port = new XNetPortControllerScaffold();
-        } catch (Exception e) {
-           Assert.fail("Error creating test port");
-        }
+        port = assertDoesNotThrow( () -> new XNetPortControllerScaffold(), "Error creating test port");
     }
 
     @AfterEach
@@ -202,6 +204,8 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
     public void tearDown() {
         tc.terminateThreads();
         tc = null;
+        port.dispose();
+        port = null;
         JUnitUtil.tearDown();
     }
 

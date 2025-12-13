@@ -1,6 +1,8 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
+import jmri.jmrix.AbstractMessageFormatterTest;
 import jmri.jmrix.roco.z21.Z21Reply;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,14 +12,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Paul Bender Copyright (C) 2025
  */
-public class Z21CANDetectorReplyFormatterTest {
-
-    Z21CANDetectorReplyFormatter formatter;
-
-    @BeforeEach
-    public void setUp() {
-        formatter = new Z21CANDetectorReplyFormatter();
-    }
+public class Z21CANDetectorReplyFormatterTest extends AbstractMessageFormatterTest {
 
     @Test
     public void testMonitorStringCanDetectorRailComReply() {
@@ -81,6 +76,13 @@ public class Z21CANDetectorReplyFormatterTest {
         Z21Reply reply = new Z21Reply(msg, 14);
         Assertions.assertTrue(formatter.handlesMessage(reply));
         Assertions.assertEquals("Z21 CAN Detetector Reply: NetworkID=abcd Address=1 Port=1 Type=Input Status Value1=Busy, Overload 3 Value2=", formatter.formatMessage(reply));
+    }
+
+    @Override
+    @BeforeEach
+    public void setUp() {
+        super.setUp(); // setup JUnit
+        formatter = new Z21CANDetectorReplyFormatter();
     }
 
 }

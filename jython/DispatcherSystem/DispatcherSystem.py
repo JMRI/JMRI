@@ -70,7 +70,9 @@ def CreateIcons_action(event):
     global f1
     initialPanelFilename = start_file
     finalPanelFilename = icons_file
+    # print "save panel"
     saveOrigPanel()
+    # print "process panels"
     result = processPanels()    # result is "Success" or "Failure"
     # stage2
     if str(result) == "Success":
@@ -79,7 +81,7 @@ def CreateIcons_action(event):
         title = "Error in Routine"
         msg = "Not creating Transits as failure in earlier routine"
         Query().displayMessage(msg,title)
-    #print "Created Transits"
+    # print "Created Transits"
 
 def saveOrigPanel():
     global backup_file
@@ -207,22 +209,8 @@ def CreateTransits_action(event):
 def CreateTransits():
     global g
     global le
-    #global DisplayProgress_global
     global logLevel
     global dpg
-
-    print( "in createTransits")
-    #the displayProgress is in CreateTransits
-    # CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
-    # exec(open (CreateTransits).read())
-    #DisplayProgress_global = DisplayProgress
-    # progress = 5
-    # DisplayProgress()
-    # dpg.Update("creating transits: " + str(progress)+ "% complete")
-
-    # initialPanelFilename = icons_file
-    # finalPanelFilename = run_file
-    #initialPanelFilename = start_file
 
     #print "Setting up Graph"
     my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/jars/jgrapht.jar')
@@ -232,25 +220,6 @@ def CreateTransits():
     exec(open (CreateGraph).read())
     le = LabelledEdge
     g = StationGraph()
-
-    # progress = 10
-    # dpg.Update("creating transits: " + str(progress)+ "% complete")
-
-    #if logLevel > 0: print "updating logic"
-    #     CreateSignalLogic = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateSignalLogicAndSections.py')
-    #     exec(open (CreateSignalLogic).read())
-    #     usl = Update_Signal_Logic()
-    #print "updating logic stage1"
-
-    #     ans = usl.create_autologic_and_sections()
-    #ans = True
-
-
-    #print "updating logic stage2"
-    #         usl.update_logic(run_file)
-
-    #progress = 15
-    #dpg.Update("creating transits: " + str(progress)+ "% complete")
 
     #print "Creating Transits"
     CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
@@ -265,7 +234,6 @@ def CreateTransits():
     ct.run_transits()
     #print "ran CreateTransits"
 
-    #dpg.killLabel()
 
 def show_options_message(msg):
     dialog = JDialog(None, 'Confirm Dispatcher Options', False)

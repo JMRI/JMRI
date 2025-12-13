@@ -311,8 +311,6 @@ public class DefaultUser implements User {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification="The text is from a bundle")
     public boolean ensureAtLeastPermission(Permission permission, PermissionValue minValue) {
         if (!hasAtLeastPermission(permission, minValue)) {
             log.warn("User {} has not permission {}", this.getUserName(), permission.getName());

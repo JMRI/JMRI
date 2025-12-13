@@ -49,11 +49,11 @@ public class GlobalVariableIconTest extends PositionableTestBase {
 
         jmri.InstanceManager.getDefault(GlobalVariableManager.class)
                 .getGlobalVariable("MyVar").setValue("Data Data");
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         int[] colors = getColor("Expect \"Data Data\" as text", "| Expect \"Data Data\" as text", 0, 6, 10);
         int r = ((colors[1] >> 16) & 0xFF) + ((colors[2] >> 16) & 0xFF) + ((colors[3] >> 16) & 0xFF) + ((colors[4] >> 16) & 0xFF);
@@ -88,7 +88,7 @@ public class GlobalVariableIconTest extends PositionableTestBase {
                 .getGlobalVariable("MyVar").setValue("");
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         int[] colors = getColor("Expect blank", "| Expect blank", 0, 6, 10);
         //for (int i=0; i< 10; i++) System.out.println("   "+String.format("0x%8s", Integer.toHexString(colors[i])).replace(' ', '0'));
@@ -114,11 +114,11 @@ public class GlobalVariableIconTest extends PositionableTestBase {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect red X default icon: "));
 
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         int colors[] = getColor("Expect empty", "| Expect empty", 0, 6, 10);
         Assert.assertTrue("Expect red X", (colors[3] == 0xff800000) || (colors[4] == 0xff800000) || (colors[5] == 0xff800000));
@@ -144,11 +144,11 @@ public class GlobalVariableIconTest extends PositionableTestBase {
 
         jmri.InstanceManager.getDefault(GlobalVariableManager.class)
                 .getGlobalVariable("MyVar").setValue(42);
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         Assert.assertFalse("No Warn Level or higher Messages", JUnitAppender.unexpectedMessageSeen(Level.WARN));
 
@@ -173,11 +173,11 @@ public class GlobalVariableIconTest extends PositionableTestBase {
 
         jmri.InstanceManager.getDefault(GlobalVariableManager.class)
                 .getGlobalVariable("MyVar").setValue(re);
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
         Assert.assertFalse("No Warn Level or higher Messages", JUnitAppender.unexpectedMessageSeen(Level.WARN));
 
         jf.setVisible(false);
@@ -201,11 +201,11 @@ public class GlobalVariableIconTest extends PositionableTestBase {
 
         jmri.InstanceManager.getDefault(GlobalVariableManager.class)
                 .getGlobalVariable("MyVar").setValue(tag);
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
         Assert.assertFalse("No Warn Level or higher Messages", JUnitAppender.unexpectedMessageSeen(Level.WARN));
         Assert.assertNotNull("Label with correct text value", jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(), tag.getDisplayName()));
 
@@ -235,11 +235,11 @@ public class GlobalVariableIconTest extends PositionableTestBase {
 
         jmri.InstanceManager.getDefault(GlobalVariableManager.class)
                 .getGlobalVariable("MyVar").setValue(rpt);
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
         Assert.assertFalse("No Warn Level or higher Messages", JUnitAppender.unexpectedMessageSeen(Level.WARN));
         Assert.assertNotNull("Label with correct text value", jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(), rpt.toReportString()));
 
@@ -267,15 +267,15 @@ public class GlobalVariableIconTest extends PositionableTestBase {
         jf.pack();
         jf.setVisible(true);
 
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         Assert.assertNotNull("Label with correct text value before key", jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(), "1"));
 
         to.addKeyAndIcon(icon, "1");
 
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
         Assert.assertFalse("No Warn Level or higher Messages", JUnitAppender.unexpectedMessageSeen(Level.WARN));
         // we should probably verify the icon displays the correct icon here.
         // The text contents of the field are not displayed.

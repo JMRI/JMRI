@@ -1,8 +1,9 @@
 package jmri.jmrix.nce;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,10 +12,12 @@ import org.junit.jupiter.api.*;
  */
 public class NceBinaryCommandTest {
 
+    // no Ctor test, class only supplies static methods.
+
     @Test
-    public void testCTor() {
-        NceBinaryCommand t = new NceBinaryCommand();
-        Assert.assertNotNull("exists",t);
+    public void testNceBinaryCommands() {
+        assertArrayEquals( new byte[]{ (byte)NceMessage.READ1_CMD, 0, 2},
+            NceBinaryCommand.accMemoryRead1(2));
     }
 
     @BeforeEach

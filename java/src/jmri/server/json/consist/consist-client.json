@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-consist-client-message",
     "type": "object",
     "description": "Schema data object in message from client to JMRI for type \"consist\"",
@@ -40,10 +40,17 @@
                     }
                 },
                 "additionalProperties": false,
-                "required": ["address", "isLongAddress", "forward", "position"]
+                "required": [
+                    "address",
+                    "isLongAddress",
+                    "forward",
+                    "position"
+                ]
             }
         }
     },
     "additionalProperties": false,
-    "required": ["address"]
+    "required": [
+        "address"
+    ]
 }

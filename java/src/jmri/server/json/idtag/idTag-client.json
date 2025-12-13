@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-idTag-client-message",
     "type": "object",
     "description": "Schema data object in message from client to JMRI for type \"idTag\"",
@@ -17,10 +17,15 @@
             "description": "If present, set the comment for the idTag"
         },
         "reporter": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "If present, sets the reporter to have last seen the idTag"
         }
     },
     "additionalProperties": false,
-    "required": ["name"]
+    "required": [
+        "name"
+    ]
 }

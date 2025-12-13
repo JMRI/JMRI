@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.GraphicsEnvironment;
 import java.beans.*;
 import java.io.PrintWriter;
@@ -484,7 +486,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
     /** {@inheritDoc} */
     @Override
-//    @OverridingMethodsMustInvokeSuper
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "LogixNG is a tree that must be deleted recursively")
     public final void deleteBean(@Nonnull LogixNG logixNG, @Nonnull String property) throws PropertyVetoException {
         for (int i=logixNG.getNumConditionalNGs()-1; i >= 0; i--) {
             ConditionalNG child = logixNG.getConditionalNG(i);

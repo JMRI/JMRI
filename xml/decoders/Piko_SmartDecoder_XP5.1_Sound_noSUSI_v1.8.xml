@@ -12,196 +12,201 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-	<version author="Ulrich Gerlach" version="1" lastUpdated="2023-10-20"/>
-	<!-- Version 1 - For Piko SmartDecoder XP5.1 Sound FW 1.8.x without SUSI Light Controller on board -->
-	<!-- Supported decoder: PIKO46505-18 = decoder neutral, PIKO46540-18 = BR55-TT -->
-	<version author="Ulrich Gerlach" version="2" lastUpdated="2023-12-03"/>
-	<!-- Version 2 - Add English translations -->
-	<version author="Ulrich Gerlach" version="3" lastUpdated="2024-03-27"/>
-	<!-- Version 3 - Supported decoder: PIKO56505-22 = PluX22 decoder neutral, PIKO56508-16 = PluX16 decoder neutral -->
-	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
-	<decoder>
-		<family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="16" comment="Decoders not sorted (necessarily) in numerical order">
-			<model model="PIKO46505-18 XP5.1 V1.8 no LC (SUSI)" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46505-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound allgemein ohne LC (FW 1.8.0 - 1.16.0)">
-				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
-				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
-				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
-				<size length="21.5" width="10.5" height="3.7" units="mm"/>
-			</model>
-			<model model="PIKO46540-18 BR55-TT V1.8" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46540-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.8.0 - 1.16.0)">
-				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
-				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
-				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
-				<size length="21.5" width="10.5" height="3.7" units="mm"/>
-			</model>
-			<model model="PIKO56505-22 XP5.1 V1.8 no LC (SUSI)" numOuts="9" numFns="68" maxMotorCurrent="1.2A" formFactor="H0" connector="PluX22" productID="PIKO56505-22" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX22 ohne LC (FW 1.8.0 - 1.16.0)">
-				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
-				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
-				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
-				<size length="21.5" width="10.5" height="3.7" units="mm"/>
-			</model>
-			<model model="PIKO56508-16 XP5.1 V1.8 no LC (SUSI)" numOuts="6" numFns="68" maxMotorCurrent="1.2A" formFactor="H0" connector="PluX16" productID="PIKO56508-16" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX16 ohne LC (FW 1.8.0 - 1.16.0)">
-				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
-				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
-				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
-				<size length="21.5" width="10.5" height="3.7" units="mm"/>
-			</model>
-		</family>
-		<programming direct="yes" paged="no" register="no" ops="yes">
-			<capability>
-				<name>Indexed CV access</name>
-				<parameter name="PI">31</parameter>
-				<!-- for Banks -->
-				<parameter name="SI">32</parameter>
-				<!-- Not used, but need to be declared for cvFirst to be read -->
-				<parameter name="cvFirst">true</parameter>
-			</capability>
-		</programming>
-		<variables>
-			<!-- CVs 1, 17, 29 bit 5 -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-			<!-- CVs 2 - 6 -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv2-6_v5.1.xml"/>
-			<!-- CVs 7 - 8 -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
-			<!-- CV 11 -->
-			<variable item="Time Digitalprotocol" CV="11" default="0">
-				<decVal/>
-				<label>Time without digital protocol</label>
-				<label xml:lang="de">Zeit ohne Digitalprotokoll</label>
-			</variable>
-			<!-- CV 12 -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv12_v5.1.xml"/>
-			<!-- CVs 13 - 14 - Analog Mode Functions F0 - F12 -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>
-			<!-- CVs 15 - 16 -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv15.16.xml"/>
-			<!-- CVs 17 - 18 - already in place with CV 1-->
-			<!-- CV 19 Consisting Information -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-			<!-- CVs 21 - 22 - Consisting Functions -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
-			<!-- CV 27 - ABC stop configuration -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv27.xml"/>
-			<!-- CV 28 - RailCom configuration -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv28.xml"/>
-			<!-- CV 29 - DCC configuration -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
-			<!-- CV 30 - Fault memory -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv30error.xml"/>
-			<!-- CVs 31 - 32 - Banks are on CV 257.512_v5.1.xml include -->
-			<!-- CVs 33 - 46 - nrma function mapping -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/functionmap.xml"/>
-			<!-- CV 47 - SUSI configuration, CVs 115 - 120 - SUSI Sendeoptionen 1 und 3 to SUSI -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv47.115-120_v5.1.xml"/>
-			<!-- CVs 48 - 52 - ABC special configuration -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv48-52_v5.1.xml"/>
-			<!-- CV 53 - ABV Anfahrrampe -->
-			<variable item="Anfahrrampe CV53" CV="53" default="40">
-				<decVal max="255"/>
-				<label>Soft start-up ramp (CV 53)</label>
-				<label xml:lang="de">Sanftanfahr- und Bremsrampe (CV 53)</label>
-				<tooltip>greift vor bzw. nach ABV</tooltip>
-				<tooltip xml:lang="de">takes effect before the start-up delays (255 = Off)</tooltip>
-			</variable>
-			<!-- CVs 54 - 56,62 Motor control -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv54-56_v5.1.xml"/>
-			<!-- CV 61 - Motorola -->
-			<variable item="Motorola Config" CV="61" default="0">
-				<decVal max="3"/>
-				<label>Motorola Config (CV 61)</label>
-				<label xml:lang="de">Motorola Konfiguration (CV 61)</label>
-				<tooltip>Number of additional Motorola addresses for F5 - F16</tooltip>
-				<tooltip xml:lang="de">Anzahl der zusätzlichen Motorolaadressen für F5 - F16</tooltip>
-			</variable>
-			<!-- CV 63 - Volume / Lautstärke -->
-			<variable item="Globale Lautstärke" CV="63" readOnly="yes" default="200">
-				<decVal max="255"/>
-				<label>Global volume for mfx control centers (CV 63)</label>
-				<label xml:lang="de">Globale Lautstärke für mfx-Zentralen (CV 63)</label>
-				<tooltip>Auxiliary CV = CV 257 on Bank 16</tooltip>
-				<tooltip xml:lang="de">Hilfs-CV = CV 257 von Bank 16</tooltip>
-			</variable>
-			<!-- CV 66 -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim128.xml"/>
-			<!-- CV 95 -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/revTrim128.xml"/>
-			<!-- CVs 67 - 94 -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
-			<variable item="Advanced Function Mapping" CV="96" default="6">
-				<enumVal>
-					<enumChoice choice="1" value="1">
-						<choice>Advanced Function Mapping off</choice>
-						<choice xml:lang="de">Einfaches Funktionsmapping</choice>
-					</enumChoice>
-					<enumChoice choice="2" value="6">
-						<choice>Advanced Function Mapping on</choice>
-						<choice xml:lang="de">Erweitertes Funktionsmapping</choice>
-					</enumChoice>
-				</enumVal>
-				<label>Use Advanced Function Mapping</label>
-				<label xml:lang="de">Art des Funktionsmapping</label>
-				<label xml:lang="nl">Uitgebreide Functiemapping actief</label>
-				<label xml:lang="cs">Použití mapování pokročilých funkcí</label>
-				<tooltip>simple value=1 / extended value=6 (from V1.8)</tooltip>
-				<tooltip xml:lang="de">einfach Wert=1 / erweitert Wert=6 (ab V1.8)</tooltip>
-			</variable>
-			<!-- CVs 97 - 98 -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv97.98_v5.1.xml"/>
-			<!-- CVs 101 - 104 - Analog mode control -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv101-104_v5.1.xml"/>
-			<!-- CVs 130 - 135 - Rangiertango -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv130-135_v5.1.xml"/>
-			<!-- CVs 140 - 145 - Constant braking distance -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv140-145_v5.1.xml"/>
-			<!-- CVs 150 - 153 - Alternate ABV -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv150-153_v5.1.xml"/>
-			<!-- CVs 154 - 157 - Function keys-->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv154-157_v5.1.xml"/>
-			<!-- CVs 160 - 163 - Piko steam configuration -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv160-163_v5.1.xml"/>
-			<!-- CVs 170 - 179 - Light Effects -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv170-179_v5.1.xml"/>
-			<!-- CVs 180 - 183 - Automatisches Abschalten Funktionsausgänge -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv180-183_v5.1.xml"/>
-			<!-- CVs 202 - 222 - Servos configuration -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv202-222_v5.1.xml"/>
-			<!-- CVs 240 - 250 - Motor control / Motorregelung -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv240-250_v5.1.xml"/>
-			<!--extended function mapping Piko Smartdecoder (Sound) 5.1, includes CV 31-32 bank switches-->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank16_v5.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank17_v5.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank18_v5.1.xml"/>
-			<!-- Kein Interner Lichtdecoder CV897 - 1024 -->
-			<!--<xi:include href="http://jmri.org/xml/decoders/piko/cv897-1024_v5.1.xml"/>-->
-		</variables>
-		<xi:include href="http://jmri.org/xml/decoders/piko/cv8factReset_v5.1.xml"/>
-	</decoder>
-	<!-- special panes -->
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoRailcom.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoAccelDecel.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePiko1.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePiko2_v5.1.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoMotor.xml"/>
-	<!-- Kein Interner Lichtdecoder CV897 - 1024 -->
-	<!--<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoLichtDecoder_v5.1.xml"/>-->
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoSound_v5.1.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoExtendedFmap_v5.1.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoConfigOutput_v5.1.xml"/>
+    <version author="Ulrich Gerlach" version="1" lastUpdated="2023-10-20"/>
+    <!-- Version 1 - For Piko SmartDecoder XP5.1 Sound FW 1.8.x without SUSI Light Controller on board -->
+    <!-- Supported decoder: PIKO46505-18 = decoder neutral, PIKO46540-18 = BR55-TT -->
+    <version author="Ulrich Gerlach" version="2" lastUpdated="2023-12-03"/>
+    <!-- Version 2 - Add English translations -->
+    <version author="Ulrich Gerlach" version="3" lastUpdated="2024-03-27"/>
+    <!-- Version 3 - Supported decoder: PIKO56505-22 = PluX22 decoder neutral, PIKO56508-16 = PluX16 decoder neutral -->
+    <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
+    <version author="Ulrich Gerlach" version="5" lastUpdated="2025-12-06"/>
+    <!-- Version 5 - Add CVs and pane for decorder informationen, set highVersionID=16 -->
+    <decoder>
+        <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="16" comment="Decoders not sorted (necessarily) in numerical order">
+            <model model="PIKO46505-18 XP5.1 V1.8 no LC (SUSI)" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein ohne LC (FW 1.8.0 - 1.16.0)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <size length="21.5" width="10.5" height="3.7" units="mm"/>
+            </model>
+            <model model="PIKO46540-18 BR55-TT V1.8" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46540-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.8.0 - 1.16.0)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <size length="21.5" width="10.5" height="3.7" units="mm"/>
+            </model>
+            <model model="PIKO56505-22 XP5.1 V1.8 no LC (SUSI)" numOuts="9" numFns="68" maxMotorCurrent="1.2A" formFactor="H0" connector="PluX22" productID="PIKO56505-22" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX22 ohne LC (FW 1.8.0 - 1.16.0)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+                <size length="21.5" width="10.5" height="3.7" units="mm"/>
+            </model>
+            <model model="PIKO56508-16 XP5.1 V1.8 no LC (SUSI)" numOuts="6" numFns="68" maxMotorCurrent="1.2A" formFactor="H0" connector="PluX16" productID="PIKO56508-16" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX16 ohne LC (FW 1.8.0 - 1.16.0)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+                <size length="21.5" width="10.5" height="3.7" units="mm"/>
+            </model>
+        </family>
+        <programming direct="yes" paged="no" register="no" ops="yes">
+            <capability>
+                <name>Indexed CV access</name>
+                <parameter name="PI">31</parameter>
+                <!-- for Banks -->
+                <parameter name="SI">32</parameter>
+                <!-- Not used, but need to be declared for cvFirst to be read -->
+                <parameter name="cvFirst">true</parameter>
+            </capability>
+        </programming>
+        <variables>
+            <!-- CVs 1, 17, 29 bit 5 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+            <!-- CVs 2 - 6 -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv2-6_v5.1.xml"/>
+            <!-- CVs 7 - 8 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+            <!-- CV 11 -->
+            <variable item="Time Digitalprotocol" CV="11" default="0">
+                <decVal/>
+                <label>Time without digital protocol</label>
+                <label xml:lang="de">Zeit ohne Digitalprotokoll</label>
+            </variable>
+            <!-- CV 12 -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv12_v5.1.xml"/>
+            <!-- CVs 13 - 14 - Analog Mode Functions F0 - F12 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>
+            <!-- CVs 15 - 16 -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv15.16.xml"/>
+            <!-- CVs 17 - 18 - already in place with CV 1-->
+            <!-- CV 19 Consisting Information -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+            <!-- CVs 21 - 22 - Consisting Functions -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
+            <!-- CV 27 - ABC stop configuration -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv27.xml"/>
+            <!-- CV 28 - RailCom configuration -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv28.xml"/>
+            <!-- CV 29 - DCC configuration -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
+            <!-- CV 30 - Fault memory -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv30error.xml"/>
+            <!-- CVs 31 - 32 - Banks are on CV 257.512_v5.1.xml include -->
+            <!-- CVs 33 - 46 - nrma function mapping -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/functionmap.xml"/>
+            <!-- CV 47 - SUSI configuration, CVs 115 - 120 - SUSI Sendeoptionen 1 und 3 to SUSI -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv47.115-120_v5.1.xml"/>
+            <!-- CVs 48 - 52 - ABC special configuration -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv48-52_v5.1.xml"/>
+            <!-- CV 53 - ABV Anfahrrampe -->
+            <variable item="Anfahrrampe CV53" CV="53" default="40">
+                <decVal max="255"/>
+                <label>Soft start and braking ramp (CV 53)</label>
+                <label xml:lang="de">Sanftanfahr- und Bremsrampe (CV 53)</label>
+                <tooltip>takes effect before the start-up delay or after braking delay (255 = Off)</tooltip>
+                <tooltip xml:lang="de">greift vor bzw. nach ABV (255 = Aus)</tooltip>
+            </variable>
+            <!-- CVs 54 - 56,62 Motor control -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv54-56_v5.1.xml"/>
+            <!-- CV 61 - Motorola -->
+            <variable item="Motorola Config" CV="61" default="0">
+                <decVal max="3"/>
+                <label>Motorola Config (CV 61)</label>
+                <label xml:lang="de">Motorola Konfiguration (CV 61)</label>
+                <tooltip>Number of additional Motorola addresses for F5 - F16</tooltip>
+                <tooltip xml:lang="de">Anzahl der zusätzlichen Motorolaadressen für F5 - F16</tooltip>
+            </variable>
+            <!-- CV 63 - Volume / Lautstärke -->
+            <variable item="Globale Lautstärke" CV="63" readOnly="yes" default="200">
+                <decVal max="255"/>
+                <label>Global volume for mfx control centers (CV 63)</label>
+                <label xml:lang="de">Globale Lautstärke für mfx-Zentralen (CV 63)</label>
+                <tooltip>Auxiliary CV = CV 257 on Bank 16</tooltip>
+                <tooltip xml:lang="de">Hilfs-CV = CV 257 von Bank 16</tooltip>
+            </variable>
+            <!-- CV 66 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim128.xml"/>
+            <!-- CV 95 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim128.xml"/>
+            <!-- CVs 67 - 94 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+            <variable item="Advanced Function Mapping" CV="96" default="6">
+                <enumVal>
+                    <enumChoice choice="1" value="1">
+                        <choice>Advanced Function Mapping off</choice>
+                        <choice xml:lang="de">Einfaches Funktionsmapping</choice>
+                    </enumChoice>
+                    <enumChoice choice="2" value="6">
+                        <choice>Advanced Function Mapping on</choice>
+                        <choice xml:lang="de">Erweitertes Funktionsmapping</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Use Advanced Function Mapping</label>
+                <label xml:lang="de">Art des Funktionsmapping</label>
+                <label xml:lang="nl">Uitgebreide Functiemapping actief</label>
+                <label xml:lang="cs">Použití mapování pokročilých funkcí</label>
+                <tooltip>simple value=1 / extended value=6 (from V1.8)</tooltip>
+                <tooltip xml:lang="de">einfach Wert=1 / erweitert Wert=6 (ab V1.8)</tooltip>
+            </variable>
+            <!-- CVs 97 - 98 -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv97.98_v5.1.xml"/>
+            <!-- CVs 101 - 104 - Analog mode control -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv101-104_v5.1.xml"/>
+            <!-- CVs 130 - 135 - Rangiertango -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv130-135_v5.1.xml"/>
+            <!-- CVs 140 - 145 - Constant braking distance -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv140-145_v5.1.xml"/>
+            <!-- CVs 150 - 153 - Alternate ABV -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv150-153_v5.1.xml"/>
+            <!-- CVs 154 - 157 - Function keys-->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv154-157_v5.1.xml"/>
+            <!-- CVs 160 - 163 - Piko steam configuration -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv160-163_v5.1.xml"/>
+            <!-- CVs 170 - 179 - Light Effects -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv170-179_v5.1.xml"/>
+            <!-- CVs 180 - 183 - Automatisches Abschalten Funktionsausgänge -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv180-183_v5.1.xml"/>
+            <!-- CVs 202 - 222 - Servos configuration -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv202-222_v5.1.xml"/>
+            <!-- CVs 240 - 250 - Motor control / Motorregelung -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv240-250_v5.1.xml"/>
+            <!--extended function mapping Piko Smartdecoder (Sound) 5.1, includes CV 31-32 bank switches-->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank16_v5.1.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank17_v5.1.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank18_v5.1.xml"/>
+            <!-- Kein Interner Lichtdecoder CV897 - 1024 -->
+            <!--<xi:include href="http://jmri.org/xml/decoders/piko/cv897-1024_v5.1.xml"/>-->
+            <xi:include href="http://jmri.org/xml/decoders/piko/decoderInfoCVs.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/piko/projectInfoCVs.xml"/>
+        </variables>
+        <xi:include href="http://jmri.org/xml/decoders/piko/cv8factReset_v5.1.xml"/>
+    </decoder>
+    <!-- special panes -->
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoRailcom.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoAccelDecel.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePiko1.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePiko2_v5.1.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoMotor.xml"/>
+    <!-- Kein Interner Lichtdecoder CV897 - 1024 -->
+    <!--<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoLichtDecoder_v5.1.xml"/>-->
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoSound_v5.1.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoExtendedFmap_v5.1.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoConfigOutput_v5.1.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoInfo.xml"/>
 </decoder-config>
 

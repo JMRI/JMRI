@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SchemaValidatorsConfig;
+import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
 
 import java.io.IOException;
@@ -31,6 +32,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
 
     private Map<String, Map<String, Set<JsonHttpService>>> services = new HashMap<>();
     private SchemaValidatorsConfig config = new SchemaValidatorsConfig();
+    private Map<String, String> schemaMappings = new HashMap<>();
     private final Map<String, Set<String>> clientTypes = new HashMap<>();
     private final Map<String, Set<String>> serverTypes = new HashMap<>();
     private final Map<String, Map<String, JsonSchema>> clientSchemas = new HashMap<>();
@@ -38,17 +40,15 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     private final ObjectMapper mapper = new ObjectMapper();
 
     public JsonSchemaServiceCache() {
-        Map<String, String> map = new HashMap<>();
         try {
             for (JsonNode mapping : mapper
                     .readTree(JsonSchemaServiceCache.class.getResource("/jmri/server/json/schema-map.json"))) {
-                map.put(mapping.get("publicURL").asText(),
+                schemaMappings.put(mapping.get("publicURL").asText(),
                         mapping.get("localURL").asText());
             }
         } catch (IOException ex) {
             log.error("Unable to read JMRI resources for JSON schema mapping", ex);
         }
-        config.setUriMappings(map);
     }
 
     /**
@@ -144,7 +144,8 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
         if (result == null) {
             for (JsonHttpService service : getServices(type, request.version)) {
                 log.debug("Processing {} with {}", type, service);
-                result = JsonSchemaFactory.getInstance()
+                result = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V202012, builder -> 
+                        builder.schemaMappers(schemaMappers -> schemaMappers.mappings(schemaMappings)))
                         .getSchema(service.doSchema(type, server, request).path(JSON.DATA).path(JSON.SCHEMA), config);
                 if (result != null) {
                     map.get(request.version).put(type, result);
@@ -225,7 +226,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
             log.warn("Errors validating {}", node);
             errors.forEach(error -> log.warn("JSON Validation Error: {}\n\t{}\n\t{}\n\t{}", error.getCode(),
                     error.getMessage(),
-                    error.getPath(), error.getType()));
+                    error.getEvaluationPath(), error.getType()));
             throw new JsonException(server ? 500 : 400, Bundle.getMessage(request.locale, JsonException.LOGGED_ERROR),
                     request.id);
         }

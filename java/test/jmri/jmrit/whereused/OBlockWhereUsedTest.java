@@ -1,11 +1,18 @@
 package jmri.jmrit.whereused;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import javax.swing.JTextArea;
+
+import jmri.NamedBeanUsageReport;
+import jmri.jmrit.logix.OBlock;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-
-import jmri.jmrit.logix.OBlock;
 
 /**
  * Tests for the OBlockWhereUsed Class
@@ -14,18 +21,26 @@ import jmri.jmrit.logix.OBlock;
  */
 public class OBlockWhereUsedTest {
 
+    // No Ctor test, class supplies static method.
+
     @Test
-    public void testOBlockWhereUsed() {
-        OBlockWhereUsed ctor = new OBlockWhereUsed();
-        Assert.assertNotNull("exists", ctor);
-        
+    public void testOBlockWhereUsedList() {
+
         // Pay the ransom to free PR#8715 to be merged
         OBlock b = new OBlock("OB1");
-        try {
-            b.getUsageReport(b);
-        } catch (java.lang.NullPointerException npe) {
-            Assert.assertFalse("NullPointerException", true);
-        }
+        List<NamedBeanUsageReport> list =
+        assertDoesNotThrow( () ->
+            b.getUsageReport(b) );
+        assertEquals( 0, list.size());
+    }
+
+    @Test
+    public void testOBlockWhereUsed() {
+        OBlock t = new OBlock("OB2");
+        JTextArea ta = assertDoesNotThrow( () ->
+            OBlockWhereUsed.getWhereUsed(t) );
+        assertTrue( ta.getText().contains(t.getDisplayName()));
+        assertTrue( ta.getText().contains("Listener count: 0"));
     }
 
     @BeforeEach
@@ -35,6 +50,7 @@ public class OBlockWhereUsedTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

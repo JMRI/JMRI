@@ -1,6 +1,8 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
+import jmri.jmrix.AbstractMessageFormatterTest;
 import jmri.jmrix.roco.z21.Z21Reply;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,14 +12,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Paul Bender Copyright (C) 2025
  */
-public class Z21RailComReplyFormatterTest {
-
-    private Z21RailComReplyFormatter formatter;
-
-    @BeforeEach
-    public void setUp() {
-        formatter = new Z21RailComReplyFormatter();
-    }
+public class Z21RailComReplyFormatterTest extends AbstractMessageFormatterTest {
 
     @Test
     public void testFormatReporterReply() {
@@ -25,6 +20,13 @@ public class Z21RailComReplyFormatterTest {
         Z21Reply reply = new Z21Reply(msg, 17);
         Assertions.assertTrue(formatter.handlesMessage(reply));
         Assertions.assertEquals("RailCom Data Changed. Entries 1: Address 256(L) Receive Count 16,777,216 Error Count 0 Options 5 Speed 6 QOS 7\n", formatter.formatMessage(reply));
+    }
+
+    @Override
+    @BeforeEach
+    public void setUp() {
+        super.setUp(); // setup JUnit
+        formatter = new Z21RailComReplyFormatter();
     }
 
 }

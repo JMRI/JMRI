@@ -1,5 +1,7 @@
 package apps.gui3.tabbedpreferences;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.event.WindowEvent;
 
 import javax.swing.WindowConstants;
@@ -43,6 +45,8 @@ public class TabbedPreferencesFrame extends JmriJFrame {
     }
 
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This handles dirty processing locally")
     public void windowClosing(WindowEvent e) {
         ShutDownManager sdm = InstanceManager.getDefault(ShutDownManager.class);
         if (!getTabbedPreferences().isPreferencesValid() && !sdm.isShuttingDown()) {
