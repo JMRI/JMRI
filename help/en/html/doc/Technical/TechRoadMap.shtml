@@ -205,9 +205,10 @@
       migration, because Java 17 is still getting security updates, 
       and because it's easier to install Java 17 on some OSs.</p>
       
-      <p>Java 21 in 2023 was the LTS release after Java 17.  We expect 
-      We gave confidence in it to that we started recommending 
-      it for use with JMRI 5.15.1 in December 2025. That JMRI release
+      <p>Java 21 in 2023 was the LTS release after Java 17.
+      
+      <p>After validation testing, we started recommending 
+      Java 21 for use with JMRI 5.15.1 in December 2025. That JMRI release
       will continue to be compatible with Java 11.
       
       <p>Following Java 21, the next Java LTS release was
@@ -217,7 +218,6 @@
       <p>For more information on compatibility, see the
       <a href="JVMCapabilities.shtml#compatibilty">compatibility discussion</a>.
       
-
       <h4>Java Release and Operating System Support</h4>
       <p>More information on Java releases and the operating systems that support them can be found
       <a href="JVMCapabilities.shtml">here</a>.</p>

@@ -957,7 +957,7 @@
         <li>(Developers only) Deprecations that are marked for removal
             generate un-suppressible compilation messages in Java 21.
             These will need to be cleaned up before the references
-            are removed in some version after Java 21.
+            are removed in some Java version after Java 21.
       </ol>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
