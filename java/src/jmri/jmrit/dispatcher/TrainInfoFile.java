@@ -383,6 +383,27 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("stopbyspeedprofileadjust") != null) {
                         tInfo.setStopBySpeedProfileAdjust(traininfo.getAttribute("stopbyspeedprofileadjust").getFloatValue());
                     }
+                    
+                 if (traininfo.getAttribute("stopbydistance_mm") != null) {
+                     try {
+                         float mm = traininfo.getAttribute("stopbydistance_mm").getFloatValue();
+                         if (mm > 0.0f) {
+                             tInfo.setStopByDistanceMm(mm);
+                             // HEAD by default; override if attribute present and equals "TAIL"
+                             if (traininfo.getAttribute("stopbydistance_ref") != null) {
+                                 String ref = traininfo.getAttribute("stopbydistance_ref").getValue();
+                                 if ("TAIL".equalsIgnoreCase(ref)) {
+                                     tInfo.setStopByDistanceRef(TrainInfo.StopReference.TAIL);
+                                 } else {
+                                     tInfo.setStopByDistanceRef(TrainInfo.StopReference.HEAD);
+                                 }
+                             }
+                         }
+                     } catch (Exception ex) {
+                         // Malformed value => leave unset for backward compatibility
+                     }
+                 }
+                    
                     if (traininfo.getAttribute("waittime") != null) {
                         tInfo.setWaitTime(traininfo.getAttribute("waittime").getFloatValue());
                     }
@@ -613,6 +634,14 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("fnumberlight", Integer.toString(tf.getFNumberLight()));
         traininfo.setAttribute("fnumberbell", Integer.toString(tf.getFNumberBell()));
         traininfo.setAttribute("fnumberhorn", Integer.toString(tf.getFNumberHorn()));
+        
+     // Only write these when the user has set a positive distance in mm; otherwise omit.
+     if (tf.getStopByDistanceMm() > 0.0f) {
+         // Persist the explicit distance (mm) into the stop block
+         traininfo.setAttribute("stopbydistance_mm", Float.toString(tf.getStopByDistanceMm()));
+         // Persist whether the distance applies to the HEAD or TAIL of the train
+         traininfo.setAttribute("stopbydistance_ref", tf.getStopByDistanceRef().name()); // HEAD | TAIL
+     }
 
         root.addContent(traininfo);
 

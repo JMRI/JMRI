@@ -95,7 +95,11 @@ public class TrainInfo {
     private float waitTime = 3.0f; //seconds:  required only by dispatcher system to pause train at beginning of transit (station)
 
     private String blockName = ""; //required only by Dispatcher System to inhibit running of transit if this block is occupied
+    
+    private Float stopByDistanceMm = 0.0f;
+    private StopReference stopByDistanceRef = StopReference.HEAD; // default choice
 
+    public enum StopReference { HEAD, TAIL }
 
     //
     // Access methods for manual and automatic instance variables
@@ -220,6 +224,22 @@ public class TrainInfo {
 
     public void setDestinationBlockId(String s) {
         destinationBlockId = s;
+    }
+    
+    public void setStopByDistanceMm(float value) {
+        stopByDistanceMm = value;
+    }
+    
+    public void setStopByDistanceRef(StopReference value) {
+        stopByDistanceRef = value;
+    }
+    
+    public float getStopByDistanceMm() {
+        return stopByDistanceMm;
+    }
+    
+    public StopReference getStopByDistanceRef() {
+        return stopByDistanceRef;
     }
 
     public String getDestinationBlockId() {

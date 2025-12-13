@@ -107,6 +107,26 @@ public class AutoActiveTrain implements ThrottleListener {
     private long _MaxTrainLength = 600; // default train length mm.
     private float _stopBySpeedProfileAdjust = 1.0f;
     private boolean _stopBySpeedProfile = false;
+     // Distance-based stopping (HEAD/TAIL reference) — runtime memory
+     private float _stopByDistanceMm = 0.0f;          // 0.0f => feature disabled
+     private boolean _stopByDistanceRefTail = false;  // false => HEAD; true => TAIL
+    
+     /** Returns the configured distance to stop into the block (mm); 0.0f means disabled. 
+     * @return _stopByDistanceRefTail */
+     public boolean isStopByDistanceRefTail() {
+         return _stopByDistanceRefTail; 
+         }
+     public float getStopByDistanceMm() {
+         return _stopByDistanceMm; 
+         }
+    
+     /** Sets whether the stop reference is TAIL (true) or HEAD (false). */
+     public void setStopByDistanceRefTail(boolean tail) { _stopByDistanceRefTail = tail; }
+    
+     /** Sets the configured distance to stop into the block (mm). */
+     public void setStopByDistanceMm(float mm) { _stopByDistanceMm = (mm > 0.0f) ? mm : 0.0f; }
+    
+     /** Returns true if the stop reference is TAIL (add train length); false for HEAD. */
     private boolean _useSpeedProfileRequested = true;
     private int _functionLight = 0;
     private int _functionBell = 1;
@@ -541,6 +561,10 @@ public class AutoActiveTrain implements ThrottleListener {
     private PropertyChangeListener _turnoutStateListener = null;
     private boolean _stoppingByBlockOccupancy = false;    // if true, stop when _stoppingBlock goes UNOCCUPIED
     private boolean _stoppingUsingSpeedProfile = false;     // if true, using the speed profile against the roster entry to bring the loco to a stop in a specific distance
+    // Distance stop is armed (waiting to start at the section's first occupied block)
+    private boolean _distanceStopPending = false;
+    private float _distanceStopPendingMm = 0.0f;
+    private int _distanceStopPendingTask = NO_TASK;
     private volatile Block _stoppingBlock = null;
     private boolean _resumingAutomatic = false;  // if true, resuming automatic mode after WORKING session
     private boolean _needSetSpeed = false;  // if true, train will set speed according to signal instead of stopping
@@ -636,6 +660,22 @@ public class AutoActiveTrain implements ThrottleListener {
             log.debug("{}: handleBlockStateChange to OCCUPIED section {}, block {}, length {}", _activeTrain.getTrainName(),
                     as.getSection().getDisplayName(USERSYS),
                     b.getDisplayName(USERSYS), getBlockLength(b));
+             // If a distance stop is pending, start exactly at the first block INSIDE the current section
+             if (_distanceStopPending && _currentAllocatedSection != null) {
+                 Block enter = _currentAllocatedSection.getEnterBlock(_previousAllocatedSection);
+                 if (enter == b) {
+                     float mm = _distanceStopPendingMm;
+                     int taskPending = _distanceStopPendingTask;
+                     _distanceStopPending = false;
+    
+                     _stoppingUsingSpeedProfile = true;     // commit to distance-based braking
+                     cancelStopInCurrentSection();          // cancel any other stop mode/ramping
+    
+                     Runnable controller = new DistanceStopController(mm, taskPending);
+                     Thread t = jmri.util.ThreadingUtil.newThread(controller, "DistanceStopPlanner " + getActiveTrain().getActiveTrainName());
+                     t.start();
+                 }
+             }
             if (b == _nextBlock || _nextBlock == null) {
                 _currentBlock = b;
                 // defer setting the next/previous blocks until we know if its required and in what fashion
@@ -1047,6 +1087,32 @@ public class AutoActiveTrain implements ThrottleListener {
             log.trace("[{}]:cannot set speed.",getActiveTrain().getActiveTrainName());
             return;
         }
+         // Do not alter speed while a distance-based stop is active or armed,
+         // EXCEPT we must always honor a STOP/DANGER/HELD signal to avoid overruns.
+         if (_stoppingUsingSpeedProfile || _distanceStopPending) {
+             // SignalHead case
+             if (_activeTrain.getSignalType() == DispatcherFrame.SIGNALHEAD && _controllingSignal != null) {
+                 // HELD is an absolute stop; RED/FLASHRED/DARK are treated as stop in head logic
+                 int app = _controllingSignal.getAppearance();
+                 if (app == SignalHead.HELD || app == SignalHead.RED || app == SignalHead.FLASHRED || app == SignalHead.DARK) {
+                     checkForSignalPassedOrStop(_controllingSignal.getDisplayName(USERSYS));
+                     return;
+                 }
+             }
+             // SignalMast case
+             if (_activeTrain.getSignalType() == DispatcherFrame.SIGNALMAST && _controllingSignalMast != null) {
+                 final String aspect = _controllingSignalMast.getAspect();
+                 final String danger = _controllingSignalMast.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
+                 if (_controllingSignalMast.getHeld() || !_controllingSignalMast.getLit() || (danger != null && danger.equals(aspect))) {
+                     checkForSignalPassedOrStop(_controllingSignalMast.getDisplayName(USERSYS));
+                     return;
+                 }
+             }
+             // Otherwise, allow the distance-stop to proceed without interference.
+             log.trace("[{}]: distance stop active/pending — suppressing setSpeedBySignal", getActiveTrain().getActiveTrainName());
+             return;
+         }
+
         // only bother to check signal if the next allocation is ours.
         // and the turnouts have been set
         if (checkAllocationsAhead() && checkTurn(getAllocatedSectionForSection(_nextSection))) {
@@ -1116,6 +1182,12 @@ public class AutoActiveTrain implements ThrottleListener {
     private void setSpeedBySectionsAllocated() {
         if (!canSpeedBeSetOrChecked()) {
             log.trace("[{}]:cannot set speed.",getActiveTrain().getActiveTrainName());
+            return;
+        }
+        
+        // Do not alter speed while a distance-based stop is active or armed
+        if (_stoppingUsingSpeedProfile || _distanceStopPending) {
+            log.trace("[{}]: distance stop active/pending — suppressing setSpeedBySectionsAllocated", getActiveTrain().getActiveTrainName());
             return;
         }
 
@@ -1453,23 +1525,138 @@ public class AutoActiveTrain implements ThrottleListener {
         cancelStoppingBySensor();
         _stoppingByBlockOccupancy = false;
         _stoppingBlock = null;
-        _stoppingUsingSpeedProfile = false;
-        _stoppingBlock = null;
         _autoEngineer.slowToStop(false);
     }
 
+
+    /** Clamp utility */
+    private static float clamp(float v, float lo, float hi) {
+        return (v < lo) ? lo : ((v > hi) ? hi : v);
+    }
+    
+    /** Clamp throttle [% 0..1] */
+    private static float clampThrottle(float pct) {
+        if (pct < 0.0f) return 0.0f;
+        if (pct > 1.0f) return 1.0f;
+        return pct;
+    }
+    
+    /**
+     * Convert a throttle percentage [0..1] to speed (mm/s) using the roster profile.
+     * We interrogate the profile via getDistanceTravelled(forward, speedStep, duration) to obtain mm/s.
+     */
+    private float speedMmsFromThrottle(float throttlePct, boolean forward) {
+        if (re == null || re.getSpeedProfile() == null) return 0.0f;
+        float pct = clampThrottle(throttlePct);                // ensure 0..1
+        return re.getSpeedProfile().getSpeed(pct, forward);    // mm/s
+    }
+    
+    /**
+     * Invert the roster profile: find the throttle [% 0..1] that yields the requested speed (mm/s).
+     * Uses a binary search over [minReliable..max] throttle.
+     */
+    private float throttleForSpeedMms(float targetMms, boolean forward) {
+        // Bracket: min reliable ↔ max speed (percent throttle)
+        float loPct = clampThrottle(_minReliableOperatingSpeed);
+        float hiPct = clampThrottle(_maxSpeed);
+        float loMms = speedMmsFromThrottle(loPct, forward);
+        float hiMms = speedMmsFromThrottle(hiPct, forward);
+    
+        if (targetMms <= loMms) return loPct;
+        if (targetMms >= hiMms) return hiPct;
+    
+        // Binary search to ~0.1% throttle precision
+        float midPct = 0.0f;
+        for (int i = 0; i < 16; i++) {
+            midPct = 0.5f * (loPct + hiPct);
+            float midMms = speedMmsFromThrottle(midPct, forward);
+            if (midMms < targetMms) {
+                loPct = midPct;
+            } else {
+                hiPct = midPct;
+            }
+        }
+        return clampThrottle(midPct);
+    }
+    
     private synchronized void stopInCurrentSection(int task) {
         if (_currentAllocatedSection == null) {
             log.error("{}: Current allocated section null on entry to stopInCurrentSection", _activeTrain.getTrainName());
             setStopNow();
             return;
         }
-        log.debug("{}: StopInCurrentSection called for {} task[{}] targetspeed[{}]", _activeTrain.getTrainName(), _currentAllocatedSection.getSection().getDisplayName(USERSYS),task,getTargetSpeed());
-        if (getTargetSpeed() == 0.0f || isStopping()) {
-            log.debug("{}: train is already stopped or stopping.", _activeTrain.getTrainName());
-            // ignore if train is already stopped or if stopping is in progress
-            return;
+        log.debug("{}: StopInCurrentSection called for {} task[{}] targetspeed[{}]", _activeTrain.getTrainName(), _currentAllocatedSection.getSection().getDisplayName(USERSYS),task,getTargetSpeed());        
+
+        /* =======================================================================
+         * Distance-based stopping (destination section only) — custom planner.
+         * We compute a constant-deceleration braking curve to stop exactly at 'distanceMm'
+         * and drive the throttle ourselves via AutoEngineer.setSpeedImmediate(...).
+         *
+         * No dependency on RosterSpeedProfile.changeLocoSpeed or AutoEngineer.setTargetSpeed(distance,...).
+         * We only read profile speeds via re.getSpeedProfile().getDistanceTravelled(...) to invert throttle ↔ mm/s.
+         *
+         * TODO (future): extend to signal stop points inside sections using the same controller,
+         * with an explicit per-section stop origin.
+         * ======================================================================= */
+        try {
+            boolean distanceEnabled = (_stopByDistanceMm > 0.0f);
+            // Direction-aware profile availability (HEAD stop needs speeds for current direction)
+            boolean profileAvailable = false;
+            if (re != null && re.getSpeedProfile() != null) {
+                boolean forward = _autoEngineer.getIsForward();
+                profileAvailable = forward ? re.getSpeedProfile().hasForwardSpeeds() : re.getSpeedProfile().hasReverseSpeeds();
+            }
+        
+            if (distanceEnabled && profileAvailable && !_stoppingUsingSpeedProfile && !_distanceStopPending) {
+                // Compute requested travel distance from the section ENTRY to the stop point
+                final float distanceMm = _stopByDistanceMm + (_stopByDistanceRefTail ? getMaxTrainLengthMM() : 0.0f);
+            
+                // Decide whether to start NOW (if we've already passed the ENTRY event) or ARM and wait for it
+                Block enter = (_currentAllocatedSection != null) ? _currentAllocatedSection.getEnterBlock(_previousAllocatedSection) : null;
+            
+                // Case A: No distinct enter block, or the enter block is already OCCUPIED -> start NOW from CURRENT position
+                if (enter == null || enter.getState() == Block.OCCUPIED) {
+                    float remainingMm = distanceMm;
+            
+                    // Estimate how far we've already progressed from the section entry:
+                    // progressed ≈ sectionActualLength - lengthRemaining(currentBlock)
+                    if (_currentAllocatedSection != null && _currentBlock != null) {
+                        float sectionLen = _currentAllocatedSection.getActualLength();
+                        float lenRemaining = _currentAllocatedSection.getLengthRemaining(_currentBlock);
+                        float progressed = Math.max(0.0f, sectionLen - lenRemaining);
+                        remainingMm = distanceMm - progressed;
+                    }
+            
+                    // If we are already beyond the target point, stop immediately; else start the distance controller now
+                    if (remainingMm <= 0.0f) {
+                        setStopNow();
+                    } else {
+                        _stoppingUsingSpeedProfile = true;      // commit to distance-based braking
+                        cancelStopInCurrentSection();           // cancel any other stop mode/ramping
+                        Runnable controller = new DistanceStopController(remainingMm, task);
+                        Thread t = jmri.util.ThreadingUtil.newThread(controller, "DistanceStopPlanner " + getActiveTrain().getActiveTrainName());
+                        t.start();
+                    }
+                    return;
+                }
+            
+                // Case B: We have not reached the ENTRY yet -> ARM and start exactly on the ENTRY OCCUPIED event
+                _distanceStopPending = true;
+                _distanceStopPendingMm = distanceMm;
+                _distanceStopPendingTask = task;
+                return;
+            }
+
+        } catch (Exception ex) {
+            log.warn("{}: custom stop-by-distance failed; reverting to legacy stop", _activeTrain.getTrainName(), ex);
         }
+         // =======================================================================
+         // Do not exit before destination stop logic;
+         // only bail out if the train is already at zero AND no profile/distance stop is requested.
+         if (getTargetSpeed() == 0.0f && !_stopBySpeedProfile && _stopByDistanceMm <= 0.0f) {
+             log.debug("{}: already stopped and no planned stop requested — skipping stop planning.", _activeTrain.getTrainName());
+             return;
+         }
         // if Section has stopping sensors, use them
         if (_currentAllocatedSection.getSection().getState() == Section.FORWARD) {
             _stopSensor = _currentAllocatedSection.getSection().getForwardStoppingSensor();
@@ -1485,13 +1672,17 @@ public class AutoActiveTrain implements ThrottleListener {
                 _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
                     handleStopSensorChange(e);
                 });
+
                 _stoppingBySensor = true;
+
             }
         } else if (useSpeedProfile && _stopBySpeedProfile) {
             log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}] StopBySpeedProfile [{}]. setStopNow", _activeTrain.getTrainName(),
                     _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getActualLength(), getMaxTrainLengthMM(), _stopBySpeedProfile);
             // stopping by speed profile uses section length to stop
+
             setTargetSpeedState(STOP_SPEED,useSpeedProfile);
+            
         } else if (_currentAllocatedSection.getActualLength()  < getMaxTrainLengthMM()) {
             log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}]. setStopNow({})",
                     _activeTrain.getTrainName(),
@@ -1514,7 +1705,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     } else {
                        tBlock = _previousAllocatedSection.getSection().getExitBlock();
                     }
-                    if ((tBlock != null) && (tBlock.getState() == Block.OCCUPIED)) {
+                    if ((tBlock != null) && (tBlock.getState() == Block.OCCUPIED)) { 
                         _stoppingBlock = tBlock;
                         setStopByBlockOccupancy(false);
                     } else {
@@ -1530,7 +1721,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 if (enterBlock == null) {
                     // this is the first Section of the Transit, with train starting in this Section
                     setStopNow();
-                } else if (exitBlock == enterBlock) {
+                } else if (exitBlock == enterBlock) {         
                     // entry and exit are from the same Block
                     if ((_previousBlock != null) && (_previousBlock.getState() == Block.OCCUPIED)
                             && (getBlockLength(exitBlock) > getMaxTrainLengthMM())) {
@@ -1590,6 +1781,7 @@ public class AutoActiveTrain implements ThrottleListener {
             // train will fit, but no way to stop it reliably
             setStopNow();
         }
+               
         // even if no task is required it must be run
         // as cleanup happens after train stops.
         Runnable waitForStop = new WaitForTrainToStop(task);
@@ -1600,6 +1792,7 @@ public class AutoActiveTrain implements ThrottleListener {
     protected synchronized void executeStopTasks(int task) {
         // clean up stopping
         cancelStopInCurrentSection();
+        _stoppingUsingSpeedProfile = false;  // queued stop has completed; allow normal speed logic again
         _dispatcher.queueReleaseOfCompletedAllocations();
         log.trace("exec[{}]",task);
         switch (task) {
@@ -1720,7 +1913,7 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     private void setStopByBlockOccupancy(boolean ignoreNotOccupied) {
         // note: _stoppingBlock must be set before invoking this method
-        //  verify that _stoppingBlock is actually occupied, if not stop immed
+        //  verify that _stoppingBlock is actually occupied, if not stop immediately
         if (_stoppingBlock.getState() == Block.OCCUPIED || ignoreNotOccupied) {
             setDecreasedSpeedBeforeStop();
             _stoppingByBlockOccupancy = true;
@@ -1809,10 +2002,11 @@ public class AutoActiveTrain implements ThrottleListener {
             return;
         }
         _autoEngineer.slowToStop(false);
+       
         float stoppingDistanceAdjust =  _stopBySpeedProfileAdjust *
                 ( _activeTrain.isTransitReversed() ?
                 _currentAllocatedSection.getTransitSection().getRevStopPerCent() :
-                    _currentAllocatedSection.getTransitSection().getFwdStopPerCent()) ;
+                    _currentAllocatedSection.getTransitSection().getFwdStopPerCent());
         log.debug("stoppingDistanceAdjust[{}] isReversed[{}] stopBySpeedProfileAdjust[{}]",stoppingDistanceAdjust,
                 _activeTrain.isTransitReversed(),_stopBySpeedProfileAdjust );
         if (speedState > STOP_SPEED) {
@@ -2053,6 +2247,182 @@ public class AutoActiveTrain implements ThrottleListener {
         private final int _delay = 91;
         private int _task = 0;
     }
+    
+
+    private class DistanceStopController implements Runnable {
+        private final float TargetDistanceMm;
+        private final int Task;
+    
+        DistanceStopController(float distanceMm, int task) {
+            this.TargetDistanceMm = (distanceMm > 0.0f ? distanceMm : 0.0f);
+            this.Task = task;
+        }
+    
+        @Override public void run() {
+            try {
+                final boolean forward = _autoEngineer.getIsForward();
+        
+                // Seed physics from the ACTUAL throttle setting (Fix #2 retained)
+                float throttleNow = clampThrottle(getThrottle().getSpeedSetting()); // actual
+                float v0 = speedMmsFromThrottle(throttleNow, forward);
+        
+                final float s = TargetDistanceMm;
+                if (s <= 0.0f) {
+                    _autoEngineer.setSpeedImmediate(0.0f);
+                    Runnable waitForStop = new WaitForTrainToStop(Task);
+                    Thread tWait = jmri.util.ThreadingUtil.newThread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
+                    tWait.start();
+                    return;
+                }
+                
+                 // Compensate for roster overrun when cutting throttle to 0 (coast after zero)
+                 float overrunSec = 0.0f;
+                 if (re != null && re.getSpeedProfile() != null) {
+                     overrunSec = _autoEngineer.getIsForward()
+                         ? re.getSpeedProfile().getOverRunTimeForward()
+                         : re.getSpeedProfile().getOverRunTimeReverse();
+                     if (overrunSec < 0.0f) overrunSec = 0.0f;
+                 }
+       
+                // Respect Dispatcher cadence; use it as our step duration base
+                final long baseMs = Math.max(_dispatcher.getMinThrottleInterval(), 50); // 50 ms floor to keep a modest resolution
+                final float dt = baseMs / 1000.0f;
+        
+                // Clamp initial speed to [vMin..vMax]
+                final float vMin = speedMmsFromThrottle(_minReliableOperatingSpeed, forward);
+                final float vMax = speedMmsFromThrottle(_maxSpeed, forward);
+                float sAdjusted = s - (vMin * overrunSec);
+                if (sAdjusted < Math.max(0.0f, 0.5f * vMin)) { // do not overcompensate
+                    sAdjusted = Math.max(0.0f, 0.5f * vMin);
+                }
+                v0 = clamp(v0, vMin, vMax);
+        
+                // Physics: constant deceleration to zero over distance s
+                final float a = (v0 > 0.0f) ? -(v0 * v0) / (2.0f * s) : 0.0f;
+
+                 // Build our queue: list of throttle [%] and durations [ms] using exact kinematics and mid-step mapping
+                 java.util.LinkedList<Float> throttleSteps = new java.util.LinkedList<>();
+                 java.util.LinkedList<Integer> durationSteps = new java.util.LinkedList<>();
+    
+                 float travelled = 0.0f;
+                 float t = 0.0f;
+                 float v = v0;                          // current speed along the decel curve (mm/s)
+                 final float absA = Math.abs(a);        // a is negative (or zero)
+    
+                 // Use baseMs normally, but allow a short, bounded tail slice for crisp final fit
+                 final int tailMs = Math.max(20, (int)Math.floor(_dispatcher.getMinThrottleInterval() / 2.0));
+                 final float tailDt = tailMs / 1000.0f;
+   
+                while (travelled < sAdjusted) {
+                    float remaining = sAdjusted - travelled;
+    
+                     // If the final fraction is small enough to finish at vMin, do that precisely
+                     if (vMin > 0.0f && remaining <= vMin * tailDt) {
+                        float dtTail = remaining / vMin;
+                        // Bound for write latency: subtract up to half a step interval
+                        float latencySecTail = Math.min(dtTail * 0.5f, Math.max(0.0f, (baseMs / 2000.0f)));
+                        dtTail = Math.max(0.001f, dtTail - latencySecTail);
+                        int lastMs = Math.max(1, Math.round(dtTail * 1000.0f));
+                        
+                        float thrApplied = throttleForSpeedMms(vMin, forward);
+                        throttleSteps.add(clampThrottle(thrApplied));
+                        durationSteps.add(lastMs);
+                        travelled = sAdjusted;
+                        break;
+                     }
+    
+                     // Default step duration
+                     float dtSec = dt;
+    
+                     // If constant decel would cross vMin within this step, split so we land exactly on vMin
+                     if (a != 0.0f && v > vMin) {
+                         float tToMin = (v - vMin) / absA;          // time from current v to vMin
+                         if (tToMin > 0.0f && tToMin < dtSec) {
+                             dtSec = tToMin;                        // take a short step to hit vMin exactly
+                         }
+                     }
+    
+                     // Predict next speed and compute mid-step speed for throttle mapping
+                     float vNext = v + a * dtSec;
+                     float vStepStart = Math.max(v, vMin);
+                     float vStepEnd   = Math.max(vNext, vMin);
+                     float vMid       = 0.5f * (vStepStart + vStepEnd);
+    
+                     // Exact distance increment under constant acceleration (or constant vMin)
+                     float deltaS;
+                     if (a != 0.0f && v > vMin && vNext >= vMin) {
+                         deltaS = v * dtSec + 0.5f * a * dtSec * dtSec;  // kinematics
+                         v = vNext;
+                     } else {
+                         // At/holding vMin
+                         deltaS = vMin * dtSec;
+                         v = vMin;
+                     }
+    
+                     // If this step would overshoot, convert the remaining distance to a short final slice at current vMid
+                     if (deltaS > remaining && vMid > 0.0f) {
+                        float dtFinal = remaining / vMid;
+                        // Bound for write latency: subtract up to half a step interval
+                        float latencySec = Math.min(dtFinal * 0.5f, Math.max(0.0f, (baseMs / 2000.0f)));
+                        dtFinal = Math.max(0.001f, dtFinal - latencySec);
+                        int msFinal = Math.max(1, Math.round(dtFinal * 1000.0f));
+                        
+                        float thrApplied = throttleForSpeedMms(vMid, forward);
+                        throttleSteps.add(clampThrottle(thrApplied));
+                        durationSteps.add(msFinal);
+                        travelled = sAdjusted;
+                        break;
+                     }
+    
+                     // Normal step with mid-step throttle and planned duration
+                    int ms = Math.max(1, Math.round(dtSec * 1000.0f));
+                    float thrApplied = (vMid <= 0.0f) ? 0.0f : throttleForSpeedMms(vMid, forward);
+                    // Pre-divide by speedFactor to get the command that yields thrApplied after applyMaxThrottleAndFactor()
+                    float thrCmd = (_speedFactor > 0.0f) ? (thrApplied / _speedFactor) : thrApplied;
+                    // Clamp command so that after factoring it stays within [minReliableOperatingSpeed, maxSpeed]
+                    float cmdMin = (_speedFactor > 0.0f) ? (_minReliableOperatingSpeed / _speedFactor) : _minReliableOperatingSpeed;
+                    float cmdMax = (_speedFactor > 0.0f) ? (_maxSpeed / _speedFactor) : _maxSpeed;
+                    thrCmd = clampThrottle(clamp(thrCmd, cmdMin, cmdMax));
+                    
+                    throttleSteps.add(thrCmd);
+                    durationSteps.add(ms);
+
+                     travelled += deltaS;
+                     t += dtSec;
+    
+                     // Safety: if v is numerically zero but we haven't finished, bail to avoid an infinite loop
+                     if (v <= 0.0f && travelled < s) {
+                         break;
+                     }
+                 }
+                 // Append a zero throttle step to assert stop
+                 throttleSteps.add(0.0f);
+                 durationSteps.add((int) baseMs);
+    
+                 // Convert to primitive arrays
+                 int n = throttleSteps.size();
+                 float[] thrArr = new float[n];
+                 int[] durArr = new int[n];
+                 for (int i = 0; i < n; i++) { thrArr[i] = throttleSteps.get(i); durArr[i] = Math.max(1, durationSteps.get(i)); }
+                log.debug("{}: planned steps N={} baseMs={} v0={} vMin={} vMax={} sAdjusted={} (orig s={})",
+                    _activeTrain.getTrainName(), n, baseMs, v0, vMin, vMax, sAdjusted, s);
+    
+                 // Drive the plan using the existing queue/timer
+                 _autoEngineer.runPlannedSpeedSchedule(thrArr, durArr);
+    
+                 // Start the watcher that will terminate the ActiveTrain when the loco is fully stopped
+                 Runnable waitForStop = new WaitForTrainToStop(Task);
+                 Thread tWait = jmri.util.ThreadingUtil.newThread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
+                 tWait.start(); 
+                // Wait-for-stop and cleanup are done by WaitForTrainToStop -> executeStopTasks
+            } catch (Exception ex) {
+                log.warn("{}: DistanceStopController failed; issuing emergency stop", _activeTrain.getTrainName(), ex);
+                _autoEngineer.setSpeedImmediate(0.0f);
+            }
+            // Do NOT clear _stoppingUsingSpeedProfile here; executeStopTasks() clears it after the stop is confirmed.
+        }
+}
+
 
     /**
      * Pause the train in a separate thread. Train is stopped, then restarted
@@ -2231,12 +2601,12 @@ public class AutoActiveTrain implements ThrottleListener {
             this.speedFactor = speedFactor;
         }
 
-        public void setTargetSpeed(float distance, float speed) {
+        public void setTargetSpeed(float distance, float speed) {           
             log.debug("Set Target Speed[{}] with distance{{}] from speed[{}]",speed,distance,throttle.getSpeedSetting());
             stopAllTimers();
             if (rosterEntry != null) {
                 rosterEntry.getSpeedProfile().setExtraInitialDelay(1500f);
-                rosterEntry.getSpeedProfile().setMinMaxLimits(minReliableOperatingSpeed, maxSpeed);
+                rosterEntry.getSpeedProfile().setMinMaxLimits(minReliableOperatingSpeed, maxSpeed);                            
                 rosterEntry.getSpeedProfile().changeLocoSpeed(_throttle, distance, speed);
                 speedProfileStoppingIsRunning = true;
                 targetSpeed = speed;
@@ -2274,7 +2644,7 @@ public class AutoActiveTrain implements ThrottleListener {
             if (throttle.getSpeedSetting() == getTargetSpeed()) {
                 return;
             } else if (throttle.getSpeedSetting() < getTargetSpeed()) {
-                // Up
+                // Up (accelerate)
                 float newSpeed = throttle.getSpeedSetting();
                 if (newSpeed < minReliableOperatingSpeed) {
                     stepQueue.add(new SpeedSetting(minReliableOperatingSpeed, throttleInterval));
@@ -2289,7 +2659,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     stepQueue.add(new SpeedSetting(newSpeed, throttleInterval));
                 }
             } else {
-                // Down
+                // Down (decelerate)
                 boolean andStop = false;
                 if (getTargetSpeed() <= 0.0f) {
                     andStop = true;
@@ -2372,6 +2742,28 @@ public class AutoActiveTrain implements ThrottleListener {
             stopAllTimers();
             targetSpeed = applyMaxThrottleAndFactor(speed);
             throttle.setSpeedSetting(targetSpeed);
+        }        
+
+        /**
+         * Run a pre-computed throttle/time schedule using the existing stepQueue and rampingTimer.
+         * Speeds are throttle percentages [0..1], durations are milliseconds.
+         */
+        public synchronized void runPlannedSpeedSchedule(float[] throttles, int[] durationsMs) {
+            stopAllTimers();
+            stepQueue = new LinkedList<>();
+            int n = Math.min(throttles.length, durationsMs.length);
+            for (int i = 0; i < n; i++) {
+                float adj;
+                if (AutoActiveTrain.this._stoppingUsingSpeedProfile) {
+                    // During a distance-based stop, use the planner's throttle values directly (already clamped to 0..1).
+                    adj = clampThrottle(throttles[i]);
+                } else {
+                    adj = applyMaxThrottleAndFactor(throttles[i]); // normal path
+                }
+                int dur = Math.max(1, durationsMs[i]);
+                stepQueue.add(new SpeedSetting(adj, dur));
+            }
+            setNextStep();
         }
 
         /**
