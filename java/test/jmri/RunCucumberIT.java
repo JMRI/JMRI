@@ -39,6 +39,7 @@ public class RunCucumberIT {
 
     @BeforeClass
     public static void beforeTests() {
+        org.junit.Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initZeroConfServiceManager();
