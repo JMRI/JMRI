@@ -922,6 +922,7 @@ public class SlotManagerTest {
         startedLongTimer = false;
         slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x0, 0x24}));
         JUnitUtil.waitFor(releaseTestDelay);
+        JUnitUtil.waitFor(() -> status == 4, "reply status");
         assertEquals( 4, status, "post-LACK status is fail");
         assertFalse( startedShortTimer, "didn't start short timer");
         assertFalse( startedLongTimer, "didn't start long timer");
