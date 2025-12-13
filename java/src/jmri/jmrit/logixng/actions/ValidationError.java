@@ -11,17 +11,18 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_SelectString;
 
 /**
- * Returns from a Module or a ConditionalNG.
+ * Returns from a Module or a ConditionalNG with a ValidationErrorException.
  *
- * @author Daniel Bergqvist Copyright 2022
+ * @author Daniel Bergqvist Copyright 2025
+ * @since 5.15.1
  */
-public class Error extends AbstractDigitalAction
+public class ValidationError extends AbstractDigitalAction
         implements PropertyChangeListener {
 
     private final LogixNG_SelectString _selectMessage =
             new LogixNG_SelectString(this, this);
 
-    public Error(String sys, String user) {
+    public ValidationError(String sys, String user) {
         super(sys, user);
     }
 
@@ -31,7 +32,7 @@ public class Error extends AbstractDigitalAction
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        Error copy = new Error(sysName, userName);
+        ValidationError copy = new ValidationError(sysName, userName);
         copy.setComment(getComment());
         getSelectMessage().copy(copy._selectMessage);
         return manager.registerAction(copy);
@@ -51,17 +52,17 @@ public class Error extends AbstractDigitalAction
     @Override
     public void execute() throws JmriException {
         String message = _selectMessage.evaluateValue(getConditionalNG());
-        throw new JmriException(message);
+        throw new ValidationErrorException(message);
     }
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Error_Short");
+        return Bundle.getMessage(locale, "ValidationError_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Error_Long",
+        return Bundle.getMessage(locale, "ValidationError_Long",
                 _selectMessage.getDescription(locale));
     }
 
@@ -76,6 +77,6 @@ public class Error extends AbstractDigitalAction
         getConditionalNG().execute();
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebBrowser.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ValidationError.class);
 
 }

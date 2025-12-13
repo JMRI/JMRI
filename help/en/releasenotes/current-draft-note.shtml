@@ -483,6 +483,17 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li><strong>Warning</strong><br/>
+              Tables and panels files created with this version or later
+              and that's using the LogixNG action <strong>Error</strong>
+              cannot be opened in earlier JMRI versions.</li>
+          <li>The LogixNG action <strong>Error</strong> has an improved
+              error message which allows using a local variable or a
+              formula for the error message.</li>
+          <li>LogixNG Tables can now be placed on Panel Editor panels.
+              The table can be read-only, editable or that only some
+              columns are editable. It's also possible to have buttons
+              and comboboxes in the table on the panel.</li>
           <li></li>
         </ul>
 
@@ -501,6 +512,32 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
+            <li><strong>LogixNG Table</strong>s can now be added to a
+                Panel Editor. The table can be edited and that's is useful
+                if the user needs to change values in a table.<br/>
+                It's recommended to use <strong>Fixed size</strong> for
+                the LogixNG Table on the panel. To move the table, use
+                <strong>Set Location</strong> since it's not currently
+                possible to move the table on the panel using the mouse.<br/>
+                The width of the columns can be changed by dragging the
+                divider of the column headers. The new width will be
+                stored when the tables and panels file is stored.<br/>
+                The table is <u>not</u> stored when the tables and
+                panels file is stored.<br/>
+                It's optional to use a LogixNG Module to validate input
+                from the user. If a LogixNG Module is selected, it will
+                be called after the user has edited a cell, before the
+                new data is written to the cell. If the data is invalid,
+                the Module can abort the editing by calling the new
+                LogixNG action <strong>Validation Error</strong> in the
+                category <strong>Flow Control</strong>. It's possible
+                to add an error message to the <strong>Validation Error</strong>
+                to be shown to the user.<br/>
+                A <strong>LogixNG Table</strong> on a Panel Editor panel
+                can also have buttons and comboboxes. If the user clicks
+                on a button, the validation module can then do something.
+                And a combobox allows the user to select an item from a
+                list instead of typing it.</li>
             <li></li>
         </ul>
 
