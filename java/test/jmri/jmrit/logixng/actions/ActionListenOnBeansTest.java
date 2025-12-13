@@ -192,6 +192,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         s1.setState(Sensor.ACTIVE);
         assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
         assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
+        assertTrue(JUnitUtil.waitFor(() -> "IS1, KnownState, 2".equals(getOutputArea().getText().trim())));
         assertEquals("IS1, KnownState, 2", getOutputArea().getText().trim());
 
         actionWaitFor.setReleaseCondition(oldReleaseCondition);
