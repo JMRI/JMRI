@@ -218,17 +218,23 @@ public class JemmyUtil {
         });
     }
 
-    static public void waitFor(JmriJFrame f) {
+    /**
+     * Wait for a specified {@link JmriJFrame} to become active.
+     * @param f The non-null {@link JmriJFrame} to wait for and activate.
+     * @throws AssertionError if the frame does not become active.
+     */
+    public static void waitFor( @Nonnull JmriJFrame f) {
         int count = 5;
+        boolean active = false;
         f.requestFocus();
-        while (!f.isActive() && count > 0) {
-            jmri.util.JUnitUtil.waitFor(() -> {
+        while (!active && count > 0) {
+            active = jmri.util.JUnitUtil.waitFor(() -> {
                 return f.isActive();
             });
             count--;
             f.requestFocusInWindow();
         }
-        assertTrue( f.isActive(), "frame should be active");
+        assertTrue( f.isActive(), () -> "frame " + f.getTitle() +" should be active");
     }
 
 }

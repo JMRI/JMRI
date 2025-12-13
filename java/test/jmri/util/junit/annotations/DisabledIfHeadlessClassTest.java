@@ -19,12 +19,16 @@ public class DisabledIfHeadlessClassTest {
 
     private static int methodCalls = 0;
 
+    private static void incrementCalls() {
+        methodCalls++;
+    }
+
     @Test
     public void testClassDisabledIfHeadlessTestDoesNotRun() {
         if ( isHeadless() ) {
             fail("Test ran, though Class has DisabledIfHeadless annotation.");
         } else {
-            methodCalls++;
+            incrementCalls();
         }
     }
 
@@ -33,7 +37,7 @@ public class DisabledIfHeadlessClassTest {
         if ( isHeadless() ) {
             fail("BeforeEach ran, though Class Disabled as in headless mode.");
         }
-        methodCalls++;
+        incrementCalls();
     }
 
     @AfterEach
@@ -41,7 +45,7 @@ public class DisabledIfHeadlessClassTest {
         if ( isHeadless() ) {
             fail("AfterEach ran, though Class Disabled as in headless mode.");
         }
-        methodCalls++;
+        incrementCalls();
     }
 
     @BeforeAll

@@ -8,15 +8,18 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
+
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.XTableColumnModel;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -30,11 +33,10 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 */
 public class JTableToCsvActionTest  {
 
-    
-    
+
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testInitComponents() throws Exception{
+    @DisabledIfHeadless
+    public void testInitComponents() {
         // for now, just makes sure there isn't an exception.
         
         JTable table = new JTable(DATA, COLUMNS);
@@ -43,12 +45,14 @@ public class JTableToCsvActionTest  {
             new JTableToCsvAction("ActionName",table,table.getModel(),"FileName",new int[]{1}))
             .isNotNull();
     }
-    
+
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testCsvFromModel() throws IOException {
         
         JTable table = new JTable(new TestModel());
+        JFrame f = new JFrame("testCsvFromModel");
+        f.add(table);
         AbstractAction action = new JTableToCsvAction(
     "ActionName",null,table.getModel(),"FileName",new int[]{1});
         
@@ -99,15 +103,19 @@ public class JTableToCsvActionTest  {
         String tmp = (mainArray[3][0]).replace("\"", "");
         assertThat(tmp).isEmpty();
         assertEquals(DATA[2][2],mainArray[3][1]);
-        
+
+        JUnitUtil.dispose(f);
+
     }
-    
+
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testCsvFromTable() throws java.io.IOException {
         
         AbstractTableModel model = new TestModel();
         JTable table = new JTable(model);
+        JFrame f = new JFrame("testCsvFromTable");
+        f.add(table);
         AbstractAction action = new JTableToCsvAction(
     "ActionName",table,table.getModel(),"FileName2.csv",new int[]{});
     
@@ -151,11 +159,12 @@ public class JTableToCsvActionTest  {
         
         assertEquals("2A",mainArray[1][0]);
         assertEquals("1A",mainArray[1][1]);
+        JUnitUtil.dispose(f);
         
     }
     
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testExistingFile() throws java.io.IOException {
         
         AbstractTableModel model = new TestModel();
