@@ -298,8 +298,11 @@
 
           <ul>
             <li>For a decimal value, you include a <code>&lt;decVal&gt;</code> element like the
-            example above. The two optional attributes are min and max, which define the range of acceptable
-            values. If you omit them, values from 0 to 255 are allowed.</li>
+            example above. The two optional attributes are 'min' and 'max', which define the range of acceptable
+            values. If you omit them, values from 0 to 255 are allowed.
+            If 'min' is present and less than zero, the value will be stored 
+            as a twos-complement number which allows negative values.  If not, 
+            the number will be stored as an unsigned number.</li>
 
             <li>If you'd rather enter and display values in hexadecimal, use a <code>&lt;hexVal&gt;</code> element.
             It's otherwise the same as the <code>&lt;decVal&gt;</code> element we've already discussed.</li>
