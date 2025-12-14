@@ -1,5 +1,6 @@
 package jmri.time;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
@@ -21,5 +22,18 @@ public interface TimeSetter {
      * @return true if the time can be set, false otherwise
      */
     boolean canSetTime();
+
+    /**
+     * Set the time of the time provider.
+     * @param time the time
+     * @throws UnsupportedOperationException if the date and time couldn't be set
+     */
+    void setDateTime(LocalDateTime time) throws UnsupportedOperationException;
+
+    /**
+     * Can the date and time be set?
+     * @return true if the date and time can be set, false otherwise
+     */
+    boolean canSetDateTime();
 
 }

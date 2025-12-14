@@ -25,7 +25,8 @@ public class InternalTimeProviderManagerXml extends jmri.managers.configurexml.A
     @Override
     public boolean load(Element shared, Element perNode) {
         // load individual time providers
-        return loadTimeProviders(shared, perNode);
+        loadTimeProviders(shared);
+        return true;
     }
 
 //    private final static Logger log = LoggerFactory.getLogger(InternalTimeProviderManagerXml.class);

@@ -12,7 +12,7 @@ import jmri.time.rate.ChangeableDoubleRate;
  * @author Daniel Bergqvist (C) 2025
  */
 public class InternalDateTime extends AbstractTimeProvider
-        implements TimeSetter, DateProvider, DateSetter, CanSetRate, StartStopTimeProvider {
+        implements TimeSetter, DateProvider, DateSetter, CanSetRate, StartStopTimeProvider, RateSetter {
 
     private LocalDateTime _time = LocalDateTime.now();
     private final ChangeableDoubleRate _rate = new ChangeableDoubleRate(1.0);
@@ -91,8 +91,19 @@ public class InternalDateTime extends AbstractTimeProvider
         timeIsUpdated(oldTime);
     }
 
+    public void setDateTime(LocalDateTime time) throws UnsupportedOperationException {
+        LocalDateTime oldTime = this._time;
+        this._time = time;
+        timeIsUpdated(oldTime);
+    }
+
     @Override
     public boolean canSetTime() {
+        return true;
+    }
+
+    @Override
+    public boolean canSetDateTime() {
         return true;
     }
 
@@ -132,6 +143,11 @@ public class InternalDateTime extends AbstractTimeProvider
     @Override
     public boolean canSetRate() {
         return true;
+    }
+
+    @Override
+    public void setRate(double rate) {
+        _rate.setRate(rate);
     }
 
 }

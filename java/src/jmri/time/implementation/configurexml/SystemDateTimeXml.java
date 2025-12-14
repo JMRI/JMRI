@@ -1,5 +1,11 @@
 package jmri.time.implementation.configurexml;
 
+import java.util.Objects;
+
+import jmri.InstanceManager;
+import jmri.configurexml.JmriConfigureXmlException;
+import jmri.time.TimeProvider;
+import jmri.time.TimeProviderManager;
 import jmri.time.implementation.SystemDateTime;
 
 import org.jdom2.Element;
@@ -22,6 +28,27 @@ public class SystemDateTimeXml extends jmri.managers.configurexml.AbstractNamedB
         storeCommon(p, element);
 
         return element;
+    }
+
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
+        String sys = getSystemName(shared);
+        String uname = getUserName(shared);
+
+        TimeProvider tp = InstanceManager.getDefault(TimeProviderManager.class).getBySystemName(sys);
+
+        if (tp == null) {
+            tp = new SystemDateTime(sys, uname);
+            InstanceManager.getDefault(TimeProviderManager.class).register(tp);
+        }
+
+        if (!Objects.equals(uname, tp.getUserName())) {
+            tp.setUserName(uname);
+        }
+
+        loadCommon(tp, shared);
+
+        return true;
     }
 
 }

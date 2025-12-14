@@ -1,9 +1,11 @@
 package jmri.managers.configurexml;
 
-import java.util.List;
-import java.util.SortedSet;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 import jmri.InstanceManager;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.time.TimeProvider;
 import jmri.time.TimeProviderManager;
 
@@ -25,6 +27,8 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Bergqvist  Copyright (C) 2025
  */
 public abstract class AbstractTimeProviderManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
+
+    private final Map<String, Class<?>> xmlClasses = new HashMap<>();
 
     public AbstractTimeProviderManagerConfigXML() {
     }
@@ -148,6 +152,57 @@ public abstract class AbstractTimeProviderManagerConfigXML extends AbstractNamed
     public abstract boolean load(Element shared, Element perNode);
 
     /**
+     * Utility method to load the individual DigitalActionBean objects. If
+     * there's no additional info needed for a specific action type, invoke
+     * this with the parent of the set of DigitalActionBean elements.
+     *
+     * @param timeProviders Element containing the TimeProviders elements to load.
+     */
+    public void loadTimeProviders(Element timeProviders) {
+
+        List<Element> timeProviderList = timeProviders.getChildren();  // NOI18N
+        log.debug("Found {} timeProviders", timeProviderList.size() );  // NOI18N
+
+        for (int i = 0; i < timeProviderList.size(); i++) {
+
+            String className = timeProviderList.get(i).getAttribute("class").getValue();
+//            log.error("className: " + className);
+
+            Class<?> clazz = xmlClasses.get(className);
+
+            if (clazz == null) {
+                try {
+                    className = jmri.configurexml.ConfigXmlManager.currentClassName(className);
+                    clazz = Class.forName(className);
+                    xmlClasses.put(className, clazz);
+                } catch (ClassNotFoundException ex) {
+                    log.error("cannot load class {}", className, ex);
+                }
+            }
+
+            if (clazz != null) {
+                Constructor<?> c = null;
+                try {
+                    c = clazz.getConstructor();
+                } catch (NoSuchMethodException | SecurityException ex) {
+                    log.error("cannot create constructor", ex);
+                }
+
+                if (c != null) {
+                    try {
+                        AbstractNamedBeanManagerConfigXML o = (AbstractNamedBeanManagerConfigXML)c.newInstance();
+                        o.load(timeProviderList.get(i), null);
+                    } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                        log.error("cannot create object", ex);
+                    } catch (JmriConfigureXmlException ex) {
+                        log.error("cannot load action", ex);
+                    }
+                }
+            }
+        }
+    }
+
+    /*.*
      * Utility method to load the individual TimeProvider objects. If there's no
      * additional info needed for a specific timeProvider type, invoke this with the
      * parent of the set of TimeProvider elements.
@@ -155,7 +210,7 @@ public abstract class AbstractTimeProviderManagerConfigXML extends AbstractNamed
      * @param shared Element containing the TimeProvider elements to load.
      * @param perNode Element containing per-node TimeProvider data.
      * @return true if succeeded
-     */
+     *./
     public boolean loadTimeProviders(Element shared, Element perNode) {
         boolean result = true;
         List<Element> timeProviderList = shared.getChildren("timeProvider");
@@ -184,7 +239,7 @@ public abstract class AbstractTimeProviderManagerConfigXML extends AbstractNamed
         } catch (jmri.JmriException ex) {
             log.error("JmriException {}", ex.getMessage() );
         }
-*/
+*./
         for (Element elem : timeProviderList) {
             String sysName = getSystemName(elem);
             if (sysName == null) {
@@ -350,14 +405,14 @@ public abstract class AbstractTimeProviderManagerConfigXML extends AbstractNamed
             } catch (jmri.JmriException ex) {
                 log.error("TimeProvider {} : {}", t, ex.getMessage());
             }
-*/
+*./
         }
 
         tm.setPropertyChangesSilenced("beans", false);
 
         return result;
     }
-
+*/
     @Override
     public int loadOrder() {
         return InstanceManager.getDefault(TimeProviderManager.class).getXMLOrder();
