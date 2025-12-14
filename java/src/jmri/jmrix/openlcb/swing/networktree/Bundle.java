@@ -1,4 +1,4 @@
-package jmri.jmrit.pragotronclock;
+package jmri.jmrix.openlcb.swing.networktree;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -18,13 +18,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * Convention is to provide a subclass of this name in each package, working off
  * the local resource bundle name.
  *
- * @author Bob Jacobsen Copyright (C) 2012
- * @since 3.3.1
+ * @author Bob Jacobsen Copyright (C) 2012, 2024
+ * @since 5.11.1
  */
-public class Bundle extends jmri.jmrit.Bundle {
+public class Bundle extends jmri.jmrix.openlcb.Bundle {
 
     @CheckForNull
-    private static final String name = "jmri.jmrit.pragotronclock.Bundle"; // NOI18N
+    private static final String name = "jmri.jmrix.openlcb.swing.networktree.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

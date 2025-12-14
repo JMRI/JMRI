@@ -121,7 +121,7 @@ public class NetworkTreePane extends JmriPanel implements CanListener, CanPanelI
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Network Tree");
+            return (memo.getUserName() + " " + Bundle.getMessage("PaneTitle"));
         }
         return "LCC / OpenLCB Network Tree";
     }
