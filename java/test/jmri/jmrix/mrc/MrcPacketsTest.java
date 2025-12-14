@@ -1,8 +1,9 @@
 package jmri.jmrix.mrc;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,10 +12,11 @@ import org.junit.jupiter.api.*;
  */
 public class MrcPacketsTest {
 
+    // no Ctor test, class only supplies static methods
+
     @Test
-    public void testCTor() {
-        MrcPackets t = new MrcPackets();
-        Assert.assertNotNull("exists",t);
+    public void testMrcPacketConstants() {
+        assertEquals( 238, MrcPackets.BADCMDRECEIVEDCODE );
     }
 
     @BeforeEach
