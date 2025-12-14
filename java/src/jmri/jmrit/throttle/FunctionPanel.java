@@ -17,7 +17,6 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.OptionallyTabbedPanel;
-import jmri.util.swing.WrapLayout;
 
 import org.jdom2.Element;
 
