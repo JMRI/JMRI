@@ -754,6 +754,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                      ? ((MaxSpeedCapModeItem) cur).getValue()
                      : MaxSpeedCapMode.THROTTLE;
              updateMaxSpeedSpinnerModelForMode(mode);
+             lastMaxSpeedCapMode = mode;  // <— keep the tracker aligned with the programmatic selection
          } finally {
              suppressMaxSpeedCapModeEvents = false;
          }
@@ -1919,6 +1920,8 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JLabel maxSpeedUnitLabel = new JLabel("%"); // changes to "mph" or "km/h" when speed mode selected
     // Suppress mode-change events while programmatically rebuilding the dropdown
     private boolean suppressMaxSpeedCapModeEvents = false;
+    // Remember last user-visible mode so we can convert values on mode switches
+    private MaxSpeedCapMode lastMaxSpeedCapMode = MaxSpeedCapMode.THROTTLE;
     private final JPanel pa2 = new JPanel();
     private final JLabel rampRateLabel = new JLabel(Bundle.getMessage("RampRateBoxLabel"));
     private final JComboBox<String> rampRateBox = new JComboBox<>();
@@ -2030,32 +2033,43 @@ public class ActivateTrainFrame extends JmriJFrame {
      // Spinner + unit label (unit changes with dropdown)
      pa1.add(maxSpeedSpinner);
      pa1.add(maxSpeedUnitLabel);
-          // When the mode changes, adjust spinner semantics and (per design) reset/retain values
-          maxSpeedCapModeBox.addActionListener(ev -> {
-              // If we’re rebuilding the dropdown programmatically, ignore this event
-              if (suppressMaxSpeedCapModeEvents) {
-                  return;
-              }
-              Object sel = maxSpeedCapModeBox.getSelectedItem();
-              if (!(sel instanceof MaxSpeedCapModeItem)) {
-                  // No valid selection yet (can happen momentarily while the model changes)
-                  return;
-              }
-              MaxSpeedCapMode mode = ((MaxSpeedCapModeItem) sel).getValue();
-        
-              // Switch the spinner model/editor and unit to match the selected mode
-              updateMaxSpeedSpinnerModelForMode(mode);
-        
-              if (mode == MaxSpeedCapMode.THROTTLE) {
-                  // Reset the scale-speed value to 0 (backend will use throttle cap).
-                  // UI keeps showing the throttle % value in the spinner.
-                  // Storage happens in autoRunItemsToTrainInfo(); we do not change the spinner value here.
-              } else {
-                  // Speed mode selected: preserve the throttle % fallback.
-                  // Spinner now edits speed (mph or km/h). No immediate change to spinner value:
-                  // trainInfoToDialog() will have set it if a value was saved.
-              }
-          });
+     // When the mode changes, adjust spinner semantics and convert display value for mph↔km/h
+     maxSpeedCapModeBox.addActionListener(ev -> {
+          if (suppressMaxSpeedCapModeEvents) {
+              return;
+          }
+          Object sel = maxSpeedCapModeBox.getSelectedItem();
+          if (!(sel instanceof MaxSpeedCapModeItem)) {
+              return; // transient null/placeholder while the model is rebuilt
+          }
+    
+          // 1) Capture the *old* displayed value before changing the model
+          float prevDisplay = ((Number) maxSpeedSpinner.getValue()).floatValue();
+    
+          MaxSpeedCapMode prevMode = lastMaxSpeedCapMode;
+          MaxSpeedCapMode mode = ((MaxSpeedCapModeItem) sel).getValue();
+    
+          // 2) Compute the *new* display value based on the old mode/value
+          float newDisplay = prevDisplay;
+          if (prevMode == MaxSpeedCapMode.SCALE_KMH && mode == MaxSpeedCapMode.SCALE_MPH) {
+              newDisplay = kmhToMph(prevDisplay);
+              // Clamp to MPH model range: 1..200
+              newDisplay = Math.max(1.0f, Math.min(200.0f, newDisplay));
+          } else if (prevMode == MaxSpeedCapMode.SCALE_MPH && mode == MaxSpeedCapMode.SCALE_KMH) {
+              newDisplay = mphToKmh(prevDisplay);
+              // Clamp to KMH model range: 1..320
+              newDisplay = Math.max(1.0f, Math.min(320.0f, newDisplay));
+          }
+          // For transitions to/from THROTTLE, we leave the numeric alone: %↔speed needs profile-based computation.
+    
+          // 3) Now swap the spinner's model/editor/unit to the *new* mode
+          updateMaxSpeedSpinnerModelForMode(mode);
+    
+          // 4) Finally set the converted value into the new model
+          maxSpeedSpinner.setValue(Float.valueOf(newDisplay));
+    
+          lastMaxSpeedCapMode = mode;
+        });
         maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint"));
         pa1.add(minReliableOperatingSpeedLabel);
         minReliableOperatingSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
