@@ -8,7 +8,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbAddress class.
