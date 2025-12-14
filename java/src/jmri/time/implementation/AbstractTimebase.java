@@ -1,5 +1,7 @@
 package jmri.time.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.PropertyChangeListener;
 import java.time.*;
 
@@ -195,24 +197,32 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
     }
 
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This class is an adapter of the main time provider")
     public void addPropertyChangeListener(PropertyChangeListener l) {
         InstanceManager.getDefault(TimeProviderManager.class)
                 .getMainTimeProviderHandler().addPropertyChangeListener(l);
     }
 
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This class is an adapter of the main time provider")
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
         InstanceManager.getDefault(TimeProviderManager.class)
                 .getMainTimeProviderHandler().addPropertyChangeListener(propertyName, l);
     }
 
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This class is an adapter of the main time provider")
     public void removePropertyChangeListener(PropertyChangeListener l) {
         InstanceManager.getDefault(TimeProviderManager.class)
                 .getMainTimeProviderHandler().removePropertyChangeListener(l);
     }
 
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This class is an adapter of the main time provider")
     public void removePropertyChangeListener(String propertyName, PropertyChangeListener l) {
         InstanceManager.getDefault(TimeProviderManager.class)
                 .getMainTimeProviderHandler().removePropertyChangeListener(l);
