@@ -577,7 +577,8 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Fixed a problem causing the Function Panel's buttons
+                to be improperly laid out.</li>
         </ul>
 
     <h3>Timetable</h3>
