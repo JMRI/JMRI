@@ -1,8 +1,10 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
 import jmri.InstanceManager;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.actions.Error;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectStringXml;
 
 import org.jdom2.Element;
 
@@ -33,21 +35,27 @@ public class ErrorXml extends jmri.managers.configurexml.AbstractNamedBeanManage
 
         storeCommon(p, element);
 
-        element.addContent(new Element("message").addContent(p.getMessage()));
+        var selectMessageXml = new LogixNG_SelectStringXml();
+        element.addContent(selectMessageXml.store(p.getSelectMessage(), "error-message"));
 
         return element;
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         Error h = new Error(sys, uname);
 
         loadCommon(h, shared);
 
+        var selectMessageXml = new LogixNG_SelectStringXml();
+        selectMessageXml.load(shared.getChild("error-message"), h.getSelectMessage());
+
         Element elem = shared.getChild("message");  // NOI18N
-        h.setMessage((elem != null) ? elem.getValue() : "");
+        if (elem != null) {
+            h.getSelectMessage().setValue(elem.getValue());
+        }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

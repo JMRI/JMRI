@@ -944,6 +944,42 @@
       <xs:attribute name="globalVariable" type="beanNameType"></xs:attribute>
     </xs:complexType>
 
+    <xs:complexType name="EditorLogixNGTableIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a LogixNGTableIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.LogixNGTableIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="globalVariableState" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
+            <xs:attribute name="icon" type="xs:string" use="required"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      
+      <xs:attribute name="logixNGTable" type="beanNameType"></xs:attribute>
+      <xs:attribute name="validateModule" type="beanNameType"></xs:attribute>
+      <xs:attribute name="isEditable" type="yesNoType"></xs:attribute>
+      <xs:attribute name="editableColumns" type="xs:string"></xs:attribute>
+      <xs:attribute name="columnWidths" type="xs:string"></xs:attribute>
+      <xs:attribute name="colWidth" type="xs:int"></xs:attribute>
+
+    </xs:complexType>
+
     <xs:complexType name="EditorFastClockIconType">
       <xs:annotation>
         <xs:documentation>

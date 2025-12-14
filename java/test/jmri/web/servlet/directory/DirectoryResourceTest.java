@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Locale;
 
@@ -45,7 +46,7 @@ public class DirectoryResourceTest {
     }
 
     @Test
-    public void testHrefEncodeURI() throws Exception {
+    public void testHrefEncodeURI() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         Method method = DirectoryResource.class.getDeclaredMethod("hrefEncodeURI", String.class);
         method.setAccessible(true);
         assertThat(method.invoke(instance, "foobar")).isEqualTo("foobar");
