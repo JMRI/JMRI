@@ -687,6 +687,77 @@ public class ActivateTrainFrame extends JmriJFrame {
                 dccAddressSpinner.setVisible(false);
         }
     }
+    
+
+    // MPH↔KMH conversion helpers
+    private static float mphToKmh(float mph) { return mph * 1.60934f; }
+    private static float kmhToMph(float kmh) { return kmh / 1.60934f; }
+
+    // Switch the spinner model & editor format to match the selected cap mode
+    private void updateMaxSpeedSpinnerModelForMode(MaxSpeedCapMode mode) {
+        switch (mode) {
+            case THROTTLE:
+                // 0.10 .. 1.00 (% throttle), step 0.01
+                maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
+                maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
+                maxSpeedUnitLabel.setText("%");
+                maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint"));
+                break;
+            case SCALE_MPH:
+                // Typical scale speeds: 1 .. 200 mph, step 0.1
+                maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(60.0f), Float.valueOf(1.0f), Float.valueOf(200.0f), Float.valueOf(0.1f)));
+                maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "0.0"));
+                maxSpeedUnitLabel.setText("mph");
+                maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint")); // reuse hint
+                break;
+            case SCALE_KMH:
+                // Typical scale speeds: 1 .. 320 km/h, step 0.1
+                maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(100.0f), Float.valueOf(1.0f), Float.valueOf(320.0f), Float.valueOf(0.1f)));
+                maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "0.0"));
+                maxSpeedUnitLabel.setText("km/h");
+                maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint")); // reuse hint
+                break;
+        }
+    }
+
+     // Enable/disable speed entries depending on speed-profile availability
+     private void updateMaxSpeedCapModeAvailability(boolean speedProfileAvailable) {
+         suppressMaxSpeedCapModeEvents = true;
+         try {
+             // Remember previous selection (if any)
+             MaxSpeedCapMode prevMode = null;
+             Object previous = maxSpeedCapModeBox.getSelectedItem();
+             if (previous instanceof MaxSpeedCapModeItem) {
+                 prevMode = ((MaxSpeedCapModeItem) previous).getValue();
+             }
+    
+             // Rebuild the dropdown model to include/exclude the speed options
+             maxSpeedCapModeBox.removeAllItems();
+             maxSpeedCapModeBox.addItem(
+                 new MaxSpeedCapModeItem(Bundle.getMessage("MaxSpeedLabel"), MaxSpeedCapMode.THROTTLE)
+             );
+             if (speedProfileAvailable) {
+                 maxSpeedCapModeBox.addItem(new MaxSpeedCapModeItem("Maximum speed (mph)", MaxSpeedCapMode.SCALE_MPH));
+                 maxSpeedCapModeBox.addItem(new MaxSpeedCapModeItem("Maximum speed (km/h)", MaxSpeedCapMode.SCALE_KMH));
+             }
+    
+             // Restore the previous mode if still valid; otherwise default to THROTTLE
+             int toSelect = 0; // THROTTLE
+             if (speedProfileAvailable && (prevMode == MaxSpeedCapMode.SCALE_MPH || prevMode == MaxSpeedCapMode.SCALE_KMH)) {
+                 toSelect = (prevMode == MaxSpeedCapMode.SCALE_MPH) ? 1 : 2;
+             }
+             maxSpeedCapModeBox.setSelectedIndex(toSelect);
+    
+             // Ensure spinner model matches the (programmatically) selected mode
+             Object cur = maxSpeedCapModeBox.getSelectedItem();
+             MaxSpeedCapMode mode = (cur instanceof MaxSpeedCapModeItem)
+                     ? ((MaxSpeedCapModeItem) cur).getValue()
+                     : MaxSpeedCapMode.THROTTLE;
+             updateMaxSpeedSpinnerModelForMode(mode);
+         } finally {
+             suppressMaxSpeedCapModeEvents = false;
+         }
+     }
 
     private void initializeTrainTypeBox() {
         trainTypeBox.removeAllItems();
@@ -1097,6 +1168,7 @@ public class ActivateTrainFrame extends JmriJFrame {
 
         }
         updateStopByDistanceEnable();
+        updateMaxSpeedCapModeAvailability(b);
     }
 
      private void updateStopByDistanceEnable() {
@@ -1614,12 +1686,15 @@ public class ActivateTrainFrame extends JmriJFrame {
             resetWhenDoneBox.setSelected(false);
             throw new IllegalArgumentException(Bundle.getMessage("NoResetMessage"));
         }
-        int max = Math.round((float) maxSpeedSpinner.getValue()*100.0f);
-        int min = Math.round((float) minReliableOperatingSpeedSpinner.getValue()*100.0f);
-        if ((max-min) < 10) {
-            throw new IllegalArgumentException(Bundle.getMessage("Error49",
-                    maxSpeedSpinner.getValue(), minReliableOperatingSpeedSpinner.getValue()));
+        MaxSpeedCapMode mode = ((MaxSpeedCapModeItem) maxSpeedCapModeBox.getSelectedItem()).getValue();
+        if (mode == MaxSpeedCapMode.THROTTLE) {
+            int max = Math.round(((Number) maxSpeedSpinner.getValue()).floatValue()*100.0f);
+            int min = Math.round(((Number) minReliableOperatingSpeedSpinner.getValue()).floatValue()*100.0f);
+            if ((max - min) < 10) {
+                throw new IllegalArgumentException(Bundle.getMessage("Error49", maxSpeedSpinner.getValue(), minReliableOperatingSpeedSpinner.getValue()));
+            }
         }
+        // In speed mode, we skip this percent-gap check; runtime will cap via the profile+scale conversion.
         return true;
     }
 
@@ -1839,8 +1914,11 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JLabel minReliableOperatingSpeedLabel = new JLabel(Bundle.getMessage("MinReliableOperatingSpeedLabel"));
     private final JSpinner minReliableOperatingSpeedSpinner = new JSpinner();
     private final JLabel minReliableOperatingScaleSpeedLabel = new JLabel();
-    private final JLabel maxSpeedLabel = new JLabel(Bundle.getMessage("MaxSpeedLabel"));
     private final JSpinner maxSpeedSpinner = new JSpinner();
+    private final JComboBox<MaxSpeedCapModeItem> maxSpeedCapModeBox = new JComboBox<>();
+    private final JLabel maxSpeedUnitLabel = new JLabel("%"); // changes to "mph" or "km/h" when speed mode selected
+    // Suppress mode-change events while programmatically rebuilding the dropdown
+    private boolean suppressMaxSpeedCapModeEvents = false;
     private final JPanel pa2 = new JPanel();
     private final JLabel rampRateLabel = new JLabel(Bundle.getMessage("RampRateBoxLabel"));
     private final JComboBox<String> rampRateBox = new JComboBox<>();
@@ -1914,6 +1992,17 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
     }
 
+    /* ComboBox item for speed-cap mode. */
+    protected enum MaxSpeedCapMode { THROTTLE, SCALE_MPH, SCALE_KMH }
+
+    protected static class MaxSpeedCapModeItem {
+        private final String key;
+        private final MaxSpeedCapMode value;
+        public MaxSpeedCapModeItem(String text, MaxSpeedCapMode mode) { this.key = text; this.value = mode; }
+        @Override public String toString() { return key; }
+        public MaxSpeedCapMode getValue() { return value; }
+    }
+
     public final TrainLengthUnitsJCombo trainLengthUnitsComboBox = new TrainLengthUnitsJCombo();
     private final JLabel trainLengthLabel = new JLabel(Bundle.getMessage("MaxTrainLengthLabel"));
     private JLabel trainLengthAltLengthLabel; // I18N Label
@@ -1929,10 +2018,44 @@ public class ActivateTrainFrame extends JmriJFrame {
         pa1.add(speedFactorSpinner);
         speedFactorSpinner.setToolTipText(Bundle.getMessage("SpeedFactorHint"));
         pa1.add(new JLabel("   "));
-        pa1.add(maxSpeedLabel);
-        maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
-        maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
-        pa1.add(maxSpeedSpinner);
+     // Mode dropdown
+     maxSpeedCapModeBox.addItem(
+         new MaxSpeedCapModeItem(Bundle.getMessage("MaxSpeedLabel"), MaxSpeedCapMode.THROTTLE)
+     ); // default; speed entries added later when roster profile is available
+     pa1.add(maxSpeedCapModeBox);
+
+     // Initial spinner/editor state: throttle % mode
+     updateMaxSpeedSpinnerModelForMode(MaxSpeedCapMode.THROTTLE);
+
+     // Spinner + unit label (unit changes with dropdown)
+     pa1.add(maxSpeedSpinner);
+     pa1.add(maxSpeedUnitLabel);
+          // When the mode changes, adjust spinner semantics and (per design) reset/retain values
+          maxSpeedCapModeBox.addActionListener(ev -> {
+              // If we’re rebuilding the dropdown programmatically, ignore this event
+              if (suppressMaxSpeedCapModeEvents) {
+                  return;
+              }
+              Object sel = maxSpeedCapModeBox.getSelectedItem();
+              if (!(sel instanceof MaxSpeedCapModeItem)) {
+                  // No valid selection yet (can happen momentarily while the model changes)
+                  return;
+              }
+              MaxSpeedCapMode mode = ((MaxSpeedCapModeItem) sel).getValue();
+        
+              // Switch the spinner model/editor and unit to match the selected mode
+              updateMaxSpeedSpinnerModelForMode(mode);
+        
+              if (mode == MaxSpeedCapMode.THROTTLE) {
+                  // Reset the scale-speed value to 0 (backend will use throttle cap).
+                  // UI keeps showing the throttle % value in the spinner.
+                  // Storage happens in autoRunItemsToTrainInfo(); we do not change the spinner value here.
+              } else {
+                  // Speed mode selected: preserve the throttle % fallback.
+                  // Spinner now edits speed (mph or km/h). No immediate change to spinner value:
+                  // trainInfoToDialog() will have set it if a value was saved.
+              }
+          });
         maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint"));
         pa1.add(minReliableOperatingSpeedLabel);
         minReliableOperatingSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
@@ -2147,7 +2270,18 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     private void autoTrainInfoToDialog(TrainInfo info) {
         speedFactorSpinner.setValue(info.getSpeedFactor());
-        maxSpeedSpinner.setValue(info.getMaxSpeed());
+        // Choose mode by presence of scale km/h
+        boolean hasScaleKmh = info.getMaxSpeedScaleKmh() > 0.0f;
+        if (hasScaleKmh && useSpeedProfileCheckBox.isEnabled()) {
+            // Default to km/h display when loading from file
+            maxSpeedCapModeBox.setSelectedIndex(Math.min(2, maxSpeedCapModeBox.getItemCount()-1)); // item 2 is KMH when enabled
+            updateMaxSpeedSpinnerModelForMode(MaxSpeedCapMode.SCALE_KMH);
+            maxSpeedSpinner.setValue(info.getMaxSpeedScaleKmh());
+        } else {
+            maxSpeedCapModeBox.setSelectedIndex(0); // THROTTLE
+            updateMaxSpeedSpinnerModelForMode(MaxSpeedCapMode.THROTTLE);
+            maxSpeedSpinner.setValue(info.getMaxSpeed());
+        }
         minReliableOperatingSpeedSpinner.setValue(info.getMinReliableOperatingSpeed());
         setComboBox(rampRateBox, info.getRampRate());
         trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
@@ -2197,7 +2331,21 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     private void autoRunItemsToTrainInfo(TrainInfo info) {
         info.setSpeedFactor((float) speedFactorSpinner.getValue());
-        info.setMaxSpeed((float) maxSpeedSpinner.getValue());
+        MaxSpeedCapMode mode = ((MaxSpeedCapModeItem) maxSpeedCapModeBox.getSelectedItem()).getValue();
+        if (mode == MaxSpeedCapMode.THROTTLE) {
+            // Throttle mode: write % (0.0..1.0) and clear scale-speed
+            info.setMaxSpeed((float) maxSpeedSpinner.getValue());
+            info.setMaxSpeedScaleKmh(0.0f);
+        } else if (mode == MaxSpeedCapMode.SCALE_MPH) {
+            // Convert mph → km/h for storage
+            float mph = ((Number) maxSpeedSpinner.getValue()).floatValue();
+            info.setMaxSpeedScaleKmh(mphToKmh(mph));
+            // Preserve existing throttle % (fallback) untouched
+        } else { // SCALE_KMH
+            float kmh = ((Number) maxSpeedSpinner.getValue()).floatValue();
+            info.setMaxSpeedScaleKmh(kmh);
+            // Preserve existing throttle % (fallback) untouched
+        }
         info.setMinReliableOperatingSpeed((float) minReliableOperatingSpeedSpinner.getValue());
         info.setRampRate((String) rampRateBox.getSelectedItem());
         info.setRunInReverse(runInReverseBox.isSelected());

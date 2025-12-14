@@ -77,6 +77,8 @@ public class TrainInfo {
     // instance variables for automatic operation
     private float speedFactor = 1.0f;
     private float maxSpeed = 1.0f;
+    // Maximum speed in scale km/h (0.0f means "use throttle % cap")
+    private float maxSpeedScaleKmh = 0.0f;
     private float minReliableOperatingSpeed = 0.0f;
     private String rampRate = Bundle.getMessage("RAMP_NONE");
     private TrainDetection trainDetection = TrainDetection.TRAINDETECTION_WHOLETRAIN;
@@ -596,6 +598,18 @@ public class TrainInfo {
     public Float getMaxSpeed() {
         return maxSpeed;
     }
+    
+    /**
+     * Sets the maximum speed in scale km/h. Use 0.0f to disable and fall back to throttle percent.
+     * @param kmh scale kilometers per hour
+     */
+    public void setMaxSpeedScaleKmh(float kmh) { maxSpeedScaleKmh = kmh; }
+
+    /**
+     * Gets the maximum speed in scale km/h. 0.0f means "disabled".
+     * @return scale km/h
+     */
+    public float getMaxSpeedScaleKmh() { return maxSpeedScaleKmh; }
 
     public void setMinReliableOperatingSpeed(float f) {
         minReliableOperatingSpeed = f;

@@ -101,6 +101,8 @@ public class AutoActiveTrain implements ThrottleListener {
     private int _rampRate = RAMP_NONE; // default Ramp Rate
     private float _speedFactor = 1.0f; // default speed factor
     private float _maxSpeed = 1.0f;    // default maximum train speed
+    // Maximum speed in scale km/h (0.0f = disabled; use throttle % cap)
+    private float _maxSpeedScaleKmh = 0.0f;
     private float _minReliableOperatingSpeed = 0.0f;
     private boolean _runInReverse = false;    // true if the locomotive should run through Transit in reverse
     private boolean _soundDecoder = false;    // true if locomotive has a sound decoder
@@ -240,6 +242,9 @@ public class AutoActiveTrain implements ThrottleListener {
             _autoEngineer.setSpeedLimits(_minReliableOperatingSpeed, _maxSpeed, _speedFactor);
         }
     }
+    
+    public float getMaxSpeedScaleKmh() { return _maxSpeedScaleKmh; }
+    public void setMaxSpeedScaleKmh(float kmh) { _maxSpeedScaleKmh = kmh; }
 
     /**
      * gets the lowest speed as a percentage of throttle that the loco reliably operates.
@@ -2645,19 +2650,47 @@ public class AutoActiveTrain implements ThrottleListener {
         * @param throttleSetting the throttle setting that would normally be set
         * @return the adjusted throttle setting after applying Max Throttle and Percentage throttle settings
         */
-       private float applyMaxThrottleAndFactor(float throttleSetting) {
-           if (throttleSetting > 0.0f) {
-               if ((throttleSetting * speedFactor) > maxSpeed) {
-                   return maxSpeed;
-               }
-               if ((throttleSetting * speedFactor) < minReliableOperatingSpeed) {
-                   return minReliableOperatingSpeed;
-               }
-               return (throttleSetting * speedFactor); //adjust for train's Speed Factor
-           } else {
-               return throttleSetting;
-           }
-       }
+        private float applyMaxThrottleAndFactor(float throttleSetting) {
+            // Apply speedFactor first (this is how the existing code behaves)
+            float applied = (throttleSetting > 0.0f) ? (throttleSetting * speedFactor) : throttleSetting;
+
+            if (applied <= 0.0f) { return applied; }
+
+            // Compute the active upper cap:
+            //  - If a scale km/h cap is set AND a speed profile exists in the current direction,
+            //    derive an equivalent throttle cap using the roster profile + layout scale ratio.
+            //  - Otherwise, fall back to the throttle % cap (maxSpeed).
+            float maxApplied;
+            boolean forward = getIsForward();
+            boolean profileAvailable = false;
+            if (AutoActiveTrain.this.re != null && AutoActiveTrain.this.re.getSpeedProfile() != null) {
+                // Direction-aware availability
+                profileAvailable = forward ? AutoActiveTrain.this.re.getSpeedProfile().hasForwardSpeeds()
+                                           : AutoActiveTrain.this.re.getSpeedProfile().hasReverseSpeeds();
+            }
+
+            if (AutoActiveTrain.this._maxSpeedScaleKmh > 0.0f && profileAvailable && AutoActiveTrain.this._dispatcher != null) {
+                // scale km/h -> actual mm/s
+                float kmh = AutoActiveTrain.this._maxSpeedScaleKmh;
+                float scaleRatio = (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio();
+                float modelKmh = kmh / ((scaleRatio <= 0.0f) ? 1.0f : scaleRatio);
+                float targetMms = modelKmh * 277.7778f; // 1 km/h = 277.7778 mm/s
+                // Invert the roster profile to get the required throttle [% 0..1]
+                float thrCapPct = throttleForSpeedMms(targetMms, forward);
+                // This cap applies to the FINAL applied throttle (after speedFactor),
+                // so clamp 'applied' directly to thrCapPct.
+                maxApplied = thrCapPct;
+            } else {
+                // Fallback to the existing throttle % cap
+                maxApplied = maxSpeed;
+            }
+
+            // Enforce min and max caps
+            if (applied > maxApplied) { applied = maxApplied; }
+            if (applied < minReliableOperatingSpeed) { applied = minReliableOperatingSpeed; }
+
+            return applied;
+        }
 
         /**
          * Flag from user's control.

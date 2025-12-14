@@ -316,6 +316,14 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("maxspeed") != null) {
                         tInfo.setMaxSpeed(Float.parseFloat(traininfo.getAttribute("maxspeed").getValue()));
                     }
+                    // Optional scale km/h cap (absent in older files).
+                    if (traininfo.getAttribute("maxspeedscalekmh") != null) {
+                        try {
+                            tInfo.setMaxSpeedScaleKmh(traininfo.getAttribute("maxspeedscalekmh").getFloatValue());
+                        } catch (org.jdom2.DataConversionException ex) {
+                            // Malformed value: leave unset (0.0f) for backward compatibility.
+                        }
+                    }
                     if (traininfo.getAttribute("minreliableoperatingspeed") != null) {
                         tInfo.setMinReliableOperatingSpeed(Float.parseFloat(traininfo.getAttribute("minreliableoperatingspeed").getValue()));
                     }
@@ -544,7 +552,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         // save Dispatcher TrainInfo in xml format
         Element traininfo = new Element("traininfo");
         // write version number
-        traininfo.setAttribute("version", "7");
+        traininfo.setAttribute("version", "8");
         traininfo.setAttribute("transitname", tf.getTransitName());
         traininfo.setAttribute("transitid", tf.getTransitId());
         traininfo.setAttribute("dynamictransit", (tf.getDynamicTransit() ? "yes" : "no"));
@@ -619,6 +627,11 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         // here save items related to automatically running active trains
         traininfo.setAttribute("speedfactor", Float.toString(tf.getSpeedFactor()));
         traininfo.setAttribute("maxspeed", Float.toString(tf.getMaxSpeed()));
+        // Persist maximum speed in scale km/h when the user selected a speed cap.
+        // Omit when 0.0f (means "use throttle cap" for backward compatibility).
+        if (tf.getMaxSpeedScaleKmh() > 0.0f) {
+            traininfo.setAttribute("maxspeedscalekmh", Float.toString(tf.getMaxSpeedScaleKmh()));
+        }
         traininfo.setAttribute("minreliableoperatingspeed", Float.toString(tf.getMinReliableOperatingSpeed()));
         traininfo.setAttribute("ramprate", tf.getRampRate());
         traininfo.setAttribute("runinreverse", "" + (tf.getRunInReverse() ? "yes" : "no"));

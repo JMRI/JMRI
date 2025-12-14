@@ -70,5 +70,8 @@
 	<!ATTLIST traininfo
 	    stopbydistance_mm   CDATA  #IMPLIED
 	    stopbydistance_ref  CDATA  #IMPLIED
+	>	
+	<!ATTLIST traininfo
+	    maxspeedscalekmh CDATA #IMPLIED
 	>
 
