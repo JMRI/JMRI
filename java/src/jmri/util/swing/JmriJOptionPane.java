@@ -57,7 +57,6 @@ public class JmriJOptionPane {
      */
     public static void showMessageDialog(@CheckForNull Component parentComponent,
         Object message) throws HeadlessException {
-        log.info("Called 1");
         showMessageDialog(parentComponent, message, 
             UIManager.getString("OptionPane.messageDialogTitle", Locale.getDefault()),
             INFORMATION_MESSAGE);
@@ -73,7 +72,6 @@ public class JmriJOptionPane {
      */
     public static void showMessageDialog(@CheckForNull Component parentComponent,
         Object message, String title, int messageType) {
-        log.info("[{}]",message);
         showOptionDialog(parentComponent, message, title, DEFAULT_OPTION,
             messageType, null, null, null);
     }
@@ -89,7 +87,6 @@ public class JmriJOptionPane {
      */
     public static void showMessageDialogNonModal(@CheckForNull Component parentComponent,
         Object message, String title, int messageType, @CheckForNull final Runnable callback ) {
-        log.info("Called 3");
 
         JOptionPane pane = new JOptionPane(message, messageType);
         JDialog dialog = pane.createDialog(parentComponent, title);
@@ -124,7 +121,6 @@ public class JmriJOptionPane {
     public static int showConfirmDialog(@CheckForNull Component parentComponent,
         Object message, String title, int optionType)
         throws HeadlessException {
-        log.info("Called 4");
         return showOptionDialog(parentComponent, message, title, optionType,
             QUESTION_MESSAGE, null, null, null);
     }
@@ -143,7 +139,6 @@ public class JmriJOptionPane {
     public static int showConfirmDialog(@CheckForNull Component parentComponent,
         Object message, String title, int optionType, int messageType)
         throws HeadlessException {
-        log.info("Called 5");
         return showOptionDialog(parentComponent, message, title, optionType,
             messageType, null, null, null);
     }
@@ -166,7 +161,6 @@ public class JmriJOptionPane {
         Icon icon, Object[] options, Object initialValue)
         throws HeadlessException {
         log.debug("showOptionDialog comp {} ", parentComponent);
-        log.info("Called 6");
 
         JOptionPane pane = new JOptionPane(message, messageType,
             optionType, icon, options, initialValue);
@@ -202,7 +196,6 @@ public class JmriJOptionPane {
     @CheckForNull
     public static String showInputDialog(@CheckForNull Component parentComponent,
         String message, String initialSelectionValue ){
-        log.info("Called 7");
         return (String)showInputDialog(parentComponent, message,
             UIManager.getString("OptionPane.inputDialogTitle",
             Locale.getDefault()), QUESTION_MESSAGE, null, null,
@@ -221,7 +214,6 @@ public class JmriJOptionPane {
     @CheckForNull
     public static String showInputDialog(@CheckForNull Component parentComponent,
         String message, String title, int messageType ){
-        log.info("Called 8");
         return (String)showInputDialog(parentComponent, message,
             title, messageType, null, null,
             "");
@@ -238,7 +230,6 @@ public class JmriJOptionPane {
     @CheckForNull
     public static Object showInputDialog(@CheckForNull Component parentComponent,
         String message, Object initialSelectionValue ){
-        log.info("Called 9");
         return showInputDialog(parentComponent, message,
             UIManager.getString("OptionPane.inputDialogTitle",
             Locale.getDefault()), QUESTION_MESSAGE, null, null,
@@ -262,7 +253,6 @@ public class JmriJOptionPane {
         Object message, String title, int messageType, Icon icon,
         Object[] selectionValues, Object initialSelectionValue)
         throws HeadlessException {
-        log.info("Called 9");
         JOptionPane pane = new JOptionPane(message, messageType,
             OK_CANCEL_OPTION, icon, null, initialSelectionValue);
 
@@ -281,7 +271,6 @@ public class JmriJOptionPane {
 
     private static void displayDialog(JOptionPane pane, Component parentComponent, String title){
         pane.setComponentOrientation(JOptionPane.getRootFrame().getComponentOrientation());
-        log.info("Called 10");
         Window w = findWindowForComponent(parentComponent);
         JDialog dialog = pane.createDialog(parentComponent, title);
         JDialogListener pcl = new JDialogListener(dialog);
@@ -309,8 +298,7 @@ public class JmriJOptionPane {
      */
     private static void setDialogLocation( @CheckForNull Component parentComponent, @Nonnull Dialog dialog) {
         log.debug("set dialog position for comp {} dialog {}", parentComponent, dialog.getTitle());
-        log.info("Called 11");
-/*        int centreWidth;
+        int centreWidth;
         int centreHeight;
         Window w = findWindowForComponent(parentComponent);
         if ( w == null || !w.isVisible() ) {
@@ -326,7 +314,6 @@ public class JmriJOptionPane {
         int centerY = centreHeight - ( dialog.getHeight() / 2 );
         // set top left of Dialog at least 0px into the screen.
         dialog.setLocation( new Point(Math.max(0, centerX), Math.max(0, centerY)));
- */
     }
 
     @CheckForNull
