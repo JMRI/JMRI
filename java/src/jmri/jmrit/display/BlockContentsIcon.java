@@ -173,8 +173,8 @@ public class BlockContentsIcon extends MemoryIcon {
         } else {
             at = null;
         }
-        if (at != null) {
-            // we have activetrain, with or without autotrain with or without roster entry
+        if (at != null && df != null) {
+            // we have active train, with or without auto train with or without roster entry
             if (at.getAutoActiveTrain() != null ) {
                 if( re == null ) {
                     popup.add(new AbstractAction("Open Throttle") {
