@@ -696,6 +696,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     // Switch the spinner model & editor format to match the selected cap mode
     private void updateMaxSpeedSpinnerModelForMode(MaxSpeedCapMode mode) {
         switch (mode) {
+            default:
             case THROTTLE:
                 // 0.10 .. 1.00 (% throttle), step 0.01
                 maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
