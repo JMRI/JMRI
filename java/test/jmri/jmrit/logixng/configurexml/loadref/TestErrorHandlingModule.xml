@@ -4,7 +4,7 @@
   <jmriversion>
     <major>5</major>
     <minor>13</minor>
-    <test>1</test>
+    <test>7</test>
     <modifier>plus</modifier>
   </jmriversion>
   <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
@@ -48,6 +48,17 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
+  <meters class="jmri.managers.configurexml.AbstractMeterManagerXml">
+    <meter>
+      <systemName>MVCBUSCurrentMeter</systemName>
+    </meter>
+    <meter>
+      <systemName>MVCBUSCurrentMeter2</systemName>
+    </meter>
+    <meter>
+      <systemName>MVCBUSVoltageMeter</systemName>
+    </meter>
+  </meters>
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -211,37 +222,15 @@
   </LogixNGDigitalActions>
   <filehistory>
     <operation>
-      <type>app</type>
-      <date>Tue Jul 01 17:32:06 CEST 2025</date>
-      <filename>PanelPro (v5.13.1)</filename>
-    </operation>
-    <operation>
       <type>Load OK</type>
-      <date>Tue Jul 01 17:32:08 CEST 2025</date>
-      <filename>/home/daniel/.jmri/TestErrorHandlingModule.jmri/TestErrorHandlingModule.xml</filename>
-      <filehistory>
-        <operation>
-          <type>app</type>
-          <date>Tue Jul 01 17:27:10 CEST 2025</date>
-          <filename>PanelPro (v5.13.1)</filename>
-        </operation>
-        <operation>
-          <type>Load with errors</type>
-          <date>Tue Jul 01 17:27:14 CEST 2025</date>
-          <filename>/home/daniel/.jmri/TestErrorHandlingModule.jmri/Daniel.xml</filename>
-        </operation>
-        <operation>
-          <type>Store</type>
-          <date>Tue Jul 01 17:29:31 CEST 2025</date>
-          <filename>/home/daniel/.jmri/TestErrorHandlingModule.jmri/TestErrorHandlingModule.xml</filename>
-        </operation>
-      </filehistory>
+      <date>Sun Dec 14 02:59:44 CET 2025</date>
+      <filename>/home/daniel/Dokument/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/TestErrorHandlingModule.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue Jul 01 17:33:03 CEST 2025</date>
-      <filename>/home/daniel/.jmri/TestErrorHandlingModule.jmri/TestErrorHandlingModule.xml</filename>
+      <date>Sun Dec 14 02:59:44 CET 2025</date>
+      <filename>/home/daniel/Dokument/GitHub/JMRI/temp/temp/TestErrorHandlingModule.xml</filename>
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.13.1plus+daniel+2025-07-01T15:31:40Z+R3403e6e on Tue Jul 01 17:33:03 CEST 2025-->
+  <!--Written by JMRI version 5.13.7plus+daniel+2025-12-14T01:59:18Z+R4180df8 on Sun Dec 14 02:59:44 CET 2025-->
 </layout-config>
