@@ -160,8 +160,69 @@ public class BlockContentsIcon extends MemoryIcon {
                 });
             }
             return true;
-        }  // end of selectable
-        if (re != null) {
+        } // end of selectable
+        final jmri.jmrit.dispatcher.DispatcherFrame df =
+                jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
+        final jmri.jmrit.dispatcher.ActiveTrain at;
+        if (df != null) {
+            if (re != null) {
+                at = df.getActiveTrainForRoster(re);
+            } else {
+                at = df.getActiveTrainForName(this.getText());
+            }
+        } else {
+            at = null;
+        }
+        if (at != null) {
+            // we have activetrain, with or without autotrain with or without roster entry
+            if (at.getAutoActiveTrain() != null ) {
+                if( re == null ) {
+                    popup.add(new AbstractAction("Open Throttle") {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+                            tf.toFront();
+                            tf.getAddressPanel().setAddress(at.getAutoActiveTrain().getDccAddress().getNumber(),
+                                    at.getAutoActiveTrain().getDccAddress().isLongAddress());
+                        }
+                    });
+                } else {
+                    popup.add(new AbstractAction("Open Throttle") {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+                            tf.toFront();
+                            tf.getAddressPanel().setAddress(at.getAutoActiveTrain().getDccAddress().getNumber(),
+                                    at.getAutoActiveTrain().getDccAddress().isLongAddress());
+                        }
+                    });
+                }
+            }
+            popup.add(new AbstractAction(Bundle.getMessage("MenuTerminateTrain")) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    df.terminateActiveTrain(at, true, false);
+                }
+            });
+            popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    //Just brings up the standard allocate extra frame, this could be expanded in the future
+                    //As a point and click operation.
+                    df.allocateExtraSection(e, at);
+                }
+            });
+            if (at.getStatus() == jmri.jmrit.dispatcher.ActiveTrain.DONE) {
+                popup.add(new AbstractAction("Restart") {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        at.allocateAFresh();
+                    }
+                });
+            }
+            return true;
+        } else if (re != null) {
+            // No active train, but have a roster, therefore a throttle can be created
             popup.add(new AbstractAction("Open Throttle") {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -170,47 +231,20 @@ public class BlockContentsIcon extends MemoryIcon {
                     tf.getAddressPanel().setRosterEntry(re);
                 }
             });
-
-            final jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
+            // if dispatcher exists we can create a new train.
             if (df != null) {
-                final jmri.jmrit.dispatcher.ActiveTrain at = df.getActiveTrainForRoster(re);
-                if (at != null) {
-                    popup.add(new AbstractAction(Bundle.getMessage("MenuTerminateTrain")) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            df.terminateActiveTrain(at,true,false);
+                popup.add(new AbstractAction(Bundle.getMessage("MenuNewTrain")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (!df.getNewTrainActive()) {
+                            df.getActiveTrainFrame().initiateTrain(e, re, getBlock());
+                            df.setNewTrainActive(true);
+                        } else {
+                            df.getActiveTrainFrame().showActivateFrame(re);
                         }
-                    });
-                    popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            //Just brings up the standard allocate extra frame, this could be expanded in the future
-                            //As a point and click operation.
-                            df.allocateExtraSection(e, at);
-                        }
-                    });
-                    if (at.getStatus() == jmri.jmrit.dispatcher.ActiveTrain.DONE) {
-                        popup.add(new AbstractAction("Restart") {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                at.allocateAFresh();
-                            }
-                        });
                     }
-                } else {
-                    popup.add(new AbstractAction(Bundle.getMessage("MenuNewTrain")) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            if (!df.getNewTrainActive()) {
-                                df.getActiveTrainFrame().initiateTrain(e, re, getBlock());
-                                df.setNewTrainActive(true);
-                            } else {
-                                df.getActiveTrainFrame().showActivateFrame(re);
-                            }
-                        }
 
-                    });
-                }
+                });
             }
             return true;
         }

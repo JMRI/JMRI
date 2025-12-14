@@ -3190,6 +3190,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     log.debug("mousePressed: ++ Linux marker popup delay");
                 }
             }
+            if (selectedObject == null) {
+                selectedObject = checkBlockContentsPopUps(dLoc);
+                if (selectedObject != null) {
+                    selectedHitPointType = HitPointType.BLOCKCONTENTSICON;
+                }
+            }
 
             // not in edit mode - check if a signal mast popup menu is being requested using Windows or Linux.
             var sm = checkSignalMastIconPopUps(dLoc);
