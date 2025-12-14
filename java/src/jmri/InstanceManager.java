@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.util.ThreadingUtil;
+import jmri.time.TimeProvider;
+import jmri.time.TimeProviderManager;
 
 /**
  * Provides methods for locating various interface implementations. These form
@@ -594,7 +596,7 @@ public final class InstanceManager {
     public static Set<Class<?>> getInstanceClasses() {
         return Collections.unmodifiableSet(getDefault().managerLists.keySet());
     }
-    
+
     /**
      * Remove notification on changes to specific types.
      *
@@ -775,6 +777,21 @@ public final class InstanceManager {
             ((ProxyManager<Sensor>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: SensorManager default isn't an AbstractProxyManager<Sensor>");
+        }
+    }
+
+    // Needs to have proxy manager converted to work
+    // with current list of managers (and robust default
+    // management) before this can be deprecated in favor of
+    // store(p, TimeProviderManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
+    public static void setTimeProviderManager(TimeProviderManager p) {
+        log.debug(" setTimeProviderManager");
+        TimeProviderManager apm = getDefault(TimeProviderManager.class);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<TimeProvider>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: TimeProviderManager default isn't an AbstractProxyManager<TimeProvider>");
         }
     }
 
