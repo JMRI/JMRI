@@ -443,6 +443,7 @@
         <ul>
              <li>Defer calling "loadAtStartup" until the layout data file loading is done and
              layout block paths have been initialized.</li>
+			 <li>Create, terminate, open throttle, extend, terminate from LEPanel.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
