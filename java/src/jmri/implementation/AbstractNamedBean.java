@@ -1,15 +1,16 @@
 package jmri.implementation;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+import java.beans.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
+
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.NamedBean;
 import jmri.beans.BeanUtil;
 
@@ -294,6 +295,11 @@ public abstract class AbstractNamedBean implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
+    }
+
+    @OverridingMethodsMustInvokeSuper
+    protected void firePropertyChange(PropertyChangeEvent evt) {
+        pcs.firePropertyChange(evt);
     }
 
     /** {@inheritDoc} */

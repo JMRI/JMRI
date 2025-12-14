@@ -8,25 +8,25 @@ import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.Error;
+import jmri.jmrit.logixng.actions.ValidationError;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectStringSwing;
 
 /**
- * Configures an Error object with a Swing JPanel.
+ * Configures an ValidationError object with a Swing JPanel.
  *
- * @author Daniel Bergqvist Copyright 2022
+ * @author Daniel Bergqvist Copyright 2025
  */
-public class ErrorSwing extends AbstractDigitalActionSwing {
+public class ValidationErrorSwing extends AbstractDigitalActionSwing {
 
     private JPanel _panelMessage;
     private LogixNG_SelectStringSwing _selectMessageSwing;
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        if ((object != null) && (! (object instanceof Error))) {
-            throw new IllegalArgumentException("object is not a Error: " + object.getClass().getName());
+        if ((object != null) && (! (object instanceof ValidationError))) {
+            throw new IllegalArgumentException("object is not a ValidationError: " + object.getClass().getName());
         }
-        Error action = (Error)object;
+        ValidationError action = (ValidationError)object;
 
         panel = new JPanel();
 
@@ -38,7 +38,7 @@ public class ErrorSwing extends AbstractDigitalActionSwing {
             _panelMessage = _selectMessageSwing.createPanel(null);
         }
 
-        panel.add(new JLabel(Bundle.getMessage("Error_Message")));
+        panel.add(new JLabel(Bundle.getMessage("ValidationError_Message")));
         panel.add(_panelMessage);
     }
 
@@ -46,7 +46,7 @@ public class ErrorSwing extends AbstractDigitalActionSwing {
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary action to test formula
-        Error action = new Error("IQDA1", null);
+        ValidationError action = new ValidationError("IQDA1", null);
         _selectMessageSwing.validate(action.getSelectMessage(), errorMessages);
         return errorMessages.isEmpty();
     }
@@ -54,7 +54,7 @@ public class ErrorSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        Error action = new Error(systemName, userName);
+        ValidationError action = new ValidationError(systemName, userName);
         updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
@@ -62,17 +62,17 @@ public class ErrorSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (! (object instanceof Error)) {
-            throw new IllegalArgumentException("object is not a Error: " + object.getClass().getName());
+        if (! (object instanceof ValidationError)) {
+            throw new IllegalArgumentException("object is not a ValidationError: " + object.getClass().getName());
         }
-        Error action = (Error)object;
+        ValidationError action = (ValidationError)object;
         _selectMessageSwing.updateObject(action.getSelectMessage());
     }
 
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Error_Short");
+        return Bundle.getMessage("ValidationError_Short");
     }
 
     @Override
