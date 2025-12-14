@@ -1,12 +1,9 @@
 package apps.gui3.tabbedpreferences;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -15,10 +12,11 @@ import org.junit.Assume;
 public class TabbedPreferencesFrameTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TabbedPreferencesFrame t = new TabbedPreferencesFrame();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
+        JUnitUtil.dispose(t);
     }
 
     @BeforeEach
