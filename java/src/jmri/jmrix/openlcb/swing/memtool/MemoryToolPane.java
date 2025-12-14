@@ -355,8 +355,8 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                     log.error("Write failed. Address space not known");
                     statusField.setText(Bundle.getMessage("StatusFieldWriteFailed"));
                 } else if (errorCode == 0x1083) {
-                    log.error(Bundle.getMessage("StatusFieldWriteFailed2"));
-                    statusField.setText("Write failed. Address space not writeable.");
+                    log.error("Write failed. Address space not writeable.");
+                    statusField.setText(Bundle.getMessage("StatusFieldWriteFailed2"));
                 } else {
                     log.error("Write failed. error code is {}", String.format("%04X", errorCode));
                     statusField.setText(Bundle.getMessage("StatusFieldWriteFailed3") + " " + String.format("%016X", errorCode));
