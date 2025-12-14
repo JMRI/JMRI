@@ -204,7 +204,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     }
 
     public String getBackupManifestDirectoryName(String name) {
-        return getBackupManifestDirectoryName() + File.separator + name + File.separator;
+        return getBackupManifestDirectoryName() + name + File.separator;
     }
 
     public String getBackupSwitchListFileName(String name, String lastModified) {
@@ -227,7 +227,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     }
 
     public String getBackupSwitchListDirectoryName(String name) {
-        return getBackupSwitchListDirectoryName() + File.separator + name + File.separator;
+        return getBackupSwitchListDirectoryName() + name + File.separator;
     }
 
     public String getBackupBuildStatusFileName(String name, String lastModified) {
@@ -250,7 +250,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     }
 
     public String getBackupBuildStatusDirectoryName(String name) {
-        return getBackupBuildStatusDirectoryName() + File.separator + name + File.separator;
+        return getBackupBuildStatusDirectoryName() + name + File.separator;
     }
 
     /**
