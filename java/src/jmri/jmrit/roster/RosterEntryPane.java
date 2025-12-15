@@ -61,6 +61,23 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
     Component pane;
     RosterEntry re;
+    
+     // --- Physics (locomotive-level) controls for the Programmer's "Roster Entry" tab ---
+     private JRadioButton physicsSteamRadio = new JRadioButton("Steam");
+     private JRadioButton physicsDieselElectricRadio = new JRadioButton("Diesel/Electric");
+     private ButtonGroup physicsTractionGroup = new ButtonGroup();
+    
+     // Unit combos per field (display units; storage stays metric in RosterEntry)
+     private JComboBox<String> physicsWeightUnitCombo = new JComboBox<>();
+     private JComboBox<String> physicsPowerUnitCombo = new JComboBox<>();
+     private JComboBox<String> physicsTeUnitCombo = new JComboBox<>();
+     private JComboBox<String> physicsSpeedUnitCombo = new JComboBox<>();
+    
+     // Editors (spinners)
+     private JSpinner physicsWeightSpinner = new JSpinner();
+     private JSpinner physicsPowerSpinner = new JSpinner();
+     private JSpinner physicsTractiveEffortSpinner = new JSpinner();
+     private JSpinner physicsMaxSpeedSpinner = new JSpinner();
 
     public RosterEntryPane(RosterEntry r) {
 
@@ -253,6 +270,131 @@ public class RosterEntryPane extends javax.swing.JPanel {
         cR.gridy = cL.gridy; // JSpinner is initialised in RosterEntryPane()
         gbLayout.setConstraints(maxSpeedSpinner, cR);
         super.add(maxSpeedSpinner);
+        
+         // ---- Physics group (compact, intuitive; metric storage, unit-converted display) ----
+        
+         // Traction type (Steam / Diesel/Electric)
+         cL.gridy++;
+         JLabel physicsTractionLabel = new JLabel("Traction type:");
+         gbLayout.setConstraints(physicsTractionLabel, cL);
+         super.add(physicsTractionLabel);
+         cR.gridy = cL.gridy;
+         JPanel tractionRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+         physicsTractionGroup.add(physicsSteamRadio);
+         physicsTractionGroup.add(physicsDieselElectricRadio);
+         tractionRow.add(physicsSteamRadio);
+         tractionRow.add(physicsDieselElectricRadio);
+         gbLayout.setConstraints(tractionRow, cR);
+         super.add(tractionRow);
+        
+         // Locomotive weight
+         cL.gridy++;
+         JLabel physicsWeightLabel = new JLabel("Locomotive weight:");
+         gbLayout.setConstraints(physicsWeightLabel, cL);
+         super.add(physicsWeightLabel);
+         cR.gridy = cL.gridy;
+         JPanel weightRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+         // spinner model: 0..1,000,000 t-equivalent with 0.001 resolution
+         physicsWeightSpinner.setModel(new SpinnerNumberModel(0.0d, 0.0d, 1_000_000.0d, 0.001d));
+         physicsWeightSpinner.setEditor(new JSpinner.NumberEditor(physicsWeightSpinner, "0.000"));
+         // display units for weight
+         physicsWeightUnitCombo.addItem("Metric tonnes (t)");
+         physicsWeightUnitCombo.addItem("UK long tons (long, UK)");
+         physicsWeightUnitCombo.addItem("US short tons (short, US)");
+         weightRow.add(physicsWeightSpinner);
+         weightRow.add(physicsWeightUnitCombo);
+         gbLayout.setConstraints(weightRow, cR);
+         super.add(weightRow);
+        
+         // Continuous power
+         cL.gridy++;
+         JLabel physicsPowerLabel = new JLabel("Continuous power:");
+         gbLayout.setConstraints(physicsPowerLabel, cL);
+         super.add(physicsPowerLabel);
+         cR.gridy = cL.gridy;
+         JPanel powerRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+         physicsPowerSpinner.setModel(new SpinnerNumberModel(0.0d, 0.0d, 1_000_000.0d, 0.1d));
+         physicsPowerSpinner.setEditor(new JSpinner.NumberEditor(physicsPowerSpinner, "0.000"));
+         physicsPowerUnitCombo.addItem("kW");
+         physicsPowerUnitCombo.addItem("hp");
+         powerRow.add(physicsPowerSpinner);
+         powerRow.add(physicsPowerUnitCombo);
+         gbLayout.setConstraints(powerRow, cR);
+         super.add(powerRow);
+        
+         // Tractive effort
+         cL.gridy++;
+         JLabel physicsTeLabel = new JLabel("Tractive effort:");
+         gbLayout.setConstraints(physicsTeLabel, cL);
+         super.add(physicsTeLabel);
+         cR.gridy = cL.gridy;
+         JPanel teRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+         physicsTractiveEffortSpinner.setModel(new SpinnerNumberModel(0.0d, 0.0d, 1_000_000.0d, 0.001d));
+         physicsTractiveEffortSpinner.setEditor(new JSpinner.NumberEditor(physicsTractiveEffortSpinner, "0.000"));
+         physicsTeUnitCombo.addItem("kN");
+         physicsTeUnitCombo.addItem("lbf");
+         teRow.add(physicsTractiveEffortSpinner);
+         teRow.add(physicsTeUnitCombo);
+         gbLayout.setConstraints(teRow, cR);
+         super.add(teRow);
+        
+         // Maximum speed
+         cL.gridy++;
+         JLabel physicsSpeedLabel = new JLabel("Maximum speed:");
+         gbLayout.setConstraints(physicsSpeedLabel, cL);
+         super.add(physicsSpeedLabel);
+         cR.gridy = cL.gridy;
+         JPanel speedRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+         physicsMaxSpeedSpinner.setModel(new SpinnerNumberModel(0.0d, 0.0d, 1_000.0d, 0.1d));
+         physicsMaxSpeedSpinner.setEditor(new JSpinner.NumberEditor(physicsMaxSpeedSpinner, "0.000"));
+         physicsSpeedUnitCombo.addItem("km/h");
+         physicsSpeedUnitCombo.addItem("mph");
+         speedRow.add(physicsMaxSpeedSpinner);
+         speedRow.add(physicsSpeedUnitCombo);
+         gbLayout.setConstraints(speedRow, cR);
+         super.add(speedRow);
+        
+          // Profile tools row: single button to open JMRI Speed Profiling UI
+          cL.gridy++;
+          JLabel profileToolsLabel = new JLabel("Profile tools:");
+          gbLayout.setConstraints(profileToolsLabel, cL);
+          super.add(profileToolsLabel);
+        
+          cR.gridy = cL.gridy;
+          JButton physicsSpeedProfileButton = new JButton("Speed profile...");
+          gbLayout.setConstraints(physicsSpeedProfileButton, cR);
+          super.add(physicsSpeedProfileButton);
+        
+          // Wire the button to open the built-in Speed Profiling UI.
+          // Prefer WindowInterface when available (PaneProgFrame implements it), else fall back.
+          physicsSpeedProfileButton.addActionListener(ev -> {
+              jmri.util.swing.WindowInterface wi = getWindowInterfaceOrNull();
+              jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction act =
+                  (wi != null)
+                      ? new jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction("Speed Profiling", wi)
+                      : new jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction("Speed Profiling");
+              act.actionPerformed(new java.awt.event.ActionEvent(this,
+                      java.awt.event.ActionEvent.ACTION_PERFORMED, "open"));
+          });
+    
+         // Wire listeners (store metric in RosterEntry on change; re is already set by this ctor)
+         physicsSteamRadio.addActionListener(ev -> { if (re != null) re.setPhysicsTractionType(RosterEntry.TractionType.STEAM); });
+         physicsDieselElectricRadio.addActionListener(ev -> { if (re != null) re.setPhysicsTractionType(RosterEntry.TractionType.DIESEL_ELECTRIC); });
+        
+         // Unit combo changes -> refresh display from stored metric
+         physicsWeightUnitCombo.addActionListener(ev -> refreshPhysicsFromRosterEntry());
+         physicsPowerUnitCombo.addActionListener(ev -> refreshPhysicsFromRosterEntry());
+         physicsTeUnitCombo.addActionListener(ev -> refreshPhysicsFromRosterEntry());
+         physicsSpeedUnitCombo.addActionListener(ev -> refreshPhysicsFromRosterEntry());
+        
+         // Spinner changes -> update stored metric in RosterEntry
+         physicsWeightSpinner.addChangeListener(ev -> { if (re != null) re.setPhysicsWeightKg(displayWeightToKg(((Number) physicsWeightSpinner.getValue()).floatValue())); });
+         physicsPowerSpinner.addChangeListener(ev -> { if (re != null) re.setPhysicsPowerKw(displayPowerToKw(((Number) physicsPowerSpinner.getValue()).floatValue())); });
+         physicsTractiveEffortSpinner.addChangeListener(ev -> { if (re != null) re.setPhysicsTractiveEffortKn(displayTeToKn(((Number) physicsTractiveEffortSpinner.getValue()).floatValue())); });
+         physicsMaxSpeedSpinner.addChangeListener(ev -> { if (re != null) re.setPhysicsMaxSpeedKmh(displaySpeedToKmh(((Number) physicsMaxSpeedSpinner.getValue()).floatValue())); });
+        
+         // Initialize display from current roster entry (metric storage -> chosen units)
+         refreshPhysicsFromRosterEntry();
 
         cL.gridy++;
         JLabel row8Label = new JLabel(Bundle.getMessage("FieldComment") + ":");
@@ -385,6 +527,108 @@ public class RosterEntryPane extends javax.swing.JPanel {
         }
     }
 
+     // --- Physics helpers: convert between metric storage (RosterEntry) and display units ---
+     // Refresh UI from 're' (safe if re == null)
+     private void refreshPhysicsFromRosterEntry() {
+         if (re == null) return;
+    
+         // Traction type
+         if (re.getPhysicsTractionType() == RosterEntry.TractionType.STEAM) {
+             physicsSteamRadio.setSelected(true);
+         } else {
+             physicsDieselElectricRadio.setSelected(true);
+         }
+    
+         // Weight kg -> display
+         physicsWeightSpinner.setValue(Double.valueOf(kgToDisplayWeight(re.getPhysicsWeightKg())));
+    
+         // Power kW -> display
+         physicsPowerSpinner.setValue(Double.valueOf(kwToDisplayPower(re.getPhysicsPowerKw())));
+    
+         // Tractive effort kN -> display
+         physicsTractiveEffortSpinner.setValue(Double.valueOf(knToDisplayTe(re.getPhysicsTractiveEffortKn())));
+    
+         // Max speed km/h -> display
+         physicsMaxSpeedSpinner.setValue(Double.valueOf(kmhToDisplaySpeed(re.getPhysicsMaxSpeedKmh())));
+     }
+    
+     // Display -> metric (Weight)
+     private float displayWeightToKg(float displayVal) {
+         switch (physicsWeightUnitCombo.getSelectedIndex()) {
+             case 0: return displayVal * 1000.0f;        // t -> kg
+             case 1: return displayVal * 1016.0469f;     // long ton -> kg
+             case 2: return displayVal * 907.18474f;     // short ton -> kg
+             default: return displayVal;
+         }
+     }
+     private float kwToDisplayPower(float kw) {
+         switch (physicsPowerUnitCombo.getSelectedIndex()) {
+             case 0: return kw;                          // kW
+             case 1: return kw / 0.7456999f;             // kW -> hp
+             default: return kw;
+         }
+     }
+    
+     // Display -> metric (Tractive Effort)
+     private float displayTeToKn(float displayVal) {
+         switch (physicsTeUnitCombo.getSelectedIndex()) {
+             case 0: return displayVal;                  // kN
+             case 1: return displayVal / 224.80894f;     // lbf -> kN
+             default: return displayVal;
+         }
+     }
+     private float knToDisplayTe(float kn) {
+         switch (physicsTeUnitCombo.getSelectedIndex()) {
+             case 0: return kn;                          // kN
+             case 1: return kn * 224.80894f;             // kN -> lbf
+             default: return kn;
+         }
+     }
+    
+     // Display -> metric (Speed)
+     private float displaySpeedToKmh(float displayVal) {
+         switch (physicsSpeedUnitCombo.getSelectedIndex()) {
+             case 0: return displayVal;                  // km/h
+             case 1: return displayVal * 1.609344f;      // mph -> km/h
+             default: return displayVal;
+         }
+     }
+     private float kmhToDisplaySpeed(float kmh) {
+         switch (physicsSpeedUnitCombo.getSelectedIndex()) {
+             case 0: return kmh;                         // km/h
+             case 1: return kmh / 1.609344f;             // km/h -> mph
+             default: return kmh;
+         }
+     }
+         
+     
+     private float kgToDisplayWeight(float kg) {
+         switch (physicsWeightUnitCombo.getSelectedIndex()) {
+             case 0: return kg / 1000.0f;                // t
+             case 1: return kg / 1016.0469f;             // long ton
+             case 2: return kg / 907.18474f;             // short ton
+             default: return kg;
+         }
+     }
+    
+     // Display -> metric (Power)
+     private float displayPowerToKw(float displayVal) {
+         switch (physicsPowerUnitCombo.getSelectedIndex()) {
+             case 0: return displayVal;                  // kW
+             case 1: return displayVal * 0.7456999f;     // hp -> kW
+             default: return displayVal;
+         }
+     }
+
+      // Helper: try to obtain the host programmer window as a WindowInterface
+      private jmri.util.swing.WindowInterface getWindowInterfaceOrNull() {
+          java.awt.Window w = javax.swing.SwingUtilities.getWindowAncestor(this);
+          return (w instanceof jmri.util.swing.WindowInterface)
+                  ? (jmri.util.swing.WindowInterface) w
+                  : null;
+      }
+
+
     /**
      *
      * @return true if the value in the id JTextField is a duplicate of some
@@ -429,7 +673,18 @@ public class RosterEntryPane extends javax.swing.JPanel {
         r.setDecoderFamily(decoderFamily.getText());
         r.setDecoderModel(decoderModel.getText());
         r.setDecoderComment(decoderComment.getText());
-    }
+    
+        // --- Save Physics (metric storage) ---
+        RosterEntry.TractionType t = physicsSteamRadio.isSelected()
+                ? RosterEntry.TractionType.STEAM
+                : RosterEntry.TractionType.DIESEL_ELECTRIC;
+        r.setPhysicsTractionType(t);
+        r.setPhysicsWeightKg(displayWeightToKg(((Number) physicsWeightSpinner.getValue()).floatValue()));
+        r.setPhysicsPowerKw(displayPowerToKw(((Number) physicsPowerSpinner.getValue()).floatValue()));
+        r.setPhysicsTractiveEffortKn(displayTeToKn(((Number) physicsTractiveEffortSpinner.getValue()).floatValue()));
+        r.setPhysicsMaxSpeedKmh(displaySpeedToKmh(((Number) physicsMaxSpeedSpinner.getValue()).floatValue()));
+   }
+
 
     /**
      * Fill GUI from roster contents.
@@ -454,6 +709,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         double maxSpeedSet = r.getMaxSpeedPCT() / 100d; // why resets to 100?
         log.debug("Max Speed set to: {}", maxSpeedSet);
         maxSpeedSpinner.setValue(maxSpeedSet);
+        // Physics (metric storage -> current display units)
+        refreshPhysicsFromRosterEntry();
         log.debug("Max Speed in spinner: {}", maxSpeedSpinner.getValue());
     }
 

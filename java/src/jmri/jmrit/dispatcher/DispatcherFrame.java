@@ -398,6 +398,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 aat.setUseSpeedProfile(info.getUseSpeedProfile());
                 aat.setStopByDistanceMm(info.getStopByDistanceMm());
                 aat.setStopByDistanceRefTail(info.getStopByDistanceRef() == TrainInfo.StopReference.TAIL);
+                // Physics: runtime parameters from TrainInfo
+                aat.setAdditionalTrainWeightMetricTonnes(info.getAdditionalTrainWeightMetricTonnes());
+                aat.setRollingResistanceCoeff(info.getRollingResistanceCoeff());
                 aat.setFunctionLight(info.getFNumberLight());
                 getAutoTrainsFrame().addAutoActiveTrain(aat);
                 if (!aat.initialize()) {

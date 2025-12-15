@@ -100,6 +100,9 @@ public class TrainInfo {
     
     private Float stopByDistanceMm = 0.0f;
     private StopReference stopByDistanceRef = StopReference.HEAD; // default choice
+    
+    // Physics: additional train weight, stored as metric tonnes (t)
+    private float additionalTrainWeightMetricTonnes = 0.0f;
 
     public enum StopReference { HEAD, TAIL }
 
@@ -810,4 +813,14 @@ public class TrainInfo {
 
     public String getBlockName() { return blockName; }
 
+    // --- Physics additional weight (metric tonnes) ---
+    public void setAdditionalTrainWeightMetricTonnes(float value) { additionalTrainWeightMetricTonnes = value; }
+    public float getAdditionalTrainWeightMetricTonnes() { return additionalTrainWeightMetricTonnes; }
+
+     // --- Physics rolling resistance coefficient (dimensionless), defaults ~0.002
+     private float rollingResistanceCoeff = 0.002f;
+     public void setRollingResistanceCoeff(float value) { rollingResistanceCoeff = Math.max(0.0f, value); }
+     public float getRollingResistanceCoeff() { return rollingResistanceCoeff; }
 }
+
+

@@ -1170,6 +1170,8 @@ public class ActivateTrainFrame extends JmriJFrame {
 
         }
         updateStopByDistanceEnable();
+        // Physics option is available iff speed profile UI is enabled (availability only)
+        updateRampPhysicsAvailability(b);
         updateMaxSpeedCapModeAvailability(b);
     }
 
@@ -1956,7 +1958,118 @@ public class ActivateTrainFrame extends JmriJFrame {
             return it != null ? it.getValue() : StopDistanceUnits.ACTUAL_MM;
         }
     }    
+    
+     // Helper: is "Physics" ramp selected?
+    private boolean isPhysicsRampSelected() {
+        // rampRateBox contains display strings from Bundle.getMessage(...)
+        String sel = (String) rampRateBox.getSelectedItem();
+        return sel != null && sel.equals(Bundle.getMessage("RAMP_PHYSICS"));
+    }
+  
+     // Add/remove "Physics" in the ramp rate box depending on speed-profile being enabled & selected
+    private void updateRampPhysicsAvailability(boolean speedProfileOn) {
+        // Snapshot current selection text
+        String prev = (String) rampRateBox.getSelectedItem();
+    
+        // Rebuild ramp options while excluding any existing "Physics" entry to avoid duplicates
+        java.util.List<String> toKeep = new java.util.ArrayList<>();
+        for (int i = 0; i < rampRateBox.getItemCount(); i++) {
+            String it = (String) rampRateBox.getItemAt(i);
+            if (!Bundle.getMessage("RAMP_PHYSICS").equals(it)) {
+                toKeep.add(it);
+            }
+        }
+        rampRateBox.removeAllItems();
+        for (String it : toKeep) {
+            rampRateBox.addItem(it);
+        }
+        if (speedProfileOn) {
+            rampRateBox.addItem(Bundle.getMessage("RAMP_PHYSICS"));
+        }
+    
+        // If Physics was selected but is no longer available, fall back to SPEEDPROFILE (if present) or first item
+        if (prev != null && Bundle.getMessage("RAMP_PHYSICS").equals(prev) && !speedProfileOn) {
+            boolean set = false;
+            for (int i = 0; i < rampRateBox.getItemCount(); i++) {
+                String candidate = (String) rampRateBox.getItemAt(i);
+                if (Bundle.getMessage("RAMP_SPEEDPROFILE").equals(candidate)) {
+                    rampRateBox.setSelectedIndex(i);
+                    set = true;
+                    break;
+                }
+            }
+            if (!set && rampRateBox.getItemCount() > 0) {
+                rampRateBox.setSelectedIndex(0);
+            }
+        }
+    
+        // Physics panel visibility follows selection
+        pa2Physics.setVisible(isPhysicsRampSelected());
+    }
+
+    
+     // Selection changed -> toggle physics panel
+     private void handleRampRateSelectionChanged() {
+         pa2Physics.setVisible(isPhysicsRampSelected());
+     }
+  
     private final StopDistanceUnitsJCombo stopByDistanceUnitsComboBox = new StopDistanceUnitsJCombo();
+
+     // --- Physics "Additional train weight" UI + units ---
+     // Units: Metric tonnes (t), Long tons (imperial), Short tons (US)
+    
+     // Top-level enum: referenced across several methods
+     private enum AdditionalWeightUnits { METRIC_TONNES, LONG_TONS, SHORT_TONS }
+    
+     protected static class AdditionalWeightUnitsItem {
+         private final String key;
+         private final AdditionalWeightUnits value;
+         public AdditionalWeightUnitsItem(String text, AdditionalWeightUnits units) {
+             this.key = text;
+             this.value = units;
+         }
+         @Override public String toString() { return key; }
+         public AdditionalWeightUnits getValue() { return value; }
+     }
+    
+     protected static class AdditionalWeightUnitsJCombo extends JComboBox {
+         public AdditionalWeightUnits getSelectedUnits() {
+             AdditionalWeightUnitsItem it = (AdditionalWeightUnitsItem) getSelectedItem();
+             return it != null ? it.getValue() : AdditionalWeightUnits.METRIC_TONNES;
+         }
+     }
+
+     // Panel + controls
+     private final JPanel pa2Physics = new JPanel();
+     private final JLabel additionalWeightLabel = new JLabel(Bundle.getMessage("AdditionalTrainWeightLabel"));
+     private final JSpinner additionalWeightSpinner = new JSpinner();
+     private final AdditionalWeightUnitsJCombo additionalWeightUnitsComboBox = new AdditionalWeightUnitsJCombo();
+     
+     // Rolling resistance coefficient (dimensionless)
+     private final JLabel rollingResistanceCoeffLabel = new JLabel(Bundle.getMessage("RollingResistanceCoeffLabel"));
+     private final JSpinner rollingResistanceCoeffSpinner = new JSpinner();
+        
+     // Track current display units for conversion
+     private AdditionalWeightUnits currentAdditionalWeightUnits = AdditionalWeightUnits.METRIC_TONNES;
+    
+     // Unit conversions: all values stored to TrainInfo as metric tonnes
+     private static float convertTonnesToDisplay(AdditionalWeightUnits units, float tonnes) {
+         switch (units) {
+             case METRIC_TONNES: return tonnes;            // t
+             case LONG_TONS:     return tonnes / 1.0160469f; // 1 long ton ≈ 1.0160469 t
+             case SHORT_TONS:    return tonnes / 0.9071847f; // 1 short ton ≈ 0.9071847 t
+             default:            return tonnes;
+         }
+     }
+     private static float convertDisplayToTonnes(AdditionalWeightUnits units, float value) {
+         switch (units) {
+             case METRIC_TONNES: return value;            // t
+             case LONG_TONS:     return value * 1.0160469f;
+             case SHORT_TONS:    return value * 0.9071847f;
+             default:            return value;
+         }
+     }
+
     // Track the “current UI units” so we can convert correctly when user changes the dropdown
     private StopDistanceUnits currentStopDistanceUnits = StopDistanceUnits.ACTUAL_MM;
 
@@ -2123,6 +2236,9 @@ public class ActivateTrainFrame extends JmriJFrame {
             new StopDistanceUnitsItem(Bundle.getMessage("StopByDistanceUnitsScaleFeet"), StopDistanceUnits.SCALE_FEET)
         );
         pa2b.add(stopByDistanceUnitsComboBox);
+
+         // Initialize Physics visibility based on current availability (enabled state)
+         updateRampPhysicsAvailability(useSpeedProfileCheckBox.isEnabled());
         
         // Head/Tail radios last (to the right of the units dropdown)
         stopByDistanceRefGroup.add(stopByDistanceHead);
@@ -2133,18 +2249,74 @@ public class ActivateTrainFrame extends JmriJFrame {
         
         initiatePane.add(pa2b);
 
-         // Event wiring:
-         // - Toggle mutually-exclusive mode (adjust% vs. distance) and availability
-         stopByDistanceEnableCheckBox.addActionListener(ev -> updateStopByDistanceEnable());
-         stopBySpeedProfileCheckBox.addActionListener(ev -> updateStopByDistanceEnable());
+        // Event wiring:
+        // - Toggle mutually-exclusive mode (adjust% vs. distance) and availability
+        stopByDistanceEnableCheckBox.addActionListener(ev -> updateStopByDistanceEnable());
+        stopBySpeedProfileCheckBox.addActionListener(ev -> updateStopByDistanceEnable());
     
-         // - Units change: convert current displayed value from old units to new, preserving the underlying mm value
-         stopByDistanceUnitsComboBox.addActionListener(ev -> handleStopByDistanceUnitsChanged());
+        // - Units change: convert current displayed value from old units to new, preserving the underlying mm value
+        stopByDistanceUnitsComboBox.addActionListener(ev -> handleStopByDistanceUnitsChanged());
     
-         updateStopByDistanceEnable();
-         stopByDistanceUnitsComboBox.setSelectedIndex(0); // default to mm (actual)
-         updateStopByDistanceSpinnerModelForUnits(StopDistanceUnits.ACTUAL_MM);
-         pa2b.add(stopByDistanceUnitsComboBox);
+        updateStopByDistanceEnable();
+        stopByDistanceUnitsComboBox.setSelectedIndex(0); // default to mm (actual)
+        updateStopByDistanceSpinnerModelForUnits(StopDistanceUnits.ACTUAL_MM);
+        pa2b.add(stopByDistanceUnitsComboBox);      
+
+         // --- Physics: Additional train weight panel ---
+         pa2Physics.setLayout(new FlowLayout());
+         pa2Physics.add(additionalWeightLabel);
+    
+         // Numeric spinner: wide range, fine step; display value depends on chosen units
+         additionalWeightSpinner.setModel(
+             new SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(10000.0f), Float.valueOf(0.1f))
+         );
+         additionalWeightSpinner.setEditor(new JSpinner.NumberEditor(additionalWeightSpinner, "0.0"));
+         additionalWeightSpinner.setToolTipText(Bundle.getMessage("AdditionalTrainWeightHint"));
+         pa2Physics.add(additionalWeightSpinner);
+    
+         // Units dropdown (replaces a static label); conversions are UI-only; TrainInfo stores metric tonnes
+         additionalWeightUnitsComboBox.addItem(new AdditionalWeightUnitsItem("Metric tonnes (t)", AdditionalWeightUnits.METRIC_TONNES));
+         additionalWeightUnitsComboBox.addItem(new AdditionalWeightUnitsItem("Long tons",       AdditionalWeightUnits.LONG_TONS));
+         additionalWeightUnitsComboBox.addItem(new AdditionalWeightUnitsItem("Short tons",      AdditionalWeightUnits.SHORT_TONS));
+         pa2Physics.add(additionalWeightUnitsComboBox);     
+         
+         // Rolling resistance coefficient (dimensionless, default 0.002)
+         rollingResistanceCoeffSpinner.setModel(
+             new SpinnerNumberModel(Float.valueOf(0.002f), Float.valueOf(0.000f), Float.valueOf(0.020f), Float.valueOf(0.0001f))
+         );
+         rollingResistanceCoeffSpinner.setEditor(new JSpinner.NumberEditor(rollingResistanceCoeffSpinner, "0.0000"));
+         rollingResistanceCoeffSpinner.setToolTipText(Bundle.getMessage("RollingResistanceCoeffHint"));
+         pa2Physics.add(rollingResistanceCoeffLabel);
+         pa2Physics.add(rollingResistanceCoeffSpinner);
+
+         // Rolling resistance coefficient (dimensionless, default 0.002)
+         rollingResistanceCoeffSpinner.setModel(
+             new SpinnerNumberModel(Float.valueOf(0.002f), Float.valueOf(0.000f), Float.valueOf(0.020f), Float.valueOf(0.0001f))
+         );
+         rollingResistanceCoeffSpinner.setEditor(new JSpinner.NumberEditor(rollingResistanceCoeffSpinner, "0.0000"));
+         rollingResistanceCoeffSpinner.setToolTipText("Coefficient of rolling resistance c_rr (dimensionless)");
+         pa2Physics.add(rollingResistanceCoeffLabel);
+         pa2Physics.add(rollingResistanceCoeffSpinner);
+            
+         // Units change => convert displayed value to new units, preserving underlying tonnes
+         additionalWeightUnitsComboBox.addActionListener(ev -> {
+             float display = ((Number) additionalWeightSpinner.getValue()).floatValue();
+             float tonnes = convertDisplayToTonnes(currentAdditionalWeightUnits, display);
+             currentAdditionalWeightUnits = additionalWeightUnitsComboBox.getSelectedUnits();
+             float newDisplay = convertTonnesToDisplay(currentAdditionalWeightUnits, tonnes);
+             additionalWeightSpinner.setValue(Float.valueOf(newDisplay));
+         });
+    
+         // Initially hidden; becomes visible only when speed profile is ON and ramp == Physics
+         pa2Physics.setVisible(false);
+         initiatePane.add(pa2Physics);
+    
+        // Events to keep Physics option availability in sync with "Use speed profile"
+        useSpeedProfileCheckBox.addActionListener(ev -> {
+            // Show/hide Physics purely based on availability (enabled), not checkbox selection.
+            updateRampPhysicsAvailability(useSpeedProfileCheckBox.isEnabled());
+        });
+        rampRateBox.addActionListener(ev -> handleRampRateSelectionChanged());        
         pa3.setLayout(new FlowLayout());
         pa3.add(soundDecoderBox);
         soundDecoderBox.setToolTipText(Bundle.getMessage("SoundDecoderBoxHint"));
@@ -2298,7 +2470,25 @@ public class ActivateTrainFrame extends JmriJFrame {
             maxSpeedSpinner.setValue(info.getMaxSpeed());
         }
         minReliableOperatingSpeedSpinner.setValue(info.getMinReliableOperatingSpeed());
-        setComboBox(rampRateBox, info.getRampRate());
+        setComboBox(rampRateBox, info.getRampRate());      
+
+         // Physics: set additional weight spinner (convert stored metric tonnes to current UI units)
+         currentAdditionalWeightUnits = AdditionalWeightUnits.METRIC_TONNES;
+         additionalWeightUnitsComboBox.setSelectedIndex(0);
+         additionalWeightSpinner.setValue(Float.valueOf(convertTonnesToDisplay(currentAdditionalWeightUnits, info.getAdditionalTrainWeightMetricTonnes())));       
+         additionalWeightUnitsComboBox.setSelectedIndex(0);
+         rollingResistanceCoeffSpinner.setValue(Float.valueOf(info.getRollingResistanceCoeff()));
+    
+         // Physics availability & panel visibility based on current Speed-profile + ramp
+          // Ensure checkbox reflects the file state *before* rebuilding ramp list
+          useSpeedProfileCheckBox.setSelected(info.getUseSpeedProfile());
+    
+          // Physics availability depends only on whether speed profile UI is enabled (availability), not on selection
+          updateRampPhysicsAvailability(useSpeedProfileCheckBox.isEnabled());
+    
+          // Physics weight row visibility follows the current ramp selection
+          pa2Physics.setVisible(isPhysicsRampSelected());
+      
         trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
         runInReverseBox.setSelected(info.getRunInReverse());
         soundDecoderBox.setSelected(info.getSoundDecoder());
@@ -2363,6 +2553,17 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         info.setMinReliableOperatingSpeed((float) minReliableOperatingSpeedSpinner.getValue());
         info.setRampRate((String) rampRateBox.getSelectedItem());
+         // Physics: when ramp == Physics, store additional weight (metric tonnes); else store 0.0f
+         if (isPhysicsRampSelected()) {
+             float display = ((Number) additionalWeightSpinner.getValue()).floatValue();
+             float tonnes = convertDisplayToTonnes(currentAdditionalWeightUnits, display);
+             info.setAdditionalTrainWeightMetricTonnes(tonnes);
+         } else {
+             info.setAdditionalTrainWeightMetricTonnes(0.0f);
+         }
+
+         // Always store c_rr (independent of ramp selection)
+        info.setRollingResistanceCoeff(((Number) rollingResistanceCoeffSpinner.getValue()).floatValue());
         info.setRunInReverse(runInReverseBox.isSelected());
         info.setSoundDecoder(soundDecoderBox.isSelected());
         info.setTrainLengthUnits(((TrainLengthUnitsItem) trainLengthUnitsComboBox.getSelectedItem()).getValue());
@@ -2407,6 +2608,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         rampRateBox.addItem(Bundle.getMessage("RAMP_MED_SLOW"));
         rampRateBox.addItem(Bundle.getMessage("RAMP_SLOW"));
         rampRateBox.addItem(Bundle.getMessage("RAMP_SPEEDPROFILE"));
+        rampRateBox.addItem(Bundle.getMessage("RAMP_PHYSICS")); // Visible only when speed-profile is enabled & selected
         // Note: the order above must correspond to the numbers in AutoActiveTrain.java
     }
 

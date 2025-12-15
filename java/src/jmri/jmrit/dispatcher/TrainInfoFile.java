@@ -426,6 +426,25 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("fnumberhorn") != null) {
                         tInfo.setFNumberHorn(Integer.parseInt(traininfo.getAttribute("fnumberhorn").getValue()));
                     }
+                    
+                     // Physics: read additional train weight (metric tonnes)
+                     if (traininfo.getAttribute("additionaltrainweight_tonnes") != null) {
+                         try {
+                             tInfo.setAdditionalTrainWeightMetricTonnes(traininfo.getAttribute("additionaltrainweight_tonnes").getFloatValue());
+                         } catch (org.jdom2.DataConversionException ex) {
+                             // Malformed value -> leave default (0.0f) for backward compatibility
+                         }
+                     }
+                     
+                  // Physics: read rolling resistance coefficient (dimensionless)
+                  if (traininfo.getAttribute("rollingresistancecoeff") != null) {
+                      try {
+                          tInfo.setRollingResistanceCoeff(traininfo.getAttribute("rollingresistancecoeff").getFloatValue());
+                      } catch (org.jdom2.DataConversionException ex) {
+                          // Malformed value -> leave default (0.002f) for backward compatibility
+                      }
+                  }
+                
                     if (version == 1) {
                         String parseArray[];
                         // If you only have a systemname then its everything before the dash
@@ -646,14 +665,18 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("fnumberlight", Integer.toString(tf.getFNumberLight()));
         traininfo.setAttribute("fnumberbell", Integer.toString(tf.getFNumberBell()));
         traininfo.setAttribute("fnumberhorn", Integer.toString(tf.getFNumberHorn()));
-        
-     // Only write these when the user has set a positive distance in mm; otherwise omit.
-     if (tf.getStopByDistanceMm() > 0.0f) {
-         // Persist the explicit distance (mm) into the stop block
-         traininfo.setAttribute("stopbydistance_mm", Float.toString(tf.getStopByDistanceMm()));
-         // Persist whether the distance applies to the HEAD or TAIL of the train
-         traininfo.setAttribute("stopbydistance_ref", tf.getStopByDistanceRef().name()); // HEAD | TAIL
-     }
+        // Physics: persist additional train weight (metric tonnes, float)
+        traininfo.setAttribute("additionaltrainweight_tonnes", Float.toString(tf.getAdditionalTrainWeightMetricTonnes()));
+        // Physics: persist rolling resistance coefficient (dimensionless)
+        traininfo.setAttribute("rollingresistancecoeff", Float.toString(tf.getRollingResistanceCoeff()));
+            
+         // Only write these when the user has set a positive distance in mm; otherwise omit.
+         if (tf.getStopByDistanceMm() > 0.0f) {
+             // Persist the explicit distance (mm) into the stop block
+             traininfo.setAttribute("stopbydistance_mm", Float.toString(tf.getStopByDistanceMm()));
+             // Persist whether the distance applies to the HEAD or TAIL of the train
+             traininfo.setAttribute("stopbydistance_ref", tf.getStopByDistanceRef().name()); // HEAD | TAIL
+         }
 
         root.addContent(traininfo);
 
