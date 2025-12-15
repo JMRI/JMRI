@@ -427,24 +427,36 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         tInfo.setFNumberHorn(Integer.parseInt(traininfo.getAttribute("fnumberhorn").getValue()));
                     }
                     
-                     // Physics: read additional train weight (metric tonnes)
-                     if (traininfo.getAttribute("additionaltrainweight_tonnes") != null) {
+                    // Physics: read additional train weight (metric tonnes)
+                    if (traininfo.getAttribute("additionaltrainweight_tonnes") != null) {
+                        try {
+                            tInfo.setAdditionalTrainWeightMetricTonnes(traininfo.getAttribute("additionaltrainweight_tonnes").getFloatValue());
+                        } catch (org.jdom2.DataConversionException ex) {
+                            // Malformed value -> leave default (0.0f) for backward compatibility
+                        }
+                    }
+                     
+                    // Physics: read rolling resistance coefficient (dimensionless)
+                    if (traininfo.getAttribute("rollingresistancecoeff") != null) {
+                        try {
+                            tInfo.setRollingResistanceCoeff(traininfo.getAttribute("rollingresistancecoeff").getFloatValue());
+                        } catch (org.jdom2.DataConversionException ex) {
+                            // Malformed value -> leave default (0.002f) for backward compatibility
+                        }
+                    }
+                     
+                      // Physics: read driver power percent (stored as fraction 0..1; default 1.0 if absent)
+                     if (traininfo.getAttribute("driverpowerpercent") != null) {
                          try {
-                             tInfo.setAdditionalTrainWeightMetricTonnes(traininfo.getAttribute("additionaltrainweight_tonnes").getFloatValue());
+                             float dp = traininfo.getAttribute("driverpowerpercent").getFloatValue();
+                             if (dp < 0.0f) dp = 0.0f;
+                             if (dp > 1.0f) dp = 1.0f;
+                             tInfo.setDriverPowerPercent(dp);
                          } catch (org.jdom2.DataConversionException ex) {
-                             // Malformed value -> leave default (0.0f) for backward compatibility
+                             // Malformed: ignore and leave TrainInfo default (typically 1.0f)
                          }
                      }
-                     
-                  // Physics: read rolling resistance coefficient (dimensionless)
-                  if (traininfo.getAttribute("rollingresistancecoeff") != null) {
-                      try {
-                          tInfo.setRollingResistanceCoeff(traininfo.getAttribute("rollingresistancecoeff").getFloatValue());
-                      } catch (org.jdom2.DataConversionException ex) {
-                          // Malformed value -> leave default (0.002f) for backward compatibility
-                      }
-                  }
-                
+            
                     if (version == 1) {
                         String parseArray[];
                         // If you only have a systemname then its everything before the dash
@@ -669,6 +681,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("additionaltrainweight_tonnes", Float.toString(tf.getAdditionalTrainWeightMetricTonnes()));
         // Physics: persist rolling resistance coefficient (dimensionless)
         traininfo.setAttribute("rollingresistancecoeff", Float.toString(tf.getRollingResistanceCoeff()));
+        traininfo.setAttribute("driverpowerpercent", Float.toString(tf.getDriverPowerPercent()));
             
          // Only write these when the user has set a positive distance in mm; otherwise omit.
          if (tf.getStopByDistanceMm() > 0.0f) {

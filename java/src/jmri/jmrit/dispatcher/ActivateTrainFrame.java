@@ -1967,46 +1967,60 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
   
      // Add/remove "Physics" in the ramp rate box depending on speed-profile being enabled & selected
-    private void updateRampPhysicsAvailability(boolean speedProfileOn) {
-        // Snapshot current selection text
-        String prev = (String) rampRateBox.getSelectedItem();
+     // Preserve the previous selection if it still exists after the rebuild.
+     private void updateRampPhysicsAvailability(boolean speedProfileOn) {
+         // Snapshot current selection text (display label)
+         String prev = (String) rampRateBox.getSelectedItem();
     
-        // Rebuild ramp options while excluding any existing "Physics" entry to avoid duplicates
-        java.util.List<String> toKeep = new java.util.ArrayList<>();
-        for (int i = 0; i < rampRateBox.getItemCount(); i++) {
-            String it = (String) rampRateBox.getItemAt(i);
-            if (!Bundle.getMessage("RAMP_PHYSICS").equals(it)) {
-                toKeep.add(it);
-            }
-        }
-        rampRateBox.removeAllItems();
-        for (String it : toKeep) {
-            rampRateBox.addItem(it);
-        }
-        if (speedProfileOn) {
-            rampRateBox.addItem(Bundle.getMessage("RAMP_PHYSICS"));
-        }
+         // Collect current items, excluding any existing "Physics" to avoid duplicates
+         java.util.List<String> toKeep = new java.util.ArrayList<>();
+         for (int i = 0; i < rampRateBox.getItemCount(); i++) {
+             String it = (String) rampRateBox.getItemAt(i);
+             if (!Bundle.getMessage("RAMP_PHYSICS").equals(it)) {
+                 toKeep.add(it);
+             }
+         }
     
-        // If Physics was selected but is no longer available, fall back to SPEEDPROFILE (if present) or first item
-        if (prev != null && Bundle.getMessage("RAMP_PHYSICS").equals(prev) && !speedProfileOn) {
-            boolean set = false;
-            for (int i = 0; i < rampRateBox.getItemCount(); i++) {
-                String candidate = (String) rampRateBox.getItemAt(i);
-                if (Bundle.getMessage("RAMP_SPEEDPROFILE").equals(candidate)) {
-                    rampRateBox.setSelectedIndex(i);
-                    set = true;
-                    break;
-                }
-            }
-            if (!set && rampRateBox.getItemCount() > 0) {
-                rampRateBox.setSelectedIndex(0);
-            }
-        }
+         // Rebuild the list
+         rampRateBox.removeAllItems();
+         for (String it : toKeep) {
+             rampRateBox.addItem(it);
+         }
+         if (speedProfileOn) {
+             rampRateBox.addItem(Bundle.getMessage("RAMP_PHYSICS"));
+         }
     
-        // Physics panel visibility follows selection
-        pa2Physics.setVisible(isPhysicsRampSelected());
-    }
-
+         // Try to restore previous selection if it still exists
+         boolean restored = false;
+         if (prev != null) {
+             for (int i = 0; i < rampRateBox.getItemCount(); i++) {
+                 if (prev.equals(rampRateBox.getItemAt(i))) {
+                     rampRateBox.setSelectedIndex(i);
+                     restored = true;
+                     break;
+                 }
+             }
+         }
+    
+         // If Physics was selected but is no longer available, fall back to SPEEDPROFILE (if present) or first item
+         if (!restored && prev != null && Bundle.getMessage("RAMP_PHYSICS").equals(prev) && !speedProfileOn) {
+             boolean set = false;
+             for (int i = 0; i < rampRateBox.getItemCount(); i++) {
+                 String candidate = (String) rampRateBox.getItemAt(i);
+                 if (Bundle.getMessage("RAMP_SPEEDPROFILE").equals(candidate)) {
+                     rampRateBox.setSelectedIndex(i);
+                     set = true;
+                     break;
+                 }
+             }
+             if (!set && rampRateBox.getItemCount() > 0) {
+                 rampRateBox.setSelectedIndex(0);
+             }
+         }
+    
+         // Physics panel visibility follows current selection
+         pa2Physics.setVisible(isPhysicsRampSelected());
+     }
     
      // Selection changed -> toggle physics panel
      private void handleRampRateSelectionChanged() {
@@ -2048,6 +2062,10 @@ public class ActivateTrainFrame extends JmriJFrame {
      // Rolling resistance coefficient (dimensionless)
      private final JLabel rollingResistanceCoeffLabel = new JLabel(Bundle.getMessage("RollingResistanceCoeffLabel"));
      private final JSpinner rollingResistanceCoeffSpinner = new JSpinner();
+     
+    // Driver power (% of full power/regulator) used during acceleration when Physics ramp is selected
+    private final JLabel driverPowerPercentLabel = new JLabel("Driver power (accel)");
+    private final JSpinner driverPowerPercentSpinner = new JSpinner();
         
      // Track current display units for conversion
      private AdditionalWeightUnits currentAdditionalWeightUnits = AdditionalWeightUnits.METRIC_TONNES;
@@ -2287,7 +2305,16 @@ public class ActivateTrainFrame extends JmriJFrame {
          rollingResistanceCoeffSpinner.setEditor(new JSpinner.NumberEditor(rollingResistanceCoeffSpinner, "0.0000"));
          rollingResistanceCoeffSpinner.setToolTipText(Bundle.getMessage("RollingResistanceCoeffHint"));
          pa2Physics.add(rollingResistanceCoeffLabel);
-         pa2Physics.add(rollingResistanceCoeffSpinner);
+         pa2Physics.add(rollingResistanceCoeffSpinner);      
+
+          // Driver power during acceleration (% of full power); stored 0..1 in TrainInfo
+          driverPowerPercentSpinner.setModel(
+              new SpinnerNumberModel(Float.valueOf(100.0f), Float.valueOf(10.0f), Float.valueOf(100.0f), Float.valueOf(1.0f))
+          );
+          driverPowerPercentSpinner.setEditor(new JSpinner.NumberEditor(driverPowerPercentSpinner, "##0'%'"));
+          driverPowerPercentSpinner.setToolTipText("Percent of full power/regulator used when accelerating (Physics ramp only)");
+          pa2Physics.add(driverPowerPercentLabel);
+          pa2Physics.add(driverPowerPercentSpinner);
 
          // Rolling resistance coefficient (dimensionless, default 0.002)
          rollingResistanceCoeffSpinner.setModel(
@@ -2470,7 +2497,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             maxSpeedSpinner.setValue(info.getMaxSpeed());
         }
         minReliableOperatingSpeedSpinner.setValue(info.getMinReliableOperatingSpeed());
-        setComboBox(rampRateBox, info.getRampRate());      
+        String rampLabel = normalizeRampLabel(info.getRampRate()); 
 
          // Physics: set additional weight spinner (convert stored metric tonnes to current UI units)
          currentAdditionalWeightUnits = AdditionalWeightUnits.METRIC_TONNES;
@@ -2478,16 +2505,24 @@ public class ActivateTrainFrame extends JmriJFrame {
          additionalWeightSpinner.setValue(Float.valueOf(convertTonnesToDisplay(currentAdditionalWeightUnits, info.getAdditionalTrainWeightMetricTonnes())));       
          additionalWeightUnitsComboBox.setSelectedIndex(0);
          rollingResistanceCoeffSpinner.setValue(Float.valueOf(info.getRollingResistanceCoeff()));
+         
+         // Driver power % -> spinner uses 0..100; file stores 0..1
+         float dp = info.getDriverPowerPercent();
+         if (dp <= 0.0f) dp = 0.0f;
+         if (dp > 1.0f) dp = 1.0f;
+         driverPowerPercentSpinner.setValue(Float.valueOf(dp * 100.0f));
     
          // Physics availability & panel visibility based on current Speed-profile + ramp
-          // Ensure checkbox reflects the file state *before* rebuilding ramp list
-          useSpeedProfileCheckBox.setSelected(info.getUseSpeedProfile());
-    
-          // Physics availability depends only on whether speed profile UI is enabled (availability), not on selection
-          updateRampPhysicsAvailability(useSpeedProfileCheckBox.isEnabled());
-    
-          // Physics weight row visibility follows the current ramp selection
-          pa2Physics.setVisible(isPhysicsRampSelected());
+        useSpeedProfileCheckBox.setSelected(info.getUseSpeedProfile());
+        // Physics availability depends only on whether speed profile UI is enabled (availability), not on selection
+        updateRampPhysicsAvailability(useSpeedProfileCheckBox.isEnabled());
+        
+        // Now that the items are rebuilt, set the ramp selection using the normalized label
+        setComboBox(rampRateBox, rampLabel);
+        
+        // Physics weight row visibility follows the current ramp selection
+        pa2Physics.setVisible(isPhysicsRampSelected());
+
       
         trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
         runInReverseBox.setSelected(info.getRunInReverse());
@@ -2562,6 +2597,12 @@ public class ActivateTrainFrame extends JmriJFrame {
              info.setAdditionalTrainWeightMetricTonnes(0.0f);
          }
 
+
+         // Driver power percent: only meaningful for Physics ramp, but we always persist (default 1.0 when not physics)
+         float dpct = ((Number) driverPowerPercentSpinner.getValue()).floatValue() / 100.0f;
+         if (dpct < 0.0f) dpct = 0.0f; else if (dpct > 1.0f) dpct = 1.0f;
+         info.setDriverPowerPercent(isPhysicsRampSelected() ? dpct : 1.0f);
+             
          // Always store c_rr (independent of ramp selection)
         info.setRollingResistanceCoeff(((Number) rollingResistanceCoeffSpinner.getValue()).floatValue());
         info.setRunInReverse(runInReverseBox.isSelected());
@@ -2600,7 +2641,41 @@ public class ActivateTrainFrame extends JmriJFrame {
             info.setFNumberHorn((int)fNumberHornSpinner.getValue());
         }
 
-   private void initializeRampCombo() {
+    // Map legacy ramp values (numeric codes or Bundle keys) to the current display label used in rampRateBox.
+     private String normalizeRampLabel(String raw) {
+         if (raw == null || raw.trim().isEmpty()) {
+             return Bundle.getMessage("RAMP_NONE");
+         }
+         String s = raw.trim();
+    
+         // Numeric legacy codes -> display labels; order must match AutoActiveTrain constants
+         if (s.matches("\\d+")) {
+             switch (Integer.parseInt(s)) {
+                 case 0: return Bundle.getMessage("RAMP_NONE");
+                 case 1: return Bundle.getMessage("RAMP_FAST");
+                 case 2: return Bundle.getMessage("RAMP_MEDIUM");
+                 case 3: return Bundle.getMessage("RAMP_MED_SLOW");
+                 case 4: return Bundle.getMessage("RAMP_SLOW");
+                 case 5: return Bundle.getMessage("RAMP_SPEEDPROFILE");
+                 case 6: return Bundle.getMessage("RAMP_PHYSICS");
+                 default: return Bundle.getMessage("RAMP_NONE");
+             }
+         }
+    
+         // Bundle key -> display label (e.g., "RAMP_MEDIUM")
+         if ("RAMP_NONE".equals(s))         return Bundle.getMessage("RAMP_NONE");
+         if ("RAMP_FAST".equals(s))         return Bundle.getMessage("RAMP_FAST");
+         if ("RAMP_MEDIUM".equals(s))       return Bundle.getMessage("RAMP_MEDIUM");
+         if ("RAMP_MED_SLOW".equals(s))     return Bundle.getMessage("RAMP_MED_SLOW");
+         if ("RAMP_SLOW".equals(s))         return Bundle.getMessage("RAMP_SLOW");
+         if ("RAMP_SPEEDPROFILE".equals(s)) return Bundle.getMessage("RAMP_SPEEDPROFILE");
+         if ("RAMP_PHYSICS".equals(s))      return Bundle.getMessage("RAMP_PHYSICS");
+    
+         // Otherwise assume it's already a localized display label
+         return s;
+     }
+  
+    private void initializeRampCombo() {
         rampRateBox.removeAllItems();
         rampRateBox.addItem(Bundle.getMessage("RAMP_NONE"));
         rampRateBox.addItem(Bundle.getMessage("RAMP_FAST"));

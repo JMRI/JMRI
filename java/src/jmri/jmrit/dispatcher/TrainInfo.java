@@ -821,6 +821,17 @@ public class TrainInfo {
      private float rollingResistanceCoeff = 0.002f;
      public void setRollingResistanceCoeff(float value) { rollingResistanceCoeff = Math.max(0.0f, value); }
      public float getRollingResistanceCoeff() { return rollingResistanceCoeff; }
+     
+
+     // --- Physics: driver's applied power/regulator during acceleration (0.0..1.0); default 1.0 (=100%)
+     private float driverPowerPercent = 1.0f;
+     /** Sets the driver's applied power/regulator during acceleration (0.0..1.0). */
+     public void setDriverPowerPercent(float value) {
+         // Clamp 0..1
+         driverPowerPercent = (value < 0.0f) ? 0.0f : ((value > 1.0f) ? 1.0f : value);
+     }
+     /** Gets the driver's applied power/regulator during acceleration (0.0..1.0). */
+     public float getDriverPowerPercent() { return driverPowerPercent; }
 }
 
 

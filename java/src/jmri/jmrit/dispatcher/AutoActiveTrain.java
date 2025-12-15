@@ -587,7 +587,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     private boolean _useStopSensor = true;                    //used by DispatcherSystem to override use of stop sensor
     
-     // --- Physics runtime state (added) ---
+     // --- Physics runtime state ---
      private float _additionalWeightTonnes = 0.0f;      // extra consist mass in metric tonnes (t)
      private float _rollingResistanceCoeff = 0.002f;    // dimensionless c_rr; default ~0.002
     
@@ -600,6 +600,15 @@ public class AutoActiveTrain implements ThrottleListener {
          _rollingResistanceCoeff = Math.max(0.0f, value);
      }
      public float getRollingResistanceCoeff() { return _rollingResistanceCoeff; }
+     
+     // Driver’s applied power/regulator during acceleration (0.0..1.0); default 1.0
+     private float _driverPowerPercent = 1.0f;
+     public void setDriverPowerPercent(float value) {
+         if (value < 0.0f) value = 0.0f;
+         if (value > 1.0f) value = 1.0f;
+        _driverPowerPercent = value;
+      }
+     public float getDriverPowerPercent() { return _driverPowerPercent; }
 
     protected void saveSpeedAndDirection() {
         _savedSpeed = _autoEngineer.getTargetSpeed();
@@ -2924,143 +2933,205 @@ public class AutoActiveTrain implements ThrottleListener {
             setNextStep();
         }
         
-        private void runPhysicsAccelerationPlanner(float targetThrottlePct, boolean forward) {
-            // --- Read current speed via profile in MODEL units (mm/s -> m/s) ---
-            float throttleNow     = clampThrottle(throttle.getSpeedSetting());
-            float v0_mms          = AutoActiveTrain.this.speedMmsFromThrottle(throttleNow, forward);   // model mm/s
-            float v0_model_ms     = v0_mms / 1000.0f;                                                  // model m/s
-        
-            // Target speed from requested throttle (MODEL units)
-            float vTarget_mms     = AutoActiveTrain.this.speedMmsFromThrottle(targetThrottlePct, forward); // model mm/s
-            float vTarget_model_ms= vTarget_mms / 1000.0f;                                                  // model m/s
-        
-            // Layout scale ratio (e.g., HO ≈ 87). Reuse ONE local only.
-            float scaleRatio = (AutoActiveTrain.this._dispatcher != null)
-                    ? (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio()
-                    : 1.0f;
-        
-            // Convert MODEL speeds to FULL-SCALE speeds (m/s) for physics math
-            float v0_fs         = v0_model_ms * scaleRatio;
-            float vTarget_fs    = vTarget_model_ms * scaleRatio;
-        
-            // Enforce caps in FULL-SCALE km/h space, then convert to FULL-SCALE m/s
-            float kmhCapInfo    = AutoActiveTrain.this.getMaxSpeedScaleKmh();                 // 0.0f => disabled
-            float kmhCapRoster  = (AutoActiveTrain.this.re != null) ? AutoActiveTrain.this.re.getPhysicsMaxSpeedKmh() : 0.0f;
-            float vCap_fs_info  = (kmhCapInfo   > 0.0f) ? (kmhCapInfo   / 3.6f) : Float.POSITIVE_INFINITY;
-            float vCap_fs_roster= (kmhCapRoster > 0.0f) ? (kmhCapRoster / 3.6f) : Float.POSITIVE_INFINITY;
-            vTarget_fs = Math.min(vTarget_fs, Math.min(vCap_fs_info, vCap_fs_roster));
-        
-            // Respect min reliable speed floor (MODEL units) → FULL-SCALE
-            float vMin_mms      = AutoActiveTrain.this.speedMmsFromThrottle(minReliableOperatingSpeed, forward);
-            float vMin_model_ms = vMin_mms / 1000.0f;
-            float vMin_fs       = vMin_model_ms * scaleRatio;
-        
-            // If target below floor, raise to floor
-            if (vTarget_fs < vMin_fs) vTarget_fs = vMin_fs;
-        
-            // --- Physics parameters (FULL-SCALE SI) ---
-            float rosterKg = (AutoActiveTrain.this.re != null) ? AutoActiveTrain.this.re.getPhysicsWeightKg() : 0.0f;
-            float extraKg  = AutoActiveTrain.this.getAdditionalTrainWeightMetricTonnes() * 1000.0f;
-            float massKg   = Math.max(1.0f, rosterKg + extraKg);     // avoid div-by-zero
-        
-            float g        = 9.80665f;
-            float c_rr     = AutoActiveTrain.this.getRollingResistanceCoeff();
-            float P_W      = (AutoActiveTrain.this.re != null) ? (AutoActiveTrain.this.re.getPhysicsPowerKw() * 1000.0f) : 0.0f;
-            float F_TE     = (AutoActiveTrain.this.re != null) ? (AutoActiveTrain.this.re.getPhysicsTractiveEffortKn() * 1000.0f) : 0.0f;
-            RosterEntry.TractionType traction = (AutoActiveTrain.this.re != null)
-                    ? AutoActiveTrain.this.re.getPhysicsTractionType()
-                    : RosterEntry.TractionType.DIESEL_ELECTRIC;
-        
-            // --- Integration step: align physics dt to write interval ---
-            int   baseMs = Math.max(AutoActiveTrain.this._dispatcher.getMinThrottleInterval(), 50);
-            float dt     = baseMs / 1000.0f;
-        
-            java.util.LinkedList<Float>  thrSteps = new java.util.LinkedList<>();
-            java.util.LinkedList<Integer> durSteps = new java.util.LinkedList<>();
-        
-            // Start at current speed or at floor, in FULL-SCALE
-            float v_fs = Math.max(v0_fs, vMin_fs);
-            int safety = 0;
-        
-            // --- DEBUG (optional): uncomment if you want to see starting point ---
-            // log.debug("[{}] PHYS start: v0_fs={}, vTarget_fs={}, vMin_fs={}",
-            //     AutoActiveTrain.this._activeTrain.getTrainName(), v_fs, vTarget_fs, vMin_fs);
-        
-            while (v_fs < vTarget_fs && safety < 10000) {
-                float v_guard = Math.max(0.01f, v_fs);   // guard 1 cm/s to avoid P/v blow-up
-        
-                // Drive force model (FULL-SCALE)
-                float F_power = (P_W > 0.0f) ? (P_W / v_guard) : Float.POSITIVE_INFINITY;
-                float F_drive;
-                if (traction == RosterEntry.TractionType.STEAM) {
-                    // Steam: constant force until power limit dominates
-                    F_drive = Math.min(F_TE, F_power);
-                } else {
-                    // Diesel/Electric: constant power once rolling, limited by starting TE at low speed
-                    F_drive = Math.min((F_TE > 0.0f) ? F_TE : Float.POSITIVE_INFINITY, F_power);
-                }
-        
-                // Rolling resistance and acceleration (FULL-SCALE)
-                float F_rr = c_rr * massKg * g;
-                float a_fs = (F_drive - F_rr) / massKg;
-                if (a_fs < 0.0f) a_fs = 0.0f;
-        
-                // Predict next speed
-                float v_next_fs = v_fs + a_fs * dt;
-                if (v_next_fs <= v_fs) break;   // numerical guard
-        
-                // If this slice overshoots the FINAL target, shorten the slice to land exactly at the target
-                float stepDt    = dt;
-                boolean finalStep = false;
-                if (a_fs > 0.0f && v_next_fs > vTarget_fs) {
-                    stepDt    = (vTarget_fs - v_fs) / a_fs;                 // exact time to reach target
-                    stepDt    = Math.max(0.001f, stepDt);
-                    finalStep = true;
-                    v_next_fs = v_fs + a_fs * stepDt;                       // equals vTarget_fs
-                }
-        
-                // Mid-step FULL-SCALE speed for throttle mapping
-                float v_mid_fs = 0.5f * (v_fs + v_next_fs);
-        
-                // Convert mid-step FULL-SCALE speed back to MODEL mm/s for roster profile inversion
-                float v_mid_model_ms = v_mid_fs / scaleRatio;
-                float v_mid_mms      = v_mid_model_ms * 1000.0f;
-        
-                float thrApplied = AutoActiveTrain.this.throttleForSpeedMms(v_mid_mms, forward);
-                float thrCmd     = (speedFactor > 0.0f) ? (thrApplied / speedFactor) : thrApplied;
-                thrCmd           = clampThrottle(clamp(thrCmd, minReliableOperatingSpeed, maxSpeed));
-        
-                thrSteps.add(Float.valueOf(thrCmd));
-                durSteps.add(Integer.valueOf(Math.max(1, Math.round(stepDt * 1000.0f))));
-        
-                v_fs = v_next_fs;
-                safety++;
-        
-                if (finalStep) break;
-            }
-        
-            // No steps? Just set immediate (use MODEL speed for inversion)
-            if (thrSteps.isEmpty()) {
-                float finalThr = AutoActiveTrain.this.throttleForSpeedMms(vTarget_model_ms * 1000.0f, forward);
-                float thrCmd   = (speedFactor > 0.0f) ? (finalThr / speedFactor) : finalThr;
-                thrCmd         = clampThrottle(clamp(thrCmd, minReliableOperatingSpeed, maxSpeed));
-                throttle.setSpeedSetting(thrCmd);
-                targetSpeed = thrCmd;
-                return;
-            }
-        
-            // Execute planned schedule
-            int n = thrSteps.size();
-            float[] thrArr = new float[n];
-            int[]   durArr = new int[n];
-            for (int i = 0; i < n; i++) {
-                thrArr[i] = thrSteps.get(i).floatValue();
-                durArr[i] = Math.max(1, durSteps.get(i).intValue());
-            }
-            AutoActiveTrain.this._stoppingUsingSpeedProfile = false;
-            runPlannedSpeedSchedule(thrArr, durArr);
-            targetSpeed = thrArr[n - 1];
-        }
+    
+         // -----------------------------------------------------------------------------
+         // Physics-based acceleration planner (with driver power % + no-stall fallback)
+         // -----------------------------------------------------------------------------
+         private void runPhysicsAccelerationPlanner(float targetThrottlePct, boolean forward) {
+             // --- Read current speed via profile in MODEL units (mm/s -> m/s) ---
+             float throttleNow = clampThrottle(throttle.getSpeedSetting());
+             float v0_mms = AutoActiveTrain.this.speedMmsFromThrottle(throttleNow, forward);  // model mm/s
+             float v0_model_ms = v0_mms / 1000.0f;                                            // model m/s
+    
+             // Target speed from requested throttle (MODEL units)
+             float vTarget_mms = AutoActiveTrain.this.speedMmsFromThrottle(targetThrottlePct, forward); // model mm/s
+             float vTarget_model_ms = vTarget_mms / 1000.0f;                                            // model m/s
+    
+             // Layout scale ratio; convert MODEL -> FULL-SCALE for physics math
+             float scaleRatio = (AutoActiveTrain.this._dispatcher != null)
+                     ? (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio()
+                     : 1.0f;
+    
+             float v0_fs = v0_model_ms * scaleRatio;          // full-scale m/s
+             float vTarget_fs = vTarget_model_ms * scaleRatio;
+    
+             // Max speed caps (full-scale km/h converted to m/s)
+             float kmhCapInfo   = AutoActiveTrain.this.getMaxSpeedScaleKmh();                      // 0.0f => disabled
+             float kmhCapRoster = (AutoActiveTrain.this.re != null) ? AutoActiveTrain.this.re.getPhysicsMaxSpeedKmh() : 0.0f;
+             float vCap_fs_info   = (kmhCapInfo   > 0.0f) ? (kmhCapInfo   / 3.6f) : Float.POSITIVE_INFINITY;
+             float vCap_fs_roster = (kmhCapRoster > 0.0f) ? (kmhCapRoster / 3.6f) : Float.POSITIVE_INFINITY;
+             vTarget_fs = Math.min(vTarget_fs, Math.min(vCap_fs_info, vCap_fs_roster));
+    
+             // Respect min reliable speed floor (MODEL -> FULL-SCALE)
+             float vMin_mms = AutoActiveTrain.this.speedMmsFromThrottle(minReliableOperatingSpeed, forward);
+             float vMin_model_ms = vMin_mms / 1000.0f;
+             float vMin_fs = vMin_model_ms * scaleRatio;
+    
+             // Apply driver power/regulator percent during ACCELERATION only
+             boolean accelerating = targetThrottlePct > (throttleNow + 0.0005f);
+             float alphaUser = getDriverPowerPercent();                 // 0..1 from TrainInfo/UI
+             float alpha = accelerating ? alphaUser : 1.0f;             // do not limit when coasting/decelerating
+    
+             // If target below floor, raise to floor
+             if (vTarget_fs < vMin_fs) vTarget_fs = vMin_fs;
+    
+             // --- Physics parameters (FULL-SCALE SI) ---
+             float rosterKg = (AutoActiveTrain.this.re != null) ? AutoActiveTrain.this.re.getPhysicsWeightKg() : 0.0f;
+             float extraKg  = AutoActiveTrain.this.getAdditionalTrainWeightMetricTonnes() * 1000.0f;
+             float massKg   = Math.max(1.0f, rosterKg + extraKg);       // avoid div-by-zero
+    
+             final float g    = 9.80665f;
+             final float c_rr = AutoActiveTrain.this.getRollingResistanceCoeff();
+             float P_W        = (AutoActiveTrain.this.re != null) ? (AutoActiveTrain.this.re.getPhysicsPowerKw() * 1000.0f) : 0.0f;
+             float F_TE       = (AutoActiveTrain.this.re != null) ? (AutoActiveTrain.this.re.getPhysicsTractiveEffortKn() * 1000.0f) : 0.0f;
+             RosterEntry.TractionType traction =
+                     (AutoActiveTrain.this.re != null) ? AutoActiveTrain.this.re.getPhysicsTractionType()
+                                                       : RosterEntry.TractionType.DIESEL_ELECTRIC;
+    
+             // Mapping exponents (tunable): Steam slightly sub-linear for power, linear for TE; Diesel/Electric linear
+             final float powerExpSteam = 0.85f;  // P ~ alpha^0.85 (steam)
+             final float teExpSteam    = 1.00f;  // TE ~ alpha^1.0  (steam)
+             final float powerExpDE    = 1.00f;  // P ~ alpha^1.0   (diesel/electric)
+             final float teExpDE       = 1.00f;  // TE ~ alpha^1.0  (diesel/electric)
+    
+             // --- No-stall fallback at crawl speed: if requested alpha cannot overcome rolling resistance, raise alpha temporarily
+             if (accelerating) {
+                 final float F_rr_crawl = c_rr * massKg * g;
+                 float vGuard = Math.max(0.01f, vMin_fs); // avoid div-by-zero
+    
+                 float ap0 = (traction == RosterEntry.TractionType.STEAM)
+                         ? (float) Math.pow(alpha, powerExpSteam) : (float) Math.pow(alpha, powerExpDE);
+                 float at0 = (traction == RosterEntry.TractionType.STEAM)
+                         ? (float) Math.pow(alpha, teExpSteam)    : (float) Math.pow(alpha, teExpDE);
+    
+                 float Fp0 = (P_W * ap0) / vGuard;   // power-limited force at crawl
+                 float Ft0 = F_TE * at0;             // tractive-effort-limited force
+                 float Fd0 = Math.min((Fp0 > 0.0f ? Fp0 : Float.POSITIVE_INFINITY), Ft0);
+    
+                 if (Fd0 <= F_rr_crawl) {
+                     // Find minimal alpha in [alpha..1] that yields positive drive at crawl
+                     float alphaEff = alpha;
+                     for (float test = alpha + 0.01f; test <= 1.0001f; test += 0.01f) {
+                         float ap = (traction == RosterEntry.TractionType.STEAM)
+                                 ? (float) Math.pow(test, powerExpSteam) : (float) Math.pow(test, powerExpDE);
+                         float at = (traction == RosterEntry.TractionType.STEAM)
+                                 ? (float) Math.pow(test, teExpSteam)    : (float) Math.pow(test, teExpDE);
+                         float Fp = (P_W * ap) / vGuard;
+                         float Ft = F_TE * at;
+                         float Fd = Math.min((Fp > 0.0f ? Fp : Float.POSITIVE_INFINITY), Ft);
+                         if (Fd > F_rr_crawl * 1.02f) { // small margin
+                             alphaEff = test;
+                             break;
+                         }
+                     }
+                     if (alphaEff > alpha) {
+                         log.debug("{}: DriverPowerPercent raised from {} to {} to avoid stall at low speed",
+                                 _activeTrain.getTrainName(), alpha, alphaEff);
+                         alpha = alphaEff;
+                     }
+                 }
+             }
+    
+             // --- Scale available power/TE for the planner using final alpha ---
+             float alphaPower;
+             float alphaTE;
+             switch (traction) {
+                 case STEAM:
+                     alphaPower = (alpha <= 0.0f) ? 0.0f : (float) Math.pow(alpha, powerExpSteam);
+                     alphaTE    = (alpha <= 0.0f) ? 0.0f : (float) Math.pow(alpha, teExpSteam);
+                     break;
+                 case DIESEL_ELECTRIC:
+                 default:
+                     alphaPower = (alpha <= 0.0f) ? 0.0f : (float) Math.pow(alpha, powerExpDE);
+                     alphaTE    = (alpha <= 0.0f) ? 0.0f : (float) Math.pow(alpha, teExpDE);
+                     break;
+             }
+             float P_W_avail  = P_W  * alphaPower;
+             float F_TE_avail = F_TE * alphaTE;
+    
+             // --- Integration step: align physics dt to write interval ---
+             int   baseMs = Math.max(AutoActiveTrain.this._dispatcher.getMinThrottleInterval(), 50);
+             float dt     = baseMs / 1000.0f;
+    
+             java.util.LinkedList<Float> thrSteps = new java.util.LinkedList<>();
+             java.util.LinkedList<Integer> durSteps = new java.util.LinkedList<>();
+    
+             // Start at current speed or at floor, in FULL-SCALE
+             float v_fs = Math.max(v0_fs, vMin_fs);
+             int safety = 0;
+    
+             while (v_fs < vTarget_fs && safety < 10000) {
+                 float v_guard = Math.max(0.01f, v_fs);           // guard 1 cm/s to avoid P/v blow-up
+    
+                 // Drive force model (FULL-SCALE)
+                 float F_power = (P_W_avail > 0.0f) ? (P_W_avail / v_guard) : Float.POSITIVE_INFINITY;
+                 float F_drive;
+                 if (traction == RosterEntry.TractionType.STEAM) {
+                     F_drive = Math.min(F_TE_avail, F_power);
+                 } else {
+                     F_drive = Math.min((F_TE_avail > 0.0f) ? F_TE_avail : Float.POSITIVE_INFINITY, F_power);
+                 }
+    
+                 // Rolling resistance and acceleration (FULL-SCALE)
+                 float F_rr = c_rr * massKg * g;
+                 float a_fs = (F_drive - F_rr) / massKg;
+                 if (a_fs < 0.0f) a_fs = 0.0f;
+    
+                 // Predict next speed
+                 float v_next_fs = v_fs + a_fs * dt;
+                 if (v_next_fs <= v_fs) break; // numerical guard
+    
+                 // If this slice overshoots the FINAL target, shorten the slice to land exactly at the target
+                 float   stepDt   = dt;
+                 boolean finalStep = false;
+                 if (a_fs > 0.0f && v_next_fs > vTarget_fs) {
+                     stepDt   = (vTarget_fs - v_fs) / a_fs; // exact time to reach target
+                     stepDt   = Math.max(0.001f, stepDt);
+                     finalStep = true;
+                     v_next_fs = v_fs + a_fs * stepDt;      // equals vTarget_fs
+                 }
+    
+                 // Mid-step FULL-SCALE speed for throttle mapping -> back to MODEL mm/s
+                 float v_mid_fs       = 0.5f * (v_fs + v_next_fs);
+                 float v_mid_model_ms = v_mid_fs / scaleRatio;
+                 float v_mid_mms      = v_mid_model_ms * 1000.0f;
+    
+                 float thrApplied = AutoActiveTrain.this.throttleForSpeedMms(v_mid_mms, forward);
+                 float thrCmd = (speedFactor > 0.0f) ? (thrApplied / speedFactor) : thrApplied;
+                 thrCmd = clampThrottle(clamp(thrCmd, minReliableOperatingSpeed, maxSpeed));
+    
+                 thrSteps.add(Float.valueOf(thrCmd));
+                 durSteps.add(Integer.valueOf(Math.max(1, Math.round(stepDt * 1000.0f))));
+    
+                 v_fs = v_next_fs;
+                 safety++;
+                 if (finalStep) break;
+             }
+    
+             // No steps? Just set immediate (use MODEL speed for inversion)
+             if (thrSteps.isEmpty()) {
+                 float finalThr = AutoActiveTrain.this.throttleForSpeedMms(vTarget_model_ms * 1000.0f, forward);
+                 float thrCmd = (speedFactor > 0.0f) ? (finalThr / speedFactor) : finalThr;
+                 thrCmd = clampThrottle(clamp(thrCmd, minReliableOperatingSpeed, maxSpeed));
+                 throttle.setSpeedSetting(thrCmd);
+                 targetSpeed = thrCmd;
+                 return;
+             }
+    
+             // Execute planned schedule
+             int n = thrSteps.size();
+             float[] thrArr = new float[n];
+             int[]   durArr = new int[n];
+             for (int i = 0; i < n; i++) {
+                 thrArr[i] = thrSteps.get(i).floatValue();
+                 durArr[i] = Math.max(1, durSteps.get(i).intValue());
+             }
+    
+             AutoActiveTrain.this._stoppingUsingSpeedProfile = false;
+             runPlannedSpeedSchedule(thrArr, durArr);
+             targetSpeed = thrArr[n - 1];
+         }
+
 
         /**
          * Check if train is moving or stopped.
