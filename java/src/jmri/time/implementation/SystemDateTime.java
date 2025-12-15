@@ -28,7 +28,7 @@ public class SystemDateTime extends AbstractTimeProvider implements DateProvider
     /**
      * Creates an instance of SystemDateTime.
      * This constructor must only be called from ProxyTimeProviderManager and
-     * the caller must call {@ #init()} afterwards.
+     * the caller must call {@link #init()} afterwards.
      * @param systemName the system name
      */
     public SystemDateTime(String systemName) {
