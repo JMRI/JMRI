@@ -1,6 +1,7 @@
 package apps.plaf.macosx;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -10,9 +11,19 @@ import org.junit.jupiter.api.*;
  */
 public class Jdk9ApplicationTest  {
 
-   @Test
-   public void testCtor(){
-      Assert.assertNotNull(new Jdk9Application());
-   }
+    @Test
+    public void testCtor(){
+        Assertions.assertNotNull(new Jdk9Application());
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 }

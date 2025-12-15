@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet.swing.menuitemspi;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JMenu;
@@ -31,6 +33,8 @@ public class MenuItemsServiceTest implements MenuItemsInterface {
     }
 
     @Test
+    @SuppressFBWarnings(value = "NP_LOAD_OF_KNOWN_NULL_VALUE",
+        justification = "WindowInterface and memo not required in test")
     public void testGetMenuExtensionsItems() {
         boolean isLocoNetInterface = false;
         WindowInterface wi = null;

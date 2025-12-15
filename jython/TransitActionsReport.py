@@ -2,11 +2,34 @@
 #
 # The output will be in the "Script Output" window, or the JMRI system console if the window is not open.
 #
+# The script starts by requesting which transit to use.  If the default empty row is selected,
+# the actions for all of the transits is printed.
+#
 # Author:  Dave Sand copyright (c) 2025
 
 import java
 import jmri
+from javax.swing import JComboBox, JOptionPane
 
+# Select a transit for a single actions report.
+# The first entry is empty which results in an actions report for all transits.
+def selectTransit():
+    cboEntries = JComboBox()
+    cboEntries.setMaximumRowCount(20)
+    transit = None
+
+    cboEntries.addItem('')
+    for entry in transitList:
+        cboEntries.addItem(entry.getDisplayName())
+
+    titleLine = 'Select a transit'
+    ret = JOptionPane.showConfirmDialog(None, cboEntries, titleLine, JOptionPane.PLAIN_MESSAGE)
+    if ret >= 0:
+        transit = cboEntries.getSelectedItem()
+
+    return transit
+
+# Format a "when" action line.
 def getWhen(action):
     code = action.getWhenCode()
     delay = action.getDataWhen()
@@ -45,6 +68,7 @@ def getWhen(action):
     else:
         return code
 
+# Format a "what" action line.
 def getWhat(action):
     code = action.getWhatCode()
     data1 = action.getDataWhat1()
@@ -124,8 +148,8 @@ def getWhat(action):
     else:
         return code
 
-
-for transit in transits.getNamedBeanSet():
+# Create an actions report for one transit.
+def printTransitReport(transit):
     transitName = transit.getDisplayName()
     print '---- transit = {}'.format(transitName)
 
@@ -142,3 +166,15 @@ for transit in transits.getNamedBeanSet():
 
             print '    when :: {}'.format(when)
             print '    what :: {}\n'.format(what)
+
+## Main ##
+transitList = transits.getNamedBeanSet()
+selectedTransitName = selectTransit()
+
+if selectedTransitName:
+    transit = transits.getTransit(selectedTransitName)
+    printTransitReport(transit)
+else:
+    for transit in transitList:
+        printTransitReport(transit)
+
