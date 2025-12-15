@@ -66,6 +66,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
      private JRadioButton physicsSteamRadio = new JRadioButton("Steam");
      private JRadioButton physicsDieselElectricRadio = new JRadioButton("Diesel/Electric");
      private ButtonGroup physicsTractionGroup = new ButtonGroup();
+     private JCheckBox physicsMechanicalTransmissionCheck = new JCheckBox("Mechanical transmission (4-speed epicyclic)");
     
      // Unit combos per field (display units; storage stays metric in RosterEntry)
      private JComboBox<String> physicsWeightUnitCombo = new JComboBox<>();
@@ -285,7 +286,17 @@ public class RosterEntryPane extends javax.swing.JPanel {
          tractionRow.add(physicsSteamRadio);
          tractionRow.add(physicsDieselElectricRadio);
          gbLayout.setConstraints(tractionRow, cR);
-         super.add(tractionRow);
+         super.add(tractionRow);    
+
+          // Transmission (mechanical DMU option)
+          cL.gridy++;
+          JLabel physicsTransLabel = new JLabel("Transmission:");
+          gbLayout.setConstraints(physicsTransLabel, cL);
+          super.add(physicsTransLabel);
+          cR.gridy = cL.gridy;
+          gbLayout.setConstraints(physicsMechanicalTransmissionCheck, cR);
+          // physics-based gear changes (15/27/41 mph) in Physics mode.");
+          super.add(physicsMechanicalTransmissionCheck);
         
          // Locomotive weight
          cL.gridy++;
@@ -380,7 +391,11 @@ public class RosterEntryPane extends javax.swing.JPanel {
          // Wire listeners (store metric in RosterEntry on change; re is already set by this ctor)
          physicsSteamRadio.addActionListener(ev -> { if (re != null) re.setPhysicsTractionType(RosterEntry.TractionType.STEAM); });
          physicsDieselElectricRadio.addActionListener(ev -> { if (re != null) re.setPhysicsTractionType(RosterEntry.TractionType.DIESEL_ELECTRIC); });
-        
+         
+        physicsMechanicalTransmissionCheck.addActionListener(ev -> {
+            if (re != null) re.setPhysicsMechanicalTransmission(physicsMechanicalTransmissionCheck.isSelected());
+        });
+     
          // Unit combo changes -> refresh display from stored metric
          physicsWeightUnitCombo.addActionListener(ev -> refreshPhysicsFromRosterEntry());
          physicsPowerUnitCombo.addActionListener(ev -> refreshPhysicsFromRosterEntry());
@@ -537,7 +552,9 @@ public class RosterEntryPane extends javax.swing.JPanel {
              physicsSteamRadio.setSelected(true);
          } else {
              physicsDieselElectricRadio.setSelected(true);
-         }
+         }   
+         
+         physicsMechanicalTransmissionCheck.setSelected(re.isPhysicsMechanicalTransmission());
     
          // Weight kg -> display
          physicsWeightSpinner.setValue(Double.valueOf(kgToDisplayWeight(re.getPhysicsWeightKg())));
@@ -683,6 +700,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         r.setPhysicsPowerKw(displayPowerToKw(((Number) physicsPowerSpinner.getValue()).floatValue()));
         r.setPhysicsTractiveEffortKn(displayTeToKn(((Number) physicsTractiveEffortSpinner.getValue()).floatValue()));
         r.setPhysicsMaxSpeedKmh(displaySpeedToKmh(((Number) physicsMaxSpeedSpinner.getValue()).floatValue()));
+        r.setPhysicsMechanicalTransmission(physicsMechanicalTransmissionCheck.isSelected());
    }
 
 

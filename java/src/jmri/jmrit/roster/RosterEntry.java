@@ -108,7 +108,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      public static final String PHYSICS_POWER_KW           = "physicsPowerKw";          // float kW
      public static final String PHYSICS_TRACTIVE_EFFORT_KN = "physicsTractiveEffortKn"; // float kN
      public static final String PHYSICS_MAX_SPEED_KMH      = "physicsMaxSpeedKmh";      // float km/h
-    
+     public static final String PHYSICS_MECH_TRANSMISSION = "physicsMechanicalTransmission"; // boolean
      public enum TractionType { STEAM, DIESEL_ELECTRIC }
 
 
@@ -141,6 +141,18 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      protected float _physicsPowerKw = 0.0f;
      protected float _physicsTractiveEffortKn = 0.0f;
      protected float _physicsMaxSpeedKmh = 0.0f;
+
+      // Mechanical transmission flag (4-speed epicyclic DMU behaviour)
+      protected boolean _physicsMechanicalTransmission = false;
+    
+      public void setPhysicsMechanicalTransmission(boolean value) {
+          boolean old = _physicsMechanicalTransmission;
+          _physicsMechanicalTransmission = value;
+          firePropertyChange(PHYSICS_MECH_TRANSMISSION, old, _physicsMechanicalTransmission);
+      }
+      public boolean isPhysicsMechanicalTransmission() {
+          return _physicsMechanicalTransmission;
+      }
 
     /**
      * Get the highest valid Fn key number for this roster entry.
@@ -860,6 +872,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
          if ((a = e.getAttribute(PHYSICS_WEIGHT_KG)) != null) {
              try { setPhysicsWeightKg(Float.parseFloat(a.getValue())); } catch (NumberFormatException ignore) {}
          }
+         if ((a = e.getAttribute(PHYSICS_MECH_TRANSMISSION)) != null) {
+             setPhysicsMechanicalTransmission("true".equalsIgnoreCase(a.getValue()));
+         }
          if ((a = e.getAttribute(PHYSICS_POWER_KW)) != null) {
              try { setPhysicsPowerKw(Float.parseFloat(a.getValue())); } catch (NumberFormatException ignore) {}
          }
@@ -1396,6 +1411,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
          e.setAttribute(PHYSICS_POWER_KW, Float.toString(getPhysicsPowerKw()));
          e.setAttribute(PHYSICS_TRACTIVE_EFFORT_KN, Float.toString(getPhysicsTractiveEffortKn()));
          e.setAttribute(PHYSICS_MAX_SPEED_KMH, Float.toString(getPhysicsMaxSpeedKmh()));
+         e.setAttribute(PHYSICS_MECH_TRANSMISSION, Boolean.toString(isPhysicsMechanicalTransmission()));
         if (_dateUpdated.isEmpty()) {
             // set date updated to now if never set previously
             this.changeDateUpdated();

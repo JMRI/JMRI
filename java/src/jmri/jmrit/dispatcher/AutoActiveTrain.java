@@ -2694,9 +2694,12 @@ public class AutoActiveTrain implements ThrottleListener {
             AutoActiveTrain.this._activeTrain.getTrainName(),
             ramping, physicsRamp, profileAvailable, forward, speed);
 
-        
         if (physicsRamp && profileAvailable) {
-            runPhysicsAccelerationPlanner(speed, forward);
+            // Run the heavy physics planner off the EDT to avoid UI stalls
+            Thread phys = jmri.util.ThreadingUtil.newThread(() -> {
+                runPhysicsAccelerationPlanner(speed, forward);
+            }, "PhysicsRamp " + AutoActiveTrain.this._activeTrain.getTrainName());
+            phys.start();
             return;
         }
     
@@ -2978,7 +2981,18 @@ public class AutoActiveTrain implements ThrottleListener {
              float kmhCapRoster = (AutoActiveTrain.this.re != null) ? AutoActiveTrain.this.re.getPhysicsMaxSpeedKmh() : 0.0f;
              float vCap_fs_info   = (kmhCapInfo   > 0.0f) ? (kmhCapInfo   / 3.6f) : Float.POSITIVE_INFINITY;
              float vCap_fs_roster = (kmhCapRoster > 0.0f) ? (kmhCapRoster / 3.6f) : Float.POSITIVE_INFINITY;
-             vTarget_fs = Math.min(vTarget_fs, Math.min(vCap_fs_info, vCap_fs_roster));
+             vTarget_fs = Math.min(vTarget_fs, Math.min(vCap_fs_info, vCap_fs_roster));        
+
+              // Mechanical transmission & gear thresholds (full-scale m/s)
+              final boolean mech = (AutoActiveTrain.this.re != null) && AutoActiveTrain.this.re.isPhysicsMechanicalTransmission();
+    
+              // 15 / 27 / 41 mph in full-scale m/s
+              final float[] gearFsMps = new float[]{15f * 0.44704f, 27f * 0.44704f, 41f * 0.44704f};
+              final boolean[] gearPauseDone = new boolean[gearFsMps.length];
+              // If we’re already above a threshold, mark it done so we don’t pause retroactively
+              for (int gi = 0; gi < gearFsMps.length; gi++) {
+                  gearPauseDone[gi] = (v0_fs >= gearFsMps[gi]);
+              }
     
              // Respect min reliable speed floor (MODEL -> FULL-SCALE)
              float vMin_mms = AutoActiveTrain.this.speedMmsFromThrottle(minReliableOperatingSpeed, forward);
@@ -3112,29 +3126,83 @@ public class AutoActiveTrain implements ThrottleListener {
                  // Mid-step FULL-SCALE speed for throttle mapping -> back to MODEL mm/s
                  float v_mid_fs       = 0.5f * (v_fs + v_next_fs);
                  float v_mid_model_ms = v_mid_fs / scaleRatio;
-                 float v_mid_mms      = v_mid_model_ms * 1000.0f;
-    
-                 float thrApplied = AutoActiveTrain.this.throttleForSpeedMms(v_mid_mms, forward);
-                 float thrCmd = (speedFactor > 0.0f) ? (thrApplied / speedFactor) : thrApplied;
-                 thrCmd = clampThrottle(clamp(thrCmd, minReliableOperatingSpeed, maxSpeed));
-    
-                 thrSteps.add(Float.valueOf(thrCmd));
-                 durSteps.add(Integer.valueOf(Math.max(1, Math.round(stepDt * 1000.0f))));
-    
-                 v_fs = v_next_fs;
-                 safety++;
-                 if (finalStep) break;
+                 float v_mid_mms      = v_mid_model_ms * 1000.0f;                
+
+
+              // --- Gear-change: simulate driver power to idle for ~3.5 s (coast under rolling resistance) ---
+              boolean pausedThisSlice = false;
+              if (mech && accelerating) {
+                  for (int gi = 0; gi < gearFsMps.length; gi++) {
+                      if (!gearPauseDone[gi]) {
+                          final float sTrig = gearFsMps[gi];
+                          // Only pause if target is beyond this gear and this slice actually crosses it
+                          if ((vTarget_fs >= sTrig) && (v_fs < sTrig) && (v_next_fs >= sTrig)) {
+
+                              // Coast for ~3.5 s with NO tractive effort: a = -(c_rr * g)
+                              final float pauseSec = 3.5f;
+                              float left = pauseSec;
+                              // Constant coasting deceleration in FULL-SCALE units
+                              final float aCoast_fs = -(c_rr * g);
+
+                              while (left > 0.0f) {
+                                  float chunk = Math.min(dt, left); // integrate at planner dt
+                                  float v_next_coast = v_fs + aCoast_fs * chunk;
+                                  // Do not drop below the min reliable floor (maps to usable throttle)
+                                  if (v_next_coast < vMin_fs) v_next_coast = vMin_fs;
+
+                                  // Mid-step speed for throttle inversion (MODEL → throttle %)
+                                  float v_mid_coast_fs = 0.5f * (v_fs + v_next_coast);
+                                  float v_mid_coast_model_ms = v_mid_coast_fs / scaleRatio;
+                                  float v_mid_coast_mms = v_mid_coast_model_ms * 1000.0f;
+
+                                  float thrAppliedCoast = AutoActiveTrain.this.throttleForSpeedMms(v_mid_coast_mms, forward);
+                                  float thrCmdCoast = (speedFactor > 0.0f) ? (thrAppliedCoast / speedFactor) : thrAppliedCoast;
+                                  thrCmdCoast = clampThrottle(clamp(thrCmdCoast, minReliableOperatingSpeed, maxSpeed));
+
+                                  thrSteps.add(Float.valueOf(thrCmdCoast));
+                                  durSteps.add(Integer.valueOf(Math.max(1, Math.round(chunk * 1000.0f))));
+
+                                  v_fs = v_next_coast;
+                                  left -= chunk;
+                                  safety++;
+                                  if (safety >= 10000) break;
+                              }
+
+                              gearPauseDone[gi] = true;
+                              pausedThisSlice = true;
+                              break; // only one gear crossed per slice
+                          }
+                      }
+                  }
+              }
+              // If we just coasted for a gear-change, skip the normal powered step this iteration
+              if (pausedThisSlice) {
+                  continue; // back to while(...) with updated v_fs
+              }
+
+              // --- Normal powered step append using v_mid_mms ---
+              float thrApplied = AutoActiveTrain.this.throttleForSpeedMms(v_mid_mms, forward);
+              // Pre-divide for SpeedFactor so final effective throttle is what we computed
+              float thrCmd = (speedFactor > 0.0f) ? (thrApplied / speedFactor) : thrApplied;
+              // Clamp to [minReliableOperatingSpeed .. maxSpeed]
+              thrCmd = clampThrottle(clamp(thrCmd, minReliableOperatingSpeed, maxSpeed));
+              thrSteps.add(Float.valueOf(thrCmd));
+              durSteps.add(Integer.valueOf(Math.max(1, Math.round(stepDt * 1000.0f))));
+              v_fs = v_next_fs;
+              safety++;
+              if (finalStep) break;
              }
-    
-             // No steps? Just set immediate (use MODEL speed for inversion)
-             if (thrSteps.isEmpty()) {
-                 float finalThr = AutoActiveTrain.this.throttleForSpeedMms(vTarget_model_ms * 1000.0f, forward);
-                 float thrCmd = (speedFactor > 0.0f) ? (finalThr / speedFactor) : finalThr;
-                 thrCmd = clampThrottle(clamp(thrCmd, minReliableOperatingSpeed, maxSpeed));
-                 throttle.setSpeedSetting(thrCmd);
-                 targetSpeed = thrCmd;
-                 return;
-             }
+
+               // No steps? Just set immediate (use MODEL speed for inversion)
+               if (thrSteps.isEmpty()) {
+                   float finalThr = AutoActiveTrain.this.throttleForSpeedMms(vTarget_model_ms * 1000.0f, forward);
+                   float thrCmdImmediate = (speedFactor > 0.0f) ? (finalThr / speedFactor) : finalThr;
+                   thrCmdImmediate = clampThrottle(clamp(thrCmdImmediate, minReliableOperatingSpeed, maxSpeed));
+                   throttle.setSpeedSetting(thrCmdImmediate);
+                   targetSpeed = thrCmdImmediate;
+                   return;
+               }
+
     
              // Execute planned schedule
              int n = thrSteps.size();
