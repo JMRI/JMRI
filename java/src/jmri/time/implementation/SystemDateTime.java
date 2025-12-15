@@ -107,6 +107,7 @@ public class SystemDateTime extends AbstractTimeProvider implements DateProvider
     /** {@inheritDoc} */
     @Override
     public void dispose() {
+        super.dispose();
         if (_timerTask != null) _timerTask.cancel();
     }
 
