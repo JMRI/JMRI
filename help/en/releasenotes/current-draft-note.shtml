@@ -702,5 +702,9 @@
                 to do SpotBugs checks locally, i.e. by running "ant spotbugs-check",
                 you will need to update your local version to 4.9.8.  See our
                 <a href="https://www.jmri.org/help/en/html/doc/Technical/SpotBugs.shtml">SpotBugs page</a>.
+            <li>(Developer) JMRI distributions, starting with this one, will now
+                be built with the Java 11.0.29 JDK.</li>
+            <li>The jSerialComm library that JMRI uses has been updated from version
+                2.10.4 to version 2.11.4.
         </ul>
 
