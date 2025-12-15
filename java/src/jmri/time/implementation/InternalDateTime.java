@@ -5,9 +5,6 @@ import java.time.temporal.*;
 import java.util.TimerTask;
 
 import jmri.time.*;
-import static jmri.time.TimeProvider.PROPERTY_CHANGE_DATETIME;
-import static jmri.time.TimeProvider.PROPERTY_CHANGE_MINUTES;
-import static jmri.time.TimeProvider.PROPERTY_CHANGE_SECONDS;
 import jmri.time.rate.ChangeableDoubleRate;
 import jmri.util.TimerUtil;
 
@@ -35,11 +32,8 @@ public class InternalDateTime extends AbstractTimeProvider
 
     private TimerTask getTimerTask() {
         /*
-        Klienterna verkar inte lyssna på klockan.
         Lägg till starta/stoppa klockan.
         Lägg till ändra hastighet (rate) på klockan.
-        DefaultTimebase får inte försöka sätta klockan om den inte har stöd
-        för det (system clock).
         */
 
         return new TimerTask() {
@@ -71,7 +65,7 @@ public class InternalDateTime extends AbstractTimeProvider
 
     /**
      * Creates an instance of SystemDateTime.
-     * the caller must call {@ #init()} afterwards.
+     * the caller must call {@link #init()} afterwards.
      * @param systemName the system name
      */
     public InternalDateTime(String systemName) {
@@ -81,7 +75,7 @@ public class InternalDateTime extends AbstractTimeProvider
 
     /**
      * Creates an instance of SystemDateTime.
-     * the caller must call {@ #init()} afterwards.
+     * the caller must call {@link #init()} afterwards.
      * @param systemName  the system name
      * @param userName    the user name
      */
