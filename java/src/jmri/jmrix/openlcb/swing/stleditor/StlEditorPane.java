@@ -924,13 +924,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
      * @param group The CDI group.
      */
     private void createTokenMap(GroupRow group) {
+        _messages.clear();
+        _tokenMap = new TreeMap<>();
         var line = group.getMultiLine();
         if (line.length() == 0) {
             return;
         }
-
-        _messages.clear();
-        _tokenMap = new TreeMap<>();
 
         // Find label locations
         log.debug("Find label locations");
