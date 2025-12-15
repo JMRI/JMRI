@@ -91,7 +91,6 @@ public class InternalDateTime extends AbstractTimeProvider
         _lastSec = _lastDateTime.getSecond();
         _lastMin = _lastDateTime.getMinute();
         _startTimeMillisec = System.currentTimeMillis();
-        System.out.format("Start internal clock%n");
         TimerUtil.schedule(_timerTask, System.currentTimeMillis() % _100_MILLISECONDS, _100_MILLISECONDS);
         return this;
     }
