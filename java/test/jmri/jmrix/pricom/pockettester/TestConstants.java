@@ -9,11 +9,11 @@ public class TestConstants {
     static String version = "PRICOM Design DCC Pocket Tester - Version 1.4\n";
     static String idlePacket = "Decoder Idle Packet\n";
     static String speed0003A = "ADR=0003 CMD=Speed    STP=128   DIR=Fwd SPD=S124\n";
-    static String speed0003B = "ADR=0003 CMD=Speed    STP=128   DIR=Fwd SPD=S000\n";
+    // static String speed0003B = "ADR=0003 CMD=Speed    STP=128   DIR=Fwd SPD=S000\n";
     static String speed0123A = "ADR=0123 CMD=Speed    STP=128   DIR=Fwd SPD=S124\n";
-    static String speed0123B = "ADR=0123 CMD=Speed    STP=128   DIR=Fwd SPD=S000\n";
+    // static String speed0123B = "ADR=0123 CMD=Speed    STP=128   DIR=Fwd SPD=S000\n";
     static String speed012A = "ADR= 012 CMD=Speed    STP=128   DIR=Fwd SPD=S124\n";
-    static String speed012B = "ADR= 012 CMD=Speed    STP=128   DIR=Fwd SPD=S000\n";
+    // static String speed012B = "ADR= 012 CMD=Speed    STP=128   DIR=Fwd SPD=S000\n";
     static String acc0222A = "ADR=0222 CMD=Accessry VAL=Thrown/R(OFF) ACT=OFF\n";
 
     // note that the "=" glyphs in the following are actually two characters
