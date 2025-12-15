@@ -85,7 +85,7 @@ public class DefaultTimebase extends AbstractTimebase {
     private void init(){
 
         // set to start counting from now
-        setTime(new Date());
+        setTimeIfPossible(new Date());
         pauseTime = null;
         // initialize start/stop sensor for time running
         try {

@@ -22,14 +22,15 @@ public class ProxyTimeProviderManager extends AbstractProxyManager<TimeProvider>
 
     @Override
     public void initialize() {
-        TimeProvider internalTimeProvider = new InternalDateTime(makeSystemName("InternalTimeProvider"));
+        TimeProvider internalTimeProvider = new InternalDateTime(makeSystemName("InternalTimeProvider")).init();
         register(internalTimeProvider);
-        TimeProvider systemClock = new SystemDateTime(makeSystemName("SystemClock"));
+        TimeProvider systemClock = new SystemDateTime(makeSystemName("SystemClock")).init();
         register(systemClock);
         MainTimeProviderHandler mtph = getMainTimeProviderHandler();
         mtph.setPrimaryTimeProvider(internalTimeProvider);
         mtph.setSecondaryTimeProvider(systemClock);
         mtph.setUsePrimaryTimeProvider(true);
+//        mtph.setUsePrimaryTimeProvider(false);
     }
 
     @Override

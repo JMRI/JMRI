@@ -38,7 +38,7 @@ public class SystemDateTimeXml extends jmri.managers.configurexml.AbstractNamedB
         TimeProvider tp = InstanceManager.getDefault(TimeProviderManager.class).getBySystemName(sys);
 
         if (tp == null) {
-            tp = new SystemDateTime(sys, uname);
+            tp = new SystemDateTime(sys);
             InstanceManager.getDefault(TimeProviderManager.class).register(tp);
         }
 

@@ -18,12 +18,6 @@ public interface TimeSetter {
     void setTime(LocalTime time) throws UnsupportedOperationException;
 
     /**
-     * Can the time be set?
-     * @return true if the time can be set, false otherwise
-     */
-    boolean canSetTime();
-
-    /**
      * Set the time of the time provider.
      * @param time the time
      * @throws UnsupportedOperationException if the date and time couldn't be set

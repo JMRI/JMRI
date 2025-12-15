@@ -45,6 +45,14 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
     }
 
 
+    protected void setTimeIfPossible(Date d) {
+        TimeProvider tp = InstanceManager.getDefault(TimeProviderManager.class)
+                .getCurrentTimeProvider();
+        if (tp instanceof TimeSetter) {
+            setTime(d);
+        }
+    }
+
     @Override
     public void setTime(Date d) {
         TimeProvider tp = InstanceManager.getDefault(TimeProviderManager.class)
@@ -70,11 +78,7 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
                 }
             }
             TimeSetter ts = (TimeSetter)tp;
-            if (ts.canSetTime()) {
-                ts.setTime(convertToLocalTime(d));
-            } else {
-                throw new UnsupportedOperationException("The current TimeProvider can not start/stop time");
-            }
+            ts.setTime(convertToLocalTime(d));
         } else {
             throw new UnsupportedOperationException("The current TimeProvider is not a TimeSetter: "
                     + (tp != null ? tp.getClass().getName() : null));
@@ -87,12 +91,8 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
                 .getCurrentTimeProvider();
         if (tp instanceof TimeSetter) {
             TimeSetter ts = (TimeSetter)tp;
-            if (ts.canSetTime()) {
-                LocalTime time = LocalTime.ofInstant(i, ZoneId.systemDefault());
-                ts.setTime(time);
-            } else {
-                throw new UnsupportedOperationException("The current TimeProvider can not start/stop time");
-            }
+            LocalTime time = LocalTime.ofInstant(i, ZoneId.systemDefault());
+            ts.setTime(time);
         } else {
             throw new UnsupportedOperationException("The current TimeProvider is not a TimeSetter: "
                     + (tp != null ? tp.getClass().getName() : null));

@@ -1,10 +1,15 @@
 package jmri.time.implementation;
 
 import java.time.*;
-import java.time.temporal.ChronoField;
+import java.time.temporal.*;
+import java.util.TimerTask;
 
 import jmri.time.*;
+import static jmri.time.TimeProvider.PROPERTY_CHANGE_DATETIME;
+import static jmri.time.TimeProvider.PROPERTY_CHANGE_MINUTES;
+import static jmri.time.TimeProvider.PROPERTY_CHANGE_SECONDS;
 import jmri.time.rate.ChangeableDoubleRate;
+import jmri.util.TimerUtil;
 
 /**
  * The system date and time.
@@ -14,35 +19,111 @@ import jmri.time.rate.ChangeableDoubleRate;
 public class InternalDateTime extends AbstractTimeProvider
         implements TimeSetter, DateProvider, DateSetter, CanSetRate, StartStopTimeProvider, RateSetter {
 
+    private static final int _100_MILLISECONDS = 100;
+
     private LocalDateTime _time = LocalDateTime.now();
     private final ChangeableDoubleRate _rate = new ChangeableDoubleRate(1.0);
     private boolean _isRunning;
+    private final TimerTask _timerTask;
+    private LocalDateTime _lastDateTime;
+    private LocalDateTime _lastUpdatedDateTime;
+    private int _lastSec;
+    private int _lastMin;
+    private long _startTimeMillisec;
+    private final Object _lock = new Object();
 
 
-    public InternalDateTime(String systemName) {
-        super(systemName);
+    private TimerTask getTimerTask() {
+        /*
+        Klienterna verkar inte lyssna på klockan.
+        Lägg till starta/stoppa klockan.
+        Lägg till ändra hastighet (rate) på klockan.
+        DefaultTimebase får inte försöka sätta klockan om den inte har stöd
+        för det (system clock).
+        */
+
+        return new TimerTask() {
+            @Override
+            public void run() {
+                synchronized(_lock) {
+                    if (!_isRunning) return;
+                    if (_rate.getRate() < 0.0001) return;   // We don't want to divide by zero later
+
+                    long time = System.currentTimeMillis() - _startTimeMillisec;
+                    long diff = Math.round(time * _rate.getRate());
+                    _time = _lastDateTime.plus(diff, ChronoUnit.MILLIS);
+                    int sec = _time.getSecond();
+                    if (sec != _lastSec) {
+                        int min = _time.getMinute();
+                        InternalDateTime.this.firePropertyChange(PROPERTY_CHANGE_SECONDS, _lastSec, sec);
+                        if (min != _lastMin) {
+                            InternalDateTime.this.firePropertyChange(PROPERTY_CHANGE_MINUTES, _lastMin, min);
+                        }
+                        InternalDateTime.this.firePropertyChange(PROPERTY_CHANGE_DATETIME, _lastUpdatedDateTime, _time);
+                        _lastSec = sec;
+                        _lastMin = min;
+                        _lastUpdatedDateTime = _time;
+                    }
+                }
+            }
+        };
     }
 
+    /**
+     * Creates an instance of SystemDateTime.
+     * the caller must call {@ #init()} afterwards.
+     * @param systemName the system name
+     */
+    public InternalDateTime(String systemName) {
+        super(systemName);
+        _timerTask = getTimerTask();
+    }
+
+    /**
+     * Creates an instance of SystemDateTime.
+     * the caller must call {@ #init()} afterwards.
+     * @param systemName  the system name
+     * @param userName    the user name
+     */
     public InternalDateTime(String systemName, String userName) {
         super(systemName, userName);
+        _timerTask = getTimerTask();
+    }
+
+    public InternalDateTime init() {
+        _time = LocalDateTime.now();
+        _lastDateTime = _time;
+        _lastUpdatedDateTime = _time;
+        _lastSec = _lastDateTime.getSecond();
+        _lastMin = _lastDateTime.getMinute();
+        _startTimeMillisec = System.currentTimeMillis();
+        System.out.format("Start internal clock%n");
+        TimerUtil.schedule(_timerTask, System.currentTimeMillis() % _100_MILLISECONDS, _100_MILLISECONDS);
+        return this;
     }
 
     /** {@inheritDoc} */
     @Override
     public LocalDateTime getTime() {
-        return _time;
+        synchronized(_lock) {
+           return _time;
+        }
     }
 
     /** {@inheritDoc} */
     @Override
     public Rate getRate() {
-        return _rate;
+        synchronized(_lock) {
+            return _rate;
+        }
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isRunning() {
-        return _isRunning;
+        synchronized(_lock) {
+            return _isRunning;
+        }
     }
 
     /** {@inheritDoc} */
@@ -71,12 +152,16 @@ public class InternalDateTime extends AbstractTimeProvider
 
     @Override
     public void start() throws UnsupportedOperationException {
-        _isRunning = true;
+        synchronized(_lock) {
+            _isRunning = true;
+        }
     }
 
     @Override
     public void stop() throws UnsupportedOperationException {
-        _isRunning = false;
+        synchronized(_lock) {
+            _isRunning = false;
+        }
     }
 
     @Override
@@ -86,20 +171,20 @@ public class InternalDateTime extends AbstractTimeProvider
 
     @Override
     public void setTime(LocalTime time) throws UnsupportedOperationException {
-        LocalDateTime oldTime = this._time;
-        _time = LocalDateTime.of(_time.toLocalDate(), time);
-        timeIsUpdated(oldTime);
-    }
-
-    public void setDateTime(LocalDateTime time) throws UnsupportedOperationException {
-        LocalDateTime oldTime = this._time;
-        this._time = time;
-        timeIsUpdated(oldTime);
+        synchronized(_lock) {
+            LocalDateTime oldTime = this._time;
+            _time = LocalDateTime.of(_time.toLocalDate(), time);
+            timeIsUpdated(oldTime);
+        }
     }
 
     @Override
-    public boolean canSetTime() {
-        return true;
+    public void setDateTime(LocalDateTime time) throws UnsupportedOperationException {
+        synchronized(_lock) {
+            LocalDateTime oldTime = this._time;
+            this._time = time;
+            timeIsUpdated(oldTime);
+        }
     }
 
     @Override
@@ -109,30 +194,38 @@ public class InternalDateTime extends AbstractTimeProvider
 
     @Override
     public void setWeekday(int dayOfWeek) throws UnsupportedOperationException {
-        LocalDateTime oldTime = this._time;
-        _time = _time.with(ChronoField.DAY_OF_WEEK, dayOfWeek);
-        timeIsUpdated(oldTime);
+        synchronized(_lock) {
+            LocalDateTime oldTime = this._time;
+            _time = _time.with(ChronoField.DAY_OF_WEEK, dayOfWeek);
+            timeIsUpdated(oldTime);
+        }
     }
 
     @Override
     public void setDayOfMonth(int day) throws UnsupportedOperationException {
-        LocalDateTime oldTime = this._time;
-        _time = _time.withDayOfMonth(day);
-        timeIsUpdated(oldTime);
+        synchronized(_lock) {
+            LocalDateTime oldTime = this._time;
+            _time = _time.withDayOfMonth(day);
+            timeIsUpdated(oldTime);
+        }
     }
 
     @Override
     public void setMonth(int month) throws UnsupportedOperationException {
-        LocalDateTime oldTime = this._time;
-        _time = _time.withMonth(month);
-        timeIsUpdated(oldTime);
+        synchronized(_lock) {
+            LocalDateTime oldTime = this._time;
+            _time = _time.withMonth(month);
+            timeIsUpdated(oldTime);
+        }
     }
 
     @Override
     public void setYear(int year) throws UnsupportedOperationException {
-        LocalDateTime oldTime = this._time;
-        _time = _time.withYear(year);
-        timeIsUpdated(oldTime);
+        synchronized(_lock) {
+            LocalDateTime oldTime = this._time;
+            _time = _time.withYear(year);
+            timeIsUpdated(oldTime);
+        }
     }
 
     @Override
@@ -147,7 +240,9 @@ public class InternalDateTime extends AbstractTimeProvider
 
     @Override
     public void setRate(double rate) {
-        _rate.setRate(rate);
+        synchronized(_lock) {
+            _rate.setRate(rate);
+        }
     }
 
 }
