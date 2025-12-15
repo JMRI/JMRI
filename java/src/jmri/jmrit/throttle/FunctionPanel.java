@@ -17,7 +17,6 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.OptionallyTabbedPanel;
-import jmri.util.swing.WrapLayout;
 
 import org.jdom2.Element;
 
@@ -203,7 +202,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      */
     private void initGUI() {
         mainPanel = new OptionallyTabbedPanel(MAX_FUNCTION_BUTTONS_PER_TAB);
-        mainPanel.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
         resetFnButtons();
         JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.getViewport().setOpaque(false); // container already gets this done (for play/edit mode)
