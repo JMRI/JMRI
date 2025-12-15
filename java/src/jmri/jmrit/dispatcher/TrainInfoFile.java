@@ -387,10 +387,23 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             tInfo.setStopBySpeedProfile(true);
                         }
                     }
-                    if (traininfo.getAttribute("stopbyspeedprofileadjust") != null) {
-                        tInfo.setStopBySpeedProfileAdjust(traininfo.getAttribute("stopbyspeedprofileadjust").getFloatValue());
-                    }
-                    
+
+                 // Preferred: "overridestopsensor" (yes/no or true/false or 1/0)
+                 // Fallback:  legacy "usestopsensor" (yes/no or true/false or 1/0)
+                 // Default:   use sensors (existing behavior)
+                 boolean useSensors = true; // default preserves existing behavior
+
+                 if (traininfo.getAttribute("overridestopsensor") != null) {
+                     String v = traininfo.getAttribute("overridestopsensor").getValue();
+                     boolean override = "yes".equalsIgnoreCase(v) || "true".equalsIgnoreCase(v) || "1".equals(v);
+                     useSensors = !override;
+                 } else if (traininfo.getAttribute("usestopsensor") != null) {
+                     String v = traininfo.getAttribute("usestopsensor").getValue();
+                     boolean legacyUse = "yes".equalsIgnoreCase(v) || "true".equalsIgnoreCase(v) || "1".equals(v);
+                     useSensors = legacyUse;
+                 }
+                 tInfo.setUseStopSensor(useSensors);
+
                  if (traininfo.getAttribute("stopbydistance_mm") != null) {
                      try {
                          float mm = traininfo.getAttribute("stopbydistance_mm").getFloatValue();
@@ -672,6 +685,8 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("usespeedprofile", "" + (tf.getUseSpeedProfile() ? "yes" : "no"));
         traininfo.setAttribute("stopbyspeedprofile", "" + (tf.getStopBySpeedProfile() ? "yes" : "no"));
         traininfo.setAttribute("stopbyspeedprofileadjust", Float.toString(tf.getStopBySpeedProfileAdjust()));
+        traininfo.setAttribute("usestopsensor", (tf.getUseStopSensor() ? "yes" : "no"));
+        traininfo.setAttribute("overridestopsensor", (tf.getUseStopSensor() ? "no" : "yes"));
         traininfo.setAttribute("waittime", Float.toString(tf.getWaitTime()));
         traininfo.setAttribute("blockname", tf.getBlockName());
         traininfo.setAttribute("fnumberlight", Integer.toString(tf.getFNumberLight()));

@@ -1935,7 +1935,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JCheckBox stopBySpeedProfileCheckBox = new JCheckBox( );
     private final JLabel stopBySpeedProfileAdjustLabel = new JLabel(Bundle.getMessage("StopBySpeedProfileAdjustLabel"));
     // Explicit override: ignore hardware Stop Sensors in Sections (default OFF = use sensors)
-    private final JCheckBox overrideStopSensorCheckBox = new JCheckBox("Override stop sensors");
+    private final JCheckBox overrideStopSensorCheckBox = new JCheckBox(Bundle.getMessage("OverrideStopSensorLabel"));
     private final JSpinner stopBySpeedProfileAdjustSpinner = new JSpinner();
     private final JPanel pa2b = new JPanel();
     private final JLabel stopByDistanceLabel = new JLabel(Bundle.getMessage("StopByDistanceLabel"));
@@ -2066,7 +2066,7 @@ public class ActivateTrainFrame extends JmriJFrame {
      private final JSpinner rollingResistanceCoeffSpinner = new JSpinner();
      
     // Driver power (% of full power/regulator) used during acceleration when Physics ramp is selected
-    private final JLabel driverPowerPercentLabel = new JLabel("Driver power (accel)");
+    private final JLabel driverPowerPercentLabel = new JLabel(Bundle.getMessage("DriverPowerPercentLabel"));
     private final JSpinner driverPowerPercentSpinner = new JSpinner();
         
      // Track current display units for conversion
@@ -2237,7 +2237,7 @@ public class ActivateTrainFrame extends JmriJFrame {
          // When checked, ignore stop sensors and rely on distance/profile stopping.
          // When unchecked, use sensors if present; runtime will slow within distance and finally stop at the sensor.
          pa2a.add(overrideStopSensorCheckBox);
-         overrideStopSensorCheckBox.setToolTipText("Ignore the Section’s stop sensor (if present) and stop the set distance into the block");
+         overrideStopSensorCheckBox.setToolTipText(Bundle.getMessage("OverrideStopSensorHint"));
          overrideStopSensorCheckBox.addActionListener(ev -> {
              // Keep UI coherent, but do NOT disable profile/distance options here.
              updateStopByDistanceEnable();
@@ -2307,10 +2307,10 @@ public class ActivateTrainFrame extends JmriJFrame {
          pa2Physics.add(additionalWeightSpinner);
     
          // Units dropdown (replaces a static label); conversions are UI-only; TrainInfo stores metric tonnes
-         additionalWeightUnitsComboBox.addItem(new AdditionalWeightUnitsItem("Metric tonnes (t)", AdditionalWeightUnits.METRIC_TONNES));
-         additionalWeightUnitsComboBox.addItem(new AdditionalWeightUnitsItem("Long tons",       AdditionalWeightUnits.LONG_TONS));
-         additionalWeightUnitsComboBox.addItem(new AdditionalWeightUnitsItem("Short tons",      AdditionalWeightUnits.SHORT_TONS));
-         pa2Physics.add(additionalWeightUnitsComboBox);     
+        additionalWeightUnitsComboBox.addItem(new AdditionalWeightUnitsItem(Bundle.getMessage("AdditionalWeightUnitsMetricTonnes"), AdditionalWeightUnits.METRIC_TONNES));
+        additionalWeightUnitsComboBox.addItem(new AdditionalWeightUnitsItem(Bundle.getMessage("AdditionalWeightUnitsLongTons"),   AdditionalWeightUnits.LONG_TONS));
+        additionalWeightUnitsComboBox.addItem(new AdditionalWeightUnitsItem(Bundle.getMessage("AdditionalWeightUnitsShortTons"),  AdditionalWeightUnits.SHORT_TONS));
+        pa2Physics.add(additionalWeightUnitsComboBox);     
          
          // Rolling resistance coefficient (dimensionless, default 0.002)
          rollingResistanceCoeffSpinner.setModel(
@@ -2326,7 +2326,7 @@ public class ActivateTrainFrame extends JmriJFrame {
               new SpinnerNumberModel(Float.valueOf(100.0f), Float.valueOf(10.0f), Float.valueOf(100.0f), Float.valueOf(1.0f))
           );
           driverPowerPercentSpinner.setEditor(new JSpinner.NumberEditor(driverPowerPercentSpinner, "##0'%'"));
-          driverPowerPercentSpinner.setToolTipText("Percent of full power/regulator used when accelerating (Physics ramp only)");
+          driverPowerPercentSpinner.setToolTipText(Bundle.getMessage("DriverPowerPercentHint"));
           pa2Physics.add(driverPowerPercentLabel);
           pa2Physics.add(driverPowerPercentSpinner);
 

@@ -103,6 +103,8 @@ public class TrainInfo {
     
     // Physics: additional train weight, stored as metric tonnes (t)
     private float additionalTrainWeightMetricTonnes = 0.0f;
+    
+    private boolean useStopSensor = true;
 
     public enum StopReference { HEAD, TAIL }
 
@@ -161,6 +163,14 @@ public class TrainInfo {
 
     public String getRosterId() {
         return rosterID;
+    }
+    
+    public boolean getUseStopSensor() {
+        return useStopSensor;
+    }
+    
+    public void setUseStopSensor(boolean value) {
+        this.useStopSensor = value;
     }
 
     public void setTrainUserName(String s) {
