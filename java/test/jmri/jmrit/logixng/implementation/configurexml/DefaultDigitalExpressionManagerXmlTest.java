@@ -1,5 +1,9 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
@@ -11,11 +15,11 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -26,7 +30,7 @@ public class DefaultDigitalExpressionManagerXmlTest {
     @Test
     public void testCTor() {
         DefaultDigitalExpressionManagerXml b = new DefaultDigitalExpressionManagerXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
     }
 
     @Test
@@ -79,7 +83,7 @@ public class DefaultDigitalExpressionManagerXmlTest {
 //        System.out.format("Class name: %s%n", PrivateConstructorXml.class.getName());
     }
 
-    @Ignore("Cannot load xml configurator")
+    @Disabled("Cannot load xml configurator")
     @Test
     public void testStore() {
         DefaultDigitalExpressionManagerXml b = new DefaultDigitalExpressionManagerXml();
@@ -116,20 +120,20 @@ public class DefaultDigitalExpressionManagerXmlTest {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_DIGITAL_EXPRESSIONS);
         }
 
-        Assert.assertTrue("manager is a MyManager",
-                InstanceManager.getDefault(DigitalExpressionManager.class)
-                        instanceof DefaultDigitalExpressionManagerXmlTest.MyManager);
+        assertInstanceOf( DefaultDigitalExpressionManagerXmlTest.MyManager.class,
+                InstanceManager.getDefault(DigitalExpressionManager.class),
+                "manager is a MyManager");
 
         // Test replacing the manager
         DefaultDigitalExpressionManagerXml b = new DefaultDigitalExpressionManagerXml();
         b.replaceExpressionManager();
 
-        Assert.assertFalse("manager is not a MyManager",
-                InstanceManager.getDefault(DigitalExpressionManager.class)
-                        instanceof DefaultDigitalExpressionManagerXmlTest.MyManager);
+        assertFalse( InstanceManager.getDefault(DigitalExpressionManager.class)
+            instanceof DefaultDigitalExpressionManagerXmlTest.MyManager,
+                "manager is not a MyManager");
     }
 
-//    @Ignore("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
+//    @Disabled("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
     @Test
     public void testReplaceActionManagerWithConfigManager() {
 
@@ -153,21 +157,20 @@ public class DefaultDigitalExpressionManagerXmlTest {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_DIGITAL_EXPRESSIONS);
         }
 
-        Assert.assertTrue("manager is a MyManager",
-                InstanceManager.getDefault(DigitalExpressionManager.class)
-                        instanceof DefaultDigitalExpressionManagerXmlTest.MyManager);
+        assertInstanceOf( DefaultDigitalExpressionManagerXmlTest.MyManager.class,
+            InstanceManager.getDefault(DigitalExpressionManager.class),
+                "manager is a MyManager");
 
         // Test replacing the manager
         DefaultDigitalExpressionManagerXml b = new DefaultDigitalExpressionManagerXml();
         b.replaceExpressionManager();
 
-        Assert.assertFalse("manager is not a MyManager",
-                InstanceManager.getDefault(DigitalExpressionManager.class)
-                        instanceof DefaultDigitalExpressionManagerXmlTest.MyManager);
+        assertFalse( InstanceManager.getDefault(DigitalExpressionManager.class)
+            instanceof DefaultDigitalExpressionManagerXmlTest.MyManager,
+                "manager is not a MyManager");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -176,7 +179,7 @@ public class DefaultDigitalExpressionManagerXmlTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
@@ -185,7 +188,7 @@ public class DefaultDigitalExpressionManagerXmlTest {
 
 
 
-    private class MyDigitalExpression extends ExpressionTurnout {
+    private static class MyDigitalExpression extends ExpressionTurnout {
 
         MyDigitalExpression() {
             super("IQDE9999", null);
@@ -196,14 +199,14 @@ public class DefaultDigitalExpressionManagerXmlTest {
 
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
-    class PrivateConstructorXml extends ExpressionTurnoutXml {
+    static class PrivateConstructorXml extends ExpressionTurnoutXml {
         private PrivateConstructorXml() {
         }
     }
 
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
-    class ThrowExceptionXml extends ExpressionTurnoutXml {
+    static class ThrowExceptionXml extends ExpressionTurnoutXml {
         @Override
         public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
             throw new JmriConfigureXmlException();
@@ -211,7 +214,7 @@ public class DefaultDigitalExpressionManagerXmlTest {
     }
 
 
-    class MyManager extends DefaultDigitalExpressionManager {
+    static class MyManager extends DefaultDigitalExpressionManager {
     }
 
 }

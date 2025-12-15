@@ -1,5 +1,9 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
@@ -10,11 +14,11 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -25,7 +29,7 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
     @Test
     public void testCTor() {
         DefaultDigitalBooleanActionManagerXml b = new DefaultDigitalBooleanActionManagerXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
     }
 
     @Test
@@ -88,7 +92,7 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
 //        System.out.format("Class name: %s%n", PrivateConstructorXml.class.getName());
     }
 
-    @Ignore("Cannot load xml configurator")
+    @Disabled("Cannot load xml configurator")
     @Test
     public void testStore() {
 
@@ -126,20 +130,20 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_DIGITAL_BOOLEAN_ACTIONS);
         }
 
-        Assert.assertTrue("manager is a MyManager",
-                InstanceManager.getDefault(DigitalBooleanActionManager.class)
-                        instanceof DefaultDigitalBooleanActionManagerXmlTest.MyManager);
+        assertInstanceOf( DefaultDigitalBooleanActionManagerXmlTest.MyManager.class,
+                InstanceManager.getDefault(DigitalBooleanActionManager.class),
+                "manager is a MyManager");
 
         // Test replacing the manager
         DefaultDigitalBooleanActionManagerXml b = new DefaultDigitalBooleanActionManagerXml();
         b.replaceActionManager();
 
-        Assert.assertFalse("manager is not a MyManager",
-                InstanceManager.getDefault(DigitalBooleanActionManager.class)
-                        instanceof DefaultDigitalBooleanActionManagerXmlTest.MyManager);
+        assertFalse( InstanceManager.getDefault(DigitalBooleanActionManager.class)
+            instanceof DefaultDigitalBooleanActionManagerXmlTest.MyManager,
+                "manager is not a MyManager");
     }
 
-//    @Ignore("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
+//    @Disabled("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
     @Test
     public void testReplaceActionManagerWithConfigManager() {
 
@@ -163,21 +167,20 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_DIGITAL_BOOLEAN_ACTIONS);
         }
 
-        Assert.assertTrue("manager is a MyManager",
-                InstanceManager.getDefault(DigitalBooleanActionManager.class)
-                        instanceof DefaultDigitalBooleanActionManagerXmlTest.MyManager);
+        assertInstanceOf( DefaultDigitalBooleanActionManagerXmlTest.MyManager.class,
+            InstanceManager.getDefault(DigitalBooleanActionManager.class),
+                "manager is a MyManager");
 
         // Test replacing the manager
         DefaultDigitalBooleanActionManagerXml b = new DefaultDigitalBooleanActionManagerXml();
         b.replaceActionManager();
 
-        Assert.assertFalse("manager is not a MyManager",
-                InstanceManager.getDefault(DigitalBooleanActionManager.class)
-                        instanceof DefaultDigitalBooleanActionManagerXmlTest.MyManager);
+        assertFalse( InstanceManager.getDefault(DigitalBooleanActionManager.class)
+            instanceof DefaultDigitalBooleanActionManagerXmlTest.MyManager,
+                "manager is not a MyManager");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -186,7 +189,7 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
@@ -195,7 +198,7 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
 
 
 
-    private class MyDigitalBooleanAction extends DigitalBooleanLogixAction {
+    private static class MyDigitalBooleanAction extends DigitalBooleanLogixAction {
 
         MyDigitalBooleanAction() {
             super("IQDB9999", null, DigitalBooleanLogixAction.When.Either);
@@ -206,7 +209,7 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
 
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
-    class PrivateConstructorXml extends DigitalBooleanLogixActionXml {
+    static class PrivateConstructorXml extends DigitalBooleanLogixActionXml {
         private PrivateConstructorXml() {
         }
     }
@@ -221,7 +224,7 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
     }
 */
 
-    class MyManager extends DefaultDigitalBooleanActionManager {
+    static class MyManager extends DefaultDigitalBooleanActionManager {
     }
 
 }
