@@ -419,6 +419,14 @@ public class AutoActiveTrain implements ThrottleListener {
         _stoppingUsingSpeedProfile = false;
         // get the dispatcher
         _dispatcher = InstanceManager.getDefault(DispatcherFrame.class);
+        
+         // Sync "Use stop sensor" from ActiveTrain/TrainInfo (default true if absent)
+         // When Override stop sensor is checked in the UI, ActiveTrain/TrainInfo will have useStopSensor == false.
+         this._useStopSensor = _activeTrain.getUseStopSensor();
+         
+          // DEBUG
+          log.debug("{}: useStopSensor at init - ActiveTrain={}, AutoActiveTrain={}",
+              _activeTrain.getTrainName(), _activeTrain.getUseStopSensor(), this._useStopSensor);
 
         // get decoder address
         try {
@@ -1648,9 +1656,16 @@ public class AutoActiveTrain implements ThrottleListener {
                 stopSensorCandidate = _currentAllocatedSection.getSection().getReverseStoppingSensor();
             }
         }
+        
+         // Refresh override flag in case it changed (e.g., user updated the Train Info while running)
+         this._useStopSensor = _activeTrain.getUseStopSensor();
     
         // Combined mode = user opted into Stop-by-Distance, profile is available, and a stopping sensor is present & in use
         boolean combinedMode = distanceEnabled && profileAvailable && (_useStopSensor) && (stopSensorCandidate != null);
+
+         // DEBUG
+         log.debug("{}: stopInSection - distEnabled={}, profileAvail={}, sensorPresent={}, useStopSensor={}, combined={}",
+             _activeTrain.getTrainName(), distanceEnabled, profileAvailable, (stopSensorCandidate != null), _useStopSensor, combinedMode);
     
         if ((distanceEnabled && profileAvailable) && !_stoppingUsingSpeedProfile && !_distanceStopPending) {
     
@@ -1769,6 +1784,11 @@ public class AutoActiveTrain implements ThrottleListener {
         } else {
             _stopSensor = _currentAllocatedSection.getSection().getReverseStoppingSensor();
         }
+         // DEBUG
+         if (_stopSensor != null && !_useStopSensor) {
+             log.debug("{}: Override enabled - ignoring section stop sensor {}",
+                 _activeTrain.getTrainName(), _stopSensor.getDisplayName(USERSYS));
+         }
         if (_stopSensor != null && _useStopSensor) {
             if (_stopSensor.getKnownState() == Sensor.ACTIVE) {
                 // stop sensor is already active, stop now
@@ -1778,9 +1798,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
                     handleStopSensorChange(e);
                 });
-
                 _stoppingBySensor = true;
-
             }
         } else if (useSpeedProfile && _stopBySpeedProfile) {
             log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}] StopBySpeedProfile [{}]. setStopNow", _activeTrain.getTrainName(),

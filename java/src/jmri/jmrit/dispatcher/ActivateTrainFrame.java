@@ -1934,6 +1934,8 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JLabel stopBySpeedProfileLabel = new JLabel(Bundle.getMessage("StopBySpeedProfileLabel"));
     private final JCheckBox stopBySpeedProfileCheckBox = new JCheckBox( );
     private final JLabel stopBySpeedProfileAdjustLabel = new JLabel(Bundle.getMessage("StopBySpeedProfileAdjustLabel"));
+    // Explicit override: ignore hardware Stop Sensors in Sections (default OFF = use sensors)
+    private final JCheckBox overrideStopSensorCheckBox = new JCheckBox("Override stop sensors");
     private final JSpinner stopBySpeedProfileAdjustSpinner = new JSpinner();
     private final JPanel pa2b = new JPanel();
     private final JLabel stopByDistanceLabel = new JLabel(Bundle.getMessage("StopByDistanceLabel"));
@@ -2228,7 +2230,19 @@ public class ActivateTrainFrame extends JmriJFrame {
         stopBySpeedProfileAdjustSpinner.setEditor(new JSpinner.NumberEditor(stopBySpeedProfileAdjustSpinner, "# %"));
         pa2a.add(stopBySpeedProfileAdjustSpinner);
         stopBySpeedProfileAdjustSpinner.setToolTipText(Bundle.getMessage("StopBySpeedProfileAdjustHint"));
-        initiatePane.add(pa2a);
+        initiatePane.add(pa2a);       
+
+         // “Override stop sensor” (default OFF = use sensors when present).
+         // NOTE: No mutual exclusion with Stop-by-speed-profile or distance mode.
+         // When checked, ignore stop sensors and rely on distance/profile stopping.
+         // When unchecked, use sensors if present; runtime will slow within distance and finally stop at the sensor.
+         pa2a.add(overrideStopSensorCheckBox);
+         overrideStopSensorCheckBox.setToolTipText("Ignore the Section’s stop sensor (if present) and stop the set distance into the block");
+         overrideStopSensorCheckBox.addActionListener(ev -> {
+             // Keep UI coherent, but do NOT disable profile/distance options here.
+             updateStopByDistanceEnable();
+         });
+            
         pa2b.add(stopByDistanceLabel);
         pa2b.add(stopByDistanceEnableCheckBox);
         
@@ -2547,7 +2561,9 @@ public class ActivateTrainFrame extends JmriJFrame {
         useSpeedProfileCheckBox.setSelected(info.getUseSpeedProfile());
         stopBySpeedProfileCheckBox.setSelected(info.getStopBySpeedProfile());
         stopBySpeedProfileAdjustSpinner.setValue(info.getStopBySpeedProfileAdjust());
-         stopByDistanceEnableCheckBox.setSelected(info.getStopByDistanceMm() > 0.0f);
+        overrideStopSensorCheckBox.setSelected(!info.getUseStopSensor());
+        updateStopByDistanceEnable();
+        stopByDistanceEnableCheckBox.setSelected(info.getStopByDistanceMm() > 0.0f);
     
          // Default UI units: mm (actual). Convert the stored mm to current display units.
          currentStopDistanceUnits = StopDistanceUnits.ACTUAL_MM;
@@ -2619,7 +2635,10 @@ public class ActivateTrainFrame extends JmriJFrame {
             info.setUseSpeedProfile(false);
             info.setStopBySpeedProfile(false);
             info.setStopBySpeedProfileAdjust(1.0f);
-        }
+        }       
+
+         // Persist inverse of “Override stop sensor” (unchecked = use sensors)
+         info.setUseStopSensor(!overrideStopSensorCheckBox.isSelected());
 
          // Only meaningful if Stop-by-speed-profile is enabled & selected
          boolean baseOn = stopBySpeedProfileCheckBox.isEnabled() && stopBySpeedProfileCheckBox.isSelected();

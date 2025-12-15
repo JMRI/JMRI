@@ -379,6 +379,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             at.setTrainType(info.getTrainType());
             at.setTerminateWhenDone(info.getTerminateWhenDone());
             at.setNextTrain(info.getNextTrain());
+            at.setUseStopSensor(info.getUseStopSensor());  // Honour "Override stop sensors" from TrainInfo
             if (info.getAutoRun()) {
                 AutoActiveTrain aat = new AutoActiveTrain(at);
                 aat.setSpeedFactor(info.getSpeedFactor());
