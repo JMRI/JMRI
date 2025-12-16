@@ -153,15 +153,17 @@ public class DecVariableValue extends VariableValue
         } catch (java.lang.NumberFormatException ex) {
             newVal = 0;
         }
-        int transfer = Math.max(newVal - _offset, 0); // prevent negative values, especially in tests outside UI
+
+        newVal = newVal - _offset;
         if (_factor != 0) {
-            transfer = transfer / _factor;
+            newVal = newVal / _factor;
         } else {
             // ignore division
             log.error("Variable param 'factor' = 0 not valid; Decoder definition needs correction");
         }
-        int newCvVal = setValueInCV(oldCvVal, transfer, getMask(), _maxVal);
-        log.debug("newVal={} transfer={} newCvVal ={}", newVal, transfer, newCvVal);
+        
+        int newCvVal = setValueInCV(oldCvVal, newVal, getMask(), _maxVal);
+        log.debug("newVal={} newCvVal ={}", newVal, newCvVal);
         if (oldCvVal != newCvVal) {
             cv.setValue(newCvVal);
         }
@@ -323,6 +325,7 @@ public class DecVariableValue extends VariableValue
         } catch (java.lang.NumberFormatException ex) {
             oldVal = -999;
         }
+        
         if (value < _minVal) value = _minVal;
         if (value > _maxVal) value = _maxVal;
         log.debug("setValue with new value {} old value {}", value, oldVal);
@@ -428,11 +431,33 @@ public class DecVariableValue extends VariableValue
             // update value of Variable
             CvValue cv = _cvMap.get(getCvNum());
             int transfer = getValueInCV(cv.getValue(), getMask(), _maxVal);
+            
             int newVal = (transfer * _factor) + _offset;
+            
+            // handle possible negative value
+            if (_minVal < 0 && newVal > _maxVal) {
+                // here a 2's-complement variable, find the sign bit in the value
+                int signBit = signBit(getMask());
+                // sign extend the value
+                newVal = (newVal ^ signBit) - signBit;
+            }
+           
             setValue(newVal);  // check for duplicate done inside setValue
         }
     }
 
+    // find the sign bit for a masked field
+    // e.g. sign bit of XXXXVVVV is 0b00001000
+    // and  sign bit of XXVVVXXX is 0b00000100
+    int signBit(String mask) {
+        int shift = offsetVal(mask);
+        int oneBits = maskValAsInt(mask)>>shift;
+        int firstBit = 31 - Integer.numberOfLeadingZeros(oneBits);
+        return 1<<firstBit;
+        
+    }
+    
+    
     // stored value, read-only Value
     JTextField _value;
 

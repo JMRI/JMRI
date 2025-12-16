@@ -67,28 +67,28 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         this.iface = memo.get(OlcbInterface.class);
         
         // We can add to GUI here
-        loadButton.setText("Load");
-        loadButton.setToolTipText("Start Load Process");
+        loadButton.setText(Bundle.getMessage("ButtonLoad"));
+        loadButton.setToolTipText(Bundle.getMessage("ButtonLoadTt"));
         JPanel p;
 
         p = new JPanel();
         p.setLayout(new WrapLayout());
-        p.add(new JLabel("Target Node ID: "));
+        p.add(new JLabel(Bundle.getMessage("LabelTargetNode")));
         p.add(nodeSelector);
         selectorPane.add(p);
 
         p = new JPanel();
         p.setLayout(new WrapLayout());
-        p.add(new JLabel("Address Space: "));
+        p.add(new JLabel(Bundle.getMessage("LabelAddressSpace")));
 
         spaceField = new MemorySpaceSelector(0xEF);
         p.add(spaceField);
         selectorPane.add(p);
-        spaceField.setToolTipText("The number of the address space, e.g. 239 or 0xEF");
+        spaceField.setToolTipText(Bundle.getMessage("LabelSpaceFieldTt"));
 
         p = new JPanel();
         p.setLayout(new WrapLayout());
-        lockNode = new JCheckBox("Lock Node");
+        lockNode = new JCheckBox(Bundle.getMessage("LabelLockNode"));
         p.add(lockNode);
         selectorPane.add(p);
 
@@ -122,7 +122,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Firmware Downloader");
+            return (memo.getUserName() + " " + Bundle.getMessage("TitleLoader"));
         }
         return getTitle(Bundle.getMessage("TitleLoader"));
     }

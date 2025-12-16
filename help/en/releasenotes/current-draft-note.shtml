@@ -161,7 +161,7 @@
 
         <h4>TAMS</h4>
             <ul>
-                <li>The <strong>LD-W-32.2</strong> decoder has been added.</li>
+                <li></li>
             </ul>
 
         <h4>TMCC</h4>
@@ -231,7 +231,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Fix bug, PR4 Stand-alone Loconet</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -311,7 +311,7 @@
 
         <h4>Piko decoders</h4>
             <ul>
-                <li>Add scale G decoders, support new firmware versions</li>
+                <li></li>
             </ul>
 
         <h4>Public Domain and DIY decoders</h4>
@@ -429,21 +429,13 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Fixed a problem causing the starting value when doing
-                CV reads to erroneously be zero.</li>
-            <li>When opening a roster entry with a large decoder definition,
-                DecoderPro now defers some of the processing until later while
-                opening the tabbed programming panes sooner.  You may see a
-                pane with "Wait for pane contents to be loaded".  The contents
-                should appear within a few seconds.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Defer calling "loadAtStartup" until the layout data file loading is done and
-             layout block paths have been initialized.</li>
-			 <li>Create, terminate, open throttle, extend, terminate from LEPanel.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -484,17 +476,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li><strong>Warning</strong><br/>
-              Tables and panels files created with this version or later
-              and that's using the LogixNG action <strong>Error</strong>
-              cannot be opened in earlier JMRI versions.</li>
-          <li>The LogixNG action <strong>Error</strong> has an improved
-              error message which allows using a local variable or a
-              formula for the error message.</li>
-          <li>LogixNG Tables can now be placed on Panel Editor panels.
-              The table can be read-only, editable or that only some
-              columns are editable. It's also possible to have buttons
-              and comboboxes in the table on the panel.</li>
           <li></li>
         </ul>
 
@@ -513,32 +494,6 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li><strong>LogixNG Table</strong>s can now be added to a
-                Panel Editor. The table can be edited and that's is useful
-                if the user needs to change values in a table.<br/>
-                It's recommended to use <strong>Fixed size</strong> for
-                the LogixNG Table on the panel. To move the table, use
-                <strong>Set Location</strong> since it's not currently
-                possible to move the table on the panel using the mouse.<br/>
-                The width of the columns can be changed by dragging the
-                divider of the column headers. The new width will be
-                stored when the tables and panels file is stored.<br/>
-                The table is <u>not</u> stored when the tables and
-                panels file is stored.<br/>
-                It's optional to use a LogixNG Module to validate input
-                from the user. If a LogixNG Module is selected, it will
-                be called after the user has edited a cell, before the
-                new data is written to the cell. If the data is invalid,
-                the Module can abort the editing by calling the new
-                LogixNG action <strong>Validation Error</strong> in the
-                category <strong>Flow Control</strong>. It's possible
-                to add an error message to the <strong>Validation Error</strong>
-                to be shown to the user.<br/>
-                A <strong>LogixNG Table</strong> on a Panel Editor panel
-                can also have buttons and comboboxes. If the user clicks
-                on a button, the validation module can then do something.
-                And a combobox allows the user to select an item from a
-                list instead of typing it.</li>
             <li></li>
         </ul>
 
@@ -575,9 +530,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>The <strong>TransitActionsReport.py</strong> has been added. It is used to display
-            the transit section actions.  When the script is run, a dialog displays the list of
-            transits.  If none are selected, a complete report is created.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -629,8 +582,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Fixed a problem causing the Function Panel's buttons
-                to be improperly laid out.</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -666,10 +618,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>JSON Schema support has been upgraded from draft-04 to draft-2020-12,
-                providing improved validation capabilities and modern schema features
-                for JSON API responses. This includes updates to 95 JSON schema files
-                and the underlying NetworkNT JSON Schema Validator library (from 1.0.28 to 1.3.3).</li>
+            <li></li>
         </ul>
 
     <h3>Where Used</h3>
@@ -699,14 +648,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>(Developer) Updated build.xml so Ant builds work with Java 25</li>
-            <li>(Developer) Updated SpotBugs checker to version 4.9.8.  If you use Ant
-                to do SpotBugs checks locally, i.e. by running "ant spotbugs-check",
-                you will need to update your local version to 4.9.8.  See our
-                <a href="https://www.jmri.org/help/en/html/doc/Technical/SpotBugs.shtml">SpotBugs page</a>.
-            <li>(Developer) JMRI distributions, starting with this one, will now
-                be built with the Java 11.0.29 JDK.</li>
-            <li>The jSerialComm library that JMRI uses has been updated from version
-                2.10.4 to version 2.11.4.
+            <li></li>
         </ul>
 

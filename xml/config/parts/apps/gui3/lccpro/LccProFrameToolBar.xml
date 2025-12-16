@@ -8,18 +8,22 @@
 >
     <name>LccPro</name>
     <node name="Event Table">
+        <name xml:lang="cs">Tabulka událostí</name>
         <icon>resources/icons/misc/gui3/IdentifyButton.png</icon>
         <adapter>jmri.jmrix.openlcb.swing.eventtable.EventTablePane$Default</adapter>
     </node>
     <node name="Traffic Monitor">
+        <name xml:lang="cs">Monitor provozu</name>
         <icon>resources/icons/misc/gui3/IdentifyButton.png</icon>
         <adapter>jmri.jmrix.openlcb.swing.monitor.MonitorAction</adapter>
     </node>
     <node name="STL Editor">
+        <name xml:lang="cs">STL Editor</name>
         <icon>resources/icons/misc/gui3/Edit.png</icon>
         <adapter>jmri.jmrix.openlcb.swing.stleditor.StlEditorPane$Default</adapter>
     </node>
     <node name="Refresh">
+        <name xml:lang="cs">Obnovit</name>
         <icon>resources/icons/misc/gui3/Reload.png</icon>
         <adapter>jmri.jmrix.openlcb.swing.lccpro.RefreshAction</adapter>
     </node>
