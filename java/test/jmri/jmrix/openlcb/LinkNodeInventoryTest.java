@@ -2,7 +2,6 @@ package jmri.jmrix.openlcb;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class LinkNodeInventoryTest {
     @Test
     public void testCTor() {
         LinkNodeInventory t = new LinkNodeInventory();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

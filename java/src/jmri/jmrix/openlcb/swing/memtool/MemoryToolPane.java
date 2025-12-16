@@ -84,18 +84,18 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         add(ns);
         nodeSelector = new org.openlcb.swing.NodeSelector(store, Integer.MAX_VALUE);
         ns.add(nodeSelector);
-        JButton check = new JButton("Check");
+        JButton check = new JButton(Bundle.getMessage("ButtonCheck"));
         ns.add(check);
         check.addActionListener(this::pushedCheckButton);
 
         var ms = new JPanel();
         ms.setLayout(new WrapLayout());
         add(ms);
-        ms.add(new JLabel("Memory Space:"));
+        ms.add(new JLabel(Bundle.getMessage("LabelMemorySpace")));
         spaceField = new MemorySpaceSelector(0xFF);
         ms.add(spaceField);
 
-        trustStatusReply = new JCheckBox("Trust Status Info");
+        trustStatusReply = new JCheckBox(Bundle.getMessage("CheckBoxTrust"));
         trustStatusReply.setSelected(true);
         ms.add(trustStatusReply);
 
@@ -138,7 +138,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Memory Tool");
+            return (memo.getUserName() + " " + Bundle.getMessage("TitleMemoryTool"));
         }
         return getTitle(Bundle.getMessage("TitleMemoryTool"));
     }
@@ -146,7 +146,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
     void pushedCheckButton(ActionEvent e) {
         var node = nodeSelector.getSelectedNodeID();
         JmriJFrame f = new JmriJFrame();
-        f.setTitle("Configuration Capabilities");
+        f.setTitle(Bundle.getMessage("CheckPaneTitle"));
 
         var p = new JPanel();
         f.add(p);
@@ -209,39 +209,39 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
             public void handleFailure(int errorCode) {
                 setRunning(false);
                 if (errorCode == 0x1082) {
-                    statusField.setText("Done reading");
+                    statusField.setText(Bundle.getMessage("StatusFieldDoneReading"));
                     log.debug("Stopping read due to 0x1082 status");
                 } if (errorCode == 0x1081) {
                     log.error("Read failed. Address space not known");
-                    statusField.setText("Read failed. Address space not known");
+                    statusField.setText(Bundle.getMessage("StatusFieldReadFailedAddress"));
                 } else {
                     log.error("Read failed. Error code is {}", String.format("%04X", errorCode));
-                    statusField.setText("Read failed. Error code is "+String.format("%04X", errorCode));
+                    statusField.setText(Bundle.getMessage("StatusFieldReadError") + " " + String.format("%04X", errorCode));
                 }
                 try {
                     outputStream.flush();
                     outputStream.close();
                 } catch (IOException ex) {
                     log.error("Error closing file", ex);
-                    statusField.setText("Error closing output file");
+                    statusField.setText(Bundle.getMessage("StatusFieldErrorClosing"));
                 }
             }
 
             @Override
             public void handleReadData(NodeID dest, int readSpace, long readAddress, byte[] readData) {
                 log.trace("read succeed with {} bytes at {}", readData.length, readAddress);
-                statusField.setText("Read "+readAddress+" bytes");
+                statusField.setText(Bundle.getMessage("StatusFieldReadBytes", readAddress));
                 try {
                     outputStream.write(readData);
                 } catch (IOException ex) {
                     log.error("Error writing data to file", ex);
-                    statusField.setText("Error writing data to file");
+                    statusField.setText(Bundle.getMessage("StatusFieldErrorWriting"));
                     setRunning(false);
                     return; // stop now
                 }
                 if (readData.length != CHUNKSIZE) {
                     // short read is another way to indicate end
-                    statusField.setText("Done reading");
+                    statusField.setText(Bundle.getMessage("StatusFieldDoneReading"));
                     log.debug("Stopping read due to short reply");
                     setRunning(false);
                     try {
@@ -249,7 +249,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                         outputStream.close();
                     } catch (IOException ex) {
                         log.error("Error closing file", ex);
-                        statusField.setText("Error closing output file");
+                        statusField.setText(Bundle.getMessage("StatusFieldErrorClosing"));
                     }
                     return;
                 }
@@ -258,7 +258,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                     // done
                     setRunning(false);
                     log.debug("Get operation ending on length");
-                    statusField.setText("Done Reading");
+                    statusField.setText(Bundle.getMessage("StatusFieldDoneReading"));
                 }
                 if (!cancelled) {
                     service.requestRead(farID, space, readAddress+readData.length,
@@ -268,7 +268,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                     setRunning(false);
                     cancelled = false;
                     log.debug("Get operation cancelled");
-                    statusField.setText("Cancelled");
+                    statusField.setText(Bundle.getMessage("StatusFieldCancelled"));
                 }
             }
         };
@@ -287,7 +287,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
             space = spaceField.getMemorySpace();
         } catch (NumberFormatException ex) {
             log.error("error parsing the space field value \"{}\"", spaceField.getText());
-            statusField.setText("Error parsing the space value");
+            statusField.setText(Bundle.getMessage("StatusFieldErrorParsing"));
             setRunning(false);
             return;
         }
@@ -296,7 +296,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         if (fileChooser == null) {
             fileChooser = new jmri.util.swing.JmriJFileChooser();
         }
-        fileChooser.setDialogTitle("Read into binary file");
+        fileChooser.setDialogTitle(Bundle.getMessage("FileDialogRead"));
         fileChooser.rescanCurrentDirectory();
         fileChooser.setSelectedFile(new File("memory.bin"));
 
@@ -313,7 +313,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
             outputStream = new FileOutputStream(file);
         } catch (IOException ex) {
             log.error("Error opening file", ex);
-            statusField.setText("Error opening file");
+            statusField.setText(Bundle.getMessage("FileDialogError"));
             setRunning(false);
             return;
         }
@@ -326,7 +326,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                     @Override
                     public void handleWriteReply(int errorCode) {
                         log.error("Get failed with code {}", String.format("%04X", errorCode));
-                        statusField.setText("Get failed with code"+String.format("%04X", errorCode));
+                        statusField.setText(Bundle.getMessage("StatusFieldGetError") + " " + String.format("%04X", errorCode));
                         setRunning(false);
                     }
 
@@ -353,13 +353,13 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
             public void handleFailure(int errorCode) {
                 if (errorCode == 0x1081) {
                     log.error("Write failed. Address space not known");
-                    statusField.setText("Write failed. Address space not known.");
+                    statusField.setText(Bundle.getMessage("StatusFieldWriteFailed"));
                 } else if (errorCode == 0x1083) {
-                    log.error("Write failed. Address space not writable");
-                    statusField.setText("Write failed. Address space not writeable.");
+                    log.error("Write failed. Address space not writeable.");
+                    statusField.setText(Bundle.getMessage("StatusFieldWriteFailed2"));
                 } else {
                     log.error("Write failed. error code is {}", String.format("%04X", errorCode));
-                    statusField.setText("Write failed. error code is "+String.format("%016X", errorCode));
+                    statusField.setText(Bundle.getMessage("StatusFieldWriteFailed3") + " " + String.format("%016X", errorCode));
                 }
                 setRunning(false);
                 // return because we're done.
@@ -371,7 +371,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
 
                 if (cancelled) {
                     log.debug("Cancelled");
-                    statusField.setText("Cancelled");
+                    statusField.setText(Bundle.getMessage("StatusFieldCancelled"));
                     setRunning(false);
                     cancelled = false;
                 }
@@ -385,7 +385,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                         // end of read present
                         setRunning(false);
                         log.debug("Completed");
-                        statusField.setText("Completed.");
+                        statusField.setText(Bundle.getMessage("StatusFieldCompleted"));
                         inputStream.close();
                         return;
                     }
@@ -405,7 +405,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
             space = spaceField.getMemorySpace();
         } catch (NumberFormatException ex) {
             log.error("error parsing the space field value \"{}\"", spaceField.getText());
-            statusField.setText("Error parsing the space value");
+            statusField.setText(Bundle.getMessage("StatusFieldErrorParsing"));
             setRunning(false);
             return;
         }
@@ -414,7 +414,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         if (fileChooser == null) {
             fileChooser = new jmri.util.swing.JmriJFileChooser();
         }
-        fileChooser.setDialogTitle("Upload binary file");
+        fileChooser.setDialogTitle(Bundle.getMessage("FileDialogUpload"));
         fileChooser.rescanCurrentDirectory();
         fileChooser.setSelectedFile(new File("memory.bin"));
 

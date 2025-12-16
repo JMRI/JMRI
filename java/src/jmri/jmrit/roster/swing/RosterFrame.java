@@ -1187,7 +1187,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             rtable.moveTableViewToSelected();
         } else {
             log.warn("Read address {}, but no such loco in roster", dccAddress); //"No roster entry found; changed to promote the number to the front, June 2022,  Bill Chown"
-            JmriJOptionPane.showMessageDialog(this, dccAddress + " was read from the decoder\nbut has not been found in the Roster", dccAddress + " No roster entry found", JmriJOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("NotFoundError", dccAddress), Bundle.getMessage("NotFoundErrorTitle", dccAddress), JmriJOptionPane.INFORMATION_MESSAGE);
         }
     }
 

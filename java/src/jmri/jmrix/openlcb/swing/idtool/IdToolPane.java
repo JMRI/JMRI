@@ -97,7 +97,7 @@ public class IdToolPane extends jmri.util.swing.JmriPanel
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Ident Tool");
+            return (memo.getUserName() + " " + Bundle.getMessage("TitleIdTool"));
         }
         return getTitle(Bundle.getMessage("TitleIdTool"));
     }
