@@ -1,8 +1,6 @@
 
     <!-- contains new warnings for the release under development -->
-    <li>The serial communications library that JMRI uses has been updated.
-        If your JMRI installation is having trouble communicating with your
-        model railroad hardware, please contact us on 
-        <a href="https://groups.io/g/jmriusers">the JMRI users group</a>.</li>
+    <li>
+    </li>
     <li>
     </li>
