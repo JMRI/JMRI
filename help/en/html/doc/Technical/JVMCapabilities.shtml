@@ -353,6 +353,14 @@
 
         <tr>
           <td>
+            Java 17 is the technical baseline for the JUnit 6 testing framework.
+          </td>
+          <td>17</td>
+          <td>17</td>
+        </tr>
+
+        <tr>
+          <td>
             The sun.misc package is replaced by jdk.internal.misc, access
             to which requires the use of the module system.
             (JMRI only uses sun.misc.Signal, which is not yet

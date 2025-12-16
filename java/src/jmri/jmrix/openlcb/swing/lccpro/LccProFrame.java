@@ -145,7 +145,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
 
         var searchPanel = new JPanel();
         searchPanel.setLayout(new WrapLayout());
-        searchPanel.add(new JLabel("Search Node Names:"));
+        searchPanel.add(new JLabel(Bundle.getMessage("FrameSearchNodeNames")));
         var searchField = new JTextField(12) {
             @Override
             public Dimension getMaximumSize() {
@@ -190,8 +190,8 @@ public class LccProFrame extends TwoPaneTBWindow  {
         
         var groupPanel = new JPanel();
         groupPanel.setLayout(new WrapLayout());
-        JLabel display = new JLabel("Display Node Groups:");
-        display.setToolTipText("Use the popup menu on a node's row to define node groups");
+        JLabel display = new JLabel(Bundle.getMessage("FrameDisplayNodeGroups"));
+        display.setToolTipText(Bundle.getMessage("FrameDisplayNodeGroupsTt"));
         groupPanel.add(display);
         
         matchGroupName = new JComboBox<>();
@@ -213,7 +213,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     // load updateMatchGroup combobox with current contents
     protected void updateMatchGroupName() {
         matchGroupName.removeAllItems();
-        matchGroupName.addItem("(All Groups)");
+        matchGroupName.addItem(Bundle.getMessage("FrameAllGroups"));
         
         var list = groupStore.getGroupNames();
         for (String group : list) {
@@ -635,25 +635,25 @@ public class LccProFrame extends TwoPaneTBWindow  {
         
         NodeID node = new NodeID((String) nodetable.getTable().getValueAt(row, LccProTableModel.IDCOL));
         
-        var addMenu = new JMenuItem("Add Node To Group");
+        var addMenu = new JMenuItem(Bundle.getMessage("FrameAddNodeToGroup"));
         addMenu.addActionListener((ActionEvent evt) -> {
             addToGroupPrompt(node);
         });
         popupMenu.add(addMenu);
 
-        var removeMenu = new JMenuItem("Remove Node From Group");
+        var removeMenu = new JMenuItem(Bundle.getMessage("FrameRemoveNodeFromGroup"));
         removeMenu.addActionListener((ActionEvent evt) -> {
             removeFromGroupPrompt(node);
         });
         popupMenu.add(removeMenu);
         
-        var restartMenu = new JMenuItem("Restart Node");
+        var restartMenu = new JMenuItem(Bundle.getMessage("FrameRestartNode"));
         restartMenu.addActionListener((ActionEvent evt) -> {
             restart(node);
         });
         popupMenu.add(restartMenu);
         
-        var clearCdiMenu = new JMenuItem("Clear CDI Cache");
+        var clearCdiMenu = new JMenuItem(Bundle.getMessage("FrameClearCdiCache"));
         clearCdiMenu.addActionListener((ActionEvent evt) -> {
             clearCDI(node);
         });
@@ -664,7 +664,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
 
     void addToGroupPrompt(NodeID node) {
         var group = JmriJOptionPane.showInputDialog(
-                    null, "Add to Group:", "Add to Group", 
+                    null, Bundle.getMessage("FrameAddToGroup"), Bundle.getMessage("FrameAddToGroupTit"), 
                     JmriJOptionPane.QUESTION_MESSAGE
                 );
         if (! group.isEmpty()) {
@@ -675,7 +675,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     
     void removeFromGroupPrompt(NodeID node) {
         var group = JmriJOptionPane.showInputDialog(
-                    null, "Remove from Group:", "Remove from Group", 
+                    null, Bundle.getMessage("FrameRemoveFromGroup"), Bundle.getMessage("FrameRemoveFromGroupTit"), 
                     JmriJOptionPane.QUESTION_MESSAGE
                 );
         if (! group.isEmpty()) {
@@ -766,37 +766,37 @@ public class LccProFrame extends TwoPaneTBWindow  {
             var gbl = new jmri.util.javaworld.GridLayout2(7,2);
             setLayout(gbl);
             
-            var a = new JLabel("Name: ");
+            var a = new JLabel(Bundle.getMessage("FrameName"));
             a.setHorizontalAlignment(SwingConstants.RIGHT);
             add(a);
             add(name);
 
-            a = new JLabel("Description: ");
+            a = new JLabel(Bundle.getMessage("FrameDescription"));
             a.setHorizontalAlignment(SwingConstants.RIGHT);
             add(a);
             add(desc);
 
-            a = new JLabel("Node ID: ");
+            a = new JLabel(Bundle.getMessage("FrameNodeId"));
             a.setHorizontalAlignment(SwingConstants.RIGHT);
             add(a);
             add(nodeID);
             
-            a = new JLabel("Manufacturer: ");
+            a = new JLabel(Bundle.getMessage("FrameManufacturer"));
             a.setHorizontalAlignment(SwingConstants.RIGHT);
             add(a);
             add(mfg);
 
-            a = new JLabel("Model: ");
+            a = new JLabel(Bundle.getMessage("FrameModel"));
             a.setHorizontalAlignment(SwingConstants.RIGHT);
             add(a);
             add(model);
 
-            a = new JLabel("Hardware Version: ");
+            a = new JLabel(Bundle.getMessage("FrameHardwareVersion"));
             a.setHorizontalAlignment(SwingConstants.RIGHT);
             add(a);
             add(hardver);
 
-            a = new JLabel("Software Version: ");
+            a = new JLabel(Bundle.getMessage("FrameSoftwareVersion"));
             a.setHorizontalAlignment(SwingConstants.RIGHT);
             add(a);
             add(softver);
@@ -825,7 +825,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
         
         public NodePipPane () {
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-            add(new JLabel("Supported Protocols:"));
+            add(new JLabel(Bundle.getMessage("FrameSupportedProtocols")));
         }
         
         public void update(MimicNodeStore.NodeMemo nodememo) {
@@ -834,7 +834,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
             revalidate();
             repaint();
             // add heading
-            add(new JLabel("Supported Protocols:"));
+            add(new JLabel(Bundle.getMessage("FrameSupportedProtocols")));
             // and display new content
             var pip = nodememo.getProtocolIdentification();
             var names = pip.getProtocolNames();

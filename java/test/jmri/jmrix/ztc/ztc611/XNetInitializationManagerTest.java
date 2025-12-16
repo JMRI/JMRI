@@ -44,7 +44,7 @@ public class XNetInitializationManagerTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
         tc = Mockito.mock(XNetTrafficController.class);
         cs = Mockito.mock(LenzCommandStation.class);
@@ -54,7 +54,7 @@ public class XNetInitializationManagerTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         memo = null;
         tc = null;
         cs = null;
