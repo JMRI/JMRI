@@ -6,6 +6,7 @@ import java.util.List;
 import jmri.jmrix.marklin.MarklinMessage;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 import jmri.jmrix.marklin.MarklinTrafficControlScaffold;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -80,6 +81,7 @@ public class MarklinSendBootActionTest {
         
         // Verify no messages were sent (since memo is null)
         Assert.assertEquals("No messages sent", 0, tc.getSentMessages().size());
+        JUnitAppender.assertWarnMessage("Cannot send CanBoot message - no connection available");
     }
 
     @Test
@@ -95,6 +97,7 @@ public class MarklinSendBootActionTest {
         
         // Verify no messages were sent (since traffic controller is null)
         Assert.assertEquals("No messages sent", 0, tc.getSentMessages().size());
+        JUnitAppender.assertWarnMessage("Cannot send CanBoot message - no connection available");
     }
 
     @Test
