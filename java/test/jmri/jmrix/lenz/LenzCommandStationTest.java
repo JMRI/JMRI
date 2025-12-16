@@ -242,6 +242,8 @@ public class LenzCommandStationTest {
         c.setSystemConnectionMemo(memo);
         memo.setUserName("ABC");
         assertEquals("ABC", c.getUserName());
+
+        memo.getXNetTrafficController().terminateThreads();
     }
 
     @Test
@@ -252,6 +254,8 @@ public class LenzCommandStationTest {
         c.setSystemConnectionMemo(memo);
         memo.setSystemPrefix("ABC");
         assertEquals("ABC", c.getSystemPrefix());
+
+        memo.getXNetTrafficController().terminateThreads();
     }
 
     @Test
@@ -268,6 +272,8 @@ public class LenzCommandStationTest {
 
         assertEquals(1, xis.outbound.size());
         assertEquals( "E6 30 C0 64 EC 1C 05 87", xis.outbound.elementAt(0).toString(), "packet message contents");
+
+        xis.terminateThreads();
     }
 
     @BeforeEach
@@ -277,7 +283,6 @@ public class LenzCommandStationTest {
 
     @AfterEach
     public void tearDown() {
-        // JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 
