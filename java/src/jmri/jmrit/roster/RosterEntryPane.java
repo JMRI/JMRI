@@ -63,10 +63,11 @@ public class RosterEntryPane extends javax.swing.JPanel {
     RosterEntry re;
     
      // --- Physics (locomotive-level) controls for the Programmer's "Roster Entry" tab ---
-     private JRadioButton physicsSteamRadio = new JRadioButton("Steam");
-     private JRadioButton physicsDieselElectricRadio = new JRadioButton("Diesel/Electric");
+     private JRadioButton physicsSteamRadio = new JRadioButton(Bundle.getMessage("PhysicsSteam"));
+     private JRadioButton physicsDieselElectricRadio = new JRadioButton(Bundle.getMessage("PhysicsDieselElectric"));
+     private JCheckBox physicsMechanicalTransmissionCheck = new JCheckBox(Bundle.getMessage("PhysicsMechanicalTransmission"));
+     
      private ButtonGroup physicsTractionGroup = new ButtonGroup();
-     private JCheckBox physicsMechanicalTransmissionCheck = new JCheckBox("Mechanical transmission (4-speed epicyclic)");
     
      // Unit combos per field (display units; storage stays metric in RosterEntry)
      private JComboBox<String> physicsWeightUnitCombo = new JComboBox<>();
@@ -276,7 +277,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         
          // Traction type (Steam / Diesel/Electric)
          cL.gridy++;
-         JLabel physicsTractionLabel = new JLabel("Traction type:");
+         JLabel physicsTractionLabel = new JLabel(Bundle.getMessage("PhysicsTractionType") + ":");
          gbLayout.setConstraints(physicsTractionLabel, cL);
          super.add(physicsTractionLabel);
          cR.gridy = cL.gridy;
@@ -285,22 +286,26 @@ public class RosterEntryPane extends javax.swing.JPanel {
          physicsTractionGroup.add(physicsDieselElectricRadio);
          tractionRow.add(physicsSteamRadio);
          tractionRow.add(physicsDieselElectricRadio);
+         physicsSteamRadio.getAccessibleContext().setAccessibleName(Bundle.getMessage("PhysicsSteam"));
+         physicsDieselElectricRadio.getAccessibleContext().setAccessibleName(Bundle.getMessage("PhysicsDieselElectric"));
          gbLayout.setConstraints(tractionRow, cR);
          super.add(tractionRow);    
 
           // Transmission (mechanical DMU option)
           cL.gridy++;
-          JLabel physicsTransLabel = new JLabel("Transmission:");
+          JLabel physicsTransLabel = new JLabel(Bundle.getMessage("PhysicsTransmission") + ":");
           gbLayout.setConstraints(physicsTransLabel, cL);
           super.add(physicsTransLabel);
           cR.gridy = cL.gridy;
           gbLayout.setConstraints(physicsMechanicalTransmissionCheck, cR);
           // physics-based gear changes (15/27/41 mph) in Physics mode.");
           super.add(physicsMechanicalTransmissionCheck);
+          physicsMechanicalTransmissionCheck.getAccessibleContext().setAccessibleName(Bundle.getMessage("PhysicsMechanicalTransmission"));
+          physicsMechanicalTransmissionCheck.setToolTipText(Bundle.getMessage("ToolTipPhysicsMechanicalTransmission"));
         
          // Locomotive weight
          cL.gridy++;
-         JLabel physicsWeightLabel = new JLabel("Locomotive weight:");
+         JLabel physicsWeightLabel = new JLabel(Bundle.getMessage("PhysicsWeight") + ":");
          gbLayout.setConstraints(physicsWeightLabel, cL);
          super.add(physicsWeightLabel);
          cR.gridy = cL.gridy;
@@ -309,70 +314,78 @@ public class RosterEntryPane extends javax.swing.JPanel {
          physicsWeightSpinner.setModel(new SpinnerNumberModel(0.0d, 0.0d, 1_000_000.0d, 0.001d));
          physicsWeightSpinner.setEditor(new JSpinner.NumberEditor(physicsWeightSpinner, "0.000"));
          // display units for weight
-         physicsWeightUnitCombo.addItem("Metric tonnes (t)");
-         physicsWeightUnitCombo.addItem("UK long tons (long, UK)");
-         physicsWeightUnitCombo.addItem("US short tons (short, US)");
+          physicsWeightUnitCombo.addItem(Bundle.getMessage("PhysicsWeightUnitTonne"));
+          physicsWeightUnitCombo.addItem(Bundle.getMessage("PhysicsWeightUnitLongTon"));
+          physicsWeightUnitCombo.addItem(Bundle.getMessage("PhysicsWeightUnitShortTon"));
          weightRow.add(physicsWeightSpinner);
          weightRow.add(physicsWeightUnitCombo);
          gbLayout.setConstraints(weightRow, cR);
          super.add(weightRow);
+         physicsWeightSpinner.getAccessibleContext().setAccessibleName(Bundle.getMessage("PhysicsWeightValue"));
+         physicsWeightUnitCombo.getAccessibleContext().setAccessibleName(Bundle.getMessage("PhysicsWeightUnits"));
         
          // Continuous power
          cL.gridy++;
-         JLabel physicsPowerLabel = new JLabel("Continuous power:");
+         JLabel physicsPowerLabel = new JLabel(Bundle.getMessage("PhysicsPower") + ":");
          gbLayout.setConstraints(physicsPowerLabel, cL);
          super.add(physicsPowerLabel);
          cR.gridy = cL.gridy;
          JPanel powerRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
          physicsPowerSpinner.setModel(new SpinnerNumberModel(0.0d, 0.0d, 1_000_000.0d, 0.1d));
          physicsPowerSpinner.setEditor(new JSpinner.NumberEditor(physicsPowerSpinner, "0.000"));
-         physicsPowerUnitCombo.addItem("kW");
-         physicsPowerUnitCombo.addItem("hp");
+         physicsPowerUnitCombo.addItem(Bundle.getMessage("PhysicsPowerUnitKW"));
+         physicsPowerUnitCombo.addItem(Bundle.getMessage("PhysicsPowerUnitHP"));
          powerRow.add(physicsPowerSpinner);
          powerRow.add(physicsPowerUnitCombo);
          gbLayout.setConstraints(powerRow, cR);
          super.add(powerRow);
+         physicsPowerSpinner.getAccessibleContext().setAccessibleName(Bundle.getMessage("PhysicsPowerValue"));
+         physicsPowerUnitCombo.getAccessibleContext().setAccessibleName(Bundle.getMessage("PhysicsPowerUnits"));
         
          // Tractive effort
          cL.gridy++;
-         JLabel physicsTeLabel = new JLabel("Tractive effort:");
+         JLabel physicsTeLabel = new JLabel(Bundle.getMessage("PhysicsTractiveEffort") + ":");
          gbLayout.setConstraints(physicsTeLabel, cL);
          super.add(physicsTeLabel);
          cR.gridy = cL.gridy;
          JPanel teRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
          physicsTractiveEffortSpinner.setModel(new SpinnerNumberModel(0.0d, 0.0d, 1_000_000.0d, 0.001d));
          physicsTractiveEffortSpinner.setEditor(new JSpinner.NumberEditor(physicsTractiveEffortSpinner, "0.000"));
-         physicsTeUnitCombo.addItem("kN");
-         physicsTeUnitCombo.addItem("lbf");
+         physicsTeUnitCombo.addItem(Bundle.getMessage("PhysicsTeUnitKN"));
+         physicsTeUnitCombo.addItem(Bundle.getMessage("PhysicsTeUnitLbf"));
          teRow.add(physicsTractiveEffortSpinner);
          teRow.add(physicsTeUnitCombo);
          gbLayout.setConstraints(teRow, cR);
          super.add(teRow);
+         physicsTractiveEffortSpinner.getAccessibleContext().setAccessibleName(Bundle.getMessage("PhysicsTractiveEffortValue"));
+         physicsTeUnitCombo.getAccessibleContext().setAccessibleName(Bundle.getMessage("PhysicsTractiveEffortUnits"));
         
          // Maximum speed
          cL.gridy++;
-         JLabel physicsSpeedLabel = new JLabel("Maximum speed:");
+         JLabel physicsSpeedLabel = new JLabel(Bundle.getMessage("PhysicsMaxSpeed") + ":");
          gbLayout.setConstraints(physicsSpeedLabel, cL);
          super.add(physicsSpeedLabel);
          cR.gridy = cL.gridy;
          JPanel speedRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
          physicsMaxSpeedSpinner.setModel(new SpinnerNumberModel(0.0d, 0.0d, 1_000.0d, 0.1d));
          physicsMaxSpeedSpinner.setEditor(new JSpinner.NumberEditor(physicsMaxSpeedSpinner, "0.000"));
-         physicsSpeedUnitCombo.addItem("km/h");
-         physicsSpeedUnitCombo.addItem("mph");
+         physicsSpeedUnitCombo.addItem(Bundle.getMessage("PhysicsSpeedUnitKmh"));
+         physicsSpeedUnitCombo.addItem(Bundle.getMessage("PhysicsSpeedUnitMph"));
          speedRow.add(physicsMaxSpeedSpinner);
          speedRow.add(physicsSpeedUnitCombo);
          gbLayout.setConstraints(speedRow, cR);
          super.add(speedRow);
+         physicsMaxSpeedSpinner.getAccessibleContext().setAccessibleName(Bundle.getMessage("PhysicsMaxSpeedValue"));
+         physicsSpeedUnitCombo.getAccessibleContext().setAccessibleName(Bundle.getMessage("PhysicsSpeedUnits"));
         
           // Profile tools row: single button to open JMRI Speed Profiling UI
           cL.gridy++;
-          JLabel profileToolsLabel = new JLabel("Profile tools:");
+          JLabel profileToolsLabel = new JLabel(Bundle.getMessage("PhysicsProfileTools") + ":");
           gbLayout.setConstraints(profileToolsLabel, cL);
           super.add(profileToolsLabel);
         
           cR.gridy = cL.gridy;
-          JButton physicsSpeedProfileButton = new JButton("Speed profile...");
+          JButton physicsSpeedProfileButton = new JButton(Bundle.getMessage("PhysicsSpeedProfileButton"));
           gbLayout.setConstraints(physicsSpeedProfileButton, cR);
           super.add(physicsSpeedProfileButton);
         
@@ -382,8 +395,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
               jmri.util.swing.WindowInterface wi = getWindowInterfaceOrNull();
               jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction act =
                   (wi != null)
-                      ? new jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction("Speed Profiling", wi)
-                      : new jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction("Speed Profiling");
+                      ? new jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction(Bundle.getMessage("PhysicsSpeedProfilingTitle"), wi)
+                      : new jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction(Bundle.getMessage("PhysicsSpeedProfilingTitle"));
               act.actionPerformed(new java.awt.event.ActionEvent(this,
                       java.awt.event.ActionEvent.ACTION_PERFORMED, "open"));
           });
