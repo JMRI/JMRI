@@ -1169,30 +1169,32 @@ public class JUnitUtil {
     }
 
     /**
-     * Errors if the {@link jmri.ShutDownManager} was not left empty. Normally
-     * run as part of the default end-of-test code. Considered an error so that
-     * CI will flag these and tests will be improved.
+     * Fails test if the {@link jmri.ShutDownManager} was not left empty.
+     * Normally run as part of the default end-of-test code.
+     * Considered a failure so that the individual test can be identified.
      *
      * @see #clearShutDownManager()
      */
     public static void checkShutDownManager() {
-        if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
+        if (!  InstanceManager.containsDefault(ShutDownManager.class)) {
+            return; // not present, stop (don't create)
+        }
 
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
 
         List<Callable<Boolean>> callables = sm.getCallables();
         while (!callables.isEmpty()) {
             Callable<Boolean> callable = callables.get(0);
-            log.error("Test {} left registered shutdown callable of type {}", getTestClassName(), callable.getClass(),
-                        LoggingUtil.shortenStacktrace(new Exception("traceback")));
+            fail("Test " + getTestClassName() + " left registered shutdown callable of type "
+                + callable.getClass());
             sm.deregister(callable);
             callables = sm.getCallables(); // avoid ConcurrentModificationException
         }
         List<Runnable> runnables = sm.getRunnables();
         while (!runnables.isEmpty()) {
             Runnable runnable = runnables.get(0);
-            log.error("Test {} left registered shutdown runnable of type {}", getTestClassName(), runnable.getClass(),
-                        LoggingUtil.shortenStacktrace(new Exception("traceback")));
+            fail("Test " + getTestClassName() + " left registered shutdown runnable of type "
+                + runnable.getClass());
             sm.deregister(runnable);
             runnables = sm.getRunnables(); // avoid ConcurrentModificationException
         }
@@ -1204,7 +1206,7 @@ public class JUnitUtil {
             f.setAccessible(true);
             f.set(sm, false);
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            log.error("Failed to reset DefaultShutDownManager shuttingDown field", x);
+            fail("Failed to reset DefaultShutDownManager shuttingDown field", x);
         }
 
     }
