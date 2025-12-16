@@ -1,6 +1,7 @@
 package jmri.script;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import javax.script.*;
 
@@ -75,6 +76,7 @@ public class ScriptEngineSelectorTest {
 
     @Test
     public void testEcmaOldStyle1() throws JmriException, ScriptException {
+        assumeTrue(hasEcmaScript());
         _turnout.setState(Turnout.CLOSED);
         runEcmaScriptOldStyle();
         assertEquals(Turnout.THROWN, _turnout.getState());
@@ -82,6 +84,7 @@ public class ScriptEngineSelectorTest {
 
     @Test
     public void testEcmaOldStyle2() throws JmriException, ScriptException {
+        assumeTrue(hasEcmaScript());
         _turnout.setState(Turnout.CLOSED);
         runEcmaScriptOldStyle();
         assertEquals(Turnout.THROWN, _turnout.getState());
@@ -103,6 +106,7 @@ public class ScriptEngineSelectorTest {
 
     @Test
     public void testEcmaNewStyle1() throws JmriException, ScriptException {
+        assumeTrue(hasEcmaScript());
         _turnout.setState(Turnout.CLOSED);
         runEcmaScriptNewStyle();
         assertEquals(Turnout.THROWN, _turnout.getState());
@@ -110,9 +114,16 @@ public class ScriptEngineSelectorTest {
 
     @Test
     public void testEcmaNewStyle2() throws JmriException, ScriptException {
+        assumeTrue(hasEcmaScript());
         _turnout.setState(Turnout.CLOSED);
         runEcmaScriptNewStyle();
         assertEquals(Turnout.THROWN, _turnout.getState());
+    }
+
+    // Java 17 doesn't have ECMA_SCRIPT
+    private boolean hasEcmaScript() {
+        ScriptEngineSelector.Engine engine = _scriptEngineSelector.getSelectedEngine();
+        return engine != null && engine.getLanguageName().equals(ScriptEngineSelector.ECMA_SCRIPT);
     }
 
     // The minimal setup for log4J

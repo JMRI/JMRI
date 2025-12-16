@@ -25,7 +25,7 @@ public class PipeListener extends Thread {
     }
 
     static final int BUFFER_SIZE = 120;
-    
+
     @Override
     public void run() {
         try {
@@ -33,6 +33,9 @@ public class PipeListener extends Thread {
             while (true) {
                 try {
                     int nRead = pr.read(cbuf, 0, BUFFER_SIZE);  // blocking read
+                    if (nRead == -1) {
+                        return;     // End of file reached.
+                    }
                     String content = new String(Arrays.copyOf(cbuf, nRead)); // retain only filled chars
 
                     // The following used to be runOnGui (i.e. not "Eventually")

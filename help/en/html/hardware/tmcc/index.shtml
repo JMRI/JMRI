@@ -25,8 +25,8 @@
 
       <h3>Limitations</h3>
 
-      <p>As of JMRI v 5.15.1, Lionel TMCC 1 and TMCC 2 Legacy should be fully supported. If anything seems missing please make a suggestion
-      via the <a href="https://groups.io/g/jmriusers">JMRIusers list.</a>.
+      <p>As of JMRI v 5.13.7, Lionel TMCC 1 and TMCC 2 Legacy should be fully supported up to the Lionel Legacy Command Protocol rev 1.21.
+      If anything seems missing please make a suggestion via the <a href="https://groups.io/g/jmriusers">JMRIusers list.</a>.
 
       <h3>Connecting via Cable</h3>
 
@@ -366,6 +366,7 @@
         <li>Select the type of consist (TMCC1 or TMCC2) in the top line next to Consist.</li>
 
         <li>Enter an ID# for the consist (This is the TR ID# in TMCC).</li>
+        *TR ID#s 1-15 are currently supported.
 
         <li>In Line 2, enter the number of the loco to be added to the consist or use the drop-down to select a loco from the roster.</li>
         *TMCC1 and TMCC2 locos should not be mixed in a consist unless TMCC2 locos are set to TMCC1 format.
@@ -387,7 +388,11 @@
         <li>Once the consist build is complete, select Throttle at the bottom of the Consisting Tool.</li>
 
         <li>A TMCC throttle will open with the Consist ID# at the top.</li>
-        *If you want a consist throttle to load with pre-set FnKeys, set the Consist ID# the same as the Eng ID# of the Head Loco (first loco added to the consist).
+        *If you want a consist throttle to load with pre-set FnKeys, use the Add New Loco feature and build a loco profile that matches the train
+        type to be set (i.e. diesel/steam) and set the target Consist ID# as the ID# of this new loco build. Be sure and set the pre-defined FnKyes
+        by highlighting/selecting this new loco and pressing the Labels and Media button (bottom right). Once open, select the X (upper right) to
+        close. This will prompt you to Save (which you should do) and then the custom FnKey layout will appear when you open the throttle associated
+        with the consist build.
  
         <li>Use the SpeedStep drop-down in the throttle to select the appropriate TR speed profile for the consist.</li>
 

@@ -3190,6 +3190,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     log.debug("mousePressed: ++ Linux marker popup delay");
                 }
             }
+            if (selectedObject == null) {
+                selectedObject = checkBlockContentsPopUps(dLoc);
+                if (selectedObject != null) {
+                    selectedHitPointType = HitPointType.BLOCKCONTENTSICON;
+                }
+            }
 
             // not in edit mode - check if a signal mast popup menu is being requested using Windows or Linux.
             var sm = checkSignalMastIconPopUps(dLoc);
@@ -3197,6 +3203,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 delayedPopupTrigger = true;
                 log.debug("mousePressed: ++ Window/Linux mast popup delay");
              }
+            if (selectedObject == null) {
+                    selectedObject = checkBlockContentsPopUps(dLoc);
+                    if (selectedObject != null) {
+                        selectedHitPointType = HitPointType.BLOCKCONTENTSICON;
+                    }
+                }
 
         } else if (event.isPopupTrigger() && !event.isShiftDown()) {
 
@@ -3516,6 +3528,23 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         return result;
     }
 
+    private BlockContentsIcon checkBlockContentsPopUps(@Nonnull Point2D loc) {
+        assert loc != null;
+
+        BlockContentsIcon result = null;
+        // check marker icons, if any
+        for (int i = blockContentsLabelList.size() - 1; i >= 0; i--) {
+            BlockContentsIcon l = blockContentsLabelList.get(i);
+            Rectangle2D r = l.getBounds();
+            if (r.contains(loc)) {
+                // mouse was pressed in marker icon
+                result = l;
+                break;
+            }
+        }
+        return result;
+    }
+
     private LayoutShape checkLayoutShapePopUps(@Nonnull Point2D loc) {
         assert loc != null;
 
@@ -3760,6 +3789,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // controlling turntable out of edit mode
             LayoutTurntable t = (LayoutTurntable) selectedObject;
             t.setPosition(selectedHitPointType.turntableTrackIndex());
+        } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.BLOCKCONTENTSICON))
+                && allControlling()  && !event.isAltDown() && !event.isPopupTrigger()
+                && !event.isShiftDown() && (!delayedPopupTrigger)) {
+            BlockContentsIcon t = (BlockContentsIcon) selectedObject;
+            if (t != null) {
+                showPopUp(t, event);
+            }
         } else if ((event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging)) {
             // requesting marker popup out of edit mode
             LocoIcon lo = checkMarkerPopUps(dLoc);

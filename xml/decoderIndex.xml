@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.13.6plus+jake+20251128T1141Z+Ra61355e9b23 on Fri Nov 28 06:41:51 EST 2025-->
-  <decoderIndex version="689">
+  <!--Written by JMRI version 5.13.7plus+jake+20251216T1943Z+R41137ea0c85 on Tue Dec 16 13:44:00 CST 2025-->
+  <decoderIndex version="691">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -17249,6 +17249,71 @@
           </soundlabels>
         </model>
       </family>
+      <family name="PIKO SmartDecoder XP5.1 (version 1.17+)" mfg="PIKO" lowVersionID="17" highVersionID="20" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound_noSUSI_v1.17.xml">
+        <model model="PIKO46505-18 XP5.1 V1.17 no LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein ohne LC (FW 1.17.0+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46540-18 BR55-TT V1.17" numOuts="4" numFns="68" productID="PIKO46540-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.17.0+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO56505-22 XP5.1 V1.17 no LC (SUSI)" numOuts="9" numFns="68" productID="PIKO56505-22" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX22 ohne LC (FW 1.17.0+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
+        </model>
+        <model model="PIKO56508-16 XP5.1 V1.17 no LC (SUSI)" numOuts="6" numFns="68" productID="PIKO56508-16" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX16 ohne LC (FW 1.17.0+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+        </model>
+        <model model="PIKO36505-G XP5.1 V1.17 no LC (SUSI)" numOuts="14" numFns="68" productID="PIKO36505-G" comment="Piko SmartDecoder XP5.1 Sound G allgemein ohne LC (FW 1.17.0+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
+          <output name="10" label=". A8 ." />
+          <output name="11" label=". A9 ." />
+          <output name="12" label=". A10." />
+          <output name="13" label=". A11." />
+          <output name="14" label=". A12." />
+        </model>
+        <model model="PIKO36537-G BR80-G V1.17" numOuts="14" numFns="68" productID="PIKO36537-G" comment="Piko SmartDecoder XP5.1 Sound BR 80 G ohne LC (FW 1.17.0+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
+          <output name="10" label=". A8 ." />
+          <output name="11" label=". A9 ." />
+          <output name="12" label=". A10." />
+          <output name="13" label=". A11." />
+          <output name="14" label=". A12." />
+        </model>
+      </family>
       <family name="PIKO SmartDecoder XP5.1 (version 1.5+)" mfg="PIKO" lowVersionID="3" highVersionID="5" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound_noSUSI_v1.5.xml">
         <model model="PIKO46505-18 XP5.1 V1.5 no LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein (FW 1.5.0)" replacementModel="PIKO46505-18 XP5.1 V1.8 no LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
@@ -17283,19 +17348,19 @@
         </model>
       </family>
       <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="16" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound_noSUSI_v1.8.xml">
-        <model model="PIKO46505-18 XP5.1 V1.8 no LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound allgemein ohne LC (FW 1.8.0 - 1.16.0)">
+        <model model="PIKO46505-18 XP5.1 V1.8 no LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein ohne LC (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46540-18 BR55-TT V1.8" numOuts="4" numFns="68" productID="PIKO46540-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.8.0 - 1.16.0)">
+        <model model="PIKO46540-18 BR55-TT V1.8" numOuts="4" numFns="68" productID="PIKO46540-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO56505-22 XP5.1 V1.8 no LC (SUSI)" numOuts="9" numFns="68" productID="PIKO56505-22" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX22 ohne LC (FW 1.8.0 - 1.16.0)">
+        <model model="PIKO56505-22 XP5.1 V1.8 no LC (SUSI)" numOuts="9" numFns="68" productID="PIKO56505-22" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX22 ohne LC (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -17306,7 +17371,7 @@
           <output name="8" label=". A6 ." />
           <output name="9" label=". A7 ." />
         </model>
-        <model model="PIKO56508-16 XP5.1 V1.8 no LC (SUSI)" numOuts="6" numFns="68" productID="PIKO56508-16" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX16 ohne LC (FW 1.8.0 - 1.16.0)">
+        <model model="PIKO56508-16 XP5.1 V1.8 no LC (SUSI)" numOuts="6" numFns="68" productID="PIKO56508-16" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX16 ohne LC (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -17535,6 +17600,9 @@
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_SCOM_TC.xml">
         <model model="ARD-SCOM-TC" lowVersionID="10" highVersionID="19" productID="16843266" numOuts="16" />
         <model model="ARD-SCOM-TC-2" lowVersionID="20" highVersionID="29" productID="16843266" numOuts="16" />
+      </family>
+      <family name="dccdoma.cz" mfg="Public-domain and DIY" modes="OPSACCEXTBYTEMODE" file="Public_Domain_dccdoma_UNI16ARD_16SV.xml">
+        <model model="UNI16ARD-16SV" lowVersionID="04" highVersionID="19" productID="16843014" numOuts="16" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_8VYH.xml">
         <model model="UNI16ARD-8VYH" lowVersionID="00" highVersionID="39" productID="16843009" numOuts="16" />
@@ -26270,6 +26338,16 @@
           <output name="9" label="X9" />
           <output name="10" label="X10" />
           <output name="11" label="X11" />
+        </model>
+      </family>
+      <family name="Multiprotocol Decoder" mfg="Tams Elektronik GmbH" lowVersionID="23" highVersionID="23" file="TAMS_LD-W-32_2.xml">
+        <model model="LD-W-32.2" numOuts="6" numFns="14">
+          <output name="1" label="X1" />
+          <output name="2" label="X2" />
+          <output name="3" label="X3" />
+          <output name="4" label="Acceleration Delay" />
+          <output name="5" label="Shunting gear" />
+          <output name="6" label="Shunting light" />
         </model>
       </family>
       <family name="Lokdecoder Serie 30 plus" mfg="Tams Elektronik GmbH" file="TAMS_LD_30.xml">

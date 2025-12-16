@@ -121,7 +121,7 @@ public class CarManagerXml extends OperationsXml implements InstanceManagerAutoD
     private String operationsFileName = "OperationsCarRoster.xml"; // NOI18N
     
     public File createCarRouterReportFile(String name) {
-        return createFile(defaultCarRouterReportFileName(name), false); // don't backup
+        return createFile(defaultCarRouterReportFileName(name)); // don't backup
     }
 
     public File getCarRouterReportFile(String name) {
@@ -140,8 +140,8 @@ public class CarManagerXml extends OperationsXml implements InstanceManagerAutoD
     
     public File createRawCarRouterReportFile(String name) {
         // must create 1st level directory first
-        createFile(defaultCarRouterReportFileName(name), false);
-        return createFile(defaultRawCarRouterReportFileName(name), false); // don't backup
+        createFile(defaultCarRouterReportFileName(name));
+        return createFile(defaultRawCarRouterReportFileName(name)); // don't backup
     }
 
     public File getRawCarRouterReportFile(String name) {

@@ -1,7 +1,6 @@
 package jmri.jmrix.bidib;
 
 import java.util.BitSet;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.SpeedStepMode;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
@@ -193,7 +192,6 @@ public class BiDiBThrottle extends AbstractThrottle {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed) {
         synchronized(this) {

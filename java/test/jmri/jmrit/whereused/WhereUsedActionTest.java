@@ -1,10 +1,10 @@
 package jmri.jmrit.whereused;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Tests for the WhereUsedAction Class
@@ -13,11 +13,17 @@ import org.junit.jupiter.api.*;
 public class WhereUsedActionTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         WhereUsedAction action = new WhereUsedAction();
-        Assert.assertNotNull("exists", action);
+        Assertions.assertNotNull( action, "exists");
         action.actionPerformed(null);
+
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleWhereUsed"));
+        Assertions.assertNotNull(jfo);
+        JUnitUtil.dispose(jfo.getWindow());
+
     }
 
     @BeforeEach

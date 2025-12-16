@@ -41,7 +41,7 @@ public class ConvertDialogTest {
         ArrayList<Positionable> selections = new ArrayList<>();
         selections.add(pos);
         frame.setSelectionGroup(selections);
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         new Thread(() -> {
             // constructor for d will wait until the dialog is visible

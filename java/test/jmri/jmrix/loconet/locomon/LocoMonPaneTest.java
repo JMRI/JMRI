@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.*;
 
 /**
  * Test of LocoMonPane
- * 
+ *
  * Initially written to test filtering
  *
  * @author Bob Jacobsen   Copyright 2015
@@ -31,7 +31,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         assertThat(thrown).isNull();
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
         ThreadingUtil.runOnGUI( () -> ((LocoMonPane)pane).message(m));
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         assertThat(getFrameTextONGUIThread()).withFailMessage("shows message").isEqualTo("Set speed of loco in slot 7 to 0.\n");
     }
 
@@ -44,7 +44,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
         ThreadingUtil.runOnGUI( () -> ((LocoMonPane)pane).message(m));
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         assertThat(getFrameTextONGUIThread()).withFailMessage("shows message").isEqualTo("Set speed of loco in slot 7 to 0.\n");
     }
 
@@ -54,10 +54,10 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         assertThat(thrown).isNull();
         // filter A0
         setAndCheckFilterTextEntry("A0","A0","filter set");
-        
+
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
         ThreadingUtil.runOnGUI( () -> ((LocoMonPane)pane).message(m));
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         assertThat(getFrameTextONGUIThread()).withFailMessage("shows message").isEqualTo("");
     }
 
@@ -70,7 +70,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
         ThreadingUtil.runOnGUI(()->((LocoMonPane)pane).message(m));
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         assertThat(getFrameTextONGUIThread()).withFailMessage("shows message").isEqualTo("");
     }
 
@@ -138,7 +138,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         // pane for AbstractMonFrameTestBase, panel for JmriPanelTest
         panel = pane = new LocoMonPane();
         helpTarget = "package.jmri.jmrix.loconet.locomon.LocoMonFrame";
-        title = Bundle.getMessage("MenuItemLocoNetMonitor"); 
+        title = Bundle.getMessage("MenuItemLocoNetMonitor");
     }
 
     @Override
@@ -146,7 +146,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     public void tearDown() {
         pane.dispose();
         panel = pane = null;
-        
+
         l.dispose();
         s.dispose();
         r.dispose();

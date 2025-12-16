@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-turnout-client-message",
     "type": "object",
     "description": "Schema data object in message from client to JMRI for type \"turnout\"",
@@ -23,7 +23,11 @@
         "state": {
             "type": "integer",
             "description": "If present, sets the state of the turnout",
-            "enum": [0, 2, 4]
+            "enum": [
+                0,
+                2,
+                4
+            ]
         },
         "feedbackMode": {
             "type": "integer",
@@ -32,12 +36,17 @@
         "sensor": {
             "type": "array",
             "description": "The feedback sensor names for the turnout in order",
-            "items" : {
-                "type": ["string", "null"],
+            "items": {
+                "type": [
+                    "string",
+                    "null"
+                ],
                 "description": "The name of the sensor to set or null to unset a sensor"
             }
         }
     },
     "additionalProperties": false,
-    "required": ["name"]
+    "required": [
+        "name"
+    ]
 }

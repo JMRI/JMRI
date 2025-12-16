@@ -222,7 +222,9 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         assertTrue(getSendEventButtonEnabled(jfo));
 
         panel.dispose();
- 
+
+        JUnitUtil.dispose(jfo.getWindow());
+
     }
 
     private boolean getNewEventButtonEnabled( JFrameOperator jfo ){
@@ -243,11 +245,11 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
 
 
     private void initFrame(){
-    
+
         JmriJFrame f = new JmriJFrame();
         f.add(panel);
         f.setTitle(panel.getTitle());
-        
+
         List<JMenu> list = panel.getMenus();
         JMenuBar bar = f.getJMenuBar();
         if (bar == null) {
@@ -257,7 +259,7 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
             bar.add(menu);
         }
         f.setJMenuBar(bar);
-        
+
         ThreadingUtil.runOnGUI( () -> {
             f.pack();
             f.setVisible(true);
@@ -265,11 +267,11 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
 
     }
 
-    @TempDir 
+    @TempDir
     protected File tempDir;
 
-    private CanSystemConnectionMemo memo = null; 
-    private TrafficControllerScaffold tcis = null; 
+    private CanSystemConnectionMemo memo = null;
+    private TrafficControllerScaffold tcis = null;
 
     @BeforeEach
     @Override
@@ -311,6 +313,6 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
-    }    
+    }
 
 }

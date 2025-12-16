@@ -269,6 +269,8 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
     }
 
     @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", 
+                justification = "OK to compare floating point from user-selected rate")
     void update() {
         Date now = clock.getTime();
         int hours = now.getHours();

@@ -1,5 +1,8 @@
 package apps.gui3.paned;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -10,7 +13,6 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -55,9 +57,9 @@ public class PanedTest {
             }
 
         };
-        Assert.assertNotNull(a);
+        assertNotNull(a);
         // shutdown the application
-        Assertions.assertFalse(AppsBase.handleQuit());
+        assertFalse(AppsBase.handleQuit());
         JUnitUtil.disposeFrame("DecoderPro Wizard", true, true);
         
         JUnitUtil.waitFor(() -> {
@@ -65,7 +67,7 @@ public class PanedTest {
         }, "no existing config Info line seen");
 
         JUnitUtil.waitFor( () ->
-            ((jmri.managers.DefaultShutDownManager)jmri.InstanceManager.getDefault(
+            ((jmri.managers.DefaultShutDownManager)InstanceManager.getDefault(
             jmri.ShutDownManager.class)).isShutDownComplete(),"Shutdown complete");
     }
 

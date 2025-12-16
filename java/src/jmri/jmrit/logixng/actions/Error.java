@@ -1,20 +1,25 @@
 package jmri.jmrit.logixng.actions;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Locale;
 import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectString;
 
 /**
  * Returns from a Module or a ConditionalNG.
  *
  * @author Daniel Bergqvist Copyright 2022
  */
-public class Error extends AbstractDigitalAction {
+public class Error extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
-    private String _message = "";
+    private final LogixNG_SelectString _selectMessage =
+            new LogixNG_SelectString(this, this);
 
     public Error(String sys, String user) {
         super(sys, user);
@@ -28,16 +33,12 @@ public class Error extends AbstractDigitalAction {
         if (sysName == null) sysName = manager.getAutoSystemName();
         Error copy = new Error(sysName, userName);
         copy.setComment(getComment());
-        copy.setMessage(_message);
+        getSelectMessage().copy(copy._selectMessage);
         return manager.registerAction(copy);
     }
 
-    public void setMessage(String message) {
-        _message = message;
-    }
-
-    public String getMessage() {
-        return _message;
+    public LogixNG_SelectString getSelectMessage() {
+        return _selectMessage;
     }
 
     /** {@inheritDoc} */
@@ -49,7 +50,8 @@ public class Error extends AbstractDigitalAction {
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        throw new JmriException(_message);
+        String message = _selectMessage.evaluateValue(getConditionalNG());
+        throw new JmriException(message);
     }
 
     @Override
@@ -59,13 +61,19 @@ public class Error extends AbstractDigitalAction {
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Error_Long", _message);
+        return Bundle.getMessage(locale, "Error_Long",
+                _selectMessage.getDescription(locale));
     }
 
     /** {@inheritDoc} */
     @Override
     public void setup() {
         // Do nothing
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebBrowser.class);

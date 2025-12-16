@@ -104,7 +104,7 @@ public class TrackerTest {
 
         List<OBlock> occupied = tkrWest.getBlocksOccupied();
         assertEquals(2, occupied.size(),"TkrWest Blocks Occupied");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         dialog._jList.setSelectedIndex(0);
 

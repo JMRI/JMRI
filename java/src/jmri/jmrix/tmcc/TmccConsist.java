@@ -10,6 +10,7 @@ import jmri.DccLocoAddress;
 /**
  * This is the Consist definition for a consist on a TMCC system.
  *
+ * Based on MqttConsist by
  * @author Dean Cording Copyright (C) 2023
  * with edits/additions by
  * @author Timothy Jump (C) 2025
@@ -160,72 +161,81 @@ public class TmccConsist extends jmri.implementation.DccConsist {
             m.setOpCode(0xFE);
             n.setOpCode(0xFE);
 
-            // TMCC has 6 commands for adding a loco to a consist: head, rear, and mid, plus direction
-            if (!contains(locoAddress)) {
-                // First loco to consist
-                if (consistList.isEmpty()) {
-                    // add head loco
-                    if (!directionNormal) {
-                        // TMCC1 - Assign as Head Unit/Reverse Direction
-                        c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
-                        m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
-                        n.putAsWord(0x0025 + locoAddress.getNumber() * 128);
-                    } else {
-                        // TMCC1 - Assign as Head Unit/Forward Direction
-                        c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
-                        m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
-                        n.putAsWord(0x0021 + locoAddress.getNumber() * 128);
-                    }
-                // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-                tc.sendSerialMessage(c, null);
-                tc.sendSerialMessage(m, null);
-                tc.sendSerialMessage(n, null);
+            // Set range on TMCC1 Consist ID (1-15)
+            if (consistAddress.getNumber() < 16) {
 
-                // Second loco to consist
-                } else if (consistList.size() == 1) {
-                    // add rear loco
-                    if (!directionNormal) {
-                        // TMCC1 - Assign as Rear Unit/Reverse Direction
-                        c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
-                        m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
-                        n.putAsWord(0x0027 + locoAddress.getNumber() * 128);
-                    } else {
-                        // TMCC1 - Assign as Rear Unit/Forward Direction
-                        c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
-                        m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
-                        n.putAsWord(0x0023 + locoAddress.getNumber() * 128);
-                    }
-                // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-                tc.sendSerialMessage(c, null);
-                tc.sendSerialMessage(m, null);
-                tc.sendSerialMessage(n, null);
+                // TMCC has 6 commands for adding a loco to a consist: head, rear, and mid, plus direction
+                if (!contains(locoAddress)) {
+                    // First loco to consist
+                    if (consistList.isEmpty()) {
+                        // add head loco
+                        if (!directionNormal) {
+                            // TMCC1 - Assign as Head Unit/Reverse Direction
+                            c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
+                            m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
+                            n.putAsWord(0x0025 + locoAddress.getNumber() * 128);
+                        } else {
+                            // TMCC1 - Assign as Head Unit/Forward Direction
+                            c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
+                            m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
+                            n.putAsWord(0x0021 + locoAddress.getNumber() * 128);
+                        }
+                    // send to command station (send once (each) is set, but number of sends may need to be adjusted depending on efficiency)
+                    tc.sendSerialMessage(c, null);
+                    tc.sendSerialMessage(m, null);
+                    tc.sendSerialMessage(n, null);
 
-                // Additional loco(s) to consist
+                    // Second loco to consist
+                    } else if (consistList.size() == 1) {
+                        // add rear loco
+                        if (!directionNormal) {
+                            // TMCC1 - Assign as Rear Unit/Reverse Direction
+                            c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
+                            m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
+                            n.putAsWord(0x0027 + locoAddress.getNumber() * 128);
+                        } else {
+                            // TMCC1 - Assign as Rear Unit/Forward Direction
+                            c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
+                            m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
+                            n.putAsWord(0x0023 + locoAddress.getNumber() * 128);
+                        }
+                    // send to command station (send once (each) is set, but number of sends may need to be adjusted depending on efficiency)
+                    tc.sendSerialMessage(c, null);
+                    tc.sendSerialMessage(m, null);
+                    tc.sendSerialMessage(n, null);
+
+                    // Additional loco(s) to consist
+                    } else {
+                        // add mid loco
+                        if (!directionNormal) {
+                            // TMCC1 - Assign as Mid Unit/Reverse Direction
+                            c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
+                            m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
+                            n.putAsWord(0x0026 + locoAddress.getNumber() * 128);
+                        } else {
+                            // TMCC1 - Assign as Mid Unit/Forward Direction
+                            c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
+                            m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
+                            n.putAsWord(0x0022 + locoAddress.getNumber() * 128);
+                        }
+                    // send to command station (send once (each) is set, but number of sends may need to be adjusted depending on efficiency)
+                    tc.sendSerialMessage(c, null);
+                    tc.sendSerialMessage(m, null);
+                    tc.sendSerialMessage(n, null);
+
+                    }
+
+                    // Add Loco to Consist List
+                    addToConsistList(locoAddress, directionNormal);
+
                 } else {
-                    // add mid loco
-                    if (!directionNormal) {
-                        // TMCC1 - Assign as Mid Unit/Reverse Direction
-                        c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
-                        m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
-                        n.putAsWord(0x0026 + locoAddress.getNumber() * 128);
-                    } else {
-                        // TMCC1 - Assign as Mid Unit/Forward Direction
-                        c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
-                        m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
-                        n.putAsWord(0x0022 + locoAddress.getNumber() * 128);
-                    }
-                // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-                tc.sendSerialMessage(c, null);
-                tc.sendSerialMessage(m, null);
-                tc.sendSerialMessage(n, null);
-
+                    log.error("Loco {} is already part of this consist {}", locoAddress, getConsistAddress());
                 }
 
-                // add loco to lists
-                consistList.add(locoAddress);
-
             } else {
-                log.error("Loco {} is already part of this consist {}", locoAddress, getConsistAddress());
+                m.putAsWord(0x002F);
+                tc.sendSerialMessage(m, null);
+                log.error("TMCC1 Consist ID out of Range (must be between 1-15)");
             }
         }
 
@@ -238,72 +248,82 @@ public class TmccConsist extends jmri.implementation.DccConsist {
             m.setOpCode(0xF8);
             n.setOpCode(0xF8);
 
-            // TMCC has 6 commands for adding a loco to a consist: head, rear, and mid, plus direction
-            if (!contains(locoAddress)) {
-                // First loco to consist
-                if (consistList.isEmpty()) {
-                    // add head loco
-                    if (!directionNormal) {
-                        // TMCC1 - Assign as Head Unit/Reverse Direction
-                        c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
-                        m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
-                        n.putAsWord(0x0123 + locoAddress.getNumber() * 512);
-                    } else {
-                        // TMCC1 - Assign as Head Unit/Forward Direction
-                        c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
-                        m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
-                        n.putAsWord(0x0122 + locoAddress.getNumber() * 512);
-                    }
-                // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-                tc.sendSerialMessage(c, null);
-                tc.sendSerialMessage(m, null);
-                tc.sendSerialMessage(n, null);
+            // Set range on TMCC2 Consist ID (1-15)
+            if (consistAddress.getNumber() < 16) {
 
-                // Second loco to consist
-                } else if (consistList.size() == 1) {
-                    // add rear loco
-                    if (!directionNormal) {
-                        // TMCC1 - Assign as Rear Unit/Reverse Direction
-                        c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
-                        m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
-                        n.putAsWord(0x0127 + locoAddress.getNumber() * 512);
-                    } else {
-                        // TMCC1 - Assign as Rear Unit/Forward Direction
-                        c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
-                        m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
-                        n.putAsWord(0x0126 + locoAddress.getNumber() * 512);
-                    }
-                // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-                tc.sendSerialMessage(c, null);
-                tc.sendSerialMessage(m, null);
-                tc.sendSerialMessage(n, null);
+                // TMCC has 6 commands for adding a loco to a consist: head, rear, and mid, plus direction
+                if (!contains(locoAddress)) {
 
-                // Additional loco(s) to consist
+                    // First loco to consist
+                    if (consistList.isEmpty()) {
+                        // add head loco
+                        if (!directionNormal) {
+                            // TMCC1 - Assign as Head Unit/Reverse Direction
+                            c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
+                            m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
+                            n.putAsWord(0x0123 + locoAddress.getNumber() * 512);
+                        } else {
+                            // TMCC1 - Assign as Head Unit/Forward Direction
+                            c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
+                            m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
+                            n.putAsWord(0x0122 + locoAddress.getNumber() * 512);
+                        }
+                    // send to command station (send once (each) is set, but number of sends may need to be adjusted depending on efficiency)
+                    tc.sendSerialMessage(c, null);
+                    tc.sendSerialMessage(m, null);
+                    tc.sendSerialMessage(n, null);
+
+                    // Second loco to consist
+                    } else if (consistList.size() == 1) {
+                        // add rear loco
+                        if (!directionNormal) {
+                            // TMCC1 - Assign as Rear Unit/Reverse Direction
+                            c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
+                            m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
+                            n.putAsWord(0x0127 + locoAddress.getNumber() * 512);
+                        } else {
+                            // TMCC1 - Assign as Rear Unit/Forward Direction
+                            c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
+                            m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
+                            n.putAsWord(0x0126 + locoAddress.getNumber() * 512);
+                        }
+                    // send to command station (send once (each) is set, but number of sends may need to be adjusted depending on efficiency)
+                    tc.sendSerialMessage(c, null);
+                    tc.sendSerialMessage(m, null);
+                    tc.sendSerialMessage(n, null);
+
+                    // Additional loco(s) to consist
+                    } else {
+                        // add mid loco
+                        if (!directionNormal) {
+                            // TMCC1 - Assign as Mid Unit/Reverse Direction
+                            c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
+                            m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
+                            n.putAsWord(0x0125 + locoAddress.getNumber() * 512);
+                        } else {
+                            // TMCC1 - Assign as Mid Unit/Forward Direction
+                            c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
+                            m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
+                            n.putAsWord(0x0124 + locoAddress.getNumber() * 512);
+                        }
+                    // send to command station (send once (each) is set, but number of sends may need to be adjusted depending on efficiency)
+                    tc.sendSerialMessage(c, null);
+                    tc.sendSerialMessage(m, null);
+                    tc.sendSerialMessage(n, null);
+
+                    }
+
+                    // Add Loco to Consist List
+                    addToConsistList(locoAddress, directionNormal);
+
                 } else {
-                    // add mid loco
-                    if (!directionNormal) {
-                        // TMCC1 - Assign as Mid Unit/Reverse Direction
-                        c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
-                        m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
-                        n.putAsWord(0x0125 + locoAddress.getNumber() * 512);
-                    } else {
-                        // TMCC1 - Assign as Mid Unit/Forward Direction
-                        c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
-                        m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
-                        n.putAsWord(0x0124 + locoAddress.getNumber() * 512);
-                    }
-                // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-                tc.sendSerialMessage(c, null);
-                tc.sendSerialMessage(m, null);
-                tc.sendSerialMessage(n, null);
-
+                    log.error("Loco {} is already part of this consist {}", locoAddress, getConsistAddress());
                 }
 
-                // add loco to lists
-                consistList.add(locoAddress);
-
             } else {
-                log.error("Loco {} is already part of this consist {}", locoAddress, getConsistAddress());
+                m.putAsWord(0x012F);
+                tc.sendSerialMessage(m, null);
+                log.error("TMCC2 Consist ID out of Range (must be between 1-15)");
             }
         }
     }

@@ -43,6 +43,10 @@ public abstract class OperationsXml extends XmlFile {
             log.error("Exception during operations file reading: {}", e.getLocalizedMessage());
         }
     }
+    
+    protected File createFile(String fullPathName) {
+        return createFile(fullPathName, false); // no backup
+    }
 
     protected File createFile(String fullPathName, boolean backupFile) {
         if (backupFile) {
@@ -70,6 +74,21 @@ public abstract class OperationsXml extends XmlFile {
             log.error("Exception while creating operations file, may not be complete: {}", e.getLocalizedMessage());
         }
         return file;
+    }
+    
+    protected void createDirectory(String fullPathName) {
+        if (!checkFile(fullPathName)) {
+            File file = new File(fullPathName);
+            File parentDir = file.getParentFile();
+            if (!parentDir.exists()) {
+                if (!parentDir.mkdir()) {
+                    log.error("Directory wasn't created");
+                }
+            }
+            if (file.mkdirs()) {
+                log.debug("Directory created {}", fullPathName);
+            }
+        }
     }
 
     protected void writeFile(String filename) throws FileNotFoundException, IOException {

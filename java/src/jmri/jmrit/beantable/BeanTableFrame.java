@@ -1,7 +1,5 @@
 package jmri.jmrit.beantable;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -146,8 +144,6 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
      * @param comp {@link Component} to add
      * @param c    Class name
      */
-    @SuppressFBWarnings(value = "UUF_UNUSED_FIELD",
-            justification = "param c is required in the listedtableframe")
     protected void addToBottomBox(Component comp, String c) {
        bottomBox.add(comp);
     }

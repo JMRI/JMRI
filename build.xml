@@ -133,7 +133,7 @@
     <path id="runtime.class.path">
         <pathelement location="${libdir}/JavaVersionCheckWindow.jar"/> <!-- Java 8 check, keep at start -->
         <pathelement location="${libdir}/jmri.script.jsr223graalpython.jar"/> <!-- Optional GraalVM-built code -->
-        <pathelement location="${libdir}/jSerialComm-2.10.4.jar"/>
+        <pathelement location="${libdir}/jSerialComm-2.11.4.jar"/>
         <pathelement location="${libdir}/purejavacomm-1.0.5.jar"/>
         <pathelement location="${libdir}/xercesImpl-2.12.2.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
@@ -198,7 +198,8 @@
         <pathelement location="${libdir}/usb4java-javax-1.3.0.jar"/>
         <pathelement location="${libdir}/hid4java-0.5.0.jar"/>
         <pathelement location="${libdir}/org.eclipse.paho.client.mqttv3-1.2.5.jar"/>
-        <pathelement location="${libdir}/json-schema-validator-1.0.28.jar"/>
+        <pathelement location="${libdir}/json-schema-validator-1.3.3.jar"/>
+        <pathelement location="${libdir}/itu-1.14.0.jar"/>
         <pathelement location="${libdir}/jinputvalidator-0.8.0.jar"/>
         <pathelement location="${libdir}/jsplitbutton-1.3.1.jar"/>
         <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
@@ -251,18 +252,18 @@
         <pathelement location="${libdir}/swingx-core-1.6.5-1.jar"/>
 
         <!-- //BiDiB client library -->
-        <pathelement location="${libdir}/jbidibc-core-2.0.29.jar"/>
-        <pathelement location="${libdir}/jbidibc-messages-2.0.29.jar"/>
-        <pathelement location="${libdir}/jbidibc-netbidib-2.0.29.jar"/>
-        <pathelement location="${libdir}/jbidibc-net-serial-over-tcp-2.0.29.jar"/>
-        <pathelement location="${libdir}/jbidibc-jserialcomm-2.0.29.jar"/>
-        <pathelement location="${libdir}/jbidibc-serial-2.0.29.jar"/>
-        <pathelement location="${libdir}/jbidibc-simulation-2.0.29.jar"/>
-        <pathelement location="${libdir}/bidibwizard-common-2.0.30.jar"/>
-        <pathelement location="${libdir}/bidibwizard-model-2.0.30.jar"/>
-        <pathelement location="${libdir}/bidibwizard-simulation-2.0.30.jar"/>
+        <pathelement location="${libdir}/jbidibc-core-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-messages-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-netbidib-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-net-serial-over-tcp-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-jserialcomm-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-serial-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-simulation-2.0.40.jar"/>
+        <pathelement location="${libdir}/bidibwizard-common-2.0.44.jar"/>
+        <pathelement location="${libdir}/bidibwizard-model-2.0.44.jar"/>
+        <pathelement location="${libdir}/bidibwizard-simulation-2.0.44.jar"/>
         <!-- BiDiB dependencies -->
-        <pathelement location="${libdir}/commons-collections4-4.4.jar"/>
+        <pathelement location="${libdir}/commons-collections4-4.5.0.jar"/>
         <pathelement location="${libdir}/eventbus-1.4.jar"/>
         <pathelement location="${libdir}/javax.activation-api-1.2.0.jar"/>
         <pathelement location="${libdir}/jaxb-api-2.3.1.jar"/>
@@ -300,7 +301,7 @@
         <!-- SpotBugs annotations -->
         <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
         <pathelement location="${libdir}/jsr305.jar"/>
-        <pathelement location="${libdir}/spotbugs-annotations-4.8.6.jar"/>
+        <pathelement location="${libdir}/spotbugs-annotations-4.9.8.jar"/>
     </path>
 
     <!-- path to run regular executables -->
@@ -326,12 +327,12 @@
 
     <!-- path containing jar files required while running tests -->
     <path id="test.jars.path">
-        <pathelement location="${libdir}/mockito-core-5.12.0.jar"/>
-        <pathelement location="${libdir}/mockito-junit-jupiter-5.12.0.jar"/>
-        <pathelement location="${libdir}/byte-buddy-1.14.15.jar"/>
-        <pathelement location="${libdir}/byte-buddy-agent-1.14.15.jar"/>
+        <pathelement location="${libdir}/mockito-core-5.20.0.jar"/>
+        <pathelement location="${libdir}/mockito-junit-jupiter-5.20.0.jar"/>
+        <pathelement location="${libdir}/byte-buddy-1.18.2.jar"/>
+        <pathelement location="${libdir}/byte-buddy-agent-1.18.2.jar"/>
         <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
-        <pathelement location="${libdir}/objenesis-3.3.jar"/>
+        <pathelement location="${libdir}/objenesis-3.4.jar"/>
         <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE125.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
         <!-- cucumber and it's dependencies -->
@@ -404,7 +405,7 @@
 
     <!-- Java Code Coverage -->
     <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-        <classpath path="lib/org.jacoco.ant-0.8.11-nodeps.jar" />
+        <classpath path="lib/org.jacoco.ant-0.8.14-nodeps.jar" />
     </taskdef>
 
     <!-- fileset for the jacoco targets. -->
@@ -2150,7 +2151,7 @@
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="https://logging.apache.org/log4j/1.x/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.7.3/"/>
+            <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.9.8/"/>
             <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
             <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
             <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
@@ -2258,7 +2259,7 @@
 
             <link offline="true" href="https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
-             <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.7.3/"/>
+             <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.9.8/"/>
             <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
 
         </javadoc>
