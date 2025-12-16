@@ -1994,8 +1994,10 @@ public class ActivateTrainFrame extends JmriJFrame {
     
     protected static class StopDistanceUnitsJCombo extends JComboBox<StopDistanceUnitsItem> {
         public StopDistanceUnits getSelectedUnits() {
+            // getSelectedItem() is Object in Swing; use a narrow cast or index->getItemAt(i)
             StopDistanceUnitsItem it = (StopDistanceUnitsItem) getSelectedItem();
             return it != null ? it.getValue() : StopDistanceUnits.ACTUAL_MM;
+
         }
     }    
     
@@ -2015,7 +2017,7 @@ public class ActivateTrainFrame extends JmriJFrame {
          // Collect current items, excluding any existing "Physics" to avoid duplicates
          java.util.List<String> toKeep = new java.util.ArrayList<>();
          for (int i = 0; i < rampRateBox.getItemCount(); i++) {
-             String it = (String) rampRateBox.getItemAt(i);
+             String it = rampRateBox.getItemAt(i);
              if (!Bundle.getMessage("RAMP_PHYSICS").equals(it)) {
                  toKeep.add(it);
              }
@@ -2046,7 +2048,7 @@ public class ActivateTrainFrame extends JmriJFrame {
          if (!restored && prev != null && Bundle.getMessage("RAMP_PHYSICS").equals(prev) && !speedProfileOn) {
              boolean set = false;
              for (int i = 0; i < rampRateBox.getItemCount(); i++) {
-                 String candidate = (String) rampRateBox.getItemAt(i);
+                 String candidate = rampRateBox.getItemAt(i);
                  if (Bundle.getMessage("RAMP_SPEEDPROFILE").equals(candidate)) {
                      rampRateBox.setSelectedIndex(i);
                      set = true;
@@ -2086,7 +2088,7 @@ public class ActivateTrainFrame extends JmriJFrame {
          public AdditionalWeightUnits getValue() { return value; }
      }
     
-     protected static class AdditionalWeightUnitsJCombo extends JComboBox {
+     protected static class AdditionalWeightUnitsJCombo extends JComboBox<AdditionalWeightUnitsItem> {
          public AdditionalWeightUnits getSelectedUnits() {
              AdditionalWeightUnitsItem it = (AdditionalWeightUnitsItem) getSelectedItem();
              return it != null ? it.getValue() : AdditionalWeightUnits.METRIC_TONNES;

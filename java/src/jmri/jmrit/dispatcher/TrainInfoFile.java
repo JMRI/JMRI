@@ -391,7 +391,6 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                  // Read the per-train stop-by-speed-profile adjust factor (fraction of block length)
                  // Preferred attribute name since v5+: "stopbyspeedprofileadjust"
                  // Backward-compatibility: accept a couple of historical synonyms if present.
-                 float adjust = tInfo.getStopBySpeedProfileAdjust(); // keep existing default
                  org.jdom2.Attribute adjAttr = traininfo.getAttribute("stopbyspeedprofileadjust");
                  if (adjAttr == null) {
                      // Legacy fallbacks seen in older files/tests
