@@ -1,18 +1,22 @@
 package jmri.jmrix.openlcb.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
+
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.jmrix.openlcb.OlcbReporterManager;
 import jmri.jmrix.openlcb.OlcbTestInterface;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.Element;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * OlcbReporterManagerXmlTest.java
@@ -25,7 +29,7 @@ import org.slf4j.LoggerFactory;
 public class OlcbReporterManagerXmlTest {
 
     @Test
-    public void testSaveAndRestore() throws Exception {
+    public void testSaveAndRestore() {
         log.debug("FIRST START");
         t = new OlcbTestInterface(new OlcbTestInterface.CreateConfigurationManager());
         OlcbReporterManager mgr = t.configurationManager.getReporterManager();
@@ -37,7 +41,7 @@ public class OlcbReporterManagerXmlTest {
         t.assertNoSentMessages();
 
         Element stored = xmlmgr.store(mgr);
-        Assert.assertNotNull(stored);
+        assertNotNull(stored);
 
         t.dispose();
         InstanceManager.getDefault().clearAll();
@@ -50,8 +54,8 @@ public class OlcbReporterManagerXmlTest {
         xmlmgr.load(stored, null);
 
         Reporter r2 = mgr.getBySystemName("MR1.2.3.4.5.6.0.0");
-        Assert.assertNotNull(r2);
-        Assert.assertEquals("rep1", r2.getUserName());
+        assertNotNull(r2);
+        assertEquals("rep1", r2.getUserName());
         t.flush();
         t.assertSentMessage(":X194a4c4cN010203040506ffff;");
         t.assertNoSentMessages();
@@ -59,13 +63,13 @@ public class OlcbReporterManagerXmlTest {
         t.dispose();
     }
 
-    OlcbTestInterface t;
-    private final static Logger log = LoggerFactory.getLogger(OlcbReporterManagerXmlTest.class);
+    private OlcbTestInterface t;
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbReporterManagerXmlTest.class);
 
     @BeforeAll
-    static public void checkSeparate() {
-       // this test is run separately because it leaves a lot of threads behind
-        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+    public static void checkSeparate() {
+        // this test is run separately because it leaves a lot of threads behind
+        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
     }
 
     @BeforeEach

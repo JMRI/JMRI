@@ -3145,17 +3145,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return allocatedSections;
     }
 
-    public ActiveTrain getActiveTrainForRoster(RosterEntry re) {
-        if ( _TrainsFrom != TrainsFrom.TRAINSFROMROSTER) {
-            return null;
-        }
+    public ActiveTrain getActiveTrainForName(String train) {
         for (ActiveTrain at : activeTrainsList) {
-            if (at.getRosterEntry().equals(re)) {
+            if (at.getTrainName().equals(train)) {
                 return at;
             }
         }
         return null;
+    }
 
+    public ActiveTrain getActiveTrainForRoster(RosterEntry re) {
+        for (ActiveTrain at : activeTrainsList) {
+            if (at.getRosterEntry() != null && at.getRosterEntry().equals(re)) {
+                return at;
+            }
+        }
+        return null;
     }
 
     protected boolean getSupportVSDecoder() {

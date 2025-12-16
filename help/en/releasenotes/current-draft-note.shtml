@@ -443,6 +443,7 @@
         <ul>
              <li>Defer calling "loadAtStartup" until the layout data file loading is done and
              layout block paths have been initialized.</li>
+			 <li>Create, terminate, open throttle, extend, terminate from LEPanel.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -628,7 +629,8 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Fixed a problem causing the Function Panel's buttons
+                to be improperly laid out.</li>
         </ul>
 
     <h3>Timetable</h3>
