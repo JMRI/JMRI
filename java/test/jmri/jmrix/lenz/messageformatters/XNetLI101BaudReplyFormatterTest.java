@@ -1,6 +1,8 @@
 package jmri.jmrix.lenz.messageformatters;
 
+import jmri.jmrix.AbstractMessageFormatterTest;
 import jmri.jmrix.lenz.XNetReply;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,14 +12,7 @@ import org.junit.jupiter.api.Test;
  * 
  * @author Paul Bender Copyright (C) 2025
  */
-public class XNetLI101BaudReplyFormatterTest {
-
-    private XNetLI101BaudReplyFormatter formatter;
-
-    @BeforeEach
-    public void setUp() {
-        formatter = new XNetLI101BaudReplyFormatter();
-    }
+public class XNetLI101BaudReplyFormatterTest extends AbstractMessageFormatterTest {
 
     @Test
     public void testToMonitorStringLIBaud1Reply(){
@@ -25,6 +20,7 @@ public class XNetLI101BaudReplyFormatterTest {
         Assertions.assertTrue(formatter.handlesMessage(r));
         Assertions.assertEquals(Bundle.getMessage("XNetReplyLIBaud","19,200 bps (default)" ),formatter.formatMessage(r));
     }
+
     @Test
     public void testToMonitorStringLIBaud2Reply(){
         XNetReply r = new XNetReply("F2 02 02 F2");
@@ -52,4 +48,12 @@ public class XNetLI101BaudReplyFormatterTest {
         Assertions.assertTrue(formatter.handlesMessage(r));
         Assertions.assertEquals(Bundle.getMessage("XNetReplyLIBaud","<undefined>"),formatter.formatMessage(r));
     }
+
+    @Override
+    @BeforeEach
+    public void setUp() {
+        super.setUp(); // setup JUnit
+        formatter = new XNetLI101BaudReplyFormatter();
+    }
+
 }
