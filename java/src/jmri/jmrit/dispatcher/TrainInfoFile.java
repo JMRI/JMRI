@@ -388,6 +388,30 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         }
                     }
 
+                 // Read the per-train stop-by-speed-profile adjust factor (fraction of block length)
+                 // Preferred attribute name since v5+: "stopbyspeedprofileadjust"
+                 // Backward-compatibility: accept a couple of historical synonyms if present.
+                 float adjust = tInfo.getStopBySpeedProfileAdjust(); // keep existing default
+                 org.jdom2.Attribute adjAttr = traininfo.getAttribute("stopbyspeedprofileadjust");
+                 if (adjAttr == null) {
+                     // Legacy fallbacks seen in older files/tests
+                     adjAttr = traininfo.getAttribute("speedprofileadjust");
+                 }
+                 if (adjAttr == null) {
+                     adjAttr = traininfo.getAttribute("usespeedprofileadjust");
+                 }
+                 if (adjAttr != null) {
+                     try {
+                         float v = adjAttr.getFloatValue();
+                         // Sanity: bounds to [0.0, 1.0] if needed; older content is a fraction (not percent)
+                         if (v < 0.0f) v = 0.0f;
+                         if (v > 1.0f) v = 1.0f;
+                         tInfo.setStopBySpeedProfileAdjust(v);
+                     } catch (org.jdom2.DataConversionException ex) {
+                         // Malformed value -> leave adjust at default for backward compatibility
+                     }
+                 }
+
                  // Preferred: "overridestopsensor" (yes/no or true/false or 1/0)
                  // Fallback:  legacy "usestopsensor" (yes/no or true/false or 1/0)
                  // Default:   use sensors (existing behavior)
