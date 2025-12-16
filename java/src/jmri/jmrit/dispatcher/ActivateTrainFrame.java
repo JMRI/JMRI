@@ -693,6 +693,43 @@ public class ActivateTrainFrame extends JmriJFrame {
     private static float mphToKmh(float mph) { return mph * 1.60934f; }
     private static float kmhToMph(float kmh) { return kmh / 1.60934f; }
 
+     // Format the min-reliable operating speed label in the user's preferred units.
+     // When the Max Speed dropdown is in SCALE_MPH or SCALE_KMH, show "scale mph" or "scale km/h" respectively.
+     // Otherwise, fall back to the existing localized profile conversion with units.
+     private String formatScaleSpeedWithPreferredUnits(float mms) {
+         Object sel = maxSpeedCapModeBox.getSelectedItem();
+         MaxSpeedCapMode mode = (sel instanceof MaxSpeedCapModeItem)
+                 ? ((MaxSpeedCapModeItem) sel).getValue()
+                 : MaxSpeedCapMode.THROTTLE;
+    
+         // Scale speed = actual speed × scale ratio (time same in model/prototype)
+         float scaleRatio = (float) _dispatcher.getScale().getScaleRatio();
+    
+         if (mode == MaxSpeedCapMode.SCALE_MPH) {
+             // mm/s → m/s → mph, then × scaleRatio
+             float mph = (mms / 1000.0f) * 2.236936f * scaleRatio;
+             return String.format(
+                     Locale.getDefault(),
+                     "%.1f %s",
+                     mph,
+                     Bundle.getMessage("ScaleMilesPerHourShort")  // e.g., "scale mph"
+             );
+         } else if (mode == MaxSpeedCapMode.SCALE_KMH) {
+             // mm/s → m/s → km/h, then × scaleRatio
+             float kmh = (mms / 1000.0f) * 3.6f * scaleRatio;
+             return String.format(
+                     Locale.getDefault(),
+                     "%.1f %s",
+                     kmh,
+                     Bundle.getMessage("ScaleKilometresPerHourShort")  // e.g., "scale km/h"
+             );
+         }
+    
+         // Default: use JMRI's existing localised conversion (includes units)
+         return RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(mms);
+     }
+
+
     // Switch the spinner model & editor format to match the selected cap mode
     private void updateMaxSpeedSpinnerModelForMode(MaxSpeedCapMode mode) {
         switch (mode) {
@@ -718,7 +755,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 maxSpeedUnitLabel.setText("km/h");
                 maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint")); // reuse hint
                 break;
-        }
+        }   
     }
 
      // Enable/disable speed entries depending on speed-profile availability
@@ -859,6 +896,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         } else {
             setSpeedProfileOptions(trainInfo,false);
         }
+        handleMinReliableOperatingSpeedUpdate(); // update the min-speed label to reflect current units
     }
 
     private void handleDelayStartClick(ActionEvent e) {
@@ -2200,9 +2238,9 @@ public class ActivateTrainFrame extends JmriJFrame {
           updateMaxSpeedSpinnerModelForMode(mode);
     
           // 4) Finally set the converted value into the new model
-          maxSpeedSpinner.setValue(Float.valueOf(newDisplay));
-    
+          maxSpeedSpinner.setValue(Float.valueOf(newDisplay));   
           lastMaxSpeedCapMode = mode;
+          handleMinReliableOperatingSpeedUpdate(); // refresh with the newly selected units
         });
         maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint"));
         pa1.add(minReliableOperatingSpeedLabel);
@@ -2396,13 +2434,16 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void handleMinReliableOperatingSpeedUpdate() {
-        float mROS = (float)minReliableOperatingSpeedSpinner.getValue();
+        float mROS = (float) minReliableOperatingSpeedSpinner.getValue();
         minReliableOperatingScaleSpeedLabel.setText("");
+    
+        // Only available when the speed-profile UI is enabled (matches current behavior)
         if (useSpeedProfileCheckBox.isEnabled()) {
             RosterEntry re = (RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem();
-            if (re != null && re.getSpeedProfile() != null &&  re.getSpeedProfile().getProfileSize() > 0) {
+            if (re != null && re.getSpeedProfile() != null && re.getSpeedProfile().getProfileSize() > 0) {
+                // Convert the selected % to mm/s, then format according to the Max Speed unit choice
                 float mms = re.getSpeedProfile().getSpeed(mROS, true);
-                minReliableOperatingScaleSpeedLabel.setText(RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(mms));
+                minReliableOperatingScaleSpeedLabel.setText(formatScaleSpeedWithPreferredUnits(mms));
             }
         }
     }
