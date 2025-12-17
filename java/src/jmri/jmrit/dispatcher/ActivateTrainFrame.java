@@ -727,7 +727,7 @@ public class ActivateTrainFrame extends JmriJFrame {
      // Convert throttle % -> scale km/h
      private float percentToScaleKmh(float pct) {
          Object sel = rosterComboBox.getRosterEntryComboBox().getSelectedItem();
-         if (!(sel instanceof jmri.jmrit.roster.RosterEntry))    if (!(sel instanceof jmri.jmrit.roster.RosterEntry)) return cachedScaleMph * 1.60934f;
+         if (!(sel instanceof jmri.jmrit.roster.RosterEntry)) return cachedScaleMph * 1.60934f;
          jmri.jmrit.roster.RosterEntry re = (jmri.jmrit.roster.RosterEntry) sel;
          jmri.jmrit.roster.RosterSpeedProfile sp = re.getSpeedProfile();
          if (sp == null || sp.getProfileSize() < 1) return cachedScaleMph * 1.60934f;
