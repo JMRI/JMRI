@@ -86,13 +86,17 @@ public class InternalDateTime extends AbstractTimeProvider
 
     public InternalDateTime init() {
         _time = LocalDateTime.now();
+        resetLast();
+        _startTimeMillisec = System.currentTimeMillis();
+        TimerUtil.schedule(_timerTask, System.currentTimeMillis() % _100_MILLISECONDS, _100_MILLISECONDS);
+        return this;
+    }
+
+    private void resetLast() {
         _lastDateTime = _time;
         _lastUpdatedDateTime = _time;
         _lastSec = _lastDateTime.getSecond();
         _lastMin = _lastDateTime.getMinute();
-        _startTimeMillisec = System.currentTimeMillis();
-        TimerUtil.schedule(_timerTask, System.currentTimeMillis() % _100_MILLISECONDS, _100_MILLISECONDS);
-        return this;
     }
 
     /** {@inheritDoc} */
@@ -167,6 +171,7 @@ public class InternalDateTime extends AbstractTimeProvider
         synchronized(_lock) {
             LocalDateTime oldTime = this._time;
             _time = LocalDateTime.of(_time.toLocalDate(), time);
+            resetLast();
             timeIsUpdated(oldTime);
         }
     }
@@ -176,6 +181,7 @@ public class InternalDateTime extends AbstractTimeProvider
         synchronized(_lock) {
             LocalDateTime oldTime = this._time;
             this._time = time;
+            resetLast();
             timeIsUpdated(oldTime);
         }
     }
@@ -190,6 +196,7 @@ public class InternalDateTime extends AbstractTimeProvider
         synchronized(_lock) {
             LocalDateTime oldTime = this._time;
             _time = _time.with(ChronoField.DAY_OF_WEEK, dayOfWeek);
+            resetLast();
             timeIsUpdated(oldTime);
         }
     }
@@ -199,6 +206,7 @@ public class InternalDateTime extends AbstractTimeProvider
         synchronized(_lock) {
             LocalDateTime oldTime = this._time;
             _time = _time.withDayOfMonth(day);
+            resetLast();
             timeIsUpdated(oldTime);
         }
     }
@@ -208,6 +216,7 @@ public class InternalDateTime extends AbstractTimeProvider
         synchronized(_lock) {
             LocalDateTime oldTime = this._time;
             _time = _time.withMonth(month);
+            resetLast();
             timeIsUpdated(oldTime);
         }
     }
@@ -217,6 +226,7 @@ public class InternalDateTime extends AbstractTimeProvider
         synchronized(_lock) {
             LocalDateTime oldTime = this._time;
             _time = _time.withYear(year);
+            resetLast();
             timeIsUpdated(oldTime);
         }
     }
