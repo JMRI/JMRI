@@ -2201,7 +2201,10 @@ public class ActivateTrainFrame extends JmriJFrame {
     public final TrainLengthUnitsJCombo trainLengthUnitsComboBox = new TrainLengthUnitsJCombo();
     private final JLabel trainLengthLabel = new JLabel(Bundle.getMessage("MaxTrainLengthLabel"));
     private JLabel trainLengthAltLengthLabel; // I18N Label
-    private final JSpinner maxTrainLengthSpinner = new JSpinner(); // initialized later
+    private final JSpinner maxTrainLengthSpinner = new JSpinner(); // initialised later
+    // Track current units displayed in the spinner and suppress conversions during programmatic updates
+    private TrainLengthUnits currentTrainLengthUnits = TrainLengthUnits.TRAINLENGTH_SCALEMETERS;
+    private boolean suppressTrainLengthUnitsEvents = false;
 
     private void initializeAutoRunItems() {
         initializeRampCombo();
@@ -2427,7 +2430,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         maxTrainLengthSpinner.setEditor(new JSpinner.NumberEditor(maxTrainLengthSpinner, "###0.0"));
         maxTrainLengthSpinner.setToolTipText(Bundle.getMessage("MaxTrainLengthHint")); // won't be updated while Dispatcher is open
         maxTrainLengthSpinner.addChangeListener( e -> handlemaxTrainLengthChangeUnitsLength());
-        trainLengthUnitsComboBox.addActionListener( e -> handlemaxTrainLengthChangeUnitsLength());
+        trainLengthUnitsComboBox.addActionListener( e -> handleTrainLengthUnitsChanged());
         trainLengthAltLengthLabel=new JLabel();
         pa4.setLayout(new FlowLayout());
         pa4.add(trainLengthLabel);
@@ -2473,6 +2476,38 @@ public class ActivateTrainFrame extends JmriJFrame {
                 ((TrainLengthUnitsItem) trainLengthUnitsComboBox.getSelectedItem()).getValue(),
                 (float) maxTrainLengthSpinner.getValue()));
     }
+
+     // Convert the displayed length when the user changes the units combo.
+     // We preserve the actual length by converting display -> scale meters -> new display units.
+     private void handleTrainLengthUnitsChanged() {
+         if (suppressTrainLengthUnitsEvents) {
+             // Programmatic change (e.g., file load): just refresh the alternate label.
+             handlemaxTrainLengthChangeUnitsLength();
+             return;
+         }
+         TrainLengthUnits newUnits =
+             ((TrainLengthUnitsItem) trainLengthUnitsComboBox.getSelectedItem()).getValue();
+    
+         // 1) Capture the current display value and convert it to scale meters.
+         float currentDisplay = ((Number) maxTrainLengthSpinner.getValue()).floatValue();
+         float scaleMeters = maxTrainLengthToScaleMeters(currentTrainLengthUnits, currentDisplay);
+    
+         // 2) Convert the common baseline (scale meters) to the newly selected display units.
+         float newDisplay = scaleMetersToDisplay(newUnits, scaleMeters);
+    
+         // 3) Update spinner without re‑entering this handler; update current unit tracker.
+         suppressTrainLengthUnitsEvents = true;
+         try {
+             maxTrainLengthSpinner.setValue(Float.valueOf(newDisplay));
+             currentTrainLengthUnits = newUnits;
+         } finally {
+             suppressTrainLengthUnitsEvents = false;
+         }
+    
+         // 4) Keep the alternate-length label in sync.
+         handlemaxTrainLengthChangeUnitsLength();
+     }
+
 
     /**
      * Get an I18N String of the max TrainLength.
@@ -2527,8 +2562,32 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         return value;
     }
+    
+    /**
+     * Convert from scale meters to the requested display units.
+     */
+    private float scaleMetersToDisplay(TrainLengthUnits toUnits, float scaleMeters) {
+        final float scaleFactor = (_dispatcher != null && _dispatcher.getScale() != null)
+                ? (float) _dispatcher.getScale().getScaleFactor()
+                : 1.0f; // CI-safe default
+    
+        switch (toUnits) {
+            case TRAINLENGTH_SCALEMETERS:
+                return scaleMeters;
+            case TRAINLENGTH_SCALEFEET:
+                return scaleMeters * 3.28084f;
+            case TRAINLENGTH_ACTUALINCHS:
+                // actual inches = scale meters × scaleFactor (scale→actual) × feet/m × 12 in/ft
+                return scaleMeters * scaleFactor * 3.28084f * 12.0f;
+            case TRAINLENGTH_ACTUALCM:
+                // actual cm = scale meters × scaleFactor (scale→actual) × 100 cm/m
+                return scaleMeters * scaleFactor * 100.0f;
+            default:
+                return scaleMeters;
+        }
+    }
 
-    /*
+    /**
      * Calculates the reciprocal unit. Actual to Scale and vice versa
      */
     private float maxTrainLengthCalculateAlt(TrainLengthUnits fromUnits, float fromValue) {
@@ -2542,12 +2601,18 @@ public class ActivateTrainFrame extends JmriJFrame {
             case TRAINLENGTH_ACTUALCM:
                 // calc scale meter
                 return fromValue / 100 * scaleRatio;
-            case TRAINLENGTH_SCALEFEET:
-                // calc actual inchs
-                return fromValue * 12 * scaleRatio;
-           case TRAINLENGTH_SCALEMETERS:
-                // calc actual cm.
-                return fromValue * 100 * scaleRatio;
+            case TRAINLENGTH_SCALEFEET: { // calc actual inches
+                final float scaleFactor = (_dispatcher != null && _dispatcher.getScale() != null)
+                        ? (float) _dispatcher.getScale().getScaleFactor()
+                        : 1.0f;
+                return fromValue * 12.0f * scaleFactor;
+            }
+            case TRAINLENGTH_SCALEMETERS: { // calc actual cm.
+                final float scaleFactor = (_dispatcher != null && _dispatcher.getScale() != null)
+                        ? (float) _dispatcher.getScale().getScaleFactor()
+                        : 1.0f;
+                return fromValue * 100.0f * scaleFactor;
+            }
            default:
                log.error("Invalid TrainLengthUnits has been updated, fix me");
         }
@@ -2608,32 +2673,37 @@ public class ActivateTrainFrame extends JmriJFrame {
         trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
         runInReverseBox.setSelected(info.getRunInReverse());
         soundDecoderBox.setSelected(info.getSoundDecoder());
-        trainLengthUnitsComboBox.setSelectedItemByValue(info.getTrainLengthUnits());
-        switch (info.getTrainLengthUnits()) {
-            case TRAINLENGTH_SCALEFEET:
-                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleFeet());
-                break;
-            case TRAINLENGTH_SCALEMETERS:
-                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters());
-                break;
-            case TRAINLENGTH_ACTUALINCHS: {
-                float sf = (_dispatcher != null && _dispatcher.getScale() != null)
-                    ? (float)_dispatcher.getScale().getScaleFactor()
-                    : 1.0f; // CI-safe default
-                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleFeet() * 12.0f * sf);
-                break;
+        try {
+            trainLengthUnitsComboBox.setSelectedItemByValue(info.getTrainLengthUnits());
+            switch (info.getTrainLengthUnits()) {
+                case TRAINLENGTH_SCALEFEET:
+                    maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleFeet());
+                    break;
+                case TRAINLENGTH_SCALEMETERS:
+                    maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters());
+                    break;
+                case TRAINLENGTH_ACTUALINCHS: {
+                    float sf = (_dispatcher != null && _dispatcher.getScale() != null)
+                        ? (float)_dispatcher.getScale().getScaleFactor()
+                        : 1.0f; // CI-safe default
+                    maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleFeet() * 12.0f * sf);
+                    break;
+                }
+                case TRAINLENGTH_ACTUALCM: {
+                    float sf = (_dispatcher != null && _dispatcher.getScale() != null)
+                        ? (float)_dispatcher.getScale().getScaleFactor()
+                        : 1.0f; // CI-safe default
+                    maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters() * 100.0f * sf);
+                    break;
+                }
+    
+                default:
+                    maxTrainLengthSpinner.setValue(0.0f);
             }
-            case TRAINLENGTH_ACTUALCM: {
-                float sf = (_dispatcher != null && _dispatcher.getScale() != null)
-                    ? (float)_dispatcher.getScale().getScaleFactor()
-                    : 1.0f; // CI-safe default
-                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters() * 100.0f * sf);
-                break;
-            }
-
-            default:
-                maxTrainLengthSpinner.setValue(0.0f);
+        } finally {
+            suppressTrainLengthUnitsEvents = false;
         }
+        
         useSpeedProfileCheckBox.setSelected(info.getUseSpeedProfile());
         stopBySpeedProfileCheckBox.setSelected(info.getStopBySpeedProfile());
         stopBySpeedProfileAdjustSpinner.setValue(info.getStopBySpeedProfileAdjust());
