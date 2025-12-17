@@ -747,14 +747,14 @@ public class ActivateTrainFrame extends JmriJFrame {
                 // Typical scale speeds: 1 .. 200 mph, step 0.1
                 maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(60.0f), Float.valueOf(1.0f), Float.valueOf(200.0f), Float.valueOf(0.1f)));
                 maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "0.0"));
-                maxSpeedUnitLabel.setText("mph");
+                maxSpeedUnitLabel.setText(Bundle.getMessage("MilesPerHourShort"));
                 maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint")); // reuse hint
                 break;
             case SCALE_KMH:
                 // Typical scale speeds: 1 .. 320 km/h, step 0.1
                 maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(100.0f), Float.valueOf(1.0f), Float.valueOf(320.0f), Float.valueOf(0.1f)));
                 maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "0.0"));
-                maxSpeedUnitLabel.setText("km/h");
+                maxSpeedUnitLabel.setText(Bundle.getMessage("MilesPerHourShort"));
                 maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint")); // reuse hint
                 break;
         }   
@@ -776,10 +776,12 @@ public class ActivateTrainFrame extends JmriJFrame {
              maxSpeedCapModeBox.addItem(
                  new MaxSpeedCapModeItem(Bundle.getMessage("MaxSpeedLabel"), MaxSpeedCapMode.THROTTLE)
              );
-             if (speedProfileAvailable) {
-                 maxSpeedCapModeBox.addItem(new MaxSpeedCapModeItem("Maximum speed (mph)", MaxSpeedCapMode.SCALE_MPH));
-                 maxSpeedCapModeBox.addItem(new MaxSpeedCapModeItem("Maximum speed (km/h)", MaxSpeedCapMode.SCALE_KMH));
-             }
+            if (speedProfileAvailable) {
+                maxSpeedCapModeBox.addItem(new MaxSpeedCapModeItem(
+                    Bundle.getMessage("MaxSpeedScaleMph"), MaxSpeedCapMode.SCALE_MPH));
+                maxSpeedCapModeBox.addItem(new MaxSpeedCapModeItem(
+                    Bundle.getMessage("MaxSpeedScaleKmh"), MaxSpeedCapMode.SCALE_KMH));
+            }
     
              // Restore the previous mode if still valid; otherwise default to THROTTLE
              int toSelect = 0; // THROTTLE
@@ -1181,7 +1183,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             trainSelectBox.removeActionListener(al);
         }
         trainSelectBox.removeAllItems();
-        trainSelectBox.addItem("Select Train");
+        trainSelectBox.addItem(Bundle.getMessage("SelectTrain"));
         // initialize free trains from operations
         List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByNameList();
         if (trains.size() > 0) {
@@ -2391,7 +2393,7 @@ public class ActivateTrainFrame extends JmriJFrame {
              new SpinnerNumberModel(Float.valueOf(0.002f), Float.valueOf(0.000f), Float.valueOf(0.020f), Float.valueOf(0.0001f))
          );
          rollingResistanceCoeffSpinner.setEditor(new JSpinner.NumberEditor(rollingResistanceCoeffSpinner, "0.0000"));
-         rollingResistanceCoeffSpinner.setToolTipText("Coefficient of rolling resistance c_rr (dimensionless)");
+         rollingResistanceCoeffSpinner.setToolTipText(Bundle.getMessage("RollingResistanceCoeffHint"));
          pa2Physics.add(rollingResistanceCoeffLabel);
          pa2Physics.add(rollingResistanceCoeffSpinner);
             
