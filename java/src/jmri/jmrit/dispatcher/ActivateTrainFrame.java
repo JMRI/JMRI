@@ -747,14 +747,14 @@ public class ActivateTrainFrame extends JmriJFrame {
                 // Typical scale speeds: 1 .. 200 mph, step 0.1
                 maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(60.0f), Float.valueOf(1.0f), Float.valueOf(200.0f), Float.valueOf(0.1f)));
                 maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "0.0"));
-                maxSpeedUnitLabel.setText(Bundle.getMessage("MilesPerHourShort"));
+                maxSpeedUnitLabel.setText(Bundle.getMessage("ScaleMilesPerHourShort"));
                 maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint")); // reuse hint
                 break;
             case SCALE_KMH:
                 // Typical scale speeds: 1 .. 320 km/h, step 0.1
                 maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(100.0f), Float.valueOf(1.0f), Float.valueOf(320.0f), Float.valueOf(0.1f)));
                 maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "0.0"));
-                maxSpeedUnitLabel.setText(Bundle.getMessage("MilesPerHourShort"));
+                maxSpeedUnitLabel.setText(Bundle.getMessage("ScaleMilesPerHourShort"));
                 maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint")); // reuse hint
                 break;
         }   
@@ -2458,22 +2458,37 @@ public class ActivateTrainFrame extends JmriJFrame {
         pa5_FNumbers.add(fNumberHornLabel);
         pa5_FNumbers.add(fNumberHornSpinner);
         initiatePane.add(pa5_FNumbers);
-        showHideAutoRunItems(autoRunBox.isSelected());   // initialize with auto run items hidden
+        showHideAutoRunItems(autoRunBox.isSelected());   // initialise with auto run items hidden
     }
 
     private void handleMinReliableOperatingSpeedUpdate() {
-        float mROS = (float) minReliableOperatingSpeedSpinner.getValue();
+        // Read % as float
+        float mROS = ((Number) minReliableOperatingSpeedSpinner.getValue()).floatValue();
+        // Clear label by default
         minReliableOperatingScaleSpeedLabel.setText("");
     
-        // Only available when the speed-profile UI is enabled (matches current behavior)
-        if (useSpeedProfileCheckBox.isEnabled()) {
-            RosterEntry re = (RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem();
-            if (re != null && re.getSpeedProfile() != null && re.getSpeedProfile().getProfileSize() > 0) {
-                // Convert the selected % to mm/s, then format according to the Max Speed unit choice
-                float mms = re.getSpeedProfile().getSpeed(mROS, true);
-                minReliableOperatingScaleSpeedLabel.setText(formatScaleSpeedWithPreferredUnits(mms));
-            }
+        // Only attempt conversion when speed-profile UI is enabled
+        if (!useSpeedProfileCheckBox.isEnabled()) {
+            return;
         }
+    
+        // RosterEntryComboBox is JComboBox<Object>; first item is a String ("no selection").
+        Object sel = rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+        if (!(sel instanceof RosterEntry)) {
+            // No roster entry selected yet; nothing to display
+            return;
+        }
+    
+        RosterEntry re = (RosterEntry) sel;
+        RosterSpeedProfile sp = re.getSpeedProfile();
+        if (sp == null || sp.getProfileSize() < 1) {
+            // No profile data; nothing to display
+            return;
+        }
+    
+        // Convert % -> mm/s, then format in the currently selected preferred units
+        float mms = sp.getSpeed(mROS, true);
+        minReliableOperatingScaleSpeedLabel.setText(formatScaleSpeedWithPreferredUnits(mms));
     }
 
     private void handlemaxTrainLengthChangeUnitsLength() {
