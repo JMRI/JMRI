@@ -2330,12 +2330,17 @@ public class ActivateTrainFrame extends JmriJFrame {
         );
         pa2b.add(stopByDistanceUnitsComboBox);
 
-         // Initialize Physics visibility based on current availability (enabled state)
+         // Initialise Physics visibility based on current availability (enabled state)
          updateRampPhysicsAvailability(useSpeedProfileCheckBox.isEnabled());
         
         // Head/Tail radios last (to the right of the units dropdown)
         stopByDistanceRefGroup.add(stopByDistanceHead);
         stopByDistanceRefGroup.add(stopByDistanceTail);
+        
+        // Localised tooltips for Head/Tail reference selection
+        stopByDistanceHead.setToolTipText(Bundle.getMessage("StopByDistanceHeadHint"));
+        stopByDistanceTail.setToolTipText(Bundle.getMessage("StopByDistanceTailHint"));
+        
         stopByDistanceHead.setSelected(true);
         pa2b.add(stopByDistanceHead);
         pa2b.add(stopByDistanceTail);
