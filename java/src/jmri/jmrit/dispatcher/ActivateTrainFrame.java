@@ -693,6 +693,97 @@ public class ActivateTrainFrame extends JmriJFrame {
     // MPH↔KMH conversion helpers
     private static float mphToKmh(float mph) { return mph * 1.60934f; }
     private static float kmhToMph(float kmh) { return kmh / 1.60934f; }
+    
+
+     // Safe access to current layout scale ratio (prototype/model length ratio)
+     private float getScaleRatioSafe() {
+         return (_dispatcher != null && _dispatcher.getScale() != null)
+                 ? (float) _dispatcher.getScale().getScaleRatio()
+                 : 1.0f; // CI-safe default
+     }
+    
+     // Do we have a concrete roster entry with a non-empty speed profile?
+     private boolean isConcreteSpeedProfileAvailable() {
+         Object sel = rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+         if (!(sel instanceof jmri.jmrit.roster.RosterEntry)) return false;
+         jmri.jmrit.roster.RosterEntry re = (jmri.jmrit.roster.RosterEntry) sel;
+         return re.getSpeedProfile() != null && re.getSpeedProfile().getProfileSize() > 0;
+     }
+    
+     // Convert throttle % -> scale mph (via mm/s from profile)
+     private float percentToScaleMph(float pct) {
+         Object sel = rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+         if (!(sel instanceof jmri.jmrit.roster.RosterEntry)) return cachedScaleMph;
+         jmri.jmrit.roster.RosterEntry re = (jmri.jmrit.roster.RosterEntry) sel;
+         jmri.jmrit.roster.RosterSpeedProfile sp = re.getSpeedProfile();
+         if (sp == null || sp.getProfileSize() < 1) return cachedScaleMph;
+    
+         float mms = sp.getSpeed(pct, true); // mm/s for this % (forward)
+         float scaleRatio = getScaleRatioSafe();
+         // mm/s -> m/s -> mph, then × scale ratio (scale speed)
+         return (mms / 1000.0f) * 2.236936f * scaleRatio;
+     }
+    
+     // Convert throttle % -> scale km/h
+     private float percentToScaleKmh(float pct) {
+         Object sel = rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+         if (!(sel instanceof jmri.jmrit.roster.RosterEntry))    if (!(sel instanceof jmri.jmrit.roster.RosterEntry)) return cachedScaleMph * 1.60934f;
+         jmri.jmrit.roster.RosterEntry re = (jmri.jmrit.roster.RosterEntry) sel;
+         jmri.jmrit.roster.RosterSpeedProfile sp = re.getSpeedProfile();
+         if (sp == null || sp.getProfileSize() < 1) return cachedScaleMph * 1.60934f;
+    
+         float mms = sp.getSpeed(pct, true);
+         float scaleRatio = getScaleRatioSafe();
+         // mm/s -> m/s -> km/h, then × scale ratio
+         return (mms / 1000.0f) * 3.6f * scaleRatio;
+     }
+    
+     // Convert target scale speed (mph or km/h) -> throttle % by inverting the profile via bisection
+     private float scaleSpeedToPercentFromProfile(float speedValue, boolean isKmh) {
+         Object sel = rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+         if (!(sel instanceof jmri.jmrit.roster.RosterEntry)) return cachedThrottlePercent;
+         jmri.jmrit.roster.RosterEntry re = (jmri.jmrit.roster.RosterEntry) sel;
+         jmri.jmrit.roster.RosterSpeedProfile sp = re.getSpeedProfile();
+         if (sp == null || sp.getProfileSize() < 1) return cachedThrottlePercent;
+    
+         float scaleRatio = getScaleRatioSafe();
+         // scale mph/kmh -> m/s -> mm/s (model), divide by scale ratio to remove scale
+         float mps = isKmh ? (speedValue / 3.6f) : (speedValue / 2.236936f);
+         float targetMms = (mps * 1000.0f) / scaleRatio;
+    
+         // Bisection in [0.0 .. 1.0] on sp.getSpeed(%)
+         float lo = 0.0f, hi = 1.0f;
+         for (int i = 0; i < 24; i++) {
+             float mid = 0.5f * (lo + hi);
+             float midMms = sp.getSpeed(mid, true);
+             if (midMms < targetMms) lo = mid; else hi = mid;
+         }
+         float pct = 0.5f * (lo + hi);
+         // Clamp to spinner's [%] domain 0.10 .. 1.00 (the UI model)
+         if (pct < 0.10f) pct = 0.10f;
+         if (pct > 1.00f) pct = 1.00f;
+         return pct;
+     }
+    
+     // Keep the sticky caches aligned with user's edits on the numeric spinner
+     private void updateMaxSpeedCachesFromSpinner() {
+         if (suppressMaxSpeedSpinnerEvents) {
+             return;
+         }
+         float v = ((Number) maxSpeedSpinner.getValue()).floatValue();
+         switch (lastMaxSpeedCapMode) {
+            case THROTTLE:
+                // Clamp percent [0.10 .. 1.00] before caching; editor "# %" multiplies by 100 for display
+                if (v < 0.10f) v = 0.10f;
+                if (v > 1.00f) v = 1.00f;
+                cachedThrottlePercent = v;
+                break;
+             case SCALE_MPH:  cachedScaleMph       = v;             break;
+             case SCALE_KMH:  cachedScaleMph       = kmhToMph(v);   break;
+             default: break;
+             }
+         }
+
 
      // Format the min-reliable operating speed label in the user's preferred units.
      // When the Max Speed dropdown is in SCALE_MPH or SCALE_KMH, show "scale mph" or "scale km/h" respectively.
@@ -1981,8 +2072,11 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JLabel maxSpeedUnitLabel = new JLabel("%"); // changes to "mph" or "km/h" when speed mode selected
     // Suppress mode-change events while programmatically rebuilding the dropdown
     private boolean suppressMaxSpeedCapModeEvents = false;
+    private boolean suppressMaxSpeedSpinnerEvents = false;
     // Remember last user-visible mode so we can convert values on mode switches
     private MaxSpeedCapMode lastMaxSpeedCapMode = MaxSpeedCapMode.THROTTLE;
+    private float cachedThrottlePercent = 1.0f; // spinner shows 0.10..1.00; we cache user's last % (0.0..1.0)
+    private float cachedScaleMph       = 100.0f; // default "sensible" scale speed (mph)
     private final JPanel pa2 = new JPanel();
     private final JLabel rampRateLabel = new JLabel(Bundle.getMessage("RampRateBoxLabel"));
     private final JComboBox<String> rampRateBox = new JComboBox<>();
@@ -2230,42 +2324,113 @@ public class ActivateTrainFrame extends JmriJFrame {
      // Spinner + unit label (unit changes with dropdown)
      pa1.add(maxSpeedSpinner);
      pa1.add(maxSpeedUnitLabel);
-     // When the mode changes, adjust spinner semantics and convert display value for mph↔km/h
-     maxSpeedCapModeBox.addActionListener(ev -> {
-          if (suppressMaxSpeedCapModeEvents) {
-              return;
+     maxSpeedSpinner.addChangeListener(e -> updateMaxSpeedCachesFromSpinner());
+
+      // --- Max Speed mode change: % <-> mph/km/h (with profile-aware conversions and sticky fallbacks) ---
+      maxSpeedCapModeBox.addActionListener(new java.awt.event.ActionListener() {
+          @Override
+          public void actionPerformed(java.awt.event.ActionEvent ev) {
+    
+              // Ignore programmatic changes while rebuilding the combo model.
+              if (suppressMaxSpeedCapModeEvents) {
+                  return;
+              }
+    
+              Object sel = maxSpeedCapModeBox.getSelectedItem();
+              if (!(sel instanceof MaxSpeedCapModeItem)) {
+                  // Transient state while the model is being rebuilt.
+                  return;
+              }
+    
+              // 1) Capture current spinner value and the previous/new modes.
+              float prevDisplay = ((Number) maxSpeedSpinner.getValue()).floatValue();
+              MaxSpeedCapMode prevMode = lastMaxSpeedCapMode;
+              MaxSpeedCapMode mode     = ((MaxSpeedCapModeItem) sel).getValue();
+    
+              // Keep our sticky caches aligned with what the user just had visible.
+              switch (prevMode) {
+                case THROTTLE:
+                    // Clamp percent [0.10 .. 1.00] before caching
+                    if (prevDisplay < 0.10f) prevDisplay = 0.10f;
+                    if (prevDisplay > 1.00f) prevDisplay = 1.00f;
+                    cachedThrottlePercent = prevDisplay;
+                    break;
+                  case SCALE_MPH:
+                      cachedScaleMph = prevDisplay;
+                      break;
+                  case SCALE_KMH:
+                      cachedScaleMph = kmhToMph(prevDisplay);
+                      break;
+                  default:
+                      break;
+              }
+    
+              // 2) Compute the new display value for the target mode.
+              float newDisplay = prevDisplay;
+    
+              // mph <-> km/h always converts the number, then clamps to the new spinner model.
+              if (prevMode == MaxSpeedCapMode.SCALE_KMH && mode == MaxSpeedCapMode.SCALE_MPH) {
+                  newDisplay = kmhToMph(prevDisplay);
+                  newDisplay = Math.max(1.0f, Math.min(200.0f, newDisplay)); // clamp to MPH model 1..200
+    
+              } else if (prevMode == MaxSpeedCapMode.SCALE_MPH && mode == MaxSpeedCapMode.SCALE_KMH) {
+                  newDisplay = mphToKmh(prevDisplay);
+                  newDisplay = Math.max(1.0f, Math.min(320.0f, newDisplay)); // clamp to KMH model 1..320
+    
+              // % -> mph/km/h : only convert if a concrete roster speed profile is available
+              } else if (prevMode == MaxSpeedCapMode.THROTTLE
+                      && (mode == MaxSpeedCapMode.SCALE_MPH || mode == MaxSpeedCapMode.SCALE_KMH)) {
+    
+                  if (isConcreteSpeedProfileAvailable()) {
+                      if (mode == MaxSpeedCapMode.SCALE_MPH) {
+                          newDisplay = percentToScaleMph(prevDisplay);
+                          newDisplay = Math.max(1.0f, Math.min(200.0f, newDisplay));
+                      } else {
+                          newDisplay = percentToScaleKmh(prevDisplay);
+                          newDisplay = Math.max(1.0f, Math.min(320.0f, newDisplay));
+                      }
+                  } else {
+                      // No profile: do NOT convert. Show the last sticky scale speed.
+                      newDisplay = (mode == MaxSpeedCapMode.SCALE_MPH)
+                              ? cachedScaleMph
+                              : mphToKmh(cachedScaleMph);
+                  }
+    
+              // mph/km/h -> % : only convert if a concrete roster speed profile is available
+              } else if ((prevMode == MaxSpeedCapMode.SCALE_MPH || prevMode == MaxSpeedCapMode.SCALE_KMH)
+                      && mode == MaxSpeedCapMode.THROTTLE) {
+    
+                  if (isConcreteSpeedProfileAvailable()) {
+                      if (prevMode == MaxSpeedCapMode.SCALE_MPH) {
+                          newDisplay = scaleSpeedToPercentFromProfile(prevDisplay, false); // mph -> %
+                      } else {
+                          newDisplay = scaleSpeedToPercentFromProfile(prevDisplay, true);  // km/h -> %
+                      }
+                      // Clamp to spinner's % model 0.10..1.00
+                      newDisplay = Math.max(0.10f, Math.min(1.00f, newDisplay));
+                  } else {
+                           // No profile: do NOT convert. Show the last sticky % value (clamped)
+                           newDisplay = cachedThrottlePercent;
+                           newDisplay = Math.max(0.10f, Math.min(1.00f, newDisplay));
+                         }  
+              } else {
+                  // Same-mode selection or THROTTLE->THROTTLE: keep numeric as-is
+              }
+    
+              // 3) Update spinner model/editor/unit to the new mode, then set the display value.
+                suppressMaxSpeedSpinnerEvents = true;
+                try {
+                    // Set the visible mode first so any incidental listeners see the correct mode
+                    lastMaxSpeedCapMode = mode;
+                
+                    // Now change the spinner model and the numeric value
+                    updateMaxSpeedSpinnerModelForMode(mode);
+                    maxSpeedSpinner.setValue(Float.valueOf(newDisplay));
+                } finally {
+                    suppressMaxSpeedSpinnerEvents = false;
+                }
+                handleMinReliableOperatingSpeedUpdate();
           }
-          Object sel = maxSpeedCapModeBox.getSelectedItem();
-          if (!(sel instanceof MaxSpeedCapModeItem)) {
-              return; // transient null/placeholder while the model is rebuilt
-          }
-    
-          // 1) Capture the *old* displayed value before changing the model
-          float prevDisplay = ((Number) maxSpeedSpinner.getValue()).floatValue();
-    
-          MaxSpeedCapMode prevMode = lastMaxSpeedCapMode;
-          MaxSpeedCapMode mode = ((MaxSpeedCapModeItem) sel).getValue();
-    
-          // 2) Compute the *new* display value based on the old mode/value
-          float newDisplay = prevDisplay;
-          if (prevMode == MaxSpeedCapMode.SCALE_KMH && mode == MaxSpeedCapMode.SCALE_MPH) {
-              newDisplay = kmhToMph(prevDisplay);
-              // Clamp to MPH model range: 1..200
-              newDisplay = Math.max(1.0f, Math.min(200.0f, newDisplay));
-          } else if (prevMode == MaxSpeedCapMode.SCALE_MPH && mode == MaxSpeedCapMode.SCALE_KMH) {
-              newDisplay = mphToKmh(prevDisplay);
-              // Clamp to KMH model range: 1..320
-              newDisplay = Math.max(1.0f, Math.min(320.0f, newDisplay));
-          }
-          // For transitions to/from THROTTLE, we leave the numeric alone: %↔speed needs profile-based computation.
-    
-          // 3) Now swap the spinner's model/editor/unit to the *new* mode
-          updateMaxSpeedSpinnerModelForMode(mode);
-    
-          // 4) Finally set the converted value into the new model
-          maxSpeedSpinner.setValue(Float.valueOf(newDisplay));   
-          lastMaxSpeedCapMode = mode;
-          handleMinReliableOperatingSpeedUpdate(); // refresh with the newly selected units
         });
         maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint"));
         pa1.add(minReliableOperatingSpeedLabel);
@@ -2987,6 +3152,8 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         return true;
     }
+    
+    
 
     /*
      * ComboBox item.

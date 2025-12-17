@@ -192,7 +192,11 @@ public class AutoActiveTrain implements ThrottleListener {
    }
 
     public synchronized void setTargetSpeed(float speed) {
+        log.debug("{}: setTargetSpeed(speed={}): stopped={}, targetWas={}, delayedMode=?",
+            _activeTrain.getTrainName(), speed, _autoEngineer.isStopped(), getTargetSpeed());
         if (_autoEngineer.isStopped() && getTargetSpeed() == 0.0f && speed > 0.0f) {
+            boolean hold = _autoTrainAction.isDelayedStart(-1.0f, speed);
+            log.debug("{}: delayedStart check (no-distance): hold={}", _activeTrain.getTrainName(), hold);
             if (_autoTrainAction.isDelayedStart(-1.0f, speed)) {
                 return;
             }
@@ -201,6 +205,8 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     public synchronized void setTargetSpeed(float distance, float speed) {
+        log.debug("{}: setTargetSpeed(distance={}, speed={}): stopped={}, targetWas={}",
+            _activeTrain.getTrainName(), distance, speed, _autoEngineer.isStopped(), getTargetSpeed());
         if (_autoEngineer.isStopped() && getTargetSpeed() == 0.0f && speed > 0.0f) {
             if (_autoTrainAction.isDelayedStart(distance, speed)) {
                 return;
@@ -507,6 +513,14 @@ public class AutoActiveTrain implements ThrottleListener {
                 _autoEngineer.setRamping(_currentRampRate, _dispatcher.getFullRampTime(),
                         _dispatcher.getMinThrottleInterval(), _currentRampRate);
                 _autoEngineer.setSpeedLimits(_minReliableOperatingSpeed, _maxSpeed, _speedFactor);
+
+                 // Respect delayed start by forcing immediate stop and WAITING status ---
+                 if (_activeTrain.getDelayedStart() != ActiveTrain.NODELAY) {
+                     // Ensure throttle is at zero so the delayed-start guard can engage
+                     _autoEngineer.setHalt(true);
+                     _autoEngineer.setSpeedImmediate(0.0f);
+                        _activeTrain.setStatus(ActiveTrain.WAITING);
+                 }
             }
             if (_resumingAutomatic) {
                 _resumingAutomatic = false;
@@ -1131,6 +1145,14 @@ public class AutoActiveTrain implements ThrottleListener {
             log.trace("[{}]:cannot set speed.",getActiveTrain().getActiveTrainName());
             return;
         }
+
+        // --- Respect delayed start: hold at full stop and do nothing until 'Started' ---
+        if (!_activeTrain.getStarted() && _activeTrain.getDelayedStart() != ActiveTrain.NODELAY) {
+            _autoEngineer.setHalt(true);
+            _autoEngineer.setSpeedImmediate(0.0f);
+            _activeTrain.setStatus(ActiveTrain.WAITING);
+            return; // prevent any speed change or stop scheduling during delay
+        }
          // Do not alter speed while a distance-based stop is active or armed,
          // EXCEPT we must always honor a STOP/DANGER/HELD signal to avoid overruns.
          if (_stoppingUsingSpeedProfile || _distanceStopPending) {
@@ -1630,6 +1652,15 @@ public class AutoActiveTrain implements ThrottleListener {
             setStopNow();
             return;
         }
+        
+        // --- Respect delayed start: do not engage distance/profile braking or pre-stop crawl ---
+        if (!_activeTrain.getStarted() && _activeTrain.getDelayedStart() != ActiveTrain.NODELAY) {
+            _autoEngineer.setHalt(true);
+            _autoEngineer.setSpeedImmediate(0.0f);
+            _activeTrain.setStatus(ActiveTrain.WAITING);
+            return;
+        }
+        
         log.debug("{}: StopInCurrentSection called for {} task[{}] targetspeed[{}]", _activeTrain.getTrainName(), _currentAllocatedSection.getSection().getDisplayName(USERSYS),task,getTargetSpeed());        
 
         /* =======================================================================
@@ -2899,6 +2930,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 stepQueue.removeFirst();
                 log.trace("Set New Speed[{}]",ss.getSpeedStep());
                 throttle.setSpeedSetting(ss.getSpeedStep());
+                log.debug("{}: ramp step -> {}", _activeTrain.getTrainName(), ss.getSpeedStep());
                 rampingTimer = new javax.swing.Timer(ss.getDuration(), (java.awt.event.ActionEvent e) -> {
                     setNextStep();
                 });
@@ -2934,6 +2966,7 @@ public class AutoActiveTrain implements ThrottleListener {
             log.trace("{}: setting speed directly to {}%", _activeTrain.getTrainName(), (int) (speed * 100));
             stopAllTimers();
             targetSpeed = applyMaxThrottleAndFactor(speed);
+            log.debug("{}: setSpeedImmediate -> {}", _activeTrain.getTrainName(), speed);
             throttle.setSpeedSetting(targetSpeed);
         }        
 
