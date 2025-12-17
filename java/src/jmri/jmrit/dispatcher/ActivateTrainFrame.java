@@ -685,6 +685,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 trainNameField.setVisible(true);
                 dccAddressFieldLabel.setVisible(false);
                 dccAddressSpinner.setVisible(false);
+                setSpeedProfileOptions(trainInfo, true);
         }
     }
     
@@ -1647,6 +1648,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             default:
                 radioTrainsFromSetLater.setSelected(true);
         }
+        setTrainsFromOptions(info.getTrainsFrom());
         trainNameField.setText(info.getTrainUserName());
         trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
         inTransitBox.setSelected(info.getTrainInTransit());
