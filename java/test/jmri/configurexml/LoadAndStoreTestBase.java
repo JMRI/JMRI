@@ -11,6 +11,9 @@ import java.util.stream.Stream;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.logix.WarrantPreferences;
+import jmri.time.TimeProvider;
+import jmri.time.TimeProviderManager;
+import jmri.time.implementation.InternalDateTime;
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -385,6 +388,13 @@ public class LoadAndStoreTestBase {
         // kill the fast clock and set to a consistent time
         jmri.Timebase clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
         clock.setRun(false);
+
+        TimeProvider tp = InstanceManager.getDefault(TimeProviderManager.class)
+                .getCurrentTimeProvider();
+        if (tp instanceof InternalDateTime) {
+            // Prevent the clock from running
+            ((InternalDateTime)tp).lockFromRunning();
+        }
 
         try {
             clock.setTime(

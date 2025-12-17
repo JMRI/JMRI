@@ -21,6 +21,7 @@ public class InternalDateTime extends AbstractTimeProvider
     private LocalDateTime _time = LocalDateTime.now();
     private final ChangeableDoubleRate _rate = new ChangeableDoubleRate(1.0);
     private boolean _isRunning;
+    private boolean _isLockedFromRunning;
     private final TimerTask _timerTask;
     private LocalDateTime _lastDateTime;
     private LocalDateTime _lastUpdatedDateTime;
@@ -40,7 +41,7 @@ public class InternalDateTime extends AbstractTimeProvider
             @Override
             public void run() {
                 synchronized(_lock) {
-                    if (!_isRunning) return;
+                    if (!_isRunning || _isLockedFromRunning) return;
                     if (_rate.getRate() < 0.0001) return;   // We don't want to divide by zero later
 
                     long time = System.currentTimeMillis() - _startTimeMillisec;
@@ -90,6 +91,16 @@ public class InternalDateTime extends AbstractTimeProvider
         _startTimeMillisec = System.currentTimeMillis();
         TimerUtil.schedule(_timerTask, System.currentTimeMillis() % _100_MILLISECONDS, _100_MILLISECONDS);
         return this;
+    }
+
+    /**
+     * Lock the clock from running.
+     * Used by LoadAndStore tests.
+     */
+    public void lockFromRunning() {
+        synchronized(_lock) {
+            _isLockedFromRunning = true;
+        }
     }
 
     private void resetLast() {
