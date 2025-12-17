@@ -2159,7 +2159,7 @@ public class TrainCommon {
      * midnight. Note that the string time could be blank, and in that case
      * returns 0 minutes. 
      */
-    protected int convertStringTime(String time) {
+    public static int convertStringTime(String time) {
         int minutes = 0;
         boolean hrFormat = false;
         String[] splitTimePM = time.split(SPACE);
