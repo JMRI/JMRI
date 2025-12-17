@@ -24,25 +24,24 @@ public class JsonSensorTest {
     }
 
     @Test
-    public void testConstructor() throws Exception {
-        try {
+    public void testConstructor() {
+
+        // because the constructor throws UnsupportedOperationException, and
+        // that is thrown by newInstance() into an InvocationTargetException
+        // we pass an InvocationTargetException that is caused by an
+        // UnsupportedOperationException and fail everything else.
+
+        InvocationTargetException ex = Assertions.assertThrows( InvocationTargetException.class, () -> {
             Constructor<JsonSensor> constructor;
             constructor = JsonSensor.class.getDeclaredConstructor();
             constructor.setAccessible(true);
             constructor.newInstance();
             Assertions.fail("Instance of JsonSensor created");
-        } catch (InvocationTargetException ex) {
-            // because the constructor throws UnsupportedOperationException, and
-            // that is thrown by newInstance() into an InvocationTargetException
-            // we pass an InvocationTargetException that is caused by an
-            // UnsupportedOperationException and fail everything else by
-            // rethrowing the unexepected exception to get a stack trace
-            var cause = ex.getCause();
-            Assertions.assertNotNull(cause);
-            if (!cause.getClass().equals(UnsupportedOperationException.class)) {
-                throw ex;
-            }
-        }
+        });
+        UnsupportedOperationException cause = Assertions.assertInstanceOf(
+            UnsupportedOperationException.class, ex.getCause());
+        Assertions.assertNotNull(cause);
+
     }
 
 }

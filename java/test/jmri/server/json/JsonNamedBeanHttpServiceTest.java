@@ -93,10 +93,10 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
      * turnout with some property values. Uses a JsonTurnoutHttpService since
      * the JsonNamedBeanHttpService is abstract.
      *
-     * @throws java.lang.Exception on unexpected exceptions
+     * @throws JsonException on unexpected JsonException
      */
     @Test
-    public void testGetNamedBeanWithProperties() throws Exception {
+    public void testGetNamedBeanWithProperties() throws JsonException {
         String name = "IT1";
         // retain turnout as NamedBean to ensure only "generic" NamedBean
         // methods are used
