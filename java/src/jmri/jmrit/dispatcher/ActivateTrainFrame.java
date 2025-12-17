@@ -703,7 +703,9 @@ public class ActivateTrainFrame extends JmriJFrame {
                  : MaxSpeedCapMode.THROTTLE;
     
          // Scale speed = actual speed × scale ratio (time same in model/prototype)
-         float scaleRatio = (float) _dispatcher.getScale().getScaleRatio();
+        float scaleRatio = (_dispatcher != null && _dispatcher.getScale() != null)
+            ? (float) _dispatcher.getScale().getScaleRatio()
+            : 1.0f; // CI-safe default
     
          if (mode == MaxSpeedCapMode.SCALE_MPH) {
              // mm/s → m/s → mph, then × scaleRatio
@@ -2592,12 +2594,21 @@ public class ActivateTrainFrame extends JmriJFrame {
             case TRAINLENGTH_SCALEMETERS:
                 maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters());
                 break;
-            case TRAINLENGTH_ACTUALINCHS:
-                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleFeet() * 12.0f * (float)_dispatcher.getScale().getScaleFactor());
+            case TRAINLENGTH_ACTUALINCHS: {
+                float sf = (_dispatcher != null && _dispatcher.getScale() != null)
+                    ? (float)_dispatcher.getScale().getScaleFactor()
+                    : 1.0f; // CI-safe default
+                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleFeet() * 12.0f * sf);
                 break;
-            case TRAINLENGTH_ACTUALCM:
-                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters() * 100.0f * (float)_dispatcher.getScale().getScaleFactor());
+            }
+            case TRAINLENGTH_ACTUALCM: {
+                float sf = (_dispatcher != null && _dispatcher.getScale() != null)
+                    ? (float)_dispatcher.getScale().getScaleFactor()
+                    : 1.0f; // CI-safe default
+                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters() * 100.0f * sf);
                 break;
+            }
+
             default:
                 maxTrainLengthSpinner.setValue(0.0f);
         }
