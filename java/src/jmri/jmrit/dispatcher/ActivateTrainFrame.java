@@ -841,10 +841,19 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void handleInTransitClick() {
+        if (selectedTransit == null) {
+            // No transit yet; avoid NPE and present empty combos.
+            startingBlockBox.removeAllItems();
+            destinationBlockBox.removeAllItems();
+            return;
+        }
         if (!inTransitBox.isSelected() && selectedTransit.getEntryBlocksList().isEmpty()) {
-            JmriJOptionPane.showMessageDialog(initiateFrame, Bundle
-                    .getMessage("NoEntryBlocks"), Bundle.getMessage("MessageTitle"),
-                    JmriJOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(
+                initiateFrame,
+                Bundle.getMessage("NoEntryBlocks"),
+                Bundle.getMessage("MessageTitle"),
+                JmriJOptionPane.INFORMATION_MESSAGE
+            );
             inTransitBox.setSelected(true);
         }
         initializeStartingBlockCombo();
@@ -853,7 +862,8 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void handleTrainSelectionChanged() {
-        if (!trainsFromButtonGroup.getSelection().getActionCommand().equals("TRAINSFROMOPS")) {
+        if (trainsFromButtonGroup.getSelection() == null ||
+            !trainsFromButtonGroup.getSelection().getActionCommand().equals("TRAINSFROMOPS")) {
             return;
         }
         int ix = trainSelectBox.getSelectedIndex();
@@ -875,7 +885,8 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void handleRosterSelectionChanged(ActionEvent e) {
-        if (!trainsFromButtonGroup.getSelection().getActionCommand().equals("TRAINSFROMROSTER")) {
+        if (trainsFromButtonGroup.getSelection() == null ||
+            !trainsFromButtonGroup.getSelection().getActionCommand().equals("TRAINSFROMROSTER")) {
             return;
         }
         RosterEntry r ;
@@ -1295,6 +1306,7 @@ public class ActivateTrainFrame extends JmriJFrame {
        *  - inches <-> mm conversions use constants 25.4 and 3.28084 as in the train-length panel
        */
       private float convertMmToStopDisplay(StopDistanceUnits units, float mm) {
+          final float scaleRatio = (_dispatcher != null && _dispatcher.getScale() != null) ? (float) _dispatcher.getScale().getScaleRatio() : 1.0f;
           switch (units) {
               case ACTUAL_MM:
                   return mm;
@@ -1302,12 +1314,12 @@ public class ActivateTrainFrame extends JmriJFrame {
                   return mm / 25.4f;
               case SCALE_METERS: {
                   // actual metres to scale metres -> (mm / 1000) * scaleRatio
-                  float scaleMeters = (mm / 1000.0f) * (float) _dispatcher.getScale().getScaleRatio();
+                  float scaleMeters = (mm / 1000.0f) * scaleRatio;
                   return scaleMeters;
               }
               case SCALE_FEET: {
                   // scale feet = scale metres * 3.28084
-                  float scaleFeet = ((mm / 1000.0f) * (float) _dispatcher.getScale().getScaleRatio()) * 3.28084f;
+                  float scaleFeet = ((mm / 1000.0f) * scaleRatio) * 3.28084f;
                   return scaleFeet;
               }
               default:
@@ -1319,19 +1331,18 @@ public class ActivateTrainFrame extends JmriJFrame {
        * Convert a displayed value in the chosen units back to underlying mm (actual).
        */
       private float convertStopDisplayToMm(StopDistanceUnits units, float value) {
+          final float scaleRatio = (_dispatcher != null && _dispatcher.getScale() != null) ? (float) _dispatcher.getScale().getScaleRatio() : 1.0f;
           switch (units) {
               case ACTUAL_MM:
                   return value;
               case ACTUAL_INCHES:
                   return value * 25.4f;
               case SCALE_METERS: {
-                  // mm = (scale metres / scaleRatio) * 1000
-                  float mm = (value / (float) _dispatcher.getScale().getScaleRatio()) * 1000.0f;
+                  float mm = (value / scaleRatio) * 1000.0f;
                   return mm;
               }
               case SCALE_FEET: {
-                  // mm = (scale feet / 3.28084 / scaleRatio) * 1000
-                  float mm = (value / 3.28084f / (float) _dispatcher.getScale().getScaleRatio()) * 1000.0f;
+                  float mm = (value / 3.28084f / scaleRatio) * 1000.0f;
                   return mm;
               }
               default:
@@ -1343,6 +1354,9 @@ public class ActivateTrainFrame extends JmriJFrame {
         String prevValue = (String)startingBlockBox.getSelectedItem();
         startingBlockBox.removeAllItems();
         startingBlockBoxList.clear();
+        if (selectedTransit == null) {
+            return;
+        }
         if (!inTransitBox.isSelected() && selectedTransit.getEntryBlocksList().isEmpty()) {
             inTransitBox.setSelected(true);
         }
@@ -2487,14 +2501,17 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     private float maxTrainLengthToScaleMeters(TrainLengthUnits fromUnits, float fromValue) {
         float value;
+        final float scaleRatio = (_dispatcher != null && _dispatcher.getScale() != null)
+                ? (float) _dispatcher.getScale().getScaleRatio()
+                : 1.0f;
         // convert to meters.
         switch (fromUnits) {
             case TRAINLENGTH_ACTUALINCHS:
-                value = fromValue / 12.0f * (float) _dispatcher.getScale().getScaleRatio();
+                value = fromValue / 12.0f * scaleRatio;
                 value = value / 3.28084f;
                 break;
             case TRAINLENGTH_ACTUALCM:
-                value = fromValue / 100.0f * (float) _dispatcher.getScale().getScaleRatio();
+                value = fromValue / 100.0f * scaleRatio;
                 break;
            case TRAINLENGTH_SCALEFEET:
                value = fromValue / 3.28084f;
@@ -2513,19 +2530,22 @@ public class ActivateTrainFrame extends JmriJFrame {
      * Calculates the reciprocal unit. Actual to Scale and vice versa
      */
     private float maxTrainLengthCalculateAlt(TrainLengthUnits fromUnits, float fromValue) {
+        final float scaleRatio = (_dispatcher != null && _dispatcher.getScale() != null)
+                ? (float) _dispatcher.getScale().getScaleRatio()
+                : 1.0f;
         switch (fromUnits) {
             case TRAINLENGTH_ACTUALINCHS:
                 // calc scale feet
-                return (float) jmri.util.MathUtil.granulize(fromValue / 12 * (float) _dispatcher.getScale().getScaleRatio(),0.1f);
+                return (float) jmri.util.MathUtil.granulize(fromValue / 12 * scaleRatio, 0.1f);
             case TRAINLENGTH_ACTUALCM:
                 // calc scale meter
-                return fromValue / 100 * (float) _dispatcher.getScale().getScaleRatio();
+                return fromValue / 100 * scaleRatio;
             case TRAINLENGTH_SCALEFEET:
                 // calc actual inchs
-                return fromValue * 12 * (float) _dispatcher.getScale().getScaleFactor();
+                return fromValue * 12 * scaleRatio;
            case TRAINLENGTH_SCALEMETERS:
                 // calc actual cm.
-                return fromValue * 100 * (float) _dispatcher.getScale().getScaleFactor();
+                return fromValue * 100 * scaleRatio;
            default:
                log.error("Invalid TrainLengthUnits has been updated, fix me");
         }
