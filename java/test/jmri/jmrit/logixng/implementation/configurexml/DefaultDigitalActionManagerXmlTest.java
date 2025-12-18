@@ -1,5 +1,9 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
@@ -11,11 +15,11 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -26,7 +30,7 @@ public class DefaultDigitalActionManagerXmlTest {
     @Test
     public void testCTor() {
         DefaultDigitalActionManagerXml b = new DefaultDigitalActionManagerXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
     }
 
     @Test
@@ -85,7 +89,7 @@ public class DefaultDigitalActionManagerXmlTest {
 //        System.out.format("Class name: %s%n", PrivateConstructorXml.class.getName());
     }
 
-    @Ignore("Cannot load xml configurator")
+    @Disabled("Cannot load xml configurator")
     @Test
     public void testStore() {
         DefaultDigitalActionManagerXml b = new DefaultDigitalActionManagerXml();
@@ -122,20 +126,20 @@ public class DefaultDigitalActionManagerXmlTest {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_DIGITAL_ACTIONS);
         }
 
-        Assert.assertTrue("manager is a MyManager",
-                InstanceManager.getDefault(DigitalActionManager.class)
-                        instanceof DefaultDigitalActionManagerXmlTest.MyManager);
+        assertInstanceOf( DefaultDigitalActionManagerXmlTest.MyManager.class,
+                InstanceManager.getDefault(DigitalActionManager.class),
+                "manager is a MyManager");
 
         // Test replacing the manager
         DefaultDigitalActionManagerXml b = new DefaultDigitalActionManagerXml();
         b.replaceActionManager();
 
-        Assert.assertFalse("manager is not a MyManager",
-                InstanceManager.getDefault(DigitalActionManager.class)
-                        instanceof DefaultDigitalActionManagerXmlTest.MyManager);
+        assertFalse( InstanceManager.getDefault(DigitalActionManager.class)
+            instanceof DefaultDigitalActionManagerXmlTest.MyManager,
+                "manager is not a MyManager");
     }
 
-//    @Ignore("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
+//    @Disabled("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
     @Test
     public void testReplaceActionManagerWithConfigManager() {
 
@@ -159,21 +163,20 @@ public class DefaultDigitalActionManagerXmlTest {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_DIGITAL_ACTIONS);
         }
 
-        Assert.assertTrue("manager is a MyManager",
-                InstanceManager.getDefault(DigitalActionManager.class)
-                        instanceof DefaultDigitalActionManagerXmlTest.MyManager);
+        assertInstanceOf( DefaultDigitalActionManagerXmlTest.MyManager.class,
+            InstanceManager.getDefault(DigitalActionManager.class),
+                "manager is a MyManager");
 
         // Test replacing the manager
         DefaultDigitalActionManagerXml b = new DefaultDigitalActionManagerXml();
         b.replaceActionManager();
 
-        Assert.assertFalse("manager is not a MyManager",
-                InstanceManager.getDefault(DigitalActionManager.class)
-                        instanceof DefaultDigitalActionManagerXmlTest.MyManager);
+        assertFalse( InstanceManager.getDefault(DigitalActionManager.class)
+                        instanceof DefaultDigitalActionManagerXmlTest.MyManager,
+                "manager is not a MyManager");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -182,7 +185,7 @@ public class DefaultDigitalActionManagerXmlTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
@@ -191,7 +194,7 @@ public class DefaultDigitalActionManagerXmlTest {
 
 
 
-    private class MyDigitalAction extends ActionTurnout {
+    private static class MyDigitalAction extends ActionTurnout {
 
         MyDigitalAction() {
             super("IQDA9999", null);
@@ -202,14 +205,14 @@ public class DefaultDigitalActionManagerXmlTest {
 
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
-    class PrivateConstructorXml extends ActionTurnoutXml {
+    static class PrivateConstructorXml extends ActionTurnoutXml {
         private PrivateConstructorXml() {
         }
     }
 
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
-    class ThrowExceptionXml extends ActionTurnoutXml {
+    static class ThrowExceptionXml extends ActionTurnoutXml {
         @Override
         public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
             throw new JmriConfigureXmlException();
@@ -217,7 +220,7 @@ public class DefaultDigitalActionManagerXmlTest {
     }
 
 
-    class MyManager extends DefaultDigitalActionManager {
+    static class MyManager extends DefaultDigitalActionManager {
     }
 
 }
