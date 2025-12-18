@@ -81,7 +81,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             showCarServiceOrder(car);
 
             cabooseTip = false; // found at least one caboose, so they exist!
-            addLine(_buildReport, SEVEN, Bundle.getMessage("buildCarIsCaboose", car.toString(), car.getRoadName(),
+            addLine(_buildReport, FIVE, Bundle.getMessage("buildCarIsCaboose", car.toString(), car.getRoadName(),
                     car.getLocationName(), car.getTrackName()));
             // car departing staging must leave with train
             if (car.getTrack() == departTrack) {
@@ -107,6 +107,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 }
                 // is there a specific road requirement for the caboose?
             } else if (!roadCaboose.equals(Train.NONE) && !roadCaboose.equals(car.getRoadName())) {
+                addLine(_buildReport, SEVEN, Bundle.getMessage("buildCabooseWrongRoad", car.toString(),
+                        car.getRoadName(), roadCaboose, rl.getName()));
                 continue;
             } else if (!foundCaboose && car.getLocationName().equals(rl.getName())) {
                 // remove cars that can't be picked up due to train and track
