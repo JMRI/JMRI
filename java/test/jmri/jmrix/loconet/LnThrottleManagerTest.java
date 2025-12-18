@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Paul Bender Copyright (C) 2017
  * @author B. Milhaupt, Copyright (C) 2018
  */
-@Disabled("Temporary disable during testing")
 public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     @Test

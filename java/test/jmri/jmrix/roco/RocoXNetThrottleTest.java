@@ -17,7 +17,6 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender
  */
-@Disabled("TEMPORARY DISABLED. MUST BE FIXED")
 public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
 
     @Test
