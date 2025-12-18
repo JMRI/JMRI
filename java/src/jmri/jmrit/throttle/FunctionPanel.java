@@ -202,7 +202,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      */
     private void initGUI() {
         mainPanel = new OptionallyTabbedPanel(MAX_FUNCTION_BUTTONS_PER_TAB);
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         resetFnButtons();
         JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.getViewport().setOpaque(false); // container already gets this done (for play/edit mode)

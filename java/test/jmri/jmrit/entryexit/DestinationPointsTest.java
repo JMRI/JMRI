@@ -9,6 +9,7 @@ import jmri.TurnoutManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -33,12 +34,16 @@ public class DestinationPointsTest {
 
     @Test
     public void testCTor() {
-        PointDetails pdSrc = tools.getPoint(sm.getSensor("NX-From-Beta"), panels.get("Alpha") ,eep);  // NOI18N
+        PointDetails pdSrc = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return tools.getPoint(sm.getSensor("NX-From-Beta"), panels.get("Alpha") ,eep);  // NOI18N
+        });
         Assert.assertNotNull("testCTor - source point", pdSrc);  // NOI18N
         Source src = new Source(pdSrc);
         Assert.assertNotNull("testCTor - source", src);  // NOI18N
 
-        PointDetails pdDest = tools.getPoint(sm.getSensor("NX-AE"), panels.get("Alpha") ,eep);  // NOI18N
+        PointDetails pdDest = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return tools.getPoint(sm.getSensor("NX-AE"), panels.get("Alpha") ,eep);  // NOI18N
+        });
         Assert.assertNotNull("testCTor - destination point", pdDest);  // NOI18N
 
         DestinationPoints dp = new DestinationPoints(pdDest, null, src);
@@ -52,34 +57,42 @@ public class DestinationPointsTest {
 
     @Test
     public void testSetRoute() throws Exception {
-        // Create a route
-        DestinationPoints dp = tools.getDestinationPoint(sm.getSensor("NX-AW-Side"),  // NOI18N
-                sm.getSensor("NX-Alpha-EB"), panels.get("Alpha"), eep);  // NOI18N
-        dp.activeBean(false, false);
-        dp.setRoute(true);
-        JUnitUtil.waitFor(()->{return dp.getState() == 2;}, "Route active");  // NOI18N
+        DestinationPoints dp2 = ThreadingUtil.runOnGUIwithReturn(() -> {
+            // Create a route
+            DestinationPoints dp = tools.getDestinationPoint(sm.getSensor("NX-AW-Side"),  // NOI18N
+                    sm.getSensor("NX-Alpha-EB"), panels.get("Alpha"), eep);  // NOI18N
+            dp.activeBean(false, false);
+            dp.setRoute(true);
+            return dp;
+        });
+        JUnitUtil.waitFor(()->{return dp2.getState() == 2;}, "Route active");  // NOI18N
 
         // Cancel the route
-        dp.cancelClearInterlock(EntryExitPairs.CANCELROUTE);
-        JUnitUtil.waitFor(()->{return dp.getState() == 4;}, "Route inactive");  // NOI18N
+        ThreadingUtil.runOnGUI(() -> dp2.cancelClearInterlock(EntryExitPairs.CANCELROUTE));
+        JUnitUtil.waitFor(()->{return dp2.getState() == 4;}, "Route inactive");  // NOI18N
     }
 
     @Test
     public void testEnabled() {
-        DestinationPoints dp = tools.getDestinationPoint(sm.getSensor("NX-AE"),  // NOI18N
-                sm.getSensor("NX-AW-Main"), panels.get("Alpha"), eep);  // NOI18N
-        Assert.assertNotNull("test enabled", dp);  // NOI18N
-        boolean chkEnabled = dp.isEnabled();
+        DestinationPoints dp2 = ThreadingUtil.runOnGUIwithReturn(() -> {
+            DestinationPoints dp = tools.getDestinationPoint(sm.getSensor("NX-AE"),  // NOI18N
+                    sm.getSensor("NX-AW-Main"), panels.get("Alpha"), eep);  // NOI18N
+            return dp;
+        });
+        Assert.assertNotNull("test enabled", dp2);  // NOI18N
+        boolean chkEnabled = dp2.isEnabled();
         Assert.assertTrue("test enabled true", chkEnabled);  // NOI18N
-        dp.setEnabled(false);
-        chkEnabled = dp.isEnabled();
+        dp2.setEnabled(false);
+        chkEnabled = dp2.isEnabled();
         Assert.assertFalse("test enabled false", chkEnabled);  // NOI18N
     }
 
     @Test
     public void testState() {
-        DestinationPoints dp = tools.getDestinationPoint(sm.getSensor("NX-AE"),  // NOI18N
-                sm.getSensor("NX-AW-Side"), panels.get("Alpha"), eep);  // NOI18N
+        DestinationPoints dp = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return tools.getDestinationPoint(sm.getSensor("NX-AE"),  // NOI18N
+                    sm.getSensor("NX-AW-Side"), panels.get("Alpha"), eep);  // NOI18N
+        });
         Assert.assertNotNull("test state", dp);
         int state = dp.getState();
         Assert.assertEquals("test state inactive", 4, state);  // NOI18N
@@ -90,8 +103,10 @@ public class DestinationPointsTest {
 
     @Test
     public void testNoCurrentRoute() {
-        DestinationPoints dp = tools.getDestinationPoint(sm.getSensor("NX-AE"),  // NOI18N
-                sm.getSensor("NX-AW-Side"), panels.get("Alpha"), eep);  // NOI18N
+        DestinationPoints dp = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return tools.getDestinationPoint(sm.getSensor("NX-AE"),  // NOI18N
+                    sm.getSensor("NX-AW-Side"), panels.get("Alpha"), eep);  // NOI18N
+        });
         Assert.assertNotNull("test state", dp);
 
         // Setup memory variable
