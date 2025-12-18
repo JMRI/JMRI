@@ -1,6 +1,5 @@
 package jmri.jmrit.z21server;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,7 +12,7 @@ public class Z21ClientsListModelTest {
     @Test
     public void testCtor() {
         Z21ClientsListModel panel = new Z21ClientsListModel();
-        Assert.assertNotNull("exists", panel );
+        Assertions.assertNotNull( panel, "exists" );
     }
 
     @BeforeEach
