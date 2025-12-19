@@ -2297,7 +2297,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     public final TrainLengthUnitsJCombo trainLengthUnitsComboBox = new TrainLengthUnitsJCombo();
     private final JLabel trainLengthLabel = new JLabel(Bundle.getMessage("MaxTrainLengthLabel"));
     private JLabel trainLengthAltLengthLabel; // I18N Label
-    private final JSpinner maxTrainLengthSpinner = new JSpinner(); // initialised later
+    private final JSpinner maxTrainLengthSpinner = new JSpinner(); // initialized later
     // Track current units displayed in the spinner and suppress conversions during programmatic updates
     private TrainLengthUnits currentTrainLengthUnits = TrainLengthUnits.TRAINLENGTH_SCALEMETERS;
     private boolean suppressTrainLengthUnitsEvents = false;
@@ -2497,7 +2497,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         );
         pa2b.add(stopByDistanceUnitsComboBox);
 
-         // Initialise Physics visibility based on current availability (enabled state)
+         // Initialize Physics visibility based on current availability (enabled state)
          updateRampPhysicsAvailability(useSpeedProfileCheckBox.isEnabled());
         
         // Head/Tail radios last (to the right of the units dropdown)
@@ -2625,7 +2625,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         pa5_FNumbers.add(fNumberHornLabel);
         pa5_FNumbers.add(fNumberHornSpinner);
         initiatePane.add(pa5_FNumbers);
-        showHideAutoRunItems(autoRunBox.isSelected());   // initialise with auto run items hidden
+        showHideAutoRunItems(autoRunBox.isSelected());   // initialize with auto run items hidden
     }
 
     private void handleMinReliableOperatingSpeedUpdate() {
