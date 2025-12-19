@@ -132,7 +132,7 @@ public class DefaultIdTagTest {
 
         Timebase tb = jmri.InstanceManager.getDefault(Timebase.class);
         tb.setRun(false);
-        
+
         Date now = new Date(1234567890000L);
         tb.setTime(now);
 
@@ -176,7 +176,7 @@ public class DefaultIdTagTest {
         Assertions.assertNotNull(d);
         Assertions.assertEquals(now, d);
     }
-    
+
     @Test
     public void testLoadPreviousDateFormat(){
 
@@ -211,7 +211,7 @@ public class DefaultIdTagTest {
         JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Reporter");
         JUnitAppender.assertWarnMessage("Failed to provide Reporter \"\" in load of \"ID0973274FA9\"");
     }
-    
+
     @Test
     public void testElementNameFail(){
         IdTag r = new DefaultIdTag("ID0673474AA7");
@@ -242,6 +242,7 @@ public class DefaultIdTagTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();

@@ -154,7 +154,7 @@ public class AutoTrainsFrameStopManualTest {
         // ********************************
         // Go to manual, go to forward, back to auto
         // Direction should return to rev
-        // ********************************** 
+        // **********************************
         boToManual.push();
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
@@ -181,7 +181,7 @@ public class AutoTrainsFrameStopManualTest {
         // ********************************
         // Go to manual, go to full throttle, back to auto
         // speed should go back to medium
-        // ********************************** 
+        // **********************************
         boToManual.push();
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
@@ -383,6 +383,7 @@ public class AutoTrainsFrameStopManualTest {
         JUnitUtil.resetFileUtilSupport();
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initDefaultSignalMastManager();

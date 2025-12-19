@@ -88,6 +88,7 @@ public class LightTableWindowTest {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        jmri.util.JUnitUtil.initTimeProviderManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
     }

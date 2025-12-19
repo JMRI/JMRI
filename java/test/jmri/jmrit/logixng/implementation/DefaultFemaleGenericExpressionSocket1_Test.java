@@ -382,6 +382,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();

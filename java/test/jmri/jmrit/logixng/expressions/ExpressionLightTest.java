@@ -383,6 +383,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
 

@@ -184,6 +184,7 @@ public abstract class ImportExpressionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixManager();

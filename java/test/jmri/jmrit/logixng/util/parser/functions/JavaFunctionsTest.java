@@ -65,6 +65,7 @@ public class JavaFunctionsTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @After

@@ -178,6 +178,7 @@ public class TurnoutOperationFrameTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach

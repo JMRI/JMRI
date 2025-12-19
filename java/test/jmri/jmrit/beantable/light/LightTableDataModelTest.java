@@ -13,23 +13,24 @@ import org.junit.jupiter.api.Test;
  * @author Steve Young Copyright (C) 2021
  */
 public class LightTableDataModelTest extends jmri.jmrit.beantable.AbstractBeanTableDataModelBase<Light> {
-    
-    
+
+
     @Test
     public void testCTor() {
         Assert.assertNotNull("exists",t);
     }
-    
+
     @Override
     public int getModelColumnCount(){
         return 9;
     }
-    
+
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalLightManager();
         t = new LightTableDataModel();
     }
@@ -43,5 +44,5 @@ public class LightTableDataModelTest extends jmri.jmrit.beantable.AbstractBeanTa
         t = null;
         JUnitUtil.tearDown();
     }
-    
+
 }

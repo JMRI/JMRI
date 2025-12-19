@@ -17,7 +17,7 @@ import org.junit.Test;
 
 /**
  * Test ParsedExpression
- * 
+ *
  * @author Daniel Bergqvist 2019
  */
 public class ExpressionNodeIdentifierTest {
@@ -31,12 +31,12 @@ public class ExpressionNodeIdentifierTest {
             public String getName() {
                 return "abc";
             }
-            
+
             @Override
             public Object getValue(SymbolTable symbolTable) {
                 return "0";
             }
-            
+
             @Override
             public void setValue(SymbolTable symbolTable, Object value) {
                 throw new UnsupportedOperationException("Not supported");
@@ -45,14 +45,14 @@ public class ExpressionNodeIdentifierTest {
         ExpressionNodeIdentifier t = new ExpressionNodeIdentifier(token, variables);
         Assert.assertNotNull("not null", t);
     }
-    
+
     private Object getConstant(String name, SymbolTable symbolTable, Map<String, Variable> variables) throws JmriException {
         Token token = new Token(TokenType.NONE, name, 0);
         ExpressionNodeIdentifier t = new ExpressionNodeIdentifier(token, variables);
         Assert.assertNotNull("not null", t);
         return t.calculate(symbolTable);
     }
-    
+
     @Test
     public void testConstants() throws JmriException {
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
@@ -76,11 +76,12 @@ public class ExpressionNodeIdentifierTest {
         Assert.assertEquals(SignalHead.FLASHLUNAR, (int)(Integer)getConstant("FlashLunar",symbolTable,variables));
         Assert.assertEquals(SignalHead.HELD, (int)(Integer)getConstant("Held",symbolTable,variables));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @After
@@ -89,5 +90,5 @@ public class ExpressionNodeIdentifierTest {
         LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
+
 }

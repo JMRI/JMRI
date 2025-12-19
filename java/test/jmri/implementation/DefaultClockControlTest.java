@@ -36,6 +36,7 @@ public class DefaultClockControlTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach

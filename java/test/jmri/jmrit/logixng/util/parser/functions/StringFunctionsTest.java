@@ -94,6 +94,7 @@ public class StringFunctionsTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @After
