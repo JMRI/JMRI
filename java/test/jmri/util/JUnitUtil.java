@@ -771,8 +771,6 @@ public class JUnitUtil {
         // ensure the auto-default UserPreferencesManager is not created by installing a test one
         InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
         InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).setEnableStoreCheck(false);
-        // Ensure we have the time provider manager
-        InstanceManager.getDefault(jmri.time.TimeProviderManager.class).getCurrentTimeProvider();
     }
 
     public static void resetTurnoutOperationManager() {
@@ -789,6 +787,13 @@ public class JUnitUtil {
         InstanceManager.reset(UserPreferencesManager.class);
         // create a test user preferences manager
         InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
+    }
+
+    public static void initTimeProviderManager() {
+        InstanceManager.setDefault(ProxyTimeProviderManager.HasTimeProviderManager.class,
+                new ProxyTimeProviderManager.HasTimeProviderManager(){});
+        // Ensure we have the time provider manager
+        InstanceManager.getDefault(jmri.time.TimeProviderManager.class).getCurrentTimeProvider();
     }
 
     public static void initInternalTurnoutManager() {

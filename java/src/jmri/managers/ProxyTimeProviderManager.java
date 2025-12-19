@@ -4,8 +4,7 @@ import jmri.time.TimeProvider;
 
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManagerAutoInitialize;
-import jmri.Manager;
+import jmri.*;
 import jmri.time.MainTimeProviderHandler;
 import jmri.time.TimeProviderManager;
 import jmri.time.implementation.InternalDateTime;
@@ -77,8 +76,13 @@ public class ProxyTimeProviderManager extends AbstractProxyManager<TimeProvider>
 
     @Override
     public final TimeProvider getCurrentTimeProvider() {
+        if (!jmri.InstanceManager.containsDefault(HasTimeProviderManager.class)) {
+            throw new UnsupportedOperationException("TimeProviderManager not initialized by JUnitUtil");
+        }
         return getMainTimeProviderHandler().getCurrentTimeProvider();
     }
+
+    public interface HasTimeProviderManager {}
 
     // initialize logging
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyClockManager.class);
