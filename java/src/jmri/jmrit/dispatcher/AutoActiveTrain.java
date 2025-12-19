@@ -1250,12 +1250,6 @@ public class AutoActiveTrain implements ThrottleListener {
             log.trace("[{}]:cannot set speed.",getActiveTrain().getActiveTrainName());
             return;
         }
-        
-        // Do not alter speed while a distance-based stop is active or armed
-        if (_stoppingUsingSpeedProfile || _distanceStopPending) {
-            log.trace("[{}]: distance stop active/pending — suppressing setSpeedBySectionsAllocated", getActiveTrain().getActiveTrainName());
-            return;
-        }
 
         if (_stoppingByBlockOccupancy && (_stoppingBlock != null && _stoppingBlock.getState() == Block.UNOCCUPIED)) {
             // we are awaiting a delayed stop
