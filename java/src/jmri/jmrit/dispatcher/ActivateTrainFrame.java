@@ -956,10 +956,6 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void handleTrainSelectionChanged() {
-        if (trainsFromButtonGroup.getSelection() == null ||
-            !trainsFromButtonGroup.getSelection().getActionCommand().equals("TRAINSFROMOPS")) {
-            return;
-        }
         int ix = trainSelectBox.getSelectedIndex();
         if (ix < 1) { // no train selected
             dccAddressSpinner.setEnabled(false);
@@ -979,10 +975,6 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void handleRosterSelectionChanged(ActionEvent e) {
-        if (trainsFromButtonGroup.getSelection() == null ||
-            !trainsFromButtonGroup.getSelection().getActionCommand().equals("TRAINSFROMROSTER")) {
-            return;
-        }
         RosterEntry r ;
         int ix = rosterComboBox.getRosterEntryComboBox().getSelectedIndex();
         if (ix > 0) { // first item is "Select Loco" string
@@ -1400,7 +1392,7 @@ public class ActivateTrainFrame extends JmriJFrame {
        *  - inches <-> mm conversions use constants 25.4 and 3.28084 as in the train-length panel
        */
       private float convertMmToStopDisplay(StopDistanceUnits units, float mm) {
-          final float scaleRatio = (_dispatcher != null && _dispatcher.getScale() != null) ? (float) _dispatcher.getScale().getScaleRatio() : 1.0f;
+          final float scaleRatio = (_dispatcher.getScale() != null) ? (float) _dispatcher.getScale().getScaleRatio() : 1.0f;
           switch (units) {
               case ACTUAL_MM:
                   return mm;
@@ -2754,7 +2746,7 @@ public class ActivateTrainFrame extends JmriJFrame {
      * Convert from scale meters to the requested display units.
      */
     private float scaleMetersToDisplay(TrainLengthUnits toUnits, float scaleMeters) {
-        final float scaleFactor = (_dispatcher != null && _dispatcher.getScale() != null)
+        final float scaleFactor = (_dispatcher.getScale() != null)
                 ? (float) _dispatcher.getScale().getScaleFactor()
                 : 1.0f; // CI-safe default
     
