@@ -63,6 +63,7 @@ public class FastClockControllerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.initTimeProviderManager();
     }
 
