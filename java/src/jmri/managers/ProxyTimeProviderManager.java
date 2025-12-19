@@ -20,6 +20,8 @@ import jmri.time.implementation.SystemDateTime;
 public class ProxyTimeProviderManager extends AbstractProxyManager<TimeProvider>
         implements TimeProviderManager, InstanceManagerAutoInitialize {
 
+    private volatile TimeProviderManager _internalManager;
+
     @Override
     public void initialize() {
         TimeProvider internalTimeProvider = new InternalDateTime(makeSystemName("InternalTimeProvider")).init();
@@ -35,7 +37,16 @@ public class ProxyTimeProviderManager extends AbstractProxyManager<TimeProvider>
 
     @Override
     protected TimeProviderManager makeInternalManager() {
-        return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getTimeProviderManager();
+        // It has been observed on GitHub CI tests that the internal manager
+        // has been created twice. We want to prevent that.
+        if (_internalManager == null) {
+            synchronized(this) {
+                if (_internalManager == null) {
+                    _internalManager = jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getTimeProviderManager();
+                }
+            }
+        }
+        return _internalManager;
     }
 
     /** {@inheritDoc} */
