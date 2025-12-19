@@ -36,13 +36,13 @@ public class CbusConfigurationManagerTest {
     public void testDisabled() {
 
         memo.setDisabled(true);
-        
+
         assertNotNull(t);
-        
+
         assertFalse( t.provides(PowerManager.class) );
-        
+
         assertNull( t.get(PowerManager.class) );
-        
+
         assertNull( t.get(PowerManager.class) );
         assertNull( t.get(ThrottleManager.class) );
         assertNull( t.get(TurnoutManager.class) );
@@ -52,12 +52,12 @@ public class CbusConfigurationManagerTest {
         assertNull( t.get(CommandStation.class) );
         assertNull( t.get(CbusPreferences.class) );
         assertNull( t.get(CabSignalManager.class) );
-        
+
     }
 
     @Test
     public void testProvides() {
-        
+
         assertTrue( t.provides(AddressedProgrammerManager.class) );
         assertTrue( t.provides(GlobalProgrammerManager.class) );
         assertTrue( t.provides(ThrottleManager.class) );
@@ -73,17 +73,17 @@ public class CbusConfigurationManagerTest {
         assertTrue( t.provides(ClockControl.class) );
         assertTrue( t.provides(CbusSimulator.class)); // created by default
         assertTrue( t.provides(CbusSlotMonitorDataModel.class)); // created by default
-        
+
         assertFalse( t.provides(CbusNodeTableDataModel.class) ); // not created by default
         assertFalse( t.provides(CbusEventTableDataModel.class) ); // not created by default
-        
+
         assertFalse( t.provides(CbusSensor.class) );
-        
+
     }
 
     @Test
     public void testGet() {
-        
+
         assertNull( t.get(jmri.jmrix.can.cbus.CbusSensor.class) );
 
         assertNotNull( t.get(AddressedProgrammerManager.class) );
@@ -97,10 +97,10 @@ public class CbusConfigurationManagerTest {
         assertNotNull( t.get(CommandStation.class) );
         assertNotNull( t.get(CbusPreferences.class) );
         assertNotNull( t.get(CabSignalManager.class) );
-        
+
         assertNull( t.get(CbusNodeTableDataModel.class) );
         assertNull( t.get(CbusEventTableDataModel.class) );
-        
+
         assertNull( t.provide(CbusSensor.class) );
     }
 
@@ -110,7 +110,7 @@ public class CbusConfigurationManagerTest {
         t.configureManagers();
         assertNull( t.get(LightManager.class) );
         assertEquals(0, tcis.numListeners(),"No listeners " + tcis.getListeners());
-    
+
     }
 
     @Test
@@ -158,17 +158,17 @@ public class CbusConfigurationManagerTest {
         ((CbusEventTableDataModel)t.provide(CbusEventTableDataModel.class)).skipSaveOnDispose();
 
         assertEquals(3, tcis.numListeners(),"3 tcis listeners");
-    
+
         memo.configureManagers();
 
         assertTrue(tcis.numListeners() > 5,"6 tcis listeners as of April 2022");
-        
+
         memo.dispose();
 
         assertEquals(0, tcis.numListeners(),"All listeners removed " + tcis.getListeners());
-        
+
     }
-    
+
     public static Collection<Class<?>> classData() {
         Collection<Class<?>> toReturn = new java.util.HashSet<>(12);
         toReturn.add(CbusPreferences.class);
@@ -186,11 +186,11 @@ public class CbusConfigurationManagerTest {
         toReturn.add(CbusSlotMonitorDataModel.class);
         return toReturn;
     }
-    
+
     @ParameterizedTest(name = "{arguments}")
     @MethodSource("classData")
     public void testGetClass(Class<?> classToTest ) {
-    
+
         assertEquals(0, tcis.numListeners(),"no tcis listeners before test");
 
         assertNull(memo.getFromMap(classToTest));
@@ -201,12 +201,12 @@ public class CbusConfigurationManagerTest {
         memo.dispose();
         assertNull(memo.getFromMap(classToTest));
         assertEquals(0, tcis.numListeners(),"All listeners removed " + tcis.getListeners());
-    
+
     }
 
     @Test
     public void testGetDisposeSimulator() {
-        
+
         CbusSimulator simA = memo.getFromMap(CbusSimulator.class);
         assertNull(simA);
         CbusSimulator sim = memo.get(CbusSimulator.class);
@@ -214,7 +214,7 @@ public class CbusConfigurationManagerTest {
         simA = memo.getFromMap(CbusSimulator.class);
         assertNotNull(simA);
         assertTrue(sim == simA);
-        
+
         t.disposeOf(sim, CbusSimulator.class);
         simA = memo.getFromMap(CbusSimulator.class);
         assertNull(simA);
@@ -222,7 +222,7 @@ public class CbusConfigurationManagerTest {
 
     @Test
     public void testGetDisposeSlotMonitor() {
-        
+
         CbusSlotMonitorDataModel smdm = memo.getFromMap(CbusSlotMonitorDataModel.class);
         assertNull(smdm);
         CbusSlotMonitorDataModel smdm2 = memo.get(CbusSlotMonitorDataModel.class);
@@ -230,7 +230,7 @@ public class CbusConfigurationManagerTest {
         smdm = memo.getFromMap(CbusSlotMonitorDataModel.class);
         assertNotNull(smdm);
         assertTrue(smdm2 == smdm);
-        
+
         t.disposeOf(smdm2, CbusSlotMonitorDataModel.class);
         smdm = memo.getFromMap(CbusSlotMonitorDataModel.class);
         assertNull(smdm);
@@ -245,6 +245,7 @@ public class CbusConfigurationManagerTest {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
+        JUnitUtil.initTimeProviderManager();
 
         // This test requires a registred connection config since ProxyMeterManager
         // auto creates system meter managers using the connection configs.
@@ -253,7 +254,7 @@ public class CbusConfigurationManagerTest {
         pa.setSystemPrefix("M");
         jmri.jmrix.ConnectionConfig cc = new jmri.jmrix.can.adapters.gridconnect.net.MergConnectionConfig(pa);
         InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class).add(cc);
-        
+
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);

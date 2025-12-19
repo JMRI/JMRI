@@ -49,6 +49,7 @@ public class HexFileFrameTest {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach

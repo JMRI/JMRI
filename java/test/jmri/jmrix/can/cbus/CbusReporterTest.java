@@ -252,6 +252,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         tcis = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcis);

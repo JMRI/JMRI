@@ -35,7 +35,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
         Assert.assertNotNull( lm.getBySystemName("IL21"));
         Assert.assertNotNull( lm.getByUserName("my name"));
-        
+
         Assert.assertTrue( tl == lm.getBySystemName("IL21") );
         Assert.assertTrue( tl == lm.getByUserName("my name") );
 
@@ -63,6 +63,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         // create and register the manager object
         l = new InternalLightManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         InstanceManager.setLightManager(l);

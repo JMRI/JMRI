@@ -36,10 +36,11 @@ public class DCCppInitializationManagerTest {
         Assert.assertNotNull("exists", memo);
         //jmri.util.JUnitAppender.assertWarnMessage("Command Station disconnected, or powered down");
     }
-    
+
     @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach
