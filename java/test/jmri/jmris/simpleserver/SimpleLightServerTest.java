@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Paul Bender Copyright (C) 2012,2016
  */
 public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBase {
-        
+
     private StringBuilder sb = null;
     private java.io.DataOutputStream output = null;
 
@@ -123,6 +123,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();

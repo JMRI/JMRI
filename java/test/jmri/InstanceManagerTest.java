@@ -428,6 +428,7 @@ public class InstanceManagerTest {
         JUnitUtil.setUp();
         OkToDispose.startUp();
         InstanceManager.getDefault().clearAll();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach
