@@ -31,8 +31,9 @@ public class DeviceServerTest {
     public void setUp() {
         JUnitUtil.setUp();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
+        JUnitUtil.initTimeProviderManager();
     }
-    
+
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
