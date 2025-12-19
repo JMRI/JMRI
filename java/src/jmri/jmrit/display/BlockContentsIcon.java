@@ -161,8 +161,15 @@ public class BlockContentsIcon extends MemoryIcon {
             }
             return true;
         } // end of selectable
-        final jmri.jmrit.dispatcher.DispatcherFrame df =
-                jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
+        // This is a little different
+        // jmri.jmrit.dispatcher.DispatcherFrame.class is AutoCreate so getNullableDefault creates it 
+        // if it doesnt exist. So we look at the count of instances.
+        final jmri.jmrit.dispatcher.DispatcherFrame df;
+        if (jmri.InstanceManager.getList(jmri.jmrit.dispatcher.DispatcherFrame.class).size() == 0) {
+            df = null;
+        } else {
+            df = jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
+        }
         final jmri.jmrit.dispatcher.ActiveTrain at;
         if (df != null) {
             if (re != null) {
@@ -220,6 +227,9 @@ public class BlockContentsIcon extends MemoryIcon {
                     }
                 });
             }
+            if (isEditable()) {
+                popup.add(new JSeparator());
+            }
             return true;
         } else if (re != null) {
             // No active train, but have a roster, therefore a throttle can be created
@@ -245,6 +255,9 @@ public class BlockContentsIcon extends MemoryIcon {
                     }
 
                 });
+            }
+            if (isEditable()) {
+                popup.add(new JSeparator());
             }
             return true;
         }
