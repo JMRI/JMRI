@@ -29,6 +29,7 @@ public class InternalDateTime extends AbstractTimeProvider
     private int _lastMin;
     private long _startTimeMillisec;
     private final Object _lock = new Object();
+    private boolean _isTimerTaskStarted;
 
 
     private TimerTask getTimerTask() {
@@ -86,10 +87,6 @@ public class InternalDateTime extends AbstractTimeProvider
     }
 
     public InternalDateTime init() {
-        _time = LocalDateTime.now();
-        resetLast();
-        _startTimeMillisec = System.currentTimeMillis();
-        TimerUtil.schedule(_timerTask, System.currentTimeMillis() % _100_MILLISECONDS, _100_MILLISECONDS);
         return this;
     }
 
@@ -161,6 +158,13 @@ public class InternalDateTime extends AbstractTimeProvider
     @Override
     public void start() throws UnsupportedOperationException {
         synchronized(_lock) {
+            if (!_isTimerTaskStarted && !_isLockedFromRunning) {
+                _time = LocalDateTime.now();
+                resetLast();
+                _startTimeMillisec = System.currentTimeMillis();
+                TimerUtil.schedule(_timerTask, _100_MILLISECONDS, _100_MILLISECONDS);
+               _isTimerTaskStarted = true;
+            }
             _isRunning = true;
         }
     }
