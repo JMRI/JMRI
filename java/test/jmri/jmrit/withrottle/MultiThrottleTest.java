@@ -22,7 +22,7 @@ import org.junit.jupiter.api.*;
  */
 public class MultiThrottleTest {
 
-    private ControllerInterfaceScaffold cis = null; 
+    private ControllerInterfaceScaffold cis = null;
     private ThrottleControllerListenerScaffold tcls = null;
     private MultiThrottle throttle = null;
 
@@ -33,7 +33,7 @@ public class MultiThrottleTest {
 
     @Test
     public void testSetShortAddress(){
-       // tests setting the address from the input.  
+       // tests setting the address from the input.
        // Does not include the prefix.
        throttle.handleMessage("+S1<;>S1");
        assertEquals( "MAAS1<;>s1",cis.getLastPacket(), "outgoing message after throttle request");
@@ -42,7 +42,7 @@ public class MultiThrottleTest {
 
     @Test
     public void testSetLongAddress(){
-       // tests setting the address from the input.  
+       // tests setting the address from the input.
        // Does not include the prefix.
        throttle.handleMessage("+L1234<;>L1234");
        assertEquals( "MAAL1234<;>s1",cis.getLastPacket(), "outgoing message after throttle request");
@@ -157,7 +157,7 @@ public class MultiThrottleTest {
        throttle.handleMessage("AL1234<;>Q");
        assertEquals( "MA-L1234<;>",cis.getLastPacket(), "outgoing message after quit");
     }
-    
+
     @Test
     public void testIsValidAddress() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Method m = throttle.getClass().getDeclaredMethod("isValidAddr", String.class);
@@ -184,6 +184,7 @@ public class MultiThrottleTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initRosterConfigManager();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
         InstanceManager.setDefault(WiThrottlePreferences.class, new WiThrottlePreferences());
@@ -192,7 +193,7 @@ public class MultiThrottleTest {
         tcls = new ThrottleControllerListenerScaffold();
         throttle = new MultiThrottle('A',tcls,cis);
     }
-    
+
     @AfterEach
     public void tearDown() {
         cis = null;
