@@ -102,8 +102,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
                 <li><a href="#PrintOptions">Manifest Print Options</a>
                   <ul>
+                    <li><a href="#PrintFont">Manifest Printer Font</a></li>
+                    <li><a href="#PrintFormat">Format</a></li>
                     <li><a href="#PrintOrientation">Orientation and Paper Size</a></li>
                     <li><a href="#PrintSides">Print on One or Two Sides</a></li>
+                    <li><a href="#PrintColor">Text Color</a></li>
                     <li><a href="#ManifestComments">Manifests and Switch List Options</a></li>
                     <li><a href="#AddLogo">Add Logo</a></li>
                     <li><a href="#MisplacedCarsComment">Misplaced Cars Comment</a></li>
@@ -1822,12 +1825,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         <img src="images/PrintOptions.png" alt="">
       </p>
 
-      <h3>Manifest Printer Font</h3>
+      <h3 id="PrintFont">Manifest Printer Font</h3>
       OperationsPro&trade; supports several types of fonts for printing. Select the desired font and
       size using the pull down menus. You can also select which printer to use when printing out a
       Manifest or switch list. See <a href="#SwitchList">Switch Lists</a> for more details.
 
-      <h3>Format</h3>
+      <h3 id="PrintFormat">Format</h3>
       If you would like your Manifest and switch lists printed in a tabular (columns) format select
       the "Tabular" checkbox. The program uses the longest character length for each of the
       attribute's names (Road, Number, Type, Load, Hazardous, Color, Kernel, Owner, Division, Track,
@@ -1874,7 +1877,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       sides of your paper. Short edge means the pages are bound along the short edge of the page.
       Long edge means the pages are bound along the long edge of the page.
 
-      <h3>Pick Up Locomotive Text Color</h3>
+      <h3 id="PrintColor">Pick Up Locomotive Text Color</h3>
       You can select the text color of your Manifest when the operation is to pick up a locomotive.
       Select the desired color from the drop down box.
 
@@ -2055,14 +2058,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3 id="ManifestPrintOptionsTools">Manifest Print Options Tools</h3>
       The menu bar of the "Manifest Print Options" provides additional features that can be found
       under "Tools". The first "More Print Options" allows you to adjust the length of the tab
-      character when using the "Tabular" feature. The next three options "Edit Manifest Header
+      characters when using the
+      <a href="#PrintFormat">Tabular</a> feature. The next three options "Edit Manifest Header
       Text", "Edit Manifest Text" and "Edit Switch List Text" allows you to modify all of the text
       found in a Manifest or switch list. Each text line used by the program is shown along with a
       text box with the same message. Edit the text box to change the default message to your liking
       and press "Save" to complete your change. You can always return the text to the original
       settings by pressing the "Reset" button followed by "Save".
-      
-       <p>
+
+      <p>
         <img src="images/EditManifestText.png" alt="">
       </p>
       
@@ -2090,12 +2094,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         to a file. The radio buttons control how much of that data is actually printed. The
         "Minimal" radio button provides the least amount of information and "Very Detailed" provides
         the most. If you're only interested why a train won't build, the "Minimal" setting might
-        provide you with this information. The "Normal" setting shows the train's route and
-        requirements, along with the choices the program makes for setting out locomotives and cars.
-        The "Detailed" provides additional comments about the build and shows which cars were added
-        to the train. The "Very Detailed" setting produces the most pages, and will show why cars
-        are excluded from the train, and why they are not picked up or set out. Be sure and press
-        "Save" after changing the build report selection.
+        provide you with this information, but most likely not! The "Normal" setting shows the
+        train's route and requirements, along with the choices the program makes for setting out
+        locomotives and cars. The "Detailed" provides additional comments about the build and shows
+        which cars were added to the train. The "Very Detailed" setting produces the most pages, and
+        will show why cars are excluded from the train, and why they are not picked up or set out.
+        Be sure and press "Save" after changing the build report selection.
       </p>
 
       <p>
