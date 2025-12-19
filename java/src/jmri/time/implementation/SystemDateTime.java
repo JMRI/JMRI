@@ -58,7 +58,7 @@ public class SystemDateTime extends AbstractTimeProvider implements DateProvider
         _lastDateTime = LocalDateTime.now();
         _lastSec = _lastDateTime.getSecond();
         _lastMin = _lastDateTime.getMinute();
-        TimerUtil.schedule(_timerTask, System.currentTimeMillis() % _100_MILLISECONDS, _100_MILLISECONDS);
+        TimerUtil.schedule(_timerTask, _100_MILLISECONDS, _100_MILLISECONDS);
         return this;
     }
 
