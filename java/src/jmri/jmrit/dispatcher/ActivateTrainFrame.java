@@ -697,7 +697,7 @@ public class ActivateTrainFrame extends JmriJFrame {
 
      // Safe access to current layout scale ratio (prototype/model length ratio)
      private float getScaleRatioSafe() {
-         return (_dispatcher != null && _dispatcher.getScale() != null)
+         return (_dispatcher.getScale() != null)
                  ? (float) _dispatcher.getScale().getScaleRatio()
                  : 1.0f; // CI-safe default
      }
@@ -795,7 +795,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                  : MaxSpeedCapMode.THROTTLE;
     
          // Scale speed = actual speed × scale ratio (time same in model/prototype)
-        float scaleRatio = (_dispatcher != null && _dispatcher.getScale() != null)
+        float scaleRatio = (_dispatcher.getScale() != null)
             ? (float) _dispatcher.getScale().getScaleRatio()
             : 1.0f; // CI-safe default
     
@@ -1417,7 +1417,7 @@ public class ActivateTrainFrame extends JmriJFrame {
        * Convert a displayed value in the chosen units back to underlying mm (actual).
        */
       private float convertStopDisplayToMm(StopDistanceUnits units, float value) {
-          final float scaleRatio = (_dispatcher != null && _dispatcher.getScale() != null) ? (float) _dispatcher.getScale().getScaleRatio() : 1.0f;
+          final float scaleRatio = (_dispatcher.getScale() != null) ? (float) _dispatcher.getScale().getScaleRatio() : 1.0f;
           switch (units) {
               case ACTUAL_MM:
                   return value;
@@ -2717,7 +2717,7 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     private float maxTrainLengthToScaleMeters(TrainLengthUnits fromUnits, float fromValue) {
         float value;
-        final float scaleRatio = (_dispatcher != null && _dispatcher.getScale() != null)
+        final float scaleRatio = (_dispatcher.getScale() != null)
                 ? (float) _dispatcher.getScale().getScaleRatio()
                 : 1.0f;
         // convert to meters.
@@ -2770,7 +2770,7 @@ public class ActivateTrainFrame extends JmriJFrame {
      * Calculates the reciprocal unit. Actual to Scale and vice versa
      */
     private float maxTrainLengthCalculateAlt(TrainLengthUnits fromUnits, float fromValue) {
-        final float scaleRatio = (_dispatcher != null && _dispatcher.getScale() != null)
+        final float scaleRatio = (_dispatcher.getScale() != null)
                 ? (float) _dispatcher.getScale().getScaleRatio()
                 : 1.0f;
         switch (fromUnits) {
@@ -2781,13 +2781,13 @@ public class ActivateTrainFrame extends JmriJFrame {
                 // calc scale meter
                 return fromValue / 100 * scaleRatio;
             case TRAINLENGTH_SCALEFEET: { // calc actual inches
-                final float scaleFactor = (_dispatcher != null && _dispatcher.getScale() != null)
+                final float scaleFactor = (_dispatcher.getScale() != null)
                         ? (float) _dispatcher.getScale().getScaleFactor()
                         : 1.0f;
                 return fromValue * 12.0f * scaleFactor;
             }
             case TRAINLENGTH_SCALEMETERS: { // calc actual cm.
-                final float scaleFactor = (_dispatcher != null && _dispatcher.getScale() != null)
+                final float scaleFactor = (_dispatcher.getScale() != null)
                         ? (float) _dispatcher.getScale().getScaleFactor()
                         : 1.0f;
                 return fromValue * 100.0f * scaleFactor;
@@ -2862,14 +2862,14 @@ public class ActivateTrainFrame extends JmriJFrame {
                     maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters());
                     break;
                 case TRAINLENGTH_ACTUALINCHS: {
-                    float sf = (_dispatcher != null && _dispatcher.getScale() != null)
+                    float sf = (_dispatcher.getScale() != null)
                         ? (float)_dispatcher.getScale().getScaleFactor()
                         : 1.0f; // CI-safe default
                     maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleFeet() * 12.0f * sf);
                     break;
                 }
                 case TRAINLENGTH_ACTUALCM: {
-                    float sf = (_dispatcher != null && _dispatcher.getScale() != null)
+                    float sf = (_dispatcher.getScale() != null)
                         ? (float)_dispatcher.getScale().getScaleFactor()
                         : 1.0f; // CI-safe default
                     maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters() * 100.0f * sf);
