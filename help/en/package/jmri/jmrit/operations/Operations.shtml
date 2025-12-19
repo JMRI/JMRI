@@ -1860,8 +1860,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         "Tab" options at the end of the <a href="#MessageFormats">Message Format</a> drop down
         menus. Use these three tabs to space out the Manifest or switch list to your liking. You can
         change the length of the tab characters if you wish, see <a
-          href="#ManifestPrintOptionsTools">Tools</a>. Go to <a href="#PrintingManifests">Printing
-          Manifests</a> to see examples of Manifests and switch lists using the described options.
+          href="#ManifestPrintOptionsTools">Manifest Print Options Tools</a>. Go to <a
+          href="#PrintingManifests">Printing Manifests</a> to see examples of Manifests and switch
+        lists using the described options.
       </p>
 
       <h3 id="PrintOrientation">Orientation and Paper Size</h3>
@@ -2059,7 +2060,19 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       The menu bar of the "Manifest Print Options" provides additional features that can be found
       under "Tools". The first "More Print Options" allows you to adjust the length of the tab
       characters when using the
-      <a href="#PrintFormat">Tabular</a> feature. The next three options "Edit Manifest Header
+      <a href="#PrintFormat">Tabular</a> feature.
+
+      <p>
+        <img src="images/MorePrintOptions.png" alt="">
+      </p>
+
+      The tabs can be found at the bottom of the drop down menus.
+
+      <p>
+        <img src="images/ManifestPrintOptionsTab.png" alt="">
+      </p>
+
+      The next three options "Edit Manifest Header
       Text", "Edit Manifest Text" and "Edit Switch List Text" allows you to modify all of the text
       found in a Manifest or switch list. Each text line used by the program is shown along with a
       text box with the same message. Edit the text box to change the default message to your liking
@@ -2186,7 +2199,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <h3 id="AddLocation">Add or Edit Location</h3>
-      To add a location, press the "Add" button located at the bottom of the "Locations" window. A
+      To add a location, press the "Add Location" button located at the bottom of the "Locations" window. A
       new window should appear. To edit an existing location, press the "Edit" button for the
       location.
 
