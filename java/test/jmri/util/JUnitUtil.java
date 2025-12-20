@@ -385,6 +385,8 @@ public class JUnitUtil {
      */
     public static void tearDown() {
 
+        disposeTimeProviderManager();
+
         // Stop all LogixNG threads
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
 
@@ -794,6 +796,13 @@ public class JUnitUtil {
                 new ProxyTimeProviderManager.HasTimeProviderManager(){});
         // Ensure we have the time provider manager
         InstanceManager.getDefault(jmri.time.TimeProviderManager.class).getCurrentTimeProvider();
+    }
+
+    public static void disposeTimeProviderManager() {
+        var list = InstanceManager.getList(jmri.time.TimeProviderManager.class);
+        if (!list.isEmpty()) {
+            list.getFirst().dispose();
+        }
     }
 
     public static void initInternalTurnoutManager() {

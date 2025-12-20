@@ -46,4 +46,12 @@ public abstract class AbstractTimeProviderManager extends AbstractManager<TimePr
                 .getMainTimeProviderHandler().getCurrentTimeProvider();
     }
 
+    @Override
+    public void dispose() {
+        for (var tp : getNamedBeanSet()) {
+            tp.dispose();
+        }
+        super.dispose();
+    }
+
 }
