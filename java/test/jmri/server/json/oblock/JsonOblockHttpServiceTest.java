@@ -226,10 +226,10 @@ public class JsonOblockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
 
     /**
      * Test of doGetList method, of class JsonOblockHttpService.
-     * @throws Exception rethrows any exceptions from instance.doGetList()
+     * @throws JsonException rethrows any JsonExceptions from instance.doGetList()
      */
     @Test
-    public void testDoGetList() throws Exception {
+    public void testDoGetList() throws JsonException {
         InstanceManager.getDefault(OBlockManager.class).createNewOBlock("OB9", null);
         JsonOblockHttpService instance = new JsonOblockHttpService(mapper);
         JsonNode result = instance.doGetList(JsonOblock.OBLOCK, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
