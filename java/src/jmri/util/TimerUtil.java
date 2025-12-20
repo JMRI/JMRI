@@ -49,7 +49,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(task, time);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -78,7 +78,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(task, firstTime, period);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -103,7 +103,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(task, delay);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -132,7 +132,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(task, delay, period);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -161,7 +161,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(task, firstTime, period);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -190,7 +190,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(task, delay, period);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -229,7 +229,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(gtask(task), time);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -258,7 +258,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(gtask(task), firstTime, period);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -284,7 +284,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(gtask(task), delay);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -313,7 +313,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(gtask(task), delay, period);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -342,7 +342,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(gtask(task), firstTime, period);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -371,7 +371,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(gtask(task), delay, period);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -408,7 +408,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(ltask(task), time);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -437,7 +437,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(ltask(task), firstTime, period);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -463,7 +463,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(ltask(task), delay);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -492,7 +492,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(ltask(task), delay, period);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -522,7 +522,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(ltask(task), firstTime, period);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
@@ -551,7 +551,7 @@ public final class TimerUtil {
             try {
                 commonTimer.schedule(ltask(task), delay, period);
             } catch (IllegalStateException e) {
-                if ("Timer already cancelled.".equals(e.getMessage())) {
+                if (false && "Timer already cancelled.".equals(e.getMessage())) {
                     try {
                         log.info("Create new timer");
                         commonTimer = new Timer("JMRI Common Timer", true);
