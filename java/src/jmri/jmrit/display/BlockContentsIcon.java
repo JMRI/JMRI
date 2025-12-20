@@ -165,7 +165,7 @@ public class BlockContentsIcon extends MemoryIcon {
         // jmri.jmrit.dispatcher.DispatcherFrame.class is AutoCreate so getNullableDefault creates it 
         // if it doesnt exist. So we look at the count of instances.
         final jmri.jmrit.dispatcher.DispatcherFrame df;
-        if (jmri.InstanceManager.getList(jmri.jmrit.dispatcher.DispatcherFrame.class).size() == 0) {
+        if (jmri.InstanceManager.getList(jmri.jmrit.dispatcher.DispatcherFrame.class).isEmpty()) {
             df = null;
         } else {
             df = jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
