@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  *
@@ -240,7 +241,7 @@ public class JsonClientHandlerTest {
     }
 
     @Test
-    public void testOnMessage_JsonNode_Method_get_exception() throws Exception {
+    public void testOnMessage_JsonNode_Method_get_exception() throws IOException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonClientHandler instance = new TestJsonClientHandler(connection);
         JsonNode node = connection.getObjectMapper()
@@ -255,7 +256,7 @@ public class JsonClientHandlerTest {
     }
 
     @Test
-    public void testOnMessage_JsonNode_Method_Goodbye() throws Exception {
+    public void testOnMessage_JsonNode_Method_Goodbye() throws IOException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonClientHandler instance = new TestJsonClientHandler(connection);
         JsonNode node = connection.getObjectMapper().readTree("{\"type\":\"goodbye\"}");
@@ -275,16 +276,16 @@ public class JsonClientHandlerTest {
      * node. The {@code get} and {@code list} methods are not required to have a
      * data node by the JsonClientHandler.
      *
-     * @throws Exception if an unexpected exception occurs
+     * @throws IOException if an unexpected IOException occurs
      */
     @Test
-    public void testOnMessage_JsonNode_missing_data() throws Exception {
+    public void testOnMessage_JsonNode_missing_data() throws IOException {
         testOnMessage_JsonNode_missing_data("{\"type\":\"test\",\"method\":\"post\"}");
         testOnMessage_JsonNode_missing_data("{\"type\":\"test\",\"method\":\"put\"}");
         testOnMessage_JsonNode_missing_data("{\"type\":\"test\",\"method\":\"delete\"}");
     }
 
-    private void testOnMessage_JsonNode_missing_data(String message) throws Exception {
+    private void testOnMessage_JsonNode_missing_data(String message) throws IOException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonClientHandler instance = new TestJsonClientHandler(connection);
         JsonNode node = connection.getObjectMapper().readTree(message);
@@ -320,7 +321,10 @@ public class JsonClientHandlerTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         connection.setVersion("v4"); // not valid
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-            () -> new TestJsonClientHandler(connection).getServices());
+            () -> { 
+                var result = new TestJsonClientHandler(connection).getServices();
+                fail("should not get to here, created " + result);
+            });
         assertNotNull(ex);
         JUnitAppender.assertErrorMessage("Unable to create handler for version v4");
     }

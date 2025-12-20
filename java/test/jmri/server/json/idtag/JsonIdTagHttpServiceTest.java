@@ -191,10 +191,10 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
 
     /**
      * Test of doGetList method, of class JsonIdTagHttpService.
-     * @throws java.lang.Exception rethrows any exceptions from instance.doGetList()
+     * @throws JsonException rethrows any JsonException exceptions from instance.doGetList()
      */
     @Test
-    public void testDoGetList() throws Exception {
+    public void testDoGetList() throws JsonException {
         InstanceManager.getDefault(IdTagManager.class).provide("test");
         JsonIdTagHttpService instance = new JsonIdTagHttpService(mapper);
         JsonNode result = instance.doGetList(JsonIdTag.IDTAG, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
