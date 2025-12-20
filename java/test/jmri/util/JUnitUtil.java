@@ -801,7 +801,7 @@ public class JUnitUtil {
     public static void disposeTimeProviderManager() {
         var list = InstanceManager.getList(jmri.time.TimeProviderManager.class);
         if (!list.isEmpty()) {
-            list.getFirst().dispose();
+            list.get(0).dispose();
         }
     }
 
