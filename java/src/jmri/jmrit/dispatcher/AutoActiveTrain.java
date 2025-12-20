@@ -727,12 +727,25 @@ public class AutoActiveTrain implements ThrottleListener {
                     boolean toMin = _distanceStopPendingToMin;
                     _distanceStopPending = false;
                     _distanceStopPendingToMin = false;
-                    _stoppingUsingSpeedProfile = true;         // commit to distance-based braking
-                    cancelStopInCurrentSection();              // cancel any other stop mode/ramping
-                    Runnable controller = new DistanceStopController(mm, taskPending, toMin);
-                    Thread t = jmri.util.ThreadingUtil.newThread(controller, "DistanceStopPlanner " + getActiveTrain().getActiveTrainName());
-                    t.start();
 
+                    _stoppingUsingSpeedProfile = true; // commit to distance-based braking
+                    if (toMin) {
+                        // COMBINED (approach-to-min + sensor):
+                        re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed,
+                                _maxSpeedScaleKmh, (float) _dispatcher.getScale().getScaleRatio(),
+                                _autoEngineer.getIsForward());
+                        re.getSpeedProfile().planApproachToMinOverDistanceThenStopBySensor(
+                                getThrottle(), mm, _stopSensor, _speedFactor);
+                        return; // bypass legacy inner controller
+                    }
+                    // PURE distance stop-to-zero: cancel and plan via RosterSpeedProfile (same semantics)
+                    cancelStopInCurrentSection();
+                    re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed, _maxSpeedScaleKmh,
+                            (float) _dispatcher.getScale().getScaleRatio(), _autoEngineer.getIsForward());
+                    re.getSpeedProfile().planStopToZeroOverDistance(getThrottle(), mm, _speedFactor);
+                    Thread tWait = jmri.util.ThreadingUtil.newThread(new WaitForTrainToStop(taskPending),
+                            "Wait for stop " + getActiveTrain().getActiveTrainName());
+                    tWait.start();
                 }
             }
             if (b == _nextBlock || _nextBlock == null) {
@@ -1595,44 +1608,6 @@ public class AutoActiveTrain implements ThrottleListener {
         return pct;
     }
 
-    /**
-     * Convert a throttle percentage [0..1] to speed (mm/s) using the roster profile.
-     * We interrogate the profile via getDistanceTravelled(forward, speedStep, duration) to obtain mm/s.
-     */
-    private float speedMmsFromThrottle(float throttlePct, boolean forward) {
-        if (re == null || re.getSpeedProfile() == null) return 0.0f;
-        float pct = clampThrottle(throttlePct);                // ensure 0..1
-        return re.getSpeedProfile().getSpeed(pct, forward);    // mm/s
-    }
-
-    /**
-     * Invert the roster profile: find the throttle [% 0..1] that yields the requested speed (mm/s).
-     * Uses a binary search over [minReliable..max] throttle.
-     */
-    private float throttleForSpeedMms(float targetMms, boolean forward) {
-        // Bracket: min reliable ↔ max speed (percent throttle)
-        float loPct = clampThrottle(_minReliableOperatingSpeed);
-        float hiPct = clampThrottle(_maxSpeed);
-        float loMms = speedMmsFromThrottle(loPct, forward);
-        float hiMms = speedMmsFromThrottle(hiPct, forward);
-
-        if (targetMms <= loMms) return loPct;
-        if (targetMms >= hiMms) return hiPct;
-
-        // Binary search to ~0.1% throttle precision
-        float midPct = 0.0f;
-        for (int i = 0; i < 16; i++) {
-            midPct = 0.5f * (loPct + hiPct);
-            float midMms = speedMmsFromThrottle(midPct, forward);
-            if (midMms < targetMms) {
-                loPct = midPct;
-            } else {
-                hiPct = midPct;
-            }
-        }
-        return clampThrottle(midPct);
-    }
-
     private synchronized void stopInCurrentSection(int task) {
         if (_currentAllocatedSection == null) {
             log.error("{}: Current allocated section null on entry to stopInCurrentSection", _activeTrain.getTrainName());
@@ -1715,17 +1690,23 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                     if (remainingMm <= 0.0f) {
                         // Already at/inside the target – assert crawl and fall through to sensor wait
-                        float vMin = speedMmsFromThrottle(_minReliableOperatingSpeed, _autoEngineer.getIsForward());
-                        float thrMin = throttleForSpeedMms(vMin, _autoEngineer.getIsForward());
+                        float vMin =
+                                re.getSpeedProfile().getSpeed(_minReliableOperatingSpeed, _autoEngineer.getIsForward());
+                        float thrMin = re.getSpeedProfile().getThrottleSetting(vMin, _autoEngineer.getIsForward());
                         _autoEngineer.setSpeedImmediate(clampThrottle(thrMin));
                     } else {
-                        // Plan a decel to min (NOT to zero), and do not finish with stop here
-                        _stoppingUsingSpeedProfile = true;        // suppress setSpeedBySignal until done
-                        cancelStopInCurrentSection();              // cancel any other ramping/stop modes
-                        Runnable controller = new DistanceStopController(remainingMm, task, /*toMinOnly*/ true);
-                        Thread t = jmri.util.ThreadingUtil.newThread(controller,
-                                "DistanceStopPlanner " + getActiveTrain().getActiveTrainName());
-                        t.start();
+                        // Cancel first; then mark that we are in a distance-based stop (suppresses setSpeedBySignal correctly)
+                        cancelStopInCurrentSection();
+                        _stoppingUsingSpeedProfile = true; // suppress setSpeedBySignal until done
+                        re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed,
+                                _maxSpeedScaleKmh, (float) _dispatcher.getScale().getScaleRatio(),
+                                _autoEngineer.getIsForward());
+                        // Combined mode: approach to MIN over 'remainingMm', then stop by the section stop sensor.
+                        // (Use correct API and throttle accessor; do NOT return here.)
+                        re.getSpeedProfile().planApproachToMinOverDistanceThenStopBySensor(
+                                getThrottle(), remainingMm, stopSensorCandidate, _speedFactor);
+
+                        // Do NOT start the legacy DistanceStopController in combined mode.
                     }
 
                     // Now arm the stop sensor, but do NOT pre-lower to a generic stopping speed
@@ -1738,6 +1719,12 @@ public class AutoActiveTrain implements ThrottleListener {
                         });
                         _stoppingBySensor = true;
                     }
+                    // Ensure stop tasks/termination run when the train actually stops.
+                    Runnable __waitForStop = new WaitForTrainToStop(task);
+                    Thread __tWait = jmri.util.ThreadingUtil.newThread(__waitForStop,
+                            "Wait for stop " + getActiveTrain().getActiveTrainName());
+                    __tWait.start();
+
                     return; // combined branch handled
                 }
 
@@ -1756,6 +1743,12 @@ public class AutoActiveTrain implements ThrottleListener {
                     });
                     _stoppingBySensor = true;
                 }
+                // Ensure stop tasks/termination run when the train actually stops.
+                Runnable __waitForStop = new WaitForTrainToStop(_distanceStopPendingTask);
+                Thread __tWait = jmri.util.ThreadingUtil.newThread(__waitForStop,
+                        "Wait for stop " + getActiveTrain().getActiveTrainName());
+                __tWait.start();
+
                 return; // wait for entry OCCUPIED to start the approach-to-min plan
             }
 
@@ -1778,12 +1771,16 @@ public class AutoActiveTrain implements ThrottleListener {
                 } else {
                     _stoppingUsingSpeedProfile = true;
                     cancelStopInCurrentSection();
-                    Runnable controller = new DistanceStopController(remainingMm, task /*, toMinOnly = false*/);
-                    Thread t = jmri.util.ThreadingUtil.newThread(controller,
-                            "DistanceStopPlanner " + getActiveTrain().getActiveTrainName());
-                    t.start();
+                    re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed, _maxSpeedScaleKmh,
+                            (float) _dispatcher.getScale().getScaleRatio(), _autoEngineer.getIsForward());
+                    // Delegate pure distance stop-to-zero to RosterSpeedProfile
+                    re.getSpeedProfile().planStopToZeroOverDistance(getThrottle(), remainingMm, _speedFactor);
+                    Thread tWait = jmri.util.ThreadingUtil.newThread(new WaitForTrainToStop(task),
+                            "Wait for stop " + getActiveTrain().getActiveTrainName());
+                    tWait.start();
                 }
                 return;
+
             }
 
             // Arm pending pure distance stop
@@ -2392,194 +2389,6 @@ public class AutoActiveTrain implements ThrottleListener {
         private int _task = 0;
     }
 
-
-
-    private class DistanceStopController implements Runnable {
-        private final float TargetDistanceMm;
-        private final int Task;
-        private final boolean ToMinOnly; // true = approach-to-min only (hold until sensor); false = stop-to-zero
-
-        DistanceStopController(float distanceMm, int task) {
-            this(distanceMm, task, false);
-        }
-        DistanceStopController(float distanceMm, int task, boolean toMinOnly) {
-            this.TargetDistanceMm = (distanceMm > 0.0f ? distanceMm : 0.0f);
-            this.Task = task;
-            this.ToMinOnly = toMinOnly;
-        }
-
-
-
-        @Override public void run() {
-            try {
-                final boolean forward = _autoEngineer.getIsForward();
-
-                // Seed current physics from ACTUAL throttle setting
-                float throttleNow = clampThrottle(getThrottle().getSpeedSetting());
-                float v0 = speedMmsFromThrottle(throttleNow, forward);
-
-                final float s = TargetDistanceMm;
-                if (s <= 0.0f) {
-                    if (ToMinOnly) {
-                        // Assert crawl, then let sensor listener do the final stop
-                        float vMin = speedMmsFromThrottle(_minReliableOperatingSpeed, forward);
-                        float thrMin = throttleForSpeedMms(vMin, forward);
-                        _autoEngineer.setSpeedImmediate(clampThrottle(thrMin));
-                        return;
-                    } else {
-                        _autoEngineer.setSpeedImmediate(0.0f);
-                        Thread tWait = jmri.util.ThreadingUtil.newThread(new WaitForTrainToStop(Task),
-                                "Wait for stop " + getActiveTrain().getActiveTrainName());
-                        tWait.start();
-                        return;
-                    }
-                }
-
-                // Overrun compensation only when stopping to ZERO (not for approach-to-min)
-                float overrunSec = 0.0f;
-                if (!ToMinOnly && re != null && re.getSpeedProfile() != null) {
-                    overrunSec = _autoEngineer.getIsForward()
-                            ? re.getSpeedProfile().getOverRunTimeForward()
-                                    : re.getSpeedProfile().getOverRunTimeReverse();
-                    if (overrunSec < 0.0f) {
-                        overrunSec = 0.0f;
-                    }
-                }
-
-                final long baseMs = Math.max(_dispatcher.getMinThrottleInterval(), 50);
-                final float dt = baseMs / 1000.0f;
-
-                final float vMin = speedMmsFromThrottle(_minReliableOperatingSpeed, forward);
-                final float vMax = speedMmsFromThrottle(_maxSpeed, forward);
-
-                float sAdjusted = ToMinOnly ? s : (s - (vMin * overrunSec));
-                if (sAdjusted < Math.max(0.0f, 0.5f * vMin)) {
-                    sAdjusted = Math.max(0.0f, 0.5f * vMin);
-                }
-
-                v0 = clamp(v0, vMin, vMax);
-
-                // If stopping to ZERO, decel all the way; else decel to vMin and hold
-                final float a = (v0 > 0.0f) ? -(v0 * v0) / (2.0f * sAdjusted) : 0.0f;
-
-                java.util.LinkedList<Float> throttleSteps = new java.util.LinkedList<>();
-                java.util.LinkedList<Integer> durationSteps = new java.util.LinkedList<>();
-
-                float travelled = 0.0f;
-                float v = v0;
-
-                final int tailMs = Math.max(20, (int) Math.floor(_dispatcher.getMinThrottleInterval() / 2.0));
-                final float tailDt = tailMs / 1000.0f;
-
-                while (travelled < sAdjusted) {
-                    float remaining = sAdjusted - travelled;
-
-                    if (ToMinOnly && vMin > 0.0f && remaining <= vMin * tailDt) {
-                        // Short, precise final slice to land exactly at vMin
-                        float dtTail = remaining / vMin;
-                        float latencySecTail = Math.min(dtTail * 0.5f, Math.max(0.0f, (baseMs / 2000.0f)));
-                        dtTail = Math.max(0.001f, dtTail - latencySecTail);
-                        int lastMs = Math.max(1, Math.round(dtTail * 1000.0f));
-                        float thrApplied = throttleForSpeedMms(vMin, forward);
-                        throttleSteps.add(clampThrottle(thrApplied));
-                        durationSteps.add(lastMs);
-                        break;
-                    }
-
-                    float dtSec = dt;
-
-                    if (!ToMinOnly && a != 0.0f && v > 0.0f) {
-                        // No special split here; normal constant decel to zero case falls through
-                    } else if (a != 0.0f && v > vMin) {
-                        // Approach-to-min: split the step to hit vMin precisely
-                        float tToMin = (v - vMin) / Math.abs(a);
-                        if (tToMin > 0.0f && tToMin < dtSec) {
-                            dtSec = tToMin;
-                        }
-                    }
-
-                    float vNext = v + a * dtSec;
-                    float vStepStart = ToMinOnly ? Math.max(v, vMin) : v;
-                    float vStepEnd   = ToMinOnly ? Math.max(vNext, vMin) : Math.max(vNext, 0.0f);
-                    float vMid = 0.5f * (vStepStart + vStepEnd);
-
-                    float deltaS;
-                    if (!ToMinOnly) {
-                        deltaS = v * dtSec + 0.5f * a * dtSec * dtSec;
-                        v = Math.max(0.0f, vNext);
-                    } else if (a != 0.0f && v > vMin && vNext >= vMin) {
-                        deltaS = v * dtSec + 0.5f * a * dtSec * dtSec;
-                        v = vNext;
-                    } else {
-                        deltaS = vMin * dtSec;
-                        v = vMin;
-                    }
-
-                    if (deltaS > remaining && vMid > 0.0f) {
-                        float dtFinal = remaining / vMid;
-                        float latencySec = Math.min(dtFinal * 0.5f, Math.max(0.0f, (baseMs / 2000.0f)));
-                        dtFinal = Math.max(0.001f, dtFinal - latencySec);
-                        int msFinal = Math.max(1, Math.round(dtFinal * 1000.0f));
-                        float thrApplied = throttleForSpeedMms(vMid, forward);
-                        throttleSteps.add(clampThrottle(thrApplied));
-                        durationSteps.add(msFinal);
-                        break;
-                    }
-
-                    int ms = Math.max(1, Math.round(dtSec * 1000.0f));
-                    float thrApplied = (vMid <= 0.0f) ? 0.0f : throttleForSpeedMms(vMid, forward);
-                    // Pre-divide for SpeedFactor so final effective throttle is what we computed
-                    float thrCmd = (_speedFactor > 0.0f) ? (thrApplied / _speedFactor) : thrApplied;
-                    float cmdMin = (_speedFactor > 0.0f) ? (_minReliableOperatingSpeed / _speedFactor) : _minReliableOperatingSpeed;
-                    float cmdMax = (_speedFactor > 0.0f) ? (_maxSpeed / _speedFactor) : _maxSpeed;
-                    thrCmd = clampThrottle(clamp(thrCmd, cmdMin, cmdMax));
-                    throttleSteps.add(thrCmd);
-                    durationSteps.add(ms);
-                    travelled += deltaS;
-
-                    if (!ToMinOnly && v <= 0.0f && travelled < s) {
-                        break;
-                    }
-                }
-
-                // Append a final zero step ONLY for stop-to-zero mode
-                if (!ToMinOnly) {
-                    throttleSteps.add(0.0f);
-                    durationSteps.add((int) baseMs);
-                }
-
-                // Execute the plan
-                int n = throttleSteps.size();
-                float[] thrArr = new float[n];
-                int[] durArr = new int[n];
-                for (int i = 0; i < n; i++) {
-                    thrArr[i] = throttleSteps.get(i);
-                    durArr[i] = Math.max(1, durationSteps.get(i));
-                }
-
-                log.debug("[{}] PHYS schedule: steps={}, firstThr={}, lastThr={}, baseMs={}",
-                        AutoActiveTrain.this._activeTrain.getTrainName(),
-                        n, thrArr[0], thrArr[n-1], baseMs);
-
-                _autoEngineer.runPlannedSpeedSchedule(thrArr, durArr);
-
-                // If we planned a stop-to-zero, wait-for-stop and then finish tasks;
-                // for approach-to-min we just return (sensor listener will stop us)
-                if (!ToMinOnly) {
-                    Thread tWait = jmri.util.ThreadingUtil.newThread(new WaitForTrainToStop(Task),
-                            "Wait for stop " + getActiveTrain().getActiveTrainName());
-                    tWait.start();
-                }
-            } catch (RuntimeException ex) {
-                log.warn("{}: DistanceStopController failed; issuing emergency stop",
-                        _activeTrain.getTrainName(), ex);
-                _autoEngineer.setSpeedImmediate(0.0f);
-            }
-            // Do NOT clear _stoppingUsingSpeedProfile here; executeStopTasks() clears it after a full stop.
-        }
-    }
-
-
     /**
      * Pause the train in a separate thread. Train is stopped, then restarted
      * after specified number of fast Minutes have elapsed.
@@ -2717,14 +2526,30 @@ public class AutoActiveTrain implements ThrottleListener {
                     ramping, physicsRamp, profileAvailable, forward, speed);
 
             if (physicsRamp && profileAvailable) {
-                // Run the heavy physics planner off the EDT to avoid UI stalls
+                // Run physics planner off the EDT
                 Thread phys = jmri.util.ThreadingUtil.newThread(() -> {
-                    runPhysicsAccelerationPlanner(speed, forward);
+                    // Ensure min/max limits (including optional scale km/h cap) are in the profile
+                    re.getSpeedProfile().setMinMaxLimitsKmh(
+                        minReliableOperatingSpeed,
+                        maxSpeed,
+                        AutoActiveTrain.this._maxSpeedScaleKmh,
+                        (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(),
+                        forward
+                    );
+                    // Delegate the acceleration plan & execution to RosterSpeedProfile
+                    re.getSpeedProfile().runPhysicsAccelerationToTargetThrottle(
+                        throttle,
+                        speed,
+                        AutoActiveTrain.this._driverPowerPercent,
+                        AutoActiveTrain.this._additionalWeightTonnes,
+                        AutoActiveTrain.this._rollingResistanceCoeff,
+                        (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(),
+                        speedFactor
+                    );
                 }, "PhysicsRamp " + AutoActiveTrain.this._activeTrain.getTrainName());
-                phys.start();
+                           phys.start();
                 return;
             }
-
             // Fallback to existing behaviour
             targetSpeed = applyMaxThrottleAndFactor(speed);
             log.debug("setTargetSpeed: Set Speed[{}] adjusted to TargetSpeed[{}] ", speed, targetSpeed);
@@ -2770,8 +2595,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 float scaleRatio = (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio();
                 float modelKmh = kmh / ((scaleRatio <= 0.0f) ? 1.0f : scaleRatio);
                 float targetMms = modelKmh * 277.7778f; // 1 km/h = 277.7778 mm/s
-                // Invert the roster profile to get the required throttle [% 0..1]
-                float thrCapPct = throttleForSpeedMms(targetMms, forward);
+                // Invert the roster profile to get the required throttle [% 0..1] via RosterSpeedProfile
+                float thrCapPct = AutoActiveTrain.this.re.getSpeedProfile().getThrottleSetting(targetMms, forward);
                 // This cap applies to the FINAL applied throttle (after speedFactor),
                 // so clamp 'applied' directly to thrCapPct.
                 maxApplied = thrCapPct;
@@ -2817,7 +2642,9 @@ public class AutoActiveTrain implements ThrottleListener {
             stopAllTimers();
             if (rosterEntry != null) {
                 rosterEntry.getSpeedProfile().setExtraInitialDelay(1500f);
-                rosterEntry.getSpeedProfile().setMinMaxLimits(minReliableOperatingSpeed, maxSpeed);
+                rosterEntry.getSpeedProfile().setMinMaxLimitsKmh(minReliableOperatingSpeed, maxSpeed,
+                        AutoActiveTrain.this._maxSpeedScaleKmh,
+                        (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(), getIsForward());
                 rosterEntry.getSpeedProfile().changeLocoSpeed(_throttle, distance, speed);
                 speedProfileStoppingIsRunning = true;
                 targetSpeed = speed;
@@ -2958,303 +2785,6 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         /**
-         * Run a pre-computed throttle/time schedule using the existing stepQueue and rampingTimer.
-         * Speeds are throttle percentages [0..1], durations are milliseconds.
-         */
-        public synchronized void runPlannedSpeedSchedule(float[] throttles, int[] durationsMs) {
-            stopAllTimers();
-            stepQueue = new LinkedList<>();
-            int n = Math.min(throttles.length, durationsMs.length);
-            for (int i = 0; i < n; i++) {
-                float adj;
-                if (AutoActiveTrain.this._stoppingUsingSpeedProfile) {
-                    // During a distance-based stop, use the planner's throttle values directly (already clamped to 0..1).
-                    adj = clampThrottle(throttles[i]);
-                } else {
-                    adj = applyMaxThrottleAndFactor(throttles[i]); // normal path
-                }
-                int dur = Math.max(1, durationsMs[i]);
-                stepQueue.add(new SpeedSetting(adj, dur));
-            }
-            setNextStep();
-        }
-
-        // ------------------------------------------------------------------------------------
-        // Physics-based acceleration planner (with driver power % + no-stall fallback)
-        // ------------------------------------------------------------------------------------
-        private void runPhysicsAccelerationPlanner(float targetThrottlePct, boolean forward) {
-            // --- Read current speed via profile in MODEL units (mm/s -> m/s) ---
-            float throttleNow = clampThrottle(throttle.getSpeedSetting());
-            float v0_mms = AutoActiveTrain.this.speedMmsFromThrottle(throttleNow, forward); // model mm/s
-            float v0_model_ms = v0_mms / 1000.0f; // model m/s
-
-            // Target speed from requested throttle (MODEL units)
-            float vTarget_mms = AutoActiveTrain.this.speedMmsFromThrottle(targetThrottlePct, forward); // model mm/s
-            float vTarget_model_ms = vTarget_mms / 1000.0f; // model m/s
-
-            // Layout scale ratio; convert MODEL -> FULL-SCALE for physics math
-            float scaleRatio = (AutoActiveTrain.this._dispatcher != null)
-                    ? (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio()
-                            : 1.0f;
-            float v0_fs = v0_model_ms * scaleRatio;       // full-scale m/s
-            float vTarget_fs = vTarget_model_ms * scaleRatio;
-
-            // Max speed caps (full-scale km/h converted to m/s)
-            float kmhCapInfo = AutoActiveTrain.this.getMaxSpeedScaleKmh(); // 0.0f => disabled
-            float kmhCapRoster = (AutoActiveTrain.this.re != null) ? AutoActiveTrain.this.re.getPhysicsMaxSpeedKmh() : 0.0f;
-            float vCap_fs_info = (kmhCapInfo > 0.0f) ? (kmhCapInfo / 3.6f) : Float.POSITIVE_INFINITY;
-            float vCap_fs_roster = (kmhCapRoster > 0.0f) ? (kmhCapRoster / 3.6f) : Float.POSITIVE_INFINITY;
-            vTarget_fs = Math.min(vTarget_fs, Math.min(vCap_fs_info, vCap_fs_roster));
-
-            // Mechanical transmission & gear thresholds (full-scale m/s)
-            final boolean mech = (AutoActiveTrain.this.re != null) && AutoActiveTrain.this.re.isPhysicsMechanicalTransmission();
-            // 15 / 27 / 41 mph in full-scale m/s
-            final float[] gearFsMps = new float[] {15f * 0.44704f, 27f * 0.44704f, 41f * 0.44704f};
-            final boolean[] gearPauseDone = new boolean[gearFsMps.length];
-            // If we’re already above a threshold, mark it done so we don’t pause retroactively
-            for (int gi = 0; gi < gearFsMps.length; gi++) {
-                gearPauseDone[gi] = (v0_fs >= gearFsMps[gi]);
-            }
-
-            // Respect min reliable speed floor (MODEL -> FULL-SCALE)
-            float vMin_mms = AutoActiveTrain.this.speedMmsFromThrottle(minReliableOperatingSpeed, forward);
-            float vMin_model_ms = vMin_mms / 1000.0f;
-            float vMin_fs = vMin_model_ms * scaleRatio;
-
-            // Apply driver power/regulator percent during ACCELERATION only
-            boolean accelerating = targetThrottlePct > (throttleNow + 0.0005f);
-            float alphaUser = getDriverPowerPercent(); // 0..1 from TrainInfo/UI
-            float alpha = accelerating ? alphaUser : 1.0f; // do not limit when coasting/decelerating
-
-            // If target below floor, raise to floor
-            if (vTarget_fs < vMin_fs) {
-                vTarget_fs = vMin_fs;
-            }
-
-            // --- Physics parameters (FULL-SCALE SI) ---
-            float rosterKg = (AutoActiveTrain.this.re != null) ? AutoActiveTrain.this.re.getPhysicsWeightKg() : 0.0f;
-            float extraKg = AutoActiveTrain.this.getAdditionalTrainWeightMetricTonnes() * 1000.0f;
-            float massKg = Math.max(1.0f, rosterKg + extraKg); // avoid div-by-zero
-            final float g = 9.80665f;
-            final float c_rr = AutoActiveTrain.this.getRollingResistanceCoeff();
-            float P_W = (AutoActiveTrain.this.re != null) ? (AutoActiveTrain.this.re.getPhysicsPowerKw() * 1000.0f) : 0.0f;
-            float F_TE = (AutoActiveTrain.this.re != null) ? (AutoActiveTrain.this.re.getPhysicsTractiveEffortKn() * 1000.0f) : 0.0f;
-            RosterEntry.TractionType traction = (AutoActiveTrain.this.re != null)
-                    ? AutoActiveTrain.this.re.getPhysicsTractionType()
-                            : RosterEntry.TractionType.DIESEL_ELECTRIC;
-
-            // Mapping exponents (tunable): Steam slightly sub-linear for power; others linear
-            final float powerExpSteam = 0.85f; // P ~ alpha^0.85 (steam)
-            // final float teExpSteam   = 1.00f; // TE ~ alpha^1.0 (steam) -> just alpha
-            // final float powerExpDE   = 1.00f; // diesel/electric -> just alpha
-            // final float teExpDE      = 1.00f; // diesel/electric -> just alpha
-
-            // --- No-stall fallback at crawl speed (use integer loop to avoid FL_FLOATS_AS_LOOP_COUNTERS) ---
-            if (accelerating) {
-                final float F_rr_crawl = c_rr * massKg * g;
-                float vGuard = Math.max(0.01f, vMin_fs); // avoid div-by-zero
-
-                // Scale power/TE at the current alpha (avoid unnecessary Math.pow for exponent 1.0)
-                final boolean steam = (traction == RosterEntry.TractionType.STEAM);
-                float ap0 = steam ? (float) Math.pow(alpha, powerExpSteam) : alpha; // power scaling
-                float at0 = /* steam TE exponent is 1.0 */ alpha;                    // TE scaling
-
-                float Fp0 = (P_W > 0.0f) ? (P_W * ap0) / vGuard : 0.0f; // power-limited force at crawl
-                float Ft0 = F_TE * at0;                                  // tractive-effort-limited force
-                float Fd0 = (Fp0 > 0.0f) ? Math.min(Fp0, Ft0) : Ft0;
-
-                if (Fd0 <= F_rr_crawl) {
-                    // Find minimal alpha in (alpha..1] that yields positive drive at crawl, using integer index
-                    int startPct = Math.min(100, Math.max(0, Math.round(alpha * 100.0f) + 1));
-                    float alphaEff = alpha;
-                    for (int pct = startPct; pct <= 100; pct++) {
-                        float test = pct / 100.0f;
-                        float ap = steam ? (float) Math.pow(test, powerExpSteam) : test;
-                        float at = /* exponent 1.0 */ test;
-                        float Fp = (P_W > 0.0f) ? (P_W * ap) / vGuard : 0.0f;
-                        float Ft = F_TE * at;
-                        float Fd = (Fp > 0.0f) ? Math.min(Fp, Ft) : Ft;
-                        if (Fd > F_rr_crawl * 1.02f) { // small margin
-                            alphaEff = test;
-                            break;
-                        }
-                    }
-                    if (alphaEff > alpha) {
-                        log.debug("{}: DriverPowerPercent raised from {} to {} to avoid stall at low speed",
-                                _activeTrain.getTrainName(), alpha, alphaEff);
-                        alpha = alphaEff;
-                    }
-                }
-            }
-
-            // --- Scale available power/TE for the planner using final alpha (avoid pow(x,1)) ---
-            final boolean steam = (traction == RosterEntry.TractionType.STEAM);
-            float alphaPower = steam ? ((alpha <= 0.0f) ? 0.0f : (float) Math.pow(alpha, powerExpSteam)) : ((alpha <= 0.0f) ? 0.0f : alpha);
-            float alphaTE    = /* exponent 1.0 */ ((alpha <= 0.0f) ? 0.0f : alpha);
-
-            float P_W_avail  = P_W  * alphaPower;
-            float F_TE_avail = F_TE * alphaTE;
-
-            // --- Integration step: align physics dt to write interval ---
-            int baseMs = Math.max(AutoActiveTrain.this._dispatcher.getMinThrottleInterval(), 50);
-            float dt = baseMs / 1000.0f;
-
-            java.util.LinkedList<Float> thrSteps = new java.util.LinkedList<>();
-            java.util.LinkedList<Integer> durSteps = new java.util.LinkedList<>();
-
-            // Start at current speed or at floor, in FULL-SCALE
-            float v_fs = Math.max(v0_fs, vMin_fs);
-            int safety = 0;
-
-            while (v_fs < vTarget_fs && safety < 10000) {
-                float v_guard = Math.max(0.01f, v_fs); // guard 1 cm/s to avoid P/v blow-up
-
-                // Drive force model (FULL-SCALE)
-                float F_power = (P_W_avail > 0.0f) ? (P_W_avail / v_guard) : 0.0f; // if no power, zero
-                float limitTE = (F_TE_avail > 0.0f) ? F_TE_avail : F_power;        // if no TE limit, use power-only
-                float F_drive = Math.min(limitTE, F_power);
-
-                // Rolling resistance and acceleration (FULL-SCALE)
-                float F_rr = c_rr * massKg * g;
-                float a_fs = (F_drive - F_rr) / massKg;
-                if (a_fs < 0.0f) {
-                    a_fs = 0.0f;
-                }
-
-                // Predict next speed
-                float v_next_fs = v_fs + a_fs * dt;
-                if (v_next_fs <= v_fs) {
-                    break; // numerical guard
-                }
-
-                // If this slice overshoots the FINAL target, shorten the slice to land exactly at the target
-                float stepDt = dt;
-                boolean finalStep = false;
-                if (a_fs > 0.0f && v_next_fs > vTarget_fs) {
-                    stepDt = (vTarget_fs - v_fs) / a_fs; // exact time to reach target
-                    stepDt = Math.max(0.001f, stepDt);
-                    finalStep = true;
-                    v_next_fs = v_fs + a_fs * stepDt; // equals vTarget_fs
-                }
-
-                // Mid-step FULL-SCALE speed for throttle mapping -> back to MODEL mm/s
-                float v_mid_fs = 0.5f * (v_fs + v_next_fs);
-                float v_mid_model_ms = v_mid_fs / scaleRatio;
-                float v_mid_mms = v_mid_model_ms * 1000.0f;
-
-                // --- Gear-change: simulate driver power to idle for ~3.5 s (coast under rolling resistance) ---
-                boolean pausedThisSlice = false;
-                if (mech && accelerating) {
-                    for (int gi = 0; gi < gearFsMps.length; gi++) {
-                        if (!gearPauseDone[gi]) {
-                            final float sTrig = gearFsMps[gi];
-                            // Only pause if target is beyond this gear and this slice actually crosses it
-                            if ((vTarget_fs >= sTrig) && (v_fs < sTrig) && (v_next_fs >= sTrig)) {
-                                // Coast for ~3.5 s with NO tractive effort: a = -(c_rr * g)
-                                final float pauseSec = 3.5f;
-                                float left = pauseSec;
-                                // Constant coasting deceleration in FULL-SCALE units
-                                final float aCoast_fs = -(c_rr * g);
-                                while (left > 0.0f) {
-                                    float chunk = Math.min(dt, left); // integrate at planner dt
-                                    float v_next_coast = v_fs + aCoast_fs * chunk;
-                                    // Do not drop below the min reliable floor (maps to usable throttle)
-                                    if (v_next_coast < vMin_fs) {
-                                        v_next_coast = vMin_fs;
-                                    }
-
-                                    // Mid-step speed for throttle inversion (MODEL → throttle %)
-                                    float v_mid_coast_fs = 0.5f * (v_fs + v_next_coast);
-                                    float v_mid_coast_model_ms = v_mid_coast_fs / scaleRatio;
-                                    float v_mid_coast_mms = v_mid_coast_model_ms * 1000.0f;
-
-                                    float thrAppliedCoast = AutoActiveTrain.this.throttleForSpeedMms(v_mid_coast_mms, forward);
-                                    // Pre-divide by speedFactor so runPlannedSpeedSchedule() multiply lands on the intended final value
-                                    float thrCmdCoastRaw = (speedFactor > 0.0f) ? (thrAppliedCoast / speedFactor) : thrAppliedCoast;
-                                    thrCmdCoastRaw = clampThrottle(clamp(thrCmdCoastRaw, minReliableOperatingSpeed, maxSpeed));
-
-                                    // --- NO-INCREASE DURING COAST ---
-                                    // Coast must never raise throttle above the previous scheduled value
-                                    float prevThrCoast = thrSteps.isEmpty() ? throttle.getSpeedSetting() : thrSteps.getLast();
-                                    float thrCmdCoast = thrCmdCoastRaw;
-                                    if (thrCmdCoast > prevThrCoast) {
-                                        thrCmdCoast = prevThrCoast; // hold or reduce only
-                                    }
-
-                                    // --- PER-STEP DELTA CAP ---
-                                    // Keep coast smooth by bounding the change to speedIncrement
-                                    float deltaCoast = thrCmdCoast - prevThrCoast;
-                                    if (Math.abs(deltaCoast) > speedIncrement) {
-                                        thrCmdCoast = prevThrCoast + Math.copySign(speedIncrement, deltaCoast);
-                                    }
-
-                                    // Final safety clamp and enqueue the POST-PROCESSED value
-                                    thrCmdCoast = clampThrottle(clamp(thrCmdCoast, minReliableOperatingSpeed, maxSpeed));
-                                    thrSteps.add(thrCmdCoast);
-                                    durSteps.add(Math.max(1, Math.round(chunk * 1000.0f)));
-
-                                    v_fs = v_next_coast;
-                                    left -= chunk;
-                                    safety++;
-                                    if (safety >= 10000) {
-                                        break;
-                                    }
-                                }
-                                gearPauseDone[gi] = true;
-                                pausedThisSlice = true;
-                                break; // only one gear crossed per slice
-                            }
-                        }
-                    }
-                }
-
-                // If we just coasted for a gear-change, skip the normal powered step this iteration
-                if (pausedThisSlice) {
-                    continue; // back to while(...) with updated v_fs
-                }
-
-                // --- Normal powered step append using v_mid_mms ---
-                float thrApplied = AutoActiveTrain.this.throttleForSpeedMms(v_mid_mms, forward);
-                // Pre-divide by speedFactor so runPlannedSpeedSchedule() multiply lands on the intended value
-                float thrCmd = (speedFactor > 0.0f) ? (thrApplied / speedFactor) : thrApplied;
-                thrCmd = clampThrottle(clamp(thrCmd, minReliableOperatingSpeed, maxSpeed));
-                // Clamp to [minReliableOperatingSpeed .. maxSpeed]
-                thrCmd = clampThrottle(clamp(thrCmd, minReliableOperatingSpeed, maxSpeed));
-                thrSteps.add(Float.valueOf(thrCmd));
-                durSteps.add(Integer.valueOf(Math.max(1, Math.round(stepDt * 1000.0f))));
-                v_fs = v_next_fs;
-                safety++;
-                if (finalStep) {
-                    break;
-                }
-            }
-
-            // No steps? Just set immediate (use MODEL speed for inversion)
-            if (thrSteps.isEmpty()) {
-                float finalThr = AutoActiveTrain.this.throttleForSpeedMms(vTarget_model_ms * 1000.0f, forward);
-                // Pre-divide by speedFactor for the same reason as above
-                float thrCmdImmediate = (speedFactor > 0.0f) ? (finalThr / speedFactor) : finalThr;
-                thrCmdImmediate = clampThrottle(clamp(thrCmdImmediate, minReliableOperatingSpeed, maxSpeed));
-                thrCmdImmediate = clampThrottle(clamp(thrCmdImmediate, minReliableOperatingSpeed, maxSpeed));
-                throttle.setSpeedSetting(thrCmdImmediate);
-                targetSpeed = thrCmdImmediate;
-                return;
-            }
-
-            // Execute planned schedule
-            int n = thrSteps.size();
-            float[] thrArr = new float[n];
-            int[] durArr = new int[n];
-            for (int i = 0; i < n; i++) {
-                thrArr[i] = thrSteps.get(i).floatValue();
-                durArr[i] = Math.max(1, durSteps.get(i).intValue());
-            }
-            AutoActiveTrain.this._stoppingUsingSpeedProfile = false;
-            runPlannedSpeedSchedule(thrArr, durArr);
-            targetSpeed = thrArr[n - 1];
-        }
-
-        /**
          * Check if train is moving or stopped.
          *
          * @return true if stopped; false otherwise
@@ -3283,57 +2813,57 @@ public class AutoActiveTrain implements ThrottleListener {
         protected void setFunction(int cmdNum, boolean isSet) {
             throttle.setFunction(cmdNum, isSet);
         }
-    }
-
-    /**
-     * Convert ramp rate name, stored as a string into the constant value
-     * assigned.
-     *
-     * @param rampRate  name of ramp rate, such as "RAMP_FAST"
-     * @return integer representing a ramprate constant value
-     */
-    public static int getRampRateFromName(String rampRate) {
-        if (rampRate.equals(Bundle.getMessage("RAMP_FAST")))
-            return RAMP_FAST;
-        else if (rampRate.equals(Bundle.getMessage("RAMP_MEDIUM")))
-            return RAMP_MEDIUM;
-        else if (rampRate.equals(Bundle.getMessage("RAMP_MED_SLOW")))
-            return RAMP_MED_SLOW;
-        else if (rampRate.equals(Bundle.getMessage("RAMP_SLOW")))
-            return RAMP_SLOW;
-        else if (rampRate.equals(Bundle.getMessage("RAMP_SPEEDPROFILE")))
-            return RAMP_SPEEDPROFILE;
-        else if (rampRate.equals(Bundle.getMessage("RAMP_PHYSICS")))
-            return RAMP_PHYSICS;
-        return RAMP_NONE;
-    }
-
-    /*
-     * Listener for switching Ghost blocks to unoccupied
-     */
-    static class DarkTerritoryListener implements PropertyChangeListener {
-        private Sensor sensor;
-
-        public DarkTerritoryListener(Sensor sensor) {
-            this.sensor = sensor;
-            log.trace("Sensor[{}]",sensor.getDisplayName());
         }
 
-        @Override
-        public void propertyChange(PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("state")) {
-                ((Block) e.getSource()).removePropertyChangeListener(this);
-                if (e.getNewValue().equals(Block.UNOCCUPIED)) {
-                    try {
-                        log.trace("Sensor INACTIVE[{}]", sensor.getDisplayName());
-                        sensor.setKnownState(Sensor.INACTIVE);
-                    } catch (jmri.JmriException ex) {
-                        log.error("Error leaving darkterratory");
+        /**
+         * Convert ramp rate name, stored as a string into the constant value
+         * assigned.
+         *
+         * @param rampRate name of ramp rate, such as "RAMP_FAST"
+         * @return integer representing a ramprate constant value
+         */
+        public static int getRampRateFromName(String rampRate) {
+            if (rampRate.equals(Bundle.getMessage("RAMP_FAST")))
+                return RAMP_FAST;
+            else if (rampRate.equals(Bundle.getMessage("RAMP_MEDIUM")))
+                return RAMP_MEDIUM;
+            else if (rampRate.equals(Bundle.getMessage("RAMP_MED_SLOW")))
+                return RAMP_MED_SLOW;
+            else if (rampRate.equals(Bundle.getMessage("RAMP_SLOW")))
+                return RAMP_SLOW;
+            else if (rampRate.equals(Bundle.getMessage("RAMP_SPEEDPROFILE")))
+                return RAMP_SPEEDPROFILE;
+            else if (rampRate.equals(Bundle.getMessage("RAMP_PHYSICS")))
+                return RAMP_PHYSICS;
+            return RAMP_NONE;
+        }
+
+        /*
+         * Listener for switching Ghost blocks to unoccupied
+         */
+        static class DarkTerritoryListener implements PropertyChangeListener {
+            private Sensor sensor;
+
+            public DarkTerritoryListener(Sensor sensor) {
+                this.sensor = sensor;
+                log.trace("Sensor[{}]", sensor.getDisplayName());
+            }
+
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                if (e.getPropertyName().equals("state")) {
+                    ((Block) e.getSource()).removePropertyChangeListener(this);
+                    if (e.getNewValue().equals(Block.UNOCCUPIED)) {
+                        try {
+                            log.trace("Sensor INACTIVE[{}]", sensor.getDisplayName());
+                            sensor.setKnownState(Sensor.INACTIVE);
+                        } catch (jmri.JmriException ex) {
+                            log.error("Error leaving darkterratory");
+                        }
                     }
                 }
             }
         }
-    }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AutoActiveTrain.class);
 }
