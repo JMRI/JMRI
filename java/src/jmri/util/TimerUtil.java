@@ -45,21 +45,11 @@ public final class TimerUtil {
      * @param time time at which task is to be executed.
      */
     public static void schedule(@Nonnull TimerTask task, @Nonnull Date time) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(task, time);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(task, time);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -74,21 +64,11 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void schedule(@Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(task, firstTime, period);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(task, firstTime, period);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -99,21 +79,11 @@ public final class TimerUtil {
      * @param delay delay in milliseconds before task is to be executed.
      */
     public static void schedule(@Nonnull TimerTask task, long delay) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(task, delay);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(task, delay);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -128,21 +98,11 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void schedule(@Nonnull TimerTask task, long delay, long period) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(task, delay, period);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(task, delay, period);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -157,21 +117,11 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void scheduleAtFixedRate(@Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(task, firstTime, period);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(task, firstTime, period);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -186,21 +136,11 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void scheduleAtFixedRate(@Nonnull TimerTask task, long delay, long period) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(task, delay, period);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(task, delay, period);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -225,21 +165,11 @@ public final class TimerUtil {
      * @param time time at which task is to be executed.
      */
     public static void scheduleOnGUIThread(@Nonnull TimerTask task, @Nonnull Date time) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(gtask(task), time);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(gtask(task), time);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -254,21 +184,11 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void scheduleOnGUIThread(@Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(gtask(task), firstTime, period);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(gtask(task), firstTime, period);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -280,21 +200,11 @@ public final class TimerUtil {
      * @param delay delay in milliseconds before task is to be executed.
      */
     public static void scheduleOnGUIThread(@Nonnull TimerTask task, long delay) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(gtask(task), delay);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(gtask(task), delay);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -309,21 +219,11 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void scheduleOnGUIThread(@Nonnull TimerTask task, long delay, long period) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(gtask(task), delay, period);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(gtask(task), delay, period);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -338,21 +238,11 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void scheduleAtFixedRateOnGUIThread(@Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(gtask(task), firstTime, period);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(gtask(task), firstTime, period);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -367,21 +257,11 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void scheduleAtFixedRateOnGUIThread(@Nonnull TimerTask task, long delay, long period) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(gtask(task), delay, period);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(gtask(task), delay, period);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -404,21 +284,11 @@ public final class TimerUtil {
      * @param time time at which task is to be executed.
      */
     public static void scheduleOnLayoutThread(@Nonnull TimerTask task, @Nonnull Date time) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(ltask(task), time);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(ltask(task), time);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -433,21 +303,11 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void scheduleOnLayoutThread(@Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(ltask(task), firstTime, period);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(ltask(task), firstTime, period);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -459,21 +319,11 @@ public final class TimerUtil {
      * @param delay delay in milliseconds before task is to be executed.
      */
     public static void scheduleOnLayoutThread(@Nonnull TimerTask task, long delay) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(ltask(task), delay);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(ltask(task), delay);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -488,21 +338,11 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void scheduleOnLayoutThread(@Nonnull TimerTask task, long delay, long period) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(ltask(task), delay, period);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(ltask(task), delay, period);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -518,21 +358,11 @@ public final class TimerUtil {
      */
     public static void scheduleAtFixedRateOnLayoutThread(
         @Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(ltask(task), firstTime, period);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(ltask(task), firstTime, period);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
@@ -547,28 +377,17 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void scheduleAtFixedRateOnLayoutThread(@Nonnull TimerTask task, long delay, long period) {
-        synchronized (lock) {
+        synchronized (commonTimer) {
             try {
                 commonTimer.schedule(ltask(task), delay, period);
             } catch (IllegalStateException e) {
-                if (false && "Timer already cancelled.".equals(e.getMessage())) {
-                    try {
-                        log.info("Create new timer");
-                        commonTimer = new Timer("JMRI Common Timer", true);
-                        commonTimer.schedule(ltask(task), delay, period);
-                    } catch (IllegalStateException e2) {
-                        log.warn("During schedule()", e2);
-                    }
-                } else {
-                   log.warn("During schedule()", e);
-                }
+                log.warn("During schedule()", e);
             }
         }
     }
 
 
-    private static Timer commonTimer = new Timer("JMRI Common Timer", true);
-    private static final Object lock = new Object();
+    private static final Timer commonTimer = new Timer("JMRI Common Timer", true);
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimerUtil.class);
 }
