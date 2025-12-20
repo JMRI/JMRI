@@ -792,8 +792,6 @@ public class JUnitUtil {
     }
 
     public static void initTimeProviderManager() {
-        InstanceManager.setDefault(ProxyTimeProviderManager.HasTimeProviderManager.class,
-                new ProxyTimeProviderManager.HasTimeProviderManager(){});
         // Ensure we have the time provider manager
         InstanceManager.getDefault(jmri.time.TimeProviderManager.class).getCurrentTimeProvider();
     }
