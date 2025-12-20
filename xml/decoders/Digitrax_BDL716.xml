@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd"
+                showEmptyPanes="no"
+                suppressFunctionLabels="yes"
+                suppressRosterMedia="yes"
+                >
+
+    <version author="B. Milhaupt" version="1" lastUpdated="20250408" />
+
+    <decoder>
+
+        <family name="Series 7 Boards" mfg="Digitrax">
+            <model model="BDL716"/>
+        </family>
+
+        <programming direct="no" paged="yes" register="no" ops="no">
+            <!-- paged yes allows initial setup and change of address -->
+            <mode>LOCONETBD7OPSWMODE</mode>
+        </programming>
+
+        <variables>
+
+          <variable CV="1" comment="Base Address" item="Long Address" default="1" infoOnly="yes">
+            <!-- This is needed to set the Base Address value.
+                2037 is a practical maximum.
+                Note that the BDL716 will allow higher numbers
+                to be set, but they will conflict with the
+                "interrogate" switches.  -->
+            <splitVal highCV="2" upperMask="XXXXXVVV" default="0" min="1" max="2037"/>
+            <label>Board Address</label>
+          </variable>
+
+           <!-- CV7 is the product ID. Should be 0x43, 67 decimal -->
+          <variable CV="7" item="Device Type" readOnly="yes">
+            <decVal min="0" max="255"/>
+            <label>Device Type</label>
+          </variable>
+
+          <variable CV="8" item="Device Mfgr" readOnly="yes">
+            <decVal min="0" max="255"/>
+            <label>Device Manufacturer (NMRA number) </label>
+          </variable>
+
+          <variable CV="9" item="Serial Number" default="0" mask="VVVVVVVV" readOnly="yes">
+            <splitVal highCV="10" upperMask="VVVVVVVV"/>
+            <label>Serial Number</label>
+          </variable>
+
+
+           <variable CV="11" item="Trip current" default="0" tooltip="OpSw1,2" mask="XXXXXXVV"><!-- opsw 1-2 -->
+            <enumVal>
+              <enumChoice choice="0">
+                <choice>Normal Sensitivity</choice>
+              </enumChoice>
+              <enumChoice choice="1">
+                <choice>Higher Sensitivity</choice>
+              </enumChoice>
+              <enumChoice choice="2">
+                <choice>Lower Sensitivity</choice>
+              </enumChoice>
+              <enumChoice choice="3">
+                <choice>(unknown sensitivity)</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Detection uses </label>
+          </variable>
+           <variable CV="11" item="Detection Speed" default="0" tooltip="OpSw3" mask="XXXXXVXX"><!-- opsw 3 -->
+            <enumVal>
+              <enumChoice>
+                <choice>Normal</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Slow</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Detection speed is </label>
+          </variable>
+
+           <variable CV="12" item="Power Detect" default="0" tooltip="OpSw15" mask="XVXXXXXX"><!-- opsw 15 -->
+            <enumVal>
+              <enumChoice>
+                <choice>Forces all detection to "occupied"</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>has no effect on occupancy reporting</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Track power "off" </label>
+          </variable>
+        </variables>
+    </decoder>
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>CVs</name>
+    <column>
+        <row>
+            <cvtable/>
+        </row>
+        <row>
+            <column>
+                <label>
+                    <text>&lt;html&gt;The "CV" column in the table above shows CV
+                        numbers, not the Op Switch number.&lt;p&gt;To see those, hover
+                        your mouse over a variable on the OpSw Settings pane.
+                        &lt;p&gt;CVs 1 and 2 are the low and high (respectively) 8-bit
+                        "Base Address" values.&lt;p&gt;The "Base Address" is practically
+                        limited to 2040, max.&lt;p&gt;The JMRI "Roster" tool and its
+                        Roster entries &lt;em&gt; cannot&lt;/em&gt; change the
+                        "Base Address".
+                    </text>
+                </label>
+                <label>
+                    <text> </text>
+                </label>
+            </column>
+        </row>
+    </column>
+
+  </pane>
+  <pane>
+      <name>Basic</name>
+      <column>
+          <display item="Long Address"/>
+          <label>
+            <text>&lt;html&gt;
+                &lt;p&gt;This roster entry will only access the specified
+                board if the Base Address specified above &lt;br&gt;was
+                correctly entered when the roster entry was first created.
+                You &lt;em&gt;cannot&lt;/em&gt; change it in the Roster Entry.
+            &lt;/html&gt;</text>
+          </label>
+          <label>
+              <text> </text>
+          </label>
+          <display item="Device Type"/>
+          <display item="Device Mfgr"/>
+          <display item="Serial Number"/>
+      </column>
+  </pane>
+
+    <pane>
+        <name>OpSw Settings</name>
+        <column>
+            <label>
+                <text>&lt;html&gt;&lt;h2&gt;Detection Settings</text>
+            </label>
+
+            <display item="Trip current"/>
+            <display item="Detection Speed"/>
+            <display item="Power Detect"/>
+        </column>
+    </pane>
+    <pane>
+        <name>Notes</name>
+        <column>
+            <label>
+                <text>&lt;html&gt;&lt;h2&gt;Notes:&lt;/h2&gt;
+                  &lt;ul&gt;
+                  &lt;li&gt;The BDL716 device implements features that "use" various
+                  types of addresses in&lt;br&gt;
+                  several types of "Address Spaces".  It is important that the
+                  device &lt;em&gt;only&lt;/em&gt; uses those&lt;br&gt;
+                  addresses that are &lt;em&gt;not&lt;/em&gt; used by any other device,
+                  whether on LocoNet or connected&lt;br&gt;
+                  to the "DCC Track" signal. &lt;/li&gt;
+                  &lt;li&gt;The BDL716 is believed to use the addresses as described below:&lt;br&gt;
+                  &lt;table border="3"&gt;
+                    &lt;tr&gt;&lt;th&gt;Address Type&lt;/th&gt;
+                    &lt;th&gt;Range of Addresses&lt;/th&gt;
+                    &lt;th&gt;Comments&lt;/th&gt;&lt;/tr&gt;
+
+                    &lt;tr&gt;&lt;td&gt;Sensors&lt;/td&gt;
+                    &lt;td&gt;Base Address to&lt;br&gt;(Base Address + 15)&lt;/td&gt;
+                    &lt;td&gt;The BDL716 implements 16 "Detection&lt;br&gt;
+                              Sensors" in the LocoNet sensor address&lt;br&gt;
+                              range.&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;&lt;td&gt;Switches&lt;/td&gt;
+                    &lt;td&gt;(None)&lt;/td&gt;
+                    &lt;td&gt;The BDL716 does not implement any&lt;br&gt;
+                              "Turnout"s in either the LocoNet or&lt;br&gt;
+                              the "NMRA Accessory" address range.&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;&lt;td&gt;NMRA "Extended&lt;br&gt;Accessories"
+                    &lt;br&gt;(Signal Aspect&lt;br&gt;Accessories)&lt;/td&gt;
+                    &lt;td&gt;Base Address to&lt;br&gt;(Base Address + 3)&lt;/td&gt;
+                    &lt;td&gt;The BDL716 uses NMRA "Extended&lt;br&gt;
+                              Accessory" ("Signal Aspect") &lt;br&gt;
+                              addresses for accessing Device&lt;br&gt;
+                              "CV" settings, but does not otherwise&lt;br&gt;
+                              implement any "Extended Accessory"&lt;br&gt;
+                              addresses.&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;&lt;td&gt;Transponding&lt;br&gt;"Zones"&lt;/td&gt;
+                    &lt;td&gt;(None)&lt;/td&gt;
+                    &lt;td&gt;The BDL716 does not implement any&lt;br&gt;
+                              "Transponding" addresses in the&lt;br&gt;
+                              LocoNet Transponding address range.&lt;/td&gt;
+                    &lt;/tr&gt;
+
+                    &lt;tr&gt;&lt;td&gt;"Power/Track&lt;br&gt;Status"&lt;/td&gt;
+                    &lt;td&gt;(None)&lt;/td&gt;
+                    &lt;td&gt;The BDL716 does not implement any&lt;br&gt;
+                              addresses in the LocoNet "Power/&lt;br&gt;
+                              Track Status" address range.&lt;/td&gt;
+                    &lt;/tr&gt;
+                  &lt;/table&gt;
+
+              &lt;li&gt;The BDL716's CVs can be mapped to a "Base Address" that
+                        "overlaps" another&lt;br;&gt;
+                        device on this LocoNet connection, or otherwise
+                        conflicts with an NMRA&lt;br;&gt;
+                        Extended Accessory decoder.&lt;br;&gt;
+                        &lt;em&gt;When programming with this roster entry, such a conflict
+                        can cause the conflicting&lt;br;&gt;
+                        device to be mistakenly configured.&lt;/em&gt;&lt;/li&gt;
+              &lt;li&gt;Because the DT602 or other mechanisms (like this roster entry!)
+                  can access this&lt;br;&gt;
+                  BDL716 device's CVs by any of a number of "device addresses"
+                  (See 'NMRA&lt;br&gt;
+                  "Extended Accessories" in the table above), this roster entry's
+                  "Board Address"&lt;br;&gt;
+                  should be configured to the actual device's Base Address. This
+                  will reduce the&lt;br;&gt;
+                  likelihood of mis-configuring this BDL716 or any other device
+                  that may be&lt;br;&gt;
+                  configured by this type of configuration method, whether a
+                  LocoNet peripheral or&lt;/li&gt;
+                  some other kind of device.&lt;/li&gt;
+              &lt;li&gt;Because of the notes above, &lt;/em&gt;it is recommended&lt;/em&gt;
+                  that this BDL716 roster entry &lt;br;&gt;
+                  should be set to the BDL716's "Base Address" setting, and that
+                  care must be taken&lt;br;&gt;
+                  to avoid other devices from using addresses that this BDL716
+                  will use.&lt;/ul&gt;&lt;/html&gt;</text>
+          </label>
+          <label>
+              <text> </text>
+          </label>
+        </column>
+    </pane>
+
+</decoder-config>

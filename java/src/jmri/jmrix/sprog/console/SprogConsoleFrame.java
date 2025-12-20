@@ -107,6 +107,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
      */
     @Override
     public void dispose() {
+        stopTimer();
         if (tc != null) {
             tc.removeSprogListener(this);
         }
@@ -273,7 +274,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
      * Validate the current limit value entered by the user, depending on the
      * SPROG version.
      */
-    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // validateCurrent() is called from synchronised code
     public void validateCurrent() {
         String currentRange = "200 - 996";
@@ -323,7 +323,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         // Further messages will be sent from state machine
     }
 
-    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isCurrentLimitPossible() {
         return sv.hasCurrentLimit();
@@ -335,13 +334,11 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         return sv.hasBlueLine();
     }
 
-    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isFirmwareUnlockPossible() {
         return sv.hasFirmwareLock();
     }
 
-    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isZTCModePossible() {
         return sv.hasZTCMode();
@@ -356,7 +353,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
      * @param v The SprogVersion being handled
      */
     @Override
-    synchronized public void notifyVersion(SprogVersion v) {
+    public synchronized void notifyVersion(SprogVersion v) {
         SprogMessage msg;
         sv = v;
         // Save it for others
@@ -364,7 +361,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         log.debug("Found: {}", sv );
         if (sv.sprogType.isSprog() == false) {
             // Didn't recognize a SPROG so check if it is in boot mode already
-            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("TypeNoSprogPromptFound"),
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TypeNoSprogPromptFound"),
                     Bundle.getMessage("SprogConsoleTitle"), JmriJOptionPane.ERROR_MESSAGE);
         } else {
             if ((sv.sprogType.sprogType > SprogType.SPROGIIv3) && (sv.sprogType.sprogType < SprogType.NANO)) {
@@ -459,7 +456,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                         currentLimitFromHardware = Integer.parseInt(tmpString);
                     }
                     catch (NumberFormatException e) {
-                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFrameDialogLimit"),
+                        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorFrameDialogLimit"),
                                 Bundle.getMessage("SprogConsoleTitle"), JmriJOptionPane.ERROR_MESSAGE);
                         state = State.IDLE;
                         return;
@@ -491,7 +488,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                         modeWord = Integer.parseInt(tmpString, 16);
                     }
                     catch (NumberFormatException e) {
-                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFrameDialogWord"),
+                        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorFrameDialogWord"),
                                 Bundle.getMessage("SprogConsoleTitle"), JmriJOptionPane.ERROR_MESSAGE);
                         state = State.IDLE;
                         return;
@@ -569,8 +566,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     /**
      * Internal routine to handle a timeout.
      */
-    synchronized protected void timeout() {
-        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("TypeTimeoutTalkingToSPROG"),
+    protected synchronized void timeout() {
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TypeTimeoutTalkingToSPROG"),
                 Bundle.getMessage("Timeout"), JmriJOptionPane.ERROR_MESSAGE);
         state = State.IDLE;
     }

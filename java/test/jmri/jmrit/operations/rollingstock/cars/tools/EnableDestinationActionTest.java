@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.rollingstock.cars.CarSetFrame;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarSetFrame;
 
 /**
  *

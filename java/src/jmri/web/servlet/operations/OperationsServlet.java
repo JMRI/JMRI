@@ -213,7 +213,7 @@ public class OperationsServlet extends HttpServlet {
             ((ObjectNode) data).put("format", request.getParameter("format"));
         }
         if (data.path("format").asText().equals("html")) {
-            JsonNode location = data.path(JsonOperations.LOCATION);
+            JsonNode location = data.path(JSON.LOCATION);
             if (!location.isMissingNode()) {
                 if (location.isNull() || train.getNextLocationName().equals(location.asText())) {
                     train.move();

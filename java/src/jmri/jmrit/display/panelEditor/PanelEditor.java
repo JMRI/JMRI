@@ -1,5 +1,7 @@
 package jmri.jmrit.display.panelEditor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -43,11 +45,7 @@ import jmri.InstanceManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.ImageIndexEditor;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.EditorManager;
-import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.PositionablePopupUtil;
-import jmri.jmrit.display.ToolTip;
+import jmri.jmrit.display.*;
 import jmri.util.JmriJFrame;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JmriColorChooser;
@@ -108,6 +106,7 @@ public class PanelEditor extends Editor implements ItemListener {
     private static final String RPSREPORTER = "RPSreporter";
     private static final String FAST_CLOCK = "FastClock";
     private static final String GLOBAL_VARIABLE = "GlobalVariable";
+    private static final String LOGIXNG_TABLE = "LogixNGTable";
     private static final String ICON = "Icon";
     private static final String AUDIO = "Audio";
     private static final String LOGIXNG = "LogixNG";
@@ -203,11 +202,8 @@ public class PanelEditor extends Editor implements ItemListener {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Component ancestor = getTargetPanel().getTopLevelAncestor(); // could be null
-                    String oldName = "";
-                    if (ancestor instanceof JFrame) {
-                        oldName = ((JFrame) ancestor).getTitle();
-                    }
+                    JFrame frame = getTargetFrame();
+                    String oldName = frame.getTitle();
                     // prompt for name
                     String newName = JmriJOptionPane.showInputDialog(null, Bundle.getMessage("PromptNewName"), oldName);
                     if ((newName == null) || (oldName.equals(newName))) {
@@ -218,9 +214,7 @@ public class PanelEditor extends Editor implements ItemListener {
                                 JmriJOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    if (ancestor instanceof JFrame) {
-                        ((JFrame) ancestor).setTitle(newName);
-                    }
+                    frame.setTitle(newName);
                     editor.setTitle();
                 }
 
@@ -287,6 +281,7 @@ public class PanelEditor extends Editor implements ItemListener {
         _addIconBox.addItem(new ComboBoxItem(RPSREPORTER));
         _addIconBox.addItem(new ComboBoxItem(FAST_CLOCK));
         _addIconBox.addItem(new ComboBoxItem(GLOBAL_VARIABLE));
+        _addIconBox.addItem(new ComboBoxItem(LOGIXNG_TABLE));
         _addIconBox.addItem(new ComboBoxItem(AUDIO));
         _addIconBox.addItem(new ComboBoxItem(LOGIXNG));
         _addIconBox.addItem(new ComboBoxItem(ICON));
@@ -450,6 +445,8 @@ public class PanelEditor extends Editor implements ItemListener {
                 bundleName = "BeanNameLight";
             } else if (GLOBAL_VARIABLE.equals(name)) {
                 bundleName = "BeanNameGlobalVariable";
+            } else if (LOGIXNG_TABLE.equals(name)) {
+                bundleName = "BeanNameLogixNGTable";
             } else if (AUDIO.equals(name)) {
                 bundleName = "BeanNameAudio";
             } else {
@@ -492,6 +489,8 @@ public class PanelEditor extends Editor implements ItemListener {
      * so we don't dispose it (yet).
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "Don't want to close window yet")
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
     }
@@ -504,7 +503,7 @@ public class PanelEditor extends Editor implements ItemListener {
      * @return the frame.
      */
     public JmriJFrame makeFrame(String name) {
-        JmriJFrame targetFrame = new JmriJFrame(name);
+        JmriJFrame targetFrame = new JmriJFrameWithPermissions(name);
         targetFrame.setVisible(false);
 
         JMenuBar menuBar = new JMenuBar();
@@ -1059,6 +1058,7 @@ public class PanelEditor extends Editor implements ItemListener {
         addItemPopUp(new ComboBoxItem(RPSREPORTER), _add);
         addItemPopUp(new ComboBoxItem(FAST_CLOCK), _add);
         addItemPopUp(new ComboBoxItem(GLOBAL_VARIABLE), _add);
+        addItemPopUp(new ComboBoxItem(LOGIXNG_TABLE), _add);
         addItemPopUp(new ComboBoxItem(AUDIO), _add);
         addItemPopUp(new ComboBoxItem(LOGIXNG), _add);
         addItemPopUp(new ComboBoxItem(ICON), _add);

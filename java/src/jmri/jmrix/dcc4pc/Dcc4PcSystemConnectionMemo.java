@@ -99,6 +99,10 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         }
+        Dcc4PcSensorManager sm = (Dcc4PcSensorManager) classObjectMap.get(SensorManager.class);
+        if (sm != null) {
+            sm.dispose();
+        }
         super.dispose();
     }
 

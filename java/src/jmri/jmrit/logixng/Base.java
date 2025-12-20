@@ -6,11 +6,10 @@ import java.util.*;
 
 import javax.annotation.*;
 
-import jmri.JmriException;
-import jmri.NamedBean;
-import jmri.beans.PropertyChangeProvider;
-
 import org.apache.commons.lang3.mutable.MutableInt;
+
+import jmri.*;
+import jmri.beans.PropertyChangeProvider;
 
 /**
  * The base interface for LogixNG expressions and actions.
@@ -114,6 +113,7 @@ public interface Base extends PropertyChangeProvider {
     /**
      * Get the user name.
      * @param s the new user name
+     * @throws NamedBean.BadUserNameException when needed
      */
     void setUserName(@CheckForNull String s) throws NamedBean.BadUserNameException;
 
@@ -270,6 +270,7 @@ public interface Base extends PropertyChangeProvider {
      * @return the child
      * @throws IllegalArgumentException if the index is less than 0 or greater
      * or equal with the value returned by getChildCount()
+     * @throws UnsupportedOperationException when needed
      */
     FemaleSocket getChild(int index)
             throws IllegalArgumentException, UnsupportedOperationException;

@@ -44,12 +44,12 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2024')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2025')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
 -->
-<xsl:output method="html" encoding="ISO-8859-1"/>
+<xsl:output method="html" encoding="UTF-8"/>
 
 
 <!-- Define variables for translation -->
@@ -1218,9 +1218,9 @@ value="<xsl:value-of select="@dataString"/>"
                  <td>
                  <xsl:value-of select="./csvType"/>: <xsl:value-of select="./fileName"/></td>
               </xsl:when>
-              <xsl:if test="string-length(comment)!=0" > 
+              <xsl:when test="string-length(comment)!=0" > 
                  <td><xsl:value-of select="comment"/></td>
-              </xsl:if>
+              </xsl:when>
             </xsl:choose>
         </tr>
      </xsl:for-each>

@@ -8,6 +8,7 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.can.TestTrafficController;
+import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.openlcb.Connection;
@@ -164,8 +165,11 @@ public class OlcbTestInterface {
     public CanSystemConnectionMemo systemConnectionMemo;
 
     public void dispose(){
-      // terminate the OlcbInterface (and terminate thread)
-      new Thread(iface::dispose,"OLCB Interface dispose thread").start();
+        // terminate the OlcbInterface (and terminate thread)
+        Thread thread = new Thread(iface::dispose,"OLCB Test Interface dispose thread");
+        thread.start();
+        JUnitUtil.waitThreadTerminated(thread);
+        configurationManager.olcbEventNameStore.deregisterShutdownTask();
     }
 
 

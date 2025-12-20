@@ -6,7 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for jmri.jmrit.beantable.routtable.RouteTurnout
@@ -18,55 +18,55 @@ class RouteTurnoutTest {
     private RouteTurnout rt;
 
     @BeforeEach
-    void setUp(){
-        JUnitUtil.setUpLoggingAndCommonProperties();
+    public void setUp(){
+        JUnitUtil.setUp();
         rt = new RouteTurnout("IT1","Turnout");
     }
 
     @AfterEach
-    void tearDown(){
+    public void tearDown(){
         rt = null;
         JUnitUtil.tearDown();
     }
 
     @Test
-    void getSysName() {
-        assertThat(rt.getSysName()).isEqualTo("IT1");
+    public void getSysName() {
+        assertEquals( "IT1", rt.getSysName() );
     }
 
     @Test
-    void getUserName() {
-        assertThat(rt.getUserName()).isEqualTo("Turnout");
+    public void getUserName() {
+        assertEquals( "Turnout", rt.getUserName() );
     }
 
     @Test
-    void getDisplayName() {
-        assertThat(rt.getDisplayName()).isEqualTo("Turnout");
+    public void getDisplayName() {
+        assertEquals( "Turnout", rt.getDisplayName() );
     }
 
     @Test
-    void getAndSetIncluded() {
-        assertThat(rt.isIncluded()).isFalse();
+    public void getAndSetIncluded() {
+        assertFalse( rt.isIncluded() );
         rt.setIncluded(true);
-        assertThat(rt.isIncluded()).isTrue();
+        assertTrue( rt.isIncluded() );
         rt.setIncluded(false);
-        assertThat(rt.isIncluded()).isFalse();
+        assertFalse( rt.isIncluded() );
     }
 
     @Test
-    void getAndSetState() {
-        assertThat(rt.getState()).isEqualTo(Turnout.THROWN);
+    public void getAndSetState() {
+        assertEquals( Turnout.THROWN, rt.getState() );
         rt.setState(Turnout.CLOSED);
-        assertThat(rt.getState()).isEqualTo(Turnout.CLOSED);
+        assertEquals( Turnout.CLOSED, rt.getState() );
     }
 
     @Test
-    void getAndSetSetToState() {
-        assertThat(rt.getSetToState()).isEqualTo("Set Thrown");
+    public void getAndSetSetToState() {
+        assertEquals( "Set Thrown", rt.getSetToState() );
         rt.setSetToState("Set Closed");
-        assertThat(rt.getSetToState()).isEqualTo("Set Closed");
+        assertEquals( "Set Closed", rt.getSetToState() );
         rt.setSetToState("Set Toggle");
-        assertThat(rt.getSetToState()).isEqualTo("Set Toggle");
+        assertEquals( "Set Toggle", rt.getSetToState() );
     }
 
 }

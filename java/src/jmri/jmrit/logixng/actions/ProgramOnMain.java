@@ -42,7 +42,7 @@ public class ProgramOnMain extends AbstractDigitalAction
         super(sys, user);
 
         // The array is updated with correct values when setMemo() is called
-        String[] modes = {""};
+        POMItem[] modes = {new POMItem("")};
         _selectProgrammingMode = new LogixNG_SelectComboBox(this, modes, modes[0], this);
 
         // Set the _programmerManager and _throttleManager variables
@@ -127,19 +127,19 @@ public class ProgramOnMain extends AbstractDigitalAction
             _throttleManager = InstanceManager.getDefault(ThrottleManager.class);
         }
 
-        List<String> modeList = new ArrayList<>();
+        List<POMItem> modeList = new ArrayList<>();
         for (ProgrammingMode mode : _programmerManager.getDefaultModes()) {
             log.debug("Available programming mode: {}", mode);
-            modeList.add(mode.getStandardName());
+            modeList.add(new POMItem(mode.getStandardName()));
         }
 
         // Add OPSBYTEMODE in case we don't have any mode,
         // for example if we are running a simulator.
         if (modeList.isEmpty()) {
-            modeList.add(ProgrammingMode.OPSBYTEMODE.getStandardName());
+            modeList.add(new POMItem(ProgrammingMode.OPSBYTEMODE.getStandardName()));
         }
 
-        String[] modes = modeList.toArray(String[]::new);
+        POMItem[] modes = modeList.toArray(POMItem[]::new);
         _selectProgrammingMode.setValues(modes);
     }
 
@@ -149,8 +149,8 @@ public class ProgramOnMain extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     private void doProgrammingOnMain(ConditionalNG conditionalNG,
@@ -159,24 +159,24 @@ public class ProgramOnMain extends AbstractDigitalAction
             throws JmriException {
         try {
             boolean longAddress;
-            
+
             switch (longOrShort) {
                 case Short:
                     longAddress = false;
                     break;
-                    
+
                 case Long:
                     longAddress = true;
                     break;
-                    
+
                 case Auto:
                     longAddress = !_throttleManager.canBeShortAddress(address);
                     break;
-                    
+
                 default:
                     throw new IllegalArgumentException("longOrShort has unknown value");
             }
-            
+
             AddressedProgrammer programmer = _programmerManager.getAddressedProgrammer(
                     new DccLocoAddress(address, longAddress));
 
@@ -223,8 +223,18 @@ public class ProgramOnMain extends AbstractDigitalAction
         ConditionalNG conditionalNG = this.getConditionalNG();
         DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG.getSymbolTable());
 
-        String progModeStr = _selectProgrammingMode.evaluateValue(conditionalNG);
-        ProgrammingMode progMode = new ProgrammingMode(progModeStr);
+        String progModeStr = _selectProgrammingMode.evaluateValue(conditionalNG).getKey();
+
+        ProgrammingMode progMode = null;
+        for (ProgrammingMode mode : _programmerManager.getDefaultModes()) {
+            if (mode.getStandardName().equals(progModeStr)) {
+                progMode = mode;
+            }
+        }
+
+        if (progMode == null) {
+            throw new IllegalArgumentException("Programming mode "+progModeStr+" is not found");
+        }
 
         int address = _selectAddress.evaluateValue(conditionalNG);
         LongOrShortAddress longOrShort = _selectLongOrShortAddress.evaluateEnum(conditionalNG);
@@ -406,6 +416,27 @@ public class ProgramOnMain extends AbstractDigitalAction
         @Override
         public String toString() {
             return _text;
+        }
+
+    }
+
+
+    private static class POMItem implements LogixNG_SelectComboBox.Item {
+
+        private final String _value;
+
+        public POMItem(String value) {
+            this._value = value;
+        }
+
+        @Override
+        public String getKey() {
+            return _value;
+        }
+
+        @Override
+        public String toString() {
+            return _value;
         }
 
     }

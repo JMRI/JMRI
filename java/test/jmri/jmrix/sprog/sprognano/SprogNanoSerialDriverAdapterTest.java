@@ -2,7 +2,6 @@ package jmri.jmrix.sprog.sprognano;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,9 +12,9 @@ import org.junit.jupiter.api.*;
 public class SprogNanoSerialDriverAdapterTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testSprogNanoSerialDriverAdapterConstructor(){
        SprogNanoSerialDriverAdapter a = new SprogNanoSerialDriverAdapter();
-       Assert.assertNotNull(a);
+       Assertions.assertNotNull(a);
 
        // clean up
        a.getSystemConnectionMemo().getSprogTrafficController().dispose();

@@ -1,12 +1,11 @@
 package jmri.jmrix.nce.boosterprog;
 
-import javax.swing.*;
-import jmri.AddressedProgrammer;
-import jmri.ProgListener;
-import jmri.ProgrammerException;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-
 import java.awt.*;
+
+import javax.swing.*;
+
+import jmri.*;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
 
 /**
  * Panel for configuring an NCE booster.
@@ -60,6 +59,14 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
         x.append(": ");
         x.append(Bundle.getMessage("TitleBoosterProg"));
         return x.toString();
+    }
+
+    /**
+     * The minimum frame size for font size 16
+     */
+    @Override
+    public Dimension getMinimumDimension() {
+        return new Dimension(400, 200);
     }
 
     /**

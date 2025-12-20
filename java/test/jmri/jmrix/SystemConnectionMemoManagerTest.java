@@ -110,8 +110,11 @@ public class SystemConnectionMemoManagerTest {
 
     @AfterEach
     public void tearDown() {
+        mqttMemo.dispose();
         mqttMemo = null;
+        lnMemo1.dispose();
         lnMemo1 = null;
+        lnMemo2.dispose();
         lnMemo2 = null;
         lnis1 = null;
         lnis2 = null;

@@ -12,10 +12,6 @@ public class JsonOperations {
      */
     public static final String CARS = "cars"; // NOI18N
     /**
-     * {@value #LOCATIONS}
-     */
-    public static final String LOCATIONS = "locations"; // NOI18N
-    /**
      * {@value #TRAINS}
      */
     public static final String TRAINS = "trains"; // NOI18N
@@ -34,7 +30,7 @@ public class JsonOperations {
     /**
      * {@value #LOCATION}
      */
-    public static final String LOCATION = "location"; // NOI18N
+    public static final String LOCATION = "location";
     /**
      * {@value #LOCATION_COMMENT}
      */
@@ -68,17 +64,121 @@ public class JsonOperations {
      */
     public static final String TRAIN = "train"; // NOI18N
     /**
+     * {@value #LENGTH}
+     * <p>
+     * Used for rolling stock length in feet or meters
+     */
+    public static final String LENGTH = "length";
+    /**
      * {@value #WEIGHT}
      * <p>
-     * Used for actual weight of rolling stock in ounces or a train's weight in tons
+     * Rolling stock or a train's weight in tons
      */
-    public static final String WEIGHT = "weight"; // NOI18N
+    public static final String WEIGHT = "weight";
     /**
      * {@value #WEIGHT_TONS}
      * <p>
      * Used for model weight of rolling stock in tons
      */
     public static final String WEIGHT_TONS = "weightTons"; // NOI18N
+    /**
+     * {@value #TYPE}
+     */
+    public static final String TYPE = "type";
+    /**
+     * {@value #COLOR}
+     */
+    public static final String COLOR = "color";
+    /**
+     * {@value #LOAD}
+     */
+    public static final String LOAD = "load";
+    /**
+     * {@value #MODEL}
+     */
+    public static final String MODEL = "model";
+    /**
+     * {@value #HP}
+     */
+    public static final String HP = "hp";
+    /**
+     * {@value #ROAD}
+     */
+    public static final String ROAD = "road";
+    /**
+     * {@value #NUMBER}
+     */
+    public static final String NUMBER = "number";
+    /**
+     * {@value #OWNER}
+     */
+    public static final String OWNER = "owner";
+    /**
+     * {@value #HAZARDOUS}
+     */
+    public static final String HAZARDOUS = "hazardous";
+    /**
+     * {@value #COMMENT}
+     */
+    public static final String COMMENT = "comment";
+    /**
+     * {@value #KERNEL}
+     */
+    public static final String KERNEL = "kernel";
+    /**
+     * {@value #FINAL_DESTINATION }
+     */
+    public static final String FINAL_DESTINATION = "final dest";
+    /**
+     * {@value #FINAL_DEST_TRACK }
+     */
+    public static final String FINAL_DEST_TRACK = "fd&track";
+    /**
+     * {@value #RETURN_WHEN_EMPTY}
+     */
+    public static final String RETURN_WHEN_EMPTY = "rwe";
+    /**
+     * {@value #SETOUT_COMMENT}
+     *
+     * @since 1.1
+     */
+    public static final String SETOUT_COMMENT = "setout msg"; // NOI18N
+    /**
+     * {@value #PICKUP_COMMENT}
+     *
+     * @since 1.1
+     */
+    public static final String PICKUP_COMMENT = "pickup msg"; // NOI18N
+    /**
+     * {@value #IS_LOCAL}
+     *
+     * @since 1.1
+     */
+    public static final String IS_LOCAL = "isLocal";
+    /**
+     * @since 5.4.0
+     */
+    public static final String RETURN_WHEN_LOADED = "returnWhenLoaded";
+    /**
+     * {@value #DIVISION}
+     *
+     * @since 5.4.0
+     */
+    public static final String DIVISION = "division";
+    /**
+     * {@value #LAST_TRAIN}
+     */
+    public static final String LAST_TRAIN = "last train";
+    /**
+     * {@value #BLOCKING_ORDER}
+     */
+    public static final String BLOCKING_ORDER = "block order";
+    /**
+     * {@value #UTILITY}
+     *
+     * @since 1.1
+     */
+    public static final String UTILITY = "utility";
     /**
      * {@value #BUILT}
      */
@@ -118,19 +218,11 @@ public class JsonOperations {
     /**
      * {@value #DESTINATION}
      */
-    public static final String DESTINATION = "destination"; // NOI18N
+    public static final String DESTINATION = "destination";
     /**
      * {@value #DESTINATION_TRACK}
      */
-    public static final String DESTINATION_TRACK = "dest&track"; // NOI18N
-    /**
-     * {@value #LOCATION_TRACK}
-     */
-    public static final String LOCATION_TRACK = "locationTrack"; // NOI18N
-    /**
-     * {@value #KERNEL}
-     */
-    public static final String KERNEL = "kernel"; // NOI18N
+    public static final String DESTINATION_TRACK = "dest&track";
     /**
      * {@value #LEAD}
      */

@@ -6,19 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
-import javax.swing.Box;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.SortOrder;
+
+import javax.swing.*;
 import javax.swing.table.TableRowSorter;
+
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 import jmri.swing.RowSorterUtil;
 import jmri.util.swing.XTableColumnModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -47,15 +41,11 @@ public class AudioTablePanel extends JPanel {
     private JScrollPane listenerDataScroll;
     private JScrollPane bufferDataScroll;
     private JScrollPane sourceDataScroll;
-    private JTabbedPane audioTabs;
-    Box bottomBox;                  // panel at bottom for extra buttons etc
-    int bottomBoxIndex;             // index to insert extra stuff
-
-    static final int bottomStrutWidth = 20;
+    private final JTabbedPane audioTabs;
+    private final JPanel bottomBox; // panel at bottom for extra buttons etc
 
     private static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
 
-//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioTablePanel(AudioTableDataModel listenerModel,
             AudioTableDataModel bufferModel,
             AudioTableDataModel sourceModel,
@@ -89,15 +79,14 @@ public class AudioTablePanel extends JPanel {
         sourceDataTable.createDefaultColumnsFromModel();
 
         // configure items for GUI
-        listenerDataModel.configureTable(listenerDataTable);
         listenerDataModel.configEditColumn(listenerDataTable);
-        listenerDataModel.persistTable(listenerDataTable);
-        bufferDataModel.configureTable(bufferDataTable);
+        listenerDataModel.configureTable(listenerDataTable); // and persists
+
         bufferDataModel.configEditColumn(bufferDataTable);
-        bufferDataModel.persistTable(bufferDataTable);
-        sourceDataModel.configureTable(sourceDataTable);
+        bufferDataModel.configureTable(bufferDataTable); // and persists
+
         sourceDataModel.configEditColumn(sourceDataTable);
-        sourceDataModel.persistTable(sourceDataTable);
+        sourceDataModel.configureTable(sourceDataTable); // and persists
 
         // general GUI config
         this.setLayout(new BorderLayout());
@@ -107,35 +96,19 @@ public class AudioTablePanel extends JPanel {
         audioTabs.addTab(rba.getString("LabelListener"), listenerDataScroll);
         audioTabs.addTab(rba.getString("LabelBuffers"), bufferDataScroll);
         audioTabs.addTab(rba.getString("LabelSources"), sourceDataScroll);
-
         add(audioTabs, BorderLayout.CENTER);
 
-        bottomBox = Box.createHorizontalBox();
-        bottomBox.add(Box.createHorizontalGlue()); // stays at end of box
-        bottomBoxIndex = 0;
-
+        bottomBox = new JPanel();
+        bottomBox.setLayout(new jmri.util.swing.WrapLayout(jmri.util.swing.WrapLayout.LEFT,20,5));
         add(bottomBox, BorderLayout.SOUTH);
 
-        // add extras, if desired by subclass
-        extras();
-
         // set preferred scrolling options
-        listenerDataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        listenerDataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        bufferDataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        bufferDataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        sourceDataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        sourceDataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-    }
-
-    /**
-     * Hook to allow sub-types to install more items in GUI
-     */
-    void extras() {
-    }
-
-    protected Box getBottomBox() {
-        return bottomBox;
+        listenerDataScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        listenerDataScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        bufferDataScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        bufferDataScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        sourceDataScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        sourceDataScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     }
 
     public JMenuItem getPrintItem() {
@@ -158,16 +131,11 @@ public class AudioTablePanel extends JPanel {
     }
 
     /**
-     * Add a component to the bottom box. Takes care of organising glue, struts
-     * etc
-     *
+     * Add a component to the bottom box.
      * @param comp {@link Component} to add
      */
     protected void addToBottomBox(Component comp) {
-        bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);
-        ++bottomBoxIndex;
-        bottomBox.add(comp, bottomBoxIndex);
-        ++bottomBoxIndex;
+        bottomBox.add(comp);
     }
 
     public void dispose() {
@@ -194,6 +162,6 @@ public class AudioTablePanel extends JPanel {
         sourceDataScroll = null;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AudioTablePanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AudioTablePanel.class);
 
 }

@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
-import jmri.jmrix.AbstractSerialPortController.SerialPort;
+import jmri.jmrix.SerialPort;
 import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 

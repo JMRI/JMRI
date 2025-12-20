@@ -137,7 +137,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
 
     protected class IndicatorDragJLabel extends DragJLabel {
 
-        HashMap<String, NamedIcon> iconMap;
+        private final HashMap<String, NamedIcon> iconMap;
 
         public IndicatorDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
             super(flavor, icon);
@@ -158,9 +158,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
                 log.error("IconDragJLabel.getTransferData: iconMap is null!");
                 return null;
             }
-            if (log.isDebugEnabled()) {
-                log.debug("IndicatorDragJLabel.getTransferData");
-            }
+            log.debug("IndicatorDragJLabel.getTransferData");
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
                 IndicatorTrackIcon t = new IndicatorTrackIcon(_frame.getEditor());
 

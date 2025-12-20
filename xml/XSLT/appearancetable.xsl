@@ -25,12 +25,12 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2024')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2025')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
 -->
-<xsl:output method="html" encoding="ISO-8859-1"/>
+<xsl:output method="html" encoding="UTF-8"/>
 
 <!-- Overide basic default template rule to
      copy nodes to the output.  This lets e.g.

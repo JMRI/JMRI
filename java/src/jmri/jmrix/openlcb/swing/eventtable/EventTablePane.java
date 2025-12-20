@@ -2,6 +2,7 @@ package jmri.jmrix.openlcb.swing.eventtable;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.*;
 import java.nio.charset.StandardCharsets;
 import java.io.*;
 import java.util.*;
@@ -11,9 +12,8 @@ import javax.swing.table.*;
 
 import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.openlcb.OlcbConstants;
-import jmri.jmrix.openlcb.OlcbSensor;
-import jmri.jmrix.openlcb.OlcbTurnout;
+import jmri.jmrix.openlcb.*;
+import jmri.util.ThreadingUtil;
 
 import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.swing.MultiLineCellRenderer;
@@ -22,6 +22,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
 
 import org.openlcb.*;
 import org.openlcb.implementations.*;
@@ -40,17 +41,21 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     protected CanSystemConnectionMemo memo;
     Connection connection;
     NodeID nid;
+    OlcbEventNameStore nameStore;
+    OlcbNodeGroupStore groupStore;
 
-    MimicNodeStore store;
+    MimicNodeStore mimcStore;
     EventTableDataModel model;
     JTable table;
     Monitor monitor;
 
+    JComboBox<String> matchGroupName;   // required group name to display; index <= 0 is all
     JCheckBox showRequiresLabel; // requires a user-provided name to display
     JCheckBox showRequiresMatch; // requires at least one consumer and one producer exist to display
     JCheckBox popcorn;           // popcorn mode displays events in real time
 
     JFormattedTextField findID;
+    JTextField findTextID;
 
     private transient TableRowSorter<EventTableDataModel> sorter;
 
@@ -63,12 +68,13 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         this.memo = memo;
         this.connection = memo.get(Connection.class);
         this.nid = memo.get(NodeID.class);
-
-        store = memo.get(MimicNodeStore.class);
+        this.nameStore = memo.get(OlcbEventNameStore.class);
+        this.groupStore = InstanceManager.getDefault(OlcbNodeGroupStore.class);
+        this.mimcStore = memo.get(MimicNodeStore.class);
         EventTable stdEventTable = memo.get(OlcbInterface.class).getEventTable();
         if (stdEventTable == null) log.warn("no OLCB EventTable found");
 
-        model = new EventTableDataModel(store, stdEventTable);
+        model = new EventTableDataModel(mimcStore, stdEventTable, nameStore);
         sorter = new TableRowSorter<>(model);
 
 
@@ -89,6 +95,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         table.setName("jmri.jmrix.openlcb.swing.eventtable.EventTablePane.table"); // for persistence
         table.setColumnSelectionAllowed(true);
         table.setRowSelectionAllowed(true);
+        
+        // render in fixed size font
+        var defaultFont = table.getFont();
+        var fixedFont = new Font(Font.MONOSPACED, Font.PLAIN, defaultFont.getSize());
+        table.setFont(fixedFont);
 
         var scrollPane = new JScrollPane(table);
 
@@ -100,50 +111,120 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         add(scrollPane);
 
-        var buttonPanel = new JPanel();
+        var buttonPanel = new JToolBar();
         buttonPanel.setLayout(new jmri.util.swing.WrapLayout());
 
         add(buttonPanel);
 
         var updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
-        updateButton.addActionListener(this::sendRequestEvents);
+        updateButton.addActionListener(this::sendRequestEvents); 
+        updateButton.setToolTipText(Bundle.getMessage("ButtonUpdateTt"));
         buttonPanel.add(updateButton);
-
+        
+        matchGroupName = new JComboBox<>();
+        updateMatchGroupName();     // before adding listener
+        matchGroupName.addActionListener((ActionEvent e) -> {
+            filter();
+        });
+        groupStore.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            updateMatchGroupName();
+        });
+        buttonPanel.add(matchGroupName);
+        
         showRequiresLabel = new JCheckBox(Bundle.getMessage("BoxShowRequiresLabel"));
         showRequiresLabel.addActionListener((ActionEvent e) -> {
             filter();
         });
+        showRequiresLabel.setToolTipText(Bundle.getMessage("BoxShowRequiresLabelTt"));
+        showRequiresLabel.setOpaque(false); // make transparent
         buttonPanel.add(showRequiresLabel);
 
         showRequiresMatch = new JCheckBox(Bundle.getMessage("BoxShowRequiresMatch"));
         showRequiresMatch.addActionListener((ActionEvent e) -> {
             filter();
         });
+        showRequiresMatch.setToolTipText(Bundle.getMessage("BoxShowRequiresMatchTt"));
+        showRequiresMatch.setOpaque(false); // make transparent
         buttonPanel.add(showRequiresMatch);
 
         popcorn = new JCheckBox(Bundle.getMessage("BoxPopcorn"));
         popcorn.addActionListener((ActionEvent e) -> {
             popcornButtonChanged();
         });
+        popcorn.setToolTipText(Bundle.getMessage("BoxPopcornTt"));
+        popcorn.setOpaque(false); // make transparent
         buttonPanel.add(popcorn);
 
-        JPanel findpanel = new JPanel();
+        JPanel findpanel = new JPanel(); // keep button and text together
+        findpanel.setOpaque(false); // make transparent
+        findpanel.setToolTipText(Bundle.getMessage("FindPanelFindEventTt"));
         buttonPanel.add(findpanel);
         
-        JButton find = new JButton("Find");
+        JLabel find = new JLabel(Bundle.getMessage("FindPanelFindEvent"));
         findpanel.add(find);
-        find.addActionListener(this::findRequested);
 
-        findID = EventIdTextField.getEventIdTextField();
+        findID = new EventIdTextField();
+        findID.setToolTipText(Bundle.getMessage("FindPanelFindEventFieldTt"));
         findID.addActionListener(this::findRequested);
-        findpanel.add(findID);
+        findID.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+           }
 
-        JButton sensorButton = new JButton("Names from Sensors");
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                // on release so the searchField has been updated
+                log.trace("keyTyped {} content {}", keyEvent.getKeyCode(), findTextID.getText());
+                findRequested(null);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+            }
+        });
+        findpanel.add(findID);
+        JButton addButton = new JButton(Bundle.getMessage("FindPanelButtonAdd"));
+        addButton.addActionListener(this::addRequested);
+        addButton.setToolTipText(Bundle.getMessage("FindPanelButtonAddTt"));        
+        findpanel.add(addButton);
+
+        findpanel = new JPanel();  // keep button and text together
+        findpanel.setOpaque(false); // make transparent
+        findpanel.setToolTipText(Bundle.getMessage("FindPanelFindNameTt"));
+        buttonPanel.add(findpanel);
+
+        JLabel findText = new JLabel(Bundle.getMessage("FindPanelFindName"));
+        findpanel.add(findText);
+
+        findTextID = new JTextField(16);
+        findTextID.addActionListener(this::findTextRequested);
+        findTextID.setToolTipText(Bundle.getMessage("FindPanelFindNameTt"));
+        findTextID.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+           }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                // on release so the searchField has been updated
+                log.trace("keyTyped {} content {}", keyEvent.getKeyCode(), findTextID.getText());
+                findTextRequested(null);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+            }
+        });
+        findpanel.add(findTextID);        
+
+        JButton sensorButton = new JButton(Bundle.getMessage("FindPanelButtonSensor"));
         sensorButton.addActionListener(this::sensorRequested);
+        sensorButton.setToolTipText(Bundle.getMessage("FindPanelButtonSensorTt"));
         buttonPanel.add(sensorButton);
         
-        JButton turnoutButton = new JButton("Names from Turnouts");
+        JButton turnoutButton = new JButton(Bundle.getMessage("FindPanelButtonTurnout"));
         turnoutButton.addActionListener(this::turnoutRequested);
+        turnoutButton.setToolTipText(Bundle.getMessage("FindPanelButtonTurnoutTt"));
         buttonPanel.add(turnoutButton);
 
         buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
@@ -155,6 +236,19 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
     public EventTablePane() {
         // interface and connections built in initComponents(..)
+    }
+    
+    // load updateMatchGroup combobox with current contents
+    protected void updateMatchGroupName() {
+        matchGroupName.removeAllItems();
+        matchGroupName.addItem(Bundle.getMessage("FrameAllGroups"));
+        
+        var list = groupStore.getGroupNames();
+        for (String group : list) {
+            matchGroupName.addItem(group);
+        }        
+
+        matchGroupName.setVisible(matchGroupName.getItemCount() > 1);
     }
 
     @Override
@@ -176,16 +270,27 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     public java.util.List<JMenu> getMenus() {
         // create a file menu
         var retval = new ArrayList<JMenu>();
-        var fileMenu = new JMenu("File");
+        var fileMenu = new JMenu(Bundle.getMessage("PaneMenuFile"));
         fileMenu.setMnemonic(KeyEvent.VK_F);
-        var csvItem = new JMenuItem("Save to CSV...", KeyEvent.VK_S);
+        
+        var csvWriteItem = new JMenuItem(Bundle.getMessage("PaneSaveToCsv"), KeyEvent.VK_S);
         KeyStroke ctrlSKeyStroke = KeyStroke.getKeyStroke("control S");
         if (jmri.util.SystemType.isMacOSX()) {
             ctrlSKeyStroke = KeyStroke.getKeyStroke("meta S");
         }
-        csvItem.setAccelerator(ctrlSKeyStroke);
-        csvItem.addActionListener(this::writeToCsvFile);
-        fileMenu.add(csvItem);
+        csvWriteItem.setAccelerator(ctrlSKeyStroke);
+        csvWriteItem.addActionListener(this::writeToCsvFile);
+        fileMenu.add(csvWriteItem);
+        
+        var csvReadItem = new JMenuItem(Bundle.getMessage("PaneReadFromCsv"), KeyEvent.VK_O);
+        KeyStroke ctrlOKeyStroke = KeyStroke.getKeyStroke("control O");
+        if (jmri.util.SystemType.isMacOSX()) {
+            ctrlOKeyStroke = KeyStroke.getKeyStroke("meta O");
+        }
+        csvReadItem.setAccelerator(ctrlOKeyStroke);
+        csvReadItem.addActionListener(this::readFromCsvFile);
+        fileMenu.add(csvReadItem);
+        
         retval.add(fileMenu);
         return retval;
     }
@@ -198,7 +303,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Event Table");
+            return (memo.getUserName() + " " + Bundle.getMessage("TitleEventTable"));
         }
         return getTitle(Bundle.getMessage("TitleEventTable"));
     }
@@ -213,7 +318,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         int nextDelay = 0;
 
         // assumes that a VerifyNodes has been done and all nodes are in the MimicNodeStore
-        for (var memo : store.getNodeMemos()) {
+        for (var memo : mimcStore.getNodeMemos()) {
 
             jmri.util.ThreadingUtil.runOnLayoutDelayed(() -> {
                 var destNodeID = memo.getNodeID();
@@ -247,51 +352,114 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
 
     public void findRequested(java.awt.event.ActionEvent e) {
-        log.debug("Request find event {}", findID.getText());
-        model.highlightEvent(new EventID(findID.getText()));
+        var text = findID.getText();
+        // take off all the trailing .00
+        text = text.strip().replaceAll("(.00)*$", "");
+        log.debug("Request find event [{}]", text);
+        // just search event ID
+        table.clearSelection();
+        if (findTextSearch(text, EventTableDataModel.COL_EVENTID)) return;
+    }
+    
+    public void findTextRequested(java.awt.event.ActionEvent e) {
+        String text = findTextID.getText();
+        log.debug("Request find text {}", text);
+        // first search event name, then from config, then producer name, then consumer name
+        table.clearSelection();
+        if (findTextSearch(text, EventTableDataModel.COL_EVENTNAME)) return;
+        if (findTextSearch(text, EventTableDataModel.COL_CONTEXT_INFO)) return;
+        if (findTextSearch(text, EventTableDataModel.COL_PRODUCER_NAME)) return;
+        if (findTextSearch(text, EventTableDataModel.COL_CONSUMER_NAME)) return;
+        return;
+
+        //model.highlightEvent(new EventID(findID.getText()));
+    }
+    
+    protected boolean findTextSearch(String text, int column) {
+        text = text.toUpperCase();
+        try {
+            for (int row = 0; row < model.getRowCount(); row++) {
+                var cell = table.getValueAt(row, column);
+                if (cell == null) continue;
+                var value = cell.toString().toUpperCase();
+                if (value.startsWith(text)) {
+                    table.changeSelection(row, column, false, false);
+                    return true;
+                }
+            }
+        } catch (RuntimeException e) {
+            // we get ArrayIndexOutOfBoundsException occasionally for no known reason
+            log.debug("unexpected AIOOBE");
+        }
+        return false;
+    }
+    
+    public void addRequested(java.awt.event.ActionEvent e) {
+        var text = findID.getText();
+        EventID eventID = new EventID(text);
+        // first, add the event
+        var memo = new EventTableDataModel.TripleMemo(
+                            eventID,
+                            "",
+                            null,
+                            "",
+                            null,
+                            ""
+                        );
+        // check to see if already in there:
+        boolean found = false;
+        for (var check : EventTableDataModel.memos) {
+            if (memo.eventID.equals(check.eventID)) {
+                found = true;
+                break;
+            }
+        }
+        if (! found) {
+            EventTableDataModel.memos.add(memo);
+        }
+        model.fireTableDataChanged();
+        // now select that one
+        findRequested(e);
+        
     }
     
     public void sensorRequested(java.awt.event.ActionEvent e) {
         // loop over sensors to find the OpenLCB ones
         var beans = InstanceManager.getDefault(SensorManager.class).getNamedBeanSet();
-        var tagmgr = InstanceManager.getDefault(IdTagManager.class);
         for (NamedBean bean : beans ) {
             if (bean instanceof OlcbSensor) {
-                oneSensorToTag(true,  bean, tagmgr); // active
-                oneSensorToTag(false, bean, tagmgr); // inactive
+                oneSensorToTag(true,  bean); // active
+                oneSensorToTag(false, bean); // inactive
             }
         }
     }
 
-    private void oneSensorToTag(boolean isActive, NamedBean bean, IdTagManager tagmgr) {
+    private void oneSensorToTag(boolean isActive, NamedBean bean) {
         var sensor = (OlcbSensor) bean;
         var sensorID = sensor.getEventID(isActive);
-        if (tagmgr.getIdTag(OlcbConstants.tagPrefix+sensorID.toShortString()) == null) {
-            // tag doesn't exist, make it.
-            tagmgr.provideIdTag(OlcbConstants.tagPrefix+sensorID.toShortString())
-                .setUserName(sensor.getEventName(isActive));
+        if (! isEventNamePresent(sensorID)) {
+            // add the association
+            nameStore.addMatch(sensorID, sensor.getEventName(isActive));
         }
     }
 
     public void turnoutRequested(java.awt.event.ActionEvent e) {
         // loop over turnouts to find the OpenLCB ones
         var beans = InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet();
-        var tagmgr = InstanceManager.getDefault(IdTagManager.class);
         for (NamedBean bean : beans ) {
             if (bean instanceof OlcbTurnout) {
-                oneTurnoutToTag(true,  bean, tagmgr); // thrown
-                oneTurnoutToTag(false, bean, tagmgr); // closed
+                oneTurnoutToTag(true,  bean); // thrown
+                oneTurnoutToTag(false, bean); // closed
             }
         }
     }
 
-    private void oneTurnoutToTag(boolean isThrown, NamedBean bean, IdTagManager tagmgr) {
+    private void oneTurnoutToTag(boolean isThrown, NamedBean bean) {
         var turnout = (OlcbTurnout) bean;
         var turnoutID = turnout.getEventID(isThrown);
-        if (tagmgr.getIdTag(OlcbConstants.tagPrefix+turnoutID.toShortString()) == null) {
-            // tag doesn't exist, make it.
-            tagmgr.provideIdTag(OlcbConstants.tagPrefix+turnoutID.toShortString())
-                .setUserName(turnout.getEventName(isThrown));
+        if (! isEventNamePresent(turnoutID)) {
+            // add the association
+            nameStore.addMatch(turnoutID, turnout.getEventName(isThrown));
         }
     }
     
@@ -308,8 +476,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         if (fileChooser == null) {
             fileChooser = new jmri.util.swing.JmriJFileChooser();
-            fileChooser.setDialogTitle("Save CSV file");
         }
+        fileChooser.setDialogTitle(Bundle.getMessage("PaneSaveCsvFile"));
         fileChooser.rescanCurrentDirectory();
         fileChooser.setSelectedFile(new File("eventtable.csv"));
 
@@ -323,7 +491,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
             try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
                 str.printRecord("Event ID", "Event Name", "Producer Node", "Producer Node Name",
-                                "Consumer Node", "Consumer Node Name", "Paths");
+                                "Consumer Node", "Consumer Node Name", "Paths");                
                 for (int i = 0; i < model.getRowCount(); i++) {
 
                     str.print(model.getValueAt(i, EventTableDataModel.COL_EVENTID));
@@ -347,6 +515,66 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         }
     }
 
+    /**
+     * Read event names from a CSV file
+     * @param e Needed for signature of method, but ignored here
+     */
+    public void readFromCsvFile(ActionEvent e) {
+
+        if (fileChooser == null) {
+            fileChooser = new jmri.util.swing.JmriJFileChooser();
+        }
+        fileChooser.setDialogTitle(Bundle.getMessage("PaneOpenCsvFile"));
+        fileChooser.rescanCurrentDirectory();
+
+        int retVal = fileChooser.showOpenDialog(this);
+
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            if (log.isDebugEnabled()) {
+                log.debug("start to read from CSV file {}", file);
+            }
+
+            try (Reader in = new FileReader(file)) {
+                Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
+                
+                for (CSVRecord record : records) {
+                    String eventIDname = record.get(0);
+                     // Is the 1st column really an event ID
+                    EventID eid;
+                    try {
+                        eid = new EventID(eventIDname);
+                    } catch (IllegalArgumentException e1) {
+                        // really shouldn't happen, as table manages column contents
+                        log.warn("Column 0 doesn't contain an EventID: {}", eventIDname);
+                        continue;
+                    }
+                    // here we have a valid EventID, assign the name if currently blank
+                    if (! isEventNamePresent(eid)) {
+                        String eventName = record.get(1);
+                        nameStore.addMatch(eid, eventName);
+                    }         
+                }
+                log.debug("File reading complete");
+                // cause the table to update
+                model.fireTableDataChanged();
+                
+            } catch (IOException ex) {
+                log.error("Error reading file", ex);
+            }
+        }
+    }
+
+    /**
+     * Check whether a Event Name tag is defined or not.
+     * Check for other uses before changing this.
+     * @param eventID EventID in native form
+     * @return true is the event name tag is present
+     */
+    public boolean isEventNamePresent(EventID eventID) {
+        return nameStore.hasEventName(eventID);
+    }
+    
     /**
      * Set up filtering of displayed rows
      */
@@ -377,6 +605,17 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     }
                 }
 
+                // check for group match
+                if ( matchGroupName.getSelectedIndex() > 0) {  // -1 is empty combobox
+                    String group = matchGroupName.getSelectedItem().toString();
+                    var memo = model.getTripleMemo(row);
+                    if ( (! groupStore.isNodeInGroup(memo.producer, group))
+                        && (! groupStore.isNodeInGroup(memo.consumer, group)) ) {
+                            return false;
+                    }
+                }
+                
+                // passed all filters
                 return true;
             }
         };
@@ -388,10 +627,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
      */
     protected static class EventTableDataModel extends AbstractTableModel {
 
-        EventTableDataModel(MimicNodeStore store, EventTable stdEventTable) {
+        EventTableDataModel(MimicNodeStore store, EventTable stdEventTable, OlcbEventNameStore nameStore) {
             this.store = store;
             this.stdEventTable = stdEventTable;
-            tagManager = InstanceManager.getDefault(IdTagManager.class);
+            this.nameStore = nameStore;
 
             loadIdTagEventIDs();
         }
@@ -407,6 +646,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         MimicNodeStore store;
         EventTable stdEventTable;
+        OlcbEventNameStore nameStore;
         IdTagManager tagManager;
         JTable table;
         TableRowSorter<EventTableDataModel> sorter;
@@ -421,19 +661,24 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         void loadIdTagEventIDs() {
             // are there events in the IdTags? If so, add them
-            log.debug("Found {} tags", tagManager.getNamedBeanSet().size());
-            for (var tag: tagManager.getNamedBeanSet()) {
-                if (tag.getSystemName().startsWith(OlcbConstants.tagPrefix)) {
-                    var id = tag.getSystemName().replace(OlcbConstants.tagPrefix, "");
-                    log.trace("Found initial entry for {}", id);
-                    var eventID = new EventID(id);
-                    var memo = new TripleMemo(
+            for (var eventID: nameStore.getMatches()) {
+                var memo = new TripleMemo(
                                     eventID,
+                                    "",
                                     null,
                                     "",
                                     null,
                                     ""
                                 );
+                // check to see if already in there:
+                boolean found = false;
+                for (var check : memos) {
+                    if (memo.eventID.equals(check.eventID)) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (! found) {
                     memos.add(memo);
                 }
             }
@@ -448,11 +693,17 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
             var memo = memos.get(row);
             switch (col) {
-                case COL_EVENTID: return memo.eventID.toShortString();
+                case COL_EVENTID: 
+                    String retval = memo.eventID.toShortString();
+                    if (!memo.rangeSuffix.isEmpty()) retval += " - "+memo.rangeSuffix;
+                    return retval;
                 case COL_EVENTNAME:
-                    var tag = tagManager.getIdTag(OlcbConstants.tagPrefix+memo.eventID.toShortString());
-                    if (tag == null) return "";
-                    return tag.getUserName();
+                    if (nameStore.hasEventName(memo.eventID)) {
+                        return nameStore.getEventName(memo.eventID);
+                    } else {
+                        return "";
+                    }
+                    
                 case COL_PRODUCER_NODE:
                     return memo.producer != null ? memo.producer.toString() : "";
                 case COL_PRODUCER_NAME: return memo.producerName;
@@ -460,38 +711,56 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     return memo.consumer != null ? memo.consumer.toString() : "";
                 case COL_CONSUMER_NAME: return memo.consumerName;
                 case COL_CONTEXT_INFO:
-                    // set up for multi-line output in the cell
+
+                    // When table is constrained, these rows don't match up, need to find constrained row
+                    var viewRow = sorter.convertRowIndexToView(row);
+
+                    if (lineIncrement <= 0) { // load cache variable?
+                        if (viewRow >= 0) {
+                            lineIncrement = table.getRowHeight(viewRow); // do this if valid row
+                        } else {
+                            lineIncrement = table.getFont().getSize()*13/10; // line spacing from font if not valid row
+                        }
+                     }
+
                     var result = new StringBuilder();
-                    if (lineIncrement <= 0) { // load cached value
-                        lineIncrement = table.getFont().getSize()*13/10; // line spacing
-                    }
+
                     var height = lineIncrement/3; // for margins
                     var first = true;   // no \n before first line
 
-                    // scan the event info as available
+                    // interpret eventID and start with that if present
+                    String interp = memo.eventID.parse();
+                    if (interp != null && !interp.isEmpty()) {
+                        height += lineIncrement;
+                        result.append(interp);                        
+                        first = false;
+                    }
+
+                    // scan the CD/CDI information as available
                     for (var entry : stdEventTable.getEventInfo(memo.eventID).getAllEntries()) {
                         if (!first) result.append("\n");
                         first = false;
                         height += lineIncrement;
                         result.append(entry.getDescription());
                     }
-                    // When table is constrained, these rows don't match up, need to find constrained row
-                    var viewRow = sorter.convertRowIndexToView(row);
-                    if (viewRow >= 0) { // make sure it's a valid row in the table
+
+                    // set height for multi-line output in the cell
+                    if (viewRow >= 0) { // make sure it's a valid visible row in the table; -1 signals not
                         // set height
                         if (height < lineIncrement) {
                             height = height+lineIncrement; // when no lines, assume 1
                         }
-                       if (Math.abs(height - table.getRowHeight(row)) > lineIncrement/2) {
-                            table.setRowHeight(viewRow, height);
-                        }
+                        table.setRowHeight(viewRow, height);
+                    } else {
+                        lineIncrement = -1;  // reload on next request, hoping for a viewed row
                     }
                     return new String(result);
                 default: return "Illegal row "+row+" "+col;
             }
         }
 
-        int lineIncrement = -1; // cache the line spacing for multi-line cells
+        int lineIncrement = -1; // cache the line spacing for multi-line cells; 
+                                // this gets the value before any adjustments done
 
         @Override
         public void setValueAt(Object value, int row, int col) {
@@ -501,8 +770,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 return;
             }
             var memo = memos.get(row);
-            var tag = tagManager.provideIdTag(OlcbConstants.tagPrefix+memo.eventID.toShortString());
-            tag.setUserName(value.toString());
+            nameStore.addMatch(memo.eventID, value.toString());
         }
 
         @Override
@@ -513,13 +781,13 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         @Override
         public String getColumnName(int col) {
             switch (col) {
-                case COL_EVENTID:       return "Event ID";
-                case COL_EVENTNAME:     return "Event Name";
-                case COL_PRODUCER_NODE: return "Producer Node";
-                case COL_PRODUCER_NAME: return "Producer Node Name";
-                case COL_CONSUMER_NODE: return "Consumer Node";
-                case COL_CONSUMER_NAME: return "Consumer Node Name";
-                case COL_CONTEXT_INFO:  return "Path(s) from Configure Dialog";
+                case COL_EVENTID:       return Bundle.getMessage("TableColEventId");
+                case COL_EVENTNAME:     return Bundle.getMessage("TableColEventName");
+                case COL_PRODUCER_NODE: return Bundle.getMessage("TableColProducerNode");
+                case COL_PRODUCER_NAME: return Bundle.getMessage("TableColProducerName");
+                case COL_CONSUMER_NODE: return Bundle.getMessage("TableColConsumerNode");
+                case COL_CONSUMER_NAME: return Bundle.getMessage("TableColConsumerName");
+                case COL_CONTEXT_INFO:  return Bundle.getMessage("TableColContextInfo");
                 default: return "ERROR "+col;
             }
         }
@@ -577,8 +845,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          * Record an event-producer pair
          * @param eventID Observed event
          * @param nodeID  Node that is known to produce the event
+         * @param rangeSuffix the range mask string or "" for single events
          */
-        void recordProducer(EventID eventID, NodeID nodeID) {
+        void recordProducer(EventID eventID, NodeID nodeID, String rangeSuffix) {
             log.debug("recordProducer of {} in {}", eventID, nodeID);
 
             // update if the model has been cleared
@@ -606,7 +875,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             TripleMemo sameNodeID = null;// cell with matching consumer                 // TODO: switch to int index for handle update below
             for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
-                if (memo.eventID.equals(eventID) ) {
+                if (memo.eventID.equals(eventID) && memo.rangeSuffix.equals(rangeSuffix) ) {
                     // if nodeID matches, already present; ignore
                     if (nodeID.equals(memo.producer)) {
                         // might be 2nd EventTablePane to process the data,
@@ -668,6 +937,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             // have to make a new one
             var memo = new TripleMemo(
                             eventID,
+                            rangeSuffix,
                             nodeID,
                             name,
                             null,
@@ -681,8 +951,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          * Record an event-consumer pair
          * @param eventID Observed event
          * @param nodeID  Node that is known to consume the event
+         * @param rangeSuffix the range mask string or "" for single events
          */
-        void recordConsumer(EventID eventID, NodeID nodeID) {
+        void recordConsumer(EventID eventID, NodeID nodeID, String rangeSuffix) {
             log.debug("recordConsumer of {} in {}", eventID, nodeID);
 
             // update if the model has been cleared
@@ -709,7 +980,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             TripleMemo sameNodeID = null;// cell with matching consumer                 // TODO: switch to int index for handle update below
             for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
-                if (memo.eventID.equals(eventID) ) {
+                if (memo.eventID.equals(eventID) && memo.rangeSuffix.equals(rangeSuffix) ) {
                     // if nodeID matches, already present; ignore
                     if (nodeID.equals(memo.consumer)) {
                         // might be 2nd EventTablePane to process the data,
@@ -769,6 +1040,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             log.trace("    make a new one");
             var memo = new TripleMemo(
                             eventID,
+                            rangeSuffix,
                             null,
                             "",
                             nodeID,
@@ -787,7 +1059,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             log.trace("highlightProducer {} {}", eventID, nodeID);
             for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
-                if (eventID.equals(memo.eventID) && nodeID.equals(memo.producer)) {
+                if (eventID.equals(memo.eventID)  && memo.rangeSuffix.equals("") && nodeID.equals(memo.producer)) {
                     try {
                         var viewRow = sorter.convertRowIndexToView(i);
                         log.trace("highlight event ID {} row {} viewRow {}", eventID, i, viewRow);
@@ -809,7 +1081,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             table.clearSelection(); // clear existing selections
             for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
-                if (eventID.equals(memo.eventID)) {
+                if (eventID.equals(memo.eventID) && memo.rangeSuffix.equals("") ) {
                     try {
                         var viewRow = sorter.convertRowIndexToView(i);
                         log.trace("highlight event ID {} row {} viewRow {}", eventID, i, viewRow);
@@ -826,7 +1098,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         boolean consumerPresent(EventID eventID) {
             for (var memo : memos) {
-                if (memo.eventID.equals(eventID) ) {
+                if (memo.eventID.equals(eventID) && memo.rangeSuffix.equals("") ) {
                     if (memo.consumer!=null) return true;
                 }
             }
@@ -835,7 +1107,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         boolean producerPresent(EventID eventID) {
             for (var memo : memos) {
-                if (memo.eventID.equals(eventID) ) {
+                if (memo.eventID.equals(eventID) && memo.rangeSuffix.equals("") ) {
                     if (memo.producer!=null) return true;
                 }
             }
@@ -843,16 +1115,18 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         }
 
         static class TripleMemo {
-            EventID eventID;
-            // Event name is stored as an IdTag
+            final EventID eventID;
+            final String  rangeSuffix;
+            // Event name is stored in an OlcbEventNameStore, see getValueAt()
             NodeID producer;
             String producerName;
             NodeID consumer;
             String consumerName;
 
-            TripleMemo(EventID eventID, NodeID producer, String producerName,
+            TripleMemo(EventID eventID, String rangeSuffix, NodeID producer, String producerName,
                         NodeID consumer, String consumerName) {
                 this.eventID = eventID;
+                this.rangeSuffix = rangeSuffix;
                 this.producer = producer;
                 this.producerName = producerName;
                 this.consumer = consumer;
@@ -880,10 +1154,12 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          */
         @Override
         public void handleProducerConsumerEventReport(ProducerConsumerEventReportMessage msg, Connection sender){
-            var nodeID = msg.getSourceNodeID();
-            var eventID = msg.getEventID();
-            model.recordProducer(eventID, nodeID);
-            model.highlightProducer(eventID, nodeID);
+            ThreadingUtil.runOnGUIEventually(()->{
+                var nodeID = msg.getSourceNodeID();
+                var eventID = msg.getEventID();
+                model.recordProducer(eventID, nodeID, "");
+                model.highlightProducer(eventID, nodeID);
+            });
         }
 
         /**
@@ -893,9 +1169,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          */
         @Override
         public void handleConsumerIdentified(ConsumerIdentifiedMessage msg, Connection sender){
-            var nodeID = msg.getSourceNodeID();
-            var eventID = msg.getEventID();
-            model.recordConsumer(eventID, nodeID);
+            ThreadingUtil.runOnGUIEventually(()->{
+                var nodeID = msg.getSourceNodeID();
+                var eventID = msg.getEventID();
+                model.recordConsumer(eventID, nodeID, "");
+            });
         }
 
         /**
@@ -905,9 +1183,39 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          */
         @Override
         public void handleProducerIdentified(ProducerIdentifiedMessage msg, Connection sender){
-            var nodeID = msg.getSourceNodeID();
-            var eventID = msg.getEventID();
-            model.recordProducer(eventID, nodeID);
+            ThreadingUtil.runOnGUIEventually(()->{
+                var nodeID = msg.getSourceNodeID();
+                var eventID = msg.getEventID();
+                model.recordProducer(eventID, nodeID, "");
+            });
+        }
+
+        @Override
+        public void handleConsumerRangeIdentified(ConsumerRangeIdentifiedMessage msg, Connection sender){
+            ThreadingUtil.runOnGUIEventually(()->{
+                final var nodeID = msg.getSourceNodeID();
+                final var eventID = msg.getEventID();
+                
+                final long rangeSuffix = eventID.rangeSuffix();
+                // have to set low part of event ID to 0's as it might be 1's
+                EventID zeroedEID = new EventID(eventID.toLong() & (~rangeSuffix));
+                
+                model.recordConsumer(zeroedEID, nodeID, (new EventID(eventID.toLong() | rangeSuffix)).toShortString());
+            });
+        }
+    
+        @Override
+        public void handleProducerRangeIdentified(ProducerRangeIdentifiedMessage msg, Connection sender){
+            ThreadingUtil.runOnGUIEventually(()->{
+                final var nodeID = msg.getSourceNodeID();
+                final var eventID = msg.getEventID();
+                
+                final long rangeSuffix = eventID.rangeSuffix();
+                // have to set low part of event ID to 0's as it might be 1's
+                EventID zeroedEID = new EventID(eventID.toLong() & (~rangeSuffix));
+                
+                model.recordProducer(zeroedEID, nodeID, (new EventID(eventID.toLong() | rangeSuffix)).toShortString());
+            });
         }
 
         /*
@@ -923,12 +1231,26 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     public static class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
-            super("Openlcb Event Table",
+            super("LCC Event Table",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     EventTablePane.class.getName(),
-                    jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
+                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
+        }
+        
+        public Default(String name, jmri.util.swing.WindowInterface iface) {
+            super(name,
+                    iface,
+                    EventTablePane.class.getName(),
+                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+        }
+
+        public Default(String name, Icon icon, jmri.util.swing.WindowInterface iface) {
+            super(name,
+                    icon, iface,
+                    EventTablePane.class.getName(),
+                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
         }
     }
-
+    
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTablePane.class);
 }

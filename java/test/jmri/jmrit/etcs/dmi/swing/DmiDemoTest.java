@@ -7,14 +7,14 @@ import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for DmiDemo.
  * @author Steve Young Copyright (C) 2024
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class DmiDemoTest {
 
     @Test
@@ -40,7 +40,9 @@ public class DmiDemoTest {
         JLabelOperator label1oper = JemmyUtil.getLabelOperatorByName(jfo, "msglabel1");
         JUnitUtil.waitFor( () -> label1oper.getText().equals("Demo Complete"), "Demo Complete");
 
-        jfo.requestClose();
+        DmiPanelTest.waitSoundsTerminated();
+
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 

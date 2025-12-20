@@ -246,7 +246,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
             rawPanel.setVisible(false);
             ms100Panel.setVisible(false);
             pr2Panel.setVisible(false);
-            ((JmriJFrame) getRootPane().getParent()).setPreferredSize(null);
+            getRootPane().getParent().setPreferredSize(null);
             ((JmriJFrame) getRootPane().getParent()).pack();
         } else if (o.getClass() == PR2Status.class) {
             PR2Status s = (PR2Status) o;
@@ -259,7 +259,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
             rawPanel.setVisible(false);
             ms100Panel.setVisible(true);
             pr2Panel.setVisible(true);
-            ((JmriJFrame) getRootPane().getParent()).setPreferredSize(null);
+            getRootPane().getParent().setPreferredSize(null);
             ((JmriJFrame) getRootPane().getParent()).pack();
         } else if (o.getClass() == PR3MS100ModeStatus.class) {
             PR3MS100ModeStatus s = (PR3MS100ModeStatus) o;
@@ -270,7 +270,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
             rawPanel.setVisible(false);
             ms100Panel.setVisible(true);
             pr2Panel.setVisible(true);
-            ((JmriJFrame) getRootPane().getParent()).setPreferredSize(null);
+            getRootPane().getParent().setPreferredSize(null);
             ((JmriJFrame) getRootPane().getParent()).pack();
         } else if (o.getClass() == RawStatus.class) {
             RawStatus s = (RawStatus)o;
@@ -286,7 +286,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
             rawPanel.setVisible(true);
             ms100Panel.setVisible(false);
             pr2Panel.setVisible(false);
-            ((JmriJFrame) getRootPane().getParent()).setPreferredSize(null);
+            getRootPane().getParent().setPreferredSize(null);
             ((JmriJFrame) getRootPane().getParent()).pack();
             }
         }

@@ -7,14 +7,14 @@ import javax.swing.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for JmriJOptionPane.
  * @author Steve Young Copyright (C) 2023
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class JmriJOptionPaneTest {
 
     @Test
@@ -87,6 +87,7 @@ public class JmriJOptionPaneTest {
 
         jfo.requestClose();
         jfo.waitClosed();
+        JUnitUtil.dispose(frame);
     }
     
     @Test
@@ -145,6 +146,7 @@ public class JmriJOptionPaneTest {
 
         jfo.requestClose();
         jfo.waitClosed();
+        JUnitUtil.dispose(frame);
 
     }
 
@@ -280,6 +282,7 @@ public class JmriJOptionPaneTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 

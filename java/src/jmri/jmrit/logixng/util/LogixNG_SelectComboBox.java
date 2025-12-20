@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -24,16 +25,36 @@ import jmri.util.TypeConversionUtil;
  */
 public class LogixNG_SelectComboBox implements VetoableChangeListener {
 
+    /**
+     * An item in the combo box.
+     */
+    public interface Item {
+
+        /**
+         * Return the key that's used to store the item in the tables and
+         * panels file, as well as when indirect addessing is used.
+         * @return the key
+         */
+        String getKey();
+
+        /**
+         * Return the value that's used to show the item in the ComboBox.
+         * @return the value
+         */
+        @Override
+        String toString();
+    }
+
     private final AbstractBase _base;
     private final InUse _inUse;
-    private String[] _valuesArray;
+    private Item[] _valuesArray;
     private final LogixNG_SelectTable _selectTable;
     private final PropertyChangeListener _listener;
     private boolean _listenToMemory;
     private boolean _listenersAreRegistered;
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private String _value;
+    private Item _value;
     private String _reference = "";
     private NamedBeanHandle<Memory> _memoryHandle;
     private String _localVariable = "";
@@ -41,8 +62,8 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
     private ExpressionNode _expressionNode;
 
 
-    public LogixNG_SelectComboBox(AbstractBase base, String[] valuesArray,
-            String initialValue, PropertyChangeListener listener) {
+    public LogixNG_SelectComboBox(AbstractBase base, Item[] valuesArray,
+            Item initialValue, PropertyChangeListener listener) {
         _base = base;
         _inUse = () -> true;
         _valuesArray = valuesArray;
@@ -63,22 +84,27 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
         _selectTable.copy(copy._selectTable);
     }
 
-    public void setValues(String[] valuesArray) {
+    public void setValues(Item[] valuesArray) {
+        String key = _value != null ? _value.getKey() : null;
         _valuesArray = valuesArray;
 
-        // Ensure the selected value is in the array
+        // Check if the selected value is in the array
         boolean found = false;
-        for (String value : _valuesArray) {
-            if (value.equals(this._value)) {
+        for (Item value : _valuesArray) {
+            if (value.getKey().equals(key)) {
                 found = true;
             }
         }
         if (!found) {
-            _value = _valuesArray[0];
+            if (_valuesArray.length > 0) {
+                _value = _valuesArray[0];
+            } else {
+                _value = null;
+            }
         }
     }
 
-    public String[] getValues() {
+    public Item[] getValues() {
         return _valuesArray;
     }
 
@@ -95,18 +121,34 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
         return _addressing;
     }
 
-    public void setValue(@Nonnull String value) {
+    public void setValue(Item value) {
         _base.assertListenersAreNotRegistered(log, "setString");
         _value = value;
     }
 
-    public String getValue() {
+    public void setValue(String key) {
+        _base.assertListenersAreNotRegistered(log, "setString");
+        if (key == null) {
+            _value = null;
+            return;
+        }
+        for (Item v : _valuesArray) {
+            if (v.getKey().equals(key)) {
+                _value = v;
+                return;
+            }
+        }
+        throw new IllegalArgumentException("Key " + key + " is not in list");
+    }
+
+    @CheckForNull
+    public Item getValue() {
         return _value;
     }
 
-    public String getValue(String name) {
-        for (String value : _valuesArray) {
-            if (value.equals(name)) return value;
+    public Item getValueByKey(String key) {
+        for (Item value : _valuesArray) {
+            if (value.getKey().equals(key)) return value;
         }
         return null;
     }
@@ -202,32 +244,32 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
         }
     }
 
-    public String evaluateValue(ConditionalNG conditionalNG) throws JmriException {
+    public Item evaluateValue(ConditionalNG conditionalNG) throws JmriException {
 
         if (_addressing == NamedBeanAddressing.Direct) {
             return _value;
         } else {
-            String name;
+            String key;
 
             switch (_addressing) {
                 case Reference:
-                    name = ReferenceUtil.getReference(
+                    key = ReferenceUtil.getReference(
                             conditionalNG.getSymbolTable(), _reference);
                     break;
 
                 case Memory:
-                    name = TypeConversionUtil
+                    key = TypeConversionUtil
                             .convertToString(_memoryHandle.getBean().getValue(), false);
                     break;
 
                 case LocalVariable:
                     SymbolTable symbolNamedBean = conditionalNG.getSymbolTable();
-                    name = TypeConversionUtil
+                    key = TypeConversionUtil
                             .convertToString(symbolNamedBean.getValue(_localVariable), false);
                     break;
 
                 case Formula:
-                    name = _expressionNode  != null
+                    key = _expressionNode  != null
                             ? TypeConversionUtil.convertToString(
                                     _expressionNode.calculate(
                                             conditionalNG.getSymbolTable()), false)
@@ -235,7 +277,7 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
                     break;
 
                 case Table:
-                    name = TypeConversionUtil.convertToString(
+                    key = TypeConversionUtil.convertToString(
                             _selectTable.evaluateTableData(conditionalNG), false);
                     break;
 
@@ -243,7 +285,7 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
                     throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
             }
 
-            return LogixNG_SelectComboBox.this.getValue(name);
+            return LogixNG_SelectComboBox.this.getValueByKey(key);
         }
     }
 

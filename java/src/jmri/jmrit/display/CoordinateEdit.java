@@ -588,17 +588,16 @@ public class CoordinateEdit extends JmriJFrame {
     public void initScale() {
         //int scale = (int)Math.round(pl.getScale()*100);
         oldD = pl.getScale();
-
+        log.debug("initScale oldD = {}", oldD);
+        log.trace("  pl = {}", pl);
         textX = new JLabel();
         textX.setText(MessageFormat.format(Bundle.getMessage("Scale"), oldD * 100));
         textX.setVisible(true);
 
-        SpinnerNumberModel model = new SpinnerNumberModel(100.0, 10.0, 5000.0, 1.0);
+        SpinnerNumberModel model = new SpinnerNumberModel(100.0d, 10.0d, 5000.0d, 1.0d);
         spinX = new JSpinner(model);
-        if (log.isDebugEnabled()) {
-            log.debug("scale%= {}", (int) Math.round(oldD * 100));
-        }
-        spinX.setValue((int) Math.round(oldD * 100));
+        log.debug("scale%= {}", (int) Math.round(oldD * 100));
+        spinX.setValue((double) Math.round(oldD * 100));
         spinX.setToolTipText(Bundle.getMessage("enterScale"));
         spinX.setMaximumSize(new Dimension(
                 spinX.getMaximumSize().width, spinX.getPreferredSize().height));
@@ -608,7 +607,7 @@ public class CoordinateEdit extends JmriJFrame {
         addSpinItems(false);
 
         okButton.addActionListener(e -> {
-            double s = ((Number) spinX.getValue()).doubleValue() / 100;
+            double s = ((Number) spinX.getValue()).doubleValue() / 100 * pl.getScale();
             pl.getEditor().setSelectionsScale(s, pl);
             textX.setText(MessageFormat.format(Bundle.getMessage("Scale"), pl.getScale() * 100));
             dispose();
@@ -619,27 +618,25 @@ public class CoordinateEdit extends JmriJFrame {
     }
 
     public void initId(final Editor editor) {
-        PositionableLabel pLabel = (PositionableLabel) pl;
-        oldStr = pLabel.getId();
+        oldStr = pl.getId();
         textX = new JLabel();
         textX.setText(Bundle.getMessage("EnterId") + ":");
         textX.setVisible(true);
 
         xTextField = new JTextField(15);
-        xTextField.setText(pLabel.getId());
+        xTextField.setText(pl.getId());
         xTextField.setToolTipText(Bundle.getMessage("TooltipEnterId"));
 
         getContentPane().setLayout(new GridBagLayout());
         addTextItems();
 
         okButton.addActionListener(e -> {
-            PositionableLabel pp = (PositionableLabel) pl;
             String t = xTextField.getText();
             boolean hasText = (t != null && t.length() > 0);
             if (hasText) {
                 try {
-                    pp.setId(t);
-                    pp.updateSize();
+                    pl.setId(t);
+                    pl.updateSize();
                     dispose();
                 } catch (Positionable.DuplicateIdException ignore) {
                     JmriJOptionPane.showMessageDialog(editor,
@@ -649,8 +646,8 @@ public class CoordinateEdit extends JmriJFrame {
                 }
             } else {
                 try {
-                    pp.setId(null);
-                    pp.updateSize();
+                    pl.setId(null);
+                    pl.updateSize();
                     dispose();
                 } catch (Positionable.DuplicateIdException ex) {
                     // This should never happen
@@ -785,6 +782,8 @@ public class CoordinateEdit extends JmriJFrame {
 
     public void initZoom() {
         oldD = pl.getScale();
+        log.debug("initZoom oldD = {}", oldD);
+        log.trace("  pl = {}", pl);
 
         textX = new JLabel();
         textX.setText(MessageFormat.format(Bundle.getMessage("Scale"), oldD * 100));

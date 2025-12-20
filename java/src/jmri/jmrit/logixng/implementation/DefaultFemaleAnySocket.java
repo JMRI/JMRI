@@ -2,11 +2,12 @@ package jmri.jmrit.logixng.implementation;
 
 import java.util.*;
 
+import jmri.Category;
 import jmri.jmrit.logixng.*;
 
 /**
  * Default implementation of FemaleAnySocket
- * 
+ *
  * @author Daniel Bergqvist (C) 2020
  */
 public class DefaultFemaleAnySocket extends AbstractFemaleSocket implements FemaleAnySocket {
@@ -14,7 +15,7 @@ public class DefaultFemaleAnySocket extends AbstractFemaleSocket implements Fema
     public DefaultFemaleAnySocket(Base parent, FemaleSocketListener listener, String name) {
         super(parent, listener, name);
     }
-    
+
     @Override
     public void disposeMe() {
         throw new UnsupportedOperationException("Not supported");
@@ -39,5 +40,5 @@ public class DefaultFemaleAnySocket extends AbstractFemaleSocket implements Fema
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "DefaultAnySocket_Long", getName());
     }
-    
+
 }

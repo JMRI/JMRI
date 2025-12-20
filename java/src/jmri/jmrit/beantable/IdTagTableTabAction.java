@@ -1,11 +1,9 @@
 package jmri.jmrit.beantable;
 
-import java.awt.BorderLayout;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.swing.event.ChangeEvent;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import jmri.*;
 
@@ -46,9 +44,7 @@ public class IdTagTableTabAction extends AbstractTableTabAction<IdTag> {
 
     @Override
     protected void createModel() {
-        dataPanel = new JPanel();
         dataTabs = new JTabbedPane();
-        dataPanel.setLayout(new BorderLayout());
         if (getManager() instanceof jmri.managers.AbstractProxyManager) {
             // build the list, with default at start and internal at end (if present)
             jmri.managers.AbstractProxyManager<IdTag> proxy = (jmri.managers.AbstractProxyManager<IdTag>) getManager();
@@ -74,10 +70,7 @@ public class IdTagTableTabAction extends AbstractTableTabAction<IdTag> {
             table.addToPanel(this);
             dataTabs.addTab(tabbedTableArray.get(x).getItemString(), null, tabbedTableArray.get(x).getPanel(), null);
         }
-        dataTabs.addChangeListener((ChangeEvent evt) -> {
-            setMenuBar(f);
-        });
-        dataPanel.add(dataTabs, BorderLayout.CENTER);
+        dataTabs.addChangeListener((ChangeEvent evt) -> setMenuBar(f));
         init = true;
     }
 

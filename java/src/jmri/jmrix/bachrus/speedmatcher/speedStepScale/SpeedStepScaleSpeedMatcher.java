@@ -16,6 +16,7 @@ import jmri.jmrix.bachrus.speedmatcher.SpeedMatcher;
 public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
 
     //<editor-fold defaultstate="collapsed" desc="Instance Variables">
+    protected final SpeedTableStepSpeed targetMaxSpeedStep;
     protected final float targetMaxSpeedKPH;
     protected final Speed.Unit speedUnit;
     protected final JLabel actualMaxSpeedField;
@@ -35,7 +36,9 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
 
         this.actualMaxSpeedField = config.actualMaxSpeedField;
         this.speedUnit = config.speedUnit;
-        this.targetMaxSpeedKPH = config.speedUnit == Speed.Unit.MPH ? Speed.mphToKph(config.targetMaxSpeed) : config.targetMaxSpeed;
+
+        this.targetMaxSpeedStep = config.targetMaxSpeedStep;
+        this.targetMaxSpeedKPH = config.speedUnit == Speed.Unit.MPH ? Speed.mphToKph(this.targetMaxSpeedStep.getSpeed()) : this.targetMaxSpeedStep.getSpeed();
     }
 
     //<editor-fold defaultstate="collapsed" desc="Protected APIs">
@@ -51,7 +54,7 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
             return false;
         }
 
-        if (targetMaxSpeedKPH < 1) {
+        if (targetMaxSpeedStep == null) {
             statusLabel.setText(Bundle.getMessage("StatInvalidMaxSpeed"));
             return false;
         }
@@ -68,7 +71,7 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
      */
     protected float getSpeedStepScaleSpeedInKPH(int speedStep) {
         //speed = step in 128 speed step mode
-        float speedStepSpeed = convert28To128SpeedSteps(speedStep);
+        float speedStepSpeed = getSpeedForSpeedTableStep(speedStep);
 
         //convert MPH to KPH since Bachrus does everything in KPH
         if (speedUnit == Speed.Unit.MPH) {
@@ -76,34 +79,42 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
         }
 
         //speed must be bounded by the target max speed
-        speedStepSpeed = Math.min(speedStepSpeed, targetMaxSpeedKPH);
+        speedStepSpeed = Math.min(speedStepSpeed, speedMatchMaxSpeedKPH);
 
         return speedStepSpeed;
     }
+    
+    /**
+     * Gets the speed step value for a linear speed table
+     * @param speedStep the inst speed step to get the value for
+     * @return value for the speed step
+     */
+    protected int getSpeedStepLinearValue(int speedStep) {
+        return (int) (speedStep / 28f * 255f);
+    }
 
     /**
-     * Converts a 28 speed step mode speed step into its 128 speed step mode
-     * "equivalent"
+     * Gets the 128 speed step mode speed for a speed table step
      *
-     * @param speedStep the int speed steep to get the 128 speed step mode
-     *                  "equivalent" for
-     * @return the 128 speed step mode "equivalent" for the given speedStep
+     * @param speedStep the int speed table step to get the 128 speed step mode
+     *                  speed for
+     * @return the 128 speed step mode speed for the given speedStep
      */
-    protected float convert28To128SpeedSteps(int speedStep) {
-        //speed step 1 (28) = speed step 1 (128), 28 (28) = 126 (128), so 27 speed steps (28) = 125 speed steps (128)
-        //so each step (28) = 4.704 steps (128)
+    public static float getSpeedForSpeedTableStep(int speedStep) {
+        //speed step 1 (28) = speed step 1 (128), 28 (28) = 126 (128), 
+        //so 27 speed steps (28) = 125 speed steps (128),
+        //so each step (28) = 4.6296 steps (128)
         return (speedStep * 4.6296f) - 3.6296f;
     }
 
     /**
-     * Gets the lowest speed step which will run at the max speed
+     * Gets the next lowest speed table step for the given speed
      *
-     * @param speedMatchMaxSpeed the max speed in the user facing unit
-     * @return integer speed step value for the lowest 28 speed step mode speed
-     *         step which will run at the max speed
+     * @param speed float speed in the user facing unit
+     * @return the next lowest int speed table step for the given speed
      */
-    protected int getLowestMaxSpeedStep(float speedMatchMaxSpeed) {
-        return (int) Math.ceil((speedMatchMaxSpeed + 3.6296f) / 4.6296f);
+    public static int getNextLowestSpeedTableStepForSpeed(float speed) {
+        return (int) Math.floor((speed + 3.6296f) / 4.6296f);
     }
     //</editor-fold>
 }

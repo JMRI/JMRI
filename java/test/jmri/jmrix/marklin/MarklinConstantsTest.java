@@ -2,7 +2,6 @@ package jmri.jmrix.marklin;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,8 +12,7 @@ public class MarklinConstantsTest {
 
     @Test
     public void testCTor() {
-        MarklinConstants t = new MarklinConstants();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertEquals(5, MarklinConstants.LOCODIRECTION);
     }
 
     @BeforeEach

@@ -26,6 +26,8 @@ public class LnThrottleStringIO extends AbstractStringIO {
     @Override
     protected void sendStringToLayout(String value) throws JmriException {
         _scm.getLnMessageManager().sendMessage(value);
+        // Sets the known string and fires listeners.
+        setString(value);
     }
 
     /** {@inheritDoc} */

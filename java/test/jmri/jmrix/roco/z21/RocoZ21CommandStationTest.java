@@ -140,6 +140,26 @@ public class RocoZ21CommandStationTest {
       Assert.assertFalse("LocoNet Occupancy Flag after reset",rcs.getLocoNetOccupancyMessagesFlag());
    }
 
+    @Test
+    public void testCanBoosterFlag(){
+        RocoZ21CommandStation rcs = new RocoZ21CommandStation();
+        Assert.assertFalse("initial CAN Booster Flag",rcs.getCanBoosterFlag());
+        rcs.setCanBoosterFlag(true);
+        Assert.assertTrue("CAN Booster Flag after set",rcs.getCanBoosterFlag());
+        rcs.setCanBoosterFlag(false);
+        Assert.assertFalse("CAN Booster Flag after reset",rcs.getCanBoosterFlag());
+    }
+
+    @Test
+    public void testFastClockFlag(){
+        RocoZ21CommandStation rcs = new RocoZ21CommandStation();
+        Assert.assertFalse("initial Fast Clock Flag",rcs.getFastClockFlag());
+        rcs.setFastClockFlag(true);
+        Assert.assertTrue("Fast Clock Flag after set",rcs.getFastClockFlag());
+        rcs.setFastClockFlag(false);
+        Assert.assertFalse("Fast Clock Flag after reset",rcs.getFastClockFlag());
+    }
+
    @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();

@@ -58,7 +58,7 @@ public interface MemoryManager extends ProvidingManager<Memory> {
     Memory provideMemory(@Nonnull String name) throws IllegalArgumentException;
 
     /**
-     * Get an existing Turnout or return null if it doesn't exist. 
+     * Get an existing Memory or return null if it doesn't exist. 
      * 
      * Locates via user name, then system name if needed.
      *

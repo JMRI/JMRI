@@ -134,6 +134,8 @@ import jmri.util.JmriJFrame;
                     csvTypeLabel.setText(Table.CsvType.TABBED.toString());
                 } else if (csvType.equals(Table.CsvType.COMMA)) {
                     csvTypeLabel.setText(Table.CsvType.COMMA.toString());
+                } else if (csvType.equals(Table.CsvType.SEMICOLON)) {
+                    csvTypeLabel.setText(Table.CsvType.SEMICOLON.toString());
                 } else {
                     throw new RuntimeException("unrecognized csvType");
                 }
@@ -252,14 +254,12 @@ import jmri.util.JmriJFrame;
             cancelButton.addActionListener((e) -> {
                 finishDone();
             });
-//            done.setToolTipText(Bundle.getMessage("CancelButtonHint"));  // NOI18N
             // Bottom Buttons - Ok NamedTable
             JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
             panel6.add(okButton);
             okButton.addActionListener((e) -> {
                 okPressed(e);
             });
-//            done.setToolTipText(Bundle.getMessage("OkButtonHint"));  // NOI18N
             // Delete NamedTable
             JButton delete = new JButton(Bundle.getMessage("ButtonDelete"));  // NOI18N
             panel6.add(delete);
@@ -477,7 +477,9 @@ import jmri.util.JmriJFrame;
     }
 
     protected String getClassName() {
-        return TableEditor.class.getName();
+        // The class that is returned must have a default constructor,
+        // a constructor with no parameters.
+        return jmri.jmrit.logixng.LogixNG_UserPreferences.class.getName();
     }
 
 

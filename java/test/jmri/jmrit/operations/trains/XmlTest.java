@@ -133,12 +133,12 @@ public class XmlTest extends OperationsTestCase {
         TrainManager manager = InstanceManager.getDefault(TrainManager.class);
 
 
-        Assert.assertEquals("Starting Number of Trains", 0, manager.getTrainsByIdList().size());
+        Assert.assertEquals("Starting Number of Trains", 0, manager.getList().size());
         Train t1 = manager.newTrain("Test Number 1");
         Train t2 = manager.newTrain("Test Number 2");
         Train t3 = manager.newTrain("Test Number 3");
 
-        Assert.assertEquals("New Number of Trains", 3, manager.getTrainsByIdList().size());
+        Assert.assertEquals("New Number of Trains", 3, manager.getList().size());
 
         EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
         Engine e1 = eManager.newRS("UP", "1");
@@ -237,7 +237,7 @@ public class XmlTest extends OperationsTestCase {
         t1.setThirdLegNumberEngines("3");
         t1.setThirdLegOptions(Train.HELPER_ENGINES);
         t1.setThirdLegStartRouteLocation(midC);
-        t1.addTrainSkipsLocation(midC.getId());
+        t1.addTrainSkipsLocation(midC);
 
         t3.setBuildEnabled(false);
         t3.setBuildFailed(true);
@@ -356,9 +356,9 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 third leg number of engines", "3", t1.getThirdLegNumberEngines());
         Assert.assertEquals("t1 third leg options", Train.HELPER_ENGINES, t1.getThirdLegOptions());
         Assert.assertEquals("t1 third leg start location", midC, t1.getThirdLegStartRouteLocation());
-        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(startC.getId()));
-        Assert.assertEquals("t1 skips location", true, t1.isLocationSkipped(midC.getId()));
-        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(endC.getId()));
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(startC));
+        Assert.assertEquals("t1 skips location", true, t1.isLocationSkipped(midC));
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(endC));
 
         Assert.assertEquals("t3 build", false, t3.isBuildEnabled());
         Assert.assertEquals("t3 build failed", true, t3.isBuildFailed());
@@ -537,9 +537,9 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 third leg number of engines", "3", t1.getThirdLegNumberEngines());
         Assert.assertEquals("t1 third leg options", Train.HELPER_ENGINES, t1.getThirdLegOptions());
         Assert.assertEquals("t1 third leg start location", midC, t1.getThirdLegStartRouteLocation());
-        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(startC.getId()));
-        Assert.assertEquals("t1 skips location", true, t1.isLocationSkipped(midC.getId()));
-        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(endC.getId()));
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(startC));
+        Assert.assertEquals("t1 skips location", true, t1.isLocationSkipped(midC));
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(endC));
 
         Assert.assertEquals("t3 build", false, t3.isBuildEnabled());
         Assert.assertEquals("t3 build failed", true, t3.isBuildFailed());
@@ -664,10 +664,11 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("Move script", 0, t3.getMoveScripts().size());
         Assert.assertEquals("Termination script", 0, t3.getTerminationScripts().size());
 
+        jmri.util.JUnitUtil.waitThreadTerminated("Startup Scripts"); // TrainManager.java
+
     }
 
     // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
     @Override
     @BeforeEach
     public void setUp() {

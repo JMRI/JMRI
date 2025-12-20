@@ -34,7 +34,7 @@
         </int>
         <int size="2">
             <name>Sample integer variable</name>
-            <description>Doesn't do anything</description>
+            <description>Doesn't do anything either</description>
             <min>1</min>
             <max>999</max>
             <default>12</default>
@@ -43,23 +43,28 @@
 
     <segment origin="128" space="1">
         <int size="1">
-            <name>Reset</name>
+            <name>Resets</name>
             <description>Controls reloading and clearing node memory. Board must be restarted for this to take effect.</description>
             <map>
-                <relation>
-                    <property>85</property>
-                    <value>(No reset)</value>
-                </relation>
-                <relation>
-                    <property>0</property>
-                    <value>Reset all to defaults</value>
-                </relation>
-                <relation>
-                    <property>170</property>
-                    <value>Reset just EventIDs to defaults</value>
-                </relation>
+                <relation><property>1</property><value>(No reset)</value></relation>
+                <relation><property>85</property><value>Reset all to defaults</value></relation>
+                <relation><property>170</property><value>Reset just EventIDs to defaults</value></relation>
             </map>
         </int>
-    </segment>
+        <int size="1" offset="-1">
+            <name>Sample bit variable</name>
+            <description>Same location as Resets</description>
+        </int>
+        <action size="2">
+            <name>Factory Reset</name>
+            <buttonText>Perform Reset</buttonText>
+            <dialogText>Do a factory reset?</dialogText>
+            <value>12</value>
+        </action>
+        <int size="1">
+            <name>Yet Another Reset</name>
+            <description>This should be stored at address 131.</description>
+        </int>
+</segment>
 
 </cdi>

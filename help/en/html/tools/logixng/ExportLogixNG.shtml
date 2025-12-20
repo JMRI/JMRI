@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Export LogixNG</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="java model railroad JMRI LogixNG export">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Export LogixNG</h1>
+
+      <p>The LogixNG content in the PanelPro xml data file looks simple but it is internally complex.</p>
+
+      <p>The LogixNG default is to use automatic system names.  The format is <strong>xxxx:AUTO:nnnn</strong>.
+      The xxxx is one of <em>many</em> names that all start with <strong>IQ</strong>.  The nnnn is
+      a sequential number.  Since the system names are only unique within a xml data file, manually
+      copying LogixNG content to another xml data file is impossible</p>
+
+      <h2>LogixNG Export Process</h2>
+
+      <p>The export is an external process which works with PanelPro xml data files using a Jython script.  A file that
+      contains LogixNG is used to create a new file that only has LogixNG content.  The system
+      names are changed when the new file is created.  The <strong>AUTO</strong> keyword is replaced
+      by a different keyword.  For example using XYZ, the result is that <strong>xxxx:AUTO:nnnn</strong>
+      becomes <strong>xxxx$XYZ:nnnn</strong>.  Notice that the first colon becomes the dollar character.</p>
+
+      <p>Other than the LogixNG content, the new file does not have any other tables or any panels.
+      The file is a valid PanelPro xml data file.  It can be <strong>loaded</strong> after another
+      xml data file.  The result is that the LogixNG definitions will be merged. A subsequent store
+      completes the process.</p>
+
+      <p>The export process does not change user names.  Conflicts will need to be manually resolved.</p>
+
+      <p>The export process does not change any table references such as sensors or turnouts.  If the
+      existing tables do not have matching items, errors will occur.</p>
+
+      <h3>Selective Export</h3>
+
+      <p>The script exports all of the LogixNG content.  If only some items are needed, use the
+      following process after the script has created the output file.</p>
+
+      <ol>
+        <li>Load the output file in a new PanelPro session.</li>
+        <li>Delete the unneeded items from the LogixNG tables.</li>
+        <li>Store the updated LogixNG content.</li>
+        <li>Quit PanelPro</li>
+      </ol>
+
+      <h2>Running the LogixNG Export</h2>
+
+      <p>The export process uses a Jython script.  From the main PanelPro menu, select
+      <strong>Scripting &rArr; Run Script</strong>.  The <strong>ExportLogixNG.py</strong> script is
+      in the <strong>jython/LogixNG</strong> directory at the JMRI install location.</p>
+
+      <p>The script requests the input and output file names along with the new system name keyword.</p>
+
+      <dl>
+        <dt>Select Input XML Data File</dt>
+        <dd>The selected file is open read only and will not be changed.</dd>
+
+        <dt>Select Output XML Data File</dt>
+        <dd>The selected file will be created or over written with no warnings.</dd>
+
+        <dt>Enter the replacement keyword for AUTO</dt>
+        <dd>The new keyword should be unique, short and descriptive.  It can only contain alpha
+        and numeric characters.</dd>
+      </dl>
+
+      <p>Messages from the script are displayed on the JMRI system console.</p>
+
+      <pre>
+14:11:40,841 jmri.jmrit.jython.exec.ExportLogixNG  INFO  - Run LogixNG Export v1.0 [AWT-EventQueue-0]
+14:12:13,431 jmri.jmrit.jython.exec.ExportLogixNG  INFO  - Export completed, AUTO replaced by XYZ, file .../LogixNG.xml has been created [AWT-EventQueue-0]
+      </pre>
+
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

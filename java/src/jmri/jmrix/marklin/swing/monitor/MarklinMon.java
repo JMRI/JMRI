@@ -8,9 +8,21 @@ import jmri.jmrix.marklin.MarklinReply;
  */
 public class MarklinMon {
 
+    // class only supplies static methods
+    private MarklinMon(){}
+
     public static String displayReply(MarklinReply r) {
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
+        appendPriority(r, sb);
+        appendCommand(r, sb);
+        appendResponse(r, sb);
+        appendAddress(r, sb);
+        appendCanHex(r, sb);
+        return sb.toString();
+    }
+
+    private static void appendPriority(MarklinReply r, StringBuilder sb) {
         sb.append("Priority ");
         switch (r.getPriority()) {
             case MarklinConstants.PRIO_1:
@@ -28,6 +40,9 @@ public class MarklinMon {
             default:
                 sb.append(Bundle.getMessage("StateUnknown"));
         }
+    }
+
+    private static void appendCommand(MarklinReply r, StringBuilder sb) {
         sb.append(" Command: ");
         int command = r.getCommand();
         if (command == MarklinConstants.SYSCOMMANDSTART) {
@@ -35,13 +50,13 @@ public class MarklinMon {
         } else if (command >= MarklinConstants.MANCOMMANDSTART && command <= MarklinConstants.MANCOMMANDEND) {
             switch (r.getCommand()) {
                 case MarklinConstants.LOCODIRECTION:
-                    sb.append("Change of direction " + r.getElement(9));
+                    sb.append("Change of direction ").append(r.getElement(9));
                     break;
                 case MarklinConstants.LOCOSPEED:
-                    sb.append("Change of speed " + ((r.getElement(9) & 0xff << 8) + (r.getElement(10) & 0xff)));
+                    sb.append("Change of speed ").append((r.getElement(9) & 0xff << 8) + (r.getElement(10) & 0xff));
                     break;
                 case MarklinConstants.LOCOFUNCTION:
-                    sb.append("Function: " + r.getElement(9) + " state: " + r.getElement(10));
+                    sb.append("Function: ").append(r.getElement(9)).append(" state: ").append(r.getElement(10));
                     break;
                 default:
                     sb.append("Management");
@@ -56,7 +71,7 @@ public class MarklinMon {
                     sb.append(Bundle.getMessage("SetTurnoutState", Bundle.getMessage("TurnoutStateClosed")));
                     break;
                 default:
-                    sb.append("Unknown state command " + r.getElement(9));
+                    sb.append("Unknown state command ").append(r.getElement(9));
             }
         } else if (command >= MarklinConstants.SOFCOMMANDSTART && command <= MarklinConstants.SOFCOMMANDEND) {
             sb.append("Software");
@@ -67,53 +82,59 @@ public class MarklinMon {
         } else if (command >= MarklinConstants.FEECOMMANDSTART && command <= MarklinConstants.FEECOMMANDEND) {
             sb.append("Feedback");
         }
+    }
+
+    private static void appendResponse(MarklinReply r, StringBuilder sb) {
         if (r.isResponse()) {
-            sb.append(" " + Bundle.getMessage("ReplyMessage"));
+            sb.append(" ").append( Bundle.getMessage("ReplyMessage"));
         } else {
-            sb.append(" " + Bundle.getMessage("RequestMessage"));
+            sb.append(" ").append( Bundle.getMessage("RequestMessage"));
         }
+    }
+
+    private static void appendAddress(MarklinReply r, StringBuilder sb) {
         long addr = r.getAddress();
         if (addr >= MarklinConstants.MM1START && addr <= MarklinConstants.MM1END) {
             if (addr == 0) {
                 sb.append(" Broadcast");
             } else {
-                sb.append(" " + Bundle.getMessage("MonTrafToLocoAddress", addr));
+                sb.append(" ").append( Bundle.getMessage("MonTrafToLocoAddress", addr));
             }
         } else if (addr >= MarklinConstants.MM1FUNCTSTART && addr <= MarklinConstants.MM1FUNCTEND) {
-            addr = addr - MarklinConstants.MM1FUNCTSTART;
-            sb.append(" to MM Function decoder " + addr);
+            addr -= MarklinConstants.MM1FUNCTSTART;
+            sb.append(" to MM Function decoder ").append(addr);
         } else if (addr >= MarklinConstants.MM1LOCOSTART && addr <= MarklinConstants.MM1LOCOEND) {
-            addr = addr - MarklinConstants.MM1LOCOSTART;
-            sb.append(" " + Bundle.getMessage("MonTrafToLocoAddress", addr));
+            addr -= MarklinConstants.MM1LOCOSTART;
+            sb.append(" ").append( Bundle.getMessage("MonTrafToLocoAddress", addr));
         } else if (addr >= MarklinConstants.SX1START && addr <= MarklinConstants.SX1END) {
-            addr = addr - MarklinConstants.SX1START;
-            sb.append(" to SX Address " + addr);
+            addr -= MarklinConstants.SX1START;
+            sb.append(" to SX Address ").append( addr);
         } else if (addr >= MarklinConstants.SX1ACCSTART && addr <= MarklinConstants.SX1ACCEND) {
-            addr = addr - MarklinConstants.SX1ACCSTART;
-            sb.append(" to SX Accessory Address " + addr);
+            addr -= MarklinConstants.SX1ACCSTART;
+            sb.append(" to SX Accessory Address ").append(addr);
         } else if (addr >= MarklinConstants.MM1ACCSTART && addr <= MarklinConstants.MM1ACCEND) {
-            addr = addr - MarklinConstants.MM1ACCSTART;
-            sb.append(" to MM Accessory Address " + addr);
+            addr -= MarklinConstants.MM1ACCSTART;
+            sb.append(" to MM Accessory Address ").append( addr);
         } else if (addr >= MarklinConstants.DCCACCSTART && addr <= MarklinConstants.DCCACCEND) {
-            addr = addr - MarklinConstants.DCCACCSTART;
-            sb.append(" to DCC Accessory Address " + addr);
+            addr -= MarklinConstants.DCCACCSTART;
+            sb.append(" to DCC Accessory Address ").append( addr);
         } else if (addr >= MarklinConstants.MFXSTART && addr <= MarklinConstants.MFXEND) {
-            addr = addr - MarklinConstants.MFXSTART;
-            sb.append(" to MFX Address " + addr);
+            addr -= MarklinConstants.MFXSTART;
+            sb.append(" to MFX Address ").append( addr);
         } else if (addr >= MarklinConstants.SX2START && addr <= MarklinConstants.SX2END) {
-            addr = addr - MarklinConstants.SX2START;
-            sb.append(" to SX2 Address " + addr);
+            addr -= MarklinConstants.SX2START;
+            sb.append(" to SX2 Address ").append( addr);
         } else if (addr >= MarklinConstants.DCCSTART && addr <= MarklinConstants.DCCEND) {
-            addr = addr - MarklinConstants.DCCSTART;
-            sb.append(" to DCC Address " + addr);
+            addr -= MarklinConstants.DCCSTART;
+            sb.append(" to DCC Address ").append( addr);
         }
-        //StringBuffer buf = new StringBuffer();
-        sb.append("0x" + Integer.toHexString(r.getCanData()[0]));
-        for (int i = 1; i < r.getCanData().length; i++) {
-            sb.append(", 0x" + Integer.toHexString(r.getCanData()[i]));
-        }
+    }
 
-        return sb.toString();
+    private static void appendCanHex(MarklinReply r, StringBuilder sb) {
+        sb.append("0x").append( Integer.toHexString(r.getCanData()[0]));
+        for (int i = 1; i < r.getCanData().length; i++) {
+            sb.append(", 0x").append(Integer.toHexString(r.getCanData()[i]));
+        }
     }
 
 }

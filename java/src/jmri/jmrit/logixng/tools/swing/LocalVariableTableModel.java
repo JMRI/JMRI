@@ -231,7 +231,9 @@ public class LocalVariableTableModel extends AbstractTableModel {
             JComboBox<InitialValueType> typeComboBox = new JComboBox<>();
 
             for (InitialValueType type : InitialValueType.values()) {
-                typeComboBox.addItem(type);
+                if (type.isVisible()) {
+                    typeComboBox.addItem(type);
+                }
             }
             JComboBoxUtil.setupComboBoxMaxRows(typeComboBox);
 

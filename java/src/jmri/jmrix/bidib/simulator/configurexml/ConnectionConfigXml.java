@@ -71,8 +71,8 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         //Attribute a = perNode.getAttribute("simulationFile");
         //boolean b = a.isSpecified();
         String simulationFile = perNode.getAttribute("simulationFile").getValue();
-        ((BiDiBSimulatorAdapter)adapter).setSimulationFile(simulationFile);        
-        
+        ((BiDiBSimulatorAdapter)adapter).setSimulationFile(simulationFile);
+
         loadCommon(shared, perNode, adapter);
 
         // register, so can be picked up next time
@@ -93,7 +93,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 //            return false;
 //        }
 
-        
+
         adapter.configure();
 
         // once all the configure processing has happened, do any
@@ -119,6 +119,11 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     @Override
     protected void register() {
         this.register(new ConnectionConfig(adapter));
+    }
+
+    @Override
+    protected void dispose() {
+        adapter.dispose();
     }
 
 //    /**

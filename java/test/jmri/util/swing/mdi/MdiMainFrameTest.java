@@ -1,10 +1,8 @@
 package jmri.util.swing.mdi;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,8 +12,8 @@ import org.junit.jupiter.api.*;
 public class MdiMainFrameTest {
 
     @Test
+    @DisabledIfHeadless
     public void testShow() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         MdiMainFrame f = new MdiMainFrame("Test of MDI Frame",
                 "java/test/jmri/util/swing/xml/Gui3LeftTree.xml",
                 "java/test/jmri/util/swing/xml/Gui3Menus.xml",
@@ -29,7 +27,7 @@ public class MdiMainFrameTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();

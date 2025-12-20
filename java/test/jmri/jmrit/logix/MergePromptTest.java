@@ -1,49 +1,53 @@
 package jmri.jmrit.logix;
 
-import org.junit.Assume;
-import org.junit.jupiter.api.*;
-import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
-import java.util.Map;
 
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
+import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
 @Timeout(10)
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class MergePromptTest {
 
     @Test
-    @Disabled("unreliable; frequently errors or times out")
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testMergePromptDisplayClose() {
 
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator("Merge Prompt CTor Test");
-            jdo.close();
+            JButtonOperator jbo = new JButtonOperator(jdo, Bundle.getMessage("ButtonNoMerge"));
+            jbo.doClick();
+            jdo.waitClosed();
         });
         t.setName("MergePrompt Dialog Close Thread");
         t.start();
 
-        MergePrompt m = new MergePrompt("Merge Prompt CTor Test",new HashMap<String,Boolean>(),
-                        new HashMap<String, Map<Integer,Boolean>>());
-        assertThat(m).withFailMessage("exists").isNotNull();
+        MergePrompt m = new MergePrompt("Merge Prompt CTor Test",new HashMap<>(),
+                        new HashMap<>());
+        Assertions.assertNotNull(m, "exists");
+        jmri.util.ThreadingUtil.runOnGUI( () -> m.setVisible(true));
+
+        JUnitUtil.waitFor( () -> !t.isAlive(),"Dialog closed");
         m.dispose();
     }
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
     }
 
     @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(MergePromptTest.class.getName());

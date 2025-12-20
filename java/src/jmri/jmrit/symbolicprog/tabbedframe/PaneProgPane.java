@@ -48,12 +48,11 @@ import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.VariableValue;
 import jmri.util.CvUtil;
 import jmri.util.StringUtil;
+import jmri.util.ThreadingUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide the individual panes for the TabbedPaneProgrammer.
@@ -215,6 +214,9 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Construct the Pane from the XML definition element.
      *
+     * In case this is invoked from off the Swing/AWT thread, 
+     * it defers to that thread in a granular manner.
+     *
      * @param parent       The parent pane
      * @param name         Name to appear on tab of pane
      * @param pane         The JDOM Element for the pane definition
@@ -246,11 +248,10 @@ public class PaneProgPane extends javax.swing.JPanel
         setToolTipText(jmri.util.jdom.LocaleSelector.getAttribute(pane, "tooltip"));
 
         // find out whether to display "label" (false) or "item" (true)
-        boolean showItem = false;
         Attribute nameFmt = pane.getAttribute("nameFmt");
-        if (nameFmt != null && nameFmt.getValue().equals("item")) {
+        final boolean showItem = (nameFmt != null && nameFmt.getValue().equals("item"));
+        if (showItem) {
             log.debug("Pane {} will show items, not labels, from decoder file", name);
-            showItem = true;
         }
         // put the columns left to right in a panel
         JPanel p = new JPanel();
@@ -261,26 +262,34 @@ public class PaneProgPane extends javax.swing.JPanel
         // for all "column" elements ...
         List<Element> colList = pane.getChildren("column");
         for (Element element : colList) {
-            // load each column
-            p.add(newColumn(element, showItem, modelElem));
+            ThreadingUtil.runOnGUI(() -> {
+                // load each column
+                p.add(newColumn(element, showItem, modelElem));
+            });
         }
         // for all "row" elements ...
         List<Element> rowList = pane.getChildren("row");
         for (Element element : rowList) {
-            // load each row
-            p.add(newRow(element, showItem, modelElem));
+            ThreadingUtil.runOnGUI(() -> {
+                // load each row
+                p.add(newRow(element, showItem, modelElem));
+            });
         }
         // for all "grid" elements ...
         List<Element> gridList = pane.getChildren("grid");
         for (Element element : gridList) {
-            // load each grid
-            p.add(newGrid(element, showItem, modelElem));
+            ThreadingUtil.runOnGUI(() -> {
+                // load each grid
+                p.add(newGrid(element, showItem, modelElem));
+            });
         }
         // for all "group" elements ...
         List<Element> groupList = pane.getChildren("group");
         for (Element element : groupList) {
-            // load each group
-            p.add(newGroup(element, showItem, modelElem));
+            ThreadingUtil.runOnGUI(() -> {
+                // load each group
+                p.add(newGroup(element, showItem, modelElem));
+            });
         }
 
         // explain why pane is empty
@@ -657,6 +666,8 @@ public class PaneProgPane extends javax.swing.JPanel
         setToRead(justChanges, true);
         varListIndex = 0;
         cvListIterator = cvList.iterator();
+        cvReadSoFar = 0 ;
+        cvReadStartTime = System.currentTimeMillis();
     }
 
     /**
@@ -802,6 +813,10 @@ public class PaneProgPane extends javax.swing.JPanel
         }
     }
 
+    // keep track of multi reads.
+    long  cvReadSoFar;
+    long  cvReadStartTime;
+
     /**
      * If there are any more read operations to be done on this pane, do the
      * next one.
@@ -839,8 +854,10 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("nextRead scans {} CVs", cvList.size());
         }
+
         while (cvListIterator != null && cvListIterator.hasNext()) {
             int cvNum = cvListIterator.next();
+            cvReadSoFar++;
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) {
                 log.debug("nextRead cv index {} state {}", cvNum, cv.getState());
@@ -858,7 +875,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 _programmingCV.addPropertyChangeListener(this);
                 // and make the read request
                 // _programmingCV.setToRead(false);  // CVs set this themselves
-                _programmingCV.read(_cvModel.getStatusLabel());
+                _programmingCV.read(_cvModel.getStatusLabel(), cvReadSoFar, cvList.size(), cvReadStartTime);
                 log.debug("return from starting CV read");
                 // the request may have instantateously been satisfied...
                 return true;  // only make one request at a time!
@@ -2665,12 +2682,13 @@ public class PaneProgPane extends javax.swing.JPanel
             final int TABLE_COLS = 3;
 
             // index over CVs
-            if (cvList.size() > 0) {
+            if (!cvList.isEmpty()) {
 //            Check how many Cvs there are to print
                 int cvCount = cvList.size();
                 w.setFontStyle(Font.BOLD); //set font to Bold
                 // print a simple heading with I18N
-                s = String.format("%1$21s", Bundle.getMessage("Value")) + String.format("%1$28s", Bundle.getMessage("Value")) +
+                s = String.format("%1$21s", Bundle.getMessage("Value"))
+                    + String.format("%1$28s", Bundle.getMessage("Value")) +
                         String.format("%1$28s", Bundle.getMessage("Value"));
                 w.write(s, 0, s.length());
                 w.writeBorders();
@@ -2709,7 +2727,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     //convert and pad numbers as needed
                     String numString = String.format("%12s", cv.number());
                     StringBuilder valueString = new StringBuilder(Integer.toString(value));
-                    String valueStringHex = Integer.toHexString(value).toUpperCase();
+                    String valueStringHex = Integer.toHexString(value).toUpperCase(Locale.ENGLISH);
                     if (value < 16) {
                         valueStringHex = "0" + valueStringHex;
                     }
@@ -2804,6 +2822,6 @@ public class PaneProgPane extends javax.swing.JPanel
         return l;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneProgPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PaneProgPane.class);
 
 }

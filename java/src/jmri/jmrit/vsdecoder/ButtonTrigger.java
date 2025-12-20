@@ -7,8 +7,6 @@ import javax.swing.AbstractButton;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Button trigger.
@@ -34,7 +32,6 @@ public class ButtonTrigger extends Trigger implements ActionListener, JmriMouseL
     }
 
     boolean match_value;
-    boolean state;
 
     public ButtonTrigger(String name) {
         this(name, false);
@@ -146,6 +143,6 @@ public class ButtonTrigger extends Trigger implements ActionListener, JmriMouseL
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ButtonTrigger.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ButtonTrigger.class);
 
 }

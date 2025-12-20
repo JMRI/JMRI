@@ -19,9 +19,6 @@ import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Table data model for display of Roster variable values.
  * <p>
@@ -36,17 +33,19 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterTableModel extends DefaultTableModel implements PropertyChangeListener {
 
-    public static final int IDCOL = 0;
-    static final int ADDRESSCOL = 1;
-    static final int ICONCOL = 2;
-    static final int DECODERCOL = 3;
-    static final int ROADNAMECOL = 4;
-    static final int ROADNUMBERCOL = 5;
-    static final int MFGCOL = 6;
-    static final int MODELCOL = 7;
-    static final int OWNERCOL = 8;
-    static final int DATEUPDATECOL = 9;
-    public static final int PROTOCOL = 10;
+    public static final int IDCOL       = 0;
+    static final int ADDRESSCOL         = 1;
+    static final int ICONCOL            = 2;
+    static final int DECODERMFGCOL      = 3;
+    static final int DECODERFAMILYCOL   = 4;
+    static final int DECODERMODELCOL    = 5;
+    static final int ROADNAMECOL        = 6;
+    static final int ROADNUMBERCOL      = 7;
+    static final int MFGCOL             = 8;
+    static final int MODELCOL           = 9;
+    static final int OWNERCOL           = 10;
+    static final int DATEUPDATECOL      = 11;
+    public static final int PROTOCOL    = 12;
     public static final int NUMCOL = PROTOCOL + 1;
     private String rosterGroup = null;
     boolean editable = false;
@@ -116,7 +115,11 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 return Bundle.getMessage("FieldID");
             case ADDRESSCOL:
                 return Bundle.getMessage("FieldDCCAddress");
-            case DECODERCOL:
+            case DECODERMFGCOL:
+                return Bundle.getMessage("FieldDecoderMfg");
+            case DECODERFAMILYCOL:
+                return Bundle.getMessage("FieldDecoderFamily");
+            case DECODERMODELCOL:
                 return Bundle.getMessage("FieldDecoderModel");
             case MODELCOL:
                 return Bundle.getMessage("FieldModel");
@@ -176,6 +179,9 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         if (RosterEntry.ATTRIBUTE_LAST_OPERATED.equals( getAttributeKey(col))) {
             return Date.class;
         }
+        if (RosterEntry.ATTRIBUTE_OPERATING_DURATION.equals( getAttributeKey(col))) {
+            return Integer.class;
+        }
         return String.class;
     }
 
@@ -196,7 +202,13 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         if (col == PROTOCOL) {
             return false;
         }
-        if (col == DECODERCOL) {
+        if (col == DECODERMFGCOL) {
+            return false;
+        }
+        if (col == DECODERFAMILYCOL) {
+            return false;
+        }
+        if (col == DECODERMODELCOL) {
             return false;
         }
         if (col == ICONCOL) {
@@ -243,7 +255,18 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 return re.getId();
             case ADDRESSCOL:
                 return re.getDccLocoAddress().getNumber();
-            case DECODERCOL:
+            case DECODERMFGCOL:
+                var index = jmri.InstanceManager.getDefault(jmri.jmrit.decoderdefn.DecoderIndexFile.class);
+                var matches = index.matchingDecoderList(
+                        null, re.getDecoderFamily(),
+                        null, null, null,
+                        re.getDecoderModel()
+                        );
+                if (matches.size() == 0) return "";
+                return matches.get(0).getMfg();
+            case DECODERFAMILYCOL:
+                return re.getDecoderFamily();
+            case DECODERMODELCOL:
                 return re.getDecoderModel();
             case MODELCOL:
                 return re.getModel();
@@ -280,6 +303,15 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             } catch (ParseException ex){
                 return null;
             }
+        }
+        if ( RosterEntry.ATTRIBUTE_OPERATING_DURATION.equals( attributeKey) ) {
+            try {
+                return Integer.valueOf(value);
+            }
+            catch (NumberFormatException e) {
+                log.debug("could not format duration ( String integer of total seconds ) in {}", value, e);
+            }
+            return 0;
         }
         return (value == null ? "" : value);
     }
@@ -339,7 +371,8 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
 
     public int getPreferredWidth(int column) {
         int retval = 20; // always take some width
-        retval = Math.max(retval, new JLabel(getColumnName(column)).getPreferredSize().width + 15);  // leave room for sorter arrow
+        retval = Math.max(retval, new JLabel(getColumnName(column))
+            .getPreferredSize().width + 15);  // leave room for sorter arrow
         for (int row = 0; row < getRowCount(); row++) {
             if (getColumnClass(column).equals(String.class)) {
                 retval = Math.max(retval, new JLabel(getValueAt(row, column).toString()).getPreferredSize().width);
@@ -353,13 +386,11 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     }
 
     public final void setRosterGroup(String rosterGroup) {
-        Roster.getDefault().getEntriesInGroup(this.rosterGroup).forEach((re) -> {
-            re.removePropertyChangeListener(this);
-        });
+        Roster.getDefault().getEntriesInGroup(this.rosterGroup).forEach( re ->
+            re.removePropertyChangeListener(this));
         this.rosterGroup = rosterGroup;
-        Roster.getDefault().getEntriesInGroup(rosterGroup).forEach((re) -> {
-            re.addPropertyChangeListener(this);
-        });
+        Roster.getDefault().getEntriesInGroup(rosterGroup).forEach( re ->
+            re.addPropertyChangeListener(this));
         fireTableDataChanged();
     }
 
@@ -395,10 +426,10 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     // drop listeners
     public void dispose() {
         Roster.getDefault().removePropertyChangeListener(this);
-        Roster.getDefault().getEntriesInGroup(this.rosterGroup).forEach((re) -> {
-            re.removePropertyChangeListener(this);
-        });
+        Roster.getDefault().getEntriesInGroup(this.rosterGroup).forEach( re ->
+            re.removePropertyChangeListener(this) );
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RosterTableModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RosterTableModel.class);
+
 }

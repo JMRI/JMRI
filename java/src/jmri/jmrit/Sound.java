@@ -164,9 +164,12 @@ public class Sound {
      *                  valid for clips. For streams, autoClose is ignored.
      */
     public void play(boolean autoClose) {
+        streamingStop = false;
         if (streaming) {
             Runnable streamSound = new StreamingSound(this.url);
             Thread tStream = jmri.util.ThreadingUtil.newThread(streamSound);
+            String path = url.getPath();
+            tStream.setName("Play " + path.substring(path.lastIndexOf('/') + 1));
             tStream.start();
         } else {
             clipRef.updateAndGet(clip -> {
@@ -203,9 +206,12 @@ public class Sound {
      * @param count the number of times to loop
      */
     public void loop(int count) {
+        streamingStop = false;
         if (streaming) {
             Runnable streamSound = new StreamingSound(this.url, count);
             Thread tStream = jmri.util.ThreadingUtil.newThread(streamSound);
+            String path = url.getPath();
+            tStream.setName("Loop " + path.substring(path.lastIndexOf('/') + 1) );
             tStream.start();
         } else {
             clipRef.updateAndGet(clip -> {
@@ -422,7 +428,7 @@ public class Sound {
                 log.error("IOException {}", e.getMessage());
                 return;
             }
-            streamingStop = false;
+
             if (streamingSensor == null) {
                 streamingSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor("ISSOUNDSTREAMING");
             }
@@ -448,7 +454,9 @@ public class Sound {
                 }
             }
             if (streamingStop) {
-                line.close();
+                if ( line != null ) {
+                    line.close();
+                }
                 setSensor(jmri.Sensor.INACTIVE);
                 return;
             }
@@ -507,7 +515,8 @@ public class Sound {
                 try {
                     streamingSensor.setState(mode);
                 } catch (jmri.JmriException ex) {
-                    log.error("Exception while setting ISSOUNDSTREAMING sensor {} to {}", streamingSensor.getDisplayName(), mode);
+                    log.error("Exception while setting ISSOUNDSTREAMING sensor {} to {}",
+                        streamingSensor.getDisplayName(), mode);
                 }
             }
         }

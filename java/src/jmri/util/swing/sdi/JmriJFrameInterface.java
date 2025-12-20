@@ -3,8 +3,10 @@ package jmri.util.swing.sdi;
 import java.awt.Frame;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
@@ -84,6 +86,7 @@ public class JmriJFrameInterface implements jmri.util.swing.WindowInterface {
         }
 
         // pack and show
+        frame.setMinimumSize(child.getMinimumDimension());
         frame.pack();
         frame.setVisible(true);
     }

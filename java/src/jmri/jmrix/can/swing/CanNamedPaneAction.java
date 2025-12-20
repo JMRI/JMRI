@@ -1,18 +1,23 @@
 package jmri.jmrix.can.swing;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.swing.Icon;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.swing.JmriPanel;
+import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Action to create and load a JmriPanel from just its name.
+ * Action to create and load a CAN-specific JmriPanel
  *
  * @author Bob Jacobsen Copyright (C) 2012
  */
-public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
+public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction 
+    implements SystemConnectionAction<CanSystemConnectionMemo> {
 
     /**
      * Enhanced constructor for placing the pane in various GUIs.
@@ -62,6 +67,25 @@ public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CanNamedPaneAction.class);
+    @Override
+    public CanSystemConnectionMemo getSystemConnectionMemo() {
+        return this.memo;
+    }
+
+    @Override
+    public void setSystemConnectionMemo(CanSystemConnectionMemo memo) throws IllegalArgumentException {
+        if (CanSystemConnectionMemo.class.isAssignableFrom(memo.getClass())) {
+            this.memo = memo;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public Set<Class<? extends SystemConnectionMemo>> getSystemConnectionMemoClasses() {
+        return new HashSet<>(Arrays.asList(CanSystemConnectionMemo.class));
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CanNamedPaneAction.class);
 
 }

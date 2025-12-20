@@ -1,13 +1,11 @@
 package jmri.jmrix.bidib;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-
 import jmri.DccLocoAddress;
 import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the BiDiBThrottle class
@@ -347,6 +345,7 @@ public class BiDiBThrottleTest  extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup1() {
     }
 
@@ -355,6 +354,7 @@ public class BiDiBThrottleTest  extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup2() {
     }
 
@@ -363,6 +363,7 @@ public class BiDiBThrottleTest  extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup3() {
     }
 
@@ -371,6 +372,7 @@ public class BiDiBThrottleTest  extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup4() {
     }
 
@@ -379,6 +381,7 @@ public class BiDiBThrottleTest  extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup5() {
     }
 
@@ -395,6 +398,9 @@ public class BiDiBThrottleTest  extends jmri.jmrix.AbstractThrottleTest {
     @Override
     @AfterEach
     public void tearDown() {
+        memo.dispose();
+        memo = null;
+        instance = null;
         JUnitUtil.tearDown();
     }
 

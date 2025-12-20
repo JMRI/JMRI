@@ -3,12 +3,10 @@ package jmri.jmrix.can.cbus.swing;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import javax.swing.text.DefaultFormatter;
+
 import jmri.jmrix.can.cbus.swing.eventrequestmonitor.CbusEventRequestTablePane;
 import jmri.jmrix.can.cbus.swing.eventtable.CbusEventTablePane;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import jmri.util.swing.JSpinnerUtil;
 
 /**
  * Creates Panel for displaying New Event JSpinners and Button.
@@ -76,10 +74,7 @@ public class CbusNewEventPane extends JPanel {
     private JPanel newSpinnerPanel( final JSpinner spinner, String label, String tip  ){
         JPanel newnode = new JPanel();
         newnode.add(new JLabel(label));
-        JComponent comp = spinner.getEditor();
-        JFormattedTextField field = (JFormattedTextField) comp.getComponent(0);
-        DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
-        formatter.setCommitsOnValidEdit(true);
+        JSpinnerUtil.setCommitsOnValidEdit(spinner, true);
         spinner.addChangeListener((ChangeEvent e) ->  eventChanged() );
         newnode.add(spinner);
         newnode.setToolTipText(tip);
@@ -119,5 +114,5 @@ public class CbusNewEventPane extends JPanel {
         }
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(CbusNewEventPane.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNewEventPane.class);
 }

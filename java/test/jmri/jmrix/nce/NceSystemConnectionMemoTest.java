@@ -58,6 +58,11 @@ public class NceSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Nc
             public void receiveLoop() {
             }
         });
+        
+        NceCmdStationMemory t = new NceCmdStationMemory();
+        Assert.assertNotNull("exists",t);
+        scm.getNceTrafficController().csm = t;
+
         scm.configureManagers();
     }
 

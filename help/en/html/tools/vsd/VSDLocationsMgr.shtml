@@ -341,9 +341,9 @@
       layout. The described route should go away from the left to the right in forward direction,
       or in case of a circle, in clock-wise forward direction.</p>
 
-      <p>The Advanced Location Following allows up to four locomotives. Normally only one
+      <p>The Advanced Location Following allows up to eight locomotives. Normally only one
       locomotive can be detected in a tracking section. If you want to run more than one
-      locomotive, you may create a JMRI Route (again, up to four for VSD purposes) and add the
+      locomotive, you may create a JMRI Route (up to four for VSD purposes) and add the
       Route to a Train. Please choose the predetermined Route names VSDRoute1 (default), VSDRoute2,
       VSDRoute3 or VSDRoute4. On the "Virtual Sound Decoder Manager" window you'll find an "Option"
       button on each VSDecoder. There you can select a JMRI Train and accordingly a Route. Please

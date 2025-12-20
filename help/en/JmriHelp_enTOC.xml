@@ -269,10 +269,15 @@
    <tocitem text="Displaying Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
   </tocitem>
+
   <tocitem text="SoundPro " target="html.apps.SoundPro.SoundPro">
    <tocitem text="Intro " target="html.apps.SoundPro.SoundPro"/>
-
   </tocitem>
+
+  <tocitem text="LccPro " target="package.apps.gui3.lccpro.LccPro">
+   <tocitem text="Intro " target="package.apps.gui3.lccpro.LccPro"/>
+  </tocitem>
+
   <tocitem text="Additional Applications with connections to JMRI " target="html.apps.index_addapp">
    <tocitem text="Manifest Creator " target="html.apps.ManifestCreator.index"/>
 
@@ -304,6 +309,8 @@
   <tocitem text="Light Table " target="package.jmri.jmrit.beantable.LightTable"/>
 
   <tocitem text="Sensor Table " target="package.jmri.jmrit.beantable.SensorTable"/>
+
+  <tocitem text="StringIO Table " target="package.jmri.jmrit.beantable.StringIOTable"/>
 
   <tocitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
 
@@ -512,13 +519,19 @@
   <tocitem text="Send DCC Packet Tool " target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
 
   <tocitem text="Sensors " target="html.tools.Sensors">
-   <tocitem text="Sensor Table " target="package.jmri.jmrit.beantable.SensorTable"/>
+    <tocitem text="Sensor Table " target="package.jmri.jmrit.beantable.SensorTable"/>
 
-   <tocitem text="Add/Edit Sensors " target="package.jmri.jmrit.beantable.SensorAddEdit"/>
+    <tocitem text="Add/Edit Sensors " target="package.jmri.jmrit.beantable.SensorAddEdit"/>
 
-   <tocitem text="Sensor Groups " target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
-
+     <tocitem text="Sensor Groups " target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
   </tocitem>
+  
+  <tocitem text="StringIOs " target="html.tools.StringIOs">
+    <tocitem text="StringIO Table " target="package.jmri.jmrit.beantable.StringIOTable"/>
+
+    <tocitem text="Add/Edit StringIOs " target="package.jmri.jmrit.beantable.StringIOAddEdit"/>
+  </tocitem>
+  
   <tocitem text="Signaling " target="html.tools.signaling.index">
    <tocitem text="Signaling Quick Start " target="html.tools.signaling.SignalingSetup"/>
 
@@ -562,6 +575,8 @@
 
    <tocitem text="iPhone/iPod Touch as Throttle " target="package.jmri.jmrit.withrottle.UserInterface"/>
 
+   <tocitem text="Z21 Throttle (Z21 App and WlanMaus) " target="package.jmri.jmrit.z21server.z21server"/>
+   
    <tocitem text="webThrottle - Web Throttles and Panels " target="package.jmri.jmrit.webThrottle.webThrottle"/>
 
    <tocitem text="inControl - Web Throttles and Panels (older version) " target="package.jmri.jmrit.inControl.inControl"/>
@@ -669,9 +684,9 @@
 
    <tocitem text="Firmware Downloader Tool " target="package.jmri.jmrix.loconet.downloader.LoaderFrame"/>
 
-   <tocitem text="LNCV Programmer " target="package.jmri.jmrix.loconet.swing.lncvprog.LncvProgPane"/>
+   <tocitem text="Manage LNCV Modules " target="package.jmri.jmrix.loconet.swing.lncvprog.LncvProgPane"/>
 
-   <tocitem text="LocoIO Configuration Tool " target="package.jmri.jmrix.loconet.locoio.LocoIOFrame"/>
+   <tocitem text="Manage LocoIO Modules " target="package.jmri.jmrix.loconet.swing.lnsv1prog.Lnsv1ProgPane"/>
 
    <tocitem text="LocoNet Addresses " target="html.hardware.loconet.Addressing"/>
 

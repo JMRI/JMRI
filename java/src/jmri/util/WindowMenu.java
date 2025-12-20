@@ -32,7 +32,17 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
         String windowName;
         framesList = JmriJFrame.getFrameList();
         removeAll();
-
+        
+        add(new AbstractAction(Bundle.getMessage("ButtonClose")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (parentFrame != null) {
+                    parentFrame.dispatchEvent(
+                              new java.awt.event.WindowEvent(parentFrame, 
+                                        java.awt.event.WindowEvent.WINDOW_CLOSING));
+                 }
+            }    
+        });
         add(new AbstractAction(Bundle.getMessage("MenuItemMinimize")) {
             @Override
             public void actionPerformed(ActionEvent e) {

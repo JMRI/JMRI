@@ -1,5 +1,7 @@
 package jmri.jmrit.simpleclock;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
@@ -810,6 +812,22 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         dispose();
     }
 
+    /**
+     * Get the class description for the UserMessagePreferencesPane.
+     * @return The class description
+     */
+    public String getClassDescription() {
+        return "Fast Clock";
+    }
+
+    /**
+     * Set the item details for the UserMessagePreferencesPane.
+     */
+    public void setMessagePreferencesDetails() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setPreferenceItemDetails(getClassName(), "remindSaveClock", "HideSaveReminder");  // NOI18N
+    }
+
     protected String getClassName() {
         // The class that is returned must have a default constructor,
         // a constructor with no parameters.
@@ -821,6 +839,8 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This calls doneButtonActionPerformed which calls super.windowClosing()")
     public void windowClosing(WindowEvent e) {
         doneButtonActionPerformed(null);
     }

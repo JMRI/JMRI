@@ -1,24 +1,21 @@
 package jmri.jmrit.beantable;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableRowSorter;
+import javax.swing.table.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.*;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a SignalGroup - Signal Head Edit Table.
@@ -100,6 +97,7 @@ public class SignalGroupSubTableAction {
      *
      * @param box the comboBox object containing the user choice
      * @return Value for the Appearance (color) set i.e. 0 for DARK
+     * @throws IllegalArgumentException when needed
      */
     int headStateFromBox(JComboBox<String> box) throws IllegalArgumentException {
         SignalHead sig = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(curHeadName);

@@ -73,10 +73,10 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
         if (route == null) {
             _id++;
             route = new Route(Integer.toString(_id), name);
-            Integer oldSize = Integer.valueOf(_routeHashTable.size());
+            int oldSize = _routeHashTable.size();
             _routeHashTable.put(route.getId(), route);
             setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                    Integer.valueOf(_routeHashTable.size()));
+                    _routeHashTable.size());
         }
         return route;
     }
@@ -87,14 +87,14 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
      * @param route The Route to add.
      */
     public void register(Route route) {
-        Integer oldSize = Integer.valueOf(_routeHashTable.size());
+        int oldSize = _routeHashTable.size();
         _routeHashTable.put(route.getId(), route);
         // find last id created
         int id = Integer.parseInt(route.getId());
         if (id > _id) {
             _id = id;
         }
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_routeHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _routeHashTable.size());
         // listen for name and state changes to forward
     }
 
@@ -108,9 +108,9 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
             return;
         }
         route.dispose();
-        Integer oldSize = Integer.valueOf(_routeHashTable.size());
+        int oldSize = _routeHashTable.size();
         _routeHashTable.remove(route.getId());
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_routeHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _routeHashTable.size());
     }
 
     /**
@@ -244,6 +244,7 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
         Location loc = InstanceManager.getDefault(LocationManager.class).getLocationByName(rl.getName());
         RouteLocation rlNew = newRoute.addLocation(loc);
         // now copy the route location objects we want
+        rlNew.setLocalMovesAllowed(rl.isLocalMovesAllowed());
         rlNew.setMaxCarMoves(rl.getMaxCarMoves());
         rlNew.setRandomControl(rl.getRandomControl());
         rlNew.setWait(rl.getWait());

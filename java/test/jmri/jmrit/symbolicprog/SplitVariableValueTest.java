@@ -9,16 +9,12 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.CvUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.NotApplicable;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the {@link SplitVariableValue} class.
@@ -107,55 +103,65 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     // some of the premade tests don't quite make sense; override them here.
     @Override
     @Test
+    @NotApplicable("mask is ignored by splitAddress tests")
     public void testVariableValueCreate() {
-    }// mask is ignored by splitAddress tests
+    }
 
     @Override
     @Test
+    @NotApplicable("low CV is upper part of address")
     public void testVariableFromCV() {
-    }     // low CV is upper part of address
+    }
 
     @Override
     @Test
+    @NotApplicable("due to multi-cv nature of splitAddress tests")
     public void testVariableValueRead() {
-    } // due to multi-cv nature of splitAddress tests
+    }
 
     @Override
     @Test
+    @NotApplicable("due to multi-cv nature of splitAddress tests")
     public void testVariableValueWrite() {
-    } // due to multi-cv nature of splitAddress tests
+    }
 
     @Override
     @Test
+    @NotApplicable("due to multi-cv nature of splitAddress tests")
     public void testVariableCvWrite() {
-    } // due to multi-cv nature of splitAddress tests
+    }
 
     @Override
     @Test
+    @NotApplicable("programmer synch is different")
     public void testWriteSynch2() {
-    }        // programmer synch is different
+    }
 
     // at some point, these should pass, but have to think hard about
     // how to define the split/shift/mask operations for long CVs
     @Override
     @Test
+    @Disabled("mask is ignored, test requires further development")
     public void testVariableValueCreateLargeValue() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueCreateLargeMaskValue() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueCreateLargeMaskValue256() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueCreateLargeMaskValue2up16() {
-    } // mask is ignored
+    }
 
     // Local tests
     @Test
@@ -278,7 +284,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         Assertions.assertEquals(189, cv2.getValue(), "set cv high bits");
     }
 
-    List<java.beans.PropertyChangeEvent> evtList = null;  // holds a list of ParameterChange events
+    private List<java.beans.PropertyChangeEvent> evtList = null;  // holds a list of ParameterChange events
 
     // check a long address read operation
     @Test
@@ -377,7 +383,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         HashMap<String, CvValue> v = createCvMap();
         JLabel status = new JLabel();
         String stdname = "";
-        String highCV = "";
+        String mHighCV = "";
         int pFactor = 1;
         int pOffset = 0;
         String uppermask = "";
@@ -389,7 +395,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
                 readOnly, infoOnly, writeOnly, opsOnly,
                 cvNum, mask, minVal, maxVal,
                 v, status, stdname,
-                highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
+                mHighCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
         Assertions.assertNotNull(var, "makeVar returned null");
 
         FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
@@ -494,7 +500,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         HashMap<String, CvValue> v = createCvMap();
         JLabel status = new JLabel();
         String stdname = "";
-        String highCV = "";
+        String mHighCV = "";
         int pFactor = 1;
         int pOffset = 0;
         String uppermask = "";
@@ -506,7 +512,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
                 readOnly, infoOnly, writeOnly, opsOnly,
                 cvNum, mask, minVal, maxVal,
                 v, status, stdname,
-                highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
+                mHighCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
         Assertions.assertNotNull(var, "makeVar returned null");
 
         CvValue[] cv = var.usesCVs();
@@ -907,7 +913,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         HashMap<String, CvValue> v = createCvMap();
         JLabel status = new JLabel();
         String stdname = "";
-        String highCV = "";
+        String mHighCV = "";
         int pFactor = 1;
         int pOffset = 0;
         String uppermask = "";
@@ -919,7 +925,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
                 readOnly, infoOnly, writeOnly, opsOnly,
                 cvNum, mask, minVal, maxVal,
                 v, status, stdname,
-                highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
+                mHighCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
         Assertions.assertNotNull(var, "makeVar returned null");
 
         FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
@@ -998,7 +1004,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         HashMap<String, CvValue> v = createCvMap();
         JLabel status = new JLabel();
         String stdname = "";
-        String highCV = "";
+        String mHighCV = "";
         int pFactor = 1;
         int pOffset = 0;
         String uppermask = "";
@@ -1010,7 +1016,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
                 readOnly, infoOnly, writeOnly, opsOnly,
                 cvNum, mask, minVal, maxVal,
                 v, status, stdname,
-                highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
+                mHighCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
         Assertions.assertNotNull(var, "makeVar returned null");
 
         ActionEvent actionEvent = new ActionEvent(var.getCommonRep(), ActionEvent.ACTION_PERFORMED, name);
@@ -1124,6 +1130,6 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         super.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SplitVariableValueTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SplitVariableValueTest.class);
 
 }

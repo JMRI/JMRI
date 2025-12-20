@@ -1,5 +1,7 @@
 package jmri.jmrix.acela.nodeconfig;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -1677,6 +1679,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Do the done action if the window is closed early.
      */
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This calls doneButtonActionPerformed which handles window closing")
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         doneButtonActionPerformed();

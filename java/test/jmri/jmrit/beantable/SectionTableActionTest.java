@@ -1,16 +1,18 @@
 package jmri.jmrit.beantable;
 
-import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
+
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import jmri.InstanceManager;
 import jmri.Section;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
+
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -52,14 +54,15 @@ public class SectionTableActionTest extends AbstractTableActionBase<Section> {
 
     @Test
     @Override
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testAddThroughDialog() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
+
+        Assertions.assertTrue(a.includeAddButton());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
+        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
@@ -67,24 +70,25 @@ public class SectionTableActionTest extends AbstractTableActionBase<Section> {
         JLabelOperator jlo = new JLabelOperator(jf, Bundle.getMessage("LabelSystemName"));
         ((JTextField) jlo.getLabelFor()).setText("1");
         //press the "Add Selected Block" button to add the only defined block
-        jmri.util.swing.JemmyUtil.pressButton(jf, ResourceBundle.getBundle("jmri.jmrit.beantable.SectionTransitTableBundle").getString("AddBlockButton"));
+        JemmyUtil.pressButton(jf, ResourceBundle.getBundle("jmri.jmrit.beantable.SectionTransitTableBundle").getString("AddBlockButton"));
         //and press create
-        jmri.util.swing.JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
-        jmri.util.JUnitAppender.suppressWarnMessage("Block IB12 does not have a user name,may not work correctly in Section IY:AUTO:0001");
+        JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
+        
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
 
     @Test
     @Override
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testEditButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
+
+        Assertions.assertTrue(a.includeAddButton());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
+        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
         //Enter 1 in the text field labeled "System Name:"
@@ -92,10 +96,9 @@ public class SectionTableActionTest extends AbstractTableActionBase<Section> {
         JLabelOperator jlo = new JLabelOperator(jf, Bundle.getMessage("LabelSystemName"));
         ((JTextField) jlo.getLabelFor()).setText("1");
         //press the "Add Selected Block" button to add the only defined block
-        jmri.util.swing.JemmyUtil.pressButton(jf, ResourceBundle.getBundle("jmri.jmrit.beantable.SectionTransitTableBundle").getString("AddBlockButton"));
+        JemmyUtil.pressButton(jf, ResourceBundle.getBundle("jmri.jmrit.beantable.SectionTransitTableBundle").getString("AddBlockButton"));
         //and press create
-        jmri.util.swing.JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
-        jmri.util.JUnitAppender.suppressWarnMessage("Block IB12 does not have a user name,may not work correctly in Section IY:AUTO:0001");
+        JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
 
         JFrameOperator jfo = new JFrameOperator(f);
 
@@ -103,7 +106,7 @@ public class SectionTableActionTest extends AbstractTableActionBase<Section> {
         // find the "Edit" button and press it.  This is in the table body.
         tbl.clickOnCell(0, BeanTableDataModel.NUMCOLUMN + 2);
         JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2), Bundle.getMessage("ButtonCancel"));
+        JemmyUtil.pressButton(new JFrameOperator(f2), Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
@@ -118,17 +121,22 @@ public class SectionTableActionTest extends AbstractTableActionBase<Section> {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         helpTarget = "package.jmri.jmrit.beantable.SectionTable";
         InstanceManager.setDefault(jmri.BlockManager.class, new jmri.BlockManager());
         a = new SectionTableAction();
-        InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("IB12");
+        InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("IB12")
+            .setUserName("Block 12 userName");
 
     }
 
     @Override
     @AfterEach
     public void tearDown() {
+        if ( a != null ){ 
+            a.dispose();
+            a = null;
+        }
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

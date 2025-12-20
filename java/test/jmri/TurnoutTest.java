@@ -1,7 +1,9 @@
 package jmri;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the Turnout class.
@@ -13,20 +15,20 @@ public class TurnoutTest {
     @SuppressWarnings("all")
     @Test
     public void testStateConstants() {
-        Assert.assertTrue("Thrown and Closed differ", (Turnout.THROWN & Turnout.CLOSED) == 0);
-        Assert.assertTrue("Thrown and Unknown differ", (Turnout.THROWN & Turnout.UNKNOWN) == 0);
-        Assert.assertTrue("Off and Unknown differ", (Turnout.CLOSED & Turnout.UNKNOWN) == 0);
-        Assert.assertTrue("Thrown and Inconsistent differ", (Turnout.THROWN & Turnout.INCONSISTENT) == 0);
-        Assert.assertTrue("Closed and Inconsistent differ", (Turnout.CLOSED & Turnout.INCONSISTENT) == 0);
-        Assert.assertTrue("Unknown and Inconsistent differ", (Turnout.UNKNOWN & Turnout.INCONSISTENT) == 0);
+        assertTrue( (Turnout.THROWN & Turnout.CLOSED) == 0, "Thrown and Closed differ");
+        assertTrue( (Turnout.THROWN & Turnout.UNKNOWN) == 0, "Thrown and Unknown differ");
+        assertTrue( (Turnout.CLOSED & Turnout.UNKNOWN) == 0, "Off and Unknown differ");
+        assertTrue( (Turnout.THROWN & Turnout.INCONSISTENT) == 0, "Thrown and Inconsistent differ");
+        assertTrue( (Turnout.CLOSED & Turnout.INCONSISTENT) == 0, "Closed and Inconsistent differ");
+        assertTrue( (Turnout.UNKNOWN & Turnout.INCONSISTENT) == 0, "Unknown and Inconsistent differ");
     }
 
     @Test 
     public void testInvertTurnoutState() {
-        Assert.assertEquals("Closed state Inverted",Turnout.THROWN,Turnout.invertTurnoutState(Turnout.CLOSED));
-        Assert.assertEquals("Thrown state Inverted",Turnout.CLOSED,Turnout.invertTurnoutState(Turnout.THROWN));
-        Assert.assertEquals("Inconsistent state Inverted",Turnout.INCONSISTENT,Turnout.invertTurnoutState(Turnout.INCONSISTENT));
-        Assert.assertEquals("Unknown state Inverted",Turnout.UNKNOWN,Turnout.invertTurnoutState(Turnout.UNKNOWN));
+        assertEquals( Turnout.THROWN, Turnout.invertTurnoutState(Turnout.CLOSED), "Closed state Inverted");
+        assertEquals( Turnout.CLOSED, Turnout.invertTurnoutState(Turnout.THROWN), "Thrown state Inverted");
+        assertEquals( Turnout.INCONSISTENT, Turnout.invertTurnoutState(Turnout.INCONSISTENT), "Inconsistent state Inverted");
+        assertEquals( Turnout.UNKNOWN, Turnout.invertTurnoutState(Turnout.UNKNOWN), "Unknown state Inverted");
     }
 
 }

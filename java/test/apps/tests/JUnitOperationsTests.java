@@ -2,12 +2,8 @@ package apps.tests;
 
 import org.junit.internal.TextListener;
 import org.junit.platform.runner.JUnitPlatform;
-import org.junit.platform.suite.api.ExcludeClassNamePatterns;
-import org.junit.platform.suite.api.SelectPackages;
-import org.junit.platform.suite.api.SuiteDisplayName;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
-import org.junit.runner.RunWith;
+import org.junit.platform.suite.api.*;
+import org.junit.runner.*;
 import org.junit.runner.notification.RunListener;
 
 /**
@@ -28,7 +24,7 @@ import org.junit.runner.notification.RunListener;
  */
 @RunWith(JUnitPlatform.class)
 @SuiteDisplayName("OperationTests")
-@SelectPackages({"jmri.jmrit.operations"})
+@SelectPackages({"jmri.jmrit.operations", "jmri.server.json.operations", "jmri.web.servlet.operations"})
 @ExcludeClassNamePatterns({"HeadLessTest","FileLineEndingsTest","ArchitectureTest"})
 public class JUnitOperationsTests {
 

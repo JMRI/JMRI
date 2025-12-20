@@ -1,8 +1,5 @@
 package jmri.jmrit.logix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.SpeedStepMode;
 import jmri.Throttle;
 
@@ -14,31 +11,39 @@ import jmri.Throttle;
  */
 public class LearnControlPanel extends jmri.jmrit.throttle.ControlPanel {
 
-    private LearnThrottleFrame _throttleFrame;
+    private final LearnThrottleFrame _throttleFrame;
 
     LearnControlPanel(LearnThrottleFrame ltf) {
         super();
         _throttleFrame = ltf;
         
     }
+
     // update the state of this panel if any of the properties change
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("propertyChange: {}, newValue= {}", e.getPropertyName(), e.getNewValue().toString());
+            log.debug("propertyChange: {}, newValue= {}", e.getPropertyName(), e.getNewValue());
         }
-        if (e.getPropertyName().equals(Throttle.SPEEDSETTING)) {
-            float speed = ((Float) e.getNewValue()).floatValue();
-            _throttleFrame.setSpeedSetting(speed);
-        } else if (e.getPropertyName().equals(Throttle.SPEEDSTEPS)) {
-            SpeedStepMode steps = (SpeedStepMode)e.getNewValue();
-            _throttleFrame.setSpeedStepMode(steps);
-        } else if (e.getPropertyName().equals(Throttle.ISFORWARD)) {
-            boolean Forward = ((Boolean) e.getNewValue()).booleanValue();
-            _throttleFrame.setButtonForward(Forward);
+        switch (e.getPropertyName()) {
+            case Throttle.SPEEDSETTING:
+                float speed = ((Float) e.getNewValue());
+                _throttleFrame.setSpeedSetting(speed);
+                break;
+            case Throttle.SPEEDSTEPS:
+                SpeedStepMode steps = (SpeedStepMode)e.getNewValue();
+                _throttleFrame.setSpeedStepMode(steps);
+                break;
+            case Throttle.ISFORWARD:
+                boolean forward = ((Boolean) e.getNewValue());
+                _throttleFrame.setButtonForward(forward);
+                break;
+            default:
+                break;
         }
         super.propertyChange(e);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(LearnControlPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LearnControlPanel.class);
+
 }

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.trains.TrainsTableFrame;
+import jmri.jmrit.operations.trains.gui.TrainsTableFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 

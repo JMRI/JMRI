@@ -12,6 +12,18 @@
     .ctr {
         text-align: center;
     }
+
+    table {
+        border: 3px solid;
+    }
+
+    th {
+        border: 1px solid;
+    }
+
+    td {
+        border: 1px solid;
+    }
   </style>
 </head>
 <body>
@@ -228,7 +240,7 @@
 
               <li>DCS50/DCS51/DCS52</li>
 
-              <li>DCS240</li>
+              <li>DCS240/DCS240+</li>
 
               <li>DCS210/DCS210+</li>
             </ul>
@@ -247,7 +259,7 @@
 
               <li>DCS100/DCS200</li>
 
-              <li>DCS240</li>
+              <li>DCS240/DSC240+</li>
 
               <li>DCS210/DCS210+</li>
 
@@ -323,7 +335,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>RR-CirKits LocoBuffer-USB Rev N,<BR>LocoBuffer-USB Rev O</td>
+          <td>RR-CirKits LocoBuffer-USB Rev N,<BR>LocoBuffer-USB Rev O, LocoBuffer-NG</td>
           <td>Optional</td>
           <td>Required for power **</td>
           <td>Required, <em>cannot provide</em></td>
@@ -414,18 +426,37 @@
         </tr>
 
         <tr class="ctr">
+          <td>Digitrax BDL716</td>
+          <td>
+          </td>
+          <td>Requires DCC signal</td>
+          <td>Required</td>
+          <td>
+          </td>
+        </tr>
+
+        <tr class="ctr">
           <td>Digitrax PM4/PM42</td>
           <td>
           </td>
-          <td>
-          </td>
+          <td>Requires DCC signal</td>
           <td>Required, can provide</td>
           <td>
           </td>
         </tr>
 
         <tr class="ctr">
-          <td>Digitrax SE8C</td>
+          <td>Digitrax PM74</td>
+          <td>
+          </td>
+          <td>Requires DCC signal</td>
+          <td>Required</td>
+          <td>
+          </td>
+        </tr>
+
+        <tr class="ctr">
+          <td>Digitrax SE74</td>
           <td>
           </td>
           <td>
@@ -436,7 +467,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>Digitrax UR90/UR91/UR92/UR92CE</td>
+          <td>Digitrax UR90/UR90X/UR91/UR92/UR92CE/UR93</td>
           <td>Required</td>
           <td>
           </td>
@@ -619,6 +650,16 @@
           <td>
           </td>
         </tr>
+
+        <tr class="ctr">
+          <td>N3IX RailSync Power and Termination Board</td>
+          <td>
+          </td>
+          <td>Can provide DC power</td>
+          <td>Can provide Termination</td>
+          <td>
+          </td>
+        </tr>
       </table>
 
       <p>Notes:</p>
@@ -650,7 +691,8 @@
       power on the "RailSync" wires. The PR4 uses the signal on the RailSync wires to power
       its LocoNet isolation and interface circuitry. Failure to provide sufficient power on
       the RailSync wires will prevent the PR4 from communicating with LocoNet or result in
-      unreliable communication.</p>
+      unreliable communication.  The PR4 <em>cannot</em> provide LocoNet Data Signal
+      "Termination".</p>
 
       <h3 id="dataterm">LocoNet Data Signal "Termination"</h3>
 
@@ -792,6 +834,17 @@
           <p>This device may be configured to provide LocoNet Data Signal termination. It may also
           be configured to provide DC power on the RailSync wires.</p>
         </li>
+
+        <li>
+          <strong>N3IX RailSync Power and Termination Board</strong>
+          <p>This device may be configured to provide LocoNet Data Signal termination. It may also
+          be configured to provide external DC power on the RailSync wires for both of its LocoNet
+          connectors.  Alternatively, it may be configured to provide external DC power only to
+          one of the two LocoNet ports, allowing the device to provide an external power source in
+          cases where there is too much RailSync loading on a portion of the LocoNet and where
+          portion does not need an active RailSync signal.</p>
+        </li>
+
       </ul>
 
       <h4 id="diyhwdataterm">Do-it-yourself LocoNet Data Signal Termination</h4>
@@ -872,6 +925,12 @@
           <p>This device may be configured to provide DC power on the RailSync wires. It may also
           be configured to provide LocoNet Data Signal termination.</p>
         </li>
+
+        <li>
+          <strong>N3IX RailSync Power and Termination Board</strong>
+          <p>Among other options, this device may be configured to provide DC power on the
+          RailSync wires. It may also be configured to provide LocoNet Data Signal termination.</p>
+
       </ul>
 
       <h4 id="rspowersupply">RailSync power from a DC power supply</h4>
@@ -1087,7 +1146,8 @@
       remainder of the system.</p>
 
       <p>Isolation of LocoNet from the computer is recommended. The LocoBuffer-II, LocoBuffer-USB,
-      and LocoBuffer-USB Rev-n computer interface devices provide "optical isolation" of the
+      LocoBuffer-USB Rev-n and LocoBuffer-NG, and the Digitrax PR4 computer interface devices
+      provide "optical isolation" of the
       LocoNet signals from the computer electrical signals. Note that the LocoBuffer-II isolation
       is not effective when it is configured for "Local Power". The LocoBuffer-II should be
       configured for "isolated power" and should have an external power supply plugged in for
@@ -1206,8 +1266,9 @@
       "https://www.digitrax.com">the Digitrax website</a>.</p>
 
       <p>Information and support for the LocoBuffer-II, the LocoBuffer-USB, the LocoBuffer-USB
-      Rev-N and Rev-O, the LocoNet-Terminator, the SSB-Gateway, and other products by RR-CirKits
-      may be found at <a href="http://www.rr-cirkits.com/">the RR-CirKits website</a>.</p>
+      Rev-N and Rev-O, the LocoBuffer-NG, the LocoNet-Terminator, the SSB-Gateway, and other
+      products by RR-CirKits may be found at <a href="http://www.rr-cirkits.com/">the RR-CirKits
+      website</a>.</p>
 
       <p>Information and support for products from Team Digital may be found at <a href=
       "http://www.teamdigital1.com/">the Team Digital website</a>.</p>
@@ -1223,6 +1284,9 @@
 
       <p>Information and support for products by M&ouml;llehem G&aring;rdsproduktion MGP) may be found at
       <a href="http://www.mollehem.se/index.php/en/">The M&ouml;llehem G&aring;rdsproduktion website</a>.</p>
+
+      <p>Information and support for products by N3IX) may be found at
+      <a href="https://quadln.n3ix.com/">The N3IX Engineering website</a>.</p>
 
       <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com">Digitrax,
       Inc.</a></p>

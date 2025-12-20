@@ -277,7 +277,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
                 if (paths != null) {
                     for (String s : paths) {
                         if (name.equals(s)) {
-                            ((IndicatorTrack) pos).setControlling(true);
+                            pos.setControlling(true);
                             pathGroup.add(pos);
                         }
                     }

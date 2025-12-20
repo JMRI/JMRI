@@ -20,21 +20,21 @@ package jmri.jmrit.vsdecoder;
  */
 class VSDecoderManagerThread extends Thread {
 
-    private volatile static VSDecoderManagerThread instance = null;
+    private static volatile VSDecoderManagerThread instance = null;
     private static VSDecoderManager manager = null;
-    boolean is_running;
+    private boolean is_running;
 
     private VSDecoderManagerThread() {
         super();
         is_running = false;
     }
 
-    public static VSDecoderManagerThread instance(Boolean create) {
+    static VSDecoderManagerThread instance(boolean create) {
         manager = new VSDecoderManager();
         return instance();
     }
 
-    public static VSDecoderManagerThread instance() {
+    static VSDecoderManagerThread instance() {
         if (instance == null) {
             VSDecoderManagerThread temp = new VSDecoderManagerThread();
             temp.setName("VSDecoderManagerThread");
@@ -44,7 +44,7 @@ class VSDecoderManagerThread extends Thread {
         return instance;
     }
 
-    public static VSDecoderManager manager() {
+    static VSDecoderManager manager() {
         return VSDecoderManagerThread.manager;
     }
 

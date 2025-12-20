@@ -4,18 +4,17 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
 public class WarrantTableActionTest {
-    WarrantTableAction wta;
+
+    private WarrantTableAction wta;
 
     @Test
     public void testCTor() {
-        assertThat(wta).withFailMessage("exists").isNotNull();
+        Assertions.assertNotNull( wta, "exists");
     }
 
     @BeforeEach

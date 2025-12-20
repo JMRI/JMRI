@@ -22,7 +22,7 @@ public class SpeedStepScaleSpeedMatcherConfig extends SpeedMatcherConfig {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Instance Variables">
-    public float targetMaxSpeed;
+    public SpeedTableStepSpeed targetMaxSpeedStep;
     public JLabel actualMaxSpeedField;
     //</editor-fold>
 
@@ -30,7 +30,8 @@ public class SpeedStepScaleSpeedMatcherConfig extends SpeedMatcherConfig {
      * Create a config object for a Speed Step Scale Speed Matcher
      *
      * @param address              Address of locomotive to speed match
-     * @param targetMaxSpeed       Target maximum speed in the given speedUnit
+     * @param targetMaxSpeedStep   Target maximum speed step (corresponds to
+     *                             maximum speed)
      * @param speedUnit            Speed.Unit to speed match the locomotive in
      * @param trimReverseSpeed     Set to true to trim the locomotive's reverse
      *                             speed, false otherwise
@@ -50,7 +51,7 @@ public class SpeedStepScaleSpeedMatcherConfig extends SpeedMatcherConfig {
      */
     public SpeedStepScaleSpeedMatcherConfig(
             DccLocoAddress address,
-            float targetMaxSpeed,
+            SpeedTableStepSpeed targetMaxSpeedStep,
             Speed.Unit speedUnit,
             boolean trimReverseSpeed,
             int warmUpForwardSeconds,
@@ -61,7 +62,7 @@ public class SpeedStepScaleSpeedMatcherConfig extends SpeedMatcherConfig {
             JButton startStopButton) {
         super(address, speedUnit, trimReverseSpeed, warmUpForwardSeconds, warmUpReverseSeconds, powerManager, statusLabel, startStopButton);
 
-        this.targetMaxSpeed = targetMaxSpeed;
+        this.targetMaxSpeedStep = targetMaxSpeedStep;
         this.actualMaxSpeedField = actualMaxSpeedField;
     }
 

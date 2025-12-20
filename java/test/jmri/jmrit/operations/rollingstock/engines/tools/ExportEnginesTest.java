@@ -1,13 +1,13 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -17,23 +17,19 @@ public class ExportEnginesTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        ExportEngines t = new ExportEngines();
-        assertThat(t).withFailMessage("exists").isNotNull();
+        ExportEngines t = new ExportEngines(null);
+        Assertions.assertNotNull(t, "exists");
     }
-    
+
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCreateFile() {
         JUnitOperationsUtil.initOperationsData();
-        ExportEngines exportEngines = new ExportEngines();
+        EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
+        ExportEngines exportEngines = new ExportEngines(engineManager.getByIdList());
 
         // should cause export complete dialog to appear
-        Thread export = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                exportEngines.writeOperationsEngineFile();
-            }
-        });
+        Thread export = new Thread(exportEngines::writeOperationsEngineFile);
         export.setName("Export Engines"); // NOI18N
         export.start();
 
@@ -43,8 +39,10 @@ public class ExportEnginesTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
 
+        jmri.util.JUnitUtil.waitFor(() -> !export.isAlive(), "wait for export to complete");
+
         java.io.File file = new java.io.File(ExportEngines.defaultOperationsFilename());
-        assertThat(file.exists()).withFailMessage("Confirm file creation").isTrue();
+        Assertions.assertTrue(file.exists(), "Confirm file creation");
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ExportEnginesTest.class);

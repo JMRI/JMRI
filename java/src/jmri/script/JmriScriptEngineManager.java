@@ -40,6 +40,7 @@ import jmri.RouteManager;
 import jmri.SectionManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.StringIOManager;
 import jmri.ShutDownManager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
@@ -134,6 +135,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         bindings.put("reporters", InstanceManager.getNullableDefault(ReporterManager.class));
         bindings.put("idtags", InstanceManager.getNullableDefault(IdTagManager.class));
         bindings.put("memories", InstanceManager.getNullableDefault(MemoryManager.class));
+        bindings.put("stringios", InstanceManager.getNullableDefault(StringIOManager.class));
         bindings.put("powermanager", InstanceManager.getNullableDefault(PowerManager.class));
         bindings.put("addressedProgrammers", InstanceManager.getNullableDefault(AddressedProgrammerManager.class));
         bindings.put("globalProgrammers", InstanceManager.getNullableDefault(GlobalProgrammerManager.class));

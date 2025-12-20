@@ -18,8 +18,10 @@ public class MarklinConnectionTypeList implements jmri.jmrix.ConnectionTypeList 
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
+            "jmri.jmrix.marklin.tcpdriver.ConnectionConfig",
             "jmri.jmrix.marklin.networkdriver.ConnectionConfig",
-            "jmri.jmrix.marklin.cdb.serialdriver.ConnectionConfig"
+            "jmri.jmrix.marklin.cdb.serialdriver.ConnectionConfig",
+            "jmri.jmrix.marklin.simulation.MarklinSimConnectionConfig"
         };
     }
 

@@ -20,19 +20,23 @@ public class RetryRuleTest {
 
     @Test
     public void testPassOnThirdRetry() {
-        if (countPassOnThirdRetry++ < 3) {
+        countPassOnThirdRetry++;
+        if ( countPassOnThirdRetry < 4 ) {
             Assert.fail("fail test plus first two retries, will pass on 3rd");
         }
     }
-    int countPassOnThirdRetry = 0;
+
+    private static int countPassOnThirdRetry = 0;
 
     @Test
     public void testJemmyTimeout() {
-        if (countJemmyTimeout++ < 3) {
+        countJemmyTimeout++;
+        if ( countJemmyTimeout < 4 ) {
             throw new org.netbeans.jemmy.TimeoutExpiredException("fail test plus first two retries, will pass on 3rd");
         }
     }
-    int countJemmyTimeout = 0;
+
+    private static int countJemmyTimeout = 0;
 
     // Don't have a test for handling of failure after all retries,
     // because that's a failure...
@@ -49,26 +53,20 @@ public class RetryRuleTest {
     static public void setUp() {
         JUnitUtil.setUp();
     }
-    
+
     @After
     public void afterTest() {
-        // test for messages
-        if (countPassOnThirdRetry == 4) countPassOnThirdRetry = 0; // done
-        if (countPassOnThirdRetry != 0) {
-            jmri.util.JUnitAppender.assertWarnMessage("run  "+countPassOnThirdRetry+" failed, RetryRule repeats");
-        }
-
-        if (countJemmyTimeout == 4) countJemmyTimeout = 0; // done
-        if (countJemmyTimeout != 0) {
-            jmri.util.JUnitAppender.assertWarnMessage("run  "+countJemmyTimeout+" failed, RetryRule repeats");
-        }
+        // tests are run in either order, so cannot assert the warn, just suppress.
+        JUnitAppender.suppressWarnMessageStartsWith("testPassOnThirdRetry(jmri.util.junit.rules.RetryRuleTest) : run");
+        JUnitAppender.suppressWarnMessageStartsWith("testJemmyTimeout(jmri.util.junit.rules.RetryRuleTest) : run ");
         
-        jmri.util.JUnitAppender.suppressWarnMessage("run  3 failed, RetryRule repeats");
     }
 
-    // before entire class as retryrule messes with before/after
+    // after entire class as retryrule messes with before/after
     @AfterClass
     static public void tearDown() {
+        Assert.assertEquals("countPassOnThirdRetry incremented 4 times",4, countPassOnThirdRetry);
+        Assert.assertEquals("countJemmyTimeout incremented 4 times",4, countJemmyTimeout);
         JUnitUtil.tearDown();
     }
 

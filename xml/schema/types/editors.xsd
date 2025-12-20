@@ -944,6 +944,42 @@
       <xs:attribute name="globalVariable" type="beanNameType"></xs:attribute>
     </xs:complexType>
 
+    <xs:complexType name="EditorLogixNGTableIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a LogixNGTableIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.LogixNGTableIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip_prependWithDisplayName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="globalVariableState" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
+            <xs:attribute name="icon" type="xs:string" use="required"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      
+      <xs:attribute name="logixNGTable" type="beanNameType"></xs:attribute>
+      <xs:attribute name="validateModule" type="beanNameType"></xs:attribute>
+      <xs:attribute name="isEditable" type="yesNoType"></xs:attribute>
+      <xs:attribute name="editableColumns" type="xs:string"></xs:attribute>
+      <xs:attribute name="columnWidths" type="xs:string"></xs:attribute>
+      <xs:attribute name="colWidth" type="xs:int"></xs:attribute>
+
+    </xs:complexType>
+
     <xs:complexType name="EditorFastClockIconType">
       <xs:annotation>
         <xs:documentation>
@@ -1429,6 +1465,7 @@
       <xs:attribute name="ver" type="xs:integer"></xs:attribute>
 
       <xs:attribute name="hidden" type="yesNoType"></xs:attribute>
+      <xs:attribute name="showunknown" type="yesNoType"></xs:attribute>
       <xs:attribute name="disabled" type="yesNoType"></xs:attribute>
       <xs:attribute name="disableWhenOccupied" type="yesNoType"></xs:attribute>
       <xs:attribute name="showtooltip" type="yesNoType"></xs:attribute>
@@ -2013,6 +2050,7 @@
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element name="raytrack" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
+            <xs:attribute name="approachmast" type="xs:string" use="optional"></xs:attribute>
             <xs:attribute name="connectname" type="xs:string"></xs:attribute>
             <xs:attribute name="angle" type="xs:string"></xs:attribute>
             <xs:attribute name="index" type="xs:string"></xs:attribute>
@@ -2036,6 +2074,10 @@
       <xs:attribute name="xcen" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="ycen" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="turnoutControlled" type="yesNoType"></xs:attribute>
+      <xs:attribute name="dispatcherManaged" type="yesNoType" use="optional"></xs:attribute>
+      <xs:attribute name="exitmast" type="xs:string" use="optional"></xs:attribute>
+      <xs:attribute name="buffermast" type="xs:string" use="optional"></xs:attribute>
+      <xs:attribute name="signalIconPlacement" type="xs:string" use="optional"></xs:attribute>
 
     </xs:complexType>
 

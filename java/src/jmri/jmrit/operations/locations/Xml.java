@@ -61,6 +61,7 @@ public class Xml {
     static final String TRACK_TYPE = "trackType"; // NOI18N
     static final String LENGTH = "length"; // NOI18N
     static final String MOVES = "moves"; // NOI18N
+    static final String TRACK_PRIORITY = "trackPriority"; // NOI18N
     static final String BLOCKING_ORDER = "blockingOrder"; // NOI18N
     static final String CAR_ROAD_OPERATION = "carRoadOperation"; // NOI18N misspelled should have been carRoadOption
     static final String CAR_ROAD_OPTION = "carRoadOption"; // NOI18N
@@ -98,6 +99,7 @@ public class Xml {
     static final String ORDER = "order"; // NOI18N
     static final String POOL = "pool"; // NOI18N
     static final String MIN_LENGTH = "minLength"; // NOI18N
+    static final String MAX_LENGTH = "maxLength"; // NOI18N
     static final String IGNORE_USED_PERCENTAGE = "ignoreUsedPercentage"; // NOI18N
     static final String HOLD_CARS_CUSTOM = "holdCustomLoads"; // NOI18N
     static final String ONLY_CARS_WITH_FD = "onlyCarWithFD"; // NOI18N

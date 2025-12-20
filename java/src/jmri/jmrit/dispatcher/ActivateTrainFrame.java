@@ -1,14 +1,17 @@
 package jmri.jmrit.dispatcher;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
@@ -23,31 +26,42 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 import jmri.Block;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.Transit;
 import jmri.TransitManager;
+import jmri.UserPreferencesManager;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
+import jmri.jmrit.dispatcher.ActiveTrain.TrainLengthUnits;
 import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
+import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
+import jmri.jmrit.roster.swing.RosterGroupComboBox;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
- * Displays the Activate New Train dialog and processes information entered
+ * Displays the Activate New Train Frame and processes information entered
  * there.
  * <p>
- * This module works with Dispatcher, which initiates the display of the dialog.
+ * This module works with Dispatcher, which initiates the display of this Frame.
  * Dispatcher also creates the ActiveTrain.
  * <p>
  * This file is part of JMRI.
@@ -73,10 +87,10 @@ public class ActivateTrainFrame extends JmriJFrame {
     // operational instance variables
     private DispatcherFrame _dispatcher = null;
     private TrainInfoFile _tiFile = null;
-    private TrainsFrom _TrainsFrom;
-    private List<ActiveTrain> _ActiveTrainsList = null;
     private final TransitManager _TransitManager = InstanceManager.getDefault(jmri.TransitManager.class);
     private String _trainInfoName = "";
+    UserPreferencesManager upm = InstanceManager.getDefault(UserPreferencesManager.class);
+    String upmGroupName = this.getClass().getName() + ".rosterGroupSelector";
 
     // initiate train window variables
     private Transit selectedTransit = null;
@@ -84,24 +98,28 @@ public class ActivateTrainFrame extends JmriJFrame {
     private JmriJFrame initiateFrame = null;
     private Container initiatePane = null;
     private final jmri.swing.NamedBeanComboBox<Transit> transitSelectBox = new jmri.swing.NamedBeanComboBox<>(_TransitManager);
-    private final JLabel trainBoxLabel = new JLabel("     " + Bundle.getMessage("TrainBoxLabel") + ":");
     private final JComboBox<Object> trainSelectBox = new JComboBox<>();
     // private final List<RosterEntry> trainBoxList = new ArrayList<>();
-    private RosterEntryComboBox rosterComboBox = null;
+    private RosterEntrySelectorPanel rosterComboBox = null;
     private final JLabel trainFieldLabel = new JLabel(Bundle.getMessage("TrainBoxLabel") + ":");
     private final JTextField trainNameField = new JTextField(10);
     private final JLabel dccAddressFieldLabel = new JLabel("     " + Bundle.getMessage("DccAddressFieldLabel") + ":");
     private final JSpinner dccAddressSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 9999, 1));
     private final JCheckBox inTransitBox = new JCheckBox(Bundle.getMessage("TrainInTransit"));
     private final JComboBox<String> startingBlockBox = new JComboBox<>();
+    private final JComboBox<String> viaBlockBox = new JComboBox<>();
+    private final JLabel viaBlockBoxLabel = new JLabel(Bundle.getMessage("ViaBlockBoxLabel"));
     private List<Block> startingBlockBoxList = new ArrayList<>();
+    private final List<Block> viaBlockBoxList = new ArrayList<>();
     private List<Integer> startingBlockSeqList = new ArrayList<>();
     private final JComboBox<String> destinationBlockBox = new JComboBox<>();
+
     private List<Block> destinationBlockBoxList = new ArrayList<>();
     private List<Integer> destinationBlockSeqList = new ArrayList<>();
     private JButton addNewTrainButton = null;
     private JButton loadButton = null;
     private JButton saveButton = null;
+    private JButton saveAsTemplateButton  = null;
     private JButton deleteButton = null;
     private final JCheckBox autoRunBox = new JCheckBox(Bundle.getMessage("AutoRun"));
     private final JCheckBox loadAtStartupBox = new JCheckBox(Bundle.getMessage("LoadAtStartup"));
@@ -111,6 +129,11 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JRadioButton radioTrainsFromUser = new JRadioButton(Bundle.getMessage("TrainsFromUser"));
     private final JRadioButton radioTrainsFromSetLater = new JRadioButton(Bundle.getMessage("TrainsFromSetLater"));
     private final ButtonGroup trainsFromButtonGroup = new ButtonGroup();
+
+    private final JRadioButton radioTransitsPredefined = new JRadioButton(Bundle.getMessage("TransitsPredefined"));
+    private final JRadioButton radioTransitsAdHoc = new JRadioButton(Bundle.getMessage("TransitsAdHoc"));
+    private final ButtonGroup transitsFromButtonGroup = new ButtonGroup();
+    //private final JCheckBox adHocCloseLoop = new JCheckBox(Bundle.getMessage("TransitCloseLoop"));
 
     private final JRadioButton allocateBySafeRadioButton = new JRadioButton(Bundle.getMessage("ToSafeSections"));
     private final JRadioButton allocateAllTheWayRadioButton = new JRadioButton(Bundle.getMessage("AsFarAsPos"));
@@ -125,14 +148,14 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JCheckBox resetWhenDoneBox = new JCheckBox(Bundle.getMessage("ResetWhenDone"));
     private final JCheckBox reverseAtEndBox = new JCheckBox(Bundle.getMessage("ReverseAtEnd"));
 
-    int delayedStartInt[] = new int[]{ActiveTrain.NODELAY, ActiveTrain.TIMEDDELAY, ActiveTrain.SENSORDELAY};
-    String delayedStartString[] = new String[]{Bundle.getMessage("DelayedStartNone"), Bundle.getMessage("DelayedStartTimed"), Bundle.getMessage("DelayedStartSensor")};
+    int[] delayedStartInt = new int[]{ActiveTrain.NODELAY, ActiveTrain.TIMEDDELAY, ActiveTrain.SENSORDELAY};
+    String[] delayedStartString = new String[]{Bundle.getMessage("DelayedStartNone"), Bundle.getMessage("DelayedStartTimed"), Bundle.getMessage("DelayedStartSensor")};
 
     private final JComboBox<String> reverseDelayedRestartType = new JComboBox<>(delayedStartString);
     private final JLabel delayReverseReStartLabel = new JLabel(Bundle.getMessage("DelayRestart"));
     private final JLabel delayReverseReStartSensorLabel = new JLabel(Bundle.getMessage("RestartSensor"));
     private final JCheckBox delayReverseResetSensorBox = new JCheckBox(Bundle.getMessage("ResetRestartSensor"));
-    private final NamedBeanComboBox<Sensor> delayReverseReStartSensor = new NamedBeanComboBox<>(jmri.InstanceManager.sensorManagerInstance());
+    private final NamedBeanComboBox<Sensor> delayReverseReStartSensor = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance());
     private final JSpinner delayReverseMinSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
     private final JLabel delayReverseMinLabel = new JLabel(Bundle.getMessage("RestartTimed"));
 
@@ -142,8 +165,8 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JLabel delayReStartSensorLabel = new JLabel(Bundle.getMessage("RestartSensor"));
     private final JCheckBox resetRestartSensorBox = new JCheckBox(Bundle.getMessage("ResetRestartSensor"));
     private final JComboBox<String> delayedReStartBox = new JComboBox<>(delayedStartString);
-    private final NamedBeanComboBox<Sensor> delaySensor = new NamedBeanComboBox<>(jmri.InstanceManager.sensorManagerInstance());
-    private final NamedBeanComboBox<Sensor> delayReStartSensor = new NamedBeanComboBox<>(jmri.InstanceManager.sensorManagerInstance());
+    private final NamedBeanComboBox<Sensor> delaySensor = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance());
+    private final NamedBeanComboBox<Sensor> delayReStartSensor = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance());
 
     private final JSpinner departureHrSpinner = new JSpinner(new SpinnerNumberModel(8, 0, 23, 1));
     private final JSpinner departureMinSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
@@ -158,6 +181,14 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     boolean transitsFromSpecificBlock = false;
 
+    private TrainInfo trainInfo;
+
+    private final String nameOfTemplateFile="TrainInfoDefaultTemplate.xml";
+    // to be added and removed.
+    private final ActionListener viaBlockBoxListener = e -> handleViaBlockSelectionChanged();
+    // roster entries excluded due to already in use.
+    private ArrayList<RosterEntry> excludedRosterEntries;
+
     /**
      * Open up a new train window for a given roster entry located in a specific
      * block.
@@ -168,8 +199,8 @@ public class ActivateTrainFrame extends JmriJFrame {
      */
     public void initiateTrain(ActionEvent e, RosterEntry re, Block b) {
         initiateTrain(e);
-        if (_TrainsFrom == TrainsFrom.TRAINSFROMROSTER && re != null) {
-            setRosterComboBox(rosterComboBox, re.getId());
+        if (trainInfo.getTrainsFrom() == TrainsFrom.TRAINSFROMROSTER && re != null) {
+            setRosterEntryBox(rosterComboBox, re.getId());
             //Add in some bits of code as some point to filter down the transits that can be used.
         }
         if (b != null && selectedTransit != null) {
@@ -210,9 +241,21 @@ public class ActivateTrainFrame extends JmriJFrame {
      */
     protected void initiateTrain(ActionEvent e) {
         // set Dispatcher defaults
-        _TrainsFrom = _dispatcher.getTrainsFrom();
-        _ActiveTrainsList = _dispatcher.getActiveTrainsList();
         // create window if needed
+        // if template exists open it
+        try {
+            trainInfo = _tiFile.readTrainInfo(nameOfTemplateFile);
+            if (trainInfo == null) {
+                trainInfo = new TrainInfo();
+            }
+        } catch (java.io.IOException ioe) {
+            log.error("IO Exception when reading train info file", ioe);
+            return;
+        } catch (org.jdom2.JDOMException jde) {
+            log.error("JDOM Exception when reading train info file", jde);
+            return;
+        }
+
         if (initiateFrame == null) {
             initiateFrame = this;
             initiateFrame.setTitle(Bundle.getMessage("AddTrainTitle"));
@@ -221,273 +264,244 @@ public class ActivateTrainFrame extends JmriJFrame {
             initiatePane.setLayout(new BoxLayout(initiatePane, BoxLayout.Y_AXIS));
 
             // add buttons to load and save train information
-            JPanel p0 = new JPanel();
-            p0.setLayout(new FlowLayout());
-            p0.add(loadButton = new JButton(Bundle.getMessage("LoadButton")));
-            loadButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    loadTrainInfo(e);
-                }
-            });
+            JPanel hdr = new JPanel();
+            hdr.add(loadButton = new JButton(Bundle.getMessage("LoadButton")));
+            loadButton.addActionListener(this::loadTrainInfo);
             loadButton.setToolTipText(Bundle.getMessage("LoadButtonHint"));
-            p0.add(saveButton = new JButton(Bundle.getMessage("SaveButton")));
-            saveButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    saveTrainInfo(e,_TrainsFrom == TrainsFrom.TRAINSFROMSETLATER ? true : false );
-                }
-            });
+            hdr.add(saveButton = new JButton(Bundle.getMessage("SaveButton")));
+            saveButton.addActionListener( ev -> saveTrainInfo());
             saveButton.setToolTipText(Bundle.getMessage("SaveButtonHint"));
-            p0.add(deleteButton = new JButton(Bundle.getMessage("DeleteButton")));
-            deleteButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    deleteTrainInfo(e);
-                }
-            });
+            hdr.add(saveAsTemplateButton = new JButton(Bundle.getMessage("SaveAsTemplateButton")));
+            saveAsTemplateButton.addActionListener( ev -> saveTrainInfoAsTemplate());
+            saveAsTemplateButton.setToolTipText(Bundle.getMessage("SaveAsTemplateButtonHint"));
+            hdr.add(deleteButton = new JButton(Bundle.getMessage("DeleteButton")));
+            deleteButton.addActionListener( ev -> deleteTrainInfo());
             deleteButton.setToolTipText(Bundle.getMessage("DeleteButtonHint"));
 
             // add items relating to both manually run and automatic trains.
 
             // Trains From choices.
-            JPanel p0a = new JPanel();
-            p0a.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainsFrom")));
-            p0a.setLayout(new FlowLayout());
+            JPanel p1 = new JPanel();
+            p1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainsFrom")));
+            radioTrainsFromRoster.setActionCommand("TRAINSFROMROSTER");
             trainsFromButtonGroup.add(radioTrainsFromRoster);
+            radioTrainsFromOps.setActionCommand("TRAINSFROMOPS");
             trainsFromButtonGroup.add(radioTrainsFromOps);
+            radioTrainsFromUser.setActionCommand("TRAINSFROMUSER");
             trainsFromButtonGroup.add(radioTrainsFromUser);
+            radioTrainsFromSetLater.setActionCommand("TRAINSFROMSETLATER");
             trainsFromButtonGroup.add(radioTrainsFromSetLater);
-            p0a.add(radioTrainsFromRoster);
+            p1.add(radioTrainsFromRoster);
             radioTrainsFromRoster.setToolTipText(Bundle.getMessage("TrainsFromRosterHint"));
-            p0a.add(radioTrainsFromOps);
+            p1.add(radioTrainsFromOps);
             radioTrainsFromOps.setToolTipText(Bundle.getMessage("TrainsFromTrainsHint"));
-            p0a.add(radioTrainsFromUser);
+            p1.add(radioTrainsFromUser);
             radioTrainsFromUser.setToolTipText(Bundle.getMessage("TrainsFromUserHint"));
-            p0a.add(radioTrainsFromSetLater);
+            p1.add(radioTrainsFromSetLater);
             radioTrainsFromSetLater.setToolTipText(Bundle.getMessage("TrainsFromSetLaterHint"));
 
-            radioTrainsFromOps.addItemListener(new ItemListener() {
-                @Override
-                public void itemStateChanged(ItemEvent e)  {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        _TrainsFrom = TrainsFrom.TRAINSFROMOPS;
-                        setTrainsFromOptions(_TrainsFrom);
-                    }
+            radioTrainsFromOps.addItemListener( e1 -> {
+                if (e1.getStateChange() == ItemEvent.SELECTED) {
+                    setTrainsFromOptions(TrainsFrom.TRAINSFROMOPS);
                 }
             });
+            radioTrainsFromRoster.addItemListener( e1 -> {
+                if (e1.getStateChange() == ItemEvent.SELECTED) {
+                    setTrainsFromOptions(TrainsFrom.TRAINSFROMROSTER);
+                }
+            });
+            radioTrainsFromUser.addItemListener( e1 -> {
+                if (e1.getStateChange() == ItemEvent.SELECTED) {
+                    setTrainsFromOptions(TrainsFrom.TRAINSFROMUSER);
+                }
+            });
+            radioTrainsFromSetLater.addItemListener( e1 -> {
+                if (e1.getStateChange() == ItemEvent.SELECTED) {
+                    setTrainsFromOptions(TrainsFrom.TRAINSFROMSETLATER);
+                }
+            });
+            initiatePane.add(p1);
 
-            radioTrainsFromRoster.addItemListener(new ItemListener() {
-                @Override
-                public void itemStateChanged(ItemEvent e)  {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        _TrainsFrom = TrainsFrom.TRAINSFROMROSTER;
-                         setTrainsFromOptions(_TrainsFrom);
-                    }
-                }
-            });
-            radioTrainsFromUser.addItemListener(new ItemListener() {
-                @Override
-                public void itemStateChanged(ItemEvent e)  {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        _TrainsFrom = TrainsFrom.TRAINSFROMUSER;
-                        setTrainsFromOptions(_TrainsFrom);
-                    }
-                }
-            });
-            radioTrainsFromSetLater.addItemListener(new ItemListener() {
-                @Override
-                public void itemStateChanged(ItemEvent e)  {
-                    if (e.getStateChange() == ItemEvent.SELECTED) {
-                        _TrainsFrom = TrainsFrom.TRAINSFROMSETLATER;
-                        setTrainsFromOptions(_TrainsFrom);
-                    }
-                }
-            });
-            p0a.add(allocateCustomSpinner);
-            initiatePane.add(p0a);
+            // Select train
+            JPanel p2 = new JPanel();
 
-            JPanel p1 = new JPanel();
-            p1.setLayout(new FlowLayout());
-            p1.add(new JLabel(Bundle.getMessage("TransitBoxLabel") + " :"));
-            p1.add(transitSelectBox);
-            transitSelectBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleTransitSelectionChanged(e);
-                }
+            // Dispatcher train name
+            p2.add(trainFieldLabel);
+            p2.add(trainNameField);
+            trainNameField.setToolTipText(Bundle.getMessage("TrainFieldHint"));
+
+            // Roster combo box
+            rosterComboBox = new RosterEntrySelectorPanel(null,upm.getComboBoxLastSelection(upmGroupName));
+            rosterComboBox.getRosterGroupComboBox().addActionListener( e3 -> {
+                    String s =((RosterGroupComboBox) e3.getSource()).getSelectedItem();
+                    upm.setComboBoxLastSelection(upmGroupName, s);
             });
-            transitSelectBox.setToolTipText(Bundle.getMessage("TransitBoxHint"));
-            p1.add(trainBoxLabel);
-            p1.add(trainSelectBox);
-            trainSelectBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e)  {
-                        handleTrainSelectionChanged();
-                }
-            });
+            initializeFreeRosterEntriesCombo();
+            rosterComboBox.getRosterEntryComboBox().addActionListener(this::handleRosterSelectionChanged);
+            p2.add(rosterComboBox);
+
+            // Operations combo box
+            p2.add(trainSelectBox);
+            trainSelectBox.addActionListener( e1 -> handleTrainSelectionChanged());
             trainSelectBox.setToolTipText(Bundle.getMessage("TrainBoxHint"));
 
-            rosterComboBox = new RosterEntryComboBox();
-            initializeFreeRosterEntriesCombo();
-            rosterComboBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleRosterSelectionChanged(e);
-                }
-            });
-            p1.add(rosterComboBox);
-
-            initiatePane.add(p1);
-            JPanel p1a = new JPanel();
-            p1a.setLayout(new FlowLayout());
-            p1a.add(trainFieldLabel);
-            p1a.add(trainNameField);
-            trainNameField.setToolTipText(Bundle.getMessage("TrainFieldHint"));
-            p1a.add(dccAddressFieldLabel);
-            p1a.add(dccAddressSpinner);
+            // DCC address selector
+            p2.add(dccAddressFieldLabel);
+            p2.add(dccAddressSpinner);
             dccAddressSpinner.setToolTipText(Bundle.getMessage("DccAddressFieldHint"));
-            initiatePane.add(p1a);
-            JPanel p2 = new JPanel();
-            p2.setLayout(new FlowLayout());
-            p2.add(inTransitBox);
-            inTransitBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleInTransitClick(e);
-                }
-            });
-            inTransitBox.setToolTipText(Bundle.getMessage("InTransitBoxHint"));
+
             initiatePane.add(p2);
+
+            // Select transit type
             JPanel p3 = new JPanel();
-            p3.setLayout(new FlowLayout());
-            p3.add(new JLabel(Bundle.getMessage("StartingBlockBoxLabel") + " :"));
-            p3.add(startingBlockBox);
-            startingBlockBox.setToolTipText(Bundle.getMessage("StartingBlockBoxHint"));
-            startingBlockBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleStartingBlockSelectionChanged(e);
+            p3.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TransitsFrom")));
+            radioTransitsPredefined.setActionCommand("USETRANSITS");
+            transitsFromButtonGroup.add(radioTransitsPredefined);
+            radioTransitsAdHoc.setActionCommand("USEADHOC");
+            transitsFromButtonGroup.add(radioTransitsAdHoc);
+            p3.add(radioTransitsPredefined);
+            radioTransitsPredefined.setToolTipText(Bundle.getMessage("TransitsPredefinedHint"));
+            p3.add(radioTransitsAdHoc);
+            radioTransitsAdHoc.setToolTipText(Bundle.getMessage("TransitsAdHocHint"));
+            radioTransitsPredefined.addItemListener( e1 -> {
+                if (e1.getStateChange() == ItemEvent.SELECTED) {
+                    transitSelectBox.setEnabled(true);
+                    //adHocCloseLoop.setEnabled(false);
+                    inTransitBox.setEnabled(true);
+                    handleInTransitClick();
+                    viaBlockBox.setVisible(false);
+                    viaBlockBoxLabel.setVisible(false);
                 }
             });
+            radioTransitsAdHoc.addItemListener( e1 -> {
+                if (e1.getStateChange() == ItemEvent.SELECTED) {
+                    checkAdvancedRouting();
+                    transitSelectBox.setEnabled(false);
+                    //adHocCloseLoop.setEnabled(true);
+                    inTransitBox.setEnabled(false);
+                    inTransitBox.setSelected(true);
+                    initializeStartingBlockComboDynamic();
+                    viaBlockBox.setVisible(true);
+                    viaBlockBoxLabel.setVisible(true);
+                }
+            });
+
+            //p3.add(adHocCloseLoop);
+            //adHocCloseLoop.setToolTipText(Bundle.getMessage("TransitCloseLoopHint"));
+
+            p3.add(new JLabel(Bundle.getMessage("TransitBoxLabel") + " :"));
+            p3.add(transitSelectBox);
+            transitSelectBox.addActionListener(this::handleTransitSelectionChanged);
+            transitSelectBox.setToolTipText(Bundle.getMessage("TransitBoxHint"));
             initiatePane.add(p3);
+
+            // Train in transit
             JPanel p4 = new JPanel();
-            p4.setLayout(new FlowLayout());
-            p4.add(new JLabel(Bundle.getMessage("DestinationBlockBoxLabel") + ":"));
-            p4.add(destinationBlockBox);
-            destinationBlockBox.setToolTipText(Bundle.getMessage("DestinationBlockBoxHint"));
-            JPanel p4a = new JPanel();
+            p4.add(inTransitBox);
+            inTransitBox.addActionListener( ev -> handleInTransitClick());
+            inTransitBox.setToolTipText(Bundle.getMessage("InTransitBoxHint"));
             initiatePane.add(p4);
-            p4a.add(trainDetectionLabel);
+
+            // Starting block, add Via for adhoc transits
+            JPanel p5 = new JPanel();
+            p5.add(new JLabel(Bundle.getMessage("StartingBlockBoxLabel") + " :"));
+            p5.add(startingBlockBox);
+            startingBlockBox.setToolTipText(Bundle.getMessage("StartingBlockBoxHint"));
+            startingBlockBox.addActionListener( ev -> handleStartingBlockSelectionChanged());
+            p5.add(viaBlockBoxLabel);
+            p5.add(viaBlockBox);
+            viaBlockBox.setToolTipText(Bundle.getMessage("ViaBlockBoxHint"));
+            viaBlockBox.addActionListener(viaBlockBoxListener);
+            initiatePane.add(p5);
+
+            // Destination block
+            JPanel p6 = new JPanel();
+            p6.add(new JLabel(Bundle.getMessage("DestinationBlockBoxLabel") + ":"));
+            p6.add(destinationBlockBox);
+            destinationBlockBox.setToolTipText(Bundle.getMessage("DestinationBlockBoxHint"));
+            initiatePane.add(p6);
+
+            // Train detection scope
+            JPanel p7 = new JPanel();
+            p7.add(trainDetectionLabel);
             initializeTrainDetectionBox();
-            p4a.add(trainDetectionComboBox);
+            p7.add(trainDetectionComboBox);
             trainDetectionComboBox.setToolTipText(Bundle.getMessage("TrainDetectionBoxHint"));
-            initiatePane.add(p4a);
-            JPanel p4b = new JPanel();
-            p4b.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AllocateMethodLabel")));
-            p4b.setLayout(new FlowLayout());
+            initiatePane.add(p7);
+
+            // Allocation method
+            JPanel p8 = new JPanel();
+            p8.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AllocateMethodLabel")));
             allocateMethodButtonGroup.add(allocateAllTheWayRadioButton);
             allocateMethodButtonGroup.add(allocateBySafeRadioButton);
             allocateMethodButtonGroup.add(allocateNumberOfBlocks);
-            p4b.add(allocateAllTheWayRadioButton);
+            p8.add(allocateAllTheWayRadioButton);
             allocateAllTheWayRadioButton.setToolTipText(Bundle.getMessage("AllocateAllTheWayHint"));
-            p4b.add(allocateBySafeRadioButton);
+            p8.add(allocateBySafeRadioButton);
             allocateBySafeRadioButton.setToolTipText(Bundle.getMessage("AllocateSafeHint"));
-            p4b.add(allocateNumberOfBlocks);
+            p8.add(allocateNumberOfBlocks);
             allocateNumberOfBlocks.setToolTipText(Bundle.getMessage("AllocateMethodHint"));
-            allocateAllTheWayRadioButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleAllocateAllTheWayButtonChanged(e);
-                }
-            });
-            allocateBySafeRadioButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleAllocateBySafeButtonChanged(e);
-                }
-            });
-            allocateNumberOfBlocks.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleAllocateNumberOfBlocksButtonChanged(e);
-                }
-            });
-            p4b.add(allocateCustomSpinner);
+            allocateAllTheWayRadioButton.addActionListener( ev -> handleAllocateAllTheWayButtonChanged());
+            allocateBySafeRadioButton.addActionListener( ev -> handleAllocateBySafeButtonChanged());
+            allocateNumberOfBlocks.addActionListener( ev -> handleAllocateNumberOfBlocksButtonChanged());
+            p8.add(allocateCustomSpinner);
             allocateCustomSpinner.setToolTipText(Bundle.getMessage("AllocateMethodHint"));
-            initiatePane.add(p4b);
-            JPanel p6 = new JPanel();
-            p6.setLayout(new FlowLayout());
-            p6.add(resetWhenDoneBox);
-            resetWhenDoneBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleResetWhenDoneClick(e);
-                }
-            });
+            initiatePane.add(p8);
+
+            // Restart at end
+            JPanel p9 = new JPanel();
+            p9.add(resetWhenDoneBox);
+            resetWhenDoneBox.addActionListener( ev -> handleResetWhenDoneClick());
             resetWhenDoneBox.setToolTipText(Bundle.getMessage("ResetWhenDoneBoxHint"));
-            initiatePane.add(p6);
-            JPanel p6a = new JPanel();
-            p6a.setLayout(new FlowLayout());
-            ((FlowLayout) p6a.getLayout()).setVgap(1);
-            p6a.add(delayedReStartLabel);
-            p6a.add(delayedReStartBox);
-            p6a.add(resetRestartSensorBox);
+            initiatePane.add(p9);
+
+            // Restart using sensor
+            JPanel p9a = new JPanel();
+            ((FlowLayout) p9a.getLayout()).setVgap(1);
+            p9a.add(delayedReStartLabel);
+            p9a.add(delayedReStartBox);
+            p9a.add(resetRestartSensorBox);
             resetRestartSensorBox.setToolTipText(Bundle.getMessage("ResetRestartSensorHint"));
             resetRestartSensorBox.setSelected(true);
-            delayedReStartBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleResetWhenDoneClick(e);
-                }
-            });
+            delayedReStartBox.addActionListener( ev -> handleResetWhenDoneClick());
             delayedReStartBox.setToolTipText(Bundle.getMessage("DelayedReStartHint"));
-            initiatePane.add(p6a);
+            initiatePane.add(p9a);
 
-            JPanel p6b = new JPanel();
-            p6b.setLayout(new FlowLayout());
-            ((FlowLayout) p6b.getLayout()).setVgap(1);
-            p6b.add(delayMinLabel);
-            p6b.add(delayMinSpinner); // already set to 0
+            // Restart using timer
+            JPanel p9b = new JPanel();
+            ((FlowLayout) p9b.getLayout()).setVgap(1);
+            p9b.add(delayMinLabel);
+            p9b.add(delayMinSpinner); // already set to 0
             delayMinSpinner.setToolTipText(Bundle.getMessage("RestartTimedHint"));
-            p6b.add(delayReStartSensorLabel);
-            p6b.add(delayReStartSensor);
+            p9b.add(delayReStartSensorLabel);
+            p9b.add(delayReStartSensor);
             delayReStartSensor.setAllowNull(true);
-            handleResetWhenDoneClick(null);
-            initiatePane.add(p6b);
+            handleResetWhenDoneClick();
+            initiatePane.add(p9b);
 
             initiatePane.add(new JSeparator());
 
+            // Reverse at end
             JPanel p10 = new JPanel();
-            p10.setLayout(new FlowLayout());
             p10.add(reverseAtEndBox);
             reverseAtEndBox.setToolTipText(Bundle.getMessage("ReverseAtEndBoxHint"));
             initiatePane.add(p10);
-            reverseAtEndBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleReverseAtEndBoxClick(e);
-                }
-            });
+            reverseAtEndBox.addActionListener( ev -> handleReverseAtEndBoxClick());
+
+            // Reverse using sensor
             JPanel pDelayReverseRestartDetails = new JPanel();
-            pDelayReverseRestartDetails.setLayout(new FlowLayout());
             ((FlowLayout) pDelayReverseRestartDetails.getLayout()).setVgap(1);
             pDelayReverseRestartDetails.add(delayReverseReStartLabel);
             pDelayReverseRestartDetails.add(reverseDelayedRestartType);
             pDelayReverseRestartDetails.add(delayReverseResetSensorBox);
             delayReverseResetSensorBox.setToolTipText(Bundle.getMessage("ReverseResetRestartSensorHint"));
             delayReverseResetSensorBox.setSelected(true);
-            reverseDelayedRestartType.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleReverseAtEndBoxClick(e);
-                }
-            });
+            reverseDelayedRestartType.addActionListener( ev -> handleReverseAtEndBoxClick());
             reverseDelayedRestartType.setToolTipText(Bundle.getMessage("ReverseDelayedReStartHint"));
             initiatePane.add(pDelayReverseRestartDetails);
 
+            // Reverse using timer
             JPanel pDelayReverseRestartDetails2 = new JPanel();
-            pDelayReverseRestartDetails2.setLayout(new FlowLayout());
             ((FlowLayout) pDelayReverseRestartDetails2.getLayout()).setVgap(1);
             pDelayReverseRestartDetails2.add(delayReverseMinLabel);
             pDelayReverseRestartDetails2.add(delayReverseMinSpinner); // already set to 0
@@ -495,122 +509,101 @@ public class ActivateTrainFrame extends JmriJFrame {
             pDelayReverseRestartDetails2.add(delayReverseReStartSensorLabel);
             pDelayReverseRestartDetails2.add(delayReverseReStartSensor);
             delayReverseReStartSensor.setAllowNull(true);
-            handleReverseAtEndBoxClick(null);
+            handleReverseAtEndBoxClick();
             initiatePane.add(pDelayReverseRestartDetails2);
 
             initiatePane.add(new JSeparator());
 
-            JPanel p10a = new JPanel();
-            p10a.setLayout(new FlowLayout());
-            p10a.add(terminateWhenDoneBox);
-            terminateWhenDoneBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleTerminateWhenDoneBoxClick(e);
-                }
-            });
-            initiatePane.add(p10a);
+            // Terminate when done option
+            JPanel p11 = new JPanel();
+            p11.setLayout(new FlowLayout());
+            p11.add(terminateWhenDoneBox);
+            terminateWhenDoneBox.addActionListener( ev -> handleTerminateWhenDoneBoxClick());
+            initiatePane.add(p11);
+
+            // Optional next train, tied to terminate when done.
             terminateWhenDoneDetails.setLayout(new FlowLayout());
             terminateWhenDoneDetails.add(nextTrainLabel);
             terminateWhenDoneDetails.add(nextTrain);
             nextTrain.setToolTipText(Bundle.getMessage("TerminateWhenDoneNextTrainHint"));
             initiatePane.add(terminateWhenDoneDetails);
-            handleTerminateWhenDoneBoxClick(null);
+            handleTerminateWhenDoneBoxClick();
 
             initiatePane.add(new JSeparator());
 
-            JPanel p8 = new JPanel();
-            p8.setLayout(new FlowLayout());
-            p8.add(new JLabel(Bundle.getMessage("PriorityLabel") + ":"));
-            p8.add(prioritySpinner); // already set to 5
+            // Priority and train type.
+            JPanel p12 = new JPanel();
+            p12.setLayout(new FlowLayout());
+            p12.add(new JLabel(Bundle.getMessage("PriorityLabel") + ":"));
+            p12.add(prioritySpinner); // already set to 5
             prioritySpinner.setToolTipText(Bundle.getMessage("PriorityHint"));
-            p8.add(new JLabel("     "));
-            p8.add(new JLabel(Bundle.getMessage("TrainTypeBoxLabel")));
+            p12.add(new JLabel("     "));
+            p12.add(new JLabel(Bundle.getMessage("TrainTypeBoxLabel")));
             initializeTrainTypeBox();
-            p8.add(trainTypeBox);
+            p12.add(trainTypeBox);
             trainTypeBox.setSelectedIndex(1);
             trainTypeBox.setToolTipText(Bundle.getMessage("TrainTypeBoxHint"));
-            initiatePane.add(p8);
-            JPanel p9 = new JPanel();
-            p9.setLayout(new FlowLayout());
-            p9.add(new JLabel(Bundle.getMessage("DelayedStart")));
-            p9.add(delayedStartBox);
+            initiatePane.add(p12);
+
+            // Delayed start option
+            JPanel p13 = new JPanel();
+            p13.add(new JLabel(Bundle.getMessage("DelayedStart")));
+            p13.add(delayedStartBox);
             delayedStartBox.setToolTipText(Bundle.getMessage("DelayedStartHint"));
-            delayedStartBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleDelayStartClick(e);
-                }
-            });
-            p9.add(departureTimeLabel);
+            delayedStartBox.addActionListener(this::handleDelayStartClick);
+            p13.add(departureTimeLabel);
             departureHrSpinner.setEditor(new JSpinner.NumberEditor(departureHrSpinner, "00"));
-            p9.add(departureHrSpinner);
+            p13.add(departureHrSpinner);
             departureHrSpinner.setValue(8);
             departureHrSpinner.setToolTipText(Bundle.getMessage("DepartureTimeHrHint"));
-            p9.add(departureSepLabel);
+            p13.add(departureSepLabel);
             departureMinSpinner.setEditor(new JSpinner.NumberEditor(departureMinSpinner, "00"));
-            p9.add(departureMinSpinner);
+            p13.add(departureMinSpinner);
             departureMinSpinner.setValue(0);
             departureMinSpinner.setToolTipText(Bundle.getMessage("DepartureTimeMinHint"));
-            p9.add(delaySensor);
+            p13.add(delaySensor);
             delaySensor.setAllowNull(true);
-            p9.add(resetStartSensorBox);
+            p13.add(resetStartSensorBox);
             resetStartSensorBox.setToolTipText(Bundle.getMessage("ResetStartSensorHint"));
             resetStartSensorBox.setSelected(true);
             handleDelayStartClick(null);
-            initiatePane.add(p9);
+            initiatePane.add(p13);
 
-            JPanel p11 = new JPanel();
-            p11.setLayout(new FlowLayout());
-            p11.add(loadAtStartupBox);
+            // Load at startup option
+            JPanel p14 = new JPanel();
+            p14.setLayout(new FlowLayout());
+            p14.add(loadAtStartupBox);
             loadAtStartupBox.setToolTipText(Bundle.getMessage("LoadAtStartupBoxHint"));
             loadAtStartupBox.setSelected(false);
-            initiatePane.add(p11);
+            initiatePane.add(p14);
 
+            // Auto run option
             initiatePane.add(new JSeparator());
-            JPanel p5 = new JPanel();
-            p5.setLayout(new FlowLayout());
-            p5.add(autoRunBox);
-            autoRunBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleAutoRunClick(e);
-                }
-            });
+            JPanel p15 = new JPanel();
+            p15.add(autoRunBox);
+            autoRunBox.addActionListener( ev -> handleAutoRunClick());
             autoRunBox.setToolTipText(Bundle.getMessage("AutoRunBoxHint"));
             autoRunBox.setSelected(false);
-            initiatePane.add(p5);
-
+            initiatePane.add(p15);
             initializeAutoRunItems();
 
-            JPanel p7 = new JPanel();
-            p7.setLayout(new FlowLayout());
-            JButton cancelButton = null;
-            p7.add(cancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
-            cancelButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cancelInitiateTrain(e);
-                }
-            });
+            // Footer buttons
+            JPanel ftr = new JPanel();
+            JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+            ftr.add(cancelButton);
+            cancelButton.addActionListener( ev -> cancelInitiateTrain());
             cancelButton.setToolTipText(Bundle.getMessage("CancelButtonHint"));
-            p7.add(addNewTrainButton = new JButton(Bundle.getMessage("ButtonCreate")));
-            addNewTrainButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    addNewTrain(e);
-                }
-            });
+            ftr.add(addNewTrainButton = new JButton(Bundle.getMessage("ButtonCreate")));
+            addNewTrainButton.addActionListener( e1 -> addNewTrain());
             addNewTrainButton.setToolTipText(Bundle.getMessage("AddNewTrainButtonHint"));
 
-            JPanel mainPane = new JPanel();
-            mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.Y_AXIS));
+            JPanel mainPane = new JPanel(new BorderLayout());
             JScrollPane scrPane = new JScrollPane(initiatePane);
-            mainPane.add(p0);
-            mainPane.add(scrPane);
-            mainPane.add(p7);
+            mainPane.add(hdr, BorderLayout.NORTH);
+            mainPane.add(scrPane, BorderLayout.CENTER);
+            mainPane.add(ftr, BorderLayout.SOUTH);
             initiateFrame.setContentPane(mainPane);
-            switch (_TrainsFrom) {
+            switch (trainInfo.getTrainsFrom()) {
                 case TRAINSFROMROSTER:
                     radioTrainsFromRoster.setSelected(true);
                     break;
@@ -618,23 +611,23 @@ public class ActivateTrainFrame extends JmriJFrame {
                     radioTrainsFromOps.setSelected(true);
                     break;
                 case TRAINSFROMUSER:
-                     radioTrainsFromUser.setSelected(true);
-                     break;
+                    radioTrainsFromUser.setSelected(true);
+                    break;
                 case TRAINSFROMSETLATER:
                 default:
                     radioTrainsFromSetLater.setSelected(true);
             }
 
         }
-        setAutoRunDefaults();
         autoRunBox.setSelected(false);
         loadAtStartupBox.setSelected(false);
-        initializeFreeTransitsCombo(new ArrayList<Transit>());
-        nextTrain.addItem("");
+        initializeFreeTransitsCombo(new ArrayList<>());
         refreshNextTrainCombo();
-        setTrainsFromOptions(_TrainsFrom);
+        setTrainsFromOptions(trainInfo.getTrainsFrom());
         initiateFrame.pack();
         initiateFrame.setVisible(true);
+
+        trainInfoToDialog(trainInfo);
     }
 
     private void refreshNextTrainCombo() {
@@ -642,7 +635,8 @@ public class ActivateTrainFrame extends JmriJFrame {
         if (nextTrain.getSelectedIndex() > 0) {
             saveEntry=nextTrain.getSelectedItem();
         }
-        nextTrain.removeAll();
+        nextTrain.removeAllItems();
+        nextTrain.addItem(" ");
         for (String file: _tiFile.getTrainInfoFileNames()) {
             nextTrain.addItem(file);
         }
@@ -650,11 +644,11 @@ public class ActivateTrainFrame extends JmriJFrame {
             nextTrain.setSelectedItem(saveEntry);
         }
     }
+
     private void setTrainsFromOptions(TrainsFrom transFrom) {
         switch (transFrom) {
             case TRAINSFROMROSTER:
                 initializeFreeRosterEntriesCombo();
-                trainBoxLabel.setVisible(true);
                 rosterComboBox.setVisible(true);
                 trainSelectBox.setVisible(false);
                 trainFieldLabel.setVisible(true);
@@ -664,18 +658,16 @@ public class ActivateTrainFrame extends JmriJFrame {
                 break;
             case TRAINSFROMOPS:
                 initializeFreeTrainsCombo();
-                trainBoxLabel.setVisible(true);
                 trainSelectBox.setVisible(true);
                 rosterComboBox.setVisible(false);
                 trainFieldLabel.setVisible(true);
                 trainNameField.setVisible(true);
                 dccAddressFieldLabel.setVisible(true);
                 dccAddressSpinner.setVisible(true);
-                setSpeedProfileOptions(false);
+                setSpeedProfileOptions(trainInfo,false);
                 break;
             case TRAINSFROMUSER:
                 trainNameField.setText("");
-                trainBoxLabel.setVisible(false);
                 trainSelectBox.setVisible(false);
                 rosterComboBox.setVisible(false);
                 trainFieldLabel.setVisible(true);
@@ -683,11 +675,10 @@ public class ActivateTrainFrame extends JmriJFrame {
                 dccAddressFieldLabel.setVisible(true);
                 dccAddressSpinner.setVisible(true);
                 dccAddressSpinner.setEnabled(true);
-                setSpeedProfileOptions(false);
+                setSpeedProfileOptions(trainInfo,false);
                 break;
             case TRAINSFROMSETLATER:
             default:
-                trainBoxLabel.setVisible(false);
                 rosterComboBox.setVisible(false);
                 trainSelectBox.setVisible(false);
                 trainFieldLabel.setVisible(true);
@@ -716,6 +707,13 @@ public class ActivateTrainFrame extends JmriJFrame {
         trainDetectionComboBox.addItem(new TrainDetectionItem(Bundle.getMessage("TrainDetectionHeadOnly"),TrainDetection.TRAINDETECTION_HEADONLY));
     }
 
+    private void initializeScaleLengthBox() {
+        trainLengthUnitsComboBox.addItem(new TrainLengthUnitsItem(Bundle.getMessage("TrainLengthInScaleFeet"), TrainLengthUnits.TRAINLENGTH_SCALEFEET));
+        trainLengthUnitsComboBox.addItem(new TrainLengthUnitsItem(Bundle.getMessage("TrainLengthInScaleMeters"), TrainLengthUnits.TRAINLENGTH_SCALEMETERS));
+        trainLengthUnitsComboBox.addItem(new TrainLengthUnitsItem(Bundle.getMessage("TrainLengthInActualInchs"), TrainLengthUnits.TRAINLENGTH_ACTUALINCHS));
+        trainLengthUnitsComboBox.addItem(new TrainLengthUnitsItem(Bundle.getMessage("TrainLengthInActualcm"), TrainLengthUnits.TRAINLENGTH_ACTUALCM));
+    }
+
     private void handleTransitSelectionChanged(ActionEvent e) {
         int index = transitSelectBox.getSelectedIndex();
         if (index < 0) {
@@ -730,7 +728,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
     }
 
-    private void handleInTransitClick(ActionEvent e) {
+    private void handleInTransitClick() {
         if (!inTransitBox.isSelected() && selectedTransit.getEntryBlocksList().isEmpty()) {
             JmriJOptionPane.showMessageDialog(initiateFrame, Bundle
                     .getMessage("NoEntryBlocks"), Bundle.getMessage("MessageTitle"),
@@ -742,9 +740,8 @@ public class ActivateTrainFrame extends JmriJFrame {
         initiateFrame.pack();
     }
 
- //   private void handleTrainSelectionChanged(ActionEvent e) {
-      private void handleTrainSelectionChanged() {
-        if (_TrainsFrom != TrainsFrom.TRAINSFROMOPS) {
+    private void handleTrainSelectionChanged() {
+        if (!trainsFromButtonGroup.getSelection().getActionCommand().equals("TRAINSFROMOPS")) {
             return;
         }
         int ix = trainSelectBox.getSelectedIndex();
@@ -756,48 +753,39 @@ public class ActivateTrainFrame extends JmriJFrame {
         int dccAddress;
         try {
             dccAddress = Integer.parseInt((((Train) trainSelectBox.getSelectedItem()).getLeadEngineDccAddress()));
-        } catch (NumberFormatException Ex) {
+        } catch (NumberFormatException ex) {
             JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error43"),
                     Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         dccAddressSpinner.setValue (dccAddress);
+        trainNameField.setText(((Train) trainSelectBox.getSelectedItem()).getName());
     }
 
     private void handleRosterSelectionChanged(ActionEvent e) {
-        if (_TrainsFrom != TrainsFrom.TRAINSFROMROSTER) {
+        if (!trainsFromButtonGroup.getSelection().getActionCommand().equals("TRAINSFROMROSTER")) {
             return;
         }
-        int ix = rosterComboBox.getSelectedIndex();
+        RosterEntry r ;
+        int ix = rosterComboBox.getRosterEntryComboBox().getSelectedIndex();
         if (ix > 0) { // first item is "Select Loco" string
-            RosterEntry r = (RosterEntry) rosterComboBox.getItemAt(ix);
+             r = (RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem();
             // check to see if speed profile exists and is not empty
             if (r.getSpeedProfile() == null || r.getSpeedProfile().getProfileSize() < 1) {
                 // disable profile boxes etc.
-                setSpeedProfileOptions(false);
+                setSpeedProfileOptions(trainInfo,false);
             } else {
                 // enable profile boxes
-                setSpeedProfileOptions(true);
+                setSpeedProfileOptions(trainInfo,true);
             }
+            maxSpeedSpinner.setValue(r.getMaxSpeedPCT()/100.0f);
             trainNameField.setText(r.titleString());
             if (r.getAttribute("DispatcherTrainType") != null && !r.getAttribute("DispatcherTrainType").equals("")) {
                 trainTypeBox.setSelectedItem(r.getAttribute("DispatcherTrainType"));
             }
         } else {
-            setSpeedProfileOptions(false);
+            setSpeedProfileOptions(trainInfo,false);
         }
-    }
-
-    private boolean checkResetWhenDone() {
-        if ((!reverseAtEndBox.isSelected()) && resetWhenDoneBox.isSelected()
-                && (!selectedTransit.canBeResetWhenDone())) {
-            resetWhenDoneBox.setSelected(false);
-            JmriJOptionPane.showMessageDialog(initiateFrame, Bundle
-                    .getMessage("NoResetMessage"), Bundle.getMessage("MessageTitle"),
-                    JmriJOptionPane.INFORMATION_MESSAGE);
-            return false;
-        }
-        return true;
     }
 
     private void handleDelayStartClick(ActionEvent e) {
@@ -819,7 +807,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         initiateFrame.pack(); // to fit extra hh:mm in window
     }
 
-    private void handleResetWhenDoneClick(ActionEvent e) {
+    private void handleResetWhenDoneClick() {
         delayMinSpinner.setVisible(false);
         delayMinLabel.setVisible(false);
         delayedReStartLabel.setVisible(false);
@@ -845,18 +833,17 @@ public class ActivateTrainFrame extends JmriJFrame {
         initiateFrame.pack();
     }
 
-    private void handleTerminateWhenDoneBoxClick(ActionEvent e) {
+    private void handleTerminateWhenDoneBoxClick() {
         if (terminateWhenDoneBox.isSelected()) {
             refreshNextTrainCombo();
             resetWhenDoneBox.setSelected(false);
             terminateWhenDoneDetails.setVisible(true);
         } else {
             terminateWhenDoneDetails.setVisible(false);
-            // leave it
-            //nextTrain.setSelectedItem("");
         }
     }
-    private void handleReverseAtEndBoxClick(ActionEvent e) {
+
+    private void handleReverseAtEndBoxClick() {
         delayReverseMinSpinner.setVisible(false);
         delayReverseMinLabel.setVisible(false);
         delayReverseReStartLabel.setVisible(false);
@@ -886,279 +873,147 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
     }
 
-    private void handleAutoRunClick(ActionEvent e) {
-        if (autoRunBox.isSelected()) {
-            showAutoRunItems();
+    private void handleAutoRunClick() {
+        showHideAutoRunItems(autoRunBox.isSelected());
+        initiateFrame.pack();
+    }
+
+    private void handleStartingBlockSelectionChanged() {
+        if (radioTransitsAdHoc.isSelected() ) {
+            initializeViaBlockDynamicCombo();
+            initializeDestinationBlockDynamicCombo();
         } else {
-            hideAutoRunItems();
+            initializeDestinationBlockCombo();
         }
         initiateFrame.pack();
     }
 
-    private void handleStartingBlockSelectionChanged(ActionEvent e) {
-        initializeDestinationBlockCombo();
+    private void handleViaBlockSelectionChanged() {
+        if (radioTransitsAdHoc.isSelected() ) {
+            initializeDestinationBlockDynamicCombo();
+        } else {
+            initializeDestinationBlockCombo();
+        }
         initiateFrame.pack();
     }
 
-    private void handleAllocateAllTheWayButtonChanged(ActionEvent e) {
+    private void handleAllocateAllTheWayButtonChanged() {
         allocateCustomSpinner.setVisible(false);
     }
 
-    private void handleAllocateBySafeButtonChanged(ActionEvent e) {
+    private void handleAllocateBySafeButtonChanged() {
         allocateCustomSpinner.setVisible(false);
     }
 
-    private void handleAllocateNumberOfBlocksButtonChanged(ActionEvent e) {
+    private void handleAllocateNumberOfBlocksButtonChanged() {
         allocateCustomSpinner.setVisible(true);
     }
 
-    private void cancelInitiateTrain(ActionEvent e) {
+    private void cancelInitiateTrain() {
         _dispatcher.newTrainDone(null);
     }
 
-    /**
-     * Handles press of "Add New Train" button by edit-checking populated values
-     * then (if no errors) creating an ActiveTrain and (optionally) an
-     * AutoActiveTrain
+    /*
+     * Handles press of "Add New Train" button.
+     * Move data to TrainInfo validating basic information
+     * Call dispatcher to start the train from traininfo which
+     * completes validation.
      */
-    private void addNewTrain(ActionEvent e) {
-        // get information
-        if (selectedTransit == null) {
-            // no transits available
-            JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error15"),
-                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-            cancelInitiateTrain(null);
-            return;
-        }
-        String transitName = selectedTransit.getDisplayName();
-        String trainName = "";
-        int index = startingBlockBox.getSelectedIndex();
-        if (index < 0) {
-            return;
-        }
-        String startBlockName = startingBlockBoxList.get(index).getDisplayName();
-        int startBlockSeq = startingBlockSeqList.get(index).intValue();
-        index = destinationBlockBox.getSelectedIndex();
-        if (index < 0) {
-            return;
-        }
-        String endBlockName = destinationBlockBoxList.get(index).getDisplayName();
-        int endBlockSeq = destinationBlockSeqList.get(index).intValue();
-        boolean autoRun = autoRunBox.isSelected();
-        if (!checkResetWhenDone()) {
-            return;
-        }
-        boolean resetWhenDone = resetWhenDoneBox.isSelected();
-        boolean reverseAtEnd = reverseAtEndBox.isSelected();
-        index = trainDetectionComboBox.getSelectedIndex();
-        if (index < 0) {
-            return;
-        }
-        TrainDetection trainDetection = ((TrainDetectionItem)trainDetectionComboBox.getSelectedItem()).value;
-        int allocateMethod = 3;
-        if (allocateAllTheWayRadioButton.isSelected()) {
-            allocateMethod = ActiveTrain.ALLOCATE_AS_FAR_AS_IT_CAN;
-        } else if (allocateBySafeRadioButton.isSelected()) {
-            allocateMethod = ActiveTrain.ALLOCATE_BY_SAFE_SECTIONS;
-        } else {
-            allocateMethod = (Integer) allocateCustomSpinner.getValue();
-        }
-        int delayedStart = delayModeFromBox(delayedStartBox);
-        int delayedReStart = delayModeFromBox(delayedReStartBox);
-        int delayedReverseReStart = delayModeFromBox(reverseDelayedRestartType);
-        int departureTimeHours = 8;
-        departureTimeHours = (Integer) departureHrSpinner.getValue();
-        int departureTimeMinutes = 8;
-        departureTimeMinutes = (Integer) departureMinSpinner.getValue();
-        int delayRestartMinutes = 0;
-        delayRestartMinutes = (Integer) delayMinSpinner.getValue();
-        if ((delayRestartMinutes < 0)) {
-            JmriJOptionPane.showMessageDialog(initiateFrame, delayMinSpinner.getValue(),
-                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-            log.warn("Range error in Delay Restart Time Minutes field");
-            return;
-        }
-        int delayReverseRestartMinutes = 0;
-        delayReverseRestartMinutes = (Integer) delayReverseMinSpinner.getValue();
-        if ((delayReverseRestartMinutes < 0)) {
-            JmriJOptionPane.showMessageDialog(initiateFrame, delayReverseMinSpinner.getValue(),
-                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-            log.warn("Range error in Reverse Delay Restart Time Minutes field");
-            return;
-        }
-        int tSource = 0;
-        String dccAddress = "unknown";
-        switch (_TrainsFrom) {
-            case TRAINSFROMROSTER:
-                index = rosterComboBox.getSelectedIndex();
-                if (index < 1) { // first item is the "Select Loco" message
-                    // no train selected
-                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error41"),
-                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-                    return;
+    private void addNewTrain() {
+        try {
+            validateDialog();
+            trainInfo = new TrainInfo();
+            dialogToTrainInfo(trainInfo);
+            if (radioTransitsAdHoc.isSelected()) {
+                int ixStart, ixEnd, ixVia;
+                ixStart = startingBlockBox.getSelectedIndex();
+                ixEnd = destinationBlockBox.getSelectedIndex();
+                ixVia = viaBlockBox.getSelectedIndex();
+                // search for a transit if ones available.
+                Transit tmpTransit = null;
+                int routeCount = 9999;
+                int startBlockSeq = 0;
+                int endBlockSeq = 0;
+                log.debug("Start[{}]Via[{}]Dest[{}}]",
+                        startingBlockBoxList.get(ixStart).getDisplayName(),
+                        viaBlockBoxList.get(ixVia).getDisplayName(),
+                        destinationBlockBoxList.get(ixEnd).getDisplayName());
+                for (Transit tr : InstanceManager.getDefault(jmri.TransitManager.class)
+                        .getListUsingBlock(startingBlockBoxList.get(ixStart))) {
+                    if (tr.getState() == Transit.IDLE
+                            && tr.containsBlock(startingBlockBoxList.get(ixStart))
+                            && tr.containsBlock(viaBlockBoxList.get(ixVia)) &&
+                            tr.containsBlock(destinationBlockBoxList.get(ixEnd))) {
+                        log.debug("[{}]  contains all blocks", tr.getDisplayName());
+                        int ixCountStart = -1, ixCountVia = -1, ixCountDest = -1, ixCount = 0;
+                        List<Block> transitBlocks = tr.getInternalBlocksList();
+                        List<Integer> transitBlockSeq = tr.getBlockSeqList();
+                        for (Block blk : transitBlocks) {
+                            log.debug("Checking Block[{}] t[{}] BlockSequ[{}]",
+                                    blk.getDisplayName(),
+                                    ixCount,
+                                    transitBlockSeq.get(ixCount));
+                            if (ixCountStart == -1 && blk == startingBlockBoxList.get(ixStart)) {
+                                log.trace("ixOne[{}]block[{}]",ixCount,blk.getDisplayName());
+                                ixCountStart = ixCount;
+                            } else if (ixCountStart != -1 && ixCountVia == -1 && blk == viaBlockBoxList.get(ixVia)) {
+                                log.trace("ixTwo[{}]block[{}]",ixCount,blk.getDisplayName());
+                                if (ixCount != ixCountStart + 1) {
+                                    log.debug("AdHoc {}:via and start not ajacent",tr.getDisplayName());
+                                    break;
+                                }
+                                ixCountVia = ixCount;
+                            } else if (ixCountStart != -1 && ixCountVia != -1 && ixCountDest == -1 && blk == destinationBlockBoxList.get(ixEnd)) {
+                                ixCountDest = ixCount;
+                                log.trace("ixThree[{}]block[{}]",ixCountDest,blk.getDisplayName());
+                                break;
+                            }
+                            ixCount++;
+                        }
+                        if (ixCountVia == (ixCountStart + 1) && ixCountDest > ixCountStart) {
+                            log.debug("Canuse [{}", tr.getDisplayName());
+                            Integer routeBlockLength =
+                                    transitBlockSeq.get(ixCountDest) - transitBlockSeq.get(ixCountStart);
+                            if (routeBlockLength < routeCount) {
+                                routeCount = ixCountDest - ixCountStart;
+                                tmpTransit = tr;
+                                startBlockSeq = transitBlockSeq.get(ixCountStart).intValue();
+                                endBlockSeq = transitBlockSeq.get(ixCountDest).intValue();
+                            }
+                        }
+                    }
                 }
-                RosterEntry r = (RosterEntry) rosterComboBox.getSelectedItem();
-                dccAddress = r.getDccAddress();
-                if (trainNameField.getText().isEmpty()) {
-                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                            "Error45", dccAddress), Bundle.getMessage("ErrorTitle"),
-                            JmriJOptionPane.ERROR_MESSAGE);
-                    return;
+                if (tmpTransit != null &&
+                        (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("Question6",tmpTransit.getDisplayName()),
+                                "Question",
+                                JmriJOptionPane.YES_NO_OPTION,
+                                JmriJOptionPane.QUESTION_MESSAGE) == JmriJOptionPane.YES_OPTION)) {
+                    // use transit found
+                    trainInfo.setDynamicTransit(false);
+                    trainInfo.setTransitName(tmpTransit.getDisplayName());
+                    trainInfo.setTransitId(tmpTransit.getDisplayName());
+                    trainInfo.setStartBlockSeq(startBlockSeq);
+                    trainInfo.setStartBlockName(getBlockName(startingBlockBoxList.get(ixStart)) + "-" + startBlockSeq);
+                    trainInfo.setDestinationBlockSeq(endBlockSeq);
+                    trainInfo.setDestinationBlockName(getBlockName(destinationBlockBoxList.get(ixEnd)) + "-" + endBlockSeq);
+                    trainInfoToDialog(trainInfo);
+                } else {
+                    // use a true ad-hoc
+                    List<LayoutBlock> blockList = _dispatcher.getAdHocRoute(startingBlockBoxList.get(ixStart),
+                            destinationBlockBoxList.get(ixEnd),
+                            viaBlockBoxList.get(ixVia));
+                    if (blockList == null) {
+                        JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error51"),
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                 }
-                trainName=trainNameField.getText();
-                if (!_dispatcher.isTrainFree(trainName)) {
-                    // train name is already in use by an Active Train
-                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                            "Error24", trainName), Bundle.getMessage("ErrorTitle"),
-                            JmriJOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                trainName = trainNameField.getText();
-                if (!isAddressFree(r.getDccLocoAddress().getNumber())) {
-                    // DCC address is already in use by an Active Train
-                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                            "Error40", dccAddress), Bundle.getMessage("ErrorTitle"),
-                            JmriJOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                tSource = ActiveTrain.ROSTER;
-
-                if (trainTypeBox.getSelectedIndex() != 0 &&
-                        (r.getAttribute("DispatcherTrainType") == null ||
-                                !r.getAttribute("DispatcherTrainType").equals("" + trainTypeBox.getSelectedItem()))) {
-                    r.putAttribute("DispatcherTrainType", "" + trainTypeBox.getSelectedItem());
-                    r.updateFile();
-                    Roster.getDefault().writeRoster();
-                }
-                break;
-            case TRAINSFROMOPS:
-                tSource = ActiveTrain.OPERATIONS;
-                index = trainSelectBox.getSelectedIndex();
-                if (index < 1) { // first item is Select Train
-                    // Train not selected
-                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error42"),
-                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                if (trainNameField.getText().isEmpty()) {
-                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                            "Error45", dccAddress), Bundle.getMessage("ErrorTitle"),
-                            JmriJOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                if (!_dispatcher.isTrainFree(trainName)) {
-                    // train name is already in use by an Active Train
-                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                            "Error24", trainName), Bundle.getMessage("ErrorTitle"),
-                            JmriJOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                trainName = trainSelectBox.getSelectedItem().toString();
-                dccAddress = getDCCAddressFromSpinner();
-                if (dccAddress == null) {
-                    return;
-                }
-                break;
-            case TRAINSFROMUSER:
-                trainName = trainNameField.getText();
-                if ((trainName == null) || trainName.equals("")) {
-                    // no train name entered
-                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error14"),
-                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                if (trainNameField.getText().isEmpty()) {
-                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                            "Error45", dccAddress), Bundle.getMessage("ErrorTitle"),
-                            JmriJOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                if (!_dispatcher.isTrainFree(trainName)) {
-                    // train name is already in use by an Active Train
-                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                            "Error24", trainName), Bundle.getMessage("ErrorTitle"),
-                            JmriJOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                dccAddress = getDCCAddressFromSpinner();
-                if (dccAddress == null) {
-                    return;
-                }
-                tSource = ActiveTrain.USER;
-                break;
-            case TRAINSFROMSETLATER:
-            default:
-                trainName = "";
-        }
-        int priority = 5;
-        priority = (Integer) prioritySpinner.getValue();
-        int trainType = trainTypeBox.getSelectedIndex();
-        if (autoRunBox.isSelected()) {
-            if (!readAutoRunItems()) {
-                return;
             }
+            _dispatcher.loadTrainFromTrainInfoThrowsException(trainInfo,"NONE","");
+        } catch (IllegalArgumentException ex) {
+            JmriJOptionPane.showMessageDialog(initiateFrame, ex.getMessage(),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
         }
-
-        // create a new Active Train
-        ActiveTrain at = _dispatcher.createActiveTrain(transitName, trainName, tSource, startBlockName,
-                startBlockSeq, endBlockName, endBlockSeq, autoRun, dccAddress, priority,
-                resetWhenDone, reverseAtEnd,  true, initiateFrame, allocateMethod);
-        if (at == null) {
-            return;  // error message sent by createActiveTrain
-        }
-        if (tSource == ActiveTrain.ROSTER) {
-            at.setRosterEntry((RosterEntry)rosterComboBox.getSelectedItem());
-        }
-        at.setTrainDetection(trainDetection);
-        at.setAllocateMethod(allocateMethod);
-        at.setDelayedStart(delayedStart);
-        at.setDelayedRestart(delayedReStart);
-        at.setDepartureTimeHr(departureTimeHours);
-        at.setDepartureTimeMin(departureTimeMinutes);
-        at.setRestartDelay(delayRestartMinutes);
-        at.setDelaySensor(delaySensor.getSelectedItem());
-        at.setReverseDelayRestart(delayedReverseReStart);
-        at.setReverseRestartDelay(delayReverseRestartMinutes);
-        at.setReverseDelaySensor(delayReverseReStartSensor.getSelectedItem());
-        at.setReverseResetRestartSensor(delayReverseResetSensorBox.isSelected());
-        if ((_dispatcher.isFastClockTimeGE(departureTimeHours, departureTimeMinutes) && delayedStart != ActiveTrain.SENSORDELAY)
-                || delayedStart == ActiveTrain.NODELAY) {
-            at.setStarted();
-        }
-        at.setRestartSensor(delayReStartSensor.getSelectedItem());
-        at.setResetRestartSensor(resetRestartSensorBox.isSelected());
-        at.setTrainType(trainType);
-        at.setTerminateWhenDone(terminateWhenDoneBox.isSelected());
-        at.setNextTrain(_nextTrain);
-        if (autoRunBox.isSelected()) {
-            AutoActiveTrain aat = new AutoActiveTrain(at);
-            setAutoRunItems(aat);
-            _dispatcher.getAutoTrainsFrame().addAutoActiveTrain(aat);
-            if (!aat.initialize()) {
-                JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                        "Error27", at.getTrainName()), Bundle.getMessage("MessageTitle"),
-                        JmriJOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-        _dispatcher.allocateNewActiveTrain(at);
-        _dispatcher.newTrainDone(at);
-    }
-
-    private String getDCCAddressFromSpinner() {
-        int address = (Integer) dccAddressSpinner.getValue(); // SpinnerNumberModel
-                                                          // limits
-                                                          // address to
-                                                          // 1 - 9999
-                                                          // inclusive
-        if (!isAddressFree(address)) {
-            // DCC address is already in use by an Active Train
-            JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
-                    "Error40", address), Bundle.getMessage("ErrorTitle"),
-                    JmriJOptionPane.ERROR_MESSAGE);
-            return null;
-        }
-        return String.valueOf(address);
     }
 
     private void initializeFreeTransitsCombo(List<Transit> transitList) {
@@ -1180,16 +1035,23 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void initializeFreeRosterEntriesCombo() {
-        rosterComboBox.update();
+        excludedRosterEntries = new ArrayList<RosterEntry>();
         // remove used entries
-        for (int ix = rosterComboBox.getItemCount() - 1; ix > 1; ix--) {  // remove from back first item is the "select loco" message
-            if ( !isAddressFree( ((RosterEntry)rosterComboBox.getItemAt(ix)).getDccLocoAddress().getNumber() ) ) {
-                rosterComboBox.removeItemAt(ix);
+        for (int ix = rosterComboBox.getRosterEntryComboBox().getItemCount() - 1; ix > 1; ix--) {  // remove from back first item is the "select loco" message
+            if ( !_dispatcher.isAddressFree( ((RosterEntry)rosterComboBox.getRosterEntryComboBox().getItemAt(ix)).getDccLocoAddress().getNumber() ) ) {
+                excludedRosterEntries.add((RosterEntry)rosterComboBox.getRosterEntryComboBox().getItemAt(ix));
             }
         }
+        rosterComboBox.getRosterEntryComboBox().setExcludeItems(excludedRosterEntries);
+        rosterComboBox.getRosterEntryComboBox().update();
     }
 
     private void initializeFreeTrainsCombo() {
+        Train prevValue = null;
+        if (trainSelectBox.getSelectedIndex() > 0) {
+            // item zero is a string
+            prevValue = (Train)trainSelectBox.getSelectedItem();
+        }
         ActionListener[] als = trainSelectBox.getActionListeners();
         for ( ActionListener al: als) {
             trainSelectBox.removeActionListener(al);
@@ -1197,7 +1059,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         trainSelectBox.removeAllItems();
         trainSelectBox.addItem("Select Train");
         // initialize free trains from operations
-        List<Train> trains = jmri.InstanceManager.getDefault(TrainManager.class).getTrainsByNameList();
+        List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByNameList();
         if (trains.size() > 0) {
             for (int i = 0; i < trains.size(); i++) {
                 Train t = trains.get(i);
@@ -1209,6 +1071,9 @@ public class ActivateTrainFrame extends JmriJFrame {
                 }
             }
         }
+        if (prevValue != null) {
+            trainSelectBox.setSelectedItem(prevValue);
+        }
         for ( ActionListener al: als) {
             trainSelectBox.addActionListener(al);
         }
@@ -1218,33 +1083,23 @@ public class ActivateTrainFrame extends JmriJFrame {
      * Sets the labels and inputs for speed profile running
      * @param b True if the roster entry has valid speed profile else false
      */
-    private void setSpeedProfileOptions(boolean b) {
+    private void setSpeedProfileOptions(TrainInfo info,boolean b) {
         useSpeedProfileLabel.setEnabled(b);
         useSpeedProfileCheckBox.setEnabled(b);
         stopBySpeedProfileLabel.setEnabled(b);
         stopBySpeedProfileCheckBox.setEnabled(b);
         stopBySpeedProfileAdjustLabel.setEnabled(b);
         stopBySpeedProfileAdjustSpinner.setEnabled(b);
+        minReliableOperatingScaleSpeedLabel.setVisible(b);
         if (!b) {
             useSpeedProfileCheckBox.setSelected(false);
             stopBySpeedProfileCheckBox.setSelected(false);
-            _useSpeedProfile = false;
-            _stopBySpeedProfile = false;
-        }
-    }
 
-
-    private boolean isAddressFree(int addr) {
-        for (int j = 0; j < _ActiveTrainsList.size(); j++) {
-            ActiveTrain at = _ActiveTrainsList.get(j);
-            if (addr == Integer.parseInt(at.getDccAddress())) {
-                return false;
-            }
         }
-        return true;
     }
 
     private void initializeStartingBlockCombo() {
+        String prevValue = (String)startingBlockBox.getSelectedItem();
         startingBlockBox.removeAllItems();
         startingBlockBoxList.clear();
         if (!inTransitBox.isSelected() && selectedTransit.getEntryBlocksList().isEmpty()) {
@@ -1266,10 +1121,14 @@ public class ActivateTrainFrame extends JmriJFrame {
                 found = true;
             }
         }
+        if (prevValue != null) {
+            startingBlockBox.setSelectedItem(prevValue);
+        }
         JComboBoxUtil.setupComboBoxMaxRows(startingBlockBox);
     }
 
     private void initializeDestinationBlockCombo() {
+        String prevValue = (String)destinationBlockBox.getSelectedItem();
         destinationBlockBox.removeAllItems();
         destinationBlockBoxList.clear();
         int index = startingBlockBox.getSelectedIndex();
@@ -1289,6 +1148,9 @@ public class ActivateTrainFrame extends JmriJFrame {
             }
             destinationBlockBox.addItem(bName);
         }
+        if (prevValue != null) {
+            destinationBlockBox.setSelectedItem(prevValue);
+        }
         JComboBoxUtil.setupComboBoxMaxRows(destinationBlockBox);
     }
 
@@ -1301,69 +1163,140 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     protected void showActivateFrame() {
         if (initiateFrame != null) {
-            initializeFreeTransitsCombo(new ArrayList<Transit>());
+            initializeFreeTransitsCombo(new ArrayList<>());
             initiateFrame.setVisible(true);
         } else {
             _dispatcher.newTrainDone(null);
         }
     }
 
+    /**
+     * Show the Frame.
+     * @param re currently unused.
+     */
     public void showActivateFrame(RosterEntry re) {
         showActivateFrame();
     }
 
-    private void loadTrainInfo(ActionEvent e) {
-        String[] names = _tiFile.getTrainInfoFileNames();
-        TrainInfo info = null;
-        if (names.length > 0) {
-            //prompt user to select a single train info filename from directory list
-            Object selName = JmriJOptionPane.showInputDialog(initiateFrame,
-                    Bundle.getMessage("LoadTrainChoice"), Bundle.getMessage("LoadTrainTitle"),
-                    JmriJOptionPane.QUESTION_MESSAGE, null, names, names[0]);
-            if ((selName == null) || (((String) selName).equals(""))) {
+    protected void loadTrainInfo(ActionEvent e) {
+        List<TrainInfoFileSummary> names = _tiFile.getTrainInfoFileSummaries();
+        if (!names.isEmpty()) {
+            JTable table = new JTable(){
+                @Override
+                public Dimension getPreferredScrollableViewportSize() {
+                  return new Dimension(super.getPreferredSize().width,
+                      super.getPreferredScrollableViewportSize().height);
+                }
+            };
+            DefaultTableModel tm = new DefaultTableModel(
+                    new Object[]{
+                            Bundle.getMessage("FileNameColumnTitle"),
+                            Bundle.getMessage("TrainColumnTitle"),
+                            Bundle.getMessage("TransitColumnTitle"),
+                            Bundle.getMessage("StartBlockColumnTitle"),
+                            Bundle.getMessage("EndBlockColumnTitle"),
+                            Bundle.getMessage("DccColumnTitleColumnTitle")
+                    }, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
+
+            table.setModel(tm);
+            for (TrainInfoFileSummary fs: names) {
+                tm.addRow(new Object[] {fs.getFileName(),fs.getTrainName(),
+                        fs.getTransitName(),fs.getStartBlockName()
+                        ,fs.getEndBlockName(),fs.getDccAddress()});
+            }
+            JPanel jp = new JPanel(new BorderLayout());
+            TableColumnModel columnModel = table.getColumnModel();
+            table.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
+            for (int column = 0; column < table.getColumnCount(); column++) {
+                int width = 30; // Min width
+                for (int row = 0; row < table.getRowCount(); row++) {
+                    TableCellRenderer renderer = table.getCellRenderer(row, column);
+                    Component comp = table.prepareRenderer(renderer, row, column);
+                    width = Math.max(comp.getPreferredSize().width +1 , width);
+                }
+                if(width > 300)
+                    width=300;
+                columnModel.getColumn(column).setPreferredWidth(width);
+            }
+            //jp.setPreferredSize(table.getPreferredSize());
+            jp.add(table);
+            table.setAutoCreateRowSorter(true);
+            JScrollPane sp = new JScrollPane(table,
+                            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            int optionSelected = JmriJOptionPane.showOptionDialog(initiateFrame,
+                    sp, Bundle.getMessage("LoadTrainTitle"), JmriJOptionPane.OK_CANCEL_OPTION, JmriJOptionPane.PLAIN_MESSAGE,
+                    null,null,null);
+            if (optionSelected != JmriJOptionPane.OK_OPTION) {
+                //Canceled
+                return;
+            }
+            if (table.getSelectedRow() < 0) {
+                return;
+            }
+            String selName = (String)table.getModel().getValueAt( table.getRowSorter().convertRowIndexToModel(table.getSelectedRow()),0);
+            if ((selName == null) || (selName.isEmpty())) {
                 return;
             }
             //read xml data from selected filename and move it into the new train dialog box
-            _trainInfoName = (String) selName;
+            _trainInfoName = selName;
             try {
-                info = _tiFile.readTrainInfo((String) selName);
-                if (info != null) {
+                trainInfo = _tiFile.readTrainInfo( selName);
+                if (trainInfo != null) {
                     // process the information just read
-                    trainInfoToDialog(info);
+                    trainInfoToDialog(trainInfo);
                 }
             } catch (java.io.IOException ioe) {
                 log.error("IO Exception when reading train info file", ioe);
             } catch (org.jdom2.JDOMException jde) {
                 log.error("JDOM Exception when reading train info file", jde);
             }
+            handleDelayStartClick(null);
+            handleReverseAtEndBoxClick();
         }
-        handleDelayStartClick(null);
-        handleReverseAtEndBoxClick(null);
     }
 
-    private void saveTrainInfo(ActionEvent e, boolean locoOptional) {
-        TrainInfo info = null;
+    private void saveTrainInfo() {
+        saveTrainInfo(false);
+        refreshNextTrainCombo();
+    }
+
+    private void saveTrainInfoAsTemplate() {
+        saveTrainInfo(true);
+    }
+
+    private void saveTrainInfo(boolean asTemplate) {
         try {
-            info = dialogToTrainInfo(locoOptional);
+            dialogToTrainInfo(trainInfo);
         } catch (IllegalArgumentException ide) {
             JmriJOptionPane.showMessageDialog(initiateFrame, ide.getMessage(),
                     Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
         // get file name
-        String eName = "";
-        eName = JmriJOptionPane.showInputDialog(initiateFrame,
-                Bundle.getMessage("EnterFileName") + " :", _trainInfoName);
-        if (eName == null) {  //Cancel pressed
-            return;
+        String fileName;
+        if (asTemplate) {
+            fileName = normalizeXmlFileName(nameOfTemplateFile);
+        } else {
+            String eName = JmriJOptionPane.showInputDialog(initiateFrame,
+                    Bundle.getMessage("EnterFileName") + " :", _trainInfoName);
+            if (eName == null) {  //Cancel pressed
+                return;
+            }
+            if (eName.length() < 1) {
+                JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error25"),
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            fileName = normalizeXmlFileName(eName);
+            _trainInfoName = fileName;
         }
-        if (eName.length() < 1) {
-            JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error25"),
-                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        String fileName = normalizeXmlFileName(eName);
-        _trainInfoName = fileName;
         // check if train info file name is in use
         String[] names = _tiFile.getTrainInfoFileNames();
         if (names.length > 0) {
@@ -1388,7 +1321,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         // write the Train Info file
         try {
-            _tiFile.writeTrainInfo(info, fileName);
+            _tiFile.writeTrainInfo(trainInfo, fileName);
         } //catch (org.jdom2.JDOMException jde) {
         // log.error("JDOM exception writing Train Info: "+jde);
         //}
@@ -1397,13 +1330,13 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
     }
 
-    private void deleteTrainInfo(ActionEvent e) {
+    private void deleteTrainInfo() {
         String[] names = _tiFile.getTrainInfoFileNames();
         if (names.length > 0) {
             Object selName = JmriJOptionPane.showInputDialog(initiateFrame,
                     Bundle.getMessage("DeleteTrainChoice"), Bundle.getMessage("DeleteTrainTitle"),
                     JmriJOptionPane.QUESTION_MESSAGE, null, names, names[0]);
-            if ((selName == null) || (((String) selName).equals(""))) {
+            if ((selName == null) || (((String) selName).isEmpty())) {
                 return;
             }
             _tiFile.deleteTrainInfoFile((String) selName);
@@ -1411,37 +1344,47 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void trainInfoToDialog(TrainInfo info) {
-        try {
-            transitSelectBox.setSelectedItemByName(info.getTransitName());
-        } catch (Exception ex) {
-            log.warn("Transit {} from file not in Transit menu", info.getTransitName());
-            JmriJOptionPane.showMessageDialog(initiateFrame,
-                    Bundle.getMessage("TransitWarn", info.getTransitName()),
-                    null, JmriJOptionPane.WARNING_MESSAGE);
+        if (!info.getDynamicTransit()) {
+            radioTransitsPredefined.setSelected(true);
+            if (!info.getTransitName().isEmpty()) {
+                try {
+                    transitSelectBox.setSelectedItemByName(info.getTransitName());
+                } catch (Exception ex) {
+                    log.warn("Transit {} from file not in Transit menu", info.getTransitName());
+                    JmriJOptionPane.showMessageDialog(initiateFrame,
+                            Bundle.getMessage("TransitWarn", info.getTransitName()),
+                            null, JmriJOptionPane.WARNING_MESSAGE);
+                }
+            }
+        } else {
+            radioTransitsAdHoc.setSelected(true);
         }
-        _TrainsFrom = info.getTrainsFrom();
-        switch (_TrainsFrom) {
+        switch (info.getTrainsFrom()) {
             case TRAINSFROMROSTER:
                 radioTrainsFromRoster.setSelected(true);
-                if (!setRosterComboBox(rosterComboBox, info.getRosterId())) {
-                    log.warn("Roster {} from file not in Roster Combo", info.getRosterId());
-                    JmriJOptionPane.showMessageDialog(initiateFrame,
-                            Bundle.getMessage("TrainWarn", info.getRosterId()),
-                            null, JmriJOptionPane.WARNING_MESSAGE);
+                if (!info.getRosterId().isEmpty()) {
+                    if (!setRosterEntryBox(rosterComboBox, info.getRosterId())) {
+                        log.warn("Roster {} from file not in Roster Combo", info.getRosterId());
+                        JmriJOptionPane.showMessageDialog(initiateFrame,
+                                Bundle.getMessage("TrainWarn", info.getRosterId()),
+                                null, JmriJOptionPane.WARNING_MESSAGE);
+                    }
                 }
                 break;
             case TRAINSFROMOPS:
                 radioTrainsFromOps.setSelected(true);
-                if (!setTrainComboBox(trainSelectBox, info.getTrainName())) {
-                    log.warn("Train {} from file not in Train Combo", info.getTrainName());
-                    JmriJOptionPane.showMessageDialog(initiateFrame,
-                            Bundle.getMessage("TrainWarn", info.getTrainName()),
-                            null, JmriJOptionPane.WARNING_MESSAGE);
+                if (!info.getTrainName().isEmpty()) {
+                    if (!setTrainComboBox(trainSelectBox, info.getTrainName())) {
+                        log.warn("Train {} from file not in Train Combo", info.getTrainName());
+                        JmriJOptionPane.showMessageDialog(initiateFrame,
+                                Bundle.getMessage("TrainWarn", info.getTrainName()),
+                                null, JmriJOptionPane.WARNING_MESSAGE);
+                    }
                 }
                 break;
             case TRAINSFROMUSER:
                 radioTrainsFromUser.setSelected(true);
-                dccAddressSpinner.setValue(Integer.parseInt(info.getDccAddress()));
+                dccAddressSpinner.setValue(Integer.valueOf(info.getDccAddress()));
                 break;
             case TRAINSFROMSETLATER:
             default:
@@ -1450,10 +1393,24 @@ public class ActivateTrainFrame extends JmriJFrame {
         trainNameField.setText(info.getTrainUserName());
         trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
         inTransitBox.setSelected(info.getTrainInTransit());
-        initializeStartingBlockCombo();
-        initializeDestinationBlockCombo();
+        if (radioTransitsAdHoc.isSelected()) {
+            initializeStartingBlockComboDynamic();
+        } else {
+            initializeStartingBlockCombo();
+        }
         setComboBox(startingBlockBox, info.getStartBlockName());
+        if (radioTransitsAdHoc.isSelected()) {
+            initializeViaBlockDynamicCombo();
+            setComboBox(viaBlockBox, info.getViaBlockName());
+        }
+        if (radioTransitsAdHoc.isSelected()) {
+            initializeDestinationBlockDynamicCombo();
+        } else {
+            initializeDestinationBlockCombo();
+        }
         setComboBox(destinationBlockBox, info.getDestinationBlockName());
+
+        setAllocateMethodButtons(info.getAllocationMethod());
         prioritySpinner.setValue(info.getPriority());
         resetWhenDoneBox.setSelected(info.getResetWhenDone());
         reverseAtEndBox.setSelected(info.getReverseAtEnd());
@@ -1476,13 +1433,12 @@ public class ActivateTrainFrame extends JmriJFrame {
 
         terminateWhenDoneBox.setSelected(info.getTerminateWhenDone());
         nextTrain.setSelectedIndex(-1);
-
         try {
             nextTrain.setSelectedItem(info.getNextTrain());
         } catch (Exception ex){
             nextTrain.setSelectedIndex(-1);
         }
-        handleTerminateWhenDoneBoxClick(null);
+        handleTerminateWhenDoneBoxClick();
         setComboBox(trainTypeBox, info.getTrainType());
         autoRunBox.setSelected(info.getAutoRun());
         loadAtStartupBox.setSelected(info.getLoadAtStartup());
@@ -1490,38 +1446,89 @@ public class ActivateTrainFrame extends JmriJFrame {
         autoTrainInfoToDialog(info);
     }
 
-    private TrainInfo dialogToTrainInfo(boolean locoOptional) throws IllegalArgumentException {
-        TrainInfo info = new TrainInfo();
+    private boolean validateDialog() throws IllegalArgumentException {
         int index = transitSelectBox.getSelectedIndex();
         if (index < 0) {
             throw new IllegalArgumentException(Bundle.getMessage("Error44"));
-        } else {
-            info.setTransitName(transitSelectBox.getSelectedItem().getDisplayName());
-            info.setTransitId(transitSelectBox.getSelectedItem().getDisplayName());
         }
-        switch (_TrainsFrom) {
-            case TRAINSFROMROSTER:
-                if (rosterComboBox.getSelectedIndex() < 1 ) {
+        switch (trainsFromButtonGroup.getSelection().getActionCommand()) {
+            case "TRAINSFROMROSTER":
+                if (rosterComboBox.getRosterEntryComboBox().getSelectedIndex() < 1 ) {
                     throw new IllegalArgumentException(Bundle.getMessage("Error41"));
                 }
-                info.setRosterId(((RosterEntry) rosterComboBox.getSelectedItem()).getId());
-                info.setDccAddress(((RosterEntry) rosterComboBox.getSelectedItem()).getDccAddress());
                 break;
-            case TRAINSFROMOPS:
+            case "TRAINSFROMOPS":
                 if (trainSelectBox.getSelectedIndex() < 1) {
                     throw new IllegalArgumentException(Bundle.getMessage("Error42"));
                 }
-                info.setTrainName(((Train) trainSelectBox.getSelectedItem()).getId());
-                info.setDccAddress(String.valueOf(dccAddressSpinner.getValue()));
                 break;
-            case TRAINSFROMUSER:
+            case "TRAINSFROMUSER":
                 if (trainNameField.getText().isEmpty()) {
                     throw new IllegalArgumentException(Bundle.getMessage("Error22"));
                 }
+                break;
+            case "TRAINSFROMSETLATER":
+            default:
+        }
+        index = startingBlockBox.getSelectedIndex();
+        if (index < 0) {
+            throw new IllegalArgumentException(Bundle.getMessage("Error13"));
+        }
+        index = destinationBlockBox.getSelectedIndex();
+        if (index < 0) {
+            throw new IllegalArgumentException(Bundle.getMessage("Error8"));
+        }
+        if (radioTransitsAdHoc.isSelected()) {
+            index = viaBlockBox.getSelectedIndex();
+            if (index < 0) {
+                throw new IllegalArgumentException(Bundle.getMessage("Error8"));
+            }
+        }
+        if ((!reverseAtEndBox.isSelected()) && resetWhenDoneBox.isSelected()
+                && (!selectedTransit.canBeResetWhenDone())) {
+            resetWhenDoneBox.setSelected(false);
+            throw new IllegalArgumentException(Bundle.getMessage("NoResetMessage"));
+        }
+        int max = Math.round((float) maxSpeedSpinner.getValue()*100.0f);
+        int min = Math.round((float) minReliableOperatingSpeedSpinner.getValue()*100.0f);
+        if ((max-min) < 10) {
+            throw new IllegalArgumentException(Bundle.getMessage("Error49",
+                    maxSpeedSpinner.getValue(), minReliableOperatingSpeedSpinner.getValue()));
+        }
+        return true;
+    }
+
+    private boolean dialogToTrainInfo(TrainInfo info) {
+        int index = transitSelectBox.getSelectedIndex();
+        info.setDynamicTransit(radioTransitsAdHoc.isSelected());
+        if (!info.getDynamicTransit() && index >= 0 ) {
+            info.setTransitName(transitSelectBox.getSelectedItem().getDisplayName());
+            info.setTransitId(transitSelectBox.getSelectedItem().getDisplayName());
+        }
+        switch (trainsFromButtonGroup.getSelection().getActionCommand()) {
+            case "TRAINSFROMROSTER":
+                if (rosterComboBox.getRosterEntryComboBox().getSelectedItem() instanceof RosterEntry) {
+                    info.setRosterId(((RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem()).getId());
+                    info.setDccAddress(((RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem()).getDccAddress());
+                }
+                trainInfo.setTrainsFrom(TrainsFrom.TRAINSFROMROSTER);
+                setTrainsFromOptions(trainInfo.getTrainsFrom());
+                break;
+            case "TRAINSFROMOPS":
+                if (trainSelectBox.getSelectedIndex() > 0) {
+                    info.setTrainName(((Train) trainSelectBox.getSelectedItem()).toString());
+                    info.setDccAddress(String.valueOf(dccAddressSpinner.getValue()));
+                }
+                trainInfo.setTrainsFrom(TrainsFrom.TRAINSFROMOPS);
+                setTrainsFromOptions(trainInfo.getTrainsFrom());
+                break;
+            case "TRAINSFROMUSER":
+                trainInfo.setTrainsFrom(TrainsFrom.TRAINSFROMUSER);
                 info.setDccAddress(String.valueOf(dccAddressSpinner.getValue()));
                 break;
-            case TRAINSFROMSETLATER:
+            case "TRAINSFROMSETLATER":
             default:
+                trainInfo.setTrainsFrom(TrainsFrom.TRAINSFROMSETLATER);
                 info.setTrainName("");
                 info.setDccAddress("");
         }
@@ -1529,21 +1536,20 @@ public class ActivateTrainFrame extends JmriJFrame {
         info.setTrainInTransit(inTransitBox.isSelected());
         info.setStartBlockName((String) startingBlockBox.getSelectedItem());
         index = startingBlockBox.getSelectedIndex();
-        if (index < 0) {
-            throw new IllegalArgumentException(Bundle.getMessage("Error13"));
+        info.setStartBlockId(startingBlockBoxList.get(index).getDisplayName());
+        if (info.getDynamicTransit()) {
+            info.setStartBlockSeq(1);
         } else {
-            info.setStartBlockId(startingBlockBoxList.get(index).getDisplayName());
             info.setStartBlockSeq(startingBlockSeqList.get(index).intValue());
         }
-        info.setDestinationBlockName((String) destinationBlockBox.getSelectedItem());
         index = destinationBlockBox.getSelectedIndex();
-        if (index < 0) {
-            throw new IllegalArgumentException(Bundle.getMessage("Error8"));
+        info.setDestinationBlockId(destinationBlockBoxList.get(index).getDisplayName());
+        info.setDestinationBlockName(destinationBlockBoxList.get(index).getDisplayName());
+        if (info.getDynamicTransit()) {
+            info.setViaBlockName(viaBlockBoxList.get(viaBlockBox.getSelectedIndex()).getDisplayName());
         } else {
-            info.setDestinationBlockId(destinationBlockBoxList.get(index).getDisplayName());
             info.setDestinationBlockSeq(destinationBlockSeqList.get(index).intValue());
         }
-        info.setTrainsFrom(_TrainsFrom);
         info.setPriority((Integer) prioritySpinner.getValue());
         info.setTrainDetection(((TrainDetectionItem)trainDetectionComboBox.getSelectedItem()).value);
         info.setResetWhenDone(resetWhenDoneBox.isSelected());
@@ -1581,7 +1587,23 @@ public class ActivateTrainFrame extends JmriJFrame {
             info.setNextTrain("None");
         }
         autoRunItemsToTrainInfo(info);
-        return info;
+        return true;
+    }
+
+    private boolean setRosterEntryBox(RosterEntrySelectorPanel box, String txt) {
+        /*
+         * Due to the different behaviour of GUI comboboxs
+         * we cannot just set the item and catch an exception.
+         * We first inspect the combo items with the current filter,
+         * if found well and good else we remove the filter and try again.
+         */
+        boolean found = false;
+        setRosterComboBox(box.getRosterEntryComboBox(),txt);
+        if (found) {
+            return found;
+        }
+        box.setSelectedRosterGroup(null);
+       return setRosterComboBox(box.getRosterEntryComboBox(),txt);
     }
 
     private boolean setRosterComboBox(RosterEntryComboBox box, String txt) {
@@ -1689,6 +1711,9 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JPanel pa1 = new JPanel();
     private final JLabel speedFactorLabel = new JLabel(Bundle.getMessage("SpeedFactorLabel"));
     private final JSpinner speedFactorSpinner = new JSpinner();
+    private final JLabel minReliableOperatingSpeedLabel = new JLabel(Bundle.getMessage("MinReliableOperatingSpeedLabel"));
+    private final JSpinner minReliableOperatingSpeedSpinner = new JSpinner();
+    private final JLabel minReliableOperatingScaleSpeedLabel = new JLabel();
     private final JLabel maxSpeedLabel = new JLabel(Bundle.getMessage("MaxSpeedLabel"));
     private final JSpinner maxSpeedSpinner = new JSpinner();
     private final JPanel pa2 = new JPanel();
@@ -1705,8 +1730,29 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JCheckBox soundDecoderBox = new JCheckBox(Bundle.getMessage("SoundDecoder"));
     private final JCheckBox runInReverseBox = new JCheckBox(Bundle.getMessage("RunInReverse"));
     private final JPanel pa4 = new JPanel();
+    private final JLabel fNumberBellLabel = new JLabel(Bundle.getMessage("fnumberbelllabel"));
+    private final JSpinner fNumberBellSpinner = new JSpinner();
+    private final JLabel fNumberHornLabel = new JLabel(Bundle.getMessage("fnumberhornlabel"));
+    private final JSpinner fNumberHornSpinner = new JSpinner();
+    private final JLabel fNumberLightLabel = new JLabel(Bundle.getMessage("fnumberlightlabel"));
+    private final JSpinner fNumberLightSpinner = new JSpinner();
+    private final JPanel pa5_FNumbers = new JPanel();
     protected static class TrainDetectionJCombo extends JComboBox<TrainDetectionItem> {
-        public void setSelectedItemByValue(TrainDetection var) {
+        public void setSelectedItemByValue(TrainDetection trainDetVar) {
+            for ( int ix = 0; ix < getItemCount() ; ix ++ ) {
+                if (getItemAt(ix).value == trainDetVar) {
+                    this.setSelectedIndex(ix);
+                    break;
+                }
+            }
+        }
+    }
+
+    private final JLabel trainDetectionLabel = new JLabel(Bundle.getMessage("TrainDetection"));
+    public final TrainDetectionJCombo trainDetectionComboBox = new TrainDetectionJCombo();
+
+    protected static class TrainLengthUnitsJCombo extends JComboBox<TrainLengthUnitsItem> {
+        public void setSelectedItemByValue(TrainLengthUnits var) {
             for ( int ix = 0; ix < getItemCount() ; ix ++ ) {
                 if (getItemAt(ix).value == var) {
                     this.setSelectedIndex(ix);
@@ -1715,40 +1761,15 @@ public class ActivateTrainFrame extends JmriJFrame {
             }
         }
     }
-    public final TrainDetectionJCombo trainDetectionComboBox
-                = new TrainDetectionJCombo();
-    private final JLabel trainDetectionLabel = new JLabel(Bundle.getMessage("TrainDetection"));
+
+    public final TrainLengthUnitsJCombo trainLengthUnitsComboBox = new TrainLengthUnitsJCombo();
     private final JLabel trainLengthLabel = new JLabel(Bundle.getMessage("MaxTrainLengthLabel"));
+    private JLabel trainLengthAltLengthLabel; // I18N Label
     private final JSpinner maxTrainLengthSpinner = new JSpinner(); // initialized later
-    // auto run variables
-    float _speedFactor = 1.0f;
-    float _maxSpeed = 0.6f;
-    int _rampRate = AutoActiveTrain.RAMP_NONE;
-    TrainDetection _trainDetection = TrainDetection.TRAINDETECTION_HEADONLY;
-    boolean _runInReverse = false;
-    boolean _soundDecoder = false;
-    float _maxTrainLength = 200.0f;
-    boolean _stopBySpeedProfile = false;
-    float _stopBySpeedProfileAdjust = 1.0f;
-    boolean _useSpeedProfile = true;
-    String _nextTrain = "";
-
-    private void setAutoRunDefaults() {
-        _speedFactor = 1.0f;
-        _maxSpeed = 0.6f;
-        _rampRate = AutoActiveTrain.RAMP_NONE;
-        _runInReverse = false;
-        _soundDecoder = false;
-        _maxTrainLength = 100.0f;
-        _stopBySpeedProfile = false;
-        _stopBySpeedProfileAdjust = 1.0f;
-        _useSpeedProfile = true;
-        _nextTrain = "";
-
-    }
 
     private void initializeAutoRunItems() {
         initializeRampCombo();
+        initializeScaleLengthBox();
         pa1.setLayout(new FlowLayout());
         pa1.add(speedFactorLabel);
         speedFactorSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(2.0f), Float.valueOf(0.01f)));
@@ -1757,10 +1778,17 @@ public class ActivateTrainFrame extends JmriJFrame {
         speedFactorSpinner.setToolTipText(Bundle.getMessage("SpeedFactorHint"));
         pa1.add(new JLabel("   "));
         pa1.add(maxSpeedLabel);
-        maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(2.0f), Float.valueOf(0.01f)));
+        maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
         maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
         pa1.add(maxSpeedSpinner);
         maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint"));
+        pa1.add(minReliableOperatingSpeedLabel);
+        minReliableOperatingSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
+        minReliableOperatingSpeedSpinner.setEditor(new JSpinner.NumberEditor(minReliableOperatingSpeedSpinner, "# %"));
+        pa1.add(minReliableOperatingSpeedSpinner);
+        minReliableOperatingSpeedSpinner.setToolTipText(Bundle.getMessage("MinReliableOperatingSpeedHint"));
+        minReliableOperatingSpeedSpinner.addChangeListener( e -> handleMinReliableOperatingSpeedUpdate());
+        pa1.add(minReliableOperatingScaleSpeedLabel);
         initiatePane.add(pa1);
         pa2.setLayout(new FlowLayout());
         pa2.add(rampRateLabel);
@@ -1787,74 +1815,182 @@ public class ActivateTrainFrame extends JmriJFrame {
         pa3.add(runInReverseBox);
         runInReverseBox.setToolTipText(Bundle.getMessage("RunInReverseBoxHint"));
         initiatePane.add(pa3);
-        pa4.setLayout(new FlowLayout());
-        pa4.add(trainLengthLabel);
         maxTrainLengthSpinner.setModel(new SpinnerNumberModel(Float.valueOf(18.0f), Float.valueOf(0.0f), Float.valueOf(10000.0f), Float.valueOf(0.5f)));
         maxTrainLengthSpinner.setEditor(new JSpinner.NumberEditor(maxTrainLengthSpinner, "###0.0"));
+        maxTrainLengthSpinner.setToolTipText(Bundle.getMessage("MaxTrainLengthHint")); // won't be updated while Dispatcher is open
+        maxTrainLengthSpinner.addChangeListener( e -> handlemaxTrainLengthChangeUnitsLength());
+        trainLengthUnitsComboBox.addActionListener( e -> handlemaxTrainLengthChangeUnitsLength());
+        trainLengthAltLengthLabel=new JLabel();
+        pa4.setLayout(new FlowLayout());
+        pa4.add(trainLengthLabel);
         pa4.add(maxTrainLengthSpinner);
-        boolean unitIsMeter = InstanceManager.getDefault(DispatcherFrame.class).getUseScaleMeters(); // read from user setting
-        maxTrainLengthSpinner.setToolTipText(Bundle.getMessage("MaxTrainLengthHint",
-                (unitIsMeter ? Bundle.getMessage("ScaleMeters") : Bundle.getMessage("ScaleFeet")))); // won't be updated while Dispatcher is open
+        pa4.add(trainLengthUnitsComboBox);
+        pa4.add(trainLengthAltLengthLabel);
         initiatePane.add(pa4);
-        hideAutoRunItems();   // initialize with auto run items hidden
-        initializeAutoRunValues();
+        pa5_FNumbers.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("fnumbers")));
+        pa5_FNumbers.setLayout(new FlowLayout());
+        fNumberLightSpinner.setModel(new SpinnerNumberModel(0,0,100,1));
+        fNumberLightSpinner.setToolTipText(Bundle.getMessage("fnumberlighthint"));
+        pa5_FNumbers.add(fNumberLightLabel);
+        pa5_FNumbers.add(fNumberLightSpinner);
+        fNumberBellSpinner.setModel(new SpinnerNumberModel(0,0,100,1));
+        fNumberBellSpinner.setToolTipText(Bundle.getMessage("fnumberbellhint"));
+        pa5_FNumbers.add(fNumberBellLabel);
+        pa5_FNumbers.add(fNumberBellSpinner);
+        fNumberHornSpinner.setModel(new SpinnerNumberModel(0,0,100,1));
+        fNumberHornSpinner.setToolTipText(Bundle.getMessage("fnumberhornhint"));
+        pa5_FNumbers.add(fNumberHornLabel);
+        pa5_FNumbers.add(fNumberHornSpinner);
+        initiatePane.add(pa5_FNumbers);
+        showHideAutoRunItems(autoRunBox.isSelected());   // initialize with auto run items hidden
     }
 
-    private void initializeAutoRunValues() {
-        speedFactorSpinner.setValue(_speedFactor);
-        maxSpeedSpinner.setValue(_maxSpeed);
-        rampRateBox.setSelectedIndex(_rampRate);
-        soundDecoderBox.setSelected(_soundDecoder);
-        runInReverseBox.setSelected(_runInReverse);
-        useSpeedProfileCheckBox.setSelected(_useSpeedProfile);
-        stopBySpeedProfileAdjustSpinner.setValue(_stopBySpeedProfileAdjust);
-        stopBySpeedProfileCheckBox.setSelected(_stopBySpeedProfile);
-        maxTrainLengthSpinner.setValue(Math.round(_maxTrainLength * 2) * 0.5f); // set in spinner as 0.5 increments
-
+    private void handleMinReliableOperatingSpeedUpdate() {
+        float mROS = (float)minReliableOperatingSpeedSpinner.getValue();
+        minReliableOperatingScaleSpeedLabel.setText("");
+        if (useSpeedProfileCheckBox.isEnabled()) {
+            RosterEntry re = (RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+            if (re != null && re.getSpeedProfile() != null &&  re.getSpeedProfile().getProfileSize() > 0) {
+                float mms = re.getSpeedProfile().getSpeed(mROS, true);
+                minReliableOperatingScaleSpeedLabel.setText(RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(mms));
+            }
+        }
     }
 
-    private void hideAutoRunItems() {
-        pa1.setVisible(false);
-        pa2.setVisible(false);
-        pa2a.setVisible(false);
-        pa3.setVisible(false);
-        pa4.setVisible(false);
+    private void handlemaxTrainLengthChangeUnitsLength() {
+        trainLengthAltLengthLabel.setText(maxTrainLengthCalculateAltFormatted(
+                ((TrainLengthUnitsItem) trainLengthUnitsComboBox.getSelectedItem()).getValue(),
+                (float) maxTrainLengthSpinner.getValue()));
     }
 
-    private void showAutoRunItems() {
-        pa1.setVisible(true);
-        pa2.setVisible(true);
-        pa2a.setVisible(true);
-        pa3.setVisible(true);
-        pa4.setVisible(true);
+    /**
+     * Get an I18N String of the max TrainLength.
+     * @param fromUnits the Length Unit.
+     * @param fromValue the length.
+     * @return String format of the length.
+     */
+    private String maxTrainLengthCalculateAltFormatted(TrainLengthUnits fromUnits, float fromValue) {
+        float value = maxTrainLengthCalculateAlt(fromUnits, fromValue);
+        switch (fromUnits) {
+            case TRAINLENGTH_ACTUALINCHS:
+                return String.format(Locale.getDefault(), "%.2f %s",
+                    value, Bundle.getMessage("TrainLengthInScaleFeet"));
+            case TRAINLENGTH_ACTUALCM:
+                return String.format(Locale.getDefault(), "%.1f %s",
+                    value, Bundle.getMessage("TrainLengthInScaleMeters"));
+            case TRAINLENGTH_SCALEFEET:
+                return String.format(Locale.getDefault(), "%.1f %s",
+                    value, Bundle.getMessage("TrainLengthInActualInchs"));
+            case TRAINLENGTH_SCALEMETERS:
+                return String.format(Locale.getDefault(), "%.0f %s",
+                    value, Bundle.getMessage("TrainLengthInActualcm"));
+            default:
+                log.error("Invalid TrainLengthUnits must have been updated, fix maxTrainLengthCalculateAltFormatted");
+        }
+        return "";
+    }
+
+    private float maxTrainLengthToScaleMeters(TrainLengthUnits fromUnits, float fromValue) {
+        float value;
+        // convert to meters.
+        switch (fromUnits) {
+            case TRAINLENGTH_ACTUALINCHS:
+                value = fromValue / 12.0f * (float) _dispatcher.getScale().getScaleRatio();
+                value = value / 3.28084f;
+                break;
+            case TRAINLENGTH_ACTUALCM:
+                value = fromValue / 100.0f * (float) _dispatcher.getScale().getScaleRatio();
+                break;
+           case TRAINLENGTH_SCALEFEET:
+               value = fromValue / 3.28084f;
+               break;
+           case TRAINLENGTH_SCALEMETERS:
+               value = fromValue;
+               break;
+           default:
+               value = 0;
+               log.error("Invalid TrainLengthUnits has been updated, fix me");
+        }
+        return value;
+    }
+
+    /*
+     * Calculates the reciprocal unit. Actual to Scale and vice versa
+     */
+    private float maxTrainLengthCalculateAlt(TrainLengthUnits fromUnits, float fromValue) {
+        switch (fromUnits) {
+            case TRAINLENGTH_ACTUALINCHS:
+                // calc scale feet
+                return (float) jmri.util.MathUtil.granulize(fromValue / 12 * (float) _dispatcher.getScale().getScaleRatio(),0.1f);
+            case TRAINLENGTH_ACTUALCM:
+                // calc scale meter
+                return fromValue / 100 * (float) _dispatcher.getScale().getScaleRatio();
+            case TRAINLENGTH_SCALEFEET:
+                // calc actual inchs
+                return fromValue * 12 * (float) _dispatcher.getScale().getScaleFactor();
+           case TRAINLENGTH_SCALEMETERS:
+                // calc actual cm.
+                return fromValue * 100 * (float) _dispatcher.getScale().getScaleFactor();
+           default:
+               log.error("Invalid TrainLengthUnits has been updated, fix me");
+        }
+        return 0;
+    }
+
+    private void showHideAutoRunItems(boolean value) {
+        pa1.setVisible(value);
+        pa2.setVisible(value);
+        pa2a.setVisible(value);
+        pa3.setVisible(value);
+        pa4.setVisible(value);
+        pa5_FNumbers.setVisible(value);
     }
 
     private void autoTrainInfoToDialog(TrainInfo info) {
         speedFactorSpinner.setValue(info.getSpeedFactor());
         maxSpeedSpinner.setValue(info.getMaxSpeed());
+        minReliableOperatingSpeedSpinner.setValue(info.getMinReliableOperatingSpeed());
         setComboBox(rampRateBox, info.getRampRate());
         trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
         runInReverseBox.setSelected(info.getRunInReverse());
         soundDecoderBox.setSelected(info.getSoundDecoder());
-        maxTrainLengthSpinner.setValue(info.getMaxTrainLength());
+        trainLengthUnitsComboBox.setSelectedItemByValue(info.getTrainLengthUnits());
+        switch (info.getTrainLengthUnits()) {
+            case TRAINLENGTH_SCALEFEET:
+                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleFeet());
+                break;
+            case TRAINLENGTH_SCALEMETERS:
+                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters());
+                break;
+            case TRAINLENGTH_ACTUALINCHS:
+                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleFeet() * 12.0f * (float)_dispatcher.getScale().getScaleFactor());
+                break;
+            case TRAINLENGTH_ACTUALCM:
+                maxTrainLengthSpinner.setValue(info.getMaxTrainLengthScaleMeters() * 100.0f * (float)_dispatcher.getScale().getScaleFactor());
+                break;
+            default:
+                maxTrainLengthSpinner.setValue(0.0f);
+        }
         useSpeedProfileCheckBox.setSelected(info.getUseSpeedProfile());
         stopBySpeedProfileCheckBox.setSelected(info.getStopBySpeedProfile());
         stopBySpeedProfileAdjustSpinner.setValue(info.getStopBySpeedProfileAdjust());
-        if (autoRunBox.isSelected()) {
-            showAutoRunItems();
-        } else {
-            hideAutoRunItems();
-        }
+        fNumberLightSpinner.setValue(info.getFNumberLight());
+        fNumberBellSpinner.setValue(info.getFNumberBell());
+        fNumberHornSpinner.setValue(info.getFNumberHorn());
+         showHideAutoRunItems(autoRunBox.isSelected());
         initiateFrame.pack();
     }
 
     private void autoRunItemsToTrainInfo(TrainInfo info) {
         info.setSpeedFactor((float) speedFactorSpinner.getValue());
         info.setMaxSpeed((float) maxSpeedSpinner.getValue());
+        info.setMinReliableOperatingSpeed((float) minReliableOperatingSpeedSpinner.getValue());
         info.setRampRate((String) rampRateBox.getSelectedItem());
         info.setRunInReverse(runInReverseBox.isSelected());
         info.setSoundDecoder(soundDecoderBox.isSelected());
-        info.setMaxTrainLength((float) maxTrainLengthSpinner.getValue());
+        info.setTrainLengthUnits(((TrainLengthUnitsItem) trainLengthUnitsComboBox.getSelectedItem()).getValue());
+        info.setMaxTrainLengthScaleMeters(maxTrainLengthToScaleMeters( info.getTrainLengthUnits(), (float) maxTrainLengthSpinner.getValue()));
+
         // Only use speed profile values if enabled
         if (useSpeedProfileCheckBox.isEnabled()) {
             info.setUseSpeedProfile(useSpeedProfileCheckBox.isSelected());
@@ -1865,43 +2001,12 @@ public class ActivateTrainFrame extends JmriJFrame {
             info.setStopBySpeedProfile(false);
             info.setStopBySpeedProfileAdjust(1.0f);
         }
+        info.setFNumberLight((int)fNumberLightSpinner.getValue());
+        info.setFNumberBell((int)fNumberBellSpinner.getValue());
+        info.setFNumberHorn((int)fNumberHornSpinner.getValue());
     }
 
-    private boolean readAutoRunItems() {
-        boolean success = true;
-        _speedFactor = (float) speedFactorSpinner.getValue();
-        _maxSpeed = (float) maxSpeedSpinner.getValue();
-        _rampRate = rampRateBox.getSelectedIndex();
-        _trainDetection = ((TrainDetectionItem)trainDetectionComboBox.getSelectedItem()).value;
-        _runInReverse = runInReverseBox.isSelected();
-        _soundDecoder = soundDecoderBox.isSelected();
-        _maxTrainLength = (float) maxTrainLengthSpinner.getValue();
-        _useSpeedProfile = useSpeedProfileCheckBox.isSelected();
-        _stopBySpeedProfile = stopBySpeedProfileCheckBox.isSelected();
-        if (_stopBySpeedProfile) {
-            _stopBySpeedProfileAdjust = (Float) stopBySpeedProfileAdjustSpinner.getValue();
-        }
-        if (nextTrain.getSelectedIndex() < 0) {
-            _nextTrain="";
-        } else {
-            _nextTrain = (String)nextTrain.getSelectedItem();
-        }
-        return success;
-    }
-
-    private void setAutoRunItems(AutoActiveTrain aaf) {
-        aaf.setSpeedFactor(_speedFactor);
-        aaf.setMaxSpeed(_maxSpeed);
-        aaf.setRampRate(_rampRate);
-        aaf.setRunInReverse(_runInReverse);
-        aaf.setSoundDecoder(_soundDecoder);
-        aaf.setMaxTrainLength(_maxTrainLength);
-        aaf.setStopBySpeedProfile(_stopBySpeedProfile);
-        aaf.setStopBySpeedProfileAdjust(_stopBySpeedProfileAdjust);
-        aaf.setUseSpeedProfile(_useSpeedProfile);
-    }
-
-    private void initializeRampCombo() {
+   private void initializeRampCombo() {
         rampRateBox.removeAllItems();
         rampRateBox.addItem(Bundle.getMessage("RAMP_NONE"));
         rampRateBox.addItem(Bundle.getMessage("RAMP_FAST"));
@@ -1936,26 +2041,146 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     /*
+     * Layout block stuff
+     */
+    private ArrayList<LayoutBlock> getOccupiedBlockList() {
+        LayoutBlockManager lBM = InstanceManager.getDefault(LayoutBlockManager.class);
+        ArrayList<LayoutBlock> lBlocks = new ArrayList<>();
+        for (LayoutBlock lB : lBM.getNamedBeanSet()) {
+            if (lB.getBlock().getState() == Block.OCCUPIED) {
+                lBlocks.add(lB);
+            }
+        }
+        return lBlocks;
+    }
+
+    private void initializeStartingBlockComboDynamic() {
+        startingBlockBox.removeAllItems();
+        startingBlockBoxList.clear();
+        for (LayoutBlock lB: getOccupiedBlockList()) {
+            if (!startingBlockBoxList.contains(lB.getBlock())) {
+                startingBlockBoxList.add(lB.getBlock());
+                startingBlockBox.addItem(getBlockName(lB.getBlock()));
+            }
+        }
+        JComboBoxUtil.setupComboBoxMaxRows(startingBlockBox);
+    }
+
+    private void initializeViaBlockDynamicCombo() {
+        String prevValue = (String) viaBlockBox.getSelectedItem();
+        viaBlockBox.removeActionListener(viaBlockBoxListener);
+        viaBlockBox.removeAllItems();
+        viaBlockBoxList.clear();
+        LayoutBlockManager lBM = InstanceManager.getDefault(LayoutBlockManager.class);
+        if (startingBlockBox.getSelectedItem() != null) {
+            LayoutBlock lBSrc;
+            if (startingBlockBox.getSelectedIndex() >= 0) {
+                lBSrc = lBM.getByUserName((String) startingBlockBox.getSelectedItem());
+                if (lBSrc != null) {
+                    int rX = lBSrc.getNumberOfNeighbours() - 1;
+                    for (; rX > -1; rX--) {
+                        viaBlockBox.addItem(lBSrc.getNeighbourAtIndex(rX).getDisplayName());
+                        viaBlockBoxList.add(lBSrc.getNeighbourAtIndex(rX));
+                    }
+                }
+            }
+        }
+        if (prevValue != null) {
+            viaBlockBox.setSelectedItem(prevValue);
+        }
+        viaBlockBox.addActionListener(viaBlockBoxListener);
+    }
+
+    private void initializeDestinationBlockDynamicCombo() {
+        destinationBlockBox.removeAllItems();
+        destinationBlockBoxList.clear();
+        LayoutBlockManager lBM = InstanceManager.getDefault(LayoutBlockManager.class);
+        if (startingBlockBox.getSelectedItem() != null) {
+            LayoutBlock lBSrc;
+            if (startingBlockBox.getSelectedIndex() >= 0
+                    && viaBlockBox.getSelectedIndex() >= 0) {
+                lBSrc = lBM.getByUserName((String) startingBlockBox.getSelectedItem());
+                Block b = viaBlockBoxList.get(viaBlockBox.getSelectedIndex());
+                if (lBSrc != null) {
+                    int rX = lBSrc.getNumberOfRoutes() - 1;
+                    for (; rX > -1; rX--) {
+                        if (lBSrc.getRouteNextBlockAtIndex(rX) == b) {
+                            destinationBlockBox.addItem(lBSrc.getRouteDestBlockAtIndex(rX).getDisplayName());
+                            destinationBlockBoxList.add(lBSrc.getRouteDestBlockAtIndex(rX));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /*
+     * Check Advanced routing
+    */
+    private boolean checkAdvancedRouting() {
+        if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
+            int response = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("AdHocNeedsEnableBlockRouting"),
+                    Bundle.getMessage("AdHocNeedsBlockRouting"), JmriJOptionPane.YES_NO_OPTION);
+            if (response == 0) {
+                InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("AdhocNeedsBlockRoutingEnabled"));
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /*
      * ComboBox item.
      */
     protected static class TrainDetectionItem {
-        private String key;
+
+        private final String key;
         private TrainDetection value;
+
         public TrainDetectionItem(String text, TrainDetection trainDetection ) {
             this.key = text;
             this.value = trainDetection;
         }
+
         @Override
-        public String toString()
-        {
+        public String toString() {
             return key;
         }
-        public String getKey()
-        {
+
+        public String getKey() {
             return key;
         }
-        public TrainDetection getValue()
-        {
+
+        public TrainDetection getValue() {
+            return value;
+        }
+    }
+
+    /*
+     * ComboBox item.
+     */
+    protected static class TrainLengthUnitsItem {
+
+        private final String key;
+        private TrainLengthUnits value;
+
+        public TrainLengthUnitsItem(String text, TrainLengthUnits trainLength ) {
+            this.key = text;
+            this.value = trainLength;
+        }
+
+        @Override
+        public String toString() {
+            return key;
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public TrainLengthUnits getValue() {
             return value;
         }
     }

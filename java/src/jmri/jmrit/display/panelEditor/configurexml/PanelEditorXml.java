@@ -155,6 +155,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
 
         PanelEditor panel = new PanelEditor(name);
         panel.setTitle();
+        panel.setKeepSize(false);
         panel.getTargetFrame().setLocation(x, y);
         panel.getTargetFrame().setSize(width, height);
         //Panel already added to EditorManager with new PanelEditor(name)

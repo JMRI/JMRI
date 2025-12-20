@@ -1,12 +1,8 @@
 package jmri.jmrix.can.cbus.swing.eventtable;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of CbusBeanRenderer
@@ -14,13 +10,13 @@ import org.junit.jupiter.api.Test;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2020
 */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CbusBeanRendererTest  {
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testInitComponents() throws Exception{
+    public void testBeanRendererCtor() {
         // for now, just makes sure there isn't an exception.
-        assertThat(new CbusBeanRenderer(26)).isNotNull();
+        Assertions.assertNotNull(new CbusBeanRenderer(26));
     }
 
     @BeforeEach

@@ -481,7 +481,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.ITEM == _base.getCategory());
     }
 
     @Test
@@ -518,7 +518,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");

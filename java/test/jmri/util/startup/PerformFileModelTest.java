@@ -2,7 +2,6 @@ package jmri.util.startup;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class PerformFileModelTest {
     @Test
     public void testCTor() {
         PerformFileModel t = new PerformFileModel();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

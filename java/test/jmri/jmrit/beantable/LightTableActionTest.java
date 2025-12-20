@@ -12,6 +12,7 @@ import jmri.jmrit.beantable.light.LightTableDataModel;
 import jmri.jmrix.internal.InternalLightManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
@@ -499,7 +500,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         Assert.assertNotNull("exists", sOne);
         Assert.assertNotNull("exists", sTwo);
 
-        a.actionPerformed(null); // show table
+        ThreadingUtil.runOnGUI( () -> a.actionPerformed(null) ); // show table
 
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
@@ -525,7 +526,9 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // light control frame closes
 
         JemmyUtil.pressButton(jfob, Bundle.getMessage("ButtonCreate"));
-        // new light frame closes
+        // new light frame stays open
+        jfob.requestClose();
+        jfob.waitClosed();
 
         Light created = lightManager.provideLight("IL444");
         Assert.assertEquals("1 Control", 1, created.getLightControlList().size());

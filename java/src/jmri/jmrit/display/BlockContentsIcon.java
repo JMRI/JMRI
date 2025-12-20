@@ -27,12 +27,11 @@ import jmri.util.swing.JmriMouseEvent;
 public class BlockContentsIcon extends MemoryIcon {
 
     private NamedIcon defaultIcon = null;
-    java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Block> namedBlock;
 
     public BlockContentsIcon(String s, Editor editor) {
         super(s, editor);
-        resetDefaultIcon();
+        BlockContentsIcon.this.resetDefaultIcon();
         _namedIcon = defaultIcon;
         //By default all text objects are left justified
         _popupUtil.setJustification(LEFT);
@@ -161,8 +160,79 @@ public class BlockContentsIcon extends MemoryIcon {
                 });
             }
             return true;
-        }  // end of selectable
-        if (re != null) {
+        } // end of selectable
+        // This is a little different
+        // jmri.jmrit.dispatcher.DispatcherFrame.class is AutoCreate so getNullableDefault creates it 
+        // if it doesnt exist. So we look at the count of instances.
+        final jmri.jmrit.dispatcher.DispatcherFrame df;
+        if (jmri.InstanceManager.getList(jmri.jmrit.dispatcher.DispatcherFrame.class).isEmpty()) {
+            df = null;
+        } else {
+            df = jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
+        }
+        final jmri.jmrit.dispatcher.ActiveTrain at;
+        if (df != null) {
+            if (re != null) {
+                at = df.getActiveTrainForRoster(re);
+            } else {
+                at = df.getActiveTrainForName(this.getText());
+            }
+        } else {
+            at = null;
+        }
+        if (at != null && df != null) {
+            // we have active train, with or without auto train with or without roster entry
+            if (at.getAutoActiveTrain() != null ) {
+                if( re == null ) {
+                    popup.add(new AbstractAction("Open Throttle") {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+                            tf.toFront();
+                            tf.getAddressPanel().setAddress(at.getAutoActiveTrain().getDccAddress().getNumber(),
+                                    at.getAutoActiveTrain().getDccAddress().isLongAddress());
+                        }
+                    });
+                } else {
+                    popup.add(new AbstractAction("Open Throttle") {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+                            tf.toFront();
+                            tf.getAddressPanel().setAddress(at.getAutoActiveTrain().getDccAddress().getNumber(),
+                                    at.getAutoActiveTrain().getDccAddress().isLongAddress());
+                        }
+                    });
+                }
+            }
+            popup.add(new AbstractAction(Bundle.getMessage("MenuTerminateTrain")) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    df.terminateActiveTrain(at, true, false);
+                }
+            });
+            popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    //Just brings up the standard allocate extra frame, this could be expanded in the future
+                    //As a point and click operation.
+                    df.allocateExtraSection(e, at);
+                }
+            });
+            if (at.getStatus() == jmri.jmrit.dispatcher.ActiveTrain.DONE) {
+                popup.add(new AbstractAction("Restart") {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        at.allocateAFresh();
+                    }
+                });
+            }
+            if (isEditable()) {
+                popup.add(new JSeparator());
+            }
+            return true;
+        } else if (re != null) {
+            // No active train, but have a roster, therefore a throttle can be created
             popup.add(new AbstractAction("Open Throttle") {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -171,47 +241,23 @@ public class BlockContentsIcon extends MemoryIcon {
                     tf.getAddressPanel().setRosterEntry(re);
                 }
             });
-
-            final jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
+            // if dispatcher exists we can create a new train.
             if (df != null) {
-                final jmri.jmrit.dispatcher.ActiveTrain at = df.getActiveTrainForRoster(re);
-                if (at != null) {
-                    popup.add(new AbstractAction(Bundle.getMessage("MenuTerminateTrain")) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            df.terminateActiveTrain(at,true,false);
+                popup.add(new AbstractAction(Bundle.getMessage("MenuNewTrain")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (!df.getNewTrainActive()) {
+                            df.getActiveTrainFrame().initiateTrain(e, re, getBlock());
+                            df.setNewTrainActive(true);
+                        } else {
+                            df.getActiveTrainFrame().showActivateFrame(re);
                         }
-                    });
-                    popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            //Just brings up the standard allocate extra frame, this could be expanded in the future
-                            //As a point and click operation.
-                            df.allocateExtraSection(e, at);
-                        }
-                    });
-                    if (at.getStatus() == jmri.jmrit.dispatcher.ActiveTrain.DONE) {
-                        popup.add(new AbstractAction("Restart") {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                at.allocateAFresh();
-                            }
-                        });
                     }
-                } else {
-                    popup.add(new AbstractAction(Bundle.getMessage("MenuNewTrain")) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            if (!df.getNewTrainActive()) {
-                                df.getActiveTrainFrame().initiateTrain(e, re, getBlock());
-                                df.setNewTrainActive(true);
-                            } else {
-                                df.getActiveTrainFrame().showActivateFrame(re);
-                            }
-                        }
 
-                    });
-                }
+                });
+            }
+            if (isEditable()) {
+                popup.add(new JSeparator());
             }
             return true;
         }

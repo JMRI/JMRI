@@ -220,8 +220,17 @@ public class JmriConfigurationManager implements ConfigureManager {
             throw new JmriException(ex.getMessage(), ex);
         }
         // make this url the default "Store Panels..." file
-        JFileChooser ufc = jmri.configurexml.StoreXmlUserAction.getUserFileChooser();
-        ufc.setSelectedFile(new File(FileUtil.urlToURI(url)));
+        try {
+            JFileChooser ufc = jmri.configurexml.StoreXmlUserAction.getUserFileChooser();
+            ufc.setSelectedFile(new File(FileUtil.urlToURI(url)));
+        } catch (Exception e) {
+            // A user was seeing an IndexOutOfBoundsException in the setSelectedFile above
+            // when loading a file at startup.  
+            // We don't know why, but see https://stackoverflow.com/questions/37322892/jfilechooser-java-lang-indexoutofboundsexception-invalid-index
+            // and https://web.archive.org/web/20170924021323/http://bugs.java.com/view_bug.do?bug_id=6684952
+            // This lets operation proceed past that exception.
+            log.error("Exception caught while setting default load file in file chooser: {}", e.toString());
+        }
 
         return this.legacy.load(url, registerDeferred);
         // return true; // always return true once legacy support is dropped

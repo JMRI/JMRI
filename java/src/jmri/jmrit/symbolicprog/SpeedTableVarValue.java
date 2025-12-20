@@ -905,7 +905,8 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
             if (log.isDebugEnabled()) {
                 log.debug("CV State changed to {}", cv.getState());
             }
-            setState(cv.getState());
+            log.trace("Setting state {} and notifying from {}", cv.getState(), e);
+            setState((ValueState) e.getNewValue());
         } else if (e.getPropertyName().equals("Value")) {
             // find the CV that sent this
             CvValue cv = (CvValue) e.getSource();
@@ -932,7 +933,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
      *
      * @author   Bob Jacobsen   Copyright (C) 2001
      */
-    public class VarSlider extends JSlider {
+    public static class VarSlider extends JSlider {
 
         VarSlider(BoundedRangeModel m, CvValue var, int step) {
             super(m);

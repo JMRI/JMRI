@@ -1,5 +1,7 @@
 package jmri.jmrix.bachrus.speedmatcher.speedStepScale;
 
+import java.util.Locale;
+
 import jmri.DccThrottle;
 import jmri.jmrix.bachrus.Speed;
 
@@ -44,7 +46,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
         READ_MAX_SPEED,
         FORWARD_SPEED_MATCH_VHIGH,
         FORWARD_SPEED_MATCH_VSTART,
-        SET_UPPER_SPEED_STEPS,
+        RE_INIT_SPEED_TABLE,
         FORWARD_SPEED_MATCH,
         POST_SPEED_MATCH,
         REVERSE_WARM_UP,
@@ -59,7 +61,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
     private SpeedTableStep initSpeedTableStep;
     private int initSpeedTableStepValue;
     private SpeedTableStep speedMatchSpeedTableStep;
-    private int lowestMaxSpeedStep;
+    private int speedMatchMaxSpeedStep;
 
     private float speedStepTargetSpeedKPH;
 
@@ -77,8 +79,6 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
 
     private int reverseTrimValue = INITIAL_TRIM;
     private int lastReverseTrimValue = INITIAL_TRIM;
-    private int reverseTrimSpeedStep;
-    private float reverseTrimSpeedKPH;
 
     private SpeedMatcherState speedMatcherState = SpeedMatcherState.IDLE;
     //</editor-fold>
@@ -120,7 +120,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
 
         speedMatcherState = SpeedMatcherState.WAIT_FOR_THROTTLE;
 
-        actualMaxSpeedField.setText(String.format("___"));
+        actualMaxSpeedField.setText("___");
 
         if (!initializeAndStartSpeedMatcher(e -> speedMatchTimeout())) {
             cleanUpSpeedMatcher();
@@ -222,12 +222,11 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                 //255, respectively on ESU decoders
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
-                        initSpeedTableStepValue = INITIAL_STEP2;
                         initSpeedTableStep = SpeedTableStep.STEP2;
                         stepDuration = 1;
                     }
 
-                    writeSpeedTableStep(initSpeedTableStep, initSpeedTableStepValue);
+                    writeSpeedTableStep(initSpeedTableStep, getSpeedStepLinearValue(initSpeedTableStep.getSpeedStep()));
 
                     initSpeedTableStep = initSpeedTableStep.getNext();
                     if (initSpeedTableStep == SpeedTableStep.STEP28) {
@@ -294,23 +293,27 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                 } else {
                     measuredMaxSpeedKPH = currentSpeedKPH;
 
-                    String statusMessage = String.format("Measured maximum speed = %.1f KPH (%.1f MPH)", measuredMaxSpeedKPH, Speed.kphToMph(measuredMaxSpeedKPH));
+                    String statusMessage = String.format(Locale.getDefault(),
+                        "Measured maximum speed = %.1f KPH (%.1f MPH)",
+                            measuredMaxSpeedKPH, Speed.kphToMph(measuredMaxSpeedKPH));
                     logger.info(statusMessage);
+                    
+                    float speedMatchMaxSpeed;
 
                     if (measuredMaxSpeedKPH > targetMaxSpeedKPH) {
+                        speedMatchMaxSpeedStep = targetMaxSpeedStep.getSpeedTableStep().getSpeedStep();
+                        speedMatchMaxSpeed = targetMaxSpeedStep.getSpeed();
                         speedMatchMaxSpeedKPH = targetMaxSpeedKPH;
-                        initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VHIGH);
                     } else {
-                        //skip speed matching VHIGH if max speed is less than target
-                        speedMatchMaxSpeedKPH = measuredMaxSpeedKPH;
-                        initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART);
+                        float measuredMaxSpeed = speedUnit == Speed.Unit.MPH ? Speed.kphToMph(measuredMaxSpeedKPH) : measuredMaxSpeedKPH;
+                        speedMatchMaxSpeedStep = getNextLowestSpeedTableStepForSpeed(measuredMaxSpeed);
+                        speedMatchMaxSpeed = getSpeedForSpeedTableStep(speedMatchMaxSpeedStep);
+                        speedMatchMaxSpeedKPH = speedUnit == Speed.Unit.MPH ? Speed.mphToKph(speedMatchMaxSpeed): speedMatchMaxSpeed;
                     }
-
-                    //set TOP_SPEED_STEP_MIN to the lowest speed step that will be set to the max speed
-                    float speedMatchMaxSpeed = speedUnit == Speed.Unit.MPH ? Speed.kphToMph(speedMatchMaxSpeedKPH) : speedMatchMaxSpeedKPH;
-                    lowestMaxSpeedStep = getLowestMaxSpeedStep(speedMatchMaxSpeed);
-
-                    actualMaxSpeedField.setText(String.format("%.1f", speedMatchMaxSpeed));
+                    
+                    actualMaxSpeedField.setText(String.format(Locale.getDefault(), "%.1f", speedMatchMaxSpeed));
+                    
+                    initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VHIGH, 30);
                 }
                 break;
 
@@ -327,7 +330,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                         setSpeedMatchError(speedMatchMaxSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
-                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART);
+                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART, 3);
                         } else {
                             vHigh = getNextSpeedMatchValue(lastVHigh, VHIGH_MAX, VHIGH_MIN);
 
@@ -354,13 +357,14 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", SpeedMatcherCV.VSTART.getName()));
                         logger.info("Setting CV {} to {} KPH ({} MPH)", SpeedMatcherCV.VSTART.getName(), String.valueOf(targetVStartSpeedKPH), String.valueOf(Speed.kphToMph(targetVStartSpeedKPH)));
                         setThrottle(true, 1);
-                        setSpeedMatchStateTimerDuration(8000);
+                        setSpeedMatchStateTimerDuration(15000);
                         stepDuration = 1;
                     } else {
                         setSpeedMatchError(targetVStartSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
-                            initNextSpeedMatcherState(SpeedMatcherState.SET_UPPER_SPEED_STEPS);
+                            setThrottle(true, 28);
+                            initNextSpeedMatcherState(SpeedMatcherState.RE_INIT_SPEED_TABLE);
                         } else {
                             vStart = getNextSpeedMatchValue(lastVStart, vStartMax, VSTART_MIN);
 
@@ -378,19 +382,28 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                 }
                 break;
 
-            case SET_UPPER_SPEED_STEPS:
-                //Set Speed table steps 27 through lowestMaxSpeedStep to TOP_SPEED_STEP_MAX
+            case RE_INIT_SPEED_TABLE:
+                //Set Speed table steps 27 through lowestMaxSpeedStep to TOP_SPEED_STEP_MAX 
+                //and the remaining steps through step 2 to 1
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
-                        speedMatchSpeedTableStep = SpeedTableStep.STEP27;
+                        initSpeedTableStepValue = TOP_SPEED_STEP_MAX;
+                        initSpeedTableStep = SpeedTableStep.STEP27;
                         stepDuration = 1;
                     }
 
-                    writeSpeedTableStep(speedMatchSpeedTableStep, TOP_SPEED_STEP_MAX);
+                    writeSpeedTableStep(initSpeedTableStep, initSpeedTableStepValue);
+                    
+                    if (initSpeedTableStep.getSpeedStep() == speedMatchMaxSpeedStep) {
+                        initSpeedTableStep = initSpeedTableStep.getPrevious();
+                        speedMatchSpeedTableStep = initSpeedTableStep;
+                        initSpeedTableStepValue = INITIAL_STEP2;
+                    }
+                    else {
+                        initSpeedTableStep = initSpeedTableStep.getPrevious();
+                    }
 
-                    speedMatchSpeedTableStep = speedMatchSpeedTableStep.getPrevious();
-
-                    if (speedMatchSpeedTableStep.getSpeedStep() < lowestMaxSpeedStep) {
+                    if (initSpeedTableStep.getSpeedStep() < 2) {
                         initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH);
                     }
                 }
@@ -445,13 +458,11 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
                         statusLabel.setText(Bundle.getMessage("StatSettingReverseTrim"));
-                        reverseTrimSpeedStep = Math.max(lowestMaxSpeedStep - 2, 1);
-                        reverseTrimSpeedKPH = getSpeedStepScaleSpeedInKPH(reverseTrimSpeedStep);
-                        setThrottle(false, reverseTrimSpeedStep);
+                        setThrottle(false, speedMatchMaxSpeedStep);
                         setSpeedMatchStateTimerDuration(8000);
                         stepDuration = 1;
                     } else {
-                        setSpeedMatchError(reverseTrimSpeedKPH);
+                        setSpeedMatchError(speedMatchMaxSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
                             initNextSpeedMatcherState(SpeedMatcherState.COMPLETE);
@@ -594,13 +605,24 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
     }
 
     /**
-     * Sets up the speed match state by clearing the speed match error, clearing
-     * the step duration, setting the timer duration, and setting the next state
+     * Sets up the speed match state by resetting the speed matcher with a value delta of 10,
+     * clearing the step duration, setting the timer duration, and setting the next state
      *
-     * @param nextState - next SpeedMatcherState to set
+     * @param nextState next SpeedMatcherState to set
      */
     protected void initNextSpeedMatcherState(SpeedMatcherState nextState) {
-        resetSpeedMatchError();
+        initNextSpeedMatcherState(nextState, 10); 
+    }
+    
+    /**
+     * Sets up the speed match state by resetting the speed matcher with the given value delta,
+     * clearing the step duration, setting the timer duration, and setting the next state
+     *
+     * @param nextState next SpeedMatcherState to set
+     * @param speedMatchValueDelta the value delta to use when resetting the speed matcher
+     */
+    protected void initNextSpeedMatcherState(SpeedMatcherState nextState, int speedMatchValueDelta) {
+        resetSpeedMatcher(speedMatchValueDelta);
         stepDuration = 0;
         speedMatcherState = nextState;
         setSpeedMatchStateTimerDuration(1800);

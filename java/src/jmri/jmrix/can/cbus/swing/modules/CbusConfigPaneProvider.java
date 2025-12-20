@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.swing.modules;
 
 import java.util.*;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
@@ -82,6 +83,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * @param name of the module
      * @return the module provider, null if not known
      */
+    @CheckForNull
     final static public CbusConfigPaneProvider getProviderByName(String name) {
         loadInstances();
         CbusConfigPaneProvider p = instanceMap.get(name);

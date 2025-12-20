@@ -119,7 +119,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     public Object getValueAt(int row, int col) {
         switch (col) {
             case HEADERCOL:
-                return Integer.valueOf(row);
+                return row;
             case HANDLECOL:
                 return Integer.valueOf(file.getHeader(row + 1).getHandle());
             case MAPCOL:
@@ -138,7 +138,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                     return null;
                 }
                 float time = file.getHeader(row + 1).getDataLength() / rate;
-                return Float.valueOf(time);
+                return time;
             case PLAYBUTTONCOL:
                 if (file.getHeader(row + 1).isWAV()) {
                     return Bundle.getMessage("ButtonPlay");

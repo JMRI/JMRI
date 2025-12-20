@@ -2,8 +2,9 @@ package jmri.util;
 
 import java.util.TimerTask;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -16,26 +17,26 @@ public class TimerUtilTest {
     @Test
     public void testScheduleDate() {
         TimerUtil.schedule(task, 10);
-        Assert.assertTrue(JUnitUtil.waitFor(() -> {return taskRan;}));
+        assertTrue(JUnitUtil.waitFor(() -> {return taskRan;}));
     }
 
     @Test
     public void testScheduleDateOnLayout() {
         TimerUtil.scheduleOnLayoutThread(task, 10);
-        Assert.assertTrue(JUnitUtil.waitFor(() -> {return taskRan;}));
-        Assert.assertTrue(taskRanOnLayout);
+        assertTrue(JUnitUtil.waitFor(() -> {return taskRan;}));
+        assertTrue(taskRanOnLayout);
     }
 
     @Test
     public void testScheduleDateOnGUI() {
         TimerUtil.scheduleOnGUIThread(task, 10);
-        Assert.assertTrue(JUnitUtil.waitFor(() -> {return taskRan;}));
-        Assert.assertTrue(taskRanOnGUI);
+        assertTrue(JUnitUtil.waitFor(() -> {return taskRan;}));
+        assertTrue(taskRanOnGUI);
     }
 
-    boolean taskRan = false;
-    boolean taskRanOnGUI = false;
-    boolean taskRanOnLayout = false;
+    private boolean taskRan = false;
+    private boolean taskRanOnGUI = false;
+    private boolean taskRanOnLayout = false;
 
     final TimerTask task = new TimerTask(){
         @Override
@@ -45,6 +46,7 @@ public class TimerUtilTest {
             taskRan = true;
         }
     };
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

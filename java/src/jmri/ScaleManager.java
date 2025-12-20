@@ -15,7 +15,12 @@ import javax.annotation.Nonnull;
  */
 public class ScaleManager {
 
-    private static HashMap<String, Scale> _scaleMap = new HashMap<>();
+    private static final HashMap<String, Scale> _scaleMap = new HashMap<>();
+
+    /**
+     * Prevent public Construction, class only supplies static methods.
+     */
+    private ScaleManager(){}
 
     /**
      * Load the hash map from ScaleData.xml.  The XML load process will load
@@ -28,6 +33,12 @@ public class ScaleManager {
             addScale("N", "N", 160.0);
         }
         log.debug("ScaleManager initialized");
+    }
+
+    private static void fillScaleMapIfEmpty(){
+        if (_scaleMap.isEmpty()) {
+            fillMap();
+        }
     }
 
     /**
@@ -46,7 +57,7 @@ public class ScaleManager {
      * @return The selected scale or null.
      */
     public static Scale getScale(@Nonnull String name) {
-        if (_scaleMap.isEmpty()) fillMap();
+        fillScaleMapIfEmpty();
         return _scaleMap.get(name);
     }
 
@@ -55,7 +66,7 @@ public class ScaleManager {
      * @return The sorted scale list.
      */
     public static ArrayList<Scale> getScales() {
-        if (_scaleMap.isEmpty()) fillMap();
+        fillScaleMapIfEmpty();
         ArrayList<Scale> list = new ArrayList<>();
         for (Scale scale : _scaleMap.values()) {
             list.add(scale);
@@ -71,7 +82,7 @@ public class ScaleManager {
      * @return The selected scale or null.
      */
     public static Scale getScaleByName(@Nonnull String name) {
-        if (_scaleMap.isEmpty()) fillMap();
+        fillScaleMapIfEmpty();
         for (Scale scale : _scaleMap.values()) {
             if (scale.getUserName().equals(name)) {
                 return scale;
@@ -80,5 +91,6 @@ public class ScaleManager {
         return _scaleMap.get(name);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScaleManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScaleManager.class);
+
 }

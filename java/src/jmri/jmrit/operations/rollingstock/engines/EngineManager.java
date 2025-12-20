@@ -3,11 +3,14 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.beans.PropertyChangeEvent;
 import java.util.*;
 
+import javax.swing.JComboBox;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.*;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -93,19 +96,19 @@ public class EngineManager extends RollingStockManager<Engine>
     }
 
     /**
-     * return a list available engines (no assigned train) engines are ordered least
-     * recently moved to most recently moved.
+     * Returns a list of available engines (no assigned train). Engines are
+     * ordered by track priority and least recently moved to most recently
+     * moved.
      *
      * @param train The Train requesting this list.
-     *
      * @return Ordered list of engines not assigned to a train
      */
     public List<Engine> getAvailableTrainList(Train train) {
         // now build list of available engines for this route
         List<Engine> out = new ArrayList<>();
-        // get engines by moves list
-        for (RollingStock rs : getByMovesList()) {
-            Engine engine = (Engine) rs;
+        // get engines by track priority and moves
+        List<Engine> sortByPriority = sortByTrackPriority(getByMovesList());
+        for (Engine engine : sortByPriority) {
             if (engine.getTrack() != null && (engine.getTrain() == null || engine.getTrain() == train)) {
                 out.add(engine);
             }
@@ -142,6 +145,16 @@ public class EngineManager extends RollingStockManager<Engine>
         }
         java.util.Collections.sort(names);
         return names;
+    }
+
+    public void updateEngineRoadComboBox(String engineModel, JComboBox<String> roadEngineBox) {
+        roadEngineBox.removeAllItems();
+        roadEngineBox.addItem(NONE);
+        List<String> roads = getEngineRoadNames(engineModel);
+        for (String roadName : roads) {
+            roadEngineBox.addItem(roadName);
+        }
+        OperationsPanel.padComboBox(roadEngineBox);
     }
 
     int _commentLength = 0;

@@ -53,7 +53,7 @@ public class MqttReporterManager extends AbstractReporterManager {
     }
 
     /**
-     * Create an new sensor object.
+     * Create an new Reporter object.
      * {@inheritDoc}
      * @return never null
      */

@@ -1,8 +1,15 @@
 package jmri.jmrit.dispatcher;
 
+import jmri.InstanceManager;
+import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.JUnitUtil;
+import java.awt.GraphicsEnvironment;
+import org.junit.Assume;
 
 import org.junit.jupiter.api.*;
+
+import java.io.File;
+
 import org.junit.Assert;
 
 /**
@@ -12,9 +19,11 @@ import org.junit.Assert;
  */
 public class DispatcherTrainInfoFileTest {
 
+    DispatcherFrame d;  // need dispatcher now
+    
     @Test
     public void testFileRead() throws Exception {
-
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainInfoFile tif = new TrainInfoFile();
         tif.setFileLocation("java/test/jmri/jmrit/dispatcher/traininfo/");
         TrainInfo ti = tif.readTrainInfo("TestTrain.xml");
@@ -48,14 +57,17 @@ public class DispatcherTrainInfoFileTest {
         Assert.assertEquals("Resistance Wheels", ActiveTrain.TrainDetection.TRAINDETECTION_WHOLETRAIN,ti.getTrainDetection());
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertFalse("Sound Decoder", ti.getSoundDecoder());
-        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), 222.0f, 0.0);
+        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLengthScaleFeet(), 222.0f, 0.01);
+        Assert.assertEquals("Light Function key", 0, ti.getFNumberLight());
+        Assert.assertEquals("Bell Function key", 1, ti.getFNumberBell());
+        Assert.assertEquals("Horn Function key", 2, ti.getFNumberHorn());
 
     }
 
     // Version 2
     @Test
     public void testFileRead_V2() throws Exception {
-
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainInfoFile tif = new TrainInfoFile();
         tif.setFileLocation("java/test/jmri/jmrit/dispatcher/traininfo/");
         TrainInfo ti = tif.readTrainInfo("TestTrainCW_V2.xml");
@@ -89,7 +101,7 @@ public class DispatcherTrainInfoFileTest {
         Assert.assertEquals("Resistance Wheels", ActiveTrain.TrainDetection.TRAINDETECTION_WHOLETRAIN,ti.getTrainDetection());
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertTrue("Sound Decoder", ti.getSoundDecoder());
-        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), 200.0f, 0.0);
+        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLengthScaleFeet(), 200.0f, 0.0);
         Assert.assertEquals("Allocation Method", ti.getAllocationMethod(),3,0);
         Assert.assertFalse("Use Speed Profile", ti.getUseSpeedProfile());
         Assert.assertEquals("Use Speed Profile Adjust block length", ti.getStopBySpeedProfileAdjust(),1.0f,0.0f);
@@ -98,7 +110,7 @@ public class DispatcherTrainInfoFileTest {
     // Version 3
     @Test
     public void testFileRead_V3_withReverse() throws Exception {
-
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainInfoFile tif = new TrainInfoFile();
         tif.setFileLocation("java/test/jmri/jmrit/dispatcher/traininfo/");
         TrainInfo ti = tif.readTrainInfo("FWDREV40.xml");
@@ -136,7 +148,7 @@ public class DispatcherTrainInfoFileTest {
         Assert.assertEquals("Resistance Wheels", ActiveTrain.TrainDetection.TRAINDETECTION_WHOLETRAIN,ti.getTrainDetection());
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertFalse("Sound Decoder", ti.getSoundDecoder());
-        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), 40.0f, 0.0);
+        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLengthScaleFeet(), 40.0f, 0.0);
         Assert.assertEquals("Allocation Method", ti.getAllocationMethod(),-1,0);
         Assert.assertFalse("Use Speed Profile", ti.getUseSpeedProfile());
         Assert.assertEquals("Use Speed Profile Adjust block length", ti.getStopBySpeedProfileAdjust(),1.0f,0.0f);
@@ -145,7 +157,7 @@ public class DispatcherTrainInfoFileTest {
     // Version 4
     @Test
     public void testFileRead_V4_withReverse() throws Exception {
-
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainInfoFile tif = new TrainInfoFile();
         tif.setFileLocation("java/test/jmri/jmrit/dispatcher/traininfo/");
         TrainInfo ti = tif.readTrainInfo("FWDREV120.xml");
@@ -181,7 +193,7 @@ public class DispatcherTrainInfoFileTest {
         Assert.assertEquals("Resistance Wheels", ActiveTrain.TrainDetection.TRAINDETECTION_WHOLETRAIN,ti.getTrainDetection());
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertFalse("Sound Decoder", ti.getSoundDecoder());
-        Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLength(), 120.0f, 0.0);
+        Assert.assertEquals("Maximum Train Length", 120.0f, ti.getMaxTrainLengthScaleFeet(), 0.0);
         Assert.assertEquals("Allocation Method", ti.getAllocationMethod(),-1,0);
         Assert.assertFalse("Use Speed Profile", ti.getUseSpeedProfile());
         Assert.assertEquals("Use Speed Profile Adjust block length", ti.getStopBySpeedProfileAdjust(),1.0f,0.0f);
@@ -190,7 +202,7 @@ public class DispatcherTrainInfoFileTest {
     // Version 5
     @Test
     public void testFileRead_V5() throws Exception {
-
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainInfoFile tif = new TrainInfoFile();
         tif.setFileLocation("java/test/jmri/jmrit/dispatcher/traininfo/");
         TrainInfo ti = tif.readTrainInfo("TestInfoV5-WholeTrain.xml");
@@ -228,19 +240,46 @@ public class DispatcherTrainInfoFileTest {
         Assert.assertEquals("TrainDetection", ActiveTrain.TrainDetection.TRAINDETECTION_HEADANDTAIL,ti.getTrainDetection());
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertTrue("Sound Decoder", ti.getSoundDecoder());
-        Assert.assertEquals("Maximum Train Length",  80.0f, ti.getMaxTrainLength(), 0.0);
+        Assert.assertEquals("Maximum Train Length",  80.0f, ti.getMaxTrainLengthScaleFeet(), 0.0);
         Assert.assertEquals("Allocation Method", 0, ti.getAllocationMethod());
         Assert.assertTrue("Use Speed Profile", ti.getUseSpeedProfile());
         Assert.assertEquals("Use Speed Profile Adjust block length", 0.5f, ti.getStopBySpeedProfileAdjust(), 0.0f);
+        Assert.assertEquals("Light Function Key", 4, ti.getFNumberLight());
+        Assert.assertEquals("Bell Function Key", 5, ti.getFNumberBell());
+        Assert.assertEquals("Horn Function Key", 6, ti.getFNumberHorn());
     }
 
     @BeforeEach
     public void setUp() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitUtil.setUp();
+        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
+        };
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+        File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStop.xml");
+
+        Assertions.assertDoesNotThrow(() -> {
+            cm.load(f);
+        });
+
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class)
+                .initializeLayoutBlockPaths();
+
+        // load dispatcher, with all the correct options
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/TestTrainDispatcherOptions.xml");
+        d = InstanceManager.getDefault(DispatcherFrame.class);
+
     }
 
     @AfterEach
     public void tearDown() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitUtil.dispose(d);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.resetFileUtilSupport();
         JUnitUtil.tearDown();
     }
 }

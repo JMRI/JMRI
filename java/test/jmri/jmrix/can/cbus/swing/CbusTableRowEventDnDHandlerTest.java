@@ -1,7 +1,5 @@
 package jmri.jmrix.can.cbus.swing;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 
@@ -12,7 +10,8 @@ import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test simple functioning of CbusSendEventPane
@@ -20,11 +19,11 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2020
 */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CbusTableRowEventDnDHandlerTest  {
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testInitComponents() throws Exception{
+    public void testInitComponents() {
         // for now, just makes sure there isn't an exception.
         t = new CbusTableRowEventDnDHandler(null,null);
         assertNotNull(t);
@@ -32,7 +31,6 @@ public class CbusTableRowEventDnDHandlerTest  {
     }
     
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testTransferable() throws java.awt.datatransfer.UnsupportedFlavorException, java.io.IOException {
         
         dm = new CbusEventTableDataModel(memo,0,0);

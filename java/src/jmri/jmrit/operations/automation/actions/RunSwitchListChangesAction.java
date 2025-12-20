@@ -10,10 +10,8 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCsvSwitchLists;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainSwitchLists;
+import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.csv.TrainCsvSwitchLists;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 
@@ -54,7 +52,7 @@ public class RunSwitchListChangesAction extends Action {
                 return;
             }
             // we do need one of these!
-            if (!InstanceManager.getDefault(TrainCustomSwitchList.class).excelFileExists()) {
+            if (!InstanceManager.getDefault(TrainCustomSwitchList.class).doesExcelFileExist()) {
                 log.warn("Manifest creator file not found!, directory name: {}, file name: {}",
                         InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryName(),
                         InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName());

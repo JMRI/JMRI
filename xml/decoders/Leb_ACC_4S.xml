@@ -76,10 +76,12 @@
       </variable>
 	  -->
 	  
+<!-- commented out because without a type specification element it doesn't do anything
       <variable item="Allumage choix" CV="3" mask="XXXXXXXX" default="0">
 	  <label>Allumage choix</label>
 	  </variable>  
-	  
+-->
+
 <!--
       <variable item="Allumage ID" CV="3" mask="XXXXXXXV" default="0">
 	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>

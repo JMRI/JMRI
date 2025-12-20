@@ -9,10 +9,9 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JFileChooser;
 
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.jmrit.logixng.LogixNGPreferences;
-import jmri.JmriException;
+import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.logixng.LogixNG_Manager;
@@ -42,6 +41,11 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .ensureAtLeastPermission(LoadAndStorePermissionOwner.LOAD_XML_FILE_PERMISSION,
+                        BooleanPermission.BooleanValue.TRUE)) {
+            return;
+        }
         loadFile(getConfigFileChooser(), JmriJOptionPane.findWindowForObject( e == null ? null : e.getSource()));
     }
 
@@ -86,6 +90,12 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                         if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()
                                 && logixNG_Manager.isStartLogixNGsOnLoad()) {
                             logixNG_Manager.activateAllLogixNGs();
+                        }
+
+                        // If a LE panel specified "openDispatcher", it creates the DispatcherFrame instance.
+                        // The presence of the instance is use to trigger calling loadAtStartup after file loading is done.
+                        if (InstanceManager.isInitialized(DispatcherFrame.class)) {
+                            InstanceManager.getDefault(DispatcherFrame.class).loadAtStartup();
                         }
                     }
                 }

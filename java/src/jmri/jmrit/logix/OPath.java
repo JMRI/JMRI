@@ -1,17 +1,17 @@
 package jmri.jmrit.logix;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+
 import javax.swing.Timer;
+
 import jmri.BeanSetting;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Turnout;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Extends jmri.Path. An OPath is a route that traverses a Block from one
@@ -64,26 +64,22 @@ public class OPath extends jmri.Path {
         _toPortal = exit;
         if (settings != null) {
             for (BeanSetting setting : settings) {
-                addSetting(setting);
+                OPath.this.addSetting(setting);
             }
         }
         if (log.isDebugEnabled()) {
             log.debug("OPath Ctor: name= {}, block= {}, fromPortal= {}, toPortal= {}",
-                    name, owner.getDisplayName(), (_fromPortal == null ? "null" : _fromPortal.getName()),
-                            (_toPortal == null ? "null" : _toPortal.getName()));
+                name, owner.getDisplayName(), (_fromPortal == null ? "null" : _fromPortal.getName()),
+                    (_toPortal == null ? "null" : _toPortal.getName()));
         }
     }
 
     protected String getOppositePortalName(String name) {
-        if (_fromPortal != null && _fromPortal.getName().equals(name)) {
-            if (_toPortal != null) {
-                return _toPortal.getName();
-            }
+        if ( _fromPortal != null && _fromPortal.getName().equals(name) && _toPortal != null ) {
+            return _toPortal.getName();
         }
-        if (_toPortal != null && _toPortal.getName().equals(name)) {
-            if (_fromPortal != null) {
-                return _fromPortal.getName();
-            }
+        if ( _toPortal != null && _toPortal.getName().equals(name) && _fromPortal != null ) {
+            return _fromPortal.getName();
         }
         return null;
     }
@@ -99,10 +95,8 @@ public class OPath extends jmri.Path {
         OBlock block = (OBlock) getBlock();
         block.pseudoPropertyChange("pathName", oldName, _name); // for IndicatorTrack icons
         InstanceManager.getDefault(WarrantManager.class).pathNameChange(block, oldName, _name);
-        if (_fromPortal != null) {
-            if (_fromPortal.addPath(this)) {
-                return;
-            }
+        if ( _fromPortal != null && _fromPortal.addPath(this ) ) {
+            return;
         }
         if (_toPortal != null) {
             _toPortal.addPath(this);
@@ -191,7 +185,7 @@ public class OPath extends jmri.Path {
     /**
      * Class for defining ActionListener for ACTION_DELAYED_TURNOUT
      */
-    class TimeTurnout implements java.awt.event.ActionListener {
+    private class TimeTurnout implements java.awt.event.ActionListener {
 
         private List<BeanSetting> list;
         private int lockState;
@@ -343,6 +337,6 @@ public class OPath extends jmri.Path {
         return true;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OPath.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OPath.class);
 
 }

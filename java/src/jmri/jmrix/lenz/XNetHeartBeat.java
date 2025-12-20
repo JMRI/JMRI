@@ -1,5 +1,8 @@
 package jmri.jmrix.lenz;
 
+import jmri.Programmer;
+import jmri.jmrix.lenz.XNetProgrammer.XNetConfigurator;
+
 /**
  * XNet specific class to send heartbeat messages to
  * the XNet.  Heartbeat messages are only required if
@@ -7,7 +10,7 @@ package jmri.jmrix.lenz;
  * of time, so any outgoing message should restart
  * the timer.
  *
- * @author Paul Bender Copyright (C) 2019 
+ * @author Paul Bender Copyright (C) 2019
  */
 public class XNetHeartBeat implements XNetListener {
 
@@ -36,9 +39,12 @@ public class XNetHeartBeat implements XNetListener {
             keepAliveTimer = new javax.swing.Timer(keepAliveTimeoutValue, e -> {
                 // If the timer times out, and we are not currently
                 // programming, send a request for status
-                XNetProgrammer p = null;
+                XNetConfigurator p = null;
                 if(memo.provides(jmri.GlobalProgrammerManager.class)){
-                    p = (XNetProgrammer) (memo.getProgrammerManager().getGlobalProgrammer());
+                    Programmer prog = memo.getProgrammerManager().getGlobalProgrammer();
+                    if (prog != null) {
+                        p = (XNetConfigurator) prog.getConfigurator();
+                    }
                 }
                 if (p == null || !(p.programmerBusy())) {
                    tc.sendXNetMessage(

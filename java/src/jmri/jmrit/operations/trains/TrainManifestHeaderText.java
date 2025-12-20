@@ -16,6 +16,7 @@ public class TrainManifestHeaderText {
     private static String engine_number = Bundle.getMessage("Number");
     private static String type = Bundle.getMessage("Type");
     private static String model = Bundle.getMessage("Model");
+    private static String hp = Bundle.getMessage("HP");
     private static String length = Bundle.getMessage("Length");
     private static String weight = Bundle.getMessage("Weight");
     private static String load = Bundle.getMessage("Load");
@@ -37,6 +38,7 @@ public class TrainManifestHeaderText {
     private static String drop_comment = Bundle.getMessage("SetOut_Msg");
     private static String pickup_comment = Bundle.getMessage("PickUp_Msg");
     private static String hazardous = Bundle.getMessage("Hazardous");
+    private static String lastTrain = Bundle.getMessage("LastTrain");
 
     public static String getStringHeader_Road() {
         return road;
@@ -76,6 +78,14 @@ public class TrainManifestHeaderText {
 
     public static void setStringHeader_Model(String s) {
         model = s;
+    }
+
+    public static String getStringHeader_Hp() {
+        return hp;
+    }
+
+    public static void setStringHeader_Hp(String s) {
+        hp = s;
     }
 
     public static String getStringHeader_Length() {
@@ -246,6 +256,14 @@ public class TrainManifestHeaderText {
         dcc_address = s;
     }
 
+    public static String getStringHeader_Last_Train() {
+        return lastTrain;
+    }
+
+    public static void setStringHeader_Last_Train(String s) {
+        lastTrain = s;
+    }
+
     // must synchronize changes with operation-config.dtd
     public static Element store() {
         Element values;
@@ -270,6 +288,10 @@ public class TrainManifestHeaderText {
         if (!getStringHeader_Model().equals(Bundle.getMessage("Model"))) {
             e.addContent(values = new Element(Xml.MODEL));
             values.setAttribute(Xml.TEXT, getStringHeader_Model());
+        }
+        if (!getStringHeader_Hp().equals(Bundle.getMessage("HP"))) {
+            e.addContent(values = new Element(Xml.HP));
+            values.setAttribute(Xml.TEXT, getStringHeader_Hp());
         }
         if (!getStringHeader_Length().equals(Bundle.getMessage("Length"))) {
             e.addContent(values = new Element(Xml.LENGTH));
@@ -355,6 +377,10 @@ public class TrainManifestHeaderText {
             e.addContent(values = new Element(Xml.HAZARDOUS));
             values.setAttribute(Xml.TEXT, getStringHeader_Hazardous());
         }
+        if (!getStringHeader_Last_Train().equals(Bundle.getMessage("LastTrain"))) {
+            e.addContent(values = new Element(Xml.LAST_TRAIN));
+            values.setAttribute(Xml.TEXT, getStringHeader_Last_Train());
+        }
 
         return e;
     }
@@ -388,6 +414,11 @@ public class TrainManifestHeaderText {
         if (emts.getChild(Xml.MODEL) != null) {
             if ((a = emts.getChild(Xml.MODEL).getAttribute(Xml.TEXT)) != null) {
                 setStringHeader_Model(a.getValue());
+            }
+        }
+        if (emts.getChild(Xml.HP) != null) {
+            if ((a = emts.getChild(Xml.HP).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_Hp(a.getValue());
             }
         }
         if (emts.getChild(Xml.LENGTH) != null) {
@@ -493,6 +524,11 @@ public class TrainManifestHeaderText {
         if (emts.getChild(Xml.HAZARDOUS) != null) {
             if ((a = emts.getChild(Xml.HAZARDOUS).getAttribute(Xml.TEXT)) != null) {
                 setStringHeader_Hazardous(a.getValue());
+            }
+        }
+        if (emts.getChild(Xml.LAST_TRAIN) != null) {
+            if ((a = emts.getChild(Xml.LAST_TRAIN).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_Last_Train(a.getValue());
             }
         }
     }

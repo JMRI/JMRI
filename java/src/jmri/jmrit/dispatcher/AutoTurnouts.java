@@ -10,6 +10,9 @@ import jmri.Transit;
 import jmri.Turnout;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
+import jmri.jmrit.display.layoutEditor.LayoutDoubleXOver;
+import jmri.jmrit.display.layoutEditor.LayoutLHXOver;
+import jmri.jmrit.display.layoutEditor.LayoutRHXOver;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -58,11 +61,12 @@ public class AutoTurnouts {
      * @param nextSection the following section
      * @param at          the associated train
      * @param prevSection the prior section
+     * @param useTurnoutConnectionDelay true if the turnout connection delay should be applied
      * @return list of turnouts and their expected states if affected turnouts are correctly set; null otherwise.
      */
     protected List<LayoutTrackExpectedState<LayoutTurnout>> checkTurnoutsInSection(Section s, int seqNum, Section nextSection,
-            ActiveTrain at, Section prevSection) {
-        return turnoutUtil(s, seqNum, nextSection, at, false, false, prevSection);
+            ActiveTrain at, Section prevSection, boolean useTurnoutConnectionDelay) {
+        return turnoutUtil(s, seqNum, nextSection, at, false, false, prevSection, useTurnoutConnectionDelay);
     }
 
 
@@ -87,6 +91,7 @@ public class AutoTurnouts {
      * @param at                 the associated train
      * @param trustKnownTurnouts true to trust known turnouts
      * @param prevSection        the prior section
+     * @param useTurnoutConnectionDelay true if the turnout connection delay should be applied
      *
      * @return list of turnouts and their expected states if affected turnouts are correctly set or commands have been
      *         issued to set any that aren't set correctly; null if a needed
@@ -94,8 +99,8 @@ public class AutoTurnouts {
      *         occupied
      */
     protected List<LayoutTrackExpectedState<LayoutTurnout>> setTurnoutsInSection(Section s, int seqNum, Section nextSection,
-            ActiveTrain at, boolean trustKnownTurnouts,  Section prevSection) {
-        return turnoutUtil(s, seqNum, nextSection, at, trustKnownTurnouts, true, prevSection);
+            ActiveTrain at, boolean trustKnownTurnouts,  Section prevSection, boolean useTurnoutConnectionDelay) {
+        return turnoutUtil(s, seqNum, nextSection, at, trustKnownTurnouts, true, prevSection, useTurnoutConnectionDelay);
     }
 
     protected Turnout checkStateAgainstList(List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList) {
@@ -129,7 +134,11 @@ public class AutoTurnouts {
      * finds.
      */
     private List<LayoutTrackExpectedState<LayoutTurnout>> turnoutUtil(Section s, int seqNum, Section nextSection,
-          ActiveTrain at, boolean trustKnownTurnouts, boolean set, Section prevSection ) {
+          ActiveTrain at, boolean trustKnownTurnouts, boolean set, Section prevSection, boolean useTurnoutConnectionDelay ) {
+        log.trace("{}:Checking LayoutTrackExpectedState Section[{}]  NextSection[{}] PrevSection[{}]",
+                at.getTrainName(), (s != null) ? s.getDisplayName() : "null",
+                nextSection== null ? "Null" : nextSection.getDisplayName(),
+                prevSection == null ? "Null" : prevSection.getDisplayName());
         // initialize response structure
         List<LayoutTrackExpectedState<LayoutTurnout>> turnoutListForAllocatedSection = new ArrayList<>();
         // validate input and initialize
@@ -239,7 +248,8 @@ public class AutoTurnouts {
              this will only happen on the first run.  Plus working on the basis that the turnouts in the current block would have already of
              been set correctly for the train to have arrived in the first place.
              */
-
+            log.trace("curBlock {}: PrevBlock[{}]", curBlock.getDisplayName(),
+                    prevBlock == null ?   "Null" : prevBlock.getDisplayName());
             if (prevBlock != null) {
                 var blockName = curBlock.getUserName();
                 if (blockName != null) {
@@ -248,10 +258,13 @@ public class AutoTurnouts {
                         var panel = lblock.getMaxConnectedPanel();
                         if (panel != null) {
                             var connection = new ConnectivityUtil(panel);
+                            // note turnouts for turntables are added to the list in getTurnoutList
                             turnoutList = connection.getTurnoutList(curBlock, prevBlock, nextBlock, true);
                         }
                     }
                 }
+            } else {
+               log.debug("turnoutUtil - No previous block");
             }
             // loop over turnouts checking and optionally setting turnouts
             for (int i = 0; i < turnoutList.size(); i++) {
@@ -268,24 +281,36 @@ public class AutoTurnouts {
                     setting = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutState(turnoutList.get(i).getExpectedState());
                 }
                 // check or ignore current setting based on flag, set in Options
-                if (!trustKnownTurnouts) {
+                if (!trustKnownTurnouts && set) {
                     log.debug("{}: setting turnout {} to {}", at.getTrainName(), to.getDisplayName(USERSYS),
                             (setting == Turnout.CLOSED ? closedText : thrownText));
-                    to.setCommandedState(setting);
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException ex) {
-                    }  //TODO: move this to separate thread
+                    if (checkTurnoutsCanBeSet(turnoutList.get(i).getObject(), setting, s, curBlock, at)) {
+                        log.debug("{}: setting turnout {} to {}", at.getTrainName(), to.getDisplayName(USERSYS),
+                                (setting == Turnout.CLOSED ? closedText : thrownText));
+                        if (useTurnoutConnectionDelay) {
+                            to.setCommandedStateAtInterval(setting);
+                        } else {
+                            to.setCommandedState(setting);
+                        }
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException ex) {
+                        } //TODO: Check if this is needed, shouldnt turnout delays be handled at a lower level.
+                    }
                 } else {
                     if (to.getKnownState() != setting) {
                         // turnout is not set correctly
                         if (set) {
                             // setting has been requested, is Section free and Block unoccupied
-                            if ((s.getState() == Section.FREE) && (curBlock.getState() != Block.OCCUPIED)) {
+                            if (checkTurnoutsCanBeSet(turnoutList.get(i).getObject(), setting, s, curBlock, at)) {
                                 // send setting command
-                                log.debug("{}: turnout {} commanded to {}", at.getTrainName(), to.getDisplayName(USERSYS),
+                                log.debug("{}: turnout {} commanded to {}", at.getTrainName(), to.getDisplayName(),
                                         (setting == Turnout.CLOSED ? closedText : thrownText));
-                                to.setCommandedState(setting);
+                                if (useTurnoutConnectionDelay) {
+                                    to.setCommandedStateAtInterval(setting);
+                                } else {
+                                    to.setCommandedState(setting);
+                                }
                                 try {
                                     Thread.sleep(100);
                                 } catch (InterruptedException ex) {
@@ -306,14 +331,22 @@ public class AutoTurnouts {
                     setting = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutBState(turnoutList.get(i).getExpectedState());
                     to = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutB();
                     if (!trustKnownTurnouts) {
-                        to.setCommandedState(setting);
+                        if (useTurnoutConnectionDelay) {
+                            to.setCommandedStateAtInterval(setting);
+                        } else {
+                            to.setCommandedState(setting);
+                        }
                     } else if (to.getKnownState() != setting) {
                         // turnout is not set correctly
                         if (set) {
                             // setting has been requested, is Section free and Block unoccupied
                             if ((s.getState() == Section.FREE) && (curBlock.getState() != Block.OCCUPIED)) {
                                 // send setting command
-                                to.setCommandedState(setting);
+                                if (useTurnoutConnectionDelay) {
+                                    to.setCommandedStateAtInterval(setting);
+                                } else {
+                                    to.setCommandedState(setting);
+                                }
                             } else {
                                 turnoutsOK = false;
                             }
@@ -355,6 +388,70 @@ public class AutoTurnouts {
             return turnoutListForAllocatedSection;
         }
         return null;
+    }
+
+    /*
+     * Check that the turnout is safe to change.
+     */
+    private boolean checkTurnoutsCanBeSet(LayoutTurnout layoutTurnout, int setting, Section s, Block b, ActiveTrain at) {
+        if (layoutTurnout instanceof LayoutDoubleXOver) {
+            LayoutDoubleXOver lds = (LayoutDoubleXOver) layoutTurnout;
+            if ((lds.getLayoutBlock().getBlock().getState() == Block.OCCUPIED)
+                    || (lds.getLayoutBlockB().getBlock().getState() == Block.OCCUPIED)
+                    || (lds.getLayoutBlockC().getBlock().getState() == Block.OCCUPIED)
+                    || (lds.getLayoutBlockD().getBlock().getState() == Block.OCCUPIED)) {
+                log.debug("{}: turnout {} cannot be set to {} DoubleXOver occupied.",
+                        at.getTrainName(),layoutTurnout.getTurnout().getDisplayName(),
+                        (setting == Turnout.CLOSED ? closedText : thrownText));
+                return(false);
+            }
+            if ((_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlock().getBlock(), s))
+                    || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockB().getBlock(), s))
+                    || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockC().getBlock(), s))
+                    || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockD().getBlock(), s))) {
+                log.debug("{}: turnout {} cannot be set to {} DoubleXOver already allocated to another train.",
+                        at.getTrainName(), layoutTurnout.getTurnout().getDisplayName(),
+                        (setting == Turnout.CLOSED ? closedText : thrownText));
+                return(false);
+            }
+        } else if (layoutTurnout instanceof LayoutRHXOver) {
+            LayoutRHXOver lds = (LayoutRHXOver) layoutTurnout;
+            if ((lds.getLayoutBlock().getBlock().getState() == Block.OCCUPIED)
+                    || (lds.getLayoutBlockC().getBlock().getState() == Block.OCCUPIED)) {
+                log.debug("{}: turnout {} cannot be set to {} RHXOver occupied.",
+                        at.getTrainName(),layoutTurnout.getTurnout().getDisplayName(),
+                        (setting == Turnout.CLOSED ? closedText : thrownText));
+                return(false);
+            }
+            if ((_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlock().getBlock(), s))
+                    || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockC().getBlock(), s))) {
+                log.debug("{}: turnout {} cannot be set to {} RHXOver already allocated to another train.",
+                        at.getTrainName(), layoutTurnout.getTurnout().getDisplayName(),
+                        (setting == Turnout.CLOSED ? closedText : thrownText));
+                return(false);
+            }
+        } else if (layoutTurnout instanceof LayoutLHXOver) {
+            LayoutLHXOver lds = (LayoutLHXOver) layoutTurnout;
+            if ((lds.getLayoutBlockB().getBlock().getState() == Block.OCCUPIED)
+                    || (lds.getLayoutBlockD().getBlock().getState() == Block.OCCUPIED)) {
+                log.debug("{}: turnout {} cannot be set to {} LHXOver occupied.",
+                        at.getTrainName(),layoutTurnout.getTurnout().getDisplayName(),
+                        (setting == Turnout.CLOSED ? closedText : thrownText));
+                return(false);
+            }
+            if ((_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockB().getBlock(), s))
+                    || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockD().getBlock(), s))) {
+                log.debug("{}: turnout {} cannot be set to {} RHXOver already allocated to another train.",
+                        at.getTrainName(), layoutTurnout.getTurnout().getDisplayName(),
+                        (setting == Turnout.CLOSED ? closedText : thrownText));
+                return(false);
+            }
+        }
+
+        if (s.getState() == Section.FREE && b.getState() != Block.OCCUPIED) {
+            return true;
+        }
+        return false;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AutoTurnouts.class);

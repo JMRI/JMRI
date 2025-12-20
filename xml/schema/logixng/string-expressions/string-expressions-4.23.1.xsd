@@ -27,6 +27,7 @@
 
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/string-expressions/expression-constant-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/string-expressions/expression-memory-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/string-expressions/expression-stringio-5.11.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/string-expressions/formula-4.23.1.xsd"/>
 
     <xs:complexType name="LogixNG_StringExpressionManagerType">
@@ -45,6 +46,7 @@
 
             <xs:element name="StringExpressionConstant"  type="LogixNG_StringExpression_ConstantType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="StringExpressionMemory"    type="LogixNG_StringExpression_MemoryType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="StringExpressionStringIO"  type="LogixNG_StringExpression_StringIOType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="StringFormula"                     type="LogixNG_StringExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
 
             <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>

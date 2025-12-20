@@ -47,8 +47,7 @@
       <h2>Scaling an Icon</h2>
 
       <p>Right click an icon and select <strong>Scale (percentage)...</strong> to increase or
-      decrease the size of the icon relative to its original size. To restore the icon to its
-      original size, enter the value 100 (%).</p>
+      decrease the size of the icon relative to its current scaling. </p>
 
       <h2>Text Label Editor</h2>
 

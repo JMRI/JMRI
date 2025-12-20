@@ -20,6 +20,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
 import jmri.server.json.operations.JsonUtil;
@@ -66,7 +67,7 @@ public class JsonManifest extends TrainCommon {
         }
         root.put(JSON.USERNAME, StringEscapeUtils.escapeHtml4(this.train.getName()));
         root.put(JSON.DESCRIPTION, StringEscapeUtils.escapeHtml4(this.train.getDescription()));
-        root.set(JsonOperations.LOCATIONS, this.getLocations());
+        root.set(JSON.LOCATIONS, this.getLocations());
         if (!this.train.getManifestLogoPathName().equals(Train.NONE)) {
             // The operationsServlet will need to change this to a usable URL
             root.put(JSON.IMAGE, this.train.getManifestLogoPathName());
@@ -102,7 +103,7 @@ public class JsonManifest extends TrainCommon {
             locationNode.put(JSON.COMMENT,
                     StringEscapeUtils.escapeHtml4(routeLocation.getLocation().getCommentWithColor()));
             locationNode.put(JSON.NAME, routeLocation.getLocation().getId());
-            jsonLocation.set(JsonOperations.LOCATION, locationNode);
+            jsonLocation.set(JSON.LOCATION, locationNode);
             jsonLocation.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(routeLocation.getCommentWithColor()));
             // engine change or helper service?
             if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
@@ -169,7 +170,7 @@ public class JsonManifest extends TrainCommon {
             }
             jsonCars.set(JSON.REMOVE, setouts);
 
-            jsonLocation.set(JsonOperations.TRACK, this.getTrackComments(routeLocation, carList));
+            jsonLocation.set(JSON.TRACK, this.getTrackComments(routeLocation, carList));
 
             if (routeLocation != train.getTrainTerminatesRouteLocation()) {
                 jsonLocation.put(JSON.TRAIN_DIRECTION, routeLocation.getTrainDirection());
@@ -177,7 +178,7 @@ public class JsonManifest extends TrainCommon {
                 length.put(JSON.LENGTH, train.getTrainLength(routeLocation));
                 length.put(JSON.UNIT, Setup.getLengthUnit());
                 jsonLocation.set(JSON.LENGTH, length);
-                jsonLocation.put(JsonOperations.WEIGHT, train.getTrainWeight(routeLocation));
+                jsonLocation.put(JSON.WEIGHT, train.getTrainWeight(routeLocation));
                 int cars = train.getNumberCarsInTrain(routeLocation);
                 int emptyCars = train.getNumberEmptyCarsInTrain(routeLocation);
                 jsonCars.put(JSON.TOTAL, cars);

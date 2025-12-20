@@ -105,7 +105,7 @@ abstract public class LayoutTrackEditor {
     /**
      * Display a message describing the reason for the block selection combo box
      * being disabled. An option is provided to hide the message. Note: The
-     * PanelMenu class is being used to satisfy the showInfoMessage requirement
+     * EditorManager class is being used to satisfy the showInfoMessage requirement
      * for a default manager type class.
      *
      * @since 4.11.2
@@ -130,8 +130,8 @@ abstract public class LayoutTrackEditor {
                 showInfoMessage(
                         Bundle.getMessage("BlockSensorTitle"), // NOI18N
                         msg.toString(),
-                        "jmri.jmrit.display.PanelMenu", // NOI18N
-                        "BlockSensorMessage");  // NOI18N
+                        "jmri.jmrit.display.EditorManager", // NOI18N
+                        "skipEntryExitDialog");  // NOI18N
     }
 
 

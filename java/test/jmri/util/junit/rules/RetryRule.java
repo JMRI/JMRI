@@ -25,7 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RetryRule implements TestRule {
-    private int retryCount;
+
+    private final int retryCount;
 
     /** 
      * Configure the rule

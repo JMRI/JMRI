@@ -1,10 +1,12 @@
 package jmri.jmrit.throttle;
 
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import jmri.InstanceManager;
 
-public class ThrottlesListAction extends AbstractAction {
+import jmri.InstanceManager;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.JmriPanel;
+
+public class ThrottlesListAction extends JmriAbstractAction {
 
     /**
      * Constructor
@@ -26,5 +28,11 @@ public class ThrottlesListAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
+    }
+
+    // never invoked, because we overrode actionPerformed above
+    @Override
+    public JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
 }

@@ -63,7 +63,7 @@ import org.openide.util.lookup.ServiceProvider;
  */
 public class TrackerTableAction extends AbstractAction implements PropertyChangeListener{
 
-    static int STRUT_SIZE = 10;
+    protected static final int STRUT_SIZE = 10;
 
     private final ArrayList<Tracker> _trackerList = new ArrayList<>();
     private final HashMap<OBlock, ArrayList<Tracker>> _trackerBlocks = new HashMap<>();
@@ -174,16 +174,17 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
      * @param t Tracker to be stopped
      * @param b Block Tracker of its last move. Optional, for display purpose only.
      */
-   public void stopTracker(Tracker t, OBlock b) {
+    public void stopTracker(Tracker t, OBlock b) {
         if (_frame == null) {
             _frame = new TableFrame();
         }
         stopTrain(t, b);
     }
 
-   protected void setStatus(String msg) {
-       _frame.setStatus(msg);
-   }
+    protected void setStatus(String msg) {
+        _frame.setStatus(msg);
+    }
+
     /**
      * See if any Trackers are occupying a given block.
      * @param b Block being queried
@@ -447,7 +448,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             _jList = new JList<>();
             _jList.setModel(new TrackerListModel());
             _jList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-            _jList.addListSelectionListener(this);
+            _jList.addListSelectionListener(ChooseTracker.this);
             panel.add(_jList);
             p = new JPanel();
             p.add(panel);
@@ -545,7 +546,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             p.add(_status);
             _status.setEditable(false);
             _status.setBackground(Color.white);
-            _status.addMouseListener(JmriMouseListener.adapt(this));
+            _status.addMouseListener(JmriMouseListener.adapt(TableFrame.this));
             panel.add(p);
 
             tablePanel.add(makeButtonPanel(), BorderLayout.CENTER);
@@ -778,6 +779,19 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
                 }
             }
         }
+
+        // For test purposes. The Window close action is set to hide the Frame, not dispose.
+        @Override
+        public void dispose(){
+            if ( _pickFrame != null) {
+                _pickFrame.dispose();
+            }
+            if ( _dialog != null) {
+                _dialog.dispose();
+            }
+            super.dispose();
+        }
+
     }
 
     private class TrackerTableModel extends AbstractTableModel {

@@ -18,7 +18,7 @@ public class OsIndicatorTest {
 
     @Test
     public void testCreate() {
-        new OsIndicator("IT12", "IS34", "IS56");
+        Assertions.assertNotNull( new OsIndicator("IT12", "IS34", "IS56"));
     }
 
     @Test

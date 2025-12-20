@@ -50,7 +50,7 @@ public class SignalTableModel extends AbstractTableModel implements PropertyChan
     public static final int LENGTHCOL = 4;
     public static final int UNITSCOL = 5;
     public static final int DELETE_COL = 6;
-    static public final int EDIT_COL = 7; // only used on _tabbed UI
+    public static final int EDIT_COL = 7; // only used on _tabbed UI
     public static final int NUMCOLS = 7;  // returns 7+1 for _tabbed
     int _lastIdx; // for debug
 
@@ -741,6 +741,7 @@ public class SignalTableModel extends AbstractTableModel implements PropertyChan
             // open SignalEditFrame
             SignalEditFrame sef = new SignalEditFrame(Bundle.getMessage("TitleSignalEditor", sr.getSignal().getDisplayName()),
                     signal, sr, this);
+            sef.initComponents();
             // TODO run on separate thread?
             sef.setVisible(true);
         }
@@ -821,6 +822,7 @@ public class SignalTableModel extends AbstractTableModel implements PropertyChan
         inEditMode = editing;
     }
 
+    // TODO - This class does not appear to add a PCL to a Portal / OBlock / Manager, should it ?
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         String property = e.getPropertyName();
@@ -831,6 +833,6 @@ public class SignalTableModel extends AbstractTableModel implements PropertyChan
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalTableModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalTableModel.class);
 
 }

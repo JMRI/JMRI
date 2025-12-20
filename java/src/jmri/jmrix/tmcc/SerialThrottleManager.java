@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
  * Implementation of a TMCC ThrottleManager.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
+ * with edits/additions by
+ * @author Timothy Jump Copyright (C) 2025
  */
 public class SerialThrottleManager extends AbstractThrottleManager {
 
@@ -73,13 +75,28 @@ public class SerialThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
+    @Override
+    public String[] getAddressTypes() {
+        return new String[]{
+            LocoAddress.Protocol.TMCC1.getPeopleName(),
+            LocoAddress.Protocol.TMCC2.getPeopleName()};
+    }
+
+    @Override
+    public LocoAddress.Protocol[] getAddressProtocolTypes() {
+        return new LocoAddress.Protocol[]{
+            LocoAddress.Protocol.TMCC1,
+            LocoAddress.Protocol.TMCC2};
+    }
+
+
     /**
      * What speed modes are supported by this system? value should be xor of
      * possible modes specifed by the DccThrottle interface
      */
     @Override
     public EnumSet<SpeedStepMode> supportedSpeedModes() {
-        return EnumSet.of(SpeedStepMode.TMCC_32, SpeedStepMode.TMCC_200);
+        return EnumSet.of(SpeedStepMode.TMCC1_32, SpeedStepMode.TMCC2_32, SpeedStepMode.TMCC1_100, SpeedStepMode.TMCC2_200, SpeedStepMode.TMCC1TR_32, SpeedStepMode.TMCC2TR_32, SpeedStepMode.TMCC1TR_100, SpeedStepMode.TMCC2TR_200);
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialThrottleManager.class);

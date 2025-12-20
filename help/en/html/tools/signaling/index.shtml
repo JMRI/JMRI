@@ -171,7 +171,7 @@
           <strong>System Name</strong> The name of a JMRI object identifying either a virtual
           (Internal) or physical piece of hardware being used, e.g. an output on a decoder to
           control a signal. The System Name must follow certain <a href=
-          "../../doc/Technical/Names.shtml">Naming Rules</a> to be correctly interpreted bij JMRI,
+          "../../doc/Technical/Names.shtml">Naming Rules</a> to be correctly interpreted by JMRI,
           and the name will vary depending on your hardware so it must match your DCC system.
         </li>
       </ul>

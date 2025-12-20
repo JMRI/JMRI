@@ -16,9 +16,6 @@ import jmri.jmrit.display.palette.IndicatorItemPanel;
 import jmri.jmrit.logix.OBlock;
 import jmri.util.ThreadingUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * An icon to display the status of a track segment in a block.
  * <p>
@@ -285,7 +282,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         _status = _pathUtil.getStatus(block, state);
         if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
             // _pathUtil.setLocoIcon must run on GUI. LocoLabel ctor causes editor to draw a graphic
-            ThreadingUtil.runOnLayoutEventually(() -> {
+            ThreadingUtil.runOnGUIEventually(() -> {
                 _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
                 repaint();
             });
@@ -430,6 +427,6 @@ public class IndicatorTrackIcon extends PositionableIcon
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IndicatorTrackIcon.class);
 
 }

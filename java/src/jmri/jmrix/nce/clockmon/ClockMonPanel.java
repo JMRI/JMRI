@@ -1,32 +1,19 @@
 package jmri.jmrix.nce.clockmon;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.Timer;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jmri.InstanceManager;
-import jmri.Timebase;
-import jmri.TimebaseRateException;
+import jmri.*;
 import jmri.jmrix.nce.*;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -225,6 +212,14 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         x.append(": ");
         x.append(Bundle.getMessage("TitleNceClockMonitor"));
         return x.toString();
+    }
+
+    /**
+     * The minimum frame size for font size 16
+     */
+    @Override
+    public Dimension getMinimumDimension() {
+        return new Dimension(600, 600);
     }
 
     /**

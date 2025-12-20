@@ -2,21 +2,21 @@
 #
 # A Digitrax BXPA1 AutoReverser-to-Sensor "follower"
 #
-# This script provides a JMRI sensor where the sensor's state "follows" the 
-# reported "autoreverser state" of a Digitrax BXPA1 device, as reported by 
+# This script provides a JMRI sensor where the sensor's state "follows" the
+# reported "autoreverser state" of a Digitrax BXPA1 device, as reported by
 # LocoNet messaging.
 #
-# This script can be configured to monitor all BXPA1 devices, reporting each 
+# This script can be configured to monitor all BXPA1 devices, reporting each
 # individual device's autoreversing state in its own device-specific sensor.
 #
-# Sensor naming is of the form "ISPM1aReversedX".  This is interpreted as: 
+# Sensor naming is of the form "ISPM1aReversedX".  This is interpreted as:
 #    "I" for JMRI's "Internal" object grouping
 #    "S" for "Sensor" (in the "Internal" object grouping)
 #    "PM" for "Power Management" effects
-#    "1a" for a source from a "BXP1a" device
+#    "1a" for a source from a "BXPA1" device
 #    "Reversed" to denote the sensor as reporting "autoreversing" state (Active
 #         means "Reversed", Inactive means "Normal")
-#    "X" is the BoardID number reported in the LocoNet message from the BXPA1 
+#    "X" is the BoardID number reported in the LocoNet message from the BXPA1
 #         device
 #
 # As written, this script supports either
@@ -25,13 +25,13 @@
 #
 # Configuring the script
 # ----------------------
-# - See comments below for information on configuring the behavior of this 
+# - See comments below for information on configuring the behavior of this
 #     script:
-#     -- the "interestingBoardIdNumber" determines what BXPA1 device BoardID 
+#     -- the "interestingBoardIdNumber" determines what BXPA1 device BoardID
 #        value to watch for, or, alternately, configures the script to monitor
 #        for LocoNet messages from _all_ BXPA1 BoardID values, and causes this
 #        script to follow each unique BXPA1 BoardID number using a unique Sensor.
-#     -- DebuggingMessages determines whether debugging messages will be sent to 
+#     -- DebuggingMessages determines whether debugging messages will be sent to
 #        the JMRI "Script Output" window.
 #
 # Script details
@@ -39,14 +39,14 @@
 # This script has three main functional parts (in order of appearance).
 #
 # The first part provides some "import" statements and declares some variables
-# that influence script behavior.  Users may wish to modify some variable values 
+# that influence script behavior.  Users may wish to modify some variable values
 # in this section.
 #
 # The second part is where the bulk of the work is done, because it declares and
-# defines a "Bxpa1ReverserStateListener" class which implements a JMRI 
-# "LocoNetListener" which has BXPA1-specific features.  The class's "message()" 
+# defines a "Bxpa1ReverserStateListener" class which implements a JMRI
+# "LocoNetListener" which has BXPA1-specific features.  The class's "message()"
 # method is triggered upon JMRI receipt of a LocoNet message.  It "parses" the
-# received LocoNet message to determine if it is a valid "Autoreversing" status 
+# received LocoNet message to determine if it is a valid "Autoreversing" status
 # message from a BXPA1 device.  If it is, the "BoardID" value is extracted and
 # checked to determine if it is a BXPA1 for which the message should be reported
 # via a JMRI Sensor object.  This determination is made in the isInterestingBoardId()
@@ -54,13 +54,13 @@
 #
 # For a message that is interesting to the script, the BoardId number from the
 # message is used to create a variable representing the JMRI Sensor name, and
-# that sensor name is used to create a JMRI sensor (if it does not already 
+# that sensor name is used to create a JMRI sensor (if it does not already
 # exist) and update the sensor's value.
 #
-# The isInterestingBoardId() method uses the user-customization variables of 
-# Section 1, along with the LocoNet BXPA1 Autoreverse status message's extracted 
+# The isInterestingBoardId() method uses the user-customization variables of
+# Section 1, along with the LocoNet BXPA1 Autoreverse status message's extracted
 # boardID value, to determine whether or not to update a sensor.  It returns True
-# if the message's BoardID value refers to a BXPA1 which should be tracked via a 
+# if the message's BoardID value refers to a BXPA1 which should be tracked via a
 # JMRI sensor, or it returns False to indicate that the message should be ignored.
 #
 # The third part of the script creates an instance of the LocoNet Listner class
@@ -71,7 +71,7 @@
 #
 # Note the following limitations:
 # - So far as the script author knows, there is _no_ way to query the autoreversing
-#     state of a BXPA1 device.  As such, until a BXPA1 device changes its 
+#     state of a BXPA1 device.  As such, until a BXPA1 device changes its
 #     auto-reversing state, there is _no_ way to tell what the device's current
 #     state is.
 #
@@ -81,30 +81,30 @@
 #     opened a JMRI "panel" XML file which was saved when the corresponding sensor
 #     was known to JMRI.
 #
-# - If you open a saved JMRI Panel XML file and that file had one or more JMRI 
-#     Sensor objects created by this script, such If you "save" a panel XML 
+# - If you open a saved JMRI Panel XML file and that file had one or more JMRI
+#     Sensor objects created by this script, such If you "save" a panel XML
 #     file, JMRI will create the associate Sensors but will leave those sensors
-#     in the "unknown" state.  Once a BXPA1 sends an "Autoreversing" event 
-#     LocoNet message, the associated sensor will be updated to "Inactive" or 
+#     in the "unknown" state.  Once a BXPA1 sends an "Autoreversing" event
+#     LocoNet message, the associated sensor will be updated to "Inactive" or
 #     "Active", as appropriate.
 #
 # - This script provides little if any "error-checking" of the configuration
-#     variables.  Specifying an "out-of-range" connection index will result in 
-#     an exception reported in the JMRI Console log as well as failure of the 
-#     script to perform.  Specifying a BoardID value of 0 will not result in 
+#     variables.  Specifying an "out-of-range" connection index will result in
+#     an exception reported in the JMRI Console log as well as failure of the
+#     script to perform.  Specifying a BoardID value of 0 will not result in
 #     capture of _any_ BXPA1 autoreversing data.
-#     Various other configuration boo-boos may result in exceptions in the log 
-#     and/or failure of this script to perform. 
+#     Various other configuration boo-boos may result in exceptions in the log
+#     and/or failure of this script to perform.
 #
 # - Because of an apparent BXPA1 firmware issue seen in at least some BXPA1 devices,
-#     BXPA1 devices with some BoardID values report their status as if they had 
-#     different BoardID values.  To avoid this problem, avoid using BoardID 
+#     BXPA1 devices with some BoardID values report their status as if they had
+#     different BoardID values.  To avoid this problem, avoid using BoardID
 #     values where
 #           (your BoardID value) / 8
 #     has a fractional part of .0, .625, .75, or .825.
 #     As examples:
 #                             BoardID / 8
-#                  BoardId    fractional 
+#                  BoardId    fractional
 #        BoardId     / 8         part        OK to use?
 #           1        0.125       .125          Yes
 #           2        0.25        .25           Yes
@@ -125,26 +125,30 @@
 #           17       2.125       .125          Yes
 #      ...
 #
-# - It is possible that a BXPA1 firmware revision that resolves the above BoardId 
-#     issue _could_ require re-work of the message parsing found in the LocoNet 
+# - It is possible that a BXPA1 firmware revision that resolves the above BoardId
+#     issue _could_ require re-work of the message parsing found in the LocoNet
 #     Listener implementation.
 #
 # Script version 1.0 created 30Mar2021 by Bob M.
+#
+# Script version 1.1 created 26Nov2024 by Bob M.
+#             - do a better job of watching for BXPA1 "Autoreverse" event
+#               LocoNet messages.
 
-# Part 1: 
+# Part 1:
 
 import jmri
 import java
 
-# Initialize the variable "connectionIndex" to specify which of potentially 
-# several LocoNet connections this script watches.  This is specified by the 
+# Initialize the variable "connectionIndex" to specify which of potentially
+# several LocoNet connections this script watches.  This is specified by the
 # LocoNet connection's "index":
 #    - When you have just a single connection, the only usable index is 1.
 #    - When you have more than one LocoNet connection defined, the index is the
-#      count, from the left, of the "tabs" for LocoNet connections as seen 
+#      count, from the left, of the "tabs" for LocoNet connections as seen
 #      in the "Connections" page of the JMRI "Preferences".
-connectionIndex = 1 # this is appropriate for a JMRI install with only a single 
-                    # LocoNet connection, or when monitoring the _first_ of  
+connectionIndex = 1 # this is appropriate for a JMRI install with only a single
+                    # LocoNet connection, or when monitoring the _first_ of
                     # available (and active) LocoNet connections.
 
 reportAllBxpa1s = False # assume that only a specific BXPA1 Board ID number
@@ -153,7 +157,7 @@ reportAllBxpa1s = False # assume that only a specific BXPA1 Board ID number
 # Initialize the variable "interestingBoardIdNumber" to reflect the
 # BoardId of the BXPA1 you care about.  If you want to create a sensor
 # for _each_ BXPA1 BoardId that reports autoreversing state, set
-# interestingBoardIdNumber to a negative value.  Uncomment (and modify, # as 
+# interestingBoardIdNumber to a negative value.  Uncomment (and modify, # as
 # needed) one of the examples shown below.
 #
 # Example: follow only Autoreversing messages from BXPA1 BoardID 1
@@ -162,7 +166,7 @@ reportAllBxpa1s = False # assume that only a specific BXPA1 Board ID number
 # Example: follow only Autoreversing messages from BXPA1 BoardID 12
 interestingBoardIdNumber = 12
 
-# Example: follow every BXPA1 Autoreversing message, regardless of BoardID, by 
+# Example: follow every BXPA1 Autoreversing message, regardless of BoardID, by
 # overriding the previous value of reportAllBxpa1s.  Note that the value of the
 # interestingBoardIdNumber variable has no effect which reportAllBxpa1s is True.:
 reportAllBxpa1s = True
@@ -172,16 +176,16 @@ reportAllBxpa1s = True
 #  - False disables the debugging messages.
 DebuggingMessages = True
 
-# Part 2: 
+# Part 2:
 
 # Define a LocoNet "BXPA1 Autoreversing Event" listener class
 class Bxpa1ReverserStateListener(jmri.jmrix.loconet.LocoNetListener) :
     def isInterestingBoardId(self, boardId) :
-        # This method is used to determine whether a particular BXPA1's 
+        # This method is used to determine whether a particular BXPA1's
         # autoreversing messages will be used to update an appropriately-named
-        # JMRI sensor.  
+        # JMRI sensor.
         #
-        #   Returns True to update the sensor based on the LocoNet message contents.  
+        #   Returns True to update the sensor based on the LocoNet message contents.
         #   Returns False to ignore the BXPA1's LocoNet Message.
         #
         # The user may modify this method to suit his/her personal "selection"
@@ -198,7 +202,9 @@ class Bxpa1ReverserStateListener(jmri.jmrix.loconet.LocoNetListener) :
         # LocoNet messages and deals with BXPA1 autoreversing messages.
 
         # Is this message an autoreversing message from a BPXA1 device?
-        if ((msg.getNumDataElements() == 6) and (msg.getElement(0) == 0xD0) and ((msg.getElement(1) & 0x60) == 0x60) and ((msg.getElement(3) & 0xF0) == 0x50) ) :
+        if ((msg.getNumDataElements() == 6) and (msg.getElement(0) == 0xD0) \
+            and ((msg.getElement(1) & 0x7E) == 0x62) \
+            and ((msg.getElement(3) & 0xF0) == 0x50) ) :
 
             # Yes, the message is for a BXPA1 autoreversing message!
             boardId = 1 + (msg.getElement(2) * 8) + (msg.getElement(3) & 0x7)
@@ -244,7 +250,7 @@ class Bxpa1ReverserStateListener(jmri.jmrix.loconet.LocoNetListener) :
         # Nothing more to do, so ...
         return
 
-# Part 3: 
+# Part 3:
 
 # Create an instance of the listener class
 ln = Bxpa1ReverserStateListener()

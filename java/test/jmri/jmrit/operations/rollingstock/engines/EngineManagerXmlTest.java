@@ -1,8 +1,10 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
-import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 
 /**
  *
@@ -16,6 +18,20 @@ public class EngineManagerXmlTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EngineManagerXmlTest.class);
+    @Test
+    public void testXmlLoadDuplicates() {
+        JUnitOperationsUtil.initOperationsData();
+        // load a second time to create duplicates
+        JUnitOperationsUtil.initOperationsData();
+        // four duplicate messages
+        jmri.util.JUnitAppender
+                .assertErrorMessage("Duplicate rolling stock id: (PC5016)");
+        jmri.util.JUnitAppender
+                .assertErrorMessage("Duplicate rolling stock id: (PC5019)");
+        jmri.util.JUnitAppender
+                .assertErrorMessage("Duplicate rolling stock id: (PC5524)");
+        jmri.util.JUnitAppender
+                .assertErrorMessage("Duplicate rolling stock id: (PC5559)");
+    }
 
 }

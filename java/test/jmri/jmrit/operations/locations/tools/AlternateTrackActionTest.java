@@ -8,7 +8,7 @@ import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.SpurEditFrame;
+import jmri.jmrit.operations.locations.gui.SpurEditFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 

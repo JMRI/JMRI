@@ -338,6 +338,7 @@ public class SprogThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup1() {
     }
 
@@ -346,6 +347,7 @@ public class SprogThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup2() {
     }
 
@@ -354,6 +356,7 @@ public class SprogThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup3() {
     }
 
@@ -362,6 +365,7 @@ public class SprogThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup4() {
     }
 
@@ -370,6 +374,7 @@ public class SprogThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup5() {
     }
 
@@ -398,15 +403,17 @@ public class SprogThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @BeforeEach
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDebugPowerManager();
+        JUnitUtil.setUp();
+        JUnitUtil.initDebugPowerManager();
         // prepare an interface
 
         SprogSystemConnectionMemo m = new SprogSystemConnectionMemo(SprogMode.SERVICE);
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
         m.configureCommandStation();
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new SprogThrottleManager(m));
+        SprogThrottleManager tm = new SprogThrottleManager(m);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        m.store(tm, jmri.ThrottleManager.class);
         instance = new SprogThrottle(m, new jmri.DccLocoAddress(2,false));
         setMaxFns(SprogConstants.MAX_FUNCTIONS);
     }

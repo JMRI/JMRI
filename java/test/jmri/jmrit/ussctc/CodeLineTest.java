@@ -13,7 +13,8 @@ public class CodeLineTest {
 
     @Test
     public void testConstruction() {
-        new CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104");
+        Assertions.assertNotNull( new CodeLine("Code Indication Start",
+            "Code Send Start", "IT101", "IT102", "IT103", "IT104"));
     }
         
     @BeforeEach

@@ -221,10 +221,6 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             } catch (Throwable e) {
                 if(!threadStopRequest)
                     log.error("Transmit thread terminated prematurely by: {}", e.toString(), e);
-                // ThreadDeath must be thrown per Java API JavaDocs
-                if (e instanceof ThreadDeath) {
-                    throw e;
-                }
             }
         });
         xmtThread.setName("z21.Z21TrafficController Transmit thread");
@@ -275,7 +271,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
 
         // create a buffer to hold the incoming data.
         byte[] buffer = new byte[100];  // the size here just needs to be longer
-        // than the longest protocol message.  
+        // than the longest protocol message.
         // Otherwise, the receive will truncate.
 
         // create the packet.
@@ -468,7 +464,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         threadStopRequest = true;
         // ensure socket closed to end pending operations
         if ( controller != null && ((Z21Adapter) controller).getSocket() != null) ((Z21Adapter) controller).getSocket().close();
-        
+
         // usual stop process
         super.terminateThreads();
     }

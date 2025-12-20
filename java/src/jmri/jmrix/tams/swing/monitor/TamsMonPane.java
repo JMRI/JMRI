@@ -17,8 +17,6 @@ import jmri.jmrix.tams.swing.TamsPanelInterface;
  */
 public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListener, TamsPanelInterface {
 
-    private TamsMessage tm; // Keeping a local copy of the latest TamsMessage for helping with decoding
-
     public TamsMonPane() {
         super();
     }
@@ -104,7 +102,7 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
         if (l.isUnsolicited()) {
             logMessage("msg: ", l);
         } else {
-            if (tm.isBinary()){
+            if (l.isBinary()){
                 logMessage("Binary rep: ", l);
             } else {
                 logMessage("ASCII rep: " , l);

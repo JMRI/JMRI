@@ -15,6 +15,21 @@ import jmri.jmrit.logix.WarrantManager;
  */
 public enum NamedBeanType {
 
+    Audio(
+            Bundle.getMessage("BeanNameAudio"),
+            Bundle.getMessage("BeanNameAudios"),
+            Audio.class,
+            "State",
+            () -> InstanceManager.getDefault(AudioManager.class),
+            null,
+            (NamedBean bean, String property) -> {
+                if (!(bean instanceof Audio)) {
+                    throw new IllegalArgumentException("bean is not an Audio");
+                }
+                InstanceManager.getDefault(AudioManager.class)
+                        .deleteBean((Audio)bean, property);
+            }),
+
     Block(
             Bundle.getMessage("BeanNameBlock"),
             Bundle.getMessage("BeanNameBlocks"),

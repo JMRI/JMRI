@@ -1,27 +1,30 @@
 package jmri.jmrit.beantable;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
-import javax.swing.Box;
+
 import javax.swing.BoxLayout;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
+
 import jmri.NamedBean;
 import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide a JFrame to display a table of NamedBeans.
+ * <p>
+ * This is used when a table is opened by itself, without
+ * being embedded in a selection frame.  Typically, this 
+ * happens when the table is opened from a startup action.
  * <p>
  * This frame includes the table itself at the top, plus a "bottom area" for
  * things like an Add... button and checkboxes that control display options.
@@ -38,26 +41,27 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
 
     BeanTableDataModel<E> dataModel;
     JTable dataTable;
-    JScrollPane dataScroll;
-    Box bottomBox;  // panel at bottom for extra buttons etc
-    int bottomBoxIndex; // index to insert extra stuff
-    static final int bottomStrutWidth = 20;
+    final JPanel bottomBox;  // panel at bottom for extra buttons etc
 
     public BeanTableFrame() {
         super();
+        bottomBox = new JPanel();
+        bottomBox.setLayout(new jmri.util.swing.WrapLayout( jmri.util.swing.WrapLayout.LEFT, 20, 5));
     }
 
     public BeanTableFrame(String s) {
         super(s);
+        bottomBox = new JPanel();
+        bottomBox.setLayout(new jmri.util.swing.WrapLayout( jmri.util.swing.WrapLayout.LEFT, 20, 5));
     }
 
     public BeanTableFrame(BeanTableDataModel<E> model, String helpTarget, JTable dataTab) {
 
-        super();
+        this();
         dataModel = model;
         this.dataTable = dataTab;
 
-        dataScroll = new JScrollPane(dataTable);
+        JScrollPane dataScroll = new JScrollPane(dataTable);
 
         // give system name column as smarter sorter and use it initially
         TableRowSorter<BeanTableDataModel<?>> sorter = new TableRowSorter<>(dataModel);
@@ -97,16 +101,18 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
             }
         });
 
+        JMenuItem exportItem = new JMenuItem(Bundle.getMessage("ExportTable"));
+        fileMenu.add(exportItem);
+        exportItem.addActionListener((ActionEvent e) -> {
+            dataModel.exportToCSV(null);
+        });
+
         setJMenuBar(menuBar);
 
         addHelpMenu(helpTarget, true);
 
         // install items in GUI
         getContentPane().add(dataScroll);
-        bottomBox = Box.createHorizontalBox();
-        bottomBox.add(Box.createHorizontalGlue()); // stays at end of box
-        bottomBoxIndex = 0;
-
         getContentPane().add(bottomBox);
 
         // add extras, if desired by subclass
@@ -131,10 +137,6 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
     void extras() {
     }
 
-    protected Box getBottomBox() {
-        return bottomBox;
-    }
-
     /**
      * Add a component to the bottom box. Takes care of organising glue, struts
      * etc
@@ -142,15 +144,14 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
      * @param comp {@link Component} to add
      * @param c    Class name
      */
-    @SuppressFBWarnings(value = "UUF_UNUSED_FIELD",
-            justification = "param c is required in the listedtableframe")
     protected void addToBottomBox(Component comp, String c) {
-        bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);
-        ++bottomBoxIndex;
-        bottomBox.add(comp, bottomBoxIndex);
-        ++bottomBoxIndex;
+       bottomBox.add(comp);
     }
 
+    public JTable getTable() {
+        return dataTable;
+    }
+    
     @Override
     public void dispose() {
         if (dataModel != null) {
@@ -159,9 +160,9 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
         }
         dataModel = null;
         dataTable = null;
-        dataScroll = null;
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BeanTableFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BeanTableFrame.class);
+
 }

@@ -1,8 +1,7 @@
 package jmri.jmrit.operations.automation.actions;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 
 public class PrintTrainManifestAction extends Action {
 
@@ -28,7 +27,12 @@ public class PrintTrainManifestAction extends Action {
             Train train = getAutomationItem().getTrain();
             if (train != null && train.isBuilt()) {
                 setRunning(true);
-                finishAction(train.printManifest(InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled()));
+                try {
+                    finishAction(train
+                            .printManifest(InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled()));
+                } catch (BuildFailedException e) {
+                    finishAction(false);
+                }
             } else {
                 finishAction(false);
             }

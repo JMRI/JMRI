@@ -1,10 +1,11 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
+
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.LevelXingView;
-import jmri.jmrit.display.layoutEditor.TrackSegment;
+
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -45,16 +46,16 @@ public class LevelXingViewXml extends LayoutTrackViewXml {
             element.setAttribute("blocknamebd", lt.getBlockNameBD());
         }
         if (lt.getConnectA() != null) {
-            element.setAttribute("connectaname", ((TrackSegment) lt.getConnectA()).getId());
+            element.setAttribute("connectaname", lt.getConnectA().getId());
         }
         if (lt.getConnectB() != null) {
-            element.setAttribute("connectbname", ((TrackSegment) lt.getConnectB()).getId());
+            element.setAttribute("connectbname", lt.getConnectB().getId());
         }
         if (lt.getConnectC() != null) {
-            element.setAttribute("connectcname", ((TrackSegment) lt.getConnectC()).getId());
+            element.setAttribute("connectcname", lt.getConnectC().getId());
         }
         if (lt.getConnectD() != null) {
-            element.setAttribute("connectdname", ((TrackSegment) lt.getConnectD()).getId());
+            element.setAttribute("connectdname", lt.getConnectD().getId());
         }
         if (lv.isHidden()) {
             element.setAttribute("hidden", "yes");

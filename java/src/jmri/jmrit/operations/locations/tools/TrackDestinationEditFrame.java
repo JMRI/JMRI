@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.gui.TrackEditFrame;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.router.Router;
@@ -21,7 +22,6 @@ import jmri.util.swing.JmriJOptionPane;
  * Frame for user edit of track destinations
  *
  * @author Dan Boudreau Copyright (C) 2013, 2024
- * 
  */
 public class TrackDestinationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -42,7 +42,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
     JRadioButton destinationsAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
     JRadioButton destinationsInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
     JRadioButton destinationsExclude = new JRadioButton(Bundle.getMessage("Exclude"));
-    
+
     // checkboxes
     JCheckBox onlyCarsWithFD = new JCheckBox(Bundle.getMessage("OnlyCarsWithFD"));
 
@@ -82,6 +82,12 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         p1.add(pTrackName);
         p1.add(pLocationName);
 
+        // row 2 only for C/I and Staging
+        JPanel pFD = new JPanel();
+        pFD.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
+        pFD.add(onlyCarsWithFD);
+        pFD.setMaximumSize(new Dimension(2000, 200));
+
         // row 3
         JPanel p3 = new JPanel();
         p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
@@ -97,14 +103,8 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         pRadioButtons.add(destinationsExclude);
 
         p3.add(pRadioButtons);
-        
-        // row 4 only for C/I and Staging
-        JPanel pFD = new JPanel();
-        pFD.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
-        pFD.add(onlyCarsWithFD);
-        pFD.setMaximumSize(new Dimension(2000, 200));
 
-        // row 5
+        // row 4
         panelDestinations.setLayout(new GridBagLayout());
         paneDestinations.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Destinations")));
 
@@ -113,19 +113,18 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         bGroup.add(destinationsInclude);
         bGroup.add(destinationsExclude);
 
-        // row 12
+        // row last
         JPanel panelButtons = new JPanel();
         panelButtons.setLayout(new GridBagLayout());
         panelButtons.setBorder(BorderFactory.createTitledBorder(""));
         panelButtons.setMaximumSize(new Dimension(2000, 200));
 
-        // row 13
         addItem(panelButtons, checkDestinationsButton, 0, 0);
         addItem(panelButtons, saveButton, 1, 0);
 
         getContentPane().add(p1);
-        getContentPane().add(pane3);
         getContentPane().add(pFD);
+        getContentPane().add(pane3);
         getContentPane().add(paneDestinations);
         getContentPane().add(panelButtons);
 
@@ -215,8 +214,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
             addCheckBoxAction(cb);
             if (destinationsAll.isSelected()) {
                 cb.setSelected(true);
-            } else if (_track != null && _track.isDestinationAccepted(loc)
-                    ^ _track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
+            } else if (_track != null &&
+                    _track.isDestinationAccepted(loc) ^
+                            _track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
                 cb.setSelected(true);
             }
         }
@@ -242,16 +242,23 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
     private void checkDestinationsValid() {
         SwingUtilities.invokeLater(() -> {
-            if (checkLocationsLoop())
+            if (checkDestinations())
                 JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("OkayMessage"));
             checkDestinationsButton.setEnabled(true);
         });
     }
 
-    private boolean checkLocationsLoop() {
+    private boolean checkDestinations() {
+        // 1st check to see if all car types have a destination
+        if (!checkDestinationCarTypes()) {
+            return false;
+        }
+        // now check each destination
         boolean noIssues = true;
         // only report car type not serviced once
         List<String> ignoreType = new ArrayList<String>();
+        // only report car type and load not serviced once
+        List<String> ignoreTypeAndLoad = new ArrayList<String>();
         for (Location destination : locationManager.getLocationsByNameList()) {
             ignoreType.clear();
             if (_track.isDestinationAccepted(destination)) {
@@ -267,8 +274,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                     if (!destination.acceptsTypeName(type)) {
                         noIssues = false;
                         int response = JmriJOptionPane.showConfirmDialog(this,
-                                Bundle.getMessage("WarningDestinationCarType", 
-                                        destination.getName(), type), Bundle.getMessage("WarningCarMayNotMove"),
+                                Bundle.getMessage("WarningDestinationCarType",
+                                        destination.getName(), type),
+                                Bundle.getMessage("WarningCarMayNotMove"),
                                 JmriJOptionPane.OK_CANCEL_OPTION);
                         if (response == JmriJOptionPane.OK_OPTION) {
                             ignoreType.add(type);
@@ -329,6 +337,8 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                     if (!_track.isTypeNameAccepted(type) || ignoreType.contains(type)) {
                         continue;
                     }
+                    // only report car load not serviced once
+                    List<String> ignoreLoad = new ArrayList<String>();
                     List<String> loads = InstanceManager.getDefault(CarLoads.class).getNames(type);
                     checkLoads: for (String load : loads) {
                         if (!_track.isLoadNameAccepted(load)) {
@@ -339,22 +349,25 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             if (!track.isTypeNameAccepted(type)) {
                                 continue;
                             }
-                            if (track.isLoadNameAccepted(load)) {
+                            if (track.isLoadNameAndCarTypeAccepted(load, type)) {
                                 continue checkLoads;
                             }
                         }
                         noIssues = false;
                         int response = JmriJOptionPane.showConfirmDialog(this, Bundle
                                 .getMessage("WarningDestinationTrackCarLoad", destination.getName(),
-                                type, load), Bundle.getMessage("WarningCarMayNotMove"), JmriJOptionPane.OK_CANCEL_OPTION);
+                                        type, load),
+                                Bundle.getMessage("WarningCarMayNotMove"), JmriJOptionPane.OK_CANCEL_OPTION);
                         if (response == JmriJOptionPane.OK_OPTION) {
+                            ignoreLoad.add(load);
+                            ignoreTypeAndLoad.add(type + load);
                             continue;
                         }
                         return false; // done
                     }
                     // now check car type and load combinations
                     checkLoads: for (String load : loads) {
-                        if (!_track.isLoadNameAndCarTypeAccepted(load, type)) {
+                        if (!_track.isLoadNameAndCarTypeAccepted(load, type) || ignoreLoad.contains(load)) {
                             continue;
                         }
                         // now determine if there's a track willing to service this load
@@ -366,8 +379,10 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         noIssues = false;
                         int response = JmriJOptionPane.showConfirmDialog(this, Bundle
                                 .getMessage("WarningDestinationTrackCarLoad", destination.getName(),
-                                type, load), Bundle.getMessage("WarningCarMayNotMove"), JmriJOptionPane.OK_CANCEL_OPTION);
+                                        type, load),
+                                Bundle.getMessage("WarningCarMayNotMove"), JmriJOptionPane.OK_CANCEL_OPTION);
                         if (response == JmriJOptionPane.OK_OPTION) {
+                            ignoreTypeAndLoad.add(type + load);
                             continue;
                         }
                         return false; // done
@@ -383,14 +398,15 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                     }
                     List<String> loads = InstanceManager.getDefault(CarLoads.class).getNames(type);
                     for (String load : loads) {
-                        if (!_track.isLoadNameAndCarTypeAccepted(load, type)) {
+                        if (!_track.isLoadNameAndCarTypeAccepted(load, type) ||
+                                ignoreTypeAndLoad.contains(type + load)) {
                             continue;
                         }
                         for (String road : InstanceManager.getDefault(CarRoads.class).getNames(type)) {
                             if (!_track.isRoadNameAccepted(road)) {
                                 continue;
                             }
-                            // is there a car with this road?
+                            // is there a car in the roster with this road?
                             boolean foundCar = false;
                             for (RollingStock rs : InstanceManager.getDefault(CarManager.class).getList()) {
                                 if (rs.getTypeName().equals(type) && rs.getRoadName().equals(road)) {
@@ -406,15 +422,16 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             car.setRoadName(road);
                             car.setLoadName(load);
                             car.setTrack(_track);
+                            // TODO There's an issue when the only track available is an interchange that has destination restrictions
                             car.setFinalDestination(destination);
-                            
+
                             // does the destination accept this car?
                             // this checks tracks that have schedules
                             String testDest = "NO_TYPE";
                             for (Track track : destination.getTracksList()) {
                                 if (!track.isTypeNameAccepted(type)) {
                                     // already reported if type not accepted
-                                    continue; 
+                                    continue;
                                 }
                                 if (track.getScheduleMode() == Track.SEQUENTIAL) {
                                     // must test in match mode
@@ -430,23 +447,24 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                     break; // done
                                 }
                             }
-                            
+
                             if (testDest.equals("NO_TYPE")) {
                                 continue;
                             }
-                            
+
                             if (!testDest.equals(Track.OKAY)) {
                                 noIssues = false;
                                 int response = JmriJOptionPane.showConfirmDialog(this, Bundle
                                         .getMessage("WarningNoTrack", destination.getName(), type, road, load,
-                                        destination.getName()), Bundle.getMessage("WarningCarMayNotMove"),
+                                                destination.getName()),
+                                        Bundle.getMessage("WarningCarMayNotMove"),
                                         JmriJOptionPane.OK_CANCEL_OPTION);
                                 if (response == JmriJOptionPane.OK_OPTION) {
                                     continue;
                                 }
                                 return false; // done
                             }
-                            
+
                             log.debug("Find train for car type ({}), road ({}), load ({})", type, road, load);
 
                             boolean results = InstanceManager.getDefault(Router.class).setDestination(car, null, null);
@@ -455,7 +473,8 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                 noIssues = false;
                                 int response = JmriJOptionPane.showConfirmDialog(this, Bundle
                                         .getMessage("WarningNoTrain", type, road, load,
-                                        destination.getName()), Bundle.getMessage("WarningCarMayNotMove"),
+                                                destination.getName()),
+                                        Bundle.getMessage("WarningCarMayNotMove"),
                                         JmriJOptionPane.OK_CANCEL_OPTION);
                                 if (response == JmriJOptionPane.OK_OPTION) {
                                     continue;
@@ -469,6 +488,47 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
             }
         }
         return noIssues;
+    }
+
+    /*
+     * Used to determine if every car type accepted by the interchange can be
+     * sent to another destination.
+     */
+    private boolean checkDestinationCarTypes() {
+        checkTypes: for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
+            if (!_track.isTypeNameAccepted(type)) {
+                continue;
+            }
+            for (Location destination : locationManager.getLocationsByNameList()) {
+                if (_track.getLocation() == destination || !_track.isDestinationAccepted(destination)) {
+                    continue;
+                }
+                // check destination and tracks at destination
+                if (destination.acceptsTypeName(type)) {
+                    for (Track track : destination.getTracksByNameList(null)) {
+                        if (track.isTypeNameAccepted(type)) {
+                            continue checkTypes;
+                        }
+                    }
+                }
+            }
+            int response = JmriJOptionPane.showConfirmDialog(this,
+                    Bundle.getMessage("ErrorNoDestinatonType", type, _track.getTrackTypeName(),
+                            _track.getLocation().getName(), _track.getName()),
+                    Bundle.getMessage("WarningCarMayNotMove"), JmriJOptionPane.OK_CANCEL_OPTION);
+            if (response == JmriJOptionPane.OK_OPTION) {
+                response = JmriJOptionPane.showConfirmDialog(this,
+                        Bundle.getMessage("RemoveCarType", type, _track.getTrackTypeName(),
+                                _track.getLocation().getName(), _track.getName()),
+                        Bundle.getMessage("WarningCarMayNotMove"), JmriJOptionPane.YES_NO_OPTION);
+                if (response == JmriJOptionPane.YES_OPTION) {
+                    _track.deleteTypeName(type);
+                }
+                continue;
+            }
+            return false; // done
+        }
+        return true;
     }
 
     @Override

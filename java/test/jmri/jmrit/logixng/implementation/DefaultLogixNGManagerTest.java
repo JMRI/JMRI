@@ -1,5 +1,11 @@
 package jmri.jmrit.logixng.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.beans.PropertyVetoException;
 
 import jmri.InstanceManager;
@@ -9,10 +15,7 @@ import jmri.jmrit.logixng.actions.*;
 import jmri.jmrit.logixng.expressions.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test DefaultLogixNG
@@ -25,34 +28,34 @@ public class DefaultLogixNGManagerTest {
     public void testManager() {
         LogixNG_Manager manager = InstanceManager.getDefault(LogixNG_Manager.class);
 
-        Assert.assertEquals("getXMLOrder() is correct", Manager.LOGIXNGS, manager.getXMLOrder());
-        Assert.assertEquals("getBeanTypeHandled() is correct", Bundle.getMessage("BeanNameLogixNG"), manager.getBeanTypeHandled());
-        Assert.assertEquals("getSystemPrefix() is correct", "I", manager.getSystemPrefix());
-        Assert.assertEquals("typeLetter() is correct", 'Q', manager.typeLetter());
+        assertEquals( Manager.LOGIXNGS, manager.getXMLOrder(), "getXMLOrder() is correct");
+        assertEquals( Bundle.getMessage("BeanNameLogixNG"), manager.getBeanTypeHandled(), "getBeanTypeHandled() is correct");
+        assertEquals( "I", manager.getSystemPrefix(), "getSystemPrefix() is correct");
+        assertEquals( 'Q', manager.typeLetter(), "typeLetter() is correct");
 
-        Assert.assertEquals("bean type is correct", Bundle.getMessage("BeanNameLogixNG"), manager.getBeanTypeHandled(false));
-        Assert.assertEquals("bean type is correct", Bundle.getMessage("BeanNameLogixNGs"), manager.getBeanTypeHandled(true));
+        assertEquals( Bundle.getMessage("BeanNameLogixNG"), manager.getBeanTypeHandled(false), "bean type is correct");
+        assertEquals( Bundle.getMessage("BeanNameLogixNGs"), manager.getBeanTypeHandled(true), "bean type is correct");
     }
 
     @Test
     public void testValidSystemNameFormat() {
         LogixNG_Manager manager = InstanceManager.getDefault(LogixNG_Manager.class);
 
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat(""));
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQ"));
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.VALID, manager.validSystemNameFormat("IQ1"));
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat("iQ1"));
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat("Iq1"));
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat("iq1"));
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.VALID, manager.validSystemNameFormat("IQ:AUTO:1"));
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQ1A"));
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQA"));
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQ1 "));
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.VALID, manager.validSystemNameFormat("IQ11111"));
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQ1AA"));
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQ1X"));
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQX1"));
-        Assert.assertEquals("validSystemNameFormat()", Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQX1X"));
+        assertEquals( Manager.NameValidity.INVALID, manager.validSystemNameFormat(""), "validSystemNameFormat()");
+        assertEquals( Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQ"), "validSystemNameFormat()");
+        assertEquals( Manager.NameValidity.VALID, manager.validSystemNameFormat("IQ1"), "validSystemNameFormat()");
+        assertEquals( Manager.NameValidity.INVALID, manager.validSystemNameFormat("iQ1"), "validSystemNameFormat()");
+        assertEquals( Manager.NameValidity.INVALID, manager.validSystemNameFormat("Iq1"), "validSystemNameFormat()");
+        assertEquals( Manager.NameValidity.INVALID, manager.validSystemNameFormat("iq1"), "validSystemNameFormat()");
+        assertEquals( Manager.NameValidity.VALID, manager.validSystemNameFormat("IQ:AUTO:1"), "validSystemNameFormat()");
+        assertEquals( Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQ1A"), "validSystemNameFormat()");
+        assertEquals( Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQA"), "validSystemNameFormat()");
+        assertEquals( Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQ1 "), "validSystemNameFormat()");
+        assertEquals( Manager.NameValidity.VALID, manager.validSystemNameFormat("IQ11111"), "validSystemNameFormat()");
+        assertEquals( Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQ1AA"), "validSystemNameFormat()");
+        assertEquals( Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQ1X"), "validSystemNameFormat()");
+        assertEquals( Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQX1"), "validSystemNameFormat()");
+        assertEquals( Manager.NameValidity.INVALID, manager.validSystemNameFormat("IQX1X"), "validSystemNameFormat()");
     }
 
     @Test
@@ -61,48 +64,45 @@ public class DefaultLogixNGManagerTest {
 
         // Correct system name
         LogixNG logixNG = manager.createLogixNG("IQ1", "Some name");
-        Assert.assertNotNull("exists", logixNG);
+        assertNotNull( logixNG, "exists");
         LogixNG logixNG_2 = manager.getLogixNG("IQ1");
-        Assert.assertEquals("logixNGs are the same", logixNG, logixNG_2);
+        assertEquals( logixNG, logixNG_2, "logixNGs are the same");
         logixNG_2 = manager.getBySystemName("IQ1");
-        Assert.assertEquals("logixNGs are the same", logixNG, logixNG_2);
+        assertEquals( logixNG, logixNG_2, "logixNGs are the same");
         logixNG_2 = manager.getLogixNG("Some name");
-        Assert.assertEquals("logixNGs are the same", logixNG, logixNG_2);
+        assertEquals( logixNG, logixNG_2, "logixNGs are the same");
         logixNG_2 = manager.getByUserName("Some name");
-        Assert.assertEquals("logixNGs are the same", logixNG, logixNG_2);
+        assertEquals( logixNG, logixNG_2, "logixNGs are the same");
         logixNG_2 = manager.getLogixNG("Some other name");
-        Assert.assertNull("logixNG not found", logixNG_2);
+        assertNull( logixNG_2, "logixNG not found");
 
         // Correct system name. Neither system name or user name exists already
         logixNG = manager.createLogixNG("IQ2", "Other LogixNG");
-        Assert.assertNotNull("exists", logixNG);
+        assertNotNull( logixNG, "exists");
 
         // System name exists
         logixNG = manager.createLogixNG("IQ1", "Another name");
-        Assert.assertNull("cannot create new", logixNG);
+        assertNull( logixNG, "cannot create new");
 
         // User name exists
         logixNG = manager.createLogixNG("IQ3", "Other LogixNG");
-        Assert.assertNull("cannot create new", logixNG);
+        assertNull( logixNG, "cannot create new");
 
         // Bad system name
-        boolean thrown = false;
-        try {
-            manager.createLogixNG("IQ4A", "Different name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class,
+            () -> manager.createLogixNG("IQ4A", "Different name"),
+            "Expected exception thrown");
+        assertNotNull(ex);
 
 
         // Create LogixNG with user name
         logixNG = manager.createLogixNG("Only user name");
-        Assert.assertNotNull("exists", logixNG);
-        Assert.assertEquals("user name is correct", "Only user name", logixNG.getUserName());
+        assertNotNull( logixNG, "exists");
+        assertEquals( "Only user name", logixNG.getUserName(), "user name is correct");
     }
 
     public void setupInitialConditionalNGTree(ConditionalNG conditionalNG) {
-        try {
+        assertDoesNotThrow( () -> {
             DigitalActionManager digitalActionManager =
                     InstanceManager.getDefault(DigitalActionManager.class);
 
@@ -118,10 +118,7 @@ public class DefaultLogixNGManagerTest {
                     InstanceManager.getDefault(DigitalActionManager.class)
                             .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null));
             femaleSocket.connect(actionIfThenSocket);
-        } catch (SocketAlreadyConnectedException e) {
-            // This should never be able to happen.
-            throw new RuntimeException(e);
-        }
+        });
     }
 
     @Test
@@ -129,31 +126,26 @@ public class DefaultLogixNGManagerTest {
         // Correct system name
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                 .createLogixNG("IQ1", "Some name");
-        Assert.assertNotNull("exists", logixNG);
+        assertNotNull( logixNG, "exists");
 
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG(logixNG, "A conditionalNG");  // NOI18N
-        Assert.assertNotNull("exists", conditionalNG);
+        assertNotNull( conditionalNG, "exists");
         setupInitialConditionalNGTree(conditionalNG);
 
         FemaleSocket child = conditionalNG.getChild(0);
-        Assert.assertEquals("action is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
-                child.getClass().getName());
+        assertEquals( "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
+                child.getClass().getName(), "action is of correct class");
         MaleSocket maleSocket = child.getConnectedSocket();
-        Assert.assertEquals("action is of correct class",
-                "jmri.jmrit.logixng.tools.debugger.DebuggerMaleDigitalActionSocket",
-                maleSocket.getClass().getName());
-        Assert.assertEquals("action is of correct class",
-                "Many",
+        assertEquals( "jmri.jmrit.logixng.tools.debugger.DebuggerMaleDigitalActionSocket",
+                maleSocket.getClass().getName(), "action is of correct class");
+        assertEquals( "Many",
                 maleSocket.getLongDescription());
         MaleSocket maleSocket2 = maleSocket.getChild(0).getConnectedSocket();
-        Assert.assertEquals("action is of correct class",
-                "jmri.jmrit.logixng.tools.debugger.DebuggerMaleDigitalActionSocket",
-                maleSocket2.getClass().getName());
-        Assert.assertEquals("action is of correct class",
-                "If Then Else. Execute on change",
-                maleSocket2.getLongDescription());
+        assertEquals( "jmri.jmrit.logixng.tools.debugger.DebuggerMaleDigitalActionSocket",
+                maleSocket2.getClass().getName(), "action is of correct class");
+        assertEquals( "If Then Else. Execute on change",
+                maleSocket2.getLongDescription(), "action is of correct class");
     }
 
     @Test
@@ -169,11 +161,11 @@ public class DefaultLogixNGManagerTest {
         StringExpressionManager stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
 
         LogixNG logixNG = logixNG_Manager.createLogixNG("IQ1", "Some name");
-        Assert.assertNotNull("exists", logixNG);
+        assertNotNull( logixNG, "exists");
 
         ConditionalNG conditionalNG = conditionalNG_Manager
                 .createConditionalNG(logixNG, "A conditionalNG");  // NOI18N
-        Assert.assertNotNull("exists", conditionalNG);
+        assertNotNull( conditionalNG, "exists");
 
         FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
         MaleDigitalActionSocket actionManySocket = digitalActionManager
@@ -245,41 +237,37 @@ public class DefaultLogixNGManagerTest {
         lastResultOfDigitalExpression.getSelectNamedBean().setNamedBean(expressionOrSocket);
 
 
-        Assert.assertNotNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
-        Assert.assertNotNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
-        Assert.assertNotNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
-        Assert.assertNotNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
-        Assert.assertNotNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
-        Assert.assertNotNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
-        Assert.assertNotNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
-        Assert.assertNotNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
-        Assert.assertNotNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+        assertNotNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
+        assertNotNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
+        assertNotNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        assertNotNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        assertNotNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        assertNotNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        assertNotNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        assertNotNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        assertNotNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
 
-        try {
-            logixNG_Manager.deleteBean(logixNG, "CanDelete");
-        } catch (PropertyVetoException e) {
-            Assert.assertEquals("DoNotDelete", e.getPropertyChangeEvent().getPropertyName());
-            Assert.assertEquals("In use by IQDE:AUTO:0002 - Last result of digital expression", e.getMessage());
-        }
+        PropertyVetoException e = assertThrows( PropertyVetoException.class,
+            () -> logixNG_Manager.deleteBean(logixNG, "CanDelete"));
+        assertEquals("DoNotDelete", e.getPropertyChangeEvent().getPropertyName());
+        assertEquals("In use by IQDE:AUTO:0002 - Last result of digital expression", e.getMessage());
+
         lastResultOfDigitalExpression.getSelectNamedBean().removeNamedBean();
 
-        try {
-            logixNG_Manager.deleteBean(logixNG, "CanDelete");
-        } catch (PropertyVetoException e) {
-            Assert.assertEquals("CanDelete", e.getPropertyChangeEvent().getPropertyName());
-            Assert.assertEquals("", e.getMessage());
-        }
+        assertDoesNotThrow( () -> logixNG_Manager.deleteBean(logixNG, "CanDelete"));
+
+
         logixNG_Manager.deleteBean(logixNG, "DoDelete");
 
-        Assert.assertNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
-        Assert.assertNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
-        Assert.assertNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
-        Assert.assertNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
-        Assert.assertNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
-        Assert.assertNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
-        Assert.assertNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
-        Assert.assertNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
-        Assert.assertNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+        assertNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
+        assertNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
+        assertNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        assertNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        assertNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        assertNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        assertNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        assertNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        assertNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
     }
 
     @Test
@@ -295,11 +283,11 @@ public class DefaultLogixNGManagerTest {
         StringExpressionManager stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
 
         LogixNG logixNG = logixNG_Manager.createLogixNG("IQ1", "Some name");
-        Assert.assertNotNull("exists", logixNG);
+        assertNotNull( logixNG, "exists");
 
         ConditionalNG conditionalNG = conditionalNG_Manager
                 .createConditionalNG(logixNG, "A conditionalNG");  // NOI18N
-        Assert.assertNotNull("exists", conditionalNG);
+        assertNotNull( conditionalNG, "exists");
 
         FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
         MaleDigitalActionSocket actionManySocket = digitalActionManager
@@ -371,41 +359,36 @@ public class DefaultLogixNGManagerTest {
         lastResultOfDigitalExpression.getSelectNamedBean().setNamedBean(expressionOrSocket);
 
 
-        Assert.assertNotNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
-        Assert.assertNotNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
-        Assert.assertNotNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
-        Assert.assertNotNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
-        Assert.assertNotNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
-        Assert.assertNotNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
-        Assert.assertNotNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
-        Assert.assertNotNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
-        Assert.assertNotNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+        assertNotNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
+        assertNotNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
+        assertNotNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        assertNotNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        assertNotNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        assertNotNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        assertNotNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        assertNotNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        assertNotNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
 
-        try {
-            conditionalNG_Manager.deleteBean(conditionalNG, "CanDelete");
-        } catch (PropertyVetoException e) {
-            Assert.assertEquals("DoNotDelete", e.getPropertyChangeEvent().getPropertyName());
-            Assert.assertEquals("In use by IQDE:AUTO:0002 - Last result of digital expression", e.getMessage());
-        }
+        PropertyVetoException e = assertThrows( PropertyVetoException.class,
+            () -> conditionalNG_Manager.deleteBean(conditionalNG, "CanDelete"));
+        assertEquals("DoNotDelete", e.getPropertyChangeEvent().getPropertyName());
+        assertEquals("In use by IQDE:AUTO:0002 - Last result of digital expression", e.getMessage());
+
         lastResultOfDigitalExpression.getSelectNamedBean().removeNamedBean();
 
-        try {
-            conditionalNG_Manager.deleteBean(conditionalNG, "CanDelete");
-        } catch (PropertyVetoException e) {
-            Assert.assertEquals("CanDelete", e.getPropertyChangeEvent().getPropertyName());
-            Assert.assertEquals("", e.getMessage());
-        }
+        assertDoesNotThrow( () -> conditionalNG_Manager.deleteBean(conditionalNG, "CanDelete"));
+
         conditionalNG_Manager.deleteBean(conditionalNG, "DoDelete");
 
-        Assert.assertNotNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
-        Assert.assertNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
-        Assert.assertNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
-        Assert.assertNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
-        Assert.assertNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
-        Assert.assertNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
-        Assert.assertNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
-        Assert.assertNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
-        Assert.assertNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+        assertNotNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
+        assertNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
+        assertNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        assertNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        assertNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        assertNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        assertNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        assertNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        assertNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
     }
 
     @Test
@@ -422,7 +405,7 @@ public class DefaultLogixNGManagerTest {
 
         jmri.jmrit.logixng.Module module = moduleManager
                 .createModule("A module", femaleSocketManager.getSocketTypeByType("DefaultFemaleDigitalActionSocket"));  // NOI18N
-        Assert.assertNotNull("exists", module);
+        assertNotNull( module, "exists");
 
         FemaleSocket femaleSocket = module.getRootSocket();
         MaleDigitalActionSocket actionManySocket = digitalActionManager
@@ -494,39 +477,34 @@ public class DefaultLogixNGManagerTest {
         lastResultOfDigitalExpression.getSelectNamedBean().setNamedBean(expressionOrSocket);
 
 
-        Assert.assertNotNull(moduleManager.getBySystemName(module.getSystemName()));
-        Assert.assertNotNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
-        Assert.assertNotNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
-        Assert.assertNotNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
-        Assert.assertNotNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
-        Assert.assertNotNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
-        Assert.assertNotNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
-        Assert.assertNotNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+        assertNotNull(moduleManager.getBySystemName(module.getSystemName()));
+        assertNotNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        assertNotNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        assertNotNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        assertNotNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        assertNotNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        assertNotNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        assertNotNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
 
-        try {
-            moduleManager.deleteBean(module, "CanDelete");
-        } catch (PropertyVetoException e) {
-            Assert.assertEquals("DoNotDelete", e.getPropertyChangeEvent().getPropertyName());
-            Assert.assertEquals("In use by IQDE:AUTO:0002 - Last result of digital expression", e.getMessage());
-        }
+        PropertyVetoException e = assertThrows( PropertyVetoException.class,
+            () -> moduleManager.deleteBean(module, "CanDelete"));
+        assertEquals("DoNotDelete", e.getPropertyChangeEvent().getPropertyName());
+        assertEquals("In use by IQDE:AUTO:0002 - Last result of digital expression", e.getMessage());
+
         lastResultOfDigitalExpression.getSelectNamedBean().removeNamedBean();
 
-        try {
-            moduleManager.deleteBean(module, "CanDelete");
-        } catch (PropertyVetoException e) {
-            Assert.assertEquals("CanDelete", e.getPropertyChangeEvent().getPropertyName());
-            Assert.assertEquals("", e.getMessage());
-        }
+        assertDoesNotThrow( () -> moduleManager.deleteBean(module, "CanDelete"));
+
         moduleManager.deleteBean(module, "DoDelete");
 
-        Assert.assertNull(moduleManager.getBySystemName(module.getSystemName()));
-        Assert.assertNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
-        Assert.assertNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
-        Assert.assertNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
-        Assert.assertNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
-        Assert.assertNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
-        Assert.assertNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
-        Assert.assertNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+        assertNull(moduleManager.getBySystemName(module.getSystemName()));
+        assertNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        assertNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        assertNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        assertNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        assertNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        assertNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        assertNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
     }
 
     @Test
@@ -620,44 +598,39 @@ public class DefaultLogixNGManagerTest {
 
 //        Assert.assertNotNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
 //        Assert.assertNotNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
-        Assert.assertNotNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
-        Assert.assertNotNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
-        Assert.assertNotNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
-        Assert.assertNotNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
-        Assert.assertNotNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
-        Assert.assertNotNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
-        Assert.assertNotNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+        assertNotNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        assertNotNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        assertNotNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        assertNotNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        assertNotNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        assertNotNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        assertNotNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
 
-        try {
-            digitalActionManager.deleteBean(actionManySocket, "CanDelete");
-        } catch (PropertyVetoException e) {
-            Assert.assertEquals("DoNotDelete", e.getPropertyChangeEvent().getPropertyName());
-            Assert.assertEquals("In use by IQDE:AUTO:0002 - Last result of digital expression", e.getMessage());
-        }
+        PropertyVetoException e = assertThrows( PropertyVetoException.class,
+            () -> digitalActionManager.deleteBean(actionManySocket, "CanDelete"));
+        assertEquals("DoNotDelete", e.getPropertyChangeEvent().getPropertyName());
+        assertEquals("In use by IQDE:AUTO:0002 - Last result of digital expression", e.getMessage());
+
         lastResultOfDigitalExpression.getSelectNamedBean().removeNamedBean();
 
-        try {
-            digitalActionManager.deleteBean(actionManySocket, "CanDelete");
-        } catch (PropertyVetoException e) {
-            Assert.assertEquals("CanDelete", e.getPropertyChangeEvent().getPropertyName());
-            Assert.assertEquals("", e.getMessage());
-        }
+        assertDoesNotThrow( () -> digitalActionManager.deleteBean(actionManySocket, "CanDelete"));
+
         digitalActionManager.deleteBean(actionManySocket, "DoDelete");
 
 //        Assert.assertNotNull(logixNG_Manager.getBySystemName(logixNG.getSystemName()));
 //        Assert.assertNull(conditionalNG_Manager.getBySystemName(conditionalNG.getSystemName()));
-        Assert.assertNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
-        Assert.assertNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
-        Assert.assertNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
-        Assert.assertNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
-        Assert.assertNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
-        Assert.assertNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
-        Assert.assertNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
+        assertNull(analogActionManager.getBySystemName(actionAnalogManySocket.getSystemName()));
+        assertNull(analogExpressionManager.getBySystemName(expressionAnalogExpressionConstantSocket.getSystemName()));
+        assertNull(digitalActionManager.getBySystemName(actionManySocket.getSystemName()));
+        assertNull(digitalExpressionManager.getBySystemName(expressionOrSocket.getSystemName()));
+        assertNull(stringActionManager.getBySystemName(actionStringManySocket.getSystemName()));
+        assertNull(stringExpressionManager.getBySystemName(expressionStringExpressionConstantSocket.getSystemName()));
+        assertNull(digitalBooleanActionManager.getBySystemName(onChange.getSystemName()));
     }
 
     @Test
+    @Disabled("Test requires further development")
     public void testDeleteTable() throws SocketAlreadyConnectedException {
-//        Assert.fail("Not implemented yet");
     }
 
 

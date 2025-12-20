@@ -43,3 +43,9 @@ jobs:
         mvn -Dtest=jmri.ArchitectureTest,jmri.TestArchitectureTest,jmri.util.FileLineEndingsCheck test --file=pom.xml
         # Test if stale sources exists
         ./scripts/test_stale_sources.sh
+        # Test if  if there are any files with with multiple UTF-8 Byte-Order-Marks (BOM) or TABs
+        ./scripts/test_BOM_and_tab.sh
+        # Check that the default_lcf.xml and scripts/default.xml files are in synch.
+        ./scripts/test_default_lcf.sh
+        # Check XSLT transformations
+        ./scripts/test_decoder_XSLT_transforms.sh

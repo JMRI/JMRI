@@ -49,7 +49,7 @@
 <!ELEMENT terminate EMPTY>
 
 <!ELEMENT trains (train)*>
-<!ELEMENT train (rowColor | route | types | carLoads | carRoads | carOwners |scripts | railRoad | manifestLogo)*>
+<!ELEMENT train (rowColor | route | types | carLoads | carRoads | cabooseRoads| locoRoads| carOwners |scripts | railRoad | manifestLogo)*>
 
 <!ELEMENT rowColor EMPTY>
 <!ELEMENT route (skips)*>
@@ -61,7 +61,10 @@
 <!ELEMENT carLoads (carLoad)*>
 <!ELEMENT carLoad EMPTY>
 <!ELEMENT carRoads (carRoad)*>
+<!ELEMENT cabooseRoads (carRoad)*>
+<!ELEMENT locoRoads (locoRoad)*>
 <!ELEMENT carRoad EMPTY>
+<!ELEMENT locoRoad EMPTY>
 <!ELEMENT carOwners (carOwner)*>
 <!ELEMENT carOwner EMPTY>
 <!ELEMENT scripts (startUp | shutDown | build | afterBuild | move | terminate)*>
@@ -90,7 +93,10 @@
 <!ATTLIST train carTypes			CDATA #IMPLIED> 
 <!ATTLIST train carRoadOperation	CDATA #IMPLIED>
 <!ATTLIST train carRoadOption		CDATA #IMPLIED>
+<!ATTLIST train cabooseRoadOption	CDATA #IMPLIED>
+<!ATTLIST train locoRoadOption		CDATA #IMPLIED>
 <!ATTLIST train carRoads			CDATA #IMPLIED>
+<!ATTLIST train locoRoads			CDATA #IMPLIED>
 <!ATTLIST train carLoadOption		CDATA #IMPLIED>
 <!ATTLIST train carLoads			CDATA #IMPLIED>
 <!ATTLIST train carOwnerOption		CDATA #IMPLIED>
@@ -155,6 +161,7 @@
 <!ATTLIST carLoad name				CDATA #IMPLIED>
 <!ATTLIST carRoad name				CDATA #IMPLIED>
 <!ATTLIST carOwner name				CDATA #IMPLIED>
+<!ATTLIST locoRoad name				CDATA #IMPLIED>
 
 <!ATTLIST build name				CDATA #IMPLIED>
 <!ATTLIST afterBuild name			CDATA #IMPLIED>

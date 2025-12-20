@@ -80,7 +80,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String DECODER_DEVELOPERID = "developerID"; // NOI18N
     public static final String DECODER_MANUFACTURERID = "manufacturerID"; // NOI18N
     public static final String DECODER_PRODUCTID = "productID"; // NOI18N
+    public static final String PROGRAMMING = "programming"; // NOI18N
     public static final String DECODER_FAMILY = "decoderfamily"; // NOI18N
+    public static final String DECODER_MODES = "decoderModes"; // NOI18N
     public static final String DECODER_COMMENT = "decodercomment"; // NOI18N
     public static final String DECODER_MAXFNNUM = "decodermaxFnNum"; // NOI18N
     public static final String DEFAULT_MAXFNNUM = "28"; // NOI18N
@@ -123,6 +125,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _developerID = "";
     protected String _manufacturerID = "";
     protected String _productID = "";
+    protected String _programmingModes = "";
 
     /**
      * Get the highest valid Fn key number for this roster entry.
@@ -168,6 +171,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         functionSelectedImages = Collections.synchronizedMap(new HashMap<>());
         functionImages = Collections.synchronizedMap(new HashMap<>());
         functionLockables = Collections.synchronizedMap(new HashMap<>());
+        functionVisibles = Collections.synchronizedMap(new HashMap<>());
     }
 
     /**
@@ -207,6 +211,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         _developerID = pEntry._developerID;
         _manufacturerID = pEntry._manufacturerID;
         _productID = pEntry._productID;
+        _programmingModes = pEntry._programmingModes;
         _decoderComment = pEntry._decoderComment;
         _owner = pEntry._owner;
         _imageFilePath = pEntry._imageFilePath;
@@ -250,6 +255,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 }
             });
         }
+        if (pEntry.functionVisibles != null) {
+            pEntry.functionVisibles.forEach((key, value) -> {
+                if (value != null) {
+                    functionVisibles.put(key, value);
+                }
+            });
+        }        
     }
 
     /**
@@ -474,15 +486,34 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         return _manufacturerID;
     }
 
-    public void setProductID(String s) {
+    public void setProductID(@CheckForNull String s) {
         String old = _productID;
-        if (s == null) {s="";}
+        if (s == null) {s = "";}
         _productID = s;
         firePropertyChange(DECODER_PRODUCTID, old, s);
     }
 
     public String getProductID() {
         return _productID;
+    }
+
+    /**
+     * Set programming modes as defined in a roster entry's decoder definition.
+     * @param s a comma separated string of predefined mode elements
+     */
+    public void setProgrammingModes(@CheckForNull String s) {
+        String old = _programmingModes;
+        if (s == null) {s = "";}
+        _programmingModes = s;
+        firePropertyChange(DECODER_MODES, old, s);
+    }
+
+    /**
+     * Get the modes as defined in a roster entry's decoder definition.
+     * @return a comma separated string of predefined mode elements
+     */
+    public String getProgrammingModes() {
+        return _programmingModes;
     }
 
     public void setDecoderFamily(String s) {
@@ -570,7 +601,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setDateModified(@Nonnull Date date) {
         Date old = this.dateModified;
-        this.dateModified = date;
+        this.dateModified = new Date(date.getTime());
         this.firePropertyChange(RosterEntry.DATE_UPDATED, old, date);
     }
 
@@ -599,8 +630,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 try {
                     setDateModified(customFmt.parse(date));
                 } catch (ParseException ex3) {
-                    // then try with a specific format to handle e.g. "01-Oct-2016 9:13:36"
-                    customFmt = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");
+                    // then try with a specific format to handle e.g. "01-Oct-2016 21:13:36"
+                    customFmt = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
                     setDateModified(customFmt.parse(date));
                 }
             }
@@ -608,7 +639,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             // warn that there's perhaps something wrong with the classpath
             log.error(
                     "IllegalArgumentException in RosterEntry.setDateModified - this may indicate a problem with the classpath, specifically multiple copies of the 'jackson` library. See release notes");
-            // parse using defaults since thats how it was saved if saved
+            // parse using defaults since that is how it was saved if saved
             // by earlier versions of JMRI
             this.setDateModified(DateFormat.getDateTimeInstance().parse(date));
         }
@@ -689,9 +720,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         functionSelectedImages = Collections.synchronizedMap(new HashMap<>());
         functionImages = Collections.synchronizedMap(new HashMap<>());
         functionLockables = Collections.synchronizedMap(new HashMap<>());
-        if (log.isDebugEnabled()) {
-            log.debug("ctor from element {}", e);
-        }
+        functionVisibles = Collections.synchronizedMap(new HashMap<>());
+        log.debug("ctor from element {}", e);
         Attribute a;
         if ((a = e.getAttribute("id")) != null) {
             _id = a.getValue();
@@ -758,7 +788,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             _isShuntingOn = a.getValue();
         }
         if ((a = e.getAttribute(RosterEntry.MAX_SPEED)) != null) {
-            _maxSpeedPCT = Integer.parseInt(a.getValue());
+            try {
+                _maxSpeedPCT = Integer.parseInt(a.getValue());
+            } catch ( NumberFormatException ex ) {
+                log.error("Could not set maxSpeedPCT from {} , {}", a.getValue(), ex.getMessage());
+            }
         }
 
         if ((a = e.getAttribute(DECODER_DEVELOPERID)) != null) {
@@ -771,6 +805,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
         if ((a = e.getAttribute(DECODER_PRODUCTID)) != null) {
             _productID = a.getValue();
+        }
+
+        if ((a = e.getAttribute(DECODER_MODES)) != null) {
+            _programmingModes = a.getValue();
         }
 
         Element e3;
@@ -786,7 +824,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 _dccAddress = "";
                 _protocol = LocoAddress.Protocol.DCC_SHORT;
             }
-        } else {// Did not find "locoaddress" element carrying the short/long, probably
+        } else { // Did not find "locoaddress" element carrying the short/long, probably
             // because this is an older-format file, so try to use system default.
             // This is generally the best we can do without parsing the decoder file now
             // but may give the wrong answer in some cases (low value long addresses on NCE)
@@ -848,7 +886,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             _sp = new RosterSpeedProfile(this);
             _sp.load(e.getChild(RosterEntry.SPEED_PROFILE));
         }
-
     }
 
     boolean loadedOnce = false;
@@ -888,13 +925,20 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             for (Element fn : l) {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
                 String lock = fn.getAttribute("lockable").getValue();
+                String visible = null;
+                if (fn.getAttribute("visible") != null) {
+                    visible = fn.getAttribute("visible").getValue();
+                }
                 String val = LocaleSelector.getAttribute(fn, "text");
                 if (val == null) {
                     val = fn.getText();
                 }
                 if ((this.getFunctionLabel(num) == null) || (source.equalsIgnoreCase("model"))) {
                     this.setFunctionLabel(num, val);
-                    this.setFunctionLockable(num, lock.equals("true"));
+                    this.setFunctionLockable(num, "true".equals(lock));                    
+                    if (visible != null){
+                        this.setFunctionVisible(num, "true".equals(visible));
+                    }
                     Attribute a;
                     if ((a = fn.getAttribute("functionImage")) != null && !a.getValue().isEmpty()) {
                         try {
@@ -934,7 +978,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         }
     }
 
-    boolean soundLoadedOnce = false;
+    private boolean soundLoadedOnce = false;
 
     /**
      * Loads sound names from a JDOM element. Does not change values that are
@@ -1171,7 +1215,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     @Override
     public String[] getAttributeList() {
-        return attributePairs.keySet().toArray(new String[attributePairs.size()]);
+        return attributePairs.keySet().toArray(new String[0]);
     }
 
     /**
@@ -1254,6 +1298,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         e.setAttribute(DECODER_DEVELOPERID, getDeveloperID());
         e.setAttribute(DECODER_MANUFACTURERID, getManufacturerID());
         e.setAttribute(DECODER_PRODUCTID, getProductID());
+        e.setAttribute(DECODER_MODES, getProgrammingModes());
         e.setAttribute(RosterEntry.MAX_SPEED, (Integer.toString(getMaxSpeedPCT())));
         // file path are saved without default xml config path
         e.setAttribute("imageFilePath",
@@ -1290,6 +1335,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                     Element fne = new Element(RosterEntry.FUNCTION_LABEL);
                     fne.setAttribute("num", "" + key);
                     fne.setAttribute("lockable", getFunctionLockable(key) ? "true" : "false");
+                    fne.setAttribute("visible", getFunctionVisible(key) ? "true" : "false");
                     fne.setAttribute("functionImage",
                             (getFunctionImage(key) != null) ? FileUtil.getPortableFilename(getFunctionImage(key)) : "");
                     fne.setAttribute("functionImageSelected", (getFunctionSelectedImage(key) != null)
@@ -1340,38 +1386,41 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     @Override
     public String toString() {
-        String out = "[RosterEntry: "
-                + _id
-                + " "
-                + (_fileName != null ? _fileName : "<null>")
-                + " "
-                + _roadName
-                + " "
-                + _roadNumber
-                + " "
-                + _mfg
-                + " "
-                + _owner
-                + " "
-                + _model
-                + " "
-                + _dccAddress
-                + " "
-                + _comment
-                + " "
-                + _decoderModel
-                + " "
-                + _decoderFamily
-                + " "
-                + _developerID
-                + " "
-                + _manufacturerID
-                + " "
-                + _productID
-                + " "
-                + _decoderComment
-                + "]";
-        return out;
+        return new StringBuilder()
+            .append("[RosterEntry: ")
+            .append(_id)
+            .append(" ")
+            .append(_fileName != null ? _fileName : "<null>")
+            .append(" ")
+            .append(_roadName)
+            .append(" ")
+            .append(_roadNumber)
+            .append(" ")
+            .append(_mfg)
+            .append(" ")
+            .append(_owner)
+            .append(" ")
+            .append(_model)
+            .append(" ")
+            .append(_dccAddress)
+            .append(" ")
+            .append(_comment)
+            .append(" ")
+            .append(_decoderModel)
+            .append(" ")
+            .append(_decoderFamily)
+            .append(" ")
+            .append(_developerID)
+            .append(" ")
+            .append(_manufacturerID)
+            .append(" ")
+            .append(_productID)
+            .append(" ")
+            .append(_programmingModes)
+            .append(" ")
+            .append(_decoderComment)
+            .append("]")
+            .toString();
     }
 
     /**
@@ -1507,7 +1556,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Ultra compact list view of roster entries. Shows text from fields as
+     * Ultra-compact list view of roster entries. Shows text from fields as
      * initially visible in the Roster frame table.
      * <p>
      * Header is created in
@@ -1618,7 +1667,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     String newLine = "\n";
 
     /**
-     * Print the roster information.
+     * Print the roster entry information.
      * <p>
      * Updated to allow for multiline comment and decoder comment fields.
      * Separate write statements for text and line feeds to work around the
@@ -1715,14 +1764,14 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             // If there is a comment field, then wrap it using the new wrapCommment()
             // method and print it
             if (!(_comment.isEmpty())) {
-                //Because the text will fill the width if the roster entry has an icon
-                //then we need to add some blank lines to prevent the comment text going
-                //through the picture.
+                // Because the text will fill the width if the roster entry has an icon
+                // then we need to add some blank lines to prevent the comment text going
+                // through the picture.
                 for (int i = 0; i < (blanks - linesAdded); i++) {
                     w.write(newLine, 0, 1);
                 }
-                //As we have added the blank lines to pad out the comment we will
-                //reset the number of blanks to 0.
+                // As we have added the blank lines to pad out the comment we will
+                // reset the number of blanks to 0.
                 if (blanks != 0) {
                     blanks = 0;
                 }
@@ -1750,17 +1799,27 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                     linesAdded = writeWrappedComment(w, _decoderFamily, leftMargin + title, textSpace) + linesAdded;
                 }
             }
+            if (!(_programmingModes.isEmpty())) {
+                title = String.format("%-" + labelColumn + "s",
+                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldDecoderModes")))); // I18N Programming Mode(s):
+                if ((textSpaceWithIcon != 0) && (linesAdded < blanks)) {
+                    linesAdded
+                            = writeWrappedComment(w, _programmingModes, leftMargin + title, textSpaceWithIcon) + linesAdded;
+                } else {
+                    linesAdded = writeWrappedComment(w, _programmingModes, leftMargin + title, textSpace) + linesAdded;
+                }
+            }
 
-            //If there is a decoderComment field, need to wrap it
+            // If there is a decoderComment field, need to wrap it
             if (!(_decoderComment.isEmpty())) {
-                //Because the text will fill the width if the roster entry has an icon
-                //then we need to add some blank lines to prevent the comment text going
-                //through the picture.
+                // Because the text will fill the width if the roster entry has an icon
+                // then we need to add some blank lines to prevent the comment text going
+                // through the picture.
                 for (int i = 0; i < (blanks - linesAdded); i++) {
                     w.write(newLine, 0, 1);
                 }
-                //As we have added the blank lines to pad out the comment we will
-                //reset the number of blanks to 0.
+                // As we have added the blank lines to pad out the comment we will
+                // reset the number of blanks to 0.
                 if (blanks != 0) {
                     blanks = 0;
                 }
@@ -1780,9 +1839,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     private int writeWrappedComment(Writer w, String text, String title, int textSpace) {
         Vector<String> commentVector = wrapComment(text, textSpace);
 
-        //Now have a vector of text pieces and line feeds that will all
-        //fit in the allowed space. Print each piece, prefixing the first one
-        //with the label and indenting any remaining.
+        // Now have a vector of text pieces and line feeds that will all
+        // fit in the allowed space. Print each piece, prefixing the first one
+        // with the label and indenting any remaining.
         String s;
         int k = 0;
         try {

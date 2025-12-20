@@ -55,10 +55,10 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
         if (r != null) {
             _lastReport = r;
             // notify
-            firePropertyChange("lastReport", oldLast, _lastReport);
+            firePropertyChange(PROPERTY_LAST_REPORT, oldLast, _lastReport);
         }
         // notify
-        firePropertyChange("currentReport", old, _currentReport);
+        firePropertyChange(PROPERTY_CURRENT_REPORT, old, _currentReport);
     }
 
     // internal data members

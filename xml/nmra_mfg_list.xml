@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/mfgID.xsl" type="text/xsl"?>
-<mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169"
+<mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/nmra_mfg_list-4-19-1.xsd">
 
   <!--
@@ -43,7 +43,7 @@
     with the NMRAs very idiosyncratic form.
   -->
       <manufacturer mfg="NMRA" mfgID="999" />
-      <manufacturer mfg="A-Train Electronics" mfgID="137" />
+      <manufacturer mfg="A-Train Electronics" mfgID="137" /><!-- no longer in NMRA list-->
       <manufacturer mfg="Advance IC Engineering, Inc." mfgID="17" />
       <manufacturer mfg="AE Electronic Ltd" mfgID="169" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -60,6 +60,7 @@
       <manufacturer mfg="BLOCKsignalling" mfgID="148" />
       <manufacturer mfg="Bluecher-Electronic" mfgID="60" />
       <manufacturer mfg="Blue Digital" mfgID="225" />
+      <manufacturer mfg="bogobit" mfgID="171" />
       <manufacturer mfg="Brelec" mfgID="31" />
       <manufacturer mfg="BRAWA Modellspielwaren GmbH" mfgID="186" />
       <manufacturer mfg="Broadway Limited Imports, LLC" mfgID="38" />
@@ -80,7 +81,7 @@
       <manufacturer mfg="Dietz Modellbahntechnik" mfgID="115" />
       <manufacturer mfg="Digi-CZ" mfgID="152" />
       <manufacturer mfg="Digikeijs" mfgID="42" />
-      <manufacturer mfg="Digirails" mfgID="42" />
+      <manufacturer mfg="Digirails" mfgID="42" /><!-- note duplicates 42; not in NMRA listing -->
       <manufacturer mfg="Digital Bahn" mfgID="64" />
       <manufacturer mfg="Digitools Elektronika, Kft" mfgID="75" />
       <manufacturer mfg="Digitrax" mfgID="129" />
@@ -92,8 +93,8 @@
       <manufacturer mfg="Electronic Solutions Ulm GmbH" mfgID="151" />
       <manufacturer mfg="Electroniscript, inc" mfgID="94" />
       <manufacturer mfg="E-Modell" mfgID="69" />
-      <manufacturer mfg="ECCO GmbH" mfgID="121" />
-      <manufacturer mfg="Fleischmann" mfgID="155" />
+      <manufacturer mfg="ECCO GmbH" mfgID="121" /><!-- no longer in NMRA listing -->
+      <manufacturer mfg="Fleischmann" mfgID="155" /><!-- no longer in NMRA listing -->
       <manufacturer mfg="Frateschi Model Trains" mfgID="128" />
       <manufacturer mfg="Fucik" mfgID="158" />
       <manufacturer mfg="Gaugemaster" mfgID="65" />
@@ -120,13 +121,13 @@
       <manufacturer mfg="KRES GmbH" mfgID="58" />
       <manufacturer mfg="Krois-Modell" mfgID="52" />
       <manufacturer mfg="Kuehn Ing." mfgID="157" />
+      <manufacturer mfg="Lahti Associates" mfgID="14" /><!-- not in NMRA listing-->
+      <manufacturer mfg="LaisDCC" mfgID="134" />
+      <manufacturer mfg="Lenz" mfgID="99" />
       <manufacturer mfg="LDH" mfgID="56" />
       <manufacturer mfg="LGB" mfgID="159" />
       <manufacturer mfg="LSdigital" mfgID="112" />
       <manufacturer mfg="LS Models Sprl" mfgID="77" />
-      <manufacturer mfg="LaisDCC" mfgID="134" />
-      <manufacturer mfg="Lahti Associates" mfgID="14" />
-      <manufacturer mfg="Lenz" mfgID="99" />
       <manufacturer mfg="Maison de DCC" mfgID="166" />
       <manufacturer mfg="Massoth Elektronik, GmbH" mfgID="123" />
       <manufacturer mfg="MAWE Elektronik" mfgID="68" />
@@ -151,7 +152,7 @@
       <manufacturer mfg="Ngineering" mfgID="43" />
       <manufacturer mfg="NMRA Reserved" mfgID="238" />
       <manufacturer mfg="Noarail" mfgID="63" />
-      <manufacturer mfg="Nucky" mfgID="156" />
+      <manufacturer mfg="Nucky" mfgID="156" /><!--  Also earlier in NMRA listing-->
       <manufacturer mfg="NYRS" mfgID="136" />
       <manufacturer mfg="Opherline1" mfgID="106" />
       <manufacturer mfg="Passmann" mfgID="41" />
@@ -177,7 +178,7 @@
       <manufacturer mfg="Regal Way Co. Ltd" mfgID="32" />
       <manufacturer mfg="Rock Junction Controls" mfgID="149" />
       <manufacturer mfg="Rocrail" mfgID="70" />
-      <manufacturer mfg="Roco Modelspielwaren" mfgID="161" />
+      <manufacturer mfg="Roco Modelspielwaren" mfgID="161" /><!-- NMRA lists under another name-->
       <manufacturer mfg="RR-CirKits" mfgID="87" />
       <manufacturer mfg="S Helper Service" mfgID="23" />
       <manufacturer mfg="Sanda Kan Industrial" mfgID="95" />
@@ -185,9 +186,9 @@
       <manufacturer mfg="SLOMO Railroad Models" mfgID="142" />
       <manufacturer mfg="Spectrum Engineering" mfgID="80" />
       <manufacturer mfg="SPROG DCC" mfgID="44" />
-      <manufacturer mfg="Signaling Solution" mfgID="119" />
-      <manufacturer mfg="Silicon Railway" mfgID="33" />
-      <manufacturer mfg="SoundTraxx (Throttle-Up)" mfgID="141" />
+      <manufacturer mfg="Signaling Solution" mfgID="119" /><!-- not in NMRA listing -->
+      <manufacturer mfg="Silicon Railway" mfgID="33" /><!-- not in NMRA listing -->
+      <manufacturer mfg="SoundTraxx (Throttle-Up)" mfgID="141" /><!-- NMRA lists under another name-->
       <manufacturer mfg="T4T - Technology for Trains GmbH" mfgID="20" />
       <manufacturer mfg="Tam Valley Depot" mfgID="59" />
       <manufacturer mfg="Tams Elektronik GmbH" mfgID="62" />
@@ -224,6 +225,8 @@
       <!-- not registered, provide custom numbers -->
       <manufacturer mfg="LEB" mfgID="1002" />
       <manufacturer mfg="Logic Rail Technologies" mfgID="1003" />
+      <manufacturer mfg="Decoderwerk" mfgID="1004" />
+      <manufacturer mfg="DCCWorld.com" mfgID="1005" />
       
 
 </mfgList>

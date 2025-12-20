@@ -1,0 +1,1582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2025 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">    
+        
+ <version author="dieter.flunkert@experimentalme.com" version="1" lastUpdated="20250321" />
+   <decoder>
+      <family name="Decoderwerk LokCommander" mfg="Decoderwerk" lowVersionID="0" highVersionID="255">
+         <model model="LokCommander 7090x" numOuts="8" numFns="68">
+            <size length="24" width="14" height="4" units="mm" />
+         </model>
+      </family>
+      <programming direct="yes" paged="yes" register="yes" ops="yes" />
+      <variables>
+
+         <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml" />
+         <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml" />
+         <variable item="Vstart" default="5" CV="2">
+            <decVal min="0" max="255" />
+            <label>Vstart</label>
+            <label xml:lang="it">Velocità Partenza</label>
+            <label xml:lang="fr">V démarr.</label>
+            <label xml:lang="de">Minimale Geschwindigkeit</label>
+            <comment>A value of 255 corresponds to 100%</comment>
+            <comment xml:lang="it">Un Valore di 255 corrisponde al 100%</comment>
+            <comment xml:lang="de">Der Wert 255 entspricht 100%</comment>
+         </variable>
+         <variable item="Vhigh" default="250" CV="5">
+            <decVal min="0" max="255" />
+            <label>Vhigh</label>
+            <label xml:lang="it">Velocità Massimi</label>
+            <label xml:lang="fr">Vmax</label>
+            <label xml:lang="de">Maximale Geschwindigkeit</label>
+         </variable>
+         <variable item="Vmid" default="80" CV="6">
+            <decVal min="0" max="255" />
+            <label>Vmid</label>
+            <label xml:lang="it">Velocità Intermedi</label>
+            <label xml:lang="fr">Vmoy</label>
+            <label xml:lang="de">Mittlere Geschwindigkeit</label>
+         </variable>
+         <variable CV="3" item="Accel" default="10" comment="Range 0-255">
+            <decVal min="0" max="255" />
+            <label>Acceleration Rate</label>
+            <label xml:lang="it">Accellerazione</label>
+            <label xml:lang="fr">Accelération</label>
+            <label xml:lang="de">Beschleunigungsrate</label>
+            <comment>Range 0-255</comment>
+            <comment xml:lang="it">Valori 0-255</comment>
+            <comment xml:lang="fr">Valeur 0-255</comment>
+            <comment xml:lang="de">Wert 0-255</comment>
+         </variable>
+         <variable CV="4" item="Decel" default="10" comment="Range 0-255">
+            <decVal min="0" max="255" />
+            <label>Deceleration Rate</label>
+            <label xml:lang="it">Decellerazione</label>
+            <label xml:lang="fr">Décélération</label>
+            <label xml:lang="de">Bremsrate</label>
+            <comment>Range 0-255</comment>
+            <comment xml:lang="it">Valori 0-255</comment>
+            <comment xml:lang="fr">Valeur 0-255</comment>
+            <comment xml:lang="de">Wert 0-255</comment>
+         </variable>
+      <variable item="EMF Static Config" CV="49" mask="XXXXXXXV" default="1">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>EMF Active</label>
+        <label xml:lang="de">Lastregelung aktiv</label>
+      </variable>
+
+         <variable CV="11" item="Packet Time-out Value" default="50">
+            <decVal min="30" max="255" />
+            <label>Packet Time-out Value (1ms each value)</label>
+            <label xml:lang="de">Datenpaket Time-out (1ms pro Wert)</label>
+            <label xml:lang="fr">Valeur du Time-out de paquet</label>
+            <label xml:lang="it">Valore Time-out Packet</label>
+         </variable>
+
+         <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml" />
+         <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml" />
+         <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml" />
+         <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml" />
+         <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml" />
+         <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml" />
+
+         
+         <!-- Railcom® support -->
+         <variable item="Advanced Group 1 Option 4" CV="29" mask="XXXXVXXX" default="0">
+             <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+             <label>Enable RailCom</label>
+             <label xml:lang="fr">RailCom®</label>
+             <label xml:lang="de">RailCom®</label>
+             <label xml:lang="it">Abilita RailCom®</label>
+         </variable>
+        <variable item="Advanced Group 1 Option 5" CV="28" mask="VXXXXXXX" default="0">
+             <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+             <label>RailCom® Plus</label>
+             <label xml:lang="de">Railcom® Plus</label>
+         </variable>
+        <variable item="Advanced Group 1 Option 6" CV="28" mask="XXXXXXXV" default="0">
+             <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+             <label>RailCom® Channel 1 Address Broadcast</label>
+             <label xml:lang="de">RailCom® Kanal 1 Address Broadcast</label>
+         </variable>
+        <variable item="Advanced Group 1 Option 7" CV="28" mask="XXXXXXVX" default="0">
+             <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+             <label>RailCom® Channel 2 Data Transmission</label>
+             <label xml:lang="de">RailCom® Kanal 2 Data Transmission</label>
+         </variable>
+     
+         <variable item="Function 13 effect generated" CV="31" default="64">
+            <decVal />
+            <label>Function key for Frontlight suppression (0-68)</label>
+            <label xml:lang="de">Funktionskey zur Vorderlicht Unterdrückung</label>
+         </variable>
+         <variable item="Function 14 effect generated" CV="32" default="64">
+            <decVal />
+            <label>Function key for Backlight suppression (0-64)</label>
+            <label xml:lang="de">Funktionskey zur Rücklich Unterdrückung</label>
+         </variable>
+         
+         <!-- Motor control -->
+         <variable item="EMF Option 3" CV="60" default="35" comment="P component of the PID controller for load control">
+             <decVal min="1" max="255" />
+             <label>PID P controller</label>
+             <label xml:lang="de">Lastregelung: Nachregelung</label>
+         </variable>
+         <variable item="EMF Option 4" CV="62" default="20" comment="I component of the PID controller for load control">
+             <decVal min="1" max="255" />
+             <label>PID I controller</label>
+             <label xml:lang="de">Lastregelung:Verzögerung</label>
+         </variable>
+         <variable item="EMF Option 5" CV="61" default="10" comment="D component of the PID controller for load control">
+             <decVal min="1" max="255" />
+             <label>PID D controller</label>
+             <label xml:lang="de">Lastregelung:Begrenzung</label>
+         </variable>
+         
+         <variable item="Advanced Group 1 Option 1" CV="10" mask="XXXXXXVV" default="1">
+             <enumVal>
+                 <enumChoice choice="Automatic" value="1">
+                     <choice>Automatic</choice>
+                 </enumChoice>
+                 <enumChoice choice="only DCC" value="2">
+                     <choice>only DCC</choice>
+                 </enumChoice>
+                 <enumChoice choice="only MM" value="3">
+                     <choice>only MM</choice>
+                 </enumChoice>
+             </enumVal>
+             <label>Protocol</label>
+             <label xml:lang="de">Protokol</label>
+         </variable>
+         <variable item="Motor Option 1" CV="9" mask="XXXXXVVV" default="0">
+             <enumVal>
+                 <enumChoice choice="16kHz" value="0">
+                     <choice>16kHz</choice>
+                 </enumChoice>
+                 <enumChoice choice="2kHz" value="1">
+                     <choice>2kHz</choice>
+                 </enumChoice>
+                 <enumChoice choice="250Hz" value="2">
+                     <choice>250Hz</choice>
+                 </enumChoice>
+                 <enumChoice choice="60Hz" value="3">
+                     <choice>60Hz</choice>
+                 </enumChoice>
+                 <enumChoice choice="100kHz" value="4">
+                     <choice>100kHz</choice>
+                 </enumChoice>
+             </enumVal>
+             <label>Motor PWM frequency</label>
+             <label xml:lang="de">Motorfrequenz</label>
+         </variable>
+         <variable item="Motor Option 2" CV="66" default="255">
+           <decVal min="1" max="255" />
+           <label>Forward-Trim (Value*CV5/255)</label>
+           <label xml:lang="de">Vorwärts-Trim (Wert*CV5/255)</label>
+         </variable>
+         <variable item="Motor Option 3" CV="95" default="255">
+           <decVal min="1" max="255" />
+           <label>Backward-Trim (Value*CV5/255)</label>
+           <label xml:lang="de">Rückwärts-Trim Wert*CV5/255)</label>
+         </variable>
+         
+         <!-- Decoder Lock -->
+         
+         <variable item="Advanced Group 1 Option 2" CV="15" default="205">
+           <decVal/>
+           <label>Decoder Lock (1) (To unlock set it to the value below)</label>
+           <label xml:lang="it">Blocco Decoder (1)</label>
+           <label xml:lang="de">Decoder Lock (1)</label>
+           <label xml:lang="nl">Decoder Lock (1)</label>
+         </variable>
+ 
+         <variable item="Advanced Group 1 Option 3" CV="16" default="205" readOnly="yes">
+           <decVal/>
+           <label>Decoder Lock (2)</label>
+           <label xml:lang="it">Blocco Decoder (2)</label>
+           <label xml:lang="de">Decoder Lock (2)</label>
+           <label xml:lang="nl">Decoder Lock (2)</label>
+         </variable>
+         
+         <!-- ABC braking -->
+         <variable item="Advanced Group 2 Option 11" CV="27" mask="XXXXXXXV" default="0">
+             <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+             <label>Automatic stop with asymmetrical DCC signal right track</label>
+             <label xml:lang="de">Stop DCC rechts</label>
+         </variable>
+         <variable item="Advanced Group 2 Option 12" CV="27" mask="XXXXXXVX" default="0">
+             <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+             <label>Automatic stop with asymmetrical DCC signal left track</label>
+             <label xml:lang="de">Stop DCC links</label>
+         </variable>
+         
+         <!-- ZIMO HLU -->
+         <variable item="Advanced Group 2 Option 13" CV="27" mask="XXXXXVXX" default="0">
+             <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+             <label>Automatic stop ZIMO HLU System</label>
+             <label xml:lang="de">Automatischer Stop ZIMO HLU System</label>
+         </variable>
+         
+         <!-- Märklin braking -->
+         <variable item="Advanced Group 2 Option 14" CV="27" mask="XXXVXXXX" default="0">
+             <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+             <label>Automatic stop with positiv DC signal right track</label>
+             <label xml:lang="de">Automatischer Halt bei postivem DC Signal rechte Schiene</label>
+         </variable>
+         <variable item="Advanced Group 2 Option 15" CV="27" mask="XXVXXXXX" default="0">
+             <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+             <label>Automatic stop with positiv DC signal left track</label>
+             <label xml:lang="de">Automatischer Halt bei positivem DC Signal linke Schiene</label>
+         </variable>
+
+         <variable item="AUX Option 1" CV="53" default="0">
+             <enumVal>
+                 <enumChoice choice="Normal" value="0">
+                     <choice>Normal</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flash symetric" value="1">
+                     <choice>Flash symetric</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashing short" value="2">
+                     <choice>Flashing short</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashin long" value="3">
+                     <choice>Flashing long</choice>
+                 </enumChoice>
+                 <enumChoice choice="Photographer flash" value="4">
+                     <choice>Photographer flash</choice>
+                 </enumChoice>
+                 <enumChoice choice="Monoflop" value="5">
+                     <choice>Monoflop</choice>
+                 </enumChoice>
+                 <enumChoice choice="Switch on delayed" value="6">
+                     <choice>Switch on delayed</choice>
+                 </enumChoice>
+                 <enumChoice choice="Firebox" value="7">
+                     <choice>Firebox</choice>
+                 </enumChoice>
+                 <enumChoice choice="TV flickering" value="8">
+                     <choice>TV flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Petrolium flickering" value="9">
+                     <choice>Petrolium flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flourescent tube" value="10">
+                     <choice>Flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Defective flourescent tube" value="11">
+                     <choice>Defective flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Alternating flash to paired output" value="12">
+                     <choice>Alternating flash to paired output</choice>
+                     <comment>Combination of A1-A2, A3-A4 etc </comment>
+                 </enumChoice>             
+                 <enumChoice choice="US strobe light" value="13">
+                     <choice>US strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US double strobe light" value="14">
+                     <choice>US double strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US marslight" value="15">
+                     <choice>US marslight</choice>
+                 </enumChoice>
+                 <enumChoice choice="US ditch light" value="16">
+                     <choice>US ditch light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Sodium lamp" value="17">
+                     <choice>Sodium lamp</choice>
+                 </enumChoice>
+                 <enumChoice choice="Welding light" value="18">
+                     <choice>Welding light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Buffercontrol BC" value="20">
+                     <choice>Buffercontrol BC</choice>
+                 </enumChoice>
+                 <enumChoice choice="Clock simulation" value="21">
+                     <choice>Clock simulation</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Steam" value="22">
+                     <choice>Pulsed smoke unit control Steam</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Diesel" value="23">
+                     <choice>Pulsed smoke unit control Diesel</choice>
+                 </enumChoice>
+                 <enumChoice choice="Cuppler" value="24">
+                     <choice>Cuppler</choice>
+                 </enumChoice>
+             </enumVal>
+             <label>Effect Frontlight</label>
+             <label xml:lang="de">Vorderlicht Effekt</label>
+            </variable>
+         <variable item="AUX Option 2" CV="58" default="0">
+             <enumVal>
+                 <enumChoice choice="Normal" value="0">
+                     <choice>Normal</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flash symetric" value="1">
+                     <choice>Flash symetric</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashing short" value="2">
+                     <choice>Flashing short</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashin long" value="3">
+                     <choice>Flashing long</choice>
+                 </enumChoice>
+                 <enumChoice choice="Photographer flash" value="4">
+                     <choice>Photographer flash</choice>
+                 </enumChoice>
+                 <enumChoice choice="Monoflop" value="5">
+                     <choice>Monoflop</choice>
+                 </enumChoice>
+                 <enumChoice choice="Switch on delayed" value="6">
+                     <choice>Switch on delayed</choice>
+                 </enumChoice>
+                 <enumChoice choice="Firebox" value="7">
+                     <choice>Firebox</choice>
+                 </enumChoice>
+                 <enumChoice choice="TV flickering" value="8">
+                     <choice>TV flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Petrolium flickering" value="9">
+                     <choice>Petrolium flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flourescent tube" value="10">
+                     <choice>Flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Defective flourescent tube" value="11">
+                     <choice>Defective flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Alternating flash to paired output" value="12">
+                     <choice>Alternating flash to paired output</choice>
+                     <comment>Combination of A1-A2, A3-A4 etc </comment>
+                 </enumChoice>             
+                 <enumChoice choice="US strobe light" value="13">
+                     <choice>US strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US double strobe light" value="14">
+                     <choice>US double strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US marslight" value="15">
+                     <choice>US marslight</choice>
+                 </enumChoice>
+                 <enumChoice choice="US ditch light" value="16">
+                     <choice>US ditch light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Sodium lamp" value="17">
+                     <choice>Sodium lamp</choice>
+                 </enumChoice>
+                 <enumChoice choice="Welding light" value="18">
+                     <choice>Welding light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Buffercontrol BC" value="20">
+                     <choice>Buffercontrol BC</choice>
+                 </enumChoice>
+                 <enumChoice choice="Clock simulation" value="21">
+                     <choice>Clock simulation</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Steam" value="22">
+                     <choice>Pulsed smoke unit control Steam</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Diesel" value="23">
+                     <choice>Pulsed smoke unit control Diesel</choice>
+                 </enumChoice>
+                 <enumChoice choice="Cuppler" value="24">
+                     <choice>Cuppler</choice>
+                 </enumChoice>
+             </enumVal>
+             <label>Effect Rearlight</label>
+             <label xml:lang="de">Rücklicht Effekt</label>
+         </variable>
+         <variable item="AUX Option 3" CV="123" default="0">
+             <enumVal>
+                 <enumChoice choice="Normal" value="0">
+                     <choice>Normal</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flash symetric" value="1">
+                     <choice>Flash symetric</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashing short" value="2">
+                     <choice>Flashing short</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashin long" value="3">
+                     <choice>Flashing long</choice>
+                 </enumChoice>
+                 <enumChoice choice="Photographer flash" value="4">
+                     <choice>Photographer flash</choice>
+                 </enumChoice>
+                 <enumChoice choice="Monoflop" value="5">
+                     <choice>Monoflop</choice>
+                 </enumChoice>
+                 <enumChoice choice="Switch on delayed" value="6">
+                     <choice>Switch on delayed</choice>
+                 </enumChoice>
+                 <enumChoice choice="Firebox" value="7">
+                     <choice>Firebox</choice>
+                 </enumChoice>
+                 <enumChoice choice="TV flickering" value="8">
+                     <choice>TV flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Petrolium flickering" value="9">
+                     <choice>Petrolium flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flourescent tube" value="10">
+                     <choice>Flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Defective flourescent tube" value="11">
+                     <choice>Defective flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Alternating flash to paired output" value="12">
+                     <choice>Alternating flash to paired output</choice>
+                     <comment>Combination of A1-A2, A3-A4 etc </comment>
+                 </enumChoice>             
+                 <enumChoice choice="US strobe light" value="13">
+                     <choice>US strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US double strobe light" value="14">
+                     <choice>US double strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US marslight" value="15">
+                     <choice>US marslight</choice>
+                 </enumChoice>
+                 <enumChoice choice="US ditch light" value="16">
+                     <choice>US ditch light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Sodium lamp" value="17">
+                     <choice>Sodium lamp</choice>
+                 </enumChoice>
+                 <enumChoice choice="Welding light" value="18">
+                     <choice>Welding light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Buffercontrol BC" value="20">
+                     <choice>Buffercontrol BC</choice>
+                 </enumChoice>
+                 <enumChoice choice="Clock simulation" value="21">
+                     <choice>Clock simulation</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Steam" value="22">
+                     <choice>Pulsed smoke unit control Steam</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Diesel" value="23">
+                     <choice>Pulsed smoke unit control Diesel</choice>
+                 </enumChoice>
+                 <enumChoice choice="Cuppler" value="24">
+                     <choice>Cuppler</choice>
+                 </enumChoice>
+             </enumVal>
+             <label>Effect AUX1</label>
+             <label xml:lang="de">AUX1 Effekt</label>
+         </variable>
+         <variable item="AUX Option 4" CV="133" default="0">
+             <enumVal>
+                 <enumChoice choice="Normal" value="0">
+                     <choice>Normal</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flash symetric" value="1">
+                     <choice>Flash symetric</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashing short" value="2">
+                     <choice>Flashing short</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashin long" value="3">
+                     <choice>Flashing long</choice>
+                 </enumChoice>
+                 <enumChoice choice="Photographer flash" value="4">
+                     <choice>Photographer flash</choice>
+                 </enumChoice>
+                 <enumChoice choice="Monoflop" value="5">
+                     <choice>Monoflop</choice>
+                 </enumChoice>
+                 <enumChoice choice="Switch on delayed" value="6">
+                     <choice>Switch on delayed</choice>
+                 </enumChoice>
+                 <enumChoice choice="Firebox" value="7">
+                     <choice>Firebox</choice>
+                 </enumChoice>
+                 <enumChoice choice="TV flickering" value="8">
+                     <choice>TV flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Petrolium flickering" value="9">
+                     <choice>Petrolium flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flourescent tube" value="10">
+                     <choice>Flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Defective flourescent tube" value="11">
+                     <choice>Defective flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Alternating flash to paired output" value="12">
+                     <choice>Alternating flash to paired output</choice>
+                     <comment>Combination of A1-A2, A3-A4 etc </comment>
+                 </enumChoice>             
+                 <enumChoice choice="US strobe light" value="13">
+                     <choice>US strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US double strobe light" value="14">
+                     <choice>US double strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US marslight" value="15">
+                     <choice>US marslight</choice>
+                 </enumChoice>
+                 <enumChoice choice="US ditch light" value="16">
+                     <choice>US ditch light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Sodium lamp" value="17">
+                     <choice>Sodium lamp</choice>
+                 </enumChoice>
+                 <enumChoice choice="Welding light" value="18">
+                     <choice>Welding light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Buffercontrol BC" value="20">
+                     <choice>Buffercontrol BC</choice>
+                 </enumChoice>
+                 <enumChoice choice="Clock simulation" value="21">
+                     <choice>Clock simulation</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Steam" value="22">
+                     <choice>Pulsed smoke unit control Steam</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Diesel" value="23">
+                     <choice>Pulsed smoke unit control Diesel</choice>
+                 </enumChoice>
+                 <enumChoice choice="Cuppler" value="24">
+                     <choice>Cuppler</choice>
+                 </enumChoice>
+             </enumVal>
+             <label>Effect AUX2</label>
+             <label xml:lang="de">AUX 2 Effekt</label>
+         </variable>
+         <variable item="AUX Option 5" CV="143" default="0">
+             <enumVal>
+                 <enumChoice choice="Normal" value="0">
+                     <choice>Normal</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flash symetric" value="1">
+                     <choice>Flash symetric</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashing short" value="2">
+                     <choice>Flashing short</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashin long" value="3">
+                     <choice>Flashing long</choice>
+                 </enumChoice>
+                 <enumChoice choice="Photographer flash" value="4">
+                     <choice>Photographer flash</choice>
+                 </enumChoice>
+                 <enumChoice choice="Monoflop" value="5">
+                     <choice>Monoflop</choice>
+                 </enumChoice>
+                 <enumChoice choice="Switch on delayed" value="6">
+                     <choice>Switch on delayed</choice>
+                 </enumChoice>
+                 <enumChoice choice="Firebox" value="7">
+                     <choice>Firebox</choice>
+                 </enumChoice>
+                 <enumChoice choice="TV flickering" value="8">
+                     <choice>TV flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Petrolium flickering" value="9">
+                     <choice>Petrolium flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flourescent tube" value="10">
+                     <choice>Flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Defective flourescent tube" value="11">
+                     <choice>Defective flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Alternating flash to paired output" value="12">
+                     <choice>Alternating flash to paired output</choice>
+                     <comment>Combination of A1-A2, A3-A4 etc </comment>
+                 </enumChoice>             
+                 <enumChoice choice="US strobe light" value="13">
+                     <choice>US strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US double strobe light" value="14">
+                     <choice>US double strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US marslight" value="15">
+                     <choice>US marslight</choice>
+                 </enumChoice>
+                 <enumChoice choice="US ditch light" value="16">
+                     <choice>US ditch light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Sodium lamp" value="17">
+                     <choice>Sodium lamp</choice>
+                 </enumChoice>
+                 <enumChoice choice="Welding light" value="18">
+                     <choice>Welding light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Buffercontrol BC" value="20">
+                     <choice>Buffercontrol BC</choice>
+                 </enumChoice>
+                 <enumChoice choice="Clock simulation" value="21">
+                     <choice>Clock simulation</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Steam" value="22">
+                     <choice>Pulsed smoke unit control Steam</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Diesel" value="23">
+                     <choice>Pulsed smoke unit control Diesel</choice>
+                 </enumChoice>
+                 <enumChoice choice="Cuppler" value="24">
+                     <choice>Cuppler</choice>
+                 </enumChoice>
+             </enumVal>
+             <label>Effect AUX3</label>
+             <label xml:lang="de">AUX3 Effekt</label>
+         </variable>
+         <variable item="AUX Option 6" CV="153" default="0">
+             <enumVal>
+                 <enumChoice choice="Normal" value="0">
+                     <choice>Normal</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flash symetric" value="1">
+                     <choice>Flash symetric</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashing short" value="2">
+                     <choice>Flashing short</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashin long" value="3">
+                     <choice>Flashing long</choice>
+                 </enumChoice>
+                 <enumChoice choice="Photographer flash" value="4">
+                     <choice>Photographer flash</choice>
+                 </enumChoice>
+                 <enumChoice choice="Monoflop" value="5">
+                     <choice>Monoflop</choice>
+                 </enumChoice>
+                 <enumChoice choice="Switch on delayed" value="6">
+                     <choice>Switch on delayed</choice>
+                 </enumChoice>
+                 <enumChoice choice="Firebox" value="7">
+                     <choice>Firebox</choice>
+                 </enumChoice>
+                 <enumChoice choice="TV flickering" value="8">
+                     <choice>TV flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Petrolium flickering" value="9">
+                     <choice>Petrolium flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flourescent tube" value="10">
+                     <choice>Flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Defective flourescent tube" value="11">
+                     <choice>Defective flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Alternating flash to paired output" value="12">
+                     <choice>Alternating flash to paired output</choice>
+                     <comment>Combination of A1-A2, A3-A4 etc </comment>
+                 </enumChoice>             
+                 <enumChoice choice="US strobe light" value="13">
+                     <choice>US strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US double strobe light" value="14">
+                     <choice>US double strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US marslight" value="15">
+                     <choice>US marslight</choice>
+                 </enumChoice>
+                 <enumChoice choice="US ditch light" value="16">
+                     <choice>US ditch light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Sodium lamp" value="17">
+                     <choice>Sodium lamp</choice>
+                 </enumChoice>
+                 <enumChoice choice="Welding light" value="18">
+                     <choice>Welding light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Buffercontrol BC" value="20">
+                     <choice>Buffercontrol BC</choice>
+                 </enumChoice>
+                 <enumChoice choice="Clock simulation" value="21">
+                     <choice>Clock simulation</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Steam" value="22">
+                     <choice>Pulsed smoke unit control Steam</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Diesel" value="23">
+                     <choice>Pulsed smoke unit control Diesel</choice>
+                 </enumChoice>
+                 <enumChoice choice="Cuppler" value="24">
+                     <choice>Cuppler</choice>
+                 </enumChoice>
+             </enumVal>
+             <label>Effect AUX4</label>
+             <label xml:lang="de">AUX4 Effekt</label>
+         </variable>
+         <variable item="AUX Option 7" CV="163" default="0">
+             <enumVal>
+                 <enumChoice choice="Normal" value="0">
+                     <choice>Normal</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flash symetric" value="1">
+                     <choice>Flash symetric</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashing short" value="2">
+                     <choice>Flashing short</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashin long" value="3">
+                     <choice>Flashing long</choice>
+                 </enumChoice>
+                 <enumChoice choice="Photographer flash" value="4">
+                     <choice>Photographer flash</choice>
+                 </enumChoice>
+                 <enumChoice choice="Monoflop" value="5">
+                     <choice>Monoflop</choice>
+                 </enumChoice>
+                 <enumChoice choice="Switch on delayed" value="6">
+                     <choice>Switch on delayed</choice>
+                 </enumChoice>
+                 <enumChoice choice="Firebox" value="7">
+                     <choice>Firebox</choice>
+                 </enumChoice>
+                 <enumChoice choice="TV flickering" value="8">
+                     <choice>TV flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Petrolium flickering" value="9">
+                     <choice>Petrolium flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flourescent tube" value="10">
+                     <choice>Flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Defective flourescent tube" value="11">
+                     <choice>Defective flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Alternating flash to paired output" value="12">
+                     <choice>Alternating flash to paired output</choice>
+                     <comment>Combination of A1-A2, A3-A4 etc </comment>
+                 </enumChoice>             
+                 <enumChoice choice="US strobe light" value="13">
+                     <choice>US strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US double strobe light" value="14">
+                     <choice>US double strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US marslight" value="15">
+                     <choice>US marslight</choice>
+                 </enumChoice>
+                 <enumChoice choice="US ditch light" value="16">
+                     <choice>US ditch light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Sodium lamp" value="17">
+                     <choice>Sodium lamp</choice>
+                 </enumChoice>
+                 <enumChoice choice="Welding light" value="18">
+                     <choice>Welding light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Buffercontrol BC" value="20">
+                     <choice>Buffercontrol BC</choice>
+                 </enumChoice>
+                 <enumChoice choice="Clock simulation" value="21">
+                     <choice>Clock simulation</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Steam" value="22">
+                     <choice>Pulsed smoke unit control Steam</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Diesel" value="23">
+                     <choice>Pulsed smoke unit control Diesel</choice>
+                 </enumChoice>
+                 <enumChoice choice="Cuppler" value="24">
+                     <choice>Cuppler</choice>
+                 </enumChoice>
+             </enumVal>
+             <label>Effect AUX5</label>
+             <label xml:lang="de">AUX5 Effekt</label>
+         </variable>
+
+         <variable item="AUX Option 8" CV="173" default="0">
+             <enumVal>
+                 <enumChoice choice="Normal" value="0">
+                     <choice>Normal</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flash symetric" value="1">
+                     <choice>Flash symetric</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashing short" value="2">
+                     <choice>Flashing short</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flashin long" value="3">
+                     <choice>Flashing long</choice>
+                 </enumChoice>
+                 <enumChoice choice="Photographer flash" value="4">
+                     <choice>Photographer flash</choice>
+                 </enumChoice>
+                 <enumChoice choice="Monoflop" value="5">
+                     <choice>Monoflop</choice>
+                 </enumChoice>
+                 <enumChoice choice="Switch on delayed" value="6">
+                     <choice>Switch on delayed</choice>
+                 </enumChoice>
+                 <enumChoice choice="Firebox" value="7">
+                     <choice>Firebox</choice>
+                 </enumChoice>
+                 <enumChoice choice="TV flickering" value="8">
+                     <choice>TV flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Petrolium flickering" value="9">
+                     <choice>Petrolium flickering</choice>
+                 </enumChoice>
+                 <enumChoice choice="Flourescent tube" value="10">
+                     <choice>Flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Defective flourescent tube" value="11">
+                     <choice>Defective flourescent tube</choice>
+                 </enumChoice>
+                 <enumChoice choice="Alternating flash to paired output" value="12">
+                     <choice>Alternating flash to paired output</choice>
+                     <comment>Combination of A1-A2, A3-A4 etc </comment>
+                 </enumChoice>             
+                 <enumChoice choice="US strobe light" value="13">
+                     <choice>US strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US double strobe light" value="14">
+                     <choice>US double strobe light</choice>
+                 </enumChoice>
+                 <enumChoice choice="US marslight" value="15">
+                     <choice>US marslight</choice>
+                 </enumChoice>
+                 <enumChoice choice="US ditch light" value="16">
+                     <choice>US ditch light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Sodium lamp" value="17">
+                     <choice>Sodium lamp</choice>
+                 </enumChoice>
+                 <enumChoice choice="Welding light" value="18">
+                     <choice>Welding light</choice>
+                 </enumChoice>
+                 <enumChoice choice="Buffercontrol BC" value="20">
+                     <choice>Buffercontrol BC</choice>
+                 </enumChoice>
+                 <enumChoice choice="Clock simulation" value="21">
+                     <choice>Clock simulation</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Steam" value="22">
+                     <choice>Pulsed smoke unit control Steam</choice>
+                 </enumChoice>
+                 <enumChoice choice="Pulsed smoke unit control Diesel" value="23">
+                     <choice>Pulsed smoke unit control Diesel</choice>
+                 </enumChoice>
+                 <enumChoice choice="Cuppler" value="24">
+                     <choice>Cuppler</choice>
+                 </enumChoice>
+             </enumVal>
+             <label>Effect AUX6</label>
+             <label xml:lang="de">AUX6 Effekt</label>
+         </variable>
+         
+         <variable item="Time Option 1" CV="54" default="10">
+           <decVal />
+           <label>Time base (0.1s/value) for special function (Frontlight)</label> 
+           <label xml:lang="de">Timer (0,1s/Wert) Vorderlicht Effekt</label>         
+         </variable>
+         <variable item="Time Option 2" CV="59" default="10">
+           <decVal />
+           <label>Time base (0.1s/value) for special function (Rearlight)</label> 
+           <label xml:lang="de">Timer (0,1s/Wert) Rücklicht Effekt</label>         
+         </variable>
+         <variable item="Time Option 3" CV="124" default="10">
+           <decVal />
+           <label>Time base (0.1s/value) for special function (AUX 1)</label> 
+           <label xml:lang="de">Timer (0,1s/Wert) AUX1 Effekt</label>         
+         </variable>
+         <variable item="Time Option 4" CV="134" default="10">
+           <decVal />
+           <label>Time base (0.1s/value) for special function (AUX 2)</label> 
+           <label xml:lang="de">Timer (0,1s/Wert) AUX2 Effekt</label>         
+         </variable>
+         <variable item="Time Option 5" CV="144" default="10">
+           <decVal />
+           <label>Time base (0.1s/value) for special function (AUX 3)</label> 
+           <label xml:lang="de">Timer (0,1s/Wert) AUX3 Effekt</label>         
+         </variable>
+         <variable item="Time Option 6" CV="154" default="10">
+           <decVal />
+           <label>Time base (0.1s/value) for special function (AUX 4)</label>
+           <label xml:lang="de">Timer (0,1s/Wert) AUX4 Effekt</label>         
+         </variable>
+         <variable item="Time Option 7" CV="164" default="10">
+           <decVal />
+           <label>Time base (0.1s/value) for special function (AUX 5)</label>
+           <label xml:lang="de">Timer (0,1s/Wert) AUX5 Effekt</label>          
+         </variable>
+         <variable item="Time Option 8" CV="174" default="10">
+           <decVal />
+           <label>Time base (0.1s/value) for special function (AUX 6)</label>
+           <label xml:lang="de">Timer (0,1s/Wert) AUX6 Effekt</label>          
+         </variable>
+
+         <!-- Dummy variables for CVs that will be implemented in a future update of the decoder definition -->
+         <variable item="Dummy 20" CV="20">
+           <decVal />
+           <label>Dummy 20</label>
+         </variable>
+         <variable item="Dummy 23" CV="23">
+           <decVal />
+           <label>Dummy 23</label>
+         </variable>
+         <variable item="Dummy 24" CV="24">
+            <decVal />
+            <label>Dummy 24</label>
+         </variable>
+         <variable item="Dummy 26" CV="26">
+            <decVal />
+            <label>Dummy 26</label>
+         </variable>
+         <variable item="Dummy 30" CV="30">
+            <decVal />
+            <label>Dummy 30</label> 
+         </variable>        
+         <variable item="Dummy 34" CV="34">
+            <decVal />
+            <label>Dummy 34</label>
+         </variable>
+         <variable item="Dummy 39" CV="39">
+            <decVal />
+            <label>Dummy 39</label>
+         </variable>
+         <variable item="Dummy 40" CV="40">
+           <decVal />
+           <label>Dummy 40</label>
+         </variable>
+         <variable item="Dummy 41" CV="41">
+           <decVal />
+           <label>Dummy 41</label>
+         </variable>
+         <variable item="Dummy 42" CV="42">
+            <decVal />
+            <label>Dummy 42</label>
+         </variable>
+         <variable item="Dummy 43" CV="43">
+            <decVal />
+            <label>Dummy 43</label>
+         </variable>
+         <variable item="Dummy 44" CV="44">
+            <decVal />
+            <label>Dummy 44</label>
+         </variable>
+         <variable item="Dummy 45" CV="45">
+            <decVal />
+            <label>Dummy 45</label>
+         </variable>
+        <variable item="Dummy 46" CV="46">
+            <decVal />
+            <label>Dummy 46</label>
+         </variable>
+        <variable item="Dummy 47" CV="47">
+            <decVal />
+            <label>Dummy 47</label>
+		</variable>
+        <variable item="Dummy 63" CV="63">
+            <decVal />
+            <label>Dummy 63</label>
+         </variable>
+        <variable item="Dummy 64" CV="64">
+            <decVal />
+            <label>Dummy 64</label>
+		</variable>
+        <variable item="Dummy 96" CV="96">
+            <decVal />
+            <label>Dummy 96</label>
+		</variable>	
+        <variable item="Dummy 98" CV="98">
+            <decVal />
+            <label>Dummy 98</label>
+		</variable>	
+        <variable item="Dummy 99" CV="99">
+            <decVal />
+            <label>Dummy 99</label>
+		</variable>	
+        <variable item="Dummy 100" CV="100">
+            <decVal />
+            <label>Dummy 100</label>
+		</variable>	
+        <variable item="Dummy 101" CV="101">
+            <decVal />
+            <label>Dummy 101</label>
+		</variable>	
+        <variable item="Dummy 102" CV="102">
+            <decVal />
+            <label>Dummy 102</label>
+		</variable>	
+        <variable item="Dummy 103" CV="103">
+            <decVal />
+            <label>Dummy 103</label>
+		</variable>	
+        <variable item="Dummy 104" CV="104">
+            <decVal />
+            <label>Dummy 104</label>
+		</variable>	
+        <variable item="Dummy 107" CV="107">
+            <decVal />
+            <label>Dummy 107</label>
+		</variable>	
+        <variable item="Dummy 108" CV="108">
+            <decVal />
+            <label>Dummy 108</label>
+		</variable>	
+        <variable item="Dummy 109" CV="109">
+            <decVal />
+            <label>Dummy 109</label>
+		</variable>	
+        <variable item="Dummy 110" CV="110">
+            <decVal />
+            <label>Dummy 110</label>
+		</variable>	
+        <variable item="Dummy 112" CV="112">
+            <decVal />
+            <label>Dummy 112</label>
+		</variable>	
+        <variable item="Dummy 113" CV="113">
+            <decVal />
+            <label>Dummy 113</label>
+		</variable>	
+        <variable item="Dummy 114" CV="114">
+            <decVal />
+            <label>Dummy 114</label>
+		</variable>	
+        <variable item="Dummy 115" CV="115">
+            <decVal />
+            <label>Dummy 115</label>
+		</variable>	
+        <variable item="Dummy 116" CV="116">
+            <decVal />
+            <label>Dummy 116</label>
+		</variable>	
+																																	
+         <!-- Lights Dimming -->
+         <variable item="Function F0F option 1" CV="51" default="100" minOut="1">
+            <decVal max="100" />
+            <label>Dimming Frontlight</label>
+            <label xml:lang="de">Dimmen für Frontlicht</label>
+            <tooltip>&lt;html&gt;Reduces the voltage on the function output in Percent.&lt;br&gt; A value of “0” corresponds to the smallest,&lt;br&gt; a value of “100” to the maximal voltage.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;Reduzierung der Spannung in Prozent, die am Ausgang anliegt.&lt;br&gt; Der Wert “0” entspricht der kleinsten,&lt;br&gt; 100 der maximalen Spannung.&lt;/html&gt;</tooltip>
+         </variable>
+         <variable item="Function F0R option 1" CV="56" default="100" minOut="2">
+            <decVal max="100" />
+            <label>Dimming Rearlight</label>
+            <label xml:lang="de">Dimmen für Rücklicht</label>
+            <tooltip>&lt;html&gt;Reduces the voltage on the function output in Percent.&lt;br&gt; A value of “0” corresponds to the smallest,&lt;br&gt; a value of “100” to the maximal voltage.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;Reduzierung der Spannung, die am Ausgang anliegt.&lt;br&gt; Der Wert “0” entspricht der kleinsten,&lt;br&gt; 100 der maximalen Spannung in Prozent.&lt;/html&gt;</tooltip>
+         </variable>
+         <variable item="Function 1 option 1" CV="121" default="100" minOut="3">
+            <decVal max="100" />
+            <label>Dimming AUX 1</label>
+            <label xml:lang="de">Dimmen für AUX 1</label>
+            <tooltip>&lt;html&gt;Reduces the voltage on the function output in Percent.&lt;br&gt; A value of “0” corresponds to the smallest,&lt;br&gt; a value of “100” to the maximal voltage.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;Reduzierung der Spannung, die am Ausgang anliegt.&lt;br&gt; Der Wert “0” entspricht der kleinsten,&lt;br&gt; 100 der maximalen Spannung in Prozent.&lt;/html&gt;</tooltip>
+         </variable>
+         <variable item="Function 2 option 1" CV="131" default="100" minOut="4">
+            <decVal max="100" />
+            <label>Dimming AUX 2</label>
+            <label xml:lang="de">Dimmen für AUX 2</label>
+            <tooltip>&lt;html&gt;Reduces the voltage on the function output in Prozent.&lt;br&gt; A value of “0” corresponds to the smallest,&lt;br&gt; a value of “15” to the maximal voltage.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;Reduzierung der Spannung, die am Ausgang anliegt.&lt;br&gt; Der Wert “0” entspricht der kleinsten,&lt;br&gt; 100 der maximalen Spannung in Prozent.&lt;/html&gt;</tooltip>
+         </variable>
+         <variable item="Function 3 option 1" CV="141" default="100" minOut="3">
+            <decVal max="100" />
+            <label>Dimming AUX 3</label>
+            <label xml:lang="de">Dimmen für AUX 3</label>
+            <tooltip>&lt;html&gt;Reduces the voltage on the function output in Percent.&lt;br&gt; A value of “0” corresponds to the smallest,&lt;br&gt; a value of “100” to the maximal voltage.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;Reduzierung der Spannung, die am Ausgang anliegt.&lt;br&gt; Der Wert “0” entspricht der kleinsten,&lt;br&gt; 100 der maximalen Spannung in Prozent.&lt;/html&gt;</tooltip>
+         </variable>
+         <variable item="Function 4 option 1" CV="151" default="100" minOut="4">
+            <decVal max="100" />
+            <label>Dimming AUX 4</label>
+            <label xml:lang="de">Dimmen für AUX 4</label>
+            <tooltip>&lt;html&gt;Reduces the voltage on the function output in Prozent.&lt;br&gt; A value of “0” corresponds to the smallest,&lt;br&gt; a value of “15” to the maximal voltage.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;Reduzierung der Spannung, die am Ausgang anliegt.&lt;br&gt; Der Wert “0” entspricht der kleinsten,&lt;br&gt; 100 der maximalen Spannung in Prozent.&lt;/html&gt;</tooltip>
+         </variable>
+         <variable item="Function 5 option 1" CV="161" default="100" minOut="3">
+            <decVal max="100" />
+            <label>Dimming AUX 5</label>
+            <label xml:lang="de">Dimmen für AUX 5</label>
+            <tooltip>&lt;html&gt;Reduces the voltage on the function output in Percent.&lt;br&gt; A value of “0” corresponds to the smallest,&lt;br&gt; a value of “100” to the maximal voltage.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;Reduzierung der Spannung, die am Ausgang anliegt.&lt;br&gt; Der Wert “0” entspricht der kleinsten,&lt;br&gt; 100 der maximalen Spannung in Prozent.&lt;/html&gt;</tooltip>
+         </variable>
+         <variable item="Function 6 option 1" CV="171" default="100" minOut="4">
+            <decVal max="100" />
+            <label>Dimming AUX 6</label>
+            <label xml:lang="de">Dimmen für AUX 6</label>
+            <tooltip>&lt;html&gt;Reduces the voltage on the function output in Prozent.&lt;br&gt; A value of “0” corresponds to the smallest,&lt;br&gt; a value of “15” to the maximal voltage.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="de">&lt;html&gt;Reduzierung der Spannung, die am Ausgang anliegt.&lt;br&gt; Der Wert “0” entspricht der kleinsten,&lt;br&gt; 100 der maximalen Spannung in Prozent.&lt;/html&gt;</tooltip>
+         </variable> 
+         <variable item="Function 11 effect generated" CV="97" default="14">  
+           <decVal max="68" />
+           <label>Function key for High beam (0-68)</label>
+           <label xml:lang="de">Funktions key Fernlicht (0-68)</label>           
+         </variable>    
+         <variable item="Fn Option 1" CV="50" default="0">
+           <decVal max="68" />
+           <label>Frontlight Function key number (0-68)</label>
+           <label xml:lang="de">Funktions key Vorderlicht (0-68)</label>         
+         </variable>
+         <variable item="Fn Option 2" CV="55" default="0">
+           <decVal max="68" />
+           <label>Rearlight Function key number (0-68)</label>
+           <label xml:lang="de">Funktions key Rücklicht (0-68)</label>
+         </variable>
+         <variable item="Fn Option 3" CV="120" default="0">
+           <decVal max="68" />
+           <label>Function key number for AUX 1 (0-68)</label>
+           <label xml:lang="de">Funktions key AUX1 (0-68)</label>
+         </variable>
+         <variable item="Fn Option 4" CV="130" default="0">
+           <decVal max="68" />
+           <label>Function key number for AUX 2 (0-68)</label>
+            <label xml:lang="de">Funktions key AUX2 (0-68)</label>
+         </variable>         
+         <variable item="Fn Option 5" CV="140" default="0">
+           <decVal max="68" />
+           <label>Function key number for AUX 3 (0-68)</label>
+           <label xml:lang="de">Funktions key AUX3 (0-68)</label>
+         </variable>
+         <variable item="Fn Option 6" CV="150" default="0">
+           <decVal max="68" />
+           <label>Function key number for AUX 4 (0-68)</label>
+           <label xml:lang="de">Funktions key AUX4 (0-68)</label>
+         </variable>         
+         <variable item="Fn Option 7" CV="160" default="0">
+           <decVal max="68" />
+           <label>Function key number for AUX 5 (0-68)</label>           
+           <label xml:lang="de">Funktions key AUX5 (0-68)</label></variable>
+         <variable item="Fn Option 8" CV="170" default="0">
+           <decVal max="68" />
+           <label>Function key number for AUX 6 (0-68)</label>
+           <label xml:lang="de">Funktions key AUX6 (0-68)</label>
+         </variable>
+         
+<!-- Analog Modus -->
+    <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" minFn="1">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F1</label>
+      <label xml:lang="it">Stato Funzioni in analogico - F1</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F1</label>
+      <label xml:lang="fr">État de la fonction en analogique - F1</label>
+      <label xml:lang="de">Funktionsstatus im Analogbetrieb - F1</label>
+      <label xml:lang="nl">Funktiestatus Analoog - F1</label>
+      <label xml:lang="es">Estado de la función en modo análogo - F1</label>
+      <tooltip>Check to enable function F1 when the unit is operating in Analog power mode</tooltip>
+      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F1 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="de">Auswählen um Function F1 zu aktivieren im Analogbetrieb</tooltip>
+      <tooltip xml:lang="nl">Selecteer om functie F1 te activeren tijdens Analoog rijden</tooltip>
+      <tooltip xml:lang="es">Marque para habilitar la función F1 cuando se use en modo análogo</tooltip>
+    </variable>
+    <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" minFn="2">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F2</label>
+      <label xml:lang="it">Stato Funzioni in analogico - F2</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F2</label>
+      <label xml:lang="fr">État de la fonction en analogique - F2</label>
+      <label xml:lang="de">Funktionsstatus im Analogbetrieb - F2</label>
+      <label xml:lang="nl">Funktiestatus Analoog - F2</label>
+      <label xml:lang="es">Estado de la función en modo análogo - F2</label>
+      <tooltip>Check to enable function F2 when the unit is operating in Analog power mode</tooltip>
+      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F2 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="de">Auswählen um Function F2 zu aktivieren im Analogbetrieb</tooltip>
+      <tooltip xml:lang="nl">Selecteer om functie F2 te activeren tijdens Analoog rijden</tooltip>
+      <tooltip xml:lang="es">Marque para habilitar la función F2 cuando se use en modo análogo</tooltip>
+    </variable>
+    <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" minFn="3">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F3</label>
+      <label xml:lang="it">Stato Funzioni in analogico - F3</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F3</label>
+      <label xml:lang="fr">État de la fonction en analogique - F3</label>
+      <label xml:lang="de">Funktionsstatus im Analogbetrieb - F3</label>
+      <label xml:lang="nl">Funktiestatus Analoog - F3</label>
+      <label xml:lang="es">Estado de la función en modo análogo - F3</label>
+      <tooltip>Check to enable function F3 when the unit is operating in Analog power mode</tooltip>
+      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F3 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="de">Auswählen um Function F3 zu aktivieren im Analogbetrieb</tooltip>
+      <tooltip xml:lang="nl">Selecteer om functie F3 te activeren tijdens Analoog rijden</tooltip>
+      <tooltip xml:lang="es">Marque para habilitar la función F3 cuando se use en modo análogo</tooltip>
+    </variable>
+    <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" minFn="4">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F4</label>
+      <label xml:lang="it">Stato Funzioni in analogico - F4</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F4</label>
+      <label xml:lang="fr">État de la fonction en analogique - F4</label>
+      <label xml:lang="de">Funktionsstatus im Analogbetrieb - F4</label>
+      <label xml:lang="nl">Funktiestatus Analoog - F4</label>
+      <label xml:lang="es">Estado de la función en modo análogo - F4</label>
+      <tooltip>Check to enable function F4 when the unit is operating in Analog power mode</tooltip>
+      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F4 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="de">Auswählen um Function F4 zu aktivieren im Analogbetrieb</tooltip>
+      <tooltip xml:lang="nl">Selecteer om functie F4 te activeren tijdens Analoog rijden</tooltip>
+      <tooltip xml:lang="es">Marque para habilitar la función F4 cuando se use en modo análogo</tooltip>
+    </variable>
+    <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" minFn="5">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F5</label>
+      <label xml:lang="it">Stato Funzioni in analogico - F5</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F5</label>
+      <label xml:lang="fr">État de la fonction en analogique - F5</label>
+      <label xml:lang="de">Funktionsstatus im Analogbetrieb - F5</label>
+      <label xml:lang="nl">Funktiestatus Analoog - F5</label>
+      <label xml:lang="es">Estado de la función en modo análogo - F5</label>
+
+      <tooltip>Check to enable function F5 when the unit is operating in Analog power mode</tooltip>
+      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F5 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="de">Auswählen um Function F5 zu aktivieren im Analogbetrieb</tooltip>
+      <tooltip xml:lang="nl">Selecteer om functie F5 te activeren tijdens Analoog rijden</tooltip>
+      <tooltip xml:lang="es">Marque para habilitar la función F5 cuando se use en modo análogo</tooltip>
+    </variable>
+    <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" minFn="6">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>Analog Mode Function Status - F6</label>
+      <label xml:lang="it">Stato Funzioni in analogico - F6</label>
+      <label xml:lang="cs">Stav funkce v analogovém režimu - F6</label>
+      <label xml:lang="fr">État de la fonction en analogique - F6</label>
+      <label xml:lang="de">Funktionsstatus im Analogbetrieb - F6</label>
+      <label xml:lang="nl">Funktiestatus Analoog - F6</label>
+      <label xml:lang="es">Estado de la función en modo análogo - F6</label>
+      <tooltip>Check to enable function F6 when the unit is operating in Analog power mode</tooltip>
+      <tooltip xml:lang="cs">Zkontroluje zdali je povolena fukce F6 když jednotka je provozována v režimu analogového napájení</tooltip>
+      <tooltip xml:lang="de">Auswählen um Function F6 zu aktivieren im Analogbetrieb</tooltip>
+      <tooltip xml:lang="nl">Selecteer om functie F6 te activeren tijdens Analoog rijden</tooltip>
+      <tooltip xml:lang="es">Marque para habilitar la función F6 cuando se use en modo análogo</tooltip>
+    </variable>
+    
+    <variable item="Condition Option 1" CV="52" default="1">
+    <enumVal>
+      <enumChoice choice="Normal" value="0">
+        <choice>Normal</choice>
+      </enumChoice>
+      <enumChoice choice="Forward" value="1">
+        <choice>Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Backward" value="2">
+        <choice>Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Standig" value="3">
+        <choice>Standing</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Forward" value="4">
+        <choice>Standing Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Backward" value="5">
+        <choice>Standing Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving" value="6">
+        <choice>Driving</choice>
+      </enumChoice>
+      <enumChoice choice="Drinving Forward" value="7">
+        <choice>Driving Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving Backward" value="8">
+        <choice>Driving Backward</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Frontlight Condition</label> 
+    <label xml:lang="de">Vorderlicht Bedingung</label>   
+    </variable>
+    <variable item="Condition Option 2" CV="57" default="2">
+    <enumVal>
+      <enumChoice choice="Normal" value="0">
+        <choice>Normal</choice>
+      </enumChoice>
+      <enumChoice choice="Forward" value="1">
+        <choice>Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Backward" value="2">
+        <choice>Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Standig" value="3">
+        <choice>Standing</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Forward" value="4">
+        <choice>Standing Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Backward" value="5">
+        <choice>Standing Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving" value="6">
+        <choice>Driving</choice>
+      </enumChoice>
+      <enumChoice choice="Drinving Forward" value="7">
+        <choice>Driving Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving Backward" value="8">
+        <choice>Driving Backward</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Rearlight Condition</label>
+    <label xml:lang="de">Rücklicht Bedingung</label>     
+    </variable>
+    <variable item="Condition Option 3" CV="122" default="0">
+    <enumVal>
+      <enumChoice choice="Normal" value="0">
+        <choice>Normal</choice>
+      </enumChoice>
+      <enumChoice choice="Forward" value="1">
+        <choice>Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Backward" value="2">
+        <choice>Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Standig" value="3">
+        <choice>Standing</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Forward" value="4">
+        <choice>Standing Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Backward" value="5">
+        <choice>Standing Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving" value="6">
+        <choice>Driving</choice>
+      </enumChoice>
+      <enumChoice choice="Drinving Forward" value="7">
+        <choice>Driving Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving Backward" value="8">
+        <choice>Driving Backward</choice>
+      </enumChoice>
+    </enumVal>
+    <label>AUX1 Condition</label>
+    <label xml:lang="de">AUX1 Bedingung</label>     
+    </variable>
+    <variable item="Condition Option 4" CV="132" default="0">
+    <enumVal>
+      <enumChoice choice="Normal" value="0">
+        <choice>Normal</choice>
+      </enumChoice>
+      <enumChoice choice="Forward" value="1">
+        <choice>Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Backward" value="2">
+        <choice>Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Standig" value="3">
+        <choice>Standing</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Forward" value="4">
+        <choice>Standing Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Backward" value="5">
+        <choice>Standing Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving" value="6">
+        <choice>Driving</choice>
+      </enumChoice>
+      <enumChoice choice="Drinving Forward" value="7">
+        <choice>Driving Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving Backward" value="8">
+        <choice>Driving Backward</choice>
+      </enumChoice>
+    </enumVal>
+    <label>AUX2 Condition</label> 
+    <label xml:lang="de">AUX2 Bedingung</label>   
+    </variable>
+    <variable item="Condition Option 5" CV="142" default="0">
+    <enumVal>
+      <enumChoice choice="Normal" value="0">
+        <choice>Normal</choice>
+      </enumChoice>
+      <enumChoice choice="Forward" value="1">
+        <choice>Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Backward" value="2">
+        <choice>Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Standig" value="3">
+        <choice>Standing</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Forward" value="4">
+        <choice>Standing Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Backward" value="5">
+        <choice>Standing Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving" value="6">
+        <choice>Driving</choice>
+      </enumChoice>
+      <enumChoice choice="Drinving Forward" value="7">
+        <choice>Driving Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving Backward" value="8">
+        <choice>Driving Backward</choice>
+      </enumChoice>
+    </enumVal>
+    <label>AUX3 Condition</label>
+    <label xml:lang="de">AUX3 Bedingung</label>    
+    </variable>
+    <variable item="Condition Option 6" CV="152" default="0">
+    <enumVal>
+      <enumChoice choice="Normal" value="0">
+        <choice>Normal</choice>
+      </enumChoice>
+      <enumChoice choice="Forward" value="1">
+        <choice>Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Backward" value="2">
+        <choice>Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Standig" value="3">
+        <choice>Standing</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Forward" value="4">
+        <choice>Standing Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Backward" value="5">
+        <choice>Standing Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving" value="6">
+        <choice>Driving</choice>
+      </enumChoice>
+      <enumChoice choice="Drinving Forward" value="7">
+        <choice>Driving Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving Backward" value="8">
+        <choice>Driving Backward</choice>
+      </enumChoice>
+    </enumVal>
+    <label>AUX4 Condition</label>
+    <label xml:lang="de">AUX4 Bedingung</label>    
+    </variable>
+    <variable item="Condition Option 7" CV="162" default="0">
+    <enumVal>
+      <enumChoice choice="Normal" value="0">
+        <choice>Normal</choice>
+      </enumChoice>
+      <enumChoice choice="Forward" value="1">
+        <choice>Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Backward" value="1">
+        <choice>Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Standig" value="3">
+        <choice>Standing</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Forward" value="4">
+        <choice>Standing Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Backward" value="5">
+        <choice>Standing Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving" value="6">
+        <choice>Driving</choice>
+      </enumChoice>
+      <enumChoice choice="Drinving Forward" value="7">
+        <choice>Driving Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving Backward" value="8">
+        <choice>Driving Backward</choice>
+      </enumChoice>
+    </enumVal>
+    <label>AUX5 Condition</label>
+    <label xml:lang="de">AUX5 Bedingung</label>    
+    </variable>
+    <variable item="Condition Option 8" CV="172" default="0">
+    <enumVal>
+      <enumChoice choice="Normal" value="0">
+        <choice>Normal</choice>
+      </enumChoice>
+      <enumChoice choice="Forward" value="1">
+        <choice>Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Backward" value="2">
+        <choice>Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Standig" value="3">
+        <choice>Standing</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Forward" value="4">
+        <choice>Standing Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Standing Backward" value="5">
+        <choice>Standing Backward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving" value="6">
+        <choice>Driving</choice>
+      </enumChoice>
+      <enumChoice choice="Drinving Forward" value="7">
+        <choice>Driving Forward</choice>
+      </enumChoice>
+      <enumChoice choice="Driving Backward" value="8">
+        <choice>Driving Backward</choice>
+      </enumChoice>
+    </enumVal>
+    <label>AUX6 Condition</label>
+    <label xml:lang="de">AUX6 Bedingung</label>    
+    </variable>   
+    
+    </variables>      
+   </decoder>
+<pane>
+  <name>Output Control</name>
+  <name xml:lang="cs">Output Control</name>
+  <name xml:lang="de">Output Control</name>
+  <name xml:lang="fr">Output Control</name>
+  <name xml:lang="it">Output Control</name>
+  <name xml:lang="nl">Output Control</name>
+  <name xml:lang="es">Output Control</name>
+
+  <column>
+    <display item="AUX Option 1"/>
+    <display item="AUX Option 2"/>
+    <display item="AUX Option 3"/>
+    <display item="AUX Option 4"/>
+    <display item="AUX Option 5"/>
+    <display item="AUX Option 6"/>
+    <display item="AUX Option 7"/>
+    <display item="AUX Option 8"/>
+    <display item="AUX Option 9"/>
+    <display item="AUX Option 10"/>
+  </column>
+    <column>
+    <display item="Condition Option 1"/>
+    <display item="Condition Option 2"/>
+    <display item="Condition Option 3"/>
+    <display item="Condition Option 4"/>
+    <display item="Condition Option 5"/>
+    <display item="Condition Option 6"/>
+    <display item="Condition Option 7"/>
+    <display item="Condition Option 8"/>
+    <display item="Condition Option 9"/>
+    <display item="Condition Option 10"/>
+  </column>
+  <column>
+    <display item="Time Option 1"/>
+    <display item="Time Option 2"/>    
+    <display item="Time Option 3"/>    
+    <display item="Time Option 4"/>    
+    <display item="Time Option 5"/>    
+    <display item="Time Option 6"/>    
+    <display item="Time Option 7"/>    
+    <display item="Time Option 8"/>    
+  </column>  
+  <column>
+    <display item="Fn Option 1"/>
+    <display item="Fn Option 2"/>
+    <display item="Fn Option 3"/>
+    <display item="Fn Option 4"/>
+    <display item="Fn Option 5"/>
+    <display item="Fn Option 6"/>
+    <display item="Fn Option 7"/>
+    <display item="Fn Option 8"/>
+    <display item="Fn Option 9"/>
+    <display item="Fn Option 10"/>    
+  </column>
+</pane>
+</decoder-config>

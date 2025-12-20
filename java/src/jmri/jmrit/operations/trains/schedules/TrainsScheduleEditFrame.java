@@ -3,9 +3,7 @@ package jmri.jmrit.operations.trains.schedules;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,6 +71,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
 
         // row 5
         addItem(restoreButton, 2, 5);
+        restoreButton.setToolTipText(Bundle.getMessage("RestoreScheduleTip"));
 
         addButtonAction(addButton);
         addButtonAction(deleteButton);
@@ -80,7 +79,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         addButtonAction(restoreButton);
 
         setTitle(Bundle.getMessage("MenuItemEditSchedule"));
-        initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight200));
+        initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
 
     }
 

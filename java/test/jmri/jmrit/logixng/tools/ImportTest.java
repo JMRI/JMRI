@@ -160,9 +160,6 @@ public class ImportTest {
         JUnitAppender.assertWarnMessage("Import Conditional 'IX:RTXINITIALIZER1T' to LogixNG 'IQ:AUTO:0005'");
     }
 
-
-
-    // The minimal setup for log4J
     @Before
     public void setUp() throws JmriException {
 
@@ -232,10 +229,24 @@ public class ImportTest {
 
     @After
     public void tearDown() {
+
+        if ( logixManager != null ) {
+            logixManager.dispose();
+        }
+        if ( logixNG_Manager != null ) {
+            logixNG_Manager.dispose();
+        }
+
+        logixManager = null;
+        logixNG_Manager = null;
+
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.clearTurnoutThreads();
         JUnitUtil.clearRouteThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+
+        JUnitUtil.resetWindows(false, false);
+
         JUnitUtil.tearDown();
     }
 

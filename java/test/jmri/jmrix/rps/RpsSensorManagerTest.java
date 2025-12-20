@@ -54,6 +54,7 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
 
     @Override
     @Test
+    @jmri.util.junit.annotations.NotApplicable
     public void testUpperLower() {
         // RPS sensors use coordinates as their address, and they require a
         // 2 characterprefix (for now).

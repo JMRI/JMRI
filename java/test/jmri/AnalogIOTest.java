@@ -2,8 +2,10 @@ package jmri;
 
 import jmri.implementation.AbstractNamedBean;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the Light class
@@ -18,18 +20,18 @@ public class AnalogIOTest {
         double max = 1.0;
         AnalogIO analogIO = new MyAnalogIO("Analog");
         analogIO.setCommandedAnalogValue(min);
-        Assert.assertTrue("AnalogIO has value -1.0", analogIO.getCommandedAnalogValue() == min);
+        assertTrue( analogIO.getCommandedAnalogValue() == min, "AnalogIO has value -1.0");
         analogIO.setCommandedAnalogValue(max);
-        Assert.assertTrue("AnalogIO has value 1.0", analogIO.getCommandedAnalogValue() == max);
+        assertTrue( analogIO.getCommandedAnalogValue() == max, "AnalogIO has value 1.0");
         analogIO.setCommandedAnalogValue(min);
-        Assert.assertTrue("AnalogIO has value -1.0", analogIO.getKnownAnalogValue() == min);
+        assertTrue( analogIO.getKnownAnalogValue() == min, "AnalogIO has value -1.0");
         analogIO.setCommandedAnalogValue(max);
-        Assert.assertTrue("AnalogIO has value 1.0", analogIO.getKnownAnalogValue() == max);
+        assertTrue( analogIO.getKnownAnalogValue() == max, "AnalogIO has value 1.0");
         
-        Assert.assertTrue("String value is Absolute",
-                "Absolute".equals(AnalogIO.AbsoluteOrRelative.ABSOLUTE.toString()));
-        Assert.assertTrue("String value is Relative",
-                "Relative".equals(AnalogIO.AbsoluteOrRelative.RELATIVE.toString()));
+        assertEquals( "Absolute", AnalogIO.AbsoluteOrRelative.ABSOLUTE.toString(),
+            "String value is Absolute");
+        assertEquals( "Relative", AnalogIO.AbsoluteOrRelative.RELATIVE.toString(),
+            "String value is Relative");
     }
     
     @BeforeEach

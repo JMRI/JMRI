@@ -7,12 +7,14 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionManager;
-import jmri.jmrit.operations.rollingstock.ImportRollingStock;
+import jmri.jmrit.operations.rollingstock.ImportCommon;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -23,7 +25,7 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Dan Boudreau Copyright (C) 2008 2010 2011, 2013, 2016, 2021, 2024
  */
-public class ImportCars extends ImportRollingStock {
+public class ImportCars extends ImportCommon {
 
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
 
@@ -140,7 +142,7 @@ public class ImportCars extends ImportRollingStock {
         }
 
         while (true) {
-            lineNumber.setText(Bundle.getMessage("LineNumber") + " " + Integer.toString(++lineNum));
+            lineNumber.setText(Bundle.getMessage("LineNumber", Integer.toString(++lineNum)));
             try {
                 line = in.readLine();
             } catch (IOException e) {
@@ -912,6 +914,7 @@ public class ImportCars extends ImportRollingStock {
         try {
             in.close();
         } catch (IOException e) {
+            log.error("Import cars failed: {}", e.getLocalizedMessage());
         }
 
         if (importOkay) {

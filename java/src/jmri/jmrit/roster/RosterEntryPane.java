@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.text.*;
 
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -43,7 +44,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
     JTextArea comment = new JTextArea(3, 50);
     public String getComment() {return comment.getText();}
     public void setComment(String text) {comment.setText(text);}
-
+    public Document getCommentDocument() {return comment.getDocument();}
+    
     // JScrollPanes are defined with scroll bars on always to avoid undesirable resizing behavior
     // Without this the field will shrink to minimum size any time the scroll bars become needed and
     // the scroll bars are inside, not outside the field area, obscuring their contents.
@@ -53,6 +55,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
     JLabel dateUpdated = new JLabel();
     JLabel decoderModel = new JLabel();
     JLabel decoderFamily = new JLabel();
+    JLabel decoderProgModes = new JLabel();
     JTextArea decoderComment = new JTextArea(3, 50);
     JScrollPane decoderCommentScroller = new JScrollPane(decoderComment, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
@@ -65,7 +68,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
         id.setText(r.getId());
 
-        if (r.getDccAddress().equals("")) {
+        if (r.getDccAddress().isEmpty()) {
             // null address, so clear selector
             addrSel.reset();
         } else {
@@ -95,7 +98,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
             List<LocoAddress.Protocol> protocolTypes = new ArrayList<>(Arrays.asList(tm.getAddressProtocolTypes()));
 
             if (!protocolTypes.contains(LocoAddress.Protocol.DCC_LONG) && !protocolTypes.contains(LocoAddress.Protocol.DCC_SHORT)) {
-                //Multi protocol systems so far are not worried about dcc long vs dcc short
+                //Multi-protocol systems so far are not worried about dcc long vs dcc short
                 List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, r.getDecoderFamily(), null, null, null, r.getDecoderModel());
                 if (log.isDebugEnabled()) {
                     log.debug("found {} matched", l.size());
@@ -109,7 +112,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
                     }
                 }
                 DecoderFile d;
-                if (l.size() > 0) {
+                if (!l.isEmpty()) {
                     d = l.get(0);
                     if (d != null && d.getSupportedProtocols().length > 0) {
                         ArrayList<String> protocols = new ArrayList<>(d.getSupportedProtocols().length);
@@ -135,6 +138,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         selPanel.setToolTipText(Bundle.getMessage("ToolTipDccAddress"));
         decoderModel.setToolTipText(Bundle.getMessage("ToolTipDecoderModel"));
         decoderFamily.setToolTipText(Bundle.getMessage("ToolTipDecoderFamily"));
+        decoderProgModes.setToolTipText(Bundle.getMessage("ToolTipDecoderProgModes"));
         dateUpdated.setToolTipText(Bundle.getMessage("ToolTipDateUpdated"));
         id.addFocusListener(new FocusListener() {
             @Override
@@ -287,13 +291,24 @@ public class RosterEntryPane extends javax.swing.JPanel {
         super.add(decoderModel);
 
         cL.gridy++;
-        JLabel row11Label = new JLabel(Bundle.getMessage("FieldDecoderComment") + ":");
+        JLabel row11Label = new JLabel(Bundle.getMessage("FieldDecoderModes") + ":");
+        decoderProgModes.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldDecoderModes"));
+        gbLayout.setConstraints(row11Label, cL);
+        super.add(row11Label);
+
+        cR.gridy = cL.gridy;
+        decoderProgModes.setMinimumSize(minFieldDim);
+        gbLayout.setConstraints(decoderProgModes, cR);
+        super.add(decoderProgModes);
+
+        cL.gridy++;
+        JLabel row12Label = new JLabel(Bundle.getMessage("FieldDecoderComment") + ":");
         // ensure same font on textarea as textfield
         // as this is not true in all GUI types.
         decoderComment.setFont(owner.getFont());
         decoderCommentScroller.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldDecoderComment"));
-        gbLayout.setConstraints(row11Label, cL);
-        super.add(row11Label);
+        gbLayout.setConstraints(row12Label, cL);
+        super.add(row12Label);
 
         cR.gridy = cL.gridy;
         decoderCommentScroller.setMinimumSize(minScrollerDim);
@@ -315,7 +330,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
     double maxSet;
 
     /**
-     * Does the GUI contents agree with a RosterEntry?
+     * Do the GUI contents agree with a RosterEntry?
      *
      * @param r the entry to compare
      * @return true if entry in GUI does not match r; false otherwise
@@ -345,6 +360,9 @@ public class RosterEntryPane extends javax.swing.JPanel {
         if (!r.getDecoderModel().equals(decoderModel.getText())) {
             return true;
         }
+        if (!r.getProgrammingModes().equals(decoderProgModes.getText())) {
+            return true;
+        }
         if (!r.getDecoderComment().equals(decoderComment.getText())) {
             return true;
         }
@@ -358,7 +376,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         }
         DccLocoAddress a = addrSel.getAddress();
         if (a == null) {
-            return !r.getDccAddress().equals("");
+            return !r.getDccAddress().isEmpty();
         } else {
             if (r.getProtocol() != a.getProtocol()) {
                 return true;
@@ -427,6 +445,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         comment.setText(r.getComment());
         decoderModel.setText(r.getDecoderModel());
         decoderFamily.setText(r.getDecoderFamily());
+        decoderProgModes.setText(r.getProgrammingModes());
         decoderComment.setText(r.getDecoderComment());
         dateUpdated.setText((r.getDateModified() != null)
                 ? DateFormat.getDateTimeInstance().format(r.getDateModified())

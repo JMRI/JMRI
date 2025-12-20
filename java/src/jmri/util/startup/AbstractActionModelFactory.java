@@ -66,16 +66,18 @@ public abstract class AbstractActionModelFactory implements StartupModelFactory 
                     JmriJOptionPane.OK_CANCEL_OPTION,
                     JmriJOptionPane.PLAIN_MESSAGE);
             if (result == JmriJOptionPane.OK_OPTION) {
-                String name = actions.getSelectedValue();
-                Optional<StartupActionsManager> manager = InstanceManager.getOptionalDefault(StartupActionsManager.class);
-                if (!name.equals(model.getName())) {
-                    model.setName(name);
-                    manager.ifPresent(StartupActionsManager::setRestartRequired);
-                }
-                if ((userName.isEmpty() && connections.getSelectedItem() != null)
-                        || !userName.equals(connections.getSelectedItem())) {
-                    ((AbstractActionModel) model).setSystemPrefix(ConnectionNameFromSystemName.getPrefixFromName((String) connections.getSelectedItem()));
-                    manager.ifPresent(StartupActionsManager::setRestartRequired);
+                if (actions.getSelectedIndex() >= 0) { // checks for nothing selected
+                    String name = actions.getSelectedValue();
+                    Optional<StartupActionsManager> manager = InstanceManager.getOptionalDefault(StartupActionsManager.class);
+                    if (!name.equals(model.getName())) {
+                        model.setName(name);
+                        manager.ifPresent(StartupActionsManager::setRestartRequired);
+                    }
+                    if ((userName.isEmpty() && connections.getSelectedItem() != null)
+                            || !userName.equals(connections.getSelectedItem())) {
+                        ((AbstractActionModel) model).setSystemPrefix(ConnectionNameFromSystemName.getPrefixFromName((String) connections.getSelectedItem()));
+                        manager.ifPresent(StartupActionsManager::setRestartRequired);
+                    }
                 }
             }
         }

@@ -69,9 +69,12 @@
 				<label>Turnout_Address_High6</label>
 			</variable>
 			
+<!-- commented out because without a type specification element it doesn't do anything
 			<variable item="CV 3/515 Allumage choix" CV="3" mask="XXXXXXXX" default="0">
 				<label>CV 3/515 Allumage choix</label>
 			</variable>
+-->
+
 			<variable item="Allumage ID" CV="3" mask="XXXXXXXV" default="0">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 				<label>Allumage ID</label>

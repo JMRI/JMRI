@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://jmri.org/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<nodes
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/guinode.xsd"
+>
+    <name>LccPro</name>
+    <node name="Event Table">
+        <name xml:lang="cs">Tabulka událostí</name>
+        <icon>resources/icons/misc/gui3/IdentifyButton.png</icon>
+        <adapter>jmri.jmrix.openlcb.swing.eventtable.EventTablePane$Default</adapter>
+    </node>
+    <node name="Traffic Monitor">
+        <name xml:lang="cs">Monitor provozu</name>
+        <icon>resources/icons/misc/gui3/IdentifyButton.png</icon>
+        <adapter>jmri.jmrix.openlcb.swing.monitor.MonitorAction</adapter>
+    </node>
+    <node name="STL Editor">
+        <name xml:lang="cs">STL Editor</name>
+        <icon>resources/icons/misc/gui3/Edit.png</icon>
+        <adapter>jmri.jmrix.openlcb.swing.stleditor.StlEditorPane$Default</adapter>
+    </node>
+    <node name="Refresh">
+        <name xml:lang="cs">Obnovit</name>
+        <icon>resources/icons/misc/gui3/Reload.png</icon>
+        <adapter>jmri.jmrix.openlcb.swing.lccpro.RefreshAction</adapter>
+    </node>
+    <node name="Help">
+        <name xml:lang="it">Aiuto</name>
+        <name xml:lang="da">Hjælp</name>
+        <name xml:lang="de">Hilfe</name>
+        <name xml:lang="fr">Aide</name>
+		<name xml:lang="ca">Ajuda</name>
+        <name xml:lang="cs">Nápověda</name>
+        <name xml:lang="nl">Help</name>
+        <icon>resources/icons/misc/gui3/help-browser.png</icon>
+        <help>package.apps.gui3.lccpro.LccPro</help>
+    </node>
+</nodes>
+

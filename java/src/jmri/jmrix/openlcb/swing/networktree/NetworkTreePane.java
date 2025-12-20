@@ -121,7 +121,7 @@ public class NetworkTreePane extends JmriPanel implements CanListener, CanPanelI
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Network Tree");
+            return (memo.getUserName() + " " + Bundle.getMessage("PaneTitle"));
         }
         return "LCC / OpenLCB Network Tree";
     }
@@ -234,4 +234,39 @@ public class NetworkTreePane extends JmriPanel implements CanListener, CanPanelI
         }
     }
 
+    // Create the panel-name of this node depending on what's available
+    static public String augmentedNodeName(MimicNodeStore.NodeMemo nodememo) {
+        var node = nodememo.getNodeID();
+        var ident = nodememo.getSimpleNodeIdent();
+
+        var description = new StringBuilder();
+        if (ident.getUserName() != null) {
+            description.append(ident.getUserName());
+        }
+        if (ident.getUserDesc() != null && ident.getUserDesc().length() > 0) {
+            if (description.length() > 0) {
+                description.append(" - ");
+            }
+            description.append(ident.getUserDesc());
+        }
+        if (description.length() == 0) {
+            if (ident.getMfgName() != null && ident.getMfgName().length() > 0) {
+                description.append(ident.getMfgName());
+            }
+            if (ident.getModelName() != null && ident.getModelName().length() > 0) {
+                if (description.length() > 0) {
+                    description.append(" - ");
+                }
+                description.append(ident.getModelName());
+            }
+        }
+        if (description.length() == 0) {
+            description.append(node.toString());
+        } else {
+            description.append(" (");
+            description.append(node.toString());
+            description.append(")");
+        }
+        return description.toString();
+    }
 }

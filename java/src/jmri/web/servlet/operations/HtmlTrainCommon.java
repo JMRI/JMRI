@@ -21,8 +21,8 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
  *
@@ -100,6 +100,7 @@ public class HtmlTrainCommon extends TrainCommon {
 
     protected String pickUpCar(Car car, int count, String[] format) {
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getPickupTextColor() + ";\">");
         builder.append(Setup.getPickupCarPrefix()).append(" ");
         // count the number of utility cars
         if (count != 0) {
@@ -121,8 +122,10 @@ public class HtmlTrainCommon extends TrainCommon {
     protected String dropCar(Car car, int count, String[] format, boolean isLocal) {
         StringBuilder builder = new StringBuilder();
         if (!isLocal) {
+            builder.append("<span style=\"color: " + Setup.getDropTextColor() + ";\">");
             builder.append(Setup.getDropCarPrefix()).append(" ");
         } else {
+            builder.append("<span style=\"color: " + Setup.getLocalTextColor() + ";\">");
             builder.append(Setup.getLocalPrefix()).append(" ");
         }
         // count the number of utility cars
@@ -170,6 +173,7 @@ public class HtmlTrainCommon extends TrainCommon {
     @Override
     public String dropEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getDropEngineTextColor() + ";\">");
         builder.append(Setup.getDropEnginePrefix()).append(" ");
         for (String attribute : Setup.getDropEngineMessageFormat()) {
             builder.append(
@@ -193,6 +197,7 @@ public class HtmlTrainCommon extends TrainCommon {
     @Override
     public String pickupEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getPickupEngineTextColor() + ";\">");
         builder.append(Setup.getPickupEnginePrefix()).append(" ");
         for (String attribute : Setup.getPickupEngineMessageFormat()) {
             builder.append(
@@ -205,7 +210,10 @@ public class HtmlTrainCommon extends TrainCommon {
 
     protected String getCarAttribute(Car car, String attribute, boolean isPickup, boolean isLocal) {
         if (attribute.equals(Setup.LOAD)) {
-            return (car.isCaboose() || car.isPassenger()) ? "" : StringEscapeUtils.escapeHtml4(car.getLoadName()); // NOI18N
+            return (car.isCaboose() || car.isPassenger()) ? ""
+                    : StringEscapeUtils.escapeHtml4(car.getLoadName().split(TrainCommon.HYPHEN)[0]); // NOI18N
+        } else if (attribute.equals(Setup.LOAD_TYPE)) {
+            return car.getLoadType();
         } else if (attribute.equals(Setup.HAZARDOUS)) {
             return car.isHazardous() ? Setup.getHazardousMsg() : ""; // NOI18N
         } else if (attribute.equals(Setup.DROP_COMMENT)) {
@@ -214,6 +222,12 @@ public class HtmlTrainCommon extends TrainCommon {
             return car.getPickupComment();
         } else if (attribute.equals(Setup.KERNEL)) {
             return car.getKernelName();
+        } else if (attribute.equals(Setup.KERNEL_SIZE)) {
+            if (car.getKernel() != null) {
+                return Integer.toString(car.getKernel().getSize());
+            } else {
+                return "";
+            }
         } else if (attribute.equals(Setup.RWE)) {
             if (!car.getReturnWhenEmptyDestinationName().isEmpty()) {
                 return String.format(locale, strings.getProperty("RWELocationAndTrack"), StringEscapeUtils
@@ -231,7 +245,14 @@ public class HtmlTrainCommon extends TrainCommon {
             if (!car.getFinalDestinationName().isEmpty()) {
                 return String.format(locale, strings.getProperty("FinalDestinationLocationAndTrack"), StringEscapeUtils
                         .escapeHtml4(car.getSplitFinalDestinationName()), StringEscapeUtils
-                        .escapeHtml4(car.getSplitFinalDestinationTrackName()));
+                                .escapeHtml4(car.getSplitFinalDestinationTrackName()));
+            }
+            return "";
+        } else if (attribute.equals(Setup.DIVISION)) {
+            return car.getDivisionName();
+        } else if (attribute.equals(Setup.BLOCKING_ORDER)) {
+            if (car.isPassenger()) {
+                return Integer.toString(car.getBlocking());
             }
             return "";
         }
@@ -241,6 +262,9 @@ public class HtmlTrainCommon extends TrainCommon {
     protected String getEngineAttribute(Engine engine, String attribute, boolean isPickup) {
         if (attribute.equals(Setup.MODEL)) {
             return engine.getModel();
+        }
+        if (attribute.equals(Setup.HP)) {
+            return engine.getHp();
         }
         if (attribute.equals(Setup.CONSIST)) {
             return engine.getConsistName();
@@ -260,6 +284,8 @@ public class HtmlTrainCommon extends TrainCommon {
             return rs.getTypeName().split(TrainCommon.HYPHEN)[0];
         } else if (attribute.equals(Setup.LENGTH)) {
             return rs.getLength();
+        } else if (attribute.equals(Setup.WEIGHT)) {
+            return Integer.toString(rs.getAdjustedWeightTons());
         } else if (attribute.equals(Setup.COLOR)) {
             return rs.getColor();
         } else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal)
@@ -288,6 +314,9 @@ public class HtmlTrainCommon extends TrainCommon {
             return StringEscapeUtils.escapeHtml4(rs.getOwnerName());
         } else if (attribute.equals(Setup.COMMENT)) {
             return StringEscapeUtils.escapeHtml4(rs.getComment());
+        } else if (attribute.equals(Setup.LAST_TRAIN)) {
+            return String.format(locale, strings.getProperty("LastTrain"),
+                    StringEscapeUtils.escapeHtml4(rs.getLastTrainName()));
         } else if (attribute.equals(Setup.BLANK) || attribute.equals(Setup.NO_NUMBER)
                 || attribute.equals(Setup.NO_ROAD) || attribute.equals(Setup.NO_COLOR)
                 || attribute.equals(Setup.NO_DESTINATION) || attribute.equals(Setup.NO_DEST_TRACK)

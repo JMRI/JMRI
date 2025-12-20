@@ -13,8 +13,6 @@ import jmri.jmrit.XmlFileLocationAction;
 import jmri.util.*;
 
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import apps.util.issuereporter.swing.IssueReporterAction;
 
@@ -65,6 +63,10 @@ public class HelpMenuProvider implements HelpUtil.MenuProvider {
 
         items.add(new JMenuItem(new IssueReporterAction()));
 
+        JMenuItem jmriusers = new JMenuItem(Bundle.getMessage("MenuItemJmriUsers"));
+        items.add(jmriusers);
+        jmriusers.addActionListener(new JmriUsersAction());
+
         // Put about dialog in Apple's preferred area on Mac OS X
         if (SystemType.isMacOSX()) {
             try {
@@ -85,5 +87,5 @@ public class HelpMenuProvider implements HelpUtil.MenuProvider {
     }
 
     // initialize logging
-    private static final Logger log = LoggerFactory.getLogger(HelpMenuProvider.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HelpMenuProvider.class);
 }

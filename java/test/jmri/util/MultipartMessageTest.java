@@ -2,13 +2,13 @@ package jmri.util;
 
 import java.nio.charset.StandardCharsets;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import jmri.web.server.WebServer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  *
@@ -21,7 +21,7 @@ public class MultipartMessageTest {
     @Test
     public void testCTor() throws java.io.IOException, java.net.URISyntaxException {
         MultipartMessage t = new MultipartMessage("http://localhost:12080",StandardCharsets.UTF_8.name());
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
         t.finish(); // make sure the port closes.
     }
 
@@ -44,7 +44,7 @@ public class MultipartMessageTest {
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "DCN_NULLPOINTER_EXCEPTION",
         justification = "custom NPE handling ")
     public void tearDown() {
-        Assertions.assertNotNull(server);
+        assertNotNull(server);
         try {
             try {
                 server.stop();
@@ -57,16 +57,16 @@ public class MultipartMessageTest {
                 // Exception is thrown by the stop call above.
                 // if an Exception occurs here, we may want to raise a flag,
                 log.error("Excecption shutting down web server", ex);
-                Assert.fail("Exception occured during web server shutdown:" + ex);
+                fail("Exception occured during web server shutdown:" + ex);
             }
         } catch (NullPointerException npe2) {
             log.debug("NPE shutting down web server", npe2);
             //Assert.fail("Null Pointer Exception occured during teardown:" + npe2);
         }
-        JUnitUtil.resetZeroConfServiceManager();
+        assertTrue(JUnitUtil.resetZeroConfServiceManager());
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultipartMessageTest.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MultipartMessageTest.class.getName());
 
 }

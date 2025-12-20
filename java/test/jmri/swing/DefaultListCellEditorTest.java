@@ -6,8 +6,9 @@ import javax.swing.JTextField;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
@@ -17,20 +18,20 @@ public class DefaultListCellEditorTest {
 
     @Test
     public void testCTorCheckBox() {
-        DefaultListCellEditor<String> t = new DefaultListCellEditor<String>(new JCheckBox());
-        Assert.assertNotNull("exists",t);
+        DefaultListCellEditor<String> t = new DefaultListCellEditor<>(new JCheckBox());
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testCTorComboBox() {
-        DefaultListCellEditor<String> t = new DefaultListCellEditor<String>(new JComboBox<String>());
-        Assert.assertNotNull("exists",t);
+        DefaultListCellEditor<String> t = new DefaultListCellEditor<>(new JComboBox<String>());
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testCTorTextField() {
-        DefaultListCellEditor<String> t = new DefaultListCellEditor<String>(new JTextField());
-        Assert.assertNotNull("exists",t);
+        DefaultListCellEditor<String> t = new DefaultListCellEditor<>(new JTextField());
+        assertNotNull( t, "exists");
     }
 
     @BeforeEach

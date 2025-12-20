@@ -10,7 +10,12 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test InstanceManager
@@ -25,7 +30,7 @@ public class InstanceManagerTest {
 
         InstanceManager.store(m, jmri.PowerManager.class);
 
-        Assert.assertTrue("power manager present", InstanceManager.getDefault(jmri.PowerManager.class) == m);
+        assertTrue( InstanceManager.getDefault(jmri.PowerManager.class) == m, "power manager present");
     }
 
     @Test
@@ -36,7 +41,7 @@ public class InstanceManagerTest {
         InstanceManager.store(m1, jmri.PowerManager.class);
         InstanceManager.store(m2, jmri.PowerManager.class);
 
-        Assert.assertTrue("power manager present", InstanceManager.getDefault(jmri.PowerManager.class) == m2);
+        assertTrue( InstanceManager.getDefault(jmri.PowerManager.class) == m2, "power manager present");
     }
 
     @Test
@@ -46,8 +51,8 @@ public class InstanceManagerTest {
         InstanceManager.store(m, AddressedProgrammerManager.class);
         InstanceManager.store(m, GlobalProgrammerManager.class);
 
-        Assert.assertTrue("global programmer manager was set", InstanceManager.getDefault(GlobalProgrammerManager.class) == m);
-        Assert.assertTrue("addressed programmer manager was set", InstanceManager.getDefault(AddressedProgrammerManager.class) == m);
+        assertTrue( InstanceManager.getDefault(GlobalProgrammerManager.class) == m, "global programmer manager was set");
+        assertTrue( InstanceManager.getDefault(AddressedProgrammerManager.class) == m, "addressed programmer manager was set");
     }
 
     @Test
@@ -60,19 +65,19 @@ public class InstanceManagerTest {
         InstanceManager.store(m2, AddressedProgrammerManager.class);
         InstanceManager.store(m2, GlobalProgrammerManager.class);
 
-        Assert.assertTrue("2nd global programmer manager is default", InstanceManager.getDefault(GlobalProgrammerManager.class) == m2);
-        Assert.assertTrue("2nd addressed programmer manager is default", InstanceManager.getDefault(AddressedProgrammerManager.class) == m2);
+        assertTrue( InstanceManager.getDefault(GlobalProgrammerManager.class) == m2, "2nd global programmer manager is default");
+        assertTrue( InstanceManager.getDefault(AddressedProgrammerManager.class) == m2, "2nd addressed programmer manager is default");
     }
 
     @Test
     public void testIsInitialized() {
         // counts on the following test class to be loaded
-        Assert.assertFalse(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
-        Assert.assertFalse(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
+        assertFalse(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
+        assertFalse(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
 
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
+        assertNotNull(InstanceManager.getDefault(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
 
-        Assert.assertTrue(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
+        assertTrue(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
     }
 
     static public class InstanceManagerInitCheck implements jmri.InstanceManagerAutoDefault {
@@ -87,7 +92,7 @@ public class InstanceManagerTest {
         // initialize the system
         Programmer p = new jmri.progdebugger.ProgDebugger();
         InstanceManager.store(new jmri.managers.DefaultProgrammerManager(p), GlobalProgrammerManager.class);
-        Assert.assertEquals(p, InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer());
+        assertEquals(p.getConfigurator(),InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer().getConfigurator());
     }
 
     // Testing new load store
@@ -99,7 +104,7 @@ public class InstanceManagerTest {
         InstanceManager.store(m1, PowerManager.class);
         m2 = InstanceManager.getDefault(PowerManager.class);
 
-        Assert.assertEquals("retrieved same object", m1, m2);
+        assertEquals( m1, m2, "retrieved same object");
     }
 
     @Test
@@ -110,17 +115,16 @@ public class InstanceManagerTest {
         InstanceManager.store(m1, PowerManager.class);
         InstanceManager.store(m2, PowerManager.class);
 
-        Assert.assertEquals("list length", 2,
-                InstanceManager.getList(PowerManager.class).size());
-        Assert.assertEquals("retrieved 1st PowerManager", m1,
-                InstanceManager.getList(PowerManager.class).get(0));
-        Assert.assertEquals("retrieved 2nd PowerManager", m2,
-                InstanceManager.getList(PowerManager.class).get(1));
+        assertEquals( 2, InstanceManager.getList(PowerManager.class).size(),
+            "list length");
+        assertEquals( m1, InstanceManager.getList(PowerManager.class).get(0),
+            "retrieved 1st PowerManager");
+        assertEquals( m2, InstanceManager.getList(PowerManager.class).get(1),
+            "retrieved 2nd PowerManager");
 
-        Assert.assertTrue("access by string",
-                InstanceManager.getList(PowerManager.class).equals(
-                InstanceManager.getList("jmri.PowerManager"))
-            );
+        assertTrue( InstanceManager.getList(PowerManager.class).equals(
+            InstanceManager.getList("jmri.PowerManager")),
+            "access by string");
     }
 
     @Test
@@ -135,12 +139,13 @@ public class InstanceManagerTest {
         m2 = InstanceManager.getDefault(PowerManager.class);
         t2 = InstanceManager.getDefault(TurnoutManager.class);
 
-        Assert.assertEquals("retrieved same PowerManager", m1, m2);
-        Assert.assertEquals("retrieved same TurnoutManager", t1, t2);
+        assertEquals( m1, m2, "retrieved same PowerManager");
+        assertEquals( t1, t2, "retrieved same TurnoutManager");
 
-        Assert.assertEquals("access by string",
+        assertEquals(
                 InstanceManager.getDefault(PowerManager.class),
-                InstanceManager.getDefault("jmri.PowerManager")
+                InstanceManager.getDefault("jmri.PowerManager"),
+                "access by string"
             );
 
     }
@@ -154,17 +159,16 @@ public class InstanceManagerTest {
         InstanceManager.store(t1, TurnoutManager.class);
 
         var set = InstanceManager.getInstanceClasses();
-        
-        Assert.assertTrue("PowerManager", set.contains(PowerManager.class));
-        Assert.assertTrue("TurnoutManager", set.contains(TurnoutManager.class));
+
+        assertTrue( set.contains(PowerManager.class), "PowerManager");
+        assertTrue( set.contains(TurnoutManager.class), "TurnoutManager");
     }
 
     @Test
     public void testGetInstance() throws ClassNotFoundException {
         // for sync usage, check a predicate - Class.forName returns same object always
-        Assert.assertTrue("access by string",
-                Class.forName("jmri.PowerManager") == Class.forName("jmri.PowerManager")
-            );
+        assertTrue( Class.forName("jmri.PowerManager") == Class.forName("jmri.PowerManager"),
+            "access by string");
         // the rest of the checks are done via calls to getInstance
         // embedded in various other tests
 
@@ -182,7 +186,7 @@ public class InstanceManagerTest {
 
         m2 = InstanceManager.getDefault(PowerManager.class);
 
-        Assert.assertEquals("retrieved second PowerManager", m1, m2);
+        assertEquals( m1, m2, "retrieved second PowerManager");
     }
 
     public static class OkAutoCreate implements InstanceManagerAutoDefault {
@@ -195,10 +199,10 @@ public class InstanceManagerTest {
     public void testAutoCreateOK() {
 
         OkAutoCreate obj1 = InstanceManager.getDefault(OkAutoCreate.class);
-        Assert.assertNotNull("Created object 1", obj1);
+        assertNotNull( obj1, "Created object 1");
         OkAutoCreate obj2 = InstanceManager.getDefault(OkAutoCreate.class);
-        Assert.assertNotNull("Created object 2", obj2);
-        Assert.assertTrue("same object", obj1 == obj2);
+        assertNotNull( obj2, "Created object 2");
+        assertTrue( obj1 == obj2, "same object");
     }
 
     public static class NoAutoCreate {
@@ -206,9 +210,9 @@ public class InstanceManagerTest {
 
     @Test
     public void testAutoCreateNotOK() {
-        Exception ex = Assertions.assertThrows(NullPointerException.class, () ->
+        Exception ex = assertThrows(NullPointerException.class, () ->
             InstanceManager.getDefault(NoAutoCreate.class) );
-        Assert.assertEquals("Required nonnull default for jmri.InstanceManagerTest$NoAutoCreate does not exist.",
+        assertEquals("Required nonnull default for jmri.InstanceManagerTest$NoAutoCreate does not exist.",
             ex.getMessage());
     }
 
@@ -217,7 +221,7 @@ public class InstanceManagerTest {
     static synchronized void setavoidLoopAutoCreateCycle( boolean newVal) {
         avoidLoopAutoCreateCycle = newVal;
     }
-    
+
     public static class AutoCreateCycle implements InstanceManagerAutoDefault {
 
         public AutoCreateCycle() {
@@ -300,30 +304,30 @@ public class InstanceManagerTest {
      */
     @Test
     public void testAllDefaults() {
-        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalHeadManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalSystemManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalGroupManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(WarrantManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.TransitManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.RouteManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.ConditionalManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.LogixManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(Timebase.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.ClockControl.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalGroupManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.ReporterManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(CatalogTreeManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(MemoryManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(AudioManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(RosterIconFactory.class));
+        assertNotNull(InstanceManager.getDefault(SensorManager.class));
+        assertNotNull(InstanceManager.getDefault(TurnoutManager.class));
+        assertNotNull(InstanceManager.getDefault(LightManager.class));
+        assertNotNull(InstanceManager.getDefault(jmri.SignalHeadManager.class));
+        assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class));
+        assertNotNull(InstanceManager.getDefault(jmri.SignalSystemManager.class));
+        assertNotNull(InstanceManager.getDefault(jmri.SignalGroupManager.class));
+        assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class));
+        assertNotNull(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class));
+        assertNotNull(InstanceManager.getDefault(WarrantManager.class));
+        assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class));
+        assertNotNull(InstanceManager.getDefault(jmri.TransitManager.class));
+        assertNotNull(InstanceManager.getDefault(jmri.RouteManager.class));
+        assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class));
+        assertNotNull(InstanceManager.getDefault(jmri.ConditionalManager.class));
+        assertNotNull(InstanceManager.getDefault(jmri.LogixManager.class));
+        assertNotNull(InstanceManager.getDefault(Timebase.class));
+        assertNotNull(InstanceManager.getDefault(jmri.ClockControl.class));
+        assertNotNull(InstanceManager.getDefault(jmri.SignalGroupManager.class));
+        assertNotNull(InstanceManager.getDefault(jmri.ReporterManager.class));
+        assertNotNull(InstanceManager.getDefault(CatalogTreeManager.class));
+        assertNotNull(InstanceManager.getDefault(MemoryManager.class));
+        assertNotNull(InstanceManager.getDefault(AudioManager.class));
+        assertNotNull(InstanceManager.getDefault(RosterIconFactory.class));
     }
 
     //
@@ -333,28 +337,28 @@ public class InstanceManagerTest {
     @Test
     public void testLayoutBlockManager() {
         LayoutBlockManager obj = InstanceManager.getDefault(LayoutBlockManager.class);
-        Assert.assertNotNull(obj);
-        Assert.assertEquals(obj, InstanceManager.getDefault(LayoutBlockManager.class));
-        Assert.assertEquals(obj, InstanceManager.getDefault(LayoutBlockManager.class));
-        Assert.assertEquals(obj, InstanceManager.getDefault(LayoutBlockManager.class));
+        assertNotNull(obj);
+        assertEquals(obj, InstanceManager.getDefault(LayoutBlockManager.class));
+        assertEquals(obj, InstanceManager.getDefault(LayoutBlockManager.class));
+        assertEquals(obj, InstanceManager.getDefault(LayoutBlockManager.class));
     }
 
     @Test
     public void testWarrantManager() {
         WarrantManager obj = InstanceManager.getDefault(WarrantManager.class);
-        Assert.assertNotNull(obj);
-        Assert.assertEquals(obj, InstanceManager.getDefault(WarrantManager.class));
-        Assert.assertEquals(obj, InstanceManager.getDefault(WarrantManager.class));
-        Assert.assertEquals(obj, InstanceManager.getDefault(WarrantManager.class));
+        assertNotNull(obj);
+        assertEquals(obj, InstanceManager.getDefault(WarrantManager.class));
+        assertEquals(obj, InstanceManager.getDefault(WarrantManager.class));
+        assertEquals(obj, InstanceManager.getDefault(WarrantManager.class));
     }
 
     @Test
     public void testOBlockManager() {
         OBlockManager obj = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-        Assert.assertNotNull(obj);
-        Assert.assertEquals(obj, InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class));
-        Assert.assertEquals(obj, InstanceManager.getDefault(OBlockManager.class));
-        Assert.assertEquals(obj, InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class));
+        assertNotNull(obj);
+        assertEquals(obj, InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class));
+        assertEquals(obj, InstanceManager.getDefault(OBlockManager.class));
+        assertEquals(obj, InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class));
     }
 
     @Test
@@ -366,14 +370,14 @@ public class InstanceManagerTest {
         InstanceManager.store(pm2, PowerManager.class);
         InstanceManager.store(nac1, NoAutoCreate.class);
         // should contain two lists and calls for other lists should be empty
-        Assert.assertFalse(InstanceManager.getList(PowerManager.class).isEmpty());
-        Assert.assertFalse(InstanceManager.getList(NoAutoCreate.class).isEmpty());
-        Assert.assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
+        assertFalse(InstanceManager.getList(PowerManager.class).isEmpty());
+        assertFalse(InstanceManager.getList(NoAutoCreate.class).isEmpty());
+        assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
         InstanceManager.getDefault().clearAll();
         // should contain only empty lists
-        Assert.assertTrue(InstanceManager.getList(PowerManager.class).isEmpty());
-        Assert.assertTrue(InstanceManager.getList(NoAutoCreate.class).isEmpty());
-        Assert.assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
+        assertTrue(InstanceManager.getList(PowerManager.class).isEmpty());
+        assertTrue(InstanceManager.getList(NoAutoCreate.class).isEmpty());
+        assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
     }
 
     @Test
@@ -385,37 +389,37 @@ public class InstanceManagerTest {
         InstanceManager.store(pm2, PowerManager.class);
         InstanceManager.store(nac1, NoAutoCreate.class);
         // should contain two lists and calls for other lists should be empty
-        Assert.assertFalse(InstanceManager.getList(PowerManager.class).isEmpty());
-        Assert.assertFalse(InstanceManager.getList(NoAutoCreate.class).isEmpty());
-        Assert.assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
+        assertFalse(InstanceManager.getList(PowerManager.class).isEmpty());
+        assertFalse(InstanceManager.getList(NoAutoCreate.class).isEmpty());
+        assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
         InstanceManager.getDefault().clear(PowerManager.class);
         // should contain one list and calls for other lists should be empty
-        Assert.assertTrue(InstanceManager.getList(PowerManager.class).isEmpty());
-        Assert.assertFalse(InstanceManager.getList(NoAutoCreate.class).isEmpty());
-        Assert.assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
+        assertTrue(InstanceManager.getList(PowerManager.class).isEmpty());
+        assertFalse(InstanceManager.getList(NoAutoCreate.class).isEmpty());
+        assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
         InstanceManager.getDefault().clear(NoAutoCreate.class);
         // should contain only empty lists
-        Assert.assertTrue(InstanceManager.getList(PowerManager.class).isEmpty());
-        Assert.assertTrue(InstanceManager.getList(NoAutoCreate.class).isEmpty());
-        Assert.assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
+        assertTrue(InstanceManager.getList(PowerManager.class).isEmpty());
+        assertTrue(InstanceManager.getList(NoAutoCreate.class).isEmpty());
+        assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
         InstanceManager.getDefault().clear(OkAutoCreate.class);
         // verify that no exception was thrown
-        Assert.assertTrue(InstanceManager.getList(PowerManager.class).isEmpty());
-        Assert.assertTrue(InstanceManager.getList(NoAutoCreate.class).isEmpty());
-        Assert.assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
+        assertTrue(InstanceManager.getList(PowerManager.class).isEmpty());
+        assertTrue(InstanceManager.getList(NoAutoCreate.class).isEmpty());
+        assertTrue(InstanceManager.getList(OkAutoCreate.class).isEmpty());
     }
 
     @Test
     public void testContainsDefault() {
         // verify not OkAutoCreate instances exist
         InstanceManager.reset(OkAutoCreate.class);
-        Assert.assertFalse("Should be empty", InstanceManager.containsDefault(OkAutoCreate.class));
+        assertFalse( InstanceManager.containsDefault(OkAutoCreate.class), "Should be empty");
         // create a OkAutoCreate instance
-        Assert.assertNotNull(InstanceManager.getDefault(OkAutoCreate.class));
-        Assert.assertTrue("Should not be empty", InstanceManager.containsDefault(OkAutoCreate.class));
+        assertNotNull(InstanceManager.getDefault(OkAutoCreate.class));
+        assertTrue( InstanceManager.containsDefault(OkAutoCreate.class), "Should not be empty");
         // remote OkAutoCreate instance
         InstanceManager.reset(OkAutoCreate.class);
-        Assert.assertFalse("Should be empty", InstanceManager.containsDefault(OkAutoCreate.class));
+        assertFalse( InstanceManager.containsDefault(OkAutoCreate.class), "Should be empty");
     }
 
     @BeforeEach

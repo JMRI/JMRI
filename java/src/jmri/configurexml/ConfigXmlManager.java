@@ -330,8 +330,11 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     protected void includeHistory(Element root, File file) {
         // add history to end of document
         if (InstanceManager.getNullableDefault(FileHistory.class) != null) {
-            root.addContent(jmri.jmrit.revhistory.configurexml.FileHistoryXml.storeDirectly(
-                    InstanceManager.getDefault(FileHistory.class), file.getPath()));
+            var historyElement = jmri.jmrit.revhistory.configurexml.FileHistoryXml.storeDirectly(
+                    InstanceManager.getDefault(FileHistory.class), file.getPath());
+            if (historyElement != null) {
+                root.addContent(historyElement);
+            }
         }
     }
 

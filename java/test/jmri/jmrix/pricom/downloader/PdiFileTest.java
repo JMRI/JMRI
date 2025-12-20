@@ -1,6 +1,5 @@
 package jmri.jmrix.pricom.downloader;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,14 +10,18 @@ import org.junit.jupiter.api.*;
 public class PdiFileTest {
 
     @Test
-    public void testCreate() {
-        new PdiFile(null);
+    public void testPdiFileCTor() {
+        Assertions.assertNotNull( new PdiFile(null) );
     }
 
-    // create and show, with some data present
-    @Test
-    public void testOpen() {
-        PdiFile f = new PdiFile(null);
-        Assert.assertNotNull("exists", f);
+    @BeforeEach
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
     }
+
+    @AfterEach
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
+
 }

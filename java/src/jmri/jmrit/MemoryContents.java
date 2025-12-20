@@ -1,16 +1,12 @@
 package jmri.jmrit;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Writer;
+import java.io.*;
 import java.util.ArrayList;
-import jmri.util.StringUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.util.StringUtil;
 
 /**
  * Models (and provides utility functions for) board memory as expressed in .hex
@@ -765,6 +761,7 @@ public class MemoryContents {
      * @throws MemoryFileAddressingFormatException if unsupported addressing
      *                                             format
      */
+    @SuppressWarnings("javadoc")
     public void writeHex(Writer writer, boolean writeKeyVals, int blockSize)
             throws IOException, MemoryFileAddressingFormatException {
         if (writeKeyVals) {

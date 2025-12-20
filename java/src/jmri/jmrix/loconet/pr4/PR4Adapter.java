@@ -152,7 +152,7 @@ public class PR4Adapter extends LocoBufferAdapter {
         // Add "Standalone LocoNet" option
         // Note: PR4 does not provide "LocoNet Data Termination" and _requires_
         // some external source of that feature.
-        retval[retval.length - 1] = LnCommandStationType.COMMAND_STATION_STANDALONE.getName() + " (using external LocoNet Data Termination!)"; // NOI18N
+        retval[retval.length - 1] = LnCommandStationType.COMMAND_STATION_STANDALONE_EXT_TERM.getName(); // NOI18N
         return retval;
     }
 

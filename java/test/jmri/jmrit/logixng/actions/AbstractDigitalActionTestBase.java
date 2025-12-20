@@ -1,8 +1,12 @@
 package jmri.jmrit.logixng.actions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Locale;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import jmri.NamedBean;
@@ -15,33 +19,29 @@ import jmri.jmrit.logixng.DigitalActionBean;
 public abstract class AbstractDigitalActionTestBase extends AbstractBaseTestBase {
 
     public abstract NamedBean createNewBean(String systemName);
-    
+
     @Test
     public void testBadSystemName() {
-        boolean hasThrown = false;
-        try {
+        IllegalArgumentException e = assertThrows( IllegalArgumentException.class, () -> {
             // Create a bean with bad system name. This must throw an exception
             NamedBean bean = createNewBean("IQ111");
             // We should never get here.
-            Assert.assertNotNull("Bean is not null", bean);
-        } catch (IllegalArgumentException e) {
-            Assert.assertEquals("Exception is correct", "system name is not valid: IQ111", e.getMessage());
-            hasThrown = true;
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+            assertNotNull( bean, "Bean is not null");
+            });
+        assertEquals( "system name is not valid: IQ111", e.getMessage(), "Exception is correct");
     }
-    
+
     @Test
     public void testBundle() {
-        Assert.assertEquals("strings are equal", "Memory", Bundle.getMessage("ActionMemory_Short"));
-        Assert.assertEquals("strings are equal", "Set memory IM1 to null", Bundle.getMessage("ActionMemory_Long_Null", "IM1"));
-        Assert.assertEquals("strings are equal", "Memory", Bundle.getMessage(Locale.CANADA, "ActionMemory_Short"));
-        Assert.assertEquals("strings are equal", "Set memory IM1 to null", Bundle.getMessage(Locale.CANADA, "ActionMemory_Long_Null", "IM1"));
+        assertEquals( "Memory", Bundle.getMessage("ActionMemory_Short"), "strings are equal");
+        assertEquals( "Set memory IM1 to null", Bundle.getMessage("ActionMemory_Long_Null", "IM1"), "strings are equal 2");
+        assertEquals( "Memory", Bundle.getMessage(Locale.CANADA, "ActionMemory_Short"), "strings are equal 3");
+        assertEquals( "Set memory IM1 to null", Bundle.getMessage(Locale.CANADA, "ActionMemory_Long_Null", "IM1"), "strings are equal 4");
     }
-    
+
     @Test
     public void testGetBeanType() {
-        Assert.assertTrue("String matches", "Digital action".equals(((DigitalActionBean)_base).getBeanType()));
+        assertTrue( "Digital action".equals(((DigitalActionBean)_base).getBeanType()), "String matches");
     }
-    
+
 }

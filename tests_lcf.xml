@@ -47,7 +47,6 @@ the data is actually logged.
         https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/JUnitAppender.java -->
         <JUnitAppender name="J">
             <PatternLayout pattern="%-5p - %m [%t] %c{4}.%M()%n"/>
-            <ThresholdFilter level="INFO"/>
         </JUnitAppender>
 
     </Appenders>

@@ -2,15 +2,16 @@ package jmri.jmrit.logix;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JDesktopPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
+
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -18,8 +19,6 @@ import jmri.PowerManager;
 import jmri.SpeedStepMode;
 import jmri.jmrit.throttle.FunctionButton;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A JFrame to contain throttle elements such as speed control, function panel.
@@ -33,9 +32,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright 2009, 2020
  */
-public class LearnThrottleFrame extends JmriJFrame { //implements java.beans.PropertyChangeListener {
+public class LearnThrottleFrame extends JmriJFrame {
 
-    private WarrantFrame _warrantFrame;
+    private final WarrantFrame _warrantFrame;
     private PowerManager powerMgr = null;
     private LearnControlPanel _controlPanel;
     private LearnFunctionPanel _functionPanel;
@@ -85,7 +84,7 @@ public class LearnThrottleFrame extends JmriJFrame { //implements java.beans.Pro
     }
 
     private void initGUI() {
-        setTitle("Throttle");
+        setTitle(Bundle.getMessage("ThrottleTitle"));
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -140,12 +139,14 @@ public class LearnThrottleFrame extends JmriJFrame { //implements java.beans.Pro
         JMenu speedControl = new JMenu(Bundle.getMessage("SpeedControl"));
         ButtonGroup buttonGroup = new ButtonGroup();
         JRadioButtonMenuItem displaySlider = new JRadioButtonMenuItem(Bundle.getMessage("ButtonDisplaySpeedSlider"));
-        displaySlider.addActionListener((ActionEvent e)->_controlPanel.setSpeedController(jmri.jmrit.throttle.ControlPanel.SLIDERDISPLAYCONTINUOUS));
+        displaySlider.addActionListener((ActionEvent e)->
+            _controlPanel.setSpeedController(jmri.jmrit.throttle.ControlPanel.SLIDERDISPLAYCONTINUOUS));
         displaySlider.setSelected(true);
         buttonGroup.add(displaySlider);
         speedControl.add(displaySlider);
         JRadioButtonMenuItem displaySteps = new JRadioButtonMenuItem(Bundle.getMessage("ButtonDisplaySpeedSteps"));
-        displaySteps.addActionListener((ActionEvent e)->_controlPanel.setSpeedController(jmri.jmrit.throttle.ControlPanel.STEPDISPLAY));
+        displaySteps.addActionListener((ActionEvent e)->
+            _controlPanel.setSpeedController(jmri.jmrit.throttle.ControlPanel.STEPDISPLAY));
         buttonGroup.add(displaySteps);
         speedControl.add(displaySteps);
         this.setJMenuBar(new JMenuBar());
@@ -155,29 +156,21 @@ public class LearnThrottleFrame extends JmriJFrame { //implements java.beans.Pro
             JMenu powerMenu = new JMenu(Bundle.getMessage("ThrottleMenuPower"));
             JMenuItem powerOn = new JMenuItem(Bundle.getMessage("ThrottleMenuPowerOn"));
             powerMenu.add(powerOn);
-            powerOn.addActionListener(new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    try {
-                        powerMgr.setPower(PowerManager.ON);
-                    } catch (JmriException e1) {
-                        log.error("Error when setting power", e1);
-                    }
+            powerOn.addActionListener((ActionEvent e) -> {
+                try {
+                    powerMgr.setPower(PowerManager.ON);
+                } catch (JmriException e1) {
+                    log.error("Error when setting power", e1);
                 }
             });
 
             JMenuItem powerOff = new JMenuItem(Bundle.getMessage("ThrottleMenuPowerOff"));
             powerMenu.add(powerOff);
-            powerOff.addActionListener(new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    try {
-                        powerMgr.setPower(PowerManager.OFF);
-                    } catch (JmriException e1) {
-                        log.error("Error when setting power", e1);
-                    }
+            powerOff.addActionListener((ActionEvent e) -> {
+                try {
+                    powerMgr.setPower(PowerManager.OFF);
+                } catch (JmriException e1) {
+                    log.error("Error when setting power", e1);
                 }
             });
 
@@ -207,18 +200,18 @@ public class LearnThrottleFrame extends JmriJFrame { //implements java.beans.Pro
         _warrantFrame.setThrottleCommand("SpeedStep", speedStep.name);
     }
 
-    protected void setFunctionState(String FNum, boolean isSet) {
-        _warrantFrame.setThrottleCommand(FNum, Boolean.toString(isSet));
+    protected void setFunctionState(String fNum, boolean isSet) {
+        _warrantFrame.setThrottleCommand(fNum, Boolean.toString(isSet));
     }
 
-    protected void setFunctionLock(String FMom, boolean isLockable) {
-        _warrantFrame.setThrottleCommand(FMom, Boolean.toString(isLockable));
+    protected void setFunctionLock(String fMom, boolean isLockable) {
+        _warrantFrame.setThrottleCommand(fMom, Boolean.toString(isLockable));
     }
 
     protected void setButtonForward(boolean isForward) {
         _warrantFrame.setThrottleCommand("Forward", Boolean.toString(isForward));
     }
 
-    private static final Logger log = LoggerFactory.getLogger(LearnThrottleFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LearnThrottleFrame.class);
 
 }

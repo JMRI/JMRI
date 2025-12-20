@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * Added methods to manipulate the programmer availability to support hardware
  * that can redirect ops mode or service mode packets to a particular interface.
- * 
+ *
  * @see jmri.managers.DefaultProgrammerManager
  * @author Andrew crosland Copyright (C) 2009, 2020
  */
@@ -23,7 +23,7 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
 
     private boolean _isAddressedModePossible = true;
     private boolean _isGlobalProgrammerAvailable = true;
-    
+
     private final CbusPreferences prefs;
 
     public CbusDccProgrammerManager(Programmer serviceModeProgrammer, CanSystemConnectionMemo memo) {
@@ -42,7 +42,7 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
      * Check that the programming mode preferences, which may be default values for a new connection
      * or if they have never been set, are consistent with the programmer modes for
      * the connected hardware
-     * 
+     *
      * @param memo CAN system connection emo
      */
     protected final void validateProgrammingModes(CanSystemConnectionMemo memo) {
@@ -57,7 +57,7 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
                 igpa = true;
                 iamp = true;
                 break;
-                
+
             case EITHER:
                 if ((igpa && iamp) || (!igpa && !iamp)) {
                     // Default to global (service) mode if inconsistent prefs
@@ -65,7 +65,7 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
                     iamp = false;
                 } // else prefs are OK
                 break;
-                
+
             case SPROG3PLUS:
                 if (ptm == SprogCbusSprog3PlusModeSwitcherFrame.PROG_AR_MODE) {
                     // No global (service) mode if using auto-reverse
@@ -82,7 +82,7 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
         mySetGlobalProgrammerAvailable(igpa);
         mySetAddressedModePossible(iamp);
     }
-    
+
     /**
      * CBUS DCC Programmer has hardware support for ops mode
      *
@@ -100,7 +100,7 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
     public boolean isGlobalProgrammerHardwareAvailable() {
         return true;
     }
-    
+
     /**
      * Does Programmer currently support ops mode
      *
@@ -114,7 +114,7 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
     /**
      * Set availability of addressed (ops mode) programmer.
      * To avoid calling overridable method from constructor
-     * 
+     *
      * @param state true if possible
      */
     public final void mySetAddressedModePossible(boolean state) {
@@ -125,7 +125,7 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
 
     /**
      * Set availability of addressed (ops mode) programmer.
-     * 
+     *
      * @param state true if available
      */
     public void setAddressedModePossible(boolean state) {
@@ -141,11 +141,11 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
     public boolean isGlobalProgrammerAvailable() {
         return _isGlobalProgrammerAvailable;
     }
-    
+
     /**
      * Set availability of global (service mode) programmer.
      * To avoid calling overridable method from constructor
-     * 
+     *
      * @param state true if available
      */
     public final void mySetGlobalProgrammerAvailable(boolean state) {
@@ -156,7 +156,7 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
 
     /**
      * Set availability of global (service mode) programmer.
-     * 
+     *
      * @param state true if available
      */
     public void setGlobalProgrammerAvailable(boolean state) {
@@ -164,15 +164,15 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
     }
 
     @Override
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new CbusDccOpsModeProgrammer(pAddress, pLongAddress, tc);
     }
 
     @Override
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammerManager.class);
-    
+
 }

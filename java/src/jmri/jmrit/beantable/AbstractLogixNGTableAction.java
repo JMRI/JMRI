@@ -196,7 +196,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     protected AbstractLogixNGEditor<E> _editor = null;
 
     boolean _showReminder = false;
-    private boolean _checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
     jmri.jmrit.picker.PickFrame _pickTables;
 
     // Current focus variables
@@ -631,31 +630,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     }
 
     /**
-     * Display reminder to save.
-     */
-    void showSaveReminder() {
-        if (_showReminder && !_checkEnabled) {
-            if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
-                InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLogixNGTable")), // NOI18N
-                                getClassName(),
-                                "remindSaveLogix");  // NOI18N
-            }
-        }
-    }
-
-    @Override
-    public void setMessagePreferencesDetails() {
-        HashMap<Integer, String> options = new HashMap<>(3);
-        options.put(0x00, Bundle.getMessage("DeleteAsk"));      // NOI18N
-        options.put(0x01, Bundle.getMessage("DeleteNever"));    // NOI18N
-        options.put(0x02, Bundle.getMessage("DeleteAlways"));   // NOI18N
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMessageItemDetails(getClassName(), "delete", Bundle.getMessage("DeleteLogixNG"), options, 0x00);  // NOI18N
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(getClassName(), "remindSaveLogixNG", Bundle.getMessage("HideSaveReminder"));  // NOI18N
-        super.setMessagePreferencesDetails();
-    }
-
-    /**
      * Respond to the Delete combo selection bean window delete request.
      *
      * @param sName system name of bean to be deleted
@@ -685,11 +659,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         if (x == null) return;  // This should never happen
 
         execute(x);
-    }
-
-    @Override
-    public String getClassDescription() {
-        return Bundle.getMessage("TitleLogixNGTable");        // NOI18N
     }
 
     @Override

@@ -34,7 +34,7 @@ public class Almir {
             return ret;
         }
         String key = EMPTY;
-        if ((l.getOpCode() == 0xE6) && (l.getElement(3) == 0x02)) {
+        if ((l.getOpCode() == LnConstants.OPC_ALM_READ) && (l.getElement(3) == 0x02)) {
             if (l.getElement(2) == 1) {
                 key = "LN_MSG_ALM_ROUTE_CMD_STN_REPORT"; // NOI18N
             } else if (l.getElement(2) != 2) {
@@ -42,7 +42,7 @@ public class Almir {
             } else {
                 key = "LN_MSG_ALM_ROUTE_DEV_REPORT"; // NOI18N
             }
-        } else if ((l.getOpCode() == 0xEE) && (l.getElement(3) == 3)) {
+        } else if ((l.getOpCode() == LnConstants.OPC_IMM_PACKET_2) && (l.getElement(3) == 3)) {
             if (l.getElement(2) == 1) {
                 key = "LN_MSG_ALM_ROUTE_CMD_STN_WRITE"; // NOI18N
             } else if (l.getElement(2) != 2) {
@@ -202,6 +202,13 @@ public class Almir {
                 be = bs + 7;
                 break;
 
+            case LnConstants.RE_IPL_DIGITRAX_HOST_BDL716:
+                dev = "BDL716"; //NOI18N
+                rts = 0;
+                ents = 0;
+                be = bs + 15;
+                break;
+
             default:
                 dev = Bundle.getMessage("LN_MSG_ALM_HELPER_DEVICE_UNKNOWN");
                 be = bs;
@@ -270,7 +277,7 @@ public class Almir {
         }
 
         LocoNetMessage seldev = new LocoNetMessage(new int[] {
-            0xee, 0x10, 0x02, 0x0e, 0,0,0,0,0,0,0,0,0,0,0,0
+            LnConstants.OPC_IMM_PACKET_2, 0x10, 0x02, 0x0e, 0,0,0,0,0,0,0,0,0,0,0,0
         });
         int sdm[] = {255,255,255,255,255,255,255,255,255,0,0,0,0,0,0,0};
         if (l.equals(seldev, sdm)) {
@@ -303,7 +310,7 @@ public class Almir {
         return (l.getElement(10)& 0x40) == 0x40;
     }
     private static DevMode getMode(LocoNetMessage l) {
-        if (l.getElement(9) == 0x74) {
+        if (l.getElement(9) == LnConstants.RE_IPL_DIGITRAX_HOST_DS74) {
             switch (l.getElement(10) & 0x1E) {
                 case 0:
                     return DevMode.DS74_SOLE;
@@ -314,7 +321,7 @@ public class Almir {
                 default:
                     break;
             }
-        } else if (l.getElement(9) == 0x7c) {
+        } else if (l.getElement(9) == LnConstants.RE_IPL_DIGITRAX_HOST_DS78V) {
             switch (l.getElement(10) & 0xF) {
                 case 4:
                     return DevMode.DS78V_2_POS;
@@ -330,26 +337,26 @@ public class Almir {
     private static final String EMPTY = "";
 
     private static final LocoNetMessage DESEL = new LocoNetMessage(new int[] {
-    0xEE, 0x10, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3});
+    LnConstants.OPC_IMM_PACKET_2, 0x10, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3});
 
     private static final LocoNetMessage almRouteCapabilitiesQuery = new LocoNetMessage(new int[] {
-        0xEE, 0x10, 1, 0, 0, 0, 0, 0,
+        LnConstants.OPC_IMM_PACKET_2, 0x10, 1, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0});
 
     private static final LocoNetMessage almRouteCapabilitiesQuery2 = new LocoNetMessage(new int[] {
-        0xEE, 0x10, 1, 0, 0, 0, 15, 0,
+        LnConstants.OPC_IMM_PACKET_2, 0x10, 1, 0, 0, 0, 15, 0,
         0, 0, 0, 0, 0, 0, 0, 0});
 
     private static final LocoNetMessage cmdStnRoutesCap = new LocoNetMessage(new int[] {
-            0xE6, 0x10, 1, 0, 0x40, 0, 3, 2, 8,
+            LnConstants.OPC_ALM_READ, 0x10, 1, 0, 0x40, 0, 3, 2, 8,
             0x7F, 0, 0, 0, 0, 0, 0x64});
 
     private static final LocoNetMessage cmdStnRoutesCap2 = new LocoNetMessage(new int[] {
-            0xE6, 0x10, 1, 0, 0, 2, 3, 2, 0x10,
+            LnConstants.OPC_ALM_READ, 0x10, 1, 0, 0, 2, 3, 2, 0x10,
             0x7F, 0, 0, 0, 0, 0, 0x64});
 
     private static final LocoNetMessage AlmRoutesDataQuery = new LocoNetMessage(new int[] {
-        0xEE, 0x10, 1, 2, 0, 0, 0, 0,
+        LnConstants.OPC_IMM_PACKET_2, 0x10, 1, 2, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0});
 
     private static final int[] ardqm = new int[] {255, 255, 255, 255, 0, 0, 0, 0,

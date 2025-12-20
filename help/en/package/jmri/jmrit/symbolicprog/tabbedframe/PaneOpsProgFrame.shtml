@@ -17,7 +17,7 @@
       <h2 id="contents">Contents</h2>
 
       <p>This document explains some basic <strong>programmer tabs</strong>, and ideas on how to
-      use them</p>
+      use them.</p>
 
       <ul>
         <li>
@@ -40,7 +40,9 @@
       <h3 id="Roster">Roster tab</h3>
 
       <p>A roster is a database of all locomotives that your installation of DecoderPro has
-      programmed. It includes the information seen in the screen below:</p>
+      programmed. Some stationary decoders can also be added to this database.<br>
+      It includes the information seen in the screen below:</p>
+
       <img src="RosterTab.png" alt="DecoderPro Roster Tab">
       <p>The first field "ID" becomes the file name in the Roster for the locomotive you are
       programming.</p>
@@ -50,7 +52,7 @@
 
       <p>The Throttle Speed Limit sets the Maximum throttle percentage allowed.</p>
 
-      <p>You can put any thing you want in the other fields.</p>
+      <p>You can put anything you want in the other fields.</p>
 
       <p>The Save button stores the current decoder information to your Roster folder. The default
       storage is in the same directory the Preferences are stored in.</p>
@@ -58,7 +60,7 @@
       <p>The "Reset to Defaults" button, not a "factory reset", returns the Decoder CVs to the
       Default value that was programmed into the decoder xml file. It does NOT change the values in
       the roster file on your hard disk, unless you Save it The Values are not written to the
-      decoder until you select a to write them.</p>
+      decoder until you select to write them.</p>
 
       <p>Most decoders will activate the Reset Menu (next to the File menu at the top of the page).
       This is the "Factory Reset", some of the manufacturer has several reset routines. It does
@@ -78,7 +80,7 @@
 
       <p>The Speed Steps for the Loco can be selected, usually its 28 steps.</p>
 
-      <p>You can select wither the loco responds to DV voltage or not.</p>
+      <p>You can select whether the loco responds to DC voltage or not.</p>
 
       <p>You can enter any number you want into the "User id's"</p>
 

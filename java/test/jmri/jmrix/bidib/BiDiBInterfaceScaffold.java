@@ -36,7 +36,7 @@ public class BiDiBInterfaceScaffold implements org.bidib.jbidibc.core.BidibInter
     //private final BidibInterface bidib = Mockito.mock(BidibInterface.class);
 
     public BiDiBInterfaceScaffold() {
-        nodeRegistry = new NodeRegistry();// {
+        nodeRegistry = new NodeRegistry(false);// {
 //            @Override
 //            public BidibNode getNode(final Node node) {
 //                return super.getNode(node);

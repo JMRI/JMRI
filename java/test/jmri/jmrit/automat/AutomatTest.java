@@ -12,13 +12,12 @@ import org.junit.Assert;
  */
 public class AutomatTest {
 
-    boolean initDone;
-    boolean handleDone;
+    private boolean initDone;
+    private boolean handleDone;
 
     @Test
     public void testCreate() {
-        new AbstractAutomaton() {
-        };
+        Assertions.assertNotNull( new AbstractAutomaton() {} );
     }
 
     @Test

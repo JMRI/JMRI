@@ -14,8 +14,8 @@ import org.junit.Assert;
 public class X10SequenceTest {
 
     @Test
-    public void testCtors() {
-        new X10Sequence();
+    public void testX10SequenceCtors() {
+        Assertions.assertNotNull( new X10Sequence());
     }
 
     @Test

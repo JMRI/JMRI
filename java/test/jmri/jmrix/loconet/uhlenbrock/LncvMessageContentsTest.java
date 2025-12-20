@@ -46,7 +46,7 @@ public class LncvMessageContentsTest {
         LocoNetMessage l = new LocoNetMessage(new int[]{0xED, 0x0F, 0x01, 0x05, 0x00, 0x21, 0x01, 0x29, 0x13, 0x00, 0x00, 0x01, 0x00, 0x00, 0x02});
         for (int i = 0; i < 07f; ++i) {
             l.setElement(11, i);
-            Assertions.assertEquals(i, new LncvMessageContents(l).getLncvModuleNum(), ""+i+" as LSByte of destAddr");
+            Assertions.assertEquals(i, new LncvMessageContents(l).getLncvModuleNum(), i+" as LSByte of destAddr");
         }
         l.setElement(11,0);
         l.setElement(6,0x51); // hibit
@@ -55,7 +55,7 @@ public class LncvMessageContentsTest {
         l.setElement(6,0x01); // hibit
         for (int i = 0; i < 0x7f; ++i) {
             l.setElement(12, i);
-            Assertions.assertEquals(i<<8, new LncvMessageContents(l).getLncvModuleNum(), ""+(i<<8)+" as MSByte of destAddr");
+            Assertions.assertEquals(i<<8, new LncvMessageContents(l).getLncvModuleNum(), (i<<8)+" as MSByte of destAddr");
         }
         l.setElement(11,0);
         l.setElement(12,0);
@@ -68,7 +68,7 @@ public class LncvMessageContentsTest {
         LocoNetMessage l = new LocoNetMessage(new int[]{0xED, 0x0F, 0x01, 0x05, 0x00, 0x21, 0x20, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F});
         for (int i = 0; i < 0x7f; ++i) {
             l.setElement(7, i);
-            Assertions.assertEquals(i, new LncvMessageContents(l).getLncvArticleNum(), ""+i+" as LSByte of ProductId");
+            Assertions.assertEquals(i, new LncvMessageContents(l).getLncvArticleNum(), i+" as LSByte of ProductId");
         }
         l.setElement(7,0);
         l.setElement(6,0x1); // hibits
@@ -76,7 +76,7 @@ public class LncvMessageContentsTest {
         l.setElement(6,0x20);
         for (int i = 0; i < 0x7f; ++i) {
             l.setElement(8, i);
-            Assertions.assertEquals(i<<8, new LncvMessageContents(l).getLncvArticleNum(), ""+(i<<8)+" as MSByte of ProductId");
+            Assertions.assertEquals(i<<8, new LncvMessageContents(l).getLncvArticleNum(), (i<<8)+" as MSByte of ProductId");
         }
         l.setElement(7,0);
         l.setElement(8,0);

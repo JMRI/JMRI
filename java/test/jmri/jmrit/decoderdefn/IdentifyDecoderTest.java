@@ -276,7 +276,7 @@ public class IdentifyDecoderTest {
     }
 
     /**
-     * Test Hornby HN7000 decoder with CV7=254, then reads 47/48/49
+     * Test Hornby HN7000 decoder with CV7=254, then reads 200/201
      */
     @Test
     public void testIdentifyHornby7000() {
@@ -304,27 +304,22 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("step 2 reads CV ", 7, cvRead);
         Assert.assertEquals("running after 2 ", true, i.isRunning());
 
-        // simulate CV read complete on CV7, start 159
+        // simulate CV read complete on CV7, start 200
         i.programmingOpReply(254, 0);
-        Assert.assertEquals("step 3 reads CV ", 47, cvRead);
+        Assert.assertEquals("step 3 reads CV ", 200, cvRead);
         Assert.assertEquals("running after 3 ", true, i.isRunning());
 
-        // simulate CV read complete on CV47, does CV48 and ends
+        // simulate CV read complete on CV200, does CV201 and ends
         i.programmingOpReply(1, 0);
-        Assert.assertEquals("step 4 reads CV ", 48, cvRead);
+        Assert.assertEquals("step 4 reads CV ", 201, cvRead);
         Assert.assertEquals("running after 4 ", true, i.isRunning());
 
-        // simulate CV read complete on 48, reads 49
         i.programmingOpReply(2, 0);
-        Assert.assertEquals("step 5 reads CV ", 49, cvRead);
-        Assert.assertEquals("running after 5 ", true, i.isRunning());
-
-        i.programmingOpReply(3, 0);
-        Assert.assertEquals("running after 6 ", false, i.isRunning());
+        Assert.assertEquals("running after 5 ", false, i.isRunning());
 
         Assert.assertEquals("found mfg ID ", 48, i.mfgID.value);
         Assert.assertEquals("found model ID ", 254, i.modelID);
-        Assert.assertEquals("found product ID ", 1*256*256 + 2*256 + 3, i.productID);
+        Assert.assertEquals("found product ID ", 1*256+ 2, i.productID);
     }
 
     /**

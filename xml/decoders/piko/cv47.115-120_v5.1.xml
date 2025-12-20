@@ -12,150 +12,156 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-	<copyright xmlns="http://docbook.org/ns/docbook">
-		<year>2023</year>
-		<holder>JMRI</holder>
-	</copyright>
-	<authorgroup xmlns="http://docbook.org/ns/docbook">
-		<author>
-			<personname>
-				<firstname>Ulrich</firstname>
-				<surname>Gerlach</surname>
-			</personname>
-		</author>
-	</authorgroup>
-	<revhistory xmlns="http://docbook.org/ns/docbook">
-		<revision>
-			<revnumber>1</revnumber>
-			<date>2023-11-30</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
-		</revision>
-	</revhistory>
-	<variable item="Spezialfunktionen" CV="47" default="1" minOut="4" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18">
-		<!-- Next-18 Decoder -->
-		<decVal max="63"/>
-		<label>Special Functions (CV 47)</label>
-		<label xml:lang="de">Spezialfunktionen Zuordnung (CV 47)</label>
-	</variable>
-	<variable item="Spezialfunktionen" CV="47" default="44" minOut="7" include="PIKO56554-22">
-		<!-- Next-22 Decoder with digital coupling-->
-		<decVal max="63"/>
-		<label>Special funktions (CV 47)</label>
-		<label xml:lang="de">Spezialfunktionen Zuordnung (CV 47)</label>
-	</variable>
-	<variable item="SUSI Bit 0" CV="47" default="1" mask="XXXXXXXV">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>SUSI CV 47 Bit 0</label>
-		<label xml:lang="de">SUSI CV 47 Bit 0</label>
-		<tooltip>0 = Logic1 und Logic2, 1 = SUSI</tooltip>
-		<tooltip xml:lang="de">0 = Logik1 und Logik2, 1 = SUSI</tooltip>
-	</variable>
-	<variable item="SUSI Bit 1" CV="47" default="0" mask="XXXXXXVX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>SUSI CV 47 Bit 1</label>
-		<label xml:lang="de">SUSI CV 47 Bit 1</label>
-		<tooltip>0 = Logic1 und Logic2, 1 = Servo1 und Servo2</tooltip>
-		<tooltip xml:lang="de">0 = Logik1 und Logik2, 1 = Servo1 und Servo2</tooltip>
-	</variable>
-	<variable item="SUSI Bit 2" CV="47" default="0" mask="XXXXXVXX" minOut="7">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>AUX4 for digital coupling</label>
-		<label xml:lang="de">A4 für Digitalkupplung</label>
-	</variable>
-	<variable item="Coupling option 1" CV="47" default="0" mask="XXXXXVXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>Digital coupling AUX4</label>
-		<label xml:lang="de">Digitalkupplung A4 vorn</label>
-		<tooltip>Activation coupling sequenz reverse</tooltip>
-		<tooltip xml:lang="de">Auch zur Aktivierung Kupplungswalzer rückwärts</tooltip>
-	</variable>
-	<variable item="Coupling option 2" CV="47" default="0" mask="XXXXVXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>Digital coupling AUX5</label>
-		<label xml:lang="de">Digitalkupplung A5 hinten</label>
-		<tooltip>Activation coupling sequenz forward</tooltip>
-		<tooltip xml:lang="de">Auch zur Aktivierung Kupplungswalzer vorwärts</tooltip>
-	</variable>
-	<variable item="SUSI Bit 3" CV="47" default="0" mask="XXXXVXXX" minOut="7">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>AUX5 for digital coupling</label>
-		<label xml:lang="de">A5 für Digitalkupplung</label>
-	</variable>
-	<variable item="SUSI Bit 4" CV="47" default="0" mask="XXXVXXXX" minOut="7">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>Swap coupling outputs AUX4 and AUX5</label>
-		<label xml:lang="de">Kupplungsausgänge A4 und A5 tauschen</label>
-	</variable>
-	<variable item="Coupling option 3" default="0" CV="47" mask="XXXVXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>Swap coupling outputs AUX4 and AUX5</label>
-		<label xml:lang="de">Kupplungsausgänge A4 und A5 tauschen</label>
-	</variable>
-	<variable item="SUSI Bit 5" CV="47" mask="XXVXXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>Using the wheel sensor CV 47 Bit 5</label>
-		<label xml:lang="de">Radsensor verwenden CV 47 Bit 5</label>
-	</variable>
-	<!-- CV 115 - 116 SUSI Sendeoptionen 1 und 3 to SUSI-->
-	<variable item="SUSI 115 Bit 0" CV="115" mask="XXXXXXXV" default="1">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>SUSI Send option 1</label>
-		<label xml:lang="de">SUSI Sendeoption 1</label>
-	</variable>
-	<variable item="SUSI 115 Bit 1" CV="115" mask="XXXXXXVX" default="1">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable item="SUSI 115 Bit 2" CV="115" mask="XXXXXVXX" default="1">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable item="SUSI 115 Bit 3" CV="115" mask="XXXXVXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable item="SUSI 115 Bit 4" CV="115" mask="XXXVXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable item="SUSI 115 Bit 5" CV="115" mask="XXVXXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable item="SUSI 115 Bit 6" CV="115" mask="XVXXXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable item="SUSI 115 Bit 7" CV="115" mask="VXXXXXXX" default="1">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable item="SUSI 116 Bit 0" CV="116" mask="XXXXXXXV" default="1">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>SUSI Send option 2</label>
-		<label xml:lang="de">SUSI Sendeoption 2</label>
-	</variable>
-	<variable item="SUSI 116 Bit 1" CV="116" mask="XXXXXXVX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable item="SUSI 116 Bit 2" CV="116" mask="XXXXXVXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable item="SUSI 116 Bit 3" CV="116" mask="XXXXVXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable item="SUSI 116 Bit 4" CV="116" mask="XXXVXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable item="SUSI 116 Bit 5" CV="116" mask="XXVXXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable item="SUSI 116 Bit 6" CV="116" mask="XVXXXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<variable item="SUSI 116 Bit 7" CV="116" mask="VXXXXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-	</variable>
-	<!-- CV 120 -->
-	<variable item="SUSI Taktrate" CV="120" default="0">
-		<decVal/>
-		<label>SUSI Clock rate (CV 120)</label>
-		<label xml:lang="de">SUSI Taktrate (CV 120)</label>
-		<tooltip>SUSI Clock rate = CV value * 1 + 10 micro Sek</tooltip>
-		<tooltip xml:lang="de">Einschaltzeit = CV-Wert * 0,1 Sek (wenn CV 47 aktiviert)</tooltip>
-	</variable>
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2023</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Ulrich</firstname>
+                <surname>Gerlach</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2023-11-30</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+        </revision>
+        <revision>
+            <revnumber>4</revnumber>
+            <date>2025-12-06</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add Decoder BR80 36537 / 36505 Spur G</revremark>
+        </revision>
+    </revhistory>
+    <variable item="Spezialfunktionen" CV="47" default="1" minOut="4" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18">
+        <!-- Next-18 Decoder -->
+        <decVal max="63"/>
+        <label>Special Functions (CV 47)</label>
+        <label xml:lang="de">Spezialfunktionen Zuordnung (CV 47)</label>
+    </variable>
+    <variable item="Spezialfunktionen" CV="47" default="44" minOut="7" include="PIKO56554-22,PIKO3505-G">
+        <!-- Next-22 Decoder with digital coupling-->
+        <decVal max="63"/>
+        <label>Special funktions (CV 47)</label>
+        <label xml:lang="de">Spezialfunktionen Zuordnung (CV 47)</label>
+    </variable>
+    <variable item="SUSI Bit 0" CV="47" default="1" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>SUSI CV 47 Bit 0</label>
+        <label xml:lang="de">SUSI CV 47 Bit 0</label>
+        <tooltip>0 = Logic1 und Logic2, 1 = SUSI</tooltip>
+        <tooltip xml:lang="de">0 = Logik1 und Logik2, 1 = SUSI</tooltip>
+    </variable>
+    <variable item="SUSI Bit 1" CV="47" default="0" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>SUSI CV 47 Bit 1</label>
+        <label xml:lang="de">SUSI CV 47 Bit 1</label>
+        <tooltip>0 = Logic1 und Logic2, 1 = Servo1 und Servo2</tooltip>
+        <tooltip xml:lang="de">0 = Logik1 und Logik2, 1 = Servo1 und Servo2</tooltip>
+    </variable>
+    <variable item="SUSI Bit 2" CV="47" default="0" mask="XXXXXVXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>AUX4 for digital coupling</label>
+        <label xml:lang="de">A4 für Digitalkupplung</label>
+    </variable>
+    <variable item="Coupling option 1" CV="47" default="0" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Digital coupling AUX4</label>
+        <label xml:lang="de">Digitalkupplung A4 vorn</label>
+        <tooltip>Activation coupling sequenz reverse</tooltip>
+        <tooltip xml:lang="de">Auch zur Aktivierung Kupplungswalzer rückwärts</tooltip>
+    </variable>
+    <variable item="Coupling option 2" CV="47" default="0" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Digital coupling AUX5</label>
+        <label xml:lang="de">Digitalkupplung A5 hinten</label>
+        <tooltip>Activation coupling sequenz forward</tooltip>
+        <tooltip xml:lang="de">Auch zur Aktivierung Kupplungswalzer vorwärts</tooltip>
+    </variable>
+    <variable item="SUSI Bit 3" CV="47" default="0" mask="XXXXVXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>AUX5 for digital coupling</label>
+        <label xml:lang="de">A5 für Digitalkupplung</label>
+    </variable>
+    <variable item="SUSI Bit 4" CV="47" default="0" mask="XXXVXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Swap coupling outputs AUX4 and AUX5</label>
+        <label xml:lang="de">Kupplungsausgänge A4 und A5 tauschen</label>
+    </variable>
+    <variable item="Coupling option 3" default="0" CV="47" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Swap coupling outputs AUX4 and AUX5</label>
+        <label xml:lang="de">Kupplungsausgänge A4 und A5 tauschen</label>
+    </variable>
+    <variable item="SUSI Bit 5" CV="47" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Using the wheel sensor CV 47 Bit 5</label>
+        <label xml:lang="de">Radsensor verwenden CV 47 Bit 5</label>
+    </variable>
+    <!-- CV 115 - 116 SUSI Sendeoptionen 1 und 3 to SUSI-->
+    <variable item="SUSI 115 Bit 0" CV="115" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>SUSI Send option 1</label>
+        <label xml:lang="de">SUSI Sendeoption 1</label>
+    </variable>
+    <variable item="SUSI 115 Bit 1" CV="115" mask="XXXXXXVX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="SUSI 115 Bit 2" CV="115" mask="XXXXXVXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="SUSI 115 Bit 3" CV="115" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="SUSI 115 Bit 4" CV="115" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="SUSI 115 Bit 5" CV="115" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="SUSI 115 Bit 6" CV="115" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="SUSI 115 Bit 7" CV="115" mask="VXXXXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="SUSI 116 Bit 0" CV="116" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>SUSI Send option 2</label>
+        <label xml:lang="de">SUSI Sendeoption 2</label>
+    </variable>
+    <variable item="SUSI 116 Bit 1" CV="116" mask="XXXXXXVX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="SUSI 116 Bit 2" CV="116" mask="XXXXXVXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="SUSI 116 Bit 3" CV="116" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="SUSI 116 Bit 4" CV="116" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="SUSI 116 Bit 5" CV="116" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="SUSI 116 Bit 6" CV="116" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <variable item="SUSI 116 Bit 7" CV="116" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    </variable>
+    <!-- CV 120 -->
+    <variable item="SUSI Taktrate" CV="120" default="0">
+        <decVal/>
+        <label>SUSI Clock rate (CV 120)</label>
+        <label xml:lang="de">SUSI Taktrate (CV 120)</label>
+        <tooltip>SUSI Clock rate = CV value * 1 + 10 (micro Sek)</tooltip>
+        <tooltip xml:lang="de">Taktrate = (CV-Wert * 1 µSek) + 10 µSek (wenn CV 47 aktiviert)</tooltip>
+    </variable>
 </variables>

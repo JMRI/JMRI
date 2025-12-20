@@ -1,26 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrix.openlcb;
 
 import jmri.Light;
 import jmri.LightControl;
 import jmri.implementation.AbstractLight;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.VersionedValueListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 /**
  *
  * @author jcollell
  */
-public class OlcbLight extends AbstractLight {
+public final class OlcbLight extends AbstractLight {
     
     private static final int PC_DEFAULT_FLAGS = BitProducerConsumer.DEFAULT_FLAGS &
             (~BitProducerConsumer.LISTEN_INVALID_STATE);
@@ -30,11 +26,23 @@ public class OlcbLight extends AbstractLight {
     
     OlcbAddress addrOn;    // go to On state
     OlcbAddress addrOff;  // go to Off state
-    OlcbInterface iface;
+    private final OlcbInterface iface;
+    private final CanSystemConnectionMemo memo;
     
     VersionedValueListener<Boolean> lightListener;
     BitProducerConsumer pc;
     
+    public OlcbLight(String prefix, String address, CanSystemConnectionMemo memo) {
+        super(prefix + "L" + address);
+        this.memo = memo;
+        if (memo != null) { // greatly simplify testing
+            this.iface = memo.get(OlcbInterface.class);
+        } else {
+            this.iface = null;
+        }
+        init(address);
+    }
+
     /**
      * Common initialization for both constructors.
      * <p>
@@ -42,8 +50,8 @@ public class OlcbLight extends AbstractLight {
      */
     private void init(String address) {
         // build local addresses
-        OlcbAddress a = new OlcbAddress(address);
-        OlcbAddress[] v = a.split();
+        OlcbAddress a = new OlcbAddress(address, memo);
+        OlcbAddress[] v = a.split(memo);
         if (v == null) {
             log.error("Did not find usable system name: {}", address);
             return;
@@ -76,6 +84,13 @@ public class OlcbLight extends AbstractLight {
         // A Light Control will have failed to set its state during xml load
         // as the LightListener is not present, so we re-activate any Light Controls
         activateLight();
+    }
+
+    @Override
+    @CheckReturnValue
+    @Nonnull
+    public String getRecommendedToolTip() {
+        return addrOn.toDottedString()+";"+addrOff.toDottedString();
     }
     
     /**
@@ -146,15 +161,6 @@ public class OlcbLight extends AbstractLight {
         super.dispose();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(OlcbLight.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbLight.class);
 
-    public OlcbLight(String systemName) {
-        super(systemName);
-    }
-    
-    public OlcbLight(String prefix, String address, OlcbInterface iface) {
-        super(prefix + "L" + address);
-        this.iface = iface;
-        init(address);
-    }
 }

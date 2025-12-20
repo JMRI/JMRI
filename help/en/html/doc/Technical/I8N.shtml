@@ -386,7 +386,7 @@ attribute. "Null" will be returned if nothing is found.
       <h3 id="numbers">Numbers</h3>
 
       <p>The number "10*10*10+2+3/10" is written in different ways in different places: "1002.3",
-      "1,002.3", "1.002,3" and perhaps other ways.</p>
+      "1,002.3", "1.002,3", "1 002.3", "1 002,3", "1002.30", and perhaps other ways.</p>
 
       <p>JMRI provides a helpful utility for handling this on input:</p>
 
@@ -394,6 +394,7 @@ attribute. "Null" will be returned if nothing is found.
   <pre>
 double d = jmri.util.IntlUtilities.doubleValue("1,002.3");
 float  f = jmri.util.IntlUtilities.floatValue("1,002.3");
+int    i = jmri.util.IntlUtilities.intValue("1 002");
 </pre>
 </div>
 
@@ -403,10 +404,17 @@ so handling that is part of your user-error handling.
 <pre>
 String s = jmri.util.IntlUtilities.valueOf(1002.3);
 </pre>
+
+      <p><a href="../../../../../../JavaDoc/doc/jmri/util/IntlUtilities.html">IntlUtilities</a>
+      should only be used within the GUI.</p>
+
       <p><strong>Note: You should still store and load values in XML files in Java's default
       coding, without using these formatting tools. That way, the files can be moved from one user
       to another without worrying about whether they are using the same Locale.</strong>
       </p>
+
+      <p><code>String.format()</code> uses English locale for numbers in Java 17 but the computer locale for
+      numbers on Java 21. Care should be taken with this method within both GUI and XML.</p>
 
       <h3 id="testing">Testing</h3>
       <p>You should check that you've properly internationalized your code. We provide a tool for

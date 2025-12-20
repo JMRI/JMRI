@@ -21,6 +21,7 @@ import jmri.jmrit.logixng.actions.ActionThrottle;
 public class ActionThrottleSwing extends AbstractDigitalActionSwing {
 
     private JComboBox<Connection> _connection;
+    private JCheckBox _stopLocoWhenSwitchingLoco;
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -52,8 +53,15 @@ public class ActionThrottleSwing extends AbstractDigitalActionSwing {
             }
         }
         connectionPanel.add(_connection);
-
         panel.add(connectionPanel);
+
+        _stopLocoWhenSwitchingLoco = new JCheckBox(Bundle.getMessage("ActionThrottleSwing_StopLocoWhenSwitchingLoco"));
+        if (action != null) {
+            _stopLocoWhenSwitchingLoco.setSelected(action.isStopLocoWhenSwitchingLoco());
+        } else {
+            _stopLocoWhenSwitchingLoco.setSelected(true);
+        }
+        panel.add(_stopLocoWhenSwitchingLoco);
     }
 
     /** {@inheritDoc} */
@@ -81,6 +89,7 @@ public class ActionThrottleSwing extends AbstractDigitalActionSwing {
         ActionThrottle action = (ActionThrottle)object;
 
         action.setMemo(_connection.getItemAt(_connection.getSelectedIndex())._memo);
+        action.setStopLocoWhenSwitchingLoco(_stopLocoWhenSwitchingLoco.isSelected());
     }
 
     /** {@inheritDoc} */

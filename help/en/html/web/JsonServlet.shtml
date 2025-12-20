@@ -119,7 +119,7 @@ code {
 
 						<dt>WS</dt>
 
-						<dd>Open a JSON WebSocekt.</dd>
+						<dd>Open a JSON WebSocket.</dd>
 					</dl>
 				</dd>
 
@@ -244,9 +244,11 @@ code {
 			<p>
 				The <b>WebSocket</b> feature of the servlet can be seen by browsing
 				to the <b>/json/</b> url, where a <b>JSON console</b> is provided
-				for testing.<br> Example commands and responses:
+				for testing.<br>
+                Notes: Method "get" is default. "get"ting an item sets up a listener which sends all subsequent changes as well.<br>                
 			</p>
 			<table id="jsonResponses">
+                <caption><b>Example commands and responses</b></caption>
 				<tr>
 					<th>command</th>
 					<th>response</th>
@@ -254,30 +256,34 @@ code {
 				</tr>
 				<tr>
 					<td><code>{"type":"sensor","data":{"name":"IS2"}}</code></td>
-					<td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td>
+					<td><code>{"type":"sensor","data":{"name":"IS2","state":2,"userName":null,"comment":null,"properties":[],"inverted":false}}</code></td>
 					<td>request current state of sensor IS2</td>
 				</tr>
 				<tr>
-					<td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td>
-					<td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td>
+					<td><code>{"type":"sensor","method":"post","data":{"name":"IS2","state":4}}</code></td>
+					<td><code>{"type":"sensor","data":{"name":"IS2","state":4,"userName":null,"comment":null,"properties":[],"inverted":false}}</code></td>
 					<td>set sensor IS2 to InActive (4)</td>
 				</tr>
+                <tr>
+                    <td><code>{"type":"turnout","data":{"name":"IT99"}}</code></td>
+                    <td><code>{"type":"turnout","data":{"name":"IT99","state":4,"userName":null,"comment":null,"properties":[],"inverted":false,"feedbackMode":1,"feedbackModes":[16,32,128,1],"sensor":[null,null]}}</code></td>
+                    <td>request current state of turnout IT99</td>
+                </tr>
+                <tr>
+                    <td><code>{"type":"turnout","method":"put","data":{"name":"IT98","userName":"Test Turnout 98"}}</code></td>
+                    <td><code>{"type":"turnout","data":{"name":"IT98","userName":"Test Turnout 98","comment":null,"properties":[],"inverted":false,"state":0,"feedbackMode":1,"feedbackModes":[16,32,128,1],"sensor":[null,null]}}</code></td>
+                    <td>creaate turnout IT98 using "put" method</td>
+                </tr>
 				<tr>
-					<td><code>{"type":"turnout","data":{"name":"IT99","state":0}}</code></td>
-					<td><code>{"type":"turnout","data":{"name":"IT99","state":4}}</code></td>
-					<td>sending state=0 is also treated as request for current
-						state</td>
-				</tr>
-				<tr>
-					<td><code>{"type":"power","data":{}}</code></td>
-					<td><code>{"type":"power","data":{"state":2}}</code></td>
-					<td>power does not need a name</td>
+					<td><code>{"type":"power"}</code></td>
+					<td><code>{"type":"power","data":{"name":"LocoNet","state":2,"default":true}}</code></td>
+					<td>get power state, "name" is optional, will return default if not passed</td>
 				</tr>
 				<tr>
 					<td><code>{"type":"memory","data":{"name":"IMCURRENTTIME"}}</code></td>
 					<td><code>{"type":"memory","data":{"name":"IMCURRENTTIME","userName":null,"comment":null,"value":"2:53
 							PM"}}</code></td>
-					<td>get (fast)clock time, resent each minute</td>
+					<td>get builtin memory (fast)clock time.</td>
 				</tr>
 				<tr>
 					<td><code>{"type":"ping"}</code></td>
@@ -293,8 +299,8 @@ code {
 						shows two panels</td>
 				</tr>
 				<tr>
-					<td><code>{"type":"throttle","data":{"throttle":"CSX754","address":754}}</code></td>
-					<td><code>{"type":"throttle","data":{"address":754,"speed":0.0,"forward":true,
+					<td><code>{"type":"throttle","data":{"name":"CSX754","address":754}}</code></td>
+					<td><code>{"type":"throttle","data":{"name":"CSX754","address":754,"speed":0.0,"forward":true,
 							"F0":false,"F1":false,"F2":false,"F3":false,"F4":false,"F5":false,"F6":false,"F7":false,
 							"F8":false,"F9":false,"F10":false,"F11":false,"F12":false,"F13":false,"F14":false,
 							"F15":false,"F16":false,"F17":false,"F18":false,"F19":false,"F20":false,"F21":false,
@@ -303,13 +309,13 @@ code {
 					<td>request throttle for address 754, refer to it as "CSX754"</td>
 				</tr>
 				<tr>
-					<td><code>{"type":"throttle","data":{"throttle":"CSX754","speed":0.25}}</code></td>
-					<td><code>{"type":"throttle","data":{"speed":0.25,"throttle":"CSX754"}}</code></td>
+					<td><code>{"type":"throttle","data":{"name":"CSX754","speed":0.25}}</code></td>
+					<td><code>{"type":"throttle","data":{"name":"CSX754","speed":0.25,"throttle":"CSX754"}}</code></td>
 					<td>request speed of throttle "CSX754" to 25%</td>
 				</tr>
 				<tr>
-					<td><code>{"type":"throttle","data":{"throttle":"CSX754","release":null}}</code></td>
-					<td><code>{"type":"throttle","data":{"release":null,"throttle":"CSX754"}}</code></td>
+					<td><code>{"type":"throttle","data":{"name":"CSX754","release":null}}</code></td>
+					<td><code>{"type":"throttle","data":{"name":"CSX754","release":null,"throttle":"CSX754"}}</code></td>
 					<td>release the throttle "CSX754"</td>
 				</tr>
 				<tr>
@@ -325,15 +331,14 @@ code {
 				</tr>
 				<tr>
 					<td><code>{"type":"train","data":{"name":"3"}}</code></td>
-					<td><code>{"type":"train","data":{"userName":"BB","iconName":"BB
-							1017", "name":"3", "departureTime":"07:50",
-							"description":"Bakersfield - Sweeper", "route": "Bksfld-turn",
-							"routeId": "4", "locations": [</code>...<code>], "engines": [</code>...<code>],
-							"cars": [</code>...<code>], "trainDepartsName": "Bakersfield",
-							"trainTerminatesName": "Bakersfield", "location": "Bakersfield",
-							"locationId": "4r1", "status": "Partial 4/8 cars", "statusCode":
-							20, "length": 87, "weight": 144, "leadEngine": "SP 1017",
-							"caboose": "NH 681"}}</code></td>
+					<td><code>{"type":"train","data":{"name":"3","userName":"BB","iconName":"BB 1017",
+                            "departureTime":"07:50","description":"Bakersfield - Sweeper","route":"Bksfld-turn",
+							"routeId":"4","locations":[</code>...<code>],"engines":[</code>...<code>],
+							"cars": [</code>...<code>],"trainDepartsName":"Bakersfield",
+							"trainTerminatesName":"Bakersfield","location":"Bakersfield",
+							"locationId":"4r1","status":"Partial 4/8 cars","statusCode":20,
+                            "length":87,"weight":144,"leadEngine":"SP 1017",
+							"caboose":"NH 681"}}</code></td>
 					<td>request train by name<br />
 					NOTE: locations, engines and cars arrays not shown here for clarity</td>
 				</tr>

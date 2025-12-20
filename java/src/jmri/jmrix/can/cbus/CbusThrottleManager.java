@@ -179,6 +179,10 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                 for (Map.Entry<Integer, CbusThrottle> entry : softThrottles.entrySet()) {
                     CbusThrottle throttle = entry.getValue();
                     if (throttle.getHandle() == handle) {
+                        // stop Throttle from sending keep-alives
+                        throttle.throttleDispose();
+                        // remove from abstract list
+                        forceDisposeThrottle(throttle.getLocoAddress());
                         // Remove the Throttle from the managed list
                         softThrottles.remove(throttle.getHandle());
                     }
@@ -208,8 +212,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
     /**
      * {@inheritDoc}
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"SLF4J_SIGN_ONLY_FORMAT", "SLF4J_FORMAT_SHOULD_BE_CONST"})
-        // justification="I18N of log message")
     @Override
     public void reply(CanReply m) {
         if ( m.extendedOrRtr() ) {

@@ -1,12 +1,16 @@
 package jmri.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.*;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -27,25 +31,25 @@ public class AbstractXmlAdapterTest{
         
         Element testEl = new Element("foo");
         
-        Assert.assertTrue(adapter.getAttributeBooleanValue(testEl, "att", true));
-        Assert.assertFalse(adapter.getAttributeBooleanValue(testEl, "att", false));
+        assertTrue(adapter.getAttributeBooleanValue(testEl, "att", true));
+        assertFalse(adapter.getAttributeBooleanValue(testEl, "att", false));
                 
         testEl.setAttribute("t", "true");
         testEl.setAttribute("f", "false");
         testEl.setAttribute("y", "yes");
         testEl.setAttribute("n", "no");
 
-        Assert.assertTrue(adapter.getAttributeBooleanValue(testEl, "t", true));
-        Assert.assertTrue(adapter.getAttributeBooleanValue(testEl, "t", false));
+        assertTrue(adapter.getAttributeBooleanValue(testEl, "t", true));
+        assertTrue(adapter.getAttributeBooleanValue(testEl, "t", false));
                 
-        Assert.assertFalse(adapter.getAttributeBooleanValue(testEl, "f", true));
-        Assert.assertFalse(adapter.getAttributeBooleanValue(testEl, "f", false));
+        assertFalse(adapter.getAttributeBooleanValue(testEl, "f", true));
+        assertFalse(adapter.getAttributeBooleanValue(testEl, "f", false));
                 
-        Assert.assertTrue(adapter.getAttributeBooleanValue(testEl, "y", true));
-        Assert.assertTrue(adapter.getAttributeBooleanValue(testEl, "y", false));
+        assertTrue(adapter.getAttributeBooleanValue(testEl, "y", true));
+        assertTrue(adapter.getAttributeBooleanValue(testEl, "y", false));
                 
-        Assert.assertFalse(adapter.getAttributeBooleanValue(testEl, "n", true));
-        Assert.assertFalse(adapter.getAttributeBooleanValue(testEl, "n", false));
+        assertFalse(adapter.getAttributeBooleanValue(testEl, "n", true));
+        assertFalse(adapter.getAttributeBooleanValue(testEl, "n", false));
                 
         
     }
@@ -61,15 +65,15 @@ public class AbstractXmlAdapterTest{
         
         Element testEl = new Element("foo");
         
-        Assert.assertEquals(12, adapter.getAttributeIntegerValue(testEl, "att", 12));
+        assertEquals(12, adapter.getAttributeIntegerValue(testEl, "att", 12));
                 
         testEl.setAttribute("t21", "21");
         
-        Assert.assertEquals(21, adapter.getAttributeIntegerValue(testEl, "t21", 12));
+        assertEquals(21, adapter.getAttributeIntegerValue(testEl, "t21", 12));
         
         // check error handling
         testEl.setAttribute("bar", "bar");
-        Assert.assertEquals(21, adapter.getAttributeIntegerValue(testEl, "bar", 21));
+        assertEquals(21, adapter.getAttributeIntegerValue(testEl, "bar", 21));
         
         JUnitAppender.assertErrorMessageStartsWith("Load Error: element: foo System name \"attribute: bar\" User name \"value: bar\" while getAttributeIntegerValue threw exception in adaptor of type jmri.configurexml.AbstractXmlAdapterTest");
     }
@@ -85,11 +89,11 @@ public class AbstractXmlAdapterTest{
         
         Element testEl = new Element("foo");
         
-        Assert.assertEquals(12., adapter.getAttributeDoubleValue(testEl, "att", 12.), 0.001);
+        assertEquals(12., adapter.getAttributeDoubleValue(testEl, "att", 12.), 0.001);
                 
         testEl.setAttribute("t21", "21.");
         
-        Assert.assertEquals(21., adapter.getAttributeDoubleValue(testEl, "t21", 12.), 0.001);
+        assertEquals(21., adapter.getAttributeDoubleValue(testEl, "t21", 12.), 0.001);
     }
         
     @Test
@@ -103,11 +107,11 @@ public class AbstractXmlAdapterTest{
         
         Element testEl = new Element("foo");
         
-        Assert.assertEquals(12., adapter.getAttributeFloatValue(testEl, "att", 12.f), 0.001);
+        assertEquals(12., adapter.getAttributeFloatValue(testEl, "att", 12.f), 0.001);
                 
         testEl.setAttribute("t21", "21.");
         
-        Assert.assertEquals(21., adapter.getAttributeFloatValue(testEl, "t21", 12.f), 0.001);
+        assertEquals(21., adapter.getAttributeFloatValue(testEl, "t21", 12.f), 0.001);
     }
 
     private enum TestEnum {
@@ -128,15 +132,15 @@ public class AbstractXmlAdapterTest{
     public void testEnumIoOrdinals() {
         AbstractXmlAdapter.EnumIO<TestEnum> map = new AbstractXmlAdapter.EnumIoOrdinals<>(TestEnum.class);
         
-        Assert.assertEquals("0", map.outputFromEnum(TestEnum.Foo));
-        Assert.assertEquals(TestEnum.Foo, map.inputFromString("0"));
-        Assert.assertEquals("2", map.outputFromEnum(TestEnum.Biff));
-        Assert.assertEquals(TestEnum.Biff, map.inputFromString("2"));
+        assertEquals("0", map.outputFromEnum(TestEnum.Foo));
+        assertEquals(TestEnum.Foo, map.inputFromString("0"));
+        assertEquals("2", map.outputFromEnum(TestEnum.Biff));
+        assertEquals(TestEnum.Biff, map.inputFromString("2"));
         
-        Assert.assertEquals(TestEnum.Foo, map.inputFromString("FooBar"));
+        assertEquals(TestEnum.Foo, map.inputFromString("FooBar"));
         JUnitAppender.assertErrorMessage("from String FooBar get Foo for class jmri.configurexml.AbstractXmlAdapterTest$TestEnum");
         
-        Assert.assertEquals(TestEnum.Foo, map.inputFromString(null));
+        assertEquals(TestEnum.Foo, map.inputFromString(null));
         JUnitAppender.assertErrorMessage("from String null get Foo for class jmri.configurexml.AbstractXmlAdapterTest$TestEnum");
     }
 
@@ -144,13 +148,13 @@ public class AbstractXmlAdapterTest{
     public void testEnumIoNames() {
         AbstractXmlAdapter.EnumIO<TestEnum> map = new AbstractXmlAdapter.EnumIoNames<>(TestEnum.class);
         
-        Assert.assertEquals("Foo", map.outputFromEnum(TestEnum.Foo));
-        Assert.assertEquals(TestEnum.Biff, map.inputFromString("Biff"));
+        assertEquals("Foo", map.outputFromEnum(TestEnum.Foo));
+        assertEquals(TestEnum.Biff, map.inputFromString("Biff"));
         
-        Assert.assertEquals(TestEnum.Foo, map.inputFromString("FooBar"));
+        assertEquals(TestEnum.Foo, map.inputFromString("FooBar"));
         JUnitAppender.assertErrorMessage("from String FooBar get Foo for class jmri.configurexml.AbstractXmlAdapterTest$TestEnum");
         
-        Assert.assertEquals(TestEnum.Foo, map.inputFromString(null));
+        assertEquals(TestEnum.Foo, map.inputFromString(null));
         JUnitAppender.assertErrorMessage("from String null get Foo for class jmri.configurexml.AbstractXmlAdapterTest$TestEnum");
     }
 
@@ -168,18 +172,18 @@ public class AbstractXmlAdapterTest{
                                         }}
                                    );
         
-        Assert.assertEquals("Foo", map.outputFromEnum(TestEnum.Foo));
-        Assert.assertEquals(TestEnum.Biff, map.inputFromString("biff"));
-        Assert.assertEquals(TestEnum.Biff, map.inputFromString("6"));
+        assertEquals("Foo", map.outputFromEnum(TestEnum.Foo));
+        assertEquals(TestEnum.Biff, map.inputFromString("biff"));
+        assertEquals(TestEnum.Biff, map.inputFromString("6"));
 
-        Assert.assertEquals("Foo", map.outputFromEnum(TestEnum.Foo));
-        Assert.assertEquals(TestEnum.Foo, map.inputFromString("foo"));
-        Assert.assertEquals(TestEnum.Foo, map.inputFromString("4"));
+        assertEquals("Foo", map.outputFromEnum(TestEnum.Foo));
+        assertEquals(TestEnum.Foo, map.inputFromString("foo"));
+        assertEquals(TestEnum.Foo, map.inputFromString("4"));
 
-        Assert.assertEquals(TestEnum.Foo, map.inputFromString("FooBar"));
+        assertEquals(TestEnum.Foo, map.inputFromString("FooBar"));
         JUnitAppender.assertErrorMessage("from String FooBar get Foo for class jmri.configurexml.AbstractXmlAdapterTest$TestEnum");
 
-        Assert.assertEquals(TestEnum.Foo, map.inputFromString(null));
+        assertEquals(TestEnum.Foo, map.inputFromString(null));
         JUnitAppender.assertErrorMessage("from String null get Foo for class jmri.configurexml.AbstractXmlAdapterTest$TestEnum");
     }
 
@@ -202,18 +206,18 @@ public class AbstractXmlAdapterTest{
                                         }}
                                 );
         
-        Assert.assertEquals("BIFF", map.outputFromEnum(TestEnum.Biff));
-        Assert.assertEquals(TestEnum.Biff, map.inputFromString("biff"));
-        Assert.assertEquals(TestEnum.Biff, map.inputFromString("6"));
+        assertEquals("BIFF", map.outputFromEnum(TestEnum.Biff));
+        assertEquals(TestEnum.Biff, map.inputFromString("biff"));
+        assertEquals(TestEnum.Biff, map.inputFromString("6"));
 
-        Assert.assertEquals("FOO", map.outputFromEnum(TestEnum.Foo));
-        Assert.assertEquals(TestEnum.Foo, map.inputFromString("foo"));
-        Assert.assertEquals(TestEnum.Foo, map.inputFromString("4"));
+        assertEquals("FOO", map.outputFromEnum(TestEnum.Foo));
+        assertEquals(TestEnum.Foo, map.inputFromString("foo"));
+        assertEquals(TestEnum.Foo, map.inputFromString("4"));
 
-        Assert.assertEquals(TestEnum.Foo, map.inputFromString("FooBar"));
+        assertEquals(TestEnum.Foo, map.inputFromString("FooBar"));
         JUnitAppender.assertErrorMessage("from String FooBar get Foo for class jmri.configurexml.AbstractXmlAdapterTest$TestEnum");
 
-        Assert.assertEquals(TestEnum.Foo, map.inputFromString(null));
+        assertEquals(TestEnum.Foo, map.inputFromString(null));
         JUnitAppender.assertErrorMessage("from String null get Foo for class jmri.configurexml.AbstractXmlAdapterTest$TestEnum");
     }
 

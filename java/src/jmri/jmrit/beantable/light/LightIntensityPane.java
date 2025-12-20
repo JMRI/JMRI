@@ -4,9 +4,7 @@ import javax.swing.*;
 
 import jmri.Light;
 import jmri.VariableLight;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JSpinnerUtil;
 
 /**
  * Panel to display Light Intensity options.
@@ -18,17 +16,17 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2021
  */
 public class LightIntensityPane extends JPanel {
-    
+
     private JPanel minPan;
     private JPanel maxPan;
     private JPanel transitionPan;
-    
+
     private JSpinner minIntensity;
     private JSpinner maxIntensity;
     private JSpinner transitionTime;
-    
+
     private final JLabel status1 = new JLabel();
-    
+
     /**
      * Create a new Light Intensity Panel.
      * 
@@ -38,60 +36,62 @@ public class LightIntensityPane extends JPanel {
         super();
         init(vertical);
     }
-    
-    
+
     private void init(boolean vertical){
-    
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS ));
         minIntensity = new JSpinner();
         maxIntensity = new JSpinner();
         transitionTime = new JSpinner();
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, ( vertical ? BoxLayout.Y_AXIS : BoxLayout.X_AXIS)));
-        
+
         minPan = new JPanel();
         minPan.add(new JLabel(" "));
         minPan.add(new JLabel(Bundle.getMessage("LightMinIntensity")));
         minIntensity.setModel(
-                new SpinnerNumberModel(Double.valueOf(0.0d), Double.valueOf(0.0d), Double.valueOf(0.99d), Double.valueOf(0.01d))); // 0 - 99%
+                new SpinnerNumberModel(0.0d, 0.0d, 0.99d, 0.01d)); // 0 - 99%
         minIntensity.setEditor(new JSpinner.NumberEditor(minIntensity, "##0 %"));
         minIntensity.setToolTipText(Bundle.getMessage("LightMinIntensityHint"));
         minIntensity.setValue(0.0d); // reset JSpinner1
+        JSpinnerUtil.setCommitsOnValidEdit(minIntensity, true);
         minPan.add(minIntensity);
         minPan.add(new JLabel("   "));
         mainPanel.add(minPan);
-        
+
         maxPan = new JPanel();
         maxPan.add(new JLabel(Bundle.getMessage("LightMaxIntensity")));
         maxIntensity.setModel(
-                new SpinnerNumberModel(Double.valueOf(1.0d), Double.valueOf(0.01d), Double.valueOf(1.0d), Double.valueOf(0.01d))); // 100 - 1%
+                new SpinnerNumberModel(1.0d, 0.01d, 1.0d, 0.01d)); // 100 - 1%
         maxIntensity.setEditor(new JSpinner.NumberEditor(maxIntensity, "##0 %"));
         maxIntensity.setToolTipText(Bundle.getMessage("LightMaxIntensityHint"));
         maxIntensity.setValue(1.0d); // reset JSpinner2
+        JSpinnerUtil.setCommitsOnValidEdit(maxIntensity, true);
         maxPan.add(maxIntensity);
         maxPan.add(new JLabel("   "));
         mainPanel.add(maxPan);
-        
+
         transitionPan = new JPanel();
         transitionPan.add(new JLabel(Bundle.getMessage("LightTransitionTime")));
         transitionTime.setModel(
-                new SpinnerNumberModel(Double.valueOf(0d), Double.valueOf(0d), Double.valueOf(1000000d), Double.valueOf(0.01d)));
+                new SpinnerNumberModel(0d, 0d, 1000000d, 0.01d));
         transitionTime.setEditor(new JSpinner.NumberEditor(transitionTime, "###0.00"));
         transitionTime.setPreferredSize(new JTextField(8).getPreferredSize());
         transitionTime.setToolTipText(Bundle.getMessage("LightTransitionTimeHint"));
         transitionTime.setValue(0.0); // reset from possible previous use
+        JSpinnerUtil.setCommitsOnValidEdit(transitionTime, true);
         transitionPan.add(transitionTime);
         transitionPan.add(new JLabel(" "));
         mainPanel.add(transitionPan);
-        
+
         add(mainPanel);
-        
+
         JPanel statusPanel = new JPanel();
         statusPanel.add(status1);
         add(statusPanel);
-    
+
     }
-    
+
     /**
      * Set the panel to match a Light.
      * @param light the Light to set Panel for.
@@ -101,20 +101,21 @@ public class LightIntensityPane extends JPanel {
             minIntensity.setValue(((VariableLight)light).getMinIntensity()); // displayed as percentage
             maxIntensity.setValue(((VariableLight)light).getMaxIntensity());
             if (((VariableLight)light).isTransitionAvailable()) {
-                transitionTime.setValue(((VariableLight)light).getTransitionTime()); // displays i18n decimal separator eg. 0,00 in _nl
+                // displays i18n decimal separator eg. 0,00 in _nl
+                transitionTime.setValue(((VariableLight)light).getTransitionTime());
             }
             setupVariableDisplay(true, ((VariableLight)light).isTransitionAvailable());
         } else {
             setupVariableDisplay(false, false);
         }
     }
-    
+
     /**
      * Set a Light to match the Panel.
      * @param light The Light to edit details for.
      */
     public void setLightFromPane(VariableLight light){
-    
+
         if ((Double) minIntensity.getValue() >= (Double) maxIntensity.getValue()) {
             log.error("minInt value entered: {}", minIntensity.getValue());
             // do not set intensity
@@ -129,7 +130,7 @@ public class LightIntensityPane extends JPanel {
         }
     
     }
-    
+
     /**
      * Set up panel for Variable Options.
      *
@@ -143,7 +144,7 @@ public class LightIntensityPane extends JPanel {
         transitionPan.setVisible(showTransition);
         setVisible(showIntensity || showTransition);
     }
-    
-    private final static Logger log = LoggerFactory.getLogger(LightIntensityPane.class);
-    
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LightIntensityPane.class);
+
 }

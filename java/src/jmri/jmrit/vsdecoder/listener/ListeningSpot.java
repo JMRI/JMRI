@@ -7,8 +7,6 @@ import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 import jmri.util.PhysicalLocation;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a defined spot for viewing (and therefore listening to) a layout.
@@ -27,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2012
+ * @author Klaus Killinger Copyright (C) 2025
  */
 public class ListeningSpot {
 
@@ -37,10 +36,11 @@ public class ListeningSpot {
 
     private static final Vector3d _atVector = new Vector3d(0.0d, 1.0d, 0.0d);
     private static final Vector3d _upVector = new Vector3d(0.0d, 0.0d, 1.0d);
+    private static final Vector3d _locVector = new Vector3d(0.0d, 0.0d, 0.0d);
 
     public ListeningSpot() {
         _name = null;
-        _location = new Vector3d();
+        _location = _locVector;
         _up = _upVector;
         _lookAt = _atVector;
     }
@@ -52,26 +52,11 @@ public class ListeningSpot {
         _lookAt = _atVector;
     }
 
-    public ListeningSpot(Vector3d position) {
-        this(null, position);
-    }
-
-    public ListeningSpot(String name, Vector3d position) {
-        _name = name;
-        _location = position;
-        _lookAt = _atVector;
-        _up = _upVector;
-    }
-
     public ListeningSpot(String name, Vector3d loc, Vector3d up, Vector3d at) {
         _name = name;
         _location = loc;
         _up = up;
         _lookAt = at;
-    }
-
-    public ListeningSpot(Element e) {
-        this.setXml(e);
     }
 
     public String getName() {
@@ -212,12 +197,12 @@ public class ListeningSpot {
            azimuth = -180.0d - azimuth;
         }
 
-        double y = Math.sin(Math.toRadians(90 - azimuth)) * Math.cos(Math.toRadians(bearing)); 
+        double y = Math.sin(Math.toRadians(90 - azimuth)) * Math.cos(Math.toRadians(bearing));
         double x = Math.sin(Math.toRadians(90 - azimuth)) * Math.sin(Math.toRadians(bearing));
         double z = Math.cos(Math.toRadians(90 - azimuth));
         _lookAt = new Vector3d(x, y, z);
         _up = calcUpFromLookAt(_lookAt);
- 
+
         _lookAt.x = roundDecimal(_lookAt.x);
         _lookAt.y = roundDecimal(_lookAt.y);
         _lookAt.z = roundDecimal(_lookAt.z);
@@ -277,8 +262,14 @@ public class ListeningSpot {
         if ((_location == null) || (_lookAt == null) || (_up == null)) {
             return "ListeningSpot (undefined)";
         } else {
-            return ("ListeningSpot Name: " + _name + " Location: " + _location.toString() + " LookAt: " + _lookAt.toString() + " Up: " + _up.toString());
+            return ("ListeningSpot Name: " + _name + " Location: " + _location.toString() +
+                    " LookAt: " + _lookAt.toString() + " Up: " + _up.toString());
         }
+    }
+
+    public ListeningSpot parseListeningSpot(Element e) {
+        setXml(e);
+        return new ListeningSpot(_name, _location, _up, _lookAt);
     }
 
     public Element getXml(String elementName) {
@@ -292,11 +283,12 @@ public class ListeningSpot {
 
     public void setXml(Element e) {
         if (e != null) {
-            log.debug("ListeningSpot: {}", e.getAttributeValue("name"));
             _name = e.getAttributeValue("name");
             _location = parseVector3d(e.getAttributeValue("location"));
             _up = parseVector3d(e.getAttributeValue("up"));
             _lookAt = parseVector3d(e.getAttributeValue("look_at"));
+            log.debug("ListeningSpot: name: {}, location: {}, up: {}, lookAt: {}",
+                    _name, _location, _up, _lookAt);
         }
     }
 
@@ -312,6 +304,6 @@ public class ListeningSpot {
         return value;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ListeningSpot.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ListeningSpot.class);
 
 }

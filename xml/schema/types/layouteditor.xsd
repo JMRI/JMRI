@@ -129,6 +129,7 @@
       <xs:attribute name="gridSize2nd" type="xs:integer"/>
       <xs:attribute name="openDispatcher" type="yesNoType" default="no"/>
       <xs:attribute name="useDirectTurnoutControl" type="yesNoType" default="no"/>
+      <xs:attribute name="highlightCursor" type="yesNoType" default="no"/>
       <xs:attribute name="zoom" type="xs:float" default="1.0"/>
     </xs:complexType>
 

@@ -144,9 +144,9 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         int b3 = m.getElement(2);
         int b4 = m.getElement(3) & 0x07; // UR-92's set bit 4 for duplex
 
-        // Response code is D7 {12, 17, 1F} 00 <value>
+        // Response code is D7 {12, 14, 17, 1F} 00 <value>
         if ((b1 == 0xD7)
-                && ((b2 == 0x12) || (b2 == 0x17) || (b2 == 0x1F))
+                && ((b2 == 0x12) || (b2 == 0x14) || (b2 == 0x17) || (b2 == 0x1F))
                 && (b3 == 0x00)) {
             // We start with "-", so index + 1
             idBox.setSelectedIndex(b4 + 1);

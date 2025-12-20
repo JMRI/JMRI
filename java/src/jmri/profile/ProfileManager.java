@@ -57,7 +57,7 @@ public class ProfileManager extends Bean {
     private boolean autoStartActiveProfile = false;
     private File defaultSearchPath = new File(FileUtil.getPreferencesPath());
     private int autoStartActiveProfileTimeout = 10;
-    volatile private static ProfileManager defaultInstance = null;
+
     public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
     public static final String NEXT_PROFILE = "nextProfile"; // NOI18N
     private static final String AUTO_START = "autoStart"; // NOI18N
@@ -72,23 +72,16 @@ public class ProfileManager extends Bean {
     public static final String SYSTEM_PROPERTY = "org.jmri.profile"; // NOI18N
     private static final Logger log = LoggerFactory.getLogger(ProfileManager.class);
 
-    /**
-     * Create a new ProfileManager using the default catalog. In almost all
-     * cases, the use of {@link #getDefault()} is preferred.
-     */
-    public ProfileManager() {
-        this(new File(FileUtil.getPreferencesPath() + CATALOG));
+    // Synchronized lazy initialization, default instance created the 1st time requested
+    private static class InstanceHolder {
+        private static final ProfileManager defaultInstance = new ProfileManager();
     }
 
     /**
-     * Create a new ProfileManager. In almost all cases, the use of
-     * {@link #getDefault()} is preferred.
-     *
-     * @param catalog the list of know profiles as an XML file
+     * Create a new ProfileManager using the default catalog.
      */
-    // TODO: write Test cases using this.
-    public ProfileManager(File catalog) {
-        this.catalog = catalog;
+    private ProfileManager() {
+        this.catalog = new File(FileUtil.getPreferencesPath() + CATALOG);
         try {
             this.readProfiles();
             this.findProfiles();
@@ -109,10 +102,7 @@ public class ProfileManager extends Bean {
      */
     @Nonnull
     public static ProfileManager getDefault() {
-        if (defaultInstance == null) {
-            defaultInstance = new ProfileManager();
-        }
-        return defaultInstance;
+        return InstanceHolder.defaultInstance;
     }
 
     /**

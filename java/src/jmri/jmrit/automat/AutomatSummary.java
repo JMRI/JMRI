@@ -18,18 +18,18 @@ public class AutomatSummary {
     private AutomatSummary() {
     }
 
-    static volatile private AutomatSummary self = null;
+    // Synchronized lazy initialization, default instance created the 1st time requested
+    private static class InstanceHolder {
+        private static final AutomatSummary self = new AutomatSummary();
+    }
 
-    static public AutomatSummary instance() {
-        if (self == null) {
-            self = new AutomatSummary();
-        }
-        return self;
+    public static AutomatSummary instance() {
+        return InstanceHolder.self;
     }
 
     private final ArrayList<AbstractAutomaton> automats = new ArrayList<>();
 
-    java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
+    private final java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
 
     public void removePropertyChangeListener(java.beans.PropertyChangeListener p) {
         prop.removePropertyChangeListener(p);
@@ -141,7 +141,7 @@ public class AutomatSummary {
         javax.swing.SwingUtilities.invokeLater(r);
     }
 
-    class Notifier implements Runnable {
+    private class Notifier implements Runnable {
 
         Notifier(String property, Object arg1, Object arg2) {
             this.property = property;

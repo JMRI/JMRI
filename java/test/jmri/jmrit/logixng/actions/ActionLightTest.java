@@ -478,7 +478,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.ITEM == _base.getCategory());
     }
 
     @Test
@@ -515,7 +515,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         light = InstanceManager.getDefault(LightManager.class).provide("IL1");

@@ -36,6 +36,7 @@ public class Xml {
     static final String RANDOM_CONTROL = "randomControl"; // NOI18N
     static final String PICKUPS = "pickups"; // NOI18N
     static final String DROPS = "drops"; // NOI18N
+    static final String LOCAL_MOVES = "localMoves"; // NOI18N
     static final String WAIT = "wait"; // NOI18N
     static final String DEPART_TIME = "departTime"; // NOI18N
     static final String TRAIN_ICON_X = "trainIconX"; // NOI18N

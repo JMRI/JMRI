@@ -11,8 +11,9 @@ import org.junit.jupiter.api.*;
 public class I18NTest {
 
     @Test
+    @Disabled("Test requires further development")
     public void testI18N() throws IOException {
-        return; // disable the test until I can figure out why its failing on Jenkins
+        // disable the test until I can figure out why its failing on Jenkins
         /*
          File suiteDir = new File(System.getProperty("user.dir")); // root of SVN checkout
          suiteDir = suiteDir.getCanonicalFile();

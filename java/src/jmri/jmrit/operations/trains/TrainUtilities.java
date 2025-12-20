@@ -2,6 +2,7 @@ package jmri.jmrit.operations.trains;
 
 import java.io.File;
 import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +32,7 @@ public class TrainUtilities {
         try {
             desktop.open(file);
         } catch (IOException e) {
-            log.error("unable to open {} in desktop application", file, e);
+            log.error("unable to open {} in desktop application: {}", file.getName(), e.getLocalizedMessage());
         }
     }
 

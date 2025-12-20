@@ -7,6 +7,8 @@ import javax.swing.JTable;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarSetFrame;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableModel;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -44,8 +46,7 @@ public class CarsSetFrame extends CarSetFrame {
         setTitle(Bundle.getMessage("TitleSetCars"));
         // modify Save button text to "Apply";
         saveButton.setText(Bundle.getMessage("ButtonApply"));
-        // disable edit load button if no cars selected
-        editLoadButton.setEnabled(false);
+
         // show ignore checkboxes
         ignoreStatusCheckBox.setVisible(true);
         ignoreLocationCheckBox.setVisible(true);

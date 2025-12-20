@@ -141,7 +141,6 @@ public class ImportEntryExitTest {
         runTestExpressionEntryExit(dp, sensor211);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws JmriException {
 
@@ -211,6 +210,8 @@ public class ImportEntryExitTest {
 
     @After
     public void tearDown() {
+
+        JUnitUtil.resetWindows(false, false);
 
         JUnitAppender.suppressWarnMessageStartsWith("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:000'");
         JUnitAppender.suppressWarnMessage("Import Conditional 'IX:RTXINITIALIZER1T' to LogixNG 'IQ:AUTO:0005'");

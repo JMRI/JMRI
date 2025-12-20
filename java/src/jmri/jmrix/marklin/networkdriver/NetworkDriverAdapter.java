@@ -2,15 +2,13 @@ package jmri.jmrix.marklin.networkdriver;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.net.DatagramSocket;
+
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.marklin.MarklinPortController;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 import jmri.jmrix.marklin.MarklinTrafficController;
 import jmri.util.com.rbnb.UDPInputStream;
 import jmri.util.com.rbnb.UDPOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements NetworkPortAdapter for the Marklin system network connection.
@@ -22,8 +20,6 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2012
  */
 public class NetworkDriverAdapter extends MarklinPortController {
-
-    protected DatagramSocket datagramSocketConn = null;
 
     public NetworkDriverAdapter() {
         super(new MarklinSystemConnectionMemo());
@@ -129,6 +125,6 @@ public class NetworkDriverAdapter extends MarklinPortController {
         return opened;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

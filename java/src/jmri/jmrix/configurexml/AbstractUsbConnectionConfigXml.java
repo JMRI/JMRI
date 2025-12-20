@@ -156,6 +156,11 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
         log.error("method with two args invoked");
     }
 
+    @Override
+    protected void dispose() {
+        adapter.dispose();
+    }
+
     // initialize logging
     private static final Logger log
             = LoggerFactory.getLogger(AbstractUsbConnectionConfigXml.class);

@@ -1,9 +1,19 @@
 package jmri.server.json.operations;
 
 import static jmri.server.json.JSON.*;
+import static jmri.server.json.JSON.COMMENT;
+import static jmri.server.json.JSON.DESTINATION;
 import static jmri.server.json.JSON.ENGINES;
+import static jmri.server.json.JSON.KERNEL;
+import static jmri.server.json.JSON.LENGTH;
+import static jmri.server.json.JSON.LOCATION;
+import static jmri.server.json.JSON.MODEL;
+import static jmri.server.json.JSON.NUMBER;
+import static jmri.server.json.JSON.ROAD;
+import static jmri.server.json.JSON.TRACK;
+import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JSON.WEIGHT;
 import static jmri.server.json.operations.JsonOperations.*;
-import static jmri.server.json.operations.JsonOperations.KERNEL;
 import static jmri.server.json.operations.JsonOperations.OUT_OF_SERVICE;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
@@ -408,8 +418,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
      * Set the properties in the data parameter for the train with the given id.
      * <p>
      * Currently only moves the train to the location given with the key
-     * {@value jmri.server.json.operations.JsonOperations#LOCATION}. If the move
-     * cannot be completed, throws error code 428.
+     * LOCATION. If the move cannot be completed, throws error code 428.
      *
      * @param name   id of the train
      * @param data   train data to change
@@ -660,22 +669,18 @@ public class JsonOperationsHttpService extends JsonHttpService {
             }
         }
         // set properties using the existing property as the default
-        rs.setRoadName(data.path(ROAD).asText(rs.getRoadName()));
-        rs.setNumber(data.path(NUMBER).asText(rs.getNumber()));
+        rs.setRoadName(data.path(JsonOperations.ROAD).asText(rs.getRoadName()));
+        rs.setNumber(data.path(JsonOperations.NUMBER).asText(rs.getNumber()));
         rs.setColor(data.path(COLOR).asText(rs.getColor()));
-        rs.setComment(data.path(COMMENT).asText(rs.getComment()));
-        rs.setOwnerName(data.path(OWNER).asText(rs.getOwnerName()));
+        rs.setComment(data.path(JsonOperations.COMMENT).asText(rs.getComment()));
+        rs.setOwnerName(data.path(JsonOperations.OWNER).asText(rs.getOwnerName()));
         rs.setBuilt(data.path(BUILT).asText(rs.getBuilt()));
-        if (data.path(WEIGHT).isValueNode()) {
-            rs.setWeight(Double.toString(data.path(WEIGHT).asDouble()));
-        }
-        if (data.path(WEIGHT_TONS).isValueNode()) {
-            rs.setWeightTons(Double.toString(data.path(WEIGHT_TONS).asDouble()));
-        }
+
+        rs.setWeightTons(data.path(WEIGHT_TONS).asText());
         rs.setRfid(data.path(RFID).asText(rs.getRfid()));
         rs.setLength(Integer.toString(data.path(LENGTH).asInt(rs.getLengthInteger())));
         rs.setOutOfService(data.path(OUT_OF_SERVICE).asBoolean(rs.isOutOfService()));
-        rs.setTypeName(data.path(CAR_TYPE).asText(rs.getTypeName()));
+        rs.setTypeName(data.path(JsonOperations.TYPE).asText(rs.getTypeName()));
         ObjectNode result = utilities.getRollingStock(rs, locale);
         if (!rs.getId().equals(name)) {
             result.put(RENAME, name);

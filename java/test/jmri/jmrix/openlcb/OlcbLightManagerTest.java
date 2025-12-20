@@ -3,6 +3,7 @@ package jmri.jmrix.openlcb;
 
 import java.beans.PropertyVetoException;
 
+import jmri.InstanceManager;
 import jmri.Light;
 import jmri.util.JUnitUtil;
 
@@ -18,9 +19,9 @@ import org.openlcb.*;
 public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
     private static OlcbSystemConnectionMemoScaffold memo;
-    static Connection connection;
-    static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
-    static java.util.ArrayList<Message> messages;
+    private static Connection connection;
+    private static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+    private static java.util.ArrayList<Message> messages;
 
     @Override
     public String getSystemName(int i) {
@@ -127,9 +128,9 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         testRegisterDuplicateSystemName(l, s1, s2);
     }
 
-    // Test requires further setup
     @Override
     @Test
+    @Disabled("Test requires further setup")
     public void testCreate() {}
 
     @Override
@@ -170,7 +171,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             }
         });
 
-        jmri.util.JUnitUtil.waitFor(()-> (!messages.isEmpty()),"Initialization Complete message");
+        JUnitUtil.waitFor(()-> (!messages.isEmpty()),"Initialization Complete message");
     }
 
     @AfterAll
@@ -178,6 +179,8 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
+           memo.get(OlcbEventNameStore.class).deregisterShutdownTask();
+           InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
         }
         memo = null;
         connection = null;

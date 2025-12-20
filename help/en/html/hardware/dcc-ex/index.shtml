@@ -50,7 +50,7 @@
       Most menus and labels still show "DCC++" but work properly with DCC-EX.</p>
 
       <p>Note: DCC-EX is a separate project from JMRI. If you have questions about building an EX-CommandStation system, operating it, etc, you should get help via their <a href="https://dcc-ex.com/">DCC-EX website</a> or their <a href=
-        "https://discord.gg/bFHAafZE">DCC-EX Discord server</a>. There's also information on the <a href="https://github.com/DCC-EX">DCC-EX GitHub repository</a> and <a href=
+        "https://discord.com/invite/y2sB4Fp">DCC-EX Discord server</a>. There's also information on the <a href="https://github.com/DCC-EX">DCC-EX GitHub repository</a> and <a href=
       "https://dcc-ex.com/">associated documentation</a>. The JMRI discussion groups can only provide limited support for EX-CommandStation itself.</p>
 
       <p>Features of DCC-EX CommandStation include:</p>
@@ -207,11 +207,12 @@
 
         <li>Select "DCC++ Ethernet" from the second selection box ("System Connection").</li>
 
-        <li>Input the IP Address and Port Number of the EX-CommandStation.</li>
+        <li>Input the IP Address or Host Name of the EX-CommandStation.</li>
+        
+        <li>Check the "Additional Connection Settings" and verify that the Port is set to "2560" (DCC-EX default)</li>
 
-        <li>Click "Save". You'll be asked if it's OK for the program to quit, click "Yes".</li>
+        <li>Click "Save". You'll be prompted to Restart, click "Restart".</li>
 
-        <li>Restart the program. You should be up and running.</li>
       </ol>
 
       <h3>Connecting a 2nd JMRI instance to an EX-CommandStation using DCC++ Over TCP</h3>
@@ -311,7 +312,7 @@
       <ul>
 
         <li>
-          <a href="https://dcc-ex.com/ex-commandstation/get-started/index.html#gsc.tab=0">EX-CommandStation - Getting Started</a>
+          <a href="https://dcc-ex.com/begin/what-to-know.html#gsc.tab=0">EX-CommandStation - Getting Started</a>
         </li>
 
         <li>

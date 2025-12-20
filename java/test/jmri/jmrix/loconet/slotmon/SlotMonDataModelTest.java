@@ -21,7 +21,10 @@ public class SlotMonDataModelTest {
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
         SlotMonDataModel t = new SlotMonDataModel(1,19,memo);
         Assert.assertNotNull("exists",t);
+        t.dispose();
+        slotmanager.dispose();
         memo.dispose();
+        JUnitUtil.waitThreadTerminated(slotmanager.getUserName() + SlotManager.READ_ALL_SLOTS_THREADNAME);
     }
 
     @BeforeEach

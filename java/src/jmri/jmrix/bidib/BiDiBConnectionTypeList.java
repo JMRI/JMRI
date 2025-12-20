@@ -5,7 +5,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns a list of valid BiDiB Connection Types
- * <p>
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2015
@@ -27,6 +27,7 @@ public class BiDiBConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.bidib.serialdriver.ConnectionConfig",
             "jmri.jmrix.bidib.simulator.ConnectionConfig",
             "jmri.jmrix.bidib.bidibovertcp.ConnectionConfig",
+            "jmri.jmrix.bidib.netbidib.ConnectionConfig",
         };
     }
 

@@ -1,9 +1,6 @@
 package jmri.jmrit.operations.routes.tools;
 
-import java.awt.GraphicsEnvironment;
-
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
@@ -24,20 +21,15 @@ public class ExportRoutesTest extends OperationsTestCase {
     }
 
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCreateFile() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ExportRoutes exportRoutes = new ExportRoutes();
         Assert.assertNotNull("exists", exportRoutes);
 
         JUnitOperationsUtil.initOperationsData();
 
         // next should cause export complete dialog to appear
-        Thread export = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                exportRoutes.writeOperationsRoutesFile();
-            }
-        });
+        Thread export = new Thread(exportRoutes::writeOperationsRoutesFile);
         export.setName("Export Routes"); // NOI18N
         export.start();
 
@@ -47,9 +39,10 @@ public class ExportRoutesTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
 
+        jmri.util.JUnitUtil.waitFor(() -> !export.isAlive(), "wait for export to complete");
+
         java.io.File file = new java.io.File(ExportRoutes.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
-        
 
     }
 

@@ -14,6 +14,7 @@ import org.junit.jupiter.api.*;
 public class IntTriggerTest {
 
     @Test
+    @Disabled("Test requires further development")
     public void testStateConstants() {
         // Maybe check the enums here?
     }
@@ -105,9 +106,7 @@ public class IntTriggerTest {
             }
         });
         uut.setCompareType(Trigger.CompareType.GT);
-        PropertyChangeEvent e = new PropertyChangeEvent(this, "test event",
-                Integer.valueOf(1),
-                Integer.valueOf(3));
+        PropertyChangeEvent e = new PropertyChangeEvent(this, "test event", 1, 3);
         uut.propertyChange(e);
 
         uut.setCompareType(Trigger.CompareType.LT);
@@ -117,21 +116,15 @@ public class IntTriggerTest {
         uut.propertyChange(e);
 
         uut.setCompareType(Trigger.CompareType.GTE);
-        e = new PropertyChangeEvent(this, "test event",
-                Integer.valueOf(1),
-                Integer.valueOf(2));
+        e = new PropertyChangeEvent(this, "test event", 1, 2);
         uut.propertyChange(e);
 
         uut.setCompareType(Trigger.CompareType.LTE);
-        e = new PropertyChangeEvent(this, "test event",
-                Integer.valueOf(3),
-                Integer.valueOf(2));
+        e = new PropertyChangeEvent(this, "test event", 3, 2);
         uut.propertyChange(e);
 
         uut.setCompareType(Trigger.CompareType.EQ);
-        e = new PropertyChangeEvent(this, "test event",
-                Integer.valueOf(3),
-                Integer.valueOf(2));
+        e = new PropertyChangeEvent(this, "test event", 3, 2);
         uut.propertyChange(e);
     }
 

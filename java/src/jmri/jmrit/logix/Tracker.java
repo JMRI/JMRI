@@ -1,6 +1,5 @@
 package jmri.jmrit.logix;
 
-import javax.annotation.Nonnull;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -9,6 +8,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractListModel;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -34,13 +35,13 @@ import jmri.util.swing.JmriJOptionPane;
 public class Tracker {
 
     private static final String TRACKER_NO_CURRENT_BLOCK = "TrackerNoCurrentBlock";
-    TrackerTableAction _parent;
+    private final TrackerTableAction _parent;
     private final String _trainName;
     private ArrayList<OBlock> _headRange; // blocks reachable from head block
     private ArrayList<OBlock> _tailRange; // blocks reachable from tail block
     private final ArrayList<OBlock> _lostRange = new ArrayList<>(); // blocks that lost detection
     private final LinkedList<OBlock> _occupies = new LinkedList<>();     // blocks occupied by train
-    long _startTime;
+    final long _startTime;
     String _statusMessage;
     private final Color _markerForeground;
     private final Color _markerBackground;
@@ -67,9 +68,9 @@ public class Tracker {
         block._entryTime = _startTime;
         List<OBlock> occupy = initialRange(_parent);
         if (!occupy.isEmpty()) {
-            new ChooseStartBlock(block, occupy, this, _parent);
+            new ChooseStartBlock(block, occupy, Tracker.this, _parent);
         } else {
-            _parent.addTracker(this);
+            _parent.addTracker(Tracker.this);
         }
         if (marker != null) {
             marker.dock();
@@ -242,7 +243,7 @@ public class Tracker {
     /**
      * Get All paths in OBlock "block" that are set to go to Portal "portal"
      */
-    private List<OPath> getPathsSet(OBlock block, Portal portal) {
+    private List<OPath> getPathsSet(OBlock block, @Nonnull Portal portal) {
         List<OPath> paths = portal.getPathsWithinBlock(block);
         List<OPath> setPaths = new ArrayList<>();
         for (OPath path : paths) {
@@ -261,7 +262,7 @@ public class Tracker {
         return !(_headRange.contains(b) || _occupies.contains(b) || _tailRange.contains(b));
     }
 
-    private void addtoHeadRange(OBlock b) {
+    private void addtoHeadRange(@CheckForNull OBlock b) {
         if (b != null) {
             if (areDisjoint(b)) {
                 _headRange.add(b);
@@ -269,7 +270,7 @@ public class Tracker {
         }
     }
 
-    private void addtoTailRange(OBlock b) {
+    private void addtoTailRange(@CheckForNull OBlock b) {
         if (b != null) {
             if (areDisjoint(b)) {
                 _tailRange.add(b);
@@ -600,7 +601,7 @@ public class Tracker {
         }
     }
 
-    abstract class ChooseBlock extends JDialog implements ListSelectionListener {
+    private abstract class ChooseBlock extends JDialog implements ListSelectionListener {
         OBlock block;
         TrackerTableAction parent;
         List<OBlock> list;

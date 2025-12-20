@@ -36,7 +36,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         updateOutput();
 
         // notify listeners, if any
-        firePropertyChange("Appearance", oldAppearance, newAppearance);
+        firePropertyChange(PROPERTY_APPEARANCE, oldAppearance, newAppearance);
     }
 
     /**
@@ -75,7 +75,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
             }
             updateOutput();
             // notify listeners, if any
-            firePropertyChange("Lit", oldLit, newLit);
+            firePropertyChange(PROPERTY_LIT, oldLit, newLit);
         }
     }
 
@@ -95,7 +95,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         mHeld = newHeld;
         if (oldHeld != newHeld) {
             // notify listeners, if any
-            firePropertyChange("Held", oldHeld, newHeld);
+            firePropertyChange(PROPERTY_HELD, oldHeld, newHeld);
         }
 
     }

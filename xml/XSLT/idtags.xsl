@@ -25,12 +25,12 @@
      In batch work via running Ant, this is defined
      via the build.xml file
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2024')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2025')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
 -->
-<xsl:output method="html" encoding="ISO-8859-1"/>
+<xsl:output method="html" encoding="UTF-8"/>
 
 
 <!-- This first template matches our root element in the input file.

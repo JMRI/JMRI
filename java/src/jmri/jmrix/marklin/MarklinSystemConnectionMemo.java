@@ -17,7 +17,8 @@ import jmri.util.NamedBeanComparator;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
+public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo
+    implements ConfiguringSystemConnectionMemo {
 
     // Allow is-a relation between sub types, i.e. CdB and Marklin
     protected MarklinSystemConnectionMemo(String prefix, String userName) {

@@ -22,7 +22,7 @@ import org.jdom2.Element;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018, 2021
+ * @author Klaus Killinger Copyright (C) 2018, 2021, 2025
  */
 public class EngineSound extends VSDSound {
 
@@ -40,6 +40,7 @@ public class EngineSound extends VSDSound {
     int sleep_interval;
     float exponent;
     private float actual_speed;
+    private boolean buffers_state;
 
     EnginePane engine_pane;
 
@@ -197,6 +198,22 @@ public class EngineSound extends VSDSound {
     @Override
     public void setVolume(float v) {
         // do nothing.
+    }
+
+    boolean getBuffersFreeState() {
+        return buffers_state;
+    }
+
+    void setBuffersFreeState(boolean state) {
+        buffers_state = state;
+        if (!buffers_state) {
+            String soundtype = this.toString();
+            soundtype = soundtype.substring(soundtype.indexOf("vsdecoder.") + 10, soundtype.indexOf("Sound"));
+            log.warn("No more free buffers! Decoder will not be added.");
+            if (!java.awt.GraphicsEnvironment.isHeadless()) {
+                jmri.util.swing.JmriJOptionPane.showMessageDialog(null, soundtype + ": no more free buffers!");
+            }
+        }
     }
 
     // Note: We have to invoke engine_pane later because everything's not really setup yet

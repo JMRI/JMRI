@@ -110,9 +110,28 @@
         <adapter>jmri.jmrit.XmlFileValidateAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
+    <node name="Login">
+        <name xml:lang="cs">Přihlásit</name>
+        <adapter>jmri.jmrit.permission.swing.LoginAction</adapter>
+        <instanceManagerOptionalClass>jmri.PermissionManager</instanceManagerOptionalClass>
+        <optionalFunction>isEnabled</optionalFunction>
+    </node>
+    <node name="Logout">
+        <name xml:lang="cs">Odhlásit</name>
+        <adapter>jmri.jmrit.permission.swing.LogoutAction</adapter>
+        <instanceManagerOptionalClass>jmri.PermissionManager</instanceManagerOptionalClass>
+        <optionalFunction>isEnabled</optionalFunction>
+    </node>
+    <node name="Change password">
+        <name xml:lang="cs">Změnit heslo</name>
+        <adapter>jmri.jmrit.permission.swing.ChangePasswordAction</adapter>
+        <instanceManagerOptionalClass>jmri.PermissionManager</instanceManagerOptionalClass>
+        <optionalFunction>isEnabled</optionalFunction>
+    </node>
+    <node>separator</node><!-- separator -->
     <node name="Open PanelPro Window">
         <name xml:lang="fr">Ouvrir la fenêtre PanelPro</name>
-        <name xml:lang="it">Aprire la finestra PanelPro</name>        
+        <name xml:lang="it">Aprire la finestra PanelPro</name>
         <name xml:lang="da">Åben PanelPro Window</name>
         <name xml:lang="de">Öffne PanelPro Fenster</name>
 		<name xml:lang="ca">Obrir la finestra del PanelPro</name>
@@ -350,7 +369,7 @@
         <name xml:lang="de">Zeige/Verbirge Lokparkbild</name>
 		    <name xml:lang="ca">Oculta/Mostra Imatge de la flota</name>
         <name xml:lang="cs">Skrýt/zobrazit obrázek evidence</name>
-        <name xml:lang="nl">Toon/Verberg Locafbeelding</name>
+        <name xml:lang="nl">Toon/Verberg Loc-afbeelding</name>
         <mnemonic>i</mnemonic>
         <current>hiderosterimage</current>
     </node>
@@ -532,7 +551,7 @@
         <name xml:lang="de">Weichensteuerung</name>
 		    <name xml:lang="ca">Comandament d'Agulles</name>
         <name xml:lang="cs">Ovládání výhybek</name>
-        <name xml:lang="nl">Wisselaansturing</name>
+        <name xml:lang="nl">Wisselbediening</name>
         <adapter>jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction</adapter>
     </node>
     <node name="Power Control">

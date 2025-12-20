@@ -4,6 +4,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
+import jmri.jmrit.dispatcher.ActiveTrain.TrainLengthUnits;
 import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 
 /**
@@ -26,14 +27,17 @@ public class TrainInfo {
 
     // instance variables for both manual and automatic operation
     private int version = 1;
+    private boolean dynamicTransit = false;
+    private boolean dynamicTransitCloseLoopIfPossible = false;
     private String transitName = "";
     private String transitId = "";
     private String trainName = "";
     private String rosterID = "";
     private String trainUserName = "";
-    private String dccAddress = "";
+    private String dccAddress = "3";
     private boolean trainInTransit = false;
     private String startBlockName = "";
+    private String viaBlockName = "";
     private String startBlockId = "";
     private int startBlockSeq = -1;
     private String destinationBlockName = "";
@@ -72,17 +76,23 @@ public class TrainInfo {
 
     // instance variables for automatic operation
     private float speedFactor = 1.0f;
-    private float maxSpeed = 0.6f;
+    private float maxSpeed = 1.0f;
+    private float minReliableOperatingSpeed = 0.0f;
     private String rampRate = Bundle.getMessage("RAMP_NONE");
-    private TrainDetection trainDetection = TrainDetection.TRAINDETECTION_HEADONLY;
+    private TrainDetection trainDetection = TrainDetection.TRAINDETECTION_WHOLETRAIN;
     private boolean runInReverse = false;
     private boolean soundDecoder = false;
-    private float maxTrainLength = 200.0f;
+    private float maxTrainLength = 100.0f;
+    private float maxTrainLengthMeters = 30.0f;
+    private TrainLengthUnits trainLengthUnits = TrainLengthUnits.TRAINLENGTH_SCALEFEET; // units used to enter value
     private boolean useSpeedProfile = false;
     private boolean stopBySpeedProfile = false;
     private float stopBySpeedProfileAdjust = 1.0f;
+    private int fNumberLight = 0;
+    private int fNumberBell = 1;
+    private int fNumberHorn = 2;
 
-    private float waitTime = 1.0f; //required only by dispatcher system to pause train at beginning of transit (station)
+    private float waitTime = 3.0f; //seconds:  required only by dispatcher system to pause train at beginning of transit (station)
 
     private String blockName = ""; //required only by Dispatcher System to inhibit running of transit if this block is occupied
 
@@ -113,6 +123,21 @@ public class TrainInfo {
         return transitId;
     }
 
+    public void setDynamicTransit(boolean b) {
+        dynamicTransit = b;
+    }
+
+    public boolean getDynamicTransit() {
+        return dynamicTransit;
+    }
+
+    public void setDynamicTransitCloseLoopIfPossible(boolean b) {
+        dynamicTransitCloseLoopIfPossible = b;
+    }
+
+    public boolean getDynamicTransitCloseLoopIfPossible() {
+        return dynamicTransitCloseLoopIfPossible;
+    }
     public void setTrainName(String s) {
         trainName = s;
     }
@@ -159,6 +184,14 @@ public class TrainInfo {
 
     public String getStartBlockName() {
         return startBlockName;
+    }
+
+    public void setViaBlockName(String s) {
+        viaBlockName = s;
+    }
+
+    public String getViaBlockName() {
+        return viaBlockName;
     }
 
     public void setStartBlockId(String s) {
@@ -544,6 +577,14 @@ public class TrainInfo {
         return maxSpeed;
     }
 
+    public void setMinReliableOperatingSpeed(float f) {
+        minReliableOperatingSpeed = f;
+    }
+
+    public float getMinReliableOperatingSpeed() {
+        return minReliableOperatingSpeed;
+    }
+
     public void setRampRate(String s) {
         rampRate = s;
     }
@@ -609,12 +650,120 @@ public class TrainInfo {
         return soundDecoder;
     }
 
+    /**
+     * Sets F number for the Light
+     * @param value F Number.
+     */
+    public void setFNumberLight(int value) {
+        fNumberLight = value;
+    }
+
+    /**
+     * returns the F number for the Light
+     * @return F Number
+     */
+    public int getFNumberLight() {
+        return fNumberLight;
+    }
+
+    /**
+     * Sets F number for the Bell
+     * @param value F Number.
+     */
+    public void setFNumberBell(int value) {
+        fNumberBell = value;
+    }
+
+    /**
+     * returns the F number for the Bell
+     * @return F Number
+     */
+    public int getFNumberBell() {
+        return fNumberBell;
+    }
+
+    /**
+     * Sets F number for the Horn
+     * @param value F Number.
+     */
+    public void setFNumberHorn(int value) {
+        fNumberHorn = value;
+    }
+
+    /**
+     * returns the F number for the Horn
+     * @return F Number
+     */
+    public int getFNumberHorn() {
+        return fNumberHorn;
+    }
+
+    /**
+     * @deprecated use {@link #setMaxTrainLengthScaleMeters}
+     *               or {@link #setMaxTrainLengthScaleMeters}
+     * @param f train length
+     */
+    @Deprecated (since="5.9.7",forRemoval=true)
     public void setMaxTrainLength(float f) {
         maxTrainLength = f;
     }
 
+    /**
+     * @deprecated use {@link #getMaxTrainLengthScaleMeters}
+     *              or {@link #getMaxTrainLengthScaleFeet}
+     * @return train length of in units of the writing application
+     */
+    @Deprecated (since="5.9.7",forRemoval=true)
     public float getMaxTrainLength() {
         return maxTrainLength;
+    }
+
+    /**
+     * Sets the max train length expected during run
+     * @param f scale Meters.
+     */
+    public void setMaxTrainLengthScaleMeters(float f) {
+        maxTrainLengthMeters = f;
+    }
+
+    /**
+     * Gets the Max train length expected during run
+     * @return scale meters
+     */
+    public float getMaxTrainLengthScaleMeters() {
+        return maxTrainLengthMeters;
+    }
+
+    /**
+     * Sets the max train length expected
+     * @param f scale Meters.
+     */
+    public void setMaxTrainLengthScaleFeet(float f) {
+        maxTrainLengthMeters = f / 3.28084f;
+    }
+
+    /**
+     * Gets the Max train length expected during route
+     * @return scale meters
+     */
+    public float getMaxTrainLengthScaleFeet() {
+        return maxTrainLengthMeters * 3.28084f;
+    }
+
+   /**
+     * Sets the gui units used to enter or display (The units are always held in scale meters)
+     * @param value {@link ActiveTrain.TrainLengthUnits}
+     */
+    public void setTrainLengthUnits(TrainLengthUnits value) {
+        trainLengthUnits = value;
+    }
+
+    /**
+     * Get the GUI units entered (The data is held in scale Meters)
+     * @return  {@link ActiveTrain.TrainLengthUnits}
+     */
+    public TrainLengthUnits getTrainLengthUnits() {
+        return trainLengthUnits;
     }
 
     public void setWaitTime(float f) { waitTime = f; }

@@ -2,27 +2,28 @@ package apps.gui3.tabbedpreferences;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
 import javax.swing.JDialog;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
+
+import jmri.*;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Provide a Connection preferences dialog.
  * <p>
- * References the status of an {@link EditConnectionPreferences} object that 
+ * References the status of an {@link EditConnectionPreferences} object that
  * is created (via new()) as part of this constructor.
- * 
+ *
  * @author Kevin Dickerson Copyright 2010
  */
 public final class EditConnectionPreferencesDialog extends JDialog implements WindowListener {
 
     final EditConnectionPreferences editConnectionPreferences;
     boolean restartProgram = false;
-    
+
     @Override
     public String getTitle() {
         return editConnectionPreferences.getTitle();
@@ -31,13 +32,18 @@ public final class EditConnectionPreferencesDialog extends JDialog implements Wi
     public boolean isMultipleInstances() {
         return true;
     }
-    
+
     /**
      * Displays a dialog for editing the connections.
      *
      * @return true if the program should restart, false if the program should quit.
      */
     public static boolean showDialog() {
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                        BooleanPermission.BooleanValue.TRUE)) {
+            return false;
+        }
         EditConnectionPreferencesDialog dialog = new EditConnectionPreferencesDialog();
         SwingUtilities.updateComponentTreeUI(dialog);  // hack because sometimes this was created before L&F was set?
         dialog.pack();

@@ -19,7 +19,8 @@ public class MemoryTrackerTest {
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         m.provideMemory("dummy");
         // check for exception in ctor
-        new MemoryTracker(new Block("dummy"), "");
+        MemoryTracker t = new MemoryTracker(new Block("dummy"), "");
+        Assertions.assertNotNull(t);
     }
 
     @BeforeEach

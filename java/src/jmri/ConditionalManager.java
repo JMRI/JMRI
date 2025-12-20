@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.CheckForNull;
+
 /**
  * Interface for obtaining Conditionals
  * <p>
@@ -51,6 +53,7 @@ public interface ConditionalManager extends Manager<Conditional> {
      * @param name system name of Conditional
      * @return the logix for the conditional
      */
+    @CheckForNull
     Logix getParentLogix(String name);
 
     /**
@@ -63,11 +66,14 @@ public interface ConditionalManager extends Manager<Conditional> {
      * @param name name to look up
      * @return null if no match found
      */
+    @CheckForNull
     Conditional getConditional(Logix x, String name);
 
+    @CheckForNull
     Conditional getConditional(String name);
 
     @Override
+    @CheckForNull
     Conditional getByUserName(String s);
 
     Conditional getByUserName(Logix x, String s);
@@ -106,7 +112,7 @@ public interface ConditionalManager extends Manager<Conditional> {
      * @param target The system name for the target conditional
      * @param reference The system name of the conditional that contains the conditional reference
      */
-    void addWhereUsed(String target, String reference);
+    void addWhereUsed(@CheckForNull String target, @CheckForNull String reference);
 
     /**
      * Get a list of conditional references for the indicated conditional

@@ -1,6 +1,6 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.util.TimerUnit;
 
 import java.util.*;
 
@@ -105,8 +105,8 @@ public class ActionTimer extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.COMMON;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.COMMON;
     }
 
     /**
@@ -188,7 +188,7 @@ public class ActionTimer extends AbstractDigitalAction
                     state._currentTimer++;
                 }
             }
-            // If we get here, all timers has a delay of 0 ms
+            // If we get here, all timers have a delay of 0 ms
             state._timerState = TimerState.Off;
             return true;
         }
@@ -256,7 +256,7 @@ public class ActionTimer extends AbstractDigitalAction
             }
 
             if (startTimer == state._currentTimer) {
-                // If we get here, all timers has a delay of 0 ms
+                // If we get here, all timers have a delay of 0 ms
                 state._timerState = TimerState.Off;
             }
         }
@@ -587,6 +587,7 @@ public class ActionTimer extends AbstractDigitalAction
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
+            _stateMap.computeIfAbsent(getConditionalNG(), o -> new State());
             _stateMap.forEach((conditionalNG, state) -> {
                 // If _timerState is not TimerState.Off, the timer was running when listeners wss unregistered
                 if ((_startImmediately) || (state._timerState != TimerState.Off)) {

@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-car-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"car\"",
@@ -23,15 +23,15 @@
             ],
             "description": "Month and year car was built in MM-YY, MM-YYYY, or YYYY format"
         },
-        "carType": {
+        "type": {
             "type": "string",
             "description": "The car type as displayed in manifests and switch lists"
         },
         "carSubType": {
             "type": [
-            	"string",
-            	"null"
-        	],
+                "string",
+                "null"
+            ],
             "description": "The car sub-type; not displayed in manifests and switch lists"
         },
         "rfid": {
@@ -86,11 +86,11 @@
             "type": "boolean",
             "description": "True if the load is considered hazardous; false otherwise"
         },
-        "removeComment": {
+        "setout msg": {
             "type": "string",
             "description": "Additional drop instructions or an empty string if none"
         },
-        "addComment": {
+        "pickup msg": {
             "type": "string",
             "description": "Additional pickup instructions or an empty string if none"
         },
@@ -149,14 +149,14 @@
             ],
             "description": "the current destination of the car"
         },
-        "finalDestination": {
+        "final dest": {
             "type": [
                 "object",
                 "null"
             ],
             "description": "the final destination of the car"
         },
-        "returnWhenEmpty": {
+        "rwe": {
             "type": [
                 "object",
                 "null"
@@ -171,8 +171,12 @@
             "description": "The location to return the car to when loaded or null"
         },
         "division": {
-            "type":"string",
+            "type": "string",
             "description": "division name for the car"
+        },
+        "block order": {
+            "type": "string",
+            "description": "blocking order for passenger car"
         },
         "status": {
             "type": "string",
@@ -192,11 +196,15 @@
         },
         "weight": {
             "type": "number",
-            "description": "Weight of car in onces"
+            "description": "Adjusted weight of car in tons"
         },
         "weightTons": {
-            "type": "number",
+            "type": "string",
             "description": "Weight of car in tons"
+        },
+        "last train": {
+            "type": "string",
+            "description": "Last train to carry car"
         }
     },
     "additionalProperties": false,
@@ -204,7 +212,7 @@
         "name",
         "road",
         "number",
-        "carType",
+        "type",
         "length",
         "weight",
         "weightTons",
@@ -213,17 +221,17 @@
         "fred",
         "passenger",
         "hazardous",
-        "removeComment",
-        "addComment",
+        "setout msg",
+        "pickup msg",
         "owner",
         "built",
         "comment",
         "kernel",
         "utility",
         "destination",
-        "finalDestination",
+        "final dest",
         "outOfService",
-        "returnWhenEmpty",
+        "rwe",
         "isLocal"
     ]
 }

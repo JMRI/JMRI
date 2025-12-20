@@ -14,13 +14,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.Xml;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.JsonManifest;
-import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
@@ -49,11 +47,11 @@ public class HtmlManifest extends HtmlTrainCommon {
             return "Error manifest file not found for this train";
         }
         StringBuilder builder = new StringBuilder();
-        JsonNode locations = this.getJsonManifest().path(JsonOperations.LOCATIONS);
+        JsonNode locations = this.getJsonManifest().path(JSON.LOCATIONS);
         String previousLocationName = null;
         boolean hasWork;
         for (JsonNode location : locations) {
-            RouteLocation routeLocation = train.getRoute().getLocationById(location.path(JSON.NAME).textValue());
+            RouteLocation routeLocation = train.getRoute().getRouteLocationById(location.path(JSON.NAME).textValue());
             log.debug("Processing {} ({})", routeLocation.getName(), location.path(JSON.NAME).textValue());
             String routeLocationName = location.path(JSON.USERNAME).textValue();
             builder.append(String.format(locale, strings.getProperty("LocationStart"), routeLocation.getId())); // NOI18N
@@ -88,14 +86,14 @@ public class HtmlManifest extends HtmlTrainCommon {
 
                 // add location comment
                 if (Setup.isPrintLocationCommentsEnabled()
-                        && !location.path(JsonOperations.LOCATION).path(JSON.COMMENT).textValue().isBlank()) {
+                        && !location.path(JSON.LOCATION).path(JSON.COMMENT).textValue().isBlank()) {
                     builder.append(String.format(locale, strings.getProperty("LocationComment"), location.path(
-                            JsonOperations.LOCATION).path(JSON.COMMENT).textValue()));
+                            JSON.LOCATION).path(JSON.COMMENT).textValue()));
                 }
 
                 // add track comments
                 builder.append(
-                        getTrackComments(location.path(JsonOperations.TRACK), location.path(JsonOperations.CARS)));
+                        getTrackComments(location.path(JSON.TRACK), location.path(JsonOperations.CARS)));
             }
 
             previousLocationName = routeLocationName;
@@ -146,7 +144,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                                     strings.getProperty("Heading"
                                             + Setup.getDirectionString(location.path(JSON.TRAIN_DIRECTION).intValue())),
                                     location.path(JSON.LENGTH).path(JSON.LENGTH).intValue(), location.path(JSON.LENGTH)
-                                    .path(JSON.UNIT).asText().toLowerCase(), location.path(JsonOperations.WEIGHT)
+                                    .path(JSON.UNIT).asText().toLowerCase(), location.path(JSON.WEIGHT)
                                     .intValue(), location.path(JsonOperations.CARS).path(JSON.TOTAL).intValue()));
                         } else {
                             // Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet, 3000
@@ -155,7 +153,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                                     strings.getProperty("Heading"
                                             + Setup.getDirectionString(location.path(JSON.TRAIN_DIRECTION).intValue())),
                                     location.path(JSON.LENGTH).path(JSON.LENGTH).intValue(), location.path(JSON.LENGTH)
-                                    .path(JSON.UNIT).asText().toLowerCase(), location.path(JsonOperations.WEIGHT)
+                                    .path(JSON.UNIT).asText().toLowerCase(), location.path(JSON.WEIGHT)
                                     .intValue(), location.path(JsonOperations.CARS).path(JSON.LOADS).intValue(), location
                                     .path(JsonOperations.CARS).path(JSON.EMPTIES).intValue()));
                         }
@@ -244,12 +242,17 @@ public class HtmlManifest extends HtmlTrainCommon {
             if (!this.isLocalMove(car)) {
                 if (this.isUtilityCar(car)) {
                     builder.append(pickupUtilityCars(adds, car, location, isManifest));
-                } else if (isManifest &&
-                        Setup.isPrintTruncateManifestEnabled() &&
-                        location.getLocation().isSwitchListEnabled()) {
-                    builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
                 } else {
-                    builder.append(pickUpCar(car, Setup.getPickupManifestMessageFormat()));
+                    String[] messageFormat;
+                    if (isManifest &&
+                            Setup.isPrintTruncateManifestEnabled() &&
+                            location.getLocation().isSwitchListEnabled()) {
+                        messageFormat = Setup.getPickupTruncatedManifestMessageFormat();
+                    } else {
+                        messageFormat = Setup.getPickupManifestMessageFormat();
+                    }
+                    Setup.stringToTagConversion(messageFormat);
+                    builder.append(pickUpCar(car, messageFormat));
                 }
             }
         }
@@ -276,6 +279,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                     format = (!local) ? Setup.getDropSwitchListMessageFormat() : Setup
                             .getLocalSwitchListMessageFormat();
                 }
+                Setup.stringToTagConversion(format);
                 builder.append(dropCar(car, format, local));
             }
         }
@@ -315,6 +319,7 @@ public class HtmlManifest extends HtmlTrainCommon {
             return ""; // print nothing for local move, see dropCar()
         }
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getPickupTextColor() + ";\">");
         builder.append(Setup.getPickupCarPrefix()).append(" ");
         for (String attribute : format) {
             if (!attribute.trim().isEmpty()) {
@@ -333,8 +338,6 @@ public class HtmlManifest extends HtmlTrainCommon {
                     builder.append(
                             this.getFormattedAttribute(attribute, this.getDropLocation(car.path(JsonOperations.DESTINATION),
                                             ShowLocation.both))).append(" "); // NOI18N
-                } else if (attribute.equals(Xml.TYPE)) {
-                    builder.append(this.getTextAttribute(JsonOperations.CAR_TYPE, car)).append(" "); // NOI18N
                 } else {
                     builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
                 }
@@ -347,8 +350,10 @@ public class HtmlManifest extends HtmlTrainCommon {
     protected String dropCar(JsonNode car, String[] format, boolean isLocal) {
         StringBuilder builder = new StringBuilder();
         if (!isLocal) {
+            builder.append("<span style=\"color: " + Setup.getDropTextColor() + ";\">");
             builder.append(Setup.getDropCarPrefix()).append(" ");
         } else {
+            builder.append("<span style=\"color: " + Setup.getLocalTextColor() + ";\">");
             builder.append(Setup.getLocalPrefix()).append(" ");
         }
         log.debug("dropCar {}", car);
@@ -361,6 +366,10 @@ public class HtmlManifest extends HtmlTrainCommon {
                     builder.append(
                             this.getFormattedAttribute(attribute, this.getDropLocation(car.path(attribute),
                                             ShowLocation.track))).append(" "); // NOI18N
+                } else if (attribute.equals(JsonOperations.DESTINATION_TRACK)) {
+                    builder.append(
+                            this.getFormattedAttribute(attribute, this.getDropLocation(car.path(JsonOperations.DESTINATION),
+                                            ShowLocation.both))).append(" "); // NOI18N
                 } else if (attribute.equals(JsonOperations.LOCATION) && isLocal) {
                     builder.append(
                             this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute),
@@ -369,8 +378,6 @@ public class HtmlManifest extends HtmlTrainCommon {
                     builder.append(
                             this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute),
                                             ShowLocation.location))).append(" "); // NOI18N
-                } else if (attribute.equals(Xml.TYPE)) {
-                    builder.append(this.getTextAttribute(JsonOperations.CAR_TYPE, car)).append(" "); // NOI18N
                 } else {
                     builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
                 }
@@ -394,15 +401,24 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String dropEngine(JsonNode engine) {
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getDropEngineTextColor() + ";\">");
         builder.append(Setup.getDropEnginePrefix()).append(" ");
-        for (String attribute : Setup.getDropEngineMessageFormat()) {
+        String[] formatMessage = Setup.getDropEngineMessageFormat();
+        Setup.stringToTagConversion(formatMessage);
+        for (String attribute : formatMessage) {
             if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
                 if (attribute.equals(JsonOperations.DESTINATION) || attribute.equals(JsonOperations.TRACK)) {
                     attribute = JsonOperations.DESTINATION; // treat "track" as "destination"
                     builder.append(
                             this.getFormattedAttribute(attribute, this.getDropLocation(engine.path(attribute),
-                                            ShowLocation.track))).append(" "); // NOI18N
+                                    ShowLocation.track)))
+                            .append(" "); // NOI18N
+                } else if (attribute.equals(JsonOperations.LOCATION)) {
+                    builder.append(
+                            this.getFormattedAttribute(attribute, this.getPickupLocation(engine.path(attribute),
+                                    ShowLocation.location)))
+                            .append(" "); // NOI18N
                 } else {
                     builder.append(this.getTextAttribute(attribute, engine)).append(" "); // NOI18N
                 }
@@ -424,16 +440,25 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String pickupEngine(JsonNode engine) {
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getPickupEngineTextColor() + ";\">");
         builder.append(Setup.getPickupEnginePrefix()).append(" ");
-        log.debug("PickupEngineMessageFormat: {}", (Object) Setup.getPickupEngineMessageFormat());
-        for (String attribute : Setup.getPickupEngineMessageFormat()) {
+        String[] messageFormat =  Setup.getPickupEngineMessageFormat();
+        Setup.stringToTagConversion(messageFormat);
+        log.debug("PickupEngineMessageFormat: {}", (Object) messageFormat);
+        for (String attribute : messageFormat) {
             if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
                 if (attribute.equals(JsonOperations.LOCATION) || attribute.equals(JsonOperations.TRACK)) {
                     attribute = JsonOperations.LOCATION; // treat "track" as "location"
                     builder.append(
                             this.getFormattedAttribute(attribute, this.getPickupLocation(engine.path(attribute),
-                                            ShowLocation.track))).append(" "); // NOI18N
+                                    ShowLocation.track)))
+                            .append(" "); // NOI18N
+                } else if (attribute.equals(JsonOperations.DESTINATION)) {
+                    builder.append(
+                            this.getFormattedAttribute(attribute, this.getDropLocation(engine.path(attribute),
+                                    ShowLocation.location)))
+                            .append(" "); // NOI18N
                 } else {
                     builder.append(this.getTextAttribute(attribute, engine)).append(" "); // NOI18N
                 }
@@ -452,19 +477,23 @@ public class HtmlManifest extends HtmlTrainCommon {
     }
 
     protected String getTextAttribute(String attribute, JsonNode rollingStock) {
-        if (attribute.equals(JSON.HAZARDOUS)) {
+        if (attribute.equals(JsonOperations.HAZARDOUS)) {
             return this.getFormattedAttribute(attribute, (rollingStock.path(attribute).asBoolean() ? Setup
                     .getHazardousMsg() : "")); // NOI18N
-        } else if (attribute.equals(Setup.PICKUP_COMMENT.toLowerCase())) { // NOI18N
-            return this.getFormattedAttribute(JSON.ADD_COMMENT, rollingStock.path(JSON.ADD_COMMENT).textValue());
-        } else if (attribute.equals(Setup.DROP_COMMENT.toLowerCase())) { // NOI18N
-            return this.getFormattedAttribute(JSON.REMOVE_COMMENT, rollingStock.path(JSON.REMOVE_COMMENT).textValue());
-        } else if (attribute.equals(Setup.RWE.toLowerCase())) {
-            return this.getFormattedLocation(rollingStock.path(JSON.RETURN_WHEN_EMPTY), ShowLocation.both, "RWE"); // NOI18N
-        } else if (attribute.equals(Setup.FINAL_DEST.toLowerCase())) {
-            return this.getFormattedLocation(rollingStock.path(JSON.FINAL_DESTINATION), ShowLocation.location, "FinalDestination"); // NOI18N
-        } else if (attribute.equals(Setup.FINAL_DEST_TRACK.toLowerCase())) {
-            return this.getFormattedLocation(rollingStock.path(JSON.FINAL_DESTINATION), ShowLocation.track, "FinalDestination"); // NOI18N
+        } else if (attribute.equals(JsonOperations.PICKUP_COMMENT)) {
+            return this.getFormattedAttribute(JsonOperations.PICKUP_COMMENT, rollingStock.path(JsonOperations.PICKUP_COMMENT).textValue());
+        } else if (attribute.equals(JsonOperations.SETOUT_COMMENT)) {
+            return this.getFormattedAttribute(JsonOperations.SETOUT_COMMENT, rollingStock.path(JsonOperations.SETOUT_COMMENT).textValue());
+        } else if (attribute.equals(JsonOperations.RETURN_WHEN_EMPTY)) {
+            return this.getFormattedLocation(rollingStock.path(JsonOperations.RETURN_WHEN_EMPTY), ShowLocation.both, "RWE"); // NOI18N
+        } else if (attribute.equals(JsonOperations.FINAL_DESTINATION)) {
+            return this.getFormattedLocation(rollingStock.path(JsonOperations.FINAL_DESTINATION), ShowLocation.location, "FinalDestination"); // NOI18N
+        } else if (attribute.equals(JsonOperations.FINAL_DEST_TRACK)) {
+            return this.getFormattedLocation(rollingStock.path(JsonOperations.FINAL_DESTINATION), ShowLocation.both, "FinalDestination"); // NOI18N
+        } else if (attribute.equals(JsonOperations.LAST_TRAIN)) {
+            return TrainManifestHeaderText.getStringHeader_Last_Train() +
+                    SPACE +
+                    getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
         }
         return this.getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
     }
@@ -485,12 +514,12 @@ public class HtmlManifest extends HtmlTrainCommon {
                         splitString(location.path(JSON.USERNAME).asText()));
             case track:
                 return String.format(locale, strings.getProperty(prefix + "Track"),
-                        splitString(location.path(JsonOperations.TRACK).path(JSON.USERNAME).asText()));
+                        splitString(location.path(JSON.TRACK).path(JSON.USERNAME).asText()));
             case both:
             default: // default here ensures the method always returns
                 return String.format(locale, strings.getProperty(prefix + "LocationAndTrack"),
                         splitString(location.path(JSON.USERNAME).asText()),
-                        splitString(location.path(JsonOperations.TRACK).path(JSON.USERNAME).asText()));
+                        splitString(location.path(JSON.TRACK).path(JSON.USERNAME).asText()));
         }
     }
 
@@ -504,7 +533,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                 boolean setout = false;
                 if (cars.path(JSON.ADD).size() > 0) {
                     for (JsonNode car : cars.path(JSON.ADD)) {
-                        if (track.getKey().equals(car.path(JsonOperations.LOCATION).path(JsonOperations.TRACK)
+                        if (track.getKey().equals(car.path(JSON.LOCATION).path(JSON.TRACK)
                                 .path(JSON.NAME).asText())) {
                             pickup = true;
                             break; // we do not need to iterate all cars
@@ -513,7 +542,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                 }
                 if (cars.path(JSON.REMOVE).size() > 0) {
                     for (JsonNode car : cars.path(JSON.REMOVE)) {
-                        if (track.getKey().equals(car.path(JsonOperations.DESTINATION).path(JsonOperations.TRACK)
+                        if (track.getKey().equals(car.path(JsonOperations.DESTINATION).path(JSON.TRACK)
                                 .path(JSON.NAME).textValue())) {
                             setout = true;
                             break; // we do not need to iterate all cars
@@ -536,11 +565,11 @@ public class HtmlManifest extends HtmlTrainCommon {
     }
 
     protected boolean isLocalMove(JsonNode car) {
-        return car.path(JSON.IS_LOCAL).booleanValue();        
+        return car.path(JsonOperations.IS_LOCAL).booleanValue();        
     }
 
     protected boolean isUtilityCar(JsonNode car) {
-        return car.path(JSON.UTILITY).booleanValue();
+        return car.path(JsonOperations.UTILITY).booleanValue();
     }
 
     protected JsonNode getJsonManifest() throws IOException {

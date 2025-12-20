@@ -43,6 +43,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     @Test
     @Override
     @jmri.util.junit.annotations.ToDo("investigate why fails in super class")
+    @Disabled("Test requires further development")
     public void testRegisterDuplicateSystemName() throws PropertyVetoException,
             NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
     }

@@ -21,13 +21,13 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Override
     @Test
-    public void testInitComponents() throws Exception{
+    public void testInitComponents() {
         // for now, just makes ure there isn't an exception.
         ((LoaderPane) panel).initComponents(memo);
     }
 
     @Test
-    public void testInitContext() throws Exception {
+    public void testInitContext() {
         // for now, just makes ure there isn't an exception.
         ((LoaderPane)panel).initContext(memo);
     }

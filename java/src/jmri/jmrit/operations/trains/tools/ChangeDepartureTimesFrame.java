@@ -4,18 +4,15 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.OperationsPanel;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -45,6 +42,8 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
         for (int i = 1; i < 24; i++) {
             hourBox.addItem(i);
         }
+
+        OperationsPanel.padComboBox(hourBox, 3);
 
         // row 2
         JPanel pHour = new JPanel();

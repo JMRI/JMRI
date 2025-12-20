@@ -1,19 +1,13 @@
 package jmri.jmrix.direct.simulator;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import java.io.*;
 
-import jmri.jmrix.direct.DirectSystemConnectionMemo;
-import jmri.jmrix.direct.Message;
-import jmri.jmrix.direct.PortController; // no special xSimulatorController
-import jmri.jmrix.direct.Reply;
-import jmri.jmrix.direct.TrafficController;
-import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+// no special xSimulatorController
+import jmri.jmrix.direct.*;
+import jmri.util.ImmediatePipedOutputStream;
 
 /**
  * Provide access to a simulated DirectDrive system.
@@ -33,6 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2018
  */
+@SuppressWarnings("javadoc")
 public class SimulatorAdapter extends PortController implements Runnable {
 
     // private control members

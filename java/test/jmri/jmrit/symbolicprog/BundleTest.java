@@ -1,7 +1,7 @@
 package jmri.jmrit.symbolicprog;
 
+import java.util.Locale;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,16 +11,43 @@ import org.junit.jupiter.api.*;
  */
 public class BundleTest  {
 
-    @Test public void testGoodKeys() {
-        Assert.assertEquals("Read", Bundle.getMessage("ButtonRead"));
-        Assert.assertEquals("Tools", Bundle.getMessage("MenuTools"));
-        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
+    @Test
+    public void testGoodKeys() {
+        Assertions.assertEquals("Read", Bundle.getMessage("ButtonRead"));
+        Assertions.assertEquals("Tools", Bundle.getMessage("MenuTools"));
+
+        Assertions.assertEquals("No locomotive detected (301);", Bundle.getMessage("NoLocoDetected"));
+        Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
     @Test
     public void testBadKey() {
-        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
+        var ex = Assertions.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
+        Assertions.assertNotNull(ex);
     }
 
+    @Test
+    public void testGoodKeyMessageArg() {
+        Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
+        Assertions.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
+    }
+
+    @Test
+    public void testBadKeyMessageArg() {
+        var ex = Assertions.assertThrows(java.util.MissingResourceException.class,
+            () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
+        Assertions.assertNotNull(ex);
+    }
+
+    @Test
+    public void testLocaleMessage() {
+        Assertions.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout"));
+    }
+
+    @Test
+    public void testLocaleMessageArg() {
+        Assertions.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
+        Assertions.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
+    }
 
 }

@@ -1,7 +1,5 @@
 package jmri.implementation;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import jmri.JmriException;
 
 import org.junit.Assert;
@@ -13,9 +11,7 @@ import org.junit.jupiter.api.*;
  * @author Daniel Bergqvist Copyright (c) 2018
  */
 public class AbstractStringIOTest {
-    
-    AtomicBoolean exceptionThrown = new AtomicBoolean(false);
-    
+
     @Test
     public void testCtor() {
         MyAbstractStringIO stringIO = new MyAbstractStringIO();
@@ -59,15 +55,13 @@ public class AbstractStringIOTest {
         Assert.assertTrue("string is correct",
                 "8:20. Train 21 to Vaxjo".equals(myStringIO.getKnownStringValue()));
         
-        myStringIO = new MyAbstractStringIO(22, false);
-        exceptionThrown.set(false);
-        try {
-            myStringIO.setCommandedStringValue("8:20. Train 21 to Vaxjo");
-        } catch (JmriException e) {
-            exceptionThrown.set(true);
-        }
-        Assert.assertTrue("string is too long", exceptionThrown.get() == true);
-        
+        MyAbstractStringIO exStringIO = new MyAbstractStringIO(22, false);
+
+        Exception ex = Assertions.assertThrows(JmriException.class,
+            () -> exStringIO.setCommandedStringValue("8:20. Train 21 to Vaxjo"));
+        Assertions.assertNotNull(ex);
+        Assertions.assertEquals("String too long", ex.getMessage());
+
         myStringIO = new MyAbstractStringIO(23, false);
         myStringIO.setCommandedStringValue("8:20. Train 21 to Vaxjo");
         Assert.assertTrue("string is correct and has valid length",
@@ -92,9 +86,9 @@ public class AbstractStringIOTest {
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
-    
-    
-    private class MyAbstractStringIO extends AbstractStringIO {
+
+
+    private static class MyAbstractStringIO extends AbstractStringIO {
         
         private int _maxLen = 0;
         private boolean _cut = false;

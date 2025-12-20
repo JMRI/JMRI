@@ -97,6 +97,7 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new CarLoadEditFrameAction());
+        toolMenu.addSeparator();
         toolMenu.add(new PrintCarLoadsAction(true));
         toolMenu.add(new PrintCarLoadsAction(false));
         menuBar.add(toolMenu);
@@ -171,19 +172,19 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
     private String getTrackCarLoadOptions(Track track) {
         StringBuffer options = new StringBuffer();
         if (track.isLoadSwapEnabled()) {
-            options.append(Bundle.getMessage("ABV_SwapDefaultLoads") + ", ");
+            options.append(Bundle.getMessage("ABV_SwapDefaultLoads") + " ");
         }
         if (track.isLoadEmptyEnabled()) {
-            options.append(Bundle.getMessage("ABV_EmptyDefaultLoads") + ", ");
+            options.append(Bundle.getMessage("ABV_EmptyDefaultLoads") + " ");
         }
         if (track.isRemoveCustomLoadsEnabled()) {
-            options.append(Bundle.getMessage("ABV_EmptyCustomLoads") + ", ");
+            options.append(Bundle.getMessage("ABV_EmptyCustomLoads") + " ");
         }
         if (track.isAddCustomLoadsEnabled()) {
-            options.append(Bundle.getMessage("ABV_GenerateCustomLoad") + ", ");
+            options.append(Bundle.getMessage("ABV_GenerateCustomLoad") + " ");
         }
         if (track.isAddCustomLoadsAnySpurEnabled()) {
-            options.append(Bundle.getMessage("ABV_GenerateCustomLoadAnySpur") + ", ");
+            options.append(Bundle.getMessage("ABV_GenerateCustomLoadAnySpur") + " ");
         }
         if (track.isAddCustomLoadsAnyStagingTrackEnabled()) {
             options.append(Bundle.getMessage("ABV_GereateCustomLoadStaging"));
@@ -239,16 +240,18 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
                 sch.removePropertyChangeListener(this);
                 sch.addPropertyChangeListener(this);
                 // determine if schedule is requesting car type and load
-                for (ScheduleItem si : sch.getItemsBySequenceList()) {
-                    if (spur.isLoadNameAccepted(load) &&
-                            si.getTypeName().equals(type) &&
-                            (si.getReceiveLoadName().equals(load) ||
-                                    (si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
-                                            !generatedLoadsCheckBox.isSelected()))) {
-                        addItemLeft(locationsPanel, new JLabel(load), 4, x);
-                        addItemLeft(locationsPanel, new JLabel(location.getName() + " (" + spur.getName() + ")"), 5, x);
-                        addItemLeft(locationsPanel, new JLabel(spur.getLoadOptionString()), 6, x);
-                        addItemLeft(locationsPanel, new JLabel(sch.getName() + " " + si.getId()), 7, x++);
+                if (spur.isLoadNameAndCarTypeAccepted(load, type)) {
+                    for (ScheduleItem si : sch.getItemsBySequenceList()) {
+                        if (si.getTypeName().equals(type) &&
+                                (si.getReceiveLoadName().equals(load) ||
+                                        (si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
+                                                !generatedLoadsCheckBox.isSelected()))) {
+                            addItemLeft(locationsPanel, new JLabel(load), 4, x);
+                            addItemLeft(locationsPanel, new JLabel(location.getName() + " (" + spur.getName() + ")"), 5,
+                                    x);
+                            addItemLeft(locationsPanel, new JLabel(spur.getLoadOptionString()), 6, x);
+                            addItemLeft(locationsPanel, new JLabel(sch.getName() + " " + si.getId()), 7, x++);
+                        }
                     }
                 }
             }

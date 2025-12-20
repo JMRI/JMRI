@@ -182,7 +182,7 @@
       bottom.</p>
 
       <p>2. Move the cursor around inside the blank panel. Note that as you move, coordinates are
-      displayed at the upper left of the tool bar--<em>x</em> (horizontal) and <em>y</em>
+      displayed at the upper right of the tool bar--<em>x</em> (horizontal) and <em>y</em>
       (vertical). (This is to aid in aligning items as you draw them.) Move the cursor over the
       radio buttons, check boxes and entry fields in the tool bar, noting that each has a tool
       tip.</p>
@@ -360,14 +360,14 @@
 
         <li>Release the mouse, and then release the shift key.</li>
 
-        <li>If the item is a <strong>Shape</strong>, the first point has been added.  To
-        add additional points, drag a line from a point.  When the mouse is released a
-        point will be created.  The right click on a point or the center of the shape will
-        display a menu to set various attributes.  Changing the shape type from <strong>
-        Open</strong> to <strong>Closed</strong> will create a final line between the
-        first and last point. To create a rectangle, draw three lines (four points) and
-        select closed.  Note:  The drag process is the same as drawing track segments
-        except there is no destination point until the mouse is released.</li>
+        <li id="add-shape">If the item is a <strong>Shape</strong>, the first point has been added.
+        To add additional points, drag a line from a point.  When the mouse is released a point will
+        be created.  The right click on a point or the center of the shape will display a menu to
+        set various attributes.  Changing the shape type from <strong>Open</strong> to
+        <strong>Closed</strong> will create a final line between the first and last point. To create
+        a rectangle, draw three lines (four points) and select closed.  Note:  The drag process is
+        the same as drawing track segments except there is no destination point until the mouse is
+        released.</li>
       </ol>
 
       <p>A Track Segment is a piece of track connecting two connection points (<strong><span style=
@@ -586,7 +586,8 @@
 
         <li><strong>Allow Layout Control</strong> - When this item is checked, clicking on active
         turnout items in the track diagram or on active icon items, such as sensor icons, and
-        signal icons, will toggle the state of the represented item.</li>
+        signal icons, will toggle the state of the represented item.  If the track item or icon has
+        been <strong>Disabled</strong>, the attempted changes will not occur.</li>
 
         <li><strong>Use Direct Turnout Control</strong> - If enabled and edit mode is not active,
         then the left mouse button sets a turnout closed and the right mouse button sets the
@@ -596,6 +597,17 @@
         panel is displayed (rendered) with antialiasing enabled. Antialiasing smoothes out lines in
         the drawn panel, but it does take longer to refresh the panel. Check antialiasing for a
         better looking panel. Uncheck antialiasing for faster refresh.</li>
+
+        <li><strong>Toggle Track labels in Edit mode</strong> - If this item is selected, the
+        panel is displayed with the internal names for track items such as anchor points,
+        track segments, turnouts, etc.</li>
+
+        <li><strong>Highlight Cursor Position</strong> <span class="since">since 5.11.3</span>
+        - If this item is selected, the cursor will have a colored box drawn around the mouse
+        pointer when the mouse has been clicked and held. This option is not active when the
+        panel is in edit mode. The primary purpose is to provide an enhanced mouse pointer on touch
+        screens. For turnouts, the turnout control circle will also flash a couple of times
+        while the turnout is moving.</li>
 
         <li><strong>New Title...</strong> - Selecting this item brings up a small window that
         allows a new panel window title to be entered.</li>
@@ -679,11 +691,13 @@
             <li><strong>Default Track Colors</strong> - This item's submenu allows colors to be
             selected from a color chooser as the <strong>Default Track Color</strong>, the
             <strong>Default Occupied Color</strong> and the <strong>Default Alternative Track
-            Color</strong>. When a track component is added it will have the default track color.
-            If the track component is added with a block name assigned and the block has been used
-            before, it will inherit the existing block colors. If this is the first track component
-            for this block, the new layout block will be assigned all three colors. The default
-            track color is also used for lines of the selection rectangle.</li>
+            Color</strong>. Note: <em>These are actually the default <strong>layout block</strong>
+            colors.</em> When a track component is added it will use the <strong>rail</strong> color
+            from <strong>Set Track Drawing Options</strong>. If the track component is added with a
+            block name assigned and the block has been used before, it will use the existing layout
+            block colors. If this is the first track component for this block, the new layout block
+            will be assigned the three default colors.  The <strong>Set All Tracks to Default Colors</strong>
+            menu item sets all of the <strong>layout blocks</strong> to the default colors.</li>
 
             <li><strong>Automatically Assign Blocks to Track</strong> - A block is created for each
             piece of track as it is added. The generated block names are <strong>AUTOBLK:n</strong>
@@ -1144,7 +1158,12 @@
       <p>Turnout drawings in a track diagram are drawn using solid lines for both continuing and
       diverging legs until the turnout drawings are linked to turnouts in the Turnout Table. Once
       linked to actual turnouts, turnout drawings show the "known states" of the turnouts they
-      represent. After linking, you can toggle each turnout on your layout by clicking on the
+      represent. When the turnout's state is UNKNOWN, both legs of the turnout are drawn.
+      You can change this to drawing a "?" character instead using the contextual
+      menu on the turnout.
+      </p>
+      
+      <p>After linking, you can toggle each turnout on your layout by clicking on the
       center point of its drawing (provided <strong>Disabled</strong> is not checked in the Options
       menu, and your system supports computer control of turnouts). The ability to toggle by
       clicking can be turned off by checking <strong>Disabled</strong> in the turnout's popup menu.
@@ -1328,6 +1347,51 @@
       defined as one that is not already linked, is connected to a track segment that is configured
       with a block, which is not the same as the block our connected track segment is configured as
       (ie the edge connector becomes a block boundary).</p>
+
+      <div class="noted">
+        <h4>Incomplete Track Segments</h4>
+
+        <p style="margin-left: 2em">Track segments can be defined as circles with a radius.  When the
+        track segment is at the right or bottom edge of the track plan the image can be incomplete.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/clip-example.png"><img src=
+          "images/clip-example.png" alt="exmaple of a clipped track segment"></a>
+        </div>
+
+        <p style="margin-left: 2em">The content of a Layout Editor panel is contained within a
+        rectangle. The shape of the rectangle is defined by the components that have <strong>xy</strong>
+        coordinates. These include many of the items on the Layout Editor toolbar.  Track segments
+        do not have a <strong>location</strong>. A track segment's location on the panel is based on
+        its two connections, such as anchor points, turnouts, etc. When the track segment is defined
+        as a circle, part of the arc can be outside of the rectangle.  When the rectangle is drawn
+        on the screen, anything outside of the rectangle is omitted.</p>
+
+        <p style="margin-left: 2em">To fix this issue, the size of the rectangle needs to changed.
+        There is no direct control of the rectangle size, but there are a couple of easy indirect
+        techniques.</p>
+
+        <p style="margin-left: 2em">For the sample image, the easy solution is to <strong>split</strong>
+        the track segment.  The 180&deg; arc is split into two 90&deg; arcs with an anchor point
+        supplying an additional <strong>xy</strong> coordinate at the far right.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/clip-split.png"><img src=
+          "images/clip-split.png" alt="exmaple of splitting a track segment arc"></a>
+        </div>
+
+        <p style="margin-left: 2em">Another technique is to add a <a href="#add-shape">shape</a>.
+        Normally a shape has multiple points, such as two for a line or four for a rectangle.  To
+        change the Layout Editor rectangle, only the initial point is needed.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/clip-shape.png"><img src=
+          "images/clip-shape.png" alt="exmaple of using a shape"></a>
+        </div>
+
+        <p style="margin-left: 2em">If the shape is placed to the right and below other objects, it
+        defines the lower right corner of the rectangle.</p>
+      </div>
 
       <h2 id="xing">Level Crossings</h2>
 

@@ -7,10 +7,7 @@ import java.io.PipedOutputStream;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-
-
 
 /**
  * XNetStreamPortControllerTest.java
@@ -23,29 +20,28 @@ public class XNetStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortC
 
     @Test
     public void testCtor() {
-       Assert.assertNotNull("exists", apc);
+        Assertions.assertNotNull( apc, "exists");
     }
 
     @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        try {
+        apc = Assertions.assertDoesNotThrow( () -> {
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();
             DataOutputStream ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
             tempPipe = new PipedInputStream();
             DataInputStream istream = new DataInputStream(tempPipe);
-            apc = new XNetStreamPortController(istream, ostream, "Test");
-        } catch (java.io.IOException ioe) {
-            Assert.fail("IOException creating stream");
-        }
+            return new XNetStreamPortController(istream, ostream, "Test");
+        }, "Exception creating stream");
 
     }
 
     @Override
     @AfterEach
     public  void tearDown() {
+        apc = null;
         JUnitUtil.tearDown();
     }
 

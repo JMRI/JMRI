@@ -47,15 +47,16 @@
 
         <li>You might be interfacing to some other existing code that uses threads.</li>
       </ul>
-      We would prefer that you handle the threading issues that arise in that case via the <a href=
+
+      <p>We would prefer that you handle the threading issues that arise in that case via the <a href=
       "https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a>
       class. ThreadingUtil provides utilities that make it easy to invoke needed functions on the
-      right thread.
+      right thread.</p>
       <p>For example, if you want to read a bunch of data from a file, spend some time munging it,
       and then create a window to present it all, you might want to do all that work on a separate
       thread. At the end, when it's time to set your new frame visible, <a href=
       "http://web.archive.org/web/20090526170426/http://java.sun.com/developer/JDCTechTips/2003/tt1208.html">
-      you have to to that on the Swing (GUI) thread</a>. Here's the code to do that:</p>
+      you have to do that on the Swing (GUI) thread</a>. Here's the code to do that:</p>
       <div class="wide">
       <pre>
  frame = new JmriJFrame();  // frame declared as instance variable
@@ -92,7 +93,7 @@
 </pre>
       <p>That check does take a bit of time, so it should probably only be done on entry to a large
       chunk of code, or perhaps be protected by a check of <code>log.isDebugEnabled()</code>. If the call
-      occurs on the wrong thread, a <code>Log4JUtil.warnOnce</code> logs the first occurance with
+      occurs on the wrong thread, a <code>Log4JUtil.warnOnce</code> logs the first occurrence with
       traceback info. In addition to the <code>@InvokeOnGuiThread</code>,
       <code>@InvokeOnLayoutThread</code> and <code>@InvokeOnAnyThread</code> annotations mentioned here,
       there are <code>@ThreadSafe</code>, <code>@NotThreadSafe</code>, <code>@Immutable</code>, and
@@ -219,7 +220,7 @@
       <p>If for some reason you can't use jvisualvm, then:</p>
 
       <ul>
-        <li>On Linux and macOS when running from a command line, type control-backspace</li>
+        <li>On Linux and macOS when running from a command line, type control-backslash</li>
 
         <li>On Linux and macOS when running detached, e.g. from startup icon,
           <ul>

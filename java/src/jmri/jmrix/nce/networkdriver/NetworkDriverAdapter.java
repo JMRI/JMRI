@@ -45,10 +45,10 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
             this.getSystemConnectionMemo().setNceCmdGroups(~NceTrafficController.CMDS_USB);
         }
 
+        tc.csm = new NceCmdStationMemory();
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-        tc.csm = new NceCmdStationMemory();
     }
 
 }

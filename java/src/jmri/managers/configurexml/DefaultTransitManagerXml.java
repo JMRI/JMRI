@@ -7,6 +7,7 @@ import java.util.SortedSet;
 import jmri.InstanceManager;
 import jmri.Section;
 import jmri.Transit;
+import jmri.Transit.TransitType;
 import jmri.TransitManager;
 import jmri.TransitSection;
 import jmri.TransitSectionAction;
@@ -46,7 +47,9 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
             for (Transit transit : tstList) {
                 String tstName = transit.getSystemName();
                 log.debug("Transit system name is {}", tstName);
-
+                if (transit.getTransitType() == TransitType.DYNAMICADHOC) {
+                    continue;
+                }
                 Element elem = new Element("transit");
                 elem.addContent(new Element("systemName").addContent(tstName));
 
@@ -83,7 +86,8 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                         tsElem.setAttribute("alternate", "" + (ts.isAlternate() ? "yes" : "no"));
                         tsElem.setAttribute("safe", "" + (ts.isSafe() ? "yes" : "no"));
                         tsElem.setAttribute("stopallocatingsensor", ts.getStopAllocatingSensor());
-
+                        tsElem.setAttribute("fwdstoppercent", Float.toString(ts.getFwdStopPerCent()));
+                        tsElem.setAttribute("revstoppercent", Float.toString(ts.getRevStopPerCent()));
                         // save child TransitSectionAction entries if any
                         ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
                         if (!tsaList.isEmpty()) {
@@ -199,8 +203,17 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                         stopAllocatingSensor = "";
                     }
                 }
+                float fwdStopPerCent = 1.00f;
+                if (elem.getAttribute("fwdstoppercent") != null) {
+                    fwdStopPerCent = Float.parseFloat(elem.getAttribute("fwdstoppercent").getValue());
+                }
+                float revStopPerCent = 1.00f;
+                if (elem.getAttribute("revstoppercent") != null) {
+                    revStopPerCent = Float.parseFloat(elem.getAttribute("revstoppercent").getValue());
+                }
 
-                TransitSection ts = new TransitSection(sectionName, seq, dir, alt, safe, stopAllocatingSensor );
+                TransitSection ts = new TransitSection(sectionName, seq, dir, alt, safe,
+                        stopAllocatingSensor, fwdStopPerCent, revStopPerCent );
                 x.addTransitSection(ts);
                 // load transitsectionaction children, if any
                 List<Element> transitTransitSectionActionList = elem.
@@ -214,8 +227,8 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                     int tWhatData2 = 0;
                     String tWhatString = elemx.getAttribute("whatstring").getValue();
                     String tWhatString2 = "";
-                    if (elemx.getAttribute("whatstring").getValue() != null) {
-                        tWhatString2=elemx.getAttribute("whatstring").getValue();
+                    if (elemx.getAttribute("whatstring2") != null) {
+                        tWhatString2=elemx.getAttribute("whatstring2").getValue();
                     }
                     try {
                         tWhen = elemx.getAttribute("whencode").getIntValue();

@@ -13,8 +13,8 @@ import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteManager;
-import jmri.jmrit.operations.setup.AutoBackup;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.setup.backup.AutoBackup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
@@ -125,7 +125,7 @@ public final class OperationsManager implements InstanceManagerAutoDefault, Inst
         // auto backup?
         if (Setup.isAutoBackupEnabled()) {
             try {
-                AutoBackup backup = new AutoBackup();
+                AutoBackup backup = InstanceManager.getDefault(AutoBackup.class);
                 backup.autoBackup();
             } catch (IOException ex) {
                 log.debug("Auto backup after enabling Auto Backup flag.", ex);

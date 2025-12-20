@@ -57,6 +57,8 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
                 "jmri.jmrit.display.EditorManager", "skipHideDialog", Bundle.getMessage("PanelHideSkip"));  // NOI18N
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(
                 "jmri.jmrit.display.EditorManager", "skipDupLoadDialog", Bundle.getMessage("DuplicateLoadSkip"));  // NOI18N
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(
+                "jmri.jmrit.display.EditorManager", "skipEntryExitDialog", Bundle.getMessage("EntryExitBlockSkip"));  // NOI18N
     }
 
     /**

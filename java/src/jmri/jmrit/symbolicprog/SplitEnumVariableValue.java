@@ -413,15 +413,6 @@ public class SplitEnumVariableValue extends VariableValue
         return retString;
     }
 
-    @Deprecated
-    public String getSecondCvNum() {
-        String retString = "";
-        if (cvCount > 1) {
-            retString = cvList.get(1).cvName;
-        }
-        return retString;
-    }
-
     long _minVal;
     long _maxVal;
 

@@ -35,8 +35,17 @@ import org.slf4j.LoggerFactory;
  * </ul>
  * QSI decoders generally use the 1st format, and ESU LokSound decoders the second.
  * <p>
+ * In some circumstances, the PI and SI values should be set to specific values
+ * <u>after</u> the operation is otherwise complete.  The syntax for this
+ * uses a semicolon:
+ * <ul>
+ *  <li>11.12.123;0.1 After the read or write operation has accessed the main CV,
+ *          write 0 to the PI and 1 to the SI.
+ * </ul>
+ * <p>
  * The specific CV numbers for PI and SI are provided when constructing the object.
- * They can be read from a decoder definition file by e.g. {@link jmri.implementation.ProgrammerFacadeSelector}.
+ * They can be read from a decoder definition file 
+ * by e.g. {@link jmri.implementation.ProgrammerFacadeSelector}.
  * <p>
  * Alternately the PI and/or SI CV numbers can be set by using a "nn=nn" syntax when specifying
  * PI and/or SI.  For example, using a cvFirst false syntax, "101=12.80" sets CV101 to 12 before
@@ -49,6 +58,7 @@ import org.slf4j.LoggerFactory;
  * for how the decoder file contents and default (preferences) interact.
  * <p>
  * State Diagram for read and write operations (click to magnify):
+ * <br>
  * <a href="doc-files/MultiIndexProgrammerFacade-State-Diagram.png"><img src="doc-files/MultiIndexProgrammerFacade-State-Diagram.png" alt="UML State diagram" height="50%" width="50%"></a>
  *
  * @see jmri.implementation.ProgrammerFacadeSelector
@@ -64,14 +74,24 @@ import org.slf4j.LoggerFactory;
  * NOTPROGRAMMING --> FINISHREAD: readCV() & PI!=-1\n(write PI)
  * NOTPROGRAMMING --> PROGRAMMING: writeCV() & single CV\n(write CV)
  * NOTPROGRAMMING --> FINISHWRITE: writeCV() & PI write needed\n(write PI)
+ *
  * FINISHREAD --> FINISHREAD: OK reply & SI!=-1\n(write SI)
  * FINISHREAD --> PROGRAMMING: OK reply & SI==-1\n(read CV)
  * FINISHWRITE --> FINISHWRITE: OK reply & SI!=-1\n(write SI)
  * FINISHWRITE --> PROGRAMMING: OK reply & SI==-1\n(write CV)
- * PROGRAMMING --> NOTPROGRAMMING: OK reply received\n(return status and value)
+ * PROGRAMMING --> NOTPROGRAMMING: OK reply received and no after-index\n(return status and value)
+ *
  * FINISHREAD --> NOTPROGRAMMING : Error reply received
  * FINISHWRITE --> NOTPROGRAMMING : Error reply received
  * PROGRAMMING --> NOTPROGRAMMING : Error reply received
+ *
+ * PROGRAMMING --> AFTERWRITEFIRST : if PI, SI are to be reset,\n write PI value
+ * 
+ * AFTERWRITEFIRST --> NOTPROGRAMMING : Error reply received
+ * AFTERWRITEFIRST --> AFTERWRITESECOND : write SI value
+ *
+ * AFTERWRITESECOND --> NOTPROGRAMMING : Error reply received
+ * AFTERWRITESECOND --> NOTPROGRAMMING : OK reply received\n(return status and value)
  * @enduml
 */
 
@@ -83,7 +103,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
      *                          NN.NN and NN.NN.NN forms
      * @param indexSI           CV to which the second value is to be written
      *                          for NN.NN.NN forms
-     * @param cvFirst           true if first value in parsed CV is to be
+     * @param cvFirst           true if first value is parsed CV to be
      *                          written; false if second value is to be written
      * @param skipDupIndexWrite true if heuristics can be used to skip PI and SI
      *                          writes; false requires them to be written each
@@ -110,8 +130,10 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     // members for handling the programmer interface
     int _val; // remember the value being read/written for confirmative reply
     String _cv; // remember the cv number being read/written
-    int valuePI;  //  value to write to PI in current operation or -1
-    int valueSI;  //  value to write to SI in current operation or -1
+    int valuePI;  //  value to write to PI before current operation or -1
+    int valueSI;  //  value to write to SI before current operation or -1
+    int valuePIafter;  //  value to write to PI after current operation or -1
+    int valueSIafter;  //  value to write to SI after current operation or -1
     int _startVal;  // Current CV value hint
 
     // remember last operation for skipDupIndexWrite
@@ -123,9 +145,12 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     void parseCV(String cv) {
         valuePI = -1;
         valueSI = -1;
+        valuePIafter = -1;
+        valueSIafter = -1;
         if (cv.contains(".")) {
+            String[] parts = cv.split(";");
+            String[] splits = parts[0].split("\\.");
             if (cvFirst) {
-                String[] splits = cv.split("\\.");
                 switch (splits.length) {
                     case 2:
                         if (hasAlternateAddress(splits[1])) {
@@ -155,14 +180,14 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                         _cv = splits[0];
                         break;
                     default:
-                        log.error("Too many parts in CV name; taking 1st two {}", cv);
+                        log.error("Too many parts in CV name {}; taking 1st two", cv);
                         valuePI = Integer.parseInt(splits[1]);
                         valueSI = Integer.parseInt(splits[2]);
                         _cv = splits[0];
                         break;
                 }
             } else {
-                String[] splits = cv.split("\\.");
+                // not cvFirst case
                 switch (splits.length) {
                     case 2:
                         if (hasAlternateAddress(splits[0])) {
@@ -192,16 +217,25 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                         _cv = splits[2];
                         break;
                     default:
-                        log.error("Too many parts in CV name; taking 1st two {}", cv);
+                        log.error("Too many parts in CV name {}; taking 1st two", cv);
                         valuePI = Integer.parseInt(splits[0]);
                         valueSI = Integer.parseInt(splits[1]);
                         _cv = splits[2];
                         break;
                 }
+                // now handle anything after a semicolon
+            }
+            if (parts.length == 2) {
+                String[] afters = parts[1].split("\\.");
+                valuePIafter = Integer.parseInt(afters[0]);
+                valueSIafter = Integer.parseInt(afters[1]);
             }
         } else {
+            // no "." in CV number argument; accept as number, don't parts for semicolon
             _cv = cv;
         }
+        
+        
     }
 
     boolean hasAlternateAddress(String cv) {
@@ -337,11 +371,17 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
         FINISHWRITE,
         /** Waiting for response to first or second index write before a final confirm operation */
         FINISHCONFIRM,
+        /** Just wrote PI after the read or write has been done */
+        AFTERWRITEFIRST,
+        /** Just wrote SI after the read or write has been done */
+        AFTERWRITESECOND,
         /** No current operation */
         NOTPROGRAMMING
     }
     ProgState state = ProgState.NOTPROGRAMMING;
 
+    int storedReturnValue = -1;
+    
     // get notified of the final result
     // Note this assumes that there's only one phase to the operation
     @Override
@@ -369,16 +409,65 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
             return;
         }
 
+        jmri.ProgListener tempProgListener; 
+        
         switch (state) {
             case PROGRAMMING:
+                // check for whether after operation id needed
+                if (valuePIafter != -1) {
+                    // save the programming value
+                    storedReturnValue = value;
+                    // write primary index
+                    try {
+                        lastValuePI = valuePIafter;
+                        lastValueSI = valueSIafter;
+
+                        valuePIafter = -1;
+                        state = ProgState.AFTERWRITEFIRST;
+                        prog.writeCV(indexPI, lastValuePI, this); 
+                    } catch (jmri.ProgrammerException e) {
+                        log.error("Exception doing write PI after operation", e);
+                    }   
+                    break;         
+                }
+                // No write after, this is the end of the operation
                 // the programmingOpReply handler might send an immediate reply, so
                 // clear the current listener _first_
-                jmri.ProgListener temp = _usingProgrammer;
+                tempProgListener = _usingProgrammer;
                 _usingProgrammer = null; // done
                 state = ProgState.NOTPROGRAMMING;
                 lastOpTime = System.currentTimeMillis();
-                temp.programmingOpReply(value, status);
+                tempProgListener.programmingOpReply(value, status);
                 break;
+            case AFTERWRITEFIRST:
+                if (valueSIafter == -1) {
+                    log.error("Does not yet handle writing only one after index value");
+                } else {
+                    // need to write 2nd after-operation CV
+                    try {
+                        int tempSI = valueSIafter;
+                        valueSIafter = -1;
+                        state = ProgState.AFTERWRITESECOND;
+                        prog.writeCV(indexSI, tempSI, this);
+                    } catch (jmri.ProgrammerException e) {
+                        log.error("Exception doing write SI after operation", e);
+                    }
+                }
+                
+                break;
+
+            case AFTERWRITESECOND:
+                // 2nd after write done, this is the end of the operation
+                // the programmingOpReply handler might send an immediate reply, so
+                // clear the current listener _first_
+                tempProgListener = _usingProgrammer;
+                _usingProgrammer = null; // done
+                state = ProgState.NOTPROGRAMMING;
+                lastOpTime = System.currentTimeMillis();
+                tempProgListener.programmingOpReply(storedReturnValue, status);
+                break;
+
+
             case FINISHREAD:
                 if (valueSI == -1) {
                     try {

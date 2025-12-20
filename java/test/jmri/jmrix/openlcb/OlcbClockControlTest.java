@@ -24,7 +24,7 @@ import static jmri.Timebase.ClockInitialRunState.DO_NOTHING;
 import static jmri.Timebase.ClockInitialRunState.DO_START;
 import static jmri.Timebase.ClockInitialRunState.DO_STOP;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import static jmri.jmrix.openlcb.OlcbConfigurationManager.*;
 
@@ -36,8 +36,8 @@ import static org.mockito.Mockito.mock;
  * Created by bracz on 11/27/18.
  */
 public class OlcbClockControlTest {
-    OlcbTestInterface iface = null;
-    ClockControl clock;
+    private OlcbTestInterface iface = null;
+    private ClockControl clock;
 
     interface MockInterface {
         void onChange(String property, Object newValue);

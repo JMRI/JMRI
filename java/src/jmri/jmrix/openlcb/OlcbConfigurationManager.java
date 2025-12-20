@@ -6,6 +6,7 @@ import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import jmri.ClockControl;
@@ -149,6 +150,11 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.setTurnoutManager(
                 getTurnoutManager());
 
+        InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
+
+        InstanceManager.setStringIOManager(
+                getStringIOManager());
+
         InstanceManager.setThrottleManager(
                 getThrottleManager());
 
@@ -159,6 +165,12 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 getLightManager()
         );
 
+        InstanceManager.setMeterManager(
+                getMeterManager()
+        );
+
+        InstanceManager.store(getCommandStation(), jmri.CommandStation.class);
+        
         if (getProgrammerManager().isAddressedModePossible()) {
             InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
@@ -206,7 +218,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     NodeID nodeID;
     LoaderClient loaderClient;
     OlcbClockControl clockControl;
-
+    OlcbEventNameStore olcbEventNameStore = new OlcbEventNameStore();
+    
     OlcbInterface getInterface() {
         return olcbCanInterface.getInterface();
     }
@@ -236,16 +249,28 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
+        if (type.equals(jmri.PowerManager.class)) {
+            return true;
+        }
         if (type.equals(jmri.ReporterManager.class)) {
             return true;
         }
         if (type.equals(jmri.LightManager.class)) {
             return true;
         }
+        if (type.equals(jmri.MeterManager.class)) {
+            return true;
+        }
+        if (type.equals(jmri.StringIOManager.class)) {
+            return true;
+        }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return true;
         }
         if (type.equals(jmri.AddressedProgrammerManager.class)) {
+            return true;
+        }
+        if (type.equals(jmri.CommandStation.class)) {
             return true;
         }
         if (type.equals(AliasMap.class)) {
@@ -278,6 +303,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(ClockControl.class)) {
             return clockControl != null;
         }
+        if (type.equals(OlcbEventNameStore.class)) {
+            return true;
+        }
         return false; // nothing, by default
     }
 
@@ -296,8 +324,17 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (T.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
+        if (T.equals(jmri.PowerManager.class)) {
+            return (T) getPowerManager();
+        }
         if (T.equals(jmri.LightManager.class)) {
             return (T) getLightManager();
+        }
+        if (T.equals(jmri.MeterManager.class)) {
+            return (T) getMeterManager();
+        }
+        if (T.equals(jmri.StringIOManager.class)) {
+            return (T) getStringIOManager();
         }
         if (T.equals(jmri.ReporterManager.class)) {
             return (T) getReporterManager();
@@ -307,6 +344,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (T.equals(jmri.AddressedProgrammerManager.class)) {
             return (T) getProgrammerManager();
+        }
+        if (T.equals(jmri.CommandStation.class)) {
+            return (T) getCommandStation();
         }
         if (T.equals(AliasMap.class)) {
             return (T) aliasMap;
@@ -340,6 +380,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (T.equals(ClockControl.class)) {
             return (T) clockControl;
+        }
+        if (T.equals(OlcbEventNameStore.class)) {
+            return (T) olcbEventNameStore;
         }
         return null; // nothing, by default
     }
@@ -380,6 +423,18 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return turnoutManager;
     }
 
+    protected OlcbPowerManager powerManager;
+
+    public OlcbPowerManager getPowerManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (powerManager == null) {
+            powerManager = new OlcbPowerManager(adapterMemo);
+        }
+        return powerManager;
+    }
+
     protected OlcbSensorManager sensorManager;
 
     public OlcbSensorManager getSensorManager() {
@@ -392,6 +447,42 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return sensorManager;
     }
 
+    protected OlcbLightManager lightManager;
+
+    public OlcbLightManager getLightManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (lightManager == null) {
+            lightManager = new OlcbLightManager(adapterMemo);
+        }
+        return lightManager;
+    }
+
+    protected OlcbMeterManager meterManager;
+
+    public OlcbMeterManager getMeterManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (meterManager == null) {
+            meterManager = new OlcbMeterManager(adapterMemo);
+        }
+        return meterManager;
+    }
+
+    protected OlcbStringIOManager stringIOManager;
+
+    public OlcbStringIOManager getStringIOManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (stringIOManager == null) {
+            stringIOManager = new OlcbStringIOManager(adapterMemo);
+        }
+        return stringIOManager;
+    }
+
     protected OlcbReporterManager reporterManager;
 
     public OlcbReporterManager getReporterManager() {
@@ -402,6 +493,18 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             reporterManager = new OlcbReporterManager(adapterMemo);
         }
         return reporterManager;
+    }
+
+    protected OlcbCommandStation commandStation;
+
+    public OlcbCommandStation getCommandStation() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (commandStation == null) {
+            commandStation = new OlcbCommandStation(adapterMemo);
+        }
+        return commandStation;
     }
 
     @Override
@@ -424,18 +527,6 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             clockControl.dispose();
             InstanceManager.deregister(clockControl, ClockControl.class);
         }
-    }
-
-    protected OlcbLightManager lightManager;
-
-    public OlcbLightManager getLightManager() {
-        if (adapterMemo.getDisabled()) {
-            return null;
-        }
-        if (lightManager == null) {
-            lightManager = new OlcbLightManager(adapterMemo);
-        }
-        return lightManager;
     }
 
     class SimpleNodeIdentInfoHandler extends MessageDecoder {
@@ -464,7 +555,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
             l.add((byte)4); // version byte
             addStringPart("JMRI", l, 40);  // mfg field; 40 char limit in Standard, not counting final null
-            addStringPart("PanelPro", l, 40);  // model
+            addStringPart(jmri.Application.getApplicationName(), l, 40);  // model
             String name = ProfileManager.getDefault().getActiveProfileName();
             if (name != null) {
                 addStringPart(name, l, 20); // hardware version
@@ -519,48 +610,71 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
      * bytes of PID. That changes each time, which isn't perhaps what's wanted.
      */
     protected void getOurNodeID() {
-        String userOption = adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_NODEID);
-        if (userOption != null && !userOption.isEmpty()) {
-            try {
-                nodeID = new NodeID(userOption);
-                return;
-            } catch (IllegalArgumentException e) {
-                log.error("User set node ID protocol option which is in invalid format ({}). Expected dotted hex notation like 02.01.12.FF.EE.DD", userOption);
-            }
-        }
-        List<NodeID> previous = InstanceManager.getList(NodeID.class);
-        if (!previous.isEmpty()) {
-            nodeID = previous.get(0);
-            return;
-        }
-
-        long pid = getProcessId(1);
-        log.debug("Process ID: {}", pid);
-
-        // get first network interface internet address
-        // almost certainly the wrong approach, isn't likely to
-        // find real IP address for coms, but it gets some entropy.
-        InetAddress address = null;
         try {
-            NetworkInterface n = NetworkInterface.getNetworkInterfaces().nextElement();
-            if (n != null) {
-                address = n.getInetAddresses().nextElement();
+            String userOption = adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_NODEID);
+            if (userOption != null && !userOption.isEmpty()) {
+                try {
+                    nodeID = new NodeID(userOption);
+                    log.trace("getOurNodeID sets known option Node ID: {}", nodeID);
+                    return;
+                } catch (IllegalArgumentException e) {
+                    log.error("User configured a node ID protocol option which is in invalid format ({}). Expected dotted hex notation like 02.01.12.FF.EE.DD", userOption);
+                }
             }
-        } catch (SocketException | RuntimeException e) {
-            // java.util.NoSuchElementException seen on some Windows machines
-            log.warn("Can't get IP address to make NodeID", e);
-        } 
-        log.debug("InetAddress: {}", address);
-        int b1 = 0;
-        if (address != null) {
-            b1 = address.getAddress()[0];
+            List<NodeID> previous = InstanceManager.getList(NodeID.class);
+            if (!previous.isEmpty()) {
+                nodeID = previous.get(0);
+                log.trace("getOurNodeID sets known instance Node ID: {}", nodeID);
+                return;
+            }
+    
+            long pid = getProcessId(1);
+            log.trace("Process ID: {}", pid);
+    
+            // get first network interface internet address
+            // almost certainly the wrong approach, isn't likely to
+            // find real IP address for coms, but it gets some entropy.
+            InetAddress address = null;
+            try {
+                NetworkInterface n = NetworkInterface.getNetworkInterfaces().nextElement();
+                if (n != null) {
+                    address = n.getInetAddresses().nextElement();
+                }
+                log.debug("InetAddress: {}", address);
+            } catch (SocketException | java.util.NoSuchElementException e) {
+                // SocketException is part of the getNetworkInterfaces specification.
+                // java.util.NoSuchElementException seen on some Windows machines
+                // for unknown reasons.  We provide a short error message in that case.
+                log.warn("Can't get IP address to make NodeID. You should set a NodeID in the Connection preferences.");
+            }
+            
+            int b2 = 0;
+            if (address != null) {
+                b2 = address.getAddress()[0];
+            } else {
+                b2 = (byte)(RANDOM.nextInt(255) & 0xFF); // & 0xFF not strictly necessary, but makes SpotBugs happy
+                log.trace("Used random value {} for address byte", b2);
+            }
+            
+            // store new NodeID
+            nodeID = new NodeID(new byte[]{2, 1, 18, (byte) (b2 & 0xFF), (byte) ((pid >> 8) & 0xFF), (byte) (pid & 0xFF)});
+            log.debug("getOurNodeID sets new Node ID: {}", nodeID);
+            
+        } catch (Exception e) {
+            // We catch Exception here, instead of within the NetworkInterface lookup, because
+            // we want to know which kind of exceptions we're seeing.  If/when this gets reported,
+            // generalize the catch statement above.
+            log.error("Unexpected Exception while processing Node ID definition. Please report this to the JMRI developers", e);
+            byte b2 = (byte)(RANDOM.nextInt(255) & 0xFF); // & 0xFF not strictly necessary, but makes SpotBugs happy
+            byte b1 = (byte)(RANDOM.nextInt(255) & 0xFF);
+            byte b0 = (byte)(RANDOM.nextInt(255) & 0xFF);
+            nodeID = new NodeID(new byte[]{2, 1, 18, b2, b1, b0});            
+            log.debug("Setting random Node ID: {}", nodeID);
         }
-
-        // store new NodeID
-        nodeID = new NodeID(new byte[]{2, 1, 18, (byte) (b1 & 0xFF), (byte) ((pid >> 8) & 0xFF), (byte) (pid & 0xFF)});
-        log.debug("Node ID: {}", nodeID);
     }
 
+    private static final Random RANDOM = new Random();
+    
     protected long getProcessId(final long fallback) {
         // Note: may fail in some JVM implementations
         // therefore fallback has to be provided

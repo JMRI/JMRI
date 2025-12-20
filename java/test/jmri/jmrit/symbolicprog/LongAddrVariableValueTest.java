@@ -7,13 +7,11 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.NotApplicable;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test LongAddrVariableValue class.
@@ -23,7 +21,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
 
-    ProgDebugger p = new ProgDebugger();
+    // ProgDebugger p = new ProgDebugger();
 
     // abstract members invoked by tests in parent AbstractVariableValueTestBase class
     @Override
@@ -63,58 +61,69 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
     // some of the premade tests don't quite make sense; override them here.
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueCreate() {
-    }// mask is ignored by LongAddr
+    }
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueCreateLargeValue() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueCreateLargeMaskValue() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueCreateLargeMaskValue256() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueCreateLargeMaskValue2up16() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueTwinMask() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @NotApplicable("low CV is upper part of address")
     public void testVariableFromCV() {
-    }     // low CV is upper part of address
+    }
 
     @Override
     @Test
+    @NotApplicable("due to multi-cv nature of LongAddr")
     public void testVariableValueRead() {
-    } // due to multi-cv nature of LongAddr
+    }
 
     @Override
     @Test
+    @NotApplicable("due to multi-cv nature of LongAddr")
     public void testVariableValueWrite() {
-    } // due to multi-cv nature of LongAddr
+    }
 
     @Override
     @Test
+    @NotApplicable("due to multi-cv nature of LongAddr")
     public void testVariableCvWrite() {
-    }    // due to multi-cv nature of LongAddr
+    }
 
     @Override
     @Test
+    @NotApplicable("programmer synch is different")
     public void testWriteSynch2() {
-    }        // programmer synch is different
+    }
     // can we create long address , then manipulate the variable to change the CV?
 
     @Test
@@ -162,7 +171,7 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals(189, cv18.getValue());
     }
 
-    List<java.beans.PropertyChangeEvent> evtList = null;  // holds a list of ParameterChange events
+    private List<java.beans.PropertyChangeEvent> evtList = null;  // holds a list of ParameterChange events
 
     // check a long address read operation
     @Test
@@ -178,13 +187,10 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
 
         LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, "17", "XXVVVVXX", 0, 255, v, jlabel, "stdname", cv18);
         // register a listener for parameter changes
-        java.beans.PropertyChangeListener listen = new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                evtList.add(e);
-                if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
-                    log.debug("Busy false seen in test");
-                }
+        java.beans.PropertyChangeListener listen = (java.beans.PropertyChangeEvent e) -> {
+            evtList.add(e);
+            if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
+                log.debug("Busy false seen in test");
             }
         };
         evtList = new ArrayList<>();
@@ -256,6 +262,6 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
         jlabel = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LongAddrVariableValueTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LongAddrVariableValueTest.class);
 
 }

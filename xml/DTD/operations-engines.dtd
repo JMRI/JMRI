@@ -55,6 +55,8 @@
 <!ATTLIST engine lastTrackId			CDATA #IMPLIED>
 <!ATTLIST engine train					CDATA #IMPLIED>
 <!ATTLIST engine trainId 				CDATA #IMPLIED>  
+<!ATTLIST engine lastTrain				CDATA #IMPLIED>  
+<!ATTLIST engine lastTrainId			CDATA #IMPLIED>
 <!ATTLIST engine owner					CDATA #IMPLIED>  
 <!ATTLIST engine moves					CDATA #IMPLIED>                    
 <!ATTLIST engine comment				CDATA #IMPLIED>

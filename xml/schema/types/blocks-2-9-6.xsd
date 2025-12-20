@@ -86,6 +86,7 @@
               <!-- end of ugly duplication -->
               <xs:element name="speed" minOccurs="0" maxOccurs="1" />
               <xs:element name="permissive" minOccurs="0" maxOccurs="1" />
+              <xs:element name="ghost" minOccurs="0" maxOccurs="1" />
               <xs:element name="occupancysensor" type="beanNameType" minOccurs="0" maxOccurs="1" />
               <xs:element name="sensor" minOccurs="0" maxOccurs="1" >
                 <xs:complexType>

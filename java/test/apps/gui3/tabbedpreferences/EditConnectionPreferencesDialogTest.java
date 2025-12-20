@@ -5,29 +5,34 @@ import jmri.util.swing.JemmyUtil;
 import jmri.util.ThreadingUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
- *
+ * Tests for EditConnectionPreferencesDialog
  */
 public class EditConnectionPreferencesDialogTest {
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCTor() {
 
         Thread t = JemmyUtil.createModalDialogOperatorThread("Preferences", "Quit");
-        ThreadingUtil.runOnGUI(() -> {
-            Assertions.assertFalse(EditConnectionPreferencesDialog.showDialog());
+        boolean tst = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return EditConnectionPreferencesDialog.showDialog();
         });
-        JUnitUtil.waitFor(() -> { return !t.isAlive(); }," dialog thread did not close");
+        Assertions.assertFalse(tst);
+        JUnitUtil.waitFor(() -> !t.isAlive()," dialog thread did not close");
 
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir java.io.File folder) {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
+        try {
+            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
+        } catch (java.io.IOException ioe) {
+            Assertions.fail("Failed to reset the profile", ioe);
+        }
         JUnitUtil.initConfigureManager();
         JUnitUtil.resetPreferencesProviders();
 
@@ -36,6 +41,7 @@ public class EditConnectionPreferencesDialogTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.resetWindows(false, false); // tidy up after Dialog with null parent
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

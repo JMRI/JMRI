@@ -13,7 +13,7 @@ public class EngineSoundEventTest {
 
     @Test
     public void testCTor() {
-        EngineSoundEvent t = new EngineSoundEvent();
+        EngineSoundEvent t = new EngineSoundEvent("test");
         Assert.assertNotNull("exists",t);
     }
 

@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-engine-client-message",
     "type": "object",
     "description": "Schema data object in message from client to JMRI for type \"engine\"",
@@ -81,6 +81,10 @@
             "type": "string",
             "description": "The model of engine"
         },
+        "hp": {
+            "type": "string",
+            "description": "The HP of engine"
+        },
         "outOfService": {
             "type": "boolean",
             "description": "True if out of service; false otherwise"
@@ -114,17 +118,17 @@
             ],
             "description": "The timestamp of the last reported sighting of the tag"
         },
-        "carType": {
+        "type": {
             "type": "string",
             "description": "The engine type"
         },
         "weight": {
             "type": "number",
-            "description": "Weight of car in onces"
+            "description": "Weight of engine in tons"
         },
         "weightTons": {
-            "type": "number",
-            "description": "Weight of car in tons"
+            "type": "string",
+            "description": "Weight of engine in tons"
         }
     },
     "additionalProperties": false,

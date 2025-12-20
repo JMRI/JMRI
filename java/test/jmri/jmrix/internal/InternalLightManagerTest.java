@@ -22,10 +22,10 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     public void testAsAbstractFactory() {
         // create and register the manager object
         InternalLightManager alm = new InternalLightManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        jmri.InstanceManager.setLightManager(alm);
+        InstanceManager.setLightManager(alm);
 
         // ask for a Light, and check type
-        LightManager lm = jmri.InstanceManager.lightManagerInstance();
+        LightManager lm = InstanceManager.lightManagerInstance();
 
         Light tl = lm.newLight("IL21", "my name");
 
@@ -44,28 +44,28 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     @Test
     public void testIsVariableLight() {
         // ask for a Light, and check type
-        LightManager lm = jmri.InstanceManager.lightManagerInstance();
+        LightManager lm = InstanceManager.lightManagerInstance();
 
         Assert.assertTrue(lm.newLight("IL21", "my name") instanceof VariableLight);
     }
 
-    // No manager-specific system name validation at present
     @Test
     @Override
+    @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
 
-    // No manager-specific system name validation at present
     @Test
     @Override
+    @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         // create and register the manager object
         l = new InternalLightManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        jmri.InstanceManager.setLightManager(l);
+        InstanceManager.setLightManager(l);
     }
 
     @AfterEach

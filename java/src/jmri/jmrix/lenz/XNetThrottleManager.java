@@ -2,11 +2,10 @@ package jmri.jmrix.lenz;
 
 import java.util.EnumSet;
 import java.util.HashMap;
+
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * XNet implementation of a ThrottleManager based on the
@@ -35,15 +34,14 @@ public class XNetThrottleManager extends AbstractThrottleManager implements XNet
     }
 
     /**
-     * Request a new throttle object be creaetd for the address, and let the
+     * Request a new throttle object be created for the address, and let the
      * throttle listeners know about it.
+     * {@inheritDoc}
      */
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         XNetThrottle throttle;
-        if (log.isDebugEnabled()) {
-            log.debug("Requesting Throttle: {}", address);
-        }
+        log.debug("Requesting Throttle: {}", address);
         // range check for LH200 and Compact/Commander
         if (tc.getCommandStation().getCommandStationType() == 0x01 ||
             tc.getCommandStation().getCommandStationType() == 0x02 ) {
@@ -64,6 +62,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements XNet
 
     /**
      * XpressNet based systems DO NOT use the Dispatch Function.
+     * @return false always.
      */
     @Override
     public boolean hasDispatchFunction() {
@@ -110,7 +109,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements XNet
      * @param num address to examine
      * @return true if can be long address
      */
-    static protected boolean isLongAddress(int num) {
+    protected static boolean isLongAddress(int num) {
         return (num >= 100);
     }
 
@@ -162,10 +161,6 @@ public class XNetThrottleManager extends AbstractThrottleManager implements XNet
     }
 
     @Override
-    public void releaseThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
-    }
-
-    @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
             if(!(t instanceof XNetThrottle)) {
@@ -178,6 +173,6 @@ public class XNetThrottleManager extends AbstractThrottleManager implements XNet
         return false;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(XNetThrottleManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XNetThrottleManager.class);
 
 }

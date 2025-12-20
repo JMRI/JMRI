@@ -8,10 +8,11 @@ import jmri.*;
 import jmri.jmrit.display.*;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JMenuOperator;
@@ -24,7 +25,7 @@ import org.netbeans.jemmy.operators.JMenuOperator;
  * @author Bob Jacobsen Copyright (C) 2020
  */
 @Timeout(10)
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
     private EditorFrameOperator jfo = null;
@@ -38,7 +39,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JUnitUtil.initLayoutBlockManager();
 
         e = new LayoutEditor("Layout Editor Test Layout");
-        e.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> e.setVisible(true));
         jfo = new EditorFrameOperator(e);
 
     }
@@ -456,6 +457,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public void testGetLayoutName() {
         e.dispose(); // remove existing instance
         e = new LayoutEditor(); // create new instance to test the default name
+        jfo = new EditorFrameOperator(e);
         // default is "My Layout"
         Assert.assertEquals("getLayoutName", "My Layout", e.getLayoutName());
     }
@@ -786,7 +788,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         e.setHighlightSelectedBlock(true);
         // setHighlightSelectedBlock performs some GUI actions, so give
         // the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
         Assert.assertTrue("le.getHighlightSelectedBlock after setHighlightSelectedBlock(true)", e.getHighlightSelectedBlock());
     }
 
@@ -796,7 +798,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         e.setHighlightSelectedBlock(false);
         // setHighlightSelectedBlock performs some GUI actions, so give
         // the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
         Assert.assertFalse("le.getHighlightSelectedBlock after setHighlightSelectedBlock(false)", e.getHighlightSelectedBlock());
     }
 
@@ -804,7 +806,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public void checkOptionsMenuExists() {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
         Assert.assertNotNull("Options Menu Exists", jmo);
-        Assert.assertEquals("Menu Item Count", 19, jmo.getItemCount());
+        Assert.assertEquals("Menu Item Count", 20, jmo.getItemCount());
     }
 
     @Test

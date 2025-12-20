@@ -5,7 +5,11 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Calendar;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests for the jmri.util.WaitHandler class.
@@ -18,25 +22,25 @@ import org.junit.Assert;
  */
 public class WaitHandlerTest {
 
-    private transient boolean flag1;
-    private transient boolean flag2;
+    private volatile boolean flag1;
+    private volatile boolean flag2;
 
-    static final int THREAD_DELAY = 200;   // time to delay thread under test
-    static final int TEST_DELAY = THREAD_DELAY + 250;  // time to wait for thread to complete
+    static final int THREAD_DELAY = 500;   // time to delay thread under test
 
-    transient long startTime;
-    transient long endTime;
+    private volatile long startTime;
+    private volatile long endTime;
 
     @Test
     public void testInlineWait() {
         startTime = Calendar.getInstance().getTimeInMillis();
 
         // delay the test thread itself
-        new WaitHandler(this, 50);
+        WaitHandler t = new WaitHandler(this, 50);
+        assertNotNull(t);
 
         // check how long it took
         endTime = Calendar.getInstance().getTimeInMillis();
-        Assert.assertTrue("wait time long enough", 50 <= endTime - startTime);
+        assertTrue( 50 <= endTime - startTime, "wait time long enough");
     }
 
     @Test
@@ -50,7 +54,8 @@ public class WaitHandlerTest {
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
-                new WaitHandler(this, THREAD_DELAY);
+                WaitHandler t = new WaitHandler(this, THREAD_DELAY);
+                Assertions.assertNotNull(t);
                 endTime = Calendar.getInstance().getTimeInMillis();
                 flag2 = true;
             }
@@ -60,12 +65,12 @@ public class WaitHandlerTest {
 
         JUnitUtil.waitFor(()->{return flag1;},"flag1 not set");
 
-        Assert.assertTrue("started", flag1);
+        assertTrue( flag1, "started");
 
         JUnitUtil.waitFor(()->{return flag2;},"flag2 not set");
 
-        Assert.assertTrue("ended", flag2);
-        Assert.assertTrue("run time long enough", THREAD_DELAY <= endTime - startTime);
+        assertTrue( flag2, "ended");
+        assertTrue( THREAD_DELAY <= endTime - startTime, "run time long enough");
     }
 
     @Test
@@ -77,7 +82,8 @@ public class WaitHandlerTest {
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
-                new WaitHandler(this, THREAD_DELAY);
+                WaitHandler t = new WaitHandler(this, THREAD_DELAY);
+                assertNotNull(t);
                 endTime = Calendar.getInstance().getTimeInMillis();
                 flag2 = true;
             }
@@ -87,17 +93,17 @@ public class WaitHandlerTest {
 
         JUnitUtil.waitFor(()->{return flag1;},"flag1 not set");
 
-        Assert.assertTrue("started", flag1);
+        assertTrue( flag1, "started");
 
         // fire Interrupt while still running
-        Assert.assertTrue("still running", !flag2);
+        assertFalse( flag2, "still running");
         t.interrupt();
-        Assert.assertTrue("notify early enough", THREAD_DELAY > Calendar.getInstance().getTimeInMillis() - startTime);
+        assertTrue( THREAD_DELAY > Calendar.getInstance().getTimeInMillis() - startTime, "notify early enough");
 
         JUnitUtil.waitFor(()->{return flag2;},"flag2 not set");
 
-        Assert.assertTrue("ended", flag2);
-        Assert.assertTrue("ended early", THREAD_DELAY >= endTime - startTime);
+        assertTrue( flag2, "ended");
+        assertTrue( THREAD_DELAY >= endTime - startTime, "ended early");
     }
 
     @Test
@@ -110,12 +116,14 @@ public class WaitHandlerTest {
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
-                new WaitHandler(this, THREAD_DELAY) {
+
+                WaitHandler wh = new WaitHandler(this, THREAD_DELAY) {
                     @Override
                     public boolean wasSpurious() {
                         return true;
                     }
                 };
+                assertNotNull(wh);
                 endTime = Calendar.getInstance().getTimeInMillis();
                 flag2 = true;
             }
@@ -125,21 +133,21 @@ public class WaitHandlerTest {
 
         JUnitUtil.waitFor(()->{return flag1;},"flag1 not set");
 
-        Assert.assertTrue("started", flag1);
+        assertTrue( flag1, "started");
 
-        Assert.assertTrue("still running", !flag2);
+        assertFalse( flag2, "started");
 
         // fire spurious wake
         synchronized (t) {
-            Assert.assertTrue("notify early enough", THREAD_DELAY > Calendar.getInstance().getTimeInMillis() - startTime);
+            assertTrue( THREAD_DELAY > Calendar.getInstance().getTimeInMillis() - startTime, "notify early enough");
             t.notify();
         }
 
         JUnitUtil.waitFor(()->{return flag2;},"flag2 not set");
 
-        Assert.assertTrue("ended", flag2);
+        assertTrue( flag2, "ended");
 
-        Assert.assertTrue("run time long enough", THREAD_DELAY <= endTime - startTime);
+        assertTrue( THREAD_DELAY <= endTime - startTime, "run time long enough");
     }
 
     @Test
@@ -167,31 +175,31 @@ public class WaitHandlerTest {
         t.start();
 
         JUnitUtil.waitFor(()->{return flag1;},"flag1 not set");
-        Assert.assertTrue("started", flag1);
-        Assert.assertTrue("still running", !flag2);
+        assertTrue( flag1, "started");
+        assertFalse( flag2, "still running");
 
         // fire intentional wake, which will pass test
         synchronized (t) {
             t.notify();
-            Assert.assertTrue("notify early enough", THREAD_DELAY >= Calendar.getInstance().getTimeInMillis() - startTime);
+            assertTrue( THREAD_DELAY >= Calendar.getInstance().getTimeInMillis() - startTime, "notify early enough");
         }
 
         JUnitUtil.waitFor(()->{return flag2;},"flag2 not set");
-        Assert.assertTrue("ended", flag2);
+        assertTrue( flag2, "ended");
 
         if (THREAD_DELAY <= endTime - startTime) {
-            Assert.fail("run time: " + THREAD_DELAY + "  not shortened: " + ( endTime - startTime));
+            fail("run time: " + THREAD_DELAY + "  not shortened: " + ( endTime - startTime));
         }
-        Assert.assertTrue("run time shortened", THREAD_DELAY > endTime - startTime);
+        assertTrue( THREAD_DELAY > endTime - startTime, "run time shortened");
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 

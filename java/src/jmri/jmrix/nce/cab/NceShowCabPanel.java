@@ -1,36 +1,20 @@
 package jmri.jmrix.nce.cab;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import java.util.Calendar;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import jmri.jmrix.nce.NceBinaryCommand;
-import jmri.jmrix.nce.NceCmdStationMemory;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.NceTrafficController;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
+
+import javax.swing.*;
+import javax.swing.table.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.jmrix.nce.*;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
 
 /**
  * Frame to display NCE cabs
@@ -253,6 +237,14 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         x.append(": ");
         x.append(Bundle.getMessage("Title"));
         return x.toString();
+    }
+
+    /**
+     * The minimum frame size for font size 16
+     */
+    @Override
+    public Dimension getMinimumDimension() {
+        return new Dimension(500, 500);
     }
 
     /**

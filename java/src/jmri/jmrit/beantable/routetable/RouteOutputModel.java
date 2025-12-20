@@ -1,7 +1,5 @@
 package jmri.jmrit.beantable.routetable;
 
-import jmri.InstanceManager;
-
 import javax.swing.table.AbstractTableModel;
 import java.beans.PropertyChangeListener;
 
@@ -30,15 +28,13 @@ abstract class RouteOutputModel extends AbstractTableModel implements PropertyCh
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("length")) {
+        if (jmri.Manager.PROPERTY_LENGTH.equals(e.getPropertyName())) {
             // a new NamedBean is available in the manager
             fireTableDataChanged();
         }
     }
 
-    void dispose() {
-        InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
-    }
+    protected abstract void dispose();
 
     @Override
     public String getColumnName(int c) {

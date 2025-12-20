@@ -1,6 +1,7 @@
 package jmri.jmrix.dccpp;
 
 import jmri.SpeedStepMode;
+import jmri.ThrottleManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -479,6 +480,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup1() {
     }
 
@@ -487,6 +489,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup2() {
     }
 
@@ -495,6 +498,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup3() {
     }
 
@@ -503,6 +507,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup4() {
     }
 
@@ -511,6 +516,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup5() {
     }
 
@@ -557,13 +563,13 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     // Test the constructor with an address specified.
     @Test
-    public void testCtorWithArg() throws Exception {
+    public void testCtorWithArg() {
         Assert.assertNotNull(instance);
     }
 
     // Test the initialization sequence.
     @Test
-    public void testInitSequence() throws Exception {
+    public void testInitSequence() {
         Assert.assertEquals("Throttle in THROTTLEIDLE state", DCCppThrottle.THROTTLEIDLE, ((DCCppThrottle)instance).requestState);
     }
 
@@ -573,19 +579,20 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Override
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
         memo = new DCCppSystemConnectionMemo(tc);
         tm = new DCCppThrottleManager(memo);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        jmri.InstanceManager.setDefault(ThrottleManager.class, tm);
+        memo.store(tm, ThrottleManager.class);
         instance = new DCCppThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
         setMaxFns(69);
     }
 
     @Override
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         // no need to dispose of instance
         if (tm != null) {
             tm.dispose();

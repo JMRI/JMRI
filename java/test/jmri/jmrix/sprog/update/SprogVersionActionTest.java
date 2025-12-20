@@ -19,6 +19,7 @@ public class SprogVersionActionTest {
         m.setSprogTrafficController(new SprogTrafficControlScaffold(m));
         SprogVersionAction t = new SprogVersionAction("test",m);
         Assert.assertNotNull("exists",t);
+        m.getSprogTrafficController().dispose();
     }
 
     @BeforeEach

@@ -169,14 +169,56 @@ public class LenzCommandStation implements jmri.CommandStation {
         if (AH == 0x00) {
             /* if AH is 0, this is a short address */
             return (AL);
-        } else {
-            /* This must be a long address */
-            int address;
-            address = ((AH * 256) & 0xFF00);
-            address += (AL & 0xFF);
-            address -= 0xC000;
-            return (address);
+        } 
+        
+        if ((AH & 0xC0) == 0x80) {
+            /* this is accessory address */
+            if ((AL & 0x80) == 0x80) {
+                /* this is Basic accessory decoder */
+                int address;
+                
+                int part1 ;
+                part1 = (AH & 0x3F) ;
+                
+                int part2 ;
+                part2 = ~AL ;
+                part2 = (part2 & 0x70) ;
+                part2 = part2 << 2 ;
+                
+                address = part2 | part1 ;
+                return (address) ;
+            } else {
+                /* this is Extended accessory decoder */
+                int address;
+                
+                int part1 ;
+                part1 = (AH & 0x3F) ;
+                // part1 = part1 + 1 ;
+                part1 = part1 << 2 ;
+                
+                int part2 ;
+                part2 = ~AL ;
+                part2 = (part2 & 0x70) ;
+                part2 = part2 << 4 ;
+                
+                int part3 ;
+                part3 = AL ;
+                part3 = (part3 & 0x06) ;
+                part3 = part3 >> 1 ;
+                
+                address = part2 | part1 | part3;
+                address = address + 1;
+                
+                return (address) ;
+            }
         }
+        
+        /* This must be a long locomotive address */
+        int address;
+        address = ((AH * 256) & 0xFF00);
+        address += (AL & 0xFF);
+        address -= 0xC000;
+        return (address);
     }
 
     /* To Implement the CommandStation Interface, we have to define the 

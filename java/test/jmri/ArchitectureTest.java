@@ -1,15 +1,16 @@
 package jmri;
 
-import com.tngtech.archunit.lang.*;
-import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 import java.io.File;
 
-import jmri.util.FileUtil;
-
 import org.junit.jupiter.api.*;
+
+import com.tngtech.archunit.junit.*;
+import com.tngtech.archunit.lang.ArchRule;
+
+import jmri.util.FileUtil;
 
 /**
  * Check the architecture of the JMRI library
@@ -57,9 +58,10 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.util.swing.JmriMouseListener").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.swing.JmriMouseMotionListener").and()
 
+                                .doNotHaveFullyQualifiedName("apps.Apps").and()
                                 .doNotHaveFullyQualifiedName("apps.SystemConsole$PopupListener").and()
                                 .doNotHaveFullyQualifiedName("apps.startup.StartupActionsPreferencesPanel$1").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.BeanTableDataModel$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.BeanTableJTable").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.ListedTableFrame$ActionJList").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.RowComboBoxPanel").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.RowComboBoxPanel$1").and()
@@ -69,7 +71,6 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.oblock.TableFrames").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.sensor.SensorTableDataModel$ImageIconRenderer$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.turnout.TurnoutTableDataModel$ImageIconRenderer$1").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.turnout.TurnoutTableJTable").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.catalog.ImageIndexEditor").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.catalog.ImageIndexEditor$2").and()
                                 .doNotHaveFullyQualifiedName("mri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel$1").and()
@@ -82,9 +83,9 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.logix.WarrantRoute$RouteLocation").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.swing.ConditionalNGDebugger$PopupMenu$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.swing.TreeEditor$5").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$1").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$2").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$3").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.gui.LocationEditFrame$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.gui.LocationEditFrame$2").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.gui.LocationEditFrame$3").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.roster.swing.RosterGroupsPanel$MouseAdapter").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.roster.swing.RosterTable$RosterCellEditor").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.symbolicprog.CombinedLocoSelTreePane$1").and()
@@ -109,12 +110,15 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.swing.EditableList$MouseListener").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.BusyGlassPane$CBListener").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.JTreeWithPopup$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.org.mitre.jawb.swing.DetachableTabbedPane$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.swing.JCheckBoxTree").and() // getToolTipText( java.awt.event.MouseEvent ev)
                                 .doNotHaveFullyQualifiedName("jmri.util.swing.JmriMouseListener$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.swing.JmriMouseMotionListener$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.swing.TriStateJCheckBox$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.table.JTableWithColumnToolTips$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.table.ButtonEditor").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.table.ToggleButtonEditor").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.org.mitre.jawb.swing.DetachableTabbedPane").and()
                                 .doNotHaveFullyQualifiedName("jmri.web.servlet.frameimage.JmriJFrameServlet")
 
                             .should()
@@ -311,9 +315,8 @@ public class ArchitectureTest {
         .that()
 
         // all the standard serial access should be confined to here:
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$SerialPort").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$SerialPortEvent")
+        .doNotHaveFullyQualifiedName("jmri.jmrix.jserialcomm.JSerialPort").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.jserialcomm.JSerialPortEvent")
 
         .should().accessClassesThat().resideInAPackage("com.fazecast.jSerialComm..");
 
@@ -366,6 +369,7 @@ public class ArchitectureTest {
     public static final ArchRule checkLogixNGActionsXmlNotUsingNamedBeanHandle = noClasses()
             .that()
             .resideInAPackage("jmri.jmrit.logixng.actions.configurexml")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.configurexml.ActionListenOnBeansXml")            // This class doesn't seem to be able to use LogixNG_SelectNamedBean
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
 

@@ -1,6 +1,9 @@
 package jmri.swing;
 
+import java.util.function.BooleanSupplier;
+
 import javax.swing.JComponent;
+
 import jmri.spi.JmriServiceProviderInterface;
 
 /**
@@ -122,5 +125,17 @@ public interface PreferencesPanel extends JmriServiceProviderInterface {
      */
     default int getSortOrder() {
         return Integer.MAX_VALUE;
+    }
+
+    /**
+     * Offers a way to tell if this panel is currently enabled or not.
+     * It's primarily used for permission panel to protect it from unauthorized
+     * changes.
+     *
+     * @return A BooleanSupplier that tells if this panel is currently enabled.
+     *         Or null if the panel is always enabled.
+     */
+    default BooleanSupplier getIsEnabled() {
+        return null;
     }
 }

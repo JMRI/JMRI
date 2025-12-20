@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.Block;
@@ -27,9 +28,6 @@ import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a SectionManager.
@@ -161,6 +159,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      * @return the found section of null if no matching Section found
      */
     @Override
+    @CheckForNull
     public Section getSection(String name) {
         Section y = getByUserName(name);
         if (y != null) {
@@ -209,7 +208,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
         }
         for (Section section : set) {
             int errors = section.placeDirectionSensors();
-            numErrors = numErrors + errors;
+            numErrors += errors;
             numSections++;
         }
         log.debug("Checked direction sensors for {} Sections - {} errors or warnings.", numSections, numErrors);
@@ -259,13 +258,16 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      */
     @Override
     public void initializeBlockingSensors() {
+        Sensor sensor;
         for (Section s : getNamedBeanSet()) {
             try {
-                if (s.getForwardBlockingSensor() != null) {
-                    s.getForwardBlockingSensor().setState(Sensor.ACTIVE);
+                sensor = s.getForwardBlockingSensor();
+                if (sensor != null) {
+                    sensor.setState(Sensor.ACTIVE);
                 }
-                if (s.getReverseBlockingSensor() != null) {
-                    s.getReverseBlockingSensor().setState(Sensor.ACTIVE);
+                sensor = s.getReverseBlockingSensor();
+                if (sensor != null) {
+                    sensor.setState(Sensor.ACTIVE);
                 }
             } catch (JmriException reason) {
                 log.error("Exception when initializing blocking Sensors for Section {}", s.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME));
@@ -280,7 +282,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
     /**
      * A list of blocks that will be used to create a block based section.
      */
-    List<Block> blockList;
+    private List<Block> blockList;
 
     /**
      * Find stub end blocks.
@@ -325,6 +327,28 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      * @param layoutBlock The starting layout block.
      */
     private void createBlockSection(LayoutBlock layoutBlock){
+        // Do not generate block sections for turntable components (the turntable block or ray blocks)
+        // as these are not standard stub-end sidings.
+        boolean isTurntableComponent = false;
+        for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+            for (jmri.jmrit.display.layoutEditor.LayoutTurntable turntable : panel.getLayoutTurntables()) {
+                if (turntable.getLayoutBlock() == layoutBlock) {
+                    isTurntableComponent = true;
+                    break;
+                }
+                for (jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
+                    if (ray.getConnect() != null && ray.getConnect().getLayoutBlock() == layoutBlock) {
+                        isTurntableComponent = true;
+                        break;
+                    }
+                }
+                if (isTurntableComponent) break;
+            }
+            if (isTurntableComponent) break;
+        }
+        if (isTurntableComponent) {
+            return; // Skip creating a section for this block
+        }
         blockList = new ArrayList<>();
         var block = layoutBlock.getBlock();
         createSectionBlockList(block);
@@ -343,15 +367,14 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
         Section section;
         try {
             section = createNewSection(sectionName);
+            log.debug("created section '{}' for layout block '{}'", sectionName, layoutBlock.getDisplayName());
         }
         catch (IllegalArgumentException ex){
             log.error("Could not create Section for layout block '{}'",layoutBlock.getDisplayName());
             return;
         }
 
-        blockList.forEach((blk) -> {
-            section.addBlock(blk);
-        });
+        blockList.forEach( blk -> section.addBlock(blk));
 
         // Create entry point
         Block lastBlock = blockList.get(blockList.size() - 1);
@@ -394,11 +417,13 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
     }
 
     /**
-     * Get the next block if this one is not the last block.  The last block is one that
-     * is a SML facing block.  The other restriction is only 1 or 2 neighbors.
+     * Get the next block if this one is not the last block.
+     * The last block is one that is a SML facing block.
+     * The other restriction is only 1 or 2 neighbors.
      * @param block The block to be checked.
      * @return the next block or null if it is the last block.
      */
+    @CheckForNull
     private Block getNextBlock(@Nonnull Block block) {
         var lbmManager = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         var smlManager = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
@@ -410,8 +435,11 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
 
         // If the current block is a SML facing block, the next block is not needed.
         for (jmri.SignalMastLogic sml : smlManager.getSignalMastLogicList()) {
-            if (sml.getFacingBlock().equals(layoutBlock)) {
-                return null;
+            // should not occur, but sometimes a sml has a null entry point (does not show up in sml table)
+            if (sml.getFacingBlock() != null) {
+                if (sml.getFacingBlock().equals(layoutBlock)) {
+                    return null;
+                }
             }
         }
 
@@ -448,6 +476,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      * @param currentBlock The layout block with more than 2 connections.
      * @return the next block or null.
      */
+    @CheckForNull
     private Block getNextConnectedBlock(LayoutBlock currentBlock) {
         var lbmManager = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         var lbTools = lbmManager.getLayoutBlockConnectivityTools();
@@ -468,7 +497,8 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
             var dest = currentBlock.getNeighbourAtIndex(i);
             var destBlock = lbmManager.getLayoutBlock(dest);
             try {
-                boolean valid = lbTools.checkValidDest(facingBlock, currentBlock, destBlock, new ArrayList<LayoutBlock>(), pathMethod);
+                boolean valid = lbTools.checkValidDest(facingBlock,
+                    currentBlock, destBlock, new ArrayList<>(), pathMethod);
                 if (valid) {
                     return dest;
                 }
@@ -493,6 +523,6 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSectionManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSectionManager.class);
 
 }

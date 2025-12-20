@@ -126,9 +126,5 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
     }
 
     abstract public JmriPanel makePanel();
-    /* {
-        log.error("makePanel must be overridden", new Exception());
-        return null;
-    } */
 
 }

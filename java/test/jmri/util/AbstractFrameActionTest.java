@@ -1,11 +1,10 @@
 package jmri.util;
 
-import java.awt.GraphicsEnvironment;
-
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+
 import org.netbeans.jemmy.operators.JFrameOperator;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
@@ -17,22 +16,22 @@ public class AbstractFrameActionTest {
     public void testCtor() {
         AbstractFrameAction t = new AbstractFrameAction("TestAction","jmri.util.JmriJFrame"){
         };
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
-    @SuppressWarnings("deprecation") // WindowOperations.close()
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testAction() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AbstractFrameAction t = new AbstractFrameAction("TestAction","jmri.util.JmriJFrame"){
         };
         t.actionPerformed(new java.awt.event.ActionEvent(this,1,"test action event"));
         // this test creates a JmriJFrame with no title.  find that
         javax.swing.JFrame f = JFrameOperator.waitJFrame("", true, true);
-        Assert.assertNotNull("found output frame", f);
+        assertNotNull( f, "found output frame");
         // then close the frame.
         JFrameOperator fo = new JFrameOperator(f);
-        fo.close();
+        JUnitUtil.dispose(fo.getWindow());
+        fo.waitClosed();
 
     }
 

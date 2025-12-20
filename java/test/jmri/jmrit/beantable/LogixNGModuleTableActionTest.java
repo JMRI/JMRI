@@ -2,27 +2,24 @@ package jmri.jmrit.beantable;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.GraphicsEnvironment;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ResourceBundle;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.netbeans.jemmy.operators.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.tools.swing.ConditionalNGEditor;
-
-import jmri.util.*;
-
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.*;
-
-import org.netbeans.jemmy.operators.*;
-
+import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
+import jmri.util.swing.JemmyUtil;
 
 /**
 * Tests for the LogixNGModuleTableAction Class
@@ -33,7 +30,7 @@ import org.netbeans.jemmy.operators.*;
 @Timeout(10) // 10 second timeout for methods in this test class.
 public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module> {
 
-    static final ResourceBundle rbxLogixNGSwing = ResourceBundle.getBundle("jmri.jmrit.logixng.tools.swing.LogixNGSwingBundle");
+    // static final java.util.ResourceBundle rbxLogixNGSwing = java.util.ResourceBundle.getBundle("jmri.jmrit.logixng.tools.swing.LogixNGSwingBundle");
 
     @Test
     public void testCtor() {
@@ -41,8 +38,8 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     }
 
     @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testStringCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LogixNGModuleTableAction Constructor Return", new LogixNGModuleTableAction("test"));  // NOI18N
     }
 
@@ -58,19 +55,20 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     }
 
     @org.junit.Ignore // Fails on Java 11
-    //@Test
+    @Test
     @Override
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testAddThroughDialog() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
 //        AbstractLogixNGTableAction logixNGModuleTable = (AbstractLogixNGTableAction) a;
-        a.actionPerformed(null);
+        ThreadingUtil.runOnGUI(() -> a.actionPerformed(null)); // show table
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         Module module = InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM1");
         Assert.assertNull("LogixNG Module does not exist", module);
 
         // find the "Add... " button and press it.
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
@@ -82,7 +80,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
 //        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
         ((JTextField)jlo.getLabelFor()).setText("IQM1");
         //and press create
-        jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
 
         // Click button "Done" on the EditLogixNG frame
         String title = String.format("Edit Module %s", "IQM1");
@@ -549,19 +547,19 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
 */
 
     @org.junit.Ignore // Fails on Java 11
-    //@Test
+    @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testEditModule() throws JmriException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
 //        AbstractLogixNGTableAction logixNGModuleTable = (AbstractLogixNGTableAction) a;
-        a.actionPerformed(null);
+        ThreadingUtil.runOnGUI(() -> a.actionPerformed(null)); // show table
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         Module module = InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM1");
         Assert.assertNull("LogixNG Module does not exist", module);
 
         // find the "Add... " button and press it.
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
@@ -573,7 +571,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
 //        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
         ((JTextField)jlo.getLabelFor()).setText("IQM1");
         //and press create
-        jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
 
         // Click button "Done" on the EditLogixNG frame
         String title = String.format("Edit Module %s", "IQM1");
@@ -700,25 +698,28 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     }
 
     @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testDeleteModule() throws InterruptedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction) a;
 
-        moduleTable.actionPerformed(null); // show table
+        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction<?>) a;
+
+        ThreadingUtil.runOnGUI(() -> moduleTable.actionPerformed(null)); // show table
         JFrame moduleFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGModuleTable"), true, true);  // NOI18N
         Assert.assertNotNull("Found LogixNG Frame", moduleFrame);  // NOI18N
 
         // Delete IQM102, respond No
         Thread t1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"), "Are you sure you want to delete IQM102?");  // NOI18N
-        moduleTable.deletePressed("IQM102");  // NOI18N
-        t1.join();
+        ThreadingUtil.runOnGUI(() -> moduleTable.deletePressed("IQM102"));
+        JUnitUtil.waitFor( () -> !t1.isAlive(), "dialog no complete");
+
         Module module102 = jmri.InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM102");  // NOI18N
         Assert.assertNotNull("Verify IQM102 Not Deleted", module102);  // NOI18N
 
         // Delete IQM103, respond Yes
         Thread t2 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "Are you sure you want to delete IQM103?");  // NOI18N
-        moduleTable.deletePressed("IQM103");  // NOI18N
-        t2.join();
+        ThreadingUtil.runOnGUI(() -> moduleTable.deletePressed("IQM103"));
+        JUnitUtil.waitFor( () -> !t2.isAlive(), "dialog yes complete");
+
         LogixNG module103 = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQM103");  // NOI18N
         Assert.assertNull("Verify IQM103 Is Deleted", module103);  // NOI18N
 
@@ -726,9 +727,10 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     }
 
     @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testDeleteModuleWithDigitalAction() throws InterruptedException, SocketAlreadyConnectedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction) a;
+
+        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction<?>) a;
 
         Module module102 = InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM102");   // NOI18N
         jmri.jmrit.logixng.actions.DigitalMany digitalMany_102 =
@@ -744,14 +746,15 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
                 InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(digitalMany_103));
 
-        moduleTable.actionPerformed(null); // show table
+        ThreadingUtil.runOnGUI(() -> moduleTable.actionPerformed(null)); // show table
         JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGModuleTable"), true, true);  // NOI18N
         Assert.assertNotNull("Found LogixNG Frame", logixNGFrame);  // NOI18N
 
         // Delete IQM102, respond No
         Thread t1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"), "Are you sure you want to delete IQM102 and its children?");  // NOI18N
-        moduleTable.deletePressed("IQM102");  // NOI18N
-        t1.join();
+        ThreadingUtil.runOnGUI(() -> moduleTable.deletePressed("IQM102"));
+        JUnitUtil.waitFor( () -> !t1.isAlive(), "dialog no complete");
+
         Module mod102 = jmri.InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM102");  // NOI18N
         Assert.assertNotNull("Verify IQM102 Not Deleted", mod102);  // NOI18N
         MaleSocket digMany102 = InstanceManager.getDefault(DigitalActionManager.class).getBySystemName("IQDA102");   // NOI18N
@@ -759,8 +762,9 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
 
         // Delete IQM103, respond Yes
         Thread t2 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "Are you sure you want to delete IQM103 and its children?");  // NOI18N
-        moduleTable.deletePressed("IQM103");  // NOI18N
-        t2.join();
+        ThreadingUtil.runOnGUI(() -> moduleTable.deletePressed("IQM103"));
+        JUnitUtil.waitFor( () -> !t2.isAlive(), "dialog yes complete");
+
         Module mod103 = jmri.InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM103");  // NOI18N
         Assert.assertNull("Verify IQM103 Is Deleted", mod103);  // NOI18N
         MaleSocket digMany103 = InstanceManager.getDefault(DigitalActionManager.class).getBySystemName("IQDA103");   // NOI18N
@@ -770,9 +774,10 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     }
 
     @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testDeleteModuleWithTwoDigitalActions() throws InterruptedException, SocketAlreadyConnectedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction) a;
+
+        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction<?>) a;
 
         Module module102 = InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM102");   // NOI18N
         jmri.jmrit.logixng.actions.DigitalMany digitalMany_102 =
@@ -798,14 +803,15 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
                 InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(digitalMany_113));
 
-        moduleTable.actionPerformed(null); // show table
+        ThreadingUtil.runOnGUI(() -> moduleTable.actionPerformed(null)); // show table
         JFrame moduleFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGModuleTable"), true, true);  // NOI18N
         Assert.assertNotNull("Found LogixNG Frame", moduleFrame);  // NOI18N
 
         // Delete IQM102, respond No
         Thread t1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"), "Are you sure you want to delete IQM102 and its children?");  // NOI18N
-        moduleTable.deletePressed("IQM102");  // NOI18N
-        t1.join();
+        ThreadingUtil.runOnGUI(() -> moduleTable.deletePressed("IQM102"));
+        JUnitUtil.waitFor( () -> !t1.isAlive(), "dialog no complete");
+
         Module mod102 = jmri.InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM102");  // NOI18N
         Assert.assertNotNull("Verify IQM102 Not Deleted", mod102);  // NOI18N
         MaleSocket digMany102 = InstanceManager.getDefault(DigitalActionManager.class).getBySystemName("IQDA102");   // NOI18N
@@ -815,8 +821,9 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
 
         // Delete IQM103, respond Yes
         Thread t2 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "Are you sure you want to delete IQM103 and its children?");  // NOI18N
-        moduleTable.deletePressed("IQM103");  // NOI18N
-        t2.join();
+        ThreadingUtil.runOnGUI(() -> moduleTable.deletePressed("IQM103"));
+        JUnitUtil.waitFor( () -> !t2.isAlive(), "dialog yes complete");
+
         Module mod103 = jmri.InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM103");  // NOI18N
         Assert.assertNull("Verify IQM103 Is Deleted", mod103);  // NOI18N
         MaleSocket digMany103 = InstanceManager.getDefault(DigitalActionManager.class).getBySystemName("IQDA103");   // NOI18N
@@ -828,9 +835,10 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     }
 
     @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testDeleteModuleWithDigitalActionWithListenerRef() throws InterruptedException, SocketAlreadyConnectedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction) a;
+
+        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction<?>) a;
 
         PropertyChangeListener pcl = (PropertyChangeEvent evt) -> {
             // Do nothing
@@ -879,14 +887,16 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
                 InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(digitalMany_113));
 
-        moduleTable.actionPerformed(null); // show table
+        ThreadingUtil.runOnGUI(() -> moduleTable.actionPerformed(null)); // show table
         JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGModuleTable"), true, true);  // NOI18N
         Assert.assertNotNull("Found LogixNG Frame", logixNGFrame);  // NOI18N
 
         // Delete IQM102, respond No
         Thread t1 = createModalDialogOperatorThread_WithListenerRefs(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"), listenerRefs);  // NOI18N
-        moduleTable.deletePressed("IQM102");  // NOI18N
-        t1.join();
+        ThreadingUtil.runOnGUI(() -> moduleTable.deletePressed("IQM102"));
+
+        JUnitUtil.waitFor(() -> !t1.isAlive(),"dialog no did not complete");
+
         Module mod102 = jmri.InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM102");  // NOI18N
         Assert.assertNotNull("Verify IQM102 Not Deleted", mod102);  // NOI18N
         MaleSocket digMany102 = InstanceManager.getDefault(DigitalActionManager.class).getBySystemName("IQDA102");   // NOI18N
@@ -896,8 +906,9 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
 
         // Delete IQM103, respond Yes
         Thread t2 = createModalDialogOperatorThread_WithListenerRefs(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), listenerRefs);  // NOI18N
-        moduleTable.deletePressed("IQM103");  // NOI18N
-        t2.join();
+        ThreadingUtil.runOnGUI(() -> moduleTable.deletePressed("IQM103"));
+        JUnitUtil.waitFor(() -> !t2.isAlive(),"dialog yes did not complete");
+
         Module mod103 = jmri.InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM103");  // NOI18N
         Assert.assertNull("Verify IQM103 Is Deleted", mod103);  // NOI18N
         MaleSocket digMany103 = InstanceManager.getDefault(DigitalActionManager.class).getBySystemName("IQDA103");   // NOI18N
@@ -913,7 +924,8 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            new JLabelOperator(jdo, labelText);     // Throws exception if not found
+            JLabelOperator jlo = new JLabelOperator(jdo, labelText);     // Throws exception if not found
+            Assertions.assertNotNull(jlo);
             jbo.pushNoBlock();
         });
         t.setName(dialogTitle + " Close Dialog Thread");
@@ -928,7 +940,9 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
             }
             if (component instanceof Container) {
                 JEditorPane textArea = findTextArea((Container) component);
-                if (textArea != null) return textArea;
+                if (textArea != null) {
+                    return textArea;
+                }
             }
         }
         return null;
@@ -953,10 +967,10 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.util.JUnitUtil.initLogixNGManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initLogixNGManager();
 
 //        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
 
@@ -982,7 +996,6 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGModuleTableActionTest.class);
 

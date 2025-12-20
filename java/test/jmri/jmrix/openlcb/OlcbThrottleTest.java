@@ -1,7 +1,6 @@
 package jmri.jmrix.openlcb;
 
-import jmri.DccLocoAddress;
-import jmri.SpeedStepMode;
+import jmri.*;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.can.TestTrafficController;
 
@@ -337,6 +336,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup1() {
     }
 
@@ -345,6 +345,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup2() {
     }
 
@@ -353,6 +354,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup3() {
     }
 
@@ -361,6 +363,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup4() {
     }
 
@@ -369,6 +372,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup5() {
     }
 
@@ -439,6 +443,8 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         if (memo != null && memo.getInterface() !=null ) {
             memo.getTrafficController().terminateThreads();
             memo.getInterface().dispose();
+            memo.get(OlcbEventNameStore.class).deregisterShutdownTask();
+            InstanceManager.getDefault(IdTagManager.class).dispose();
         }
         memo = null;
         connection = null;

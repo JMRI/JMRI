@@ -1,26 +1,16 @@
 package jmri.jmrix.ncemonitor;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Vector;
 
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
+import javax.swing.*;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import jmri.jmrix.AbstractSerialPortController;
-import jmri.jmrix.AbstractSerialPortController.SerialPort;
+import jmri.jmrix.SerialPort;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.swing.NcePanelInterface;
 
@@ -117,6 +107,14 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         x.append(": ");
         x.append(Bundle.getMessage("Title"));
         return x.toString();
+    }
+
+    /**
+     * The minimum frame size for font size 16
+     */
+    @Override
+    public Dimension getMinimumDimension() {
+        return new Dimension(500, 500);
     }
 
     /**
@@ -486,7 +484,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         int parity = modelParityValues[modelValue];
         int baudrate = modelBaudRates[modelValue];
         activeSerialPort = AbstractSerialPortController.activatePort(
-                null, portName, log, numStopBits, AbstractSerialPortController.Parity.getParity(parity));
+                null, portName, log, numStopBits, SerialPort.Parity.getParity(parity));
 
         activeSerialPort.setNumDataBits(numDataBits);
         activeSerialPort.setBaudRate(baudrate);

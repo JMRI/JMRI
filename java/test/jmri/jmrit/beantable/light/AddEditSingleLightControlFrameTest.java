@@ -19,7 +19,7 @@ public class AddEditSingleLightControlFrameTest {
         LightControlPane lcp = new LightControlPane();
         AddEditSingleLightControlFrame t = new AddEditSingleLightControlFrame(lcp,null);
         assertNotNull(t);
-        lcp.dispose();
+        JUnitUtil.dispose(t);
     }
     
     @BeforeEach

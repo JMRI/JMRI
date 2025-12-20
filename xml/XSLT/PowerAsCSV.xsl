@@ -20,7 +20,7 @@
 <!-- Need to instruct the XSLT processor to use text output rules.
      See http://www.w3.org/TR/xslt#output for more details
 -->
-<xsl:output method="text" encoding="ISO-8859-1" 
+<xsl:output method="text" encoding="UTF-8" 
 	indent="no"
 	omit-xml-declaration="yes"
 	standalone="no" />

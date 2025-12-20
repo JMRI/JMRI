@@ -106,12 +106,8 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
     String[] IMAGE_FILTER = {"gif", "jpg", "jpeg", "png"};
 
-    @SuppressFBWarnings(value = "MS_OOI_PKGPROTECT",
-            justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
     String[] SOUND_FILTER = {"wav"};
 
-    @SuppressFBWarnings(value = "MS_OOI_PKGPROTECT",
-            justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
     String[] SCRIPT_FILTER = {"py", "scpt"};
 
 }

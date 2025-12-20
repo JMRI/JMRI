@@ -5,8 +5,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -26,7 +24,7 @@ public class ManagerDefaultsConfigPaneTest extends PreferencesPanelTestBase<Mana
     @Override
     @Test
     public void isPersistant() {
-        assertThat(prefsPanel.isPersistant()).isTrue();
+        Assertions.assertTrue(prefsPanel.isPersistant());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ManagerDefaultsConfigPaneTest.class);

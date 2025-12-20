@@ -10,9 +10,6 @@ import java.util.Date;
 import jmri.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Provide basic Timebase implementation from system clock.
  * <p>
@@ -69,7 +66,8 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         if (InstanceManager.getNullableDefault(MemoryManager.class) != null) {
             // only try to create memory if memories are supported
             try {
-                factorMemory = InstanceManager.memoryManagerInstance().provideMemory(memo.getSystemPrefix()+"MRATEFACTOR");
+                factorMemory = InstanceManager.memoryManagerInstance()
+                    .provideMemory(memo.getSystemPrefix()+"MRATEFACTOR");
                 factorMemory.setValue(userGetRate());
             } catch (IllegalArgumentException ex) {
                 log.warn("Unable to create RATEFACTOR time memory variable");
@@ -107,12 +105,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     public void setTime(Date d) {
         startAtTime = new Date(); // set now in wall clock time
         setTimeValue = new Date(d.getTime()); // to ensure not modified from outside
-        if (synchronizeWithHardware) {
+        if ( synchronizeWithHardware && InstanceManager.getDefault(ClockControl.class) != hardwareTimeSource) {
             // send new time to all hardware clocks, except the hardware time source if there is one
             // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-            if (InstanceManager.getDefault(ClockControl.class) != hardwareTimeSource) {
-                InstanceManager.getDefault(ClockControl.class).setTime(d);
-            }
+            InstanceManager.getDefault(ClockControl.class).setTime(d);
         }
         if (pauseTime != null) {
             pauseTime = setTimeValue; // if stopped, continue stopped at new time
@@ -190,7 +186,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 }
             }
         }
-        firePropertyChange("run", !run, run); // old, then new
+        firePropertyChange(PROPERTY_CHANGE_RUN, !run, run); // old, then new
         handleAlarm(null);
     }
 
@@ -638,7 +634,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             timer.setRepeats(false); // just in case
             timer.stop();
 
-            ActionListener listeners[] = timer.getListeners(ActionListener.class);
+            ActionListener[] listeners = timer.getListeners(ActionListener.class);
             for (ActionListener listener : listeners) {
                 timer.removeActionListener(listener);
             }
@@ -731,8 +727,9 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             // update memory
             updateMemory(date);
             // notify listeners
-            firePropertyChange("minutes", Double.valueOf(oldMinutes), Double.valueOf(minutes));
-            firePropertyChange("time", oldDate != null ? new Date(oldDate.getTime()) : null, new Date(date.getTime())); // to ensure not modified outside
+            firePropertyChange(PROPERTY_CHANGE_MINUTES, Double.valueOf(oldMinutes), Double.valueOf(minutes));
+            firePropertyChange(PROPERTY_CHANGE_TIME, oldDate != null ? new Date(oldDate.getTime()) : null,
+                new Date(date.getTime())); // to ensure not modified outside
         }
         oldDate = date;
         oldHours = hours;
@@ -764,7 +761,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void addMinuteChangeListener(PropertyChangeListener l) {
-        addPropertyChangeListener("minutes", l);
+        addPropertyChangeListener(PROPERTY_CHANGE_MINUTES, l);
     }
 
     /**
@@ -772,7 +769,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void removeMinuteChangeListener(PropertyChangeListener l) {
-        removePropertyChangeListener("minutes", l);
+        removePropertyChangeListener(PROPERTY_CHANGE_MINUTES, l);
     }
 
     /**
@@ -780,7 +777,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public PropertyChangeListener[] getMinuteChangeListeners() {
-        return getPropertyChangeListeners("minutes");
+        return getPropertyChangeListeners(PROPERTY_CHANGE_MINUTES);
     }
 
     @Override
@@ -793,7 +790,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         super.addPropertyChangeListener(propertyName, listener);
-        if (propertyName != null && (propertyName.equals("minutes") || propertyName.equals("time"))) {
+        if (propertyName != null && (propertyName.equals(PROPERTY_CHANGE_MINUTES) || propertyName.equals(PROPERTY_CHANGE_TIME))) {
             startAlarm();
         }
     }
@@ -815,6 +812,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         return 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleTimebase.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleTimebase.class);
 
 }

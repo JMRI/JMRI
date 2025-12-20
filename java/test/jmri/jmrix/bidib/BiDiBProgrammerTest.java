@@ -5,18 +5,19 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
 
 /**
- * Tests for the BiDiBMultiMeter class
+ * Tests for the BiDiBProgrammer class
  * 
  * @author  Eckart Meyer  Copyright (C) 2020
  */
 public class BiDiBProgrammerTest  extends jmri.jmrix.AbstractProgrammerTest {
     
-    BiDiBSystemConnectionMemo memo;
+    private BiDiBSystemConnectionMemo memo;
     
     // should be revised - which modes are really available with BiDiB..
     @Override
@@ -58,8 +59,9 @@ public class BiDiBProgrammerTest  extends jmri.jmrix.AbstractProgrammerTest {
 
     @Override
     @Test
+    @Disabled("we can't make a BidibNode which does not execute synchroneous BiDiB commands")
     public void testWriteCVNullListener() throws jmri.ProgrammerException {
-                //programmer.writeCV("1",42,null); //not possible since we can't make a BidibNode which does not execute synchroneous BiDiB commands
+        //programmer.writeCV("1",42,null); //not possible since we can't make a BidibNode which does not execute synchroneous BiDiB commands
     }
 
     @Override

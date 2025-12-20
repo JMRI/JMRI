@@ -367,7 +367,7 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.COMMON == _base.getCategory());
     }
 
     // Test the methods connected(FemaleSocket) and getExpressionSystemName(int)
@@ -669,7 +669,7 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.COMMON;
+        _category = LogixNG_Category.COMMON;
         _isExternal = false;
 
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N

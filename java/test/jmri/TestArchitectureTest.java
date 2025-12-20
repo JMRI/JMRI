@@ -1,9 +1,13 @@
 package jmri;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
 
+import com.tngtech.archunit.base.DescribedPredicate;
+import com.tngtech.archunit.core.domain.JavaMethod;
 import com.tngtech.archunit.core.domain.JavaModifier;
 import com.tngtech.archunit.lang.*;
+import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
 import com.tngtech.archunit.junit.*;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.*;
@@ -54,9 +58,31 @@ public class TestArchitectureTest {
     @ArchTest
     public static final ArchRule junit4TestRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..")
+        .doNotHaveFullyQualifiedName("jmri.TestArchitectureTest").and()
+        .resideOutsideOfPackage("jmri.jmrit.logixng..").
+            and().areNotInnerClasses() // within TestArchitectureTest
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Test");
+
+    @ArchTest
+    public static final ArchRule methodsStartingWithTestShouldBeAnnotatedWithTest =
+        ArchRuleDefinition.methods()
+        .that(new DescribedPredicate<JavaMethod>("name starts with 'test', missing test annotations") {
+            @Override
+            public boolean test(JavaMethod method) {
+                boolean nameMatches = method.getName().toLowerCase().startsWith("test");
+                boolean noParams = method.getRawParameterTypes().isEmpty();
+                boolean notAbstract = !method.getModifiers().contains(JavaModifier.ABSTRACT);
+                boolean isVoid = method.getRawReturnType().isEquivalentTo(void.class);
+                boolean hasAnyTestAnnotation =
+                    method.isAnnotatedWith( ParameterizedTest.class) ||
+                    method.isAnnotatedWith(org.junit.Test.class); // JUnit 4
+
+                // Return true for methods that start with test, have no params, AND are missing the annotations
+                return nameMatches && noParams && notAbstract && isVoid && !hasAnyTestAnnotation;
+            }
+        })
+        // Point failures towards org.junit.jupiter.api.Test , not JU4 / Parameterized / Abstract
+        .should().beAnnotatedWith(Test.class); // JUnit 5
 
     /**
      * Please use org.junit.jupiter.api.BeforeEach
@@ -79,15 +105,17 @@ public class TestArchitectureTest {
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.After");
 
     /**
-     * jmri should not reference org.apache.log4j to allow jmri
+     * JMRI should not reference org.apache.log4j to allow JMRI
      * to be used as library in applications that choose not to use Log4J.
      */
     @ArchTest
     public static final ArchRule noLog4JinJmriTestsRule = noClasses()
         .that().doNotHaveFullyQualifiedName("jmri.util.JUnitAppender")
+        .and().doNotHaveFullyQualifiedName("jmri.util.JUnitAppenderTest")
         .and().doNotHaveFullyQualifiedName("jmri.util.TestingLoggerConfiguration")
         .and().doNotHaveFullyQualifiedName("apps.jmrit.log.Log4JTreePaneTest")
-        .should().dependOnClassesThat().resideInAPackage("org.apache.logging.log4j");
+        .should().dependOnClassesThat().resideInAPackage("org.apache.logging.log4j")
+        .because("Tests should normally use org.slf4j.Logger instead of Log4J");
 
     /**
      * JMRI tests should use org.slf4j.Logger instead of JUL.
@@ -98,7 +126,8 @@ public class TestArchitectureTest {
         .and().doNotHaveFullyQualifiedName("jmri.util.TestingLoggerConfiguration") // tests jul routed to l4j OK
         .and().doNotHaveFullyQualifiedName("jmri.util.web.BrowserFactory") // 3rd party lib setup
         .and().doNotHaveFullyQualifiedName("jmri.web.WebServerAcceptanceSteps") // testing output from lib
-        .should().dependOnClassesThat().resideInAPackage("java.util.logging");
+        .should().dependOnClassesThat().resideInAPackage("java.util.logging")
+        .because("Tests should normally use org.slf4j.Logger instead of JUL");
 
     /**
      * setUp methods should normally use the org.junit.jupiter.api.BeforeEach annotation.
@@ -115,7 +144,8 @@ public class TestArchitectureTest {
         .and().areNotDeclaredIn(jmri.util.junit.rules.RetryRuleTest.class)
         .should()
         .beAnnotatedWith(BeforeEach.class)
-        .orShould().beAnnotatedWith(BeforeAll.class);
+        .orShould().beAnnotatedWith(BeforeAll.class)
+        .because("setUp methods should normally use the BeforeEach annotation");
 
     /**
      * tearDown methods should normally use the org.junit.jupiter.api.AfterEach annotation.
@@ -132,14 +162,16 @@ public class TestArchitectureTest {
         .and().areNotDeclaredIn(jmri.util.junit.rules.RetryRuleTest.class)
         .should()
         .beAnnotatedWith(AfterEach.class)
-        .orShould().beAnnotatedWith(AfterAll.class);
+        .orShould().beAnnotatedWith(AfterAll.class)
+        .because("tearDown methods should normally use the AfterEach annotation");
 
     /**
      * JMRI does not require PackageTest.class .
      */
     @ArchTest
     public static final ArchRule noJUnit4PackageTestsRule = noClasses()
-        .should().haveSimpleName("PackageTest");
+        .should().haveSimpleName("PackageTest")
+        .because("JMRI does not require PackageTest.class");
 
     /**
      * JUnit5 should not have abstract methods with Test annotation.
@@ -150,7 +182,8 @@ public class TestArchitectureTest {
         .that().areAnnotatedWith(Test.class)
         .or().areAnnotatedWith(org.junit.jupiter.params.ParameterizedTest.class)
         .should()
-        .haveModifier(JavaModifier.ABSTRACT);
+        .haveModifier(JavaModifier.ABSTRACT)
+        .because("The overriding method should have the Test annotation, not the abstract.");
 
     /**
      * JUnit5 should not have abstract methods with LifeCycle annotation.
@@ -163,6 +196,35 @@ public class TestArchitectureTest {
         .or().areAnnotatedWith(BeforeAll.class)
         .or().areAnnotatedWith(AfterAll.class)
         .should()
-        .haveModifier(JavaModifier.ABSTRACT);
+        .haveModifier(JavaModifier.ABSTRACT)
+        .because("The overriding method should have the Test Lifecycle annotation, not the abstract.");
+
+    /**
+     * Tests should not have empty methods
+     * as this saves invoking both the setUp and tearDown Class methods.
+     */
+    @ArchTest
+    public static final ArchRule no_empty_test_methods = 
+        ArchRuleDefinition.methods()
+            .that().areAnnotatedWith(Test.class)
+            .and().areNotAnnotatedWith(Disabled.class)
+            .and().areNotAnnotatedWith(jmri.util.junit.annotations.NotApplicable.class)
+            // java assert may be removed in compilation resulting in an empty method
+            .and().areNotDeclaredIn(jmri.util.junit.AssertTest.class)
+            .should(notBeEmpty())
+            .because("this saves invoking both the setUp and tearDown Class methods. "
+            +"Please use @Disabled or @jmri.util.junit.annotations.NotApplicable");
+
+    private static ArchCondition<JavaMethod> notBeEmpty() {
+        return new ArchCondition<>("not be empty") {
+            @Override
+            public void check(JavaMethod method, ConditionEvents events) {
+                if (method.getMethodCallsFromSelf().isEmpty() && method.getRawParameterTypes().isEmpty()) {
+                    String message = String.format("Method %s is empty", method.getFullName());
+                    events.add(SimpleConditionEvent.violated(method, message));
+                }
+            }
+        };
+    }
 
 }

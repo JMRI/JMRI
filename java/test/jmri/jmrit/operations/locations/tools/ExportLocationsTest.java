@@ -1,12 +1,11 @@
 package jmri.jmrit.operations.locations.tools;
 
-import java.awt.GraphicsEnvironment;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -19,34 +18,30 @@ public class ExportLocationsTest extends OperationsTestCase {
         ExportLocations t = new ExportLocations();
         Assert.assertNotNull("exists", t);
     }
-    
+
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCreateFile() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         ExportLocations exportLoc = new ExportLocations();
         Assert.assertNotNull("exists", exportLoc);
-        
+
         JUnitOperationsUtil.loadFiveLocations(); //only Test Loc E has a track
-        
+
         // should cause export complete dialog to appear
-        Thread export = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                exportLoc.writeOperationsLocationFile();
-            }
-        });
+        Thread export = new Thread(exportLoc::writeOperationsLocationFile);
         export.setName("Export Locations"); // NOI18N
         export.start();
 
         jmri.util.JUnitUtil.waitFor(() -> {
             return export.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
-        
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
-        
-        java.io.File file = new java.io.File(ExportLocations.defaultOperationsFilename());   
-        Assert.assertTrue("Confirm file creation", file.exists());        
-    }
 
-    // private final static Logger log = LoggerFactory.getLogger(ExportCarsTest.class);
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
+
+        jmri.util.JUnitUtil.waitFor(() -> !export.isAlive(), "wait for export to complete");
+
+        java.io.File file = new java.io.File(ExportLocations.defaultOperationsFilename());   
+        Assert.assertTrue("Confirm file creation", file.exists());
+    }
 }

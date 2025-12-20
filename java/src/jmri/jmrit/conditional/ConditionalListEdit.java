@@ -702,8 +702,6 @@ public class ConditionalListEdit extends ConditionalList {
             }
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-                justification = "better to keep cases in column order rather than to combine")
         public int getPreferredWidth(int col) {
             switch (col) {
                 case SNAME_COLUMN:

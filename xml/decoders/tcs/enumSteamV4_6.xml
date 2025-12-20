@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- TCS WOWSteam Version 4 Sound Set 6 - Revision 1 						-->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<enumChoiceGroup>
+		<name>Air Pump</name>
+		<enumChoice choice="0-4-0 Saddle Tank Air Pump" value="0"/>
+		<enumChoice choice="N&#038;W #611 Air Pump" value="1"/>
+		<enumChoice choice="Cass Shay #6 Air Pump" value="2"/>
+		<enumChoice choice="Narrow Gauge Air Pump Type 1" value="3"/>
+		<enumChoice choice="Narrow Gauge Air Pump Type 2" value="4"/>
+		<enumChoice choice="0-6-0 Saddle Tank Air Pump" value="5"/>
+		<enumChoice choice="2-8-4 Berkshire Air Pump" value="6"/>
+		<enumChoice choice="4-8-0 Baldwin Air Pump" value="7"/>
+		<enumChoice choice="#89 Single-Stage Air Pump Type 1" value="8"/>
+		<enumChoice choice="Cab-Forward Air Pump" value="9"/>
+		<enumChoice choice="4-6-0 Baldwin Air Pump" value="10"/>
+		<enumChoice choice="0-6-0 Air Pump Type 1" value="11"/>
+		<enumChoice choice="0-6-0 Air Pump Type 2" value="12"/>
+	</enumChoiceGroup>
+	<enumChoice choice="Ash Pan Cleaning" value="13"/>
+	<enumChoice choice="Bell" value="14"/>
+	<enumChoiceGroup>
+		<name>Blow Down</name>
+		<enumChoice choice="Blow Down 1" value="65"/>
+		<enumChoice choice="Blow Down 2" value="66"/>
+		<enumChoice choice="Blow Down 3" value="67"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Blower</name>
+		<enumChoice choice="Blower 1" value="68"/>
+		<enumChoice choice="Blower 2" value="69"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Brake Release</name>
+		<enumChoice choice="Brake Release 1" value="70"/>
+		<enumChoice choice="Brake Release 2" value="71"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Brake Squeal</name>
+		<enumChoice choice="Train Brake Function" value="72"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Coupler Clank</name>
+		<enumChoice choice="Coupling" value="9462"/>
+		<enumChoice choice="Uncoupling" value="9463"/>
+	</enumChoiceGroup>
+	<enumChoice choice="Cylinder Cocks On/Off" value="9464"/>
+	<enumChoiceGroup>
+		<name>Generator</name>
+		<enumChoice choice="Generator 1" value="9574"/>
+		<enumChoice choice="Generator 2" value="9575"/>
+		<enumChoice choice="Generator 3" value="9576"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Idling Sounds</name>
+		<enumChoice choice="Idling Sounds 1" value="9577"/>
+		<enumChoice choice="Idling Sounds 2" value="9578"/>
+		<enumChoice choice="Idling Sounds 3" value="9579"/>
+		<enumChoice choice="Idling Sounds 4" value="9580"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Injector</name>
+		<enumChoice choice="Injector 1" value="9581"/>
+		<enumChoice choice="Injector 2" value="9582"/>
+		<enumChoice choice="Injector 3" value="9583"/>
+		<enumChoice choice="Injector 4" value="9584"/>
+		<enumChoice choice="Injector 5" value="9585"/>
+		<enumChoice choice="Injector 6" value="9586"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Johnson Bar</name>
+		<enumChoice choice="Johnson bar down" value="9587"/>
+		<enumChoice choice="Johnson bar up" value="9588"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Momentum</name>
+		<enumChoice choice="Switching/Mainline Momentum Function" value="9589"/>
+		<enumChoice choice="Switching/Mainline Momentum Function (Inverted)" value="9590"/>
+	</enumChoiceGroup>
+	<enumChoice choice="Mute" value="9591"/>
+	<enumChoiceGroup>
+		<name>TCS Rotate Function</name>
+		<enumChoice choice="Rotate Whistle, Bell, Chuff Feature" value="9787"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Safety</name>
+		<enumChoice choice="Cass Shay #3 Safety" value="9866"/>
+		<enumChoice choice="Cass Shay #6 Safety" value="9867"/>
+		<enumChoice choice="Strasburg 475 Safety" value="9868"/>
+		<enumChoice choice="Williams Grove 643 Safety" value="9869"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Coal Shovelling</name>
+		<enumChoice choice="Coal Shovelling" value="9870"/>
+		<enumChoice choice="Coal Shovelling With Air Powered Door" value="9871"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Station Announcements</name>
+		<enumChoice choice="Station Arrival Announcements" value="9874"/>
+		<enumChoice choice="Station Departure Announcements" value="9880"/>
+	</enumChoiceGroup>
+	<enumChoice choice="Water Filling" value="9965"/>
+	<enumChoiceGroup>
+		<name>Whistle</name>
+		<enumChoice choice="Playable Whistle" value="9966"/>
+		<enumChoice choice="Short Whistle Blast" value="10282"/>
+		<enumChoice choice="Grade Crossing Quill" value="10045"/>
+		<enumChoice choice="Forward Move Whistle Quill" value="9495"/>
+		<enumChoice choice="Reverse Move Whistle Quill" value="9593"/>
+		<enumChoice choice="Stop Whistle Quill" value="9886"/>
+	</enumChoiceGroup>
+	<enumChoice choice="None" value="65535"/>
+</enumVal>

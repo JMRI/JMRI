@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus.swing.console;
 
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.TimerTask;
 
 import javax.swing.BorderFactory;
@@ -167,14 +168,14 @@ public class CbusConsoleStatsPane extends javax.swing.JPanel {
                     countFramesInLastSecond(currentTime)));
                 maxFramesPerSecondField.setText(Integer.toString(maxPerSecondCount));
                 float average = total / secsDuration;
-                meanFramesPerSecondField.setText(String.format("%.01f", average));
+                meanFramesPerSecondField.setText(String.format(Locale.getDefault(), "%.01f", average));
                 totalCountField.setText(Integer.toString(total));
                 rcvdCountField.setText(Integer.toString(rcvdTotal));
                 sentCountField.setText(Integer.toString(sentTotal));
                 eventsCountField.setText(Integer.toString(eventTotal));
                 dccCountField.setText(Integer.toString(dccTotal));
                 statsClearButton.setToolTipText(Bundle.getMessage("ResetButtonLastRestTip",
-                    String.format("%.01f", secsDuration)));
+                    String.format(Locale.getDefault(), "%.01f", secsDuration)));
                 jmri.util.TimerUtil.scheduleOnGUIThread(keepAliveTimer, 500);
             }
         };

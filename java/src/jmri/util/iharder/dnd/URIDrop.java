@@ -14,10 +14,8 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.HierarchyEvent;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.Reader;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -273,7 +271,19 @@ public class URIDrop {
                 try {   // Get whatever was dropped
                     Transferable tr = evt.getTransferable();
                     boolean handled = false;
-                    // Is it a file list?
+                    // Is it a raw image?
+                    if (!handled && tr.isDataFlavorSupported(DataFlavor.imageFlavor) && listener != null && listener instanceof ListenerExt) {
+                        // Say we'll take it.
+                        evt.acceptDrop(DnDConstants.ACTION_COPY);
+                        log.debug("HTMLDrop: raw image accepted.");
+                        BufferedImage img = (BufferedImage) tr.getTransferData(DataFlavor.imageFlavor);
+                        ((ListenerExt)listener).imageDropped(img);
+                        // Mark that drop is completed.
+                        evt.getDropTargetContext().dropComplete(true);
+                        handled = true;
+                        log.debug("ImageDrop: drop complete as image.");                           
+                    }
+                    // Is it a file path list ?
                     if (!handled && tr.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
                         // Say we'll take it.
                         evt.acceptDrop(DnDConstants.ACTION_COPY);
@@ -569,5 +579,16 @@ public class URIDrop {
         public abstract void URIsDropped(java.net.URI[] uris);
     }
 
+    public interface ListenerExt extends Listener{        
+        /**
+         * This method is called when an image has been successfully dropped.
+         *
+         * @param image The BufferedImage that has been dropped
+         * @since 1.0
+         */
+        public void imageDropped(BufferedImage image);
+    }            
+        
+    
     private final static Logger log = LoggerFactory.getLogger(URIDrop.class);
 }

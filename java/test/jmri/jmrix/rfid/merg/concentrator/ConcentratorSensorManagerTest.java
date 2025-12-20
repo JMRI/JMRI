@@ -34,15 +34,15 @@ public class ConcentratorSensorManagerTest extends jmri.managers.AbstractSensorM
         Assert.assertNotNull(t);
     }
 
-    // test not applicable as minimal validation
     @Test
     @Override
+    @jmri.util.junit.annotations.NotApplicable("test not applicable as minimal validation")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {
     }
 
-    // test not applicable as minimal validation
     @Test
     @Override
+    @jmri.util.junit.annotations.NotApplicable("test not applicable as minimal validation")
     public void testMakeSystemNameWithPrefixNotASystemName() {
     }
 

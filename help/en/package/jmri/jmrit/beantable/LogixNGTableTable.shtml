@@ -142,8 +142,8 @@
       Tables Table. The user name is usually used to provide a more descriptive name, for example,
       "Signal 5 Table".</p>
 
-      <p>Select the delimiter used for the CSV, either <strong>Tabbed</strong> (the default)
-      or <strong>Comma</strong>.</p>
+      <p>Select the field delimiter that was used for the CSV file. The options are <strong>Tabbed</strong>
+      (the default), <strong>Comma</strong> or <strong>Semicolon</strong>.</p>
 
       <p>Use the file selector button to find and load a CSV file. A CSV type file (comma separated) may be
       created by saving a spreadsheet using the "Save As" function. You may also create a comma
@@ -153,6 +153,9 @@
       some text editors might automatically change tabs to spaces (and that will not load correctly).
       In that case, change the preferences of the editor, or use a different editor.
       The default location will be the user files location.</p>
+
+      <p class="noted">CSV exports from Excel normally use the comma. If the locale uses the comma
+      as a decimal character, the export will use the semicolon as the CSV field delimiter.</p>
 
       <p>The ability to create an internal table is not implemented yet.</p>
 

@@ -15,9 +15,6 @@ import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.swing.JmriMouseEvent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import static jmri.NamedBean.INCONSISTENT;
 import static jmri.NamedBean.UNKNOWN;
 import static jmri.Turnout.CLOSED;
@@ -79,7 +76,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             try {
                 Turnout turnout = InstanceManager.turnoutManagerInstance().
                         provideTurnout(pName);
-                setTurnout(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, turnout), turn);
+                setTurnout(InstanceManager.getDefault(jmri.NamedBeanHandleManager.class)
+                    .getNamedBeanHandle(pName, turnout), turn);
             } catch (IllegalArgumentException e) {
                 log.error("Turnout '{}' not available, icon won't see changes", pName);
             }
@@ -194,7 +192,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     public static final int SCISSOR = 0x08;
 
     //true for double slip, false for single.
-    int turnoutType = DOUBLESLIP;
+    private int turnoutType = DOUBLESLIP;
 
     /**
      * Sets the type of turnout configuration which is being used
@@ -215,7 +213,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         return turnoutType;
     }
 
-    boolean singleSlipRoute = false;
+    private boolean singleSlipRoute = false;
     //static boolean LOWERWESTtoLOWEREAST = false;
     //static boolean UPPERWESTtoUPPEREAST = true;
 
@@ -414,7 +412,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      *
      * @return A state variable from a Turnout, e.g. Turnout.CLOSED
      */
-    int turnoutState() {
+    private int turnoutState() {
         //Need to rework this!
         //might be as simple as adding the two states together.
         //if either turnout is not entered then the state to report
@@ -478,7 +476,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         // animation
         if (getTristate()
                 && (getTurnout(WEST).getFeedbackMode() != Turnout.DIRECT)
-                && (e.getPropertyName().equals("CommandedState"))) {
+                && (Turnout.PROPERTY_COMMANDED_STATE.equals(e.getPropertyName()))) {
             if ((getTurnout(WEST).getCommandedState() != getTurnout(WEST).getKnownState())
                     || (getTurnout(EAST).getCommandedState() != getTurnout(EAST).getKnownState())) {
                 displayState(INCONSISTENT);
@@ -490,7 +488,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             }
         }
 
-        if (e.getPropertyName().equals("KnownState")) {
+        if (Turnout.PROPERTY_KNOWN_STATE.equals(e.getPropertyName())) {
             displayState(turnoutState());
         }
     }
@@ -539,7 +537,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         tristateItem = new javax.swing.JCheckBoxMenuItem(Bundle.getMessage("Tristate"));
         tristateItem.setSelected(getTristate());
         popup.add(tristateItem);
-        tristateItem.addActionListener((java.awt.event.ActionEvent e) -> setTristate(tristateItem.isSelected()));
+        tristateItem.addActionListener( e -> setTristate(tristateItem.isSelected()));
     }
 
     /**
@@ -587,7 +585,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      *
      * @param state An integer value of the turnout states.
      */
-    void displayState(int state) {
+    private void displayState(int state) {
         // TODO This needs to be worked on.
         //  When changes are made, update the slipturnouticon code in web/js/panel.js accordingly
         log.debug("{} displayState {}", getNameString(), state);
@@ -991,7 +989,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     /**
      * Throw the turnouts for a scissor crossing when the icon is clicked.
      */
-    boolean firstStraight = false;
+    private boolean firstStraight = false;
 
     private void doScissorMouseClick() {
         if (turnoutState() == 5) {
@@ -1007,7 +1005,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
     }
 
-    HashMap<Turnout, Integer> _turnoutSetting = new HashMap<>();
+    private HashMap<Turnout, Integer> _turnoutSetting = new HashMap<>();
 
     protected HashMap<Turnout, Integer> getTurnoutSettings() {
         return _turnoutSetting;
@@ -1258,16 +1256,17 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             thread.start();
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(SlipTurnoutIcon.class);
 
-    static class SetSlipThread extends Thread {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlipTurnoutIcon.class);
+
+    private static class SetSlipThread extends Thread {
 
         /**
          * Construct the thread.
          *
          * @param aSlip the slip icon to manipulate in the thread
          */
-        public SetSlipThread(SlipTurnoutIcon aSlip) {
+        SetSlipThread(SlipTurnoutIcon aSlip) {
             s = aSlip;
         }
 

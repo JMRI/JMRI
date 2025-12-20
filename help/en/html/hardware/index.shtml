@@ -1,31 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Hardware Support</title>
   <meta name="Author" content="Bob Jacobsen, Egbert Broerse, Jerry Grochow">
   <!--#include virtual="/help/en/parts/Style.shtml" -->
-
-  <style type="text/css">
-  * {
-  box-sizing: border-box;
-  }
-
-  /* Create three equal columns that float next to each other */
-  .column {
-  float: left;
-  width: 30%;
-  /* allows for padding within 100% */
-  padding: 10px;
-  }
-
-  /* Clear floats after the columns */
-  .row:after {
-  content: "";
-  display: table;
-  clear: both;
-  }
-  </style>
 </head><!-- Reorg and additions by @jerryg2003 2020-04-25 -->
 
 <body>
@@ -92,8 +70,8 @@
       here, please ask about it on the <a href="https://groups.io/g/jmriusers">JMRI users</a>.</p>
 
       <p class="note">For developers adding new hardware integration: see <a href=
-      "../doc/Technical/Help.shtml#hwhelp">here for information about Creating Help and Web Pages
-      for New Hardware</a>.</p>
+      "../doc/Technical/Help.shtml#hwhelp">here</a> for information about Creating Help and Web Pages
+      for New Hardware.</p>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h2 id="catalpha">Category/Alphabetical Index</h2>
@@ -103,8 +81,8 @@
       hardware item to go to the JMRI Help page for that product or family. Note the sidebar provides a
       single alphabetical list.</p>
 
-      <div class="row">
-        <div class="column">
+      <div class="flex-container">
+        <div class="flex-item-30">
           <em style="padding-left: 1em;"><a href="#commandstations">Command Stations:</a></em>
           <ul>
             <li>
@@ -205,7 +183,7 @@
           </ul>
         </div>
 
-        <div class="column">
+        <div class="flex-item-30">
           <em style="padding-left: 1em;"><a href="#multi">Multi-purpose:</a></em>
           <ul>
             <li>
@@ -313,7 +291,7 @@
           </ul>
         </div>
 
-        <div class="column">
+        <div class="flex-item-30">
           <em style="padding-left: 1em;"><a href="#other">Accessories/<wbr>Other Devices:</a></em>
           <ul>
             <li>

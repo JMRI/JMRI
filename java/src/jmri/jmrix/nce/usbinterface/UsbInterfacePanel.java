@@ -1,8 +1,6 @@
 package jmri.jmrix.nce.usbinterface;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 
@@ -84,6 +82,14 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         x.append(": ");
         x.append(Bundle.getMessage("TitleUsbInterface"));
         return x.toString();
+    }
+
+    /**
+     * The minimum frame size for font size 16
+     */
+    @Override
+    public Dimension getMinimumDimension() {
+        return new Dimension(300, 200);
     }
 
     @Override

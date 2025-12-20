@@ -81,9 +81,11 @@ class SimulationMaster(jmri.jmrit.automat.AbstractAutomaton):
 
             for activeTrain in active_trains_list:
                 activeTrainName = activeTrain.getActiveTrainName()
-
                 # if train being dispatched not in train_being simulated, and train is RUNNING simulate it
-                if activeTrainName not in trains_being_simulated:   # do not want to suimulate a train already being simulated
+                if activeTrainName not in trains_being_simulated:   # do not want to simulate a train already being simulated
+                    while activeTrain.getModeText() != "AUTOMATIC":     # will be DISPATCHED if not enough time for the throttle to start
+                        # print "activeTrain.getMode()", activeTrain.getModeText()  #waiting to change to "AUTOMATIC"
+                        self.waitMsec(500)
                     if self.logLevel > 0: print "!!!!!!activeTrainName started simulation = " , activeTrain, "activeTrainName", activeTrainName,"trains_being_simulated", [train for train in trains_being_simulated]
 
                     if activeTrain.getStatus() == activeTrain.RUNNING:  #only simulate if the train is running
@@ -134,7 +136,7 @@ class SimulationMaster(jmri.jmrit.automat.AbstractAutomaton):
             simulate_instance.start()
 
     def blockOccupied(self, block):
-        if block.getState() == ACTIVE:
+        if block.getSensor().getState() == ACTIVE:
             state = True
         else:
             state = True
@@ -148,22 +150,22 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
     ###########################################
     # repeat
     #   take block off end or add one to start max no blocks == 2
-    #
-    # make_first_block_unoccupied
-    #
-    #
-    # make_next_block_occupied
-    #   if at end returm FINISHED
-    #   if not runnin go into wait state until running
+    #    make_first_block_unoccupied
+    #    make_next_block_occupied
+    #   if at end return FINISHED
+    #   if not running go into wait state until running
     #   then set next block occupied and return SUCCESS
     #
     ###########################################
 
     def __init__(self, block_list, activeTrain, activeTrainName):
         #global trains_being_simulated
-        self.block_list = block_list
+        self.block_list = block_list     # all the blocks in the transit
         self.activeTrain = activeTrain
         self.activeTrainName = activeTrainName
+        self.transit = activeTrain.getTransit()
+        self.allocatedSectionList = self.activeTrain.getAllocatedSectionList()
+        # print "SectionList", [section.getSectionName() for section in self.allocatedSectionList]
         #trains_being_simulated.append(activeTrainName)
         self.logLevel = 0
         if self.logLevel > 0: print "activeTrainName", activeTrainName
@@ -175,7 +177,7 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         success = False
         for block in self.block_list:
             if self.logLevel > 0: print "block", block.getUserName()
-            if block.getState() == ACTIVE:
+            if block.getSensor().getState() == ACTIVE:
                 index = i
                 if self.logLevel > 0: print "Success occupied block is", "index",index
                 success = True
@@ -190,17 +192,15 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print "end of setup", "returning False", index
             return False
 
-
     def handle(self):
 
         global removetrain
 
-        if self.number_blocks_occupied(self.block_list) >1:
-            msg = "make_first_block_unoccupied"
-            title = self.activeTrainName
-            #JOptionPane.showMessageDialog(None, msg, title, JOptionPane.WARNING_MESSAGE)
+        if self.number_blocks_occupied(self.block_list) > 1:
+            # print "start occupied"
             self.make_first_block_unoccupied(self.block_list)
             response = "Success"
+            # print "end unoccupied"
         else:
             msg = "make_next_block_occupied"
             if self.logLevel > 0: print "make_next_block_occupied"
@@ -212,7 +212,10 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "response = " , response, "name", self.activeTrainName
                 if response == "Waiting":
                     if self.logLevel > 0: print "waiting"
-                    self.waitMsec(50)
+                    # self.waitMsec(500)
+                if response == "Success":
+                    break
+            if self.logLevel > 0: print "end make_next_block_occupied"
 
         if response == "Finished":
             if self.forward_stopping_sensor_exists(self.activeTrain):
@@ -220,14 +223,14 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
                 # if we are stopping by speed profile we won't use it, but that doesn't matter
                 forward_stopping_sensor = self.forward_stopping_sensor(self.activeTrain)
                 forward_stopping_sensor.setKnownState(ACTIVE)
-                self.waitMsec(2000)
+                self.wait_for_sensor_to_change(forward_stopping_sensor, ACTIVE)
                 forward_stopping_sensor.setKnownState(INACTIVE)
             if self.logLevel > 0: print "FINISHED"
             # (Note train will be removed from trains_being_simulated by looking at the dispatched train list
             # which will have the train removed when the dispatch finishes)
             return False
         else:
-            self.waitMsec(1000)
+            # self.waitMsec(1000)
             # msg = "click to move to next step"
             # title = self.activeTrainName
             # JOptionPane.showMessageDialog(None, msg, title, JOptionPane.WARNING_MESSAGE)    # uncomment for debugging
@@ -238,7 +241,7 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         return (self.end_position - self.start_position) +1
 
     def blockOccupied(self, block):
-        if block.getState() == ACTIVE:
+        if block.getSensor().getState() == ACTIVE:
             state = True
         else:
             state = False
@@ -247,7 +250,17 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
     def make_first_block_unoccupied(self, block_list):
         if self.logLevel > 0: print ("******make_first_block_unoccupied",self.activeTrainName, self.getPrintStatus(self.activeTrain.getStatus()), self.activeTrain.getTrainName(),"\n")
         if self.logLevel > 0: print "self.start_position at start", self.start_position
+
+        # print "setting block ", block_list[self.start_position].getUserName() , "inactive"
+        sensor = block_list[self.start_position].getSensor()
+        # print "sensor", sensor.getUserName()
+        # print "sensor state" , sensor.getState()
         block_list[self.start_position].getSensor().setState(INACTIVE)
+        # print "waiting for sensor to change"
+        self.wait_for_sensor_to_change(block_list[self.start_position].getSensor(), INACTIVE)
+        # print "waited making block unoccupied"
+        # print "self.start_position", self.start_position, "self.end_position", self.end_position
+        # print "blocklist", [[str(block.getUserName()), block.getSensor().getState()] for block in self.block_list]
         if self.logLevel > 0: print "sensor set inactive", block_list[self.start_position].getSensor().getUserName()
         if self.logLevel > 0: print "Success", "Set block ", self.start_position, "inactive"
         self.start_position += 1
@@ -255,30 +268,55 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "self.start_position at end", self.start_position
         if self.logLevel > 0: print "**********"
 
+    def wait_for_sensor_to_change(self, sensor, state):
+        counter = 0
+        # while sensor.getState() != state or counter < 5:
+        while sensor.getState() != state:
+            self.waitMsec(100)
+            counter += 1
+        while counter < 5:
+            self.waitMsec(100)
+            counter += 1
 
     def make_next_block_occupied(self, block_list):
         if self.logLevel > 0: print "end pos at start", self.end_position
         title = "debug"
         if self.logLevel > 0: print ("******make_next_block_occupied",self.activeTrainName, self.getPrintStatus(self.activeTrain.getStatus()), self.activeTrain.getTrainName(),"\n")
         if self.end_position == len(block_list)-1:
+            # Stop if at end block
             if self.logLevel > 0: print "finished", "end position" , self.end_position, "len(block_list)-1", len(block_list)-1
+            # print "self.start_position", self.start_position, "self.end_position", self.end_position
             ret = "Finished"
         else:
+
             at_last_block_in_section = self.at_last_block_in_section()
-            if self.logLevel > 0: print "*******"
-            if (self.signal_ahead_clear() or not at_last_block_in_section) and self.activeTrain.getStatus() == self.activeTrain.RUNNING:
+            # if self.logLevel > 0: print "*******"
+            # if self.logLevel > 0: print "at_last_block_in_section", at_last_block_in_section, \
+            # "self.activeTrain.getStatus()", self.activeTrain.getStatus(), \
+            # "self.activeTrain.RUNNING", self.activeTrain.RUNNING
+
+            # if next section is occupied , proceed to the last block of the current section
+            # in otherwords, proceed to last block of current section, then check if section ahead is clear
+            train_running = self.activeTrain.getStatus() == self.activeTrain.RUNNING
+            if train_running == False: print "train running: ", train_running
+            # would prefer to check if active train running, but can't because the throttle sometimes stops.
+            if (self.signal_ahead_clear() or not at_last_block_in_section):
                 self.end_position +=1
                 if self.logLevel > 0: print "end pos incremented", self.end_position
+                # print "setting block ", block_list[self.end_position].getUserName() , "active"
                 block_list[self.end_position].getSensor().setState(ACTIVE)
+                self.wait_for_sensor_to_change(block_list[self.end_position].getSensor(), ACTIVE)
+                # print "waited making block occupied"
+                # print "self.start_position", self.start_position, "self.end_position", self.end_position
+                # print "blocklist", [[block.getUserName(), block.getSensor().getState()]  for block in self.block_list]
                 if self.logLevel > 0: print "Success", "Set block ", self.end_position
                 ret = "Success"
             else:
                 # msg = "status is False, hence not proceeding " + str(self.activeTrain.getStatusText())
                 # title = self.activeTrainName
                 # JOptionPane.showMessageDialog(None, msg, title, JOptionPane.WARNING_MESSAGE)      # uncomment for debugging
-                if self.logLevel > 0: print "Waiting"
                 ret = "Waiting"
-        self.waitMsec(500)     # to stop an error message
+             # to stop an error message
         if self.logLevel > 0: print "end pos at end", self.end_position
         if self.logLevel > 0: print "sensor set active", block_list[self.end_position].getSensor().getUserName()
         if self.logLevel > 0: print "ret", ret
@@ -287,45 +325,71 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         # JOptionPane.showMessageDialog(None, msg, title, JOptionPane.WARNING_MESSAGE)      # uncomment for debugging
         return ret
 
-    def current_section(self):
-        allocatedSectionList = self.activeTrain.getAllocatedSectionList()
-        current_section_list = [allocatedSection.getSection() for allocatedSection in allocatedSectionList \
-                                 if self.block_list[self.end_position] in allocatedSection.getSection().getBlockList()]
-        if current_section_list == []:
-            # print "******* current_section list is empty in Simulate Instance +++****"
-            # print "active train", self.activeTrain
-            # print "allocatedSectionList", allocatedSectionList
-            # print "allocatedSectionList", [allocatedSection.getSection().getUserName() for allocatedSection in allocatedSectionList]
-            # print "current_section_list", [section.getUserName() for section in current_section_list]
-            # print "self.block_list[self.end_position]", self.block_list[self.end_position].getUserName()
-            # print "******* current_section ****"
-            return
-        current_section = current_section_list[0]
-        return current_section
+    def current_section(self, print_flag = False):
+        # we know the sections in the transit
+        # we know the blocks in each section
+        # we know the current block
+
+        # we can determine the current section
+
+        # current_block = self.block_list[self.end_position]   # end_position is the last block occupied
+        # sections_in_transit = [allocatedSection.getSection() for allocatedSection in allocatedSectionList]
+        # blocks_
+        # allocatedSectionList = self.allocatedSectionList
+        # current_section_list = [allocatedSection.getSection() for allocatedSection in allocatedSectionList]
+                                 # if current_block in allocatedSection.getSection().getBlockList()]
+        # print "self.end_position", self.end_position
+        current_block = self.block_list[self.end_position]  # end_position is the last block occupied
+        # print "current_block", current_block.getUserName()
+        train_name = self.activeTrain.getTrainName()
+        id = "__" + train_name + ": "
+
+        self.allocatedSectionList = self.activeTrain.getAllocatedSectionList()
+        # print "*****"
+        # print "no sections" , len(self.allocatedSectionList), "sections", [asl.getSection().getUserName() for asl in self.allocatedSectionList]
+        iter = 1
+
+        for allocatedSection in self.allocatedSectionList:
+            # print "iteration", iter
+            section = allocatedSection.getSection()
+            blocks_in_section = section.getBlockList()
+            # print "section", section.getUserName(), "blocks in section", [block.getUserName() for block in blocks_in_section]
+            if current_block in blocks_in_section:
+                # print "current_block", current_block.getUserName(), "current block in section"            # print id + "blocks in each section: ", [ [str(block.getUserName()) for block in allocatedSection.getSection().getBlockList()] for allocatedSection in self.allocatedSectionList]
+                # print id + "current_block: ", current_block.getUserName()
+                # if print_flag: print id + "current section: ", section.getUserName(), "no of blocks in section", len(blocks_in_section)
+                return section
+            # print "current_block", current_block.getUserName(), "current block not yet found in section", "iteration", iter
+            iter += 1
+            # print "++++++"
+        # if print_flag: print id + "could not find current section"
+        # if print_flag: print id + "blocks in each section: ", [ [str(block.getUserName()) for block in allocatedSection.getSection().getBlockList()] for allocatedSection in self.allocatedSectionList]
+        # if print_flag: print id + "current_block", current_block.getUserName()
+        return None
 
     def last_block_name_in_current_section(self):
-        if self.current_section() != None:
+        if self.current_section(True) != None:
             blocks_in_section = self.current_section().getBlockList()
             last_block = blocks_in_section[-1]
             last_block_name = last_block.getUserName()
+            # print "last_block_name in section", last_block_name
             return last_block_name
 
     def next_signal_mast(self):
         SignalMastManager = jmri.InstanceManager.getDefault(jmri.SignalMastManager)
-        if self.current_section() == None:
+        current_section = self.current_section()
+        if current_section == None:
             return None
-        current_section_name = self.current_section().getUserName()
+        current_section_name = current_section.getUserName()
         if ":" in current_section_name:
             next_signal_mast_name = current_section_name.split(":")[1]
         else:
-            # section_name_list = [allocated_section.getSection().getUserName() \
-            #                         for allocated_section in self.activeTrain.getAllocatedSectionList()]
-            transit = self.activeTrain.getTransit()
+            transit = self.transit
             sections_in_transit = [transit_section.getSection().getUserName() \
                                    for transit_section in transit.getTransitSectionList()]
             if self.logLevel > 0: print "sections_in_transit", sections_in_transit
-            next_section_index = sections_in_transit.index(self.current_section().getUserName()) + 1
-            if self.logLevel > 0: print "self.current_section().getUserName()", self.current_section().getUserName()
+            next_section_index = sections_in_transit.index(current_section.getUserName()) + 1
+            if self.logLevel > 0: print "current_section.getUserName()", current_section.getUserName()
             if self.logLevel > 0: print "next_section_index", next_section_index
             next_section_name = sections_in_transit[next_section_index]
             next_signal_mast_name = next_section_name.split(":")[0]
@@ -334,18 +398,6 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         return signal_mast
 
     def at_last_block_in_section(self):
-        # startBlockSectionSeqNumber = self.activeTrain.getStartBlockSectionSequenceNumber()
-        # lastAllocatedSectionSeqNumber = self.activeTrain.getLastAllocatedSectionSeqNumber()
-        # transit = self.activeTrain.getTransit()
-        # current_section = transit.getSectionListBySeq(lastAllocatedSectionSeqNumber)[0]
-        # allocatedSectionList = self.activeTrain.getAllocatedSectionList()
-        # print "allocatedSectionList", allocatedSectionList
-        #
-        # current_section_list = [ allocatedSection.getSection() for allocatedSection in allocatedSectionList \
-        #                          if self.block_list[self.end_position] in allocatedSection.getSection().getBlockList()]
-        # current_section = current_section_list[0].getUserName()
-        # blocks_in_section = self.current_section().getBlockList()
-        # last_block = blocks_in_section[-1]
         last_block_name = self.last_block_name_in_current_section()
         if self.logLevel > 0: print "last_block_name", last_block_name
         current_block_name = self.block_list[self.end_position].getUserName()
@@ -357,21 +409,19 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print "at_last_block_in_section", "False"
             return False
 
-
     def signal_ahead_clear(self):
         signal_mast = self.next_signal_mast()
         if signal_mast != None:
             if self.logLevel > 0: print "signal_mast" , signal_mast.getUserName()
             if self.logLevel > 0: print "signal_mast.isCleared()", signal_mast.isCleared()
+            if self.logLevel > 0: print "signal_mast.getAspect()", signal_mast.getAspect()
             if signal_mast.isCleared():
                 if self.logLevel > 0: print "clear True"
             else:
                 if self.logLevel > 0: print "clear False"
             return signal_mast.isCleared()
         else:
-            # print
             return False
-
 
     def getPrintStatus(self, status):
         if status == self.activeTrain.RUNNING:

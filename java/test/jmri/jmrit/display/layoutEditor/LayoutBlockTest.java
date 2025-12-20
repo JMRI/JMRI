@@ -150,6 +150,7 @@ public class LayoutBlockTest {
 
     @AfterEach
     public void tearDown() throws Exception {
+        layoutBlock.dispose();
         layoutBlock = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

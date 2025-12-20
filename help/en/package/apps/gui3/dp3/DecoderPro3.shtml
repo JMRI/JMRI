@@ -17,7 +17,8 @@
       improve this help file !</p>
 
       <p>DecoderPro 3 presents a list of your locomotives (the Roster) and provides access to tools
-      for programming decoder configuration variables (CV's).</p>
+      for programming decoder configuration variables (CV's). Some stationary decoders can also be
+      added to this database.</p>
 
       <h2>Description of DecoderPro 3 Window</h2>
 
@@ -51,8 +52,9 @@
 
       <h3>New Locomotive</h3>
 
-      <p>To add a new locomotive (or first locomotive), click on the "New Loco" button on the Tool
-      Bar. This will open a "Create New Loco" window, where the decoder can be either identified or
+      <p>To add a new locomotive (or first locomotive, or stationary decoder), click on the
+      "New Loco" button on the Tool Bar.<br>
+      This will open a "Create New Loco" window, where the decoder can be either identified or
       selected from the list. To create the locomotive, having selected (or identified) a decoder,
       select the Programmer format (Basic or Comprehensive) and click "Open Programmer". A
       Programming window for the new locomotive will open, with the "Roster Entry" tab foremost. It

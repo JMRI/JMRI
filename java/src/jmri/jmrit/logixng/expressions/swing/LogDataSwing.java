@@ -148,7 +148,7 @@ public class LogDataSwing extends AbstractDigitalExpressionSwing {
                 }
             }
         }
-        return true;
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */

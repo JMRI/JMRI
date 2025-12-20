@@ -275,8 +275,10 @@ public class OlcbSignalMast extends AbstractSignalMast {
      * There's a one-to-one mapping between transitions and events.
      * EventID storage is via Strings, so that the user-visible
      * eventID string is preserved.
+     * <p> 
+     * non-static because it references systemMemo from parent class
      */
-    static class StateMachine<T> extends org.openlcb.MessageDecoder {
+    class StateMachine<T> extends org.openlcb.MessageDecoder {
         public StateMachine(@Nonnull Connection connection, @Nonnull NodeID node, @Nonnull T start) {
             this.connection = connection;
             this.node = node;
@@ -298,7 +300,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
                     null);
         }
 
-        private static final EventID nullEvent = new EventID(new byte[]{0,0,0,0,0,0,0,0});
+        private final EventID nullEvent = new EventID(new byte[]{0,0,0,0,0,0,0,0});
 
         @Nonnull
         public T getState() { return state; }
@@ -306,7 +308,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         public void setEventForState(@Nonnull T key, @Nonnull String value) {
             stateToEventString.put(key, value);
 
-            EventID eid = new OlcbAddress(value).toEventID();
+            EventID eid = new OlcbAddress(value, systemMemo).toEventID();
             stateToEventID.put(key, eid);
 
             // check for whether already there; so, we're done.

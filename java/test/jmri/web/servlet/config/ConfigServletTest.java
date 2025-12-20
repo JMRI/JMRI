@@ -2,7 +2,6 @@ package jmri.web.servlet.config;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class ConfigServletTest {
     @Test
     public void testCtor() {
         ConfigServlet a = new ConfigServlet();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
     @BeforeEach

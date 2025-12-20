@@ -1,5 +1,12 @@
 package jmri.jmrit.display.logixng;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.GraphicsEnvironment;
 
 import jmri.jmrit.logixng.actions.*;
@@ -11,14 +18,19 @@ import jmri.jmrit.display.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Test ActionPositionable
  *
  * @author Daniel Bergqvist 2018
  */
+@DisabledIfHeadless
 public class ActionPositionableTest extends AbstractDigitalActionTestBase {
 
     private LogixNG logixNG;
@@ -72,21 +84,23 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCtor() throws JmriException {
-        Assert.assertTrue("object exists", _base != null);
+        assertNotNull( _base, "object exists");
 
         ActionPositionable action2;
-        Assert.assertNotNull("turnout is not null", turnout);
+        assertNotNull( turnout, "turnout is not null");
         turnout.setState(Turnout.ON);
 
         action2 = new ActionPositionable("IQDA321", null);
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Set icon/label \"''\" on panel \"''\" to \"Enable\"", action2.getLongDescription());
+        assertNotNull( action2, "object exists");
+        assertNull( action2.getUserName(), "Username matches");
+        assertEquals( "Set icon/label \"''\" on panel \"''\" to \"Enable\"",
+            action2.getLongDescription(), "String matches");
 
         action2 = new ActionPositionable("IQDA321", "My turnout");
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertEquals("Username matches", "My turnout", action2.getUserName());
-        Assert.assertEquals("String matches", "Set icon/label \"''\" on panel \"''\" to \"Enable\"", action2.getLongDescription());
+        assertNotNull( action2, "object exists");
+        assertEquals( "My turnout", action2.getUserName(), "Username matches");
+        assertEquals( "Set icon/label \"''\" on panel \"''\" to \"Enable\"",
+            action2.getLongDescription(), "String matches");
 /*
         action2 = new ActionPositionable("IQDA321", null);
         action2.setTurnout(turnout);
@@ -103,23 +117,19 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("Username matches", "My turnout", action2.getUserName());
         Assert.assertEquals("String matches", "Set turnout IT1 to state Thrown", action2.getLongDescription());
 */
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            new ActionPositionable("IQA55:12:XY11", null);
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+            () -> {
+                var ac = new ActionPositionable("IQA55:12:XY11", null);
+                assertNull(ac); // should not reach here, avoids new instance ignored compiler warning
+            }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            new ActionPositionable("IQA55:12:XY11", "A name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows(IllegalArgumentException.class,
+            () -> {
+                var ac = new ActionPositionable("IQA55:12:XY11", "A name");
+                assertNull(ac); // should not reach here, avoids new instance ignored compiler warning
+            }, "Illegal system name Expected exception thrown 2");
+        assertNotNull(ex);
 
         // Test setup(). This method doesn't do anything, but execute it for coverage.
         _base.setup();
@@ -127,22 +137,17 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == actionPositionable.getChildCount());
+        assertEquals( 0, actionPositionable.getChildCount(), "getChildCount() returns 0");
 
-        boolean hasThrown = false;
-        try {
-            actionPositionable.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class,
+            () -> actionPositionable.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
     @Test
     public void testTurnoutState() {
-        Assert.assertEquals("String matches", "Disable", ActionPositionable.Operation.Disable.toString());
-        Assert.assertEquals("String matches", "Enable", ActionPositionable.Operation.Enable.toString());
+        assertEquals( "Disable", ActionPositionable.Operation.Disable.toString(), "String matches");
+        assertEquals( "Enable", ActionPositionable.Operation.Enable.toString(), "String matches 2");
     }
 /*
     @Test
@@ -470,36 +475,33 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
 */
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", CategoryDisplay.DISPLAY == _base.getCategory());
+        assertSame( CategoryDisplay.DISPLAY, _base.getCategory(), "Category matches");
     }
 
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Icon/Label on panel", _base.getShortDescription());
+        assertEquals( "Icon/Label on panel", _base.getShortDescription(), "String matches");
     }
 
     @Test
     public void testLongDescription() {
-        Assert.assertEquals("String matches", "Set icon/label \"Some other id\" on panel \"A panel editor\" to \"Disable\"", _base.getLongDescription());
+        assertEquals( "Set icon/label \"Some other id\" on panel \"A panel editor\" to \"Disable\"",
+            _base.getLongDescription(), "String matches");
     }
 
     @Test
     public void testChild() {
-        Assert.assertTrue("Num children is zero", 0 == _base.getChildCount());
-        boolean hasThrown = false;
-        try {
-            _base.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertTrue("Error message is correct", "Not supported.".equals(ex.getMessage()));
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        assertEquals( 0, _base.getChildCount(), "Num children is zero");
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class,
+            () -> _base.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
-    // The minimal setup for log4J
     @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, Positionable.DuplicateIdException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // Following line can be removed once super Tests are JUnit5, @DisabledIfHeadless not JUnit4
+        org.junit.Assume.assumeFalse( "Not Headless", GraphicsEnvironment.isHeadless());
 
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -509,7 +511,7 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         EditorManager editorManager = InstanceManager.getDefault(EditorManager.class);
@@ -546,14 +548,29 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
         _base = actionPositionable;
         _baseMaleSocket = socket;
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue ( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
+
+        // At this stage Panel is visible but not Editor.
+        // Make visible so both can be closed by Operator in tearDown
+        ThreadingUtil.runOnGUI( () -> {
+            editor.pack();
+            editor.setVisible(true);
+        });
     }
 
     @After
+    @AfterEach
     public void tearDown() {
+
+        if ( editor != null ) {
+            EditorFrameOperator efo = new EditorFrameOperator(editor);
+            efo.deleteViaFileMenuWithConfirmations();
+            EditorFrameOperator.clearEditorFrameOperatorThreads();
+        }
         editor = null;
+        logixNG = null;
         positionable1 = null;
         positionable2 = null;
         positionable3 = null;

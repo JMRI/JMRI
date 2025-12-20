@@ -2,7 +2,8 @@
  *  panel Servlet - Draw JMRI panels on browser screen
  *    Retrieves panel xml from JMRI and builds panel client-side from that xml, including
  *    click functions.  Sends and listens for changes to panel elements using the JSON WebSocket server.
- *    If no parm passed, page will list links to available panels.
+ *    If no parm "name" passed, page will list links to available panels.
+ *	  Include parm protect=yes to treat panel as read-only
  *  Approach:  Read panel's xml and create widget objects in the browser with all needed attributes.
  *    There are 5 "widgetFamily"s: text, input, icon, drawn and switch.  States are handled by storing member's
  *    iconX, textX, cssX where X is the state.  The corresponding members are "shown" whenever the state changes.
@@ -191,6 +192,12 @@ function processPanelXML($returnedData, $success, $xhr) {
     $("#panel-area").width($gPanel.width);
     $("#panel-area").height($gPanel.height);
 
+    //override "Allow Layout Control" attribute when protect parm set to "yes"
+    var protect = getParameterByName("protect");
+    if (protect == "yes") {
+        $gPanel["controlling"] = "no";
+    }
+
     // insert the canvas layer and set up context used by LayoutEditor "drawn" objects, set some defaults
     if ($gPanel.paneltype == "LayoutPanel") {
         createPanelCanvas(); //insure canvas layer is available for drawing
@@ -252,6 +259,11 @@ function processPanelXML($returnedData, $success, $xhr) {
             });
             //default various css attributes to not-set, then set in later code as needed
             var $hoverText = "";
+
+            //set value as JMRI would if "Allow Layout Control" turned off
+            if ($gPanel.controlling != "yes") {
+                $widget['forcecontroloff'] = "true";
+            }
 
             // add and normalize the various type-unique values, from the various spots they are stored
             // icon names based on states returned from JSON server,
@@ -591,6 +603,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             memorystates.each(function(i, item) {  //get any memorystates defined
                                 //store icon url in "iconXX" where XX is the state to match
                                 $widget['icon' + item.attributes['value'].value] = item.attributes['icon'].value;
+                                $widget.state = item.attributes['value'].value; //default state to last defined value to draw icon
                             });
                             if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
@@ -1759,7 +1772,7 @@ function $drawIcon($widget) {
             $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
         }
     } else {
-        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", TOstate=" + $state + ", iconstate=" + $state + " ["+$indicator+"] (icon" + $indicator + $state + ")");
+        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", iconstate=" + $state + " ["+$indicator+"] (icon" + $indicator + $state + ")");
     }
     $setWidgetPosition($("#panel-area #" + $widget.id));
 }
@@ -2574,7 +2587,7 @@ $(document).ready(function() {
     }
     // setup the functional menu items
     $("#navbar-panel-reload > a").attr("href", location.href);
-    $("#navbar-panel-xml > a").attr("href", location.href + "?format=xml");
+    $("#navbar-panel-xml > a").attr("href", location.pathname + "?format=xml");
     // show panel thumbnails if no panel name
     listPanels(panelName);
     if (panelName === null || typeof (panelName) === undefined) {

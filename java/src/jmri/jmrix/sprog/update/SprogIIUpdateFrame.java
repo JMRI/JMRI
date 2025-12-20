@@ -2,8 +2,6 @@ package jmri.jmrix.sprog.update;
 
 import static jmri.jmrix.sprog.SprogConstants.TC_BOOT_REPLY_TIMEOUT;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
@@ -47,7 +45,6 @@ public class SprogIIUpdateFrame
      * {@inheritDoc}
      * @param v SPROG version to be decoded
      */
-    @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")
     @Override
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;

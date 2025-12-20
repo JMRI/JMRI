@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.locations.*;
+import jmri.util.JUnitOperationsUtil;
 
 /**
  * Tests for the Operations RollingStock Cars Roads class Last manually
@@ -52,5 +54,27 @@ public class CarRoadsTest extends OperationsTestCase {
         Assert.assertFalse("Car Roads Delete New4", cr1.containsName("BB New4"));
         cr1.deleteName("BB New1");
         Assert.assertFalse("Car Roads Delete New1", cr1.containsName("BB New1"));
+    }
+
+    /**
+     * Tests that if a car road name replace causes a duplicate car road and
+     * number, that the program will delete the duplicate car.
+     */
+    @Test
+    public void testDuplicateRoadAndNumber() {
+        JUnitOperationsUtil.initOperationsData();
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Location locationNorthIndustries = lmanager.getLocationByName("North Industries");
+        Track l20yard1 = locationNorthIndustries.getTrackByName("NI Yard", Track.YARD);
+        // add car with same road number but different road name CP 777 already created
+        JUnitOperationsUtil.createAndPlaceCar("PC", "777", "Boxcar", "50", "AT", "1990", l20yard1, 6);
+        // confirm track space used
+        Assert.assertEquals("Track space consumed", 266, l20yard1.getUsedLength());
+        CarRoads cr1 = InstanceManager.getDefault(CarRoads.class);
+        cr1.replaceName("PC", "CP");
+        jmri.util.JUnitAppender
+                .assertErrorMessage("Duplicate rolling stock id: (CP777)");
+        // duplicate car should be deleted and track space returned
+        Assert.assertEquals("Track space consumed", 212, l20yard1.getUsedLength());
     }
 }

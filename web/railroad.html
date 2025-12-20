@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>JSON Read/Write Railroad Demonstration</title>
+        <style>
+            html {background-color:#eeeeee}
+            body {
+                background-color:#ccffcc;
+                font-family:Tahoma,Arial,Helvetica,sans-serif;
+                font-size:12px;
+                margin-left:15%;
+                margin-right:15%;
+                border:3px groove #006600;
+                padding:15px
+            }
+            h1   {
+                text-align:left;
+                font-size:1.5em;
+                font-weight:bold
+            }
+        </style>
+        <!-- include the jquery.jmri library and its dependencies -->
+        <script src="/js/jquery-2.2.4.min.js"></script>
+        <script src="/js/json2.js"></script>
+        <script src="/js/jquery.websocket.js"></script>
+        <script src="/js/logger.js"></script>
+        <script src="/js/jquery.jmri.js"></script>
+        <script type="text/javascript">
+            // set the jmri global variable to null
+            var jmri = null;
+            $(document).ready(function() {
+                // once the document is loaded, assign a $.JMRI object to
+                // the jmri variable and overload two functions:
+                // open() and power(state)
+                jmri = $.JMRI({
+                    // call getRailroad() when the JMRI WebSocket connection opens
+                    // getRailroad() does two things: it requests the current power
+                    // status from JMRI and it starts the railroad attribute monitor
+                    // on the JMRI server.
+                    open: function() {
+                        jmri.getRailroad();
+                        // Keep this for learner's visibility - this is not production code
+                        console.log("getRailroad fired");
+                    },
+                    // when the JMRI object receives an update to the railroad name, call this
+                    // function, regardless of source of update
+                    railroad: function(state) {
+                        console.log(state);
+                        railroadName = state;
+                        $('#railroadName').val(railroadName);
+                    }
+                });
+                // trigger the initial connection to the JMRI server; this
+                // method call ensures the jmri.open() method is called after
+                // a timeout to begin using fall back methods for monitoring
+                // items on the JMRI server even if a WebSocket connection
+                // cannot be established
+                jmri.connect();
+                $("input[name=changeRailroadNameButton]" ).on( "click", function() {
+                  newName = $('#railroadName').val();
+                  console.log("Firing outgoing message for railroad name change to '" + newName + "'");
+                  jmri.setRailroad(newName);
+                } );
+            });
+        </script>
+
+    </head>
+    <body>
+        <h1>JSON Socket Read and Write Railroad Name Demonstration</h1>
+        <hr />
+        <p>This sample page loads the railroad name from the socket server and listens if the railroad name is changed through JMRI's menu</p>
+        <p>It also provides a button to change the railroad name. You can change it here and check in JMRI to see it really changed.</p>
+        <p>Railroad name below will update in browser if changed in the application window</p>
+        <p><form name="changeRailroadNameForm" action="" method="get">
+          <input id="railroadName" type="text" name="railroadName" value="">
+          <input type="button" name="changeRailroadNameButton" value="Change Name">
+        </form>
+        </p>
+    </body>
+</html>

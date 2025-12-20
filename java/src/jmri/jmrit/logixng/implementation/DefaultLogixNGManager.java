@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.GraphicsEnvironment;
 import java.beans.*;
 import java.io.PrintWriter;
@@ -192,10 +194,13 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         for (Runnable r : _setupTasks) {
             r.run();
         }
-        if (errors.size() > 0) {
+        if (!errors.isEmpty()) {
             messageDialog("SetupErrorsTitle", errors, null);
         }
         checkItemsHaveParents();
+
+        // Notify listeners that setupAllLogixNGs() is completed.
+        firePropertyChange(PROPERTY_SETUP, false, true);
     }
 
     /**
@@ -225,7 +230,9 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
     private void checkItemsHaveParents(SortedSet<? extends MaleSocket> set, List<MaleSocket> beansWithoutParentList) {
         for (MaleSocket bean : set) {
-            if (((Base)bean).getParent() == null) beansWithoutParentList.add(bean);
+            if (bean.getParent() == null) {
+                beansWithoutParentList.add(bean);
+            }
         }
     }
 
@@ -479,7 +486,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
     /** {@inheritDoc} */
     @Override
-//    @OverridingMethodsMustInvokeSuper
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "LogixNG is a tree that must be deleted recursively")
     public final void deleteBean(@Nonnull LogixNG logixNG, @Nonnull String property) throws PropertyVetoException {
         for (int i=logixNG.getNumConditionalNGs()-1; i >= 0; i--) {
             ConditionalNG child = logixNG.getConditionalNG(i);
@@ -535,6 +543,18 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     public void executeModule(Module module, Map<String, Object> parameters)
             throws IllegalArgumentException {
         DefaultConditionalNG.executeModule(module, parameters);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public FemaleSocket getErrorHandlingModuleSocket() {
+        return AbstractMaleSocket.getErrorHandlingModuleSocket();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isErrorHandlingModuleEnabled() {
+        return AbstractMaleSocket.isErrorHandlingModuleEnabled();
     }
 
     /**

@@ -5,7 +5,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -13,13 +12,13 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
  */
 public class TurnoutOperationEditorDialogTest {
     
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @jmri.util.junit.annotations.DisabledIfHeadless
     @Test
     public void testCTor() {
         Turnout testedTurnout = InstanceManager.getDefault(TurnoutManager.class).provide("IS1");
         TurnoutOperation proto = InstanceManager.getDefault(TurnoutOperationManager.class).getMatchingOperationAlways(testedTurnout);
         Assert.assertNotNull("proto exists",proto);
-        
+
         TurnoutOperationEditorDialog t = new TurnoutOperationEditorDialog(proto,testedTurnout,null);
         Assert.assertNotNull("exists",t);
         

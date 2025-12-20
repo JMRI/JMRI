@@ -17,14 +17,6 @@ import jmri.*;
 public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
 
     //<editor-fold defaultstate="collapsed" desc="Constants">
-    //PID Controller Values
-    protected final float Kp = 0.3f;
-    protected final float Ti = 240;
-    protected final float Td = 5;
-    protected final float Ki = Kp / Ti;
-    protected final float Kd = Kp * Td;
-
-    //Other Constants
     protected final int INITIAL_MOMENTUM = 0;
     protected final int REVERSE_TRIM_MAX = 255;
     protected final int REVERSE_TRIM_MIN = 1;
@@ -440,13 +432,14 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         WRITE95,
         WRITE_SPEED_TABLE_STEP,
     }
+    
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Instance Variables">
-    protected float speedMatchIntegral = 0;
-    protected float speedMatchDerivative = 0;
-    protected float lastSpeedMatchError = 0;
+
+    protected int attempt = 0;
     protected float speedMatchError = 0;
+    protected int speedMatcherValueDelta;
 
     protected boolean trimReverseSpeed;
 
@@ -639,7 +632,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     }
 
     /**
-     * Sets the PID controller's speed match error for speed matching
+     * Sets the current speed match error
      *
      * @param speedTarget - target speed in KPH
      */
@@ -648,7 +641,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     }
 
     /**
-     * Gets the next value to try for speed matching using a PID controller
+     * Gets the next value to try for speed matching
      *
      * @param lastValue the last speed match CV value tried
      * @param max       the maximum value
@@ -656,10 +649,23 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      * @return the next value to try for speed matching [min:max]
      */
     protected int getNextSpeedMatchValue(int lastValue, int max, int min) {
-        speedMatchIntegral += speedMatchError;
-        speedMatchDerivative = speedMatchError - lastSpeedMatchError;
-
-        int value = (lastValue + Math.round((Kp * speedMatchError) + (Ki * speedMatchIntegral) + (Kd * speedMatchDerivative)));
+        attempt++;
+        
+        if ((speedMatchError < 0 && speedMatcherValueDelta >= 0) || (speedMatchError >= 0 && speedMatcherValueDelta < 0)) {
+            speedMatcherValueDelta = -speedMatcherValueDelta;
+            if (attempt > 1) {
+                if (speedMatcherValueDelta >= 0)
+                {
+                    speedMatcherValueDelta = Math.max(1, speedMatcherValueDelta/3);
+                }
+                else
+                {
+                    speedMatcherValueDelta = Math.min(-1, speedMatcherValueDelta/3);
+                }
+            }
+        }
+        
+        int value = lastValue + speedMatcherValueDelta;
 
         if (value > max) {
             value = max;
@@ -671,12 +677,12 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     }
 
     /**
-     * Resets the PID controller's speed match error, integral, and derivative
+     * Resets the speed matcher with the given value delta
+     * @param initialValueDelta the value delta to use for the next use of the speed matcher
      */
-    protected void resetSpeedMatchError() {
-        speedMatchIntegral = 0;
-        speedMatchDerivative = 0;
-        lastSpeedMatchError = 0;
+    protected void resetSpeedMatcher(int initialValueDelta) {
+        attempt = 0;
+        speedMatcherValueDelta = initialValueDelta;
         speedMatchError = 0;
     }
     //</editor-fold>

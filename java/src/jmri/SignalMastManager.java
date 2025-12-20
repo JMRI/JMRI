@@ -24,6 +24,11 @@ import javax.annotation.Nonnull;
  */
 public interface SignalMastManager extends ProvidingManager<SignalMast> {
 
+    /**
+     * String constant for property changes repeater length.
+     */
+    String PROPERTY_REPEATER_LENGTH = "repeaterlength";
+
     /** {@inheritDoc} */
     @Override
     void dispose();

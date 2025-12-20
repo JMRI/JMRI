@@ -123,6 +123,13 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
         }
         addPropertyChangeAllTrains();
 
+        // build menu
+        JMenuBar menuBar = new JMenuBar();
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
+        toolMenu.add(new PrintTrainsServingLocationAction(this, false));
+        toolMenu.add(new PrintTrainsServingLocationAction(this, true));
+        menuBar.add(toolMenu);
+        setJMenuBar(menuBar);
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_ShowTrainsServicingThisLocation", true); // NOI18N
 
@@ -159,7 +166,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
                     train.getRoute().addPropertyChangeListener(this);
                     if (rl.isPickUpAllowed() &&
                             rl.getMaxCarMoves() > 0 &&
-                            !train.isLocationSkipped(rl.getId()) &&
+                            !train.isLocationSkipped(rl) &&
                             typeAccepted &&
                             (train.isLocalSwitcher() ||
                                     (rl.getTrainDirection() & _location.getTrainDirections()) != 0) &&
@@ -171,7 +178,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
                     }
                     if (rl.isDropAllowed() &&
                             rl.getMaxCarMoves() > 0 &&
-                            !train.isLocationSkipped(rl.getId()) &&
+                            !train.isLocationSkipped(rl) &&
                             typeAccepted &&
                             (train.isLocalSwitcher() ||
                                     (rl.getTrainDirection() & _location.getTrainDirections()) != 0) &&
@@ -217,7 +224,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
         updateTrainPane();
     }
 
-    private String _carType = NONE;
+    String _carType = NONE;
 
     @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {

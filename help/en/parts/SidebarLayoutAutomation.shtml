@@ -6,6 +6,7 @@
             <li><a href="/help/en/html/tools/signaling/index.shtml">Signaling</a>
             <li><a href="/help/en/html/tools/WarrantsIntro.shtml">Warrants</a>
             <li><a href="/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
+            <li><a href="/help/en/html/scripthelp/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System</a>
             <li><a href="/help/en/html/tools/Routes.shtml">Routes</a>
             <li><a href="/help/en/html/tools/LRoutes.shtml">LRoutes</a>
             <li><a href="/help/en/html/tools/EntryExit.shtml">Entry/Exit Routing</a>

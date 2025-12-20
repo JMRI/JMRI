@@ -356,12 +356,12 @@ public final class TypeConversionUtil {
                 throw new NumberFormatException(
                         String.format("the boolean value \"%b\" cannot be converted to an integer", ((Boolean)value)));
             }
-            return ((Boolean)value) ? 1 : 0;
+            return Boolean.TRUE.equals(value) ? 1 : 0;
         } else {
             if (value == null) {
                 if (throwOnError) {
                     throw new NumberFormatException(
-                            String.format("the null value cannot be converted to an integer"));
+                            "the null value cannot be converted to an integer");
                 }
                 return 0;
             }
@@ -488,12 +488,12 @@ public final class TypeConversionUtil {
                 throw new NumberFormatException(
                         String.format("the boolean value \"%b\" cannot be converted to a number", ((Boolean)value)));
             }
-            return ((Boolean)value) ? 1 : 0;
+            return Boolean.TRUE.equals(value) ? 1 : 0;
         } else {
             if (value == null) {
                 if (throwOnError) {
                     throw new NumberFormatException(
-                            String.format("the null value cannot be converted to a number"));
+                            "the null value cannot be converted to a number");
                 }
                 return 0.0;
             }
