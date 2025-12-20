@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.*;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -463,14 +464,22 @@ public class CarManager extends RollingStockManager<Car>
 
     public List<Car> getCarsLocationUnknown() {
         List<Car> mias = new ArrayList<>();
-        List<Car> cars = getByIdList();
-        for (Car rs : cars) {
-            Car car = rs;
+        for (Car car : getByIdList()) {
             if (car.isLocationUnknown()) {
                 mias.add(car); // return unknown location car
             }
         }
         return mias;
+    }
+    
+    public List<Car> getCarsUsingTrack(Track track) {
+        List<Car> list = new ArrayList<>();
+        for (Car car : getByIdList()) {
+            if (car.getTrack() == track) {
+                list.add(car);
+            }
+        }
+        return list;
     }
 
     /**

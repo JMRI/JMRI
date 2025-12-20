@@ -483,17 +483,23 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     *
      * @return true if there's a train being built
      */
     public boolean isAnyTrainBuilding() {
+        if (getTrainBuilding() != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public Train getTrainBuilding() {
         for (Train train : getList()) {
             if (train.getStatusCode() == Train.CODE_BUILDING) {
                 log.debug("Train {} is currently building", train.getName());
-                return true;
+                return train;
             }
         }
-        return false;
+        return null;
     }
 
     /**

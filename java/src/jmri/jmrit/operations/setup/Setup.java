@@ -315,6 +315,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     private boolean aggressiveBuild = false; // when true subtract car length from track reserve length
     private int numberPasses = 2; // the number of passes in train builder
+    // the default dell time disables this feature
+    private int dwellTime = 24 * 60; // time in minutes before allowing track reuse
     private boolean allowLocalInterchangeMoves = false; // when true local C/I to C/I moves are allowed
     private boolean allowLocalYardMoves = false; // when true local yard to yard moves are allowed
     private boolean allowLocalSpurMoves = false; // when true local spur to spur moves are allowed
@@ -509,6 +511,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static void setNumberPasses(int number) {
         getDefault().numberPasses = number;
+    }
+    
+    public static int getDwellTime() {
+        return getDefault().dwellTime;
+    }
+
+    public static void setDwellTime(int minutes) {
+        getDefault().dwellTime = minutes;
     }
 
     public static boolean isLocalInterchangeMovesEnabled() {
@@ -2132,6 +2142,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         e.addContent(values = new Element(Xml.BUILD_OPTIONS));
         values.setAttribute(Xml.AGGRESSIVE, isBuildAggressive() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.NUMBER_PASSES, Integer.toString(getNumberPasses()));
+        values.setAttribute(Xml.DWELL_TIME, Integer.toString(getDwellTime()));
 
         values.setAttribute(Xml.ALLOW_LOCAL_INTERCHANGE, isLocalInterchangeMovesEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.ALLOW_LOCAL_SPUR, isLocalSpurMovesEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2842,6 +2853,15 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                     setNumberPasses(Integer.parseInt(number));
                 } catch (NumberFormatException ne) {
                     log.debug("Number of passes isn't a number");
+                }
+            }
+            if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.DWELL_TIME)) != null) {
+                String minutes = a.getValue();
+                log.debug("dwell time: {}", minutes);
+                try {
+                    setDwellTime(Integer.parseInt(minutes));
+                } catch (NumberFormatException ne) {
+                    log.debug("dwell time isn't a number");
                 }
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_INTERCHANGE)) != null) {

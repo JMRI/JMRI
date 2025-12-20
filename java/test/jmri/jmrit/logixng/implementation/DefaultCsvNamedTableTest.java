@@ -43,7 +43,7 @@ public class DefaultCsvNamedTableTest {
 
     @ParameterizedTest(name = "{index}: {0}")
     @MethodSource("data")
-    public void loadAndStoreTest(File file) throws Exception {
+    public void loadAndStoreTest(File file) throws IOException {
         // The test will overwrite the file so make a copy of it and test the copy.
         Path copy = new File(FileUtil.getUserFilesPath() + file.getName()).toPath();
         Files.copy(file.toPath(), copy, StandardCopyOption.REPLACE_EXISTING);

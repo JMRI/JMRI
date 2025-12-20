@@ -25,13 +25,13 @@ public class FacelessServerTest {
 //    }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         server = FacelessServer.getInstance();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         Assertions.assertNotNull(server);
         server.stop();
         //JUnitUtil.waitFor( () -> { return !server.isListen; },"Server stops listening flag");
