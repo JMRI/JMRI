@@ -80,6 +80,6 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
     }
 
     // initialize logging
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PerformActionModelXml.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PerformActionModelXml.class);
 
 }
