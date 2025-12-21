@@ -9,7 +9,6 @@ import java.nio.file.StandardCopyOption;
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.implementation.SignalSpeedMap;
-import jmri.jmrit.dispatcher.Bundle;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.*;
 
