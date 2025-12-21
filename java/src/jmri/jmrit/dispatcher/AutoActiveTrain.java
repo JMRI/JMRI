@@ -1595,12 +1595,6 @@ public class AutoActiveTrain implements ThrottleListener {
         _autoEngineer.slowToStop(false);
     }
 
-
-    /** Clamp utility */
-    private static float clamp(float v, float lo, float hi) {
-        return (v < lo) ? lo : ((v > hi) ? hi : v);
-    }
-
     /** Clamp throttle [% 0..1] */
     private static float clampThrottle(float pct) {
         if (pct < 0.0f) return 0.0f;
