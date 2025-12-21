@@ -549,10 +549,9 @@ public class CarManager extends RollingStockManager<Car>
     }
     
     /**
-     * Return null if there isn't a clone car. Returns the car's last clone car
-     * if there's one.
+     * Returns the car's last clone car if there's one.
      * @param car The car searhing for a clone
-     * @return null if there isn't a clone car. Returns the car's last clone car
+     * @return Returns the car's last clone car, null if there isn't a clone car. 
      */
     public Car getClone(Car car) {
         List<Car> cars = getByLastDateList();
