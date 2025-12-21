@@ -1,13 +1,16 @@
 package jmri.jmrix.lenz;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensorManager class.
@@ -25,7 +28,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @Test
     public void testXNetCTor() {
-        Assert.assertNotNull(l);
+        assertNotNull(l);
     }
 
     @Test
@@ -34,8 +37,8 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t = l.newSensor("XS22", "test");
 
         // test get
-        Assert.assertSame(t, l.getByUserName("test"));
-        Assert.assertSame(t, l.getBySystemName("XS22"));
+        assertSame(t, l.getByUserName("test"));
+        assertSame(t, l.getBySystemName("XS22"));
     }
 
     @Test
@@ -43,11 +46,11 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     public void testMisses() {
         // sample turnout object
         Sensor s = l.newSensor("XS22", "test");
-        Assert.assertNotNull("exists", s);
+        assertNotNull( s, "exists");
 
         // try to get nonexistant turnouts
-        Assert.assertNull(l.getByUserName("foo"));
-        Assert.assertNull(l.getBySystemName("bar"));
+        assertNull(l.getByUserName("foo"));
+        assertNull(l.getBySystemName("bar"));
     }
 
     @Test
@@ -64,7 +67,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         xnis.sendTestMessage(m1);
 
         // see if sensor exists
-        Assert.assertNotNull(l.getBySystemName("XS22"));
+        assertNotNull(l.getBySystemName("XS22"));
     }
 
     @Test
@@ -76,41 +79,31 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
         Sensor o = t.newSensor("XS21", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received sensor value {}", o);
-        }
-        Assert.assertNotNull(o);
+        assertNotNull(o);
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: {}", t.getBySystemName("XS21"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name: {}", t.getByUserName("my name"));
-        }
 
-        Assert.assertNotNull(t.getBySystemName("XS21"));
-        Assert.assertNotNull(t.getByUserName("my name"));
+        assertNotNull(t.getBySystemName("XS21"));
+        assertNotNull(t.getByUserName("my name"));
 
     }
 
     @Test
     public void testGetSystemPrefix() {
-        Assert.assertEquals("prefix", "X", l.getSystemPrefix());
+        assertEquals( "X", l.getSystemPrefix(), "prefix");
     }
 
     @Test
     public void testAllowMultipleAdditions() {
-        Assert.assertTrue(l.allowMultipleAdditions("foo"));
+        assertTrue(l.allowMultipleAdditions("foo"));
     }
 
     @Test
     public void testProvideAddressAndPin() {
-        Assert.assertNotNull("Sensor XS99:3 provided", l.provideSensor("XS99:3"));
+        assertNotNull( l.provideSensor("XS99:3"), "Sensor XS99:3 provided");
     }
 
     // from here down is testing infrastructure
-    private final static Logger log = LoggerFactory.getLogger(XNetSensorManagerTest.class);
 
     @Override
     @BeforeEach
@@ -125,8 +118,12 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @AfterEach
     public void tearDown() {
         l.dispose();
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        xnis.terminateThreads();
+        l = null;
+        xnis = null;
         JUnitUtil.tearDown();
     }
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XNetSensorManagerTest.class);
 
 }
