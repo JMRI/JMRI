@@ -547,6 +547,27 @@ public class CarManager extends RollingStockManager<Car>
         }
         return ++cloneCreationOrder;
     }
+    
+    /**
+     * Return null if there isn't a clone car. Returns the car's last clone car
+     * if there's one.
+     * @param car The car searhing for a clone
+     * @return null if there isn't a clone car. Returns the car's last clone car
+     */
+    public Car getClone(Car car) {
+        List<Car> cars = getByLastDateList();
+        // clone with the highest creation number will be last in the list
+        for (int i = cars.size() - 1; i >= 0; i--) {
+            Car kar = cars.get(i);
+            if (kar.isClone() &&
+                    kar.getDestinationTrack() == car.getTrack() &&
+                    kar.getRoadName().equals(car.getRoadName()) &&
+                    kar.getNumber().split(Car.CLONE_REGEX)[0].equals(car.getNumber())) {
+                return kar;
+            }
+        }
+        return null; // no clone for this car
+    }
 
     int _commentLength = 0;
     

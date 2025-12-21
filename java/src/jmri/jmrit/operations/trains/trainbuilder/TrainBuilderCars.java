@@ -2181,7 +2181,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      */
     private boolean checkQuickServiceDeparting(Car car, RouteLocation rl) {
         if (car.getTrack().isQuickServiceEnabled()) {
-            Car clone = getClone(car);
+            Car clone = carManager.getClone(car);
             if (clone != null) {
                 // was the car delivered using this route location?
                 if (car.getRouteDestination() == rl) {
@@ -2204,26 +2204,14 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                             car.getTrackName(), clone.getTrainName(), _train.getName(), trainExpectedArrival));
                     addLine(_buildReport, FIVE, BLANK_LINE);
                     return false;
+                } else {
+                    addLine(_buildReport, SEVEN, Bundle.getMessage("buildCloneDeliveryTiming", clone.toString(),
+                            clone.getSetoutTime(), car.getTrack().getTrackTypeName(), car.getLocationName(),
+                            car.getTrackName(), clone.getTrainName(), _train.getName(), trainExpectedArrival));
                 }
             }
         }
         return true;
-    }
-
-    /*
-     * Return null if there isn't a clone car. Returns the car's last clone car
-     * if there's one.
-     */
-    private Car getClone(Car car) {
-        for (Car kar : carManager.getList()) {
-            if (kar.isClone() &&
-                    kar.getDestinationTrack() == car.getTrack() &&
-                    kar.getRoadName().equals(car.getRoadName()) &&
-                    kar.getNumber().split(Car.CLONE_REGEX)[0].equals(car.getNumber())) {
-                return kar;
-            }
-        }
-        return null; // no clone for this car
     }
 
     private void remove(Car car) {
