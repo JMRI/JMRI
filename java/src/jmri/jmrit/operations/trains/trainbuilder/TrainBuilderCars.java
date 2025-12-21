@@ -241,7 +241,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 continue;
             }
             showCarServiceOrder(car);
-            addLine(_buildReport, SEVEN,
+            addLine(_buildReport, FIVE,
                     Bundle.getMessage("buildCarHasFRED", car.toString(), car.getRoadName(), car.getLocationName(),
                             car.getTrackName()));
             // all cars with FRED departing staging must leave with train
@@ -269,7 +269,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             } // is there a specific road requirement for the car with FRED?
             else if (!road.equals(Train.NONE) && !road.equals(car.getRoadName())) {
                 addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarWrongRoad", car.toString(),
-                        car.getLocationName(), car.getTrackName(), car.getTypeName(), car.getRoadName()));
+                        car.getLocationName(), car.getTrackName(), car.getTypeName(), car.getTypeExtensions(),
+                        car.getRoadName()));
                 remove(car); // remove this car from the list
                 continue;
             } else if (!foundCarWithFred && car.getLocationName().equals(rl.getName())) {
