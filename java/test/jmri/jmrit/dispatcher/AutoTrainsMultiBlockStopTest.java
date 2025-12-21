@@ -1,9 +1,10 @@
 package jmri.jmrit.dispatcher;
 
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -12,15 +13,14 @@ import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
+import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 
 /**
  *
@@ -32,7 +32,7 @@ import java.nio.file.StandardCopyOption;
  * Move a medium train
  *
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@DisabledIfHeadless
 public class AutoTrainsMultiBlockStopTest {
 
     // Only one aat at a time
@@ -858,7 +858,7 @@ public class AutoTrainsMultiBlockStopTest {
             }, "Should have stop on Block 2 inactive.");
         JUnitUtil.waitFor(waitInterval);
         
-        JUnitUtil.setBeanStateAndWait(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("TrainRestart"), Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> {
             return(d.getAllocatedSectionsList().size()==3);
         },"Allocated sections should be 3");
@@ -1004,7 +1004,7 @@ public class AutoTrainsMultiBlockStopTest {
             }, "Still stop on block 1 inactive,  block 2, 3 still active");
         JUnitUtil.waitFor(waitInterval);
         
-        JUnitUtil.setBeanStateAndWait(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("TrainRestart"), Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> {
             return(d.getAllocatedSectionsList().size()==3);
         },"Allocated sections should be 3");
@@ -1162,7 +1162,7 @@ public class AutoTrainsMultiBlockStopTest {
             }, "Still stop on block 1 inactive,  block 2, 3 still active");
         JUnitUtil.waitFor(waitInterval);
         
-        JUnitUtil.setBeanStateAndWait(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("TrainRestart"), Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> {
             return(d.getAllocatedSectionsList().size()==3);
         },"Allocated sections should be 3");
@@ -1343,8 +1343,8 @@ public class AutoTrainsMultiBlockStopTest {
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "1 section clear speed medium "+ speedMedium  + " but was " + aat.getThrottle().getSpeedSetting());
-        JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.INACTIVE);
-        JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
                 JUnitUtil.waitFor(waitInterval);
         // only one section ahead.
         JUnitUtil.waitFor(() -> {
@@ -1473,7 +1473,7 @@ public class AutoTrainsMultiBlockStopTest {
             }, "Failed To Stop and wait for sensor");
 
         assertEquals(0,getSectionsClearAhead(at),"No sections allocated ahead");
-        JUnitUtil.setBeanStateAndWait(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("TrainRestart"), Sensor.ACTIVE);
 
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.ACTIVE);
         JUnitUtil.waitFor(waitInterval);
@@ -1486,14 +1486,14 @@ public class AutoTrainsMultiBlockStopTest {
         JUnitUtil.waitFor(waitInterval);
         
         // manually reset restart sensor.
-        JUnitUtil.setBeanStateAndWait(sm.getSensor("TrainRestart"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("TrainRestart"), Sensor.INACTIVE);
 
         // only one section ahead.
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "1 section clear speed medium "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
-        JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.INACTIVE);
-        JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
                 JUnitUtil.waitFor(waitInterval);
         // only one section ahead.
         JUnitUtil.waitFor(() -> {
@@ -1602,71 +1602,67 @@ public class AutoTrainsMultiBlockStopTest {
     private Path outPathWarrentPreferences = null;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetFileUtilSupport();
         // set up users files in temp tst area
         outBaseTrainInfo = new File(FileUtil.getUserFilesPath(), "dispatcher/traininfo");
         outBaseSignal = new File(FileUtil.getUserFilesPath(), "signal");
-        try {
-            FileUtil.createDirectory(outBaseTrainInfo);
-            {
-                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "FWDREV40.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "FWDREV40.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
-                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "FWDREV80.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "FWDREV80.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
-                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "FWDREV120.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "FWDREV120.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
-                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "REVFWD40.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "REVFWD40.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
-                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "REVFWD80.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "REVFWD80.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
-                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "REVFWD120.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "REVFWD120.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
-                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "RNDRND3BLK40.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND3BLK40.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
-                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "RNDRND3BLK80.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND3BLK80.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
-                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "RNDRND3BLK120.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND3BLK120.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
-                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "RNDRND2BLK120.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND2BLK120.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
-                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "RNDRND2BLK120NoDelay.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND2BLK120NoDelay.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
 
-            }
-            FileUtil.createDirectory(outBaseSignal);
-            {
-                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/signal"),
-                        "WarrantPreferences.xml").toPath();
-                outPathWarrentPreferences = new File(outBaseSignal, "WarrantPreferences.xml").toPath();
-                Files.copy(inPath, outPathWarrentPreferences, StandardCopyOption.REPLACE_EXISTING);
-            }
+        FileUtil.createDirectory(outBaseTrainInfo);
+        {
+            Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "FWDREV40.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "FWDREV40.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+            inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "FWDREV80.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "FWDREV80.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+            inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "FWDREV120.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "FWDREV120.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+            inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "REVFWD40.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "REVFWD40.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+            inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "REVFWD80.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "REVFWD80.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+            inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "REVFWD120.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "REVFWD120.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+            inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "RNDRND3BLK40.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND3BLK40.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+            inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "RNDRND3BLK80.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND3BLK80.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+            inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "RNDRND3BLK120.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND3BLK120.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+            inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "RNDRND2BLK120.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND2BLK120.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+            inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "RNDRND2BLK120NoDelay.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND2BLK120NoDelay.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
 
-        } catch (IOException e) {
-            throw e;
+        }
+        FileUtil.createDirectory(outBaseSignal);
+        {
+            Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/signal"),
+                    "WarrantPreferences.xml").toPath();
+            outPathWarrentPreferences = new File(outBaseSignal, "WarrantPreferences.xml").toPath();
+            Files.copy(inPath, outPathWarrentPreferences, StandardCopyOption.REPLACE_EXISTING);
         }
 
         JUnitUtil.resetProfileManager();
@@ -1676,7 +1672,7 @@ public class AutoTrainsMultiBlockStopTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.resetWindows(false,false);
         
