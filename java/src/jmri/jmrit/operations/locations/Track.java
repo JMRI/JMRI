@@ -1673,7 +1673,7 @@ public class Track extends PropertyChangeSupport {
      *         cars being pulled from this track.
      */
     private boolean checkQuickServiceTrack(RollingStock rs, int rsLength) {
-        if (!isQuickServiceEnabled()) {
+        if (!isQuickServiceEnabled() || !Setup.isBuildOnTime()) {
             return false;
         }
         Train train = InstanceManager.getDefault(TrainManager.class).getTrainBuilding();
@@ -1694,8 +1694,8 @@ public class Track extends PropertyChangeSupport {
                 log.debug("Car ({}) length {}, pull from ({}, {}) at {}", car.toString(), car.getTotalLength(),
                         car.getLocationName(), car.getTrackName(), car.getPickupTime());
                 if (TrainCommon.convertStringTime(car.getPickupTime()) + Setup.getDwellTime() > trainDepartureTimeMinutes) {
-                    log.debug("Attempt to spot new car before all pulls completed");
-                    return false; // car being pulled after the train being built departs
+                    log.debug("Attempt to spot new car before pulls completed");
+                    return false; // car pulled after the train being built departs
                 }
             }
         }

@@ -524,6 +524,16 @@ public class CarManager extends RollingStockManager<Car>
         }
         return false;
     }
+    
+    public Car createClone(Car car) {
+        int cloneCreationOrder = getCloneCreationOrder();
+        Car cloneCar = car.copy();
+        cloneCar.setNumber(car.getNumber() + Car.CLONE + cloneCreationOrder);
+        cloneCar.setClone(true);
+        // register car before setting location so the car gets logged
+        register(cloneCar);
+        return cloneCar;
+    }
 
     int cloneCreationOrder = 0;
 
@@ -533,7 +543,7 @@ public class CarManager extends RollingStockManager<Car>
      * @return 1 if the first clone created, otherwise the highest found plus
      *         one. Automatically increments.
      */
-    public int getCloneCreationOrder() {
+    private int getCloneCreationOrder() {
         if (cloneCreationOrder == 0) {
             for (Car car : getList()) {
                 if (car.isClone()) {
@@ -550,7 +560,7 @@ public class CarManager extends RollingStockManager<Car>
     
     /**
      * Returns the car's last clone car if there's one.
-     * @param car The car searhing for a clone
+     * @param car The car searching for a clone
      * @return Returns the car's last clone car, null if there isn't a clone car. 
      */
     public Car getClone(Car car) {

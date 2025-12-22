@@ -2103,12 +2103,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
                         track.getLocation().getName(), track.getName()));
         // quick service enabled, create clones
-        int cloneCreationOrder = carManager.getCloneCreationOrder();
-        Car cloneCar = car.copy();
-        cloneCar.setNumber(car.getNumber() + Car.CLONE + cloneCreationOrder);
-        cloneCar.setClone(true);
-        // register car before setting location so the car gets logged
-        carManager.register(cloneCar);
+        Car cloneCar = carManager.createClone(car);
         cloneCar.setLocation(car.getLocation(), car.getTrack(), RollingStock.FORCE);
         // for reset
         cloneCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
@@ -2120,6 +2115,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // other trains will use their departure time, loaded when creating the Manifest
         String expectedArrivalTime = _train.getExpectedArrivalTime(rld, true);
         cloneCar.setSetoutTime(expectedArrivalTime);
+        String[] number = cloneCar.getNumber().split(Car.CLONE_REGEX);
+        int cloneCreationOrder = Integer.parseInt(number[1]);
         if (car.getKernel() != null) {
             String kernelName = car.getKernelName() + Car.CLONE + cloneCreationOrder;
             Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel(kernelName);
