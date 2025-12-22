@@ -29,18 +29,11 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
                 .toLocalDateTime();
     }
 
-    private LocalTime convertToLocalTime(Date dateToConvert) {
-        return Instant.ofEpochMilli(dateToConvert.getTime())
-                .atZone(ZoneId.systemDefault())
-                .toLocalTime();
-    }
-
     private Date convertToDate(LocalDateTime dateToConvert) {
         return java.util.Date
                 .from(dateToConvert.atZone(ZoneId.systemDefault())
                         .toInstant());
     }
-
 
     protected void setTimeIfPossible(Date d) {
         TimeProvider tp = InstanceManager.getDefault(TimeProviderManager.class)
