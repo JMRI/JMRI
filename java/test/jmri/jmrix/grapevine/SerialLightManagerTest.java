@@ -1,11 +1,14 @@
 package jmri.jmrix.grapevine;
 
-import jmri.Light;
-import jmri.util.JUnitUtil;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.beans.PropertyVetoException;
 
-import org.junit.Assert;
+import jmri.Light;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,21 +19,6 @@ import org.junit.jupiter.api.*;
 public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
     private GrapevineSystemConnectionMemo memo = null; 
-
-    @BeforeEach
-    @Override
-    public void setUp() {
-        JUnitUtil.setUp();
-
-        // replace the SerialTrafficController
-        memo = new GrapevineSystemConnectionMemo();
-        SerialTrafficController t = new SerialTrafficControlScaffold(memo);
-        memo.setTrafficController(t);
-        t.registerNode(new SerialNode(1, SerialNode.NODE2002V6, t));
-        // create and register the manager object
-        l = new SerialLightManager(memo);
-        jmri.InstanceManager.setLightManager(l);
-    }
 
     @Override
     public String getSystemName(int n) {
@@ -46,12 +34,12 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     public void testAsAbstractFactory() {
         // ask for a Light, and check type
         Light o = l.newLight("GL1105", "my name");
-        Assert.assertNotNull( o);
-        Assert.assertTrue(o instanceof SerialLight);
+        assertNotNull( o);
+        assertInstanceOf( SerialLight.class, o);
 
         // make sure loaded into tables
-        Assert.assertNotNull( l.getBySystemName("GL1105"));
-        Assert.assertNotNull( l.getByUserName("my name"));
+        assertNotNull( l.getBySystemName("GL1105"));
+        assertNotNull( l.getByUserName("my name"));
 
     }
 
@@ -68,8 +56,8 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     @Test
     public void testMakeSystemName() {
         String s = l.makeSystemName("1107");
-        Assert.assertNotNull(s);
-        Assert.assertFalse(s.isEmpty());
+        assertNotNull(s);
+        assertFalse(s.isEmpty());
     }
 
     /**
@@ -83,6 +71,21 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     @Override
     protected int getNumToTest2() {
         return 1107;
+    }
+
+    @BeforeEach
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
+
+        // replace the SerialTrafficController
+        memo = new GrapevineSystemConnectionMemo();
+        SerialTrafficController t = new SerialTrafficControlScaffold(memo);
+        memo.setTrafficController(t);
+        t.registerNode(new SerialNode(1, SerialNode.NODE2002V6, t));
+        // create and register the manager object
+        l = new SerialLightManager(memo);
+        jmri.InstanceManager.setLightManager(l);
     }
 
     @AfterEach
