@@ -2682,6 +2682,9 @@
         <copy todir="${dist.macosx}/JMRI/">
             <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
+        <copy todir="${dist.macosx}/JMRI/">
+            <fileset file="${dist.scripts}/JmriFaceless.command"/>
+        </copy>
         <mkdir dir="${dist.macosx}/JMRI/lib"/>
         <copy todir="${dist.macosx}/JMRI/lib" flatten="true">
             <path>
@@ -2702,6 +2705,9 @@
                 <include name="SoundPro.app/Contents/MacOS/StartJMRI"/>
                 <include name="LccPro.app/Contents/MacOS/StartJMRI"/>
             </fileset>
+        </chmod>
+        <chmod perm="ugo+rx">
+            <fileset file="${dist.macosx}/JMRI/JmriFaceless.command"/>
         </chmod>
         <mkdir dir="${dist.release}"/>
         <exec executable="${scriptdir}/diskimage.sh"
@@ -2875,6 +2881,7 @@
         <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
         <create-macosx-application-directory script.name="LccPro"        script.class="apps.gui3.lccpro.LccPro"/>
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
+        <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless" dest="${dist.scripts}/JmriFaceless.command"/>
     </target>
 
 
