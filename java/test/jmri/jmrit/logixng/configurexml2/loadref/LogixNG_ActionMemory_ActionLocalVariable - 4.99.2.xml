@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
-<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+<?xml-stylesheet href="/xml/XSLT/panelfile-5-5-5.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
   <jmriversion>
     <major>5</major>
-    <minor>3</minor>
-    <test>1</test>
+    <minor>13</minor>
+    <test>7</test>
     <modifier>plus</modifier>
   </jmriversion>
+  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
+    <InternalDateTime class="jmri.time.implementation.configurexml.InternalDateTimeXml">
+      <systemName>IUInternalTimeProvider</systemName>
+      <isRunning>yes</isRunning>
+      <rate>1.0</rate>
+      <localDateTime>2021-12-02T00:00</localDateTime>
+    </InternalDateTime>
+    <InternalDateTime class="jmri.time.implementation.configurexml.SystemDateTimeXml">
+      <systemName>IUSystemClock</systemName>
+    </InternalDateTime>
+  </timeProviders>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
@@ -44,7 +55,6 @@
       <systemName>MVCBUSVoltageMeter</systemName>
     </meter>
   </meters>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Feb 11 12:07:37 CET 2022" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -412,14 +422,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sat Dec 31 14:40:11 CET 2022</date>
-      <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG_ActionMemory_ActionLocalVariable%20-%204.99.2.xml</filename>
+      <date>Sun Dec 14 03:05:02 CET 2025</date>
+      <filename>/home/daniel/Dokument/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml2/load/LogixNG_ActionMemory_ActionLocalVariable - 4.99.2.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat Dec 31 14:40:11 CET 2022</date>
-      <filename />
+      <date>Sun Dec 14 03:05:02 CET 2025</date>
+      <filename>/home/daniel/Dokument/GitHub/JMRI/temp/temp/LogixNG_ActionMemory_ActionLocalVariable - 4.99.2.xml</filename>
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.3.1plus+daniel+2022-12-31T13:35:16Z+Re863d9a on Sat Dec 31 14:40:11 CET 2022-->
+  <!--Written by JMRI version 5.13.7plus+daniel+2025-12-14T02:04:38Z+Rc848db3 on Sun Dec 14 03:05:02 CET 2025-->
 </layout-config>

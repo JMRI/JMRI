@@ -24,6 +24,7 @@ public class SpecificInsteonLightTest {
         JUnitUtil.setUp();
 
         JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initTimeProviderManager();
         SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
         tc = new SpecificTrafficController(memo);
         memo.setTrafficController(tc);

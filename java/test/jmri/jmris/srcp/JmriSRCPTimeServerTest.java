@@ -50,6 +50,7 @@ public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBas
     public void setUp(){
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initTimeProviderManager();
         sb = new StringBuilder();
         OutputStream output = new java.io.OutputStream() {
                     @Override

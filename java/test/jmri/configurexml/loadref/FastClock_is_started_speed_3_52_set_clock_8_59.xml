@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-5-5-5.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
+  <jmriversion>
+    <major>5</major>
+    <minor>13</minor>
+    <test>7</test>
+    <modifier>plus</modifier>
+  </jmriversion>
+  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
+    <InternalDateTime class="jmri.time.implementation.configurexml.InternalDateTimeXml">
+      <systemName>IUInternalTimeProvider</systemName>
+      <isRunning>yes</isRunning>
+      <rate>3.52</rate>
+      <localDateTime>2025-12-03T07:59</localDateTime>
+    </InternalDateTime>
+    <InternalDateTime class="jmri.time.implementation.configurexml.SystemDateTimeXml">
+      <systemName>IUSystemClock</systemName>
+    </InternalDateTime>
+  </timeProviders>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="8:59 AM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="3.52">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Wed Dec 03 17:55:47 CET 2025</date>
+      <filename>PanelPro (v5.13.7)</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Wed Dec 03 17:55:55 CET 2025</date>
+      <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_started_speed_3_52_set_clock_8_59.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Wed Dec 03 17:54:03 CET 2025</date>
+          <filename>PanelPro (v5.13.7)</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Wed Dec 03 17:54:59 CET 2025</date>
+          <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_started_speed_3_52_set_clock_8_59.xml</filename>
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Wed Dec 03 17:56:03 CET 2025</date>
+      <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_started_speed_3_52_set_clock_8_59.xml</filename>
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 5.13.7plus+daniel+2025-12-03T16:55:43Z+R8c76183 on Wed Dec 03 17:56:03 CET 2025-->
+</layout-config>

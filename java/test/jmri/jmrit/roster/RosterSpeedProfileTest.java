@@ -408,6 +408,7 @@ public class RosterSpeedProfileTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initDebugThrottleManager();
     }
 

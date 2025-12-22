@@ -259,6 +259,7 @@ public class LastResultOfDigitalExpressionTest extends AbstractDigitalExpression
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
 

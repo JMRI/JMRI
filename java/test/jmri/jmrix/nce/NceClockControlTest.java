@@ -23,6 +23,7 @@ public class NceClockControlTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         tcis = new NceTrafficControlScaffold();
     }
 

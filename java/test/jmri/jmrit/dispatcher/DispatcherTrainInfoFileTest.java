@@ -20,7 +20,7 @@ import org.junit.Assert;
 public class DispatcherTrainInfoFileTest {
 
     DispatcherFrame d;  // need dispatcher now
-    
+
     @Test
     public void testFileRead() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -255,6 +255,7 @@ public class DispatcherTrainInfoFileTest {
         JUnitUtil.setUp();
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
+        JUnitUtil.initTimeProviderManager();
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStop.xml");
 

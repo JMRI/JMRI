@@ -23,7 +23,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
     private int _endTime = 0;
 
     TimerTask timerTask = null;
-    private int milisInAMinute = 60000;
+    private final int milisInAMinute = 60000;
 
 
     public ExpressionClock(String sys, String user) {

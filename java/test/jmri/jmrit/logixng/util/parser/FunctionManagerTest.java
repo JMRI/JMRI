@@ -12,7 +12,7 @@ import org.junit.Test;
 
 /**
  * Test Bundle
- * 
+ *
  * @author Daniel Bergqvist 2019
  */
 public class FunctionManagerTest {
@@ -20,7 +20,7 @@ public class FunctionManagerTest {
     @Test
     public void testFunctions() {
         FunctionManager fm = InstanceManager.getDefault(FunctionManager.class);
-        
+
         for (Map.Entry<String, Function> entry : fm.getFunctions().entrySet()) {
             Assert.assertEquals(entry.getKey(), entry.getValue().getName());
             Assert.assertNotNull(entry.getValue().getName());
@@ -31,11 +31,12 @@ public class FunctionManagerTest {
             Assert.assertNotEquals("", entry.getValue().getDescription());
         }
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @After
@@ -43,5 +44,5 @@ public class FunctionManagerTest {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

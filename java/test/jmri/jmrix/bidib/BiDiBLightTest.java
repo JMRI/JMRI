@@ -10,18 +10,18 @@ import jmri.util.JUnitUtil;
 
 /**
  * Tests for the BiDiBLight class
- * 
+ *
  * TODO: Test different types of Lights
  *
  * @author  Eckart Meyer  Copyright (C) 2020
  */
 public class BiDiBLightTest  extends AbstractLightTestBase {
-    
+
     BiDiBSystemConnectionMemo memo;
     // actually there is no AbstractVariableLightTestBase and variable t is just a 'Light'.
     // Since we would like to test VariableLight features, we use our own instance variable named 'vl'
-    BiDiBLight vl;    
-    
+    BiDiBLight vl;
+
     @Override
     public int numListeners() {
         return 0; //TODO: handle Bidib Message Receiver Listeners
@@ -41,6 +41,7 @@ public class BiDiBLightTest  extends AbstractLightTestBase {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         memo = new BiDiBSystemConnectionMemo();
         memo.setBiDiBTrafficController(new TestBiDiBTrafficController(new BiDiBInterfaceScaffold()));
         BiDiBLightManager lm = new BiDiBLightManager(memo);
@@ -52,7 +53,7 @@ public class BiDiBLightTest  extends AbstractLightTestBase {
 //        vl.setMinIntensity(0.02);
 //        vl.setMaxIntensity(0.03);
     }
-    
+
     @AfterEach
     public void tearDown() {
         vl.dispose();

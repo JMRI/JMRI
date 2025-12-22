@@ -58,16 +58,16 @@ public class CbusClockControlTest {
 
     @Test
     public void testSendTimeFromInternal() throws jmri.TimebaseRateException {
-        
+
         tb = jmri.InstanceManager.getDefault(Timebase.class);
         tb.setRun(false);
-        
+
         LocalDateTime specificDate = LocalDateTime.of(2020, 04, 24, 17, 57, 0);
         tb.setTime(Date.from( specificDate.atZone( ZoneId.systemDefault()).toInstant())); // a Friday
-        
+
         t = new CbusClockControl(memo);
         InstanceManager.setDefault(ClockControl.class, t);
-        
+
         tb.setInternalMaster(true, false);
         tb.setSynchronize(true, true);
         Assertions.assertNotNull(tcis);
@@ -265,7 +265,7 @@ public class CbusClockControlTest {
         tb.setSynchronize(true, true);
         String clockName = t.getHardwareClockName();
         Assertions.assertNotNull(clockName);
-        tb.setMasterName(clockName);     
+        tb.setMasterName(clockName);
 
         assertTrue(tb.getTime().toString().contains("Apr 24 17:57") );
 
@@ -377,6 +377,7 @@ public class CbusClockControlTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
 
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();

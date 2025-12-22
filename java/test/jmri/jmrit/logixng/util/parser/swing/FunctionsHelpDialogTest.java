@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  * Test FunctionsHelpDialog
- * 
+ *
  * @author Daniel Bergqvist 2021
  */
 public class FunctionsHelpDialogTest {
@@ -19,11 +19,12 @@ public class FunctionsHelpDialogTest {
         FunctionsHelpDialog t = new FunctionsHelpDialog();
         Assert.assertNotNull("not null", t);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @After
@@ -31,5 +32,5 @@ public class FunctionsHelpDialogTest {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }
