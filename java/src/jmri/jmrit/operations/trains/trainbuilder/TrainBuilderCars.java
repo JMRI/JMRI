@@ -2204,7 +2204,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 } else {
                     addLine(_buildReport, SEVEN, Bundle.getMessage("buildCloneDeliveryTiming", clone.toString(),
                             clone.getSetoutTime(), car.getTrack().getTrackTypeName(), car.getLocationName(),
-                            car.getTrackName(), clone.getTrainName(), _train.getName(), trainExpectedArrival));
+                            car.getTrackName(), clone.getTrainName(), _train.getName(), trainExpectedArrival,
+                            car.toString()));
                 }
             }
         }

@@ -1366,6 +1366,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     public void reset() {
+        setPickupTime(NONE);
         // the order of the next two instructions is important, otherwise rs will have
         // train's route id
         setTrain(null);
