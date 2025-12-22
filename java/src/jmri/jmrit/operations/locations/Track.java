@@ -1638,8 +1638,8 @@ public class Track extends PropertyChangeSupport {
                     return OKAY;
                 }
                 // The code assumes everything is fine with the track if the Length issue is returned.
-                log.debug("Rolling stock ({}) not accepted at location ({}, {}) no room!", rs.toString(),
-                        getLocation().getName(), getName()); // NOI18N
+                log.debug("Rolling stock ({}) not accepted at location ({}, {}) no room! Used {}, reserved {}",
+                        rs.toString(), getLocation().getName(), getName(), getUsedLength(), getReserved()); // NOI18N
 
                 return Bundle.getMessage("lengthIssue",
                         LENGTH, rsLength, Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace(), getLength());
@@ -1667,13 +1667,15 @@ public class Track extends PropertyChangeSupport {
     
     /**
      * @return true if there's space available due when cars are being pulled.
-     *         Allows new cars to be spotted to a quick service track after all
+     *         Allows new cars to be spotted to a quick service track after
      *         pulls are completed by previous trains. Therefore the train being
-     *         built has to have a departure time that is later than any of the
-     *         cars being pulled from this track.
+     *         built has to have a departure time that is later than the cars
+     *         being pulled from this track. Also includes track space created
+     *         by car pick ups by the train being built, but not delivered by
+     *         the train being built.
      */
     private boolean checkQuickServiceTrack(RollingStock rs, int rsLength) {
-        if (!isQuickServiceEnabled()) {
+        if (!isQuickServiceEnabled() || !Setup.isBuildOnTime()) {
             return false;
         }
         Train train = InstanceManager.getDefault(TrainManager.class).getTrainBuilding();
@@ -1688,15 +1690,31 @@ public class Track extends PropertyChangeSupport {
         int trackSpaceAvalable = getLength() - getUsedLength();
         log.debug("track ({}) space available at start: {}", this.getName(), trackSpaceAvalable);
         for (Car car : cars) {
+            log.debug("Car ({}) length {}, track ({}, {}) at {}, to ({}), train ({}), last train ({})", car.toString(),
+                    car.getTotalLength(), car.getLocationName(), car.getTrackName(), car.getPickupTime(),
+                    car.getRouteDestination(), car.getTrain(), car.getLastTrain());
             // cars being pulled by previous trains will free up track space
             if (car.getTrack() == this && car.getRouteDestination() != null && !car.getPickupTime().equals(Car.NONE)) {
                 trackSpaceAvalable = trackSpaceAvalable + car.getTotalLength();
                 log.debug("Car ({}) length {}, pull from ({}, {}) at {}", car.toString(), car.getTotalLength(),
                         car.getLocationName(), car.getTrackName(), car.getPickupTime());
-                if (TrainCommon.convertStringTime(car.getPickupTime()) + Setup.getDwellTime() > trainDepartureTimeMinutes) {
-                    log.debug("Attempt to spot new car before all pulls completed");
-                    return false; // car being pulled after the train being built departs
+                if (TrainCommon.convertStringTime(car.getPickupTime()) +
+                        Setup.getDwellTime() > trainDepartureTimeMinutes) {
+                    log.debug("Attempt to spot new car before pulls completed");
+                    return false; // car pulled after the train being built departs
                 }
+                // cars pulled by the train being built also free up track space
+            } else if (car.getTrack() == this &&
+                    car.getRouteDestination() != null &&
+                    car.getPickupTime().equals(Car.NONE) &&
+                    car.getTrain() == train &&
+                    car.getLastTrain() != train) {
+                trackSpaceAvalable = trackSpaceAvalable + car.getTotalLength();
+                log.debug("Car ({}) length {}, pull from ({}, {})", car.toString(), car.getTotalLength(),
+                        car.getLocationName(), car.getTrackName());
+            }
+            if (trackSpaceAvalable >= rsLength) {
+                break;
             }
         }
         log.debug("Available space {} for track ({}, {}) car ({}) length: {}", trackSpaceAvalable,
@@ -2248,7 +2266,7 @@ public class Track extends PropertyChangeSupport {
     }
 
     public boolean isQuickServiceEnabled() {
-        return (isSpur() || isInterchange()) && !isAlternate() && (0 != (_loadOptions & QUICK_SERVICE));
+        return (isSpur() || isInterchange()) && (0 != (_loadOptions & QUICK_SERVICE));
     }
 
     public void setBlockCarsEnabled(boolean enable) {

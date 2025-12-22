@@ -315,8 +315,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     private boolean aggressiveBuild = false; // when true subtract car length from track reserve length
     private int numberPasses = 2; // the number of passes in train builder
-    // the default dell time disables this feature
-    private int dwellTime = 24 * 60; // time in minutes before allowing track reuse
+    private boolean onTimeBuild = false;    // when true on time mode
+    private int dwellTime = 60; // time in minutes before allowing track reuse
     private boolean allowLocalInterchangeMoves = false; // when true local C/I to C/I moves are allowed
     private boolean allowLocalYardMoves = false; // when true local yard to yard moves are allowed
     private boolean allowLocalSpurMoves = false; // when true local spur to spur moves are allowed
@@ -511,6 +511,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static void setNumberPasses(int number) {
         getDefault().numberPasses = number;
+    }
+    
+    public static boolean isBuildOnTime() {
+        return getDefault().onTimeBuild;
+    }
+
+    public static void setBuildOnTime(boolean enabled) {
+        getDefault().onTimeBuild = enabled;
     }
     
     public static int getDwellTime() {
@@ -2142,6 +2150,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         e.addContent(values = new Element(Xml.BUILD_OPTIONS));
         values.setAttribute(Xml.AGGRESSIVE, isBuildAggressive() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.NUMBER_PASSES, Integer.toString(getNumberPasses()));
+        values.setAttribute(Xml.ON_TIME, isBuildOnTime() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.DWELL_TIME, Integer.toString(getDwellTime()));
 
         values.setAttribute(Xml.ALLOW_LOCAL_INTERCHANGE, isLocalInterchangeMovesEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2854,6 +2863,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 } catch (NumberFormatException ne) {
                     log.debug("Number of passes isn't a number");
                 }
+            }
+            if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ON_TIME)) != null) {
+                String enable = a.getValue();
+                log.debug("on time: {}", enable);
+                setBuildOnTime(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.DWELL_TIME)) != null) {
                 String minutes = a.getValue();
