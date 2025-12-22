@@ -1,21 +1,27 @@
 package jmri.jmrix.bidib;
 
-// import org.junit.Assert;
-// import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import jmri.InstanceManager;
+import jmri.MeterManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+
+import org.junit.jupiter.api.*;
 
 import jmri.util.JUnitUtil;
 
 /**
- * Tests for the BiDiBMultiMeter class
+ * Tests for the BiDiBPredefinedMeters class
  * 
  * @author  Eckart Meyer  Copyright (C) 2020
  */
 public class BiDiBPredefinedMetersTest {
     
-    BiDiBSystemConnectionMemo memo;
-    BiDiBPredefinedMeters mm;
+    private BiDiBSystemConnectionMemo memo;
+    private BiDiBPredefinedMeters mm;
+
+    @Test
+    public void testBiDiBPredefinedMeterCtor() {
+        Assertions.assertNotNull(mm);
+    }
 
 //    @Test
 //    public void testMeterName() {
@@ -29,13 +35,15 @@ public class BiDiBPredefinedMetersTest {
         JUnitUtil.setUp();
         memo = new BiDiBSystemConnectionMemo();
         memo.setBiDiBTrafficController(new TestBiDiBTrafficController(new BiDiBInterfaceScaffold()));
+        MeterManager itm = new jmri.jmrix.internal.InternalMeterManager(new InternalSystemConnectionMemo("J", "Juliet"));
+        InstanceManager.store(itm, MeterManager.class);
         mm = new BiDiBPredefinedMeters(memo);
     }
     
     @AfterEach
     public void tearDown() {
         memo = null;
-        //tc = null;
+        mm = null;
         JUnitUtil.tearDown(); 
     }
 
