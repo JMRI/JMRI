@@ -1,8 +1,5 @@
 package jmri.time.implementation;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
-import java.beans.PropertyChangeListener;
 import java.time.*;
 
 import java.util.Date;
@@ -58,27 +55,8 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
         TimeProvider tp = InstanceManager.getDefault(TimeProviderManager.class)
                 .getCurrentTimeProvider();
         if (tp instanceof TimeSetter) {
-            if ((tp instanceof DateProvider) && (tp instanceof DateSetter)) {
-                DateProvider dp = (DateProvider)(TimeSetter)tp;
-                DateSetter ds = (DateSetter)(TimeSetter)tp;
-                if (ds.canSetDate()) {
-                    LocalDateTime date = convertToLocalDateTime(d);
-                    if (dp.hasYear()) {
-                        ds.setYear(date.getYear());
-                    }
-                    if (dp.hasMonth()) {
-                        ds.setMonth(date.getMonthValue());
-                    }
-                    if (dp.hasDayOfMonth()) {
-                        ds.setDayOfMonth(date.getDayOfMonth());
-                    }
-                    if (dp.hasWeekday()) {
-                        ds.setWeekday(date.getDayOfWeek().getValue());
-                    }
-                }
-            }
             TimeSetter ts = (TimeSetter)tp;
-            ts.setTime(convertToLocalTime(d));
+            ts.setDateTime(convertToLocalDateTime(d));
         } else {
             throw new UnsupportedOperationException("The current TimeProvider is not a TimeSetter: "
                     + (tp != null ? tp.getClass().getName() : null));
@@ -194,65 +172,6 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
     public double userGetRate() {
         return InstanceManager.getDefault(TimeProviderManager.class)
                 .getCurrentTimeProvider().getRate().getRate();
-    }
-
-    @Override
-    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
-            justification = "This class is an adapter of the main time provider")
-    public void addPropertyChangeListener(PropertyChangeListener l) {
-        InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().addPropertyChangeListener(l);
-    }
-
-    @Override
-    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
-            justification = "This class is an adapter of the main time provider")
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
-        InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().addPropertyChangeListener(propertyName, l);
-    }
-
-    @Override
-    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
-            justification = "This class is an adapter of the main time provider")
-    public void removePropertyChangeListener(PropertyChangeListener l) {
-        InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().removePropertyChangeListener(l);
-    }
-
-    @Override
-    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
-            justification = "This class is an adapter of the main time provider")
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener l) {
-        InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().removePropertyChangeListener(l);
-    }
-
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListeners() {
-        return InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().getPropertyChangeListeners();
-    }
-
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-        return InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().getPropertyChangeListeners(propertyName);
-    }
-
-    @Override
-    public void addMinuteChangeListener(PropertyChangeListener l) {
-        addPropertyChangeListener(Timebase.PROPERTY_CHANGE_MINUTES, l);
-    }
-
-    @Override
-    public void removeMinuteChangeListener(PropertyChangeListener l) {
-        removePropertyChangeListener(Timebase.PROPERTY_CHANGE_MINUTES, l);
-    }
-
-    @Override
-    public PropertyChangeListener[] getMinuteChangeListeners() {
-        return getPropertyChangeListeners(Timebase.PROPERTY_CHANGE_MINUTES);
     }
 
 

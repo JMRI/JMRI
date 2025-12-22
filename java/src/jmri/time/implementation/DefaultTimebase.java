@@ -1,9 +1,12 @@
 package jmri.time.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import java.util.Date;
+import java.util.*;
 
 import jmri.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -57,14 +60,11 @@ public class DefaultTimebase extends AbstractTimebase {
 
 //    private java.text.SimpleDateFormat timeStorageFormat = null;
 
+    private final Map<PropertyChangeListener, PropertyChangeListener> _pclMap = new HashMap<>();
+    private final Map<String, Map<PropertyChangeListener, PropertyChangeListener>> _pclNameMap = new HashMap<>();
+    private final Map<PropertyChangeListener, PropertyChangeListener> _minutePclMap = new HashMap<>();
+
     private javax.swing.Timer timer = null;
-
-
-
-
-
-
-
 
 
     public DefaultTimebase(InternalSystemConnectionMemo memo) {
@@ -365,21 +365,79 @@ public class DefaultTimebase extends AbstractTimebase {
     }
 
     @Override
-    public void addMinuteChangeListener(PropertyChangeListener l) {
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This class is an adapter of the main time provider")
+    public final void addPropertyChangeListener(PropertyChangeListener l) {
+        PropertyChangeListener adapter = new PropertyChangeListenerAdapter(l);
+        _pclMap.put(l, adapter);
         InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().addPropertyChangeListener(TimeProvider.PROPERTY_CHANGE_MINUTES, l);
+                .getMainTimeProviderHandler().addPropertyChangeListener(TimeProvider.PROPERTY_CHANGE_MINUTES, adapter);
+    }
+
+    @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This class is an adapter of the main time provider")
+    public final void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
+        PropertyChangeListener adapter = new PropertyChangeListenerAdapter(l);
+        var map = _pclNameMap.computeIfAbsent(propertyName, (k) -> new HashMap<>());
+        map.put(l, adapter);
+        _pclNameMap.put(propertyName, map);
+        InstanceManager.getDefault(TimeProviderManager.class)
+                .getMainTimeProviderHandler().addPropertyChangeListener(TimeProvider.PROPERTY_CHANGE_MINUTES, adapter);
+    }
+
+    @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This class is an adapter of the main time provider")
+    public final void removePropertyChangeListener(PropertyChangeListener l) {
+        PropertyChangeListener adapter = _pclMap.remove(l);
+        if (adapter != null) {
+            InstanceManager.getDefault(TimeProviderManager.class)
+                    .getMainTimeProviderHandler().removePropertyChangeListener(TimeProvider.PROPERTY_CHANGE_MINUTES, adapter);
+        }
+    }
+
+    @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This class is an adapter of the main time provider")
+    public final void removePropertyChangeListener(String propertyName, PropertyChangeListener l) {
+        PropertyChangeListener adapter = _pclNameMap.get(propertyName).remove(l);
+        if (adapter != null) {
+            InstanceManager.getDefault(TimeProviderManager.class)
+                        .getMainTimeProviderHandler().removePropertyChangeListener(TimeProvider.PROPERTY_CHANGE_MINUTES, adapter);
+        }
+    }
+
+    @Override
+    public final PropertyChangeListener[] getPropertyChangeListeners() {
+        return _pclMap.keySet().toArray(PropertyChangeListener[]::new);
+    }
+
+    @Override
+    public final PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return _pclNameMap.get(propertyName).keySet().toArray(PropertyChangeListener[]::new);
+    }
+
+    @Override
+    public void addMinuteChangeListener(PropertyChangeListener l) {
+        PropertyChangeListener adapter = new PropertyChangeListenerAdapter(l);
+        _minutePclMap.put(l, adapter);
+        InstanceManager.getDefault(TimeProviderManager.class)
+                .getMainTimeProviderHandler().addPropertyChangeListener(TimeProvider.PROPERTY_CHANGE_MINUTES, adapter);
     }
 
     @Override
     public void removeMinuteChangeListener(PropertyChangeListener l) {
-        InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().removePropertyChangeListener(TimeProvider.PROPERTY_CHANGE_MINUTES, l);
+        PropertyChangeListener adapter = _minutePclMap.remove(l);
+        if (adapter != null) {
+            InstanceManager.getDefault(TimeProviderManager.class)
+                    .getMainTimeProviderHandler().removePropertyChangeListener(TimeProvider.PROPERTY_CHANGE_MINUTES, adapter);
+        }
     }
 
     @Override
     public PropertyChangeListener[] getMinuteChangeListeners() {
-        return InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().getPropertyChangeListeners(TimeProvider.PROPERTY_CHANGE_MINUTES);
+        return _minutePclMap.keySet().toArray(PropertyChangeListener[]::new);
     }
 
     /**
@@ -422,6 +480,27 @@ public class DefaultTimebase extends AbstractTimebase {
             clockSensor.removePropertyChangeListener(this::clockSensorChanged);
         }
         super.dispose(); // remove standard property change listeners
+    }
+
+
+    private static class PropertyChangeListenerAdapter implements PropertyChangeListener {
+
+        private final PropertyChangeListener _pcl;
+
+        PropertyChangeListenerAdapter(PropertyChangeListener l) {
+            _pcl = l;
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (TimeProvider.PROPERTY_CHANGE_MINUTES.equals(evt.getPropertyName())) {
+                _pcl.propertyChange(new PropertyChangeEvent(
+                        evt.getSource(), "time", evt.getOldValue(), evt.getNewValue()));
+            } else {
+                _pcl.propertyChange(evt);
+            }
+        }
+
     }
 
 
