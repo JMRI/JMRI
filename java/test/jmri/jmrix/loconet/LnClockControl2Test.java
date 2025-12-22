@@ -25,6 +25,7 @@ public class LnClockControl2Test {
     @Test
     public void testCheckStartValues(){
         assertEquals(1.0, ldt.getRate(), "initial rate");
+        assertEquals("Mon Dec 22 00:00:00 CET 2025", time.toString());
     }
 
     @BeforeEach
