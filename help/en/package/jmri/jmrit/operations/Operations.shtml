@@ -82,7 +82,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
               <ul>
                 <li><a href="#SettingsOptions">Options</a>
                   <ul>
-                    <li><a href="#BuildOptions">Build Options (Normal or Aggressive)</a></li>
+                    <li><a href="#BuildOptions">Build Options (Normal, Aggressive or On Time)</a></li>
                     <li><a href="#AllowLocalCarMovements">Switcher Service Options (Local
                         Car Movement with Default Loads)</a></li>
                     <li><a href="#StagingOptions">Staging Options</a></li>
@@ -1186,7 +1186,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <h3 id="BuildOptions">Build Options</h3>
-      There are two build train options, normal and aggressive. It is recommended that you select
+      There are three build train options, normal, aggressive and on time. It is recommended that you select
       normal when you first begin using OperationsPro&trade;. Normal builds guarantee that when a
       car is delivered (set out) by a train that there will be track space available for the car.
       Normal mode will not fill every track to capacity which is more prototypical. However, normal
@@ -1194,6 +1194,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       space. Normal mode prevents track overloading. In aggressive mode you can "accidentally"
       create track overloading by the order you build and run your trains or by using the <a
         href="#TrainReset">Train Reset</a> function.
+        
+      <h4>Aggressive</h4>
 
       <p>Aggressive builds makes the car's track space available as soon as a car is scheduled
         for a pick up. Therefore there can be instances where a train was to pick up a car to vacate
@@ -1230,6 +1232,28 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         additional trains. And if you do reset a train, there isn't a guarantee that building the
         train again will pull the same cars, each train build can be different depending on the car
         movements created by the other trains.</p>
+
+      <h4>On Time</h4>
+
+      On time is an experimental mode of operations that was introduced in January of 2026. On time
+      mode requires the use of a real or fast clock to dictate train movement. To use on time, your
+      trains must run on schedule. They should depart at the correct departure time, and they should
+      complete their work reasonably close to the times provided on the train Manifests. When
+      running OperationsPro in on time mode, tracks that have
+      <a href="#InterchangeQuickService">Quick Service</a> enabled can be reused multiple times
+      based on when cars are set out and picked up.
+
+      <p>After selecting the "On Time" radio button, a text field called "Dwell Time" is
+        enabled. Dwell time is the number of extra minutes the program will use to determine when a
+        track has available space, or when a car is available for pick up. For example, if a car is
+        pulled at 1:30 PM and the dwell time is 60 minutes, the track space vacated by the car is
+        available at 2:30 PM. For car pick ups, if a car is set out at 2:10 PM and the dwell time is
+        60 minutes, the car can be pulled by a train at or after 3:10. You would normally set the
+        dwell time greater than your worst operator's completion time for a train. For example, if
+        some of your operators normally finish their runs 30 minutes late, you would set the dwell
+        time to 30 or more minutes. Dwell time helps prevent the frustration of not having the track
+        space or car available from a previous train delivery. However, high dwell times will cause
+        less cars to be moved in a given time.</p>
 
       <p>Note that once you've built a train, the build option can not be changed until all
         trains are terminated or reset.</p>

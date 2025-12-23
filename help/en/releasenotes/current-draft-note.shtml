@@ -488,7 +488,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>New feature, you can now build your train using "On Time" mode. Requires using real or fast clock to schedule for your trains.</li>
         </ul>
 
    <h3>Panel Editor</h3>

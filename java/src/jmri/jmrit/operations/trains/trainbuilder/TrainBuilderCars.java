@@ -502,8 +502,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             if (!rl.isLocalMovesAllowed() && car.getSplitFinalDestinationName().equals(rl.getSplitName())) {
                 addLine(_buildReport, FIVE,
-                        Bundle.getMessage("buildRouteNoLocalLocation", _train.getRoute().getName(),
-                                rl.getId(), rl.getName()));
+                        Bundle.getMessage("buildRouteNoLocalLocCar", _train.getRoute().getName(),
+                                rl.getId(), rl.getName(), car.toString()));
             }
             // can this car be pulled from an interchange or spur?
             if (!checkPickupInterchangeOrSpur(car)) {
@@ -1492,8 +1492,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             // are local moves allows at this location?
             if (!rld.isLocalMovesAllowed() && car.isLocalMove()) {
-                addLine(_buildReport, FIVE, Bundle.getMessage("buildRouteNoLocalLocation", _train.getRoute().getName(),
-                        rld.getId(), rld.getName()));
+                addLine(_buildReport, FIVE, Bundle.getMessage("buildRouteNoLocalLocCar", _train.getRoute().getName(),
+                        rld.getId(), rld.getName(), car.toString()));
                 continue;
             }
             if (_train.isLocationSkipped(rld)) {
@@ -1763,14 +1763,14 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     !car.hasFred()) {
                 if (!rld.isLocalMovesAllowed()) {
                     addLine(_buildReport, FIVE,
-                            Bundle.getMessage("buildRouteNoLocalLocation", _train.getRoute().getName(),
-                                    rld.getId(), rld.getName()));
+                            Bundle.getMessage("buildRouteNoLocalLocCar", _train.getRoute().getName(),
+                                    rld.getId(), rld.getName(), car.toString()));
                     continue;
                 }
                 if (!rl.isLocalMovesAllowed()) {
                     addLine(_buildReport, FIVE,
-                            Bundle.getMessage("buildRouteNoLocalLocation", _train.getRoute().getName(),
-                                    rl.getId(), rl.getName()));
+                            Bundle.getMessage("buildRouteNoLocalLocCar", _train.getRoute().getName(),
+                                    rl.getId(), rl.getName(), car.toString()));
                     continue;
                 }
             }
@@ -2190,22 +2190,28 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     addLine(_buildReport, FIVE, BLANK_LINE);
                     return false;
                 }
-                
-                // determine when the clone is going to be delivered
+
+                // determine when the train arrives
                 String trainExpectedArrival = _train.getExpectedArrivalTime(rl, true);
                 int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);
+                // determine when the clone is going to be delivered
                 int cloneSetoutTimeMinutes = convertStringTime(clone.getSetoutTime());
-                if (cloneSetoutTimeMinutes > trainArrivalTimeMinutes) {
+                int dwellTime = 0;
+                if (Setup.isBuildOnTime()) {
+                    dwellTime = Setup.getDwellTime();
+                }
+                if (cloneSetoutTimeMinutes + dwellTime > trainArrivalTimeMinutes) {
                     addLine(_buildReport, FIVE, Bundle.getMessage("buildCarDeliveryTiming", car.toString(),
                             clone.getSetoutTime(), car.getTrack().getTrackTypeName(), car.getLocationName(),
-                            car.getTrackName(), clone.getTrainName(), _train.getName(), trainExpectedArrival));
+                            car.getTrackName(), clone.getTrainName(), _train.getName(), trainExpectedArrival,
+                            dwellTime));
                     addLine(_buildReport, FIVE, BLANK_LINE);
                     return false;
                 } else {
                     addLine(_buildReport, SEVEN, Bundle.getMessage("buildCloneDeliveryTiming", clone.toString(),
                             clone.getSetoutTime(), car.getTrack().getTrackTypeName(), car.getLocationName(),
                             car.getTrackName(), clone.getTrainName(), _train.getName(), trainExpectedArrival,
-                            car.toString()));
+                            dwellTime, car.toString()));
                 }
             }
         }
