@@ -14,7 +14,7 @@ import jmri.util.swing.JmriJOptionPane;
 /**
  * Frame for user edit of setup options
  *
- * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013, 2015
+ * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013, 2015, 2026
  */
 public class OptionPanel extends OperationsPreferencesPanel {
 
@@ -320,7 +320,11 @@ public class OptionPanel extends OperationsPreferencesPanel {
         Setup.setBuildAggressive(buildAggressive.isSelected() || buildOnTime.isSelected());
         Setup.setNumberPasses((Integer) numberPassesComboBox.getSelectedItem());
         Setup.setBuildOnTime(buildOnTime.isSelected());
-        Setup.setDwellTime(Integer.parseInt(dwellTimeTextField.getText()));
+        try {
+            Setup.setDwellTime(Integer.parseInt(dwellTimeTextField.getText()));
+        } catch (NumberFormatException e) {
+            log.error("Dwell Time {} must be a number", dwellTimeTextField.getText());
+        }
         // local switcher options
         Setup.setLocalInterchangeMovesEnabled(localInterchangeCheckBox.isSelected());
         Setup.setLocalSpurMovesEnabled(localSpurCheckBox.isSelected());
