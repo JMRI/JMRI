@@ -1,5 +1,15 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
@@ -14,9 +24,10 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ExpressionTransit
@@ -81,79 +92,69 @@ public class ExpressionTransitTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testCtor() throws JmriException {
         ExpressionTransit expression2;
-        Assert.assertNotNull("transit is not null", transit1);
+        assertNotNull( transit1, "transit is not null");
         transit1.setState(Transit.IDLE);
 
         expression2 = new ExpressionTransit("IQDE321", null);
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Transit \"''\" is Idle", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
+        assertEquals( "Transit \"''\" is Idle", expression2.getLongDescription(),
+                "String matches");
 
         expression2 = new ExpressionTransit("IQDE321", "My Transit");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My Transit", expression2.getUserName());
-        Assert.assertEquals("String matches", "Transit \"''\" is Idle", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My Transit", expression2.getUserName(), "Username matches");
+        assertEquals( "Transit \"''\" is Idle", expression2.getLongDescription(), "String matches");
 
         expression2 = new ExpressionTransit("IQDE321", null);
         expression2.getSelectNamedBean().setNamedBean(transit1);
-        Assert.assertTrue("transit is correct", transit1 == expression2.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Transit \"transit1\" is Idle", expression2.getLongDescription());
+        assertSame( transit1, expression2.getSelectNamedBean().getNamedBean().getBean(), "transit is correct");
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
+        assertEquals( "Transit \"transit1\" is Idle", expression2.getLongDescription(), "String matches");
 
         Transit t = InstanceManager.getDefault(TransitManager.class).createNewTransit("transit2");
         expression2 = new ExpressionTransit("IQDE321", "My transit");
         expression2.getSelectNamedBean().setNamedBean(t);
-        Assert.assertTrue("transit is correct", t == expression2.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My transit", expression2.getUserName());
-        Assert.assertEquals("String matches", "Transit \"transit2\" is Idle", expression2.getLongDescription());
+        assertSame( t, expression2.getSelectNamedBean().getNamedBean().getBean(), "transit is correct");
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My transit", expression2.getUserName(), "Username matches");
+        assertEquals( "Transit \"transit2\" is Idle", expression2.getLongDescription(), "String matches");
 
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            new ExpressionTransit("IQE55:12:XY11", null);
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () -> {
+            var et = new ExpressionTransit("IQE55:12:XY11", null);
+            fail("Should have thrown, not created " + et);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            new ExpressionTransit("IQE55:12:XY11", "A name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows( IllegalArgumentException.class, () -> {
+            var et = new ExpressionTransit("IQE55:12:XY11", "A name");
+            fail("Should have thrown, not created " + et);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == expressionTransit.getChildCount());
+        assertEquals( 0, expressionTransit.getChildCount(), "getChildCount() returns 0");
 
-        boolean hasThrown = false;
-        try {
-            expressionTransit.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class, () ->
+            expressionTransit.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
     @Test
     public void testTransitState() {
-        Assert.assertEquals("String matches", "Idle", ExpressionTransit.TransitState.Idle.toString());
-        Assert.assertEquals("String matches", "Assigned", ExpressionTransit.TransitState.Assigned.toString());
+        assertEquals( "Idle", ExpressionTransit.TransitState.Idle.toString(), "String matches");
+        assertEquals( "Assigned", ExpressionTransit.TransitState.Assigned.toString(), "String matches");
 
-        Assert.assertEquals("ID matches", Transit.IDLE, ExpressionTransit.TransitState.Idle.getID());
-        Assert.assertEquals("ID matches", Transit.ASSIGNED, ExpressionTransit.TransitState.Assigned.getID());
+        assertEquals( Transit.IDLE, ExpressionTransit.TransitState.Idle.getID(), "ID matches");
+        assertEquals( Transit.ASSIGNED, ExpressionTransit.TransitState.Assigned.getID(), "ID matches");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", LogixNG_Category.ITEM == _base.getCategory());
+        assertSame( LogixNG_Category.ITEM, _base.getCategory(), "Category matches");
     }
 
     @Test
@@ -162,16 +163,16 @@ public class ExpressionTransitTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
 
         expressionTransit.getSelectNamedBean().removeNamedBean();
-        Assert.assertEquals("Transit", expressionTransit.getShortDescription());
-        Assert.assertEquals("Transit \"''\" is Idle", expressionTransit.getLongDescription());
+        assertEquals("Transit", expressionTransit.getShortDescription());
+        assertEquals("Transit \"''\" is Idle", expressionTransit.getLongDescription());
         expressionTransit.getSelectNamedBean().setNamedBean(transit1);
         expressionTransit.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionTransit.getSelectEnum().setEnum(ExpressionTransit.TransitState.Idle);
-        Assert.assertEquals("Transit \"transit1\" is Idle", expressionTransit.getLongDescription());
+        assertEquals("Transit \"transit1\" is Idle", expressionTransit.getLongDescription());
         expressionTransit.set_Is_IsNot(Is_IsNot_Enum.IsNot);
-        Assert.assertEquals("Transit \"transit1\" is not Idle", expressionTransit.getLongDescription());
+        assertEquals("Transit \"transit1\" is not Idle", expressionTransit.getLongDescription());
         expressionTransit.getSelectEnum().setEnum(ExpressionTransit.TransitState.Assigned);
-        Assert.assertEquals("Transit \"transit1\" is not Assigned", expressionTransit.getLongDescription());
+        assertEquals("Transit \"transit1\" is not Assigned", expressionTransit.getLongDescription());
     }
 
     @Test
@@ -191,32 +192,32 @@ public class ExpressionTransitTest extends AbstractDigitalExpressionTestBase {
         transit1.setState(Transit.IDLE);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
 
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
 
         // Change the transit twice to trigger the "then" state
         transit1.setState(Transit.ASSIGNED);
         transit1.setState(Transit.IDLE);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        assertTrue( atomicBoolean.get(), "atomicBoolean is true");
 
         // Clear the atomic boolean.
         atomicBoolean.set(false);
         // Change the transit to trigger the "else" state.
         transit1.setState(Transit.ASSIGNED);
         // The action should now be executed so the atomic boolean should still be false since the action is the else.
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
 
         // Test IS_NOT
         expressionTransit.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         // Create two events to trigger on change to the "then" state.
         transit1.setState(Transit.IDLE);
         transit1.setState(Transit.ASSIGNED);
-        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        assertTrue( atomicBoolean.get(), "atomicBoolean is true");
     }
 
     @Test
@@ -224,53 +225,44 @@ public class ExpressionTransitTest extends AbstractDigitalExpressionTestBase {
         expressionTransit.unregisterListeners();
 
         Transit otherTransit = InstanceManager.getDefault(TransitManager.class).createNewTransit("transitX");
-        Assert.assertNotEquals("Transits are different", otherTransit, expressionTransit.getSelectNamedBean().getNamedBean().getBean());
+        assertNotEquals( otherTransit, expressionTransit.getSelectNamedBean().getNamedBean().getBean(), "Transits are different");
         expressionTransit.getSelectNamedBean().setNamedBean(otherTransit);
-        Assert.assertEquals("Transits are equal", otherTransit, expressionTransit.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( otherTransit, expressionTransit.getSelectNamedBean().getNamedBean().getBean(), "Transits are equal");
 
         NamedBeanHandle<Transit> otherTransitHandle =
                 InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(otherTransit.getDisplayName(), otherTransit);
         expressionTransit.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull("Transit is null", expressionTransit.getSelectNamedBean().getNamedBean());
+        assertNull( expressionTransit.getSelectNamedBean().getNamedBean(), "Transit is null");
         expressionTransit.getSelectNamedBean().setNamedBean(otherTransitHandle);
-        Assert.assertEquals("Transits are equal", otherTransit, expressionTransit.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertEquals("TransitHandles are equal", otherTransitHandle, expressionTransit.getSelectNamedBean().getNamedBean());
+        assertEquals( otherTransit, expressionTransit.getSelectNamedBean().getNamedBean().getBean(), "Transits are equal");
+        assertEquals( otherTransitHandle, expressionTransit.getSelectNamedBean().getNamedBean(), "TransitHandles are equal");
     }
 
     @Test
     public void testSetTransitException() {
-        Assert.assertNotNull("Transit is not null", transit1);
-        Assert.assertNotNull("Transit is not null", expressionTransit.getSelectNamedBean().getNamedBean());
+        assertNotNull( transit1, "Transit is not null");
+        assertNotNull( expressionTransit.getSelectNamedBean().getNamedBean(), "Transit is not null");
         expressionTransit.registerListeners();
-        boolean thrown = false;
-        try {
-            expressionTransit.getSelectNamedBean().setNamedBean("A transit");
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        RuntimeException ex = assertThrows( RuntimeException.class, () ->
+            expressionTransit.getSelectNamedBean().setNamedBean("A transit"),
+                "Expected exception thrown");
+        assertNotNull(ex);
         JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
-        thrown = false;
-        try {
+        ex = assertThrows( RuntimeException.class, () -> {
             Transit transit99 = InstanceManager.getDefault(TransitManager.class).createNewTransit("transit99");
             NamedBeanHandle<Transit> transitHandle99 =
                     InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(transit99.getDisplayName(), transit99);
             expressionTransit.getSelectNamedBean().setNamedBean(transitHandle99);
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        }, "Expected exception thrown");
+        assertNotNull(ex);
         JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
-        thrown = false;
-        try {
-            expressionTransit.getSelectNamedBean().removeNamedBean();
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows( RuntimeException.class, () ->
+            expressionTransit.getSelectNamedBean().removeNamedBean(),
+                "Expected exception thrown");
+        assertNotNull(ex);
         JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
     }
 
@@ -288,46 +280,44 @@ public class ExpressionTransitTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
 
         // Get the expressionTransit and set the transit
-        Assert.assertNotNull("Transit is not null", transit1);
+        assertNotNull( transit1, "Transit is not null");
         expressionTransit.getSelectNamedBean().setNamedBean(transit1);
 
         // Get some other transit for later use
         Transit otherTransit = InstanceManager.getDefault(TransitManager.class).createNewTransit("transitQ");
-        Assert.assertNotNull("Transit is not null", otherTransit);
-        Assert.assertNotEquals("Transit is not equal", transit1, otherTransit);
+        assertNotNull( otherTransit, "Transit is not null");
+        assertNotEquals( transit1, otherTransit, "Transit is not equal");
 
         // Test vetoableChange() for some other propery
         expressionTransit.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Transit matches", transit1, expressionTransit.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( transit1, expressionTransit.getSelectNamedBean().getNamedBean().getBean(), "Transit matches");
 
         // Test vetoableChange() for a string
         expressionTransit.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Transit matches", transit1, expressionTransit.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( transit1, expressionTransit.getSelectNamedBean().getNamedBean().getBean(), "Transit matches");
         expressionTransit.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Transit matches", transit1, expressionTransit.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( transit1, expressionTransit.getSelectNamedBean().getNamedBean().getBean(), "Transit matches");
 
         // Test vetoableChange() for another transit
         expressionTransit.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherTransit, null));
-        Assert.assertEquals("Transit matches", transit1, expressionTransit.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( transit1, expressionTransit.getSelectNamedBean().getNamedBean().getBean(), "Transit matches");
         expressionTransit.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherTransit, null));
-        Assert.assertEquals("Transit matches", transit1, expressionTransit.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( transit1, expressionTransit.getSelectNamedBean().getNamedBean().getBean(), "Transit matches");
 
         // Test vetoableChange() for its own transit
-        boolean thrown = false;
-        try {
-            expressionTransit.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", transit1, null));
-        } catch (PropertyVetoException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        PropertyVetoException ex = assertThrows( PropertyVetoException.class, () ->
+            expressionTransit.getSelectNamedBean().vetoableChange(
+                    new PropertyChangeEvent(this, "CanDelete", transit1, null)),
+                "Expected exception thrown");
+        assertNotNull(ex);
 
-        Assert.assertEquals("Transit matches", transit1, expressionTransit.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( transit1, expressionTransit.getSelectNamedBean().getNamedBean().getBean(), "Transit matches");
         expressionTransit.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", transit1, null));
-        Assert.assertNull("Transit is null", expressionTransit.getSelectNamedBean().getNamedBean());
+        assertNull( expressionTransit.getSelectNamedBean().getNamedBean(), "Transit is null");
     }
 
-    // The minimal setup for log4J
     @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -368,12 +358,13 @@ public class ExpressionTransitTest extends AbstractDigitalExpressionTestBase {
         transit1 = InstanceManager.getDefault(TransitManager.class).createNewTransit("transit1");
         expressionTransit.getSelectNamedBean().setNamedBean(transit1);
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
     @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

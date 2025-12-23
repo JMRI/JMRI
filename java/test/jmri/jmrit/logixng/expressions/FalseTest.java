@@ -1,21 +1,21 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import jmri.InstanceManager;
-import jmri.NamedBean;
+import jmri.*;
 import jmri.jmrit.logixng.LogixNG_Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.util.JUnitUtil;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.LogixNG;
@@ -25,6 +25,14 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
+import jmri.util.JUnitUtil;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test False
@@ -90,68 +98,59 @@ public class FalseTest extends AbstractDigitalExpressionTestBase {
         False expression2;
 
         expression2 = new False("IQDE321", null);
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Always false", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
+        assertEquals( "Always false", expression2.getLongDescription(), "String matches");
 
         expression2 = new False("IQDE321", "My expression");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
-        Assert.assertEquals("String matches", "Always false", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My expression", expression2.getUserName(), "Username matches");
+        assertEquals( "Always false", expression2.getLongDescription(), "String matches");
 
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            new False("IQE55:12:XY11", null);
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () -> {
+            var t = new False("IQE55:12:XY11", null);
+            fail("Should have thrown, created " + t);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            new False("IQE55:12:XY11", "A name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows( IllegalArgumentException.class, () -> {
+            var t = new False("IQE55:12:XY11", "A name");
+            fail("Should have thrown, created " + t);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
+
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == expressionFalse.getChildCount());
+        assertEquals( 0, expressionFalse.getChildCount(), "getChildCount() returns 0");
 
-        boolean hasThrown = false;
-        try {
-            expressionFalse.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class, () ->
+            expressionFalse.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", LogixNG_Category.OTHER == _base.getCategory());
+        assertEquals( LogixNG_Category.OTHER, _base.getCategory(), "Category matches");
     }
 
     @Test
     public void testDescription() {
         False e1 = new False("IQDE321", null);
-        Assert.assertTrue("Always false".equals(e1.getShortDescription()));
-        Assert.assertTrue("Always false".equals(e1.getLongDescription()));
+        assertTrue("Always false".equals(e1.getShortDescription()));
+        assertTrue("Always false".equals(e1.getLongDescription()));
     }
 
     @Test
-    public void testExpression() throws Exception {
+    public void testExpression() throws JmriException {
         DigitalExpressionBean t = new False("IQDE321", null);
-        Assert.assertFalse("Expression is false",t.evaluate());
+        assertFalse( t.evaluate(), "Expression is false");
     }
 
     @Test
     @Override
+    @Disabled("Not implemented")
     public void testEnableAndEvaluate() {
         // Not implemented.
         // This method is implemented for other digital expressions so no need
@@ -161,6 +160,7 @@ public class FalseTest extends AbstractDigitalExpressionTestBase {
 
     @Test
     @Override
+    @Disabled("Not implemented")
     public void testDebugConfig() {
         // Not implemented.
         // This method is implemented for other digital expressions so no need
@@ -168,8 +168,8 @@ public class FalseTest extends AbstractDigitalExpressionTestBase {
         // expression.
     }
 
-    // The minimal setup for log4J
     @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -206,12 +206,13 @@ public class FalseTest extends AbstractDigitalExpressionTestBase {
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue(logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
     @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
