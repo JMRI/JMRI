@@ -7,6 +7,7 @@ import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.*;
 
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -211,10 +212,17 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         scrollPane.setViewportBorder( empyBorder );
         scrollPane.setBorder( empyBorder );
         scrollPane.setWheelScrollingEnabled(false); // already used by speed slider
+        scrollPane.getViewport().addChangeListener((e) -> viewPortSizeChanged(e));
+
         setContentPane(scrollPane);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
+    private void viewPortSizeChanged(ChangeEvent e) {
+        // make sure function button area is laid out consistent with sizing
+        mainPanel.revalidate();
+    }
+    
     private void setUpDefaultLightFunctionButton() {
         try {
             functionButtons[0].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");

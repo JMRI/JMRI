@@ -648,6 +648,11 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Added a 'JmriFaceless.command' to the macOS distribution that
+                lets you run a faceless (no GUI) version of JMRI.</li>
+            <li>Removed some code that was used for migration to JMRI 4.20
+                from earlier. If you're updating from before JMRI 4.20,
+                please go through JMRI 4.20 as described in the migration
+                instructions above.</li>
         </ul>
 

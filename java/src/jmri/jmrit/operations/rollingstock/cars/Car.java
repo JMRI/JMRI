@@ -1118,6 +1118,7 @@ public class Car extends RollingStock {
             int cloneCreationNumber = Integer.parseInt(number[1]);
             if (cloneCreationNumber <= car.getCloneOrder()) {
                 car.setLocation(getLocation(), getTrack(), Car.FORCE);
+                car.setRouteDestination(null); // clear rd
                 car.setLoadName(getLoadName());
                 car.setLastTrain(getLastTrain());
                 car.setLastRouteId(getLastRouteId());
