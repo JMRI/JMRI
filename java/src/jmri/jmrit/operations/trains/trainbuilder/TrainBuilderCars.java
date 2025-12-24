@@ -6,11 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.router.Router;
@@ -2079,21 +2077,15 @@ public class TrainBuilderCars extends TrainBuilderEngines {
     }
 
     /**
-     * Checks to see if spur/industry is requesting a quick load service, which
-     * means that on the outbound side of the turn a car or set of cars in a
-     * kernel are set out, and on the return side of the turn the same cars are
-     * pulled. Since it isn't possible for a car to be pulled and set out twice,
-     * this code creates a second "clone" car to create the requested Manifest.
-     * A car could have multiple clones, therefore each clone has a creation
-     * order number. The first clone is used to restore a car's location and
-     * load in the case of reset.
-     * <p>
-     * Also works with an interchange track to make the car immediately
-     * available to be pulled by the next train being built.
+     * Checks to see if track is requesting a quick service. Since it isn't
+     * possible for a car to be pulled and set out twice, this code creates a
+     * "clone" car to create the requested Manifest. A car could have multiple
+     * clones, therefore each clone has a creation order number. The first clone
+     * is used to restore a car's location and load in the case of reset.
      * 
-     * @param car   the car possibly needing a quick turn
+     * @param car   the car possibly needing quick service
      * @param track the destination track
-     * @return the car if not a quick turn, or a clone if quick turn
+     * @return the car if not quick service, or a clone if quick service
      */
     private Car checkQuickServiceArrival(Car car, RouteLocation rld, Track track) {
         if (!track.isQuickServiceEnabled()) {
@@ -2103,57 +2095,11 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
                         track.getLocation().getName(), track.getName()));
         // quick service enabled, create clones
-        Car cloneCar = carManager.createClone(car);
-        cloneCar.setLocation(car.getLocation(), car.getTrack(), RollingStock.FORCE);
-        // for reset
-        cloneCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
-        cloneCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
-        cloneCar.setPreviousScheduleId(car.getScheduleItemId());
-        cloneCar.setLastRouteId(car.getLastRouteId());
-        cloneCar.setMoves(car.getMoves());
+        Car cloneCar = carManager.createClone(car, track, _train, _startTime);
         // for timing, use arrival times for the train that is building
         // other trains will use their departure time, loaded when creating the Manifest
         String expectedArrivalTime = _train.getExpectedArrivalTime(rld, true);
         cloneCar.setSetoutTime(expectedArrivalTime);
-        String[] number = cloneCar.getNumber().split(Car.CLONE_REGEX);
-        int cloneCreationOrder = Integer.parseInt(number[1]);
-        if (car.getKernel() != null) {
-            String kernelName = car.getKernelName() + Car.CLONE + cloneCreationOrder;
-            Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel(kernelName);
-            cloneCar.setKernel(kernel);
-            for (Car kar : car.getKernel().getCars()) {
-                if (kar != car) {
-                    Car nCar = kar.copy();
-                    nCar.setNumber(kar.getNumber() + Car.CLONE + cloneCreationOrder);
-                    nCar.setClone(true);
-                    nCar.setKernel(kernel);
-                    carManager.register(nCar);
-                    nCar.setLocation(car.getLocation(), car.getTrack(), RollingStock.FORCE);
-                    // for reset
-                    nCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
-                    nCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
-                    // move car to new location for later pick up
-                    kar.setLocation(track.getLocation(), track, RollingStock.FORCE);
-                    kar.setLastTrain(_train);
-                    kar.setLastLocationId(car.getLocationId());
-                    kar.setLastTrackId(car.getTrackId());
-                    kar.setLastDate(_startTime);
-                    kar.setMoves(kar.getMoves() + 1); // bump count
-                    kar.setCloneOrder(cloneCreationOrder); // for reset
-                }
-            }
-        }
-        // move car to new location for later pick up
-        car.setLocation(track.getLocation(), track, RollingStock.FORCE);
-        car.setLastTrain(_train);
-        car.setLastLocationId(cloneCar.getLocationId());
-        car.setLastTrackId(cloneCar.getTrackId());
-        car.setLastRouteId(_train.getRoute().getId());
-        // this car was moved during the build process
-        car.setLastDate(_startTime);
-        car.setMoves(car.getMoves() + 1); // bump count
-        car.setCloneOrder(cloneCreationOrder); // for reset
-        car.setDestination(null, null);
         track.scheduleNext(car); // apply schedule to car
         car.loadNext(track); // update load, wait count
         if (car.getWait() > 0) {

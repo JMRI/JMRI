@@ -1186,15 +1186,21 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <h3 id="BuildOptions">Build Options</h3>
-      There are three build train options, normal, aggressive and on time. It is recommended that you select
-      normal when you first begin using OperationsPro&trade;. Normal builds guarantee that when a
-      car is delivered (set out) by a train that there will be track space available for the car.
-      Normal mode will not fill every track to capacity which is more prototypical. However, normal
-      mode won't swap a set of cars, cars are picked up or set out based on the available track
-      space. Normal mode prevents track overloading. In aggressive mode you can "accidentally"
-      create track overloading by the order you build and run your trains or by using the <a
-        href="#TrainReset">Train Reset</a> function.
-        
+      There are three build train options, normal, aggressive and on time. Note that once you've
+      built a train, the build option can not be changed until all trains are terminated or reset.
+
+      <h4>Normal</h4>
+
+      <p>
+        It is recommended that you select normal when you first begin using OperationsPro&trade;.
+        Normal builds guarantee that when a car is delivered (set out) by a train that there will be
+        track space available for the car. Normal mode will not fill every track to capacity which
+        is more prototypical. However, normal mode won't swap a set of cars, cars are picked up or
+        set out based on the available track space. Normal mode prevents track overloading. In
+        aggressive mode you can "accidentally" create track overloading by the order you build and
+        run your trains or by using the <a href="#TrainReset">Train Reset</a> function.
+      </p>
+
       <h4>Aggressive</h4>
 
       <p>Aggressive builds makes the car's track space available as soon as a car is scheduled
@@ -1255,8 +1261,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         space or car available from a previous train delivery. However, high dwell times will cause
         less cars to be moved in a given time.</p>
 
-      <p>Note that once you've built a train, the build option can not be changed until all
-        trains are terminated or reset.</p>
+      <p>
+        To help troubleshoot timing problems with your cars using the on time mode, it is
+        recommended that you show the "Last Train" on your Manifests and switch lists for car pick
+        ups. This way if a car isn't found, you'll at least know which train was supposed to drop
+        off the car. You should also enable train, car and engine <a href="#LoggingOptions">logging</a>,
+        and <a href="#SaveTrainManifests">Save Train Manifests, Build Reports, and Switch Lists</a>
+      </p>
 
       <h4>Number of Passes During Build</h4>
       When building trains in aggressive mode, you can control the number of passes the program
