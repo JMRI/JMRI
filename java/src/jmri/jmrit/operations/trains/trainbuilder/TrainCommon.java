@@ -611,14 +611,14 @@ public class TrainCommon {
         }
     }
 
-    protected void setCarPickupAndSetoutTimes(Train train, RouteLocation rl, List<Car> carList) {
+    protected void setPickupAndSetoutTimes(Train train, RouteLocation rl, List<RollingStock> list) {
         String expectedDepartureTime = train.getExpectedDepartureTime(rl, true);
-        for (Car car : carList) {
-            if (car.getRouteLocation() == rl) {
-                car.setPickupTime(expectedDepartureTime);
+        for (RollingStock rs : list) {
+            if (rs.getRouteLocation() == rl) {
+                rs.setPickupTime(expectedDepartureTime);
             }
-            if (car.getRouteDestination() == rl) {
-                car.setSetoutTime(expectedDepartureTime);
+            if (rs.getRouteDestination() == rl) {
+                rs.setSetoutTime(expectedDepartureTime);
             }
         }
 

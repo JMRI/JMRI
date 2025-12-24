@@ -15,6 +15,7 @@ import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -1685,14 +1686,14 @@ public class Track extends PropertyChangeSupport {
             return DISABLED;
         }
         int trainDepartureTimeMinutes = TrainCommon.convertStringTime(train.getDepartureTime());
-        // determine due to timing if there's space for this car
-        CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<Car> cars = manager.getList(this);
+        // determine due to timing if there's space for this rolling stock
+        CarManager carManager = InstanceManager.getDefault(CarManager.class);
+        List<Car> cars = carManager.getList(this);
         // note that used can be larger than track length
         int trackSpaceAvalable = getLength() - getUsedLength();
         log.debug("track ({}) space available at start: {}", this.getName(), trackSpaceAvalable);
         for (Car car : cars) {
-            log.debug("Car ({}) length {}, track ({}, {}) at {}, to ({}), train ({}), last train ({})", car.toString(),
+            log.debug("Car ({}) length {}, track ({}, {}) pick up time {}, to ({}), train ({}), last train ({})", car.toString(),
                     car.getTotalLength(), car.getLocationName(), car.getTrackName(), car.getPickupTime(),
                     car.getRouteDestination(), car.getTrain(), car.getLastTrain());
             // cars being pulled by previous trains will free up track space
@@ -1722,7 +1723,49 @@ public class Track extends PropertyChangeSupport {
                 break;
             }
         }
-        log.debug("Available space {} for track ({}, {}) car ({}) length: {}", trackSpaceAvalable,
+        if (trackSpaceAvalable < rsLength) {
+            // now check engines
+            EngineManager engManager = InstanceManager.getDefault(EngineManager.class);
+            List<Engine> engines = engManager.getList(this);
+            // note that used can be larger than track length
+            log.debug("Checking engines on track ({}) ", this.getName());
+            for (Engine eng : engines) {
+                log.debug("Engine ({}) length {}, track ({}, {}) pick up time {}, to ({}), train ({}), last train ({})",
+                        eng.toString(),
+                        eng.getTotalLength(), eng.getLocationName(), eng.getTrackName(), eng.getPickupTime(),
+                        eng.getRouteDestination(), eng.getTrain(), eng.getLastTrain());
+                // engines being pulled by previous trains will free up track space
+                if (eng.getTrack() == this &&
+                        eng.getRouteDestination() != null &&
+                        !eng.getPickupTime().equals(Engine.NONE)) {
+                    trackSpaceAvalable = trackSpaceAvalable + eng.getTotalLength();
+                    log.debug("Engine ({}) length {}, pull from ({}, {}) at {}", eng.toString(), eng.getTotalLength(),
+                            eng.getLocationName(), eng.getTrackName(), eng.getPickupTime());
+                    if (TrainCommon.convertStringTime(eng.getPickupTime()) +
+                            Setup.getDwellTime() > trainDepartureTimeMinutes) {
+                        log.debug("Attempt to spot new egine before pulls completed");
+                        // engine pulled after the train being built departs
+                        return Bundle.getMessage("lengthIssueEng",
+                                LENGTH, rsLength, Setup.getLengthUnit().toLowerCase(), trackSpaceAvalable,
+                                eng.toString(),
+                                eng.getTotalLength(), eng.getTrain(), eng.getPickupTime(), Setup.getDwellTime());
+                    }
+                    // engines pulled by the train being built also free up track space
+                } else if (eng.getTrack() == this &&
+                        eng.getRouteDestination() != null &&
+                        eng.getPickupTime().equals(Car.NONE) &&
+                        eng.getTrain() == train &&
+                        eng.getLastTrain() != train) {
+                    trackSpaceAvalable = trackSpaceAvalable + eng.getTotalLength();
+                    log.debug("Engine ({}) length {}, pull from ({}, {})", eng.toString(), eng.getTotalLength(),
+                            eng.getLocationName(), eng.getTrackName());
+                }
+                if (trackSpaceAvalable >= rsLength) {
+                    break;
+                }
+            }
+        }
+        log.debug("Available space {} for track ({}, {}) rs ({}) length: {}", trackSpaceAvalable,
                 this.getLocation().getName(), this.getName(), rs.toString(), rsLength);
         if (trackSpaceAvalable < rsLength) {
             return Bundle.getMessage("lengthIssue",

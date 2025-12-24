@@ -858,7 +858,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
        }
        addLine(_buildReport, ONE, Bundle.getMessage("buildEngineAssigned", engine.toString(), rl.getName(),
                rld.getName(), track.getName()));
-       engine.setDestination(track.getLocation(), track);
+       engine.setDestination(track.getLocation(), track, Engine.FORCE);
        int length = engine.getTotalLength();
        int weightTons = engine.getAdjustedWeightTons();
        // engine in consist?
