@@ -51,8 +51,8 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
 
     @Override
     public MaleSocket getConnectableChild() {
-        beanID++;
         DigitalExpressionBean childExpression = new True("IQDE"+Integer.toString(beanID), null);
+        beanID++;
         MaleSocket maleSocketChild =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(childExpression);
         return maleSocketChild;

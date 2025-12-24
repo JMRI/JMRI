@@ -58,8 +58,8 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
 
     @Override
     public MaleSocket getConnectableChild() {
-        beanID++;
         StringExpressionBean childExpression = new StringExpressionConstant("IQSE"+Integer.toString(beanID), null);
+        beanID++;
         MaleSocket maleSocketChild =
                 InstanceManager.getDefault(StringExpressionManager.class).registerExpression(childExpression);
         return maleSocketChild;

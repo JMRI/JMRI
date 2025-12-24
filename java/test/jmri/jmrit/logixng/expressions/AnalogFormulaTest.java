@@ -56,8 +56,8 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
 
     @Override
     public MaleSocket getConnectableChild() {
-        beanID++;
         AnalogExpressionBean childExpression = new AnalogExpressionConstant("IQAE"+Integer.toString(beanID), null);
+        beanID++;
         MaleSocket maleSocketChild =
                 InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(childExpression);
         return maleSocketChild;
