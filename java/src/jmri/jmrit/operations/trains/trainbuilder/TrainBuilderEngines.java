@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains.trainbuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -851,6 +852,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
    private void addEngineToTrain(Engine engine, RouteLocation rl, RouteLocation rld, Track track) {
        _lastEngine = engine; // needed in case there's a engine change in the
                              // train's route
+       engine = checkQuickServiceArrival(engine, rld, track);
        if (_train.getLeadEngine() == null) {
            _train.setLeadEngine(engine); // load lead engine
        }
@@ -878,6 +880,36 @@ public class TrainBuilderEngines extends TrainBuilderBase {
        // in the train
        finishAddRsToTrain(engine, rl, rld, length, weightTons);
    }
+   
+   /**
+    * Checks to see if track is requesting a quick service. Since it isn't
+    * possible for a engine to be pulled and set out twice, this code creates a
+    * "clone" engine to create the requested Manifest. A engine could have multiple
+    * clones, therefore each clone has a creation order number. The first clone
+    * is used to restore a engine's location and load in the case of reset.
+    * 
+    * @param engine   the engine possibly needing quick service
+    * @param track the destination track
+    * @return the engine if not quick service, or a clone if quick service
+    */
+   private Engine checkQuickServiceArrival(Engine engine, RouteLocation rld, Track track) {
+       if (!track.isQuickServiceEnabled()) {
+           return engine;
+       }
+       addLine(_buildReport, FIVE,
+               Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
+                       track.getLocation().getName(), track.getName()));
+       // quick service enabled, create clones
+       Engine cloneEng = engineManager.createClone(engine, track, _train, _startTime);
+       // for timing, use arrival times for the train that is building
+       // other trains will use their departure time, loaded when creating the Manifest
+       String expectedArrivalTime = _train.getExpectedArrivalTime(rld, true);
+       cloneEng.setSetoutTime(expectedArrivalTime);
+       // remember where in the route the car was delivered
+       engine.setRouteDestination(rld);
+       return cloneEng; // return clone
+   }
+       
 
     /**
      * Checks to see if additional engines are needed for the train based on the

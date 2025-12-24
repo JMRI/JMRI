@@ -43,7 +43,9 @@ public class Engine extends RollingStock {
 
     public Engine copy() {
         Engine eng = new Engine();
-        eng = (Engine) super.copy(eng);
+        super.copy(eng);
+        eng.setModel(getModel());
+        eng.setBunit(isBunit());
         return eng;
     }
     
@@ -334,6 +336,26 @@ public class Engine extends RollingStock {
     public String checkDestination(Location destination, Track track) {
         return super.checkDestination(destination, track);
     }
+    
+    @Override
+    public String setDestination(Location destination, Track track, boolean force) {
+        String destinationName = getDestinationName();
+        String status = super.setDestination(destination, track, force);
+        // return if not Okay
+        if (!status.equals(Track.OKAY)) {
+            return status;
+        }
+        if (destinationName.equals(NONE) || (destination != null) || getTrain() == null) {
+            return status;
+        }
+        // engine clone was in a train and has been dropped off
+        if (isClone()) {
+            // destroy clone
+            InstanceManager.getDefault(ConsistManager.class).deleteConsist(getConsistName());
+            InstanceManager.getDefault(EngineManager.class).deregister(this);
+        }
+        return status;
+    }
 
     /**
      * Determine if there's a change in the lead locomotive. There are two
@@ -362,6 +384,40 @@ public class Engine extends RollingStock {
             }
         }
         super.moveRollingStock(current, next);
+    }
+    
+    @Override
+    public void reset() {
+        super.reset();
+        destroyClone();
+    }
+    
+    /*
+     * This routine destroys the clone and restores the cloned car to its
+     * original location and load. Note there can be multiple clones for a car.
+     * Only the first clone created has the right info. A clone has creation
+     * order number appended to the road number.
+     */
+    private void destroyClone() {
+        if (isClone()) {
+            // move cloned engine back to original location
+            EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
+            String[] number = getNumber().split(Engine.CLONE_REGEX);
+            Engine engine = engineManager.getByRoadAndNumber(getRoadName(), number[0]);
+            int cloneCreationNumber = Integer.parseInt(number[1]);
+            if (cloneCreationNumber <= engine.getCloneOrder()) {
+                engine.setLocation(getLocation(), getTrack(), Engine.FORCE);
+                engine.setRouteDestination(null); // clear rd
+                engine.setLastTrain(getLastTrain());
+                engine.setLastRouteId(getLastRouteId());
+                engine.setLastDate(getLastDate());
+                engine.setMoves(getMoves());
+                // remember the last clone destroyed
+                engine.setCloneOrder(cloneCreationNumber);
+            }
+            InstanceManager.getDefault(ConsistManager.class).deleteConsist(getConsistName());
+            engineManager.deregister(this);
+        }
     }
 
     @Override

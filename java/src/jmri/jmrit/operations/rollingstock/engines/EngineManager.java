@@ -181,12 +181,22 @@ public class EngineManager extends RollingStockManager<Engine>
         return _commentLength;
     }
     
+    /**
+     * Creates a clone for the engine, and clones if the engine is part of a consist.
+     * Note that a engine have have multiple clones.
+     * 
+     * @param engine       The engine to clone
+     * @param track     The destination track for the clones
+     * @param train     The train transporting the clones
+     * @param startTime The date and time the clones were moved
+     * @return clone for this engine
+     */
     public Engine createClone(Engine engine, Track track, Train train, Date startTime) {
         int cloneCreationOrder = getCloneCreationOrder();
         Engine cloneEng = engine.copy();
         cloneEng.setNumber(engine.getNumber() + Engine.CLONE + cloneCreationOrder);
         cloneEng.setClone(true);
-        // register car before setting location so the car gets logged
+        // register engine before setting location so the engine gets logged
         register(cloneEng);
         cloneEng.setLocation(engine.getLocation(), engine.getTrack(), RollingStock.FORCE);
         // for reset
@@ -202,6 +212,7 @@ public class EngineManager extends RollingStockManager<Engine>
                     nEng.setNumber(e.getNumber() + Engine.CLONE + cloneCreationOrder);
                     nEng.setClone(true);
                     nEng.setConsist(consist);
+                    nEng.setMoves(e.getMoves());
                     register(nEng);
                     nEng.setLocation(engine.getLocation(), engine.getTrack(), RollingStock.FORCE);
                     // for reset
@@ -222,7 +233,7 @@ public class EngineManager extends RollingStockManager<Engine>
         engine.setLastLocationId(cloneEng.getLocationId());
         engine.setLastTrackId(cloneEng.getTrackId());
         engine.setLastRouteId(train.getRoute().getId());
-        // this car was moved during the build process
+        // this engine was moved during the build process
         engine.setLastDate(startTime);
         engine.setMoves(engine.getMoves() + 1); // bump count
         engine.setCloneOrder(cloneCreationOrder); // for reset

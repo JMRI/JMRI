@@ -550,6 +550,7 @@ public class CarManager extends RollingStockManager<Car>
                     nCar.setNumber(kar.getNumber() + Car.CLONE + cloneCreationOrder);
                     nCar.setClone(true);
                     nCar.setKernel(kernel);
+                    nCar.setMoves(kar.getMoves());
                     register(nCar);
                     nCar.setLocation(car.getLocation(), car.getTrack(), RollingStock.FORCE);
                     // for reset
