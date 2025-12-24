@@ -1687,7 +1687,7 @@ public class Track extends PropertyChangeSupport {
         int trainDepartureTimeMinutes = TrainCommon.convertStringTime(train.getDepartureTime());
         // determine due to timing if there's space for this car
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        List<Car> cars = manager.getCarsUsingTrack(this);
+        List<Car> cars = manager.getList(this);
         // note that used can be larger than track length
         int trackSpaceAvalable = getLength() - getUsedLength();
         log.debug("track ({}) space available at start: {}", this.getName(), trackSpaceAvalable);

@@ -30,6 +30,10 @@ public class Engine extends RollingStock {
     private String _model = NONE;
 
     EngineModels engineModels = InstanceManager.getDefault(EngineModels.class);
+    
+    public Engine() {
+        super();
+    }
 
     public Engine(String road, String number) {
         super(road, number);
@@ -37,6 +41,12 @@ public class Engine extends RollingStock {
         addPropertyChangeListeners();
     }
 
+    public Engine copy() {
+        Engine eng = new Engine();
+        eng = (Engine) super.copy(eng);
+        return eng;
+    }
+    
     /**
      * Set the locomotive's model. Note a model has only one length, type, and
      * horsepower rating.

@@ -472,16 +472,6 @@ public class CarManager extends RollingStockManager<Car>
         }
         return mias;
     }
-    
-    public List<Car> getCarsUsingTrack(Track track) {
-        List<Car> list = new ArrayList<>();
-        for (Car car : getByIdList()) {
-            if (car.getTrack() == track) {
-                list.add(car);
-            }
-        }
-        return list;
-    }
 
     /**
      * Determines a car's weight in ounces based on car's scale length
@@ -588,49 +578,6 @@ public class CarManager extends RollingStockManager<Car>
         car.setCloneOrder(cloneCreationOrder); // for reset
         car.setDestination(null, null);    
         return cloneCar;
-    }
-
-    int cloneCreationOrder = 0;
-
-    /**
-     * Returns the highest clone creation order given to a clone.
-     * 
-     * @return 1 if the first clone created, otherwise the highest found plus
-     *         one. Automatically increments.
-     */
-    private int getCloneCreationOrder() {
-        if (cloneCreationOrder == 0) {
-            for (Car car : getList()) {
-                if (car.isClone()) {
-                    String[] number = car.getNumber().split(Car.CLONE_REGEX);
-                    int creationOrder = Integer.parseInt(number[1]);
-                    if (creationOrder > cloneCreationOrder) {
-                        cloneCreationOrder = creationOrder;
-                    }
-                }
-            }
-        }
-        return ++cloneCreationOrder;
-    }
-    
-    /**
-     * Returns the car's last clone car if there's one.
-     * @param car The car searching for a clone
-     * @return Returns the car's last clone car, null if there isn't a clone car. 
-     */
-    public Car getClone(Car car) {
-        List<Car> cars = getByLastDateList();
-        // clone with the highest creation number will be last in the list
-        for (int i = cars.size() - 1; i >= 0; i--) {
-            Car kar = cars.get(i);
-            if (kar.isClone() &&
-                    kar.getDestinationTrack() == car.getTrack() &&
-                    kar.getRoadName().equals(car.getRoadName()) &&
-                    kar.getNumber().split(Car.CLONE_REGEX)[0].equals(car.getNumber())) {
-                return kar;
-            }
-        }
-        return null; // no clone for this car
     }
 
     int _commentLength = 0;

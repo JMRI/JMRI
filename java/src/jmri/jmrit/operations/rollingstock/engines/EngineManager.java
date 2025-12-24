@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.*;
 import jmri.jmrit.operations.OperationsPanel;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -178,6 +179,55 @@ public class EngineManager extends RollingStockManager<Engine>
             }
         }
         return _commentLength;
+    }
+    
+    public Engine createClone(Engine engine, Track track, Train train, Date startTime) {
+        int cloneCreationOrder = getCloneCreationOrder();
+        Engine cloneEng = engine.copy();
+        cloneEng.setNumber(engine.getNumber() + Engine.CLONE + cloneCreationOrder);
+        cloneEng.setClone(true);
+        // register car before setting location so the car gets logged
+        register(cloneEng);
+        cloneEng.setLocation(engine.getLocation(), engine.getTrack(), RollingStock.FORCE);
+        // for reset
+        cloneEng.setLastRouteId(engine.getLastRouteId());
+        cloneEng.setMoves(engine.getMoves());
+        if (engine.getConsist() != null) {
+            String consistName = engine.getConsistName() + Engine.CLONE + cloneCreationOrder;
+            Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist(consistName);
+            cloneEng.setConsist(consist);
+            for (Engine e : engine.getConsist().getEngines()) {
+                if (e != engine) {
+                    Engine nEng = e.copy();
+                    nEng.setNumber(e.getNumber() + Engine.CLONE + cloneCreationOrder);
+                    nEng.setClone(true);
+                    nEng.setConsist(consist);
+                    register(nEng);
+                    nEng.setLocation(engine.getLocation(), engine.getTrack(), RollingStock.FORCE);
+                    // for reset
+                    // move engine to new location for later pick up
+                    e.setLocation(track.getLocation(), track, RollingStock.FORCE);
+                    e.setLastTrain(train);
+                    e.setLastLocationId(engine.getLocationId());
+                    e.setLastTrackId(engine.getTrackId());
+                    e.setLastDate(startTime);
+                    e.setMoves(e.getMoves() + 1); // bump count
+                    e.setCloneOrder(cloneCreationOrder); // for reset
+                }
+            }
+        }
+        // move engine to new location for later pick up
+        engine.setLocation(track.getLocation(), track, RollingStock.FORCE);
+        engine.setLastTrain(train);
+        engine.setLastLocationId(cloneEng.getLocationId());
+        engine.setLastTrackId(cloneEng.getTrackId());
+        engine.setLastRouteId(train.getRoute().getId());
+        // this car was moved during the build process
+        engine.setLastDate(startTime);
+        engine.setMoves(engine.getMoves() + 1); // bump count
+        engine.setCloneOrder(cloneCreationOrder); // for reset
+        engine.setDestination(null, null);    
+        return cloneEng;
     }
 
     public void load(Element root) {

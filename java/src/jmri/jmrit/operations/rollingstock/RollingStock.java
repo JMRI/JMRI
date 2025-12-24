@@ -34,6 +34,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public static final int MAX_BLOCKING_ORDER = 100;
     public static final boolean FORCE = true; // ignore length, type, etc. when setting car's track
     protected static final String DEFAULT_WEIGHT = "0";
+    
+    public static final String CLONE = TrainCommon.HYPHEN + "(Clone)"; // NOI18N
+    // parentheses are special chars
+    public static final String CLONE_REGEX = TrainCommon.HYPHEN + "\\(Clone\\)"; // NOI18N
 
     protected String _id = NONE;
     protected String _number = NONE;
@@ -121,6 +125,25 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     @Override
     public String getId() {
         return _id;
+    }
+    
+    public RollingStock copy(RollingStock rs) {
+        rs.setBuilt(getBuilt());
+        rs.setColor(getColor());
+        rs.setLength(getLength());
+        rs.setWeightTons(getWeightTons());
+        rs.setNumber(getNumber());
+        rs.setOwnerName(getOwnerName());
+        rs.setRoadName(getRoadName());
+        rs.setTypeName(getTypeName());
+        rs.setComment(getComment());
+        rs.setBlocking(getBlocking());
+        rs.setLastTrain(getLastTrain());
+        rs.setLastDate(getLastDate());
+        rs.setLastLocationId(getLastLocationId());
+        rs.setLastTrackId(getLastTrackId());
+        rs.setDivision(getDivision());
+        return rs;
     }
 
     /**
