@@ -2909,6 +2909,61 @@ public class TrainBuilderBase extends TrainCommon {
     }
     
     /*
+     * Checks to see if rolling stock is departing a quick service track and is allowed to
+     * be pulled by this train. Only one pull or move from a location with quick
+     * service tracks is allowed per route location. To service the rolling stock, the
+     * train must arrive after the rolling stock's clone is set out by this train or by
+     * another train.
+     */
+    protected boolean checkQuickServiceDeparting(RollingStock rs, RouteLocation rl) {
+        if (rs.getTrack().isQuickServiceEnabled()) {
+            RollingStock clone = null;
+            if (Car.class.isInstance(rs)) {
+            clone = carManager.getClone(rs);
+            }
+            if (Engine.class.isInstance(rs)) {
+                clone = engineManager.getClone(rs);
+                }
+            if (clone != null) {
+                // was the rolling stock delivered using this route location?
+                if (rs.getRouteDestination() == rl) {
+                    addLine(_buildReport, FIVE,
+                            Bundle.getMessage("buildRouteLocation", rs.toString(),
+                                    rs.getTrack().getTrackTypeName(),
+                                    rs.getLocationName(), rs.getTrackName(), _train.getName(), rl.getName(),
+                                    rl.getId()));
+                    addLine(_buildReport, FIVE, BLANK_LINE);
+                    return false;
+                }
+
+                // determine when the train arrives
+                String trainExpectedArrival = _train.getExpectedArrivalTime(rl, true);
+                int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);
+                // determine when the clone is going to be delivered
+                int cloneSetoutTimeMinutes = convertStringTime(clone.getSetoutTime());
+                int dwellTime = 0;
+                if (Setup.isBuildOnTime()) {
+                    dwellTime = Setup.getDwellTime();
+                }
+                if (cloneSetoutTimeMinutes + dwellTime > trainArrivalTimeMinutes) {
+                    addLine(_buildReport, FIVE, Bundle.getMessage("buildDeliveryTiming", rs.toString(),
+                            clone.getSetoutTime(), rs.getTrack().getTrackTypeName(), rs.getLocationName(),
+                            rs.getTrackName(), clone.getTrainName(), _train.getName(), trainExpectedArrival,
+                            dwellTime));
+                    addLine(_buildReport, FIVE, BLANK_LINE);
+                    return false;
+                } else {
+                    addLine(_buildReport, SEVEN, Bundle.getMessage("buildCloneDeliveryTiming", clone.toString(),
+                            clone.getSetoutTime(), rs.getTrack().getTrackTypeName(), rs.getLocationName(),
+                            rs.getTrackName(), clone.getTrainName(), _train.getName(), trainExpectedArrival,
+                            dwellTime, rs.toString()));
+                }
+            }
+        }
+        return true;
+    }
+    
+    /*
      * Engine methods start here
      */
 

@@ -2115,55 +2115,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         return cloneCar; // return clone
     }
 
-    /*
-     * Checks to see if car is departing a quick service track and is allowed to
-     * be pulled by this train. Only one pull or move from a location with quick
-     * service tracks is allowed per route location. To service the car, the
-     * train must arrive after the car's clone is set out by this train or by
-     * another train.
-     */
-    private boolean checkQuickServiceDeparting(Car car, RouteLocation rl) {
-        if (car.getTrack().isQuickServiceEnabled()) {
-            Car clone = carManager.getClone(car);
-            if (clone != null) {
-                // was the car delivered using this route location?
-                if (car.getRouteDestination() == rl) {
-                    addLine(_buildReport, FIVE,
-                            Bundle.getMessage("buildCarRouteLocation", car.toString(),
-                                    car.getTrack().getTrackTypeName(),
-                                    car.getLocationName(), car.getTrackName(), _train.getName(), rl.getName(),
-                                    rl.getId()));
-                    addLine(_buildReport, FIVE, BLANK_LINE);
-                    return false;
-                }
-
-                // determine when the train arrives
-                String trainExpectedArrival = _train.getExpectedArrivalTime(rl, true);
-                int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);
-                // determine when the clone is going to be delivered
-                int cloneSetoutTimeMinutes = convertStringTime(clone.getSetoutTime());
-                int dwellTime = 0;
-                if (Setup.isBuildOnTime()) {
-                    dwellTime = Setup.getDwellTime();
-                }
-                if (cloneSetoutTimeMinutes + dwellTime > trainArrivalTimeMinutes) {
-                    addLine(_buildReport, FIVE, Bundle.getMessage("buildCarDeliveryTiming", car.toString(),
-                            clone.getSetoutTime(), car.getTrack().getTrackTypeName(), car.getLocationName(),
-                            car.getTrackName(), clone.getTrainName(), _train.getName(), trainExpectedArrival,
-                            dwellTime));
-                    addLine(_buildReport, FIVE, BLANK_LINE);
-                    return false;
-                } else {
-                    addLine(_buildReport, SEVEN, Bundle.getMessage("buildCloneDeliveryTiming", clone.toString(),
-                            clone.getSetoutTime(), car.getTrack().getTrackTypeName(), car.getLocationName(),
-                            car.getTrackName(), clone.getTrainName(), _train.getName(), trainExpectedArrival,
-                            dwellTime, car.toString()));
-                }
-            }
-        }
-        return true;
-    }
-
     private void remove(Car car) {
         if (_carList.remove(car)) { // remove this car from the list
             _carIndex--;

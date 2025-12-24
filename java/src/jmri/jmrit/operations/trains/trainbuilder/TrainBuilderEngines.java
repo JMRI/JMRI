@@ -228,6 +228,9 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                     continue;
                 }
             }
+            if (!checkQuickServiceDeparting(engine, rl)) {
+                continue;
+            }
             // departing staging, then all locos must go!
             if (departStageTrack != null) {
                 if (!setEngineDestination(engine, rl, rld)) {
