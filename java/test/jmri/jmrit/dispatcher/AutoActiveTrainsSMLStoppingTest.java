@@ -1,25 +1,24 @@
 package jmri.jmrit.dispatcher;
 
-import org.junit.Assume;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-
-import jmri.*;
-import jmri.implementation.SignalSpeedMap;
-import jmri.jmrit.logix.WarrantPreferences;
-import jmri.util.FileUtil;
-import jmri.util.JUnitUtil;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+
+import jmri.*;
+import jmri.configurexml.JmriConfigureXmlException;
+import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.logix.WarrantPreferences;
+import jmri.util.*;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  *
@@ -54,8 +53,9 @@ public class AutoActiveTrainsSMLStoppingTest {
 
     @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
     @Test
-    public void testShowAndClose() throws Exception {
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+    public void testShowAndClose() throws JmriConfigureXmlException {
+        Assumptions.assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"),
+            "Ignoring intermittent test");
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
@@ -101,7 +101,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         },"Allocated sections should be 4");
 
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Clear");
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() >= speedMedium;
@@ -110,24 +110,24 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"),Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("West-North").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("West-North").getAspect());
         }, "West-North Clear");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Clear");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.UNOCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
@@ -135,7 +135,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         //JUnitUtil.setBeanStateAndWait(sm.provideBlock("South 1"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East Switch"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-East-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-East-Cont").getAspect());
         }, "Signal Sw-East-Cont Should go red");
 
         JUnitUtil.waitFor(() -> {
@@ -176,7 +176,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         aat = at.getAutoActiveTrain();
 
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Clear");
         assertEquals(sm.provideSensor("Dir West Fwd").getState(),Sensor.ACTIVE);
         assertEquals(sm.provideSensor("Dir West Rev").getState(),Sensor.INACTIVE);
@@ -187,13 +187,13 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Sw-West-Cont no red");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Stop South 1 Rev"), Sensor.INACTIVE);  // and stopping sensor
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("West-North").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("West-North").getAspect());
         }, "West-North Yellow");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.OCCUPIED);
         // slows to stopping speed
@@ -208,18 +208,18 @@ public class AutoActiveTrainsSMLStoppingTest {
         // free up block ahead
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Clear");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West"), Block.UNOCCUPIED); // tail moves out
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.UNOCCUPIED);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Stop North Rev"), Sensor.INACTIVE); // and stopping sensor
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East Switch"), Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-East-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-East-Cont").getAspect());
         }, "Signal West End Div now Yellow");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.OCCUPIED);
@@ -253,7 +253,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.OCCUPIED);
 
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Clear");
 
         d.loadTrainFromTrainInfo("SSL3TestTrain.xml");
@@ -267,7 +267,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         },"Allocated sections should be 3");
 
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Clear");
         assertEquals(sm.provideSensor("Dir West Fwd").getState(),Sensor.ACTIVE);
         assertEquals(sm.provideSensor("Dir West Rev").getState(),Sensor.INACTIVE);
@@ -283,13 +283,13 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Sw-West-Cont no red");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Stop South 1 Rev"), Sensor.INACTIVE);  // and stopping sensor
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("West-North").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("West-North").getAspect());
         }, "West-North Yellow");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.OCCUPIED);
         // slows to stopping speed
@@ -300,7 +300,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         // free up block ahead
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Approach");
         // Accelerates to
         JUnitUtil.waitFor(() -> {
@@ -312,12 +312,12 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.UNOCCUPIED);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Stop North Rev"), Sensor.INACTIVE); // and stopping sensor
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Cont now red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East Switch"), Block.UNOCCUPIED);
@@ -341,10 +341,15 @@ public class AutoActiveTrainsSMLStoppingTest {
 
         // Clear the stopping sensors from the blocks. - TRain will fit so speed goes to zero when previous block goes  inactive
 
-        InstanceManager.getDefault(SectionManager.class).getSection("Section South 1").setReverseStoppingSensorName("");
-        InstanceManager.getDefault(SectionManager.class).getSection("Section South 1").setForwardStoppingSensorName("");
-        InstanceManager.getDefault(SectionManager.class).getSection("Section North").setReverseStoppingSensorName("");
-        InstanceManager.getDefault(SectionManager.class).getSection("Section North").setForwardStoppingSensorName("");
+        Section ss1 = InstanceManager.getDefault(SectionManager.class).getSection("Section South 1");
+        Section sn = InstanceManager.getDefault(SectionManager.class).getSection("Section North");
+        Assertions.assertNotNull(ss1);
+        Assertions.assertNotNull(sn);
+
+        ss1.setReverseStoppingSensorName("");
+        ss1.setForwardStoppingSensorName("");
+        sn.setReverseStoppingSensorName("");
+        sn.setForwardStoppingSensorName("");
 
         // *******************************************************************************
         //  Here start South - West - North -East South - Stop - using stop by previous block going inactive
@@ -363,7 +368,7 @@ public class AutoActiveTrainsSMLStoppingTest {
 
         // set up loco address
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Clear begin - end - no stops - prev block inactive.");
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() >= speedMedium;
@@ -372,24 +377,24 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Sw-West-Cont no red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("West-North").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("West-North").getAspect());
         }, "West-North Clear");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West"), Block.UNOCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
@@ -429,7 +434,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         },"Allocated sections should be 3");
 
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Clear");
 
         JUnitUtil.waitFor(() -> {
@@ -439,18 +444,18 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Sw-West-Cont no red");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Stop South 1 Rev"), Sensor.INACTIVE);  // and stopping sensor
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("West-North").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("West-North").getAspect());
         }, "West-North Yellow");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.OCCUPIED);
         // slows to stopping speed
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Red");
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
@@ -464,7 +469,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         // free up block ahead
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Approach");
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() >= speedMedium;
@@ -473,12 +478,12 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Cont is Red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
@@ -519,7 +524,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         },"Allocated sections should be 3");
 
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Clear begin - start stop north - go - end - stop on previous block");
 
         JUnitUtil.waitFor(() -> {
@@ -529,12 +534,12 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Sw-West-Cont no red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("West-North").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("West-North").getAspect());
         }, "West-North Yellow");
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
@@ -549,7 +554,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         // free up block ahead
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Clear");
         // Accelerates to
         JUnitUtil.waitFor(() -> {
@@ -561,11 +566,11 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.UNOCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East Switch"), Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div is Red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.OCCUPIED);
@@ -608,7 +613,7 @@ public class AutoActiveTrainsSMLStoppingTest {
 
         // set up loco address
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Clear");
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() >= speedMedium;
@@ -617,27 +622,27 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Sw-West-Cont no red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("West-North").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("West-North").getAspect());
         }, "West-North Clear");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Clear");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West"), Block.UNOCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End cont red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
@@ -673,7 +678,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         },"Allocated sections should be 3");
 
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Clear");
 
         JUnitUtil.waitFor(() -> {
@@ -683,13 +688,13 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Sw-West-Cont no red");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Stop South 1 Rev"), Sensor.INACTIVE);  // and stopping sensor
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("West-North").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("West-North").getAspect());
         }, "West-North Yellow");
        JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.OCCUPIED);
         // slows to stopping speed
@@ -700,7 +705,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         // free up block ahead
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Clear");
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
@@ -709,12 +714,12 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Yellow");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
@@ -752,11 +757,11 @@ public class AutoActiveTrainsSMLStoppingTest {
         },"Allocated sections should be 3");
 
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Clear");
 
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Clear");
+            return "Clear".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Clear begin - start stop north - go - end - stop on previous block");
 
         JUnitUtil.waitFor(() -> {
@@ -766,7 +771,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Sw-West-Cont no red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West"), Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
@@ -774,11 +779,11 @@ public class AutoActiveTrainsSMLStoppingTest {
         }, "Failed to slow for yellow - start stop north - go - end - Stop - on entry train dont fit");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block West Switch"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("West-North").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("West-North").getAspect());
         }, "West-North Yellow");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Red");
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
@@ -787,7 +792,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         // free up block ahead
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Approach");
         // Accelerates to
         JUnitUtil.waitFor(() -> {
@@ -798,12 +803,12 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block North"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("North-East").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("North-East").getAspect());
         }, "Signal West End Div now Red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East Switch"), Block.OCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East"), Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("Sw-West-Cont").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("Sw-West-Cont").getAspect());
         }, "Signal West End Div now Red");
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block South 1"), Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
@@ -829,6 +834,14 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.dispose(d);
         InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
         InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
+
+        JUnitAppender.assertWarnMessage("This Logic North-East to Sw-West-Cont is not using the Layout Editor or its Blocks, "
+                + "the associated Section will not be populated correctly");
+        JUnitAppender.assertWarnMessage("This Logic Sw-West-Cont to West-North is not using the Layout Editor or its Blocks, "
+                + "the associated Section will not be populated correctly");
+        JUnitAppender.assertWarnMessage("This Logic West-North to North-East is not using the Layout Editor or its Blocks, "
+                + "the associated Section will not be populated correctly");
+
 
     }
 
@@ -872,30 +885,28 @@ public class AutoActiveTrainsSMLStoppingTest {
     private static Path outPathWarrentPreferences = null;
 
     @BeforeAll
-    public static void doOnce() throws Exception {
+    public static void doOnce() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetFileUtilSupport();
         // set up users files in temp tst area
         outBaseTrainInfo = new File(FileUtil.getUserFilesPath(), "dispatcher/traininfo");
         outBaseSignal = new File(FileUtil.getUserFilesPath(), "signal");
-        try {
-            FileUtil.createDirectory(outBaseTrainInfo);
-            {
-                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "SSL3TestTrain.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "SSL3TestTrain.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
-            }
-            FileUtil.createDirectory(outBaseSignal);
-            {
-                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/signal"),
-                        "WarrantPreferences.xml").toPath();
-                outPathWarrentPreferences = new File(outBaseSignal, "WarrantPreferences.xml").toPath();
-                Files.copy(inPath, outPathWarrentPreferences, StandardCopyOption.REPLACE_EXISTING);
-            }
-        } catch (IOException e) {
-            throw e;
+
+        FileUtil.createDirectory(outBaseTrainInfo);
+        {
+            Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "SSL3TestTrain.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "SSL3TestTrain.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
         }
+        FileUtil.createDirectory(outBaseSignal);
+        {
+            Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/signal"),
+                    "WarrantPreferences.xml").toPath();
+            outPathWarrentPreferences = new File(outBaseSignal, "WarrantPreferences.xml").toPath();
+            Files.copy(inPath, outPathWarrentPreferences, StandardCopyOption.REPLACE_EXISTING);
+        }
+
     }
 
     @AfterAll
@@ -913,7 +924,7 @@ public class AutoActiveTrainsSMLStoppingTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetFileUtilSupport();
         JUnitUtil.resetProfileManager();
@@ -923,7 +934,7 @@ public class AutoActiveTrainsSMLStoppingTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.resetFileUtilSupport();
