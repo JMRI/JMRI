@@ -1,11 +1,14 @@
 package jmri.jmrit.dispatcher;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainLengthUnits;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Swing tests for dispatcher train info.
@@ -15,7 +18,7 @@ import org.junit.Assert;
 public class DispatcherTrainInfoTest {
 
     @Test
-    public void testAccessMethods() throws Exception {
+    public void testAccessMethods() {
 
         TrainInfo ti = new TrainInfo();
         // set up TrainInfo object
@@ -43,54 +46,54 @@ public class DispatcherTrainInfoTest {
         ti.setRunInReverse(false);
         ti.setSoundDecoder(true);
         ti.setMaxTrainLengthScaleMeters(1000);
-        Assert.assertEquals("setMaxTrainLengthScaleFeetFromMeters", 3280.84f, ti.getMaxTrainLengthScaleFeet(), 0.01f);
-        Assert.assertEquals("getMaxTrainLengthScaleMeters", 1000.0f, ti.getMaxTrainLengthScaleMeters(), 0.01f);
+        assertEquals( 3280.84f, ti.getMaxTrainLengthScaleFeet(), 0.01f, "setMaxTrainLengthScaleFeetFromMeters");
+        assertEquals( 1000.0f, ti.getMaxTrainLengthScaleMeters(), 0.01f, "getMaxTrainLengthScaleMeters");
         ti.setMaxTrainLengthScaleFeet(2000);
-        Assert.assertEquals("setMaxTrainLengthScaleMetersFromFeet", 609.6f, ti.getMaxTrainLengthScaleMeters(), 0.01f);
-        Assert.assertEquals("getMaxTrainLengthScaleFeet", 2000.0f, ti.getMaxTrainLengthScaleFeet(), 0.01f);
+        assertEquals( 609.6f, ti.getMaxTrainLengthScaleMeters(), 0.01f, "setMaxTrainLengthScaleMetersFromFeet");
+        assertEquals( 2000.0f, ti.getMaxTrainLengthScaleFeet(), 0.01f, "getMaxTrainLengthScaleFeet");
         ti.setTrainLengthUnits(TrainLengthUnits.TRAINLENGTH_ACTUALINCHS);
         ti.setAllocationMethod(8);
         ti.setUseSpeedProfile(true);
         ti.setStopBySpeedProfile(true);
         ti.setStopBySpeedProfileAdjust(0.5f);
         // test it
-        Assert.assertEquals("Transit Name", ti.getTransitName(), "Transit");
-        Assert.assertEquals("Train Name", ti.getTrainName(), "Train");
-        Assert.assertEquals("DCC Address", ti.getDccAddress(), "346");
-        Assert.assertTrue("Train In Transit", ti.getTrainInTransit());
-        Assert.assertEquals("Start Block Name", ti.getStartBlockName(), "IB12");
-        Assert.assertEquals("Destination Block Name", ti.getDestinationBlockName(), "IB22");
-        Assert.assertTrue("Train From Roster", ti.getTrainFromRoster());
-        Assert.assertFalse("Train From Trains", ti.getTrainFromTrains());
-        Assert.assertFalse("Train From User", ti.getTrainFromUser());
-        Assert.assertEquals("Priority", ti.getPriority(), 8);
-        Assert.assertTrue("Run Auto", ti.getAutoRun());
-        Assert.assertFalse("Reset When Done", ti.getResetWhenDone());
-        Assert.assertEquals("Delayed Start", ti.getDelayedStart(), 1);
-        Assert.assertEquals("Departure Time Hours", ti.getDepartureTimeHr(), 10);
-        Assert.assertEquals("Departure Time Minutes", ti.getDepartureTimeMin(), 30);
-        Assert.assertEquals("Train Type", ti.getTrainType(), "2");
+        assertEquals( "Transit", ti.getTransitName(), "Transit Name");
+        assertEquals( "Train", ti.getTrainName(), "Train Name");
+        assertEquals( "346", ti.getDccAddress(), "DCC Address");
+        assertTrue( ti.getTrainInTransit(), "Train In Transit");
+        assertEquals( "IB12", ti.getStartBlockName(), "Start Block Name");
+        assertEquals( "IB22", ti.getDestinationBlockName(), "Destination Block Name");
+        assertTrue( ti.getTrainFromRoster(), "Train From Roster");
+        assertFalse( ti.getTrainFromTrains(), "Train From Trains");
+        assertFalse( ti.getTrainFromUser(), "Train From User");
+        assertEquals( 8, ti.getPriority(), "Priority");
+        assertTrue( ti.getAutoRun(), "Run Auto");
+        assertFalse( ti.getResetWhenDone(), "Reset When Done");
+        assertEquals( 1, ti.getDelayedStart(), "Delayed Start");
+        assertEquals( 10, ti.getDepartureTimeHr(), "Departure Time Hours");
+        assertEquals( 30, ti.getDepartureTimeMin(), "Departure Time Minutes");
+        assertEquals( "2", ti.getTrainType(), "Train Type");
 
-        Assert.assertEquals("Speed Factor", ti.getSpeedFactor(), 0.8f, 0.0);
-        Assert.assertEquals("Maximum Speed", ti.getMaxSpeed(), 0.6f, 0.0);
-        Assert.assertEquals("Ramp Rate", ti.getRampRate(), "2");
-        Assert.assertEquals("Train Detection", ActiveTrain.TrainDetection.TRAINDETECTION_HEADONLY,ti.getTrainDetection());
-        Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
-        Assert.assertTrue("Sound Decoder", ti.getSoundDecoder());
-        Assert.assertEquals("Allocation Method", ti.getAllocationMethod(),8,0);
-        Assert.assertTrue("Use Speed Profile", ti.getUseSpeedProfile());
-        Assert.assertTrue("Stop By Speed Profile", ti.getStopBySpeedProfile());
-        Assert.assertEquals("Stop By Speed Profile using percentage of block", ti.getStopBySpeedProfileAdjust(),0.5f, 0.0);
-        Assert.assertEquals("Train Length Units",ti.getTrainLengthUnits(),TrainLengthUnits.TRAINLENGTH_ACTUALINCHS);
+        assertEquals( 0.8f, ti.getSpeedFactor(), 0.0, "Speed Factor");
+        assertEquals( 0.6f, ti.getMaxSpeed(), 0.0, "Maximum Speed");
+        assertEquals( "2", ti.getRampRate(), "Ramp Rate");
+        assertEquals( ActiveTrain.TrainDetection.TRAINDETECTION_HEADONLY,ti.getTrainDetection(), "Train Detection");
+        assertFalse( ti.getRunInReverse(), "Run In Reverse");
+        assertTrue( ti.getSoundDecoder(), "Sound Decoder");
+        assertEquals( 8, ti.getAllocationMethod(), "Allocation Method");
+        assertTrue( ti.getUseSpeedProfile(), "Use Speed Profile");
+        assertTrue( ti.getStopBySpeedProfile(), "Stop By Speed Profile");
+        assertEquals( 0.5f, ti.getStopBySpeedProfileAdjust(), 0.0, "Stop By Speed Profile using percentage of block");
+        assertEquals( ti.getTrainLengthUnits(),TrainLengthUnits.TRAINLENGTH_ACTUALINCHS, "Train Length Units");
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

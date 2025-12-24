@@ -1,10 +1,12 @@
 package jmri.jmrit.dispatcher;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
+import java.util.List;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -14,17 +16,14 @@ import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
+import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  *
@@ -36,7 +35,7 @@ import java.util.List;
  * Move a medium train
  *
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@DisabledIfHeadless
 public class AutoTrainsTurnTableTest {
 
     // Only one aat at a time
@@ -45,7 +44,7 @@ public class AutoTrainsTurnTableTest {
     private static final double TOLERANCE = 0.0001;
 
     // Adjust this if timeouts on the server
-    private static final int waitInterval = 200;
+    private static final int WAIT_INTERVAL = 200;
 
     @Test
     public void testML_T3() {
@@ -103,21 +102,21 @@ public class AutoTrainsTurnTableTest {
             }, "Failed To Start - Stop / Resume");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("TT2"), Sensor.ACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("ML"), Sensor.INACTIVE);
-         JUnitUtil.waitFor(waitInterval);
+         JUnitUtil.waitFor(WAIT_INTERVAL);
          JUnitUtil.waitFor(() -> {
              return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
              }, "Should have stop on block 2 inactive.");
 
-        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(WAIT_INTERVAL);
 
         Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout("IT1502");
         JUnitUtil.waitFor(() -> {
             return (t.getCommandedState() == Turnout.THROWN);
         },"Turnout should have been requested");
 
-        Assert.assertEquals("Currently turnout unknown state", Turnout.INCONSISTENT, t.getKnownState());
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(), "Currently turnout unknown state");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("1502-B"), Sensor.INACTIVE);
-        Assert.assertEquals("Currently turnout thrown state", Turnout.THROWN, t.getKnownState());
+        assertEquals( Turnout.THROWN, t.getKnownState(), "Currently turnout thrown state");
 
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedSlow ) < TOLERANCE );
@@ -140,17 +139,17 @@ public class AutoTrainsTurnTableTest {
         },"Allocated after stopalloc inactive sections wrong");
 
         resetTurnTable(sm);
-        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(WAIT_INTERVAL);
 
          Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1503");
          JUnitUtil.waitFor(() -> {
              return (t2.getCommandedState() == Turnout.THROWN);
          },"Turnout Ray 3 should have been requested");
 
-        Assert.assertEquals("Turnout should have been requested", Turnout.THROWN, t2.getCommandedState());
-        Assert.assertEquals("Currently turnout unknown state", Turnout.INCONSISTENT, t2.getKnownState());
+        assertEquals( Turnout.THROWN, t2.getCommandedState(), "Turnout should have been requested");
+        assertEquals( Turnout.INCONSISTENT, t2.getKnownState(), "Currently turnout unknown state");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("1503-B"), Sensor.INACTIVE);
-        Assert.assertEquals("Currently turnout thrown state", Turnout.THROWN, t2.getKnownState());
+        assertEquals( Turnout.THROWN, t2.getKnownState(), "Currently turnout thrown state");
 
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedSlow ) < TOLERANCE );
@@ -239,9 +238,9 @@ public class AutoTrainsTurnTableTest {
         JUnitUtil.waitFor(() -> {
             return (t.getCommandedState() == Turnout.THROWN);
         },"Turnout ray 1 should have been requested");
-        Assert.assertEquals("Currently Ray 1 turnout unknown state", Turnout.INCONSISTENT, t.getKnownState());
+        assertEquals( Turnout.INCONSISTENT, t.getKnownState(), "Currently Ray 1 turnout unknown state");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("1501-B"), Sensor.INACTIVE);
-        Assert.assertEquals("Currently Ray 1 turnout thrown state", Turnout.THROWN, t.getKnownState());
+        assertEquals( Turnout.THROWN, t.getKnownState(), "Currently Ray 1 turnout thrown state");
 
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedSlow ) < TOLERANCE );
@@ -249,21 +248,21 @@ public class AutoTrainsTurnTableTest {
         resetTurnTable(sm);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("TT"), Sensor.ACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("TT1"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(WAIT_INTERVAL);
 
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
         }, "Should have stop in turntable.");
 
-        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(WAIT_INTERVAL);
 
         Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1502");
         JUnitUtil.waitFor(() -> {
              return (t2.getCommandedState() == Turnout.THROWN);
         },"Turnout ray 2 should have been requested");
-        Assert.assertEquals("Currently Ray 2 turnout unknown state", Turnout.INCONSISTENT, t2.getKnownState());
+        assertEquals( Turnout.INCONSISTENT, t2.getKnownState(), "Currently Ray 2 turnout unknown state");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("1502-B"), Sensor.INACTIVE);
-        Assert.assertEquals("Currently Ray 2 turnout thrown state", Turnout.THROWN, t2.getKnownState());
+        assertEquals( Turnout.THROWN, t2.getKnownState(), "Currently Ray 2 turnout thrown state");
 
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedSlow ) < TOLERANCE );
@@ -272,7 +271,7 @@ public class AutoTrainsTurnTableTest {
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("TT2"), Sensor.ACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("TT"), Sensor.INACTIVE);
 
-        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(WAIT_INTERVAL);
 
         JUnitUtil.waitFor(() -> {
             return(d.getAllocatedSectionsList().size()==2);
@@ -292,7 +291,7 @@ public class AutoTrainsTurnTableTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
             }, "Stopping at end failed");
 
-        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(WAIT_INTERVAL);
 
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Return"), Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> {
@@ -318,9 +317,9 @@ public class AutoTrainsTurnTableTest {
         JUnitUtil.waitFor(() -> {
             return (t3.getCommandedState() == Turnout.THROWN);
         },"Turnout ray 1 should have been requested");
-        Assert.assertEquals("Currently Ray 1 turnout unknown state", Turnout.INCONSISTENT, t3.getKnownState());
+        assertEquals( Turnout.INCONSISTENT, t3.getKnownState(), "Currently Ray 1 turnout unknown state");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("1501-B"), Sensor.INACTIVE);
-        Assert.assertEquals("Currently Ray 1 turnout thrown state", Turnout.THROWN, t3.getKnownState());
+        assertEquals( Turnout.THROWN, t3.getKnownState(), "Currently Ray 1 turnout thrown state");
 
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedSlow ) < TOLERANCE );
@@ -407,9 +406,9 @@ public class AutoTrainsTurnTableTest {
         JUnitUtil.waitFor(() -> {
             return (t1.getCommandedState() == Turnout.THROWN);
         },"Turnout ray 1 should have been requested");
-        Assert.assertEquals("Currently Ray 1 turnout unknown state", Turnout.INCONSISTENT, t1.getKnownState());
+        assertEquals( Turnout.INCONSISTENT, t1.getKnownState(), "Currently Ray 1 turnout unknown state");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("1502-B"), Sensor.INACTIVE);
-        Assert.assertEquals("Currently Ray 1 turnout thrown state", Turnout.THROWN, t1.getKnownState());
+        assertEquals( Turnout.THROWN, t1.getKnownState(), "Currently Ray 1 turnout thrown state");
 
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedSlow ) < TOLERANCE );
@@ -417,7 +416,7 @@ public class AutoTrainsTurnTableTest {
         resetTurnTable(sm);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("TT2"), Sensor.ACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("TT"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(WAIT_INTERVAL);
 
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedSlow ) < TOLERANCE );
@@ -425,7 +424,7 @@ public class AutoTrainsTurnTableTest {
         resetTurnTable(sm);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("ML"), Sensor.ACTIVE);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("TT2"), Sensor.INACTIVE);
-        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(WAIT_INTERVAL);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
         }, "Should have stop in turntable.");
@@ -517,40 +516,36 @@ public class AutoTrainsTurnTableTest {
     private Path outPathWarrentPreferences = null;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetFileUtilSupport();
         // set up users files in temp tst area
         outBaseTrainInfo = new File(FileUtil.getUserFilesPath(), "dispatcher/traininfo");
         outBaseSignal = new File(FileUtil.getUserFilesPath(), "signal");
-        try {
-            FileUtil.createDirectory(outBaseTrainInfo);
-            {
-                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "TestTurnTable_ML_TT3.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "TestTurnTable_ML_TT3.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
 
-                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "TestTurnTable_TT1_ML.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "TestTurnTable_TT1_ML.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+        FileUtil.createDirectory(outBaseTrainInfo);
+        {
+            Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "TestTurnTable_ML_TT3.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "TestTurnTable_ML_TT3.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
 
-                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "TestTurnTable_TT_ML.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "TestTurnTable_TT_ML.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
-            }
-            FileUtil.createDirectory(outBaseSignal);
-            {
-                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/signal"),
-                        "WarrantPreferences.xml").toPath();
-                outPathWarrentPreferences = new File(outBaseSignal, "WarrantPreferences.xml").toPath();
-                Files.copy(inPath, outPathWarrentPreferences, StandardCopyOption.REPLACE_EXISTING);
-            }
+            inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "TestTurnTable_TT1_ML.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "TestTurnTable_TT1_ML.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
 
-        } catch (IOException e) {
-            throw e;
+            inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "TestTurnTable_TT_ML.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "TestTurnTable_TT_ML.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+        }
+        FileUtil.createDirectory(outBaseSignal);
+        {
+            Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/signal"),
+                    "WarrantPreferences.xml").toPath();
+            outPathWarrentPreferences = new File(outBaseSignal, "WarrantPreferences.xml").toPath();
+            Files.copy(inPath, outPathWarrentPreferences, StandardCopyOption.REPLACE_EXISTING);
         }
 
         JUnitUtil.resetProfileManager();
@@ -560,7 +555,7 @@ public class AutoTrainsTurnTableTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.resetWindows(false,false);
 
