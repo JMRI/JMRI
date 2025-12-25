@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
@@ -154,7 +156,7 @@ public class TrainManifest extends TrainCommon {
                     }
                 }
 
-                setCarPickupAndSetoutTimes(train, rl, carList);
+                setPickupAndSetoutTimes(train, rl, new ArrayList<RollingStock>(carList));
 
                 if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
                     pickupEngines(fileOut, engineList, rl, IS_MANIFEST);
@@ -173,6 +175,8 @@ public class TrainManifest extends TrainCommon {
                     blockLocosTwoColumn(fileOut, engineList, rl, IS_MANIFEST);
                     blockCarsByTrackNameTwoColumn(fileOut, train, carList, rl, printHeader, IS_MANIFEST);
                 }
+                
+                setPickupAndSetoutTimes(train, rl, new ArrayList<RollingStock>(engineList));
                 
                 if (rl != train.getTrainTerminatesRouteLocation()) {
                     // Is the next location the same as the current?

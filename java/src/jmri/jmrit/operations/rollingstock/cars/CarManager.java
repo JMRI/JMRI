@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.*;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -471,16 +472,6 @@ public class CarManager extends RollingStockManager<Car>
         }
         return mias;
     }
-    
-    public List<Car> getCarsUsingTrack(Track track) {
-        List<Car> list = new ArrayList<>();
-        for (Car car : getByIdList()) {
-            if (car.getTrack() == track) {
-                list.add(car);
-            }
-        }
-        return list;
-    }
 
     /**
      * Determines a car's weight in ounces based on car's scale length
@@ -524,58 +515,70 @@ public class CarManager extends RollingStockManager<Car>
         }
         return false;
     }
-    
-    public Car createClone(Car car) {
+
+    /**
+     * Creates a clone for the car, and clones if the car is part of a kernel.
+     * Note that a car have have multiple clones.
+     * 
+     * @param car       The car to clone
+     * @param track     The destination track for the clones
+     * @param train     The train transporting the clones
+     * @param startTime The date and time the clones were moved
+     * @return clone for this car
+     */
+    public Car createClone(Car car, Track track, Train train, Date startTime) {
         int cloneCreationOrder = getCloneCreationOrder();
         Car cloneCar = car.copy();
         cloneCar.setNumber(car.getNumber() + Car.CLONE + cloneCreationOrder);
         cloneCar.setClone(true);
         // register car before setting location so the car gets logged
         register(cloneCar);
-        return cloneCar;
-    }
-
-    int cloneCreationOrder = 0;
-
-    /**
-     * Returns the highest clone creation order given to a clone.
-     * 
-     * @return 1 if the first clone created, otherwise the highest found plus
-     *         one. Automatically increments.
-     */
-    private int getCloneCreationOrder() {
-        if (cloneCreationOrder == 0) {
-            for (Car car : getList()) {
-                if (car.isClone()) {
-                    String[] number = car.getNumber().split(Car.CLONE_REGEX);
-                    int creationOrder = Integer.parseInt(number[1]);
-                    if (creationOrder > cloneCreationOrder) {
-                        cloneCreationOrder = creationOrder;
-                    }
+        cloneCar.setLocation(car.getLocation(), car.getTrack(), RollingStock.FORCE);
+        // for reset
+        cloneCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
+        cloneCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
+        cloneCar.setPreviousScheduleId(car.getScheduleItemId());
+        cloneCar.setLastRouteId(car.getLastRouteId());
+        cloneCar.setMoves(car.getMoves());
+        if (car.getKernel() != null) {
+            String kernelName = car.getKernelName() + Car.CLONE + cloneCreationOrder;
+            Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel(kernelName);
+            cloneCar.setKernel(kernel);
+            for (Car kar : car.getKernel().getCars()) {
+                if (kar != car) {
+                    Car nCar = kar.copy();
+                    nCar.setNumber(kar.getNumber() + Car.CLONE + cloneCreationOrder);
+                    nCar.setClone(true);
+                    nCar.setKernel(kernel);
+                    nCar.setMoves(kar.getMoves());
+                    register(nCar);
+                    nCar.setLocation(car.getLocation(), car.getTrack(), RollingStock.FORCE);
+                    // for reset
+                    nCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
+                    nCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
+                    // move car to new location for later pick up
+                    kar.setLocation(track.getLocation(), track, RollingStock.FORCE);
+                    kar.setLastTrain(train);
+                    kar.setLastLocationId(car.getLocationId());
+                    kar.setLastTrackId(car.getTrackId());
+                    kar.setLastDate(startTime);
+                    kar.setMoves(kar.getMoves() + 1); // bump count
+                    kar.setCloneOrder(cloneCreationOrder); // for reset
                 }
             }
         }
-        return ++cloneCreationOrder;
-    }
-    
-    /**
-     * Returns the car's last clone car if there's one.
-     * @param car The car searching for a clone
-     * @return Returns the car's last clone car, null if there isn't a clone car. 
-     */
-    public Car getClone(Car car) {
-        List<Car> cars = getByLastDateList();
-        // clone with the highest creation number will be last in the list
-        for (int i = cars.size() - 1; i >= 0; i--) {
-            Car kar = cars.get(i);
-            if (kar.isClone() &&
-                    kar.getDestinationTrack() == car.getTrack() &&
-                    kar.getRoadName().equals(car.getRoadName()) &&
-                    kar.getNumber().split(Car.CLONE_REGEX)[0].equals(car.getNumber())) {
-                return kar;
-            }
-        }
-        return null; // no clone for this car
+        // move car to new location for later pick up
+        car.setLocation(track.getLocation(), track, RollingStock.FORCE);
+        car.setLastTrain(train);
+        car.setLastLocationId(cloneCar.getLocationId());
+        car.setLastTrackId(cloneCar.getTrackId());
+        car.setLastRouteId(train.getRoute().getId());
+        // this car was moved during the build process
+        car.setLastDate(startTime);
+        car.setMoves(car.getMoves() + 1); // bump count
+        car.setCloneOrder(cloneCreationOrder); // for reset
+        car.setDestination(null, null);    
+        return cloneCar;
     }
 
     int _commentLength = 0;

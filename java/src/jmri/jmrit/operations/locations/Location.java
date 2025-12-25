@@ -1326,7 +1326,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
                 return true;
             }
         }
-        return false;
+        return Setup.isBuildOnTime();
     }
 
     public boolean hasTracksWithRestrictedTrainDirections() {

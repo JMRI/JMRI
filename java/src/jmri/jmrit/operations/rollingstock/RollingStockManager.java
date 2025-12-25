@@ -617,6 +617,51 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
         });
         return out;
     }
+    
+    /**
+     * Returns the rolling stock's last clone rolling stock if there's one.
+     * 
+     * @param rs The rolling stock searching for a clone
+     * @return Returns the rolling stock's last clone rolling stock, null if
+     *         there isn't a clone rolling stock.
+     */
+    public T getClone(RollingStock rs) {
+        List<T> list = getByLastDateList();
+        // clone with the highest creation number will be last in the list
+        for (int i = list.size() - 1; i >= 0; i--) {
+            T kar = list.get(i);
+            if (kar.isClone() &&
+                    kar.getDestinationTrack() == rs.getTrack() &&
+                    kar.getRoadName().equals(rs.getRoadName()) &&
+                    kar.getNumber().split(RollingStock.CLONE_REGEX)[0].equals(rs.getNumber())) {
+                return kar;
+            }
+        }
+        return null; // no clone for this rolling stock
+    }
+
+    int cloneCreationOrder = 0;
+
+    /**
+     * Returns the highest clone creation order given to a clone.
+     * 
+     * @return 1 if the first clone created, otherwise the highest found plus
+     *         one. Automatically increments.
+     */
+    protected int getCloneCreationOrder() {
+        if (cloneCreationOrder == 0) {
+            for (RollingStock rs : getList()) {
+                if (rs.isClone()) {
+                    String[] number = rs.getNumber().split(RollingStock.CLONE_REGEX);
+                    int creationOrder = Integer.parseInt(number[1]);
+                    if (creationOrder > cloneCreationOrder) {
+                        cloneCreationOrder = creationOrder;
+                    }
+                }
+            }
+        }
+        return ++cloneCreationOrder;
+    }
 
     @Override
     @OverridingMethodsMustInvokeSuper
