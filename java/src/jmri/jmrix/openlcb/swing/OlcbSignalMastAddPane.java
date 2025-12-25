@@ -46,7 +46,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
         // If the connections list has less than 2 items, don't show a selector.
         // This maintains backward compatibility with previous versions.
-        if (olcbConnections != null && olcbConnections.size() > 1) {
+        if (olcbConnections != null) {
             // Connection selector
             JPanel p = new JPanel();
             TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
@@ -55,7 +55,10 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             p.setLayout(new jmri.util.javaworld.GridLayout2(3, 1));
 
             p.add(connSelectionBox);
-            add(p);
+            if ( olcbConnections.size() > 1 ) {
+                // only show if more than one choice
+                add(p);
+            }
         }
 
         // lit/unlit controls
@@ -262,7 +265,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
      */
     private void populateConnSelectionBox() {
         connSelectionBox.removeAllItems();
-        if (olcbConnections == null || olcbConnections.size() < 2) {
+        if (olcbConnections == null) {
             return;
         }
         for (String conn : olcbConnections) {
