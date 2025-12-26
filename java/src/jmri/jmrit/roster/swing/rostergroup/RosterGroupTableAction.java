@@ -3,7 +3,9 @@ package jmri.jmrit.roster.swing.rostergroup;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,7 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.swing.CreateRosterGroupAction;
 import jmri.jmrit.roster.swing.RosterGroupComboBox;
+
 import jmri.util.swing.WindowInterface;
 
 /**
@@ -68,12 +72,11 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
             @Override
             void extras() {
                 final JComboBox<String> selectCombo = new RosterGroupComboBox();
-                selectCombo.insertItemAt("", 0);
-                selectCombo.setSelectedIndex(-1);
+                //selectCombo.insertItemAt("", 0);
+                //selectCombo.setSelectedIndex(-1);
                 JPanel p25 = new JPanel();
                 p25.add(new JLabel(Bundle.getMessage("SelectRosterGroup")));
                 p25.add(selectCombo);
-                addToTopBox(p25);
                 selectCombo.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -85,7 +88,12 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
                     }
                 });
                 selectCombo.setVisible(true);
+                AbstractAction createGroupAction = new CreateRosterGroupAction(Bundle.getMessage("MenuGroupCreate"), p25);
+                var newButton = new JButton(createGroupAction);
+                p25.add(newButton);
 
+                addToTopBox(p25);
+     
             }
         };
         setTitle();
