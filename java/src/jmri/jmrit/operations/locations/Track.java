@@ -2318,7 +2318,7 @@ public class Track extends PropertyChangeSupport {
     }
 
     public boolean isQuickServiceEnabled() {
-        return (isSpur() || isInterchange() || isYard()) && (0 != (_loadOptions & QUICK_SERVICE));
+        return 0 != (_loadOptions & QUICK_SERVICE);
     }
 
     public void setBlockCarsEnabled(boolean enable) {
