@@ -275,6 +275,8 @@ public class ActiveTrain implements PropertyChangeProvider {
     private boolean terminateWhenFinished = false;
     private String mNextTrain = "";
     private int mSignalType;
+    // Runtime/config flag: whether to honour section stop sensors
+    private boolean useStopSensor = true;
 
     // start up instance variables
     private boolean mStarted = false;
@@ -327,6 +329,14 @@ public class ActiveTrain implements PropertyChangeProvider {
 
     public void setRosterEntry(jmri.jmrit.roster.RosterEntry re) {
         mRoster = re;
+    }
+    
+    public boolean getUseStopSensor() { 
+        return useStopSensor;
+    }
+    
+    public void setUseStopSensor(boolean value) {
+        useStopSensor = value; 
     }
 
     public jmri.jmrit.roster.RosterEntry getRosterEntry() {

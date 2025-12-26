@@ -13,6 +13,8 @@ import jmri.Block;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.Sensor;
+import java.beans.PropertyChangeListener;
 import jmri.Section;
 import jmri.implementation.SignalSpeedMap;
 
@@ -564,6 +566,343 @@ public class RosterSpeedProfile {
         return Math.abs(spd * duration);
     }
 
+    /*
+     * ============================================================
+     * Distance-based stopping API (public) - Stop to zero over a given distance
+     * (mm) - Approach to min reliable speed over a distance, then stop at
+     * sensor Notes: - Executes via RosterSpeedProfile's own stepQueue/stopTimer
+     * (H2/4A). - Overrun compensation ONLY for stop-to-zero (H4). - Optional
+     * speedFactor pre-divide supported (H3 / 4B).
+     * ============================================================
+     */
+
+    /**
+     * Plan and execute a stop-to-zero over a given distance (actual
+     * millimetres).
+     * 
+     * @param t          The DccThrottle to drive
+     * @param distanceMm Distance in mm (>= 0)
+     */
+    public void planStopToZeroOverDistance(DccThrottle t, float distanceMm) {
+        planStopToZeroOverDistance(t, distanceMm, /* speedFactor */ 1.0f);
+    }
+
+    /**
+     * Plan and execute a stop-to-zero over a given distance (actual
+     * millimetres), with an optional external speed factor pre-divide (see
+     * AutoActiveTrain behaviour).
+     * 
+     * @param t           The DccThrottle to drive
+     * @param distanceMm  Distance in mm (>= 0)
+     * @param speedFactor If > 0, throttle commands are divided by this factor
+     *                    before enqueuing.
+     */
+    public void planStopToZeroOverDistance(DccThrottle t, float distanceMm, float speedFactor) {
+        planDistanceSchedule(t, distanceMm, /* toMinOnly */ false, speedFactor);
+    }
+
+    /**
+     * Plan and execute an approach to the minimum reliable operating speed over
+     * the given distance, then stop when the supplied sensor transitions to
+     * ACTIVE.
+     * 
+     * @param t          The DccThrottle to drive
+     * @param distanceMm Distance in mm (>= 0)
+     * @param stopSensor The sensor on which to stop (must not be null)
+     */
+    public void planApproachToMinOverDistanceThenStopBySensor(
+            DccThrottle t, float distanceMm, jmri.Sensor stopSensor) {
+        planApproachToMinOverDistanceThenStopBySensor(t, distanceMm, stopSensor, /*
+                                                                                  * speedFactor
+                                                                                  */ 1.0f);
+    }
+
+    /**
+     * Plan and execute an approach to the minimum reliable operating speed over
+     * the given distance, then stop when the supplied sensor transitions to
+     * ACTIVE. Supports optional speed factor pre-divide.
+     * 
+     * @param t           The DccThrottle to drive
+     * @param distanceMm  Distance in mm (>= 0)
+     * @param stopSensor  The sensor on which to stop (must not be null)
+     * @param speedFactor If > 0, throttle commands are divided by this factor
+     *                    before enqueuing.
+     */
+    public void planApproachToMinOverDistanceThenStopBySensor(
+            DccThrottle t, float distanceMm, jmri.Sensor stopSensor, float speedFactor) {
+        if (stopSensor == null) {
+            log.warn("planApproachToMin... called with null stopSensor; forcing immediate stop.");
+            if (t != null)
+                t.setSpeedSetting(0.0f);
+            return;
+        }
+        // Stash the sensor + a one-shot listener; finishChange() removes any leftover listener.
+        approachStopSensor = stopSensor;
+        approachStopSensorListener = (java.beans.PropertyChangeEvent e) -> {
+            if ("KnownState".equals(e.getPropertyName())) {
+                try {
+                    if (((Integer) e.getNewValue()).intValue() == jmri.Sensor.ACTIVE) {
+                        if (_throttle != null)
+                            _throttle.setSpeedSetting(0.0f);
+                        finishChange(); // also detaches this listener
+                    }
+                } catch (RuntimeException ex) {
+                    log.warn("Stop-by-sensor handler failed; forcing stop.", ex);
+                    try {
+                        if (_throttle != null)
+                            _throttle.setSpeedSetting(0.0f);
+                    } catch (Exception ignore) {
+                    }
+                    finishChange();
+                }
+            }
+        };
+        approachStopSensor.addPropertyChangeListener(approachStopSensorListener);
+
+        planDistanceSchedule(t, distanceMm, /* toMinOnly */ true, speedFactor);
+    }
+
+    /*
+     * ============================================================ Helpers for
+     * distance planning (mirrors inner controller logic)
+     * ============================================================
+     */
+
+    /** Clamp helper for throttle percentage. */
+    private static float clampPct(float pct) {
+        if (pct < 0.0f)
+            return 0.0f;
+        if (pct > 1.0f)
+            return 1.0f;
+        return pct;
+    }
+
+    /**
+     * Invert the roster profile: map target speed (mm/s) -> throttle % via
+     * bisection.
+     */
+    private float throttleForSpeedMms(final float targetMms, final boolean forward,
+            final float minPct, final float maxPct) {
+        float lo = clampPct(minPct);
+        float hi = clampPct(maxPct);
+        // Guard: if target is below/above bracket, return bracket end
+        float loMms = getSpeed(lo, forward);
+        float hiMms = getSpeed(hi, forward);
+        if (targetMms <= loMms)
+            return lo;
+        if (targetMms >= hiMms)
+            return hi;
+
+        float x = 0.5f * (lo + hi);
+        for (int i = 0; i < 18; i++) { // ~0.004 resolution
+            x = 0.5f * (lo + hi);
+            float xmms = getSpeed(x, forward);
+            if (xmms < targetMms)
+                lo = x;
+            else
+                hi = x;
+        }
+        return clampPct(x);
+    }
+
+    /**
+     * Core planner: builds a constant-deceleration throttle schedule to reach
+     * either: - zero speed exactly at distance (toMinOnly=false), applying
+     * overrun compensation; or - minimum reliable operating speed at distance
+     * (toMinOnly=true), then waits for stopSensor. Executes via this profile's
+     * own stepQueue/stopTimer (H2/4A).
+     */
+    private void planDistanceSchedule(DccThrottle t, float distanceMm, boolean toMinOnly, float speedFactor) {
+        if (t == null) {
+            log.warn("planDistanceSchedule called with null throttle; ignoring.");
+            return;
+        }
+
+        // Do not clobber caller-configured min/max limits; just read them
+        final float minPct = this.minReliableOperatingSpeed; // 0..1
+        final float maxPct = this.maxOperatingSpeed; // 0..1
+        final boolean forward = t.getIsForward();
+
+        // Kill any running timer WITHOUT resetting limits (avoid finishChange() here).
+        if (stopTimer != null) {
+            stopTimer.stop();
+            stopTimer = null;
+        }
+        synchronized (this) {
+            stepQueue = new LinkedList<>();
+        }
+        _throttle = t;
+
+        if (distanceMm <= 0.0f) {
+            if (toMinOnly) {
+                // Assert crawl and return; sensor listener (if any) will stop us.
+                float vMin = getSpeed(Math.max(0.0f, minPct), forward);
+                float thrMin = throttleForSpeedMms(vMin, forward, minPct, maxPct);
+                if (speedFactor > 0.0f)
+                    thrMin = clampPct(thrMin / speedFactor);
+                _throttle.setSpeedSetting(thrMin);
+                return;
+            } else {
+                _throttle.setSpeedSetting(0.0f);
+                return;
+            }
+        }
+
+        // Current speed (mm/s) from actual throttle setting
+        float thrNow = clampPct(_throttle.getSpeedSetting());
+        float v0 = getSpeed(thrNow, forward);
+        float vMin = getSpeed(Math.max(0.0f, minPct), forward);
+        float vMax = getSpeed(Math.min(1.0f, maxPct), forward);
+
+        // If caller asked for approach-to-min but the configured minimum is effectively zero,
+        // then "approach to min" equals "stop to zero". Fall back to stop-to-zero to avoid
+        // a zero-progress plan (deltaS == 0) that would never terminate.
+        if (toMinOnly && vMin <= 0.0f) {
+            log.warn("planDistanceSchedule: minReliableOperatingSpeed=0; falling back to stop-to-zero over distance");
+            toMinOnly = false;
+        }
+
+        // Clamp v0 into [vMin, vMax] to reflect realistic low/high bounds
+        if (v0 < vMin)
+            v0 = vMin;
+        if (v0 > vMax)
+            v0 = vMax;
+
+        // Adjust target distance for overrun ONLY for stop-to-zero (H4).
+        float s = distanceMm;
+        if (!toMinOnly) {
+            float overrunSec = forward ? getOverRunTimeForward() : getOverRunTimeReverse();
+            // IMPORTANT: We mirror the semantics used by the inner controller (value is treated as SECONDS).
+            if (overrunSec < 0.0f)
+                overrunSec = 0.0f;
+            s = s - (vMin * overrunSec);
+            // Small guard to avoid degenerate slices
+            if (s < Math.max(0.0f, 0.5f * vMin)) {
+                s = Math.max(0.0f, 0.5f * vMin);
+            }
+        }
+
+        // If no distance effectively remains, set terminal target right away
+        if (s <= 0.0f) {
+            if (toMinOnly) {
+                float thrMin = throttleForSpeedMms(vMin, forward, minPct, maxPct);
+                if (speedFactor > 0.0f)
+                    thrMin = clampPct(thrMin / speedFactor);
+                _throttle.setSpeedSetting(thrMin);
+            } else {
+                _throttle.setSpeedSetting(0.0f);
+            }
+            return;
+        }
+
+        // Constant deceleration to meet distance at v=0 (or to vMin then hold).
+        final int baseMs = 50; // RSP cadence base (H2/4A): use RSP's own timer slice
+        final float dt = baseMs / 1000.0f;
+
+        float a; // mm/s^2
+        if (!toMinOnly) {
+            a = (v0 > 0.0f) ? -(v0 * v0) / (2.0f * s) : 0.0f;
+        } else {
+            // For approach-to-min, decelerate down to vMin; beyond that we run at vMin (coast/crawl)
+            a = (v0 > vMin && s > 0.0f) ? -(v0 * v0 - vMin * vMin) / (2.0f * s) : 0.0f;
+        }
+
+        java.util.LinkedList<SpeedSetting> plan = new java.util.LinkedList<>();
+        float travelled = 0.0f;
+        float v = v0;
+
+        while (travelled < s) {
+            float remaining = s - travelled;
+            float stepDt = dt;
+
+            if (toMinOnly && v > vMin && a != 0.0f) {
+                float tToMin = (v - vMin) / Math.abs(a);
+                if (tToMin > 0.0f && tToMin < stepDt)
+                    stepDt = tToMin;
+            }
+
+            // Predict next speed
+            float vNext;
+            if (!toMinOnly) {
+                vNext = Math.max(0.0f, v + a * stepDt);
+            } else {
+                float raw = v + a * stepDt;
+                vNext = (raw >= vMin) ? raw : vMin;
+            }
+
+            // Mid-step speed for mapping to throttle; guard to vMin/0 as appropriate
+            float vStart = v;
+            float vEnd = vNext;
+            if (toMinOnly) {
+                if (vStart < vMin)
+                    vStart = vMin;
+                if (vEnd < vMin)
+                    vEnd = vMin;
+            }
+            float vMid = 0.5f * (vStart + vEnd);
+            if (vMid < 0.0f)
+                vMid = 0.0f;
+
+            // Distance in this slice
+            float deltaS;
+            if (!toMinOnly) {
+                deltaS = v * stepDt + 0.5f * a * stepDt * stepDt;
+            } else if (a != 0.0f && v > vMin && vNext >= vMin) {
+                deltaS = v * stepDt + 0.5f * a * stepDt * stepDt;
+            } else {
+                deltaS = vMin * stepDt;
+            }
+            if (deltaS < 0.0f)
+                deltaS = 0.0f;
+
+            // If this slice would overshoot, shorten to land exactly.
+            if (deltaS > remaining && vMid > 0.0f) {
+                float dtFinal = remaining / vMid;
+                if (dtFinal < 0.001f)
+                    dtFinal = 0.001f;
+                int msFinal = Math.max(1, Math.round(dtFinal * 1000.0f));
+                float thr = throttleForSpeedMms(vMid, forward, minPct, maxPct);
+                if (speedFactor > 0.0f)
+                    thr = clampPct(thr / speedFactor);
+                plan.add(new SpeedSetting(thr, msFinal, /* andStop */ false));
+                travelled = s; // done
+                v = vNext;
+                break;
+            }
+
+            // Normal step append
+            int ms = Math.max(1, Math.round(stepDt * 1000.0f));
+            float thr = throttleForSpeedMms(vMid, forward, minPct, maxPct);
+            if (speedFactor > 0.0f) thr = clampPct(thr / speedFactor);
+            plan.add(new SpeedSetting(thr, ms, /* andStop */ false));
+
+            travelled += deltaS;
+            v = vNext;
+
+            // If we are doing stop-to-zero and already at zero before distance, bail
+            if (!toMinOnly && v <= 0.0f && travelled < s) {
+                break;
+            }
+        }
+
+        // Tail: for stop-to-zero, append a small zero step so the queue terminates neatly.
+        if (!toMinOnly) {
+            plan.add(new SpeedSetting(0.0f, baseMs, /* andStop */ false));
+        }
+
+        // Enqueue and kick timer
+        synchronized (this) {
+            for (SpeedSetting ss : plan) {
+                stepQueue.addLast(ss);
+                if (profileInTestMode)
+                    testSteps.add(ss);
+            }
+        }
+        if (stopTimer == null) {
+            setNextStep();
+        }
+    }
+
     private float distanceRemaining = 0;
     private float distanceTravelled = 0;
 
@@ -583,12 +922,26 @@ public class RosterSpeedProfile {
 
     private javax.swing.Timer stopTimer = null;
 
+    // Distance-based approach-to-min: optional stop-sensor hook (cleared in finishChange()).
+    private Sensor approachStopSensor = null;
+    private PropertyChangeListener approachStopSensorListener = null;
+
     private long lastTimeTimerStarted = 0L;
 
     /**
      * reset everything back to default once the change has finished.
      */
     void finishChange() {
+        // Remove any approach-stop sensor listener if present.
+        if (approachStopSensor != null && approachStopSensorListener != null) {
+            try {
+                approachStopSensor.removePropertyChangeListener(approachStopSensorListener);
+            } catch (Exception ex) {
+                // ignore
+            }
+        }
+        approachStopSensor = null;
+        approachStopSensorListener = null;
         if (stopTimer != null) {
             stopTimer.stop();
         }
@@ -617,6 +970,55 @@ public class RosterSpeedProfile {
         if (minReliableOperatingSpeed > maxOperatingSpeed) {
             log.warn("MaxOperatingSpeed [{}] < minReliableOperatingSpeed [{}] setting Max = Min",
                     minReliableOperatingSpeed, maxOperatingSpeed);
+            this.maxOperatingSpeed = this.minReliableOperatingSpeed;
+        }
+    }
+
+    /**
+     * Set min/max throttle limits, optionally enforcing a scale km/h cap. If
+     * maxSpeedScaleKmh == 0.0f, the percent maxOperatingSpeed takes precedence
+     * (no effect). If maxSpeedScaleKmh > 0.0f, we convert the km/h cap to an
+     * equivalent throttle% using the roster profile and the layout scale ratio,
+     * then take the minimum of that and the percent cap.
+     *
+     * @param minReliableOperatingSpeed lowest throttle % the loco reliably
+     *                                  moves (0..1)
+     * @param maxOperatingSpeed         percent cap (0..1)
+     * @param maxSpeedScaleKmh          scale km/h cap; 0.0f means "unused"
+     * @param layoutScaleRatio          layout scale ratio (full-scale / model),
+     *                                  e.g. 87.0 for HO
+     * @param isForward                 direction of travel
+     */
+    public void setMinMaxLimitsKmh(float minReliableOperatingSpeed,
+            float maxOperatingSpeed,
+            float maxSpeedScaleKmh,
+            float layoutScaleRatio,
+            boolean isForward) {
+        // Default to the percent cap
+        float maxPct = maxOperatingSpeed;
+
+        // If a km/h cap is specified and we have speeds for this direction, convert to throttle%
+        boolean dirHasProfile = isForward ? hasForwardSpeeds() : hasReverseSpeeds();
+        if (maxSpeedScaleKmh > 0.0f && dirHasProfile) {
+            float safeScale = (layoutScaleRatio <= 0.0f) ? 1.0f : layoutScaleRatio;
+            // Convert full-scale km/h -> model km/h -> model mm/s
+            float modelKmh = maxSpeedScaleKmh / safeScale;
+            float targetMms = modelKmh * 277.7778f; // 1 km/h = 277.7778 mm/s
+
+            float thrCapPct = getThrottleSetting(targetMms, isForward);
+            if (thrCapPct > 0.0f) {
+                maxPct = Math.min(maxOperatingSpeed, thrCapPct);
+            }
+        }
+
+        // Apply computed limits
+        this.minReliableOperatingSpeed = minReliableOperatingSpeed;
+        this.maxOperatingSpeed = maxPct;
+
+        // Guard: if min > max, clamp max to min (preserves previous method semantics)
+        if (this.minReliableOperatingSpeed > this.maxOperatingSpeed) {
+            log.warn("MaxOperatingSpeed [{}] < minReliableOperatingSpeed [{}]; setting Max = Min",
+                    this.maxOperatingSpeed, this.minReliableOperatingSpeed);
             this.maxOperatingSpeed = this.minReliableOperatingSpeed;
         }
     }
@@ -1357,6 +1759,226 @@ public class RosterSpeedProfile {
         return speed;
     }
 
+    /**
+     * Physics-based acceleration to a target throttle percent (0..1).
+     * Builds and runs a throttle/time schedule using this profile's stepQueue/stopTimer.
+     *
+     * @param t                    The DccThrottle to drive (must not be null)
+     * @param targetThrottlePct    Desired throttle percent [0..1]
+     * @param driverPowerPercent   Driver power/regulator percent [0..1] (limits applied power/TE during acceleration)
+     * @param additionalWeightTonnes Extra consist mass in metric tonnes (>= 0)
+     * @param rollingResistanceCoeff Rolling resistance coefficient c_rr (>= 0), e.g., ~0.002
+     * @param layoutScaleRatio     Layout scale ratio (full-scale / model), e.g., 87.0 for HO
+     * @param speedFactor          If > 0, throttle commands are divided by this factor before enqueuing
+     */
+    public void runPhysicsAccelerationToTargetThrottle(
+            jmri.DccThrottle t,
+            float targetThrottlePct,
+            float driverPowerPercent,
+            float additionalWeightTonnes,
+            float rollingResistanceCoeff,
+            float layoutScaleRatio,
+            float speedFactor) {
+
+        if (t == null) {
+            log.warn("runPhysicsAccelerationToTargetThrottle called with null throttle; ignoring.");
+            return;
+        }
+
+        // Clamp incoming values
+        float speedFactorSafe = (speedFactor > 0.0f) ? speedFactor : 1.0f;
+        float driverPct = clampPct(driverPowerPercent);
+        float crr = (rollingResistanceCoeff < 0.0f) ? 0.0f : rollingResistanceCoeff;
+        float scaleRatio = (layoutScaleRatio <= 0.0f) ? 1.0f : layoutScaleRatio;
+
+        // Direction and bounds
+        final boolean forward = t.getIsForward();
+        final float minPct = this.minReliableOperatingSpeed; // 0..1
+        final float maxPct = this.maxOperatingSpeed;         // 0..1
+
+        // Kill any running timer and clear queue (do NOT call finishChange() which resets limits)
+        if (stopTimer != null) {
+            stopTimer.stop();
+            stopTimer = null;
+        }
+        synchronized (this) {
+            stepQueue = new LinkedList<>();
+        }
+        _throttle = t;
+
+        // Read MODEL speeds for current throttle and target
+        float thrNow = clampPct(_throttle.getSpeedSetting());
+        float v0_mms = getSpeed(thrNow, forward);
+        float vTarget_mms = getSpeed(clampPct(targetThrottlePct), forward);
+
+        // MODEL (mm/s) -> MODEL (m/s) -> FULL-SCALE (m/s)
+        float v0_fs = (v0_mms / 1000.0f) * scaleRatio;
+        float vTarget_fs = (vTarget_mms / 1000.0f) * scaleRatio;
+
+        // Respect floor/limits: if target below min, raise to min
+        float vMin_mms = getSpeed(Math.max(0.0f, minPct), forward);
+        float vMin_fs = (vMin_mms / 1000.0f) * scaleRatio;
+        if (vTarget_fs < vMin_fs) vTarget_fs = vMin_fs;
+        if (v0_fs < vMin_fs) v0_fs = vMin_fs;
+
+        // Optional roster max km/h cap (if present), convert to FULL-SCALE m/s
+        float vCap_fs_roster = Float.POSITIVE_INFINITY;
+        try {
+            // If roster has a physics max speed km/h, cap the target
+            float kmhRoster = (_re != null) ? _re.getPhysicsMaxSpeedKmh() : 0.0f;
+            if (kmhRoster > 0.0f) vCap_fs_roster = kmhRoster / 3.6f;
+        } catch (Throwable ignore) {
+            // Older roster entries may not have physics fields; no cap applied
+        }
+        vTarget_fs = Math.min(vTarget_fs, vCap_fs_roster);
+
+        // Roster physics (SI units)
+        float massKg = 1000.0f;    // reasonable non-zero default to avoid div-by-zero
+        float powerW = 0.0f;       // available power
+        float teN = 0.0f;          // tractive effort N
+        boolean mechTransmission = false;
+        boolean isSteam = false;
+        try {
+            float rosterKg = (_re != null) ? _re.getPhysicsWeightKg() : 0.0f;
+            float extraKg = Math.max(0.0f, additionalWeightTonnes) * 1000.0f;
+            massKg = Math.max(1.0f, rosterKg + extraKg);
+
+            powerW = (_re != null) ? (_re.getPhysicsPowerKw() * 1000.0f) : 0.0f;
+            teN = (_re != null) ? (_re.getPhysicsTractiveEffortKn() * 1000.0f) : 0.0f;
+            mechTransmission = (_re != null) && _re.isPhysicsMechanicalTransmission();
+            jmri.jmrit.roster.RosterEntry.TractionType tt =
+                    (_re != null) ? _re.getPhysicsTractionType() : jmri.jmrit.roster.RosterEntry.TractionType.DIESEL_ELECTRIC;
+            isSteam = (tt == jmri.jmrit.roster.RosterEntry.TractionType.STEAM);
+        } catch (Throwable ex) {
+            log.warn("RosterEntry missing physics fields; falling back to immediate set.", ex);
+        }
+
+        // Driver scaling: steam slightly sub-linear for power; TE linear
+        final float powerExpSteam = 0.85f;
+        float alphaPower = isSteam ? (driverPct <= 0.0f ? 0.0f : (float) Math.pow(driverPct, powerExpSteam)) : driverPct;
+        float alphaTE = driverPct <= 0.0f ? 0.0f : driverPct;
+        float P_avail = powerW * alphaPower;
+        float TE_avail = teN * alphaTE;
+
+        // Integration cadence: align to RSP’s own 50 ms base
+        final int baseMs = 50;
+        final float dt = baseMs / 1000.0f;
+
+        java.util.LinkedList<SpeedSetting> plan = new java.util.LinkedList<>();
+
+        // Start speed FS
+        float v_fs = v0_fs;
+
+        // Optional mechanical gear thresholds (FS m/s) for pause/coast
+        final float[] gearFsMps = new float[] {
+            15f * 0.44704f,  // 15 mph
+            27f * 0.44704f,  // 27 mph
+            41f * 0.44704f   // 41 mph
+        };
+        boolean[] gearPauseDone = new boolean[gearFsMps.length];
+        for (int gi = 0; gi < gearPauseDone.length; gi++) {
+            gearPauseDone[gi] = (v_fs >= gearFsMps[gi]);
+        }
+
+        int safety = 0;
+        while (v_fs < vTarget_fs && safety < 10000) {
+            float v_guard = Math.max(0.01f, v_fs);
+
+            // Drive force limit by power and TE
+            float F_power = (P_avail > 0.0f) ? (P_avail / v_guard) : 0.0f;
+            float F_drive = (TE_avail > 0.0f) ? Math.min(TE_avail, F_power) : F_power;
+
+            // Rolling resistance and acceleration (FS)
+            final float g = 9.80665f;
+            float F_rr = crr * massKg * g;
+            float a_fs = (F_drive - F_rr) / massKg;
+            if (a_fs < 0.0f) a_fs = 0.0f;
+
+            // Predict next speed and adjust time slice to avoid overshoot
+            float stepDt = dt;
+            float v_next_fs = v_fs + a_fs * stepDt;
+            boolean finalStep = false;
+            if (a_fs > 0.0f && v_next_fs > vTarget_fs) {
+                stepDt = Math.max(0.001f, (vTarget_fs - v_fs) / a_fs);
+                finalStep = true;
+                v_next_fs = v_fs + a_fs * stepDt;
+            }
+
+            // Gear-change pause (coast) if mechanical transmission and crossing a threshold
+            boolean pausedThisSlice = false;
+            if (mechTransmission) {
+                for (int gi = 0; gi < gearFsMps.length; gi++) {
+                    if (!gearPauseDone[gi]) {
+                        float sTrig = gearFsMps[gi];
+                        if ((vTarget_fs >= sTrig) && (v_fs < sTrig) && (v_next_fs >= sTrig)) {
+                            final float pauseSec = 3.5f;
+                            float left = pauseSec;
+                            float aCoast_fs = -(crr * g); // coast deceleration under rolling resistance only
+                            while (left > 0.0f) {
+                                float chunk = Math.min(dt, left);
+                                float v_next_coast = v_fs + aCoast_fs * chunk;
+                                if (v_next_coast < vMin_fs) v_next_coast = vMin_fs;
+
+                                float v_mid_coast_fs = 0.5f * (v_fs + v_next_coast);
+                                // Back to MODEL mm/s for throttle inversion
+                                float v_mid_model_ms = v_mid_coast_fs / scaleRatio;
+                                float v_mid_mms = v_mid_model_ms * 1000.0f;
+
+                                float thr = throttleForSpeedMms(v_mid_mms, forward, minPct, maxPct);
+                                if (speedFactorSafe > 0.0f) thr = clampPct(thr / speedFactorSafe);
+                                int ms = Math.max(1, Math.round(chunk * 1000.0f));
+                                plan.add(new SpeedSetting(thr, ms, /*andStop*/ false));
+
+                                v_fs = v_next_coast;
+                                left -= chunk;
+                                safety++;
+                                if (safety >= 10000) break;
+                            }
+                            gearPauseDone[gi] = true;
+                            pausedThisSlice = true;
+                            break; // only one gear per slice
+                        }
+                    }
+                }
+            }
+            if (pausedThisSlice) {
+                continue; // skip normal powered step this loop
+            }
+
+            // Normal powered mid-step speed (FS -> MODEL mm/s -> throttle)
+            float v_mid_fs = 0.5f * (v_fs + v_next_fs);
+            float v_mid_model_ms = v_mid_fs / scaleRatio;
+            float v_mid_mms = v_mid_model_ms * 1000.0f;
+
+            float thr = throttleForSpeedMms(v_mid_mms, forward, minPct, maxPct);
+            if (speedFactorSafe > 0.0f) thr = clampPct(thr / speedFactorSafe);
+            int ms = Math.max(1, Math.round(stepDt * 1000.0f));
+            plan.add(new SpeedSetting(thr, ms, /*andStop*/ false));
+
+            v_fs = v_next_fs;
+            safety++;
+            if (finalStep) break;
+        }
+
+        // If the plan is empty, just set immediate
+        if (plan.isEmpty()) {
+            float thrFinal = throttleForSpeedMms(vTarget_mms, forward, minPct, maxPct);
+            if (speedFactorSafe > 0.0f) thrFinal = clampPct(thrFinal / speedFactorSafe);
+            _throttle.setSpeedSetting(thrFinal);
+            return;
+        }
+
+        // Enqueue and kick the timer
+        synchronized (this) {
+            for (SpeedSetting ss : plan) {
+                stepQueue.addLast(ss);
+                if (profileInTestMode) testSteps.add(ss);
+            }
+        }
+        if (stopTimer == null) {
+            setNextStep();
+        }
+    }
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RosterSpeedProfile.class);
 
 }
