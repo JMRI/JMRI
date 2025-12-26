@@ -126,7 +126,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Fixed a problem adding signal masts when the 
+                    OpenLCB or LCC system letter is not "M".</li>
             </ul>
 
         <h4>Powerline</h4>
