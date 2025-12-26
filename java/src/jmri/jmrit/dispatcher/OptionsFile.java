@@ -168,7 +168,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                         }
                     }
                     if (options.getAttribute("useoccupiedtrackspeed") != null) {
-                        dispatcher.setUseTurnoutConnectionDelay(false);
+                        dispatcher.setUseOccupiedTrackSpeed(false);
                         if (options.getAttribute("useoccupiedtrackspeed").getValue().equals("yes")) {
                             dispatcher.setUseOccupiedTrackSpeed(true);
                         }
@@ -312,7 +312,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         options.setAttribute("autoturnouts", "" + (dispatcher.getAutoTurnouts() ? "yes" : "no"));
         options.setAttribute("trustknownturnouts", "" + (dispatcher.getTrustKnownTurnouts() ? "yes" : "no"));
         options.setAttribute("useturnoutconnectiondelay", "" + (dispatcher.getUseTurnoutConnectionDelay() ? "yes" : "no"));
-        options.setAttribute("useoccupiedtrackSpeed", "" + (dispatcher.getUseOccupiedTrackSpeed() ? "yes" : "no"));
+        options.setAttribute("useoccupiedtrackspeed", "" + (dispatcher.getUseOccupiedTrackSpeed() ? "yes" : "no"));
         options.setAttribute("minthrottleinterval", "" + (dispatcher.getMinThrottleInterval()));
         options.setAttribute("fullramptime", "" + (dispatcher.getFullRampTime()));
         options.setAttribute("hasoccupancydetection", "" + (dispatcher.getHasOccupancyDetection() ? "yes" : "no"));
