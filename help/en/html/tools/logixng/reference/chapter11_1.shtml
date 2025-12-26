@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>LogixNG Reference - Chapter 11.1</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG reference table icon">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Reference - Chapter 11.1</h1>
+
+      <h2>LogixNG Table Icon</h2>
+
+      <p>The <strong>LogixNG table</strong> icon can be added to a <strong>Panel Editor</strong>
+      panel to display the contents of a LogixNG table.  The table can be read only, editable or
+      only selected columns are editable. It is also possible to have columns with <em>buttons</em>
+      or <em>dropdown lists</em>.</p>
+
+      <p>The <strong>LogixNG panel</strong> icon type is selected from the <strong>Panel Editor</strong>
+      icon type list.  This will display a list LogixNG tables.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter11_1/table_select_list.png"><img class="image-border" src=
+        "images/chapter11_1/table_select_list.png" alt="LogixNG table list"></a>
+      </div>
+
+      <p>The table icon is added to the panel at a default location with a default size.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter11_1/sample_panel.png"><img class="image-border" src=
+        "images/chapter11_1/sample_panel.png" alt="LogixNG table icon sample panel"></a>
+      </div>
+
+      <p>The table icon does not support <em>dragging</em> to change the location or the size.  Use
+      the <strong>Set Location</strong> context menu item to set the x and y coordinates.  For the
+      width and height, use the <strong>Fixed Size &rArr; Set Fixed Size&hellip;</strong> context
+      menu item.</p>
+
+      <p>Except for the first column, the width of the other columns can be changed by dragging the
+      column separator.  The current column sizes are saved with the table icon when the layout
+      data is stored.</p>
+
+      <h3>Table Icon Configuration</h3>
+
+      <p>The <strong>Configure LogixNG Table</strong> context menu item displays a dialog to
+      configure the icon.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter11_1/configure_table_icon.png"><img class="image-border" src=
+        "images/chapter11_1/configure_table_icon.png" alt="LogixNG configure table icon"></a>
+      </div>
+
+      <dl>
+        <dt>Allow edit table</dt>
+        <dd>
+          <p>This is the master switch to enable/disable editing of table cells.  Changing cell
+          content is temporary.  When PanelPro is stopped, the changes are lost.  The source
+          CSV/TSV file is not changed.  Permanent LogixNG table changes have to be made outside of
+          PanelPro.</p>
+        </dd>
+
+        <dt>Columns that are editable </dt>
+        <dd>
+          <p>The first column in the table is not listed and its cells cannot be changed.  If none
+          of the others are selected, then cells for all of columns can be changed.  If one or more
+          are selected, then only the cells for the selected columns can be changed.</p>
+        </dd>
+
+        <dt>Validate LogixNG Module</dt>
+        <dd>
+          <p>A LogixNG <a href="../../../../package/jmri/jmrit/beantable/LogixNGModuleTable.shtml">
+          Digital Action</a> module can be used to validate cell changes.  Select a LogixNG module
+          from the list.  It will be called after the user has edited a cell, but before the new
+          data is written to the cell. If the data is invalid, the module can abort the editing by
+          calling the <a href="chapter5.shtml#flow_validation_error">Validation Error</a> or
+          <a href="chapter5.shtml#flow_error">Error</a> actions.</p>
+        </dd>
+      </dl>
+
+      <p>The configuration settings are also saved with the table icon when the layout data is stored.</p>
+
+      <h3>Buttons and Lists</h3>
+
+      <p>A button is defined by the header of the table column starting with <strong>{{{Button}}}</strong>
+      followed by the column name, for example {{{Button}}}Status. The button click is handled by the
+      <strong>Validate LogixNG Module</strong> logic.</p>
+
+      <p>A dropdown list is defined by the header of the table column starting with
+      <strong>{{{List:TableName}}}</strong> followed by the column name, for example
+      {{{List:CrewList}}}Crew.  TableName is the system name or the user name of a LogixNG Table
+      with the items for the dropdown list.</p>
+
+      <h3>Validate LogixNG Module</h3>
+
+      <p>When the module is called, a set of local variables is included.  The local variable names
+      have two underscores at the front and two at the back.</p>
+
+      <dl>
+        <dt>__iconId__ </dt>
+        <dd> The value is null or the assigned icon id.</dd>
+
+        <dt>__tableName__ </dt>
+        <dd> The name of the table.</dd>
+
+        <dt>__row__ </dt>
+        <dd> The cell value from the first column.</dd>
+
+        <dt>__column__ </dt>
+        <dd> The column header name.</dd>
+
+        <dt>__type__ </dt>
+        <dd> The values are null, button or list.</dd>
+
+        <dt>__oldValue__ </dt>
+        <dd>The previous value.</dd>
+
+        <dt>__newValue__</dt>
+        <dd>The new value to be validated.  When the __type__ is <strong>button</strong>, the new
+        value will be the same as the oldValue.</dd>
+      </dl>
+
+      <p>The basic logic structure for a validation module is a if-then-elseif-else pattern with a
+      section for each editable column.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter11_1/validate_logic.png"><img class="image-border" src=
+        "images/chapter11_1/validate_logic.png" alt="LogixNG table icon validation logic"></a>
+      </div>
+
+      <hr>
+
+      <p><a href="chapter11.shtml">Chapter 11 - Tables</a>
+      </p>
+
+      <p><a href="chapter12.shtml">Chapter 12 - Global Variables</a>
+      </p>
+
+      <p><a href="index.shtml">Return to the Reference TOC</a>
+      </p>
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>
