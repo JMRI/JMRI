@@ -1,15 +1,15 @@
 package jmri.jmrix.roco.z21;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.Turnout;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTurnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the {@link jmri.jmrix.roco.z21.Z21XNetTurnout} class.
@@ -21,26 +21,30 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
 
     @Override
     public void checkClosedMsgSent() {
-        Assert.assertEquals("closed message", "53 00 14 88 CF",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        assertEquals( "53 00 14 88 CF",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
+                "closed message");
     }
 
     @Override
     public void checkThrownMsgSent() {
-        Assert.assertEquals("thrown message", "53 00 14 89 CE",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        assertEquals( "53 00 14 89 CE",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
+                "thrown message");
     }
 
     @Override
     protected void checkClosedOffSent() {
-        Assert.assertEquals("thrown message", "53 00 14 80 C7",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        assertEquals( "53 00 14 80 C7",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
+                "thrown message");
     }
 
     @Override
     protected void checkThrownOffSent() {
-        Assert.assertEquals("thrown message", "53 00 14 81 C6",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        assertEquals( "53 00 14 81 C6",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
+                "thrown message");
     }
 
     // Test the Z21XNetTurnout message sequence.
@@ -50,15 +54,14 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         t.setFeedbackMode(jmri.Turnout.DIRECT);
         // prepare an interface
         // set closed
-        try {
-            t.setCommandedState(jmri.Turnout.CLOSED);
-        } catch (Exception e) {
-            log.error("TO exception: {}", e);
-        }
-        Assert.assertEquals(Turnout.CLOSED, t.getCommandedState());
+        assertDoesNotThrow( () -> t.setCommandedState( Turnout.CLOSED),
+            "TO exception: ");
 
-        Assert.assertEquals("on message sent", "53 00 14 88 CF",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        assertEquals(Turnout.CLOSED, t.getCommandedState());
+
+        assertEquals( "53 00 14 88 CF",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
+                "on message sent");
 
         ((Z21XNetTurnout)t).message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
@@ -74,11 +77,11 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
 
         ((jmri.jmrix.roco.z21.Z21XNetTurnout) t).message(m);
 
-        while (n == lnis.outbound.size()) {
-        } // busy loop.  Wait for 
-        // outbound size to change.
-        Assert.assertEquals("off message sent", "53 00 14 80 C7",
-                lnis.outbound.elementAt(n).toString());
+        JUnitUtil.waitFor( () -> n != lnis.outbound.size(), "Wait for outbound size to change");
+
+        assertEquals( "53 00 14 80 C7",
+                lnis.outbound.elementAt(n).toString(),
+            "off message sent");
 
         ((Z21XNetTurnout)t).message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
@@ -94,7 +97,7 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
 
         // no wait here.  The last reply should cause the turnout to 
         // set it's state, but it will not cause another reply.
-        Assert.assertEquals(Turnout.CLOSED, t.getKnownState());
+        assertEquals(Turnout.CLOSED, t.getKnownState());
     }
 
     // Test that property change events are properly sent from the parent
@@ -104,39 +107,35 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
     @Override
     public void testXNetTurnoutPropertyChange() {
         // prepare an interface
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalSensorManager();
         t = new Z21XNetTurnout("X", 21, lnis);
 
         // set thrown
-        try {
-            t.setCommandedState(jmri.Turnout.THROWN);
-        } catch (Exception e) {
-            log.error("TO exception: {}", e);
-        }
-        Assert.assertEquals(Turnout.THROWN, t.getCommandedState());
+        assertDoesNotThrow( () -> t.setCommandedState( Turnout.THROWN),
+            "TO exception: ");
+        assertEquals(Turnout.THROWN, t.getCommandedState());
 
-        t.setFeedbackMode(jmri.Turnout.ONESENSOR);
+        t.setFeedbackMode( Turnout.ONESENSOR);
         jmri.Sensor s = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
-        try {
-            s.setState(jmri.Sensor.INACTIVE);
-            t.provideFirstFeedbackSensor("IS1");
-        } catch (Exception x1) {
-            log.error("TO exception: {}", x1);
-        }
-        try {
-            s.setState(jmri.Sensor.ACTIVE);
-        } catch (Exception x) {
-            log.error("TO exception: {}", x);
-        }
+        assertDoesNotThrow( () -> {
+                s.setState(jmri.Sensor.INACTIVE);
+                t.provideFirstFeedbackSensor("IS1");
+            }, "TO exception: ");
+
+        assertDoesNotThrow( () -> s.setState(jmri.Sensor.ACTIVE),
+            "SO exception: ");
+
         // check to see if the turnout state changes.
-        Assert.assertEquals(Turnout.THROWN, t.getKnownState());
+        assertEquals(Turnout.THROWN, t.getKnownState());
     }
+
     @Test
     @Override
     public void testDirectFeedback() {
         t.setFeedbackMode(Turnout.DIRECT);
-        Assert.assertEquals("Feedback Mode after set", Turnout.DIRECT, t.getFeedbackMode());
+        assertEquals( Turnout.DIRECT, t.getFeedbackMode(),
+            "Feedback Mode after set");
 
         listenStatus = Turnout.UNKNOWN;
         t.addPropertyChangeListener(new Listen());
@@ -149,9 +148,10 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         checkThrownOffSent();
         ((XNetTurnout) t).message(new XNetReply("01 04 05"));
         checkThrownOffSent();
-        jmri.util.JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
-        Assert.assertEquals(Turnout.THROWN,t.getState());
-        Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.THROWN, listenStatus);
+        JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
+        assertEquals(Turnout.THROWN,t.getState());
+        assertEquals( Turnout.THROWN, listenStatus,
+            "listener notified of change for DIRECT feedback");
 
         listenStatus = Turnout.UNKNOWN;
         t.setCommandedState(Turnout.CLOSED);
@@ -161,15 +161,17 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         checkClosedOffSent();
         ((XNetTurnout) t).message(new XNetReply("01 04 05"));
         checkClosedOffSent();
-        jmri.util.JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
-        Assert.assertEquals(Turnout.CLOSED,t.getState());
-        Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED, listenStatus);
+        JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
+        assertEquals(Turnout.CLOSED,t.getState());
+        assertEquals( Turnout.CLOSED, listenStatus,
+            "listener notified of change for DIRECT feedback");
     }
 
     @Override
     @Test
     public void testMonitoringFeedback() {
-        Assert.assertEquals("Feedback Mode after set", Turnout.MONITORING, t.getFeedbackMode());
+        assertEquals( Turnout.MONITORING, t.getFeedbackMode(),
+            "Feedback Mode after set");
 
         listenStatus = Turnout.UNKNOWN;
         t.addPropertyChangeListener(new Listen());
@@ -183,9 +185,10 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         ((XNetTurnout) t).message(new XNetReply("01 04 05"));
         checkThrownOffSent();
         ((XNetTurnout) t).message(new XNetReply("01 04 05"));
-        jmri.util.JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
-        Assert.assertEquals(Turnout.THROWN,t.getState());
-        Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.THROWN, listenStatus);
+        JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
+        assertEquals(Turnout.THROWN,t.getState());
+        assertEquals( Turnout.THROWN, listenStatus,
+            "listener notified of change for DIRECT feedback");
 
         listenStatus = Turnout.UNKNOWN;
         t.setCommandedState(Turnout.CLOSED);
@@ -197,19 +200,20 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         checkClosedOffSent();
         ((XNetTurnout) t).message(new XNetReply("01 04 05"));
         checkClosedOffSent();
-        jmri.util.JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
-        Assert.assertEquals(Turnout.CLOSED,t.getState());
-        Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED, listenStatus);
+        JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
+        assertEquals(Turnout.CLOSED,t.getState());
+        assertEquals( Turnout.CLOSED, listenStatus,
+            "listener notified of change for DIRECT feedback");
     }
 
     @Test
     @Override
     public void testDispose() {
-        t.setCommandedState(jmri.Turnout.CLOSED);    // in case registration with TrafficController
+        t.setCommandedState( Turnout.CLOSED);
+        // in case registration with TrafficController is deferred to after first use
 
-        //is deferred to after first use
         t.dispose();
-        Assert.assertEquals("controller listeners remaining", 1, numListeners());
+        assertEquals( 1, numListeners(), "controller listeners remaining");
     }
 
     @BeforeEach
@@ -231,6 +235,6 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnoutTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21XNetTurnoutTest.class);
 
 }

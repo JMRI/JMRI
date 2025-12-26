@@ -360,13 +360,24 @@ public class EnginesTableFrame extends OperationsFrame implements TableModelList
     }
 
     private void updateNumEngines() {
-        String count = Integer.toString(engineManager.getNumEntries());
+        String count = filterList(engineManager.getList());
         if (showAllLocos) {
             numEngines.setText(count);
         } else {
-            int showCount = getSortByList().size();
+            String showCount = filterList(getSortByList());
             numEngines.setText(showCount + "/" + count);
         }
+    }
+    
+    // only count real engines, ignore clones
+    private String filterList(List<Engine> list) {
+        int count = 0;
+        for (Engine eng : list) {
+            if (!eng.isClone()) {
+                count++;
+            }
+        }
+        return Integer.toString(count);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EnginesTableFrame.class);

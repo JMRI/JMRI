@@ -434,17 +434,17 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     }
 
     private void updateNumCars() {
-        String count = filterCarList(InstanceManager.getDefault(CarManager.class).getList());
+        String count = filterList(carManager.getList());
         if (showAllCars) {
             numCars.setText(count);
         } else {
-            String showCount = filterCarList(getSortByList());
+            String showCount = filterList(getSortByList());
             numCars.setText(showCount + "/" + count);
         }
     }
 
     // only count real cars, ignore clones
-    private String filterCarList(List<Car> list) {
+    private String filterList(List<Car> list) {
         int count = 0;
         for (Car car : list) {
             if (!car.isClone()) {

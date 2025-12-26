@@ -394,6 +394,10 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
 
     @Override
     public boolean isCellEditable(int row, int col) {
+        Engine engine = engineList.get(row);
+        if (engine.isClone()) {
+            return false;
+        }
         switch (col) {
             case SELECT_COLUMN:
             case SET_COLUMN:

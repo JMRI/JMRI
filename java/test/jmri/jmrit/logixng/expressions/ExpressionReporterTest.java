@@ -1,5 +1,15 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
@@ -29,9 +39,10 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ExpressionReport
@@ -97,94 +108,83 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testCtor() {
         ExpressionReporter expression2;
-        Assert.assertNotNull("reporter is not null", reporter);
+        assertNotNull( reporter, "reporter is not null");
 
         expression2 = new ExpressionReporter("IQDE321", null);
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Reporter '' Current Report is equal to \"\"", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
+        assertEquals( "Reporter '' Current Report is equal to \"\"", expression2.getLongDescription(), "String matches");
 
         expression2 = new ExpressionReporter("IQDE321", "My reporter");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My reporter", expression2.getUserName());
-        Assert.assertEquals("String matches", "Reporter '' Current Report is equal to \"\"", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My reporter", expression2.getUserName(), "Username matches");
+        assertEquals( "Reporter '' Current Report is equal to \"\"", expression2.getLongDescription(), "String matches");
 
         expression2 = new ExpressionReporter("IQDE321", null);
         expression2.getSelectNamedBean().setNamedBean(reporter);
-        Assert.assertTrue("reporter is correct", reporter == expression2.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Reporter IR1 Current Report is equal to \"\"", expression2.getLongDescription());
+        assertSame( reporter, expression2.getSelectNamedBean().getNamedBean().getBean(), "reporter is correct");
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
+        assertEquals( "Reporter IR1 Current Report is equal to \"\"", expression2.getLongDescription(), "String matches");
 
         Reporter l = InstanceManager.getDefault(ReporterManager.class).provide("IR2");
         expression2 = new ExpressionReporter("IQDE321", "My reporter");
         expression2.getSelectNamedBean().setNamedBean(l);
-        Assert.assertTrue("reporter is correct", l == expression2.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My reporter", expression2.getUserName());
-        Assert.assertEquals("String matches", "Reporter IR2 Current Report is equal to \"\"", expression2.getLongDescription());
+        assertEquals( l, expression2.getSelectNamedBean().getNamedBean().getBean(), "reporter is correct");
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My reporter", expression2.getUserName(), "Username matches");
+        assertEquals( "Reporter IR2 Current Report is equal to \"\"", expression2.getLongDescription(), "String matches");
 
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            new ExpressionReporter("IQE55:12:XY11", null);
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () -> {
+            var t = new ExpressionReporter("IQE55:12:XY11", null);
+            fail("Should have thrown, created " + t);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            new ExpressionReporter("IQE55:12:XY11", "A name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows( IllegalArgumentException.class, () -> {
+            var t = new ExpressionReporter("IQE55:12:XY11", "A name");
+            fail("Should have thrown, created " + t);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == expressionReporter.getChildCount());
+        assertEquals( 0, expressionReporter.getChildCount(), "getChildCount() returns 0");
 
-        boolean hasThrown = false;
-        try {
-            expressionReporter.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class, () ->
+            expressionReporter.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
     @Test
     public void testReporterOperation() {
-        Assert.assertEquals("String matches", "is less than", ExpressionReporter.ReporterOperation.LessThan.toString());
-        Assert.assertEquals("String matches", "is less than or equal", ExpressionReporter.ReporterOperation.LessThanOrEqual.toString());
-        Assert.assertEquals("String matches", "is equal to", ExpressionReporter.ReporterOperation.Equal.toString());
-        Assert.assertEquals("String matches", "is greater than or equal to", ExpressionReporter.ReporterOperation.GreaterThanOrEqual.toString());
-        Assert.assertEquals("String matches", "is greater than", ExpressionReporter.ReporterOperation.GreaterThan.toString());
-        Assert.assertEquals("String matches", "is not equal to", ExpressionReporter.ReporterOperation.NotEqual.toString());
-        Assert.assertEquals("String matches", "is null", ExpressionReporter.ReporterOperation.IsNull.toString());
-        Assert.assertEquals("String matches", "is not null", ExpressionReporter.ReporterOperation.IsNotNull.toString());
-        Assert.assertEquals("String matches", "does match regular expression", ExpressionReporter.ReporterOperation.MatchRegex.toString());
-        Assert.assertEquals("String matches", "does not match regular expression", ExpressionReporter.ReporterOperation.NotMatchRegex.toString());
+        assertEquals( "is less than", ExpressionReporter.ReporterOperation.LessThan.toString(), "String matches");
+        assertEquals( "is less than or equal", ExpressionReporter.ReporterOperation.LessThanOrEqual.toString(), "String matches");
+        assertEquals( "is equal to", ExpressionReporter.ReporterOperation.Equal.toString(), "String matches");
+        assertEquals( "is greater than or equal to", ExpressionReporter.ReporterOperation.GreaterThanOrEqual.toString(), "String matches");
+        assertEquals( "is greater than", ExpressionReporter.ReporterOperation.GreaterThan.toString(), "String matches");
+        assertEquals( "is not equal to", ExpressionReporter.ReporterOperation.NotEqual.toString(), "String matches");
+        assertEquals( "is null", ExpressionReporter.ReporterOperation.IsNull.toString(), "String matches");
+        assertEquals( "is not null", ExpressionReporter.ReporterOperation.IsNotNull.toString(), "String matches");
+        assertEquals( "does match regular expression", ExpressionReporter.ReporterOperation.MatchRegex.toString(), "String matches");
+        assertEquals( "does not match regular expression", ExpressionReporter.ReporterOperation.NotMatchRegex.toString(), "String matches");
 
-        Assert.assertTrue("operation has extra value", ExpressionReporter.ReporterOperation.LessThan.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionReporter.ReporterOperation.LessThanOrEqual.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionReporter.ReporterOperation.Equal.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionReporter.ReporterOperation.GreaterThanOrEqual.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionReporter.ReporterOperation.GreaterThan.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionReporter.ReporterOperation.NotEqual.hasExtraValue());
-        Assert.assertFalse("operation has not extra value", ExpressionReporter.ReporterOperation.IsNull.hasExtraValue());
-        Assert.assertFalse("operation has not extra value", ExpressionReporter.ReporterOperation.IsNotNull.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionReporter.ReporterOperation.MatchRegex.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionReporter.ReporterOperation.NotMatchRegex.hasExtraValue());
+        assertTrue( ExpressionReporter.ReporterOperation.LessThan.hasExtraValue(), "operation has extra value");
+        assertTrue( ExpressionReporter.ReporterOperation.LessThanOrEqual.hasExtraValue(), "operation has extra value");
+        assertTrue( ExpressionReporter.ReporterOperation.Equal.hasExtraValue(), "operation has extra value");
+        assertTrue( ExpressionReporter.ReporterOperation.GreaterThanOrEqual.hasExtraValue(), "operation has extra value");
+        assertTrue( ExpressionReporter.ReporterOperation.GreaterThan.hasExtraValue(), "operation has extra value");
+        assertTrue( ExpressionReporter.ReporterOperation.NotEqual.hasExtraValue(), "operation has extra value");
+        assertFalse( ExpressionReporter.ReporterOperation.IsNull.hasExtraValue(), "operation has not extra value");
+        assertFalse( ExpressionReporter.ReporterOperation.IsNotNull.hasExtraValue(), "operation has not extra value");
+        assertTrue( ExpressionReporter.ReporterOperation.MatchRegex.hasExtraValue(), "operation has extra value");
+        assertTrue( ExpressionReporter.ReporterOperation.NotMatchRegex.hasExtraValue(), "operation has extra value");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", LogixNG_Category.ITEM == _base.getCategory());
+        assertSame( LogixNG_Category.ITEM, _base.getCategory(), "Category matches");
     }
 
     @Test
@@ -193,14 +193,14 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
 
         expressionReporter.getSelectNamedBean().removeNamedBean();
-        Assert.assertEquals("Reporter", expressionReporter.getShortDescription());
-        Assert.assertEquals("Reporter '' Current Report is equal to \"\"", expressionReporter.getLongDescription());
+        assertEquals("Reporter", expressionReporter.getShortDescription());
+        assertEquals("Reporter '' Current Report is equal to \"\"", expressionReporter.getLongDescription());
         expressionReporter.getSelectNamedBean().setNamedBean(reporter);
         expressionReporter.setConstantValue("A value");
-        Assert.assertEquals("Reporter IR1 Current Report is equal to \"A value\"", expressionReporter.getLongDescription());
+        assertEquals("Reporter IR1 Current Report is equal to \"A value\"", expressionReporter.getLongDescription());
         expressionReporter.setConstantValue("Another value");
-        Assert.assertEquals("Reporter IR1 Current Report is equal to \"Another value\"", expressionReporter.getLongDescription());
-        Assert.assertEquals("Reporter IR1 Current Report is equal to \"Another value\"", expressionReporter.getLongDescription());
+        assertEquals("Reporter IR1 Current Report is equal to \"Another value\"", expressionReporter.getLongDescription());
+        assertEquals("Reporter IR1 Current Report is equal to \"Another value\"", expressionReporter.getLongDescription());
     }
 
     @Test
@@ -218,25 +218,25 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         expressionReporter.setConstantValue("New value");
 
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
         // Set the report. This should not execute the conditional.
         reporter.setReport("Other value");
         reporter.setReport("New value");
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
         // Set the report. This should not execute the conditional.
         reporter.setReport("Other value");
         reporter.setReport("New value");
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // Set the report. This should execute the conditional.
         reporter.setReport("Other value");
         reporter.setReport("New value");
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        assertTrue( atomicBoolean.get(), "atomicBoolean is true");
 
 
         // Test regular expression match
@@ -246,32 +246,32 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         expressionReporter.setRegEx("Hello.*");
         reporter.setReport("Hello world");
         atomicBoolean.set(false);
-        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "The expression has not executed or returns false");
         conditionalNG.setEnabled(true);
-        Assert.assertTrue("The expression returns true",atomicBoolean.get());
+        assertTrue( atomicBoolean.get(), "The expression returns true");
 
         conditionalNG.setEnabled(false);
         reporter.setReport("Some world");
         atomicBoolean.set(false);
-        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "The expression has not executed or returns false");
         conditionalNG.setEnabled(true);
-        Assert.assertFalse("The expression returns false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "The expression returns false");
 
         // Test regular expressions
         conditionalNG.setEnabled(false);
         expressionReporter.setRegEx("\\w\\w\\d+\\s\\d+");
         reporter.setReport("Ab213 31");
         atomicBoolean.set(false);
-        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "The expression has not executed or returns false");
         conditionalNG.setEnabled(true);
-        Assert.assertTrue("The expression returns true",atomicBoolean.get());
+        assertTrue( atomicBoolean.get(), "The expression returns true");
 
         conditionalNG.setEnabled(false);
         reporter.setReport("Ab213_31");    // Underscore instead of space
         atomicBoolean.set(false);
-        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "The expression has not executed or returns false");
         conditionalNG.setEnabled(true);
-        Assert.assertFalse("The expression returns false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "The expression returns false");
 
 
         // Test regular expression not match
@@ -281,32 +281,32 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         expressionReporter.setRegEx("Hello.*");
         reporter.setReport("Hello world");
         atomicBoolean.set(false);
-        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "The expression has not executed or returns false");
         conditionalNG.setEnabled(true);
-        Assert.assertFalse("The expression returns false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "The expression returns false");
 
         conditionalNG.setEnabled(false);
         reporter.setReport("Some world");
         atomicBoolean.set(false);
-        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "The expression has not executed or returns false");
         conditionalNG.setEnabled(true);
-        Assert.assertTrue("The expression returns true",atomicBoolean.get());
+        assertTrue( atomicBoolean.get(), "The expression returns true");
 
         // Test regular expressions
         conditionalNG.setEnabled(false);
         expressionReporter.setRegEx("\\w\\w\\d+\\s\\d+");
         reporter.setReport("Ab213 31");
         atomicBoolean.set(false);
-        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "The expression has not executed or returns false");
         conditionalNG.setEnabled(true);
-        Assert.assertFalse("The expression returns false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "The expression returns false");
 
         conditionalNG.setEnabled(false);
         reporter.setReport("Ab213_31");    // Underscore instead of space
         atomicBoolean.set(false);
-        Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "The expression has not executed or returns false");
         conditionalNG.setEnabled(true);
-        Assert.assertTrue("The expression returns true",atomicBoolean.get());
+        assertTrue( atomicBoolean.get(), "The expression returns true");
 
 
         long counter;
@@ -322,33 +322,33 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG
         conditionalNG.setEnabled(false);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Set the report. This should not execute the conditional.
         reporter.setReport("A report");
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter,atomicCounter.get(), "counter is correct");
         // Clear the report. This should not execute the conditional.
         reporter.setReport(null);
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Set the report. This should execute the conditional.
         reporter.setReport("A report");
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",++counter,atomicCounter.get());
+        assertTrue( atomicBoolean.get(), "atomicBoolean is true");
+        assertEquals( ++counter, atomicCounter.get(), "counter is correct");
         // Clear the atomic boolean.
         atomicBoolean.set(false);
         // Clear the report. This should not execute the conditional.
         reporter.setReport(null);
         // The action should now not be executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter,atomicCounter.get(), "counter is correct");
 
 
         expressionReporter.setReporterOperation(ExpressionReporter.ReporterOperation.IsNull);
@@ -362,33 +362,33 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG
         conditionalNG.setEnabled(false);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Set the report. This should not execute the conditional.
         reporter.setReport("A report");
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Clear the report. This should not execute the conditional.
         reporter.setReport("Some report");
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Clear the report. This should execute the conditional.
         reporter.setReport(null);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",++counter,atomicCounter.get());
+        assertTrue( atomicBoolean.get(), "atomicBoolean is true");
+        assertEquals( ++counter, atomicCounter.get(), "counter is correct");
         // Clear the atomic boolean.
         atomicBoolean.set(false);
         // Set the report. This should not execute the conditional.
         reporter.setReport("A report");
         // The action should now not be executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
 
         reporter.setReport("Some other report");
 
@@ -405,33 +405,33 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG
         conditionalNG.setEnabled(false);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Set the report. This should not execute the conditional.
         reporter.setReport("A report");
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Clear the report. This should not execute the conditional.
         reporter.setReport("Some report");
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Set the report. This should execute the conditional.
         reporter.setReport("A report");
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",++counter,atomicCounter.get());
+        assertTrue( atomicBoolean.get(), "atomicBoolean is true");
+        assertEquals( ++counter, atomicCounter.get(), "counter is correct");
         // Clear the atomic boolean.
         atomicBoolean.set(false);
         // Clear the report. This should not execute the conditional.
         reporter.setReport(null);
         // The action should now not be executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
 
 
         expressionReporter.setReporterOperation(ExpressionReporter.ReporterOperation.IsNull);
@@ -445,33 +445,33 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG
         conditionalNG.setEnabled(false);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Set the report. This should not execute the conditional.
         reporter.setReport("A report");
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Clear the report. This should not execute the conditional.
         reporter.setReport("Some report");
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Clear the report. This should not execute the conditional.
         reporter.setReport(null);
         // The action should now not be executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Clear the atomic boolean.
         atomicBoolean.set(false);
         // Set the report. This should not execute the conditional.
         reporter.setReport("A report");
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
 
 
         expressionReporter.setReporterOperation(ExpressionReporter.ReporterOperation.Equal);
@@ -486,37 +486,37 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG
         conditionalNG.setEnabled(false);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Set state ON. This should not execute the conditional.
         reporter.setState(jmri.DigitalIO.ON);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Set state UNKNOWN. This should not execute the conditional.
         reporter.setState(NamedBean.UNKNOWN);
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
         // Set state ON. This should execute the conditional.
         reporter.setState(NamedBean.INCONSISTENT);
         reporter.setState(jmri.DigitalIO.ON);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
         // setState() doesn't give a property change event so we need to call conditionalNG.execute()
         conditionalNG.execute();
-        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",++counter,atomicCounter.get());
+        assertTrue( atomicBoolean.get(), "atomicBoolean is true");
+        assertEquals( ++counter, atomicCounter.get(), "counter is correct");
         // Clear the atomic boolean.
         atomicBoolean.set(false);
         // Set state UNKNOWN. This should not execute the conditional.
         reporter.setState(NamedBean.UNKNOWN);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        Assert.assertEquals("counter is correct",counter,atomicCounter.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
+        assertEquals( counter, atomicCounter.get(), "counter is correct");
     }
 
     @Test
@@ -524,18 +524,18 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         expressionReporter.unregisterListeners();
 
         Reporter otherReporter = InstanceManager.getDefault(ReporterManager.class).provide("IR99");
-        Assert.assertNotEquals("Reporters are different", otherReporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
+        assertNotEquals( otherReporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean(), "Reporters are different");
         expressionReporter.getSelectNamedBean().setNamedBean(otherReporter);
-        Assert.assertEquals("Reporters are equal", otherReporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( otherReporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean(), "Reporters are equal");
 
         NamedBeanHandle<Reporter> otherReporterHandle =
                 InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(otherReporter.getDisplayName(), otherReporter);
         expressionReporter.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull("Reporter is null", expressionReporter.getSelectNamedBean().getNamedBean());
+        assertNull( expressionReporter.getSelectNamedBean().getNamedBean(), "Reporter is null");
         expressionReporter.getSelectNamedBean().setNamedBean(otherReporterHandle);
-        Assert.assertEquals("Reporters are equal", otherReporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertEquals("ReporterHandles are equal", otherReporterHandle, expressionReporter.getSelectNamedBean().getNamedBean());
+        assertEquals( otherReporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean(), "Reporters are equal");
+        assertEquals( otherReporterHandle, expressionReporter.getSelectNamedBean().getNamedBean(), "ReporterHandles are equal");
     }
 
     @Test
@@ -551,55 +551,49 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         reporter14.setUserName("Some user name");
 
         expressionReporter.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull("reporter handle is null", expressionReporter.getSelectNamedBean().getNamedBean());
+        assertNull( expressionReporter.getSelectNamedBean().getNamedBean(), "reporter handle is null");
 
         expressionReporter.getSelectNamedBean().setNamedBean(reporter11);
-        Assert.assertTrue("reporter is correct", reporter11 == expressionReporter.getSelectNamedBean().getNamedBean().getBean());
+        assertSame( reporter11, expressionReporter.getSelectNamedBean().getNamedBean().getBean(), "reporter is correct");
 
         expressionReporter.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull("reporter handle is null", expressionReporter.getSelectNamedBean().getNamedBean());
+        assertNull( expressionReporter.getSelectNamedBean().getNamedBean(), "reporter handle is null");
 
         expressionReporter.getSelectNamedBean().setNamedBean(memoryHandle12);
-        Assert.assertTrue("reporter handle is correct", memoryHandle12 == expressionReporter.getSelectNamedBean().getNamedBean());
+        assertSame( memoryHandle12, expressionReporter.getSelectNamedBean().getNamedBean(), "reporter handle is correct");
 
         expressionReporter.getSelectNamedBean().setNamedBean("A non existent reporter");
-        Assert.assertNull("reporter handle is null", expressionReporter.getSelectNamedBean().getNamedBean());
+        assertNull( expressionReporter.getSelectNamedBean().getNamedBean(), "reporter handle is null");
         JUnitAppender.assertErrorMessage("Reporter \"A non existent reporter\" is not found");
 
         expressionReporter.getSelectNamedBean().setNamedBean(reporter13.getSystemName());
-        Assert.assertTrue("reporter is correct", reporter13 == expressionReporter.getSelectNamedBean().getNamedBean().getBean());
+        assertSame( reporter13, expressionReporter.getSelectNamedBean().getNamedBean().getBean(), "reporter is correct");
 
         String userName = reporter14.getUserName();
-        Assert.assertNotNull("reporter is not null", userName);
+        assertNotNull( userName, "reporter is not null");
         expressionReporter.getSelectNamedBean().setNamedBean(userName);
-        Assert.assertTrue("reporter is correct", reporter14 == expressionReporter.getSelectNamedBean().getNamedBean().getBean());
+        assertSame( reporter14, expressionReporter.getSelectNamedBean().getNamedBean().getBean(), "reporter is correct");
     }
 
     @Test
     public void testSetReporterException() {
         // Test setReporter() when listeners are registered
-        Assert.assertNotNull("Reporter is not null", reporter);
-        Assert.assertNotNull("Reporter is not null", expressionReporter.getSelectNamedBean().getNamedBean());
+        assertNotNull( reporter, "Reporter is not null");
+        assertNotNull( expressionReporter.getSelectNamedBean().getNamedBean(), "Reporter is not null");
         expressionReporter.registerListeners();
-        boolean thrown = false;
-        try {
-            expressionReporter.getSelectNamedBean().setNamedBean("A memory");
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        RuntimeException ex = assertThrows( RuntimeException.class, () ->
+            expressionReporter.getSelectNamedBean().setNamedBean("A memory"),
+                "Expected exception thrown");
+        assertNotNull(ex);
         JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
-        thrown = false;
-        try {
+        ex = assertThrows( RuntimeException.class, () -> {
             Reporter reporter99 = InstanceManager.getDefault(ReporterManager.class).provide("IR99");
             NamedBeanHandle<Reporter> reporterHandle99 =
                     InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(reporter99.getDisplayName(), reporter99);
             expressionReporter.getSelectNamedBean().setNamedBean(reporterHandle99);
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        }, "Expected exception thrown");
+        assertNotNull(ex);
         JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
     }
 
@@ -609,45 +603,42 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
 
         // Get the expression and set the memory
-        Assert.assertNotNull("Reporter is not null", reporter);
+        assertNotNull( reporter, "Reporter is not null");
 
         // Get some other memory for later use
         Reporter otherReporter = InstanceManager.getDefault(ReporterManager.class).provide("IR99");
-        Assert.assertNotNull("Reporter is not null", otherReporter);
-        Assert.assertNotEquals("Reporter is not equal", reporter, otherReporter);
+        assertNotNull( otherReporter, "Reporter is not null");
+        assertNotEquals( reporter, otherReporter, "Reporter is not equal");
 
         // Test vetoableChange() for some other propery
         expressionReporter.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean(), "Reporter matches");
 
         // Test vetoableChange() for a string
         expressionReporter.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean(), "Reporter matches");
         expressionReporter.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean(), "Reporter matches");
 
         // Test vetoableChange() for another memory
         expressionReporter.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherReporter, null));
-        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean(), "Reporter matches");
         expressionReporter.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherReporter, null));
-        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean(), "Reporter matches");
 
         // Test vetoableChange() for its own memory
-        boolean thrown = false;
-        try {
-            expressionReporter.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", reporter, null));
-        } catch (PropertyVetoException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        PropertyVetoException ex = assertThrows( PropertyVetoException.class, () ->
+            expressionReporter.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", reporter, null)),
+                "Expected exception thrown");
+        assertNotNull(ex);
 
-        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean(), "Reporter matches");
         expressionReporter.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", reporter, null));
-        Assert.assertNull("Reporter is null", expressionReporter.getSelectNamedBean().getNamedBean());
+        assertNull( expressionReporter.getSelectNamedBean().getNamedBean(), "Reporter is null");
     }
 
-    // The minimal setup for log4J
     @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -692,12 +683,13 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         expressionReporter.getSelectNamedBean().setNamedBean(reporter);
         reporter.setReport("");
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
     @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
