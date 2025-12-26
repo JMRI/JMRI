@@ -2,7 +2,6 @@ package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,10 +10,11 @@ import org.junit.jupiter.api.*;
  */
 public class TamsConstantsTest {
 
+    // no Ctor test, class only supplies static methods.
+
     @Test
-    public void testCTor() {
-        TamsConstants t = new TamsConstants();
-        Assert.assertNotNull("exists",t);
+    public void testTamsConstants() {
+        Assertions.assertEquals( 0x99, TamsConstants.XSENSOFF);
     }
 
     @BeforeEach
