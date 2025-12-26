@@ -370,6 +370,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         toolMenu.addSeparator();
         toolMenu.add(new ModifyLocationsAction(_location));
         toolMenu.add(new ModifyLocationsCarLoadsAction(_location));
+        toolMenu.add(new ModifyLocationsQuickServiceAction(_location));
         toolMenu.addSeparator();
         toolMenu.add(new ShowCarsByLocationAction(false, _location, null));
         toolMenu.add(new ShowLocosByLocationAction(false, _location, null));

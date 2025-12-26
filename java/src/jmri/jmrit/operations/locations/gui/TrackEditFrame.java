@@ -294,8 +294,6 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         panels.add(dropPanel);
         panels.add(pickupPanel);
         panels.add(panelQuickService);
-        
-        panelQuickService.setVisible(false);
 
         // add optional panels
         panels.add(panelOpt3);

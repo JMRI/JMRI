@@ -145,6 +145,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#EditCarType">Edit Car Type</a></li>
                 <li><a href="#ModifyLocationByCarType">Modify Location by Car Type</a></li>
                 <li><a href="#ModifyLocationByCarLoad">Modify Location by Car Load</a></li>
+                <li><a href="#ModifyLocationByQuickService">Modify Location by Quick Service</a></li>
                 <li><a href="#ShowCars">Show Cars</a></li>
                 <li><a href="#ShowLocomotives">Show Locomotives</a></li>
                 <li><a href="#ShowTrainsServicingThisLocation">Show Trains Servicing this Location</a></li>
@@ -246,6 +247,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                     Type</a></li>
                 <li><a href="#ModifyLocationsByCarLoad">Modify Locations and Tracks by Car
                     Load</a></li>
+                <li><a href="#ModifyLocationsByQuickService">Modify Locations and Tracks by
+                    Quick Service</a></li>
                 <li><a href="#ExportLocations">Export Locations</a></li>
                 <li><a href="#ImportLocations">Import Locations</a></li>
                 <li><a href="#ShowCarsLocations">Show Cars</a></li>
@@ -1247,7 +1250,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       complete their work reasonably close to the times provided on the train Manifests. When
       running OperationsPro in on time mode, tracks that have
       <a href="#InterchangeQuickService">Quick Service</a> enabled can be reused multiple times
-      based on when cars are set out and picked up.
+      based on when cars are set out and picked up.  On Time mode is an extension of aggressive mode.
 
       <p>After selecting the "On Time" radio button, a text field called "Dwell Time" is
         enabled. Dwell time is the number of extra minutes the program will use to determine when a
@@ -1262,11 +1265,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         less cars to be moved in a given time.</p>
 
       <p>
+        See <a href="#ModifyLocationsByQuickService">Modify Locations and Tracks by Quick
+          Service</a> to modify your tracks for quick service. Only tracks enabled for quick service are
+        reused based on train timing when using the on time mode.
+      </p>
+
+      <p>
         To help troubleshoot timing problems with your cars using the on time mode, it is
         recommended that you show the "Last Train" on your Manifests and switch lists for car pick
         ups. This way if a car isn't found, you'll at least know which train was supposed to drop
         off the car. You should also enable train, car and engine <a href="#LoggingOptions">logging</a>,
-        and <a href="#SaveTrainManifests">Save Train Manifests, Build Reports, and Switch Lists</a>
+        and <a href="#SaveTrainManifests">Save Train Manifests, Build Reports, and Switch Lists</a>.
       </p>
 
       <h4>Number of Passes During Build</h4>
@@ -2548,6 +2557,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       The tool "Modify Location by Car Load" allows you to quickly select a car type and decide
       which tracks will service the car's load. Only tracks that can service the car's type are
       enabled.
+      
+       <h4 id="ModifyLocationByQuickService">Modify Location by Quick Service</h4>
+       The tool "Modify Location by Quick Service" allows you to quickly see and decide which
+       tracks support the <a href="#InterchangeQuickService">Quick Service</a> feature.
 
       <h4 id="ShowCars">Show Cars</h4>
       If you only want to view cars for a location or track, select "Show Cars" from the "Tools"
@@ -3186,10 +3199,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         trains and you've read and can understand the train build reports.</p>
 
       <h3 id="InterchangeQuickService">Quick Service</h3>
-      The quick service feature for a C/I track allow you to create a Manifest or switch list
+      The quick service feature for a track allow you to create a Manifest or switch list
       showing cars being moved more than once. When the quick service feature is enabled, the
-      program will create "clone cars" when building a train that delivers cars to the C/I track,
-      and place the original cars at the C/I track, allowing the train being built or another train
+      program will create "clone cars" when building a train that delivers cars to the track,
+      and place the original cars at the track, allowing the train being built or another train
       built later to have access to the cars. This is an advanced feature and is recommended for
       operators that have gained some experience with the program.
 
@@ -4010,6 +4023,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       The tool "Modify Locations by Car Load" allows you to quickly select a car type and decide
       which locations and tracks will service the car's load. Only tracks that can service the car's
       type are enabled.
+
+      <h4 id="ModifyLocationsByQuickService">Modify Locations by Quick Service</h4>
+      The tool "Modify Locations by Quick Service" allows you to quickly see and decide which
+      locations and tracks support the
+      <a href="#InterchangeQuickService">Quick Service</a> feature. To enable quick service for all
+      locations and tracks, press the "Select All" button followed by the "Save" button.
 
       <h4 id="ShowCarsLocations">Show Cars</h4>
       To only view cars that have a location assigned to them, select "Show Cars" from the "Tools"
