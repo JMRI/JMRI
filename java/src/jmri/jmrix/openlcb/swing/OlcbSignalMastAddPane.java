@@ -44,10 +44,8 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         // populate the OpenLCB connections list before creating GUI components.
         getOlcbConnections();
 
-        // If the connections list has less than 2 items, don't show a selector.
-        // This maintains backward compatibility with previous versions.
         if (olcbConnections != null) {
-            // Connection selector
+            // Create and fill panel for the connection selector
             JPanel p = new JPanel();
             TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
             border.setTitle(Bundle.getMessage("OlcbConnection"));
