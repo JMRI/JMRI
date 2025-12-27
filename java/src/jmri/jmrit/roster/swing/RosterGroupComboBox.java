@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 import javax.swing.JComboBox;
+
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 
@@ -17,7 +18,7 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 public class RosterGroupComboBox extends JComboBox<String> implements RosterGroupSelector {
 
     private Roster _roster;
-    private boolean allEntriesEnabled = true;
+    private boolean allEntriesEnabled = false;
 
     /**
      * Create a RosterGroupComboBox with an arbitrary Roster instead of the
@@ -61,6 +62,7 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
                 }
             }
         });
+        setEditable(false);
     }
 
     /**
@@ -80,7 +82,7 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
 
     /**
      * Update the combo box and select given String.
-     * @param selection the selection to update to
+     * @param selection the selection to update to; null or empty means 1st item if present
      */
     public final void update(String selection) {
         removeAllItems();
@@ -97,18 +99,24 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
             this.setToolTipText(null);
         } else {
             if (this.getItemCount() == 0) {
-                this.addItem(Bundle.getMessage("RosterGroupComboBoxNoGroups"));
+                // this.addItem(Bundle.getMessage("RosterGroupComboBoxNoGroups"));
                 this.setToolTipText(Bundle.getMessage("RosterGroupComboBoxNoGroupsToolTip"));
+                return;
             } else {
                 this.setToolTipText(null);
             }
         }
-        setSelectedItem(selection);
+
         if (this.getItemCount() == 1) {
             this.setSelectedIndex(0);
             this.setEnabled(false);
         } else {
             this.setEnabled(true);
+            if (selection != null && !selection.isEmpty()) {
+                setSelectedItem(selection);
+            } else {
+                this.setSelectedIndex(0);
+            }
         }
     }
 
@@ -132,6 +140,8 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
     }
 
     /**
+     * Setting this true will display the "All Groups" item in 
+     * addition to the defined groups.  Default is false.
      * @param allEntriesEnabled the allEntriesEnabled to set
      */
     public void setAllEntriesEnabled(boolean allEntriesEnabled) {

@@ -430,7 +430,17 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>The window you use to assign roster entries to groups
+                has been improved: 
+                <ul>
+                    <li>A "Create Group" button has been added
+                        to make that more convenient.</li>
+                    <li>An edge-case where you could
+                        accidentally make a copy of the "All Entries" group has 
+                        been removed. </li>
+                    <li>A blank group name will no longer
+                        appear in the selection box.</li>
+                </ul></li>
         </ul>
 
    <h3>Dispatcher</h3>
