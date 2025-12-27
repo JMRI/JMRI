@@ -3640,6 +3640,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (getLeadEngine() == null) {
             return NONE;
         }
+        if (getLeadEngine().isClone()) {
+            return getLeadEngine().getNumber().split(Engine.CLONE_REGEX)[0];
+        }
         return getLeadEngine().getNumber();
     }
 
