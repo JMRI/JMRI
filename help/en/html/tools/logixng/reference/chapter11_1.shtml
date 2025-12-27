@@ -19,11 +19,11 @@
 
       <p>The <strong>LogixNG table</strong> icon can be added to a <strong>Panel Editor</strong>
       panel to display the contents of a LogixNG table.  The table can be read only, editable or
-      only selected columns are editable. It is also possible to have columns with <em>buttons</em>
+      with only selected columns editable. It is also possible to have columns with <em>buttons</em>
       or <em>dropdown lists</em>.</p>
 
       <p>The <strong>LogixNG panel</strong> icon type is selected from the <strong>Panel Editor</strong>
-      icon type list.  This will display a list LogixNG tables.</p>
+      icon type list.  This will display a list of LogixNG tables.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter11_1/table_select_list.png"><img class="image-border" src=
@@ -122,7 +122,8 @@
 
         <dt>__newValue__</dt>
         <dd>The new value to be validated.  When the __type__ is <strong>button</strong>, the new
-        value will be the same as the oldValue.</dd>
+        value will be the same as the oldValue.  The new value can be changed by the validation
+        logic. The example changes <em>Assigned</em> to <em>Active</em> when a button is clicked.</dd>
       </dl>
 
       <p>The basic logic structure for a validation module is a if-then-elseif-else pattern with a
