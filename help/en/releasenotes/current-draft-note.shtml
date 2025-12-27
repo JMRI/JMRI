@@ -430,6 +430,13 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
+            <li>Some of the buttons have been relabelled for clarity
+                <ul>
+                    <li> New Loco &rarr; New Entry
+                    <li> Identify &rarr; Find in Roster
+                </ul>
+                Along with machine translations for other languages.
+            </li>
             <li>The window you use to assign roster entries to groups
                 has been improved: 
                 <ul>
