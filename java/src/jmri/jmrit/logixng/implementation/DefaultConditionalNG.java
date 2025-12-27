@@ -250,10 +250,11 @@ public class DefaultConditionalNG extends AbstractBase
                 } else {
                     conditionalNG.getFemaleSocket().execute();
                 }
-            } catch (AbortConditionalNG_IgnoreException | ReturnException | ExitException e) {
+            } catch (AbortConditionalNG_IgnoreException | ReturnException | ExitException | ValidationErrorException e) {
                 // A AbortConditionalNG_IgnoreException should be ignored.
                 // A Return action in a ConditionalNG causes a ReturnException so this is okay.
                 // An Exit action in a ConditionalNG causes a ExitException so this is okay.
+                // A ValidationError action in a ConditionalNG causes a ValidationErrorException so this is okay.
             } catch (PassThruException e) {
                 // This happens due to a a Break action or a Continue action that isn't handled.
                 log.info("ConditionalNG {} was aborted during execute: {}",
