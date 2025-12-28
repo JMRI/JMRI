@@ -1261,11 +1261,11 @@ LogixNG: IQ:AUTO:0001
 
       <h4 id="flow_error">Error</h4>
 
-      <p>Triggers an error. The user can enter an error message if desired.</p>
+      <p>Triggers an error and displays the standard error dialog.</p>
 
       <p><span class="since">since 5.15.1</span>The error message has been changed from a simple
       text box to multiple input options including formulas.  This makes it possible to create
-      better messages.  <em>Note:  The storage format change has changed, so any occurrences of
+      better messages.  <em>Note:  The storage format has changed. Any existing occurrences of
       <strong>Error</strong> actions will prevent loading the xml data file with previous versions
       of JMRI.</em>
 
@@ -1538,7 +1538,7 @@ LogixNG: IQ:AUTO:0001
 
       <h4 id="flow_validation_error">Validation Error<span class="since">since 5.15.1</span></h4>
 
-      <p>This is similar to the Error action but it does not interrupt the logic flow.</p>
+      <p>This is similar to the Error action but it uses a standard dialog instead of the error dialog.</p>
 
       <p>Enter the text to be displayed using one of the input types. The <strong>format()</strong>
       function can be used to insert content such as local variable values into the text string.</p>
