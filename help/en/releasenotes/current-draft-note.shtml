@@ -126,7 +126,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Fixed a problem adding signal masts when the 
+                    OpenLCB or LCC system letter is not "M".</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -429,7 +430,24 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Some of the buttons have been relabelled for clarity
+                <ul>
+                    <li> New Loco &rarr; New Entry
+                    <li> Identify &rarr; Find in Roster
+                </ul>
+                Along with machine translations for other languages.
+            </li>
+            <li>The window you use to assign roster entries to groups
+                has been improved: 
+                <ul>
+                    <li>A "Create Group" button has been added
+                        to make that more convenient.</li>
+                    <li>An edge-case where you could
+                        accidentally make a copy of the "All Entries" group has 
+                        been removed. </li>
+                    <li>A blank group name will no longer
+                        appear in the selection box.</li>
+                </ul></li>
         </ul>
 
    <h3>Dispatcher</h3>

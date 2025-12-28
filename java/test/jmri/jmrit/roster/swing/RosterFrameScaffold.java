@@ -15,11 +15,11 @@ public class RosterFrameScaffold extends JFrameOperator{
    }
 
    public void pushIdentifyButton(){
-        new JButtonOperator(this,"Identify").push();
+        new JButtonOperator(this,"Find in Roster").push();
    }
 
    public boolean isIdentifyButtonEnabled(){
-        return new JButtonOperator(this,"Identify").isEnabled();
+        return new JButtonOperator(this,"Find in Roster").isEnabled();
    }
 
 }
