@@ -295,6 +295,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         // listen for location switch list changes
         addPropertyChangeLocations();
 
+        // now load train icons on panels
+        trainManager.loadTrainIcons();
+
         // auto save
         AutoSave.start();
     }

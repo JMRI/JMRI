@@ -107,12 +107,8 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         fileLoaded = true; // set flag trains are loaded
         InstanceManager.getDefault(AutomationManager.class).load(root);
 
-        // now load train icons on panels
-        InstanceManager.getDefault(TrainManager.class).loadTrainIcons();
-
         log.debug("Trains have been loaded!");
-        //        InstanceManager.getDefault(TrainLogger.class).enableTrainLogging(Setup.isTrainLoggerEnabled());
-
+        
         for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
             if (train.getStatusCode() == Train.CODE_BUILDING) {
                 log.warn("Reseting train ({}), was building when saved", train.getName());
