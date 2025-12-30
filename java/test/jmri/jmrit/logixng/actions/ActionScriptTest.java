@@ -1,13 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
-
 import java.util.ArrayList;
 
 import jmri.InstanceManager;
@@ -21,11 +13,7 @@ import jmri.script.ScriptEngineSelector.Engine;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.*;
 
 /**
  * Test ActionSimpleScript
@@ -100,31 +88,35 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
 
         action2 = new ActionScript("IQDA321", null);
         action2.setScript(SCRIPT_TEXT);
-        assertNotNull( action2, "object exists");
-        assertNull( action2.getUserName(), "Username matches");
-        assertEquals( "Execute script: Single line command. Script lights.provideLight(\"IL1\").commandedState = ON",
-            action2.getLongDescription(), "String matches");
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertNull("Username matches", action2.getUserName());
+        Assert.assertEquals("String matches", "Execute script: Single line command. Script lights.provideLight(\"IL1\").commandedState = ON", action2.getLongDescription());
 
         action2 = new ActionScript("IQDA321", "My action");
         action2.setScript(SCRIPT_TEXT);
-        assertNotNull( action2, "object exists");
-        assertEquals( "My action", action2.getUserName(), "Username matches");
-        assertEquals( "Execute script: Single line command. Script lights.provideLight(\"IL1\").commandedState = ON",
-            action2.getLongDescription(), "String matches");
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertEquals("Username matches", "My action", action2.getUserName());
+        Assert.assertEquals("String matches", "Execute script: Single line command. Script lights.provideLight(\"IL1\").commandedState = ON", action2.getLongDescription());
 
-        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class,
-            () -> {
-                ActionScript aScript = new ActionScript("IQA55:12:XY11", null);
-                fail("action script created: " + aScript.toString() );
-            }, "Illegal system name Expected exception thrown");
-        assertNotNull(ex);
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            ActionScript aScript = new ActionScript("IQA55:12:XY11", null);
+            Assert.fail("action script created: " + aScript.toString() );
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
 
-        ex = assertThrows( IllegalArgumentException.class,
-            () -> {
-                ActionScript aScript = new ActionScript("IQA55:12:XY11", "A name");
-                fail("action script created: " + aScript.toString() );
-            }, "Illegal system name Expected exception thrown");
-        assertNotNull(ex);
+        thrown = false;
+        try {
+            // Illegal system name
+            ActionScript aScript = new ActionScript("IQA55:12:XY11", "A name");
+            Assert.fail("action script created: " + aScript.toString() );
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
     }
 
     @Test
@@ -134,39 +126,42 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
 
         // Test without script
         actionScript.setScript(null);
-        assertEquals( 0, actionScript.getChildCount(), "getChildCount() returns 0");
+        Assert.assertTrue("getChildCount() returns 0", 0 == actionScript.getChildCount());
 
-        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class,
-            () -> actionScript.getChild(0),
-            "Exception is thrown");
-        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
+        boolean hasThrown = false;
+        try {
+            actionScript.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
 
         // Test with script
         actionScript.setScript(SCRIPT_TEXT);
-        assertEquals( 0, actionScript.getChildCount(), "getChildCount() returns 0");
+        Assert.assertTrue("getChildCount() returns 0", 0 == actionScript.getChildCount());
     }
 
     @Test
     public void testDescription() {
-        assertEquals("Script", actionScript.getShortDescription());
-        assertEquals("Execute script: Single line command. Script lights.provideLight(\"IL1\").commandedState = ON",
-            actionScript.getLongDescription());
+        Assert.assertEquals("Script", actionScript.getShortDescription());
+        Assert.assertEquals("Execute script: Single line command. Script lights.provideLight(\"IL1\").commandedState = ON", actionScript.getLongDescription());
     }
 
     @Test
-    public void testAction_SingleJythonCommand() throws JmriException {
+    public void testAction_SingleJythonCommand() throws Exception {
         // Test action
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light.setCommandedState(Light.OFF);
 
         // The action is not yet executed so the light should be off
-        assertTrue( light.getState() == Light.OFF, "light is off");
+        Assert.assertTrue("light is off", light.getState() == Light.OFF);
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // Set the sensor to execute the conditionalNG
         sensor.setState(Sensor.ACTIVE);
         // The action should now be executed so the light should be on
-        assertTrue( light.getState() == Light.ON, "light is on");
+        Assert.assertTrue("light is on", light.getState() == Light.ON);
 
 
         // Test action when triggered because the script is listening on the sensor IS2
@@ -187,22 +182,22 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
 //        actionScript.setScript(_scriptText);
 
         // The action is not yet executed so the atomic boolean should be false
-        assertEquals( Light.OFF, light.getState(), "light is off");
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
         // Activate the sensor. This should not execute the conditional.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        assertEquals( Light.OFF, light.getState(), "light is off");
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
         // Inactivate the sensor. This should not execute the conditional.
         sensor2.setCommandedState(Sensor.INACTIVE);
         // The action is not yet executed so the atomic boolean should be false
-        assertEquals( Light.OFF, light.getState(), "light is off");
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // Activate the sensor. This should execute the conditional.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // The action should now be executed so the atomic boolean should be true
-        assertEquals( Light.ON, light.getState(), "light is on");
+        Assert.assertEquals("light is on",Light.ON,light.getState());
 
         // Unregister listeners
         actionScript.unregisterListeners();
@@ -212,7 +207,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         // Activate the sensor. This not should execute the conditional since listerners are not registered.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // Listerners are not registered so the atomic boolean should be false
-        assertEquals( Light.OFF, light.getState(), "light is off");
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
 
         // Test execute() without script. This shouldn't do anything but we
         // do it for coverage.
@@ -221,16 +216,13 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     }
 
     @Test
-    public void testAction_SingleEcmaCommand() throws JmriException {
+    public void testAction_SingleEcmaCommand() throws Exception {
         actionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
 
         // Java 17 doesn't have ECMA_SCRIPT
-        JUnitAppender.suppressWarnMessage("Cannot select engine for the language ECMAScript");
         Engine engine = actionScript.getScriptEngineSelector().getSelectedEngine();
-        assumeTrue( engine != null, "Engine not null");
-        assertNotNull(engine);
-        assumeTrue(engine.getLanguageName().equals(ScriptEngineSelector.ECMA_SCRIPT),
-            () -> "Engine Language Name was \"" + engine.getLanguageName() + "\" not \"" + ScriptEngineSelector.ECMA_SCRIPT+"\"");
+        Assume.assumeNotNull(engine);
+        Assume.assumeTrue(engine.getLanguageName().equals(ScriptEngineSelector.ECMA_SCRIPT));
 
         actionScript.setScript(ECMA_SCRIPT);
 
@@ -239,13 +231,13 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         light.setCommandedState(Light.OFF);
 
         // The action is not yet executed so the light should be off
-        assertTrue( light.getState() == Light.OFF, "light is off");
+        Assert.assertTrue("light is off", light.getState() == Light.OFF);
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // Set the sensor to execute the conditionalNG
         sensor.setState(Sensor.ACTIVE);
         // The action should now be executed so the light should be on
-        assertTrue( light.getState() == Light.ON, "light is on");
+        Assert.assertTrue("light is on", light.getState() == Light.ON);
 
 
         // Test action when triggered because the script is listening on the sensor IS2
@@ -266,22 +258,22 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
 //        actionScript.setScript(_scriptText);
 
         // The action is not yet executed so the atomic boolean should be false
-        assertEquals( Light.OFF, light.getState(), "light is off");
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
         // Activate the sensor. This should not execute the conditional.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        assertEquals( Light.OFF, light.getState(), "light is off");
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
         // Inactivate the sensor. This should not execute the conditional.
         sensor2.setCommandedState(Sensor.INACTIVE);
         // The action is not yet executed so the atomic boolean should be false
-        assertEquals( Light.OFF, light.getState(), "light is off");
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // Activate the sensor. This should execute the conditional.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // The action should now be executed so the atomic boolean should be true
-        assertEquals( Light.ON, light.getState(), "light is on");
+        Assert.assertEquals("light is on",Light.ON,light.getState());
 
         // Unregister listeners
         actionScript.unregisterListeners();
@@ -291,7 +283,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         // Activate the sensor. This not should execute the conditional since listerners are not registered.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // Listerners are not registered so the atomic boolean should be false
-        assertEquals( Light.OFF, light.getState(), "light is off");
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
 
         // Test execute() without script. This shouldn't do anything but we
         // do it for coverage.
@@ -300,7 +292,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     }
 
     @Test
-    public void testAction_RunScript() throws JmriException {
+    public void testAction_RunScript() throws Exception {
 
         actionScript.setOperationType(ActionScript.OperationType.RunScript);
         actionScript.setScript("java/test/jmri/jmrit/logixng/actions/ActionScriptTest.py");
@@ -310,13 +302,13 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         light.setCommandedState(Light.OFF);
 
         // The action is not yet executed so the light should be off
-        assertTrue( light.getState() == Light.OFF, "light is off");
+        Assert.assertTrue("light is off", light.getState() == Light.OFF);
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // Set the sensor to execute the conditionalNG
         sensor.setState(Sensor.ACTIVE);
         // The action should now be executed so the light should be on
-        assertTrue( light.getState() == Light.ON, "light is on");
+        Assert.assertTrue("light is on", light.getState() == Light.ON);
 
 
         // Test action when triggered because the script is listening on the sensor IS2
@@ -335,22 +327,22 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         ifThenElse.getChild(0).connect(maleSocketTrue);
 
         // The action is not yet executed so the atomic boolean should be false
-        assertEquals( Light.OFF, light.getState(), "light is off");
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
         // Activate the sensor. This should not execute the conditional.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        assertEquals( Light.OFF, light.getState(), "light is off");
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
         // Inactivate the sensor. This should not execute the conditional.
         sensor2.setCommandedState(Sensor.INACTIVE);
         // The action is not yet executed so the atomic boolean should be false
-        assertEquals( Light.OFF, light.getState(), "light is off");
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // Activate the sensor. This should execute the conditional.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // The action should now be executed so the atomic boolean should be true
-        assertEquals( Light.ON, light.getState(), "light is on");
+        Assert.assertEquals("light is on",Light.ON,light.getState());
 
         // Unregister listeners
         actionScript.unregisterListeners();
@@ -360,7 +352,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         // Activate the sensor. This not should execute the conditional since listerners are not registered.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // Listerners are not registered so the atomic boolean should be false
-        assertEquals( Light.OFF, light.getState(), "light is off");
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
 
         // Test execute() without script. This shouldn't do anything but we
         // do it for coverage.
@@ -370,7 +362,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     }
 
     @Test
-    public void testAction_GetAndSetLocalVariables() throws JmriException {
+    public void testAction_GetAndSetLocalVariables() throws Exception {
 
         ((MaleSocket)ifThenElse.getParent()).addLocalVariable("in", SymbolTable.InitialValueType.Integer, "10");
         var globalVariable = InstanceManager.getDefault(GlobalVariableManager.class).createGlobalVariable("out");
@@ -383,9 +375,8 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         sensor.setState(Sensor.ACTIVE);
 
         // The action should now be executed so the global variable should have the correct value
-        assertEquals( 150,
-                ((java.math.BigInteger)globalVariable.getValue()).longValue(),
-                "global variable has the correct value");
+        Assert.assertEquals("global variable has the correct value", 150,
+                ((java.math.BigInteger)globalVariable.getValue()).longValue());
     }
 
     @Test
@@ -395,15 +386,15 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
 
         // Test setScript() when listeners are registered
         actionScript.setScript(SCRIPT_TEXT);
-        assertNotNull( actionScript.getScript(), "Script is not null");
+        Assert.assertNotNull("Script is not null", actionScript.getScript());
 
         // Test bad script
         actionScript.setScript("This is a bad script");
-        assertEquals("This is a bad script", actionScript.getScript());
+        Assert.assertEquals("This is a bad script", actionScript.getScript());
     }
 
+    // The minimal setup for log4J
     @Before
-    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -445,13 +436,12 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         _base = actionScript;
         _baseMaleSocket = socketActionSimpleScript;
 
-        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
+        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
     @After
-    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
