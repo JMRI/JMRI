@@ -5,6 +5,7 @@ import jmri.jmrix.tmcc.SerialReply;
 import jmri.jmrix.tmcc.SerialTrafficControlScaffold;
 import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
@@ -25,10 +26,12 @@ public class SerialMonFrameTest {
         SerialMonFrame f = new SerialMonFrame(memo);
         // MonFrame needs a TrafficController for dispose()
 
-        f.initComponents();
-        
-        f.pack();
-        f.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            f.initComponents();
+
+            f.pack();
+            f.setVisible(true);
+        });
         Assertions.assertTrue(f.isVisible());
 
         SerialReply m = new SerialReply();
