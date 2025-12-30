@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.implementation;
 import java.util.*;
 
 import javax.annotation.Nonnull;
+import javax.swing.JOptionPane;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -254,6 +255,13 @@ public class DefaultConditionalNG extends AbstractBase
                 // A AbortConditionalNG_IgnoreException should be ignored.
                 // A Return action in a ConditionalNG causes a ReturnException so this is okay.
                 // An Exit action in a ConditionalNG causes a ExitException so this is okay.
+            } catch (ValidationErrorException e) {
+                ThreadingUtil.runOnGUI(()->
+                        JOptionPane.showMessageDialog(null,
+                                e.getMessage(),
+                                Bundle.getMessage("LogixNG_ValidationError"),
+                                JOptionPane.ERROR_MESSAGE)
+                );
             } catch (PassThruException e) {
                 // This happens due to a a Break action or a Continue action that isn't handled.
                 log.info("ConditionalNG {} was aborted during execute: {}",
