@@ -72,6 +72,7 @@ public class LayoutTurntable extends LayoutTrack {
     private NamedBeanHandle<SignalMast> exitSignalMast;
 
     // persistent instance variables (saved between sessions)
+    private boolean mainline = false;
 
     // temporary: this is referenced directly from LayoutTurntable, which
     // should be using _functional_ accessors here.
@@ -591,7 +592,15 @@ public class LayoutTurntable extends LayoutTrack {
 
     @Override
     public boolean isMainline() {
-        return false;
+        return mainline;
+    }
+
+    public void setMainline(boolean main) {
+        if (mainline != main) {
+            mainline = main;
+            models.redrawPanel();
+            models.setDirty();
+        }
     }
 
 
