@@ -476,6 +476,8 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>Fixes a bug where local variables might have the wrong values
+              when using the action <strong>Execute delayed</strong>.</li>
           <li></li>
         </ul>
 
