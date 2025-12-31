@@ -15,18 +15,20 @@ import jmri.SignalHeadManager;
 import jmri.Turnout;
 import jmri.implementation.VirtualSignalHead;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.io.TempDir;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
 public class SCWarrantTest extends WarrantTest {
+
     @Test
     public void testIsRouteFree() throws JmriException {
         sEast.setState(Sensor.INACTIVE);
@@ -35,10 +37,10 @@ public class SCWarrantTest extends WarrantTest {
         sNorth.setState(Sensor.ACTIVE);     // start block of warrant
 
         ArrayList<BlockOrder> orders = new ArrayList<>();
-        orders.add(new BlockOrder(_OBlockMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
-        BlockOrder viaOrder = new BlockOrder(_OBlockMgr.getOBlock("West"), "SouthToNorth", "NorthWest", "SouthWest");
+        orders.add(new BlockOrder( bNorth, "NorthToWest", "", "NorthWest"));
+        BlockOrder viaOrder = new BlockOrder( bWest, "SouthToNorth", "NorthWest", "SouthWest");
         orders.add(viaOrder);
-        BlockOrder lastOrder = new BlockOrder(_OBlockMgr.getOBlock("South"), "SouthToWest", "SouthWest", null);
+        BlockOrder lastOrder = new BlockOrder( bSouth, "SouthToWest", "SouthWest", null);
         orders.add(lastOrder);
 
         assertThat(((SCWarrant) warrant).isRouteFree()).withFailMessage("Route Free").isTrue();
@@ -57,10 +59,10 @@ public class SCWarrantTest extends WarrantTest {
         sNorth.setState(Sensor.ACTIVE);     // start block of warrant
 
         ArrayList<BlockOrder> orders = new ArrayList<>();
-        orders.add(new BlockOrder(_OBlockMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
-        BlockOrder viaOrder = new BlockOrder(_OBlockMgr.getOBlock("West"), "SouthToNorth", "NorthWest", "SouthWest");
+        orders.add(new BlockOrder( bNorth, "NorthToWest", "", "NorthWest"));
+        BlockOrder viaOrder = new BlockOrder( bWest, "SouthToNorth", "NorthWest", "SouthWest");
         orders.add(viaOrder);
-        BlockOrder lastOrder = new BlockOrder(_OBlockMgr.getOBlock("South"), "SouthToWest", "SouthWest", null);
+        BlockOrder lastOrder = new BlockOrder( bSouth, "SouthToWest", "SouthWest", null);
         orders.add(lastOrder);
 
         warrant.setThrottleCommands(new ArrayList<>());
@@ -83,11 +85,11 @@ public class SCWarrantTest extends WarrantTest {
         warrant.addPropertyChangeListener(listener);
 
         String msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
-        Assert.assertNull("setRunMode - " + msg, msg);
+        Assertions.assertNull( msg, "setRunMode - " + msg);
 
         assertThat(((SCWarrant) warrant).inStartBlock()).withFailMessage("in start block").isTrue();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             String m = warrant.getRunningMessage();
             return m.endsWith("IH1 showing appearance 16");
         }, "Train starts to move after 2nd command");
@@ -95,35 +97,20 @@ public class SCWarrantTest extends WarrantTest {
 
         // confirm one message logged
         //jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length.");
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sWest.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Unexpected Exception: " + e);
-            }
-        });
+        ThreadingUtil.runOnLayoutWithJmriException( () ->
+            sWest.setState(Sensor.ACTIVE));
         JUnitUtil.waitFor(100); // What should we specifically waitFor?
 
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sWest.setState(Sensor.INACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Unexpected Exception: " + e);
-            }
-        });
+        ThreadingUtil.runOnLayoutWithJmriException( () ->
+            sWest.setState(Sensor.INACTIVE));
         JUnitUtil.waitFor(100); // What should we specifically waitFor?
 
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sSouth.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Unexpected Exception: " + e);
-            }
-        });
+        ThreadingUtil.runOnLayoutWithJmriException( () ->
+            sSouth.setState(Sensor.ACTIVE));
         JUnitUtil.waitFor(100); // What should we specifically waitFor?
 
         // wait for done
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return warrant.getRunningMessage().equals("Idle");
         }, "warrant not done");
     }
@@ -148,6 +135,11 @@ public class SCWarrantTest extends WarrantTest {
         bEast = _OBlockMgr.createNewOBlock("OB2", "East");
         bNorth = _OBlockMgr.createNewOBlock("OB3", "North");
         bSouth = _OBlockMgr.createNewOBlock("OB4", "South");
+
+        assertNotNull(bWest);
+        assertNotNull(bEast);
+        assertNotNull(bNorth);
+        assertNotNull(bSouth);
 
         SignalHeadManager shMgr = InstanceManager.getDefault(SignalHeadManager.class);
         SignalHead shNW = new VirtualSignalHead("IH1");
@@ -186,37 +178,37 @@ public class SCWarrantTest extends WarrantTest {
         Turnout northSwitch = _turnoutMgr.newTurnout("IT1", "NorthSwitch");
         ArrayList<BeanSetting> settings = new ArrayList<>();
         settings.add(new BeanSetting(northSwitch, "NorthSwitch", Turnout.CLOSED));
-        OBlock north = _OBlockMgr.getOBlock("North");
-        OPath path = new OPath("NorthToWest", north, null, _portalMgr.getPortal("NorthWest"), settings);
-        north.addPath(path);
+
+        OPath path = new OPath("NorthToWest", bNorth, null, _portalMgr.getPortal("NorthWest"), settings);
+        bNorth.addPath(path);
 
         settings = new ArrayList<>();
         settings.add(new BeanSetting(northSwitch, "NorthSwitch", Turnout.THROWN));
-        path = new OPath("NorthToEast", north, null, _portalMgr.getPortal("NorthEast"), settings);
-        north.addPath(path);
+        path = new OPath("NorthToEast", bNorth, null, _portalMgr.getPortal("NorthEast"), settings);
+        bNorth.addPath(path);
 
         Turnout southSwitch = _turnoutMgr.newTurnout("IT2", "SouthSwitch");
-        OBlock south = _OBlockMgr.getOBlock("South");
+
         settings = new ArrayList<>();
         settings.add(new BeanSetting(southSwitch, "SouthSwitch", Turnout.THROWN));
-        path = new OPath("SouthToEast", south, null, _portalMgr.getPortal("SouthEast"), settings);
-        south.addPath(path);
+        path = new OPath("SouthToEast", bSouth, null, _portalMgr.getPortal("SouthEast"), settings);
+        bSouth.addPath(path);
         settings = new ArrayList<>();
         settings.add(new BeanSetting(southSwitch, "SouthSwitch", Turnout.CLOSED));
-        path = new OPath("SouthToWest", south, null, south.getPortalByName("SouthWest"), settings);
-        south.addPath(path);
+        path = new OPath("SouthToWest", bSouth, null, bSouth.getPortalByName("SouthWest"), settings);
+        bSouth.addPath(path);
 
         bSouth.setLength(100);
 
         settings = new ArrayList<>();
-        OBlock block = _OBlockMgr.getOBlock("West");
-        path = new OPath("SouthToNorth", block, _portalMgr.getPortal("NorthWest"), _portalMgr.getPortal("SouthWest"), settings);
-        _OBlockMgr.getOBlock("West").addPath(path);
+
+        path = new OPath("SouthToNorth", bWest, _portalMgr.getPortal("NorthWest"), _portalMgr.getPortal("SouthWest"), settings);
+        bWest.addPath(path);
         path.setLength(200);
         settings = new ArrayList<>();
-        block = _OBlockMgr.getOBlock("East");
-        path = new OPath("NorthToSouth", block, south.getPortalByName("SouthEast"), north.getPortalByName("NorthEast"), settings);
-        _OBlockMgr.getOBlock("East").addPath(path);
+
+        path = new OPath("NorthToSouth", bEast, bSouth.getPortalByName("SouthEast"), bNorth.getPortalByName("NorthEast"), settings);
+        bEast.addPath(path);
 
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         sWest = _sensorMgr.newSensor("IS1", "WestSensor");
