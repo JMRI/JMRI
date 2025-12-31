@@ -52,12 +52,12 @@
           <functionlabel num= "3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num= "4" lockable="false" visible="true">Rear-X </functionlabel>
           <functionlabel num= "5" lockable="false" visible="true">      Volume Up       </functionlabel>
-          <functionlabel num= "6" lockable="false" visible="false">      Crew Talk       </functionlabel>
+          <functionlabel num= "6" lockable="false" visible="true">      Crew Talk       </functionlabel>
           <functionlabel num= "7" lockable="false" visible="true">RPM Increase w/Startup</functionlabel>
           <functionlabel num= "8" lockable="false" visible="true">     Volume Down      </functionlabel>
           <functionlabel num= "9" lockable="false" visible="true">  Shutdown Sequence   </functionlabel>
           <functionlabel num="10" lockable="false" visible="true">     RPM Decrease     </functionlabel>
-          <functionlabel num="11" lockable="false" visible="false">      Tower Com       </functionlabel>
+          <functionlabel num="11" lockable="false" visible="true">      Tower Com       </functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
@@ -68,7 +68,7 @@
           <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
           <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
           <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
-          <functionlabel num="22" lockable="false" visible="true">         Set          </functionlabel>
+          <functionlabel num="22" lockable="false" visible="false">         Set          </functionlabel>
           <functionlabel num="23" lockable="false" visible="true">        Horn 2        </functionlabel>
           <functionlabel num="24" lockable="false" visible="true">    RRSpeed  5mph     </functionlabel>
           <functionlabel num="25" lockable="false" visible="true">    RRSpeed 20mph     </functionlabel>
