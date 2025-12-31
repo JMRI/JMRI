@@ -392,7 +392,7 @@ public class DefaultSignalMastLogicManager
      * Signal Mast attributes as stored in Signal Mast Logic.
      */
     public void generateSection() {
-        log.info("generateSection:");
+        log.debug("generateSection:");
         SectionManager sm = InstanceManager.getDefault(SectionManager.class);
         sm.getNamedBeanSet().stream().map( nb -> {
             if (nb.getSectionType() == Section.SIGNALMASTLOGIC) {
@@ -403,7 +403,7 @@ public class DefaultSignalMastLogicManager
         int x = 0;
         for (SignalMastLogic sml : getSignalMastLogicList()) {
             x++;
-            log.info("generateSection: sml {} x {}", sml, x);
+            log.debug("generateSection: sml {} x {}", sml, x);
             LayoutBlock faceLBlock = sml.getFacingBlock();
             if (faceLBlock != null) {
                 boolean sourceIntermediate = false;
@@ -413,12 +413,12 @@ public class DefaultSignalMastLogicManager
                 }
                 for (SignalMast destMast : sml.getDestinationList()) {
                     java.util.List<Block> autoBlocks = sml.getAutoBlocksBetweenMasts(destMast);
-                    log.info("generateSection: Considering SML path for section creation: {} -> {}",
+                    log.debug("generateSection: Considering SML path for section creation: {} -> {}",
                                 sml.getSourceMast().getDisplayName(), destMast.getDisplayName());
-                    log.info("generateSection: Found {} auto-blocks for this path: {}", autoBlocks.size(), autoBlocks);
+                    log.debug("generateSection: Found {} auto-blocks for this path: {}", autoBlocks.size(), autoBlocks);
                     if (!autoBlocks.isEmpty()) {
                         String secUserName = sml.getSourceMast().getDisplayName() + ":" + destMast.getDisplayName();
-                        log.info ("secUserName {}", secUserName);
+                        log.debug ("secUserName {}", secUserName);
                         Section sec = sm.getSection(secUserName);
                         if (sec != null) {
                             //A Section already exists, lets check that it is one used with the SML, if so carry on using that.

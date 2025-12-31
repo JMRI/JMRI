@@ -362,7 +362,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
                     if (!slot.isDisabled() && slot.getConnect() != null) {
                         jmri.jmrit.display.layoutEditor.LayoutBlock connectedBlock = slot.getConnect().getLayoutBlock();
                         if (connectedBlock != null) {
-                            log.info("slot {} GETCONNECT LAYOUT BLOCK {} ", slot, connectedBlock.getDisplayName());
+                            log.debug("slot {} connected block {} ", slot, connectedBlock.getDisplayName());
                             if (connectedBlock == layoutBlock) {
                                 isTraverserComponent = true;
                                 break;

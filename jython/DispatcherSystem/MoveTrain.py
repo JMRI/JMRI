@@ -664,7 +664,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         # print strindex + "DF.dispatcherSystemSchedulingInOperation", DF.dispatcherSystemSchedulingInOperation
         if mode != "not_scheduling":  # == scheduling
             # if self.logLevel > 0: print strindex + "__________________________Start__" + self.train_name + "__transit: " + transit_name
-            if self.logLevel > -1: print "__________________________Start__" + self.train_name + "__transit: " + transit_name
+            if self.logLevel > 0: print "__________________________Start__" + self.train_name + "__transit: " + transit_name
         else:
             if self.logLevel > 0: print strindex + "_Start__" + self.train_name + "__transit: " + transit_name
 

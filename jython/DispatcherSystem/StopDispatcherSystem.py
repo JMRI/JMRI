@@ -527,8 +527,12 @@ class MyTableModel3 (DefaultTableModel):
         for active_train_name in active_trains_not_setup:
             active_train = [active_train for active_train in java_active_trains_list \
                             if active_train.getTrainName() == active_train_name]
-            if active_train_name <> []:
-                block = [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == active_train_name][0]
+            if active_train_name != "":
+                found_blocks = [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == active_train_name]
+                if found_blocks:
+                    block = found_blocks[0]
+                else:
+                    block = ""
             else:
                 block = ""
             if len(active_train) > 0 :

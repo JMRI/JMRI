@@ -554,6 +554,9 @@ final public class ConnectivityUtil {
             } else if (HitPointType.isTurntableRayHitType(cType)) {
                 // Declare arrival at a turntable ray to be the end of the block
                 trackSegment = null;
+            } else if (HitPointType.isTraverserSlotHitType(cType)) {
+                // Declare arrival at a traverser slot to be the end of the block
+                trackSegment = null;
             }
         }
         return result;

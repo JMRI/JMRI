@@ -42,7 +42,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         del globals()["list"]
 
     if "set" in globals() and type(globals()["set"]).__name__ != "type":
-        print(" Detected shadowed 'set' type: ", type(globals()["set"]))  # set is being used in JMRI. This enables us to use set in Jython
+        # print(" Detected shadowed 'set' type: ", type(globals()["set"]))  # set is being used in JMRI. This enables us to use set in Jython
         del globals()["set"]
 
     logLevel = 0
@@ -100,25 +100,24 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.show_progress(20)
             self.tryme(self.removeSensors, "Cannot generate startup Logix: Contact Developer")
             self.show_progress(40)
-            print "A"
+            # print "A"
             self.tryme(self.updatePanels, "Cannot update Panels: Contact Developer")
-            print "B"
+            # print "B"
             self.get_list_of_stopping_points()
-            print "C"
+            # print "C"
             # self.tryme(self.get_list_of_stopping_points, "Cannot get list of stopping points, Contact Developer")
             self.addSensors()
-            print "D"
+            # print "D"
             self.generateSML()
-            print "E"
+            # print "E"
             self.show_progress(60)
             self.generateSections()   # if it fails need a better fail message
-            print "F"
+            # print "F"
             # self.tryme(self.generateSections, "Cannot generate Sections: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
             self.show_progress(80)
             self.tryme(self.addLogix, "Cannot generate startup Logix: Contact Developer")
-            print "G"
+            # print "G"
             self.addIcons()
-            print "H"
             self.tryme(self.retrieveForwardStoppingSensors, "Cannot retrieve Stopping Sensors: Contact Developer")
             self.setVersionNo()
             self.stop_all_threads()
@@ -646,7 +645,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # gets the list of stopping points (stations, sidings etc.)
     # ***********************************************************
     def get_list_of_stopping_points(self):
-        print "in get_list_of_stopping_points"
+        if self.logLevel > 0: print "in get_list_of_stopping_points"
         stopping_points_set = set()
 
         # First, get stopping points from block comments
@@ -673,7 +672,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                         stopping_points_set.add(layout_block.getUserName())
 
         self.list_of_stopping_points = sorted(list(stopping_points_set))
-        print "list of stopping points", self.list_of_stopping_points
+        if self.logLevel > 0: print "list of stopping points", self.list_of_stopping_points
 
     # **************************************************
     # add sensors
@@ -710,20 +709,20 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     def generateSML(self):
         layoutblocks.enableAdvancedRouting(True)
         layoutblocks.setRoutingStabilised()
-        print "Generating Signal Mast Logic"
+        if self.logLevel > 0: print "Generating Signal Mast Logic"
         smlManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
         smlManager.automaticallyDiscoverSignallingPairs()
-        # print "Signal Mast Logic Generated"
+        if self.logLevel > 0: print "Signal Mast Logic Generated"
 
     # **************************************************
     # generate sections
     # **************************************************
     def generateSections(self):
-        print "Generating Sections"
+        if self.logLevel > 0: print "Generating Sections"
         smlManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
         # generate sections()
         smlManager.generateSection()
-        print "Sections Generated"
+        if self.logLevel > 0: print "Sections Generated"
         self.show_progress(80)
         # print "+++++++++++++++++++++++ generate block sections ++++++++++++++++++++++++++++++"
         sections.generateBlockSections()
@@ -761,7 +760,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         self.addControlIconsAndLabels()
 
     def getCenterPointOfNearestBlockToMid(self, panel):
-        print "in getCenterPointOfNearestBlockToMid"
+        if self.logLevel > 0: print "in getCenterPointOfNearestBlockToMid"
         self.index = 0
         self.blockPoints.clear()
         blocks_with_track_segments = set()
@@ -911,12 +910,12 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_traverser_icon_position(self, traverser, traverserView):
         import math
-        print "--- Calculating icon position for traverser:", traverser.getName(), "---"
+        if self.logLevel > 0: print "--- Calculating icon position for traverser:", traverser.getName(), "---"
         traverser_center = traverserView.getCoordsCenter()
-        print "traverser_center", traverser_center
+        if self.logLevel > 0: print "traverser_center", traverser_center
         slotOffset = traverser.getSlotOffset()
         numberOfSlots = traverser.getNumberSlots()
-        print "numberOfSlots", numberOfSlots
+        if self.logLevel > 0: print "numberOfSlots", numberOfSlots
         # deckWidth = traverser.getDeckWidth()
 
         if traverser.getOrientation() == traverser.HORIZONTAL:
@@ -925,7 +924,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         else:
             x_reqd = int(traverser_center.getX()) + numberOfSlots/4.0 * slotOffset + 20
             y_reqd = int(traverser_center.getY())
-        print "finished calculating icon position"
+        if self.logLevel > 0: print "finished calculating icon position"
         return [x_reqd, y_reqd]
 
     def updateCoords1(self, blk, pt_to_try, pt_mid):
