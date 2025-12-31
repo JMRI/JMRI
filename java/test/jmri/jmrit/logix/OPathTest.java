@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.ArrayList;
 
 import jmri.BeanSetting;
@@ -87,6 +89,7 @@ public class OPathTest {
     }
 
     @Test
+    @SuppressFBWarnings( value = "EC_UNRELATED_TYPES", justification = "testing equals method")
     @SuppressWarnings({"unlikely-arg-type", "IncompatibleEquals", "ObjectEqualsNull"}) // String seems to be unrelated to OPath
     public void testEquals() {
         Block b1 = new Block("IB1");
