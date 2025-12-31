@@ -46,30 +46,30 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/outputs1-4.xml"/>
       <model model="TMCC 1 Diesel" maxFnNum="68" numOuts="1"/>
       <functionlabels>
-          <functionlabel num= "0" lockable="false" visible="true">    Headlight    </functionlabel>
+          <functionlabel num= "0" lockable="false" visible="true">      Headlight       </functionlabel>
           <functionlabel num= "1" lockable="false" visible="true"> Bell  </functionlabel>
           <functionlabel num= "2" lockable="false" visible="true"> Horn  </functionlabel>
           <functionlabel num= "3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num= "4" lockable="false" visible="true">Rear-X </functionlabel>
-          <functionlabel num= "5" lockable="false" visible="true"> Sound Up  </functionlabel>
-          <functionlabel num= "6" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num= "5" lockable="false" visible="true">      Volume Up       </functionlabel>
+          <functionlabel num= "6" lockable="false" visible="false">      Crew Talk       </functionlabel>
           <functionlabel num= "7" lockable="false" visible="true">RPM Increase w/Startup</functionlabel>
-          <functionlabel num= "8" lockable="false" visible="true">Sound Down </functionlabel>
-          <functionlabel num= "9" lockable="false" visible="true">Shutdown Sequence</functionlabel>
-          <functionlabel num="10" lockable="false" visible="true">  RPM Decrease   </functionlabel>
-          <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="12" lockable="false" visible="true">Mars Lt Off</functionlabel>
-          <functionlabel num="13" lockable="false" visible="true">Mars Lt On </functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">   Reset   </functionlabel>
-          <functionlabel num="15" lockable="false" visible="false">   Aux1    </functionlabel>
-          <functionlabel num="16" lockable="false" visible="true">  Letoff   </functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost   </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake   </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true">Momentum-L </functionlabel>
-          <functionlabel num="20" lockable="false" visible="true">Momentum-M </functionlabel>
-          <functionlabel num="21" lockable="false" visible="true">Momentum-H </functionlabel>
-          <functionlabel num="22" lockable="false" visible="true">    Set    </functionlabel>
-          <functionlabel num="23" lockable="false" visible="true">  Horn 2   </functionlabel>
+          <functionlabel num= "8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num= "9" lockable="false" visible="true">  Shutdown Sequence   </functionlabel>
+          <functionlabel num="10" lockable="false" visible="true">     RPM Decrease     </functionlabel>
+          <functionlabel num="11" lockable="false" visible="false">      Tower Com       </functionlabel>
+          <functionlabel num="12" lockable="false" visible="true">     Mars Lt Off      </functionlabel>
+          <functionlabel num="13" lockable="false" visible="true">      Mars Lt On      </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">         Aux1         </functionlabel>
+          <functionlabel num="16" lockable="false" visible="true">     Brake Letoff     </functionlabel>
+          <functionlabel num="17" lockable="false" visible="true"> Boost </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true"> Brake </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
+          <functionlabel num="22" lockable="false" visible="true">         Set          </functionlabel>
+          <functionlabel num="23" lockable="false" visible="true">        Horn 2        </functionlabel>
           <functionlabel num="24" lockable="false" visible="true">    RRSpeed  5mph     </functionlabel>
           <functionlabel num="25" lockable="false" visible="true">    RRSpeed 20mph     </functionlabel>
           <functionlabel num="26" lockable="false" visible="true">    RRSpeed 35mph     </functionlabel>
