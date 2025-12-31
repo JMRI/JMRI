@@ -175,7 +175,6 @@ public class LearnWarrantTest {
      * @param route Array of OBlock names
      * @param throttle assigned to run the train
      * @return Active end sensor
-     * @throws Exception when null throttle was set
      */
     private Sensor recordtimes(String[] route, DccThrottle throttle) {
         JUnitUtil.waitFor(100);     // waitEmpty(100) causes a lot of failures on Travis GUI
