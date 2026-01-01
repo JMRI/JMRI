@@ -114,7 +114,7 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
             tcm.setColumnVisible(tcm.getColumnByModelIndex(PREVIOUS_LOCATION_COLUMN), sort == SORTBY_LAST);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), sort == SORTBY_LAST);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_TRAIN_COLUMN), sort == SORTBY_LAST);
-            tcm.setColumnVisible(tcm.getColumnByModelIndex(TRAIN_COLUMN), sort != SORTBY_LAST);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(TRAIN_COLUMN), true);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(DCC_ADDRESS_COLUMN), sort == SORTBY_DCC_ADDRESS);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(COMMENT_COLUMN), sort == SORTBY_COMMENT);
         }

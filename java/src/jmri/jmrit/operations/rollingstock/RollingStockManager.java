@@ -670,25 +670,8 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
      * @return String "number" with 4 leading zeros
      */
     protected String padNumber(int n) {
-        return padNumber(n, 4);
+        return String.format("%04d", n);
     }
-
-    /**
-     * Adds leading zeros to the number for sorting purposes
-     * 
-     * @param n       the number needed leading zeros
-     * @param tabSize how long the number field needs to be
-     * @return String "number" with leading zeros
-     */
-    protected String padNumber(int n, int tabSize) {
-        String s = Integer.toString(n);
-        StringBuffer buf = new StringBuffer(s);
-        while (buf.length() < tabSize) {
-            buf.insert(0, 0);
-        }
-        return buf.toString();
-    }
-
 
     @Override
     @OverridingMethodsMustInvokeSuper
