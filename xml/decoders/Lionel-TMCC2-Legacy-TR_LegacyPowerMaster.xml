@@ -47,8 +47,8 @@
       <model model="TMCC 2 Legacy TR_LegacyPowerMaster" maxFnNum="85" numOuts="1"/>
       <functionlabels>
           <functionlabel num= "0" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num= "1" lockable="false" visible="true"> Bell  </functionlabel>
-          <functionlabel num= "2" lockable="false" visible="true">  Horn/Whistle   </functionlabel>
+          <functionlabel num= "1" lockable="false" visible="true">         Bell         </functionlabel>
+          <functionlabel num= "2" lockable="false" visible="true">     Horn/Whistle     </functionlabel>
           <functionlabel num= "3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num= "4" lockable="false" visible="true">Rear-X </functionlabel>
           <functionlabel num= "5" lockable="false" visible="false">Unassigned</functionlabel>
@@ -60,15 +60,15 @@
           <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true"> Power Off </functionlabel>
-          <functionlabel num="15" lockable="false" visible="false">   Aux1    </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">      Power Off       </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">         Aux1         </functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost   </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake   </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true">Momentum-L </functionlabel>
-          <functionlabel num="20" lockable="false" visible="true">Momentum-M </functionlabel>
-          <functionlabel num="21" lockable="false" visible="true">Momentum-H </functionlabel>
-          <functionlabel num="22" lockable="false" visible="true">    Set    </functionlabel>
+          <functionlabel num="17" lockable="false" visible="true"> Boost </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true"> Brake </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
+          <functionlabel num="22" lockable="false" visible="false">         Set          </functionlabel>
           <functionlabel num="23" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="24" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="25" lockable="false" visible="false">Unassigned</functionlabel>
