@@ -20036,11 +20036,11 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("load", "L", c5.getLoadName());
 
         // confirm clone creation
-        Car clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "1");
+        Car clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0001");
         Assert.assertNotNull(clone3);
-        Car clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "2");
+        Car clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0002");
         Assert.assertNotNull(clone4);
-        Car clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "3");
+        Car clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0003");
         Assert.assertNotNull(clone5);
 
         Assert.assertEquals("location", "Acton", clone3.getLocationName());
@@ -20063,9 +20063,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("location", "Acton", c5.getLocationName());
 
         // confirm clone destruction
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "1"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "2"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "3"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0001"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0002"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0003"));
 
         Assert.assertEquals("should be 6 cars", 6, cmanager.getNumEntries());
 
@@ -20096,11 +20096,11 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("destination", "Acton", c5.getDestinationName());
 
         // confirm clone creation
-        clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "4");
+        clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0004");
         Assert.assertNotNull(clone3);
-        clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "5");
+        clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0005");
         Assert.assertNotNull(clone4);
-        clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "6");
+        clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0006");
         Assert.assertNotNull(clone5);
 
         Assert.assertEquals("location", "Acton", clone3.getLocationName());
@@ -20114,9 +20114,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.terminate();
 
         // confirm clone destruction
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "4"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "5"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "6"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0004"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0005"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0006"));
 
         Assert.assertEquals("should be 6 cars", 6, cmanager.getNumEntries());
 
@@ -20203,9 +20203,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("load", "L", c4.getLoadName());
 
         // confirm clone creation
-        Car clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "1");
+        Car clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0001");
         Assert.assertNotNull(clone3);
-        Car clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "1");
+        Car clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0001");
         Assert.assertNotNull(clone4);
 
         Assert.assertEquals("location", "Acton", clone3.getLocationName());
@@ -20228,8 +20228,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("load", "E", c4.getLoadName());
 
         // confirm clone destruction
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "1"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "1"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0001"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0001"));
 
         Assert.assertEquals("should be 6 cars", 6, cmanager.getNumEntries());
 
@@ -20265,17 +20265,17 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("load", "L", c8.getLoadName());
 
         // confirm clone creation
-        clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "2");
+        clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0002");
         Assert.assertNotNull(clone3);
-        clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "2");
+        clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0002");
         Assert.assertNotNull(clone4);
-        Car clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "3");
+        Car clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0003");
         Assert.assertNotNull(clone5);
-        Car clone6 = cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "3");
+        Car clone6 = cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "0003");
         Assert.assertNotNull(clone6);
-        Car clone7 = cmanager.getByRoadAndNumber("CP", "70" + Car.CLONE + "3");
+        Car clone7 = cmanager.getByRoadAndNumber("CP", "70" + Car.CLONE + "0003");
         Assert.assertNotNull(clone7);
-        Car clone8 = cmanager.getByRoadAndNumber("CP", "80" + Car.CLONE + "3");
+        Car clone8 = cmanager.getByRoadAndNumber("CP", "80" + Car.CLONE + "0003");
         Assert.assertNotNull(clone8);
 
         Assert.assertEquals("location", "Acton", clone3.getLocationName());
@@ -20302,12 +20302,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.terminate();
 
         // confirm clone destruction
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "2"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "2"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "3"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "3"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "70" + Car.CLONE + "3"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "80" + Car.CLONE + "3"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0002"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0002"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0003"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "0003"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "70" + Car.CLONE + "0003"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "80" + Car.CLONE + "0003"));
 
         Assert.assertEquals("should be 6 cars", 6, cmanager.getNumEntries());
 
@@ -20404,17 +20404,17 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("load", "L", c8.getLoadName());
 
         // confirm clone creation
-        Car clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "1");
+        Car clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0001");
         Assert.assertNotNull(clone3);
-        Car clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "2");
+        Car clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0002");
         Assert.assertNotNull(clone4);
-        Car clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "3");
+        Car clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0003");
         Assert.assertNotNull(clone5);
-        Car clone6 = cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "3");
+        Car clone6 = cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "0003");
         Assert.assertNotNull(clone6);
-        Car clone7 = cmanager.getByRoadAndNumber("CP", "70" + Car.CLONE + "3");
+        Car clone7 = cmanager.getByRoadAndNumber("CP", "70" + Car.CLONE + "0003");
         Assert.assertNotNull(clone7);
-        Car clone8 = cmanager.getByRoadAndNumber("CP", "80" + Car.CLONE + "3");
+        Car clone8 = cmanager.getByRoadAndNumber("CP", "80" + Car.CLONE + "0003");
         Assert.assertNotNull(clone8);
 
         Assert.assertEquals("location", "Acton", clone3.getLocationName());
@@ -20453,12 +20453,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("load", "E", c4.getLoadName());
 
         // confirm clone destruction
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "1"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "2"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "3"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "3"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "70" + Car.CLONE + "3"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "80" + Car.CLONE + "3"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0001"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0002"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0003"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "0003"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "70" + Car.CLONE + "0003"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "80" + Car.CLONE + "0003"));
 
         Assert.assertEquals("should be 6 cars", 6, cmanager.getNumEntries());
 
@@ -20492,17 +20492,17 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("load", "L", c8.getLoadName());
 
         // confirm clone creation
-        clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "4");
+        clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0004");
         Assert.assertNotNull(clone3);
-        clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "5");
+        clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0005");
         Assert.assertNotNull(clone4);
-        clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "6");
+        clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0006");
         Assert.assertNotNull(clone5);
-        clone6 = cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "6");
+        clone6 = cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "0006");
         Assert.assertNotNull(clone6);
-        clone7 = cmanager.getByRoadAndNumber("CP", "70" + Car.CLONE + "6");
+        clone7 = cmanager.getByRoadAndNumber("CP", "70" + Car.CLONE + "0006");
         Assert.assertNotNull(clone7);
-        clone8 = cmanager.getByRoadAndNumber("CP", "80" + Car.CLONE + "6");
+        clone8 = cmanager.getByRoadAndNumber("CP", "80" + Car.CLONE + "0006");
         Assert.assertNotNull(clone8);
 
         Assert.assertEquals("location", "Acton", clone3.getLocationName());
@@ -20529,12 +20529,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.terminate();
 
         // confirm clone destruction
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "4"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "5"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "6"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "6"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "70" + Car.CLONE + "6"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "80" + Car.CLONE + "6"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0004"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0005"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0006"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "0006"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "70" + Car.CLONE + "0006"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "80" + Car.CLONE + "0006"));
 
         Assert.assertEquals("should be 6 cars", 6, cmanager.getNumEntries());
 
@@ -20581,9 +20581,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("load", "E", c8.getLoadName());
 
         // confirm clone creation
-        clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "7");
+        clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0007");
         Assert.assertNotNull(clone3);
-        clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "8");
+        clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0008");
         Assert.assertNotNull(clone4);
 
         train1.terminate();
@@ -20676,9 +20676,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("train", train1, c3.getLastTrain());
         Assert.assertEquals("train", train1, c4.getLastTrain());
 
-        Car clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "1");
+        Car clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0001");
         Assert.assertNotNull(clone3);
-        Car clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "2");
+        Car clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0002");
         Assert.assertNotNull(clone4);
 
         Assert.assertEquals("train", train1, clone3.getTrain());
@@ -20710,9 +20710,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("train", null, c4.getTrain());
         Assert.assertEquals("train", null, c5.getTrain());
 
-        clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "1");
+        clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0001");
         Assert.assertNotNull(clone3);
-        clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "2");
+        clone4 = cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0002");
         Assert.assertNotNull(clone4);
 
         train1.terminate();
@@ -20720,8 +20720,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // confirm clone destruction
         Assert.assertEquals("total cars", 3, cmanager.getNumEntries());
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "1"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "2"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "0001"));
+        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "0002"));
 
         Setup.setBuildAggressive(true);
 
@@ -20733,7 +20733,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("should be 4 cars", 4, train2.getNumberCarsWorked());
         Assert.assertEquals("should be 4 cars", 4, cmanager.getNumEntries());
 
-        Car clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "3");
+        Car clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0003");
         Assert.assertNotNull(clone5);
 
         Assert.assertEquals("destination", "Boston", clone5.getDestinationName());
