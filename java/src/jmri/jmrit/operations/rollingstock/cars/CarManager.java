@@ -528,8 +528,9 @@ public class CarManager extends RollingStockManager<Car>
      */
     public Car createClone(Car car, Track track, Train train, Date startTime) {
         int cloneCreationOrder = getCloneCreationOrder();
+        String creationOrder = padNumber(cloneCreationOrder);
         Car cloneCar = car.copy();
-        cloneCar.setNumber(car.getNumber() + Car.CLONE + cloneCreationOrder);
+        cloneCar.setNumber(car.getNumber() + Car.CLONE + creationOrder);
         cloneCar.setClone(true);
         // register car before setting location so the car gets logged
         register(cloneCar);
@@ -541,13 +542,13 @@ public class CarManager extends RollingStockManager<Car>
         cloneCar.setLastRouteId(car.getLastRouteId());
         cloneCar.setMoves(car.getMoves());
         if (car.getKernel() != null) {
-            String kernelName = car.getKernelName() + Car.CLONE + cloneCreationOrder;
+            String kernelName = car.getKernelName() + Car.CLONE + creationOrder;
             Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel(kernelName);
             cloneCar.setKernel(kernel);
             for (Car kar : car.getKernel().getCars()) {
                 if (kar != car) {
                     Car nCar = kar.copy();
-                    nCar.setNumber(kar.getNumber() + Car.CLONE + cloneCreationOrder);
+                    nCar.setNumber(kar.getNumber() + Car.CLONE + creationOrder);
                     nCar.setClone(true);
                     nCar.setKernel(kernel);
                     nCar.setMoves(kar.getMoves());
