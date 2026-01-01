@@ -4,17 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import jmri.ConfigureManager;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.ShutDownManager;
-import jmri.ShutDownTask;
+import jmri.*;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.*;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,8 +27,8 @@ public class LearnWarrantTest {
     private OBlockManager _OBlockMgr;
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testLearnWarrant() throws Exception {
+    @DisabledIfHeadless
+    public void testLearnWarrant() throws JmriException {
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         // load and display
@@ -81,6 +77,7 @@ public class LearnWarrantTest {
 
         // occupy starting block
         final OBlock block0 = _OBlockMgr.getOBlock(route[0]);
+        assertNotNull(block0);
         Sensor sensor = block0.getSensor();
         NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, block0);
 
@@ -124,6 +121,7 @@ public class LearnWarrantTest {
         assertNotNull(sensor,"Sensor not null");
 
         final OBlock block4 = _OBlockMgr.getOBlock(route[4]);
+        assertNotNull(block4);
         sensor = block4.getSensor();
         NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, block4);
 
@@ -177,18 +175,15 @@ public class LearnWarrantTest {
      * @param route Array of OBlock names
      * @param throttle assigned to run the train
      * @return Active end sensor
-     * @throws Exception when null throttle was set
      */
-    private Sensor recordtimes(String[] route, DccThrottle throttle) throws Exception {
+    private Sensor recordtimes(String[] route, DccThrottle throttle) {
         JUnitUtil.waitFor(100);     // waitEmpty(100) causes a lot of failures on Travis GUI
 //        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         float speed = 0.1f;
-        if (throttle == null) {
-            throw new Exception("recordtimes: No Throttle");
-        }
+        assertNotNull( throttle, "recordtimes: No Throttle");
         throttle.setSpeedSetting(speed);
         OBlock block = _OBlockMgr.getBySystemName(route[0]);
-        assert block != null;
+        assertNotNull(block);
         Sensor sensor = block.getSensor();
         for (int i=1; i<route.length; i++) {
             // Need to have some time elapse between commands. - Especially the last
