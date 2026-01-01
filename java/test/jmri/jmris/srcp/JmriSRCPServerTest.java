@@ -1,6 +1,7 @@
 package jmri.jmris.srcp;
 
 import jmri.util.JUnitUtil;
+import jmri.util.JUnitAppender;
 
 import org.junit.jupiter.api.*;
 
@@ -23,6 +24,7 @@ public class JmriSRCPServerTest {
     public void testCtorwithParameter() {
         JmriSRCPServer a = new JmriSRCPServer(2048);
         assertNotNull(a);
+        JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
     }
 
     @BeforeEach
