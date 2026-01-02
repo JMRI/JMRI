@@ -5,15 +5,16 @@ import java.util.List;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -38,8 +39,8 @@ public class TrackerTableActionTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testTracking1() throws Exception {
+    @DisabledIfHeadless
+    public void testTracking1() throws JmriException {
 
         Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
@@ -107,8 +108,8 @@ public class TrackerTableActionTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testTrackingDark() throws Exception {
+    @DisabledIfHeadless
+    public void testTrackingDark() throws JmriException {
         Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
@@ -161,8 +162,8 @@ public class TrackerTableActionTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testMultipleTrackers() throws Exception {
+    @DisabledIfHeadless
+    public void testMultipleTrackers() throws JmriException {
 
         Assumptions.assumeFalse(Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
