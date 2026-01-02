@@ -17,6 +17,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -199,7 +200,8 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
     public void testPropertyChangeListener4() throws SocketAlreadyConnectedException {
     }
 */
-    @Disabled
+    @Disabled("Error: ProtectedTimerTask Cannot stop timer")
+    @Ignore("ProtectedTimerTask Cannot stop timer")
     @Test
     @Override
     public void testIsActive() {
@@ -208,7 +210,8 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
 //        JUnitAppender.suppressErrorMessage("getConditionalNG() return null");
     }
 
-    @Disabled
+    @Disabled("Error: ProtectedTimerTask Cannot stop timer")
+    @Ignore("ProtectedTimerTask Cannot stop timer")
     @Test
     @Override
     public void testMaleSocketIsActive() {
