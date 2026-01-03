@@ -662,6 +662,16 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
         }
         return ++cloneCreationOrder;
     }
+    
+    /**
+     * Adds 4 leading zeros to the number for sorting purposes
+     * 
+     * @param n the number needed leading zeros
+     * @return String "number" with 4 leading zeros
+     */
+    protected String padNumber(int n) {
+        return String.format("%04d", n);
+    }
 
     @Override
     @OverridingMethodsMustInvokeSuper

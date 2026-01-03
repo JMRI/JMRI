@@ -193,8 +193,9 @@ public class EngineManager extends RollingStockManager<Engine>
      */
     public Engine createClone(Engine engine, Track track, Train train, Date startTime) {
         int cloneCreationOrder = getCloneCreationOrder();
+        String creationOrder = padNumber(cloneCreationOrder);
         Engine cloneEng = engine.copy();
-        cloneEng.setNumber(engine.getNumber() + Engine.CLONE + cloneCreationOrder);
+        cloneEng.setNumber(engine.getNumber() + Engine.CLONE + creationOrder);
         cloneEng.setClone(true);
         // register engine before setting location so the engine gets logged
         register(cloneEng);
@@ -203,13 +204,13 @@ public class EngineManager extends RollingStockManager<Engine>
         cloneEng.setLastRouteId(engine.getLastRouteId());
         cloneEng.setMoves(engine.getMoves());
         if (engine.getConsist() != null) {
-            String consistName = engine.getConsistName() + Engine.CLONE + cloneCreationOrder;
+            String consistName = engine.getConsistName() + Engine.CLONE + creationOrder;
             Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist(consistName);
             cloneEng.setConsist(consist);
             for (Engine e : engine.getConsist().getEngines()) {
                 if (e != engine) {
                     Engine nEng = e.copy();
-                    nEng.setNumber(e.getNumber() + Engine.CLONE + cloneCreationOrder);
+                    nEng.setNumber(e.getNumber() + Engine.CLONE + creationOrder);
                     nEng.setClone(true);
                     nEng.setConsist(consist);
                     nEng.setMoves(e.getMoves());
