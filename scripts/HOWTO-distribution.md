@@ -125,13 +125,13 @@ This is the next release in the 5.15 cycle. It's intended to be created from the
 
  - Make sure `git status` shows "up to date", not "ahead".
 
-- If it's a new year, update through-now copyright dates (done for 2023):
+- If it's a new year, update through-now copyright dates (done for 2026):
 
     JMRI:
     * build.xml in the jmri.copyright.years property value
     * project.properties
     * xml/XSLT/build.xml
-    * A flock of places in xml/XSLT/
+    * A flock of .xsl files in xml/XSLT/
     * scripts/WinInstallFiles/LaunchJMRI.nsi
 
     website:
@@ -683,7 +683,7 @@ Content:
 
     Test release 5.15.1 of JMRI/DecoderPro is available for download.
 
-    This is the next in a series of test releases that will culminate in a production release, hopefully in June 2025. It's really helpful when people download, install and use these test releases so we can find and fix any inadvertent new problems early.
+    This is the next in a series of test releases that will culminate in a production release, hopefully in June 2026. It's really helpful when people download, install and use these test releases so we can find and fix any inadvertent new problems early.
 
     If you are currently using JMRI 4.99.10 or earlier, there is an update process that we strongly recommend. See the release note section on updates:
     <https://www.jmri.org/releasenotes/jmri5.15.1.shtml#update>
