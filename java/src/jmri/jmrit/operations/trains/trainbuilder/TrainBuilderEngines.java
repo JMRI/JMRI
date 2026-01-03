@@ -15,7 +15,8 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.BuildFailedException;
+import jmri.jmrit.operations.trains.Train;
 
 /**
  * Contains methods for engines when building a train.
@@ -889,7 +890,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
     * possible for a engine to be pulled and set out twice, this code creates a
     * "clone" engine to create the requested Manifest. A engine could have multiple
     * clones, therefore each clone has a creation order number. The first clone
-    * is used to restore a engine's location and load in the case of reset.
+    * is used to restore a engine's location in the case of reset.
     * 
     * @param engine   the engine possibly needing quick service
     * @param track the destination track
