@@ -53,6 +53,7 @@ public class EnginesTableFrame extends OperationsFrame implements TableModelList
     JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
     JRadioButton sortByDcc = new JRadioButton(Bundle.getMessage("DccAddress"));
     JRadioButton sortByLast = new JRadioButton(Bundle.getMessage("Last"));
+    JRadioButton sortByPickup = new JRadioButton(Bundle.getMessage("Pickup"));
     JRadioButton sortByComment = new JRadioButton(Bundle.getMessage("Comment"));
     ButtonGroup group = new ButtonGroup();
 
@@ -105,6 +106,7 @@ public class EnginesTableFrame extends OperationsFrame implements TableModelList
             movep.add(sortByRfid);
         }
         movep.add(sortByDcc);
+        movep.add(sortByPickup);
         movep.add(sortByLast);
         movep.add(sortByComment);
         cp1.add(movep);
@@ -168,6 +170,7 @@ public class EnginesTableFrame extends OperationsFrame implements TableModelList
         addRadioButtonAction(sortByValue);
         addRadioButtonAction(sortByRfid);
         addRadioButtonAction(sortByDcc);
+        addRadioButtonAction(sortByPickup);
         addRadioButtonAction(sortByLast);
         addRadioButtonAction(sortByComment);
 
@@ -186,6 +189,7 @@ public class EnginesTableFrame extends OperationsFrame implements TableModelList
         group.add(sortByValue);
         group.add(sortByRfid);
         group.add(sortByDcc);
+        group.add(sortByPickup);
         group.add(sortByLast);
         group.add(sortByComment);
         
@@ -211,8 +215,9 @@ public class EnginesTableFrame extends OperationsFrame implements TableModelList
         toolMenu.add(new ShowCheckboxesEnginesTableAction(enginesTableModel));
         toolMenu.add(new ResetCheckboxesEnginesTableAction(enginesTableModel));
         toolMenu.addSeparator();
-        toolMenu.add(new EnginesSetFrameAction(enginesTable));
         toolMenu.add(new NceConsistEngineAction());
+        toolMenu.addSeparator();
+        toolMenu.add(new EnginesSetFrameAction(enginesTable));
         menuBar.add(toolMenu);
         menuBar.add(new jmri.jmrit.operations.OperationsMenu());
         setJMenuBar(menuBar);
@@ -266,6 +271,9 @@ public class EnginesTableFrame extends OperationsFrame implements TableModelList
         }
         if (ae.getSource() == sortByRfid) {
             enginesTableModel.setSort(enginesTableModel.SORTBY_RFID);
+        }
+        if (ae.getSource() == sortByPickup) {
+            enginesTableModel.setSort(enginesTableModel.SORTBY_PICKUP);
         }
         if (ae.getSource() == sortByLast) {
             enginesTableModel.setSort(enginesTableModel.SORTBY_LAST);
