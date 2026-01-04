@@ -118,6 +118,7 @@ public class CarManager extends RollingStockManager<Car>
         return getByList(getByIdList(), BY_WAIT);
     }
 
+    @Override
     public List<Car> getByPickupList() {
         return getByList(getByDestinationList(), BY_PICKUP);
     }

@@ -407,6 +407,10 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
     public List<T> getByRfidList() {
         return getByList(getByIdList(), BY_RFID);
     }
+    
+    public List<T> getByPickupList() {
+        return getByList(getByDestinationList(), BY_PICKUP);
+    }
 
     /**
      * Get a list of all rolling stock sorted last date used
@@ -453,7 +457,8 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
     protected static final int BY_VALUE = 11;
     protected static final int BY_LAST = 12;
     protected static final int BY_BLOCKING = 13;
-    protected static final int BY_COMMENT = 14;
+    private static final int BY_PICKUP = 14;
+    protected static final int BY_COMMENT = 15;
 
     protected java.util.Comparator<T> getComparator(int attribute) {
         switch (attribute) {
@@ -488,6 +493,8 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
                 return (r1, r2) -> (r1.getLastMoveDate().compareTo(r2.getLastMoveDate()));
             case BY_BLOCKING:
                 return (r1, r2) -> (r1.getBlocking() - r2.getBlocking());
+            case BY_PICKUP:
+                return (r1, r2) -> (r1.getPickupTime().compareToIgnoreCase(r2.getPickupTime()));
             case BY_COMMENT:
                 return (r1, r2) -> (r1.getComment().compareToIgnoreCase(r2.getComment()));
             default:
