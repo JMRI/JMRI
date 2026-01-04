@@ -152,7 +152,18 @@ public class CbusAllocateNodeNumberTest {
         JUnitUtil.waitFor(()->{return !(dialog_thread.isAlive());}, "checkCbus Allocate Node Num Dialog finished");
 
         JUnitUtil.waitFor(()->{ return( tcis.outbound.size() >2); }, "Outbound did not increase: " + tcis.getTranslatedOutbound());
-        assertEquals("[5f8] 42 FF 98", tcis.outbound.elementAt(2).toString(),"3rd message not right " + tcis.getTranslatedOutbound());
+        assertEquals("[5f8] 42 FF 98", tcis.outbound.elementAt(2).toString(),"3rd message not right "
+                + tcis.getTranslatedOutbound());
+
+        // The Node sends a message back acknowledging the Name.
+        // If this message is not heard, presents user with JDialog / error in log.
+        r = new CanReply();
+        r.setHeader(tcis.getCanid());
+        r.setNumDataElements(3);
+        r.setElement(0, CbusConstants.CBUS_NNACK); // Node number acknowledge
+        r.setElement(1, 65432 >> 8);
+        r.setElement(2, 65432 & 0xff);
+        t.reply(r);
 
         t.dispose();
 
@@ -276,6 +287,7 @@ public class CbusAllocateNodeNumberTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
 
+        t = null;
         memo = new CanSystemConnectionMemo();
         tcis = new CbusTrafficControllerScaffold(memo);
         memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.SPROGCBUS);
