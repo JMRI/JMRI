@@ -77,7 +77,7 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
             TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
             List<Train> trains = trainManager.getTrainsByIdList();
             for (Train train : trains) {
-                train.setDepartureTime(adjustHour(train.getDepartureTimeHour()), train.getDepartureTimeMinute());
+                train.setDepartureTime(train.getDepartureTimeDay(), adjustHour(train.getDepartureTimeHour()), train.getDepartureTimeMinute());
             }
             // now check every route to see if there are any departure times that need
             // adjustment
@@ -87,7 +87,7 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
                 for (Route route : routes) {
                     for (RouteLocation rl : route.getLocationsBySequenceList()) {
                         if (!rl.getDepartureTime().equals(RouteLocation.NONE))
-                            rl.setDepartureTime(adjustHour(rl.getDepartureTimeHour()), rl.getDepartureTimeMinute());
+                            rl.setDepartureTime(rl.getDepartureTimeDay(), adjustHour(rl.getDepartureTimeHour()), rl.getDepartureTimeMinute());
                     }
                 }
             }

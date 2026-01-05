@@ -351,7 +351,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
         route.setName("5 Locations");
         RouteLocation rl = route.getDepartsRouteLocation();
         Assert.assertEquals("Confirm departure name", "Acton", rl.getName());
-        rl.setDepartureTime("06", "05");
+        rl.setDepartureTime("0", "06", "05");
 
         RouteEditFrame f = new RouteEditFrame();
         f.initComponents(route);
@@ -366,7 +366,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
         tbl.setValueAt(box, 0, tbl.findColumn(Bundle.getMessage("Time")));
         JemmyUtil.enterClickAndLeave(f.saveRouteButton);
-        Assert.assertEquals("New departure time", "20:45", rl.getDepartureTime());
+        Assert.assertEquals("New departure time", "0:20:45", rl.getDepartureTime());
 
         JUnitUtil.dispose(f);
     }

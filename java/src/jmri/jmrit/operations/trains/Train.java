@@ -83,7 +83,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     protected String _engineRoad = NONE; // required road name for engines assigned to this train
     protected String _engineModel = NONE; // required model of engines assigned to this train
     protected String _cabooseRoad = NONE; // required road name for cabooses assigned to this train
-    protected String _departureTime = "00:00"; // NOI18N departure time for this train
+    protected String _departureTime = "00:00:00"; // departure time day:hour:minutes 
     protected String _leadEngineId = NONE; // lead engine for train icon info
     protected String _builtStartYear = NONE; // built start year
     protected String _builtEndYear = NONE; // built end year
@@ -338,40 +338,40 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /**
      * Get train's departure time in minutes from midnight for sorting
      *
-     * @return int hh*60+mm
+     * @return int dd*24*60 + hh*60 + mm
      */
     public int getDepartTimeMinutes() {
+        int day = Integer.parseInt(getDepartureTimeDay());
         int hour = Integer.parseInt(getDepartureTimeHour());
         int minute = Integer.parseInt(getDepartureTimeMinute());
-        return (hour * 60) + minute;
+        return (day * 24 * 60) + (hour * 60) + minute;
     }
 
-    public void setDepartureTime(String hour, String minute) {
+    public void setDepartureTime(String day, String hour, String minute) {
         String old = _departureTime;
-        int h = Integer.parseInt(hour);
-        if (h < 10) {
-            hour = "0" + h;
-        }
-        int m = Integer.parseInt(minute);
-        if (m < 10) {
-            minute = "0" + m;
-        }
-        String time = hour + ":" + minute;
+        hour = String.format("%02d", Integer.parseInt(hour));
+        minute = String.format("%02d", Integer.parseInt(minute));
+        String time = day + ":" + hour + ":" + minute;
         _departureTime = time;
         if (!old.equals(time)) {
-            setDirtyAndFirePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, old, _departureTime);
+            setDirtyAndFirePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, old, time);
             setModified(true);
         }
     }
-
-    public String getDepartureTimeHour() {
+    
+    public String getDepartureTimeDay() {
         String[] time = getDepartureTime().split(":");
         return time[0];
     }
 
-    public String getDepartureTimeMinute() {
+    public String getDepartureTimeHour() {
         String[] time = getDepartureTime().split(":");
         return time[1];
+    }
+
+    public String getDepartureTimeMinute() {
+        String[] time = getDepartureTime().split(":");
+        return time[2];
     }
 
     public static final String ALREADY_SERVICED = "-1"; // NOI18N
@@ -468,6 +468,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (!isTrainEnRoute()) {
             minutes += Integer.parseInt(getDepartureTimeMinute());
             minutes += 60 * Integer.parseInt(getDepartureTimeHour());
+            minutes += 24 * 60 * Integer.parseInt(getDepartureTimeDay());
         } else {
             minutes = -1; // -1 means train has already served the location
         }
@@ -3889,10 +3890,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             _description = a.getValue();
         }
         if ((a = e.getAttribute(Xml.DEPART_HOUR)) != null) {
+            String day = "0";
             String hour = a.getValue();
             if ((a = e.getAttribute(Xml.DEPART_MINUTE)) != null) {
                 String minute = a.getValue();
-                _departureTime = hour + ":" + minute;
+                if ((a = e.getAttribute(Xml.DEPART_DAY)) != null) {
+                    day = a.getValue();
+                }
+                _departureTime = day + ":" + hour + ":" + minute;
             }
         }
 
@@ -4322,6 +4327,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.NAME, getName());
         e.setAttribute(Xml.DESCRIPTION, getRawDescription());
+        e.setAttribute(Xml.DEPART_DAY, getDepartureTimeDay());
         e.setAttribute(Xml.DEPART_HOUR, getDepartureTimeHour());
         e.setAttribute(Xml.DEPART_MINUTE, getDepartureTimeMinute());
 

@@ -6242,7 +6242,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h5>Run Automation</h5>
       This action can start an automation from the beginning. You must select an automation from the
-      "Automation" menu.
+      "Automation" menu. Note that automations run in parallel. So if you need an automation to complete
+      before starting another one, use the acton "Wait Automation".
 
       <h5>Resume Automation</h5>
       This action can resume an automation that has been stopped or halted. The current pointer for
@@ -6251,6 +6252,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h5>Stop Automation</h5>
       This action can stop an automation that is running. You must select an automation from the
+      "Automation" menu.
+      
+      <h5>Wait Automation</h5>
+      This action will wait until an automation completes. You must select an automation from the
       "Automation" menu.
 
       <h5>Counter</h5>

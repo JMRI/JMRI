@@ -82,13 +82,15 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     JColorChooser commentColorChooser = new JColorChooser(Color.black);
 
     // for padding out panel
-    JLabel space1 = new JLabel(" "); // before hour
+    JLabel space0 = new JLabel(" "); // before day
+    JLabel space1 = new JLabel(" "); // between day and hour
     JLabel space2 = new JLabel(" "); // between hour and minute
     JLabel space3 = new JLabel(" "); // after minute
     JLabel space4 = new JLabel(" "); // between route and edit
     JLabel space5 = new JLabel(" "); // after edit
 
     // combo boxes
+    JComboBox<String> dayBox = new JComboBox<>();
     JComboBox<String> hourBox = new JComboBox<>();
     JComboBox<String> minuteBox = new JComboBox<>();
     JComboBox<Route> routeBox = routeManager.getComboBox();
@@ -155,8 +157,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         pdt.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("DepartTime")));
 
         // build hour and minute menus
-        hourBox.setPrototypeDisplayValue("0000"); // needed for font size 9
+        dayBox.setPrototypeDisplayValue("0000"); // needed for font size 9
+        hourBox.setPrototypeDisplayValue("0000");
         minuteBox.setPrototypeDisplayValue("0000");
+        for (int i = 0; i < 32; i++) {
+            dayBox.addItem(Integer.toString(i));
+        }
         for (int i = 0; i < 24; i++) {
             if (i < 10) {
                 hourBox.addItem("0" + Integer.toString(i));
@@ -172,11 +178,13 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             }
         }
 
-        addItem(pdt, space1, 0, 5);
-        addItem(pdt, hourBox, 1, 5);
-        addItem(pdt, space2, 2, 5);
-        addItem(pdt, minuteBox, 3, 5);
-        addItem(pdt, space3, 4, 5);
+        addItem(pdt, space0, 0, 5);
+        addItem(pdt, dayBox, 1, 5);
+        addItem(pdt, space1, 2, 5);
+        addItem(pdt, hourBox, 3, 5);
+        addItem(pdt, space2, 4, 5);
+        addItem(pdt, minuteBox, 5, 5);
+        addItem(pdt, space3, 6, 5);
         // row 2b
         // BUG! routeBox needs its own panel when resizing frame!
         JPanel pr = new JPanel();
@@ -538,7 +546,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                         TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor()))) {
             _train.setModified(true);
         }
-        _train.setDepartureTime(hourBox.getSelectedItem().toString(), minuteBox.getSelectedItem().toString());
+        _train.setDepartureTime(dayBox.getSelectedItem().toString(), hourBox.getSelectedItem().toString(), minuteBox.getSelectedItem().toString());
         _train.setNumberEngines((String) numEnginesBox.getSelectedItem());
         if (_train.getNumberEngines().equals("0")) {
             modelEngineBox.setSelectedIndex(0);
@@ -1039,14 +1047,17 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     private void updateDepartureTime() {
+        dayBox.setSelectedItem(_train.getDepartureTimeDay());
         hourBox.setSelectedItem(_train.getDepartureTimeHour());
         minuteBox.setSelectedItem(_train.getDepartureTimeMinute());
         // check to see if route has a departure time from the 1st location
         RouteLocation rl = _train.getTrainDepartsRouteLocation();
         if (rl != null && !rl.getDepartureTime().equals(NONE)) {
+            dayBox.setEnabled(false);
             hourBox.setEnabled(false);
             minuteBox.setEnabled(false);
         } else {
+            dayBox.setEnabled(!_train.isBuilt());
             hourBox.setEnabled(!_train.isBuilt());
             minuteBox.setEnabled(!_train.isBuilt());
         }
