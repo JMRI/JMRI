@@ -31,7 +31,7 @@ public class CbusAllocateNodeNumberTest {
 
         assertEquals(2, tcis.numListeners(),"2 listener " + tcis.getListeners());
 
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
         assertNotNull(t);
         assertEquals(3, tcis.numListeners(),"3 listeners " + tcis.getListeners());
 
@@ -44,7 +44,7 @@ public class CbusAllocateNodeNumberTest {
     @DisabledIfHeadless
     public void testDisplayDialogue() {
         memo.get(CbusPreferences.class).setAddNodes(false);
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
         assertNotNull(t);
 
         CbusNode node789 = nodeModel.provideNodeByNodeNum(789);
@@ -172,7 +172,7 @@ public class CbusAllocateNodeNumberTest {
     @Test
     public void testAddNodes() {
 
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
         memo.get(CbusPreferences.class).setAddNodes(true);
 
         CanReply rsna = new CanReply();
@@ -195,7 +195,7 @@ public class CbusAllocateNodeNumberTest {
     @Test
     @DisabledIfHeadless
     public void testCanMessage() {
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
 
         CanMessage r = new CanMessage(tcis.getCanid());
         r.setNumDataElements(1);
@@ -220,7 +220,7 @@ public class CbusAllocateNodeNumberTest {
     @Test
     @DisabledIfHeadless
     public void testAllocateTimeout() {
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
 
         t.setTimeout(5); // default is reduced to speed up test
 
@@ -278,7 +278,6 @@ public class CbusAllocateNodeNumberTest {
 
     private CanSystemConnectionMemo memo;
     private CbusTrafficControllerScaffold tcis;
-    private CbusAllocateNodeNumber t;
     private CbusNodeTableDataModel nodeModel;
 
     @BeforeEach
@@ -287,7 +286,6 @@ public class CbusAllocateNodeNumberTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
 
-        t = null;
         memo = new CanSystemConnectionMemo();
         tcis = new CbusTrafficControllerScaffold(memo);
         memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.SPROGCBUS);
@@ -299,7 +297,7 @@ public class CbusAllocateNodeNumberTest {
 
     @AfterEach
     public void tearDown() {
-        t = null;
+
         nodeModel.dispose();
         nodeModel = null;
         memo.dispose();
