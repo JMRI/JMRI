@@ -1,12 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of MultiIconEditor
@@ -16,21 +13,22 @@ import org.junit.Assume;
 public class MultiIconEditorTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        MultiIconEditor frame = new MultiIconEditor(4);
-        Assert.assertNotNull("exists", frame);
-        frame.dispose();
+
+        MultiIconEditor panel = new MultiIconEditor(4);
+        Assertions.assertNotNull( panel, "exists");
+        panel.dispose();
     }
 
     // from here down is testing infrastructure
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MultiIconEditorTest.class);
