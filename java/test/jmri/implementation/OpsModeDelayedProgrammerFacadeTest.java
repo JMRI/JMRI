@@ -1,5 +1,9 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.text.MessageFormat;
 import java.time.Duration;
 import java.time.Instant;
@@ -12,9 +16,6 @@ import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test the OpsModeDelayedProgrammerFacade class.
@@ -52,23 +53,23 @@ public class OpsModeDelayedProgrammerFacadeTest {
 
         Programmer p = new OpsModeDelayedProgrammerFacade(dp, 0);
 
-        Assert.assertTrue("CV limit read OK", p.getCanRead("1024"));
-        Assert.assertTrue("CV limit write OK", p.getCanWrite("1024"));
-        Assert.assertTrue("CV limit read fail", !p.getCanRead("1025"));
-        Assert.assertTrue("CV limit write fail", !p.getCanWrite("1025"));
+        assertTrue( p.getCanRead("1024"), "CV limit read OK");
+        assertTrue( p.getCanWrite("1024"), "CV limit write OK");
+        assertFalse( p.getCanRead("1025"), "CV limit read fail");
+        assertFalse( p.getCanWrite("1025"), "CV limit write fail");
     }
 
-    int facProgRetValue = -2;
-    int facProgRetStatus = -2;
-    int facProgRetDelay = 0;
-    transient volatile boolean facProgReplied = false;
+    private int facProgRetValue = -2;
+    private int facProgRetStatus = -2;
+    // private int facProgRetDelay = 0;
+    private transient volatile boolean facProgReplied = false;
 
     // Perform tests with parameters parsed from the name of the calling method.
     synchronized void testMethod(int addr, boolean addrType) throws jmri.ProgrammerException, InterruptedException {
         String methodName = "";
         String cv = "";
         int value = 0;
-        int delay = 0;
+        int delay;
 
         facProgRetValue = -2;
         facProgRetStatus = -2;
@@ -80,6 +81,8 @@ public class OpsModeDelayedProgrammerFacadeTest {
             cv = items.get(2);
             value = Integer.parseInt(items.get(4));
             delay = Integer.parseInt(items.get(6));
+        } else {
+            delay = 0;
         }
         log.debug("Testing: {}:\nExtracted parameters cv='{}', value={}, delay={}", methodName, cv, value, delay);
 
@@ -106,14 +109,15 @@ public class OpsModeDelayedProgrammerFacadeTest {
         long elapsed = Duration.between(start, end).toMillis();
 
         // Check that the write flowed through to the base programmer.
-        Assert.assertTrue("Original CV has been written", baseProg.hasBeenWritten(Integer.parseInt(cv)));
-        Assert.assertEquals("Original CV was last one written", Integer.parseInt(cv), baseProg.lastWriteCv());
-        Assert.assertEquals("Original CV value is as expected", value, baseProg.lastWrite());
+        assertTrue( baseProg.hasBeenWritten(Integer.parseInt(cv)), "Original CV has been written");
+        assertEquals( Integer.parseInt(cv), baseProg.lastWriteCv(), "Original CV was last one written");
+        assertEquals( value, baseProg.lastWrite(), "Original CV value is as expected");
 
         log.debug("Notification delay={}, elapsed={}", delay, elapsed);
-        Assert.assertEquals(MessageFormat.format("Elapsed time ({0}) >= delay  ({1})", elapsed, delay), true, (elapsed >= delay));
-        Assert.assertEquals("Facade listener return value OK", value, facProgRetValue);
-        Assert.assertEquals("Facade listener return status OK", ProgListener.OK, facProgRetStatus);
+        assertTrue( elapsed >= delay,
+            () -> MessageFormat.format("Elapsed time ({0}) >= delay  ({1})", elapsed, delay));
+        assertEquals( value, facProgRetValue, "Facade listener return value OK");
+        assertEquals( ProgListener.OK, facProgRetStatus, "Facade listener return status OK");
     }
 
     // Extract test parameters from test name.
@@ -153,16 +157,15 @@ public class OpsModeDelayedProgrammerFacadeTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OpsModeDelayedProgrammerFacadeTest.class
-    );
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OpsModeDelayedProgrammerFacadeTest.class);
 
 }
