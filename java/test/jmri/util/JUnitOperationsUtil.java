@@ -1,5 +1,8 @@
 package jmri.util;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
+
 import java.awt.GraphicsEnvironment;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -27,14 +30,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 /**
  * Common utility methods for working with Operations related JUnit tests.
@@ -238,7 +233,7 @@ public class JUnitOperationsUtil {
         train1.setCabooseRoad("CP");
         train1.deleteTypeName("Flat");
         train1.setRoute(route1);
-        train1.setDepartureTime("6", "5");
+        train1.setDepartureTime("0", "6", "5");
         train1.setComment("Test comment for train STF");
         train1.setDescription("Train STF");
 
@@ -250,7 +245,7 @@ public class JUnitOperationsUtil {
 
         Train train2 = new Train("2", "SFF");
         train2.setRoute(route1);
-        train2.setDepartureTime("22", "45");
+        train2.setDepartureTime("0", "22", "45");
         train2.setDescription("Train SFF");
         tmanager.register(train2);
 

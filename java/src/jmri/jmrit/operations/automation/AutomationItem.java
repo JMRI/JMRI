@@ -392,6 +392,7 @@ public class AutomationItem extends PropertyChangeSupport implements java.beans.
         list.add(new RunAutomationAction());
         list.add(new ResumeAutomationAction());
         list.add(new StopAutomationAction());
+        list.add(new WaitAutomationAction());
         list.add(new CounterAction());
         list.add(new MessageYesNoAction());
         list.add(new GotoAction());

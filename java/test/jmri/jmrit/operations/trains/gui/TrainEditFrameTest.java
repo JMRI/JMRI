@@ -40,6 +40,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
             trainEditFrame.trainNameTextField.setText("Test Train Name");
             trainEditFrame.trainDescriptionTextField.setText("Test Train Description");
             trainEditFrame.commentTextArea.setText("Test Train Comment");
+            trainEditFrame.dayBox.setSelectedItem("2");
             trainEditFrame.hourBox.setSelectedItem("15");
             trainEditFrame.minuteBox.setSelectedItem("45");
         });
@@ -53,7 +54,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("train name", "Test Train Name", train.getName());
         Assert.assertEquals("train description", "Test Train Description", train.getDescription());
         Assert.assertEquals("train comment", "Test Train Comment", train.getCommentWithColor());
-        Assert.assertEquals("train depart time", "15:45", train.getDepartureTime());
+        Assert.assertEquals("train depart time", "2:15:45", train.getDepartureTime());
         Assert.assertEquals("train route", null, train.getRoute());
         Assert.assertTrue("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
         Assert.assertEquals("train roads", Train.ALL_ROADS, train.getCarRoadOption());
@@ -74,7 +75,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         // save should work now
         JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.saveTrainButton);
-        Assert.assertEquals("train depart time", "15:45", train.getDepartureTime());
+        Assert.assertEquals("train depart time", "2:15:45", train.getDepartureTime());
 
         Assert.assertEquals("train route", "Test Route C", train.getRoute().getName());
         // test route edit button
@@ -128,7 +129,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(trainEditFrame.cabooseRadioButton);
         JemmyUtil.enterClickAndLeave(trainEditFrame.saveTrainButton);
-        Assert.assertEquals("train depart time", "15:45", train.getDepartureTime());
+        Assert.assertEquals("train depart time", "2:15:45", train.getDepartureTime());
         Assert.assertEquals("train requirements Caboose", Train.CABOOSE, train.getRequirements());
 
         Assert.assertEquals("caboose road 1", "", train.getCabooseRoad());
@@ -180,6 +181,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("train name", "Test Train Name", f.trainNameTextField.getText());
         Assert.assertEquals("train description", "Test Train Description", f.trainDescriptionTextField.getText());
         Assert.assertEquals("train comment", "Test Train Comment", f.commentTextArea.getText());
+        Assert.assertEquals("train depart day", "2", f.dayBox.getSelectedItem());
         Assert.assertEquals("train depart hour", "15", f.hourBox.getSelectedItem());
         Assert.assertEquals("train depart minute", "45", f.minuteBox.getSelectedItem());
         Assert.assertEquals("train route", t2.getRoute(), f.routeBox.getSelectedItem());
@@ -216,7 +218,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("train name", "Test Add Train Name", train.getName());
         Assert.assertEquals("train description", "Test Train Description", train.getDescription());
         Assert.assertEquals("train comment", "Test Train Comment", train.getCommentWithColor());
-        Assert.assertEquals("train depart time", "00:00", train.getDepartureTime());
+        Assert.assertEquals("train depart time", "0:00:00", train.getDepartureTime());
         Assert.assertEquals("train route", null, train.getRoute());
         Assert.assertTrue("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
         Assert.assertEquals("train roads", Train.ALL_ROADS, train.getCarRoadOption());
@@ -325,7 +327,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull("Confirm location exsists", loc);
 
         RouteLocation rB = routeB.addLocation(loc);
-        rB.setDepartureTime("10", "12");
+        rB.setDepartureTime("0", "10", "12");
 
         train.setRoute(routeB);
 
@@ -345,6 +347,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
                 trainEditFrame.trainDescriptionTextField.getText());
         Assert.assertEquals("train comment", "Test Train Save Button Comment",
                 trainEditFrame.commentTextArea.getText());
+        Assert.assertEquals("train depart day", "0", trainEditFrame.dayBox.getSelectedItem());
         Assert.assertEquals("train depart hour", "10", trainEditFrame.hourBox.getSelectedItem());
         Assert.assertEquals("train depart minute", "12", trainEditFrame.minuteBox.getSelectedItem());
         Assert.assertEquals("train route", train.getRoute(), trainEditFrame.routeBox.getSelectedItem());
@@ -358,14 +361,16 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("FRED selected", trainEditFrame.fredRadioButton.isSelected());
 
         // test departure time fields
+        Assert.assertFalse("Confirm day is disabled", trainEditFrame.dayBox.isEnabled());
         Assert.assertFalse("Confirm hour is disabled", trainEditFrame.hourBox.isEnabled());
         Assert.assertFalse("Confirm minute is disabled", trainEditFrame.minuteBox.isEnabled());
-        Assert.assertEquals("train departure time", "10:12", train.getDepartureTime());
+        Assert.assertEquals("train departure time", "0:10:12", train.getDepartureTime());
 
         // test route field, 5 routes and a blank
         Assert.assertEquals("Route Combobox item count", 6, trainEditFrame.routeBox.getItemCount());
 
         trainEditFrame.routeBox.setSelectedIndex(3); // the 3rd item should be "Test Route C"
+        Assert.assertTrue("Confirm day is enabled", trainEditFrame.dayBox.isEnabled());
         Assert.assertTrue("Confirm hour is enabled", trainEditFrame.hourBox.isEnabled());
         Assert.assertTrue("Confirm minute is enabled", trainEditFrame.minuteBox.isEnabled());
         Assert.assertEquals("train depart hour", "00", trainEditFrame.hourBox.getSelectedItem());

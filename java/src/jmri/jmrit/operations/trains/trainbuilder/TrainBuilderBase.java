@@ -2946,10 +2946,11 @@ public class TrainBuilderBase extends TrainCommon {
                     dwellTime = Setup.getDwellTime();
                 }
                 if (cloneSetoutTimeMinutes + dwellTime > trainArrivalTimeMinutes) {
+                    String earliest = convertMinutesTime(cloneSetoutTimeMinutes + dwellTime);
                     addLine(_buildReport, FIVE, Bundle.getMessage("buildDeliveryTiming", rs.toString(),
                             clone.getSetoutTime(), rs.getTrack().getTrackTypeName(), rs.getLocationName(),
                             rs.getTrackName(), clone.getTrainName(), _train.getName(), trainExpectedArrival,
-                            dwellTime));
+                            dwellTime, earliest));
                     addLine(_buildReport, FIVE, BLANK_LINE);
                     return false;
                 } else {

@@ -364,40 +364,53 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     public void setDepartureTime(String time) {
         String old = _departureTime;
         _departureTime = time;
+        if (!time.equals(NONE)) {
+            _departureTime = "0:" + time;
+        }
         if (!old.equals(time)) {
             setDirtyAndFirePropertyChange(DEPARTURE_TIME_CHANGED_PROPERTY, old, time);
         }
     }
 
-    public void setDepartureTime(String hour, String minute) {
+    public void setDepartureTime(String day, String hour, String minute) {
         String old = _departureTime;
-        int h = Integer.parseInt(hour);
-        if (h < 10) {
-            hour = "0" + h;
-        }
-        int m = Integer.parseInt(minute);
-        if (m < 10) {
-            minute = "0" + m;
-        }
-        String time = hour + ":" + minute;
+        hour = String.format("%02d", Integer.parseInt(hour));
+        minute = String.format("%02d", Integer.parseInt(minute));
+        String time = day + ":" + hour + ":" + minute;
         _departureTime = time;
         if (!old.equals(time)) {
             setDirtyAndFirePropertyChange(DEPARTURE_TIME_CHANGED_PROPERTY, old, time);
         }
     }
 
+    /**
+     * 
+     * @return departure time day:hour:minutes
+     */
     public String getDepartureTime() {
         return _departureTime;
     }
-
-    public String getDepartureTimeHour() {
+    
+    public String getDepartureTimeHourMinutes() {
+        if (!getDepartureTime().equals(NONE)) {
+            return getDepartureTimeHour() + ":" + getDepartureTimeMinute();
+        }
+        return getDepartureTime();
+    }
+    
+    public String getDepartureTimeDay() {
         String[] time = getDepartureTime().split(":");
         return time[0];
     }
 
-    public String getDepartureTimeMinute() {
+    public String getDepartureTimeHour() {
         String[] time = getDepartureTime().split(":");
         return time[1];
+    }
+
+    public String getDepartureTimeMinute() {
+        String[] time = getDepartureTime().split(":");
+        return time[2];
     }
 
     public String getFormatedDepartureTime() {
@@ -405,8 +418,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
             return _departureTime;
         }
         String AM_PM = TrainCommon.SPACE + Bundle.getMessage("AM");
-        String[] time = getDepartureTime().split(":");
-        int hour = Integer.parseInt(time[0]);
+        int hour = Integer.parseInt(getDepartureTimeHour());
         if (hour >= 12) {
             AM_PM = TrainCommon.SPACE + Bundle.getMessage("PM");
             hour = hour - 12;
@@ -414,8 +426,8 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         if (hour == 0) {
             hour = 12;
         }
-        time[0] = Integer.toString(hour);
-        return time[0] + ":" + time[1] + AM_PM;
+        String shour = Integer.toString(hour);
+        return getDepartureTimeDay() + ":" + shour + ":" + getDepartureTimeMinute() + AM_PM;
     }
 
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "firing property change doesn't matter")
