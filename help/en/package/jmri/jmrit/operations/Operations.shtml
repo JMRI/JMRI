@@ -6265,11 +6265,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       tools use "Reset Automation".
 
       <h5>Down Counter</h5>
-      This action will decrement a count that is entered into the edit message. Use the "Add" button
-      found under "Messages" to enter a positive number greater than zero. You can use the "If
-      Failure GOTO" and "If Success GOTO" actons to branch when the count is greater than zero, or
-      equal to zero respectively. The acton down counter will automatically reload after the count
-      reaches zero. The "Reset Automation" under tools will also reload the down counters.
+      This action will decrement a count that is entered into the message if acton succeeds window.
+      Use the "Add" button found under "Messages" and enter a positive number, followed by the "OK"
+      button to load the down counter. You can use the "If Failure GOTO" and "If Success GOTO"
+      actons to branch when the count is greater than zero, or equal to zero respectively. The acton
+      down counter will automatically reload after the count reaches zero and the acton is executed.
+      The "Reset Automation" under tools will also reload the down counters.
 
       <h5>Message Yes or No</h5>
       This action can be used to ask a question to which the answer is Yes or No. Use the "If
