@@ -2190,6 +2190,16 @@ public class TrainCommon {
         log.debug("convert time {} to minutes {}", time, minutes);
         return minutes;
     }
+    
+    public String convertMinutesTime(int minutes) {
+        int days = minutes / (24 * 60);
+        int h = (minutes - (days * 24 * 60))/60;
+        String sHours = String.format("%02d", h);
+        int m = minutes - days * 24 * 60 - h * 60;
+        String sMinutes = String.format("%02d", m);
+        return Integer.toString(days) + ":" + sHours + ":" + sMinutes;
+    }
+        
 
     /**
      * Pads out a string by adding spaces to the end of the string, and will

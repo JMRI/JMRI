@@ -141,10 +141,11 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Train Requirements NONE", 0, train1.getRequirements());
         Assert.assertFalse("no caboose", train1.isCabooseNeeded());
         Assert.assertFalse("no FRED", train1.isFredNeeded());
-        train1.setDepartureTime("12", "55");
+        train1.setDepartureTime("0", "12", "55");
+        Assert.assertEquals("Train departure day", "0", train1.getDepartureTimeDay());
         Assert.assertEquals("Train departure hour", "12", train1.getDepartureTimeHour());
         Assert.assertEquals("Train departure minute", "55", train1.getDepartureTimeMinute());
-        Assert.assertEquals("Train departure hour and minute", "12:55", train1.getDepartureTime());
+        Assert.assertEquals("Train departure hour and minute", "0:12:55", train1.getDepartureTime());
     }
 
     @Test

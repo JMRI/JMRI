@@ -849,7 +849,7 @@ public class TrainManager extends PropertyChangeSupport
         // route, departure time and types
         newTrain.setRoute(train.getRoute());
         newTrain.setTrainSkipsLocations(train.getTrainSkipsLocations());
-        newTrain.setDepartureTime(train.getDepartureTimeHour(), train.getDepartureTimeMinute());
+        newTrain.setDepartureTime(train.getDepartureTimeDay(), train.getDepartureTimeHour(), train.getDepartureTimeMinute());
         newTrain._typeList.clear(); // remove all types loaded by create
         newTrain.setTypeNames(train.getTypeNames());
         // set road, load, and owner options

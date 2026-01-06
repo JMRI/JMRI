@@ -305,7 +305,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case DEPARTURE_TIME_COLUMN: {
                 JComboBox<String> cb = getTimeComboBox();
                 cb.setToolTipText(Bundle.getMessage("TipDepartureTime", rl.getName()));
-                cb.setSelectedItem(rl.getDepartureTime());
+                cb.setSelectedItem(rl.getDepartureTimeHourMinutes());
                 return cb;
             }
             case MAXLENGTH_COLUMN:
@@ -599,22 +599,11 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
     protected JComboBox<String> getTimeComboBox() {
         JComboBox<String> timeBox = new JComboBox<>();
-        String hour;
-        String minute;
         timeBox.addItem("");
         for (int i = 0; i < 24; i++) {
-            if (i < 10) {
-                hour = "0" + Integer.toString(i);
-            } else {
-                hour = Integer.toString(i);
-            }
-            for (int j = 0; j < 60; j += 1) {
-                if (j < 10) {
-                    minute = "0" + Integer.toString(j);
-                } else {
-                    minute = Integer.toString(j);
-                }
-
+            String hour = String.format("%02d", i);
+            for (int j = 0; j < 60; j++) {
+                String minute = String.format("%02d", j);
                 timeBox.addItem(hour + ":" + minute);
             }
         }

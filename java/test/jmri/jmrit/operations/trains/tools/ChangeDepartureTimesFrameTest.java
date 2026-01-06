@@ -57,20 +57,22 @@ public class ChangeDepartureTimesFrameTest extends OperationsTestCase {
         Route route = train2.getRoute();
         // set depart time using the train's route
         RouteLocation rl1 = route.getRouteLocationBySequenceNumber(1);
-        rl1.setDepartureTime("03", "43");
+        rl1.setDepartureTime("1", "03", "43");
         RouteLocation rl2 = route.getRouteLocationBySequenceNumber(2);
-        rl2.setDepartureTime("23", "02");
+        rl2.setDepartureTime("30", "23", "02");
 
         // leave route update checkbox unselected
         Assert.assertEquals("departure time", "03", train2.getDepartureTimeHour());
         ChangeDepartureTimesFrame f = new ChangeDepartureTimesFrame();
         JemmyUtil.enterClickAndLeave(f.changeButton);
+        Assert.assertEquals("departure day", "1", train2.getDepartureTimeDay());
         Assert.assertEquals("departure time", "03", train2.getDepartureTimeHour());
         Assert.assertEquals("Route location departure time", "23", rl2.getDepartureTimeHour());
 
         // now select checkbox
         JemmyUtil.enterClickAndLeave(f.routesCheckBox);
         JemmyUtil.enterClickAndLeave(f.changeButton);
+        Assert.assertEquals("departure day", "1", train2.getDepartureTimeDay());
         Assert.assertEquals("departure time", "04", train2.getDepartureTimeHour());
         Assert.assertEquals("Route location departure time", "00", rl2.getDepartureTimeHour());
     }

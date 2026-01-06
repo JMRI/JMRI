@@ -19925,7 +19925,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // default travel time = 4 switch time = 3
         // train 2 departs B at 00:07
         // set departure time for train 1 to arrive B at 00:07
-        train1.setDepartureTime("00", "03");
+        train1.setDepartureTime("0", "00", "03");
         Assert.assertTrue(tb.build(train1));
 
         Assert.assertEquals("c1", tB, c1.getDestinationTrack());
@@ -19934,7 +19934,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("c1", "0:00:03", c1.getPickupTime());
 
         // arrive one minute too early
-        train1.setDepartureTime("00", "02");
+        train1.setDepartureTime("0", "00", "02");
         Assert.assertTrue(tb.build(train1));
 
         Assert.assertEquals("c1", null, c1.getDestinationTrack());
@@ -19944,7 +19944,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         c1.setFinalDestination(B);
 
-        train1.setDepartureTime("00", "03");
+        train1.setDepartureTime("0", "00", "03");
         Assert.assertTrue(tb.build(train1));
 
         Assert.assertEquals("c1", tB, c1.getDestinationTrack());
@@ -19954,7 +19954,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c1.setFinalDestination(B);
 
         // arrive one minute too early
-        train1.setDepartureTime("00", "02");
+        train1.setDepartureTime("0", "00", "02");
         Assert.assertTrue(tb.build(train1));
 
         Assert.assertEquals("c1", null, c1.getDestinationTrack());
@@ -20640,12 +20640,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         // define the trains
         Train train1 = tmanager.newTrain("TestQuickTurnTrainTiming1");
         train1.setRoute(route1);
-        train1.setDepartureTime("02", "30");
+        train1.setDepartureTime("0", "02", "30");
 
         Train train2 = tmanager.newTrain("TestQuickTurnTrainTiming2");
         train2.setRoute(route2);
         // train 2 arrives 2nd Boston at 2:40 same time as clone arrives
-        train2.setDepartureTime("02", "28");
+        train2.setDepartureTime("0", "02", "28");
 
         TrainBuilder tb = new TrainBuilder();
 
@@ -20696,7 +20696,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // now have train 2 depart before train 1
         train2.reset();
         // train 2 arrives 2nd Boston at 2:39 one minute before clone arrives
-        train2.setDepartureTime("02", "27");
+        train2.setDepartureTime("0", "02", "27");
         tb.build(train2);
         Assert.assertTrue("train status", train2.isBuilt());
 
@@ -20815,7 +20815,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // depart with 1 engines
         train2.setBuildConsistEnabled(true);
         train2.setNumberEngines("1");
-        train2.setDepartureTime("1", "00");
+        train2.setDepartureTime("0", "1", "00");
         
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertEquals("Train should build", true, train2.isBuilt());
@@ -20961,7 +20961,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         
         // depart with 2 engines
         train2.setNumberEngines("2");
-        train2.setDepartureTime("1", "00");
+        train2.setDepartureTime("0", "1", "00");
         
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertEquals("Train should build", true, train2.isBuilt());
