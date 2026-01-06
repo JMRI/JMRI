@@ -10,7 +10,7 @@ import jmri.Sensor;
 import org.bidib.jbidibc.messages.BidibLibrary;
 import org.bidib.jbidibc.messages.Node;
 import org.bidib.jbidibc.messages.message.FeedbackGetRangeMessage;
-import org.bidib.jbidibc.messages.message.BidibRequestFactory;
+//import org.bidib.jbidibc.messages.message.BidibRequestFactory;
 import org.bidib.jbidibc.messages.utils.NodeUtils;
 
 import org.slf4j.Logger;
