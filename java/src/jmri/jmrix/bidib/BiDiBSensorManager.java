@@ -246,7 +246,7 @@ public class BiDiBSensorManager extends jmri.managers.AbstractSensorManager {
     @Override
     public void updateAll() {
         BiDiBTrafficController tc = getMemo().getBiDiBTrafficController();
-        BidibRequestFactory rf = tc.getBidib().getRootNode().getRequestFactory();
+        //BidibRequestFactory rf = tc.getBidib().getRootNode().getRequestFactory();
         tc.getNodeList().forEach( (uid, node) -> {
             int bmSize = tc.getNodeFeature(node, BidibLibrary.FEATURE_BM_SIZE);
             if (NodeUtils.hasFeedbackFunctions(node.getUniqueId())  &&  bmSize > 0 ) {
