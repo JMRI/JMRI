@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.Locale;
 
 import javax.annotation.CheckForNull;
-//import javax.annotation.Nonnull;
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InvokeOnAnyThread;
@@ -334,33 +334,33 @@ public class JmriJOptionPane {
         }
     }
 
-//    /**
-//     * Sets the position of a dialog relative to a parent component.
-//     * This method positions the dialog at the centre of
-//     * the parent component or its parent window.
-//     *
-//     * @param parentComponent The parent component relative to which the dialog should be positioned.
-//     * @param dialog           The dialog whose position is being set.
-//     */
-//    private static void setDialogLocation( @CheckForNull Component parentComponent, @Nonnull Dialog dialog) {
-//        log.debug("set dialog position for comp {} dialog {}", parentComponent, dialog.getTitle());
-//        int centreWidth;
-//        int centreHeight;
-//        Window w = findWindowForComponent(parentComponent);
-//        if ( w == null || !w.isVisible() ) {
-//            centreWidth = Toolkit.getDefaultToolkit().getScreenSize().width / 2;
-//            centreHeight = Toolkit.getDefaultToolkit().getScreenSize().height / 2;
-//        } else {
-//            Point topLeft = w.getLocationOnScreen();
-//            Dimension size = w.getSize();
-//            centreWidth = topLeft.x + ( size.width / 2 );
-//            centreHeight = topLeft.y + ( size.height / 2 );
-//        }
-//        int centerX = centreWidth - ( dialog.getWidth() / 2 );
-//        int centerY = centreHeight - ( dialog.getHeight() / 2 );
-//        // set top left of Dialog at least 0px into the screen.
-//        dialog.setLocation( new Point(Math.max(0, centerX), Math.max(0, centerY)));
-//    }
+    /**
+     * Sets the position of a dialog relative to a parent component.
+     * This method positions the dialog at the centre of
+     * the parent component or its parent window.
+     *
+     * @param parentComponent The parent component relative to which the dialog should be positioned.
+     * @param dialog           The dialog whose position is being set.
+     */
+    private static void setDialogLocation( @CheckForNull Component parentComponent, @Nonnull Dialog dialog) {
+        log.debug("set dialog position for comp {} dialog {}", parentComponent, dialog.getTitle());
+        int centreWidth;
+        int centreHeight;
+        Window w = findWindowForComponent(parentComponent);
+        if ( w == null || !w.isVisible() ) {
+            centreWidth = Toolkit.getDefaultToolkit().getScreenSize().width / 2;
+            centreHeight = Toolkit.getDefaultToolkit().getScreenSize().height / 2;
+        } else {
+            Point topLeft = w.getLocationOnScreen();
+            Dimension size = w.getSize();
+            centreWidth = topLeft.x + ( size.width / 2 );
+            centreHeight = topLeft.y + ( size.height / 2 );
+        }
+        int centerX = centreWidth - ( dialog.getWidth() / 2 );
+        int centerY = centreHeight - ( dialog.getHeight() / 2 );
+        // set top left of Dialog at least 0px into the screen.
+        dialog.setLocation( new Point(Math.max(0, centerX), Math.max(0, centerY)));
+    }
 
     @CheckForNull
     private static Window findWindowForComponent(@CheckForNull Component component){
