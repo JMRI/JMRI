@@ -6243,7 +6243,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h5>Run Automation</h5>
       This action can start an automation from the beginning. You must select an automation from the
       "Automation" menu. Note that automations run in parallel. So if you need an automation to complete
-      before starting another one, use the acton "Wait Automation".
+      before starting another one, use the action "Wait Automation".
 
       <h5>Resume Automation</h5>
       This action can resume an automation that has been stopped or halted. The current pointer for
@@ -6265,12 +6265,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       tools use "Reset Automation".
 
       <h5>Down Counter</h5>
-      This action will decrement a count that is entered into the "Show this message if acton
+      This action will decrement a count that is entered into the "Show this message if action
       succeeds" text field. Use the "Add" button found under "Messages" and enter a positive number,
       followed by the "OK" button to load the down counter. You can use the "If Failure GOTO" and
-      "If Success GOTO" actons to branch when the count is greater than zero, or equal to zero
-      respectively. The acton down counter will automatically reload after the count reaches zero
-      and the acton is executed. The "Reset Automation" under tools will also reload the down
+      "If Success GOTO" actions to branch when the count is greater than zero, or equal to zero
+      respectively. The action down counter will automatically reload after the count reaches zero
+      and the action is executed. The "Reset Automation" under tools will also reload the down
       counters.
 
       <h5>Message Yes or No</h5>
