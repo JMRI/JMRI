@@ -59,6 +59,7 @@ public class ActionCodes {
     public static final int WAIT_AUTOMATION = 0x3400 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION;
     
     public static final int COUNTER = 0x4000 + OK_MESSAGE;
+    public static final int DOWN_COUNTER = 0x4100 + OK_MESSAGE;
     public static final int MESSAGE_YES_NO = 0x4200 + ENABLE_TRAINS + ENABLE_ROUTES + OK_MESSAGE;
     
     public static final int GOTO = 0x5000 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_GOTO;

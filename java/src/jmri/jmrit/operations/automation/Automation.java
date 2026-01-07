@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.automation;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.swing.JComboBox;
@@ -21,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *
  * @author Daniel Boudreau Copyright (C) 2016
  */
-public class Automation extends PropertyChangeSupport implements java.beans.PropertyChangeListener {
+public class Automation extends PropertyChangeSupport implements PropertyChangeListener {
 
     protected String _id = "";
     protected String _name = "";
@@ -204,11 +205,20 @@ public class Automation extends PropertyChangeSupport implements java.beans.Prop
         if (getSize() > 0) {
             setCurrentAutomationItem(getItemsBySequenceList().get(0));
             resetAutomationItems();
+            resetAutomationItemsActon();
         }
     }
 
     private void resetAutomationItems() {
         resetAutomationItems(getCurrentAutomationItem());
+    }
+    
+    private void resetAutomationItemsActon() {
+        for (AutomationItem automationItem : getItemsBySequenceList()) {
+            if (automationItem.getAction() != null) {
+                automationItem.getAction().reset();
+            }
+        }
     }
 
     public void resetAutomationItems(AutomationItem item) {
