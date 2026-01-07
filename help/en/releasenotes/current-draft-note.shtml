@@ -126,7 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Fixed a problem adding signal masts when the 
+                <li>Fixed a problem adding signal masts when the
                     OpenLCB or LCC system letter is not "M".</li>
             </ul>
 
@@ -438,12 +438,12 @@
                 Along with machine translations for other languages.
             </li>
             <li>The window you use to assign roster entries to groups
-                has been improved: 
+                has been improved:
                 <ul>
                     <li>A "Create Group" button has been added
                         to make that more convenient.</li>
                     <li>An edge-case where you could
-                        accidentally make a copy of the "All Entries" group has 
+                        accidentally make a copy of the "All Entries" group has
                         been removed. </li>
                     <li>A blank group name will no longer
                         appear in the selection box.</li>
@@ -554,7 +554,12 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Improve TransitActionsReport.py.
+              <ul>
+                <li>Sort the transit selection list by display names.</li>
+                <li>For sensors and signals in actions, use the display name instead of the system name.</li>
+              </ul>
+            </li>
         </ul>
 
     <h3>Signals</h3>
