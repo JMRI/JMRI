@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng.tools;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 
 import jmri.*;
@@ -8,10 +11,7 @@ import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.*;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test import of Logix to LogixNG.
@@ -25,10 +25,10 @@ import org.junit.Test;
  */
 public class Import_AndOrMixed_Test {
 
-    Sensor s1;
-    Sensor s2;
-    Sensor s3;
-    Turnout t1;
+    private Sensor s1;
+    private Sensor s2;
+    private Sensor s3;
+    private Turnout t1;
     private LogixManager logixManager;
     private Logix logix;
     private Conditional conditional;
@@ -38,9 +38,9 @@ public class Import_AndOrMixed_Test {
 
     public void assertBoolean(String message, boolean expectSuccess, boolean result) {
         if (expectSuccess) {
-            Assert.assertTrue(message, result);
+            assertTrue(result, message);
         } else {
-            Assert.assertFalse(message, result);
+            assertFalse(result, message);
         }
     }
 
@@ -908,8 +908,7 @@ public class Import_AndOrMixed_Test {
         JUnitAppender.assertWarnMessage("Import Conditional 'IX1C1' to LogixNG 'IQ:AUTO:0001'");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -943,7 +942,7 @@ public class Import_AndOrMixed_Test {
         conditional.setAction(actions);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
