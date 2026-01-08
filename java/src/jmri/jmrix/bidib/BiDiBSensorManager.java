@@ -10,6 +10,8 @@ import jmri.Sensor;
 import org.bidib.jbidibc.messages.BidibLibrary;
 import org.bidib.jbidibc.messages.Node;
 import org.bidib.jbidibc.messages.message.FeedbackGetRangeMessage;
+//import org.bidib.jbidibc.messages.message.BidibRequestFactory;
+import org.bidib.jbidibc.messages.utils.NodeUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -241,18 +243,17 @@ public class BiDiBSensorManager extends jmri.managers.AbstractSensorManager {
     /*
      * {@inheritDoc} Send a query message to get all sensors.
      */
-/* NOT USED
     @Override
     public void updateAll() {
         BiDiBTrafficController tc = getMemo().getBiDiBTrafficController();
-        BidibRequestFactory rf = tc.getBidib().getRootNode().getRequestFactory();
+        //BidibRequestFactory rf = tc.getBidib().getRootNode().getRequestFactory();
         tc.getNodeList().forEach( (uid, node) -> {
             int bmSize = tc.getNodeFeature(node, BidibLibrary.FEATURE_BM_SIZE);
             if (NodeUtils.hasFeedbackFunctions(node.getUniqueId())  &&  bmSize > 0 ) {
-                log.info("Requesting feedback status on node {}", node);
-//                tc.sendBiDiBMessage(new FeedbackGetRangeMessage(0, 128), node);
+                log.info("Requesting feedback status ({} sensors) on node {}", bmSize, node);
                 tc.sendBiDiBMessage(new FeedbackGetRangeMessage(0, bmSize), node);
             }
+/* TODO           
             Feature f = tc.findNodeFeature(node, BidibLibrary.FEATURE_CTRL_INPUT_COUNT);
             if (NodeUtils.hasSwitchFunctions(node.getUniqueId())  &&  (f == null  ||  f.getValue() > 0) ) {
                 log.info("Requesting input port status on node {}", node);
@@ -275,14 +276,9 @@ public class BiDiBSensorManager extends jmri.managers.AbstractSensorManager {
                     });
                 }
             }
-        });
-//        getNamedBeanSet().forEach((nb) -> {
-//            if (nb instanceof CbusSensor) {
-//                nb.requestUpdateFromLayout();
-//            }
-//        });
-    }
 */
+        });
+    }
     
 
     private final static Logger log = LoggerFactory.getLogger(BiDiBSensorManager.class);
