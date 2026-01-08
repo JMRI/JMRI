@@ -6256,7 +6256,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       
       <h5>Wait Automation</h5>
       This action will wait until an automation completes. You must select an automation from the
-      "Automation" menu.
+      "Automation" menu. The status of the waited automation is provided allowing the HIAF feature
+      to stop the automation sequence.
 
       <h5>Counter</h5>
       This action will increment a count starting from zero. The counter isn't saved when
