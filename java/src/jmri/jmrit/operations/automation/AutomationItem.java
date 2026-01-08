@@ -48,6 +48,7 @@ public class AutomationItem extends PropertyChangeSupport implements java.beans.
     protected String _trainScheduleId = NONE;
 
     public static final String DISPOSE = "automationItemDispose"; // NOI18N
+    public static final String AUTOMATION_ITEM_MESSAGE_CHANGED_PROPERTY = "AutomationItemMessageChange"; // NOI18N
 
     public AutomationItem(String id) {
         log.debug("New automation item id: {}", id);
@@ -251,7 +252,7 @@ public class AutomationItem extends PropertyChangeSupport implements java.beans.
         String old = _message;
         _message = message;
         if (!old.equals(message)) {
-            setDirtyAndFirePropertyChange("AutomationItemMessageChange", old, message); // NOI18N
+            setDirtyAndFirePropertyChange(AUTOMATION_ITEM_MESSAGE_CHANGED_PROPERTY, old, message); // NOI18N
         }
     }
 
@@ -394,6 +395,7 @@ public class AutomationItem extends PropertyChangeSupport implements java.beans.
         list.add(new StopAutomationAction());
         list.add(new WaitAutomationAction());
         list.add(new CounterAction());
+        list.add(new DownCounterAction());
         list.add(new MessageYesNoAction());
         list.add(new GotoAction());
         list.add(new GotoSuccessAction());

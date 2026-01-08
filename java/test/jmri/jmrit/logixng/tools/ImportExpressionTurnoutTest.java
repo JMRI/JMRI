@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.tools;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.*;
 
 /**
@@ -14,11 +16,12 @@ import jmri.*;
  */
 public class ImportExpressionTurnoutTest extends ImportExpressionTestBase {
 
-    Turnout turnout;
-    ConditionalVariable cv;
-    
+    private Turnout turnout = null;
+    private ConditionalVariable cv = null;
+
     @Override
     public void setNamedBeanState(State state) throws JmriException {
+        assertNotNull(turnout);
         switch (state) {
             case ON:
                 turnout.setState(Turnout.CLOSED);
@@ -27,7 +30,7 @@ public class ImportExpressionTurnoutTest extends ImportExpressionTestBase {
             case OFF:
                 turnout.setState(Turnout.THROWN);
                 break;
-                
+
             case OTHER:
             default:
                 turnout.setState(Turnout.UNKNOWN);
@@ -37,11 +40,12 @@ public class ImportExpressionTurnoutTest extends ImportExpressionTestBase {
 
     @Override
     public void setConditionalVariableState(State state) {
+        assertNotNull(cv);
         switch (state) {
             case ON:
                 cv.setType(Conditional.Type.TURNOUT_CLOSED);
                 break;
-                
+
             case OFF:
             case OTHER:
             default:
@@ -57,5 +61,5 @@ public class ImportExpressionTurnoutTest extends ImportExpressionTestBase {
         cv.setName("IT2");
         return cv;
     }
-    
+
 }

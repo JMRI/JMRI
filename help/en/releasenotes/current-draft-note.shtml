@@ -510,9 +510,11 @@
         <ul>
             <li>New feature, you can now build your train using "On Time" mode. Requires using real or fast clock to schedule for your trains.</li>
             <li>Locomotives can now use the quick service tracks feature.</li>
+            <li>New tool to quickly enable tracks for quick service.</li>
             <li>Added pick up and set out times for locomotives.</li>
             <li>Trains now have a departure day.</li>
             <li>New automation acton item: Wait for automation to complete.</li>
+            <li>New automation acton item: Down Counter.</li>
         </ul>
 
    <h3>Panel Editor</h3>
