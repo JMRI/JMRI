@@ -14,9 +14,7 @@ import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
+import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
@@ -52,6 +50,7 @@ public class Track extends PropertyChangeSupport {
     protected int _reservedLengthPickups = 0; // reserved for car pulls
     protected int _numberCarsEnRoute = 0; // number of cars en-route
     protected int _usedLength = 0; // length of track filled by cars and engines
+    protected int _usedCloneLength = 0; // length of track filled by clone cars and engines
     protected int _ignoreUsedLengthPercentage = IGNORE_0;
     // ignore values 0 - 100%
     public static final int IGNORE_0 = 0;
@@ -657,6 +656,23 @@ public class Track extends PropertyChangeSupport {
     public int getUsedLength() {
         return _usedLength;
     }
+    
+    public void setUsedCloneLength(int length) {
+        int old = _usedCloneLength;
+        _usedCloneLength = length;
+        if (old != length) {
+            setDirtyAndFirePropertyChange("trackUsedCloneLength", Integer.toString(old), // NOI18N
+                    Integer.toString(length));
+        }
+    }
+
+    public int getUsedCloneLength() {
+        return _usedCloneLength;
+    }
+    
+    public int getTotalUsedLength() {
+        return getUsedLength() + getUsedCloneLength();
+    }
 
     /**
      * The amount of consumed track space to be ignored when sending new rolling
@@ -740,23 +756,31 @@ public class Track extends PropertyChangeSupport {
      * @param rs The rolling stock to place on the track.
      */
     public void addRS(RollingStock rs) {
-        setNumberRS(getNumberRS() + 1);
-        if (rs.getClass() == Car.class) {
-            setNumberCars(getNumberCars() + 1);
-        } else if (rs.getClass() == Engine.class) {
-            setNumberEngines(getNumberEngines() + 1);
+        if (!rs.isClone()) {
+            setNumberRS(getNumberRS() + 1);
+            if (rs.getClass() == Car.class) {
+                setNumberCars(getNumberCars() + 1);
+            } else if (rs.getClass() == Engine.class) {
+                setNumberEngines(getNumberEngines() + 1);
+            }
+            setUsedLength(getUsedLength() + rs.getTotalLength());
+        } else {
+            setUsedCloneLength(getUsedCloneLength() + rs.getTotalLength());
         }
-        setUsedLength(getUsedLength() + rs.getTotalLength());
     }
 
     public void deleteRS(RollingStock rs) {
-        setNumberRS(getNumberRS() - 1);
-        if (rs.getClass() == Car.class) {
-            setNumberCars(getNumberCars() - 1);
-        } else if (rs.getClass() == Engine.class) {
-            setNumberEngines(getNumberEngines() - 1);
+        if (!rs.isClone()) {
+            setNumberRS(getNumberRS() - 1);
+            if (rs.getClass() == Car.class) {
+                setNumberCars(getNumberCars() - 1);
+            } else if (rs.getClass() == Engine.class) {
+                setNumberEngines(getNumberEngines() - 1);
+            }
+            setUsedLength(getUsedLength() - rs.getTotalLength());
+        } else {
+            setUsedCloneLength(getUsedCloneLength() - rs.getTotalLength());
         }
-        setUsedLength(getUsedLength() - rs.getTotalLength());
     }
 
     /**
@@ -1619,7 +1643,7 @@ public class Track extends PropertyChangeSupport {
         }
         if (rs.getTrack() != this &&
                 rs.getDestinationTrack() != this) {
-            if (getUsedLength() + getReserved() + rsLength > getLength() ||
+            if (getTotalUsedLength() + getReserved() + rsLength > getLength() ||
                     getReservedLengthSetouts() + rsLength > getLength()) {
                 // not enough track length check to see if track is in a pool
                 if (getPool() != null && getPool().requestTrackLength(this, rsLength)) {
@@ -1690,7 +1714,7 @@ public class Track extends PropertyChangeSupport {
         CarManager carManager = InstanceManager.getDefault(CarManager.class);
         List<Car> cars = carManager.getList(this);
         // note that used can be larger than track length
-        int trackSpaceAvalable = getLength() - getUsedLength();
+        int trackSpaceAvalable = getLength() - getTotalUsedLength();
         log.debug("track ({}) space available at start: {}", this.getName(), trackSpaceAvalable);
         for (Car car : cars) {
             log.debug("Car ({}) length {}, track ({}, {}) pick up time {}, to ({}), train ({}), last train ({})", car.toString(),
