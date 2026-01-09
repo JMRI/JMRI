@@ -38,7 +38,7 @@ public class WaitAutomationAction extends RunAutomationAction implements Propert
                     setRunning(true);
                 } else {
                     automation.removePropertyChangeListener(this);
-                    finishAction(true);
+                    finishAction(automation.getActionStatus().equals(getActionSuccessfulString()));
                 }
             } else {
                 finishAction(false);
@@ -54,10 +54,8 @@ public class WaitAutomationAction extends RunAutomationAction implements Propert
         if (getAutomationItem() != null) {
             if (evt.getPropertyName().equals(Automation.RUNNING_CHANGED_PROPERTY)) {
                 Automation automation = getAutomationItem().getAutomationToRun();
-                if (automation != null) {
-                    automation.removePropertyChangeListener(this);
-                }
-                finishAction(true);
+                automation.removePropertyChangeListener(this);
+                finishAction(automation.getActionStatus().equals(getActionSuccessfulString()));
             }
         }
     }
