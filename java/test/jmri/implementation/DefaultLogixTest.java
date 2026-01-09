@@ -45,6 +45,7 @@ public class DefaultLogixTest extends NamedBeanTest {
         assertNotEquals( ix1.hashCode(), ix2.hashCode(), "hash not equals");
     }
 
+    @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -52,6 +53,7 @@ public class DefaultLogixTest extends NamedBeanTest {
         JUnitUtil.initInternalSensorManager();
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
