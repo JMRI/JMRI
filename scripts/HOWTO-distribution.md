@@ -329,12 +329,12 @@ For each, if it doesn't have the right milestone set, add the current milestone 
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.13.7-SNAPSHOT/5.15.2-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.15.1-SNAPSHOT/5.15.2-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=7/release.build=1/g release.properties
+        sed -i.bak s/release.build=1/release.build=2/g release.properties
 ```
  - Check that both those edits left 5.15.2 defined in the two files
  
