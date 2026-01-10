@@ -247,6 +247,8 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                             formatted = prefix + ": Events with Payload unknown";
                             break;
                     }
+                } else if (((header & 0x0F000000) == 0x0F000000) && (content.length > 0)) {
+                    formatted = prefix + ": Stream Frame " + raw;
                 } else {
                     formatted = prefix + ": Unknown message " + raw;
                 }
