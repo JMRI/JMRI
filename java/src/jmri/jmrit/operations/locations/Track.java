@@ -792,7 +792,7 @@ public class Track extends PropertyChangeSupport {
     public void addPickupRS(RollingStock rs) {
         int old = _pickupRS;
         _pickupRS++;
-        if (Setup.isBuildAggressive()) {
+        if (Setup.isBuildAggressive() && !rs.isClone()) {
             setReserved(getReserved() - rs.getTotalLength());
         }
         _reservedLengthPickups = _reservedLengthPickups + rs.getTotalLength();
@@ -802,7 +802,7 @@ public class Track extends PropertyChangeSupport {
 
     public void deletePickupRS(RollingStock rs) {
         int old = _pickupRS;
-        if (Setup.isBuildAggressive()) {
+        if (Setup.isBuildAggressive() && !rs.isClone()) {
             setReserved(getReserved() + rs.getTotalLength());
         }
         _reservedLengthPickups = _reservedLengthPickups - rs.getTotalLength();
@@ -1643,7 +1643,7 @@ public class Track extends PropertyChangeSupport {
         }
         if (rs.getTrack() != this &&
                 rs.getDestinationTrack() != this) {
-            if (getTotalUsedLength() + getReserved() + rsLength > getLength() ||
+            if (getUsedLength() + getReserved() + rsLength > getLength() ||
                     getReservedLengthSetouts() + rsLength > getLength()) {
                 // not enough track length check to see if track is in a pool
                 if (getPool() != null && getPool().requestTrackLength(this, rsLength)) {
@@ -1722,17 +1722,17 @@ public class Track extends PropertyChangeSupport {
                     car.getRouteDestination(), car.getTrain(), car.getLastTrain());
             // cars being pulled by previous trains will free up track space
             if (car.getTrack() == this && car.getRouteDestination() != null && !car.getPickupTime().equals(Car.NONE)) {
-                trackSpaceAvalable = trackSpaceAvalable + car.getTotalLength();
-                log.debug("Car ({}) length {}, pull from ({}, {}) at {}", car.toString(), car.getTotalLength(),
-                        car.getLocationName(), car.getTrackName(), car.getPickupTime());
                 if (TrainCommon.convertStringTime(car.getPickupTime()) +
                         Setup.getDwellTime() > trainDepartureTimeMinutes) {
                     log.debug("Attempt to spot new car before pulls completed");
                     // car pulled after the train being built departs
-                    return Bundle.getMessage("lengthIssueCar",
+                     return Bundle.getMessage("lengthIssueCar",
                             LENGTH, rsLength, Setup.getLengthUnit().toLowerCase(), trackSpaceAvalable, car.toString(),
                             car.getTotalLength(), car.getTrain(), car.getPickupTime(), Setup.getDwellTime());
                 }
+                trackSpaceAvalable = trackSpaceAvalable + car.getTotalLength();
+                log.debug("Car ({}) length {}, pull from ({}, {}) at {}", car.toString(), car.getTotalLength(),
+                        car.getLocationName(), car.getTrackName(), car.getPickupTime());
                 // cars pulled by the train being built also free up track space
             } else if (car.getTrack() == this &&
                     car.getRouteDestination() != null &&
@@ -1762,9 +1762,6 @@ public class Track extends PropertyChangeSupport {
                 if (eng.getTrack() == this &&
                         eng.getRouteDestination() != null &&
                         !eng.getPickupTime().equals(Engine.NONE)) {
-                    trackSpaceAvalable = trackSpaceAvalable + eng.getTotalLength();
-                    log.debug("Engine ({}) length {}, pull from ({}, {}) at {}", eng.toString(), eng.getTotalLength(),
-                            eng.getLocationName(), eng.getTrackName(), eng.getPickupTime());
                     if (TrainCommon.convertStringTime(eng.getPickupTime()) +
                             Setup.getDwellTime() > trainDepartureTimeMinutes) {
                         log.debug("Attempt to spot new egine before pulls completed");
@@ -1774,6 +1771,9 @@ public class Track extends PropertyChangeSupport {
                                 eng.toString(),
                                 eng.getTotalLength(), eng.getTrain(), eng.getPickupTime(), Setup.getDwellTime());
                     }
+                    trackSpaceAvalable = trackSpaceAvalable + eng.getTotalLength();
+                    log.debug("Engine ({}) length {}, pull from ({}, {}) at {}", eng.toString(), eng.getTotalLength(),
+                            eng.getLocationName(), eng.getTrackName(), eng.getPickupTime());
                     // engines pulled by the train being built also free up track space
                 } else if (eng.getTrack() == this &&
                         eng.getRouteDestination() != null &&

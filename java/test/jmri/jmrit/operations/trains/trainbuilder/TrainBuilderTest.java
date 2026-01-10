@@ -14178,7 +14178,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.setNumberEngines("1");
 
         // improve test coverage
-        rlBoston.setDepartureTime("12:45");
+        rlBoston.setDepartureTime("0:12:45");
         rlChelmsford.setComment("No work at Chelmsford");
 
         Assert.assertTrue(new TrainBuilder().build(train1));

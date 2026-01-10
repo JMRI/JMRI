@@ -364,9 +364,6 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     public void setDepartureTime(String time) {
         String old = _departureTime;
         _departureTime = time;
-        if (!time.equals(NONE)) {
-            _departureTime = "0:" + time;
-        }
         if (!old.equals(time)) {
             setDirtyAndFirePropertyChange(DEPARTURE_TIME_CHANGED_PROPERTY, old, time);
         }
@@ -604,7 +601,16 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
             }
         }
         if ((a = e.getAttribute(Xml.DEPART_TIME)) != null) {
-            _departureTime = a.getValue();
+            // check for hour:minute format
+            String time = a.getValue();
+            if (!time.equals(NONE)) {
+                if (time.split(":").length > 2) {
+                    _departureTime = time;
+                } else {
+                    // convert to new day:hour:minute format
+                    _departureTime = "0:" + time;
+                }
+            }
         }
         if ((a = e.getAttribute(Xml.BLOCKING_ORDER)) != null) {
             try {

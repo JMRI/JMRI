@@ -3854,6 +3854,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 getDepartureTrack().isStaging() &&
                 getDepartureTrack() != getTerminationTrack() &&
                 getDepartureTrack().getIgnoreUsedLengthPercentage() == Track.IGNORE_0 &&
+                !getDepartureTrack().isQuickServiceEnabled() &&
                 getDepartureTrack().getDropRS() > 0);
     }
 
