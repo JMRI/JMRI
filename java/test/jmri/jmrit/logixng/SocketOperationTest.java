@@ -1,15 +1,21 @@
 package jmri.jmrit.logixng;
 
-import java.awt.GraphicsEnvironment;
-import java.beans.PropertyVetoException;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
+
 import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
  * Try to do a lot of random female socket operations on the female sockets
@@ -21,59 +27,61 @@ public class SocketOperationTest {
     private CreateLogixNGTreeScaffold createLogixNGTreeScaffold;
 
     @Test
-    public void testAddRemoveChildren() throws PropertyVetoException, Exception {
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testAddRemoveChildren() {
+        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         runTest(true, false);
     }
 
     @Test
-    public void testFemaleSockets() throws PropertyVetoException, Exception {
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testFemaleSockets() {
+        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         runTest(false, true);
     }
 
     @Test
-    public void testAddRemoveChildrenAndFemaleSockets() throws PropertyVetoException, Exception {
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testAddRemoveChildrenAndFemaleSockets() {
+        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         runTest(true, true);
     }
 
 //    int countIterations = 0;
 //    final int total = 873;
-    Set<Base> listOfSockets = new HashSet<>();
-    Map<Class<? extends Base>, SwingConfiguratorInterface> sciSet = new HashMap<>();
+    private final Set<Base> listOfSockets = new HashSet<>();
+    private final Map<Class<? extends Base>, SwingConfiguratorInterface> sciSet = new HashMap<>();
 
-    private void runTest(boolean addRemoveChildren, boolean testSocketOperations)
-            throws PropertyVetoException, Exception {
+    private void runTest(boolean addRemoveChildren, boolean testSocketOperations) {
 
         // Add new LogixNG actions and expressions to jmri.jmrit.logixng.CreateLogixNGTreeScaffold
-        createLogixNGTreeScaffold.createLogixNGTree();
+        assertDoesNotThrow( () -> createLogixNGTreeScaffold.createLogixNGTree() );
+        
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
 
         java.util.Set<LogixNG> newLogixNG_Set = new java.util.HashSet<>(logixNG_Manager.getNamedBeanSet());
         for (LogixNG aLogixNG : newLogixNG_Set) {
             for (int i=0; i < aLogixNG.getNumConditionalNGs(); i++) {
+                final int ii = i;
+                assertDoesNotThrow( () -> {
 
-                aLogixNG.getConditionalNG(i).forEntireTreeWithException((b) -> {
+                    aLogixNG.getConditionalNG(ii).forEntireTreeWithException((b) -> {
 
-//                    System.out.format("Count: %3d / %3d, Percent: %2d%n", ++countIterations, total, (int)(100.0*countIterations/total));
+                        // System.out.format("Count: %3d / %3d, Percent: %2d%n", ++countIterations, total, (int)(100.0*countIterations/total));
 
-                    if (b instanceof FemaleSocket) {
+                        if (b instanceof FemaleSocket) {
 
-                        FemaleSocket originSocket = (FemaleSocket)b;
-                        if (originSocket.isConnected()) {
+                            FemaleSocket originSocket = (FemaleSocket)b;
+                            if (originSocket.isConnected()) {
 
-                            Base socket = originSocket.getConnectedSocket();
-                            listOfSockets.add(socket);
+                                Base socket = originSocket.getConnectedSocket();
+                                listOfSockets.add(socket);
+                            }
                         }
-                    }
+                    });
                 });
-
-                testSockets(addRemoveChildren, testSocketOperations);
+                assertDoesNotThrow( () -> testSockets(addRemoveChildren, testSocketOperations) );
             }
         }
     }
@@ -110,10 +118,10 @@ public class SocketOperationTest {
                 break;
             case 1:  // Remove
                 if (child.isConnected()) {
-                    Assert.assertTrue(child.canDisconnect());
-                    Assert.assertTrue(child.isConnected());
+                    assertTrue(child.canDisconnect());
+                    assertTrue(child.isConnected());
                     child.disconnect();
-                    Assert.assertFalse(child.isConnected());
+                    assertFalse(child.isConnected());
                 }
                 break;
             default:
@@ -123,12 +131,12 @@ public class SocketOperationTest {
 
     private void tryToAddChild(FemaleSocket child) throws SocketAlreadyConnectedException {
 
-        Assert.assertFalse(child.isConnected());
+        assertFalse(child.isConnected());
 
         Map<Category, List<Class<? extends Base>>> connectableClasses =
                 child.getConnectableClasses();
 
-        Assert.assertFalse(connectableClasses.isEmpty());
+        assertFalse(connectableClasses.isEmpty());
 
         int count = 0;
         List<Class<? extends Base>> categoryList = null;
@@ -140,7 +148,7 @@ public class SocketOperationTest {
             categorySet.add(category);
         }
 
-        Assert.assertNotNull(categoryList);
+        assertNotNull(categoryList);
 
         if (categoryList.isEmpty()) {
             StringBuilder sb = new StringBuilder();
@@ -152,7 +160,7 @@ public class SocketOperationTest {
         }
 
 
-        Assert.assertFalse(categoryList.isEmpty());
+        assertFalse(categoryList.isEmpty());
 
         Class<? extends Base> clazz = categoryList.get(JUnitUtil.getRandom().nextInt(categoryList.size()));
 
@@ -169,7 +177,7 @@ public class SocketOperationTest {
         MaleSocket maleSocket = sci.createNewObject(sci.getAutoSystemName(), null);
         child.connect(maleSocket);
 
-        Assert.assertTrue(child.isConnected());
+        assertTrue(child.isConnected());
     }
 
     private void testFemaleSocketOperations(FemaleSocket child) {
@@ -181,18 +189,18 @@ public class SocketOperationTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         createLogixNGTreeScaffold = new CreateLogixNGTreeScaffold();
         createLogixNGTreeScaffold.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
         createLogixNGTreeScaffold.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DeepCopyTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SocketOperationTest.class);
 
 }

@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 
 import jmri.*;
@@ -15,7 +18,6 @@ import jmri.jmrit.logixng.expressions.ExpressionLocalVariable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -34,40 +36,39 @@ public class RecursiveModuleTest {
     @Test
     public void testFibonacci() {
         n.setValue(0);
-        Assert.assertEquals(Long.valueOf(1), result.getValue());
+        assertEquals(Long.valueOf(1), result.getValue());
 
         n.setValue(1);
-        Assert.assertEquals(Long.valueOf(1), result.getValue());
+        assertEquals(Long.valueOf(1), result.getValue());
 
         n.setValue(2);
-        Assert.assertEquals(Long.valueOf(2), result.getValue());
+        assertEquals(Long.valueOf(2), result.getValue());
 
         n.setValue(3);
-        Assert.assertEquals(Long.valueOf(3), result.getValue());
+        assertEquals(Long.valueOf(3), result.getValue());
 
         n.setValue(4);
-        Assert.assertEquals(Long.valueOf(5), result.getValue());
+        assertEquals(Long.valueOf(5), result.getValue());
 
         n.setValue(5);
-        Assert.assertEquals(Long.valueOf(8), result.getValue());
+        assertEquals(Long.valueOf(8), result.getValue());
 
         n.setValue(6);
-        Assert.assertEquals(Long.valueOf(13), result.getValue());
+        assertEquals(Long.valueOf(13), result.getValue());
 
         n.setValue(7);
-        Assert.assertEquals(Long.valueOf(21), result.getValue());
+        assertEquals(Long.valueOf(21), result.getValue());
 
         n.setValue(8);
-        Assert.assertEquals(Long.valueOf(34), result.getValue());
+        assertEquals(Long.valueOf(34), result.getValue());
 
         n.setValue(9);
-        Assert.assertEquals(Long.valueOf(55), result.getValue());
+        assertEquals(Long.valueOf(55), result.getValue());
 
         n.setValue(10);
-        Assert.assertEquals(Long.valueOf(89), result.getValue());
+        assertEquals(Long.valueOf(89), result.getValue());
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, JmriException {
         JUnitUtil.setUp();
@@ -240,7 +241,7 @@ public class RecursiveModuleTest {
         System.out.println();
 */
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
