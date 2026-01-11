@@ -373,6 +373,15 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     public String getDepartureTimeHourMinutes() {
         return _departureTime;
     }
+    
+    public void setDepartureTime(String time) {
+        String[] t = time.split(":");
+        if (t.length > 2) {
+            setDepartureTime(t[0], t[1], t[2]);
+        } else if (t.length > 1) {
+            setDepartureTime("0", t[0], t[1]);
+        }
+    }
 
     public void setDepartureTime(String day, String hour, String minute) {
         setDepartureTimeDay(day);
