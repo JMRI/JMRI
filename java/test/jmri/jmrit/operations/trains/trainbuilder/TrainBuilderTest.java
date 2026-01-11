@@ -5362,8 +5362,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Train 2 expected departure time", "22:45", train2.getExpectedArrivalTime(rl1));
         Assert.assertEquals("Train 2 expected North End", "1:00:36", train2.getExpectedArrivalTime(rl2));
         // one car dropped and one is picked up at North End, so travel time +
-        // two car
-        // moves
+        // two car moves
         Assert.assertEquals("Train 2 expected North Industries", "1:02:49", train2.getExpectedArrivalTime(rl3));
 
         // the build first resets which removes cars from the train, c3 load
@@ -14178,7 +14177,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.setNumberEngines("1");
 
         // improve test coverage
-        rlBoston.setDepartureTime("0:12:45");
+        rlBoston.setDepartureTimeHourMinutes("12:45");
         rlChelmsford.setComment("No work at Chelmsford");
 
         Assert.assertTrue(new TrainBuilder().build(train1));

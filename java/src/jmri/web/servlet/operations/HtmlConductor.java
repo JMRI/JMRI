@@ -135,7 +135,7 @@ public class HtmlConductor extends HtmlTrainCommon {
             } else if (routeLocation == train.getTrainDepartsRouteLocation()) {
                 builder.append(String.format(locale, strings.getProperty("WorkDepartureTime"), routeLocationName, train  // NOI18N
                         .getFormatedDepartureTime())); // NOI18N
-            } else if (!routeLocation.getDepartureTime().equals("")) {
+            } else if (!routeLocation.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
                 builder.append(String.format(locale, strings.getProperty("WorkDepartureTime"), routeLocationName,  // NOI18N
                         routeLocation.getFormatedDepartureTime())); // NOI18N
             } else if (Setup.isUseDepartureTimeEnabled()
@@ -193,7 +193,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                             builder.append(String.format(locale, strings
                                     .getProperty("NoScheduledWorkAtWithDepartureTime"), routeLocationName, train  // NOI18N
                                     .getFormatedDepartureTime()));
-                        } else if (!routeLocation.getDepartureTime().isEmpty()) {
+                        } else if (!routeLocation.getDepartureTimeHourMinutes().isEmpty()) {
                             builder.append(String.format(locale, strings
                                     .getProperty("NoScheduledWorkAtWithDepartureTime"), routeLocationName,  // NOI18N
                                     routeLocation.getFormatedDepartureTime()));
@@ -219,7 +219,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                                     .getProperty("CommentAtWithDepartureTime"), routeLocationName, train // NOI18N
                                     .getFormatedDepartureTime(), StringEscapeUtils
                                             .escapeHtml4(routeLocation.getCommentWithColor())));
-                        } else if (!routeLocation.getDepartureTime().equals(RouteLocation.NONE)) {
+                        } else if (!routeLocation.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
                             builder.append(String.format(locale, strings
                                     .getProperty("CommentAtWithDepartureTime"), routeLocationName, // NOI18N
                                     routeLocation.getFormatedDepartureTime(), StringEscapeUtils

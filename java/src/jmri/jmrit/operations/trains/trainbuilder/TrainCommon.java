@@ -645,7 +645,7 @@ public class TrainCommon {
                             new Object[]{routeLocationName,
                                     train.getFormatedDepartureTime(), train.getSplitName(),
                                     train.getDescription(), rl.getLocation().getDivisionName()});
-                } else if (!rl.getDepartureTime().equals(RouteLocation.NONE) &&
+                } else if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE) &&
                         rl != train.getTrainTerminatesRouteLocation()) {
                     // Scheduled work at {0}, departure time {1}
                     msg = MessageFormat.format(messageFormatText = TrainManifestText
@@ -714,7 +714,7 @@ public class TrainCommon {
             } else if (Setup.isUseSwitchListDepartureTimeEnabled() &&
                     rl == train.getCurrentRouteLocation() &&
                     rl != train.getTrainTerminatesRouteLocation() &&
-                    !rl.getDepartureTime().equals(RouteLocation.NONE)) {
+                    !rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
                 // Departs {0} {1}bound at {2}
                 msg = MessageFormat.format(messageFormatText = TrainSwitchListText.getStringDepartsAt(),
                         new Object[]{splitString(rl.getName()), rl.getTrainDirectionString(),

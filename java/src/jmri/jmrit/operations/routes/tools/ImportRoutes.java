@@ -115,7 +115,7 @@ public class ImportRoutes extends ImportCommon {
                 rl.setLocalMovesAllowed(
                         inputLine[FIELD_ROUTE_LOCATION_LOCAL_MOVES_ALLOWED].equals(Bundle.getMessage("yes")));
                 rl.setWait(Integer.parseInt(inputLine[FIELD_ROUTE_LOCATION_TRAVEL]) - Setup.getTravelTime());
-                rl.setDepartureTime(inputLine[FIELD_ROUTE_LOCATION_DEPARTURE_TIME]);
+                rl.setDepartureTimeHourMinutes(inputLine[FIELD_ROUTE_LOCATION_DEPARTURE_TIME]);
                 rl.setMaxTrainLength(Integer.parseInt(inputLine[FIELD_ROUTE_LOCATION_TRAIN_LENGTH]));
                 rl.setGrade(Double.parseDouble(inputLine[FIELD_ROUTE_LOCATION_GRADE]));
                 rl.setTrainIconX(Integer.parseInt(inputLine[FIELD_ROUTE_LOCATION_ICON_X]));

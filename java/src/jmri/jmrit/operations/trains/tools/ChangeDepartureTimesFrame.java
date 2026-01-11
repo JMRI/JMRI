@@ -86,7 +86,7 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
                 List<Route> routes = routeManager.getRoutesByNameList();
                 for (Route route : routes) {
                     for (RouteLocation rl : route.getLocationsBySequenceList()) {
-                        if (!rl.getDepartureTime().equals(RouteLocation.NONE))
+                        if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE))
                             rl.setDepartureTime(rl.getDepartureTimeDay(), adjustHour(rl.getDepartureTimeHour()), rl.getDepartureTimeMinute());
                     }
                 }

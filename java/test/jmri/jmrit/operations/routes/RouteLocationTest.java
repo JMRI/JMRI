@@ -28,17 +28,17 @@ public class RouteLocationTest extends OperationsTestCase {
         Assert.assertEquals("Day", "19", rl.getDepartureTimeDay());
         Assert.assertEquals("Hour", "02", rl.getDepartureTimeHour());
         Assert.assertEquals("Minute", "05", rl.getDepartureTimeMinute());
-        Assert.assertEquals("Time", "19:02:05", rl.getFormatedDepartureTime());
+        Assert.assertEquals("Time", "02:05", rl.getFormatedDepartureTime());
         
         // Change to AM / PM format
         Setup.set12hrFormatEnabled(true);
-        Assert.assertEquals("12HR Time", "19:2:05 AM", rl.getFormatedDepartureTime());
+        Assert.assertEquals("12HR Time", "2:05 AM", rl.getFormatedDepartureTime());
         rl.setDepartureTime("0", "0", "09");
-        Assert.assertEquals("12HR Time AM", "0:12:09 AM", rl.getFormatedDepartureTime());
+        Assert.assertEquals("12HR Time AM", "12:09 AM", rl.getFormatedDepartureTime());
         // test PM
         rl.setDepartureTime("0", "13", "0");
-        Assert.assertEquals("12HR Time PM", "0:1:00 PM", rl.getFormatedDepartureTime()); 
+        Assert.assertEquals("12HR Time PM", "1:00 PM", rl.getFormatedDepartureTime()); 
         rl.setDepartureTime("3", "23", "59");
-        Assert.assertEquals("12HR Time PM", "3:11:59 PM", rl.getFormatedDepartureTime());  
+        Assert.assertEquals("12HR Time PM", "11:59 PM", rl.getFormatedDepartureTime());  
     }
 }
