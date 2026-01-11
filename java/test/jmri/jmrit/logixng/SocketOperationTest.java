@@ -129,6 +129,7 @@ public class SocketOperationTest {
         }
     }
 
+    @SuppressWarnings("null") // if (categoryList.isEmpty()) { false positive, should be fixed in JUnit6
     private void tryToAddChild(FemaleSocket child) throws SocketAlreadyConnectedException {
 
         assertFalse(child.isConnected());
