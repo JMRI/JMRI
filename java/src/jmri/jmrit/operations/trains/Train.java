@@ -513,8 +513,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     private int checkForDepartureTime(int minutes, RouteLocation rl) {
         if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE) && !isTrainEnRoute()) {
-            int departMinute =
-                    60 * Integer.parseInt(rl.getDepartureTimeHour()) + Integer.parseInt(rl.getDepartureTimeMinute());
+            int departMinute = 24 * 60 * Integer.parseInt(rl.getDepartureTimeDay()) +
+                    60 * Integer.parseInt(rl.getDepartureTimeHour()) +
+                    Integer.parseInt(rl.getDepartureTimeMinute());
             // cross into new day?
             if (minutes > departMinute) {
                 // yes

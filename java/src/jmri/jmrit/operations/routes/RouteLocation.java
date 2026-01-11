@@ -391,6 +391,10 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     }
     
     public void setDepartureTimeDay(String day) {
+        String old = _departureDay;
+        if (!old.equals(day)) {
+            setDirtyAndFirePropertyChange(DEPARTURE_TIME_CHANGED_PROPERTY, old, day);
+        }
         _departureDay = day;
     }
     
@@ -409,8 +413,12 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     }
 
     public String getFormatedDepartureTime() {
+        String sDay = "";
+        if (!getDepartureTimeDay().equals("0")) {
+            sDay = getDepartureTimeDay() + ":";
+        }
         if (getDepartureTimeHourMinutes().equals(NONE) || !Setup.is12hrFormatEnabled()) {
-            return _departureTime;
+            return sDay + getDepartureTimeHourMinutes();
         }
         String AM_PM = TrainCommon.SPACE + Bundle.getMessage("AM");
         int hour = Integer.parseInt(getDepartureTimeHour());
@@ -422,7 +430,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
             hour = 12;
         }
         String shour = Integer.toString(hour);
-        return shour + ":" + getDepartureTimeMinute() + AM_PM;
+        return sDay + shour + ":" + getDepartureTimeMinute() + AM_PM;
     }
 
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "firing property change doesn't matter")
@@ -599,6 +607,9 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
                 log.error("Route location ({}) wait ({}) isn't a valid number", getName(), a.getValue());
             }
         }
+        if ((a = e.getAttribute(Xml.DEPART_DAY)) != null) {
+            _departureDay = a.getValue();
+        }
         if ((a = e.getAttribute(Xml.DEPART_TIME)) != null) {
             _departureTime = a.getValue();
         }
@@ -660,6 +671,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         e.setAttribute(Xml.DROPS, isDropAllowed() ? Xml.YES : Xml.NO);
         e.setAttribute(Xml.LOCAL_MOVES, isLocalMovesAllowed() ? Xml.YES : Xml.NO);
         e.setAttribute(Xml.WAIT, Integer.toString(getWait()));
+        e.setAttribute(Xml.DEPART_DAY, getDepartureTimeDay());
         e.setAttribute(Xml.DEPART_TIME, getDepartureTimeHourMinutes());
         e.setAttribute(Xml.BLOCKING_ORDER, Integer.toString(getBlockingOrder()));
         e.setAttribute(Xml.TRAIN_ICON_X, Integer.toString(getTrainIconX()));

@@ -295,9 +295,9 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
-        // findColumn finds the first column with the letters "up"
+        // bug, findColumn finds the first column with the letters "up"
         //        tbl.clickOnCell(0, tbl.findColumn(Bundle.getMessage("Up")));
-        tbl.clickOnCell(0, 15);
+        tbl.clickOnCell(0, 16);
 
         rl = route.getDepartsRouteLocation();
         Assert.assertEquals("Confirm departure name", "Boston", rl.getName());
@@ -417,10 +417,11 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
-        // findColumn returns the first column with the letter "x".
-        //        tbl.setValueAt(23, 0, tbl.findColumn(Bundle.getMessage("X")));      
-        tbl.setValueAt(23, 0, 12);
-        tbl.setValueAt(57, 0, tbl.findColumn(Bundle.getMessage("Y")));
+        // bug, findColumn returns the first column with the letter "x".
+        //        tbl.setValueAt(23, 0, tbl.findColumn(Bundle.getMessage("X"))); 
+        // TRAINICONX_COLUMN = 13
+        tbl.setValueAt(23, 0, 13);
+        tbl.setValueAt(57, 0, 14);
         JemmyUtil.enterClickAndLeave(f.saveRouteButton);
         Assert.assertEquals("New X Corrdinate", 23, rl.getTrainIconX());
         Assert.assertEquals("New Y Corrdinate", 57, rl.getTrainIconY());
