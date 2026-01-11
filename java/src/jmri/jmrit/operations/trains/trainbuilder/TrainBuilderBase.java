@@ -975,7 +975,7 @@ public class TrainBuilderBase extends TrainCommon {
             }
         }
         // error if all of the cars from staging aren't available
-        if (numCarsFromStaging != _departStageTrack.getNumberCars()) {
+        if (!Setup.isBuildOnTime() && numCarsFromStaging != _departStageTrack.getNumberCars()) {
             throw new BuildFailedException(Bundle.getMessage("buildErrorNotAllCars", _departStageTrack.getName(),
                     Integer.toString(_departStageTrack.getNumberCars() - numCarsFromStaging)));
         }
@@ -1694,66 +1694,68 @@ public class TrainBuilderBase extends TrainCommon {
      */
     private boolean checkStagingEngines(Track departStageTrack) {
         if (departStageTrack.getNumberEngines() > 0) {
-            for (Engine eng : engineManager.getList()) {
-                if (eng.getTrack() == departStageTrack) {
-                    // has engine been assigned to another train?
-                    if (eng.getRouteLocation() != null) {
-                        addLine(_buildReport, THREE, Bundle.getMessage("buildStagingDepart", departStageTrack.getName(),
-                                eng.getTrainName()));
-                        return false;
-                    }
-                    if (eng.getTrain() != null && eng.getTrain() != _train) {
-                        addLine(_buildReport, THREE, Bundle.getMessage("buildStagingDepartEngineTrain",
-                                departStageTrack.getName(), eng.toString(), eng.getTrainName()));
-                        return false;
-                    }
-                    // does the train accept the engine type from the staging
-                    // track?
-                    if (!_train.isTypeNameAccepted(eng.getTypeName())) {
-                        addLine(_buildReport, THREE, Bundle.getMessage("buildStagingDepartEngineType",
-                                departStageTrack.getName(), eng.toString(), eng.getTypeName(), _train.getName()));
-                        return false;
-                    }
-                    // does the train accept the engine model from the staging
-                    // track?
-                    if (!_train.getEngineModel().equals(Train.NONE) &&
-                            !_train.getEngineModel().equals(eng.getModel())) {
-                        addLine(_buildReport, THREE,
-                                Bundle.getMessage("buildStagingDepartEngineModel", departStageTrack.getName(),
-                                        eng.toString(), eng.getModel(), _train.getName()));
-                        return false;
-                    }
-                    // does the engine road match the train requirements?
-                    if (!_train.getCarRoadOption().equals(Train.ALL_ROADS) &&
-                            !_train.getEngineRoad().equals(Train.NONE) &&
-                            !_train.getEngineRoad().equals(eng.getRoadName())) {
-                        addLine(_buildReport, THREE, Bundle.getMessage("buildStagingDepartEngineRoad",
-                                departStageTrack.getName(), eng.toString(), eng.getRoadName(), _train.getName()));
-                        return false;
-                    }
-                    // does the train accept the engine road from the staging
-                    // track?
-                    if (_train.getEngineRoad().equals(Train.NONE) &&
-                            !_train.isLocoRoadNameAccepted(eng.getRoadName())) {
-                        addLine(_buildReport, THREE, Bundle.getMessage("buildStagingDepartEngineRoad",
-                                departStageTrack.getName(), eng.toString(), eng.getRoadName(), _train.getName()));
-                        return false;
-                    }
-                    // does the train accept the engine owner from the staging
-                    // track?
-                    if (!_train.isOwnerNameAccepted(eng.getOwnerName())) {
-                        addLine(_buildReport, THREE, Bundle.getMessage("buildStagingDepartEngineOwner",
-                                departStageTrack.getName(), eng.toString(), eng.getOwnerName(), _train.getName()));
-                        return false;
-                    }
-                    // does the train accept the engine built date from the
-                    // staging track?
-                    if (!_train.isBuiltDateAccepted(eng.getBuilt())) {
-                        addLine(_buildReport, THREE,
-                                Bundle.getMessage("buildStagingDepartEngineBuilt", departStageTrack.getName(),
-                                        eng.toString(), eng.getBuilt(), _train.getName()));
-                        return false;
-                    }
+            for (Engine eng : engineManager.getList(departStageTrack)) {
+                // clones are are already assigned to a train
+                if (eng.isClone()) {
+                    continue;
+                }
+                // has engine been assigned to another train?
+                if (eng.getRouteLocation() != null) {
+                    addLine(_buildReport, THREE, Bundle.getMessage("buildStagingDepart", departStageTrack.getName(),
+                            eng.getTrainName()));
+                    return false;
+                }
+                if (eng.getTrain() != null && eng.getTrain() != _train) {
+                    addLine(_buildReport, THREE, Bundle.getMessage("buildStagingDepartEngineTrain",
+                            departStageTrack.getName(), eng.toString(), eng.getTrainName()));
+                    return false;
+                }
+                // does the train accept the engine type from the staging
+                // track?
+                if (!_train.isTypeNameAccepted(eng.getTypeName())) {
+                    addLine(_buildReport, THREE, Bundle.getMessage("buildStagingDepartEngineType",
+                            departStageTrack.getName(), eng.toString(), eng.getTypeName(), _train.getName()));
+                    return false;
+                }
+                // does the train accept the engine model from the staging
+                // track?
+                if (!_train.getEngineModel().equals(Train.NONE) &&
+                        !_train.getEngineModel().equals(eng.getModel())) {
+                    addLine(_buildReport, THREE,
+                            Bundle.getMessage("buildStagingDepartEngineModel", departStageTrack.getName(),
+                                    eng.toString(), eng.getModel(), _train.getName()));
+                    return false;
+                }
+                // does the engine road match the train requirements?
+                if (!_train.getCarRoadOption().equals(Train.ALL_ROADS) &&
+                        !_train.getEngineRoad().equals(Train.NONE) &&
+                        !_train.getEngineRoad().equals(eng.getRoadName())) {
+                    addLine(_buildReport, THREE, Bundle.getMessage("buildStagingDepartEngineRoad",
+                            departStageTrack.getName(), eng.toString(), eng.getRoadName(), _train.getName()));
+                    return false;
+                }
+                // does the train accept the engine road from the staging
+                // track?
+                if (_train.getEngineRoad().equals(Train.NONE) &&
+                        !_train.isLocoRoadNameAccepted(eng.getRoadName())) {
+                    addLine(_buildReport, THREE, Bundle.getMessage("buildStagingDepartEngineRoad",
+                            departStageTrack.getName(), eng.toString(), eng.getRoadName(), _train.getName()));
+                    return false;
+                }
+                // does the train accept the engine owner from the staging
+                // track?
+                if (!_train.isOwnerNameAccepted(eng.getOwnerName())) {
+                    addLine(_buildReport, THREE, Bundle.getMessage("buildStagingDepartEngineOwner",
+                            departStageTrack.getName(), eng.toString(), eng.getOwnerName(), _train.getName()));
+                    return false;
+                }
+                // does the train accept the engine built date from the
+                // staging track?
+                if (!_train.isBuiltDateAccepted(eng.getBuilt())) {
+                    addLine(_buildReport, THREE,
+                            Bundle.getMessage("buildStagingDepartEngineBuilt", departStageTrack.getName(),
+                                    eng.toString(), eng.getBuilt(), _train.getName()));
+                    return false;
                 }
             }
         }
@@ -1771,8 +1773,9 @@ public class TrainBuilderBase extends TrainCommon {
         boolean foundCaboose = false;
         boolean foundFRED = false;
         if (departStageTrack.getNumberCars() > 0) {
-            for (Car car : carManager.getList()) {
-                if (car.getTrack() != departStageTrack) {
+            for (Car car : carManager.getList(departStageTrack)) {
+                // clones are are already assigned to a train
+                if (car.isClone()) {
                     continue;
                 }
                 // ignore non-lead cars in kernels
@@ -1956,7 +1959,8 @@ public class TrainBuilderBase extends TrainCommon {
         // track that scheduled to depart is okay
         if (((!Setup.isBuildAggressive() || !Setup.isStagingTrackImmediatelyAvail()) &&
                 terminateStageTrack.getNumberRS() != 0) ||
-                terminateStageTrack.getNumberRS() != terminateStageTrack.getPickupRS()) {
+                (terminateStageTrack.getNumberRS() != terminateStageTrack.getPickupRS()) &&
+                        terminateStageTrack.getNumberRS() != 0) {
             addLine(_buildReport, FIVE,
                     Bundle.getMessage("buildStagingTrackOccupied", terminateStageTrack.getName(),
                             terminateStageTrack.getNumberEngines(), terminateStageTrack.getNumberCars()));
@@ -1973,7 +1977,8 @@ public class TrainBuilderBase extends TrainCommon {
                                 terminateStageTrack.getAvailableTrackSpace()));
             }
         }
-        if (terminateStageTrack.getDropRS() != 0) {
+        if ((!Setup.isBuildOnTime() || !terminateStageTrack.isQuickServiceEnabled()) &&
+                terminateStageTrack.getDropRS() != 0) {
             addLine(_buildReport, FIVE, Bundle.getMessage("buildStagingTrackReserved", terminateStageTrack.getName(),
                     terminateStageTrack.getDropRS()));
             return false;

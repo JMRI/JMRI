@@ -185,6 +185,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         addItem(pdt, space2, 4, 5);
         addItem(pdt, minuteBox, 5, 5);
         addItem(pdt, space3, 6, 5);
+        // time tips
+        dayBox.setToolTipText(Bundle.getMessage("DepartureDayTip"));
+        hourBox.setToolTipText(Bundle.getMessage("DepartureHourTip"));
+        minuteBox.setToolTipText(Bundle.getMessage("DepartureMinuteTip"));
+        
         // row 2b
         // BUG! routeBox needs its own panel when resizing frame!
         JPanel pr = new JPanel();

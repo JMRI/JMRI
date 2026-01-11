@@ -476,7 +476,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     private void setDepartureTime(Object value, RouteLocation rl) {
-        rl.setDepartureTime(((String) ((JComboBox<?>) value).getSelectedItem()));
+        rl.setDepartureTime("0:" + (String) ((JComboBox<?>) value).getSelectedItem());
     }
 
     private void setMaxTrainLength(Object value, RouteLocation rl) {
