@@ -548,13 +548,17 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     @Override
     public synchronized void message(CanMessage l) {  // receive a message and log it
         log.debug("Message: {}", l);
-        format("S", l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
+        if ("H".equals(l.getSourceLetter())) {
+            log.debug("Suppressing message with source==H to avoid double counting");
+            return;
+        }
+        format(l.getSourceLetter(), l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
     }
 
     @Override
     public synchronized void reply(CanReply l) {  // receive a reply and log it
         log.debug("Reply: {}", l);
-        format("R", l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
+        format(l.getSourceLetter(), l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
     }
 
     private final static Logger log = LoggerFactory.getLogger(MonitorPane.class);

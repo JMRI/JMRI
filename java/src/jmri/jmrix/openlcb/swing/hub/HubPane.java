@@ -189,6 +189,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
             }
 
             CanReply workingReply = msg.createReply();
+            workingReply.setSourceLetter("H");
             workingReplySet.add(workingReply);  // save for later recognition
 
             CanMessage result = new CanMessage(workingReply.getNumDataElements(), workingReply.getHeader());
@@ -196,6 +197,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
                 result.setElement(i, workingReply.getElement(i));
             }
             result.setExtended(workingReply.isExtended());
+            result.setSourceLetter("H");
             workingMessageSet.add(result);
             log.trace("Hub forwarder create reply {}", workingReply);
 
