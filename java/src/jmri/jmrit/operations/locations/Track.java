@@ -1717,16 +1717,16 @@ public class Track extends PropertyChangeSupport {
         int trackSpaceAvalable = getLength() - getTotalUsedLength();
         log.debug("track ({}) space available at start: {}", this.getName(), trackSpaceAvalable);
         for (Car car : cars) {
-            log.debug("Car ({}) length {}, track ({}, {}) pick up time {}, to ({}), train ({}), last train ({})", car.toString(),
-                    car.getTotalLength(), car.getLocationName(), car.getTrackName(), car.getPickupTime(),
-                    car.getRouteDestination(), car.getTrain(), car.getLastTrain());
+            log.debug("Car ({}) length {}, track ({}, {}) pick up time {}, to ({}), train ({}), last train ({})",
+                    car.toString(), car.getTotalLength(), car.getLocationName(), car.getTrackName(),
+                    car.getPickupTime(), car.getRouteDestination(), car.getTrain(), car.getLastTrain());
             // cars being pulled by previous trains will free up track space
             if (car.getTrack() == this && car.getRouteDestination() != null && !car.getPickupTime().equals(Car.NONE)) {
                 if (TrainCommon.convertStringTime(car.getPickupTime()) +
                         Setup.getDwellTime() > trainDepartureTimeMinutes) {
                     log.debug("Attempt to spot new car before pulls completed");
                     // car pulled after the train being built departs
-                     return Bundle.getMessage("lengthIssueCar",
+                    return Bundle.getMessage("lengthIssueCar",
                             LENGTH, rsLength, Setup.getLengthUnit().toLowerCase(), trackSpaceAvalable, car.toString(),
                             car.getTotalLength(), car.getTrain(), car.getPickupTime(), Setup.getDwellTime());
                 }
@@ -1755,9 +1755,8 @@ public class Track extends PropertyChangeSupport {
             log.debug("Checking engines on track ({}) ", this.getName());
             for (Engine eng : engines) {
                 log.debug("Engine ({}) length {}, track ({}, {}) pick up time {}, to ({}), train ({}), last train ({})",
-                        eng.toString(),
-                        eng.getTotalLength(), eng.getLocationName(), eng.getTrackName(), eng.getPickupTime(),
-                        eng.getRouteDestination(), eng.getTrain(), eng.getLastTrain());
+                        eng.toString(), eng.getTotalLength(), eng.getLocationName(), eng.getTrackName(),
+                        eng.getPickupTime(), eng.getRouteDestination(), eng.getTrain(), eng.getLastTrain());
                 // engines being pulled by previous trains will free up track space
                 if (eng.getTrack() == this &&
                         eng.getRouteDestination() != null &&
@@ -1768,8 +1767,8 @@ public class Track extends PropertyChangeSupport {
                         // engine pulled after the train being built departs
                         return Bundle.getMessage("lengthIssueEng",
                                 LENGTH, rsLength, Setup.getLengthUnit().toLowerCase(), trackSpaceAvalable,
-                                eng.toString(),
-                                eng.getTotalLength(), eng.getTrain(), eng.getPickupTime(), Setup.getDwellTime());
+                                eng.toString(), eng.getTotalLength(), eng.getTrain(), eng.getPickupTime(),
+                                Setup.getDwellTime());
                     }
                     trackSpaceAvalable = trackSpaceAvalable + eng.getTotalLength();
                     log.debug("Engine ({}) length {}, pull from ({}, {}) at {}", eng.toString(), eng.getTotalLength(),

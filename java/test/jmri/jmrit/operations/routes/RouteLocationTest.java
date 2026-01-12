@@ -34,10 +34,10 @@ public class RouteLocationTest extends OperationsTestCase {
         Setup.set12hrFormatEnabled(true);
         Assert.assertEquals("12HR Time", "19:2:05 AM", rl.getFormatedDepartureTime());
         rl.setDepartureTime("0", "0", "09");
-        Assert.assertEquals("12HR Time AM", "0:12:09 AM", rl.getFormatedDepartureTime());
+        Assert.assertEquals("12HR Time AM", "12:09 AM", rl.getFormatedDepartureTime());
         // test PM
         rl.setDepartureTime("0", "13", "0");
-        Assert.assertEquals("12HR Time PM", "0:1:00 PM", rl.getFormatedDepartureTime()); 
+        Assert.assertEquals("12HR Time PM", "1:00 PM", rl.getFormatedDepartureTime()); 
         rl.setDepartureTime("3", "23", "59");
         Assert.assertEquals("12HR Time PM", "3:11:59 PM", rl.getFormatedDepartureTime());  
     }

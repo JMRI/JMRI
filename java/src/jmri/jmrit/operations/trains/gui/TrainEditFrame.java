@@ -1057,7 +1057,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         minuteBox.setSelectedItem(_train.getDepartureTimeMinute());
         // check to see if route has a departure time from the 1st location
         RouteLocation rl = _train.getTrainDepartsRouteLocation();
-        if (rl != null && !rl.getDepartureTime().equals(NONE)) {
+        if (rl != null && !rl.getDepartureTimeHourMinutes().equals(NONE)) {
             dayBox.setEnabled(false);
             hourBox.setEnabled(false);
             minuteBox.setEnabled(false);
