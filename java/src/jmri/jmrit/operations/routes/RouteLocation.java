@@ -444,11 +444,14 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
      * @return days:hours:minutes or hours:minutes. Optional AM/PM
      */
     public String getFormatedDepartureTime() {
+        if (getDepartureTimeHourMinutes().equals(NONE)) {
+            return getDepartureTimeHourMinutes();
+        }
         String sDay = "";
         if (!getDepartureTimeDay().equals("0")) {
             sDay = getDepartureTimeDay() + ":";
         }
-        if (getDepartureTimeHourMinutes().equals(NONE) || !Setup.is12hrFormatEnabled()) {
+        if (!Setup.is12hrFormatEnabled()) {
             return sDay + getDepartureTimeHourMinutes();
         }
         String AM_PM = TrainCommon.SPACE + Bundle.getMessage("AM");
