@@ -1,5 +1,13 @@
 package jmri.jmrit.logixng;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.*;
 
 import jmri.InstanceManager;
@@ -10,9 +18,7 @@ import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,21 +32,21 @@ public class SymbolTableTest {
     @Test
     public void testValidateName() {
         // Valid names
-        Assert.assertTrue(SymbolTable.validateName("Abc"));
-        Assert.assertTrue(SymbolTable.validateName("abc"));
-        Assert.assertTrue(SymbolTable.validateName("Abc123"));
-        Assert.assertTrue(SymbolTable.validateName("A123bc"));
-        Assert.assertTrue(SymbolTable.validateName("Abc___"));
-        Assert.assertTrue(SymbolTable.validateName("Abc___fsdffs"));
-        Assert.assertTrue(SymbolTable.validateName("Abc3123__2341fsdf"));
+        assertTrue(SymbolTable.validateName("Abc"));
+        assertTrue(SymbolTable.validateName("abc"));
+        assertTrue(SymbolTable.validateName("Abc123"));
+        assertTrue(SymbolTable.validateName("A123bc"));
+        assertTrue(SymbolTable.validateName("Abc___"));
+        assertTrue(SymbolTable.validateName("Abc___fsdffs"));
+        assertTrue(SymbolTable.validateName("Abc3123__2341fsdf"));
 
         // Invalid names
-        Assert.assertFalse(SymbolTable.validateName("12Abc"));  // Starts with a digit
-        Assert.assertFalse(SymbolTable.validateName("_Abc"));   // Starts with an underscore
-        Assert.assertFalse(SymbolTable.validateName(" Abc"));   // Starts with a non letter
-        Assert.assertFalse(SymbolTable.validateName("A bc"));   // Has a character that's not letter, digit or underscore
-        Assert.assertFalse(SymbolTable.validateName("A{bc"));   // Has a character that's not letter, digit or underscore
-        Assert.assertFalse(SymbolTable.validateName("A+bc"));   // Has a character that's not letter, digit or underscore
+        assertFalse(SymbolTable.validateName("12Abc"));  // Starts with a digit
+        assertFalse(SymbolTable.validateName("_Abc"));   // Starts with an underscore
+        assertFalse(SymbolTable.validateName(" Abc"));   // Starts with a non letter
+        assertFalse(SymbolTable.validateName("A bc"));   // Has a character that's not letter, digit or underscore
+        assertFalse(SymbolTable.validateName("A{bc"));   // Has a character that's not letter, digit or underscore
+        assertFalse(SymbolTable.validateName("A+bc"));   // Has a character that's not letter, digit or underscore
     }
 
     private SymbolTable createLocalVariable(InitialValueType type, String initialValue)
@@ -57,54 +63,54 @@ public class SymbolTableTest {
 
         // Test strings
         SymbolTable symbolTable = createLocalVariable(InitialValueType.String, "Hello");
-        Assert.assertEquals("variable has correct value",
-                "Hello", symbolTable.getValue("myVar"));
+        assertEquals( "Hello", symbolTable.getValue("myVar"),
+                "variable has correct value");
 
         symbolTable.setValue("myVar", 25.3);
-        Assert.assertEquals("variable has correct value",
-                25.3, (double)symbolTable.getValue("myVar"), 0.00000001);
+        assertEquals( 25.3, (double)symbolTable.getValue("myVar"), 0.00000001,
+                "variable has correct value");
 
         symbolTable.setValue("myVar", "34");
-        Assert.assertEquals("variable has correct value",
-                "34", symbolTable.getValue("myVar"));
+        assertEquals( "34", symbolTable.getValue("myVar"),
+                "variable has correct value");
 
         symbolTable.setValue("myVar", 12);
-        Assert.assertEquals("variable has correct value",
-                12, (int)symbolTable.getValue("myVar"));
+        assertEquals( 12, (int)symbolTable.getValue("myVar"),
+                "variable has correct value");
 
         // Test integers
         symbolTable = createLocalVariable(InitialValueType.FloatingNumber, "42.11");
-        Assert.assertEquals("variable has correct value",
-                42.11, (double)symbolTable.getValue("myVar"), 0.00000001);
+        assertEquals( 42.11, (double)symbolTable.getValue("myVar"), 0.00000001,
+                "variable has correct value");
 
         symbolTable.setValue("myVar", 25.3);
-        Assert.assertEquals("variable has correct value",
-                25.3, (double)symbolTable.getValue("myVar"), 0.00000001);
+        assertEquals( 25.3, (double)symbolTable.getValue("myVar"), 0.00000001,
+                "variable has correct value");
 
         symbolTable.setValue("myVar", "34");
-        Assert.assertEquals("variable has correct value",
-                "34", symbolTable.getValue("myVar"));
+        assertEquals( "34", symbolTable.getValue("myVar"),
+                "variable has correct value");
 
         symbolTable.setValue("myVar", 12);
-        Assert.assertEquals("variable has correct value",
-                12, (int)symbolTable.getValue("myVar"));
+        assertEquals( 12, (int)symbolTable.getValue("myVar"),
+                "variable has correct value");
 
         // Test floating point numbers
         symbolTable = createLocalVariable(InitialValueType.FloatingNumber, "42.11");
-        Assert.assertEquals("variable has correct value",
-                42.11, (double)symbolTable.getValue("myVar"), 0.00000001);
+        assertEquals( 42.11, (double)symbolTable.getValue("myVar"), 0.00000001,
+                "variable has correct value");
 
         symbolTable.setValue("myVar", 25.3);
-        Assert.assertEquals("variable has correct value",
-                25.3, (double)symbolTable.getValue("myVar"), 0.00000001);
+        assertEquals( 25.3, (double)symbolTable.getValue("myVar"), 0.00000001,
+                "variable has correct value");
 
         symbolTable.setValue("myVar", "34");
-        Assert.assertEquals("variable has correct value",
-                "34", symbolTable.getValue("myVar"));
+        assertEquals( "34", symbolTable.getValue("myVar"),
+                "variable has correct value");
 
         symbolTable.setValue("myVar", 12);
-        Assert.assertEquals("variable has correct value",
-                12, (int)symbolTable.getValue("myVar"));
+        assertEquals( 12, (int)symbolTable.getValue("myVar"),
+                "variable has correct value");
     }
 
     @Test
@@ -115,79 +121,82 @@ public class SymbolTableTest {
 
         // Test strings
         SymbolTable symbolTable = createLocalVariable(InitialValueType.String, "Hello");
-        Assert.assertEquals("variable has correct value",
-                "Hello", symbolTable.getValue("myVar"));
+        assertEquals( "Hello", symbolTable.getValue("myVar"),
+                "variable has correct value");
 
         symbolTable.setValue("myVar", 25.3);
-        Assert.assertEquals("variable has correct value",
-                "25.3", symbolTable.getValue("myVar"));
+        assertEquals( "25.3", symbolTable.getValue("myVar"),
+                "variable has correct value");
 
         symbolTable.setValue("myVar", "34");
-        Assert.assertEquals("variable has correct value",
-                "34", symbolTable.getValue("myVar"));
+        assertEquals( "34", symbolTable.getValue("myVar"),
+                "variable has correct value");
 
         symbolTable.setValue("myVar", 12);
-        Assert.assertEquals("variable has correct value",
-                "12", symbolTable.getValue("myVar"));
+        assertEquals( "12", symbolTable.getValue("myVar"),
+                "variable has correct value");
 
         // Test booleans
         symbolTable = createLocalVariable(InitialValueType.Boolean, "True");
-        Assert.assertTrue("variable has correct value",
-                (boolean)symbolTable.getValue("myVar"));
+        assertTrue( (boolean)symbolTable.getValue("myVar"),
+                "variable has correct value");
 
         symbolTable = createLocalVariable(InitialValueType.Boolean, "False");
-        Assert.assertFalse("variable has correct value",
-                (boolean)symbolTable.getValue("myVar"));
+        assertFalse( (boolean)symbolTable.getValue("myVar"),
+                "variable has correct value");
 
         symbolTable = createLocalVariable(InitialValueType.Boolean, "true");
-        Assert.assertTrue("variable has correct value",
-                (boolean)symbolTable.getValue("myVar"));
+        assertTrue( (boolean)symbolTable.getValue("myVar"),
+                "variable has correct value");
 
         symbolTable = createLocalVariable(InitialValueType.Boolean, "false");
-        Assert.assertFalse("variable has correct value",
-                (boolean)symbolTable.getValue("myVar"));
+        assertFalse( (boolean)symbolTable.getValue("myVar"),
+                "variable has correct value");
 
         // Test integers
         SymbolTable symbolTable2 = createLocalVariable(InitialValueType.Integer, "42");
-        Assert.assertEquals("variable has correct value",
-                42, (long)symbolTable2.getValue("myVar"), 0.00000001);
+        assertEquals( 42, (long)symbolTable2.getValue("myVar"), 0.00000001,
+                "variable has correct value");
 
-        Assertions.assertThrows(NumberFormatException.class, () -> {
+        NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {
             symbolTable2.setValue("myVar", 25.3);
         });
+        assertNotNull(ex);
 
         symbolTable2.setValue("myVar", "34");
-        Assert.assertEquals("variable has correct value",
-                34, (long)symbolTable2.getValue("myVar"));
+        assertEquals( 34, (long)symbolTable2.getValue("myVar"),
+                "variable has correct value");
 
         symbolTable2.setValue("myVar", 12);
-        Assert.assertEquals("variable has correct value",
-                12, (long)symbolTable2.getValue("myVar"));
+        assertEquals( 12, (long)symbolTable2.getValue("myVar"),
+                "variable has correct value");
 
         // Test floating point numbers
         symbolTable = createLocalVariable(InitialValueType.FloatingNumber, "42.11");
-        Assert.assertEquals("variable has correct value",
-                42.11, (double)symbolTable.getValue("myVar"), 0.00000001);
+        assertEquals( 42.11, (double)symbolTable.getValue("myVar"), 0.00000001,
+                "variable has correct value");
 
         symbolTable.setValue("myVar", 25.3);
-        Assert.assertEquals("variable has correct value",
-                25.3, (double)symbolTable.getValue("myVar"), 0.00000001);
+        assertEquals( 25.3, (double)symbolTable.getValue("myVar"), 0.00000001,
+                "variable has correct value");
 
         symbolTable.setValue("myVar", "34");
-        Assert.assertEquals("variable has correct value",
-                34.0, (double)symbolTable.getValue("myVar"), 0.00000001);
+        assertEquals( 34.0, (double)symbolTable.getValue("myVar"), 0.00000001,
+                "variable has correct value");
 
         symbolTable.setValue("myVar", 12);
-        Assert.assertEquals("variable has correct value",
-                12.0, (double)symbolTable.getValue("myVar"), 0.00000001);
+        assertEquals( 12.0, (double)symbolTable.getValue("myVar"), 0.00000001,
+                "variable has correct value");
     }
 
     @Test
     public void testInitializeLocalVariables() throws JmriException {
         for (InitialValueType type : InitialValueType.values()) {
             if (null == type) {
-                SymbolTable symbolTable = createLocalVariable(type, null);
-                Assert.assertNull("variable is null", symbolTable.getValue("myVar"));
+                // passing null as 1st createLocalVariable Arg rather than type
+                // avoids a Spotbug even though we know it's null . . . .
+                SymbolTable symbolTable = createLocalVariable( null, null);
+                assertNull( symbolTable.getValue("myVar"), "variable is null");
             } else {
                 IllegalArgumentException ex;
 
@@ -196,62 +205,65 @@ public class SymbolTableTest {
                 switch (type) {
                     case None:
                         symbolTable = createLocalVariable(type, null);
-                        Assert.assertNull("variable is null", symbolTable.getValue("myVar"));
+                        assertNull( symbolTable.getValue("myVar"), "None variable is null");
                         break;
 
                     case String:
                         symbolTable = createLocalVariable(type, null);
-                        Assert.assertNull("variable is null", symbolTable.getValue("myVar"));
+                        assertNull( symbolTable.getValue("myVar"), "String variable is null");
                         break;
 
                     case Boolean:
-                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                        ex = assertThrows(IllegalArgumentException.class, () -> {
                             createLocalVariable(type, null);
                         });
-                        Assert.assertEquals("Initial data is null for local variable \"myVar\". Can't set value to boolean.", ex.getMessage());
+                        assertEquals("Initial data is null for local variable \"myVar\". Can't set value to boolean.",
+                            ex.getMessage());
                         break;
 
                     case Integer:
-                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                        ex = assertThrows(IllegalArgumentException.class, () -> {
                             createLocalVariable(type, null);
                         });
-                        Assert.assertEquals("Initial data is null for local variable \"myVar\". Can't set value to integer.", ex.getMessage());
+                        assertEquals("Initial data is null for local variable \"myVar\". Can't set value to integer.",
+                                ex.getMessage());
                         break;
 
                     case FloatingNumber:
-                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                        ex = assertThrows(IllegalArgumentException.class, () -> {
                             createLocalVariable(type, null);
                         });
-                        Assert.assertEquals("Initial data is null for local variable \"myVar\". Can't set value to floating number.", ex.getMessage());
+                        assertEquals("Initial data is null for local variable \"myVar\". Can't set value to floating number.",
+                                ex.getMessage());
                         break;
 
                     case Map:
                         symbolTable = createLocalVariable(type, null);
-                        Assert.assertTrue("variable is a map", symbolTable.getValue("myVar") instanceof Map);
-                        Assert.assertTrue("map is empty", ((Map)symbolTable.getValue("myVar")).isEmpty());
+                        Map<?,?> map = assertInstanceOf( Map.class, symbolTable.getValue("myVar"), "variable is a map");
+                        assertTrue( map.isEmpty(), "map is empty");
                         break;
 
                     case Array:
                         symbolTable = createLocalVariable(type, null);
-                        Assert.assertTrue("variable is a list", symbolTable.getValue("myVar") instanceof List);
-                        Assert.assertTrue("list is empty", ((List<?>)symbolTable.getValue("myVar")).isEmpty());
+                        List<?> list = assertInstanceOf( List.class, symbolTable.getValue("myVar"), "variable is a list");
+                        assertTrue( list.isEmpty(), "list is empty");
                         break;
 
                     case Object:
                         symbolTable = createLocalVariable(type, null);
-                        Assert.assertNull("variable is null", symbolTable.getValue("myVar"));
+                        assertNull( symbolTable.getValue("myVar"), "Object variable is null");
                         break;
 
                     default:
-                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                        ex = assertThrows(IllegalArgumentException.class, () -> {
                             createLocalVariable(type, null);
                         });
-                        Assert.assertEquals(String.format(
+                        assertEquals(String.format(
                                 "Initial data is null for local variable \"myVar\". Can't set value from %s.",
                                 type.toString().toLowerCase()),
                                 ex.getMessage());
                 }
-                Assert.assertTrue("backlog is empty", JUnitAppender.getBacklog().isEmpty());
+                assertTrue( JUnitAppender.getBacklog().isEmpty(), "backlog is empty");
             }
         }
     }
@@ -268,76 +280,80 @@ public class SymbolTableTest {
 
             if (null == type) {
                 globalVariable.initialize();
-                SymbolTable symbolTable = createLocalVariable(type, null);
-                Assert.assertNull("variable is null", symbolTable.getValue("myVar"));
+                // passing null as 1st createLocalVariable Arg rather than type
+                // avoids a Spotbug even though we know it's null . . . .
+                SymbolTable symbolTable = createLocalVariable(null, null);
+                assertNull( symbolTable.getValue("myVar"), "variable is null");
             } else {
                 IllegalArgumentException ex;
 
                 switch (type) {
                     case None:
                         globalVariable.initialize();
-                        Assert.assertNull("variable is null", globalVariable.getValue());
+                        assertNull( globalVariable.getValue(), "None variable is null");
                         break;
 
                     case String:
                         globalVariable.initialize();
-                        Assert.assertNull("variable is null", globalVariable.getValue());
+                        assertNull( globalVariable.getValue(), "String variable is null");
                         break;
 
                     case Boolean:
-                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                        ex = assertThrows(IllegalArgumentException.class, () -> {
                             globalVariable.initialize();
                         });
-                        Assert.assertEquals("Initial data is null for global variable \"myVar\". Can't set value to boolean.", ex.getMessage());
+                        assertEquals("Initial data is null for global variable \"myVar\". Can't set value to boolean.",
+                                ex.getMessage());
                         break;
 
                     case Integer:
-                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                        ex = assertThrows(IllegalArgumentException.class, () -> {
                             globalVariable.initialize();
                         });
-                        Assert.assertEquals("Initial data is null for global variable \"myVar\". Can't set value to integer.", ex.getMessage());
+                        assertEquals("Initial data is null for global variable \"myVar\". Can't set value to integer.",
+                                ex.getMessage());
                         break;
 
                     case FloatingNumber:
-                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                        ex = assertThrows(IllegalArgumentException.class, () -> {
                             globalVariable.initialize();
                         });
-                        Assert.assertEquals("Initial data is null for global variable \"myVar\". Can't set value to floating number.", ex.getMessage());
+                        assertEquals("Initial data is null for global variable \"myVar\". Can't set value to floating number.",
+                                ex.getMessage());
                         break;
 
                     case Map:
                         globalVariable.initialize();
-                        Assert.assertTrue("variable is a map", globalVariable.getValue() instanceof Map);
-                        Assert.assertTrue("map is empty", ((Map)globalVariable.getValue()).isEmpty());
+                        Map<?,?> map = assertInstanceOf( Map.class, globalVariable.getValue(), "variable is a map");
+                        assertTrue( map.isEmpty(), "map is empty");
                         break;
 
                     case Array:
                         globalVariable.initialize();
-                        Assert.assertTrue("variable is a list", globalVariable.getValue() instanceof List);
-                        Assert.assertTrue("list is empty", ((List<?>)globalVariable.getValue()).isEmpty());
+                        List<?> list = assertInstanceOf( List.class, globalVariable.getValue(), "variable is a list");
+                        assertTrue( list.isEmpty(), "list is empty");
                         break;
 
                     case Object:
                         globalVariable.initialize();
-                        Assert.assertNull("variable is null", globalVariable.getValue());
+                        assertNull( globalVariable.getValue(), "Object variable is null");
                         break;
 
                     default:
-                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                        ex = assertThrows(IllegalArgumentException.class, () -> {
                             globalVariable.initialize();
                         });
-                        Assert.assertEquals(String.format(
+                        assertEquals(String.format(
                                 "Initial data is null for global variable \"myVar\". Can't set value from %s.",
                                 type.toString().toLowerCase()),
                                 ex.getMessage());
                 }
-                Assert.assertTrue("backlog is empty", JUnitAppender.getBacklog().isEmpty());
+                assertTrue( JUnitAppender.getBacklog().isEmpty(), "backlog is empty");
             }
             mgr.deleteGlobalVariable(globalVariable);
         }
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
