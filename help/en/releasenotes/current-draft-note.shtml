@@ -128,7 +128,9 @@
             <ul>
                 <li>Fixed a problem adding signal masts when the
                     OpenLCB or LCC system letter is not "M".</li>
-                <li>Improved display of stream data frames in the Monitor</li>
+                <li>Improved display of stream data frames in the Monitor.</li>
+                <li>Improved how traffic from an internal hub is 
+                    displayed in the Monitor.</li>
             </ul>
 
         <h4>Powerline</h4>
