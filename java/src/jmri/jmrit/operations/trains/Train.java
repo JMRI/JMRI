@@ -3834,14 +3834,18 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return True if track has been allocated to another train.
      */
     public boolean checkDepartureTrack() {
-        return (Setup.isStagingTrackImmediatelyAvail() &&
+        if (Setup.isStagingTrackImmediatelyAvail() &&
                 !isTrainEnRoute() &&
                 getDepartureTrack() != null &&
                 getDepartureTrack().isStaging() &&
                 getDepartureTrack() != getTerminationTrack() &&
-                getDepartureTrack().getIgnoreUsedLengthPercentage() == Track.IGNORE_0 &&
-                !getDepartureTrack().isQuickServiceEnabled() &&
-                getDepartureTrack().getDropRS() > 0);
+                getDepartureTrack().getIgnoreUsedLengthPercentage() == Track.IGNORE_0) {
+            if (getDepartureTrack().isQuickServiceEnabled()) {
+                return getDepartureTrack().getNumberRS() > 0;
+            }
+            return getDepartureTrack().getDropRS() > 0;
+        }
+        return false;
     }
 
     public void dispose() {
