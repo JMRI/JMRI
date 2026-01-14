@@ -569,6 +569,10 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
 
         // setup check boxes
         selectCheckboxes(true);
+        
+        // default for on time mode is quick service track
+        _track.setQuickServiceEnabled(Setup.isBuildOnTime());
+        
         // store comment
         _track.setComment(commentTextArea.getText());
         // enable
@@ -583,6 +587,14 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
             if (rs > 0) {
                 if (JmriJOptionPane.showConfirmDialog(this,
                         Bundle.getMessage("ThereAreCars", Integer.toString(rs)),
+                        Bundle.getMessage("deleteTrack?"),
+                        JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
+                    return;
+                }
+            }
+            if (_track.getDropRS() > 0 || _track.getPickupRS() > 0) {
+                if (JmriJOptionPane.showConfirmDialog(this,
+                        Bundle.getMessage("TrackInUse", _track.getPickupRS(), _track.getDropRS()),
                         Bundle.getMessage("deleteTrack?"),
                         JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                     return;
