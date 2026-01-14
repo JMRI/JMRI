@@ -5226,6 +5226,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         </tr>
       </table>
 
+      <h4>Departure Day</h4>
+
+      The departure day is only used when there's a
+      <a href="#RouteSwitchTime">Departure Time</a>. "0" is today, and "1, 2, 3 ..." are the next
+      days respectively. One you set a departure day, you should also set a departure day for all
+      following route locations that also have a departure time.
+
       <h4 id="RouteSwitchTime">Departure Time</h4>
 
       You can optionally enter the train's departure time from each location in the route. Note that
@@ -5538,11 +5545,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         build report and train tools will refer to unselected locations as being skipped.</p>
 
       <h4 id="TrainDepartureTime">Train Departure Time</h4>
-      Select the time that this train will depart the first location in its route. You can use the
-      departure time to sort your trains in the order that you want them built when using the <a
-        href="#BuildingTrains">Build</a> button at the bottom of the Trains window. Note that if the
-      train's route has a departure time for the first location, the route's departure time is used
-      and the train departure time selection is disabled.
+      Select the day and time that this train will depart the first location in its route. You can
+      use the departure time to sort your trains in the order that you want them built when using
+      the
+      <a href="#BuildingTrains">Build</a> button at the bottom of the Trains window. Note that if
+      the train's route has a departure time for the first location, the route's departure time is
+      used and the train departure time selection is disabled.
 
       <h4 id="TrainRollingStock">Train Rolling Stock</h4>
 
@@ -6256,7 +6264,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       
       <h5>Wait Automation</h5>
       This action will wait until an automation completes. You must select an automation from the
-      "Automation" menu.
+      "Automation" menu. The status of the waited automation is provided allowing the HIAF feature
+      to stop the automation sequence.
 
       <h5>Counter</h5>
       This action will increment a count starting from zero. The counter isn't saved when

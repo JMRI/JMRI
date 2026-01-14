@@ -5,22 +5,27 @@
 # The script starts by requesting which transit to use.  If the default empty row is selected,
 # the actions for all of the transits is printed.
 #
-# Author:  Dave Sand copyright (c) 2025
+# Author:  Dave Sand copyright (c) 2026
 
 import java
 import jmri
 from javax.swing import JComboBox, JOptionPane
 
 # Select a transit for a single actions report.
-# The first entry is empty which results in an actions report for all transits.
+# The first entry is empty which results in a report of all of the transits and their actions, if any.
 def selectTransit():
     cboEntries = JComboBox()
     cboEntries.setMaximumRowCount(20)
     transit = None
 
+    tList = []
+    for item in transitList:
+        tList.append(item.getDisplayName())
+    tList.sort()
+
     cboEntries.addItem('')
-    for entry in transitList:
-        cboEntries.addItem(entry.getDisplayName())
+    for entry in tList:
+        cboEntries.addItem(entry)
 
     titleLine = 'Select a transit'
     ret = JOptionPane.showConfirmDialog(None, cboEntries, titleLine, JOptionPane.PLAIN_MESSAGE)
@@ -54,9 +59,11 @@ def getWhen(action):
         return 'When train starts moving' if delay == 0 else '"{}" mSec after train starts moving'.format(delay)
 
     elif code == jmri.TransitSectionAction.SENSORACTIVE:
+        data = sensors.getSensor(data).getDisplayName()
         return 'When Sensor "{}" becomes ACTIVE'.format(data) if delay == 0 else '"{}" mSec after Sensor "{}" becomes ACTIVE'.format(delay, data)
 
     elif code == jmri.TransitSectionAction.SENSORINACTIVE:
+        data = sensors.getSensor(data).getDisplayName()
         return 'When Sensor "{}" becomes INACTIVE'.format(data) if delay == 0 else '"{}" mSec after Sensor "{}" becomes INACTIVE'.format(delay, data)
 
     elif code == jmri.TransitSectionAction.PRESTARTDELAY:
@@ -109,15 +116,29 @@ def getWhat(action):
         return 'Set decoder function "{}" to "{}"'.format(data1, text)
 
     elif code == jmri.TransitSectionAction.SETSENSORACTIVE:
+        text = sensors.getSensor(text).getDisplayName()
         return 'Set Sensor "{}" to ACTIVE'.format(text)
 
     elif code == jmri.TransitSectionAction.SETSENSORINACTIVE:
+        text = sensors.getSensor(text).getDisplayName()
         return 'Set Sensor "{}" to INACTIVE'.format(text)
 
     elif code == jmri.TransitSectionAction.HOLDSIGNAL:
+        head = signals.getSignalHead(text)
+        mast = masts.getSignalMast(text)
+        if head:
+            text = head.getDisplayName()
+        elif mast:
+            text = mast.getDisplayName()
         return 'Hold Signal "{}"'.format(text)
 
     elif code == jmri.TransitSectionAction.RELEASESIGNAL:
+        head = signals.getSignalHead(text)
+        mast = masts.getSignalMast(text)
+        if head:
+            text = head.getDisplayName()
+        elif mast:
+            text = mast.getDisplayName()
         return 'Release Signal "{}"'.format(text)
 
     elif code == jmri.TransitSectionAction.ESTOP:

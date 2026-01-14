@@ -244,7 +244,7 @@ public class TrainManifest extends TrainCommon {
                 if (rl == train.getTrainDepartsRouteLocation()) {
                     s += MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringDepartTime(), new Object[]{train.getFormatedDepartureTime()});
-                } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
+                } else if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
                     s += MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringDepartTime(), new Object[]{train.getExpectedDepartureTime(rl)});
                 } else if (Setup.isUseDepartureTimeEnabled() &&

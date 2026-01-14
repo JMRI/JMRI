@@ -696,7 +696,7 @@ public class TrainTest extends OperationsTestCase {
         Setup.setPrintLocationCommentsEnabled(true);
         middle.setComment("Middle comment");
         rl = route.addLocation(middle, 2); // put location in middle of route
-        rl.setDepartureTime("12:30");
+        rl.setDepartureTimeHourMinutes("12:30");
         rl.setComment("This location has a departure time");
 
         Assert.assertTrue(train.build());

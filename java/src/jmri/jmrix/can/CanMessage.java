@@ -249,6 +249,10 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
         _isRtr = b;
     }
 
+    public void setSourceLetter(String source) {
+        sourceLetter = source;
+    }
+
     // contents (package access)
     int _header;
     boolean _isExtended;

@@ -2,7 +2,6 @@ package jmri.jmrit.throttle;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,17 +14,17 @@ public class ThrottlesListActionTest {
     @Test
     public void testCtor() {
         ThrottlesListAction panel = new ThrottlesListAction();
-        Assert.assertNotNull("exists", panel);
-        
+        Assertions.assertNotNull( panel, "exists");
+
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

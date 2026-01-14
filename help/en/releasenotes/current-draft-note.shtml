@@ -126,8 +126,11 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Fixed a problem adding signal masts when the 
+                <li>Fixed a problem adding signal masts when the
                     OpenLCB or LCC system letter is not "M".</li>
+                <li>Improved display of stream data frames in the Monitor.</li>
+                <li>Improved how traffic from an internal hub is 
+                    displayed in the Monitor.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -430,24 +433,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Some of the buttons have been relabelled for clarity
-                <ul>
-                    <li> New Loco &rarr; New Entry
-                    <li> Identify &rarr; Find in Roster
-                </ul>
-                Along with machine translations for other languages.
-            </li>
-            <li>The window you use to assign roster entries to groups
-                has been improved: 
-                <ul>
-                    <li>A "Create Group" button has been added
-                        to make that more convenient.</li>
-                    <li>An edge-case where you could
-                        accidentally make a copy of the "All Entries" group has 
-                        been removed. </li>
-                    <li>A blank group name will no longer
-                        appear in the selection box.</li>
-                </ul></li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -494,8 +480,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Fixes a bug where local variables might have the wrong values
-              when using the action <strong>Execute delayed</strong>.</li>
           <li></li>
         </ul>
 
@@ -508,13 +492,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature, you can now build your train using "On Time" mode. Requires using real or fast clock to schedule for your trains.</li>
-            <li>Locomotives can now use the quick service tracks feature.</li>
-            <li>New tool to quickly enable tracks for quick service.</li>
-            <li>Added pick up and set out times for locomotives.</li>
-            <li>Trains now have a departure day.</li>
-            <li>New automation acton item: Wait for automation to complete.</li>
-            <li>New automation acton item: Down Counter.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -674,11 +652,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Added a 'JmriFaceless.command' to the macOS distribution that
-                lets you run a faceless (no GUI) version of JMRI.</li>
-            <li>Removed some code that was used for migration to JMRI 4.20
-                from earlier. If you're updating from before JMRI 4.20,
-                please go through JMRI 4.20 as described in the migration
-                instructions above.</li>
+            <li></li>
         </ul>
 

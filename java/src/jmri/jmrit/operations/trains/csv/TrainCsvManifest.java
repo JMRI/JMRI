@@ -63,7 +63,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                     }
                     if (rl == train.getTrainDepartsRouteLocation()) {
                         fileOut.printRecord("DT", Bundle.getMessage("csvDepartureTime"), train.getFormatedDepartureTime()); // NOI18N
-                    } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
+                    } else if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
                         fileOut.printRecord("DTR", Bundle.getMessage("csvDepartureTimeRoute"), rl.getFormatedDepartureTime()); // NOI18N
                     } else {
                         fileOut.printRecord("EDT", Bundle.getMessage("csvEstimatedDepartureTime"), train.getExpectedDepartureTime(rl)); // NOI18N

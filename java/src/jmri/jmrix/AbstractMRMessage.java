@@ -294,6 +294,16 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         return s;
     }
 
+    protected String sourceLetter = "S";
+    /** 
+     * Get the letter representing where this message originated.
+     * This is used by e.g. some Monitor implementations.
+     * Defaults to "S" for "Sent"
+     */
+    public String getSourceLetter() {
+        return sourceLetter;
+    } 
+
     private final static Logger log = LoggerFactory.getLogger(AbstractMRMessage.class);
 
 }
