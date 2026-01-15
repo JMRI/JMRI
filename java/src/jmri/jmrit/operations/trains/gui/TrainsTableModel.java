@@ -466,6 +466,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     private void buildTrain(int row) {
         final Train train = getTrainByRow(row);
         if (!train.isBuilt()) {
+            if (!trainManager.checkBuildOrder(train)) {
+                return;
+            }
             // only one train build at a time
             if (build != null && build.isAlive()) {
                 return;

@@ -494,6 +494,24 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     }
 
     /**
+     * Gets the last train built by departure time.
+     * 
+     * @return last train built by departure time, or null if no trains are
+     *         built.
+     */
+    public Train getLastTrainBuiltByDepartureTime() {
+        Train train = null;
+        int departure_minutes = 0;
+        for (Train t : getTrainsByTimeList()) {
+            if (t.isBuilt() && t.getDepartTimeMinutes() > departure_minutes) {
+                departure_minutes = t.getDepartTimeMinutes();
+                train = t;
+            }
+        }
+        return train;
+    }
+
+    /**
      * @param car         The car looking for a train.
      * @param buildReport The optional build report for logging.
      * @return Train that can service car from its current location to the its
@@ -1017,6 +1035,9 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
             @Override
             public void run() {
                 for (Train train : trains) {
+                    if (train.isBuildEnabled() && !checkBuildOrder(train)) {
+                        break;
+                    }
                     if (train.buildIfSelected()) {
                         continue;
                     }
@@ -1034,6 +1055,27 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         });
         build.setName("Build Trains"); // NOI18N
         build.start();
+    }
+    
+    /**
+     * Checks to see if using on time mode and the train to be built has a
+     * departure time after all of the other built trains.
+     * 
+     * @param train the train wanting to be built
+     * @return true if okay to build train
+     */
+    public boolean checkBuildOrder(Train train) {
+        if (Setup.isBuildOnTime()) {
+            Train t = getLastTrainBuiltByDepartureTime();
+            if (t != null && train.getDepartTimeMinutes() < t.getDepartTimeMinutes()) {
+                JmriJOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("TrainBuildTimeError",
+                                train.getName(), train.getDepartureTime(), t.getName(), t.getDepartureTime()),
+                        Bundle.getMessage("TrainBuildTime"), JmriJOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean printSelectedTrains(List<Train> trains) {
