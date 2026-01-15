@@ -26,6 +26,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
     private static final ImageIcon FWD_ICN = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirFwdOn.png"));
     private static final ImageIcon BCK_ICN = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckOn.png"));
     private static final ImageIcon ESTOP_ICN = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estop24.png"));
+    private static final ImageIcon STOP_ICN = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stopOn24.png"));
     private static final RosterIconFactory ICN_FACT = new RosterIconFactory(32);
     final static int LINE_HEIGHT = 42;
 
@@ -130,20 +131,31 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             ctrlPanel.add(dir, BorderLayout.WEST);
             // speed
             if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+                JLayeredPane layerPane = new JLayeredPane();
+                int cmpWidth = jtable.getWidth()/4 ;
+                layerPane.setPreferredSize(new Dimension(cmpWidth, LINE_HEIGHT - 8));
+                // speed
+                JProgressBar speedBar = new javax.swing.JProgressBar();
+                speedBar.setBounds(0,0,cmpWidth, LINE_HEIGHT - 8);
+                speedBar.setMinimum(0);
+                speedBar.setMaximum(1000);
+                speedBar.setValue((int) (thr.getSpeedSetting() * 1000f));
+                layerPane.add(speedBar, JLayeredPane.DEFAULT_LAYER);                
+                // estop & stop icon
                 if (thr.getSpeedSetting() == -1) {
-                    JLabel estop = new JLabel();
-                    estop.setPreferredSize(new Dimension(64, LINE_HEIGHT - 8));
+                    JLabel estop = new JLabel();                    
                     estop.setHorizontalAlignment(JLabel.CENTER);
                     estop.setIcon(ESTOP_ICN);
-                    ctrlPanel.add(estop, BorderLayout.CENTER);
-                } else {
-                    JProgressBar speedBar = new javax.swing.JProgressBar();
-                    speedBar.setPreferredSize(new Dimension(64, LINE_HEIGHT - 8));
-                    speedBar.setMinimum(0);
-                    speedBar.setMaximum(100);
-                    speedBar.setValue((int) (thr.getSpeedSetting() * 100f));
-                    ctrlPanel.add(speedBar, BorderLayout.CENTER);
+                    estop.setBounds(0,0,cmpWidth, LINE_HEIGHT - 8);
+                    layerPane.add(estop, JLayeredPane.PALETTE_LAYER);
+                } else if (thr.getSpeedSetting() == 0) {
+                    JLabel stop = new JLabel();                    
+                    stop.setHorizontalAlignment(JLabel.CENTER);
+                    stop.setIcon(STOP_ICN);
+                    stop.setBounds(0,0,cmpWidth, LINE_HEIGHT - 8);
+                    layerPane.add(stop, JLayeredPane.PALETTE_LAYER);
                 }
+                ctrlPanel.add(layerPane, BorderLayout.EAST);
             } else {
                 JLabel speedLabel = new JLabel("");
                 if (thr.getSpeedSetting() == -1) {
