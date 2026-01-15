@@ -1,10 +1,12 @@
 package jmri.jmrit.logixng.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test DefaultLogixNG
@@ -15,12 +17,11 @@ public class DefaultAnonymousTableTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", new DefaultAnonymousTable(5,7));
-        Assert.assertNotNull("exists", new DefaultAnonymousTable(new Object[10][15]));
+        assertNotNull( new DefaultAnonymousTable(5,7), "exists");
+        assertNotNull( new DefaultAnonymousTable(new Object[10][15]), "exists");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -31,7 +32,7 @@ public class DefaultAnonymousTableTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
