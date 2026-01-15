@@ -675,42 +675,42 @@
     <transit systemName="IZ:AUTO:0001" userName="gocw1">
       <systemName>IZ:AUTO:0001</systemName>
       <userName>gocw1</userName>
-      <transitsection sectionname="IY:AUTO:0003" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0004" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="4" alternate="yes" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0007" sequence="4" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0008" sequence="5" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0009" sequence="5" direction="4" alternate="yes" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0010" sequence="6" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0012" sequence="7" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0003" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0004" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="4" alternate="yes" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0007" sequence="4" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0008" sequence="5" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0009" sequence="5" direction="4" alternate="yes" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0010" sequence="6" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0012" sequence="7" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
     </transit>
     <transit systemName="IZ:AUTO:0002" userName="gocw2">
       <systemName>IZ:AUTO:0002</systemName>
       <userName>gocw2</userName>
-      <transitsection sectionname="IY:AUTO:0012" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0001" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0003" sequence="3" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0012" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0003" sequence="3" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
     </transit>
     <transit systemName="IZ:AUTO:0003" userName="goccw1">
       <systemName>IZ:AUTO:0003</systemName>
       <userName>goccw1</userName>
-      <transitsection sectionname="IY:AUTO:0009" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0007" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="8" alternate="yes" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0004" sequence="4" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0002" sequence="5" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0003" sequence="5" direction="8" alternate="yes" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0001" sequence="6" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0011" sequence="7" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0009" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0007" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="8" alternate="yes" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0004" sequence="4" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0002" sequence="5" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0003" sequence="5" direction="8" alternate="yes" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="6" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0011" sequence="7" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
     </transit>
     <transit systemName="IZ:AUTO:0004" userName="goccw2">
       <systemName>IZ:AUTO:0004</systemName>
       <userName>goccw2</userName>
-      <transitsection sectionname="IY:AUTO:0011" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0010" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0009" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0011" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0010" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0009" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
     </transit>
   </transits>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">

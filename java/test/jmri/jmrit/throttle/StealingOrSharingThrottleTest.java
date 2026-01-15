@@ -4,6 +4,8 @@ import java.awt.GraphicsEnvironment;
 
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
+import jmri.ThrottleManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -30,7 +32,7 @@ public class StealingOrSharingThrottleTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         to.typeAddressValue(42);
-        to.getQueueTool().waitEmpty(100);  //pause
+        to.getQueueTool().waitEmpty();  //pause
 
         // because of the throttle manager we are using, a steal or share
         // request is expected next, and we want to steal.
@@ -38,7 +40,7 @@ public class StealingOrSharingThrottleTest {
             Bundle.getMessage("StealShareRequestTitle"), Bundle.getMessage("StealButton"));
         to.pushSetButton();
         JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "dialog finished");
-        to.getQueueTool().waitEmpty(100);  //pause
+        to.getQueueTool().waitEmpty();  //pause
 
         Assert.assertEquals("address set", new DccLocoAddress(42, false), to.getAddressValue());
         JUnitAppender.assertErrorMessage("1: Got a steal decision");
@@ -52,7 +54,7 @@ public class StealingOrSharingThrottleTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         to.typeAddressValue(42);
-        to.getQueueTool().waitEmpty(100);  //pause
+        to.getQueueTool().waitEmpty();  //pause
 
         // because of the throttle manager we are using, a steal or share
         // request is expected next, and we want to share.
@@ -60,7 +62,7 @@ public class StealingOrSharingThrottleTest {
             Bundle.getMessage("StealShareRequestTitle"), Bundle.getMessage("ShareButton"));
         to.pushSetButton();
         JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "dialog finished");
-        to.getQueueTool().waitEmpty(100);  //pause
+        to.getQueueTool().waitEmpty();  //pause
 
 
         Assert.assertEquals("address set", new DccLocoAddress(42, false), to.getAddressValue());
@@ -83,7 +85,7 @@ public class StealingOrSharingThrottleTest {
         // because of the throttle manager we are using, a steal or share
         // request is expected next, and we want to cancel.
         JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "dialog finished");
-        to.getQueueTool().waitEmpty(100);  //pause
+        to.getQueueTool().waitEmpty();  //pause
 
         Assert.assertFalse("release button disabled", to.releaseButtonEnabled());
         Assert.assertTrue("set button enabled", to.setButtonEnabled());
@@ -95,7 +97,7 @@ public class StealingOrSharingThrottleTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         to.typeAddressValue(42);
-        to.getQueueTool().waitEmpty(100);  //pause
+        to.getQueueTool().waitEmpty();  //pause
 
         Thread add1 = JemmyUtil.createModalDialogOperatorThread(
             Bundle.getMessage("StealShareRequestTitle"), Bundle.getMessage("CancelButton"));
@@ -105,7 +107,7 @@ public class StealingOrSharingThrottleTest {
         // because of the throttle manager we are using, a steal or share
         // request is expected next, and we do not want to steal or share.
         JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "dialog finished");
-        to.getQueueTool().waitEmpty(100);  //pause
+        to.getQueueTool().waitEmpty();  //pause
 
         Assert.assertFalse("release button disabled", to.releaseButtonEnabled());
         Assert.assertTrue("set button enabled", to.setButtonEnabled());
@@ -115,7 +117,7 @@ public class StealingOrSharingThrottleTest {
         * testing for addressFieldEnabled above is already good enough
 
         to.typeAddressValue(45);
-        to.getQueueTool().waitEmpty(100);  //pause
+        to.getQueueTool().waitEmpty();  //pause
 
         // because of the throttle manager we are using, a steal or share
         // request is expected next, and we want to share.
@@ -123,7 +125,7 @@ public class StealingOrSharingThrottleTest {
             Bundle.getMessage("StealShareRequestTitle"), Bundle.getMessage("ShareButton"));
         to.pushSetButton();
         JUnitUtil.waitFor(()->{return !(add2.isAlive());}, "dialog 2 finished");
-        to.getQueueTool().waitEmpty(100);  //pause
+        to.getQueueTool().waitEmpty();  //pause
 
         Assert.assertEquals("address set", new DccLocoAddress(4245, true), to.getAddressValue());
         JUnitAppender.assertErrorMessage("1: Got a share decision");
@@ -166,8 +168,10 @@ public class StealingOrSharingThrottleTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
+        var memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
         // these tests use the StealingOrSharingThrottleManager.
-        jmri.ThrottleManager m = new jmri.managers.StealingOrSharingThrottleManager();
+        jmri.ThrottleManager m = new jmri.managers.StealingOrSharingThrottleManager(memo);
+        memo.store(m, ThrottleManager.class);
         jmri.InstanceManager.setThrottleManager(m);
 
         if (!GraphicsEnvironment.isHeadless()) {
@@ -183,7 +187,7 @@ public class StealingOrSharingThrottleTest {
     public void tearDown() {
         if (!GraphicsEnvironment.isHeadless()) {
             to.requestClose();
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
+            new org.netbeans.jemmy.QueueTool().waitEmpty();  //pause for frame to close
             JUnitUtil.dispose(frame);
             // the throttle list frame gets created above, but needs to be shown to be disposed
             InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();

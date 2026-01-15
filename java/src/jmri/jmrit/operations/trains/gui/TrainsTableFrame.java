@@ -254,9 +254,12 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new PrintOptionAction());
         toolMenu.add(new BuildReportOptionAction());
         toolMenu.addSeparator();
-        toolMenu.add(new TrainsByCarTypeAction());
-        toolMenu.add(new ChangeDepartureTimesAction());
         toolMenu.add(new TrainsScheduleAction());
+        toolMenu.addSeparator();
+        toolMenu.add(new TrainsByCarTypeAction());
+        toolMenu.add(new TrainByCarTypeAction(null));
+        toolMenu.addSeparator();
+        toolMenu.add(new ChangeDepartureTimesAction());
         toolMenu.add(new TrainsTableSetColorAction());
         toolMenu.add(new TrainCopyAction());
         toolMenu.addSeparator();
@@ -267,8 +270,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new ExportTrainRosterAction());
         toolMenu.add(new ExportTimetableAction());
         toolMenu.add(new ExportTrainLineupsAction());
-        toolMenu.addSeparator();
-        toolMenu.add(new TrainByCarTypeAction(null));
         toolMenu.addSeparator();
         toolMenu.add(new PrintTrainsAction(false, this));
         toolMenu.add(new PrintTrainsAction(true, this));
@@ -293,6 +294,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         Setup.getDefault().addPropertyChangeListener(this);
         // listen for location switch list changes
         addPropertyChangeLocations();
+
+        // now load train icons on panels
+        trainManager.loadTrainIcons();
 
         // auto save
         AutoSave.start();
@@ -341,29 +345,54 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
             trainManager.printSelectedTrains(getSortByList());
         }
         if (ae.getSource() == openFileButton) {
-            // open the csv files
-            List<Train> trains = getSortByList();
-            for (Train train : trains) {
-                if (train.isBuildEnabled()) {
-                    if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
-                        int response = JmriJOptionPane.showConfirmDialog(this,
-                                Bundle.getMessage("NeedToBuildBeforeOpenFile",
-                                        train.getName()),
-                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.OK_CANCEL_OPTION);
-                        if (response != JmriJOptionPane.OK_OPTION ) {
-                            break;
-                        }
-                    } else if (train.isBuilt()) {
-                        train.openFile();
+            openFile();
+        }
+        if (ae.getSource() == runFileButton) {
+            runExcel();
+        }
+        if (ae.getSource() == switchListsButton) {
+            if (tslef != null) {
+                tslef.dispose();
+            }
+            tslef = new TrainSwitchListEditFrame();
+            tslef.initComponents();
+        }
+        if (ae.getSource() == terminateButton) {
+            trainManager.terminateSelectedTrains(getSortByList());
+        }
+        if (ae.getSource() == saveButton) {
+            storeValues();
+        }
+    }
+
+    private void openFile() {
+        // open the csv files
+        List<Train> trains = getSortByList();
+        for (Train train : trains) {
+            if (train.isBuildEnabled()) {
+                if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
+                    int response = JmriJOptionPane.showConfirmDialog(this,
+                            Bundle.getMessage("NeedToBuildBeforeOpenFile",
+                                    train.getName()),
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.OK_CANCEL_OPTION);
+                    if (response != JmriJOptionPane.OK_OPTION) {
+                        break;
                     }
+                } else if (train.isBuilt()) {
+                    train.openFile();
                 }
             }
         }
-        if (ae.getSource() == runFileButton) {
+    }
+
+    private void runExcel() {
+        // Run on thread since addCsvFile(file) can wait for excel program to complete
+        Thread runExcel = jmri.util.ThreadingUtil.newThread(() -> {
             // Processes the CSV Manifest files using an external custom program.
             TrainCustomManifest tcm = InstanceManager.getDefault(TrainCustomManifest.class);
-            if (!tcm.excelFileExists()) {
-                log.warn("Manifest creator file not found!, directory path: {}, file name: {}", tcm.getDirectoryPathName(),
+            if (!tcm.doesExcelFileExist()) {
+                log.warn("Manifest creator file not found!, directory path: {}, file name: {}",
+                        tcm.getDirectoryPathName(),
                         tcm.getFileName());
                 JmriJOptionPane.showMessageDialog(this,
                         Bundle.getMessage("LoadDirectoryNameFileName",
@@ -379,7 +408,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                                 Bundle.getMessage("NeedToBuildBeforeRunFile",
                                         train.getName()),
                                 Bundle.getMessage("ErrorTitle"), JmriJOptionPane.OK_CANCEL_OPTION);
-                        if (response != JmriJOptionPane.OK_OPTION ) {
+                        if (response != JmriJOptionPane.OK_OPTION) {
                             break;
                         }
                     } else if (train.isBuilt()) {
@@ -391,20 +420,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
             }
             // Now run the user specified custom Manifest processor program
             tcm.process();
-        }
-        if (ae.getSource() == switchListsButton) {
-            if (tslef != null) {
-                tslef.dispose();
-            }
-            tslef = new TrainSwitchListEditFrame();
-            tslef.initComponents();
-        }
-        if (ae.getSource() == terminateButton) {
-            trainManager.terminateSelectedTrains(getSortByList());
-        }
-        if (ae.getSource() == saveButton) {
-            storeValues();
-        }
+        });
+        runExcel.setName("Run Excel program"); // NOI18N
+        runExcel.start();
     }
 
     SortOrder _status = SortOrder.ASCENDING;

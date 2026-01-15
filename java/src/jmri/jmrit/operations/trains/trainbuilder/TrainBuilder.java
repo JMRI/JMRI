@@ -106,7 +106,7 @@ public class TrainBuilder extends TrainBuilderCars {
         addCarsToTrain(); // finds and adds cars to the train (main routine)
 
         checkStuckCarsInStaging(); // determine if cars are stuck in staging
-        showTrainBuildStatus(); // show how well the build went
+        setTrainBuildStatus(); // show how well the build went
         checkEngineHP(); // determine if train has appropriate engine HP 
         checkNumnberOfEnginesNeededHPT(); // check train engine requirements
         showCarsNotRoutable(); // list cars that couldn't be routed
@@ -476,7 +476,7 @@ public class TrainBuilder extends TrainBuilderCars {
         }
     }
 
-    private void showTrainBuildStatus() {
+    private void setTrainBuildStatus() {
         if (_numberCars < _train.getNumberCarsRequested()) {
             _train.setStatusCode(Train.CODE_PARTIAL_BUILT);
             addLine(_buildReport, ONE,

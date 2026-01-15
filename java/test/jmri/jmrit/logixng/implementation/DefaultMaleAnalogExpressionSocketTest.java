@@ -1,5 +1,10 @@
 package jmri.jmrit.logixng.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.Locale;
@@ -14,7 +19,6 @@ import jmri.jmrit.logixng.expressions.AbstractAnalogExpression;
 import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.implementation.DefaultMaleAnalogExpressionSocket.AnalogExpressionDebugConfig;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,7 +43,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
     public void testCtor() {
         AnalogExpressionBean expression = new AnalogExpressionMemory("IQAE321", null);
         MaleSocket maleSocket = ((AnalogExpressionManager)manager).registerExpression(expression);
-        Assert.assertNotNull("object exists", maleSocket);
+        assertNotNull( maleSocket, "object exists");
     }
 
     @Test
@@ -50,7 +54,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         expression.setParent(conditionalNG);
 
         DefaultMaleAnalogExpressionSocket socket = new DefaultMaleAnalogExpressionSocket(manager, expression);
-        Assert.assertNotNull("exists", socket);
+        assertNotNull( socket, "exists");
 
         socket.setParent(conditionalNG);
         socket.setEnabled(true);
@@ -59,11 +63,11 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         expression.je = null;
         expression.re = null;
         expression.result = 94.27;
-        Assert.assertTrue(94.27 == socket.evaluate());
+        assertEquals( 94.27, socket.evaluate(), 0);
         expression.result = 12.92;
-        Assert.assertTrue(12.92 == socket.evaluate());
+        assertEquals( 12.92, socket.evaluate(), 0);
         expression.result = 0.0;
-        Assert.assertTrue(0.0 == socket.evaluate());
+        assertEquals( 0.0, socket.evaluate(), 0);
 
         expression.je = new JmriException("Test JmriException");
         expression.re = null;
@@ -100,9 +104,9 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         config._forceResult = true;
         config._result = 12.34;
         expression.result = 93.23;
-        Assert.assertTrue(12.34 == socket.evaluate());
+        assertEquals( 12.34, socket.evaluate(), 0);
         config._forceResult = false;
-        Assert.assertTrue(93.23 == socket.evaluate());
+        assertEquals( 93.23, socket.evaluate(), 0);
     }
 
     @Test
@@ -113,7 +117,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         expression.setParent(conditionalNG);
 
         DefaultMaleAnalogExpressionSocket socket = new DefaultMaleAnalogExpressionSocket(manager, expression);
-        Assert.assertNotNull("exists", socket);
+        assertNotNull( socket, "exists");
 
         socket.setParent(conditionalNG);
         socket.setEnabled(true);
@@ -152,7 +156,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         expression.setParent(conditionalNG);
 
         MaleSocket socket = ((AnalogExpressionManager)manager).registerExpression(expression);
-        Assert.assertNotNull("exists", socket);
+        assertNotNull( socket, "exists");
 
         PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
 
@@ -179,14 +183,14 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         MyAnalogExpression expression2 = new MyAnalogExpression("IQAE01");
         MaleAnalogExpressionSocket socket2 = ((AnalogExpressionManager)manager).registerExpression(expression2);
 
-        Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                -1, socket1.compareSystemNameSuffix("01", "1", socket2));
-        Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                0, socket1.compareSystemNameSuffix("1", "1", socket2));
-        Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                0, socket1.compareSystemNameSuffix("01", "01", socket2));
-        Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                +1, socket1.compareSystemNameSuffix("1", "01", socket2));
+        assertEquals( -1, socket1.compareSystemNameSuffix("01", "1", socket2),
+            "compareSystemNameSuffix returns correct value");
+        assertEquals( 0, socket1.compareSystemNameSuffix("1", "1", socket2),
+            "compareSystemNameSuffix returns correct value");
+        assertEquals( 0, socket1.compareSystemNameSuffix("01", "01", socket2),
+            "compareSystemNameSuffix returns correct value");
+        assertEquals( +1, socket1.compareSystemNameSuffix("1", "01", socket2),
+            "compareSystemNameSuffix returns correct value");
     }
 
     // The minimal setup for log4J
@@ -202,21 +206,21 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         JUnitUtil.initLogixNGManager();
 
         AnalogExpressionBean expressionA = new AnalogExpressionMemory("IQAE999", null);
-        Assert.assertNotNull("exists", expressionA);
+        assertNotNull( expressionA, "exists");
         AnalogExpressionBean expressionB = new MyAnalogExpression("IQAE322");
-        Assert.assertNotNull("exists", expressionA);
+        assertNotNull( expressionB, "exists");
 
         manager = InstanceManager.getDefault(AnalogExpressionManager.class);
 
         maleSocketA =
                 InstanceManager.getDefault(AnalogExpressionManager.class)
                         .registerExpression(expressionA);
-        Assert.assertNotNull("exists", maleSocketA);
+        assertNotNull( maleSocketA, "exists");
 
         maleSocketB =
                 InstanceManager.getDefault(AnalogExpressionManager.class)
                         .registerExpression(expressionB);
-        Assert.assertNotNull("exists", maleSocketB);
+        assertNotNull( maleSocketB, "exists");
     }
 
     @AfterEach
@@ -232,7 +236,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
      * This action is different from AnalogExpressionMemory and is used to test the
      * male socket.
      */
-    private class MyAnalogExpression extends AbstractAnalogExpression {
+    private static class MyAnalogExpression extends AbstractAnalogExpression {
 
         JmriException je = null;
         RuntimeException re = null;
@@ -289,15 +293,23 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
+        @SuppressFBWarnings( value = "THROWS_METHOD_THROWS_RUNTIMEEXCEPTION",
+            justification="testing exception types")
         public double evaluate() throws JmriException {
-            if (je != null) throw je;
-            if (re != null) throw re;
+            if (je != null) {
+                throw je;
+            }
+            if (re != null) {
+                throw re;
+            }
             return result;
         }
 
         @Override
         public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-            if (_vetoChange) throw new java.beans.PropertyVetoException("Veto change", evt);
+            if (_vetoChange) {
+                throw new java.beans.PropertyVetoException("Veto change", evt);
+            }
         }
 
         @Override

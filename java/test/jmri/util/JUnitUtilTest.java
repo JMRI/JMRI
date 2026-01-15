@@ -2,8 +2,12 @@ package jmri.util;
 
 import jmri.*;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests for the jmri.util.JUnitUtil itself.  
@@ -23,17 +27,17 @@ public class JUnitUtilTest {
         JUnitUtil.resetInstanceManager();
 
         ShutDownManager sdm2 = InstanceManager.getDefault(ShutDownManager.class);
-        Assert.assertTrue(sdm1 != sdm2);
+        assertTrue(sdm1 != sdm2);
     }
 
 
     @Test
     public void testInitInternalTurnoutManager() {
-        Assert.assertFalse(InstanceManager.containsDefault(jmri.TurnoutManager.class));
+        assertFalse(InstanceManager.containsDefault(jmri.TurnoutManager.class));
         
         JUnitUtil.initInternalTurnoutManager();
 
-        Assert.assertTrue(InstanceManager.containsDefault(jmri.TurnoutManager.class));
+        assertTrue(InstanceManager.containsDefault(jmri.TurnoutManager.class));
     }
 
     @Test
@@ -43,7 +47,17 @@ public class JUnitUtilTest {
 
         JUnitUtil.setBeanStateAndWait(t, Turnout.THROWN);
         
-        Assert.assertEquals(Turnout.THROWN, t.getCommandedState());
+        assertEquals(Turnout.THROWN, t.getCommandedState());
+    }
+
+    @Test
+    public void testWaitForTextNotInvoked() {
+        JUnitUtil.waitFor( () -> true, () -> "Should not call failure method " + failTest());
+    }
+
+    private String failTest() {
+        fail("Method should not have been invoked");
+        return "Should have failed Test if invoked";
     }
 
     @BeforeEach
@@ -54,7 +68,7 @@ public class JUnitUtilTest {
 
     @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();     
+        JUnitUtil.tearDown();     
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JUnitUtilTest.class);

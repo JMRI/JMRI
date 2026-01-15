@@ -2,7 +2,6 @@ package jmri.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class JTitledSeparatorTest {
     @Test
     public void testCTor() {
         JTitledSeparator t = new JTitledSeparator("Test");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

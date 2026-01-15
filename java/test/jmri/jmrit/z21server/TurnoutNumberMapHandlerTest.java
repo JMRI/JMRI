@@ -2,7 +2,6 @@ package jmri.jmrit.z21server;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class TurnoutNumberMapHandlerTest {
     @Test
     public void testCtor() {
         TurnoutNumberMapHandler s = TurnoutNumberMapHandler.getInstance();
-        Assert.assertNotNull("exists", s );
+        Assertions.assertNotNull( s, "exists" );
     }
 
     @BeforeEach

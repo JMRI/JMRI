@@ -1,12 +1,5 @@
 package jmri.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,6 +14,13 @@ import java.util.Scanner;
 import java.util.UUID;
 
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests for the jmri.util.FileUtilSupport class.
@@ -332,19 +332,19 @@ public class FileUtilSupportTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         this.instance = FileUtilSupport.getDefault();
         this.programTestFile = new File(UUID.randomUUID().toString());
-        Assertions.assertTrue(this.programTestFile.createNewFile());
+        assertTrue(this.programTestFile.createNewFile());
         JUnitUtil.waitFor(() -> {
             return this.programTestFile.exists();
         }, "Create program test file");
         File profile = new File(instance.getProfilePath());
-        Assertions.assertFalse(profile.mkdir(),"directory should exist");
+        assertFalse(profile.mkdir(),"directory should exist");
         this.preferencesTestFile = new File(profile, UUID.randomUUID().toString());
-        Assertions.assertTrue(this.preferencesTestFile.createNewFile());
+        assertTrue(this.preferencesTestFile.createNewFile());
         JUnitUtil.waitFor(() -> {
             return this.preferencesTestFile.exists();
         }, "Create program test file");
@@ -352,11 +352,11 @@ public class FileUtilSupportTest {
 
     @AfterEach
     public void tearDown() {
-        Assertions.assertTrue(this.programTestFile.delete());
+        assertTrue(this.programTestFile.delete());
         JUnitUtil.waitFor(() -> {
             return !this.programTestFile.exists();
         }, "Remove program test file");
-        Assertions.assertTrue(this.preferencesTestFile.delete());
+        assertTrue(this.preferencesTestFile.delete());
         JUnitUtil.waitFor(() -> {
             return !this.preferencesTestFile.exists();
         }, "Remove program test file");

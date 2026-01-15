@@ -128,7 +128,7 @@ public class PrintRoutes {
 
         for (RouteLocation rl : routeList) {
             String s = padAndTruncate(rl.getName(),
-                    MAX_NAME_LENGTH) + rl.getDepartureTime() + TAB + rl.getComment() + NEW_LINE;
+                    MAX_NAME_LENGTH) + padAndTruncate(rl.getFormatedDepartureTime(), 12) + rl.getComment() + NEW_LINE;
             writer.write(s);
         }
     }
@@ -164,8 +164,14 @@ public class PrintRoutes {
         String s = NEW_LINE +
                 Bundle.getMessage("Location") +
                 TAB +
+                SPACE +
+                SPACE +
+                SPACE +
+                SPACE +
+                SPACE +
                 Bundle.getMessage("DepartTime") +
-                TAB +
+                SPACE +
+                SPACE +
                 Bundle.getMessage("Comment") +
                 NEW_LINE;
         return s;

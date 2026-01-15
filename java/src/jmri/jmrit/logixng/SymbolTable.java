@@ -1,30 +1,20 @@
 package jmri.jmrit.logixng;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Collections;
+import java.util.*;
 
-import javax.script.Bindings;
-import javax.script.ScriptException;
-import javax.script.SimpleBindings;
+import javax.script.*;
 
+import org.slf4j.Logger;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.*;
-import jmri.JmriException;
 import jmri.jmrit.logixng.Stack.ValueAndType;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.LocalVariableExpressionVariable;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.TypeConversionUtil;
-
-import org.slf4j.Logger;
 
 /**
  * A symbol table
@@ -543,6 +533,7 @@ public interface SymbolTable {
      * @param oldValue the old value
      * @param newValue the new value
      * @return the value to assign. It might be converted if needed.
+     * @throws NumberFormatException when needed
      */
     public static Object validateStrictTyping(InitialValueType type, Object oldValue, Object newValue)
             throws NumberFormatException {

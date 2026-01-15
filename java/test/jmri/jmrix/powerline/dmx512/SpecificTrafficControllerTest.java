@@ -21,10 +21,8 @@ import org.junit.jupiter.api.*;
  */
 public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTrafficControllerTest {
 
-    SerialTrafficController t = null;
-    SerialSystemConnectionMemo memo = null;
-
-
+    private SerialTrafficController t = null;
+    private SerialSystemConnectionMemo memo = null;
 
     @Test
     public void testScaffold() throws java.io.IOException {
@@ -101,7 +99,8 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
     public void setUp() {
         JUnitUtil.setUp();
         memo = new SpecificSystemConnectionMemo();
-        tc = t = new SpecificTrafficController(memo);
+        t = new SpecificTrafficController(memo);
+        tc = t;
     }
 
     @Override
@@ -111,7 +110,8 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
             memo.dispose();
             memo = null;
         }
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        t.terminateThreads();
+        t = null;
         JUnitUtil.tearDown();
 
     }

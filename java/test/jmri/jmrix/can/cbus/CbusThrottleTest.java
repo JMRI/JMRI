@@ -1254,7 +1254,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.MERGCBUS);
         memo.configureManagers();
         
-        InstanceManager.setThrottleManager(new AbstractThrottleManager() {
+        InstanceManager.setThrottleManager(new AbstractThrottleManager(memo) {
 
             @Override
             public void requestThrottleSetup(LocoAddress a, boolean control) {

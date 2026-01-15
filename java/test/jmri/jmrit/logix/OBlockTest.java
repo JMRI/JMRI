@@ -1,9 +1,6 @@
 package jmri.jmrit.logix;
 
-import jmri.Block;
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
+import jmri.*;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -63,7 +60,7 @@ public class OBlockTest {
     }
 
     @Test
-    public void testSetSensor() throws Exception {
+    public void testSetSensor() throws JmriException {
         OBlock b = blkMgr.createNewOBlock("OB100", "a");
         assertNotNull(b);
         assertFalse( b.setSensor("foo"), "setSensor");
@@ -93,7 +90,7 @@ public class OBlockTest {
     }
 
     @Test
-    public void testSetErrorSensor() throws Exception {
+    public void testSetErrorSensor() throws JmriException {
         OBlock b = blkMgr.createNewOBlock("OB101", "b");
         assertNotNull(b);
         assertFalse( b.setErrorSensor("foo"), "setErrorSensor foo");
@@ -156,7 +153,7 @@ public class OBlockTest {
     }
     
     @Test
-    public void testSensorChanges() throws Exception {
+    public void testSensorChanges() throws JmriException {
         OBlock b = blkMgr.createNewOBlock("OB103", null);
         assertNotNull(b);
         Warrant w0 = new Warrant("IW0", "war0");

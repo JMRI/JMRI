@@ -1,9 +1,11 @@
 package jmri.jmrix.easydcc.simulator;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import java.io.*;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.Vector;
 
 import jmri.util.JUnitUtil;
@@ -12,7 +14,6 @@ import jmri.jmrix.easydcc.EasyDccListenerScaffold;
 import jmri.jmrix.easydcc.EasyDccPortController;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -24,7 +25,7 @@ import org.junit.jupiter.api.*;
 public class EasyDccSimulatorTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
     @Test
-    public void testSendThenRcvReply() throws Exception {
+    public void testSendThenRcvReply() throws IOException {
         EasyDccSimulatorTrafficController c = new EasyDccSimulatorTrafficController(new EasyDccSystemConnectionMemo("E", "EasyDCC Test")){
             @Override
             protected void terminate(){
@@ -52,11 +53,11 @@ public class EasyDccSimulatorTrafficControllerTest extends jmri.jmrix.AbstractMR
         JUnitUtil.waitFor(()->{return tostream.available() == 4;}, "total length");
         
         // test the result of sending
-        Assert.assertEquals("total length ", 4, tostream.available());
-        Assert.assertEquals("Char 0", (byte)'0', tostream.readByte());
-        Assert.assertEquals("Char 1", (byte)'1', tostream.readByte());
-        Assert.assertEquals("Char 2", (byte)'2', tostream.readByte());
-        Assert.assertEquals("EOM", 0x0d, tostream.readByte());
+        assertEquals( 4, tostream.available(), "total length");
+        assertEquals( (byte)'0', tostream.readByte(), "Char 0");
+        assertEquals( (byte)'1', tostream.readByte(), "Char 1");
+        assertEquals( (byte)'2', tostream.readByte(), "Char 2");
+        assertEquals( 0x0d, tostream.readByte(), "EOM");
 
         // now send reply
         tistream.write('P');
@@ -66,23 +67,25 @@ public class EasyDccSimulatorTrafficControllerTest extends jmri.jmrix.AbstractMR
         // so wait until that happens.
         JUnitUtil.waitFor(()->{return l.rcvdReply != null;}, "reply received");
 
-        Assert.assertNotNull("reply received ", l.rcvdReply );
-        Assert.assertEquals("first char of reply ", 'P', l.rcvdReply.getOpCode());
+        assertNotNull( l.rcvdReply, "reply received");
+        assertEquals( 'P', l.rcvdReply.getOpCode(), "first char of reply");
         c.terminateThreads(); // stop any threads we might have created.
     }
 
     // internal class to simulate an EasyDccPortController
     private class EasyDccPortControllerScaffold extends EasyDccPortController {
 
-        protected EasyDccPortControllerScaffold() throws Exception {
+        protected EasyDccPortControllerScaffold() {
             super(new EasyDccSystemConnectionMemo());
-            PipedInputStream tempPipe;
-            tempPipe = new PipedInputStream();
-            tostream = new DataInputStream(tempPipe);
-            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
-            tempPipe = new PipedInputStream();
-            istream = new DataInputStream(tempPipe);
-            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
+            assertDoesNotThrow( () -> {
+                PipedInputStream tempPipe;
+                tempPipe = new PipedInputStream();
+                tostream = new DataInputStream(tempPipe);
+                ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
+                tempPipe = new PipedInputStream();
+                istream = new DataInputStream(tempPipe);
+                tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
+            });
         }
 
         @Override

@@ -1,5 +1,11 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.io.File;
@@ -10,7 +16,6 @@ import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 import jmri.util.ThreadingUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import org.netbeans.jemmy.EventTool;
@@ -58,30 +63,30 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
     @Test
     public void testStringCtor() {
-        Assertions.assertNotNull(jfo);
+        assertNotNull(jfo);
         jfo.closeFrameWithConfirmations(); // close layoutEditor created in setUp
         LayoutEditor stringCtorEditor = new LayoutEditor("Layout Editor String Constructor");
-        Assert.assertNotNull("exists", stringCtorEditor);
+        assertNotNull( stringCtorEditor, "exists");
         JUnitUtil.dispose(stringCtorEditor);
     }
 
     @Test
     public void testDefaultCtor() {
-        Assertions.assertNotNull(jfo);
+        assertNotNull(jfo);
         jfo.closeFrameWithConfirmations(); // close layoutEditor created in setUp
         LayoutEditor defaultCtorEditor = new LayoutEditor(); // create layout editor
-        Assert.assertNotNull("exists", defaultCtorEditor);
+        assertNotNull( defaultCtorEditor, "exists");
         JUnitUtil.dispose(defaultCtorEditor);
     }
 
     @Test
     @Disabled("Test fails to find and close dialog on Jenkins")
-    public void testSavePanel() throws Exception {
+    public void testSavePanel() {
 
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuFile"));
 
         //delete this file so we won't get the "<xxx> exists... do you want to replace?" dialog.
-        Assertions.assertTrue(new File("temp/Layout Editor Test Layout.xml").delete());
+        assertTrue(new File("temp/Layout Editor Test Layout.xml").delete());
 
         // test the file -> delete panel menu item
         Thread misc1 = JemmyUtil.createModalDialogOperatorThread(
@@ -94,7 +99,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         }, "misc1 finished");
 
         //clean up after ourselves...
-        Assertions.assertTrue(new File("temp/Layout Editor Test Layout.xml").delete());
+        assertTrue(new File("temp/Layout Editor Test Layout.xml").delete());
     }
 
     @Test
@@ -119,7 +124,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     @Test
     public void testGetFinder() {
         LayoutEditorFindItems f = e.getFinder();
-        Assert.assertNotNull("exists", f);
+        assertNotNull( f, "exists");
     }
 
     @Test
@@ -131,8 +136,8 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
         // the java.awt.Dimension stores the values as floating point
         // numbers, but setSize expects integer parameters.
-        Assert.assertEquals("Width Set", 100.0, d.getWidth(), 0.0);
-        Assert.assertEquals("Height Set", 100.0, d.getHeight(), 0.0);
+        assertEquals( 100.0, d.getWidth(), 0.0, "Width Set");
+        assertEquals( 100.0, d.getHeight(), 0.0, "Height Set");
     }
 
     @Test
@@ -141,46 +146,46 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((m) -> {
             m.setSaveAllowed(false); // prevent attempts to save while zooming in rest of test
         });
-        Assert.assertEquals("Get initial Zoom", 1.0, e.getZoom(), 0.0);
+        assertEquals( 1.0, e.getZoom(), 0.0, "Get initial Zoom");
 
         // note: Layout Editor won't allow zooms above 8.0.
         e.setZoom(10.0);
-        Assert.assertEquals("Get Zoom after set above max", 8.0, e.getZoom(), 0.0);
+        assertEquals( 8.0, e.getZoom(), 0.0, "Get Zoom after set above max");
         e.setZoom(3.33);
-        Assert.assertEquals("Get Zoom After Set to 3.33", 3.33, e.getZoom(), 0.0);
+        assertEquals( 3.33, e.getZoom(), 0.0, "Get Zoom After Set to 3.33");
     }
 
     @Test
     public void testGetOpenDispatcherOnLoad() {
         // defaults to false.
-        Assert.assertFalse("getOpenDispatcherOnLoad", e.getOpenDispatcherOnLoad());
+        assertFalse( e.getOpenDispatcherOnLoad(), "getOpenDispatcherOnLoad");
     }
 
     @Test
     public void testSetOpenDispatcherOnLoad() {
         // defaults to false, so set to true.
         e.setOpenDispatcherOnLoad(true);
-        Assert.assertTrue("setOpenDispatcherOnLoad after set", e.getOpenDispatcherOnLoad());
+        assertTrue( e.getOpenDispatcherOnLoad(), "setOpenDispatcherOnLoad after set");
     }
 
     @Test
     public void testIsDirty() {
         // defaults to false.
-        Assert.assertFalse("isDirty", e.isDirty());
+        assertFalse( e.isDirty(), "isDirty");
     }
 
     @Test
     public void testSetDirty() {
         // defaults to false, setDirty() sets it to true.
         e.setDirty();
-        Assert.assertTrue("isDirty after set", e.isDirty());
+        assertTrue( e.isDirty(), "isDirty after set");
     }
 
     @Test
     public void testSetDirtyWithParameter() {
         // defaults to false, so set it to true.
         e.setDirty(true);
-        Assert.assertTrue("isDirty after set", e.isDirty());
+        assertTrue( e.isDirty(), "isDirty after set");
     }
 
     @Test
@@ -189,513 +194,509 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         e.setDirty(true);
         // then call resetDirty, which sets it back to false.
         e.resetDirty();
-        Assert.assertFalse("isDirty after reset", e.isDirty());
+        assertFalse( e.isDirty(), "isDirty after reset");
     }
 
     @Test
     public void testIsAnimating() {
         // default to true
-        Assert.assertTrue("isAnimating", e.isAnimating());
+        assertTrue( e.isAnimating(), "isAnimating");
     }
 
     @Test
     public void testSetTurnoutAnimating() {
         // default to true, so set to false.
         e.setTurnoutAnimation(false);
-        Assert.assertFalse("isAnimating after set", e.isAnimating());
+        assertFalse( e.isAnimating(), "isAnimating after set");
     }
 
     @Test
     public void testGetLayoutWidth() {
         // defaults to 0
-        Assert.assertEquals("layout width", 0, e.gContext.getLayoutWidth());
+        assertEquals( 0, e.gContext.getLayoutWidth(), "layout width");
     }
 
     @Test
     public void testGetLayoutHeight() {
         // defaults to 0
-        Assert.assertEquals("layout height", 0, e.gContext.getLayoutHeight());
+        assertEquals( 0, e.gContext.getLayoutHeight(), "layout height");
     }
 
     @Test
     public void testGetWindowWidth() {
         // defaults to screen width - 20
         int w = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 20);
-        Assert.assertEquals("window width", w, e.gContext.getWindowWidth());
+        assertEquals( w, e.gContext.getWindowWidth(), "window width");
     }
 
     @Test
     public void testGetWindowHeight() {
         // defaults to screen height - 120
         int h = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 120);
-        Assert.assertEquals("window height", h, e.gContext.getWindowHeight());
+        assertEquals( h, e.gContext.getWindowHeight(), "window height");
     }
 
     @Test
     public void testGetUpperLeftX() {
         // defaults to 0
-        Assert.assertEquals("upper left X", 0, e.gContext.getUpperLeftX());
+        assertEquals( 0, e.gContext.getUpperLeftX(), "upper left X");
     }
 
     @Test
     public void testGetUpperLeftY() {
         // defaults to 0
-        Assert.assertEquals("upper left Y", 0, e.gContext.getUpperLeftY());
+        assertEquals( 0, e.gContext.getUpperLeftY(), "upper left Y");
     }
 
     @Test
     public void testSetLayoutDimensions() {
-        ThreadingUtil.runOnGUI(() -> {
+        boolean complete = ThreadingUtil.runOnGUIwithReturn(() -> {
             // set the panel dimensions to known values
             e.setLayoutDimensions(100, 100, 100, 100, 100, 100);
-            Assert.assertEquals("layout width after set", 100, e.gContext.getLayoutWidth());
-            Assert.assertEquals("layout height after set", 100, e.gContext.getLayoutHeight());
-            Assert.assertEquals("window width after set", 100, e.gContext.getWindowWidth());
-            Assert.assertEquals("window height after set", 100, e.gContext.getWindowHeight());
-            Assert.assertEquals("upper left X after set", 100, e.gContext.getUpperLeftX());
-            Assert.assertEquals("upper left Y after set", 100, e.gContext.getUpperLeftX());
+            assertEquals( 100, e.gContext.getLayoutWidth(), "layout width after set");
+            assertEquals( 100, e.gContext.getLayoutHeight(), "layout height after set");
+            assertEquals( 100, e.gContext.getWindowWidth(), "window width after set");
+            assertEquals( 100, e.gContext.getWindowHeight(), "window height after set");
+            assertEquals( 100, e.gContext.getUpperLeftX(), "upper left X after set");
+            assertEquals( 100, e.gContext.getUpperLeftX(), "upper left Y after set");
+            return true;
         });
+        assertTrue(complete);
     }
 
     @Test
     public void testSetGrideSize() {
-        Assert.assertEquals("grid size after set", 100, e.gContext.setGridSize(100));
+        assertEquals( 100, e.gContext.setGridSize(100), "grid size after set");
     }
 
     @Test
     public void testGetGrideSize() {
         // defaults to 10.
-        Assert.assertEquals("grid size", 10, e.gContext.getGridSize());
+        assertEquals( 10, e.gContext.getGridSize(), "grid size");
     }
 
     @Test
     public void testGetMainlineTrackWidth() {
         // defaults to 4.
-        Assert.assertEquals("mainline track width", 4, e.gContext.getMainlineTrackWidth());
+        assertEquals( 4, e.gContext.getMainlineTrackWidth(), "mainline track width");
     }
 
     @Test
     public void testSetMainlineTrackWidth() {
         // set to known value
         e.gContext.setMainlineTrackWidth(10);
-        Assert.assertEquals("mainline track width after set", 10, e.gContext.getMainlineTrackWidth());
+        assertEquals( 10, e.gContext.getMainlineTrackWidth(), "mainline track width after set");
     }
 
     @Test
     public void testGetSidelineTrackWidth() {
         // defaults to 2.
-        Assert.assertEquals("side track width", 2, e.gContext.getSidelineTrackWidth());
+        assertEquals( 2, e.gContext.getSidelineTrackWidth(), "side track width");
     }
 
     @Test
     public void testSetSideTrackWidth() {
         // set to known value
         e.gContext.setSidelineTrackWidth(10);
-        Assert.assertEquals("Side track width after set", 10, e.gContext.getSidelineTrackWidth());
+        assertEquals( 10, e.gContext.getSidelineTrackWidth(), "Side track width after set");
     }
 
     @Test
     public void testGetXScale() {
         // defaults to 1.
-        Assert.assertEquals("XScale", 1.0, e.gContext.getXScale(), 0.0);
+        assertEquals( 1.0, e.gContext.getXScale(), 0.0, "XScale");
     }
 
     @Test
     public void testSetXScale() {
         // set to known value
         e.gContext.setXScale(2.0);
-        Assert.assertEquals("XScale after set ", 2.0, e.gContext.getXScale(), 0.0);
+        assertEquals( 2.0, e.gContext.getXScale(), 0.0, "XScale after set");
     }
 
     @Test
     public void testGetYScale() {
         // defaults to 1.
-        Assert.assertEquals("YScale", 1.0, e.gContext.getYScale(), 0.0);
+        assertEquals( 1.0, e.gContext.getYScale(), 0.0, "YScale");
     }
 
     @Test
     public void testSetYScale() {
         // set to known value
         e.gContext.setYScale(2.0);
-        Assert.assertEquals("YScale after set ", 2.0, e.gContext.getYScale(), 0.0);
+        assertEquals( 2.0, e.gContext.getYScale(), 0.0, "YScale after set ");
     }
 
     @Test
     public void testGetDefaultTrackColor() {
-        Assert.assertEquals("Default Track Color", ColorUtil.ColorDarkGray, e.getDefaultTrackColor());
+        assertEquals( ColorUtil.ColorDarkGray, e.getDefaultTrackColor(), "Default Track Color");
     }
 
     @Test
     public void testSetDefaultTrackColor() {
         e.setDefaultTrackColor(ColorUtil.stringToColor(ColorUtil.ColorPink));
-        Assert.assertEquals("Default Track Color after Set", ColorUtil.ColorPink, e.getDefaultTrackColor());
+        assertEquals( ColorUtil.ColorPink, e.getDefaultTrackColor(), "Default Track Color after Set");
     }
 
     @Test
     public void testGetDefaultOccupiedTrackColor() {
-        Assert.assertEquals("Default Occupied Track Color", "red", e.getDefaultOccupiedTrackColor());
+        assertEquals( "red", e.getDefaultOccupiedTrackColor(), "Default Occupied Track Color");
     }
 
     @Test
     public void testSetDefaultOccupiedTrackColor() {
         e.setDefaultOccupiedTrackColor(ColorUtil.stringToColor(ColorUtil.ColorPink));
-        Assert.assertEquals("Default Occupied Track Color after Set", ColorUtil.ColorPink, e.getDefaultOccupiedTrackColor());
+        assertEquals( ColorUtil.ColorPink, e.getDefaultOccupiedTrackColor(), "Default Occupied Track Color after Set");
     }
 
     @Test
     public void testGetDefaultAlternativeTrackColor() {
-        Assert.assertEquals("Default Alternative Track Color", ColorUtil.ColorWhite, e.getDefaultAlternativeTrackColor());
+        assertEquals( ColorUtil.ColorWhite, e.getDefaultAlternativeTrackColor(), "Default Alternative Track Color");
     }
 
     @Test
     public void testSetDefaultAlternativeTrackColor() {
         e.setDefaultAlternativeTrackColor(ColorUtil.stringToColor(ColorUtil.ColorPink));
-        Assert.assertEquals("Default Alternative Track Color after Set", ColorUtil.ColorPink, e.getDefaultAlternativeTrackColor());
+        assertEquals( ColorUtil.ColorPink, e.getDefaultAlternativeTrackColor(), "Default Alternative Track Color after Set");
     }
 
     @Test
     public void testSetAllTracksToDefaultColors() {
 
         LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock("ILB999", "Test Block");
-        Assert.assertNotNull("layoutBlock created", layoutBlock);
+        assertNotNull( layoutBlock, "layoutBlock created");
 
-        Assert.assertEquals("BlockTrackColor default", e.getDefaultTrackColorColor(), layoutBlock.getBlockTrackColor());
+        assertEquals( e.getDefaultTrackColorColor(), layoutBlock.getBlockTrackColor(), "BlockTrackColor default");
         layoutBlock.setBlockTrackColor(Color.pink);
-        Assert.assertEquals("BlockTrackColor set to pink", Color.pink, layoutBlock.getBlockTrackColor());
+        assertEquals( Color.pink, layoutBlock.getBlockTrackColor(), "BlockTrackColor set to pink");
 
-        Assert.assertEquals("BlockOccupiedColor default", e.getDefaultOccupiedTrackColorColor(), layoutBlock.getBlockOccupiedColor());
+        assertEquals( e.getDefaultOccupiedTrackColorColor(), layoutBlock.getBlockOccupiedColor(), "BlockOccupiedColor default");
         layoutBlock.setBlockOccupiedColor(Color.pink);
-        Assert.assertEquals("BlockOccupiedColor set to pink", Color.pink, layoutBlock.getBlockOccupiedColor());
+        assertEquals( Color.pink, layoutBlock.getBlockOccupiedColor(), "BlockOccupiedColor set to pink");
 
-        Assert.assertEquals("BlockExtraColor default", e.getDefaultAlternativeTrackColorColor(), layoutBlock.getBlockExtraColor());
+        assertEquals( e.getDefaultAlternativeTrackColorColor(), layoutBlock.getBlockExtraColor(), "BlockExtraColor default");
         layoutBlock.setBlockExtraColor(Color.pink);
-        Assert.assertEquals("BlockExtraColor set to pink", Color.pink, layoutBlock.getBlockExtraColor());
+        assertEquals( Color.pink, layoutBlock.getBlockExtraColor(), "BlockExtraColor set to pink");
 
         int changed = e.setAllTracksToDefaultColors();
-        Assert.assertEquals("setAllTracksToDefaultColors changed one block", 1, changed);
+        assertEquals( 1, changed, "setAllTracksToDefaultColors changed one block");
 
-        Assert.assertEquals("BlockTrackColor back to default", e.getDefaultTrackColorColor(), layoutBlock.getBlockTrackColor());
-        Assert.assertEquals("BlockOccupiedColor back to default", e.getDefaultOccupiedTrackColorColor(), layoutBlock.getBlockOccupiedColor());
-        Assert.assertEquals("BlockExtraColor back to default", e.getDefaultAlternativeTrackColorColor(), layoutBlock.getBlockExtraColor());
+        assertEquals( e.getDefaultTrackColorColor(), layoutBlock.getBlockTrackColor(),
+                "BlockTrackColor back to default");
+        assertEquals( e.getDefaultOccupiedTrackColorColor(), layoutBlock.getBlockOccupiedColor(),
+                "BlockOccupiedColor back to default");
+        assertEquals( e.getDefaultAlternativeTrackColorColor(), layoutBlock.getBlockExtraColor(),
+                "BlockExtraColor back to default");
     }
 
     @Test
     public void testGetDefaultTextColor() {
-        Assert.assertEquals("Default Text Color", ColorUtil.ColorBlack, e.getDefaultTextColor());
+        assertEquals( ColorUtil.ColorBlack, e.getDefaultTextColor(), "Default Text Color");
     }
 
     @Test
     public void testSetDefaultTextColor() {
         e.setDefaultTextColor(ColorUtil.stringToColor(ColorUtil.ColorPink));
-        Assert.assertEquals("Default Text Color after Set", ColorUtil.ColorPink, e.getDefaultTextColor());
+        assertEquals( ColorUtil.ColorPink, e.getDefaultTextColor(), "Default Text Color after Set");
     }
 
     @Test
     public void testGetTurnoutCircleColor() {
-        Assert.assertEquals("Turnout Circle Color", ColorUtil.ColorBlack, e.getTurnoutCircleColor());
+        assertEquals( ColorUtil.ColorBlack, e.getTurnoutCircleColor(), "Turnout Circle Color");
     }
 
     @Test
     public void testSetTurnoutCircleColor() {
         e.setTurnoutCircleColor(ColorUtil.stringToColor(ColorUtil.ColorPink));
-        Assert.assertEquals("Turnout Circle after Set", ColorUtil.ColorPink, e.getTurnoutCircleColor());
+        assertEquals( ColorUtil.ColorPink, e.getTurnoutCircleColor(), "Turnout Circle after Set");
     }
 
     @Test
     public void testGetTurnoutCircleThrownColor() {
-        Assert.assertEquals("Turnout Circle Thrown Color", ColorUtil.ColorBlack, e.getTurnoutCircleThrownColor());
+        assertEquals( ColorUtil.ColorBlack, e.getTurnoutCircleThrownColor(), "Turnout Circle Thrown Color");
     }
 
     @Test
     public void testSetTurnoutCircleThrownColor() {
         e.setTurnoutCircleThrownColor(ColorUtil.stringToColor(ColorUtil.ColorPink));
-        Assert.assertEquals("Turnout Circle after Set", ColorUtil.ColorPink, e.getTurnoutCircleThrownColor());
+        assertEquals( ColorUtil.ColorPink, e.getTurnoutCircleThrownColor(), "Turnout Circle after Set");
     }
 
     @Test
     public void testIsTurnoutFillControlCircles() {
         // default to false
-        Assert.assertFalse("isTurnoutFillControlCircles", e.isTurnoutFillControlCircles());
+        assertFalse( e.isTurnoutFillControlCircles(), "isTurnoutFillControlCircles");
     }
 
     @Test
     public void testSetTurnoutFillControlCircles() {
         // default to false, so set to true.
         e.setTurnoutFillControlCircles(true);
-        Assert.assertTrue("isTurnoutFillControlCircles after set true", e.isTurnoutFillControlCircles());
+        assertTrue( e.isTurnoutFillControlCircles(), "isTurnoutFillControlCircles after set true");
         // set back to default (false) and confirm new value
         e.setTurnoutFillControlCircles(false);
-        Assert.assertFalse("isTurnoutFillControlCircles after set false", e.isTurnoutFillControlCircles());
+        assertFalse( e.isTurnoutFillControlCircles(), "isTurnoutFillControlCircles after set false");
     }
 
     @Test
     public void testGetTurnoutCircleSize() {
         // defaults to 4.
-        Assert.assertEquals("turnout circle size", 4, e.getTurnoutCircleSize());
+        assertEquals( 4, e.getTurnoutCircleSize(), "turnout circle size");
     }
 
     @Test
     public void testSetTurnoutCircleSize() {
         e.setTurnoutCircleSize(11);
-        Assert.assertEquals("turnout circle size after set", 11, e.getTurnoutCircleSize());
+        assertEquals( 11, e.getTurnoutCircleSize(), "turnout circle size after set");
     }
 
     @Test
     public void testGetTurnoutDrawUnselectedLeg() {
         // default to true
-        Assert.assertTrue("getTurnoutDrawUnselectedLeg", e.isTurnoutDrawUnselectedLeg());
+        assertTrue( e.isTurnoutDrawUnselectedLeg(), "getTurnoutDrawUnselectedLeg");
     }
 
     @Test
     public void testSetTurnoutDrawUnselectedLeg() {
         // default to true, so set to false.
         e.setTurnoutDrawUnselectedLeg(false);
-        Assert.assertFalse("getTurnoutDrawUnselectedLeg after set", e.isTurnoutDrawUnselectedLeg());
+        assertFalse( e.isTurnoutDrawUnselectedLeg(), "getTurnoutDrawUnselectedLeg after set");
     }
 
     @Test
     public void testGetLayoutName() {
         e.dispose(); // remove existing instance
         e = new LayoutEditor(); // create new instance to test the default name
+        jfo = new EditorFrameOperator(e);
         // default is "My Layout"
-        Assert.assertEquals("getLayoutName", "My Layout", e.getLayoutName());
+        assertEquals( "My Layout", e.getLayoutName(), "getLayoutName");
     }
 
     @Test
     public void testSetLayoutName() {
         // the test layout editor setUp created is named this
-        Assert.assertEquals("getLayoutName", "Layout Editor Test Layout", e.getLayoutName());
+        assertEquals( "Layout Editor Test Layout", e.getLayoutName(), "getLayoutName");
         // set to a known (different) value
         e.setLayoutName("foo");
-        Assert.assertEquals("getLayoutName after set", "foo", e.getLayoutName());
+        assertEquals( "foo", e.getLayoutName(), "getLayoutName after set");
     }
 
     @Test
     public void testGetShowHelpBar() {
 
-        ThreadingUtil.runOnGUI(() -> {
+        boolean complete = ThreadingUtil.runOnGUIwithReturn(() -> {
             e.setShowHelpBar(true);
-        });
-        ThreadingUtil.runOnGUI(() -> {
-            Assert.assertTrue("getShowHelpBar", e.getShowHelpBar());
-        });
-        ThreadingUtil.runOnGUI(() -> {
+            assertTrue( e.getShowHelpBar(), "getShowHelpBar");
+
             e.setShowHelpBar(false);
+            assertFalse( e.getShowHelpBar(), "getShowHelpBar");
+
+            return true;
         });
-        ThreadingUtil.runOnGUI(() -> {
-            Assert.assertFalse("getShowHelpBar", e.getShowHelpBar());
-        });
+        assertTrue(complete);
     }
 
     @Test
     public void testSetShowHelpBar() {
 
-        ThreadingUtil.runOnGUI(() -> {
+        boolean complete = ThreadingUtil.runOnGUIwithReturn(() -> {
             e.setShowHelpBar(false);
-        });
-        ThreadingUtil.runOnGUI(() -> {
-            Assert.assertFalse("getShowHelpBar after set", e.getShowHelpBar());
-        });
-        ThreadingUtil.runOnGUI(() -> {
+            assertFalse( e.getShowHelpBar(), "getShowHelpBar after set");
+
             e.setShowHelpBar(true);
-        });
-        ThreadingUtil.runOnGUI(() -> {
-            Assert.assertTrue("getShowHelpBar", e.getShowHelpBar());
-        });
-        ThreadingUtil.runOnGUI(() -> {
+            assertTrue( e.getShowHelpBar(), "getShowHelpBar");
+
             e.setShowHelpBar(false);
-        });
-        ThreadingUtil.runOnGUI(() -> {
-            Assert.assertFalse("getShowHelpBar", e.getShowHelpBar());
-        });
-        ThreadingUtil.runOnGUI(() -> {
+            assertFalse( e.getShowHelpBar(), "getShowHelpBar");
+
             e.setShowHelpBar(true);
+            assertTrue( e.getShowHelpBar(), "getShowHelpBar");
+
+            return true;
         });
-        ThreadingUtil.runOnGUI(() -> {
-            Assert.assertTrue("getShowHelpBar", e.getShowHelpBar());
-        });
+        assertTrue(complete);
     }
 
     @Test
     public void testGetDrawGrid() {
         // default to true
-        Assert.assertTrue("getDrawGrid", e.getDrawGrid());
+        assertTrue( e.getDrawGrid(), "getDrawGrid");
     }
 
     @Test
     public void testSetDrawGrid() {
         // default to false, so set to true.
         e.setDrawGrid(true);
-        Assert.assertTrue("getDrawGrid after set", e.getDrawGrid());
+        assertTrue( e.getDrawGrid(), "getDrawGrid after set");
     }
 
     @Test
     public void testGetSnapOnAdd() {
         // default to false
-        Assert.assertFalse("getSnapOnAdd", e.getSnapOnAdd());
+        assertFalse( e.getSnapOnAdd(), "getSnapOnAdd");
     }
 
     @Test
     public void testSetSnapOnAdd() {
         // default to false, so set to true.
         e.setSnapOnAdd(true);
-        Assert.assertTrue("getSnapOnAdd after set", e.getSnapOnAdd());
+        assertTrue( e.getSnapOnAdd(), "getSnapOnAdd after set");
     }
 
     @Test
     public void testGetSnapOnMove() {
         // default to false
-        Assert.assertFalse("getSnapOnMove", e.getSnapOnMove());
+        assertFalse( e.getSnapOnMove(), "getSnapOnMove");
     }
 
     @Test
     public void testSetSnapOnMove() {
         // default to false, so set to true.
         e.setSnapOnMove(true);
-        Assert.assertTrue("getSnapOnMove after set", e.getSnapOnMove());
+        assertTrue( e.getSnapOnMove(), "getSnapOnMove after set");
     }
 
     @Test
     public void testGetAntialiasingOn() {
         // default to false
-        Assert.assertFalse("getAntialiasingOn", e.getAntialiasingOn());
+        assertFalse( e.getAntialiasingOn(), "getAntialiasingOn");
     }
 
     @Test
     public void testSetAntialiasingOn() {
         // default to false, so set to true.
         e.setAntialiasingOn(true);
-        Assert.assertTrue("getAntialiasingOn after set", e.getAntialiasingOn());
+        assertTrue( e.getAntialiasingOn(), "getAntialiasingOn after set");
     }
 
     @Test
     public void testGetTurnoutCircles() {
         // default to false
-        Assert.assertFalse("getTurnoutCircles", e.getTurnoutCircles());
+        assertFalse( e.getTurnoutCircles(), "getTurnoutCircles");
     }
 
     @Test
     public void testSetTurnoutCircles() {
         // default to false, so set to true.
         e.setTurnoutCircles(true);
-        Assert.assertTrue("getSetTurnoutCircles after set", e.getTurnoutCircles());
+        assertTrue( e.getTurnoutCircles(), "getSetTurnoutCircles after set");
     }
 
     @Test
     public void testGetTooltipsNotEdit() {
         // default to false
-        Assert.assertFalse("getTooltipsNotEdit", e.getTooltipsNotEdit());
+        assertFalse( e.getTooltipsNotEdit(), "getTooltipsNotEdit");
     }
 
     @Test
     public void testSetTooltipsNotEdit() {
         // default to false, so set to true.
         e.setTooltipsNotEdit(true);
-        Assert.assertTrue("getTooltipsNotEdit after set", e.getTooltipsNotEdit());
+        assertTrue( e.getTooltipsNotEdit(), "getTooltipsNotEdit after set");
     }
 
     @Test
     public void testGetTooltipsInEdit() {
         // default to true
-        Assert.assertTrue("getTooltipsInEdit", e.getTooltipsInEdit());
+        assertTrue( e.getTooltipsInEdit(), "getTooltipsInEdit");
     }
 
     @Test
     public void testSetTooltipsInEdit() {
         // default to true, so set to false.
         e.setTooltipsInEdit(false);
-        Assert.assertFalse("getTooltipsInEdit after set", e.getTooltipsInEdit());
+        assertFalse( e.getTooltipsInEdit(), "getTooltipsInEdit after set");
     }
 
     @Test
     public void testGetAutoBlockAssignment() {
         // default to false
-        Assert.assertFalse("getAutoBlockAssignment", e.getAutoBlockAssignment());
+        assertFalse( e.getAutoBlockAssignment(), "getAutoBlockAssignment");
     }
 
     @Test
     public void testSetAutoBlockAssignment() {
         // default to false, so set to true.
         e.setAutoBlockAssignment(true);
-        Assert.assertTrue("getAutoBlockAssignment after set", e.getAutoBlockAssignment());
+        assertTrue( e.getAutoBlockAssignment(), "getAutoBlockAssignment after set");
     }
 
     @Test
     public void testGetTurnoutBX() {
         // defaults to 20.
-        Assert.assertEquals("getTurnoutBX", 20.0, e.getTurnoutBX(), 0.0);
+        assertEquals( 20.0, e.getTurnoutBX(), 0.0, "getTurnoutBX");
     }
 
     @Test
     public void testSetTurnoutBX() {
         // set to known value
         e.setTurnoutBX(2.0);
-        Assert.assertEquals("getTurnoutBX after set ", 2.0, e.getTurnoutBX(), 0.0);
+        assertEquals( 2.0, e.getTurnoutBX(), 0.0, "getTurnoutBX after set ");
     }
 
     @Test
     public void testGetTurnoutCX() {
         // defaults to 20.
-        Assert.assertEquals("getTurnoutCX", 20.0, e.getTurnoutCX(), 0.0);
+        assertEquals( 20.0, e.getTurnoutCX(), 0.0, "getTurnoutCX");
     }
 
     @Test
     public void testSetTurnoutCX() {
         // set to known value
         e.setTurnoutCX(2.0);
-        Assert.assertEquals("getTurnoutCX after set ", 2.0, e.getTurnoutCX(), 0.0);
+        assertEquals( 2.0, e.getTurnoutCX(), 0.0, "getTurnoutCX after set ");
     }
 
     @Test
     public void testGetTurnoutWid() {
         // defaults to 10.
-        Assert.assertEquals("getTurnoutWid", 10.0, e.getTurnoutWid(), 0.0);
+        assertEquals( 10.0, e.getTurnoutWid(), 0.0, "getTurnoutWid");
     }
 
     @Test
     public void testSetTurnoutWid() {
         // set to known value
         e.setTurnoutWid(2.0);
-        Assert.assertEquals("getTurnoutWid after set ", 2.0, e.getTurnoutWid(), 0.0);
+        assertEquals( 2.0, e.getTurnoutWid(), 0.0, "getTurnoutWid after set");
     }
 
     @Test
     public void testGetXOverLong() {
         // defaults to 30.
-        Assert.assertEquals("getXOverLong", 30.0, e.getXOverLong(), 0.0);
+        assertEquals( 30.0, e.getXOverLong(), 0.0, "getXOverLong");
     }
 
     @Test
     public void testSetXOverLong() {
         // set to known value
         e.setXOverLong(2.0);
-        Assert.assertEquals("getXOverLong after set ", 2.0, e.getXOverLong(), 0.0);
+        assertEquals( 2.0, e.getXOverLong(), 0.0, "getXOverLong after set ");
     }
 
     @Test
     public void testGetXOverHWid() {
         // defaults to 10.
-        Assert.assertEquals("getXOverHWid", 10.0, e.getXOverHWid(), 0.0);
+        assertEquals( 10.0, e.getXOverHWid(), 0.0, "getXOverHWid");
     }
 
     @Test
     public void testSetXOverHWid() {
         // set to known value
         e.setXOverHWid(2.0);
-        Assert.assertEquals("getXOverWid after set ", 2.0, e.getXOverHWid(), 0.0);
+        assertEquals( 2.0, e.getXOverHWid(), 0.0, "getXOverWid after set ");
     }
 
     @Test
     public void testGetXOverShort() {
         // defaults to 10.
-        Assert.assertEquals("getXOverShort", 10.0, e.getXOverShort(), 0.0);
+        assertEquals( 10.0, e.getXOverShort(), 0.0, "getXOverShort");
     }
 
     @Test
     public void testSetXOverShort() {
         // set to known value
         e.setXOverShort(2.0);
-        Assert.assertEquals("getXOverShort after set ", 2.0, e.getXOverShort(), 0.0);
+        assertEquals( 2.0, e.getXOverShort(), 0.0, "getXOverShort after set ");
     }
 
     @Test
@@ -709,76 +710,69 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         e.setXOverShort(2.0);
 
         // reset - uses reflection to get a private method.
-        java.lang.reflect.Method resetTurnoutSize = null;
-        try {
-            resetTurnoutSize = e.getClass().getDeclaredMethod("resetTurnoutSize");
-        } catch (java.lang.NoSuchMethodException nsm) {
-            Assert.fail("Could not find method resetTurnoutSize in LayoutEditor class.");
-        }
+        java.lang.reflect.Method resetTurnoutSize = assertDoesNotThrow( () ->
+            e.getClass().getDeclaredMethod("resetTurnoutSize"),
+                "Could not find method resetTurnoutSize in LayoutEditor class.");
+
         // override the default permissions.
-        Assert.assertNotNull(resetTurnoutSize);
+        assertNotNull(resetTurnoutSize);
         resetTurnoutSize.setAccessible(true);
-        try {
-            resetTurnoutSize.invoke(e);
-        } catch (java.lang.IllegalAccessException iae) {
-            Assert.fail("Could not access method resetTurnoutSize in LayoutEditor class.");
-        } catch (java.lang.reflect.InvocationTargetException ite) {
-            Throwable cause = ite.getCause();
-            Assertions.fail("resetTurnoutSize execution failed reason: ", cause);
-        }
+        assertDoesNotThrow( () ->
+            resetTurnoutSize.invoke(e),
+                "resetTurnoutSize execution failed");
 
         // then check for the default values.
-        Assert.assertEquals("getTurnoutBX", 20.0, e.getTurnoutBX(), 0.0);
-        Assert.assertEquals("getTurnoutCX", 20.0, e.getTurnoutBX(), 0.0);
-        Assert.assertEquals("getTurnoutWid", 20.0, e.getTurnoutBX(), 0.0);
-        Assert.assertEquals("getXOverLong", 30.0, e.getXOverLong(), 0.0);
-        Assert.assertEquals("getXOverHWid", 30.0, e.getXOverLong(), 0.0);
-        Assert.assertEquals("getXOverShort", 30.0, e.getXOverLong(), 0.0);
+        assertEquals( 20.0, e.getTurnoutBX(), 0.0, "getTurnoutBX");
+        assertEquals( 20.0, e.getTurnoutBX(), 0.0, "getTurnoutCX");
+        assertEquals( 20.0, e.getTurnoutBX(), 0.0, "getTurnoutWid");
+        assertEquals( 30.0, e.getXOverLong(), 0.0, "getXOverLong");
+        assertEquals( 30.0, e.getXOverLong(), 0.0, "getXOverHWid");
+        assertEquals( 30.0, e.getXOverLong(), 0.0, "getXOverShort");
         // and reset also sets the dirty bit.
-        Assert.assertTrue("isDirty after resetTurnoutSize", e.isDirty());
+        assertTrue( e.isDirty(), "isDirty after resetTurnoutSize");
     }
 
     @Test
     public void testGetDirectTurnoutControl() {
         // default to false
-        Assert.assertFalse("getDirectTurnoutControl", e.getDirectTurnoutControl());
+        assertFalse( e.getDirectTurnoutControl(), "getDirectTurnoutControl");
     }
 
     @Test
     public void testSetDirectTurnoutControl() {
         // default to false, so set to true.
         e.setDirectTurnoutControl(true);
-        Assert.assertTrue("getDirectTurnoutControl after set", e.getDirectTurnoutControl());
+        assertTrue( e.getDirectTurnoutControl(), "getDirectTurnoutControl after set");
     }
 
     @Test
     public void testSetDirectTurnoutControlOff() {
         e.setDirectTurnoutControl(false);
-        Assert.assertFalse("getDirectTurnoutControl after set", e.getDirectTurnoutControl());
+        assertFalse( e.getDirectTurnoutControl(), "getDirectTurnoutControl after set");
     }
 
     @Test
     public void testIsEditableDefault() {
         // default to true
-        Assert.assertTrue("isEditable default true", e.isEditable());
+        assertTrue( e.isEditable(), "isEditable default true");
     }
 
     @Test
     public void testSetAllEditableFalse() {
         e.setAllEditable(false);
-        Assert.assertFalse("isEditable after setAllEditable(false)", e.isEditable());
+        assertFalse( e.isEditable(), "isEditable after setAllEditable(false)");
     }
 
     @Test
     public void testSetAllEditableTrue() {
         e.setAllEditable(true);
-        Assert.assertTrue("isEditable after setAllEditable(true)", e.isEditable());
+        assertTrue( e.isEditable(), "isEditable after setAllEditable(true)");
     }
 
     @Test
     public void testGetHighlightSelectedBlockDefault() {
         // default to false
-        Assert.assertFalse("le.getHighlightSelectedBlock default false", e.getHighlightSelectedBlock());
+        assertFalse( e.getHighlightSelectedBlock(), "le.getHighlightSelectedBlock default false");
     }
 
     @Test
@@ -787,8 +781,9 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         e.setHighlightSelectedBlock(true);
         // setHighlightSelectedBlock performs some GUI actions, so give
         // the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
-        Assert.assertTrue("le.getHighlightSelectedBlock after setHighlightSelectedBlock(true)", e.getHighlightSelectedBlock());
+        new QueueTool().waitEmpty();
+        assertTrue( e.getHighlightSelectedBlock(),
+                "le.getHighlightSelectedBlock after setHighlightSelectedBlock(true)");
     }
 
     @Test
@@ -797,43 +792,44 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         e.setHighlightSelectedBlock(false);
         // setHighlightSelectedBlock performs some GUI actions, so give
         // the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
-        Assert.assertFalse("le.getHighlightSelectedBlock after setHighlightSelectedBlock(false)", e.getHighlightSelectedBlock());
+        new QueueTool().waitEmpty();
+        assertFalse( e.getHighlightSelectedBlock(),
+                "le.getHighlightSelectedBlock after setHighlightSelectedBlock(false)");
     }
 
     @Test
     public void checkOptionsMenuExists() {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
-        Assert.assertNotNull("Options Menu Exists", jmo);
-        Assert.assertEquals("Menu Item Count", 20, jmo.getItemCount());
+        assertNotNull( jmo, "Options Menu Exists");
+        assertEquals( 20, jmo.getItemCount(), "Menu Item Count");
     }
 
     @Test
     public void checkToolsMenuExists() {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuTools"));
-        Assert.assertNotNull("Tools Menu Exists", jmo);
-        Assert.assertEquals("Tools Menu Item Count", 20, jmo.getItemCount());
+        assertNotNull( jmo, "Tools Menu Exists");
+        assertEquals( 20, jmo.getItemCount(), "Tools Menu Item Count");
     }
 
     @Test
     public void checkZoomMenuExists() {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuZoom"));
-        Assert.assertNotNull("Zoom Menu Exists", jmo);
-        Assert.assertEquals("Menu Item Count", 16, jmo.getItemCount());
+        assertNotNull( jmo, "Zoom Menu Exists");
+        assertEquals( 16, jmo.getItemCount(), "Menu Item Count");
     }
 
     @Test
     public void checkMarkerMenuExists() {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuMarker"));
-        Assert.assertNotNull("Marker Menu Exists", jmo);
-        Assert.assertEquals("Menu Item Count", 3, jmo.getItemCount());
+        assertNotNull( jmo, "Marker Menu Exists");
+        assertEquals( 3, jmo.getItemCount(), "Menu Item Count");
     }
 
     @Test
     public void checkDispatcherMenuExists() {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuDispatcher"));
-        Assert.assertNotNull("Dispatcher Menu Exists", jmo);
-        Assert.assertEquals("Menu Item Count", 2, jmo.getItemCount());
+        assertNotNull( jmo, "Dispatcher Menu Exists");
+        assertEquals( 2, jmo.getItemCount(), "Menu Item Count");
     }
 
     @Test
@@ -899,7 +895,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     @Test
     @Disabled("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testToolBarPositionFloat() {
-        Assertions.assertNotNull(jfo);
+        assertNotNull(jfo);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
 
         //switch to Float
@@ -921,7 +917,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     @Test
     public void testGetLEAuxTools() {
         LayoutEditorAuxTools t = e.getLEAuxTools();
-        Assert.assertNotNull("tools exist", t);
+        assertNotNull( t, "tools exist");
     }
 
     @Test
@@ -933,10 +929,10 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         int w = (int) scrollBounds.getWidth();
         int h = (int) scrollBounds.getHeight();
         // scrollBounds values are platform and OS dependent so specific values cannot be determined.
-        Assert.assertTrue("scroll bound x", x > 0);
-        Assert.assertTrue("scroll bound y", y > 0);
-        Assert.assertTrue("scroll bound w", w > 0);
-        Assert.assertTrue("scroll bound h", h > 0);
+        assertTrue( x > 0, "scroll bound x");
+        assertTrue( y > 0, "scroll bound y");
+        assertTrue( w > 0, "scroll bound w");
+        assertTrue( h > 0, "scroll bound h");
     }
 
 //     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorTest.class.getName());

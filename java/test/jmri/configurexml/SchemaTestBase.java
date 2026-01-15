@@ -1,5 +1,9 @@
 package jmri.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,8 +16,7 @@ import jmri.jmrit.XmlFile;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.JDOMException;
-import org.junit.Assert;
-import org.junit.Assume;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -45,22 +48,22 @@ public class SchemaTestBase {
         // also tested for load/store
         files.addAll(getFiles(new File(path+"/load"), true, true).collect(Collectors.toList()));
 
-        Assert.assertFalse("There should be something here; misconfigured?", files.isEmpty());
+        assertFalse( files.isEmpty(), "There should be something here; misconfigured?");
         return files.stream();
     }
 
     public void validate(File file, boolean pass) {
-        Assume.assumeFalse("Ignoring schema validation.", Boolean.getBoolean("jmri.skipschematests"));
+        assumeFalse( Boolean.getBoolean("jmri.skipschematests"), "Ignoring schema validation.");
         XmlFile.setDefaultValidate(XmlFile.Validate.CheckDtdThenSchema);
         XmlFile xf = new XmlFileImpl();
         try {
             xf.rootFromFile(file);
             if (!pass) {
-                Assert.fail("Validation of \"" + file.getPath() + "\" should have failed");
+                fail( () -> "Validation of \"" + file.getPath() + "\" should have failed");
             }
         } catch (IOException | JDOMException ex) { // throw unexpected errors
             if (pass) {
-                Assert.fail("Failed to validate \"" + file.getPath() + "\" due to: " + ex);
+                fail("Failed to validate \"" + file.getPath() + "\" due to: " + ex, ex);
             }
         }
     }
@@ -124,7 +127,7 @@ public class SchemaTestBase {
 
     @BeforeEach
     @OverridingMethodsMustInvokeSuper
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         this.validate = XmlFile.getDefaultValidate();
@@ -132,7 +135,7 @@ public class SchemaTestBase {
 
     @AfterEach
     @OverridingMethodsMustInvokeSuper
-    public void tearDown() throws Exception {
+    public void tearDown() {
         XmlFile.setDefaultValidate(this.validate);
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

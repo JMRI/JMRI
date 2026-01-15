@@ -2,7 +2,6 @@ package jmri;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,8 +13,8 @@ public class NamedBeanUsageReportTest {
     @Test
     public void testReport() {
         NamedBeanUsageReport report = new NamedBeanUsageReport("Test_Bean_Report");
-        Assert.assertNotNull("exists", report);
-        Assert.assertEquals("Test_Bean_Report", report.usageKey);
+        Assertions.assertNotNull( report, "exists");
+        Assertions.assertEquals("Test_Bean_Report", report.usageKey);
     }
 
     @BeforeEach

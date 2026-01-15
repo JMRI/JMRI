@@ -1,12 +1,11 @@
 package jmri.jmrix.sprog;
 
+import javax.annotation.Nonnull;
+
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to a SPROG Command
@@ -23,7 +22,7 @@ public class SprogCSThrottle extends AbstractThrottle {
      * @param memo system connection.
      * @param address Loco Address.
      */
-    public SprogCSThrottle(SprogSystemConnectionMemo memo, LocoAddress address) {
+    public SprogCSThrottle(@Nonnull SprogSystemConnectionMemo memo, LocoAddress address) {
         super(memo, SprogConstants.MAX_FUNCTIONS);
 
         if (address instanceof DccLocoAddress) {
@@ -46,7 +45,7 @@ public class SprogCSThrottle extends AbstractThrottle {
         //should support other modes, but doesn't in practice.
         //@see AbstractThrottleManager.supportedSpeedModes()
         // Find our command station
-        if ((memo != null) && (memo.get(jmri.CommandStation.class) != null)) {
+        if ( memo.get(jmri.CommandStation.class) != null) {
             commandStation = (SprogCommandStation) memo.get(jmri.CommandStation.class);
         } else {
             commandStation = (SprogCommandStation) jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class);
@@ -295,6 +294,6 @@ public class SprogCSThrottle extends AbstractThrottle {
         finishRecord();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogCSThrottle.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SprogCSThrottle.class);
 
 }

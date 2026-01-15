@@ -23,6 +23,8 @@
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
       <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
     </operations>
     <defaultclosedspeed>Normal</defaultclosedspeed>
     <defaultthrownspeed>Restricted</defaultthrownspeed>
@@ -132,8 +134,8 @@
     <transit systemName="IZ:AUTO:0001" userName="Transit_1">
       <systemName>IZ:AUTO:0001</systemName>
       <userName>Transit_1</userName>
-      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0002" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0002" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
     </transit>
   </transits>
   <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
@@ -150,6 +152,17 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
+  <meters class="jmri.managers.configurexml.AbstractMeterManagerXml">
+    <meter>
+      <systemName>MVCBUSCurrentMeter</systemName>
+    </meter>
+    <meter>
+      <systemName>MVCBUSCurrentMeter2</systemName>
+    </meter>
+    <meter>
+      <systemName>MVCBUSVoltageMeter</systemName>
+    </meter>
+  </meters>
   <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
     <logix enabled="yes">
       <systemName>IX1</systemName>
@@ -39731,7 +39744,6 @@
     </ActionLoconetSetSpeedZero>
     <MQTTPublish class="jmri.jmrix.mqtt.logixng.configurexml.PublishXml">
       <systemName>IQDA:AUTO:0232</systemName>
-      <systemConnection>M</systemConnection>
       <topic>
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
@@ -39820,7 +39832,6 @@
     </MQTTPublish>
     <MQTTPublish class="jmri.jmrix.mqtt.logixng.configurexml.PublishXml">
       <systemName>IQDA:AUTO:0233</systemName>
-      <systemConnection>M</systemConnection>
       <topic>
         <addressing>Direct</addressing>
         <value>topic</value>
@@ -39911,7 +39922,6 @@
     </MQTTPublish>
     <MQTTSubscribe class="jmri.jmrix.mqtt.logixng.configurexml.SubscribeXml">
       <systemName>IQDA:AUTO:0234</systemName>
-      <systemConnection>M</systemConnection>
       <removeChannelFromLastTopic>no</removeChannelFromLastTopic>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -39992,7 +40002,6 @@
     </MQTTSubscribe>
     <MQTTSubscribe class="jmri.jmrix.mqtt.logixng.configurexml.SubscribeXml">
       <systemName>IQDA:AUTO:0235</systemName>
-      <systemConnection>M</systemConnection>
       <subscribeToTopic>theTopic</subscribeToTopic>
       <lastTopicLocalVariable>topic</lastTopicLocalVariable>
       <removeChannelFromLastTopic>yes</removeChannelFromLastTopic>
@@ -46508,7 +46517,11 @@
     </Continue>
     <Error class="jmri.jmrit.logixng.actions.configurexml.ErrorXml">
       <systemName>IQDA:AUTO:0306</systemName>
-      <message />
+      <error-message>
+        <addressing>Direct</addressing>
+        <value />
+        <listenToMemory>no</listenToMemory>
+      </error-message>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -46588,7 +46601,11 @@
     </Error>
     <Error class="jmri.jmrit.logixng.actions.configurexml.ErrorXml">
       <systemName>IQDA:AUTO:0307</systemName>
-      <message>Some error has occurred</message>
+      <error-message>
+        <addressing>Direct</addressing>
+        <value>Some error has occurred</value>
+        <listenToMemory>no</listenToMemory>
+      </error-message>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">

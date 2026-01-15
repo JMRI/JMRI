@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 import jmri.jmrit.operations.locations.gui.TrackEditFrame;
@@ -14,6 +15,7 @@ import jmri.jmrit.operations.locations.gui.TrackEditFrame;
 public class ChangeTrackTypeAction extends AbstractAction {
 
     private TrackEditFrame _tef;
+    private ChangeTrackFrame _ctf;
 
     public ChangeTrackTypeAction(TrackEditFrame tef) {
         super(Bundle.getMessage("MenuItemChangeTrackType"));
@@ -22,7 +24,10 @@ public class ChangeTrackTypeAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new ChangeTrackFrame(_tef);
+        if (_ctf != null) {
+            _ctf.dispose();
+        }
+        _ctf = new ChangeTrackFrame(_tef);
     }
 
 }

@@ -28,14 +28,16 @@ public class RosterTableModelTest {
         RosterTableModel t = new RosterTableModel(true); // set Editable
 
         // hard-coded value is number of columns expected
-        // 11 normal columns + 4 attribute columns
-        Assert.assertEquals(15, t.getColumnCount());
+        // 13 normal columns + 4 attribute columns
+        Assert.assertEquals(17, t.getColumnCount());
         
         
         Assertions.assertTrue(t.isCellEditable(0, RosterTableModel.IDCOL));
         Assertions.assertFalse(t.isCellEditable(0, RosterTableModel.ADDRESSCOL));
         Assertions.assertFalse(t.isCellEditable(0, RosterTableModel.ICONCOL));
-        Assertions.assertFalse(t.isCellEditable(0, RosterTableModel.DECODERCOL));
+        Assertions.assertFalse(t.isCellEditable(0, RosterTableModel.DECODERMFGCOL));
+        Assertions.assertFalse(t.isCellEditable(0, RosterTableModel.DECODERFAMILYCOL));
+        Assertions.assertFalse(t.isCellEditable(0, RosterTableModel.DECODERMODELCOL));
         Assertions.assertTrue(t.isCellEditable(0, RosterTableModel.ROADNAMECOL));
         Assertions.assertTrue(t.isCellEditable(0, RosterTableModel.ROADNUMBERCOL));
         Assertions.assertTrue(t.isCellEditable(0, RosterTableModel.MFGCOL));
@@ -59,7 +61,7 @@ public class RosterTableModelTest {
         Assert.assertEquals(Bundle.getMessage("FieldID"), t.getColumnName( RosterTableModel.IDCOL));
         Assert.assertEquals(Bundle.getMessage("FieldDCCAddress"), t.getColumnName(RosterTableModel.ADDRESSCOL));
         Assert.assertEquals(Bundle.getMessage("FieldIcon"), t.getColumnName(RosterTableModel.ICONCOL));
-        Assert.assertEquals(Bundle.getMessage("FieldDecoderModel"), t.getColumnName(RosterTableModel.DECODERCOL));
+        Assert.assertEquals(Bundle.getMessage("FieldDecoderModel"), t.getColumnName(RosterTableModel.DECODERMODELCOL));
         Assert.assertEquals(Bundle.getMessage("FieldRoadName"), t.getColumnName(RosterTableModel.ROADNAMECOL));
         Assert.assertEquals(Bundle.getMessage("FieldRoadNumber"), t.getColumnName(RosterTableModel.ROADNUMBERCOL));
         Assert.assertEquals(Bundle.getMessage("FieldManufacturer"), t.getColumnName(RosterTableModel.MFGCOL));
@@ -85,15 +87,15 @@ public class RosterTableModelTest {
 
         Assert.assertEquals("id 1", t.getValueAt(0, RosterTableModel.IDCOL));
         Assert.assertEquals(12, (int)t.getValueAt(0, RosterTableModel.ADDRESSCOL));
-        Assert.assertEquals("33", t.getValueAt(0, RosterTableModel.DECODERCOL));
+        Assert.assertEquals("33", t.getValueAt(0, RosterTableModel.DECODERMODELCOL));
 
         Assert.assertEquals("id 2", t.getValueAt(1, RosterTableModel.IDCOL));
         Assert.assertEquals(13,(int) t.getValueAt(1, RosterTableModel.ADDRESSCOL));
-        Assert.assertEquals("34", t.getValueAt(1, RosterTableModel.DECODERCOL));
+        Assert.assertEquals("34", t.getValueAt(1, RosterTableModel.DECODERMODELCOL));
 
         Assert.assertEquals("id 3", t.getValueAt(2, RosterTableModel.IDCOL));
         Assert.assertEquals(14, (int)t.getValueAt(2, RosterTableModel.ADDRESSCOL));
-        Assert.assertEquals("35", t.getValueAt(2, RosterTableModel.DECODERCOL));
+        Assert.assertEquals("35", t.getValueAt(2, RosterTableModel.DECODERMODELCOL));
         
         Assert.assertEquals("DCC Long", t.getValueAt(2, RosterTableModel.PROTOCOL));
         
@@ -175,8 +177,8 @@ public class RosterTableModelTest {
         RosterTableModel t = new RosterTableModel(true); // set Editable
 
         // hard-coded value is number of columns expected
-        // 11 normal columns + 2 attribute columns
-        Assert.assertEquals(13, t.getColumnCount());
+        // 13 normal columns + 2 attribute columns
+        Assert.assertEquals(15, t.getColumnCount());
         Assert.assertTrue(java.util.Date.class == t.getColumnClass(RosterTableModel.NUMCOL));
 
         Assert.assertNotNull(t.getValueAt(0, RosterTableModel.NUMCOL));

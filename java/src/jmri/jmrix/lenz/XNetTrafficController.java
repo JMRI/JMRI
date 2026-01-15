@@ -106,6 +106,8 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
                     && (m.getElement(0)
                     == XNetConstants.CS_INFO
                     || m.getElement(0)
+                    == XNetConstants.CS_ADVANCED_INFO_RESPONSE
+                    || m.getElement(0)
                     == XNetConstants.CS_SERVICE_MODE_RESPONSE
                     || m.getElement(0)
                     == XNetConstants.CS_REQUEST_RESPONSE

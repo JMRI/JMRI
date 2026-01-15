@@ -1,81 +1,36 @@
 package jmri.jmrix.bidib;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
-import java.util.HashMap;
-import java.util.TreeMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Collection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import jmri.CommandStation;
-import jmri.jmrix.PortAdapter;
-import jmri.NmraPacket;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
-import jmri.ShutDownTask;
-import jmri.implementation.AbstractShutDownTask;
-import jmri.jmrix.bidib.netbidib.NetBiDiBPairingRequestDialog;
-
-import org.bidib.jbidibc.messages.BidibLibrary;
-import org.bidib.jbidibc.messages.exception.ProtocolException;
-import org.bidib.jbidibc.messages.utils.ByteUtils;
-
-import org.bidib.jbidibc.core.BidibMessageProcessor;
-import org.bidib.jbidibc.core.BidibInterface;
-import org.bidib.jbidibc.messages.BidibPort;
-import org.bidib.jbidibc.messages.ConnectionListener;
-import org.bidib.jbidibc.core.DefaultMessageListener;
-import org.bidib.jbidibc.messages.Feature;
-import org.bidib.jbidibc.messages.LcConfig;
-import org.bidib.jbidibc.messages.LcConfigX;
-import org.bidib.jbidibc.core.MessageListener;
-import org.bidib.jbidibc.messages.base.RawMessageListener;
-import org.bidib.jbidibc.messages.Node;
-import org.bidib.jbidibc.core.NodeListener;
-import org.bidib.jbidibc.messages.ProtocolVersion;
-import org.bidib.jbidibc.messages.StringData;
-import org.bidib.jbidibc.messages.helpers.Context;
+import org.bidib.jbidibc.core.*;
+import org.bidib.jbidibc.core.node.*;
 import org.bidib.jbidibc.core.node.listener.TransferListener;
+import org.bidib.jbidibc.messages.*;
+import org.bidib.jbidibc.messages.base.RawMessageListener;
+import org.bidib.jbidibc.messages.enums.*;
 import org.bidib.jbidibc.messages.exception.PortNotFoundException;
-import org.bidib.jbidibc.messages.message.BidibCommandMessage;
-import org.bidib.jbidibc.core.node.BidibNodeAccessor;
-import org.bidib.jbidibc.messages.utils.NodeUtils;
-import org.bidib.jbidibc.messages.enums.CommandStationState;
-import org.bidib.jbidibc.messages.enums.LcOutputType;
-import org.bidib.jbidibc.messages.enums.PortModelEnum;
-import org.bidib.jbidibc.messages.message.AccessoryGetMessage;
-import org.bidib.jbidibc.messages.message.BidibRequestFactory;
-import org.bidib.jbidibc.messages.message.CommandStationSetStateMessage;
-import org.bidib.jbidibc.messages.message.FeedbackGetRangeMessage;
-import org.bidib.jbidibc.messages.message.LocalPingMessage;
-import org.bidib.jbidibc.core.node.CommandStationNode;
-import org.bidib.jbidibc.core.node.BoosterNode;
-import org.bidib.jbidibc.core.node.RootNode;
-import org.bidib.jbidibc.messages.BoosterStateData;
-import org.bidib.jbidibc.messages.enums.BoosterControl;
-import org.bidib.jbidibc.messages.enums.BoosterState;
-import org.bidib.jbidibc.messages.enums.CommandStationProgState;
-import org.bidib.jbidibc.messages.enums.PairingResult;
+import org.bidib.jbidibc.messages.exception.ProtocolException;
+import org.bidib.jbidibc.messages.helpers.Context;
+import org.bidib.jbidibc.messages.message.*;
 import org.bidib.jbidibc.messages.message.netbidib.NetBidibLinkData;
-import org.bidib.jbidibc.messages.port.BytePortConfigValue;
-import org.bidib.jbidibc.messages.port.PortConfigValue;
-import org.bidib.jbidibc.messages.port.ReconfigPortConfigValue;
-import org.bidib.jbidibc.messages.utils.CollectionUtils;
+import org.bidib.jbidibc.messages.port.*;
+import org.bidib.jbidibc.messages.utils.*;
 import org.bidib.jbidibc.netbidib.NetBidibContextKeys;
 import org.bidib.jbidibc.netbidib.client.pairingstates.PairingStateEnum;
 import org.bidib.jbidibc.simulation.comm.SimulationBidib;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.*;
+import jmri.implementation.AbstractShutDownTask;
+import jmri.jmrix.PortAdapter;
+import jmri.jmrix.bidib.netbidib.NetBiDiBPairingRequestDialog;
 
 /**
  * The BiDiB Traffic Controller provides the interface for JMRI to the BiDiB Library (jbidibc) - it
@@ -83,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * Instead, it delegates BiDiB handling to a BiDiB controller instance (serial, simulation, etc.) using BiDiBInterface.
  * 
  * @author Bob Jacobsen Copyright (C) 2002
- * @author Eckart Meyer Copyright (C) 2019-2024
+ * @author Eckart Meyer Copyright (C) 2019-2025
  *
  */
 
@@ -98,6 +53,7 @@ public class BiDiBTrafficController implements CommandStation {
     
     public static final String ASYNCCONNECTIONINIT = "jmri-async-init";
     public static final String ISNETBIDIB = "jmri-is-netbidib";
+    public static final String USELOCALPING = "jmri-use-local-ping";
 
     private final BidibInterface bidib;
     private final Set<TransferListener> transferListeners = new LinkedHashSet<>();
@@ -111,6 +67,7 @@ public class BiDiBTrafficController implements CommandStation {
     private PairingResult curPairingResult = PairingResult.UNPAIRED;
     private boolean isAsyncInit = false;
     private boolean isNetBiDiB = false;
+    private boolean useLocalPing = true;
     private boolean connectionIsReady = false;
     private final BiDiBNodeInitializer nodeInitializer;
     private BiDiBPortController portController;
@@ -167,6 +124,7 @@ public class BiDiBTrafficController implements CommandStation {
         // there is currently no difference between "use async init" and "this is a netBiDiB device"...
         isAsyncInit = context.get(ASYNCCONNECTIONINIT, Boolean.class, false);
         isNetBiDiB = context.get(ISNETBIDIB, Boolean.class, false);
+        useLocalPing = context.get(USELOCALPING, Boolean.class, true);
         
         stallLock.set(false); //not stalled
         
@@ -425,7 +383,7 @@ public class BiDiBTrafficController implements CommandStation {
              * If pairing failed, timed out or the an existing pairing was removed
              * on the remote side, we will clear all nodes and then close the connection.
              * 
-             * @param pairingResult
+             * @param pairingResult pairing result
              */
             @Override
             public void pairingFinished(final PairingResult pairingResult, long uniqueId) {
@@ -734,22 +692,27 @@ public class BiDiBTrafficController implements CommandStation {
      * If there is no response from the device, the connection will be closed.
      */
     public void startLocalPing() {
-        log.debug("Start the netBiDiB local ping worker on the rootNode.");
-        try {
+        if (useLocalPing) {
+            log.debug("Start the netBiDiB local ping worker on the rootNode.");
+            try {
 
-            if (bidib != null) {
-                bidib.getRootNode().setLocalPingEnabled(true);
+                if (bidib != null) {
+                    bidib.getRootNode().setLocalPingEnabled(true);
 
-                bidib.getRootNode().startLocalPingWorker(true, localPingResult -> {
-                    if (localPingResult.equals(Boolean.FALSE)) {
-                        log.warn("The local pong was not received! Close connection");
-                        delayedCloseTimer.start();
-                    }
-                });
+                    bidib.getRootNode().startLocalPingWorker(true, localPingResult -> {
+                        if (localPingResult.equals(Boolean.FALSE)) {
+                            log.warn("The local pong was not received! Close connection");
+                            delayedCloseTimer.start();
+                        }
+                    });
+                }
+            }
+            catch (Exception ex) {
+                log.warn("Start the local ping worker failed.", ex);
             }
         }
-        catch (Exception ex) {
-            log.warn("Start the local ping worker failed.", ex);
+        else {
+            log.debug("local ping is disabled.");
         }
     }
  

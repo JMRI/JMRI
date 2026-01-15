@@ -1326,7 +1326,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
                 return true;
             }
         }
-        return false;
+        return Setup.isBuildOnTime();
     }
 
     public boolean hasTracksWithRestrictedTrainDirections() {
@@ -1342,6 +1342,15 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public boolean hasTrackMessages() {
         for (Track track : getTracksList()) {
             if (track.hasMessages()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasTrackPriortyChanges() {
+        for (Track track : getTracksList()) {
+            if (!track.getTrackPriority().equals(Track.PRIORITY_NORMAL)) {
                 return true;
             }
         }

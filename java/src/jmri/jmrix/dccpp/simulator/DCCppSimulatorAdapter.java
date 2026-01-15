@@ -149,9 +149,15 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             keepAliveTimer = new java.util.TimerTask(){
                 @Override
                 public void run() {
-                    // If the timer times out, send a request for status
-                    DCCppSimulatorAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
-                    .sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
+                    // When the timer times out, send a heartbeat (status request on DCC++, max num slots request on DCC-EX
+                    DCCppTrafficController tc = DCCppSimulatorAdapter.this.getSystemConnectionMemo().getDCCppTrafficController();
+                    DCCppCommandStation cs = tc.getCommandStation();
+                    if (cs.isMaxNumSlotsMsgSupported()) {
+                        tc.sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSMaxNumSlotsMsg(), null);                        
+                    } else {
+                        tc.sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
+                    }
+                    
                 }
             };
         } else {

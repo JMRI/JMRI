@@ -14,7 +14,8 @@ import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
@@ -133,7 +134,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
      */
     public RouteLocation addLocation(Location location, int sequence) {
         RouteLocation rl = addLocation(location);
-        if (sequence < 1 || sequence > _routeHashTable.size()) {
+        if (sequence < START || sequence > _routeHashTable.size()) {
             return rl;
         }
         for (int i = 0; i < _routeHashTable.size() - sequence; i++) {
@@ -195,7 +196,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
     private void resequence() {
         List<RouteLocation> routeList = getLocationsBySequenceList();
         for (int i = 0; i < routeList.size(); i++) {
-            _sequenceNum = i + 1; // start sequence numbers at 1
+            _sequenceNum = i + START; // start sequence numbers at 1
             routeList.get(i).setSequenceNumber(_sequenceNum);
         }
     }
@@ -346,6 +347,22 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
         }
         return out;
     }
+    
+    public RouteLocation getBlockingLocationFrontOfTrain() {
+        List<RouteLocation> list = getBlockingOrder();
+        if (list.size() > 0) {
+            return list.get(0);
+        }
+        return null;
+    }
+    
+    public RouteLocation getBlockingLocationRearOfTrain() {
+        List<RouteLocation> list = getBlockingOrder();
+        if (list.size() > 0) {
+            return list.get(list.size() - 1);
+        }
+        return null;
+    }
 
     public void setBlockingOrderUp(RouteLocation rl) {
         List<RouteLocation> blockingOrder = getBlockingOrder();
@@ -489,7 +506,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
     }
 
     private void addTrainListeners() {
-        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getList()) {
             if (train.getRoute() == this) {
                 train.addPropertyChangeListener(this);
             }
@@ -497,7 +514,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
     }
 
     private void removeTrainListeners() {
-        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getList()) {
             train.removePropertyChangeListener(this);
         }
     }

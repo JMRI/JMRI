@@ -30,9 +30,9 @@ public class XNetListenerScaffold implements jmri.jmrix.lenz.XNetListener {
         timeOutMsg = m;
     }
 
-    int rcvCount;
+    private int rcvCount;
     XNetReply rcvdRply;
-    XNetMessage timeOutMsg;
+    private XNetMessage timeOutMsg;
 
     // required for access outside of package.
     public XNetReply getRcvdRply() {
@@ -45,6 +45,10 @@ public class XNetListenerScaffold implements jmri.jmrix.lenz.XNetListener {
 
     public int getRcvCount(){
        return rcvCount;
+    }
+
+    public XNetMessage getTimeOutMsg() {
+        return timeOutMsg;
     }
 
 }

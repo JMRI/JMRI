@@ -1,7 +1,5 @@
 package jmri.web.servlet.panel;
 
-import static org.junit.Assert.assertEquals;
-
 import org.jdom2.Element;
 import org.junit.jupiter.api.*;
 
@@ -12,6 +10,8 @@ import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.MultiSensorIcon;
 import jmri.util.JUnitUtil;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AbstractPanelServletTest {
 

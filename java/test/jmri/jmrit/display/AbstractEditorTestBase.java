@@ -68,7 +68,7 @@ abstract public class AbstractEditorTestBase<T extends Editor> {
             // or the preceding separator
             assertEquals( 8, jmo.getItemCount(), "Menu Item Count");
         } else {
-            assertEquals( 10, jmo.getItemCount(), "Menu Item Count");
+            assertEquals( 11, jmo.getItemCount(), "Menu Item Count");
         }
     }
 

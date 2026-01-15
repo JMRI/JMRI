@@ -1,9 +1,14 @@
 package jmri.jmrit.pragotronclock;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -14,6 +19,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * Based on NixieClockFrameTest by Paul Bender 
  */
+@DisabledIfHeadless
 public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
 
     /**
@@ -21,22 +27,22 @@ public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
      */
     @Test
     public void testButton(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.setVisible(true);
+
+        ThreadingUtil.runOnGUI( () -> frame.setVisible(true));
         java.util.Calendar cal = new java.util.GregorianCalendar();
         cal.set(2020, 5, 4, 0, 0, 00); // 02:00:00
         clock.setTime(cal.getTime());
 
         JFrameOperator jfo = new JFrameOperator( frame);
-        Assert.assertTrue("run button found",
-    new JButtonOperator(jfo,Bundle.getMessage("ButtonRunClock")).isEnabled());
+        assertTrue( new JButtonOperator(jfo,Bundle.getMessage("ButtonRunClock")).isEnabled(),
+            "run button found");
         new JButtonOperator(jfo,Bundle.getMessage("ButtonRunClock")).doClick();
-        Assert.assertTrue("clock started running",clock.getRun());
+        assertTrue( clock.getRun(), "clock started running");
 
         new JButtonOperator(jfo,Bundle.getMessage("ButtonPauseClock")).doClick();
-        Assert.assertFalse("clock paused running",clock.getRun());
-        Assert.assertTrue("button back to run text",
-    new JButtonOperator(jfo,Bundle.getMessage("ButtonRunClock")).isEnabled());
+        assertFalse( clock.getRun(), "clock paused running");
+        assertTrue( new JButtonOperator(jfo,Bundle.getMessage("ButtonRunClock")).isEnabled(),
+           "button back to run text");
 
     }
     
@@ -45,20 +51,20 @@ public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
      */
     @Test
     public void testMins(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.setVisible(true);
+
+        ThreadingUtil.runOnGUI( () -> frame.setVisible(true));
         java.util.Calendar cal = new java.util.GregorianCalendar();
         for (int i = 0; i<=59; i++) {
             cal.set(2020, 5, 4, Math.min(23, i), i, 00); // 02:00:00
             clock.setTime(cal.getTime());
             new org.netbeans.jemmy.QueueTool().waitEmpty();
-            Assert.assertNotNull(frame);
+            assertNotNull(frame);
         }
     }
     
     @Test
     public void testNoButton(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         frame.dispose();
         clock.setShowStopButton(false);
         
@@ -69,14 +75,15 @@ public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
         frame = new PragotronClockFrame();
         frame.setVisible(true);
         new org.netbeans.jemmy.QueueTool().waitEmpty();
-        Assert.assertNotNull(frame);
+        assertNotNull(frame);
         
     }
-    
+
+    @Test
     public void testClockMinuteListener(){
-        Assert.assertEquals("1 listener when clock started",1,clock.getMinuteChangeListeners().length);
+        assertEquals( 1, clock.getMinuteChangeListeners().length, "1 listener when clock started");
         frame.dispose();
-        Assert.assertEquals("0 listener when clock disposed",0,clock.getMinuteChangeListeners().length);
+        assertEquals( 0, clock.getMinuteChangeListeners().length, "0 listener when clock disposed");
     }
     
     private jmri.Timebase clock;
@@ -89,14 +96,14 @@ public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-            // force time, not running
-            clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
-            clock.setRun(false);
-            clock.setTime(java.time.Instant.EPOCH);  // just a specific time
-            clock.setShowStopButton(true);
-            frame = new PragotronClockFrame();
-        }
+
+        // force time, not running
+        clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
+        clock.setRun(false);
+        clock.setTime(java.time.Instant.EPOCH);  // just a specific time
+        clock.setShowStopButton(true);
+        frame = new PragotronClockFrame();
+
     }
 
     @AfterEach

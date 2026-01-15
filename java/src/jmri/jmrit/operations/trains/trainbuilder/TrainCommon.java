@@ -250,7 +250,6 @@ public class TrainCommon {
 
     private void blockCarsPickups(PrintWriter file, Train train, List<Car> carList, RouteLocation rl,
             Track track, boolean isManifest) {
-        // block pick up cars, except for passenger cars
         for (RouteLocation rld : train.getTrainBlockingOrder()) {
             for (Car car : carList) {
                 if (Setup.isSortByTrackNameEnabled() &&
@@ -321,11 +320,11 @@ public class TrainCommon {
 
     /**
      * Used to determine if car is the next to be processed when producing
-     * Manifests or Switch Lists. Caboose or FRED is placed at end of the train.
-     * Passenger cars are already blocked in the car list. Passenger cars with
-     * negative block numbers are placed at the front of the train, positive
-     * numbers at the end of the train. Note that a car in train doesn't have a
-     * track assignment.
+     * Manifests or Switch Lists. Caboose or FRED is placed at end of the train
+     * unless they are also passenger cars. Passenger cars are already blocked
+     * in the car list. Passenger cars with negative block numbers are placed at
+     * the front of the train, positive numbers at the end of the train. Note
+     * that a car in train doesn't have a track assignment.
      * 
      * @param car the car being tested
      * @param rl  when in train's route the car is being pulled
@@ -345,13 +344,13 @@ public class TrainCommon {
                         !car.isCaboose() &&
                         !car.hasFred() &&
                         !car.isPassenger() ||
-                        rld == train.getTrainDepartsRouteLocation() &&
-                                car.isPassenger() &&
-                                car.getBlocking() < 0 ||
-                        rld == train.getTrainTerminatesRouteLocation() &&
-                                (car.isCaboose() ||
-                                        car.hasFred() ||
-                                        car.isPassenger() && car.getBlocking() >= 0))) {
+                        car.isPassenger() &&
+                                car.getBlocking() < 0 &&
+                                rld == train.getRoute().getBlockingLocationFrontOfTrain() ||
+                        (car.isCaboose() && !car.isPassenger() ||
+                                car.hasFred() && !car.isPassenger() ||
+                                car.isPassenger() && car.getBlocking() >= 0) &&
+                                rld == train.getRoute().getBlockingLocationRearOfTrain())) {
             return true;
         }
         return false;
@@ -612,14 +611,14 @@ public class TrainCommon {
         }
     }
 
-    protected void setCarPickupAndSetoutTimes(Train train, RouteLocation rl, List<Car> carList) {
+    protected void setPickupAndSetoutTimes(Train train, RouteLocation rl, List<RollingStock> list) {
         String expectedDepartureTime = train.getExpectedDepartureTime(rl, true);
-        for (Car car : carList) {
-            if (car.getRouteLocation() == rl) {
-                car.setPickupTime(expectedDepartureTime);
+        for (RollingStock rs : list) {
+            if (rs.getRouteLocation() == rl) {
+                rs.setPickupTime(expectedDepartureTime);
             }
-            if (car.getRouteDestination() == rl) {
-                car.setSetoutTime(expectedDepartureTime);
+            if (rs.getRouteDestination() == rl) {
+                rs.setSetoutTime(expectedDepartureTime);
             }
         }
 
@@ -636,7 +635,7 @@ public class TrainCommon {
             // Scheduled work at {0}
             msg = MessageFormat.format(messageFormatText = TrainManifestText
                     .getStringScheduledWork(),
-                    new Object[]{routeLocationName, train.getName(),
+                    new Object[]{routeLocationName, train.getSplitName(),
                             train.getDescription(), rl.getLocation().getDivisionName()});
             if (train.isShowArrivalAndDepartureTimesEnabled()) {
                 if (rl == train.getTrainDepartsRouteLocation()) {
@@ -644,9 +643,9 @@ public class TrainCommon {
                     msg = MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringWorkDepartureTime(),
                             new Object[]{routeLocationName,
-                                    train.getFormatedDepartureTime(), train.getName(),
+                                    train.getFormatedDepartureTime(), train.getSplitName(),
                                     train.getDescription(), rl.getLocation().getDivisionName()});
-                } else if (!rl.getDepartureTime().equals(RouteLocation.NONE) &&
+                } else if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE) &&
                         rl != train.getTrainTerminatesRouteLocation()) {
                     // Scheduled work at {0}, departure time {1}
                     msg = MessageFormat.format(messageFormatText = TrainManifestText
@@ -654,7 +653,7 @@ public class TrainCommon {
                             new Object[]{routeLocationName,
                                     expectedArrivalTime.equals(Train.ALREADY_SERVICED)
                                             ? rl.getFormatedDepartureTime() : train.getExpectedDepartureTime(rl),
-                                    train.getName(), train.getDescription(),
+                                    train.getSplitName(), train.getDescription(),
                                     rl.getLocation().getDivisionName()});
                 } else if (Setup.isUseDepartureTimeEnabled() &&
                         rl != train.getTrainTerminatesRouteLocation() &&
@@ -663,21 +662,21 @@ public class TrainCommon {
                     msg = MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringWorkDepartureTime(),
                             new Object[]{routeLocationName,
-                                    train.getExpectedDepartureTime(rl), train.getName(),
+                                    train.getExpectedDepartureTime(rl), train.getSplitName(),
                                     train.getDescription(), rl.getLocation().getDivisionName()});
                 } else if (!expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
                     // Scheduled work at {0}, arrival time {1}
                     msg = MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringWorkArrivalTime(),
                             new Object[]{routeLocationName, expectedArrivalTime,
-                                    train.getName(), train.getDescription(),
+                                    train.getSplitName(), train.getDescription(),
                                     rl.getLocation().getDivisionName()});
                 }
             }
             return msg;
         } catch (IllegalArgumentException e) {
             msg = Bundle.getMessage("ErrorIllegalArgument",
-                    Bundle.getMessage("TitleSwitchListText"), e.getLocalizedMessage()) + NEW_LINE + messageFormatText;
+                    Bundle.getMessage("TitleManifestText"), e.getLocalizedMessage()) + NEW_LINE + messageFormatText;
             log.error(msg);
             log.error("Illegal argument", e);
             return msg;
@@ -696,7 +695,7 @@ public class TrainCommon {
                 // Scheduled work at {0}, departure time {1}
                 msg = MessageFormat.format(messageFormatText = TrainManifestText.getStringWorkDepartureTime(),
                         new Object[]{splitString(train.getTrainDepartsName()), train.getFormatedDepartureTime(),
-                                train.getName(), train.getDescription(),
+                                train.getSplitName(), train.getDescription(),
                                 rl.getLocation().getDivisionName()});
             } else if (rl == train.getTrainDepartsRouteLocation()) {
                 // Departs {0} {1}bound at {2}
@@ -715,7 +714,7 @@ public class TrainCommon {
             } else if (Setup.isUseSwitchListDepartureTimeEnabled() &&
                     rl == train.getCurrentRouteLocation() &&
                     rl != train.getTrainTerminatesRouteLocation() &&
-                    !rl.getDepartureTime().equals(RouteLocation.NONE)) {
+                    !rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
                 // Departs {0} {1}bound at {2}
                 msg = MessageFormat.format(messageFormatText = TrainSwitchListText.getStringDepartsAt(),
                         new Object[]{splitString(rl.getName()), rl.getTrainDirectionString(),
@@ -1426,7 +1425,7 @@ public class TrainCommon {
      * @param name the string to split
      * @return First half of the string.
      */
-    protected static String splitStringLeftParenthesis(String name) {
+    public static String splitStringLeftParenthesis(String name) {
         String[] splitname = name.split(HYPHEN);
         if (splitname.length > 1 && splitname[1].startsWith("(")) {
             return splitname[0].trim();
@@ -2160,7 +2159,7 @@ public class TrainCommon {
      * midnight. Note that the string time could be blank, and in that case
      * returns 0 minutes. 
      */
-    protected int convertStringTime(String time) {
+    public static int convertStringTime(String time) {
         int minutes = 0;
         boolean hrFormat = false;
         String[] splitTimePM = time.split(SPACE);
@@ -2191,6 +2190,16 @@ public class TrainCommon {
         log.debug("convert time {} to minutes {}", time, minutes);
         return minutes;
     }
+    
+    public String convertMinutesTime(int minutes) {
+        int days = minutes / (24 * 60);
+        int h = (minutes - (days * 24 * 60))/60;
+        String sHours = String.format("%02d", h);
+        int m = minutes - days * 24 * 60 - h * 60;
+        String sMinutes = String.format("%02d", m);
+        return Integer.toString(days) + ":" + sHours + ":" + sMinutes;
+    }
+        
 
     /**
      * Pads out a string by adding spaces to the end of the string, and will

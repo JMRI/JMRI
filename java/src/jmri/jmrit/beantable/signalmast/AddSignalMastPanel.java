@@ -55,6 +55,9 @@ public class AddSignalMastPanel extends JPanel {
     private String mastSelectionCombo = this.getClass().getName() + ".SignallingMastSelected"; // NOI18N
     private String driverSelectionCombo = this.getClass().getName() + ".SignallingDriverSelected"; // NOI18N
 
+    private SignalMast mast = null;
+    private String originalUserName = null;
+
     /**
      * Constructor providing a blank panel to configure a new signal mast after
      * pressing 'Add...' on the Signal Mast Table.
@@ -208,6 +211,7 @@ public class AddSignalMastPanel extends JPanel {
     public AddSignalMastPanel(SignalMast mast) {
         this(); // calls the above method to build the base for an edit panel
         log.debug("AddSignalMastPanel({}) start", mast);
+        this.mast = mast;
 
         // switch buttons
         apply.setVisible(true);
@@ -217,10 +221,10 @@ public class AddSignalMastPanel extends JPanel {
         sigSysBox.setEnabled(false);
         mastBox.setEnabled(false);
         signalMastDriver.setEnabled(false);
-        userName.setEnabled(false);
 
         //load prior content
         userName.setText(mast.getUserName());
+        originalUserName = mast.getUserName();
         log.trace("Prior content system name: {}  mast type: {}", mast.getSignalSystem().getUserName(), mast.getMastType());
         if (mast.getMastType() == null) log.error("MastType was null, and never should be");
         sigSysBox.setSelectedItem(mast.getSignalSystem().getUserName());  // signal system
@@ -481,17 +485,54 @@ public class AddSignalMastPanel extends JPanel {
         String mastname = mastFiles.get(mastBox.getSelectedIndex()).getName();
         String tmpUserName = NamedBean.normalizeUserName(userName.getText());
         String user = ( tmpUserName != null ? tmpUserName : ""); // NOI18N
-        if (!GraphicsEnvironment.isHeadless()) {
-            if (user.isEmpty()) {
-                int i = issueNoUserNameGiven();
-                if (i != 0) {
-                    return;
+
+        // if we are editing, and the username has been changed, we need to do a rename.
+        if (mast != null && !user.equals(originalUserName)) {
+            try {
+                NamedBeanHandleManager nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
+
+                // Case 1: New user name is not empty.
+                if (!user.isEmpty()) {
+                    // This is a rename or add-user-name operation. Validate the new user name.
+                    SignalMastManager manager = InstanceManager.getDefault(SignalMastManager.class);
+                    NamedBean conflict = manager.getByUserName(user);
+                    if (conflict != null && conflict != mast) {
+                        issueWarningUserName(user); // "User Name is already in use"
+                        return;
+                    }
+                    conflict = manager.getBySystemName(user);
+                    if (conflict != null && conflict != mast) {
+                        issueWarningUserNameAsSystem(user); // "User Name exists as a System Name"
+                        return;
+                    }
+
+                    // Validation passed. Now, perform the correct update.
+                    mast.setUserName(user);
+
+                    if (originalUserName == null || originalUserName.isEmpty()) {
+                        // Was empty, now has a name.
+                        nbMan.updateBeanFromSystemToUser(mast);
+                    } else {
+                        // Was not empty, is now a different non-empty name.
+                        nbMan.renameBean(originalUserName, user, mast);
+                    }
+                } else { // user.isEmpty() is true
+                    // This is a remove-user-name operation.
+                    mast.setUserName(null);
+                    nbMan.updateBeanFromUserToSystem(mast);
                 }
+            } catch (JmriException e) {
+                log.error("Error while renaming Signal Mast", e);
+                JmriJOptionPane.showMessageDialog(this, e.getMessage(),
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                return;
             }
         }
 
         // ask top-most pane to make a signal
         try {
+            // For a new mast, this creates it.
+            // For an existing mast, this updates its properties from the pane.
             success = currentPane.createMast(sigsysname, mastname, user);
         } catch (RuntimeException ex) {
             issueDialogFailMessage(ex);

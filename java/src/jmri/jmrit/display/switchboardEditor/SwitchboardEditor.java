@@ -1,5 +1,7 @@
 package jmri.jmrit.display.switchboardEditor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -18,6 +20,7 @@ import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.swing.ManagerComboBox;
 import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
@@ -191,7 +194,7 @@ public class SwitchboardEditor extends Editor {
         // always available (?) and supports all types, not required now, will be set by listener
 
         Container contentPane = getContentPane(); // the actual Editor configuration pane
-        setVisible(false);      // start with Editor window hidden
+        ThreadingUtil.runOnGUI( () -> setVisible(false)); // start with Editor window hidden
         setUseGlobalFlag(true); // always true for a Switchboard
         // handle Editor close box clicked without deleting the Switchboard panel
         super.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -200,7 +203,7 @@ public class SwitchboardEditor extends Editor {
             public void windowClosing(java.awt.event.WindowEvent e) {
                 log.debug("switchboardEditor close box selected");
                 setAllEditable(false);
-                setVisible(false); // hide Editor window
+                ThreadingUtil.runOnGUI( () -> setVisible(false)); // hide Editor window
             }
         });
         // make menus
@@ -462,6 +465,10 @@ public class SwitchboardEditor extends Editor {
      * Switchboard JPanel WindowResize() event is handled by resizeInFrame()
      */
     public void updatePressed() {
+        ThreadingUtil.runOnGUI(this::updatePressedOnGui);
+    }
+
+    private void updatePressedOnGui() {
         log.debug("updatePressed START _tileSize = {}", _tileSize);
 
         if (_autoItemRange && !autoItemRange.isSelected()) {
@@ -1543,15 +1550,6 @@ public class SwitchboardEditor extends Editor {
         return _showUserName;
     }
 
-    /**
-     * Initial, simple boolean label option
-     * @param on true to show both system and user name on the switch label
-     */
-    @Deprecated
-    public void setShowUserName(Boolean on) {
-        setShowUserName(on ? SwitchBoardLabelDisplays.BOTH_NAMES : SwitchBoardLabelDisplays.SYSTEM_NAME);
-    }
-
     public void setShowUserName(SwitchBoardLabelDisplays label) {
         _showUserName = label;
         switch (label) {
@@ -1680,6 +1678,8 @@ public class SwitchboardEditor extends Editor {
      * so we don't dispose it (yet).
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "Just hiding the window, not actually closing it")
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
         setAllEditable(false);
@@ -1730,7 +1730,7 @@ public class SwitchboardEditor extends Editor {
      */
     public JmriJFrame makeFrame(String name) {
         JmriJFrame targetFrame = new JmriJFrame(name);
-        targetFrame.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> targetFrame.setVisible(true) );
 
         JMenuBar menuBar = new JMenuBar();
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));

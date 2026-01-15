@@ -452,7 +452,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     public static XNetMessage getVerifyOpsModeCVMsg(int AH, int AL, int cv, int val) {
         XNetMessage m = new XNetMessage(8);
         m.setElement(0, XNetConstants.OPS_MODE_PROG_REQ);
-        m.setElement(1, XNetConstants.OPS_MODE_PROG_WRITE_REQ);
+        m.setElement(1, XNetConstants.OPS_MODE_PROG_READ_REQ);
         m.setElement(2, AH);
         m.setElement(3, AL);
         /* Element 4 is 0xE4 + the upper two  bits of the 10 bit CV address.
@@ -524,6 +524,14 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return m;
     }
 
+    public static XNetMessage getOpsModeResultsMsg() {
+        XNetMessage m = new XNetMessage(3);
+        m.setTimeout(XNetProgrammingTimeout);
+        m.setElement(0, XNetConstants.CS_REQUEST);
+        m.setElement(1, XNetConstants.OPS_MODE_CSRESULT);
+        m.setParity(); // Set the parity bit
+        return m;
+    }
     /*
      * Next, we have routines to generate XpressNet Messages for building
      * and tearing down a consist or a double header.

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.*;
 import jmri.jmrit.operations.OperationsPanel;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -96,19 +97,19 @@ public class EngineManager extends RollingStockManager<Engine>
     }
 
     /**
-     * return a list available engines (no assigned train) engines are ordered least
-     * recently moved to most recently moved.
+     * Returns a list of available engines (no assigned train). Engines are
+     * ordered by track priority and least recently moved to most recently
+     * moved.
      *
      * @param train The Train requesting this list.
-     *
      * @return Ordered list of engines not assigned to a train
      */
     public List<Engine> getAvailableTrainList(Train train) {
         // now build list of available engines for this route
         List<Engine> out = new ArrayList<>();
-        // get engines by moves list
-        for (RollingStock rs : getByMovesList()) {
-            Engine engine = (Engine) rs;
+        // get engines by track priority and moves
+        List<Engine> sortByPriority = sortByTrackPriority(getByMovesList());
+        for (Engine engine : sortByPriority) {
             if (engine.getTrack() != null && (engine.getTrain() == null || engine.getTrain() == train)) {
                 out.add(engine);
             }
@@ -178,6 +179,67 @@ public class EngineManager extends RollingStockManager<Engine>
             }
         }
         return _commentLength;
+    }
+    
+    /**
+     * Creates a clone for the engine, and clones if the engine is part of a consist.
+     * Note that a engine have have multiple clones.
+     * 
+     * @param engine       The engine to clone
+     * @param track     The destination track for the clones
+     * @param train     The train transporting the clones
+     * @param startTime The date and time the clones were moved
+     * @return clone for this engine
+     */
+    public Engine createClone(Engine engine, Track track, Train train, Date startTime) {
+        int cloneCreationOrder = getCloneCreationOrder();
+        String creationOrder = padNumber(cloneCreationOrder);
+        Engine cloneEng = engine.copy();
+        cloneEng.setNumber(engine.getNumber() + Engine.CLONE + creationOrder);
+        cloneEng.setClone(true);
+        // register engine before setting location so the engine gets logged
+        register(cloneEng);
+        cloneEng.setLocation(engine.getLocation(), engine.getTrack(), RollingStock.FORCE);
+        // for reset
+        cloneEng.setLastRouteId(engine.getLastRouteId());
+        cloneEng.setMoves(engine.getMoves());
+        if (engine.getConsist() != null) {
+            String consistName = engine.getConsistName() + Engine.CLONE + creationOrder;
+            Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist(consistName);
+            cloneEng.setConsist(consist);
+            for (Engine e : engine.getConsist().getEngines()) {
+                if (e != engine) {
+                    Engine nEng = e.copy();
+                    nEng.setNumber(e.getNumber() + Engine.CLONE + creationOrder);
+                    nEng.setClone(true);
+                    nEng.setConsist(consist);
+                    nEng.setMoves(e.getMoves());
+                    register(nEng);
+                    nEng.setLocation(engine.getLocation(), engine.getTrack(), RollingStock.FORCE);
+                    // for reset
+                    // move engine to new location for later pick up
+                    e.setLocation(track.getLocation(), track, RollingStock.FORCE);
+                    e.setLastTrain(train);
+                    e.setLastLocationId(engine.getLocationId());
+                    e.setLastTrackId(engine.getTrackId());
+                    e.setLastDate(startTime);
+                    e.setMoves(e.getMoves() + 1); // bump count
+                    e.setCloneOrder(cloneCreationOrder); // for reset
+                }
+            }
+        }
+        // move engine to new location for later pick up
+        engine.setLocation(track.getLocation(), track, RollingStock.FORCE);
+        engine.setLastTrain(train);
+        engine.setLastLocationId(cloneEng.getLocationId());
+        engine.setLastTrackId(cloneEng.getTrackId());
+        engine.setLastRouteId(train.getRoute().getId());
+        // this engine was moved during the build process
+        engine.setLastDate(startTime);
+        engine.setMoves(engine.getMoves() + 1); // bump count
+        engine.setCloneOrder(cloneCreationOrder); // for reset
+        engine.setDestination(null, null);    
+        return cloneEng;
     }
 
     public void load(Element root) {

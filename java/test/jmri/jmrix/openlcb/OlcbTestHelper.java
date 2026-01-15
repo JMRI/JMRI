@@ -50,7 +50,7 @@ public class OlcbTestHelper {
      * mock connection passed in at construction time.
      * Supports printing the messages for debugging.
      */
-    public class FakeConnection extends AbstractConnection {
+    public static class FakeConnection extends AbstractConnection {
         private final Connection mock;
         public boolean debugMessages = false;
 
@@ -105,7 +105,7 @@ public class OlcbTestHelper {
      * Helper class for the single-threaded operation. This class gets plugged into the OlcbInterface as the callback
      * for executing outgoing message send operations.
      */
-    class FakeExecutionThread implements OlcbInterface.SyncExecutor, Runnable {
+    static class FakeExecutionThread implements OlcbInterface.SyncExecutor, Runnable {
         private final BlockingQueue<QEntry> outputQueue = new LinkedBlockingQueue<>();
 
         /**
@@ -131,7 +131,7 @@ public class OlcbTestHelper {
         @Override
         public void run() {
             while (!Thread.currentThread().isInterrupted()) {
-                QEntry m = null;
+                QEntry m;
                 try {
                     m = outputQueue.take();
                     m.callback.run();
@@ -142,7 +142,7 @@ public class OlcbTestHelper {
             }
         }
 
-        private class QEntry {
+        private static class QEntry {
             QEntry(Runnable r) {
                 callback = r;
             }

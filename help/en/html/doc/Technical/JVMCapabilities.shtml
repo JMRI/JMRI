@@ -116,6 +116,14 @@
         </tr>
 
         <tr>
+          <td>
+            Java 11 (2018-09-25) is a Long Term Support (LTS) version.
+          </td>
+          <td>11</td>
+          <td>11</td>
+        </tr>
+
+        <tr>
           <td>Completion of Optional class: isEmpty()</td>
           <td>11</td>
           <td>11</td>
@@ -231,6 +239,14 @@
 
         <tr>
           <td>
+            Switch Expressions for more compact, readable code.
+          </td>
+          <td>12</td>
+          <td>12</td>
+        </tr>
+
+        <tr>
+          <td>
             Improvements to the String API: transform, indent
           </td>
           <td>12</td>
@@ -250,7 +266,7 @@
             Improved handling and reporting of NPE, which will help
             debugging
           </td>
-          <td>14</td>
+          <td>11</td>
           <td>14</td>
         </tr>
 
@@ -301,6 +317,23 @@
 
         <tr>
           <td>
+            Instanceof Pattern Matching reduced the need for type casting,
+            making code more readable.
+          </td>
+          <td>16</td>
+          <td>16</td>
+        </tr>
+
+        <tr>
+          <td>
+            Java 17 (2021-09-14) is the next LTS version after Java 11.
+          </td>
+          <td>17</td>
+          <td>17</td>
+        </tr>
+
+        <tr>
+          <td>
             Improved rendering pipeline on macOS which reduces the
             number of odd display artifacts. First appearance of fully-native
             JDK on Apple Silicon.
@@ -320,7 +353,7 @@
 
         <tr>
           <td>
-            Java 17 is the next LTS version after Java 11.
+            Java 17 is the technical baseline for the JUnit 6 testing framework.
           </td>
           <td>17</td>
           <td>17</td>
@@ -330,6 +363,8 @@
           <td>
             The sun.misc package is replaced by jdk.internal.misc, access
             to which requires the use of the module system.
+            (JMRI only uses sun.misc.Signal, which is not yet
+            present in jdk.internal.misc as of Java 21)
           </td>
           <td>18</td>
           <td>18</td>
@@ -350,7 +385,7 @@
             resulting in compilation warnings.
           </td>
           <td>20</td>
-          <td>20</td>
+          <td></td>
         </tr>
 
         <tr>
@@ -359,12 +394,12 @@
             <a href="https://blogs.oracle.com/javamagazine/post/java-javadoc-snippet">code snippets</a>.
           </td>
           <td>20</td>
-          <td>20</td>
+          <td></td>
         </tr>
 
         <tr>
           <td>
-            Sequenced collections (replaces existing non-standard workarounds)
+            Java 21 (2023-09-19) is the next LTS version after Java 17.
           </td>
           <td>21</td>
           <td>21</td>
@@ -372,7 +407,7 @@
 
         <tr>
           <td>
-            Java 21 is the next LTS version after Java 17.
+            Sequenced collections (replaces existing non-standard workarounds)
           </td>
           <td>21</td>
           <td>21</td>
@@ -404,6 +439,31 @@
           </td>
           <td>23</td>
           <td>23</td>
+        </tr>
+
+        <tr>
+          <td>
+            Null-Controlled Value Types provide a cleaner way of avoiding NPEs.
+          </td>
+          <td>24</td>
+          <td>24</td>
+        </tr>
+
+        <tr>
+          <td>
+            Primitive Patterns in switch and instanceof (Preview)
+            simplify decoding.
+          </td>
+          <td>24</td>
+          <td>24</td>
+        </tr>
+
+        <tr>
+          <td>
+            Java 25 (2025-09-16) is the next LTS version after Java 21.
+          </td>
+          <td>25</td>
+          <td>25</td>
         </tr>
 
       </table>
@@ -881,9 +941,7 @@
         </tbody>
       </table>
 
-      <a id="jdk17">
-      <a id="compatibilty">
-      <h2>Running JMRI 5 on Java 17 or later</h2>
+      <h2>Running JMRI 5 on Java 21 or later</h2>
       There are some issues when using JMRI
       on Java versions later than the required Java 11.
       Specifically, for JMRI 5 these include:
@@ -902,12 +960,12 @@
             Rhino doesn't yet provide full access to the JMRI Java classes.
         <li>The Java module system will in certain circumstances emit a large
             number of "access violation" messages to the log.  These are just advisory
-            with Java 17, but will become mandatory failures in some
+            with Java 21, but will become mandatory failures in some
             version after Java 21.
         <li>(Developers only) Deprecations that are marked for removal
             generate un-suppressible compilation messages in Java 21.
             These will need to be cleaned up before the references
-            are removed in some version after Java 21.
+            are removed in some Java version after Java 21.
       </ol>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->

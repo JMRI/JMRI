@@ -214,7 +214,7 @@ class createandshowGUI3(TableModelListener):
             # (found need to do this as train went off in wrong direction after setting new trainsit)
             train_name = activeTrain.getTrainName()
             MyModelListener3(self, self.class_StopMaster).swap_direction(train_name)
-            DF.terminateActiveTrain(activeTrain)
+            DF.terminateActiveTrain(activeTrain, True, False)
         DF = None
         self.model.populate()
         self.completeTablePanel()
@@ -402,10 +402,9 @@ class MyModelListener3(TableModelListener):
             if train == train_name:
                 trains_dispatched.remove(train)
 
-
     def delete_transit(self, train_name):
+        if self.logLevel > 0: print "delete_transit: train_name", train_name
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        #DF.setState(DF.ICONIFIED);
         activeTrainList = java.util.concurrent.CopyOnWriteArrayList()
         for activeTrain in DF.getActiveTrainsList():
             activeTrainList.add(activeTrain)
@@ -416,12 +415,7 @@ class MyModelListener3(TableModelListener):
             return
         if self.logLevel > 0: print ("active_train", active_train[0].getActiveTrainName())
         if len(active_train) > 0:
-            transit_name = active_train[0].getTransitName()
-            DF.terminateActiveTrain(active_train[0])
-            # train train_name needs its direction swapped
-            # (found need to do this as train went off in wrong direction after setting new transit)
-            self.swap_direction(train_name)
-            return transit_name
+            DF.terminateActiveTrain(active_train[0], True, True)
 
     def swap_direction(self, train_name):
         global trains

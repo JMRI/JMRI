@@ -40,7 +40,7 @@ public class Pool extends Bean {
     public void setName(String name) {
         String old = _name;
         _name = name;
-        this.propertyChangeSupport.firePropertyChange("Name", old, name);
+        firePropertyChange("Name", old, name);
     }
 
     /**
@@ -76,10 +76,8 @@ public class Pool extends Bean {
      */
     public void add(Track track) {
         if (!_tracks.contains(track)) {
-
             int oldSize = _tracks.size();
             _tracks.add(track);
-
             firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, oldSize, _tracks.size());
         }
     }
@@ -91,10 +89,8 @@ public class Pool extends Bean {
      */
     public void remove(Track track) {
         if (_tracks.contains(track)) {
-
             int oldSize = _tracks.size();
             _tracks.remove(track);
-
             firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, oldSize, _tracks.size());
         }
     }
@@ -108,13 +104,19 @@ public class Pool extends Bean {
         return getTracks().stream().map(track -> track.getLength()).reduce(0, Integer::sum);
     }
     
+    /**
+     * Used to determine the maximum available length for a given track
+     * 
+     * @param track the track being evaluated
+     * @return maximum track length
+     */
     public int getMaxLengthTrack(Track track) {
         int length = getTotalLengthTracks();
         for (Track t : getTracks()) {
             if (t == track) {
                 continue;
             }
-            length = length - t.getMinimumLength();
+            length = length - t.getPoolMinimumLength();
         }
         return length;
     }
@@ -129,6 +131,10 @@ public class Pool extends Bean {
      * @return true if successful
      */
     public boolean requestTrackLength(Track track, int length) {
+        // is there a maximum length restriction?
+        if (track.getUsedLength() + track.getReserved() + length > track.getPoolMaximumLength()) {
+            return false;
+        }
         // only request enough length for the rolling stock to fit
         int additionalLength = track.getUsedLength() + track.getReserved() + length - track.getLength();
 
@@ -136,7 +142,7 @@ public class Pool extends Bean {
             // note that the reserved track length can be either positive or negative
             if (t != track) {
                 if (t.getUsedLength() + t.getReserved() + additionalLength <= t.getLength()
-                        && t.getLength() - additionalLength >= t.getMinimumLength()) {
+                        && t.getLength() - additionalLength >= t.getPoolMinimumLength()) {
                     log.debug("Pool ({}) increasing track ({}) length ({}) decreasing ({})", getName(),
                             track.getName(), additionalLength, t.getName()); // NOI18N
                     t.setLength(t.getLength() - additionalLength);
@@ -145,7 +151,7 @@ public class Pool extends Bean {
                 } else {
                     // steal whatever isn't being used by this track
                     int available = t.getLength() - (t.getUsedLength() + t.getReserved());
-                    int min = t.getLength() - t.getMinimumLength();
+                    int min = t.getLength() - t.getPoolMinimumLength();
                     if (min < available) {
                         available = min;
                     }
@@ -158,6 +164,29 @@ public class Pool extends Bean {
                         additionalLength = additionalLength - available;
                     }
                 }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Used to determine if the option to use maximum track length in a pool is
+     * enabled. Enabled when there's 3 or more tracks in the pool.
+     * 
+     * @return true if maximum track length option is available
+     */
+    public boolean isMaxLengthOptionEnabled() {
+        // need 3 or more tracks in pool before allowing max track length option
+        if (getSize() > 2) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isThereMaxLengthRestrictions() {
+        for (Track t : getTracks()) {
+            if (t.getPoolMaximumLength() != Integer.MAX_VALUE) {
+                return true;
             }
         }
         return false;

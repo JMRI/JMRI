@@ -1,5 +1,11 @@
 package jmri.jmrit.logixng.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.*;
 
 import jmri.*;
@@ -8,10 +14,7 @@ import jmri.jmrit.logixng.actions.AbstractDigitalAction;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test DefaultConditionalNG
@@ -23,17 +26,13 @@ public class DefaultConditionalNGTest {
     @Test
     public void testCtor() {
         DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
-        Assert.assertNotNull("exists", conditionalNG);
+        assertNotNull( conditionalNG, "exists");
 
-        boolean hasThrown = false;
-        try {
-            // Bad system name
-            new DefaultConditionalNG("IQCAbc", null);
-        } catch (IllegalArgumentException e) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "system name is not valid", e.getMessage());
-        }
-        Assert.assertTrue("Exception thrown", hasThrown);
+        IllegalArgumentException e = assertThrows( IllegalArgumentException.class, () -> {
+            var dc = new DefaultConditionalNG("IQCAbc", null);
+            fail("Should not have got here " + dc);
+        });
+        assertEquals( "system name is not valid", e.getMessage(), "Error message is correct");
     }
 
     @Test
@@ -42,7 +41,7 @@ public class DefaultConditionalNGTest {
         conditionalNG.setState(NamedBean.INCONSISTENT);
         JUnitAppender.assertWarnMessage("Unexpected call to setState in DefaultConditionalNG.");
 
-        Assert.assertEquals("State is correct", NamedBean.UNKNOWN, conditionalNG.getState());
+        assertEquals( NamedBean.UNKNOWN, conditionalNG.getState(), "State is correct");
         JUnitAppender.assertWarnMessage("Unexpected call to getState in DefaultConditionalNG.");
     }
 
@@ -56,14 +55,14 @@ public class DefaultConditionalNGTest {
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(action);
         conditionalNG.getChild(0).connect(socket);
-        if (! conditionalNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( conditionalNG.setParentForAllChildren(new ArrayList<>()));
 
         socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
 
         action.throwOnExecute = false;
         action.hasExecuted = false;
         conditionalNG.execute();
-        Assert.assertTrue("Action is executed", action.hasExecuted);
+        assertTrue( action.hasExecuted, "Action is executed");
 
         action.throwOnExecute = true;
         action.hasExecuted = false;
@@ -74,12 +73,11 @@ public class DefaultConditionalNGTest {
     @Test
     public void testDescription() {
         DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
-        Assert.assertEquals("Short description is correct", "ConditionalNG: IQC123", conditionalNG.getShortDescription());
-        Assert.assertEquals("Long description is correct", "ConditionalNG: IQC123", conditionalNG.getLongDescription());
+        assertEquals( "ConditionalNG: IQC123", conditionalNG.getShortDescription(), "Short description is correct");
+        assertEquals( "ConditionalNG: IQC123", conditionalNG.getLongDescription(), "Long description is correct");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -91,7 +89,7 @@ public class DefaultConditionalNGTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
@@ -102,10 +100,10 @@ public class DefaultConditionalNGTest {
 
     private static class MyDigitalAction extends AbstractDigitalAction {
 
-        private boolean hasExecuted;
-        private boolean throwOnExecute;
+        boolean hasExecuted;
+        boolean throwOnExecute;
 
-        public MyDigitalAction(String sys, String user) throws BadUserNameException, BadSystemNameException {
+        MyDigitalAction(String sys, String user) throws BadUserNameException, BadSystemNameException {
             super(sys, user);
         }
 

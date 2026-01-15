@@ -1,6 +1,9 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javax.annotation.*;
+
 import java.beans.PropertyChangeEvent;
 
 import jmri.InstanceManager;
@@ -22,7 +25,7 @@ public class DefaultVariableLightManager extends AbstractManager<VariableLight>
 
     /**
      * Create a new VariableLightManager instance.
-     * 
+     *
      * @param memo the system connection
      */
     public DefaultVariableLightManager(SystemConnectionMemo memo) {
@@ -64,7 +67,7 @@ public class DefaultVariableLightManager extends AbstractManager<VariableLight>
 
     /** {@inheritDoc} */
     @Override
-    @Nonnull 
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameVariableLights" : "BeanNameVariableLight");
     }
@@ -79,22 +82,25 @@ public class DefaultVariableLightManager extends AbstractManager<VariableLight>
 
     /** {@inheritDoc} */
     @Override
-    @OverridingMethodsMustInvokeSuper
-    public void register(@Nonnull VariableLight s) {
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This method must never be called")
+    public final void register(@Nonnull VariableLight s) {
         throw new UnsupportedOperationException("Not supported. Use LightManager.register() instead");
     }
 
     /** {@inheritDoc} */
     @Override
-    @OverridingMethodsMustInvokeSuper
-    public void deregister(@Nonnull VariableLight s) {
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This method must never be called")
+    public final void deregister(@Nonnull VariableLight s) {
         throw new UnsupportedOperationException("Not supported. Use LightManager.deregister() instead");
     }
 
     /** {@inheritDoc} */
     @Override
-    @OverridingMethodsMustInvokeSuper
-    public void deleteBean(@Nonnull VariableLight n, @Nonnull String property) {
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This method must never be called")
+    public final void deleteBean(@Nonnull VariableLight n, @Nonnull String property) {
         throw new UnsupportedOperationException("Not supported. Use LightManager.deleteBean() instead");
     }
 

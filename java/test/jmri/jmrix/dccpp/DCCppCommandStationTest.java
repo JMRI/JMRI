@@ -85,6 +85,24 @@ public class DCCppCommandStationTest {
     }
 
     @Test
+    public void testIsMaxNumSlotsMsgSupported() {
+        //verify v3+ supports the MaxNumSlots message
+        DCCppCommandStation c = new DCCppCommandStation();
+        DCCppReply r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-3.0.1 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertTrue("v3+ supports the MaxNumSlots message", c.isMaxNumSlotsMsgSupported());
+
+        //verify < v3 does need refresh
+        r = DCCppReply.parseDCCppReply(
+                "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertFalse("< v3 does not support the MaxNumSlots message", c.isMaxNumSlotsMsgSupported());
+    }
+
+    @Test
     public void testIsReadStartValSupported() {
         //verify v3+ supports start val
         DCCppCommandStation c = new DCCppCommandStation();

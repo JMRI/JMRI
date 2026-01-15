@@ -516,6 +516,7 @@ class CreateAndShowGUI6(TableModelListener):
             comment = "skip " + comment
             # print "comment1", comment
             train.setComment(comment)
+
     def delete_between(self, string, delim1, delim2):
         first, _, rest = string.partition(delim1)
         _, _, rest = rest.partition(delim2)
@@ -782,13 +783,3 @@ class MyTableModel6 (DefaultTableModel):
         # print "my_match", re.match(pattern, input_string)
 
         return my_match
-
-
-
-
-
-
-
-
-
-

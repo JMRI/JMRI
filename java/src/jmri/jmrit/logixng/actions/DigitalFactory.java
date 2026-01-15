@@ -39,6 +39,7 @@ public class DigitalFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, ActionRequestUpdateAllSensors.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, ActionReporter.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, ActionRequestUpdateOfSensor.class),
+                        new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, ActionRequestUpdateOfTurnout.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, ActionScript.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, ActionSensor.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, ActionSetReporter.class),
@@ -64,9 +65,11 @@ public class DigitalFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.FLOW_CONTROL, Error.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.OTHER, ExecuteAction.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.COMMON, ExecuteDelayed.class),
+                        new AbstractMap.SimpleEntry<>(LogixNG_Category.OTHER, ExecuteProgram.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.FLOW_CONTROL, Exit.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.FLOW_CONTROL, For.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.FLOW_CONTROL, ForEach.class),
+                        new AbstractMap.SimpleEntry<>(LogixNG_Category.FLOW_CONTROL, ForEachWithDelay.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.FLOW_CONTROL, IfThenElse.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.OTHER, JsonDecode.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.OTHER, Logix.class),
@@ -83,6 +86,7 @@ public class DigitalFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.FLOW_CONTROL, TableForEach.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.OTHER, Timeout.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, TriggerRoute.class),
+                        new AbstractMap.SimpleEntry<>(LogixNG_Category.FLOW_CONTROL, ValidationError.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.OTHER, WebBrowser.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.OTHER, WebRequest.class)
                 );

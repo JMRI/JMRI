@@ -2,8 +2,9 @@ package jmri.util.node;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
@@ -13,12 +14,12 @@ public class NodeIdentityTest {
 
     @Test
     public void testNetworkIdentity() {
-        Assert.assertNotNull(NodeIdentity.networkIdentity());
+        assertNotNull(NodeIdentity.networkIdentity());
     }
 
     @Test
     public void testStorageIdentity() {
-        Assert.assertNotNull(NodeIdentity.storageIdentity());
+        assertNotNull(NodeIdentity.storageIdentity());
     }
 
     @BeforeEach

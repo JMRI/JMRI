@@ -1,5 +1,11 @@
 package jmri.jmrit.logixng.actions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 
 import javax.swing.JTextArea;
@@ -12,9 +18,10 @@ import jmri.script.swing.ScriptOutput;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ActionListenOnBeans
@@ -86,39 +93,34 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
     @Test
     public void testCtor() {
         ActionListenOnBeans t = new ActionListenOnBeans("IQDA1", null);
-        Assert.assertNotNull("not null", t);
+        assertNotNull( t, "not null");
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == actionListenOnBeans.getChildCount());
+        assertEquals( 0, actionListenOnBeans.getChildCount(), "getChildCount() returns 0");
 
-        boolean hasThrown = false;
-        try {
-            actionListenOnBeans.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class,
+            () -> actionListenOnBeans.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", LogixNG_Category.OTHER == _base.getCategory());
+        assertSame( LogixNG_Category.OTHER, _base.getCategory(), "Category matches");
     }
 
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Listen on beans", _base.getShortDescription());
+        assertEquals( "Listen on beans", _base.getShortDescription(), "String matches");
     }
 
     @Test
     public void testLongDescription() {
         ActionListenOnBeans a1 = new ActionListenOnBeans("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Listen on beans", a1.getShortDescription());
+        assertEquals( "Listen on beans", a1.getShortDescription(), "strings are equal");
         ActionListenOnBeans a2 = new ActionListenOnBeans("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Listen on beans", a2.getLongDescription());
+        assertEquals( "Listen on beans", a2.getLongDescription(), "strings are equal");
     }
 
     private JTextArea getOutputArea() {
@@ -136,42 +138,42 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         conditionalNG.setRunDelayed(true);
 
         // Test listen on sensor s1
-        Assert.assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
+        assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
         getOutputArea().setText("");
         s99.setState(Sensor.INACTIVE);
         s1.setState(Sensor.INACTIVE);
-        Assert.assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
-        Assert.assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
-        Assert.assertEquals("IS1, KnownState, 4", getOutputArea().getText().trim());
+        assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
+        assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
+        assertEquals("IS1, KnownState, 4", getOutputArea().getText().trim());
         getOutputArea().setText("");
         s99.setState(Sensor.INACTIVE);
-        Assert.assertEquals("", getOutputArea().getText());
+        assertEquals("", getOutputArea().getText());
         s1.setState(Sensor.ACTIVE);
-        Assert.assertEquals("", getOutputArea().getText());
-        Assert.assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
-        Assert.assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
-        Assert.assertEquals("IS1, KnownState, 2", getOutputArea().getText().trim());
+        // LogixNG Thread updates the TextArea when complete.
+        assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
+        assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
+        assertEquals("IS1, KnownState, 2", getOutputArea().getText().trim());
 
         // Test listen on sensor s1
-        Assert.assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
+        assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
         getOutputArea().setText("");
         s99.setState(Sensor.INACTIVE);
         s1.setState(Sensor.INACTIVE);
-        Assert.assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
-        Assert.assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
-        Assert.assertEquals("IS1, KnownState, 4", getOutputArea().getText().trim());
+        assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
+        assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
+        assertEquals("IS1, KnownState, 4", getOutputArea().getText().trim());
         getOutputArea().setText("");
         s99.setState(Sensor.INACTIVE);
-        Assert.assertEquals("", getOutputArea().getText());
+        assertEquals("", getOutputArea().getText());
+
         s1.setState(Sensor.ACTIVE);
-        Assert.assertEquals("", getOutputArea().getText());
-        Assert.assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
-        Assert.assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
-        Assert.assertEquals("IS1, KnownState, 2", getOutputArea().getText().trim());
+        assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
+        assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
+        assertEquals("IS1, KnownState, 2", getOutputArea().getText().trim());
 
         // Test listen on sensor s1, s2 and s3, when s1 and s2 goes active
         // while the conditionalNG is running.
-        Assert.assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
+        assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
         getOutputArea().setText("");
         sensorWait.setState(Sensor.INACTIVE);
         s99.setState(Sensor.INACTIVE);
@@ -179,24 +181,25 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         s2.setState(Sensor.INACTIVE);
         s3.setState(Sensor.INACTIVE);
         sensorWait.setState(Sensor.ACTIVE);
-        Assert.assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
-        Assert.assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
-        Assert.assertTrue(JUnitUtil.waitFor(() -> {return "IS1, KnownState, 4\nIS2, KnownState, 4\nIS3, KnownState, 4\n".equals(getOutputArea().getText());}));
-        Assert.assertEquals("IS1, KnownState, 4\nIS2, KnownState, 4\nIS3, KnownState, 4\n", getOutputArea().getText());
+        assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
+        assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
+        assertTrue(JUnitUtil.waitFor(() -> {return "IS1, KnownState, 4\nIS2, KnownState, 4\nIS3, KnownState, 4\n".equals(getOutputArea().getText());}));
+        assertEquals("IS1, KnownState, 4\nIS2, KnownState, 4\nIS3, KnownState, 4\n", getOutputArea().getText());
         getOutputArea().setText("");
         s99.setState(Sensor.INACTIVE);
-        Assert.assertEquals("", getOutputArea().getText());
+        assertEquals("", getOutputArea().getText());
+
         s1.setState(Sensor.ACTIVE);
-        Assert.assertEquals("", getOutputArea().getText());
-        Assert.assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
-        Assert.assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
-        Assert.assertEquals("IS1, KnownState, 2", getOutputArea().getText().trim());
+        assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
+        assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
+        assertTrue(JUnitUtil.waitFor(() -> "IS1, KnownState, 2".equals(getOutputArea().getText().trim())));
+        assertEquals("IS1, KnownState, 2", getOutputArea().getText().trim());
 
         actionWaitFor.setReleaseCondition(oldReleaseCondition);
     }
 
-    // The minimal setup for log4J
     @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, ParserException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -264,12 +267,13 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         socket = digitalActionManager.registerAction(actionSensor);
         many.getChild(3).connect(socket);
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
     @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.removeMatchingThreads("ScriptOutput PipeListener");

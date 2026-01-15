@@ -1,10 +1,8 @@
 package jmri.jmrit.logix;
 
 import java.io.File;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
+
+import jmri.*;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -67,7 +65,7 @@ public class NXFrameTest {
 
     @Test
     @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
-    public void testNXWarrantSetup() throws Exception {
+    public void testNXWarrantSetup() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -143,7 +141,7 @@ public class NXFrameTest {
     @Test
     @Timeout(60)
     @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
-    public void testNXWarrant() throws Exception {
+    public void testNXWarrant() throws JmriException {
         // The first part of this test duplicates testNXWarrantSetup().  It
         // then goes on to test a Warrant through the WarrantTableFrame.
         // it is the WarrantTableframe portion of this test that hangs.
@@ -277,7 +275,7 @@ public class NXFrameTest {
 
     @Test
     @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
-    public void testWarrantLoopRun() throws Exception {
+    public void testWarrantLoopRun() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -339,7 +337,7 @@ public class NXFrameTest {
 
     @Test
     @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
-    public void testWarrantRampHalt() throws Exception {
+    public void testWarrantRampHalt() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -440,9 +438,8 @@ public class NXFrameTest {
      * @param route Array of OBlock names of the route
      * @param mgr OBLock manager
      * @return active end sensor
-     * @throws Exception exception thrown
      */
-    protected static Sensor runtimes(String[] route, OBlockManager mgr) throws Exception {
+    protected static Sensor runtimes(String[] route, OBlockManager mgr) {
         Sensor sensor = null;
         for (int i = 1; i < route.length; i++) {
             sensor = moveToNextBlock(i, route, mgr);
@@ -496,31 +493,32 @@ public class NXFrameTest {
     }
 
 
-    protected static void setAndConfirmSensorAction(Sensor sensor, int state, OBlock block)  {
+    protected static void setAndConfirmSensorAction(final Sensor sensor, final int state, final OBlock b)  {
         if (state == Sensor.ACTIVE) {
+            ThreadingUtil.runOnLayout(() ->
+                setSensor(sensor, Sensor.ACTIVE));
 
-            ThreadingUtil.runOnLayout(() -> {
-                assertDoesNotThrow(() -> sensor.setState(Sensor.ACTIVE),
-                    "Set "+ sensor.getDisplayName()+" ACTIVE Exception: ");
-            });
-            OBlock b = block;
+
             JUnitUtil.waitFor(() -> {
                 return (b.getState() & OBlock.OCCUPIED) != 0;
             }, b.getDisplayName() + " occupied");
         } else if (state == Sensor.INACTIVE) {
-            ThreadingUtil.runOnLayout(() -> {
-                assertDoesNotThrow(() -> sensor.setState(Sensor.INACTIVE),
-                    "Set "+ sensor.getDisplayName()+" INACTIVE Exception: ");
-            });
-            OBlock b = block;
+            ThreadingUtil.runOnLayout(() ->
+                setSensor(sensor, Sensor.INACTIVE));
+
             JUnitUtil.waitFor(() -> {
                 return (b.getState() & OBlock.OCCUPIED) == 0;
             }, b.getDisplayName() + " unoccupied");
         }
     }
 
+    private static void setSensor( Sensor sensor, int state ) {
+        assertDoesNotThrow( () ->
+            sensor.setState(state), () -> "Exception setting Sensor " + sensor + " to " + sensor.describeState(state));
+    }
+
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
@@ -541,7 +539,7 @@ public class NXFrameTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.removeMatchingThreads("Engineer(");
         JUnitUtil.deregisterBlockManagerShutdownTask();
         InstanceManager.getDefault(WarrantManager.class).dispose();

@@ -71,7 +71,7 @@ public class WarrantManager extends AbstractManager<Warrant>
                 r = getBySystemName(systemName);
             }
             if (r != null) {
-                log.warn("Warrant {}  exits.",r.getDisplayName());
+                log.warn("Warrant \"{}\" already exists.",r.getDisplayName());
                 return null;
             }
         }

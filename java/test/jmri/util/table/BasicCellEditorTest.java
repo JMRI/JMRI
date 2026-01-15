@@ -2,7 +2,6 @@ package jmri.util.table;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class BasicCellEditorTest {
     @Test
     public void testCTor() {
         BasicCellEditor t = new BasicCellEditor();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

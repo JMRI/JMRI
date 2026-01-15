@@ -3,6 +3,7 @@ package jmri.jmrix.xpa;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +24,10 @@ public class XpaThrottle extends AbstractThrottle {
      *
      * @param address the address for the throttle
      * @param t the controller for the system connection
+     * @param memo the System connection.
      */
-    public XpaThrottle(LocoAddress address, XpaTrafficController t) {
-        super(null);
+    public XpaThrottle(LocoAddress address, XpaTrafficController t, SystemConnectionMemo memo) {
+        super(memo);
         this.address = address.getNumber();
         this.speedStepMode = SpeedStepMode.INCREMENTAL;
         this.isForward = true;
@@ -36,6 +38,11 @@ public class XpaThrottle extends AbstractThrottle {
         this.speedvalue = 0;
         tc = t;
         log.debug("XpaThrottle constructor called for address {}", address);
+    }
+
+    @Deprecated (since="5.13.3", forRemoval=true)
+    public XpaThrottle(LocoAddress address, XpaTrafficController t) {
+        this(address, t, jmri.InstanceManager.getDefault(jmri.jmrix.xpa.XpaSystemConnectionMemo.class));
     }
 
     /**

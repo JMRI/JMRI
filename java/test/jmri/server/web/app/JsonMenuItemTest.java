@@ -33,7 +33,7 @@ public class JsonMenuItemTest {
     }
 
     @Test
-    public void testContstructor() throws Exception {
+    public void testContstructor() {
 
         Exception ex = Assertions.assertThrows(NullPointerException.class,() -> {
             setCtorNull(); });
@@ -53,7 +53,7 @@ public class JsonMenuItemTest {
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION",
         justification = "testing exception when null passed")
-    private void setCtorNull() throws Exception {
+    private void setCtorNull() {
         Assertions.assertNotNull(new JsonMenuItem(null));
         Assertions.fail("Should have thrown NPE");
     }

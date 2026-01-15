@@ -81,7 +81,6 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li>Fixes a bug when programming locos.</li>
                 <li></li>
             </ul>
 
@@ -127,7 +126,11 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Fixed a problem adding signal masts when the
+                    OpenLCB or LCC system letter is not "M".</li>
+                <li>Improved display of stream data frames in the Monitor.</li>
+                <li>Improved how traffic from an internal hub is 
+                    displayed in the Monitor.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -142,7 +145,6 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li>Fixes a bug when programming locos.</li>
                 <li></li>
             </ul>
 
@@ -307,6 +309,11 @@
             </ul>
 
         <h4>Norsk Modelljernbane (NJM)</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Piko decoders</h4>
             <ul>
                 <li></li>
             </ul>
@@ -485,7 +492,9 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature, a non-lead car in a kernel departing staging or spur can now have a custom load that doesn't match the lead car</li>
+            <li>Added new dialog message to the Trains window confirming termination of built trains.</li>
+            <li>Fix a bug that would crash the Train and Route windows if there were departure times in the train's route.</li>
+            <li>Improvements to staging tracks when using the new on time mode.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -503,7 +512,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>Prevent duplicate start up entries when adding a WiThrottle start up action.</li>
+            <li></li>
         </ul>
 
     <h3>Resources</h3>
@@ -627,7 +636,7 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li>Prevent duplicate start up entries when adding a WiThrottle start up action.</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -645,6 +654,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Fixed a formating problem in "Report Issue" tool</li>
+            <li></li>
         </ul>
 

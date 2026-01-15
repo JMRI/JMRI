@@ -91,6 +91,8 @@ public class LocationsTableFrame extends OperationsFrame {
         toolMenu.addSeparator();
         toolMenu.add(new ModifyLocationsAction());
         toolMenu.add(new ModifyLocationsCarLoadsAction());
+        toolMenu.add(new ModifyLocationsQuickServiceAction());
+        
         toolMenu.addSeparator();
         toolMenu.add(new ExportLocationsRosterAction());
         toolMenu.add(new ImportLocationsRosterAction() );
@@ -99,6 +101,8 @@ public class LocationsTableFrame extends OperationsFrame {
         }
         toolMenu.addSeparator();
         toolMenu.add(new ShowCarsByLocationAction(false, null, null));
+        toolMenu.add(new ShowLocosByLocationAction(false, null, null));
+        toolMenu.addSeparator();
         toolMenu.add(new ShowTrainsServingLocationAction(null, null));
         toolMenu.add(new ShowRoutesServingLocationAction(null));
         toolMenu.addSeparator();

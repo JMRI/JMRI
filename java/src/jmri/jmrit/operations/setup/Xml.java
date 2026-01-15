@@ -184,6 +184,8 @@ public class Xml {
     static final String BUILD_OPTIONS = "buildOptions"; // NOI18N
     static final String AGGRESSIVE = "aggressive"; // NOI18N
     static final String NUMBER_PASSES = "numberPasses";  // NOI18N
+    static final String ON_TIME = "onTime"; // NOI18N
+    static final String DWELL_TIME = "dwellTime";  // NOI18N
 
     static final String ALLOW_LOCAL_INTERCHANGE = "allowLocalInterchange"; // NOI18N
     static final String ALLOW_LOCAL_SPUR = "allowLocalSpur"; // NOI18N

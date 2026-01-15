@@ -1,14 +1,14 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
+import jmri.jmrix.AbstractMessageFormatterTest;
 import jmri.jmrix.roco.z21.Z21Reply;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
-public class Z21LocoNetTunnelReplyFormatterTest {
+import org.junit.jupiter.api.*;
+
+public class Z21LocoNetTunnelReplyFormatterTest extends AbstractMessageFormatterTest {
 
     @Test
     public void testMonitorStringLocoNetReply() {
-        Z21LocoNetTunnelReplyFormatter formatter = new Z21LocoNetTunnelReplyFormatter();
 
         byte msg[] = {(byte) 0x11, (byte) 0x00, (byte) 0xA2, (byte) 0x00,
                 (byte) 0xEF, (byte) 0x0E, (byte) 0x03, (byte) 0x00, (byte) 0x03,
@@ -21,4 +21,12 @@ public class Z21LocoNetTunnelReplyFormatterTest {
                 + "\tF0=Off, F1=Off, F2=Off, F3=Off, F4=Off, F5=Off, F6=Off, F7=Off, F8=Off\n"
                 + "\tMaster supports DT200; Track Status: Off/Paused; Programming Track Status: Available; STAT2=0x00, ThrottleID=0x00 0x00 (0).\n", formatter.formatMessage(message));
     }
+
+    @BeforeEach
+    @Override
+    public void setUp() {
+        super.setUp(); // setup JUnit
+        formatter = new Z21LocoNetTunnelReplyFormatter();
+    }
+
 }

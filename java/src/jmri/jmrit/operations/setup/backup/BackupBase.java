@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.InstanceManagerAutoDefault;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
 
@@ -18,9 +20,12 @@ import jmri.jmrit.operations.OperationsXml;
  *
  * @author Gregory Madsen Copyright (C) 2012
  */
-public abstract class BackupBase {
+public abstract class BackupBase extends PropertyChangeSupport implements InstanceManagerAutoDefault {
 
     private final static Logger log = LoggerFactory.getLogger(BackupBase.class);
+
+    // Property Changes
+    public static final String COPY_FILES_CHANGED_PROPERTY = "Backup Copy Files";
 
     // Just for testing......
     // If this is not null, it will be thrown to simulate various IO exceptions
@@ -283,6 +288,7 @@ public abstract class BackupBase {
             testException.fillInStackTrace();
             throw testException;
         }
+        firePropertyChange(COPY_FILES_CHANGED_PROPERTY, sourceDir, destDir);
     }
 
     /**
@@ -322,7 +328,6 @@ public abstract class BackupBase {
         File dst = new File(getOperationsRoot(), _demoPanelFileName);
 
         FileHelper.copy(src.getAbsolutePath(), dst.getAbsolutePath(), true);
-
     }
 
     /**

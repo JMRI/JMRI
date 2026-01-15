@@ -770,6 +770,35 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     }
                 }
             }
+
+            // Add turntable connectivity to the list
+            for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
+                LayoutBlock turntableBlock = turntable.getLayoutBlock();
+                if (turntableBlock == null) continue;
+
+                if (this == turntableBlock) {
+                    // This is the turntable's block. Add connections to all valid ray blocks.
+                    for (int i = 0; i < turntable.getNumberRays(); i++) {
+                        TrackSegment rayConnect = turntable.getRayConnectOrdered(i);
+                        if (rayConnect != null) {
+                            LayoutBlock rayBlock = rayConnect.getLayoutBlock();
+                            if (rayBlock != null && rayBlock != this) {
+                                c.add(new LayoutConnectivity(this, rayBlock));
+                            }
+                        }
+                    }
+                } else {
+                    // This might be a ray block. Check if it connects to this turntable.
+                    for (int i = 0; i < turntable.getNumberRays(); i++) {
+                        TrackSegment rayConnect = turntable.getRayConnectOrdered(i);
+                        if (rayConnect != null && rayConnect.getLayoutBlock() == this) {
+                            // This is a ray block for this turntable. Add a connection to the turntable block.
+                            c.add(new LayoutConnectivity(this, turntableBlock));
+                            break; // Found our turntable, no need to check other rays
+                        }
+                    }
+                }
+            }
             // update block Paths to reflect connectivity as needed
             updateBlockPaths(c, panel);
         }
@@ -2168,6 +2197,26 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     private void addThroughPath( @Nonnull Adjacencies adj) {
+        // Check if this block is a turntable block on ANY panel it belongs to.
+        // If so, do not create through paths.
+        boolean isTurntableBlock = false;
+        for (LayoutEditor p : panels) {
+            for (LayoutTurntable turntable : p.getLayoutTurntables()) {
+                if (turntable.getLayoutBlock() == this) {
+                    isTurntableBlock = true;
+                    break;
+                }
+            }
+            if (isTurntableBlock) {
+                break;
+            }
+        }
+
+        if (isTurntableBlock) {
+            addRouteLog.debug("Block {} is a turntable block. Skipping through path generation in addThroughPath(Adjacencies).", getDisplayName());
+            return; // Do not create through paths for a turntable
+        }
+        
         Block newAdj = adj.getBlock();
         int packetFlow = adj.getPacketFlow();
 
@@ -4021,7 +4070,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      *
      * @param destination final block
      * @param nextBlock   adjcent block
-     * @return lenght to final, -1 if not viable
+     * @return length to final, -1 if not viable
      */
     public float getBlockLength(Block destination, Block nextBlock) {
         if ((destination == nextBlock) && (isValidNeighbour(nextBlock))) {

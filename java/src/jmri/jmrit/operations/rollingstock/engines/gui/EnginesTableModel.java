@@ -53,14 +53,19 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
     private static final int RFID_COLUMN = 20;
     private static final int LAST_COLUMN = 21;
     private static final int DCC_ADDRESS_COLUMN = 22;
-    private static final int COMMENT_COLUMN = 23;
-    private static final int SET_COLUMN = 24;
-    private static final int EDIT_COLUMN = 25;
+    private static final int PICKUP_COLUMN = 23;
+    private static final int SETOUT_COLUMN = 24;
+    private static final int COMMENT_COLUMN = 25;
+    private static final int SET_COLUMN = 26;
+    private static final int EDIT_COLUMN = 27;
 
     private static final int HIGHEST_COLUMN = EDIT_COLUMN + 1;
 
-    public EnginesTableModel() {
+    public EnginesTableModel(boolean showAllLocos, String locationName, String trackName) {
         super();
+        showAll = showAllLocos;
+        this.locationName = locationName;
+        this.trackName = trackName;
         engineManager.addPropertyChangeListener(this);
         updateList();
     }
@@ -80,7 +85,8 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
     public final int SORTBY_LAST = 12;
     public final int SORTBY_HP = 13;
     public final int SORTBY_DCC_ADDRESS = 14;
-    public final int SORTBY_COMMENT = 15;
+    public final int SORTBY_PICKUP = 15;
+    public final int SORTBY_COMMENT = 16;
 
     private int _sort = SORTBY_NUMBER;
 
@@ -99,6 +105,7 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
                 sort == SORTBY_RFID ||
                 sort == SORTBY_LAST ||
                 sort == SORTBY_DCC_ADDRESS ||
+                sort == SORTBY_PICKUP ||
                 sort == SORTBY_COMMENT) {
             XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
             tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), sort == SORTBY_MOVES);
@@ -111,7 +118,9 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
             tcm.setColumnVisible(tcm.getColumnByModelIndex(PREVIOUS_LOCATION_COLUMN), sort == SORTBY_LAST);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), sort == SORTBY_LAST);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_TRAIN_COLUMN), sort == SORTBY_LAST);
-            tcm.setColumnVisible(tcm.getColumnByModelIndex(TRAIN_COLUMN), sort != SORTBY_LAST);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(TRAIN_COLUMN), true);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), sort == SORTBY_PICKUP);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(SETOUT_COLUMN), sort == SORTBY_PICKUP);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(DCC_ADDRESS_COLUMN), sort == SORTBY_DCC_ADDRESS);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(COMMENT_COLUMN), sort == SORTBY_COMMENT);
         }
@@ -193,9 +202,7 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
         removePropertyChangeEngines();
         engineList = getSelectedEngineList();
         // and add listeners back in
-        for (RollingStock rs : engineList) {
-            rs.addPropertyChangeListener(this);
-        }
+        addPropertyChangeEngines();
     }
 
     public List<Engine> getSelectedEngineList() {
@@ -241,6 +248,9 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
             case SORTBY_LAST:
                 list = engineManager.getByLastDateList();
                 break;
+            case SORTBY_PICKUP:
+                list = engineManager.getByPickupList();
+                break;
             case SORTBY_COMMENT:
                 list = engineManager.getByCommentList();
                 break;
@@ -248,6 +258,7 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
             default:
                 list = engineManager.getByNumberList();
         }
+        filterList(list);
         return list;
     }
 
@@ -263,8 +274,8 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
 
     // Default engines frame table column widths, starts with Number column and ends with Edit
     private final int[] _enginesTableColumnWidths =
-            {60, 60, 60, 65, 50, 65, 65, 35, 75, 190, 190, 190, 140, 190, 65, 90, 50, 50, 50, 50, 100, 130, 50, 100, 65,
-                    70};
+            {60, 60, 60, 65, 50, 65, 65, 35, 75, 190, 190, 190, 140, 190, 65, 90, 50, 50, 50, 50, 100, 130, 50, 50, 50,
+                    100, 65, 70};
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -298,6 +309,8 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_TRAIN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DCC_ADDRESS_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(SETOUT_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(COMMENT_COLUMN), false);
 
         // turn on default
@@ -363,6 +376,10 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
                 return Bundle.getMessage("LastMoved");
             case DCC_ADDRESS_COLUMN:
                 return Bundle.getMessage("DccAddress");
+            case PICKUP_COLUMN:
+                return Bundle.getMessage("Pickup");
+            case SETOUT_COLUMN:
+                return Bundle.getMessage("SetOut");
             case COMMENT_COLUMN:
                 return Bundle.getMessage("Comment");
             case SET_COLUMN:
@@ -392,6 +409,10 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
 
     @Override
     public boolean isCellEditable(int row, int col) {
+        Engine engine = engineList.get(row);
+        if (engine.isClone()) {
+            return false;
+        }
         switch (col) {
             case SELECT_COLUMN:
             case SET_COLUMN:
@@ -492,6 +513,10 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
                 return engine.getSortDate();
             case DCC_ADDRESS_COLUMN:
                 return engine.getDccAddress();
+            case PICKUP_COLUMN:
+                return engine.getPickupTime();
+            case SETOUT_COLUMN:
+                return engine.getSetoutTime();
             case COMMENT_COLUMN:
                 return engine.getComment();
             case SET_COLUMN:
@@ -573,11 +598,15 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
         }
     }
 
+    private void addPropertyChangeEngines() {
+        for (RollingStock rs : engineManager.getList()) {
+            rs.addPropertyChangeListener(this);
+        }
+    }
+
     private void removePropertyChangeEngines() {
-        if (engineList != null) {
-            for (RollingStock rs : engineList) {
-                rs.removePropertyChangeListener(this);
-            }
+        for (RollingStock rs : engineManager.getList()) {
+            rs.removePropertyChangeListener(this);
         }
     }
 
@@ -607,6 +636,10 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
             }
             if (row >= 0) {
                 fireTableRowsUpdated(row, row);
+                // next is needed when only showing engines at a location or track
+            } else if (e.getPropertyName().equals(Engine.TRACK_CHANGED_PROPERTY)) {
+                updateList();
+                fireTableDataChanged();
             }
         }
     }

@@ -86,7 +86,8 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                         tsElem.setAttribute("alternate", "" + (ts.isAlternate() ? "yes" : "no"));
                         tsElem.setAttribute("safe", "" + (ts.isSafe() ? "yes" : "no"));
                         tsElem.setAttribute("stopallocatingsensor", ts.getStopAllocatingSensor());
-
+                        tsElem.setAttribute("fwdstoppercent", Float.toString(ts.getFwdStopPerCent()));
+                        tsElem.setAttribute("revstoppercent", Float.toString(ts.getRevStopPerCent()));
                         // save child TransitSectionAction entries if any
                         ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
                         if (!tsaList.isEmpty()) {
@@ -202,8 +203,17 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                         stopAllocatingSensor = "";
                     }
                 }
+                float fwdStopPerCent = 1.00f;
+                if (elem.getAttribute("fwdstoppercent") != null) {
+                    fwdStopPerCent = Float.parseFloat(elem.getAttribute("fwdstoppercent").getValue());
+                }
+                float revStopPerCent = 1.00f;
+                if (elem.getAttribute("revstoppercent") != null) {
+                    revStopPerCent = Float.parseFloat(elem.getAttribute("revstoppercent").getValue());
+                }
 
-                TransitSection ts = new TransitSection(sectionName, seq, dir, alt, safe, stopAllocatingSensor );
+                TransitSection ts = new TransitSection(sectionName, seq, dir, alt, safe,
+                        stopAllocatingSensor, fwdStopPerCent, revStopPerCent );
                 x.addTransitSection(ts);
                 // load transitsectionaction children, if any
                 List<Element> transitTransitSectionActionList = elem.

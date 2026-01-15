@@ -116,7 +116,11 @@
         <li>"17:49:57.335" is the local time that the message was processed
         <li>"<code>[[19968a90] 03 19                  ]</code>" is the contents of the
             CAN frame that was received in this case.
-        <li>"S:" indicates this was sent by JMRI; R: indicates it was received by JMRI
+        <li>"S:" indicates this was sent by JMRI; R: indicates it was received by JMRI;
+            if you're running an 
+            <a href="../hub/HubPane.shtml">OpenLCB/LCC hub<a>, 
+            traffic from  the hub will be indicated by H:
+            
         <li>"02.01.12.FE.77.16" is the node ID of the sending node, in this case JMRI
         <li>"09.00.99.03.00.35" is the node ID of the destination node.  If this is a 
                 global message, this will be blank

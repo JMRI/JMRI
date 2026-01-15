@@ -1,11 +1,12 @@
 package jmri.util.swing;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.Component;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import org.junit.Assert;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
@@ -96,12 +97,19 @@ public class JemmyUtil {
         jbo.push();
     }
 
+    /**
+     * Create a Modal Dialog Operator Thread.
+     * Button action is complete when Thread terminates.
+     * @param dialogTitle The Dialog title
+     * @param buttonText the text of the Button to press.
+     * @return the Thread.
+     */
     public static Thread createModalDialogOperatorThread(String dialogTitle, String buttonText) {
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            jbo.pushNoBlock();
+            jbo.push(); // push waits for the button action to complete.
         });
         t.setName(dialogTitle + " Close Dialog Thread");
         t.start();
@@ -146,7 +154,7 @@ public class JemmyUtil {
                 if(comp == null){
                     return false;
                 } else if (comp instanceof JLabel ) {
-                    return name.equals(((JLabel)comp).getName());
+                    return name.equals(comp.getName());
                 } else {
                     return false;
                 }
@@ -172,7 +180,7 @@ public class JemmyUtil {
                 if(comp == null){
                     return false;
                 } else if (comp instanceof JButton ) {
-                    return name.equals(((JButton)comp).getName());
+                    return name.equals(comp.getName());
                 } else {
                     return false;
                 }
@@ -210,17 +218,23 @@ public class JemmyUtil {
         });
     }
 
-    static public void waitFor(JmriJFrame f) {
+    /**
+     * Wait for a specified {@link JmriJFrame} to become active.
+     * @param f The non-null {@link JmriJFrame} to wait for and activate.
+     * @throws AssertionError if the frame does not become active.
+     */
+    public static void waitFor( @Nonnull JmriJFrame f) {
         int count = 5;
+        boolean active = false;
         f.requestFocus();
-        while (!f.isActive() && count > 0) {
-            jmri.util.JUnitUtil.waitFor(() -> {
+        while (!active && count > 0) {
+            active = jmri.util.JUnitUtil.waitFor(() -> {
                 return f.isActive();
             });
             count--;
             f.requestFocusInWindow();
         }
-        Assert.assertTrue("frame should be active", f.isActive());
+        assertTrue( f.isActive(), () -> "frame " + f.getTitle() +" should be active");
     }
 
 }

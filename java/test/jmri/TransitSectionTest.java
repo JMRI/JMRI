@@ -3,7 +3,8 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Tests for TransitSection class.
@@ -11,25 +12,23 @@ import org.junit.Assert;
  * @author Bob Jacobsen Copyright (C) 2017
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class TransitSectionTest {
 
-   @Test
-   public void testSysNameConstructor(){
-      Assert.assertNotNull("Delayed", new TransitSection("TS1",0,0,false));
-   }
+    @Test
+    public void testSysNameConstructor(){
+        assertNotNull( new TransitSection("TS1",0,0,false), "Delayed");
+    }
 
-
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-   }
+        JUnitUtil.initDefaultUserMessagePreferences();
+    }
 
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         JUnitUtil.tearDown();
-   }
+    }
 
 }

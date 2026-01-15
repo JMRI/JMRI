@@ -4,6 +4,10 @@ import static jmri.util.JUnitSwingUtil.assertImageNinePoints;
 import static jmri.util.JUnitSwingUtil.assertPixel;
 import static jmri.util.JUnitSwingUtil.getDisplayedContent;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -18,17 +22,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitSwingUtil;
 import jmri.util.JUnitSwingUtil.Pixel;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JLabelOperator;
@@ -46,10 +49,10 @@ import org.netbeans.jemmy.operators.JLabelOperator;
  *
  * @author Bob Jacobsen Copyright 2015
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@DisabledIfHeadless
 public class PositionableLabelTest extends PositionableTestBase {
 
-    PositionableLabel to = null;
+    protected PositionableLabel to = null;
 
     @Test
     public void testSmallPanel() throws Positionable.DuplicateIdException {
@@ -87,12 +90,12 @@ public class PositionableLabelTest extends PositionableTestBase {
     // Load file showing four labels with backgrounds and make sure they have right color
     // The file used was written with 4.0.1, and behaves as expected from panel names
     @Test
-    public void testBackgroundColorFile() throws Exception {
+    public void testBackgroundColorFile() throws JmriException {
 
         // make four windows
         InstanceManager.getDefault(ConfigureManager.class)
                 .load(new File("java/test/jmri/jmrit/display/configurexml/valid/backgrounds.xml"));
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         // Find color in label by frame name
         int color1 = getColor("F Bkg none, label Bkg none"); // transparent background
@@ -111,11 +114,11 @@ public class PositionableLabelTest extends PositionableTestBase {
 
     int getColor(String name) {
 
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         // Find window by name
         JmriJFrame frame = JmriJFrame.getFrame(name);
-        Assert.assertNotNull("frame: " + name, frame);
+        assertNotNull( frame, () -> "frame: " + name);
 
         // find label within that
         JLabel jl = JLabelOperator.findJLabel(frame, new ComponentChooser() {
@@ -159,12 +162,13 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
-        Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
+        new QueueTool().waitEmpty();
+        assertEquals( new Dimension(13, 13).toString(), label.getSize().toString(),
+            "icon size");
 
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
-        Assert.assertEquals("icon arraylength", 13 * 13, val.length);
+        assertEquals( 13 * 13, val.length, "icon arraylength");
 
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.RED, Pixel.RED, Pixel.RED,
@@ -177,7 +181,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         val = getDisplayedContent(f.getContentPane(), label.getSize(), point);
 
-        Assert.assertEquals("frame arraylength", 13 * 13, val.length);
+        assertEquals( 13 * 13, val.length, "frame arraylength");
 
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.RED, Pixel.RED, Pixel.RED,
@@ -200,21 +204,24 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
-        Assert.assertEquals("icon size", new Dimension(13, 13).toString(), label.getSize().toString());
+        new QueueTool().waitEmpty();
+        assertEquals( new Dimension(13, 13).toString(),
+            label.getSize().toString(), "icon size");
 
         // do the rotation, which transforms 13x13 to sqrt(2) bigger, 19x19
         label.rotate(45);
-        Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
+        assertEquals( new Dimension(19, 19).toString(),
+            label.getSize().toString(), "icon size");
 
         f.pack();
-        new QueueTool().waitEmpty(100);
-        Assert.assertEquals("icon size", new Dimension(19, 19).toString(), label.getSize().toString());
+        new QueueTool().waitEmpty();
+        assertEquals( new Dimension(19, 19).toString(),
+            label.getSize().toString(), "icon size");
 
         // and check
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
-        Assert.assertEquals("icon arraylength", 19 * 19, val.length);
+        assertEquals( 19 * 19, val.length, "icon arraylength");
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.TRANSPARENT, Pixel.RED, Pixel.TRANSPARENT,
                 Pixel.RED, Pixel.TRANSPARENT, Pixel.TRANSPARENT, // not sure why mid-right is TRANSPARENT; misaligned? Clipping?
@@ -226,7 +233,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         val = getDisplayedContent(f.getContentPane(), label.getSize(), point);
 
-        Assert.assertEquals("frame arraylength", 19 * 19, val.length);
+        assertEquals( 19 * 19, val.length, "frame arraylength");
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.BLUE, Pixel.RED, Pixel.BLUE,
                 Pixel.RED, Pixel.BLUE, Pixel.BLUE,
@@ -257,10 +264,10 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
-        Assert.assertTrue("Expect size " + label.getSize() + " wider than height",
-                label.getSize().width > label.getSize().height);
+        assertTrue( label.getSize().width > label.getSize().height,
+            () -> "Expect size " + label.getSize() + " wider than height");
 
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
@@ -297,15 +304,15 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         label.rotate(90);
 
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
-        Assert.assertTrue("Expect size " + label.getSize() + " higher than width",
-                label.getSize().width < label.getSize().height);
+        assertTrue( label.getSize().width < label.getSize().height,
+            () -> "Expect size " + label.getSize() + " higher than width");
 
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
@@ -342,12 +349,12 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         label.rotate(45);
 
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
 
@@ -379,7 +386,8 @@ public class PositionableLabelTest extends PositionableTestBase {
         JUnitUtil.initDefaultUserMessagePreferences();
 
         editor = new EditorScaffold("PositionableLabel Test Panel");
-        p = to = new PositionableLabel("one", editor);
+        to = new PositionableLabel("one", editor);
+        p = to;
         NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
         to.setIcon(icon);
 

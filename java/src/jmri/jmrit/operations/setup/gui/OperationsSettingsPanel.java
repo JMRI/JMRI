@@ -21,7 +21,7 @@ import jmri.web.server.WebServerPreferences;
 /**
  * Frame for user edit of operation parameters
  *
- * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2025
  */
 public class OperationsSettingsPanel extends OperationsPreferencesPanel implements PropertyChangeListener {
 
@@ -49,7 +49,8 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
     private final JRadioButton scaleS = new JRadioButton("S"); // NOI18N
     private final JRadioButton scaleOn3 = new JRadioButton("On3"); // NOI18N
     private final JRadioButton scaleO = new JRadioButton("O"); // NOI18N
-    private final JRadioButton scaleG = new JRadioButton("G"); // NOI18N
+    private final JRadioButton scaleG1 = new JRadioButton("Gauge 1"); // NOI18N
+    private final JRadioButton scaleG_24 = new JRadioButton("G 1/24"); // NOI18N
 
     private final JRadioButton typeDesc = new JRadioButton(Bundle.getMessage("Descriptive"));
     private final JRadioButton typeAAR = new JRadioButton(Bundle.getMessage("AAR"));
@@ -197,25 +198,40 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         scaleGroup.add(scaleN);
         scaleGroup.add(scaleTT);
         scaleGroup.add(scaleHOn3);
-        scaleGroup.add(scaleOO);
         scaleGroup.add(scaleHO);
+        scaleGroup.add(scaleOO);
         scaleGroup.add(scaleSn3);
         scaleGroup.add(scaleS);
         scaleGroup.add(scaleOn3);
         scaleGroup.add(scaleO);
-        scaleGroup.add(scaleG);
+        scaleGroup.add(scaleG1);
+        scaleGroup.add(scaleG_24);
+
+        scaleZ.setToolTipText(Bundle.getMessage("Ratio") + Setup.Z_RATIO);
+        scaleN.setToolTipText(Bundle.getMessage("Ratio") + Setup.N_RATIO);
+        scaleTT.setToolTipText(Bundle.getMessage("Ratio") + Setup.TT_RATIO);
+        scaleHOn3.setToolTipText(Bundle.getMessage("Ratio") + Setup.HO_RATIO);
+        scaleHO.setToolTipText(Bundle.getMessage("Ratio") + Setup.HO_RATIO);
+        scaleOO.setToolTipText(Bundle.getMessage("Ratio") + Setup.OO_RATIO);
+        scaleSn3.setToolTipText(Bundle.getMessage("Ratio") + Setup.S_RATIO);
+        scaleS.setToolTipText(Bundle.getMessage("Ratio") + Setup.S_RATIO);
+        scaleOn3.setToolTipText(Bundle.getMessage("Ratio") + Setup.O_RATIO);
+        scaleO.setToolTipText(Bundle.getMessage("Ratio") + Setup.O_RATIO);
+        scaleG1.setToolTipText(Bundle.getMessage("Ratio") + Setup.Gauge1_RATIO);
+        scaleG_24.setToolTipText(Bundle.getMessage("Ratio") + Setup.G_24_RATIO);
 
         pScale.add(scaleZ);
         pScale.add(scaleN);
         pScale.add(scaleTT);
         pScale.add(scaleHOn3);
-        pScale.add(scaleOO);
         pScale.add(scaleHO);
+        pScale.add(scaleOO);
         pScale.add(scaleSn3);
         pScale.add(scaleS);
         pScale.add(scaleOn3);
         pScale.add(scaleO);
-        pScale.add(scaleG);
+        pScale.add(scaleG1);
+        pScale.add(scaleG_24);
         setScale();
 
         // row 4a
@@ -455,7 +471,7 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
                 typeAAR.isSelected() && !Setup.getCarTypes().equals(Setup.AAR)) {
 
             // backup files before changing car type descriptions
-            AutoBackup backup = new AutoBackup();
+            AutoBackup backup = InstanceManager.getDefault(AutoBackup.class);
             try {
                 backup.autoBackup();
             } catch (IOException ex) {
@@ -635,11 +651,11 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
             case Setup.HOn3_SCALE:
                 scaleHOn3.setSelected(true);
                 break;
-            case Setup.OO_SCALE:
-                scaleOO.setSelected(true);
-                break;
             case Setup.HO_SCALE:
                 scaleHO.setSelected(true);
+                break;
+            case Setup.OO_SCALE:
+                scaleOO.setSelected(true);
                 break;
             case Setup.Sn3_SCALE:
                 scaleSn3.setSelected(true);
@@ -653,8 +669,11 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
             case Setup.O_SCALE:
                 scaleO.setSelected(true);
                 break;
-            case Setup.G_SCALE:
-                scaleG.setSelected(true);
+            case Setup.Gauge1_SCALE:
+                scaleG1.setSelected(true);
+                break;
+            case Setup.G_24_SCALE:
+                scaleG_24.setSelected(true);
                 break;
             default:
                 log.error("Unknown scale");
@@ -693,8 +712,11 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         if (scaleO.isSelected()) {
             scale = Setup.O_SCALE;
         }
-        if (scaleG.isSelected()) {
-            scale = Setup.G_SCALE;
+        if (scaleG1.isSelected()) {
+            scale = Setup.Gauge1_SCALE;
+        }
+        if (scaleG_24.isSelected()) {
+            scale = Setup.G_24_SCALE;
         }
         return scale;
     }
@@ -749,6 +771,8 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", 
+                justification = "Checking for previously-set value")
     public boolean isDirty() {
         if (// set car types
         (typeDesc.isSelected() && !Setup.getCarTypes().equals(Setup.DESCRIPTIVE)) ||

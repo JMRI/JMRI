@@ -1,7 +1,6 @@
 package jmri.jmrix.bidib;
 
 import java.util.BitSet;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.SpeedStepMode;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
@@ -193,7 +192,6 @@ public class BiDiBThrottle extends AbstractThrottle {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed) {
         synchronized(this) {
@@ -468,7 +466,7 @@ public class BiDiBThrottle extends AbstractThrottle {
 
     protected void driveReceive(byte[] address, DriveState driveState) {
         if (NodeUtils.isAddressEqual(node.getAddr(), address)  &&  locoAddress.getNumber() == driveState.getAddress()) {
-            log.info("THROTTLE csDrive was signalled, node addr: {}, loco addr: {}, state: {}",
+            log.debug("THROTTLE csDrive was signalled, node addr: {}, loco addr: {}, state: {}",
                     address, driveState.getAddress(), driveState);
             // set speed
             receiveSpeedSetting(driveState.getSpeed());
@@ -485,7 +483,7 @@ public class BiDiBThrottle extends AbstractThrottle {
                 //log.trace("csDriveAcknowledge: node addr: {}, Lok addr: {}, Ack: {}", address, dccAddress, state, acknowledgedMessageNumber);
                 //log.trace("csDriveAcknowledge: Ack: {}, Lok addr: {}, node: {}", state, dccAddress, node);
                 if (NodeUtils.isAddressEqual(node.getAddr(), address)  &&  locoAddress.getNumber() == dccAddress) {
-                    log.debug("THROTTLE: drive ackn was signalled, acknowledge: {}, dccAddress: {}, node: {}", state, dccAddress, node);
+                    log.trace("THROTTLE: drive ackn was signalled, acknowledge: {}, dccAddress: {}, node: {}", state, dccAddress, node);
                     if (state == DriveAcknowledge.NOT_ACKNOWLEDGED) {
                         log.warn("setDrive was not acknowledged on node: {}, Lok addr: {}", address, dccAddress);
                     }
@@ -505,7 +503,7 @@ public class BiDiBThrottle extends AbstractThrottle {
             public void csDriveManual(byte[] address, int messageNum, DriveState driveState) {
                 //log.trace("csDriveManual: node addr: {}, DriveState: {}", address, driveState);
                 if (NodeUtils.isAddressEqual(node.getAddr(), address)  &&  locoAddress.getNumber() == driveState.getAddress()) {
-                    log.debug("THROTTLE: Drive Manual was signalled, DriveState: {}, node: {}", driveState, node);
+                    log.trace("THROTTLE: Drive Manual was signalled, DriveState: {}, node: {}", driveState, node);
                     driveReceive(address, driveState);
                 }
             }

@@ -206,7 +206,7 @@ public class XNetInitializationManagerTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         memo = null;
         tc = null;
         cs = null;

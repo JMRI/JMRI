@@ -83,7 +83,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     protected String _engineRoad = NONE; // required road name for engines assigned to this train
     protected String _engineModel = NONE; // required model of engines assigned to this train
     protected String _cabooseRoad = NONE; // required road name for cabooses assigned to this train
-    protected String _departureTime = "00:00"; // NOI18N departure time for this train
+    protected String _departureTime = "00:00:00"; // departure time day:hour:minutes 
     protected String _leadEngineId = NONE; // lead engine for train icon info
     protected String _builtStartYear = NONE; // built start year
     protected String _builtEndYear = NONE; // built end year
@@ -254,6 +254,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return _name;
     }
 
+    public String getSplitName() {
+        return TrainCommon.splitStringLeftParenthesis(getName());
+    }
+
     /**
      * @return The name of the color when highlighting the train's row
      */
@@ -299,7 +303,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /**
      * Get's train's departure time
      *
-     * @return train's departure time in the String format hh:mm
+     * @return train's departure time in the String format dd:hh:mm
      */
     public String getDepartureTime() {
         // check to see if the route has a departure time
@@ -307,7 +311,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (rl != null) {
             rl.removePropertyChangeListener(this);
             rl.addPropertyChangeListener(this);
-            if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
+            if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
                 return rl.getDepartureTime();
             }
         }
@@ -322,7 +326,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public String getFormatedDepartureTime() {
         // check to see if the route has a departure time
         RouteLocation rl = getTrainDepartsRouteLocation();
-        if (rl != null && !rl.getDepartureTime().equals(RouteLocation.NONE)) {
+        if (rl != null && !rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
             // need to forward any changes to departure time
             rl.removePropertyChangeListener(this);
             rl.addPropertyChangeListener(this);
@@ -334,40 +338,40 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /**
      * Get train's departure time in minutes from midnight for sorting
      *
-     * @return int hh*60+mm
+     * @return int dd*24*60 + hh*60 + mm
      */
     public int getDepartTimeMinutes() {
+        int day = Integer.parseInt(getDepartureTimeDay());
         int hour = Integer.parseInt(getDepartureTimeHour());
         int minute = Integer.parseInt(getDepartureTimeMinute());
-        return (hour * 60) + minute;
+        return (day * 24 * 60) + (hour * 60) + minute;
     }
 
-    public void setDepartureTime(String hour, String minute) {
+    public void setDepartureTime(String day, String hour, String minute) {
         String old = _departureTime;
-        int h = Integer.parseInt(hour);
-        if (h < 10) {
-            hour = "0" + h;
-        }
-        int m = Integer.parseInt(minute);
-        if (m < 10) {
-            minute = "0" + m;
-        }
-        String time = hour + ":" + minute;
+        hour = String.format("%02d", Integer.parseInt(hour));
+        minute = String.format("%02d", Integer.parseInt(minute));
+        String time = day + ":" + hour + ":" + minute;
         _departureTime = time;
         if (!old.equals(time)) {
-            setDirtyAndFirePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, old, _departureTime);
+            setDirtyAndFirePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, old, time);
             setModified(true);
         }
     }
-
-    public String getDepartureTimeHour() {
+    
+    public String getDepartureTimeDay() {
         String[] time = getDepartureTime().split(":");
         return time[0];
     }
 
-    public String getDepartureTimeMinute() {
+    public String getDepartureTimeHour() {
         String[] time = getDepartureTime().split(":");
         return time[1];
+    }
+
+    public String getDepartureTimeMinute() {
+        String[] time = getDepartureTime().split(":");
+        return time[2];
     }
 
     public static final String ALREADY_SERVICED = "-1"; // NOI18N
@@ -408,7 +412,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (minutes == -1) {
             return ALREADY_SERVICED;
         }
-        if (!routeLocation.getDepartureTime().equals(RouteLocation.NONE)) {
+        if (!routeLocation.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
             return parseTime(checkForDepartureTime(minutes, routeLocation), isSortFormat);
         }
         // figure out the work at this location, note that there can be
@@ -464,6 +468,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (!isTrainEnRoute()) {
             minutes += Integer.parseInt(getDepartureTimeMinute());
             minutes += 60 * Integer.parseInt(getDepartureTimeHour());
+            minutes += 24 * 60 * Integer.parseInt(getDepartureTimeDay());
         } else {
             minutes = -1; // -1 means train has already served the location
         }
@@ -496,7 +501,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     minutes += Setup.getTravelTime();
                 }
                 // don't count work if there's a departure time
-                if (i == 0 || !rl.getDepartureTime().equals(RouteLocation.NONE) && !isTrainEnRoute()) {
+                if (i == 0 || !rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE) && !isTrainEnRoute()) {
                     continue;
                 }
                 // now add the work at the location
@@ -507,11 +512,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     private int checkForDepartureTime(int minutes, RouteLocation rl) {
-        if (!rl.getDepartureTime().equals(RouteLocation.NONE) && !isTrainEnRoute()) {
-            String dt = rl.getDepartureTime();
-            log.debug("Location {} departure time {}", rl.getName(), dt);
-            String[] time = dt.split(":");
-            int departMinute = 60 * Integer.parseInt(time[0]) + Integer.parseInt(time[1]);
+        if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE) && !isTrainEnRoute()) {
+            int departMinute = 24 * 60 * Integer.parseInt(rl.getDepartureTimeDay()) +
+                    60 * Integer.parseInt(rl.getDepartureTimeHour()) +
+                    Integer.parseInt(rl.getDepartureTimeMinute());
             // cross into new day?
             if (minutes > departMinute) {
                 // yes
@@ -534,23 +538,16 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     private String parseTime(int minutes, boolean isSortFormat) {
-        int hours = 0;
-        int days = 0;
-
-        if (minutes >= 60) {
-            int h = minutes / 60;
-            minutes = minutes - h * 60;
-            hours += h;
-        }
+        int hours = minutes / 60;
+        minutes = minutes - hours * 60;
+        int days = hours / 24;
+        hours = hours - days * 24;
 
         String d = "";
         if (isSortFormat) {
             d = "0:";
         }
-        if (hours >= 24) {
-            int nd = hours / 24;
-            hours = hours - nd * 24;
-            days += nd;
+        if (days > 0) {
             d = Integer.toString(days) + ":";
         }
 
@@ -566,15 +563,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 hours = 12;
             }
         }
-
-        String h = Integer.toString(hours);
-        if (hours < 10) {
-            h = "0" + h;
-        }
-        if (minutes < 10) {
-            return d + h + ":0" + minutes + am_pm; // NOI18N
-        }
-        return d + h + ":" + minutes + am_pm;
+        String h = String.format("%02d", hours);
+        String m = String.format("%02d", minutes);
+        return d + h + ":" + m + am_pm;
     }
 
     /**
@@ -1771,22 +1762,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public boolean isServiceable(PrintWriter buildReport, Car car) {
         setServiceStatus(NONE);
         // check to see if train can carry car
-        if (!isTypeNameAccepted(car.getTypeName())) {
-            addLine(buildReport, Bundle.getMessage("trainCanNotServiceCarType",
-                    getName(), car.toString(), car.getTypeName()));
-            return false;
-        }
-        if (!isLoadNameAccepted(car.getLoadName(), car.getTypeName())) {
-            addLine(buildReport, Bundle.getMessage("trainCanNotServiceCarLoad",
-                    getName(), car.toString(), car.getTypeName(), car.getLoadName()));
-            return false;
-        }
-        if (!isBuiltDateAccepted(car.getBuilt()) ||
-                !isOwnerNameAccepted(car.getOwnerName()) ||
-                (!car.isCaboose() && !isCarRoadNameAccepted(car.getRoadName())) ||
-                (car.isCaboose() && !isCabooseRoadNameAccepted(car.getRoadName()))) {
-            addLine(buildReport, Bundle.getMessage("trainCanNotServiceCar",
-                    getName(), car.toString()));
+        if (!isTrainAbleToService(buildReport, car)) {
             return false;
         }
 
@@ -1865,7 +1841,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     return true; // done
                 }
                 // now check car's destination
-                return isServiceableDestination(buildReport, car, rLoc, rLocations);
+                if (isServiceableDestination(buildReport, car, rLoc, rLocations)) {
+                    return true; // train can carry car
+                }
+                continue; // maybe another pick up point in the route?
             }
         }
         if (debugFlag) {
@@ -1997,6 +1976,28 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         addLine(buildReport, Bundle.getMessage("trainCanNotDeliverToDestination",
                 getName(), car.toString(), car.getDestinationName(), car.getDestinationTrackName()));
         return false;
+    }
+    
+    public boolean isTrainAbleToService(PrintWriter buildReport, Car car) {
+        if (!isTypeNameAccepted(car.getTypeName())) {
+            addLine(buildReport, Bundle.getMessage("trainCanNotServiceCarType",
+                    getName(), car.toString(), car.getTypeName()));
+            return false;
+        }
+        if (!isLoadNameAccepted(car.getLoadName(), car.getTypeName())) {
+            addLine(buildReport, Bundle.getMessage("trainCanNotServiceCarLoad",
+                    getName(), car.toString(), car.getTypeName(), car.getLoadName()));
+            return false;
+        }
+        if (!isBuiltDateAccepted(car.getBuilt()) ||
+                !isOwnerNameAccepted(car.getOwnerName()) ||
+                (!car.isCaboose() && !isCarRoadNameAccepted(car.getRoadName())) ||
+                (car.isCaboose() && !isCabooseRoadNameAccepted(car.getRoadName()))) {
+            addLine(buildReport, Bundle.getMessage("trainCanNotServiceCar",
+                    getName(), car.toString()));
+            return false;
+        }
+        return true;
     }
 
     private boolean isServicableTrack(PrintWriter buildReport, Car car, RouteLocation rldest, Track track) {
@@ -3375,7 +3376,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         // Set up to process the CSV file by the external Manifest program
         InstanceManager.getDefault(TrainCustomManifest.class).addCsvFile(file);
         if (!InstanceManager.getDefault(TrainCustomManifest.class).process()) {
-            if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).doesExcelFileExist()) {
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("LoadDirectoryNameFileName",
                                 InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryPathName(),
@@ -3626,6 +3627,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (getLeadEngine() == null) {
             return NONE;
         }
+        if (getLeadEngine().isClone()) {
+            return getLeadEngine().getNumber().split(Engine.CLONE_REGEX)[0];
+        }
         return getLeadEngine().getNumber();
     }
 
@@ -3824,6 +3828,25 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         return true;
     }
+    
+    /**
+     * Checks to see if the train's staging departure track has been taken by another train.
+     * @return True if track has been allocated to another train.
+     */
+    public boolean checkDepartureTrack() {
+        if (Setup.isStagingTrackImmediatelyAvail() &&
+                !isTrainEnRoute() &&
+                getDepartureTrack() != null &&
+                getDepartureTrack().isStaging() &&
+                getDepartureTrack() != getTerminationTrack() &&
+                getDepartureTrack().getIgnoreUsedLengthPercentage() == Track.IGNORE_0) {
+            if (getDepartureTrack().isQuickServiceEnabled()) {
+                return getDepartureTrack().getNumberRS() > 0;
+            }
+            return getDepartureTrack().getDropRS() > 0;
+        }
+        return false;
+    }
 
     public void dispose() {
         if (getRoute() != null) {
@@ -3858,10 +3881,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             _description = a.getValue();
         }
         if ((a = e.getAttribute(Xml.DEPART_HOUR)) != null) {
+            String day = "0";
             String hour = a.getValue();
             if ((a = e.getAttribute(Xml.DEPART_MINUTE)) != null) {
                 String minute = a.getValue();
-                _departureTime = hour + ":" + minute;
+                if ((a = e.getAttribute(Xml.DEPART_DAY)) != null) {
+                    day = a.getValue();
+                }
+                _departureTime = day + ":" + hour + ":" + minute;
             }
         }
 
@@ -4291,6 +4318,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.NAME, getName());
         e.setAttribute(Xml.DESCRIPTION, getRawDescription());
+        e.setAttribute(Xml.DEPART_DAY, getDepartureTimeDay());
         e.setAttribute(Xml.DEPART_HOUR, getDepartureTimeHour());
         e.setAttribute(Xml.DEPART_MINUTE, getDepartureTimeMinute());
 

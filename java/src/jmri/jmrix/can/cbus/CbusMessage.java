@@ -2,10 +2,7 @@ package jmri.jmrix.can.cbus;
 
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractMessage;
-import jmri.jmrix.can.CanFrame;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanMutableFrame;
-import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.*;
 
 
 /**
@@ -147,6 +144,7 @@ public class CbusMessage {
      *
      * @param am CanMessage or CanReply
      * @param id CAN ID
+     * @throws IllegalArgumentException when needed
      */
     public static void setId(AbstractMessage am, int id) throws IllegalArgumentException {
         if (am instanceof CanMutableFrame){
@@ -171,6 +169,7 @@ public class CbusMessage {
      *
      * @param am CanMessage or CanReply
      * @param pri Priority
+     * @throws IllegalArgumentException when needed
      */
     public static void setPri(AbstractMessage am, int pri) throws IllegalArgumentException {
         if (am instanceof CanMutableFrame){
@@ -242,6 +241,7 @@ public class CbusMessage {
      *
      * @param f CanReply or CanMessage
      * @return CAN ID of the outgoing message
+     * @throws IllegalArgumentException when needed
      */
     public static int getId(AbstractMessage f) throws IllegalArgumentException {
         if (f instanceof CanFrame){
@@ -262,6 +262,7 @@ public class CbusMessage {
      *
      * @param r CanReply or CanMessage
      * @return Priority of the outgoing message
+     * @throws IllegalArgumentException when needed
      */
     public static int getPri(AbstractMessage r) throws IllegalArgumentException {
         if (r instanceof CanFrame){

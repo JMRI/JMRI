@@ -59,6 +59,14 @@
         <output name="1" label="LED 1" connection="solder"/>
         <output name="2" label="LED 2" connection="solder"/>
         <size length="2.65" width="0.37" height="0.12" units="inches"/>
+       </model>
+       <model model="NH15-44" numOuts="6" numFns="8" formFactor="N" connector="DropIn" comment="for Atlas H15-44,H16-44">
+        <output name="1" label="LED 1" connection="solder"/>
+        <output name="2" label="LED 2" connection="solder"/>
+        <output name="3" label="Pad 3" connection="solder"/>
+        <output name="4" label="Pad 4" connection="solder"/>
+        <output name="5" label="Pad 5" connection="solder"/>
+        <output name="6" label="Pad 6" connection="solder"/>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>

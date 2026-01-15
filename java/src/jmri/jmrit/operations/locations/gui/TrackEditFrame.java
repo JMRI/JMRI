@@ -17,7 +17,8 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JmriJOptionPane;
@@ -30,7 +31,7 @@ import jmri.util.swing.JmriJOptionPane;
 public abstract class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     // where in the tool menu new items are inserted
-    protected static final int TOOL_MENU_OFFSET = 6;
+    protected static final int TOOL_MENU_OFFSET = 7;
 
     // Managers
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
@@ -50,6 +51,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
     JPanel pShipLoadOption = new JPanel();
     JPanel pDestinationOption = new JPanel();
     JPanel panelOrder = new JPanel();
+    JPanel panelQuickService = new JPanel();
 
     // Alternate tool buttons
     JButton loadOptionButton = new JButton(Bundle.getMessage("AcceptsAllLoads"));
@@ -78,6 +80,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
     JCheckBox westCheckBox = new JCheckBox(Bundle.getMessage("West"));
     JCheckBox autoDropCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
     JCheckBox autoPickupCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
+    JCheckBox quickServiceCheckBox = new JCheckBox(Bundle.getMessage("QuickService"));
 
     // car pick up order controls
     JRadioButton orderNormal = new JRadioButton(Bundle.getMessage("Normal"));
@@ -246,6 +249,13 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         // row 6, pickup panel
         pickupPanel.setLayout(new GridBagLayout());
         pickupPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainsOrRoutesPickups")));
+        
+        // setup the optional panel with quick service checkbox
+        panelQuickService.setLayout(new GridBagLayout());
+        panelQuickService.setBorder(BorderFactory.createTitledBorder(Bundle
+                .getMessage("QuickService")));
+        addItem(panelQuickService, quickServiceCheckBox, 0, 0);
+        quickServiceCheckBox.setToolTipText(Bundle.getMessage("QuickServiceTip"));
 
         // row 9
         JPanel panelComment = new JPanel();
@@ -283,6 +293,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         panels.add(panelOrder);
         panels.add(dropPanel);
         panels.add(pickupPanel);
+        panels.add(panelQuickService);
 
         // add optional panels
         panels.add(panelOpt3);
@@ -336,6 +347,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
             trackNameTextField.setText(_track.getName());
             commentTextArea.setText(_track.getComment());
             trackLengthTextField.setText(Integer.toString(_track.getLength()));
+            quickServiceCheckBox.setSelected(track.isQuickServiceEnabled());
             enableButtons(true);
             if (Setup.isRfidEnabled()) {
                 readerSelector.setSelectedItem(_track.getReporter());
@@ -351,12 +363,15 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         _toolMenu.add(new TrackRoadEditAction(this));
         _toolMenu.add(new PoolTrackAction(this));
         _toolMenu.add(new IgnoreUsedTrackAction(this));
+        _toolMenu.addSeparator();
         _toolMenu.add(new TrackEditCommentsAction(this));
         _toolMenu.addSeparator();
         // spurs, interchanges, and yards insert menu items here
         _toolMenu.add(new TrackCopyAction(_track, _location));
         _toolMenu.addSeparator();
         _toolMenu.add(new ShowCarsByLocationAction(false, _location, _track));
+        _toolMenu.add(new ShowLocosByLocationAction(false, _location, _track));
+        _toolMenu.addSeparator();
         _toolMenu.add(new ShowTrainsServingLocationAction(_location, _track));
 
         menuBar.add(_toolMenu);
@@ -554,6 +569,10 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
 
         // setup check boxes
         selectCheckboxes(true);
+        
+        // default for on time mode is quick service track
+        _track.setQuickServiceEnabled(Setup.isBuildOnTime());
+        
         // store comment
         _track.setComment(commentTextArea.getText());
         // enable
@@ -568,6 +587,14 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
             if (rs > 0) {
                 if (JmriJOptionPane.showConfirmDialog(this,
                         Bundle.getMessage("ThereAreCars", Integer.toString(rs)),
+                        Bundle.getMessage("deleteTrack?"),
+                        JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
+                    return;
+                }
+            }
+            if (_track.getDropRS() > 0 || _track.getPickupRS() > 0) {
+                if (JmriJOptionPane.showConfirmDialog(this,
+                        Bundle.getMessage("TrackInUse", _track.getPickupRS(), _track.getDropRS()),
                         Bundle.getMessage("deleteTrack?"),
                         JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                     return;
@@ -594,6 +621,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         saveTrackDirections(track);
         track.setName(trackNameTextField.getText());
         track.setComment(commentTextArea.getText());
+        track.setQuickServiceEnabled(quickServiceCheckBox.isSelected());
 
         if (Setup.isRfidEnabled()) {
             _track.setReporter(readerSelector.getSelectedItem());
@@ -806,6 +834,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         orderNormal.setEnabled(enabled);
         orderFIFO.setEnabled(enabled);
         orderLIFO.setEnabled(enabled);
+        quickServiceCheckBox.setEnabled(enabled);
         enableCheckboxes(enabled);
         if (readerSelector != null) {
             // enable readerSelect.
@@ -1285,6 +1314,9 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         }
         if (e.getPropertyName().equals(Track.LENGTH_CHANGED_PROPERTY)) {
             trackLengthTextField.setText(Integer.toString(_track.getLength()));
+        }
+        if (e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY)) {
+            quickServiceCheckBox.setSelected(_track.isQuickServiceEnabled());
         }
     }
 

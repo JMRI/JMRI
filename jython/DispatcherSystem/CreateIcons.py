@@ -5,6 +5,7 @@
 
 from javax.swing import JOptionPane
 from java.awt.geom import Point2D
+from java.awt import Color
 
 
 # from jython.DispatcherSystem.Startup import OptionDialog
@@ -35,6 +36,14 @@ from java.awt.geom import Point2D
 
 
 class processPanels(jmri.jmrit.automat.AbstractAutomaton):
+
+    if "list" in globals() and type(globals()["list"]).__name__ != "type":
+        # print(" Detected shadowed 'list' type: ", type(globals()["list"]))  # list is being used in JMRI. This enables us to use list in Jython
+        del globals()["list"]
+
+    if "set" in globals() and type(globals()["set"]).__name__ != "type":
+        print(" Detected shadowed 'set' type: ", type(globals()["set"]))  # set is being used in JMRI. This enables us to use set in Jython
+        del globals()["set"]
 
     logLevel = 0
     version_no = 0.2    #used to delete DispatcherPanel for new versions if the number of controlsensors/icons has changed
@@ -76,7 +85,8 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     controlSensors.append([i, 'helpSensor', 'Help', 0, 5]); i += 1
 
 
-    def __str__(self):
+
+    def __init__(self):
         self.result = "Success"    #value is returned in __str__ and set to "Failure" in self.tryme()
         self.define_DisplayProgress_global()
         if self.perform_initial_checks():
@@ -93,9 +103,10 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.tryme(self.updatePanels, "Cannot update Panels: Contact Developer")
             self.tryme(self.get_list_of_stopping_points, "Cannot get list of stopping points, Contact Developer")
             self.addSensors()
-            self.tryme(self.generateSML, "Cannot generate Signal Mast Logic: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
+            self.generateSML()
             self.show_progress(60)
-            self.tryme(self.generateSections, "Cannot generate Sections: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
+            self.generateSections()   # if it fails need a better fail message
+            # self.tryme(self.generateSections, "Cannot generate Sections: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
             self.show_progress(80)
             self.tryme(self.addLogix, "Cannot generate startup Logix: Contact Developer")
             self.addIcons()
@@ -106,7 +117,10 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
         else:
             self.result = "Failure"
+
+    def __str__(self):
         return self.result
+
 
     def setVersionNo(self):
         memory = memories.provideMemory('IS:ISMEM:' + "versionNo")
@@ -123,7 +137,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             # print "version_no changed", "memory:", memory.getValue(), "version", self.version_no
             return True
         else:
-            print "version_no not changed", "memory:", memory.getValue(), "version", self.version_no
+            # print "version_no not changed", "memory:", memory.getValue(), "version", self.version_no
             return False
 
 
@@ -292,7 +306,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             some_checks_OK = True
 
         if some_checks_OK:
-            msg = "Performed some prelimiary checks to ensure the trains run correctly\n\nAll Checks OK"
+            msg = "Performed some preliminary checks to ensure the trains run correctly\n\nAll Checks OK"
             title = "Checks"
             opt1 = "Continue"
             opt2 = "Look in more detail"
@@ -368,14 +382,14 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         return success
 
 
-    def get_duplicate_values_in_dict(self, dict):
+    def get_duplicate_values_in_dict(self, input_dict):
 
         # finding duplicate values
         # from dictionary
         # using a naive approach
         rev_dict = {}
 
-        for key, value in dict.items():
+        for key, value in input_dict.items():
             rev_dict.setdefault(value, set()).add(key)
 
         result = ["blocks " +', '.join(values) + " have the same sensor " + str( key) for key, values in rev_dict.items()
@@ -623,11 +637,26 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # gets the list of stopping points (stations, sidings etc.)
     # ***********************************************************
     def get_list_of_stopping_points(self):
+        stopping_points_set = set()
+
+        # First, get stopping points from block comments
         for block in blocks.getNamedBeanSet():
             comment = block.getComment()
             if comment != None:
                 if "stop" in comment.lower():
-                    self.list_of_stopping_points.append(block.getUserName())
+                    stopping_points_set.add(block.getUserName())
+
+        # Second, automatically add blocks associated with LayoutTurntables
+        editorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
+        for editor in editorManager.getAll():
+            if isinstance(editor, jmri.jmrit.display.layoutEditor.LayoutEditor):
+                # The returned object is a Java Set, which needs to be converted to a list for safe iteration in Jython
+                for turntable in list(editor.getLayoutTurntables()):
+                    layout_block = turntable.getLayoutBlock()
+                    if layout_block is not None and layout_block.getUserName() is not None:
+                        stopping_points_set.add(layout_block.getUserName())
+
+        self.list_of_stopping_points = sorted(list(stopping_points_set))
 
     # **************************************************
     # add sensors
@@ -662,17 +691,24 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # **************************************************
     def generateSML(self):
         layoutblocks.enableAdvancedRouting(True)
+        # print "Generating Signal Mast Logic"
         smlManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
         smlManager.automaticallyDiscoverSignallingPairs()
+        # print "Signal Mast Logic Generated"
 
     # **************************************************
     # generate sections
     # **************************************************
     def generateSections(self):
+        # print "Generating Sections"
         smlManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
+        # generate sections()
         smlManager.generateSection()
+        # print "Sections Generated"
         self.show_progress(80)
+        # print "+++++++++++++++++++++++ generate block sections ++++++++++++++++++++++++++++++"
         sections.generateBlockSections()
+        # print "+++++++++++++++++++++++ end generate block sections ++++++++++++++++++++++++++++++"
 
     # **************************************************
     # add Logix
@@ -720,22 +756,109 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
             [x1,y1] = [pt1.getX(), pt1.getY()]
             [x2,y2] = [pt2.getX(), pt2.getY()]
-            if abs(float(y1)-float(y2)) < 15.0:     # East-West place icon to right of circle
-                x_reqd = int((float(x1)+float(x2))/2.0)+25  # to put to right of circle
-                y_reqd = int((float(y1)+float(y2))/2.0)     # to put just under track
-            else:                                   # North south place icon under circle
-                x_reqd = int((float(x1)+float(x2))/2.0)-20  #  to centralise
-                y_reqd = int((float(y1)+float(y2))/2.0)+15  #  to put under circle
+
+
+            if blk in self.list_of_stopping_points:
+                if abs(float(y1)-float(y2)) < 15.0:     # East-West place icon to right of circle
+                    x_reqd = int((float(x1)+float(x2))/2.0)+25  # to put to right of circle
+                    y_reqd = int((float(y1)+float(y2))/2.0)     # to put just under track
+                else:                                   # North south place icon under circle
+                    x_reqd = int((float(x1)+float(x2))/2.0)-20  #  to centralise
+                    y_reqd = int((float(y1)+float(y2))/2.0)+15  #  to put under circle
+            else:
+                x_reqd = int((float(x1)+float(x2))/2.0)  # to put to right of circle
+                y_reqd = int((float(y1)+float(y2))/2.0)
 
             pt_to_try = Point2D.Double(x_reqd, y_reqd)
-            pt_mid =  self.blockPoints1[blk]
+            if blk in self.blockPoints1:
+                pt_mid =  self.blockPoints1[blk]
+                self.updateCoords1(blk, pt_to_try, pt_mid)
 
-            self.updateCoords1(blk, pt_to_try, pt_mid)
+        # Handle turntables
+        for turntableView in panel.getLayoutTurntableViews():
+            turntable = turntableView.getTurntable()
+            layoutBlock = turntable.getLayoutBlock()
+            if layoutBlock is not None:
+                blk = layoutBlock.getUserName()
+                if blk in self.blockPoints1:
+                    pt_mid = self.blockPoints1[blk]
+                    # For a turntable, the icon position is calculated relative to its own center
+                    [x_reqd, y_reqd] = self.get_icon_position(turntable, turntableView)
+                    pt_to_try = Point2D.Double(x_reqd, y_reqd)
+                    self.updateCoords1(blk, pt_to_try, pt_mid)
 
+    def get_icon_position(self, turntable, turntableView):
+        import math
+        # print "--- Calculating icon position for turntable:", turntable.getName(), "---"
+        turntable_center = turntableView.getCoordsCenter()
+        radius = turntable.getRadius()
+        rays = turntable.getRayTrackList()
 
+        if len(rays) < 2:
+            # Fallback for turntables with 0 or 1 ray: place icon bottom-right
+            # print "  Fewer than 2 rays, using fallback position."
+            x_reqd = int(turntable_center.getX()) + 30
+            y_reqd = int(turntable_center.getY()) + 25
+            return [x_reqd, y_reqd]
+
+        # Get all ray angles in degrees and sort them
+        angles = sorted([ray.getAngle() for ray in rays])
+        # print "  Sorted ray angles (degrees):", angles
+
+        # Calculate angular gaps between adjacent rays
+        gaps = []
+        for i in range(len(angles) - 1):
+            gap = angles[i+1] - angles[i]
+            gaps.append(gap)
+
+        # Add the wrap-around gap between the last and first ray
+        wrap_around_gap = (360.0 - angles[-1]) + angles[0]
+        gaps.append(wrap_around_gap)
+        # print "  Calculated gaps:", gaps
+
+        max_gap = max(gaps)
+        # print "  Max gap found:", max_gap
+
+        # Find all gaps that are the largest
+        best_mid_angle = -1
+        min_angle_diff = 361 # Larger than any possible angle difference
+
+        # Define a preferred angle for tie-breaking (bottom-right quadrant)
+        preferred_angle = math.degrees(math.atan2(25, 30)) # atan2(y, x)
+        # print "  Preferred angle for tie-breaking:", preferred_angle
+
+        for i in range(len(gaps)):
+            if abs(gaps[i] - max_gap) < 1e-6: # Compare floats with a tolerance
+                # print "  Found a max gap at index", i
+                if i < len(angles) - 1:
+                    mid_angle = angles[i] + max_gap / 2.0
+                else: # Wrap-around case
+                    mid_angle = (angles[-1] + max_gap / 2.0) % 360.0
+                # print "    Mid-angle of this gap:", mid_angle
+
+                # Normalize angle difference for tie-breaking
+                angle_diff = abs(mid_angle - preferred_angle)
+                # print "    Difference from preferred angle:", angle_diff
+                if angle_diff < min_angle_diff:
+                    # print "    This is the new best candidate."
+                    min_angle_diff = angle_diff
+                    best_mid_angle = mid_angle
+
+        # print "  Final chosen mid-angle:", best_mid_angle
+        # Convert the final angle to radians for trig functions
+        final_angle_rad = math.radians(best_mid_angle)
+        if best_mid_angle > 180.0 and best_mid_angle < 360.0:
+            icon_distance = radius + 70 # Place icon 20 pixels out from the turntable radius plus a bit to allow for the icon length
+        else:
+            icon_distance = radius + 30 # Place icon 20 pixels out from the turntable radius
+        x_reqd = int(turntable_center.getX() + icon_distance * math.sin(final_angle_rad))
+        y_reqd = int(turntable_center.getY() - icon_distance * math.cos(final_angle_rad))
+        # print "  Turntable Centre (x, y):", int(turntable_center.getX()), ",", int(turntable_center.getY())
+        # print "  Calculated position (x, y):", x_reqd, ",", y_reqd
+        # print "----------------------------------------------------"
+        return [x_reqd, y_reqd]
 
     def updateCoords1(self, blk, pt_to_try, pt_mid):
-        if blk == "CornerUp": self.index += 1; print self.index
         if blk is not None:
             if blk in self.blockPoints:
                 if (jmri.util.MathUtil.distance(pt_mid, pt_to_try) < \
@@ -745,23 +868,18 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 self.blockPoints[blk] = pt_to_try
 
     def updateCoords(self, blk, xy):
-        if blk == "CornerUp": self.index += 1; print self.index
         if blk is not None:
             if blk in self.blockPoints1:
                 self.blockPoints1[blk] = jmri.util.MathUtil.midPoint(self.blockPoints1[blk], xy)
-                if blk == "CornerUp":
-                    print "self.blockPoints1[blk]", self.blockPoints1[blk]
             else:
                 self.blockPoints1[blk] = xy
-                if blk == "CornerUp":
-                    print "self.blockPoints1[blk]", self.blockPoints1[blk]
 
     def getBlockCenterPoints(self, panel):
         self.index = 0
         self.blockPoints1.clear()
         for tsv in panel.getTrackSegmentViews():
             blk = tsv.getBlockName()
-
+            #print "blk", blk
             pt1 = panel.getCoords(tsv.getConnect1(), tsv.getType1())
             pt2 = panel.getCoords(tsv.getConnect2(), tsv.getType2())
 
@@ -797,14 +915,19 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.updateCoords(blkAC, xyA)
             self.updateCoords(blkBD, xyD)
 
+        # Handle turntables
+        for turntableView in panel.getLayoutTurntableViews():
+            turntable = turntableView.getTurntable()
+            layoutBlock = turntable.getLayoutBlock()
+            if layoutBlock is not None:
+                blockName = layoutBlock.getUserName()
+                # The center of the turntable is its main coordinate, get it from the View
+                centerCoords = turntableView.getCoordsCenter()
+                self.updateCoords(blockName, centerCoords)
+
         # place the stations at the block nearest the mid-point
 
         self.getCenterPointOfNearestBlockToMid(panel)
-
-        for blk in self.blockPoints1:
-            if blk not in self.blockPoints:
-                self.blockPoints[blk] = self.blockPoints1[blk]
-
 
     # **************************************************
     # stop icons
@@ -812,6 +935,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     def addStopIcons(self, panel):
         for blockName in self.list_of_stopping_points:
             if blockName in self.blockPoints.keys():
+                # print "addStopIcons blockName", blockName
                 x = self.blockPoints[blockName].getX()
                 y = self.blockPoints[blockName].getY()
 

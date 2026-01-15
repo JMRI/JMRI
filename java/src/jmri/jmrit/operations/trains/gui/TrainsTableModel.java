@@ -12,10 +12,11 @@ import javax.swing.table.TableCellEditor;
 
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
@@ -32,7 +33,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     volatile List<Train> sysList = trainManager.getTrainsByTimeList();
     JTable _table = null;
     TrainsTableFrame _frame = null;
-    
+
     // Defines the columns
     private static final int ID_COLUMN = 0;
     private static final int TIME_COLUMN = ID_COLUMN + 1;
@@ -128,7 +129,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     // Train frame table column widths, starts with id column and ends with edit
     private final int[] _tableColumnWidths =
             {50, 50, 50, 72, 100, 140, 50, 50, 50, 50, 50, 50, 120, 120, 120, 120, 50, 120, 90,
-            70};
+                    70};
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -310,14 +311,16 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             case BUILT_COLUMN:
                 return getBuiltString(train);
             case CAR_ROAD_COLUMN:
-                return getModifiedString(train.getCarRoadNames().length, train.getCarRoadOption().equals(Train.ALL_ROADS),
+                return getModifiedString(train.getCarRoadNames().length,
+                        train.getCarRoadOption().equals(Train.ALL_ROADS),
                         train.getCarRoadOption().equals(Train.INCLUDE_ROADS));
             case CABOOSE_ROAD_COLUMN:
                 return getModifiedString(train.getCabooseRoadNames().length,
                         train.getCabooseRoadOption().equals(Train.ALL_ROADS),
                         train.getCabooseRoadOption().equals(Train.INCLUDE_ROADS));
             case LOCO_ROAD_COLUMN:
-                return getModifiedString(train.getLocoRoadNames().length, train.getLocoRoadOption().equals(Train.ALL_ROADS),
+                return getModifiedString(train.getLocoRoadNames().length,
+                        train.getLocoRoadOption().equals(Train.ALL_ROADS),
                         train.getLocoRoadOption().equals(Train.INCLUDE_ROADS));
             case LOAD_COLUMN:
                 return getModifiedString(train.getLoadNames().length, train.getLoadOption().equals(Train.ALL_LOADS),
@@ -350,16 +353,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             case BUILD_COLUMN: {
                 if (train.isBuilt()) {
                     if (Setup.isGenerateCsvManifestEnabled() && trainManager.isOpenFileEnabled()) {
-                        setToolTip(Bundle.getMessage("OpenTrainTip",
-                                train.getName()), row, col);
+                        setToolTip(Bundle.getMessage("OpenTrainTip", train.getName()), col);
                         return Bundle.getMessage("OpenFile");
                     }
                     if (Setup.isGenerateCsvManifestEnabled() && trainManager.isRunFileEnabled()) {
-                        setToolTip(Bundle.getMessage("RunTrainTip",
-                                train.getName()), row, col);
+                        setToolTip(Bundle.getMessage("RunTrainTip", train.getName()), col);
                         return Bundle.getMessage("RunFile");
                     }
-                    setToolTip(Bundle.getMessage("PrintTrainTip"), row, col);
+                    setToolTip(Bundle.getMessage("PrintTrainTip"), col);
                     if (trainManager.isPrintPreviewEnabled()) {
                         return Bundle.getMessage("Preview");
                     } else if (train.isPrinted()) {
@@ -368,8 +369,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                         return Bundle.getMessage("Print");
                     }
                 }
-                setToolTip(Bundle.getMessage("BuildTrainTip", train.getName()),
-                        row, col);
+                setToolTip(Bundle.getMessage("BuildTrainTip", train.getName()), col);
                 return Bundle.getMessage("Build");
             }
             case ACTION_COLUMN: {
@@ -389,7 +389,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    private void setToolTip(String text, int row, int col) {
+    private void setToolTip(String text, int col) {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
         ButtonRenderer buttonRenderer = (ButtonRenderer) tcm.getColumnByModelIndex(col).getCellRenderer();
         if (buttonRenderer != null) {
@@ -519,7 +519,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         } else if (trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)) {
             log.debug("Reset train ({})", train.getName());
             // check to see if departure track was reused
-            if (checkDepartureTrack(train)) {
+            if (train.checkDepartureTrack()) {
                 log.debug("Train is departing staging that already has inbound cars");
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("StagingTrackUsed",
@@ -557,20 +557,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             log.debug("Enable conductor for train ({})", train.getName());
             launchConductor(train);
         }
-    }
-
-    /*
-     * Check to see if the departure track in staging has been taken by another
-     * train. return true if track has been allocated to another train.
-     */
-    private boolean checkDepartureTrack(Train train) {
-        return (Setup.isStagingTrackImmediatelyAvail() &&
-                !train.isTrainEnRoute() &&
-                train.getDepartureTrack() != null &&
-                train.getDepartureTrack().isStaging() &&
-                train.getDepartureTrack() != train.getTerminationTrack() &&
-                train.getDepartureTrack().getIgnoreUsedLengthPercentage() == Track.IGNORE_0 &&
-                train.getDepartureTrack().getDropRS() > 0);
     }
 
     private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable = new Hashtable<>();
@@ -613,14 +599,16 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 updateList();
                 fireTableDataChanged();
             });
-        } else if (e.getSource().getClass().equals(Train.class)) {
+        } else if (e.getSource().getClass().equals(Train.class) &&
+                !e.getPropertyName().equals(Route.ROUTE_STATUS_CHANGED_PROPERTY)) {
             Train train = ((Train) e.getSource());
             SwingUtilities.invokeLater(() -> {
                 int row = sysList.indexOf(train);
                 if (row >= 0 && _table != null) {
                     fireTableRowsUpdated(row, row);
                     int viewRow = _table.convertRowIndexToView(row);
-                    log.debug("Scroll table to row: {}, property: {}", viewRow, e.getPropertyName());
+                    log.debug("Scroll table to row: {}, train: {}, property: {}", viewRow, train.getName(),
+                            e.getPropertyName());
                     _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
                 }
             });
@@ -628,13 +616,13 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     private void removePropertyChangeTrains() {
-        for (Train train : trainManager.getTrainsByIdList()) {
+        for (Train train : trainManager.getList()) {
             train.removePropertyChangeListener(this);
         }
     }
 
     private void addPropertyChangeTrains() {
-        for (Train train : trainManager.getTrainsByIdList()) {
+        for (Train train : trainManager.getList()) {
             train.addPropertyChangeListener(this);
         }
     }
@@ -664,11 +652,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             return component;
         }
 
-        Color[] darkColors = { Color.BLACK, Color.BLUE, Color.GRAY, Color.RED, Color.MAGENTA };
+        Color[] darkColors = {Color.BLACK, Color.BLUE, Color.GRAY, Color.RED, Color.MAGENTA};
 
         /**
          * Dark colors need white lettering
-         *
          */
         private Color getForegroundColor(Color background) {
             if (background == null) {

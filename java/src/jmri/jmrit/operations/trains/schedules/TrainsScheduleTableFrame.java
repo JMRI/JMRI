@@ -263,7 +263,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
         if (ae.getSource() == runFileButton) {
             // Processes the CSV Manifest files using an external custom program.
-            if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).doesExcelFileExist()) {
                 log.warn("Manifest creator file not found!, directory path: {}, file name: {}",
                         InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryPathName(),
                         InstanceManager.getDefault(TrainCustomManifest.class).getFileName()); // NOI18N

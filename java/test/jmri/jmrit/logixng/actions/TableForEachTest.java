@@ -1,5 +1,11 @@
 package jmri.jmrit.logixng.actions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.jmrit.logixng.TableRowOrColumn;
 
 import java.io.IOException;
@@ -15,9 +21,10 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test TableForEach
@@ -26,10 +33,10 @@ import org.junit.Test;
  */
 public class TableForEachTest extends AbstractDigitalActionTestBase {
 
-    LogixNG _logixNG;
-    ConditionalNG _conditionalNG;
-    TableForEach _tableForEach;
-    MaleSocket _maleSocket;
+    private LogixNG _logixNG;
+    private ConditionalNG _conditionalNG;
+    private TableForEach _tableForEach;
+    private MaleSocket _maleSocket;
     private final List<String> _cells = new ArrayList<>();
 
     @Override
@@ -82,9 +89,9 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
     @Test
     public void testCtor() {
         TableForEach t = new TableForEach("IQDA321", null);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
         t = new TableForEach("IQDA321", null);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 /* DISABLE FOR NOW
     @Test
@@ -188,37 +195,31 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
 */
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 1", 1 == _tableForEach.getChildCount());
+        assertEquals( 1, _tableForEach.getChildCount(), "getChildCount() returns 1");
 
-        Assert.assertNotNull("getChild(0) returns a non null value",
-                _tableForEach.getChild(0));
+        assertNotNull( _tableForEach.getChild(0), "getChild(0) returns a non null value");
 
-        boolean hasThrown = false;
-        try {
-            _tableForEach.getChild(1);
-        } catch (IllegalArgumentException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "index has invalid value: 1", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () ->
+            _tableForEach.getChild(1), "Exception is thrown");
+        assertEquals( "index has invalid value: 1", ex.getMessage(), "Error message is correct");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", LogixNG_Category.FLOW_CONTROL == _base.getCategory());
+        assertSame( LogixNG_Category.FLOW_CONTROL, _base.getCategory(), "Category matches");
     }
 
     @Test
     public void testDescription() {
         TableForEach a1 = new TableForEach("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Table: For each", a1.getShortDescription());
+        assertEquals( "Table: For each", a1.getShortDescription(), "strings are equal");
         TableForEach a2 = new TableForEach("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Table: For each column of row \"-- Header --\" in table \"''\" set variable \"\" and execute action A1", a2.getLongDescription());
+        assertEquals( "Table: For each column of row \"-- Header --\" in table \"''\" set variable \"\" and execute action A1",
+            a2.getLongDescription(), "strings are equal");
     }
 
     @Test
-    public void testExecute()
-            throws IOException {
+    public void testExecute() throws IOException {
 
         _maleSocket.addLocalVariable("MyVariable", SymbolTable.InitialValueType.None, null);
 
@@ -235,7 +236,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
         _tableForEach.setLocalVariableName("MyVariable");
         _logixNG.setEnabled(true);
 
-        Assert.assertEquals("IT1 :::  ::: IH1 :::  :::  ::: IT1 ::: IT3 ::: IH1" +
+        assertEquals("IT1 :::  ::: IH1 :::  :::  ::: IT1 ::: IT3 ::: IH1" +
                 " ::: IH6 :::  ::: IH4 ::: IH6 ::: IT1 ::: IH1 ::: IH3 ::: IH4" +
                 " ::: IH6 ::: IT1 ::: IT3 :::  :::  ::: ",
                 String.join(" ::: ", _cells));
@@ -255,8 +256,8 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
         super.testMaleSocketIsActive();
     }
 
-    // The minimal setup for log4J
     @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -285,12 +286,13 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
         _tableForEach.getChild(0).connect(InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(new MyAction("IQDA999", null)));
 
-        if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( _logixNG.setParentForAllChildren(new ArrayList<>()));
         _logixNG.activate();
         _logixNG.setEnabled(false);
     }
 
     @After
+    @AfterEach
     public void tearDown() {
         JUnitAppender.suppressErrorMessage("tableHandle is null");
         _logixNG.setEnabled(false);

@@ -2,7 +2,6 @@ package jmri.jmrix.zimo;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -10,24 +9,23 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class Mx1MessageExceptionTest {
 
    @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("Mx1MessageException constructor",new Mx1MessageException());
+   public void testMx1MessageExceptionCtor(){
+      Assertions.assertNotNull( new Mx1MessageException(), "Mx1MessageException constructor");
    }
 
    @Test
-   public void StringConstructorTest(){
-      Assert.assertNotNull("Mx1MessageException string constructor",new Mx1MessageException("test exception"));
+   public void testMx1MessageExceptionStringCtor(){
+      Assertions.assertNotNull( new Mx1MessageException("test exception"), "Mx1MessageException string constructor");
    }
 
    @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
    }
 
    @AfterEach

@@ -9,10 +9,19 @@ from javax.swing.event import TableModelListener, TableModelEvent
 from javax.swing.filechooser import FileNameExtensionFilter
 from org.apache.commons.io import FilenameUtils
 from java.io import File
+from java.awt.event import WindowAdapter
+from java.util.concurrent import CountDownLatch
 
 class CreateAndShowGUI7(TableModelListener):
 
     def __init__(self):
+        # Define a listener that counts down when the window is closed
+        class MyWindowListener(WindowAdapter):
+            def windowClosed(self, e):
+                global latch
+                if "latch" in globals():
+                    print "counting down latch"
+                    latch.countDown()
         self.logLevel = 0
 
         # Create and set up the window.
@@ -24,6 +33,8 @@ class CreateAndShowGUI7(TableModelListener):
         self.populate_action(None)
         self.cancel = False
         self.toggle = True
+        self.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE)
+        self.frame.addWindowListener(MyWindowListener())
 
     def completeTablePanel(self):
         self.topPanel= JPanel()
@@ -340,19 +351,3 @@ class MyTableModel7 (DefaultTableModel):
             return str(memory.getValue())
         else:
             return " "
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

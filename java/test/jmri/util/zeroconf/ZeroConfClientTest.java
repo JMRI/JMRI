@@ -2,7 +2,6 @@ package jmri.util.zeroconf;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class ZeroConfClientTest {
     @Test
     public void testCTor() {
         ZeroConfClient t = new ZeroConfClient();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

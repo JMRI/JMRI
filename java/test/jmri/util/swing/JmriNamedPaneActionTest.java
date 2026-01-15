@@ -2,7 +2,6 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class JmriNamedPaneActionTest {
     @Test
     public void testCTor() {
         JmriNamedPaneAction t = new JmriNamedPaneAction("Test Action","test");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

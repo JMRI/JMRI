@@ -54,7 +54,7 @@ public class DefaultSymbolTable implements SymbolTable {
         _symbols.putAll(prevSymbolTable.getSymbols());
         _stack = new DefaultStack();
         for (Symbol symbol : _symbols.values()) {
-            _stack.setValueAndTypeAtIndex(symbol.getIndex(),
+            _stack.copyValueAndTypeAtIndex(symbol.getIndex(),
                     prevSymbolTable.getValueAndType(symbol.getName()));
 
         }

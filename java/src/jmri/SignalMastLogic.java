@@ -1,10 +1,10 @@
 package jmri;
 
-import java.util.Hashtable;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 
@@ -752,7 +752,7 @@ public interface SignalMastLogic extends NamedBean {
      * @return the Layout Block
      */
     @CheckForNull
-    LayoutBlock getProtectingBlock(SignalMast destination);
+    LayoutBlock getProtectingBlock(@Nonnull SignalMast destination);
 
     /**
      * Set the auto turnouts based upon a given list of layout blocks for a

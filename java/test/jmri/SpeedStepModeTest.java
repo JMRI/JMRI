@@ -1,7 +1,9 @@
 package jmri;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test simple functioning of SpeedStepMode
@@ -13,15 +15,15 @@ public class SpeedStepModeTest {
     @Test
     public void testValidValues() {
         for( SpeedStepMode mode : SpeedStepMode.values()) {
-            Assert.assertNotNull(mode.name);
-            Assert.assertTrue(mode.name.length() > 0);
+            assertNotNull(mode.name);
+            assertTrue(mode.name.length() > 0);
 
-            Assert.assertNotNull(mode.description);
-            Assert.assertTrue(mode.description.length() > 0);
+            assertNotNull(mode.description);
+            assertTrue(mode.description.length() > 0);
 
-            Assert.assertTrue(mode.numSteps > 0);
+            assertTrue(mode.numSteps > 0);
 
-            Assert.assertTrue(mode.increment >= 0);
+            assertTrue(mode.increment >= 0);
         }
     }
 

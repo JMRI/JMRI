@@ -6,10 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Date;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
 import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.jmrit.catalog.NamedIcon;
@@ -27,7 +31,7 @@ import jmri.util.JmriJFrame;
  * Bob Jacobson.
  *
  */
-public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
+public class LcdClockFrame extends JmriJFrame implements PropertyChangeListener {
 
     // GUI member declarations
     JLabel h1;  // msb of hours
@@ -43,6 +47,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
     JButton runPauseButton;
 
     Timebase clock;
+    private final PropertyChangeListener minuteListener = (PropertyChangeEvent evt) -> update();
 
     NamedIcon tubes[] = new NamedIcon[10];
     NamedIcon baseTubes[] = new NamedIcon[10];
@@ -111,9 +116,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
         pack();
 
         // request callback to update time
-        clock.addMinuteChangeListener((java.beans.PropertyChangeEvent e) -> {
-            update();
-        });
+        clock.addMinuteChangeListener(minuteListener);
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(
@@ -170,7 +173,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
      * @param e unused.
      */
     @Override
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
+    public void propertyChange( PropertyChangeEvent e) {
         updateButtonText();
     }
 
@@ -188,4 +191,12 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
             updateButtonText();
         }
     }
+
+    @Override
+    public void dispose() {
+        clock.removeMinuteChangeListener(minuteListener);
+        clock.removePropertyChangeListener(this);
+        super.dispose();
+    }
+
 }

@@ -1,5 +1,7 @@
 package jmri.util;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.*;
@@ -10,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.function.Supplier;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
@@ -48,8 +51,9 @@ import jmri.util.zeroconf.MockZeroConfServiceManager;
 import jmri.util.zeroconf.ZeroConfServiceManager;
 
 import org.slf4j.event.Level;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.Assertions;
+
 import org.netbeans.jemmy.*;
 import org.netbeans.jemmy.operators.*;
 
@@ -368,7 +372,6 @@ public class JUnitUtil {
         try {
             t.join(100); // give it a bit of time to end
             if (t.getState() != Thread.State.TERMINATED) {
-                t.stop(); // yes, we know it's deprecated, but it's the only option for Jemmy threads
                 log.warn("   Thread {} did not terminate", t.getName());
             }
         } catch (IllegalMonitorStateException | IllegalStateException | InterruptedException e) {
@@ -439,7 +442,8 @@ public class JUnitUtil {
         String unexpectedMessageContent = JUnitAppender.unexpectedMessageContent(severity);
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
-        Assert.assertFalse("Unexpected "+severity+" or higher messages emitted: "+unexpectedMessageContent, unexpectedMessageSeen);
+        Assertions.assertFalse( unexpectedMessageSeen,
+            () -> "Unexpected "+severity+" or higher messages emitted: \""+unexpectedMessageContent+"\"");
 
         // check for hanging shutdown tasks - after test for ERROR so it can complain
         checkShutDownManager();
@@ -459,20 +463,39 @@ public class JUnitUtil {
     }
 
     /**
-     * Wait for a specific condition to be true, without having to wait longer
+     * Wait for a specific condition to be true, without having to wait longer.
      * <p>
      * To be used in tests, will do an assert if the total delay is longer than
      * WAITFOR_MAX_DELAY
      * <p>
      * Typical use:
-     * <code>JUnitUtil.waitFor(()->{return replyVariable != null;},"reply not received")</code>
+     * <code>JUnitUtil.waitFor(()->{return replyVariable != null;},"reply not received");</code>
      *
      * @param condition condition being waited for
      * @param name      name of condition being waited for; will appear in
      *                  Assert.fail if condition not true fast enough
      */
+    public static void waitFor( @Nonnull ReleaseUntil condition, @Nonnull String name) {
+        waitFor( condition, () -> name);
+    }
+
+    /**
+     * Wait for a specific condition to be true, without having to wait longer.
+     * <p>
+     * To be used in tests, will fail test if the total delay is longer than
+     * WAITFOR_MAX_DELAY.
+     * <p>
+     * The messageSupplier is not evaluated unless there is a test failure so
+     * can include expensive method calls and string joins without penalty.
+     * <p>
+     * Typical use:
+     * <code>JUnitUtil.waitFor( () -> { return replyVariable != null; },
+     *     () -> "replyVariable still null: " + computationallyExpensiveCall() + " or multiple Strings" );</code>
+     * @param condition condition being waited for.
+     * @param messageSupplier Failure text supplier.
+     */
     @SuppressFBWarnings("REC_CATCH_EXCEPTION")
-    static public void waitFor(ReleaseUntil condition, String name) {
+    public static void waitFor( @Nonnull ReleaseUntil condition , @Nonnull Supplier<String> messageSupplier) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
             return;
@@ -485,7 +508,7 @@ public class JUnitUtil {
                         return;
                     }
                 } catch(Exception ex) {
-                    Assertions.fail("Exception while processing condition for \"" + name + "\" ", ex);
+                    fail("Exception while processing condition for \"" + messageSupplier.get() + "\" ", ex);
                 }
                 int priority = Thread.currentThread().getPriority();
                 try {
@@ -493,14 +516,14 @@ public class JUnitUtil {
                     Thread.sleep(WAITFOR_DELAY_STEP);
                     delay += WAITFOR_DELAY_STEP;
                 } catch (InterruptedException e) {
-                    Assertions.fail("failed due to InterruptedException", e);
+                    fail("failed due to InterruptedException", e);
                 } finally {
                     Thread.currentThread().setPriority(priority);
                 }
             }
-            Assertions.fail("\"" + name + "\" did not occur in time");
+            fail("\"" + messageSupplier.get() + "\" did not occur in time");
         } catch (Exception ex) {
-            Assertions.fail("Exception while waiting for \"" + name + "\" ", ex);
+            fail("Exception while waiting for \"" + messageSupplier.get() + "\" ", ex);
         }
     }
 
@@ -511,7 +534,7 @@ public class JUnitUtil {
      * than WAITFOR_MAX_DELAY
      * <p>
      * Typical use:
-     * <code>Assume.assumeTrue("reply not received", JUnitUtil.waitForTrue(()->{return replyVariable != null;}));</code>
+     * <code>Assumptions.assumeTrue("reply not received", JUnitUtil.waitFor(()->{return replyVariable != null;}));</code>
      *
      * @param condition condition to wait for
      * @return true if condition is met before WAITFOR_MAX_DELAY, false
@@ -884,10 +907,23 @@ public class JUnitUtil {
     }
 
     /**
-     * Creates a new DebugThrottleManager and stores it to InstanceManager.
+     * Creates a new DebugThrottleManager using the default
+     * InternalSystemConnectionMemo.
+     * Stores to both InstanceManager and System Connection.
      */
     public static void initDebugThrottleManager() {
-        jmri.ThrottleManager m = new DebugThrottleManager();
+        var memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        initDebugThrottleManager(memo);
+    }
+
+    /**
+     * Creates a new DebugThrottleManager using the supplied SystemConnectionMemo.
+     * Stores to both InstanceManager and System Connection.
+     * @param memo the system connection to use.
+     */
+    public static void initDebugThrottleManager(@Nonnull jmri.jmrix.DefaultSystemConnectionMemo memo) {
+        ThrottleManager m = new DebugThrottleManager(memo);
+        memo.store(m, ThrottleManager.class);
         InstanceManager.store(m, ThrottleManager.class);
     }
 
@@ -1060,7 +1096,7 @@ public class JUnitUtil {
      * stopped all services it is managing.
      */
     public static void initZeroConfServiceManager() {
-        resetZeroConfServiceManager();
+        Assertions.assertTrue(JUnitUtil.resetZeroConfServiceManager());
         InstanceManager.setDefault(ZeroConfServiceManager.class, new MockZeroConfServiceManager());
     }
 
@@ -1070,6 +1106,7 @@ public class JUnitUtil {
      * stopped all services it is managing.
      * @return true when complete.
      */
+    @CheckReturnValue
     public static boolean resetZeroConfServiceManager() {
         if (! InstanceManager.containsDefault(ZeroConfServiceManager.class)) {
             return true; // not present, don't create one by asking for it.
@@ -1081,10 +1118,11 @@ public class JUnitUtil {
         waitFor( () -> manager.allServices().isEmpty(), "Stopping all ZeroConf Services");
 
         manager.dispose();
-
-        Thread t = getThreadByName( ZeroConfServiceManager.DNS_CLOSE_THREAD_NAME );
-        if ( t != null ) {
-            waitFor( () -> !t.isAlive(), "dns.close thread did not complete");
+        var threads = Thread.getAllStackTraces().keySet();
+        for (Thread t : threads) {
+            if (t.getName().startsWith(ZeroConfServiceManager.DNS_CLOSE_THREAD_NAME)) {
+                waitThreadTerminated(t);
+            }
         }
         return true;
     }
@@ -1131,30 +1169,32 @@ public class JUnitUtil {
     }
 
     /**
-     * Errors if the {@link jmri.ShutDownManager} was not left empty. Normally
-     * run as part of the default end-of-test code. Considered an error so that
-     * CI will flag these and tests will be improved.
+     * Fails test if the {@link jmri.ShutDownManager} was not left empty.
+     * Normally run as part of the default end-of-test code.
+     * Considered a failure so that the individual test can be identified.
      *
      * @see #clearShutDownManager()
      */
     public static void checkShutDownManager() {
-        if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
+        if (!  InstanceManager.containsDefault(ShutDownManager.class)) {
+            return; // not present, stop (don't create)
+        }
 
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
 
         List<Callable<Boolean>> callables = sm.getCallables();
         while (!callables.isEmpty()) {
             Callable<Boolean> callable = callables.get(0);
-            log.error("Test {} left registered shutdown callable of type {}", getTestClassName(), callable.getClass(),
-                        LoggingUtil.shortenStacktrace(new Exception("traceback")));
+            fail("Test " + getTestClassName() + " left registered shutdown callable of type "
+                + callable.getClass());
             sm.deregister(callable);
             callables = sm.getCallables(); // avoid ConcurrentModificationException
         }
         List<Runnable> runnables = sm.getRunnables();
         while (!runnables.isEmpty()) {
             Runnable runnable = runnables.get(0);
-            log.error("Test {} left registered shutdown runnable of type {}", getTestClassName(), runnable.getClass(),
-                        LoggingUtil.shortenStacktrace(new Exception("traceback")));
+            fail("Test " + getTestClassName() + " left registered shutdown runnable of type "
+                + runnable.getClass());
             sm.deregister(runnable);
             runnables = sm.getRunnables(); // avoid ConcurrentModificationException
         }
@@ -1166,7 +1206,7 @@ public class JUnitUtil {
             f.setAccessible(true);
             f.set(sm, false);
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            log.error("Failed to reset DefaultShutDownManager shuttingDown field", x);
+            fail("Failed to reset DefaultShutDownManager shuttingDown field", x);
         }
 
     }
@@ -1359,7 +1399,8 @@ public class JUnitUtil {
      */
     private static void resetWindows(boolean warn, boolean error, String testLocation ) {
         // close any open remaining windows from earlier tests
-        for (Frame frame : Frame.getFrames()) {
+        Frame[] frames = Frame.getFrames();
+        for (Frame frame : frames) {
             if (frame.isDisplayable()) {
                 if (frame.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
                     String message = "Cleaning up nameless invisible frame created by creating a dialog with a null parent {} {}.";
@@ -1379,7 +1420,8 @@ public class JUnitUtil {
                 JUnitUtil.dispose(frame);
             }
         }
-        for (Window window : Window.getWindows()) {
+        Window[] windows = Window.getWindows();
+        for (Window window : windows) {
             if (window.isDisplayable()) {
                 if (window.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
                     String message = "Cleaning up nameless invisible window created by creating a dialog with a null parent {} {}.";
@@ -1580,7 +1622,7 @@ public class JUnitUtil {
                  || ( name.equals("OLCB Interface dispose thread") && group.contains("main") )
                  || ( name.equals("olcbCanInterface.initialize") && group.contains("JMRI") )    // Created by JMRI but hangs due to OpenLCB lib
 
-                 || ( name.startsWith("SwingWorker-pool-1-thread-") &&
+                 || ( name.startsWith("SwingWorker-pool-") &&
                          ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
                     )
                 )) {
@@ -1684,7 +1726,7 @@ public class JUnitUtil {
      */
     public static AbstractButton pressButton(Container frame, String text) {
         AbstractButton button = JButtonOperator.findAbstractButton(frame, text, true, true);
-        Assert.assertNotNull(text + " Button not found", button);
+        Assertions.assertNotNull( button, () -> text + " Button not found");
         AbstractButtonOperator abo = new AbstractButtonOperator(button);
         abo.doClick();
         return button;

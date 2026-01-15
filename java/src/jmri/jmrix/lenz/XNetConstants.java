@@ -17,7 +17,7 @@ package jmri.jmrix.lenz;
  */
 public final class XNetConstants {
 
-    private XNetConstants(){
+    private XNetConstants() {
         // final class of static methods.
     }
 
@@ -171,6 +171,7 @@ public final class XNetConstants {
     public static final int EMERGENCY_OFF = 0x80;
     public static final int RESUME_OPS = 0x81;
     public static final int SERVICE_MODE_CSRESULT = 0x10;
+    public static final int OPS_MODE_CSRESULT = 0x27;
     public static final int CS_VERSION = 0x21;
     public static final int CS_STATUS = 0x24;
 
@@ -202,7 +203,7 @@ public final class XNetConstants {
     public static final int PROG_READ_MODE_PAGED = 0x14;
     public static final int PROG_READ_MODE_CV_V36 = 0x18; // version 3.6 read
 
-    /* Program mode read requests */
+    /* Program mode write requests */
     public static final int PROG_WRITE_REQUEST = 0x23;
 
     /* programming modes to be used with PROG_WRITE_REQUEST */
@@ -292,7 +293,7 @@ public final class XNetConstants {
 
     public static final int LOCO_SET_FUNC_GROUP9 = 0x50; /* set functions F53-60*/
 
-    public static final int LOCO_SET_FUNC_GROUP10= 0x51; /* set functions F61-68*/
+    public static final int LOCO_SET_FUNC_GROUP10 = 0x51; /* set functions F61-68*/
 
     /* these set momentary status for functions with 0xE4 as the opcode*/
     public static final int LOCO_SET_FUNC_GROUP1_MOMENTARY = 0x24; /* set functions F0-F4*/
@@ -313,7 +314,7 @@ public final class XNetConstants {
 
     public static final int LOCO_SET_FUNC_GROUP9_MOMENTARY = 0x53; /* set functions F53-60*/
 
-    public static final int LOCO_SET_FUNC_GROUP10_MOMENTARY= 0x54; /* set functions F61-68*/
+    public static final int LOCO_SET_FUNC_GROUP10_MOMENTARY = 0x54; /* set functions F61-68*/
 
     /* add a unit to a multi-unit set opcode requires addition of the
      direction relative to the lead unit as the least significant bit
@@ -350,6 +351,9 @@ public final class XNetConstants {
     /* Operations mode programming */
     public static final int OPS_MODE_PROG_REQ = 0xE6;
 
+    /* Read requests (second byte for above) */
+    public static final int OPS_MODE_PROG_READ_REQ = 0x30;
+
     /* Write requests (second byte for above) */
     public static final int OPS_MODE_PROG_WRITE_REQ = 0x30;
 
@@ -357,7 +361,7 @@ public final class XNetConstants {
      this is used to find the next Multi Unit address known to the
      command station.  FWD and BKWD refer to search direction */
     public static final int CS_MULTI_UNIT_REQ = 0xE2;  // This is the OpCode
-/* These are byte 2 of the message */
+    /* These are byte 2 of the message */
     public static final int CS_MULTI_UNIT_REQ_FWD = 0x03;
     public static final int CS_MULTI_UNIT_REQ_BKWD = 0x04;
 
@@ -396,5 +400,11 @@ public final class XNetConstants {
     public static final int LIUSB_REQUEST_SENT_WHILE_NO_TIMESLOT = 0x08;
     public static final int LIUSB_BAD_DATA_IN_REQUEST = 0x09;
     public static final int LIUSB_RETRANSMIT_REQUEST = 0x0A;
+
+    /* Information response from the Command Station - V3.8 or above */
+    public static final int CS_ADVANCED_INFO_RESPONSE = 0x64; // opcode
+    /* specific responses for the above */
+    public static final int POM_RESULTS = 0x24;
+    public static final int MODEL_TIME = 0x25;
 
 }

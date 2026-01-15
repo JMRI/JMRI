@@ -1,12 +1,15 @@
 package jmri.jmrix.loconet.locostats.swing;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import javax.swing.JFrame;
+
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.util.JmriJFrame;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,7 +19,7 @@ import org.junit.jupiter.api.*;
  */
 public class LocoStatsFrameTest {
 
-    LocoStatsPanel getFrame(String title, int offset) throws Exception {
+    LocoStatsPanel getFrame(String title, int offset) {
         JmriJFrame f = new JmriJFrame();
         LocoStatsPanel p = new LocoStatsPanel() {
             @Override
@@ -34,17 +37,19 @@ public class LocoStatsFrameTest {
     }
 
     @Test
-    public void testDefaultFormat() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testDefaultFormat() {
+
         getFrame("Default LocoStats Window", 0);
-        JFrame f = jmri.util.JmriJFrame.getFrame("Default LocoStats Window");
-        Assert.assertTrue("found frame", f != null);
-        f.dispose();
+        JFrame f = JmriJFrame.getFrame("Default LocoStats Window");
+        assertNotNull( f, "found frame");
+        JUnitUtil.dispose(f);
     }
 
     @Test
-    public void testLocoBufferFormat() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testLocoBufferFormat() {
+
         LocoStatsPanel p = getFrame("LocoBuffer Stats Window", 150);
         p.requestUpdate();
         p.stats = new jmri.jmrix.loconet.locostats.LocoStatsFunc(null); // initialize with a null traffic controller
@@ -52,14 +57,15 @@ public class LocoStatsFrameTest {
                 new int[]{LnConstants.OPC_PEER_XFER, 0x10, 0x50, 0x50, 0x01, 0x0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         ));
-        JFrame f = jmri.util.JmriJFrame.getFrame("LocoBuffer Stats Window");
-        Assert.assertTrue("found frame", f != null);
-        f.dispose();
+        JFrame f = JmriJFrame.getFrame("LocoBuffer Stats Window");
+        assertNotNull( f, "found frame");
+        JUnitUtil.dispose(f);
     }
 
     @Test
-    public void testPR2Format() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testPR2Format() {
+
         LocoStatsPanel p = getFrame("PR2 Stats Window", 300);
         p.requestUpdate();
         p.stats = new jmri.jmrix.loconet.locostats.LocoStatsFunc(null); // initialize with a null traffic controller
@@ -69,17 +75,18 @@ public class LocoStatsFrameTest {
                     0x00, 5, 6, 0, 0,
                     0}
         ));
-        JFrame f = jmri.util.JmriJFrame.getFrame("PR2 Stats Window");
-        Assert.assertTrue("found frame", f != null);
-        f.dispose();
+        JFrame f = JmriJFrame.getFrame("PR2 Stats Window");
+        assertNotNull( f, "found frame");
+        JUnitUtil.dispose(f);
     }
 
     @Test
-    public void testMS100Format() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testMS100Format() {
+
         LocoStatsPanel p = getFrame("MS100 Stats Window", 450);
         p.requestUpdate();
-        Assert.assertNotNull("p isn't supposed to be null",p);
+        assertNotNull( p, "p isn't supposed to be null");
         p.stats = new jmri.jmrix.loconet.locostats.LocoStatsFunc(null); // initialize with a null traffic controller
         p.stats.message(new LocoNetMessage(
                 new int[]{LnConstants.OPC_PEER_XFER, 0x10, 0x22, 0x22, 0x01,
@@ -87,18 +94,18 @@ public class LocoStatsFrameTest {
                     0x00, 5, 6, 0, 0,
                     0}
         ));
-        JFrame f = jmri.util.JmriJFrame.getFrame("MS100 Stats Window");
-        Assert.assertTrue("found frame", f != null);
-        f.dispose();
+        JFrame f = JmriJFrame.getFrame("MS100 Stats Window");
+        assertNotNull( f, "found frame");
+        JUnitUtil.dispose(f);
     }
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
     }
 
     @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 }

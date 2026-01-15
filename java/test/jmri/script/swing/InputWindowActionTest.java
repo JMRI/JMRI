@@ -2,7 +2,6 @@ package jmri.script.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class InputWindowActionTest {
     @Test
     public void testCTor() {
         InputWindowAction t = new InputWindowAction();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

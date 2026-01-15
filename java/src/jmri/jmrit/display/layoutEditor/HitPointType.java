@@ -126,7 +126,8 @@ public enum HitPointType {
     TURNTABLE_RAY_60,   //     110      /
     TURNTABLE_RAY_61,   //     111     /
     TURNTABLE_RAY_62,   //     112    /
-    TURNTABLE_RAY_63;   //     113
+    TURNTABLE_RAY_63,   //     113
+    BLOCKCONTENTSICON;
 
     /**
      * @param hitType the hit point type

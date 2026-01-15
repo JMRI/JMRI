@@ -6,7 +6,10 @@ import jmri.profile.ProfileManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  *
@@ -14,42 +17,31 @@ import org.junit.Assert;
  */
 public class MetadataTest {
 
-    @BeforeEach
-    public void setUp() {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-    }
-
-    @AfterEach
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
-
     /**
      * Test of getBySystemName method, of class Metadata.
      */
     @Test
     public void testGetBySystemName() {
         // non-existant properties should return null
-        Assert.assertNull("Non-existant property", Metadata.getBySystemName("non-existant-property"));
+        assertNull( Metadata.getBySystemName("non-existant-property"), "Non-existant property");
         // Java System properties are returned if in proper case
-        Assert.assertEquals("Java System property in correct case", System.getProperty("path.separator"), Metadata.getBySystemName("path.separator"));
-        Assert.assertNull("Java System property in wrong case", Metadata.getBySystemName("Path.Separator"));
+        assertEquals( System.getProperty("path.separator"), Metadata.getBySystemName("path.separator"), "Java System property in correct case");
+        assertNull( Metadata.getBySystemName("Path.Separator"), "Java System property in wrong case");
         // Named properties are case insenitive
-        Assert.assertEquals("COPYRIGHT", Metadata.getBySystemName(Metadata.COPYRIGHT), Metadata.getBySystemName("COPYRIGHT"));
-        Assert.assertEquals("copyright", Metadata.getBySystemName(Metadata.COPYRIGHT), Metadata.getBySystemName("copyright"));
-        Assert.assertEquals("CopyRight", Metadata.getBySystemName(Metadata.COPYRIGHT), Metadata.getBySystemName("CopyRight"));
-        Assert.assertEquals("cOPYrIGHT", Metadata.getBySystemName(Metadata.COPYRIGHT), Metadata.getBySystemName("cOPYrIGHT"));
+        assertEquals( Metadata.getBySystemName(Metadata.COPYRIGHT), Metadata.getBySystemName("COPYRIGHT"), "COPYRIGHT");
+        assertEquals( Metadata.getBySystemName(Metadata.COPYRIGHT), Metadata.getBySystemName("copyright"), "copyright");
+        assertEquals( Metadata.getBySystemName(Metadata.COPYRIGHT), Metadata.getBySystemName("CopyRight"), "CopyRight");
+        assertEquals( Metadata.getBySystemName(Metadata.COPYRIGHT), Metadata.getBySystemName("cOPYrIGHT"), "cOPYrIGHT");
         // Test that every named property returns an expected result
-        Assert.assertEquals(Metadata.JMRIVERSION, jmri.Version.name(), Metadata.getBySystemName(Metadata.JMRIVERSION));
-        Assert.assertEquals(Metadata.JMRIVERCANON, jmri.Version.getCanonicalVersion(), Metadata.getBySystemName(Metadata.JMRIVERCANON));
-        Assert.assertEquals(Metadata.JMRIVERMAJOR, Integer.toString(jmri.Version.major), Metadata.getBySystemName(Metadata.JMRIVERMAJOR));
-        Assert.assertEquals(Metadata.JMRIVERMINOR, Integer.toString(jmri.Version.minor), Metadata.getBySystemName(Metadata.JMRIVERMINOR));
-        Assert.assertEquals(Metadata.JMRIVERTEST, Integer.toString(jmri.Version.test), Metadata.getBySystemName(Metadata.JMRIVERTEST));
-        Assert.assertEquals(Metadata.JVMVERSION, System.getProperty("java.version", "<unknown>"), Metadata.getBySystemName(Metadata.JVMVERSION));
-        Assert.assertEquals(Metadata.JVMVENDOR, System.getProperty("java.vendor", "<unknown>"), Metadata.getBySystemName(Metadata.JVMVENDOR));
-        Assert.assertEquals(Metadata.ACTIVEPROFILE, ProfileManager.getDefault().getActiveProfileName(), Metadata.getBySystemName(Metadata.ACTIVEPROFILE));
-        Assert.assertEquals(Metadata.COPYRIGHT, jmri.Version.getCopyright(), Metadata.getBySystemName(Metadata.COPYRIGHT));
+        assertEquals( jmri.Version.name(), Metadata.getBySystemName(Metadata.JMRIVERSION), Metadata.JMRIVERSION);
+        assertEquals( jmri.Version.getCanonicalVersion(), Metadata.getBySystemName(Metadata.JMRIVERCANON), Metadata.JMRIVERCANON);
+        assertEquals( Integer.toString(jmri.Version.major), Metadata.getBySystemName(Metadata.JMRIVERMAJOR), Metadata.JMRIVERMAJOR);
+        assertEquals( Integer.toString(jmri.Version.minor), Metadata.getBySystemName(Metadata.JMRIVERMINOR), Metadata.JMRIVERMINOR);
+        assertEquals( Integer.toString(jmri.Version.test), Metadata.getBySystemName(Metadata.JMRIVERTEST), Metadata.JMRIVERTEST);
+        assertEquals( System.getProperty("java.version", "<unknown>"), Metadata.getBySystemName(Metadata.JVMVERSION), Metadata.JVMVERSION);
+        assertEquals( System.getProperty("java.vendor", "<unknown>"), Metadata.getBySystemName(Metadata.JVMVENDOR), Metadata.JVMVENDOR);
+        assertEquals( ProfileManager.getDefault().getActiveProfileName(), Metadata.getBySystemName(Metadata.ACTIVEPROFILE), Metadata.ACTIVEPROFILE);
+        assertEquals( jmri.Version.getCopyright(), Metadata.getBySystemName(Metadata.COPYRIGHT), Metadata.COPYRIGHT);
     }
 
     /**
@@ -57,7 +49,7 @@ public class MetadataTest {
      */
     @Test
     public void testGetSystemNameArray() {
-        Assert.assertArrayEquals("Known property names", new String[]{Metadata.JMRIVERSION,
+        assertArrayEquals( new String[]{Metadata.JMRIVERSION,
             Metadata.JMRIVERCANON,
             Metadata.JMRIVERMAJOR,
             Metadata.JMRIVERMINOR,
@@ -65,7 +57,9 @@ public class MetadataTest {
             Metadata.JVMVERSION,
             Metadata.JVMVENDOR,
             Metadata.ACTIVEPROFILE,
-            Metadata.COPYRIGHT}, Metadata.getSystemNameArray());
+            Metadata.COPYRIGHT},
+                Metadata.getSystemNameArray(),
+            "Known property names");
     }
 
     /**
@@ -73,7 +67,7 @@ public class MetadataTest {
      */
     @Test
     public void testGetSystemNameList() {
-        Assert.assertEquals("Known property names", Arrays.asList(new String[]{Metadata.JMRIVERSION,
+        assertEquals( Arrays.asList(new String[]{Metadata.JMRIVERSION,
             Metadata.JMRIVERCANON,
             Metadata.JMRIVERMAJOR,
             Metadata.JMRIVERMINOR,
@@ -81,7 +75,20 @@ public class MetadataTest {
             Metadata.JVMVERSION,
             Metadata.JVMVENDOR,
             Metadata.ACTIVEPROFILE,
-            Metadata.COPYRIGHT}), Metadata.getSystemNameList());
+            Metadata.COPYRIGHT}),
+                Metadata.getSystemNameList(),
+            "Known property names");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

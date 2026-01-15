@@ -96,7 +96,7 @@ public class RosterSpeedProfile {
      * reinitializes speedstep trace array
      * @param value true/false
      */
-    protected void setTestMode(boolean value) {
+    public void setTestMode(boolean value) {
         synchronized (this){
             profileInTestMode = value;
         }
@@ -107,7 +107,7 @@ public class RosterSpeedProfile {
      * Gets the speed step trace array.
      * @return speedstep trace array
      */
-    protected List<SpeedSetting> getSpeedStepTrace() {
+    public List<SpeedSetting> getSpeedStepTrace() {
         return testSteps;
     }
 
@@ -411,7 +411,7 @@ public class RosterSpeedProfile {
                 return speed;
             }
         }
-        log.debug("no exact match forward for {}", iSpeedStep);
+        log.trace("no exact match forward for {}", iSpeedStep);
         float lower = 0.0f;
         float higher = 0.0f;
         int highStep = iSpeedStep;
@@ -437,7 +437,7 @@ public class RosterSpeedProfile {
             }
             entry = speeds.lowerEntry(lowStep);
         }
-        log.debug("lowStep={}, lower={} highStep={} higher={} for iSpeedStep={}",
+        log.trace("lowStep={}, lower={} highStep={} higher={} for iSpeedStep={}",
                 lowStep, lower, highStep, higher, iSpeedStep);
         if (lower <= 0.0f) {      // nothing lower
             if (nothingHigher) {
@@ -474,7 +474,7 @@ public class RosterSpeedProfile {
                 return speed;
             }
         }
-        log.debug("no exact match reverse for {}", iSpeedStep);
+        log.trace("no exact match reverse for {}", iSpeedStep);
         float lower = 0.0f;
         float higher = 0.0f;
         int highStep = iSpeedStep;
@@ -500,7 +500,7 @@ public class RosterSpeedProfile {
             }
             entry = speeds.lowerEntry(lowStep);
         }
-        log.debug("lowStep={}, lower={} highStep={} higher={} for iSpeedStep={}",
+        log.trace("lowStep={}, lower={} highStep={} higher={} for iSpeedStep={}",
                 lowStep, lower, highStep, higher, iSpeedStep);
         if (lower <= 0.0f) {      // nothing lower
             if (nothingHigher) {
@@ -614,6 +614,11 @@ public class RosterSpeedProfile {
     public void setMinMaxLimits(float minReliableOperatingSpeed, float maxOperatingSpeed) {
         this.minReliableOperatingSpeed = minReliableOperatingSpeed;
         this.maxOperatingSpeed = maxOperatingSpeed;
+        if (minReliableOperatingSpeed > maxOperatingSpeed) {
+            log.warn("MaxOperatingSpeed [{}] < minReliableOperatingSpeed [{}] setting Max = Min",
+                    minReliableOperatingSpeed, maxOperatingSpeed);
+            this.maxOperatingSpeed = this.minReliableOperatingSpeed;
+        }
     }
 
     /**
@@ -731,20 +736,14 @@ public class RosterSpeedProfile {
      */
     public void changeLocoSpeed(DccThrottle t, float distance, float requestedSpeed) {
         float speed = 0.0f;
-        log.debug("Call to change speed over specific distance float {} distance {}", requestedSpeed, distance);
+        log.debug("Call to change speed over specific distance: speed {} distance {}", requestedSpeed, distance);
         if (requestedSpeed  > maxOperatingSpeed) {
             speed = maxOperatingSpeed;
         } else {
             speed = requestedSpeed;
         }
-        if (Float.compare(speed, t.getSpeedSetting()) == 0) {
-            log.debug("Throttle and request speed setting are the same {} {} so will quit", speed, t.getSpeedSetting());
-            //Already at correct speed setting
-            finishChange();
-            return;
-        }
-
         if (Float.compare(speed, desiredSpeedStep) == 0) {
+            // This requires no checks for min/max.
             log.debug("Already setting to desired speed step");
             return;
         }
@@ -756,12 +755,10 @@ public class RosterSpeedProfile {
             cancelSpeedChange();
         }
         _throttle = t;
-
-        log.debug("Desired Speed Step {} asked for {}", desiredSpeedStep, speed);
         desiredSpeedStep = speed;
 
-        log.debug("calculated current step {} required {} current {}",
-            _throttle.getSpeedSetting(), speed, _throttle.getSpeedSetting());
+        log.debug("Speed current {} required {} ",
+                _throttle.getSpeedSetting(), speed);
         if (_throttle.getSpeedSetting() < speed) {
             log.debug("Going for acceleration");
         } else {
@@ -770,7 +767,7 @@ public class RosterSpeedProfile {
 
         float adjSpeed = speed;
         boolean andStop = false;
-        if (speed <= 0.0 && minReliableOperatingSpeed > 0.0f) {
+        if (speed <= 0.0) {
             andStop = true;
         }
         if (speed < minReliableOperatingSpeed) {
@@ -778,6 +775,16 @@ public class RosterSpeedProfile {
         }
         log.debug("Speed[{}] adjSpeed[{}] MinSpeed[{}]",
                 speed,adjSpeed, minReliableOperatingSpeed);
+
+        if (!andStop
+                && (Float.compare(adjSpeed, t.getSpeedSetting()) == 0
+                    || (Math.round(adjSpeed/t.getSpeedIncrement()) ==
+                            Math.round(t.getSpeedSetting()/t.getSpeedIncrement())))) {
+            log.debug("Throttle and request speed setting are the same {} {} so will quit", speed, t.getSpeedSetting());
+            //Already at correct speed setting
+            finishChange();
+            return;
+        }
         calculateStepDetails(adjSpeed, distance, andStop);
     }
 
@@ -789,7 +796,6 @@ public class RosterSpeedProfile {
         float stepIncrement = _throttle.getSpeedIncrement();
         log.debug("Desired Speed Step {} asked for {}", desiredSpeedStep, speedStep);
         desiredSpeedStep = speedStep;
-        //int step = Math.round(_throttle.getSpeedSetting()*1000);
         log.debug("calculated current step {} required {} current {} increment {}", _throttle.getSpeedSetting(), speedStep, _throttle.getSpeedSetting(), stepIncrement);
         boolean increaseSpeed = false;
         if (_throttle.getSpeedSetting() < speedStep) {
@@ -815,6 +821,15 @@ public class RosterSpeedProfile {
             calculatedDistance = calculateInitialOverRun(distance);
             distanceRemaining = calculatedDistance;
         }
+        if (distanceRemaining < 0.0f) {
+            if (andStop) {
+                _throttle.setSpeedSetting(0.0f);
+            } else {
+                _throttle.setSpeedSetting(speedStep);
+            }
+            log.warn("There is insufficient distance [{}] after adjustments, setting speed immediately", distanceRemaining);
+            return;
+        }
 
         float calculatingStep = _throttle.getSpeedSetting();
         if (increaseSpeed) {
@@ -839,7 +854,6 @@ public class RosterSpeedProfile {
         }
 
         boolean calculated = false;
-
         while (!calculated) {
             float spd = 0;
             if (calculatingStep != 0.0) { // current speed
@@ -856,74 +870,120 @@ public class RosterSpeedProfile {
 
             double time = (calculatedDistance / avgSpeed); //in seconds
             time = time * 1000; //covert it to milli seconds
-            /*if(stopTimer==null){
-             log.debug("time before remove over run " + time);
-             time = calculateInitialOverRun(time);//At the start we will deduct the over run time if configured
-             log.debug("time after remove over run " + time);
-             }*/
             float speeddiff = calculatingStep - desiredSpeedStep;
+            if (increaseSpeed) {
+                speeddiff =  desiredSpeedStep - calculatingStep;
+            }
             float noSteps = speeddiff / stepIncrement;
             log.debug("Speed diff {} number of Steps {} step increment {}", speeddiff, noSteps, stepIncrement);
 
-            int timePerStep = Math.abs((int) (time / noSteps));
+            int timePerStep = (int) (time / noSteps);
+            if (timePerStep < 0) {
+                log.error("Time per speed went to zero or below, setting finale speed immediatly.");
+                if (_throttle != null) {
+                    addSpeedStepItem(calculated,new SpeedSetting(desiredSpeedStep, 10, andStop));
+                    setNextStep();
+                }
+                break;
+            }
             float calculatedStepInc = stepIncrement;
-            if (calculatingStep > (stepIncrement * 2)) {
+            boolean lastStep = false;
+            if (Math.abs(speeddiff) > (stepIncrement * 2)) {
                 //We do not get reliable time results if the duration per speed step is less than 500ms
                 //therefore we calculate how many speed steps will fit in to 750ms.
                 if (timePerStep <= 500 && timePerStep > 0) {
-                    //thing tIncrement should be different not sure about this bit
-                    float tmp = (750.0f / timePerStep);
-                    calculatedStepInc = stepIncrement * tmp;
+                    float newTime = 750.0f;
+                    float tmp =(float) Math.floor(newTime / timePerStep);
+                    // To avoid the lack of a stub ensure resultant speed is less than final speed by at least a step.
+                    if (increaseSpeed) {
+                        while (desiredSpeedStep - ( calculatingStep + (stepIncrement * tmp)) <= stepIncrement) {
+                            tmp = tmp - 1;
+                        }
+
+                        if (tmp > 0 && calculatedDistance - getDistanceTravelled(_throttle.getIsForward(),
+                                    calculatingStep + (stepIncrement * tmp),
+                                    ((float) (newTime / 1000.0))) > 0) {
+                            calculatedStepInc = stepIncrement * tmp;
+                            timePerStep = (int)newTime;
+                        }
+                    } else {
+                        while (calculatingStep - (stepIncrement * tmp) - desiredSpeedStep <= stepIncrement) {
+                            tmp = tmp - 1;
+                        }
+                        if ( tmp > 0 && (calculatedDistance
+                                - getDistanceTravelled(_throttle.getIsForward(),
+                                        calculatingStep - (stepIncrement * tmp),
+                                        ((float) (newTime / 1000.0)))) > 0) {
+                            calculatedStepInc = stepIncrement * tmp;
+                            timePerStep = (int)newTime;
+                        }
+                    }
                     log.debug("time per step was {} no of increments in 750 ms is {} new step increment in {}", timePerStep, tmp, calculatedStepInc);
-
-                    timePerStep = 750;
-                }
-            }
-            log.debug("per interval {}", timePerStep);
-
-            //Calculate the new speed setting
-            if (increaseSpeed) {
-                calculatingStep = calculatingStep + calculatedStepInc;
-                if (calculatingStep > 1.0f) {
-                    calculatingStep = 1.0f;
-                    calculated = true;
-                }
-                if (calculatingStep > desiredSpeedStep) {
-                    calculatingStep = desiredSpeedStep;
-                    calculated = true;
                 }
             } else {
-                calculatingStep = calculatingStep - calculatedStepInc;
-                if (calculatingStep < _throttle.getSpeedIncrement()) {
-                    calculatingStep = 0.0f;
-                    calculated = true;
-                    timePerStep = 0;
+                // last bit calculate duration from distance remaining
+                if (increaseSpeed && calculatingStep == 0) {
+                    calculatingStep+=calculatedStepInc;
                 }
-                if (calculatingStep < desiredSpeedStep) {
-                    calculatingStep = desiredSpeedStep;
-                    calculated = true;
+                timePerStep = Math.round(calculatedDistance/getSpeed(calculatingStep,_throttle.getIsForward())*1000);
+                if (!increaseSpeed) {
+                    calculatedStepInc = calculatingStep - desiredSpeedStep;
+                } else {
+                    calculatedStepInc = desiredSpeedStep - calculatingStep ;
                 }
+                lastStep=true;
             }
-            log.debug("Speed Step current {} speed to set {}", _throttle.getSpeedSetting(), calculatingStep);
-
-            SpeedSetting ss = new SpeedSetting(calculatingStep, timePerStep, andStop);
-            synchronized (this) {
-                stepQueue.addLast(ss);
-                if (profileInTestMode) {
-                    testSteps.add(ss);
-                }
-                if (andStop && calculated) {
-                    ss = new SpeedSetting( 0.0f, 0, andStop);
-                    stepQueue.addLast(ss);
-                    if (profileInTestMode) {
-                        testSteps.add(ss);
+            calculatedStepInc=Math.abs(calculatedStepInc);
+            log.debug("per interval {}, increase {} lastStep {}", timePerStep, increaseSpeed,lastStep);
+            //Calculate the new speed setting
+            if (increaseSpeed) {
+                //if (calculatingStep + calculatedStepInc == desiredSpeedStep) {
+                if (lastStep) {
+                    SpeedSetting ss = new SpeedSetting(calculatingStep, timePerStep, andStop);
+                    addSpeedStepItem(calculated,ss);
+                    calculated = true;
+                    if (!andStop) { calculatingStep = desiredSpeedStep;timePerStep=2;}
+                    else {
+                        calculatingStep = 0.0f;timePerStep=2;
                     }
+                    ss = new SpeedSetting(calculatingStep, timePerStep, andStop);
+                    addSpeedStepItem(calculated,ss);
+                    if (stopTimer == null) {
+                        setNextStep();
+                    }
+                    break;
                 }
+                calculatingStep = calculatingStep + calculatedStepInc;
+            } else {
+                if (lastStep) {
+                    SpeedSetting ss = new SpeedSetting(calculatingStep, timePerStep, andStop);
+                    addSpeedStepItem(calculated,ss);
+                    calculated = true;
+                    if (!andStop) { calculatingStep = desiredSpeedStep;timePerStep=2;}
+                    else {
+                        calculatingStep = 0.0f;timePerStep=2;
+                    }
+                    ss = new SpeedSetting(calculatingStep, timePerStep, andStop);
+                    addSpeedStepItem(calculated,ss);
+                    if (stopTimer == null) { //If this is the first time round then kick off the speed change
+                        setNextStep();
+                    }
+                    break;
+                }
+                calculatingStep = calculatingStep - calculatedStepInc;
             }
+            SpeedSetting ss = new SpeedSetting(calculatingStep, timePerStep, andStop);
+            addSpeedStepItem(calculated,ss);
             if (stopTimer == null) { //If this is the first time round then kick off the speed change
                 setNextStep();
             }
-
+            if (calculated) {
+               if (andStop) {
+                   ss = new SpeedSetting(0.0f, 10, andStop);
+               } else {
+                   ss = new SpeedSetting(desiredSpeedStep, 10, andStop);
+               }
+               addSpeedStepItem(calculated,ss);            }
             // The throttle can disappear during a stop situation
             if (_throttle != null) {
                 calculatedDistance = calculatedDistance - getDistanceTravelled(_throttle.getIsForward(), calculatingStep, ((float) (timePerStep / 1000.0)));
@@ -931,13 +991,26 @@ public class RosterSpeedProfile {
                 log.warn("Throttle destroyed before zero length[{}] remaining.",calculatedDistance);
                 calculatedDistance = 0;
             }
+
             if (calculatedDistance <= 0 && !calculated) {
                 log.warn("distance remaining is now 0, but we have not reached desired speed setting {} v {}", desiredSpeedStep, calculatingStep);
-                ss = new SpeedSetting(desiredSpeedStep, 10, andStop);
-                synchronized (this) {
-                    stepQueue.addLast(ss);
-                }
                 calculated = true;
+            }
+        }
+    }
+
+    private void addSpeedStepItem(Boolean calculated, SpeedSetting ss) {
+        synchronized (this) {
+            stepQueue.addLast(ss);
+            if (profileInTestMode) {
+                testSteps.add(ss);
+            }
+            if (ss.andStop && calculated) {
+                ss = new SpeedSetting( 0.0f, 0, ss.andStop);
+                stepQueue.addLast(ss);
+                if (profileInTestMode) {
+                    testSteps.add(ss);
+                }
             }
         }
     }
@@ -981,6 +1054,9 @@ public class RosterSpeedProfile {
     }
 
     synchronized void setNextStep() {
+        //if (profileInTestMode) {
+        //    return;
+        //}
         if (stepQueue.isEmpty()) {
             log.debug("No more results");
             finishChange();
@@ -1015,27 +1091,28 @@ public class RosterSpeedProfile {
 
     private LinkedList<SpeedSetting> stepQueue = new LinkedList<>();
 
-    static class SpeedSetting {
+    public static class SpeedSetting {
 
         private float step = 0.0f;
         private int duration = 0;
         private boolean andStop;
 
-        SpeedSetting(float step, int duration, boolean andStop) {
+        public SpeedSetting(float step, int duration, boolean andStop) {
+            log.debug("Adding step {} duration {} andStop{}", step, duration, andStop);
             this.step = step;
             this.duration = duration;
             this.andStop = andStop;
         }
 
-        float getSpeedStep() {
+        public float getSpeedStep() {
             return step;
         }
 
-        int getDuration() {
+        public int getDuration() {
             return duration;
         }
 
-        boolean getAndStop() {
+        public boolean getAndStop() {
             return andStop;
         }
     }
@@ -1230,7 +1307,7 @@ public class RosterSpeedProfile {
                 }
             }
         }
-        log.debug("slowerKey={}, slowerValue={} fasterKey={} fasterValue={} for speed={}",
+        log.trace("slowerKey={}, slowerValue={} fasterKey={} fasterValue={} for speed={}",
                 slowerKey, slowerValue, fasterKey, fasterValue, speed);
         if (entry == null) {
             // faster does not exists use slower...

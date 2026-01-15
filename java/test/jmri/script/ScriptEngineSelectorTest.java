@@ -1,12 +1,14 @@
 package jmri.script;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+
 import javax.script.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -62,56 +64,66 @@ public class ScriptEngineSelectorTest {
     @Test
     public void testJythonOldStyle1() throws JmriException, ScriptException {
         runJythonScriptOldStyle();
-        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
+        assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
     public void testJythonOldStyle2() throws JmriException, ScriptException {
         _turnout.setState(Turnout.CLOSED);
         runJythonScriptOldStyle();
-        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
+        assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
     public void testEcmaOldStyle1() throws JmriException, ScriptException {
+        assumeTrue(hasEcmaScript());
         _turnout.setState(Turnout.CLOSED);
         runEcmaScriptOldStyle();
-        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
+        assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
     public void testEcmaOldStyle2() throws JmriException, ScriptException {
+        assumeTrue(hasEcmaScript());
         _turnout.setState(Turnout.CLOSED);
         runEcmaScriptOldStyle();
-        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
+        assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
     public void testJythonNewStyle1() throws JmriException, ScriptException {
         _turnout.setState(Turnout.CLOSED);
         runJythonScriptNewStyle();
-        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
+        assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
     public void testJythonNewStyle2() throws JmriException, ScriptException {
         _turnout.setState(Turnout.CLOSED);
         runJythonScriptNewStyle();
-        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
+        assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
     public void testEcmaNewStyle1() throws JmriException, ScriptException {
+        assumeTrue(hasEcmaScript());
         _turnout.setState(Turnout.CLOSED);
         runEcmaScriptNewStyle();
-        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
+        assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
     public void testEcmaNewStyle2() throws JmriException, ScriptException {
+        assumeTrue(hasEcmaScript());
         _turnout.setState(Turnout.CLOSED);
         runEcmaScriptNewStyle();
-        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
+        assertEquals(Turnout.THROWN, _turnout.getState());
+    }
+
+    // Java 17 doesn't have ECMA_SCRIPT
+    private boolean hasEcmaScript() {
+        ScriptEngineSelector.Engine engine = _scriptEngineSelector.getSelectedEngine();
+        return engine != null && engine.getLanguageName().equals(ScriptEngineSelector.ECMA_SCRIPT);
     }
 
     // The minimal setup for log4J

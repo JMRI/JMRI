@@ -5,6 +5,8 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.AnalogActionBean;
+import jmri.util.JUnitAppender;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -41,14 +43,17 @@ public abstract class AbstractAnalogActionTestBase extends AbstractBaseTestBase 
     public void testState() throws JmriException {
         AnalogActionBean _action = (AnalogActionBean)_base;
         _action.setState(AnalogIO.INCONSISTENT);
+        JUnitAppender.assertWarnMessage("Unexpected call to setState in AbstractAnalogAction.");
         Assert.assertTrue("State matches", AnalogIO.INCONSISTENT == _action.getState());
-        jmri.util.JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractAnalogAction.");
+        JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractAnalogAction.");
         _action.setState(AnalogIO.UNKNOWN);
+        JUnitAppender.assertWarnMessage("Unexpected call to setState in AbstractAnalogAction.");
         Assert.assertTrue("State matches", AnalogIO.UNKNOWN == _action.getState());
-        jmri.util.JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractAnalogAction.");
+        JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractAnalogAction.");
         _action.setState(AnalogIO.INCONSISTENT);
+        JUnitAppender.assertWarnMessage("Unexpected call to setState in AbstractAnalogAction.");
         Assert.assertTrue("State matches", AnalogIO.INCONSISTENT == _action.getState());
-        jmri.util.JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractAnalogAction.");
+        JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractAnalogAction.");
     }
     
 }

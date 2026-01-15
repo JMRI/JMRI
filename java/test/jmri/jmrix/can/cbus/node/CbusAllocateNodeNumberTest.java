@@ -31,7 +31,7 @@ public class CbusAllocateNodeNumberTest {
 
         assertEquals(2, tcis.numListeners(),"2 listener " + tcis.getListeners());
 
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
         assertNotNull(t);
         assertEquals(3, tcis.numListeners(),"3 listeners " + tcis.getListeners());
 
@@ -44,7 +44,7 @@ public class CbusAllocateNodeNumberTest {
     @DisabledIfHeadless
     public void testDisplayDialogue() {
         memo.get(CbusPreferences.class).setAddNodes(false);
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
         assertNotNull(t);
 
         CbusNode node789 = nodeModel.provideNodeByNodeNum(789);
@@ -152,7 +152,18 @@ public class CbusAllocateNodeNumberTest {
         JUnitUtil.waitFor(()->{return !(dialog_thread.isAlive());}, "checkCbus Allocate Node Num Dialog finished");
 
         JUnitUtil.waitFor(()->{ return( tcis.outbound.size() >2); }, "Outbound did not increase: " + tcis.getTranslatedOutbound());
-        assertEquals("[5f8] 42 FF 98", tcis.outbound.elementAt(2).toString(),"3rd message not right " + tcis.getTranslatedOutbound());
+        assertEquals("[5f8] 42 FF 98", tcis.outbound.elementAt(2).toString(),"3rd message not right "
+                + tcis.getTranslatedOutbound());
+
+        // The Node sends a message back acknowledging the Name.
+        // If this message is not heard, presents user with JDialog / error in log.
+        r = new CanReply();
+        r.setHeader(tcis.getCanid());
+        r.setNumDataElements(3);
+        r.setElement(0, CbusConstants.CBUS_NNACK); // Node number acknowledge
+        r.setElement(1, 65432 >> 8);
+        r.setElement(2, 65432 & 0xff);
+        t.reply(r);
 
         t.dispose();
 
@@ -161,7 +172,7 @@ public class CbusAllocateNodeNumberTest {
     @Test
     public void testAddNodes() {
 
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
         memo.get(CbusPreferences.class).setAddNodes(true);
 
         CanReply rsna = new CanReply();
@@ -184,7 +195,7 @@ public class CbusAllocateNodeNumberTest {
     @Test
     @DisabledIfHeadless
     public void testCanMessage() {
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
 
         CanMessage r = new CanMessage(tcis.getCanid());
         r.setNumDataElements(1);
@@ -209,7 +220,7 @@ public class CbusAllocateNodeNumberTest {
     @Test
     @DisabledIfHeadless
     public void testAllocateTimeout() {
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
 
         t.setTimeout(5); // default is reduced to speed up test
 
@@ -267,7 +278,6 @@ public class CbusAllocateNodeNumberTest {
 
     private CanSystemConnectionMemo memo;
     private CbusTrafficControllerScaffold tcis;
-    private CbusAllocateNodeNumber t;
     private CbusNodeTableDataModel nodeModel;
 
     @BeforeEach
@@ -287,7 +297,7 @@ public class CbusAllocateNodeNumberTest {
 
     @AfterEach
     public void tearDown() {
-        t = null;
+
         nodeModel.dispose();
         nodeModel = null;
         memo.dispose();

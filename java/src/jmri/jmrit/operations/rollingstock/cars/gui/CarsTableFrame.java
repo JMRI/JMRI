@@ -34,8 +34,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     public CarsTableModel carsTableModel;
     public JTable carsTable;
     boolean showAllCars;
-    String locationName;
-    String trackName;
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
 
     // labels
@@ -79,8 +77,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     public CarsTableFrame(boolean showAllCars, String locationName, String trackName) {
         super(Bundle.getMessage("TitleCarsTable"));
         this.showAllCars = showAllCars;
-        this.locationName = locationName;
-        this.trackName = trackName;
         // general GUI configuration
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -438,17 +434,17 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     }
 
     private void updateNumCars() {
-        String count = filterCarList(InstanceManager.getDefault(CarManager.class).getList());
+        String count = filterList(carManager.getList());
         if (showAllCars) {
             numCars.setText(count);
-            return;
+        } else {
+            String showCount = filterList(getSortByList());
+            numCars.setText(showCount + "/" + count);
         }
-        String showCount = filterCarList(getSortByList());
-        numCars.setText(showCount + "/" + count);
     }
 
     // only count real cars, ignore clones
-    private String filterCarList(List<Car> list) {
+    private String filterList(List<Car> list) {
         int count = 0;
         for (Car car : list) {
             if (!car.isClone()) {

@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.*;
@@ -33,7 +34,7 @@ public class BackupDialog extends JDialog {
      * Create the dialog.
      */
     public BackupDialog() {
-        backup = new DefaultBackup();
+        backup = InstanceManager.getDefault(DefaultBackup.class);
 
         initComponents();
     }

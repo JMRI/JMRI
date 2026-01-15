@@ -3,19 +3,16 @@ package jmri.jmrit.symbolicprog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.util.ResourceBundle;
+
 import javax.annotation.CheckForNull;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
+
 import jmri.InstanceManager;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.JComboBoxUtil;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -69,6 +66,20 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setDoConfirmRead(doConfirmRead.isSelected());
         });
 
+        advancedPanel.add(new JSeparator(JSeparator.HORIZONTAL));
+
+        advancedPanel.add(disableProgrammingTrack = new JCheckBox(this.apb.getString("DisableProgrammingTrack")));
+        disableProgrammingTrack.setSelected(PaneProgFrame.getDisableProgrammingTrack());
+        disableProgrammingTrack.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setDisableProgrammingTrack(disableProgrammingTrack.isSelected());
+        });
+
+        advancedPanel.add(disableProgrammingOnMain = new JCheckBox(this.apb.getString("DisableProgrammingOnMain")));
+        disableProgrammingOnMain.setSelected(PaneProgFrame.getDisableProgrammingOnMain());
+        disableProgrammingOnMain.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setDisableProgrammingOnMain(disableProgrammingOnMain.isSelected());
+        });
+
         this.add(advancedPanel);
         this.add(Box.createVerticalGlue());
     }
@@ -88,6 +99,8 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
     JCheckBox showCvNums;
     JCheckBox canCacheDefault;
     JCheckBox doConfirmRead;
+    JCheckBox disableProgrammingTrack;
+    JCheckBox disableProgrammingOnMain;
 
     public boolean getShowEmptyTabs() {
         return showEmptyTabs.isSelected();

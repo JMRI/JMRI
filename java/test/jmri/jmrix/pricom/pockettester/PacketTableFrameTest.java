@@ -1,9 +1,8 @@
 package jmri.jmrix.pricom.pockettester;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,16 +13,18 @@ import org.junit.jupiter.api.*;
 public class PacketTableFrameTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         PacketTableFrame packetTableFrame = new PacketTableFrame();
-        Assert.assertNotNull(packetTableFrame);
+        Assertions.assertNotNull(packetTableFrame);
     }
 
     // create and show, with some data present
     @Test
-    public void testShow() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testShow() {
+
         PacketTableFrame f = new PacketTableFrame();
         f.initComponents();
         f.setVisible(true);
@@ -37,13 +38,13 @@ public class PacketTableFrameTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

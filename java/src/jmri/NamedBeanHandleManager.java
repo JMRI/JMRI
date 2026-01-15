@@ -1,11 +1,16 @@
 package jmri;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.ArrayList;
 import java.util.Objects;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+
 import jmri.managers.AbstractManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -196,6 +201,8 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
      * Don't want to store this information
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This method intentionally doesn't do anything")
     protected void registerSelf() {
     }
 
@@ -213,11 +220,15 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
     }
 
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This method must never be called")
     public void register(@Nonnull NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This method must never be called")
     public void deregister(@Nonnull NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }

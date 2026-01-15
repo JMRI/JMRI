@@ -1,8 +1,11 @@
 package jmri.jmrix.nce;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import jmri.JmriException;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,10 +14,24 @@ import org.junit.jupiter.api.*;
  */
 public class NceMessageCheckTest {
 
+    // no Ctor test, class only supplies static methods
+
     @Test
-    public void testCTor() {
-        NceMessageCheck t = new NceMessageCheck();
-        Assert.assertNotNull("exists",t);
+    public void testThrows() {
+
+        var memo = new NceSystemConnectionMemo();
+        var tc = new NceTrafficControlScaffold();
+        memo.setNceTrafficController(tc);
+        memo.setNceUsbSystem( NceTrafficController.USB_SYSTEM_POWERCAB);
+        NceMessage m = new NceMessage(13);
+        m.setOpCode( NceMessage.CLOCK_RATIO_CMD);
+
+        JmriException ex = assertThrows( JmriException.class,
+            () -> NceMessageCheck.checkMessage(memo, m),
+            "Should have thrown exception as invalid message");
+        assertNotNull( ex);
+        tc.terminateThreads();
+        memo.dispose();
     }
 
     @BeforeEach

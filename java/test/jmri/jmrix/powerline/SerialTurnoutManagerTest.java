@@ -1,5 +1,12 @@
 package jmri.jmrix.powerline;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo;
@@ -8,7 +15,6 @@ import jmri.util.JUnitUtil;
 
 import java.beans.PropertyVetoException;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -52,12 +58,12 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("PTB1", "my name");
-        Assert.assertNotNull( o );
-        Assert.assertTrue( o instanceof SerialTurnout );
+        assertNotNull( o );
+        assertInstanceOf( SerialTurnout.class, o);
 
         // make sure loaded into tables
-        Assert.assertNotNull( l.getBySystemName("PTB1"));
-        Assert.assertNotNull( l.getByUserName("my name"));
+        assertNotNull( l.getBySystemName("PTB1"));
+        assertNotNull( l.getByUserName("my name"));
 
     }
 
@@ -67,8 +73,8 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         // create
         Turnout t = l.provide(getSystemName(getNumToTest1()));
         // check
-        Assert.assertNotNull("real object returned ", t );
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        assertNotNull( t, "real object returned ");
+        assertEquals( t, l.getBySystemName(getSystemName(getNumToTest1())), "system name correct ");
     }
 
     @Override
@@ -77,8 +83,8 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         // create
         Turnout t = l.provideTurnout(getSystemName(getNumToTest1()));
         // check
-        Assert.assertNotNull("real object returned ", t );
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        assertNotNull( t, "real object returned ");
+        assertEquals( t, l.getBySystemName(getSystemName(getNumToTest1())), "system name correct ");
     }
 
     @Override
@@ -86,7 +92,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     public void testUpperLower() {
         Turnout t = l.provideTurnout(getSystemName(getNumToTest2()));
 
-        Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
+        assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
     }
 
     @Override
@@ -101,21 +107,20 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     @Override
     @Test
     public void testMakeSystemName() {
-        try {
-            l.makeSystemName("1");
-            Assert.fail("Expected exception not thrown");
-        } catch (NamedBean.BadSystemNameException ex) {
-            Assert.assertEquals("\"PT1\" is not a recognized format.", ex.getMessage());
-        }
+        NamedBean.BadSystemNameException ex = assertThrows(NamedBean.BadSystemNameException.class,
+            () -> l.makeSystemName("1"),
+            "Expected exception not thrown");
+        assertEquals("\"PT1\" is not a recognized format.", ex.getMessage());
         JUnitAppender.assertErrorMessage("Invalid system name for Turnout: \"PT1\" is not a recognized format.");
         String s = l.makeSystemName("B1");
-        Assert.assertNotNull(s);
-        Assert.assertFalse(s.isEmpty());
+        assertNotNull(s);
+        assertFalse(s.isEmpty());
     }
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        nis.terminateThreads();
+        nis = null;
         JUnitUtil.tearDown();
 
     }

@@ -36,8 +36,7 @@ import jmri.util.swing.JmriJOptionPane;
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  *         2014
  */
-public class TrainManager extends PropertyChangeSupport
-        implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
+public class TrainManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     static final String NONE = "";
 
@@ -90,7 +89,6 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     *
      * @return true if build messages are enabled
      */
     public boolean isBuildMessagesEnabled() {
@@ -104,7 +102,6 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     *
      * @return true if build reports are enabled
      */
     public boolean isBuildReportEnabled() {
@@ -118,7 +115,6 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     *
      * @return true if open file is enabled
      */
     public boolean isOpenFileEnabled() {
@@ -133,7 +129,6 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     *
      * @return true if open file is enabled
      */
     public boolean isRunFileEnabled() {
@@ -148,7 +143,6 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     *
      * @return true if print preview is enabled
      */
     public boolean isPrintPreviewEnabled() {
@@ -311,7 +305,7 @@ public class TrainManager extends PropertyChangeSupport
         }
         return false;
     }
-    
+
     /**
      * Used to determine if a train has any restrictions with regard to caboose
      * roads.
@@ -394,12 +388,10 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     * Finds an existing train or creates a new train if needed. Requires train's
-     * name and creates a unique id for a new train
+     * Finds an existing train or creates a new train if needed. Requires
+     * train's name and creates a unique id for a new train
      *
      * @param name The train's name.
-     *
-     *
      * @return new train or existing train
      */
     public Train newTrain(String name) {
@@ -447,7 +439,7 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     public void replaceLoad(String type, String oldLoadName, String newLoadName) {
-        for (Train train : getTrainsByIdList()) {
+        for (Train train : getList()) {
             for (String loadName : train.getLoadNames()) {
                 if (loadName.equals(oldLoadName)) {
                     train.deleteLoadName(oldLoadName);
@@ -470,11 +462,10 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     *
      * @return true if there's a built train
      */
     public boolean isAnyTrainBuilt() {
-        for (Train train : getTrainsByIdList()) {
+        for (Train train : getList()) {
             if (train.isBuilt()) {
                 return true;
             }
@@ -483,17 +474,23 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     *
      * @return true if there's a train being built
      */
     public boolean isAnyTrainBuilding() {
-        for (Train train : getTrainsByIdList()) {
-            if (train.getStatusCode() == Train.CODE_BUILDING) {
-                log.debug("Train {} is currently building", train.getName());
-                return true;
-            }
+        if (getTrainBuilding() != null) {
+            return true;
         }
         return false;
+    }
+
+    public Train getTrainBuilding() {
+        for (Train train : getList()) {
+            if (train.getStatusCode() == Train.CODE_BUILDING) {
+                log.debug("Train {} is currently building", train.getName());
+                return train;
+            }
+        }
+        return null;
     }
 
     /**
@@ -503,17 +500,19 @@ public class TrainManager extends PropertyChangeSupport
      *         destination.
      */
     public Train getTrainForCar(Car car, PrintWriter buildReport) {
-        return getTrainForCar(car, new ArrayList<>(), buildReport);
+        return getTrainForCar(car, new ArrayList<>(), buildReport, false);
     }
 
     /**
-     * @param car           The car looking for a train.
-     * @param excludeTrains The trains not to try.
-     * @param buildReport   The optional build report for logging.
+     * @param car             The car looking for a train.
+     * @param excludeTrains   The trains not to try.
+     * @param buildReport     The optional build report for logging.
+     * @param isExcludeRoutes When true eliminate trains that have the same
+     *                        route in the exclude trains list.
      * @return Train that can service car from its current location to the its
      *         destination.
      */
-    public Train getTrainForCar(Car car, List<Train> excludeTrains, PrintWriter buildReport) {
+    public Train getTrainForCar(Car car, List<Train> excludeTrains, PrintWriter buildReport, boolean isExcludeRoutes) {
         addLine(buildReport, TrainCommon.BLANK_LINE);
         addLine(buildReport, Bundle.getMessage("trainFindForCar", car.toString(), car.getLocationName(),
                 car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()));
@@ -525,10 +524,12 @@ public class TrainManager extends PropertyChangeSupport
             if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled()) {
                 continue;
             }
-            for (Train t : excludeTrains) {
-                if (t != null && train.getRoute() == t.getRoute()) {
-                    addLine(buildReport, Bundle.getMessage("trainHasSameRoute", train, t));
-                    continue main;
+            if (isExcludeRoutes) {
+                for (Train t : excludeTrains) {
+                    if (t != null && train.getRoute() == t.getRoute()) {
+                        addLine(buildReport, Bundle.getMessage("trainHasSameRoute", train, t));
+                        continue main;
+                    }
                 }
             }
             // does this train service this car?
@@ -540,6 +541,19 @@ public class TrainManager extends PropertyChangeSupport
             }
         }
         return null;
+    }
+
+    public List<Train> getExcludeTrainListForCar(Car car, PrintWriter buildReport) {
+        List<Train> excludeTrains = new ArrayList<>();
+        for (Train train : getTrainsByNameList()) {
+            if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled()) {
+                addLine(buildReport, Bundle.getMessage("trainRoutingDisabled", train.getName()));
+                excludeTrains.add(train);
+            } else if (!train.isTrainAbleToService(buildReport, car)) {
+                excludeTrains.add(train);
+            }
+        }
+        return excludeTrains;
     }
 
     protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
@@ -689,7 +703,7 @@ public class TrainManager extends PropertyChangeSupport
         }
     }
 
-    private List<Train> getList() {
+    public List<Train> getList() {
         if (!InstanceManager.getDefault(TrainManagerXml.class).isTrainFileLoaded()) {
             log.error("TrainManager getList called before trains completely loaded!");
         }
@@ -781,7 +795,7 @@ public class TrainManager extends PropertyChangeSupport
         _rowColorTerminated = colorName;
         setDirtyAndFirePropertyChange(ROW_COLOR_NAME_CHANGED_PROPERTY, old, colorName);
     }
-    
+
     public String getRowColorNameForReset() {
         return _rowColorReset;
     }
@@ -796,7 +810,8 @@ public class TrainManager extends PropertyChangeSupport
      * JColorChooser is not a replacement for getRowColorComboBox as it doesn't
      * support no color as a selection.
      * 
-     * @return the available colors used highlighting table rows including no color.
+     * @return the available colors used highlighting table rows including no
+     *         color.
      */
     public JComboBox<String> getRowColorComboBox() {
         JComboBox<String> box = new JComboBox<>();
@@ -826,7 +841,8 @@ public class TrainManager extends PropertyChangeSupport
         // route, departure time and types
         newTrain.setRoute(train.getRoute());
         newTrain.setTrainSkipsLocations(train.getTrainSkipsLocations());
-        newTrain.setDepartureTime(train.getDepartureTimeHour(), train.getDepartureTimeMinute());
+        newTrain.setDepartureTime(train.getDepartureTimeDay(), train.getDepartureTimeHour(),
+                train.getDepartureTimeMinute());
         newTrain._typeList.clear(); // remove all types loaded by create
         newTrain.setTypeNames(train.getTypeNames());
         // set road, load, and owner options
@@ -968,8 +984,8 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     * Sets the switch list status for all built trains. Used for switch lists in
-     * consolidated mode.
+     * Sets the switch list status for all built trains. Used for switch lists
+     * in consolidated mode.
      *
      * @param status Train.PRINTED, Train.UNKNOWN
      */
@@ -983,8 +999,8 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     * Sets all built trains manifests to modified. This causes the train's manifest
-     * to be recreated.
+     * Sets all built trains manifests to modified. This causes the train's
+     * manifest to be recreated.
      */
     public void setTrainsModified() {
         for (Train train : getTrainsByTimeList()) {
@@ -1032,13 +1048,13 @@ public class TrainManager extends PropertyChangeSupport
                     int response = JmriJOptionPane.showConfirmDialog(null,
                             Bundle.getMessage("NeedToBuildBeforePrinting",
                                     train.getName(),
-                                            (isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-                                                    : Bundle.getMessage("print"))),
+                                    (isPrintPreviewEnabled() ? Bundle.getMessage("preview")
+                                            : Bundle.getMessage("print"))),
                             Bundle.getMessage("CanNotPrintManifest",
                                     isPrintPreviewEnabled() ? Bundle.getMessage("preview")
                                             : Bundle.getMessage("print")),
                             JmriJOptionPane.OK_CANCEL_OPTION);
-                    if (response != JmriJOptionPane.OK_OPTION ) {
+                    if (response != JmriJOptionPane.OK_OPTION) {
                         break;
                     }
                 }
@@ -1048,6 +1064,9 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     public boolean terminateSelectedTrains(List<Train> trains) {
+        if (!confirmTerminateTrains(trains)) {
+            return false;
+        }
         boolean status = true;
         for (Train train : trains) {
             if (train.isBuildEnabled() && train.isBuilt()) {
@@ -1073,6 +1092,25 @@ public class TrainManager extends PropertyChangeSupport
         return status;
     }
 
+    private boolean confirmTerminateTrains(List<Train> trains) {
+        if (isBuildMessagesEnabled()) {
+            int count = 0;
+            for (Train train : trains) {
+                if (train.isBuildEnabled() && train.isBuilt()) {
+                    count += 1;
+                }
+            }
+            int response = JmriJOptionPane.showConfirmDialog(null,
+                    Bundle.getMessage("ConfirmTerminate", count),
+                    Bundle.getMessage("TerminateSelectedTip"),
+                    JmriJOptionPane.YES_NO_OPTION);
+            if (response == JmriJOptionPane.NO_OPTION) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void resetBuildFailedTrains() {
         for (Train train : getList()) {
             if (train.isBuildFailed())
@@ -1082,8 +1120,8 @@ public class TrainManager extends PropertyChangeSupport
 
     int _maxTrainNameLength = 0;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-            justification="I18N of Info Message")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "I18N of Info Message")
     public int getMaxTrainNameLength() {
         String trainName = "";
         if (_maxTrainNameLength == 0) {
@@ -1199,7 +1237,6 @@ public class TrainManager extends PropertyChangeSupport
      * synchronized with the detailed DTD in operations-trains.dtd.
      *
      * @param root common Element for operations-trains.dtd.
-     *
      */
     public void store(Element root) {
         Element options = new Element(Xml.OPTIONS);

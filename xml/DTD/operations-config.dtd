@@ -142,6 +142,8 @@
 
 <!ATTLIST buildOptions aggressive					(true | false ) "false">
 <!ATTLIST buildOptions numberPasses					CDATA #IMPLIED>
+<!ATTLIST buildOptions onTime						(true | false ) "false">
+<!ATTLIST buildOptions dwellTime					CDATA #IMPLIED>
 <!ATTLIST buildOptions allowLocalInterchange		(true | false ) "false">
 <!ATTLIST buildOptions allowLocalSpur				(true | false ) "false">
 <!-- next 1 for backward compatibility -->

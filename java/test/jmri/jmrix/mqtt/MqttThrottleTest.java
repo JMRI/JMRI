@@ -1,10 +1,14 @@
 package jmri.jmrix.mqtt;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,7 +24,7 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     public void testCtor() {
         MqttThrottle t = new MqttThrottle(memo);
-        Assert.assertNotNull(t);
+        assertNotNull(t);
     }
 
     /**
@@ -31,7 +35,7 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetSpeedIncrement() {
         float expResult = 1.0F/126.0F;
         float result = instance.getSpeedIncrement();
-        Assert.assertEquals(expResult, result, 0.0);
+        assertEquals(expResult, result, 0.0);
     }
 
     /**
@@ -42,7 +46,7 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetSpeedStepMode() {
         SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
         SpeedStepMode result = instance.getSpeedStepMode();
-        Assert.assertEquals(expResult, result);
+        assertEquals(expResult, result);
     }
 
     /**
@@ -51,11 +55,11 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetIsForward() {
-        Assert.assertTrue(instance.getIsForward()); //new throttle defaults to Forward
+        assertTrue(instance.getIsForward()); //new throttle defaults to Forward
         instance.setIsForward(true);
-        Assert.assertTrue(instance.getIsForward());
+        assertTrue(instance.getIsForward());
         instance.setIsForward(false);
-        Assert.assertFalse(instance.getIsForward());
+        assertFalse(instance.getIsForward());
     }
 
     /**
@@ -67,72 +71,72 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         instance.setSpeedSetting(0.5f);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==5; }, "publish triggered");
-        Assert.assertEquals("cab/3/throttle", a.getLastTopic());
-        Assert.assertEquals("50", new String(a.getLastPayload()));
+        assertEquals("cab/3/throttle", a.getLastTopic());
+        assertEquals("50", new String(a.getLastPayload()));
         instance.setIsForward(true);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==6; }, "publish triggered");
-        Assert.assertEquals("cab/3/direction", a.getLastTopic());
-        Assert.assertEquals("FORWARD", new String(a.getLastPayload()));
-        Assert.assertEquals(instance.getSpeedSetting(), 0.5f, 0.0001);
-        Assert.assertTrue(instance.getIsForward());
+        assertEquals("cab/3/direction", a.getLastTopic());
+        assertEquals("FORWARD", new String(a.getLastPayload()));
+        assertEquals(instance.getSpeedSetting(), 0.5f, 0.0001);
+        assertTrue(instance.getIsForward());
 //        Assert.assertEquals( "t 3 63 1", lm.toString());
 
         instance.setSpeedSetting(0.0f);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==7; }, "publish triggered");
-        Assert.assertEquals("cab/3/throttle", a.getLastTopic());
-        Assert.assertEquals("0", new String(a.getLastPayload()));
+        assertEquals("cab/3/throttle", a.getLastTopic());
+        assertEquals("0", new String(a.getLastPayload()));
         instance.setIsForward(false);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==8; }, "publish triggered");
-        Assert.assertEquals("cab/3/direction", a.getLastTopic());
-        Assert.assertEquals("REVERSE", new String(a.getLastPayload()));
-        Assert.assertEquals(instance.getSpeedSetting(), 0.0f, 0.0001);
-        Assert.assertFalse(instance.getIsForward());
+        assertEquals("cab/3/direction", a.getLastTopic());
+        assertEquals("REVERSE", new String(a.getLastPayload()));
+        assertEquals(instance.getSpeedSetting(), 0.0f, 0.0001);
+        assertFalse(instance.getIsForward());
 //        Assert.assertEquals( "t 3 0 0", lm.toString());
 
         instance.setSpeedSetting(1.0f);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==9; }, "publish triggered");
-        Assert.assertEquals("cab/3/throttle", a.getLastTopic());
-        Assert.assertEquals("100", new String(a.getLastPayload()));
+        assertEquals("cab/3/throttle", a.getLastTopic());
+        assertEquals("100", new String(a.getLastPayload()));
         instance.setIsForward(false);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==10; }, "publish triggered");
-        Assert.assertEquals("cab/3/direction", a.getLastTopic());
-        Assert.assertEquals("REVERSE", new String(a.getLastPayload()));
-        Assert.assertEquals(instance.getSpeedSetting(), 1.0f, 0.0001);
-        Assert.assertFalse(instance.getIsForward());
+        assertEquals("cab/3/direction", a.getLastTopic());
+        assertEquals("REVERSE", new String(a.getLastPayload()));
+        assertEquals(instance.getSpeedSetting(), 1.0f, 0.0001);
+        assertFalse(instance.getIsForward());
 
 
         instance.setSpeedSetting(0.5f);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==11; }, "publish triggered");
-        Assert.assertEquals("cab/3/throttle", a.getLastTopic());
-        Assert.assertEquals("50", new String(a.getLastPayload()));
+        assertEquals("cab/3/throttle", a.getLastTopic());
+        assertEquals("50", new String(a.getLastPayload()));
         instance.setIsForward(true);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==12; }, "publish triggered");
-        Assert.assertEquals("cab/3/direction", a.getLastTopic());
-        Assert.assertEquals("FORWARD", new String(a.getLastPayload()));
-        Assert.assertEquals(instance.getSpeedSetting(), 0.5f, 0.0001);
-        Assert.assertTrue(instance.getIsForward());
+        assertEquals("cab/3/direction", a.getLastTopic());
+        assertEquals("FORWARD", new String(a.getLastPayload()));
+        assertEquals(instance.getSpeedSetting(), 0.5f, 0.0001);
+        assertTrue(instance.getIsForward());
 
         instance.setSpeedSetting(0.0f);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==13; }, "publish triggered");
-        Assert.assertEquals("cab/3/throttle", a.getLastTopic());
-        Assert.assertEquals("0", new String(a.getLastPayload()));
+        assertEquals("cab/3/throttle", a.getLastTopic());
+        assertEquals("0", new String(a.getLastPayload()));
         instance.setIsForward(false);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==14; }, "publish triggered");
-        Assert.assertEquals("cab/3/direction", a.getLastTopic());
-        Assert.assertEquals("REVERSE", new String(a.getLastPayload()));
-        Assert.assertEquals(instance.getSpeedSetting(), 0.0f, 0.0001);
-        Assert.assertFalse(instance.getIsForward());
+        assertEquals("cab/3/direction", a.getLastTopic());
+        assertEquals("REVERSE", new String(a.getLastPayload()));
+        assertEquals(instance.getSpeedSetting(), 0.0f, 0.0001);
+        assertFalse(instance.getIsForward());
 
         instance.setSpeedSetting(1.0f);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==15; }, "publish triggered");
-        Assert.assertEquals("cab/3/throttle", a.getLastTopic());
-        Assert.assertEquals("100", new String(a.getLastPayload()));
+        assertEquals("cab/3/throttle", a.getLastTopic());
+        assertEquals("100", new String(a.getLastPayload()));
         instance.setIsForward(false);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==16; }, "publish triggered");
-        Assert.assertEquals("cab/3/direction", a.getLastTopic());
-        Assert.assertEquals("REVERSE", new String(a.getLastPayload()));
-        Assert.assertEquals(instance.getSpeedSetting(), 1.0f, 0.0001);
-        Assert.assertFalse(instance.getIsForward());
+        assertEquals("cab/3/direction", a.getLastTopic());
+        assertEquals("REVERSE", new String(a.getLastPayload()));
+        assertEquals(instance.getSpeedSetting(), 1.0f, 0.0001);
+        assertFalse(instance.getIsForward());
 
     }
 
@@ -143,77 +147,77 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     public void testFunctionFormats(){
         instance.setFunction(0, true);
-        Assert.assertTrue(instance.getFunction(0));
+        assertTrue(instance.getFunction(0));
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==5; }, "publish triggered");
-        Assert.assertEquals("cab/3/function/0", a.getLastTopic());
-        Assert.assertEquals("ON", new String(a.getLastPayload()));
+        assertEquals("cab/3/function/0", a.getLastTopic());
+        assertEquals("ON", new String(a.getLastPayload()));
         instance.setFunction(0, false);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==6; }, "publish triggered");
-        Assert.assertEquals("cab/3/function/0", a.getLastTopic());
-        Assert.assertEquals("OFF", new String(a.getLastPayload()));
+        assertEquals("cab/3/function/0", a.getLastTopic());
+        assertEquals("OFF", new String(a.getLastPayload()));
 
         instance.setFunction(22, false);
-        Assert.assertFalse(instance.getFunction(22));
+        assertFalse(instance.getFunction(22));
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==7; }, "publish triggered");
-        Assert.assertEquals("cab/3/function/22", a.getLastTopic());
-        Assert.assertEquals("OFF", new String(a.getLastPayload()));
+        assertEquals("cab/3/function/22", a.getLastTopic());
+        assertEquals("OFF", new String(a.getLastPayload()));
 
         instance.setFunction(28, true);
-        Assert.assertTrue(instance.getFunction(28));
+        assertTrue(instance.getFunction(28));
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==8; }, "publish triggered");
-        Assert.assertEquals("cab/3/function/28", a.getLastTopic());
-        Assert.assertEquals("ON", new String(a.getLastPayload()));
+        assertEquals("cab/3/function/28", a.getLastTopic());
+        assertEquals("ON", new String(a.getLastPayload()));
         instance.setFunction(28, false);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==9; }, "publish triggered");
-        Assert.assertEquals("cab/3/function/28", a.getLastTopic());
-        Assert.assertEquals("OFF", new String(a.getLastPayload()));
+        assertEquals("cab/3/function/28", a.getLastTopic());
+        assertEquals("OFF", new String(a.getLastPayload()));
 
         instance.setFunction(16, true);
-        Assert.assertTrue(instance.getFunction(16));
+        assertTrue(instance.getFunction(16));
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==10; }, "publish triggered");
-        Assert.assertEquals("cab/3/function/16", a.getLastTopic());
-        Assert.assertEquals("ON", new String(a.getLastPayload()));
+        assertEquals("cab/3/function/16", a.getLastTopic());
+        assertEquals("ON", new String(a.getLastPayload()));
         instance.setFunction(16, false);
-        Assert.assertFalse(instance.getFunction(16));
+        assertFalse(instance.getFunction(16));
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==11; }, "publish triggered");
-        Assert.assertEquals("cab/3/function/16", a.getLastTopic());
-        Assert.assertEquals("OFF", new String(a.getLastPayload()));
+        assertEquals("cab/3/function/16", a.getLastTopic());
+        assertEquals("OFF", new String(a.getLastPayload()));
 
         instance.setFunction(0, true);
-        Assert.assertTrue(instance.getFunction(0));
+        assertTrue(instance.getFunction(0));
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==12; }, "publish triggered");
-        Assert.assertEquals("cab/3/function/0", a.getLastTopic());
-        Assert.assertEquals("ON", new String(a.getLastPayload()));
+        assertEquals("cab/3/function/0", a.getLastTopic());
+        assertEquals("ON", new String(a.getLastPayload()));
         instance.setFunction(0, false);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==13; }, "publish triggered");
-        Assert.assertEquals("cab/3/function/0", a.getLastTopic());
-        Assert.assertEquals("OFF", new String(a.getLastPayload()));
+        assertEquals("cab/3/function/0", a.getLastTopic());
+        assertEquals("OFF", new String(a.getLastPayload()));
 
         instance.setFunction(21, false);
-        Assert.assertFalse(instance.getFunction(21));
+        assertFalse(instance.getFunction(21));
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==14; }, "publish triggered");
-        Assert.assertEquals("cab/3/function/21", a.getLastTopic());
-        Assert.assertEquals("OFF", new String(a.getLastPayload()));
+        assertEquals("cab/3/function/21", a.getLastTopic());
+        assertEquals("OFF", new String(a.getLastPayload()));
 
         instance.setFunction(4, true);
-        Assert.assertTrue(instance.getFunction(4));
+        assertTrue(instance.getFunction(4));
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==15; }, "publish triggered");
-        Assert.assertEquals("cab/3/function/4", a.getLastTopic());
-        Assert.assertEquals("ON", new String(a.getLastPayload()));
+        assertEquals("cab/3/function/4", a.getLastTopic());
+        assertEquals("ON", new String(a.getLastPayload()));
         instance.setFunction(4, false);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==16; }, "publish triggered");
-        Assert.assertEquals("cab/3/function/4", a.getLastTopic());
-        Assert.assertEquals("OFF", new String(a.getLastPayload()));
+        assertEquals("cab/3/function/4", a.getLastTopic());
+        assertEquals("OFF", new String(a.getLastPayload()));
 
         instance.setFunction(28, true);
-        Assert.assertTrue(instance.getFunction(28));
+        assertTrue(instance.getFunction(28));
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==17; }, "publish triggered");
-        Assert.assertEquals("cab/3/function/28", a.getLastTopic());
-        Assert.assertEquals("ON", new String(a.getLastPayload()));
+        assertEquals("cab/3/function/28", a.getLastTopic());
+        assertEquals("ON", new String(a.getLastPayload()));
         instance.setFunction(28, false);
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==18; }, "publish triggered");
-        Assert.assertEquals("cab/3/function/28", a.getLastTopic());
-        Assert.assertEquals("OFF", new String(a.getLastPayload()));
+        assertEquals("cab/3/function/28", a.getLastTopic());
+        assertEquals("OFF", new String(a.getLastPayload()));
 
     }
 
@@ -224,80 +228,80 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testReceivingUpdates(){
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/throttle", "22");
-        Assert.assertEquals(0.22f, instance.getSpeedSetting(), 0.0001);
+        assertEquals(0.22f, instance.getSpeedSetting(), 0.0001);
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/throttle", "0");
-        Assert.assertEquals(0.0f, instance.getSpeedSetting(), 0.0001);
+        assertEquals(0.0f, instance.getSpeedSetting(), 0.0001);
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/throttle", "100");
-        Assert.assertEquals(1.0f, instance.getSpeedSetting(), 0.0001);
+        assertEquals(1.0f, instance.getSpeedSetting(), 0.0001);
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/throttle", "10");
-        Assert.assertEquals(0.1f, instance.getSpeedSetting(), 0.0001);
+        assertEquals(0.1f, instance.getSpeedSetting(), 0.0001);
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/throttle", "122");
-        Assert.assertEquals(1.0f, instance.getSpeedSetting(), 0.0001);
+        assertEquals(1.0f, instance.getSpeedSetting(), 0.0001);
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/direction", "FORWARD");
-        Assert.assertTrue(instance.getIsForward());
+        assertTrue(instance.getIsForward());
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/direction", "REVERSE");
-        Assert.assertFalse(instance.getIsForward());
+        assertFalse(instance.getIsForward());
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/direction", "FORWARD");
-        Assert.assertTrue(instance.getIsForward());
+        assertTrue(instance.getIsForward());
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/direction", "XXXX");
         JUnitAppender.suppressErrorMessage("Invalid message XXXX");
-        Assert.assertTrue(instance.getIsForward());
+        assertTrue(instance.getIsForward());
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/direction", "REVERSE");
-        Assert.assertFalse(instance.getIsForward());
+        assertFalse(instance.getIsForward());
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/direction", "XXXX");
         JUnitAppender.suppressErrorMessage("Invalid message XXXX");
-        Assert.assertFalse(instance.getIsForward());
+        assertFalse(instance.getIsForward());
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/direction", "STOP");
-        Assert.assertEquals(-1.0f, instance.getSpeedSetting(), 0.0001);
+        assertEquals(-1.0f, instance.getSpeedSetting(), 0.0001);
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/1", "ON");
-        Assert.assertTrue(instance.getFunction(1));
+        assertTrue(instance.getFunction(1));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/1", "OFF");
-        Assert.assertFalse(instance.getFunction(1));
+        assertFalse(instance.getFunction(1));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/1", "XXX");
         JUnitAppender.suppressErrorMessage("Invalid message XXX");
-        Assert.assertFalse(instance.getFunction(1));
+        assertFalse(instance.getFunction(1));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/1", "ON");
-        Assert.assertTrue(instance.getFunction(1));
+        assertTrue(instance.getFunction(1));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/1", "XXX");
         JUnitAppender.suppressErrorMessage("Invalid message XXX");
-        Assert.assertFalse(instance.getFunction(1));
+        assertFalse(instance.getFunction(1));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/23", "ON");
-        Assert.assertTrue(instance.getFunction(23));
-        Assert.assertFalse(instance.getFunction(1));
+        assertTrue(instance.getFunction(23));
+        assertFalse(instance.getFunction(1));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/23", "OFF");
-        Assert.assertFalse(instance.getFunction(23));
+        assertFalse(instance.getFunction(23));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/23", "XXX");
         JUnitAppender.suppressErrorMessage("Invalid message XXX");
-        Assert.assertFalse(instance.getFunction(23));
-        Assert.assertFalse(instance.getFunction(1));
+        assertFalse(instance.getFunction(23));
+        assertFalse(instance.getFunction(1));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/23", "ON");
-        Assert.assertTrue(instance.getFunction(23));
-        Assert.assertFalse(instance.getFunction(1));
+        assertTrue(instance.getFunction(23));
+        assertFalse(instance.getFunction(1));
 
         ((MqttThrottle)instance).notifyMqttMessage("cab/3/function/23", "XXX");
         JUnitAppender.suppressErrorMessage("Invalid message XXX");
-        Assert.assertFalse(instance.getFunction(23));
-        Assert.assertFalse(instance.getFunction(1));
+        assertFalse(instance.getFunction(23));
+        assertFalse(instance.getFunction(1));
 
 
 
@@ -642,8 +646,8 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     // Test the constructor with an address specified.
     @Test
-    public void testCtorWithArg() throws Exception {
-        Assert.assertNotNull(instance);
+    public void testCtorWithArg() {
+        assertNotNull(instance);
     }
 
 
@@ -661,7 +665,7 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Override
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
        // prepare an interface
         a = new MqttAdapterScaffold(true);
@@ -670,13 +674,14 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo.setMqttAdapter(a);
         tm = new MqttThrottleManager(memo);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        memo.store(tm, jmri.ThrottleManager.class);
         instance = new MqttThrottle(memo, sendThrottleTopic, rcvThrottleTopic,
         sendDirectionTopic, rcvDirectionTopic, sendFunctionTopic, rcvFunctionTopic, new jmri.DccLocoAddress(3, false));
     }
 
     @Override
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         a.dispose();
         a = null;
         memo.dispose();

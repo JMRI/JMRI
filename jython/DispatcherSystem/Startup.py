@@ -248,6 +248,32 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
             s1 = opt4
         return s1
 
+    def customQuestionMessage5str(self, msg, title, opt1, opt2, opt3, opt4, opt5):
+        self.CLOSED_OPTION = False
+        options = [opt1, opt2, opt3, opt4, opt5]
+        s = JOptionPane.showOptionDialog(None,
+                                         msg,
+                                         title,
+                                         JOptionPane.DEFAULT_OPTION,
+                                         JOptionPane.QUESTION_MESSAGE,
+                                         None,
+                                         options,
+                                         options[0])
+        if s == JOptionPane.CLOSED_OPTION:
+            self.CLOSED_OPTION = True
+            return
+        if s == 0:
+            s1 = opt1
+        elif s == 1:
+            s1 = opt2
+        elif s == 2:
+            s1 = opt3
+        elif s == 3:
+            s1 = opt4
+        else:
+            s1 = opt5
+        return s1
+
     def customMessage(self, msg, title, opt1):
         self.CLOSED_OPTION = False
         options = [opt1]
@@ -296,4 +322,3 @@ if __name__ == '__builtin__':
     RunDispatchMaster = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/RunDispatchMaster.py')
     exec(open(RunDispatchMaster).read())
     RunDispatcherMaster()
-

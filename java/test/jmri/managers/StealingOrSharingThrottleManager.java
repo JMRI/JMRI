@@ -19,10 +19,6 @@ public class StealingOrSharingThrottleManager extends DebugThrottleManager {
 
     public ThrottleListener.DecisionType lastResponse = null;
 
-    public StealingOrSharingThrottleManager() {
-        super();
-    }
-
     /**
      * Constructor.
      */

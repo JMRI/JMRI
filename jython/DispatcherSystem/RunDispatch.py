@@ -37,6 +37,7 @@ import jmri
 import os
 import copy
 import sys
+import re
 
 # include the graphics library
 my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/jars/jgrapht.jar')
@@ -146,6 +147,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             # print "self.delete_active_transits()"
             self.stop_all_threads()
             # print "self.stop_all_threads()"
+            self.remove_all_trains_from_trains_dispatched()
             self.remove_all_trains_from_trains_allocated()
             glb_reset_all_trains = True
             # print "set glb_reset_all_trains", glb_reset_all_trains
@@ -153,8 +155,12 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.delete_active_transits()
             # print "self.delete_active_transits()"
             self.stop_all_threads()
+
+            self.remove_all_trains_from_trains_dispatched()
             # print "self.stop_all_threads()"
             glb_reset_all_trains = False
+        global MoveTrain_index
+        MoveTrain_index = 0   # reset the indexing of trains moving in print statements in MoveTrain()
 
     def stop_via_table(self):
         global CreateAndShowGUI3_frame
@@ -230,7 +236,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         for i in range(0, activeTrainsList.size()) :
             activeTrain = activeTrainsList.get(i)
             if train_name == activeTrain.getTrainName():
-                DF.terminateActiveTrain(activeTrain)
+                DF.terminateActiveTrain(activeTrain, True, False)
         DF = None
 
     def remove_train_name(self, train_name):
@@ -252,15 +258,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def remove_all_trains_from_trains_allocated(self):
         global trains_allocated
-        global trains_dispatched
         if self.logLevel > 0: print "train to remove", train_name
-
-        trains_dispatched_list = java.util.concurrent.CopyOnWriteArrayList()
-        for train in trains_dispatched:
-            trains_dispatched_list.add(train)
-        for train in trains_dispatched_list:
-            #print "train in trains_alloceted", train, ": trains_allocated", trains_allocated
-            trains_dispatched.remove(train)
 
         trains_allocated_list = java.util.concurrent.CopyOnWriteArrayList()
         for train in trains_allocated:
@@ -269,6 +267,16 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print "train in trains_allocated", train, ": trains_allocated", trains_allocated
             trains_allocated.remove(train)
 
+    def remove_all_trains_from_trains_dispatched(self):
+        global trains_dispatched
+        if self.logLevel > 0: print "train to remove", train_name
+
+        trains_dispatched_list = java.util.concurrent.CopyOnWriteArrayList()
+        for train in trains_dispatched:
+            trains_dispatched_list.add(train)
+        for train in trains_dispatched_list:
+            trains_dispatched.remove(train)
+
     def stop_all_threads(self):
 
         # perform actions required before stopping threads
@@ -276,7 +284,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         # scheduler_master = SchedulerMaster()   this has been set in RunDispatchMaster
         scheduler_master.exit()
 
-        # stop all thresds even if there are duplications
+        # stop all threads even if there are duplications
         summary = jmri.jmrit.automat.AutomatSummary.instance()
         automatsList = java.util.concurrent.CopyOnWriteArrayList()
 
@@ -316,7 +324,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             # print "i", i
             # activeTrain = activeTrainsList.get(i)
             if self.logLevel > 0: print "active train", activeTrain
-            DF.terminateActiveTrain(activeTrain)
+            DF.terminateActiveTrain(activeTrain, True, False)
         DF = None
 
         # set the colours of the tracks back to normal
@@ -455,7 +463,7 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
 
 class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
-    # Monitors the Station buttons and perforns actins dependent upon what mode one is in e.g.:
+    # Monitors the Station buttons and performs actions dependent upon what mode one is in e.g.:
     # Run Dispatch
     # Setup Route
     # Set stopping Length
@@ -469,7 +477,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     def __init__(self):
         self.logLevel = 0
         global trains_dispatched
-        trains_dispatched = []
+        if "trains_dispatched" not in globals():
+            trains_dispatched = []
         #initialise all block_value variables
         # for block in blocks.getNamedBeanSet():
         #     LayoutBlockManagerdispa=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
@@ -1012,55 +1021,147 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         #go to this bit when complete == True
 
-        #get traininfo and stopping fraction
+        # get length of last section of transit
         filename_fwd = self.get_filename(found_edge, "fwd")
         trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
-        stopping_fraction = trainInfo_fwd.getStopBySpeedProfileAdjust()
-
-        #modify stopping fraction in traininfo
         last_section = self.last_section_of_transit(trainInfo_fwd)
-        length_of_last_section = float(self.length_of_last_section(last_section))/10.0 #cm
-        # print "last_section", last_section.getUserName()
-        # print "length_of_last_section", length_of_last_section , " in cm"
+        length_of_last_section = float(self.length_of_last_section(last_section))/10.0 # length in cm
 
-        previous_stopping_position = round((1.0-round(stopping_fraction,2))*length_of_last_section,2)
-
-        default_value = round(previous_stopping_position,1)
+        [e, previous_stopping_position] = self.get_stopping_position(found_edge)
+        # print "V", [e, previous_stopping_position]
+        # print "type", type(previous_stopping_position)
+        default_value = round(float(previous_stopping_position),1)
+        # print "default_value", default_value
+        # stopping_fraction = self.get_stopping_fraction(stopping_position, length_of_last_section)
         title = "Stop train before end of section"
         msg = "Transit name: " + str(filename_fwd) + \
-              ".\nStopping fraction is: " + str(round(stopping_fraction,2)) + \
+              ".\n" + \
               "\nLength of last section: " + str(round(length_of_last_section, 1)) + " cm " + \
               "   (" + str(round(length_of_last_section/2.54, 1)) + " inches)" + \
-              "\nPrevious stopping position: " + str(round(previous_stopping_position,1)) + " cm " + \
-              "   (" + str(round(previous_stopping_position/2.54, 1)) + " inches )" + \
+              "\nPrevious stopping position: " + str(round(float(previous_stopping_position),1)) + " cm " + \
+              "   (" + str(round(float(previous_stopping_position)/2.54, 1)) + " inches )" + \
               "\nbefore the calculated stopping position" + \
               "\n\nEnter new stopping position in cm:"
         new_stopping_position = self.od.input(msg, title, default_value)
         if new_stopping_position == None: return
-        # print "new_stopping_position",  new_stopping_position
-        new_stopping_fraction = 1.0-(float(new_stopping_position)/float(length_of_last_section))
-        # print "new_stopping_fraction", new_stopping_fraction
-        msg = "new stopping fraction: "+ str(round(float(new_stopping_fraction),1)) + "\n" + \
-              "new stopping position: " + str(round(float(new_stopping_position),1)) + " cm    ( " + \
-              str(round(float(new_stopping_position)/2.54,1)) + " inches)"
-        self.od.displayMessage(msg)
-        trainInfo_fwd.setStopBySpeedProfileAdjust(float(new_stopping_fraction))
 
-        #write the newtraininfo back to file
-        jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(trainInfo_fwd, filename_fwd)
+        # new_stopping_fraction = 1.0-(float(new_stopping_position)/float(length_of_last_section))
 
-        #do same with reverse
-        filename_rvs = self.get_filename(found_edge, "rvs")
-        trainInfo_rvs = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_rvs)
-        #stopping_fraction = trainInfo_rvs.getStopBySpeedProfileAdjust()
-        trainInfo_rvs.setStopBySpeedProfileAdjust(float(new_stopping_fraction))
-
-        #write the newtraininfo back to file
-        jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(trainInfo_rvs, filename_rvs)
-
-        if self.logLevel > 0: print "saved new stopping fraction", float(new_stopping_fraction)
+        # save the new stopping length position
+        self.save_stopping_position(found_edge, new_stopping_position)
 
         return True
+
+    def get_default_stopping_position(self):
+        return 0
+
+    def save_stopping_position(self, edge, stopping_position):
+        folder = "stopping_positions"
+        filename = "stopping_positions.txt"
+        # print "A"
+        my_list = self.read_list(folder, filename)
+        # print "B"
+        new_tuple = [edge, stopping_position]
+        # print "C new_tuple", new_tuple
+        my_list = self.update_list(my_list, new_tuple)
+        # print "D", my_list
+        self.write_list(my_list, folder, filename)
+        # print "E"
+
+    def update_list(self, my_list, new_tuple):
+        # print "new-tuple", new_tuple
+        new_tuple = str(new_tuple[0]), int(float(new_tuple[1]))
+        # print "new-tuple2", new_tuple
+        edge, b = new_tuple
+        # print "edge", edge, "b", b
+        # print "my_list", my_list
+        # if my_list == [["",""]] or my_list == [] or my_list == ["", ""]:
+        if my_list == ["", ""]:
+            # print "xx my_list", my_list
+            my_list = [new_tuple]  # Append if not found
+            # print "my_list2", my_list
+            return my_list
+        for i, (x, _) in enumerate(my_list):
+            if x == edge:
+                my_list[i] = new_tuple  # Replace existing tuple
+                # print "my_list3", my_list
+                break
+        else:
+            my_list.append(new_tuple)  # Append if not found
+            # print "my_list4", my_list
+        # print "my_list5", my_list
+        return my_list
+
+    # def get_stopping_position(self, edge_ref, default_stopping_position, default_stopping_fraction):
+    #     filename = "stopping_positions"
+    #     my_list = self.read_list(filename)
+    #     for edge, stopping_position, stopping_fraction in my_list:
+    #         if edge == edge_ref:
+    #             return [edge_ref, stopping_position, stopping_fraction]
+    #     #if stopping position is not saved return None
+    #     return [edge_ref, default_stopping_position, default_stopping_fraction]
+
+    def get_stopping_position(self, edge_ref,):
+        folder = "stopping_positions"
+        filename = "stopping_positions.txt"
+        # print "X"
+        my_list = self.read_list(folder, filename)
+        # print "X1", my_list
+        if my_list == ["",""]:
+            # print "a", [edge_ref, 0]
+            return [edge_ref, 0]
+        for edge, stopping_position in my_list:
+            # print "edge", edge, "edge_ref", edge_ref
+            if str(edge) == str(edge_ref):
+                # print "b"
+                return [edge_ref, stopping_position]
+        # print "x2"
+        #if stopping position is not saved return 0
+        return [edge_ref, 0]
+
+    def directory(self, folder):
+        path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + folder
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + java.io.File.separator
+
+    def write_list(self, a_list, folder, filename):
+        # print "write_list", a_list
+        # store list in binary file so 'wb' mode
+        file = self.directory(folder) + filename
+        # print "block_info" , a_list
+        # print "file" + file
+        with open(file, 'wb') as fp:
+            for items in a_list:
+                # print "items", items
+                i = 0
+                for item in items:
+                    # print "item i", i, item
+                    fp.write('%s' %item)
+                    if i == 0: fp.write(",")
+                    i+=1
+                fp.write('\n')
+                #fp.write('\n'.join(item))
+                #fp.write(items)
+
+    # Read list to memory
+    def read_list(self, folder, filename):
+        # for reading also binary mode is important
+        # print "read_list"
+        file = self.directory(folder) + filename
+        # print "file " , file
+        n_list = []
+        try:
+            with open(file, 'rb') as fp:
+                for line in fp:
+                    x = line[:-1]
+                    # print "x", x
+                    y = x.split(",")
+                    # print "y" , y
+                    n_list.append(y)
+            return n_list
+        except:
+            return ["", ""]
 
     def modify_individual_station_wait_time(self, sensor_changed, button_sensor_name, button_station_name):
         msg = "selected station " + button_station_name + ". \nSelect the next station to modify the station wait time?"
@@ -1530,17 +1631,50 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         #go to this bit when complete == True
 
+        # new code
+        # write aquired information to file
+
+
         # # set transit block
         filename_fwd = self.get_filename(found_edge, "fwd")
-        filename_rvs = self.get_filename(found_edge, "rvs")
+        transit_name = re.sub(r'_\d+_fwd\.xml$', '', filename_fwd)
 
-        new_transit_block_name = button_station_name2
+        transit_block_name = button_station_name2
 
-        self.write_to_TrainInfo(found_edge, new_transit_block_name)
+        transit_tuple = [transit_name, transit_block_name]
+
+        self.store_the_restricted_transit(transit_tuple)
+
+        # self.write_to_TrainInfo(found_edge, new_transit_block_name)
 
         if self.logLevel > 0: print "saved new block_name for Transit", new_transit_block_name
 
         return True
+
+    def store_the_restricted_transit(self, new_restricted_transit):
+        folder = "restrictTransits"
+        filename = "restrictTransits.txt"
+        restricted_transits = self.read_list(folder,filename)
+        if restricted_transits == ["",""]:
+            restricted_transits = []
+        print "restricted_transits", restricted_transits
+        print "new_restricted_transit", new_restricted_transit
+        existing = restricted_transits
+        to_add = new_restricted_transit
+
+        print "to_add", to_add
+        remove_key = new_restricted_transit[0]
+        print "remove_key", remove_key
+        # remove any similar transit
+        if existing != []:
+            existing = [t for t in existing if t[0] not in remove_key]
+        print "existing", existing
+        # add the new transit
+        existing.append(to_add)
+        print "existing1", existing
+        self.write_list(existing, folder, filename)
+        # print "final" , existing
+        return existing
 
     def reset_selection_buttons(self):
         # set the dummy contrtol sensor active which triggers the routine in ResetButtonnMaster
@@ -1549,31 +1683,32 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.waitMsec(3000)
         sensors.getSensor("DummyControlSensor").setKnownState(INACTIVE)
 
+    # def write_to_TrainInfo(self, edge, new_transit_block_name):
+    #
+    #     filename_fwd = self.get_filename(edge, "fwd")
+    #     filename_rvs = self.get_filename(edge, "rvs")
+    #
+    #     trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
+    #     transit_block_name = trainInfo_fwd.getBlockName()
+    #     trainInfo_fwd.setBlockName(new_transit_block_name)
+    #
+    #     #transit_block_name1 = trainInfo_fwd.getBlockName()
+    #     # write the newtraininfo back to file
+    #     jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(trainInfo_fwd, filename_fwd)
+    #
+    #     # do same with reverse
+    #     # filename_rvs = self.get_filename(found_edge, "rvs")
+    #     trainInfo_rvs = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_rvs)
+    #     trainInfo_rvs.setBlockName(new_transit_block_name)
+    #     # write the newtraininfo back to file
+    #     jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(trainInfo_rvs, filename_rvs)
+    #
+    # def retrieve_from_Traininfo(self, edge):
+    #     filename_fwd = self.get_filename(edge, "fwd")
+    #     trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
+    #     transit_block_name = trainInfo_fwd.getBlockName()
+    #     return [transit_block_name]
 
-    def write_to_TrainInfo(self, edge, new_transit_block_name):
-
-        filename_fwd = self.get_filename(edge, "fwd")
-        filename_rvs = self.get_filename(edge, "rvs")
-
-        trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
-        transit_block_name = trainInfo_fwd.getBlockName()
-        trainInfo_fwd.setBlockName(new_transit_block_name)
-
-        #transit_block_name1 = trainInfo_fwd.getBlockName()
-        # write the newtraininfo back to file
-        jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(trainInfo_fwd, filename_fwd)
-
-        # do same with reverse
-        # filename_rvs = self.get_filename(found_edge, "rvs")
-        trainInfo_rvs = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_rvs)
-        trainInfo_rvs.setBlockName(new_transit_block_name)
-        # write the newtraininfo back to file
-        jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(trainInfo_rvs, filename_rvs)
-    def retrieve_from_Traininfo(self, edge):
-        filename_fwd = self.get_filename(edge, "fwd")
-        trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
-        transit_block_name = trainInfo_fwd.getBlockName()
-        return [transit_block_name]
     def set_transit_block(self, sensor_changed, button_sensor_name, button_station_name,
                                 sensor_changed1, button_sensor_name1, button_station_name1):
 
@@ -1714,32 +1849,38 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         return last2blocks
 
     def delete_block_pair_from_list(self, entry_to_delete):
-        existing = self.read_list()
+        folder = "blockDirections"
+        filename = "blockDirections.txt"
+        existing = self.read_list(folder,filename)
         if entry_to_delete != "no inhibited directions":
             existing.remove(entry_to_delete)
-        self.write_list(existing)
+        self.write_list(existing, folder, filename)
         return existing
 
     def store_the_two_blocks(self, first_two_blocks):
-        list_inhibited_blocks = self.read_list()
+        folder = "blockDirections"
+        filename = "blockDirections.txt"
+        list_inhibited_blocks = self.read_list(folder,filename)
         existing = list_inhibited_blocks
         to_add = first_two_blocks
         #to_add = first_two_blocks[0]+"."+first_two_blocks[1]
         if to_add not in existing:
             # print "not in existing", "to_add", to_add, "existing", existing
             existing.append(to_add)
-        self.write_list(existing)
+        self.write_list(existing, folder, filename)
         # print "final" , existing
         return existing
 
     def remove_the_two_blocks(self, first_two_blocks):
-        list_inhibited_blocks = self.read_list()
+        folder = "blockDirections"
+        filename = "blockDirections.txt"
+        list_inhibited_blocks = self.read_list(folder,filename)
         existing = list_inhibited_blocks
         to_remove = first_two_blocks
         if to_remove in existing:
             # print "in existing", "to_remove", to_remove, "existing", existing
             existing.remove(to_remove)
-        self.write_list(existing)
+        self.write_list(existing, folder, filename)
         # print "final" , existing
         return existing
 
@@ -1836,7 +1977,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "trains_to_choose",trains_to_choose
         if trains_to_choose == []:
             str_trains_dispatched= (' '.join(trains_dispatched))
-            msg = "There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched+"\nYou have to wait 20 secs after a train has stopped\nbefore dispatching it again"
+            msg = ("There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched + \
+                   "\nYou have to wait until a train has stopped\nbefore dispatching it again")
             title = "Cannot move train"
             opt1 = "continue"
             opt2 = "reset all allocations"
@@ -1948,7 +2090,10 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         #button_sensor_name MoveToblock8_stored
         #block_name block8
         block_name = button_sensor_name.replace("MoveTo","").replace("_stored","").replace("_"," ")
-        return block_name
+        for block in blocks.getNamedBeanSet():
+            if block.getUserName().replace("_"," ") == block_name:
+                break
+        return block.getUserName()
 
     def get_button_sensor_given_block_name(self, block_name):
         button_sensor_name = "MoveTo"+block_name.replace(" ","_") +"_stored"
@@ -2037,44 +2182,4 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         a = jmri.jmrit.operations.trains.TrainsTableAction()
         a.actionPerformed(None)
 
-        #write list to file
-    def directory(self):
-        path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "blockDirections"
-        if not os.path.exists(path):
-            os.makedirs(path)
-        return path + java.io.File.separator
-    def write_list(self, a_list):
-        # store list in binary file so 'wb' mode
-        file = self.directory() + "blockDirections.txt"
-        #print "block_info" , a_list
-        #print "file"  +file
-        with open(file, 'wb') as fp:
-            for items in a_list:
-                i = 0
-                for item in items:
-                    fp.write('%s' %item)
-                    if i == 0: fp.write(",")
-                    i+=1
-                fp.write('\n')
-                #fp.write('\n'.join(item))
-                #fp.write(items)
-
-    # Read list to memory
-    def read_list(self):
-        # for reading also binary mode is important
-        file = self.directory() + "blockDirections.txt"
-        n_list = []
-        try:
-            with open(file, 'rb') as fp:
-                for line in fp:
-                    x = line[:-1]
-                    #print x
-                    y = x.split(",")
-                    #print "y" , y
-                    n_list.append(y)
-            return n_list
-        except:
-            return ["",""]
-
 # End of class StopMaster
-

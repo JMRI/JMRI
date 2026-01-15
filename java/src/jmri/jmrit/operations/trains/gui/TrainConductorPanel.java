@@ -13,7 +13,8 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
@@ -149,7 +150,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                     textLocationName.setText(trainManager.isShowLocationHyphenNameEnabled() ? rl.getLocation().getName()
                             : rl.getLocation().getSplitName());
                     pTrainDepartureTime.setVisible(_train.isShowArrivalAndDepartureTimesEnabled() &&
-                            !rl.getDepartureTime().equals(RouteLocation.NONE));
+                            !rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE));
                     textTrainDepartureTime.setText(rl.getFormatedDepartureTime());
 
                     loadLocationComment(rl.getLocation());

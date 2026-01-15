@@ -85,7 +85,7 @@ public class ThrottleFrameTest {
             FunctionButton f = to.getFunctionButton(i);
             Assert.assertTrue("Function F" + i + " continuous", f.getIsLockable());
             to.toggleFunctionMomentary(i);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
+            new org.netbeans.jemmy.QueueTool().waitEmpty();  //pause for frame to close
             Assert.assertFalse("Function F" + i + " momentary", f.getIsLockable());
         }
 
@@ -105,7 +105,7 @@ public class ThrottleFrameTest {
             FunctionButton f = to.getFunctionButton(i);
             Assert.assertFalse("Function F" + i + " off", f.isSelected());
             JemmyUtil.enterClickAndLeave(f);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
+            new org.netbeans.jemmy.QueueTool().waitEmpty();  //pause for frame to close
             Assert.assertTrue("Function F" + i + " on", f.isSelected());
         }
 
@@ -325,7 +325,7 @@ public class ThrottleFrameTest {
     public void tearDown() {
 
         to.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
+        new org.netbeans.jemmy.QueueTool().waitEmpty();  //pause for frame to close
         JUnitUtil.dispose(frame);
         // the throttle list frame gets created above, but needs to be shown to be disposed
         InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();

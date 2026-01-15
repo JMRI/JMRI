@@ -27,7 +27,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
 
     // test sending a message.
     @Test
-    public void testSendMessage() throws Exception {
+    public void testSendMessage() {
         SimpleLightServer a = (SimpleLightServer)ls;
         // NOTE: this test uses reflection to test a private method.
         Assertions.assertDoesNotThrow( () -> {
@@ -40,7 +40,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
 
     // test sending a message.
     @Test
-    public void testSendMessageWithConnection() throws Exception {
+    public void testSendMessageWithConnection() {
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
         SimpleLightServer a = new SimpleLightServer(jcs);
         // NOTE: this test uses reflection to test a private method.
@@ -56,7 +56,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
     // override the default permissions.
     // test sending an error message.
     @Test
-    public void testSendErrorStatus() throws Exception {
+    public void testSendErrorStatus() {
         SimpleLightServer a = (SimpleLightServer)ls;
         Assertions.assertDoesNotThrow( () -> a.sendErrorStatus("IT1"),"Exception sending Error Status");
         assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("LIGHT ERROR\n");
@@ -64,7 +64,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
 
     // test sending an ON status message.
     @Test
-    public void testCheckSendOnStatus() throws Exception {
+    public void testCheckSendOnStatus() {
         SimpleLightServer a = (SimpleLightServer)ls;
         Assertions.assertDoesNotThrow( () -> a.sendStatus("IL1", Light.ON),"Exception sending ON Status");
         assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("LIGHT IL1 ON\n");
@@ -72,7 +72,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
 
     // test sending an OFF status message.
     @Test
-    public void testCheckSendOffStatus() throws Exception {
+    public void testCheckSendOffStatus() {
         SimpleLightServer a = (SimpleLightServer)ls;
         Assertions.assertDoesNotThrow( () -> a.sendStatus("IL1", Light.OFF),"Exception sending OFF Status");
         assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("LIGHT IL1 OFF\n");
@@ -80,7 +80,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
 
     // test sending an ON status message.
     @Test
-    public void testCheckSendUnknownStatus() throws Exception {
+    public void testCheckSendUnknownStatus() {
         SimpleLightServer a = (SimpleLightServer)ls;
         Assertions.assertDoesNotThrow( () -> a.sendStatus("IL1", 255),"Exception sending UNKNOWN Status");
         assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("LIGHT IL1 UNKNOWN\n");
@@ -88,7 +88,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
 
     // test parsing an ON status message.
     @Test
-    public void testParseOnStatus() throws Exception {
+    public void testParseOnStatus() {
         SimpleLightServer a = (SimpleLightServer)ls;
         Assertions.assertDoesNotThrow( () -> a.parseStatus("LIGHT IL1 ON\n"),"Exception retrieving Status");
         Light light = (jmri.InstanceManager.getDefault(LightManager.class)).getLight("IL1");
@@ -100,7 +100,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
 
     // test parsing an OFF status message.
     @Test
-    public void testParseOffStatus() throws Exception {
+    public void testParseOffStatus() {
         Light light = (jmri.InstanceManager.getDefault(LightManager.class)).provideLight("IL1");
         light.setState(Light.ON);  // make sure the light is on before we parse the message.
         SimpleLightServer a = (SimpleLightServer)ls;
@@ -112,7 +112,7 @@ public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBas
 
     // test parsing an UNKNOWN status message.
     @Test
-    public void testParseUnkownStatus() throws Exception {
+    public void testParseUnkownStatus() {
         SimpleLightServer a = (SimpleLightServer)ls;
         Assertions.assertDoesNotThrow( () -> a.parseStatus("LIGHT IL1 UNKNOWN\n"),"Exception retrieving Status");
         // this currently causes no change of state, so we are just
