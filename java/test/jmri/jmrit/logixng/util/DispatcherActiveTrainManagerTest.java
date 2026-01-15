@@ -2,10 +2,7 @@ package jmri.jmrit.logixng.util;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test DispatcherActiveTrainManager
@@ -17,11 +14,10 @@ public class DispatcherActiveTrainManagerTest {
     @Test
     public void testCtor() {
         DispatcherActiveTrainManager t = new DispatcherActiveTrainManager();
-        Assert.assertNotNull("not null", t);
+        Assertions.assertNotNull( t, "not null");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -32,7 +28,7 @@ public class DispatcherActiveTrainManagerTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

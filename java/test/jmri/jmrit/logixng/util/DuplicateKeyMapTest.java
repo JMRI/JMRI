@@ -1,75 +1,70 @@
 package jmri.jmrit.logixng.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
- * Test ReferenceUtil
+ * Test DuplicateKeyMap
  * 
  * @author Daniel Bergqvist 2019
  */
 public class DuplicateKeyMapTest {
 
     private DuplicateKeyMap<String,String> t;
-    
+
     private void expectException(Runnable r, Class<? extends Exception> exceptionClass, String errorMessage) {
-        boolean exceptionThrown = false;
-        try {
-            r.run();
-        } catch (Exception e) {
-            if (e.getClass() != exceptionClass) {
-                log.error("Expected exception {}, found exception {}",
-                        e.getClass().getName(), exceptionClass.getName());
-            }
-            Assert.assertTrue("Exception is correct", e.getClass() == exceptionClass);
-            Assert.assertEquals("Exception message is correct", errorMessage, e.getMessage());
-            exceptionThrown = true;
-        }
-        Assert.assertTrue("Exception is thrown", exceptionThrown);
+        Exception e = assertThrowsExactly( exceptionClass, () -> r.run(), "Exception is thrown");
+        assertEquals( errorMessage, e.getMessage(), "Exception message is correct");
     }
-    
+
     @Test
     public void testCtor() {
-        Assert.assertNotNull("not null", t);
+        assertNotNull( t, "not null");
     }
-    
+
     @Test
     public void testSize() {
-        Assert.assertTrue("size is correct", 6 == t.size());
-        Assert.assertFalse("map is not empty", t.isEmpty());
-        
-//        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+        assertEquals( 6, t.size(), "size is correct");
+        assertFalse( t.isEmpty(), "map is not empty");
+
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
         DuplicateKeyMap<String,String> t2 = new DuplicateKeyMap<>();
-        Assert.assertTrue("size is correct", 0 == t2.size());
-        Assert.assertTrue("map is empty", t2.isEmpty());
+        assertEquals( 0, t2.size(), "size is correct");
+        assertTrue( t2.isEmpty(), "map is empty");
     }
-    
+
     @Test
     public void testContainsKey() {
-        Assert.assertTrue("contains key", t.containsKey("Red"));
-        Assert.assertTrue("contains key", t.containsKey("Black"));
-        Assert.assertTrue("contains key", t.containsKey("Green"));
-        Assert.assertFalse("contains key", t.containsKey("Blue"));
+        assertTrue( t.containsKey("Red"), "contains key");
+        assertTrue( t.containsKey("Black"), "contains key");
+        assertTrue( t.containsKey("Green"), "contains key");
+        assertFalse( t.containsKey("Blue"), "contains key");
     }
-    
+
     @Test
     public void testContainsValue() {
-        Assert.assertTrue("contains key", t.containsValue("Turnout"));
-        Assert.assertTrue("contains key", t.containsValue("Light"));
-        Assert.assertTrue("contains key", t.containsValue("Signal head"));
-        Assert.assertTrue("contains key", t.containsValue("Sensor"));
-        Assert.assertTrue("contains key", t.containsValue("Logix"));
-        Assert.assertFalse("contains key", t.containsValue("Green"));
-        Assert.assertFalse("contains key", t.containsValue("Red"));
-        Assert.assertFalse("contains key", t.containsValue("Black"));
+        assertTrue( t.containsValue("Turnout"), "contains key");
+        assertTrue( t.containsValue("Light"), "contains key");
+        assertTrue( t.containsValue("Signal head"), "contains key");
+        assertTrue( t.containsValue("Sensor"), "contains key");
+        assertTrue( t.containsValue("Logix"), "contains key");
+        assertFalse( t.containsValue("Green"), "contains key");
+        assertFalse( t.containsValue("Red"), "contains key");
+        assertFalse( t.containsValue("Black"), "contains key");
     }
-    
+
     @Test
     public void testGet() {
         // Test exceptions
@@ -77,41 +72,41 @@ public class DuplicateKeyMapTest {
             t.get("abc");
         }, UnsupportedOperationException.class, "Not supported");
     }
-    
+
     @Test
     public void testGetAll() {
         List<String> list = t.getAll("Green");
-        Assert.assertTrue("size is correct", 1 == list.size());
-        Assert.assertFalse("list is not empty", list.isEmpty());
-        Assert.assertTrue("list[0] is correct", "Sensor".equals(list.get(0)));
-        
+        assertEquals( 1, list.size(), "size is correct");
+        assertFalse( list.isEmpty(), "list is not empty");
+        assertEquals( "Sensor", list.get(0), "list[0] is correct");
+
         list = t.getAll("Red");
-        Assert.assertTrue("size is correct", 3 == list.size());
-        Assert.assertFalse("list is not empty", list.isEmpty());
-        Assert.assertTrue("list[0] is correct", "Turnout".equals(list.get(0)));
-        Assert.assertTrue("list[1] is correct", "Sensor".equals(list.get(1)));
-        Assert.assertTrue("list[2] is correct", "Light".equals(list.get(2)));
-        
+        assertEquals( 3, list.size(), "size is correct");
+        assertFalse( list.isEmpty(), "list is not empty");
+        assertEquals( "Turnout", list.get(0), "list[0] is correct");
+        assertEquals( "Sensor", list.get(1), "list[1] is correct");
+        assertEquals( "Light", list.get(2), "list[2] is correct");
+
         list = t.getAll("Black");
-        Assert.assertTrue("size is correct", 2 == list.size());
-        Assert.assertFalse("list is not empty", list.isEmpty());
-        Assert.assertTrue("list[0] is correct", "Signal head".equals(list.get(0)));
-        Assert.assertTrue("list[1] is correct", "Logix".equals(list.get(1)));
-        
+        assertEquals( 2, list.size(), "size is correct");
+        assertFalse( list.isEmpty(), "list is not empty");
+        assertEquals( "Signal head", list.get(0), "list[0] is correct");
+        assertEquals( "Logix", list.get(1), "list[1] is correct");
+
         list = t.getAll("Blue");
-        Assert.assertTrue("list is empty", list.isEmpty());
+        assertTrue( list.isEmpty(), "list is empty");
     }
-    
+
     @Test
     public void testPut() {
-        Assert.assertTrue("size is correct", 6 == t.size());
+        assertEquals( 6, t.size(), "size is correct");
         // Add values that already exists in the map
         t.put("Red", "Sensor");
         t.put("Red", "Light");
         t.put("Green", "Sensor");
-        Assert.assertTrue("size is correct", 6 == t.size());
+        assertEquals( 6, t.size(), "size is correct");
     }
-    
+
     @Test
     public void testPutAll() {
         // Test exceptions
@@ -119,7 +114,7 @@ public class DuplicateKeyMapTest {
             t.putAll(null);
         }, UnsupportedOperationException.class, "Not supported");
     }
-    
+
     @Test
     public void testRemove() {
         // Test exceptions
@@ -127,51 +122,51 @@ public class DuplicateKeyMapTest {
             t.remove(null);
         }, UnsupportedOperationException.class, "Not supported");
     }
-    
+
     @Test
     public void testRemoveValue() {
-        Assert.assertTrue("size is correct", 6 == t.size());
+        assertEquals( 6, t.size(), "size is correct");
         t.removeValue("Red", "Sensor");
-        Assert.assertTrue("size is correct", 5 == t.size());
+        assertEquals( 5, t.size(), "size is correct");
         t.removeValue("Red", "Sensor");
-        Assert.assertTrue("size is correct", 5 == t.size());
+        assertEquals( 5, t.size(), "size is correct");
         t.removeValue("Green", "Sensor");
-        Assert.assertTrue("size is correct", 4 == t.size());
+        assertEquals( 4, t.size(), "size is correct");
         t.removeValue("Unknown key", "Sensor");
-        Assert.assertTrue("size is correct", 4 == t.size());
+        assertEquals( 4, t.size(), "size is correct");
     }
-    
+
     @Test
     public void testClear() {
-        Assert.assertTrue("size is correct", 6 == t.size());
-        Assert.assertFalse("map is not empty", t.isEmpty());
+        assertEquals( 6, t.size(), "size is correct");
+        assertFalse( t.isEmpty(), "map is not empty");
         t.clear();
-        Assert.assertTrue("size is correct", 0 == t.size());
-        Assert.assertTrue("map is empty", t.isEmpty());
+        assertEquals( 0, t.size(), "size is correct");
+        assertTrue( t.isEmpty(), "map is empty");
     }
-    
+
     @Test
     public void testGetKeySet() {
         Set<String> set = t.keySet();
-        Assert.assertTrue("size is correct", 3 == set.size());
-        Assert.assertFalse("set is not empty", set.isEmpty());
-        Assert.assertTrue("set contains value", set.contains("Red"));
-        Assert.assertTrue("set contains value", set.contains("Green"));
-        Assert.assertTrue("set contains value", set.contains("Black"));
+        assertEquals( 3, set.size(), "size is correct");
+        assertFalse( set.isEmpty(), "set is not empty");
+        assertTrue( set.contains("Red"), "set contains value");
+        assertTrue( set.contains("Green"), "set contains value");
+        assertTrue( set.contains("Black"), "set contains value");
     }
-    
+
     @Test
     public void testValues() {
         Collection<String> collection = t.values();
-        Assert.assertTrue("size is correct", 6 == collection.size());
-        Assert.assertFalse("collection is not empty", collection.isEmpty());
-        Assert.assertTrue("collection contains value", collection.contains("Turnout"));
-        Assert.assertTrue("collection contains value", collection.contains("Sensor"));
-        Assert.assertTrue("collection contains value", collection.contains("Light"));
-        Assert.assertTrue("collection contains value", collection.contains("Signal head"));
-        Assert.assertTrue("collection contains value", collection.contains("Logix"));
+        assertEquals( 6, collection.size(), "size is correct");
+        assertFalse( collection.isEmpty(), "collection is not empty");
+        assertTrue( collection.contains("Turnout"), "collection contains value");
+        assertTrue( collection.contains("Sensor"), "collection contains value");
+        assertTrue( collection.contains("Light"), "collection contains value");
+        assertTrue( collection.contains("Signal head"), "collection contains value");
+        assertTrue( collection.contains("Logix"), "collection contains value");
     }
-    
+
     @Test
     public void testEntrySet() {
         // Test exceptions
@@ -179,15 +174,14 @@ public class DuplicateKeyMapTest {
             t.entrySet();
         }, UnsupportedOperationException.class, "Not supported");
     }
-    
-    // The minimal setup for log4J
-    @Before
+
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        
+
         t = new DuplicateKeyMap<>();
-        Assert.assertEquals("size is correct", 0, t.size());
-        Assert.assertTrue("map is empty", t.isEmpty());
+        assertEquals( 0, t.size(), "size is correct");
+        assertTrue( t.isEmpty(), "map is empty");
         t.put("Red", "Turnout");
         t.put("Red", "Sensor");
         t.put("Red", "Light");
@@ -196,10 +190,10 @@ public class DuplicateKeyMapTest {
         t.put("Black", "Logix");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-    
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DuplicateKeyMapTest.class);
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DuplicateKeyMapTest.class);
 }
