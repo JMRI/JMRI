@@ -445,7 +445,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
      */
     public String getFormatedDepartureTime() {
         if (getDepartureTimeHourMinutes().equals(NONE)) {
-            return getDepartureTimeHourMinutes();
+            return NONE;
         }
         String sDay = "";
         if (!getDepartureTimeDay().equals("0")) {

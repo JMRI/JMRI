@@ -111,15 +111,15 @@ public class Track extends PropertyChangeSupport {
     protected List<String> _dropList = new ArrayList<>();
     protected List<String> _pickupList = new ArrayList<>();
 
-    // load options for staging
+    
     protected int _loadOptions = 0;
+    // load options for staging
     private static final int SWAP_GENERIC_LOADS = 1;
     private static final int EMPTY_CUSTOM_LOADS = 2;
     private static final int GENERATE_CUSTOM_LOADS = 4;
     private static final int GENERATE_CUSTOM_LOADS_ANY_SPUR = 8;
     private static final int EMPTY_GENERIC_LOADS = 16;
     private static final int GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK = 32;
-
     // load options for spur
     private static final int DISABLE_LOAD_CHANGE = 64;
     private static final int QUICK_SERVICE = 128;
