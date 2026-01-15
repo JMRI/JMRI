@@ -1,30 +1,26 @@
 package jmri.jmrit.logixng.tools.swing;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
+import org.junit.jupiter.api.*;
 
 /**
- * Test TimeDiagram
+ * Test LogixNGInitializationTable
  *
  * @author Daniel Bergqvist Copyright (C) 2018
  */
 public class LogixNGInitializationTableTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LogixNGInitializationTable b = new LogixNGInitializationTable();
-        Assert.assertNotNull("exists", b);
+        Assertions.assertNotNull( b, "exists");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -33,7 +29,7 @@ public class LogixNGInitializationTableTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
