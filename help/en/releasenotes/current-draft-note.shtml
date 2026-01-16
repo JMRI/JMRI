@@ -131,6 +131,8 @@
                 <li>Improved display of stream data frames in the Monitor.</li>
                 <li>Improved how traffic from an internal hub is 
                     displayed in the Monitor.</li>
+                <li>Updated the OpenLCB library to properly display
+                    Stream-related messages.</li>
             </ul>
 
         <h4>Powerline</h4>
