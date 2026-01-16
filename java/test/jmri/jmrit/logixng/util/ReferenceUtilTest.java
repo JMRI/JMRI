@@ -1,5 +1,12 @@
 package jmri.jmrit.logixng.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -8,10 +15,9 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
@@ -27,41 +33,26 @@ public class ReferenceUtilTest {
     private NamedTable yardTable;
 
     // The system appropriate newline separator.
-    private static final String _nl = System.getProperty("line.separator"); // NOI18N
+    private static final String NEWLINE = System.getProperty("line.separator"); // NOI18N
 
-    @Test
-    public void testCtor() {
-        ReferenceUtil t = new ReferenceUtil();
-        Assert.assertNotNull("not null", t);
-    }
+    // no Ctor test, tested class only supplies static methods
 
     private void expectException(Runnable r, Class<? extends Exception> exceptionClass, String errorMessage) {
-        boolean exceptionThrown = false;
-        try {
-            r.run();
-        } catch (Exception e) {
-            if (e.getClass() != exceptionClass) {
-                log.error("Expected exception {}, found exception {}",
-                        e.getClass().getName(), exceptionClass.getName());
-            }
-            Assert.assertTrue("Exception is correct", e.getClass() == exceptionClass);
-            Assert.assertEquals("Exception message is correct", errorMessage, e.getMessage());
-            exceptionThrown = true;
-        }
-        Assert.assertTrue("Exception is thrown", exceptionThrown);
+        Exception e = assertThrowsExactly( exceptionClass, () -> r.run());
+        assertEquals( errorMessage, e.getMessage(), "Exception message is correct");
     }
 
     @Test
     public void testIsReference() {
-        Assert.assertFalse("Is reference", ReferenceUtil.isReference(null));
-        Assert.assertFalse("Is reference", ReferenceUtil.isReference("{}"));
-        Assert.assertTrue("Is reference", ReferenceUtil.isReference("{A}"));
-        Assert.assertTrue("Is reference", ReferenceUtil.isReference("{Abc 123}"));
-        Assert.assertFalse("Is reference", ReferenceUtil.isReference("{"));
-        Assert.assertFalse("Is reference", ReferenceUtil.isReference("}"));
-        Assert.assertFalse("Is reference", ReferenceUtil.isReference("{Abc"));
-        Assert.assertFalse("Is reference", ReferenceUtil.isReference("Abc}"));
-        Assert.assertFalse("Is reference", ReferenceUtil.isReference("Abc"));
+        assertFalse( ReferenceUtil.isReference(null), "Is reference");
+        assertFalse( ReferenceUtil.isReference("{}"), "Is reference");
+        assertTrue( ReferenceUtil.isReference("{A}"), "Is reference");
+        assertTrue( ReferenceUtil.isReference("{Abc 123}"), "Is reference");
+        assertFalse( ReferenceUtil.isReference("{"), "Is reference");
+        assertFalse( ReferenceUtil.isReference("}"), "Is reference");
+        assertFalse( ReferenceUtil.isReference("{Abc"), "Is reference");
+        assertFalse( ReferenceUtil.isReference("Abc}"), "Is reference");
+        assertFalse( ReferenceUtil.isReference("Abc"), "Is reference");
     }
 
     @Test
@@ -75,37 +66,28 @@ public class ReferenceUtilTest {
 
         // Test references
         m1.setValue("Turnout 1");
-        Assert.assertEquals("Reference is correct",
-                "Turnout 1",
-                ReferenceUtil.getReference(symbolTable, "{IM1}"));
-        Assert.assertEquals("Reference is correct",
-                "Turnout 1",
-                ReferenceUtil.getReference(symbolTable, "{  IM1  }"));
+        assertEquals( "Turnout 1",
+                ReferenceUtil.getReference(symbolTable, "{IM1}"), "Reference is correct");
+        assertEquals( "Turnout 1",
+                ReferenceUtil.getReference(symbolTable, "{  IM1  }"), "Reference is correct");
 
         m2.setValue("IM1");
-        Assert.assertEquals("Reference is correct",
-                "IM1",
-                ReferenceUtil.getReference(symbolTable, "{IM2}"));
-        Assert.assertEquals("Reference is correct",
-                "IM1",
-                ReferenceUtil.getReference(symbolTable, "{ IM2  }"));
-        Assert.assertEquals("Reference is correct",
-                "Turnout 1",
-                ReferenceUtil.getReference(symbolTable, "{{IM2}}"));
-        Assert.assertEquals("Reference is correct",
-                "Turnout 1",
-                ReferenceUtil.getReference(symbolTable, "{{   IM2 }}"));
-        Assert.assertEquals("Reference is correct",
-                "Turnout 1",
-                ReferenceUtil.getReference(symbolTable, "{ {   IM2 } }"));
+        assertEquals( "IM1",
+                ReferenceUtil.getReference(symbolTable, "{IM2}"), "Reference is correct");
+        assertEquals( "IM1",
+                ReferenceUtil.getReference(symbolTable, "{ IM2  }"), "Reference is correct");
+        assertEquals( "Turnout 1",
+                ReferenceUtil.getReference(symbolTable, "{{IM2}}"), "Reference is correct");
+        assertEquals( "Turnout 1",
+                ReferenceUtil.getReference(symbolTable, "{{   IM2 }}"), "Reference is correct");
+        assertEquals( "Turnout 1",
+                ReferenceUtil.getReference(symbolTable, "{ {   IM2 } }"), "Reference is correct");
 
         m3.setValue("IM2");
-        Assert.assertEquals("Reference is correct",
-                "IM2",
-                ReferenceUtil.getReference(symbolTable, "{IM3}"));
-        Assert.assertEquals("Reference is correct",
-                "Turnout 1",
-                ReferenceUtil.getReference(symbolTable, "{{{IM3}}}"));
+        assertEquals( "IM2",
+                ReferenceUtil.getReference(symbolTable, "{IM3}"), "Reference is correct");
+        assertEquals( "Turnout 1",
+                ReferenceUtil.getReference(symbolTable, "{{{IM3}}}"), "Reference is correct");
     }
 
     @Test
@@ -119,66 +101,45 @@ public class ReferenceUtilTest {
 
         yardTable.setCell(null, "Other turnout");
 
-        Assert.assertNull("Reference is correct",
-                ReferenceUtil.getReference(symbolTable, "{Yard table[Other turnout]}"));
-        Assert.assertNull("Reference is correct",
-                ReferenceUtil.getReference(symbolTable, "{  Yard table[Other turnout]}"));
-        Assert.assertNull("Reference is correct",
-                ReferenceUtil.getReference(symbolTable, "{Yard table[  Other turnout]}"));
-        Assert.assertNull("Reference is correct",
-                ReferenceUtil.getReference(symbolTable, "{Yard table[Other turnout  ]}"));
-        Assert.assertNull("Reference is correct",
-                ReferenceUtil.getReference(symbolTable, "{Yard table[Other turnout]  }"));
-        Assert.assertNull("Reference is correct",
-                ReferenceUtil.getReference(symbolTable, "{  Yard table[  Other turnout  ]  }"));
-        Assert.assertNull("Reference is correct",
-                ReferenceUtil.getReference(symbolTable, "{Yard table[  Other turnout  ]}"));
-        Assert.assertNull("Reference is correct",
-                ReferenceUtil.getReference(symbolTable, "{Yard table[Other turnout,North yard]}"));
+        assertNull( ReferenceUtil.getReference(symbolTable, "{Yard table[Other turnout]}"), "Reference is correct");
+        assertNull( ReferenceUtil.getReference(symbolTable, "{  Yard table[Other turnout]}"), "Reference is correct");
+        assertNull( ReferenceUtil.getReference(symbolTable, "{Yard table[  Other turnout]}"), "Reference is correct");
+        assertNull( ReferenceUtil.getReference(symbolTable, "{Yard table[Other turnout  ]}"), "Reference is correct");
+        assertNull( ReferenceUtil.getReference(symbolTable, "{Yard table[Other turnout]  }"), "Reference is correct");
+        assertNull( ReferenceUtil.getReference(symbolTable, "{  Yard table[  Other turnout  ]  }"), "Reference is correct");
+        assertNull( ReferenceUtil.getReference(symbolTable, "{Yard table[  Other turnout  ]}"), "Reference is correct");
+        assertNull( ReferenceUtil.getReference(symbolTable, "{Yard table[Other turnout,North yard]}"), "Reference is correct");
 
-        Assert.assertNull("Reference is correct",
-                ReferenceUtil.getReference(symbolTable, "{  Yard table[Other turnout,North yard]  }"));
+        assertNull( ReferenceUtil.getReference(symbolTable, "{  Yard table[Other turnout,North yard]  }"), "Reference is correct");
 
-        Assert.assertNull("Reference is correct",
-                ReferenceUtil.getReference(symbolTable, "{Yard table[  Other turnout , North yard  ]}"));
-        Assert.assertNull("Reference is correct",
-                ReferenceUtil.getReference(symbolTable, "{  Yard table[  Other turnout   ,   North yard   ]  }"));
-        Assert.assertNull("Reference is correct",
-                ReferenceUtil.getReference(symbolTable, "{  Yard table  [  Other turnout   ,   North yard   ]  }"));
+        assertNull( ReferenceUtil.getReference(symbolTable, "{Yard table[  Other turnout , North yard  ]}"), "Reference is correct");
+        assertNull( ReferenceUtil.getReference(symbolTable, "{  Yard table[  Other turnout   ,   North yard   ]  }"), "Reference is correct");
+        assertNull( ReferenceUtil.getReference(symbolTable, "{  Yard table  [  Other turnout   ,   North yard   ]  }"), "Reference is correct");
 
         m1.setValue("Turnout 1");
-        Assert.assertEquals("Reference is correct",
-                "Turnout 111",
-                ReferenceUtil.getReference(symbolTable, "{Yard table[Left turnout]}"));
-        Assert.assertEquals("Reference is correct",
-                "Turnout 111",
-                ReferenceUtil.getReference(symbolTable, "{  Yard table  [ Left turnout  ]}"));
-        Assert.assertEquals("Reference is correct",
-                "IT302",
-                ReferenceUtil.getReference(symbolTable, "{Yard table[Rightmost turnout,South yard]}"));
-        Assert.assertEquals("Reference is correct",
-                "IT302",
-                ReferenceUtil.getReference(symbolTable, "{Yard table[  Rightmost turnout ,   South yard  ]}"));
-        Assert.assertEquals("Reference is correct",
-                "Turnout 222",
-                ReferenceUtil.getReference(symbolTable, "{Yard table[Rightmost turnout,North yard]}"));
-        Assert.assertEquals("Reference is correct",
-                "Turnout 222",
-                ReferenceUtil.getReference(symbolTable, "{Yard table[ Rightmost turnout  , North yard ]}"));
+        assertEquals( "Turnout 111",
+                ReferenceUtil.getReference(symbolTable, "{Yard table[Left turnout]}"), "Reference is correct");
+        assertEquals( "Turnout 111",
+                ReferenceUtil.getReference(symbolTable, "{  Yard table  [ Left turnout  ]}"), "Reference is correct");
+        assertEquals( "IT302",
+                ReferenceUtil.getReference(symbolTable, "{Yard table[Rightmost turnout,South yard]}"), "Reference is correct");
+        assertEquals( "IT302",
+                ReferenceUtil.getReference(symbolTable, "{Yard table[  Rightmost turnout ,   South yard  ]}"), "Reference is correct");
+        assertEquals( "Turnout 222",
+                ReferenceUtil.getReference(symbolTable, "{Yard table[Rightmost turnout,North yard]}"), "Reference is correct");
+        assertEquals( "Turnout 222",
+                ReferenceUtil.getReference(symbolTable, "{Yard table[ Rightmost turnout  , North yard ]}"), "Reference is correct");
 
         // The line below reads 'Yard table[Rightmost turnout,East yard]' which
         // has the value IM15. And then reads the memory IM15 which has the value
         // 'Chicago north east'.
         m15.setValue("Chicago north east");
-        Assert.assertEquals("Reference is correct",
-                "Chicago north east",
-                ReferenceUtil.getReference(symbolTable, "{{Yard table[Rightmost turnout,East yard]}}"));
-        Assert.assertEquals("Reference is correct",
-                "Chicago north east",
-                ReferenceUtil.getReference(symbolTable, "{{Yard table[ Rightmost turnout  ,  East yard ]}}"));
-        Assert.assertEquals("Reference is correct",
-                "Chicago north east",
-                ReferenceUtil.getReference(symbolTable, "{{  Yard table   [ Rightmost turnout  ,  East yard ]}}"));
+        assertEquals( "Chicago north east",
+                ReferenceUtil.getReference(symbolTable, "{{Yard table[Rightmost turnout,East yard]}}"), "Reference is correct");
+        assertEquals( "Chicago north east",
+                ReferenceUtil.getReference(symbolTable, "{{Yard table[ Rightmost turnout  ,  East yard ]}}"), "Reference is correct");
+        assertEquals( "Chicago north east",
+                ReferenceUtil.getReference(symbolTable, "{{  Yard table   [ Rightmost turnout  ,  East yard ]}}"), "Reference is correct");
 
         // The line below reads the reference '{Turnout table[Yellow turnout]}'
         // which has the value 'Right turnout'. It then reads the reference
@@ -188,92 +149,81 @@ public class ReferenceUtilTest {
         // 'Memory 333'. It then reads the reference '{Memory 333}' which has
         // the value 'Blue turnout'.
         m333.setValue("Blue turnout");
-        Assert.assertEquals("Reference is correct",
-                "Blue turnout",
+        assertEquals( "Blue turnout",
                 ReferenceUtil.getReference(symbolTable,
-                        "{{Yard table[{Turnout table[Yellow turnout]},{Other yard table[Turnouts,Green yard]}]}}"));
-        Assert.assertEquals("Reference is correct",
-                "Blue turnout",
+                        "{{Yard table[{Turnout table[Yellow turnout]},{Other yard table[Turnouts,Green yard]}]}}"), "Reference is correct");
+        assertEquals( "Blue turnout",
                 ReferenceUtil.getReference(symbolTable,
-                        "{{Yard table[{Turnout table[ Yellow turnout ]},{Other yard table[  Turnouts , Green yard  ]}]}}"));
+                        "{{Yard table[{Turnout table[ Yellow turnout ]},{Other yard table[  Turnouts , Green yard  ]}]}}"), "Reference is correct");
 
-        Assert.assertEquals("Reference is correct",
-                "Blue turnout",
+        assertEquals( "Blue turnout",
                 ReferenceUtil.getReference(symbolTable,
-                        "{{Yard table[{Turnout table[ Yellow turnout ]},  {Other yard table[  Turnouts , Green yard  ]}]}}"));
-        Assert.assertEquals("Reference is correct",
-                "Blue turnout",
+                        "{{Yard table[{Turnout table[ Yellow turnout ]},  {Other yard table[  Turnouts , Green yard  ]}]}}"), "Reference is correct");
+        assertEquals( "Blue turnout",
                 ReferenceUtil.getReference(symbolTable,
-                        "{{Yard table[{Turnout table[ Yellow turnout ]}  ,{Other yard table[  Turnouts , Green yard  ]}]}}"));
-        Assert.assertEquals("Reference is correct",
-                "Blue turnout",
+                        "{{Yard table[{Turnout table[ Yellow turnout ]}  ,{Other yard table[  Turnouts , Green yard  ]}]}}"), "Reference is correct");
+        assertEquals( "Blue turnout",
                 ReferenceUtil.getReference(symbolTable,
-                        "{{Yard table[{Turnout table[ Yellow turnout ]}  ,  {Other yard table[  Turnouts , Green yard  ]}]}}"));
-        Assert.assertEquals("Reference is correct",
-                "Blue turnout",
+                        "{{Yard table[{Turnout table[ Yellow turnout ]}  ,  {Other yard table[  Turnouts , Green yard  ]}]}}"), "Reference is correct");
+        assertEquals( "Blue turnout",
                 ReferenceUtil.getReference(symbolTable,
-                        "{{  Yard table [{Turnout table[ Yellow turnout ]}  ,  {Other yard table[  Turnouts , Green yard  ]}]}}"));
-        Assert.assertEquals("Reference is correct",
-                "Blue turnout",
+                        "{{  Yard table [{Turnout table[ Yellow turnout ]}  ,  {Other yard table[  Turnouts , Green yard  ]}]}}"), "Reference is correct");
+        assertEquals( "Blue turnout",
                 ReferenceUtil.getReference(symbolTable,
-                        "{  {  Yard table [{Turnout table[ Yellow turnout ]}  ,  {Other yard table[  Turnouts , Green yard  ]}]}}"));
-        Assert.assertEquals("Reference is correct",
-                "Blue turnout",
+                        "{  {  Yard table [{Turnout table[ Yellow turnout ]}  ,  {Other yard table[  Turnouts , Green yard  ]}]}}"), "Reference is correct");
+        assertEquals( "Blue turnout",
                 ReferenceUtil.getReference(symbolTable,
-                        "{  {  Yard table [ {  Turnout table  [ Yellow turnout ]}  ,  {Other yard table[  Turnouts , Green yard  ]}]}}"));
-        Assert.assertEquals("Reference is correct",
-                "Blue turnout",
+                        "{  {  Yard table [ {  Turnout table  [ Yellow turnout ]}  ,  {Other yard table[  Turnouts , Green yard  ]}]}}"), "Reference is correct");
+        assertEquals( "Blue turnout",
                 ReferenceUtil.getReference(symbolTable,
-                        "{  {  Yard table [ {  Turnout table  [ Yellow turnout ]  }  ,  {Other yard table[  Turnouts , Green yard  ]}]}}"));
-        Assert.assertEquals("Reference is correct",
-                "Blue turnout",
+                        "{  {  Yard table [ {  Turnout table  [ Yellow turnout ]  }  ,  {Other yard table[  Turnouts , Green yard  ]}]}}"), "Reference is correct");
+        assertEquals( "Blue turnout",
                 ReferenceUtil.getReference(symbolTable,
-                        "{  {  Yard table [ {  Turnout table  [ Yellow turnout ]  }  ,  {  Other yard table  [  Turnouts , Green yard  ]}]}}"));
+                        "{  {  Yard table [ {  Turnout table  [ Yellow turnout ]  }  ,  {  Other yard table  [  Turnouts , Green yard  ]}]}}"), "Reference is correct");
 
-        Assert.assertEquals("Reference is correct",
-                "Blue turnout",
+        assertEquals( "Blue turnout",
                 ReferenceUtil.getReference(symbolTable,
-                        "{  {  Yard table [ {  Turnout table  [ Yellow turnout ]  }  ,  {  Other yard table  [  Turnouts , Green yard  ]}]}}"));
-        Assert.assertEquals("Reference is correct",
-                "Blue turnout",
+                        "{  {  Yard table [ {  Turnout table  [ Yellow turnout ]  }  ,  {  Other yard table  [  Turnouts , Green yard  ]}]}}"), "Reference is correct");
+        assertEquals( "Blue turnout",
                 ReferenceUtil.getReference(symbolTable,
-                        "{  {  Yard table [ {  Turnout table  [ Yellow turnout ]  }  ,  {  Other yard table  [  Turnouts , Green yard  ]  }  ]  }  }"));
+                        "{  {  Yard table [ {  Turnout table  [ Yellow turnout ]  }  ,  {  Other yard table  [  Turnouts , Green yard  ]  }  ]  }  }"), "Reference is correct");
 
     }
 
     @Test
-//    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
     public void testExceptions() {
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
         // Test exceptions
         expectException(() -> {
-            ReferenceUtil.getReference(symbolTable, "abc");
+            var ref = ReferenceUtil.getReference(symbolTable, "abc");
+            fail("should have thrown, created " + ref);
         }, IllegalArgumentException.class, "Reference 'abc' is not a valid reference");
 
         // Test exceptions
         expectException(() -> {
-            ReferenceUtil.getReference(symbolTable, "{}");
+            var ref = ReferenceUtil.getReference(symbolTable, "{}");
+            fail("should have thrown, created " + ref);
         }, IllegalArgumentException.class, "Reference '{}' is not a valid reference");
 
         expectException(() -> {
-            ReferenceUtil.getReference(symbolTable, "{IM999}");
+            var ref = ReferenceUtil.getReference(symbolTable, "{IM999}");
+            fail("should have thrown, created " + ref);
         }, IllegalArgumentException.class, "Memory 'IM999' is not found");
 
         Memory m999 = _memoryManager.newMemory("IM999", "Memory 999");
         expectException(() -> {
-            ReferenceUtil.getReference(symbolTable, "{IM999}");
+            var ref = ReferenceUtil.getReference(symbolTable, "{IM999}");
+            fail("should have thrown, created " + ref);
         }, IllegalArgumentException.class, "Memory 'IM999' has no value");
 
         m999.setValue("Turnout 1");
-        Assert.assertEquals("Reference is correct",
-                "Turnout 1",
-                ReferenceUtil.getReference(symbolTable, "{IM999}"));
+        assertEquals( "Turnout 1",
+                ReferenceUtil.getReference(symbolTable, "{IM999}"), "Reference is correct");
     }
 
     @Test
-//    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
     public void testExceptions2() {
 
         ReferenceUtil.IntRef endRef = new ReferenceUtil.IntRef();
@@ -312,7 +262,6 @@ public class ReferenceUtilTest {
     }
 
     @Test
-//    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
     public void testSpecialCharacters() {
 
         Memory m91 = _memoryManager.newMemory("IM91", "Memory , abc");
@@ -333,48 +282,54 @@ public class ReferenceUtilTest {
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
         // Test special characters. Special characters must be escaped.
-        Assert.assertEquals("Reference is correct",
-                "Turnout 91",
-                ReferenceUtil.getReference(symbolTable, "{Memory \\, abc}"));
+        assertEquals( "Turnout 91",
+                ReferenceUtil.getReference(symbolTable, "{Memory \\, abc}"),
+                "Reference is correct");
         expectException(() -> {
-            ReferenceUtil.getReference(symbolTable, "{Memory , abc}");
+            var ref = ReferenceUtil.getReference(symbolTable, "{Memory , abc}");
+            fail("should have thrown, created " + ref);
         }, IllegalArgumentException.class, "Reference '{Memory , abc}' is not a valid reference");
 
-        Assert.assertEquals("Reference is correct",
-                "Turnout 92",
-                ReferenceUtil.getReference(symbolTable, "{Memory \\[ abc}"));
+        assertEquals( "Turnout 92",
+                ReferenceUtil.getReference(symbolTable, "{Memory \\[ abc}"),
+                "Reference is correct");
         expectException(() -> {
-            ReferenceUtil.getReference(symbolTable, "{Memory [ abc}");
+            var ref = ReferenceUtil.getReference(symbolTable, "{Memory [ abc}");
+            fail("should have thrown, created " + ref);
         }, IllegalArgumentException.class, "Reference '{Memory [ abc}' is not a valid reference");
 
-        Assert.assertEquals("Reference is correct",
-                "Turnout 93",
-                ReferenceUtil.getReference(symbolTable, "{Memory \\] abc}"));
+        assertEquals( "Turnout 93",
+                ReferenceUtil.getReference(symbolTable, "{Memory \\] abc}"),
+                "Reference is correct");
         expectException(() -> {
-            ReferenceUtil.getReference(symbolTable, "{Memory ] abc}");
+            var ref = ReferenceUtil.getReference(symbolTable, "{Memory ] abc}");
+            fail("should have thrown, created " + ref);
         }, IllegalArgumentException.class, "Reference '{Memory ] abc}' is not a valid reference");
 
-        Assert.assertEquals("Reference is correct",
-                "Turnout 94",
-                ReferenceUtil.getReference(symbolTable, "{Memory \\{ abc}"));
+        assertEquals( "Turnout 94",
+                ReferenceUtil.getReference(symbolTable, "{Memory \\{ abc}"),
+                "Reference is correct");
         expectException(() -> {
-            ReferenceUtil.getReference(symbolTable, "{Memory { abc}");
+            var ref = ReferenceUtil.getReference(symbolTable, "{Memory { abc}");
+            fail("should have thrown, created " + ref);
         }, IllegalArgumentException.class, "Reference '{Memory { abc}' is not a valid reference");
 
         // This will try to find the "Memory ", which exists.
-        Assert.assertEquals("Reference is correct",
-                "Turnout 95",
-                ReferenceUtil.getReference(symbolTable, "{Memory \\} abc}"));
+        assertEquals( "Turnout 95",
+                ReferenceUtil.getReference(symbolTable, "{Memory \\} abc}"),
+                "Reference is correct");
         expectException(() -> {
-            ReferenceUtil.getReference(symbolTable, "{Memory } abc}");
+            var ref = ReferenceUtil.getReference(symbolTable, "{Memory } abc}");
+            fail("should have thrown, created " + ref);
         }, IllegalArgumentException.class, "Reference '{Memory } abc}' is not a valid reference");
 
-        Assert.assertEquals("Reference is correct",
-                "Turnout 96",
-                ReferenceUtil.getReference(symbolTable, "{Memory \\\\ abc}"));
+        assertEquals( "Turnout 96",
+                ReferenceUtil.getReference(symbolTable, "{Memory \\\\ abc}"),
+                "Reference is correct");
         // Note that 'Memory \ abc' has an escaped space, so the backspace disappears.
         expectException(() -> {
-            ReferenceUtil.getReference(symbolTable, "{Memory \\ abc}");
+            var ref = ReferenceUtil.getReference(symbolTable, "{Memory \\ abc}");
+            fail("should have thrown, created " + ref);
         }, IllegalArgumentException.class, "Memory 'Memory  abc' is not found");
     }
 
@@ -387,33 +342,32 @@ public class ReferenceUtilTest {
         // tab character.
 
         String yardTableData =
-                "\tNorth yard\tEast yard\tSouth yard\tWest yard" + _nl +
-                "Leftmost turnout\tIT101\tIT201\tIT301\tIT401" + _nl +
-                "Left turnout\tTurnout 111\tIT203\tIT303\tIT403" + _nl +
-                "Right turnout\tIT104\tMemory 333\tIT304\tIT404" + _nl +
-                "Rightmost turnout\tTurnout 222\tIM15\tIT302\tIT402" + _nl +
-                "Other turnout\tIT1\tIT2\tIT3\tIT4" + _nl;
+                "\tNorth yard\tEast yard\tSouth yard\tWest yard" + NEWLINE +
+                "Leftmost turnout\tIT101\tIT201\tIT301\tIT401" + NEWLINE +
+                "Left turnout\tTurnout 111\tIT203\tIT303\tIT403" + NEWLINE +
+                "Right turnout\tIT104\tMemory 333\tIT304\tIT404" + NEWLINE +
+                "Rightmost turnout\tTurnout 222\tIM15\tIT302\tIT402" + NEWLINE +
+                "Other turnout\tIT1\tIT2\tIT3\tIT4" + NEWLINE;
 
         String turnoutTableData =
-                "\tColumn" + _nl +
-                "Green turnout\tIT101" + _nl +
-                "Red turnout\tTurnout" + _nl +
-                "Yellow turnout\tRight turnout" + _nl +
-                "Blue turnout\tTurnout 222" + _nl;
+                "\tColumn" + NEWLINE +
+                "Green turnout\tIT101" + NEWLINE +
+                "Red turnout\tTurnout" + NEWLINE +
+                "Yellow turnout\tRight turnout" + NEWLINE +
+                "Blue turnout\tTurnout 222" + NEWLINE;
 
         String otherYardTableData =
-                "\tYellow yard\tGreen yard\tBlue yard\tRed yard" + _nl +
-                "Turnouts\tWest yard\tEast yard\tIT301\tIT401" + _nl +
-                "Sensors\tTurnout 111\tIT203\tIT303\tIT403" + _nl +
-                "Lights\tIT104\tIT204\tIT304\tIT404" + _nl;
+                "\tYellow yard\tGreen yard\tBlue yard\tRed yard" + NEWLINE +
+                "Turnouts\tWest yard\tEast yard\tIT301\tIT401" + NEWLINE +
+                "Sensors\tTurnout 111\tIT203\tIT303\tIT403" + NEWLINE +
+                "Lights\tIT104\tIT204\tIT304\tIT404" + NEWLINE;
 
         yardTable = _tableManager.loadTableFromCSVData("IQT1", "Yard table", yardTableData);
         _tableManager.loadTableFromCSVData("IQT2", "Turnout table", turnoutTableData);
         _tableManager.loadTableFromCSVData("IQT3", "Other yard table", otherYardTableData);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -428,12 +382,12 @@ public class ReferenceUtilTest {
         setupTables();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ReferenceUtilTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ReferenceUtilTest.class);
 }
