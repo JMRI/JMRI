@@ -636,7 +636,9 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>Fixed a problem introduced in JMRI 5.15.2  where the 
+                "All Entries" roster group would not appear in WiThrotte 
+                and Engine Driver.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
