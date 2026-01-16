@@ -1,14 +1,16 @@
 package jmri.jmrit.logixng.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.File;
 import java.io.IOException;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test DefaultLogixNG
@@ -19,7 +21,7 @@ public class DefaultNamedTableTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", new DefaultInternalNamedTable("IQT10", "A table", 10, 15));
+        assertNotNull( new DefaultInternalNamedTable("IQT10", "A table", 10, 15), "exists");
     }
 
     @Test
@@ -34,11 +36,10 @@ public class DefaultNamedTableTest {
         File file = new File(FileUtil.getUserFilesPath() + "temp/" + "turnout_and_signals.csv");
 //        System.out.format("Temporary file: %s%n", file.getAbsoluteFile());
         table.storeTableAsCSV(file);
-        Assert.assertNotNull("exists", table);
+        assertNotNull( table, "exists");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -49,7 +50,7 @@ public class DefaultNamedTableTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
