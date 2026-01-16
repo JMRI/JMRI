@@ -1,15 +1,12 @@
 package jmri.jmrit.logixng.implementation.swing;
 
 import jmri.jmrit.logixng.tools.swing.LocalVariableTableModel;
-
-import java.io.IOException;
-
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
- * Test VariableTableModel
+ * Test LocalVariableTableModel
  *
  * @author Daniel Bergqvist 2020
  */
@@ -18,12 +15,11 @@ public class VariableTableModelTest {
     @Test
     public void testCtor() {
         LocalVariableTableModel obj = new LocalVariableTableModel(null);
-        Assert.assertNotNull(obj);
+        Assertions.assertNotNull(obj);
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() throws IOException {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
@@ -32,7 +28,7 @@ public class VariableTableModelTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

@@ -1,5 +1,9 @@
 package jmri.jmrit.logixng;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -7,10 +11,9 @@ import java.util.Map;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test Category
@@ -20,19 +23,11 @@ import org.junit.Test;
 public class TableTest {
 
     private void expectException(Runnable r, Class<? extends Exception> exceptionClass, String errorMessage) {
-        boolean exceptionThrown = false;
-        try {
-            r.run();
-        } catch (Exception e) {
-            Assert.assertTrue("Exception is correct", e.getClass() == exceptionClass);
-            Assert.assertEquals("Exception message is correct", errorMessage, e.getMessage());
-            exceptionThrown = true;
-        }
-        Assert.assertTrue("Exception is thrown", exceptionThrown);
+        Exception e = assertThrowsExactly( exceptionClass, () -> r.run(), "Exception is thrown");
+        assertEquals( errorMessage, e.getMessage(), "Exception message is correct");
     }
 
     @Test
-//    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
     public void testExceptions() {
         Table t = new MyTable();
 
@@ -57,22 +52,21 @@ public class TableTest {
     public void testTable() {
         Table t = new MyTable();
 
-        Assert.assertTrue("Item is null", null == t.getCell("Second row", "Seventh column"));
+        assertNull( t.getCell("Second row", "Seventh column"), "Item is null");
 
         t.setCell("Hello", "Third row");
-        Assert.assertTrue("Item has correct value", "Hello" == t.getCell("Third row"));
-        Assert.assertTrue("Item has correct value", "Hello" == t.getCell("Third row", "First column"));
+        assertEquals( "Hello", t.getCell("Third row"), "Item has correct value");
+        assertEquals( "Hello", t.getCell("Third row", "First column"), "Item has correct value");
 
         t.setCell("Hello again", "Second row", "Seventh column");
-        Assert.assertTrue("Item has correct value", "Hello again" == t.getCell("Second row", "Seventh column"));
+        assertEquals( "Hello again", t.getCell("Second row", "Seventh column"), "Item has correct value");
 
         Integer i = 15;
         t.setCell(i, "Second row", "Seventh column");
-        Assert.assertTrue("Item has correct value", t.getCell("Second row", "Seventh column").equals(15));
+        assertEquals( 15, t.getCell("Second row", "Seventh column"), "Item has correct value");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -81,7 +75,7 @@ public class TableTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
@@ -97,7 +91,7 @@ public class TableTest {
         private final Map<String, Integer> rowHeaders = new HashMap<>();
         private final Map<String, Integer> columnHeaders = new HashMap<>();
 
-        public MyTable() {
+        MyTable() {
             _data[1][0] = "First row";
             _data[2][0] = "Second row";
             _data[3][0] = "Third row";
