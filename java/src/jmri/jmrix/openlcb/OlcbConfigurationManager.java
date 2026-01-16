@@ -628,7 +628,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 return;
             }
     
-            long pid = getProcessId(1);
+            long pid = getProcessId();
             log.trace("Process ID: {}", pid);
     
             // get first network interface internet address
@@ -675,7 +675,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
     private static final Random RANDOM = new Random();
     
-    protected long getProcessId(final long fallback) {
+    protected long getProcessId() {
         try {
             // using Java 9's ProcessHandle, this is much simpler and more reliable
             // than the previous approach of parsing the RuntimeMXBean
