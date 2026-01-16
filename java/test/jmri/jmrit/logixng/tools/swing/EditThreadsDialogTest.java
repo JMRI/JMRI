@@ -5,10 +5,7 @@ import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test EditThreadsDialog
@@ -23,16 +20,15 @@ public class EditThreadsDialogTest {
                 .createLogixNG("A logixNG with an empty conditionlNG");
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, null);
         EditThreadsDialog t = new EditThreadsDialog(conditionalNG);
-        Assert.assertNotNull("not null", t);
+        Assertions.assertNotNull( t, "not null");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();

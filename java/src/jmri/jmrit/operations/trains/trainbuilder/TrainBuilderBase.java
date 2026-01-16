@@ -1957,7 +1957,7 @@ public class TrainBuilderBase extends TrainCommon {
         }
         // In normal mode, find a completely empty track. In aggressive mode, a
         // track that scheduled to depart is okay
-        if (((!Setup.isBuildAggressive() || !Setup.isStagingTrackImmediatelyAvail()) &&
+        if (((!Setup.isBuildAggressive() || !Setup.isStagingTrackImmediatelyAvail() || terminateStageTrack.isQuickServiceEnabled()) &&
                 terminateStageTrack.getNumberRS() != 0) ||
                 (terminateStageTrack.getNumberRS() != terminateStageTrack.getPickupRS()) &&
                         terminateStageTrack.getNumberRS() != 0) {

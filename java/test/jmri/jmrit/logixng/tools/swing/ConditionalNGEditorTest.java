@@ -1,17 +1,12 @@
 package jmri.jmrit.logixng.tools.swing;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test ConditionalNGEditor
@@ -21,18 +16,17 @@ import org.junit.Test;
 public class ConditionalNGEditorTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         jmri.jmrit.logixng.LogixNG logixNG = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
                 .createLogixNG("A logixNG with an empty conditionlNG");
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, null);
         ConditionalNGEditor editor = new ConditionalNGEditor(conditionalNG);
-        Assert.assertNotNull("object not null", editor);
+        Assertions.assertNotNull( editor, "object not null");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -43,7 +37,7 @@ public class ConditionalNGEditorTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
