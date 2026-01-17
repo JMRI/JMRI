@@ -500,15 +500,12 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
      *         built.
      */
     public Train getLastTrainBuiltByDepartureTime() {
-        Train train = null;
-        int departure_minutes = 0;
-        for (Train t : getTrainsByTimeList()) {
-            if (t.isBuilt() && t.getDepartTimeMinutes() > departure_minutes) {
-                departure_minutes = t.getDepartTimeMinutes();
-                train = t;
+        for (Train train : getTrainsByReverseTimeList()) {
+            if (train.isBuilt() && train.getDepartTimeMinutes() > 0) {
+                return train;
             }
         }
-        return train;
+        return null;
     }
 
     /**
@@ -598,6 +595,12 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
      */
     public List<Train> getTrainsByTimeList() {
         return getTrainsByIntList(getTrainsByNameList(), GET_TRAIN_TIME);
+    }
+    
+    public List<Train> getTrainsByReverseTimeList() {
+        List<Train> out = getTrainsByTimeList();
+        Collections.reverse(out);
+        return out;
     }
 
     /**
@@ -1151,6 +1154,18 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
             }
         }
         return true;
+    }
+    
+    public void resetTrains() {
+        int response = JmriJOptionPane.showConfirmDialog(null,
+                Bundle.getMessage("ConfirmReset"),
+                Bundle.getMessage("ConfirmReset"),
+                JmriJOptionPane.YES_NO_OPTION);
+        if (response == JmriJOptionPane.YES_OPTION) {
+            for (Train train : getTrainsByReverseTimeList()) {
+                train.reset();
+            }
+        }
     }
 
     public void resetBuildFailedTrains() {

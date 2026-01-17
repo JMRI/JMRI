@@ -144,7 +144,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         // load departure track if staging
         Track departStageTrack = null;
         if (rl == _train.getTrainDepartsRouteLocation()) {
-            departStageTrack = _departStageTrack; // get departure track from
+            departStageTrack = getDepartureStagingTrack(); // get departure track from
                                                   // staging, could be null
         }
 
@@ -799,16 +799,16 @@ public class TrainBuilderEngines extends TrainBuilderBase {
      */
     protected boolean setEngineDestination(Engine engine, RouteLocation rl, RouteLocation rld) {
         // engine to staging?
-        if (rld == _train.getTrainTerminatesRouteLocation() && _terminateStageTrack != null) {
-            String status = engine.checkDestination(_terminateStageTrack.getLocation(), _terminateStageTrack);
+        if (rld == _train.getTrainTerminatesRouteLocation() && getTerminateStagingTrack() != null) {
+            String status = engine.checkDestination(getTerminateStagingTrack().getLocation(), getTerminateStagingTrack());
             if (status.equals(Track.OKAY)) {
-                addEngineToTrain(engine, rl, rld, _terminateStageTrack);
+                addEngineToTrain(engine, rl, rld, getTerminateStagingTrack());
                 return true; // done
             } else {
                 addLine(_buildReport, SEVEN,
                         Bundle.getMessage("buildCanNotDropEngineToTrack", engine.toString(),
-                                _terminateStageTrack.getTrackTypeName(),
-                                _terminateStageTrack.getLocation().getName(), _terminateStageTrack.getName(), status));
+                                getTerminateStagingTrack().getTrackTypeName(),
+                                getTerminateStagingTrack().getLocation().getName(), getTerminateStagingTrack().getName(), status));
             }
         } else {
             // find a destination track for this engine

@@ -144,52 +144,52 @@ public class TrainBuilder extends TrainBuilderCars {
     /**
      * Figures out if the train terminates into staging, and if true, sets the
      * termination track. Note if the train is returning back to the same track
-     * in staging _terminateStageTrack is null, and is loaded later when the
+     * in staging getTerminateStagingTrack() is null, and is loaded later when the
      * departure track is determined.
      * 
      * @throws BuildFailedException if staging track can't be found
      */
     private void determineIfTrainTerminatesIntoStaging() throws BuildFailedException {
         // does train terminate into staging?
-        _terminateStageTrack = null;
-        List<Track> stagingTracksTerminate = _terminateLocation.getTracksByMoves(Track.STAGING);
+        setTerminateStagingTrack(null);
+        List<Track> stagingTracksTerminate = getTerminateLocation().getTracksByMoves(Track.STAGING);
         if (stagingTracksTerminate.size() > 0) {
             addLine(_buildReport, THREE, BLANK_LINE);
-            addLine(_buildReport, ONE, Bundle.getMessage("buildTerminateStaging", _terminateLocation.getName(),
+            addLine(_buildReport, ONE, Bundle.getMessage("buildTerminateStaging", getTerminateLocation().getName(),
                     Integer.toString(stagingTracksTerminate.size())));
             if (stagingTracksTerminate.size() > 1 && Setup.isStagingPromptToEnabled()) {
-                _terminateStageTrack = promptToStagingDialog();
+                setTerminateStagingTrack(promptToStagingDialog());
                 _startTime = new Date(); // reset build time since user can take
                                          // awhile to pick
             } else {
                 // is this train returning to the same staging in aggressive
                 // mode?
-                if (_departLocation == _terminateLocation &&
+                if (getDepartureLocation() == getTerminateLocation() &&
                         Setup.isBuildAggressive() &&
                         Setup.isStagingTrackImmediatelyAvail()) {
-                    addLine(_buildReport, ONE, Bundle.getMessage("buildStagingReturn", _terminateLocation.getName()));
+                    addLine(_buildReport, ONE, Bundle.getMessage("buildStagingReturn", getTerminateLocation().getName()));
                 } else {
                     for (Track track : stagingTracksTerminate) {
                         if (checkTerminateStagingTrack(track)) {
-                            _terminateStageTrack = track;
+                            setTerminateStagingTrack(track);
                             addLine(_buildReport, ONE, Bundle.getMessage("buildStagingAvail",
-                                    _terminateStageTrack.getName(), _terminateLocation.getName()));
+                                    getTerminateStagingTrack().getName(), getTerminateLocation().getName()));
                             break;
                         }
                     }
                 }
             }
-            if (_terminateStageTrack == null) {
+            if (getTerminateStagingTrack() == null) {
                 // is this train returning to the same staging in aggressive
                 // mode?
-                if (_departLocation == _terminateLocation &&
+                if (getDepartureLocation() == getTerminateLocation() &&
                         Setup.isBuildAggressive() &&
                         Setup.isStagingTrackImmediatelyAvail()) {
                     log.debug("Train is returning to same track in staging");
                 } else {
                     addLine(_buildReport, ONE, Bundle.getMessage("buildErrorStagingFullNote"));
                     throw new BuildFailedException(
-                            Bundle.getMessage("buildErrorStagingFull", _terminateLocation.getName()));
+                            Bundle.getMessage("buildErrorStagingFull", getTerminateLocation().getName()));
                 }
             }
         }
@@ -216,18 +216,18 @@ public class TrainBuilder extends TrainBuilderCars {
         }
 
         // determine if train is departing staging
-        List<Track> stagingTracks = _departLocation.getTracksByMoves(Track.STAGING);
+        List<Track> stagingTracks = getDepartureLocation().getTracksByMoves(Track.STAGING);
         if (stagingTracks.size() > 0) {
             addLine(_buildReport, THREE, BLANK_LINE);
-            addLine(_buildReport, ONE, Bundle.getMessage("buildDepartStaging", _departLocation.getName(),
+            addLine(_buildReport, ONE, Bundle.getMessage("buildDepartStaging", getDepartureLocation().getName(),
                     Integer.toString(stagingTracks.size())));
             if (stagingTracks.size() > 1 && Setup.isStagingPromptFromEnabled()) {
-                setDepartureTrack(promptFromStagingDialog());
+                setDepartureStagingTrack(promptFromStagingDialog());
                 _startTime = new Date(); // restart build timer
-                if (_departStageTrack == null) {
+                if (getDepartureStagingTrack() == null) {
                     showTrainRequirements();
                     throw new BuildFailedException(
-                            Bundle.getMessage("buildErrorStagingEmpty", _departLocation.getName()));
+                            Bundle.getMessage("buildErrorStagingEmpty", getDepartureLocation().getName()));
                 }
             } else {
                 for (Track track : stagingTracks) {
@@ -237,23 +237,23 @@ public class TrainBuilder extends TrainBuilderCars {
                                 Bundle.getMessage("buildStagingTrackRestriction", track.getName(), _train.getName()));
                         continue;
                     }
-                    setDepartureTrack(track);
+                    setDepartureStagingTrack(track);
                     // try each departure track for the required engines
                     if (getEngines(_train.getNumberEngines(), _train.getEngineModel(), _train.getEngineRoad(),
                             _train.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
                         addLine(_buildReport, SEVEN, Bundle.getMessage("buildDoneAssignEnginesStaging"));
                         break; // done!
                     }
-                    setDepartureTrack(null);
+                    setDepartureStagingTrack(null);
                 }
             }
-            if (_departStageTrack == null) {
+            if (getDepartureStagingTrack() == null) {
                 showTrainRequirements();
-                throw new BuildFailedException(Bundle.getMessage("buildErrorStagingEmpty", _departLocation.getName()));
+                throw new BuildFailedException(Bundle.getMessage("buildErrorStagingEmpty", getDepartureLocation().getName()));
             }
         }
-        _train.setTerminationTrack(_terminateStageTrack);
-        _train.setDepartureTrack(_departStageTrack);
+        _train.setTerminationTrack(getTerminateStagingTrack());
+        _train.setDepartureTrack(getDepartureStagingTrack());
     }
 
     /**
@@ -344,8 +344,8 @@ public class TrainBuilder extends TrainBuilderCars {
             _train.setStatusCode(Train.CODE_BUILDING);
             _train.setLeadEngine(null);
             // using the same departure and termination tracks
-            _train.setDepartureTrack(_departStageTrack);
-            _train.setTerminationTrack(_terminateStageTrack);
+            _train.setDepartureTrack(getDepartureStagingTrack());
+            _train.setTerminationTrack(getTerminateStagingTrack());
             showAndInitializeTrainRoute();
             getAndRemoveEnginesFromList();
             addEnginesToTrain();

@@ -497,6 +497,7 @@
             <li>Added new dialog message to the Trains window confirming termination of built trains.</li>
             <li>Fix a bug that would crash the Train and Route windows if there were departure times in the train's route.</li>
             <li>Improvements to staging tracks when using the new on time mode.</li>
+            <li>Added a "Reset All Trains" button to the Trains window.</li>
         </ul>
 
    <h3>Panel Editor</h3>
