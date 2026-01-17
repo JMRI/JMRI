@@ -35,7 +35,7 @@ import jmri.util.swing.JmriJOptionPane;
  * Represents a train on the layout
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
- *         2014, 2015
+ *         2014, 2015, 2026
  * @author Rodney Black Copyright (C) 2011
  */
 public class Train extends PropertyChangeSupport implements Identifiable, PropertyChangeListener {
@@ -165,6 +165,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public static final String TRAIN_EN_ROUTE = Bundle.getMessage("TrainEnRoute");
     public static final String TERMINATED = Bundle.getMessage("Terminated");
     public static final String MANIFEST_MODIFIED = Bundle.getMessage("Modified");
+    public static final String ERROR = Bundle.getMessage("ErrorTitle");
 
     // Train status codes
     public static final int CODE_TRAIN_RESET = 0;
@@ -176,6 +177,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public static final int CODE_TRAIN_EN_ROUTE = CODE_BUILT + 0x08;
     public static final int CODE_TERMINATED = 0x80;
     public static final int CODE_MANIFEST_MODIFIED = 0x200;
+    public static final int CODE_ERROR = 0x400;
     public static final int CODE_UNKNOWN = 0xFFFF;
 
     // train requirements
@@ -909,6 +911,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 return TRAIN_RESET;
             case CODE_MANIFEST_MODIFIED:
                 return MANIFEST_MODIFIED;
+            case CODE_ERROR:
+                return ERROR;
             case CODE_UNKNOWN:
             default:
                 return UNKNOWN;
@@ -3169,6 +3173,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public synchronized boolean build() {
         TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
         if (!trainManager.checkBuildOrder(this)) {
+            setStatusCode(CODE_ERROR);
             return false;
         }
         reset();

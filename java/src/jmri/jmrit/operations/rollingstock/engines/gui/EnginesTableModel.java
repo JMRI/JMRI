@@ -178,7 +178,7 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
             case SORTBY_COMMENT:
                 return Bundle.getMessage("Comment");
             default:
-                return "Error"; // NOI18N
+                return Bundle.getMessage("ErrorTitle"); // NOI18N
         }
     }
 
