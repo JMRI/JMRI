@@ -1074,8 +1074,9 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
                                     t.getName(), t.getDepartureTime()),
                             Bundle.getMessage("TrainBuildTime"), JmriJOptionPane.ERROR_MESSAGE);
                 } else {
-                    log.error(Bundle.getMessage("TrainBuildTimeError", train.getName(), train.getDepartureTime(),
-                            t.getName(), t.getDepartureTime()));
+                    String msg = Bundle.getMessage("TrainBuildTimeError", train.getName(), train.getDepartureTime(),
+                            t.getName(), t.getDepartureTime());
+                    log.error(msg);
                 }
                 return false;
             }
