@@ -83,7 +83,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     protected String _engineRoad = NONE; // required road name for engines assigned to this train
     protected String _engineModel = NONE; // required model of engines assigned to this train
     protected String _cabooseRoad = NONE; // required road name for cabooses assigned to this train
-    protected String _departureTime = "00:00:00"; // departure time day:hour:minutes 
+    protected String _departureTime = "0:00:00"; // departure time day:hour:minutes 
     protected String _leadEngineId = NONE; // lead engine for train icon info
     protected String _builtStartYear = NONE; // built start year
     protected String _builtEndYear = NONE; // built end year
@@ -3167,10 +3167,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return True if build successful.
      */
     public synchronized boolean build() {
+        TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+        if (!trainManager.checkBuildOrder(this)) {
+            return false;
+        }
         reset();
         // check to see if any other trains are building
         int count = 1200; // wait up to 120 seconds
-        while (InstanceManager.getDefault(TrainManager.class).isAnyTrainBuilding() && count > 0) {
+        while (trainManager.isAnyTrainBuilding() && count > 0) {
             count--;
             try {
                 wait(100); // 100 msec
