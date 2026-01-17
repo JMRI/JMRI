@@ -1064,6 +1064,8 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
      * @param train the train wanting to be built
      * @return true if okay to build train
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of warning message")
     public boolean checkBuildOrder(Train train) {
         if (Setup.isBuildOnTime()) {
             Train t = getLastTrainBuiltByDepartureTime();
@@ -1074,9 +1076,8 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
                                     t.getName(), t.getDepartureTime()),
                             Bundle.getMessage("TrainBuildTime"), JmriJOptionPane.ERROR_MESSAGE);
                 } else {
-                    String msg = Bundle.getMessage("TrainBuildTimeError", train.getName(), train.getDepartureTime(),
-                            t.getName(), t.getDepartureTime());
-                    log.error(msg);
+                    log.error(Bundle.getMessage("TrainBuildTimeError", train.getName(), train.getDepartureTime(),
+                            t.getName(), t.getDepartureTime()));
                 }
                 return false;
             }
