@@ -1,5 +1,9 @@
 package jmri.jmrit.roster;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 
 import jmri.util.JUnitUtil;
@@ -12,7 +16,7 @@ import jmri.ThrottleManager;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedSetting;
 import jmri.util.JUnitAppender;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -21,28 +25,26 @@ import org.junit.jupiter.api.*;
  */
 public class RosterSpeedProfileTest {
 
-    private boolean throttleResult;
-    private DccThrottle throttle;
+    private static final float GLOBAL_TOTAL_DISTANCE_TOLERANCE = 2.0f;
 
-    private float globalTotalDistanceTolerance = 2.0f;
+    private static class ThrottleListen implements ThrottleListener {
 
-    private class ThrottleListen implements ThrottleListener {
+        DccThrottle throttle;
 
         @Override
         public void notifyThrottleFound(DccThrottle t){
-            throttleResult = true;
             throttle = t;
         }
 
         @Override
         public void notifyFailedThrottleRequest(LocoAddress address, String reason){
-            throttleResult = false;
+            throttle = null;
         }
 
         @Override
         public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
             if ( question == DecisionType.STEAL ){
-                throttleResult = false;
+                throttle = null;
             }
         }
     }
@@ -50,7 +52,7 @@ public class RosterSpeedProfileTest {
     @Test
     public void testCTor() {
         RosterSpeedProfile t = new RosterSpeedProfile(new RosterEntry());
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     private static org.jdom2.Element getLocoElement100() {
@@ -95,7 +97,8 @@ public class RosterSpeedProfileTest {
         sp.setTestMode(true);
         sp.setExtraInitialDelay(0f);
         sp.setMinMaxLimits(minSpeed, maxSpeed);
-        sp.changeLocoSpeed(throttle, testDistance, newSpeed);
+        // assertNotNull(throttle);
+        sp.changeLocoSpeed(inThrottle, testDistance, newSpeed);
         ReturnValues returnValues = new ReturnValues();
         returnValues.totalDistance = 0.0f;
         returnValues.numberOfElements = sp.getSpeedStepTrace().size();
@@ -103,13 +106,13 @@ public class RosterSpeedProfileTest {
             returnValues.totalDistance += (ss.getDuration() / 1000.0f) * (ss.getSpeedStep() * mmFactor);
             returnValues.finalSpeed = ss.getSpeedStep();
         }
-        returnValues.throttleSpeedSetting = throttle.getSpeedSetting();
+        returnValues.throttleSpeedSetting = inThrottle.getSpeedSetting();
         sp.cancelSpeedChange();
 
         return returnValues;
     }
 
-    public ReturnValuesFromAct testSpeedStep(SpeedStepMode stm,
+    ReturnValuesFromAct testSpeedStep(SpeedStepMode stm,
             long fromDistanceMm, long toDistanceMm, long byDistanceMm,
             float fromSpeedStep, float bySpeedStep,    // limit for speed step is max throttle step
             float fromSpeed, float toSpeed, float bySpeed,
@@ -117,7 +120,7 @@ public class RosterSpeedProfileTest {
             float fromMax_IsMinPlus, float toMax, float byMax,
             org.jdom2.Element speedCurve) {
         ReturnValuesFromAct resultSummary = new ReturnValuesFromAct();
-        long stmLimit = 0;
+        long stmLimit;
         // statics for test objects
         RosterEntry rF1 = new RosterEntry(speedCurve) {
             @Override
@@ -125,11 +128,9 @@ public class RosterSpeedProfileTest {
             }
         };
 
-        ThrottleListener throtListen = new ThrottleListen();
+        ThrottleListen throtListen = new ThrottleListen();
         ThrottleManager tm = InstanceManager.getDefault(ThrottleManager.class);
-        if ( ! tm.requestThrottle(rF1, throtListen, throttleResult) ) {
-            return null;
-        }
+        assertTrue( tm.requestThrottle(rF1, throtListen, false) );
         stmLimit = stm.numSteps;
         resultSummary.testTotalCount = 0;
         for (float testDistance = fromDistanceMm; testDistance <= toDistanceMm; testDistance += byDistanceMm) {
@@ -146,8 +147,8 @@ public class RosterSpeedProfileTest {
                                     testDistance, // distance
                                     minPercentSpeed, // minSpeed
                                     maxPercentSpeed, // max speed
-                                    stm,
-                                    throttle// stepmode
+                                    stm, // stepmode
+                                    throtListen.throttle
                             );
                             resultSummary.testTotalCount++;
                             long ix = Math.round(
@@ -178,7 +179,7 @@ public class RosterSpeedProfileTest {
                                 resultSummary.lengthError[0] += 1;
                                 // speed test will have always failed so dont add.
                             } else if ((Math.abs(testDistance - returnValues.totalDistance) /
-                                    testDistance) < globalTotalDistanceTolerance) {
+                                    testDistance) < GLOBAL_TOTAL_DISTANCE_TOLERANCE) {
                                 // within tolerance
                                 resultSummary.passedTests++;
                                 resultSummary.lengthError[(int) ix] += 1;
@@ -195,7 +196,7 @@ public class RosterSpeedProfileTest {
 //                                            returnValues.throttleSpeedSetting);
                                 resultSummary.lengthError[(int) ix] += 1;
                             }
-                            returnValues = null;
+                            // unused returnValues = null;
                         }
                     }
                 }
@@ -214,11 +215,8 @@ public class RosterSpeedProfileTest {
                 0.0f, 0.3f, 0.6f, // min speeds
                 0.10f, 1.0f, 0.10f,
                 getLocoElement100());
-        String msg = stm.name + " Tests [" + resultSummary.testTotalCount
-                + "] run. Length Failed [" + resultSummary.failedTests
-                + "] Final Speed errors [" + + resultSummary.failedTestEndSpeed + "]";
-        Assertions.assertEquals(0, resultSummary.failedTests, msg);
-        Assertions.assertEquals(0, resultSummary.failedTestEndSpeed,msg);
+        assertEquals(0, resultSummary.failedTests, () -> getResultString( stm, resultSummary));
+        assertEquals(0, resultSummary.failedTestEndSpeed,() -> getResultString( stm, resultSummary));
     }
 
     @Test
@@ -231,11 +229,8 @@ public class RosterSpeedProfileTest {
                 0.0f, 0.3f, 0.6f, // min speeds
                 0.10f, 1.0f, 0.10f,
                 getLocoElement100());
-        String msg = stm.name + " Tests [" + resultSummary.testTotalCount
-                + "] run. Length Failed [" + resultSummary.failedTests
-                + "] Final Speed errors [" + + resultSummary.failedTestEndSpeed + "]";
-        Assertions.assertEquals(0, resultSummary.failedTests, msg);
-        Assertions.assertEquals(0, resultSummary.failedTestEndSpeed,msg);
+        assertEquals(0, resultSummary.failedTests, () -> getResultString( stm, resultSummary));
+        assertEquals(0, resultSummary.failedTestEndSpeed,() -> getResultString( stm, resultSummary));
     }
 
     @Test
@@ -248,11 +243,8 @@ public class RosterSpeedProfileTest {
                 0.0f, 0.3f, 0.6f, // min speeds
                 0.10f, 1.0f, 0.10f,
                 getLocoElement100());
-        String msg = stm.name + " Tests [" + resultSummary.testTotalCount
-                + "] run. Length Failed [" + resultSummary.failedTests
-                + "] Final Speed errors [" + + resultSummary.failedTestEndSpeed + "]";
-        Assertions.assertEquals(0, resultSummary.failedTests, msg);
-        Assertions.assertEquals(0, resultSummary.failedTestEndSpeed,msg);
+        assertEquals(0, resultSummary.failedTests, () -> getResultString( stm, resultSummary));
+        assertEquals(0, resultSummary.failedTestEndSpeed,() -> getResultString( stm, resultSummary));
     }
 
     @Test
@@ -265,15 +257,21 @@ public class RosterSpeedProfileTest {
                 0.0f, 0.3f, 0.6f, // min speeds
                 0.10f, 1.0f, 0.10f,
                 getLocoElement100());
-        String msg = stm.name + " Tests [" + resultSummary.testTotalCount
-                + "] run. Length Failed [" + resultSummary.failedTests
-                + "] Final Speed errors [" + + resultSummary.failedTestEndSpeed + "]";
-        Assertions.assertEquals(0, resultSummary.failedTests, msg);
-        Assertions.assertEquals(0, resultSummary.failedTestEndSpeed,msg);
+        
+        assertEquals(0, resultSummary.failedTests, () -> getResultString( stm, resultSummary));
+        assertEquals(0, resultSummary.failedTestEndSpeed, () -> getResultString( stm, resultSummary));
+    }
+
+    private String getResultString(SpeedStepMode stm, ReturnValuesFromAct resultSummary) {
+        return stm.name + " Tests [" + resultSummary.testTotalCount
+            + "] run. Length Failed [" + resultSummary.failedTests
+            + "] Final Speed errors [" + + resultSummary.failedTestEndSpeed + "]"
+            + " Zero:" + resultSummary.zeroTests
+            + " Passed:" + resultSummary.passedTests;
     }
 
     @Test
-    public void testSpeedProfileFromFiftyPercentToTwentyShortBlock() throws Exception {
+    public void testSpeedProfileFromFiftyPercentToTwentyShortBlock() {
         // statics for test objects
         org.jdom2.Element f1 = getLocoElement400();
         RosterEntry rF1 = new RosterEntry(f1) {
@@ -281,11 +279,12 @@ public class RosterSpeedProfileTest {
             protected void warnShortLong(String s) {
             }
         };
-        ThrottleListener throtListen = new ThrottleListen();
+        ThrottleListen throtListen = new ThrottleListen();
         ThrottleManager tm = InstanceManager.getDefault(ThrottleManager.class);
-        boolean OK = tm.requestThrottle(rF1, throtListen, throttleResult);
-        Assert.assertTrue("Throttle request denied",OK);
-        JUnitUtil.waitFor(()-> (throttleResult), "Got No throttle");
+        assertTrue( tm.requestThrottle(rF1, throtListen, false), "Throttle request denied");
+        JUnitUtil.waitFor(()-> ( throtListen.throttle != null), "Got No throttle");
+        DccThrottle throttle = throtListen.throttle;
+        assertNotNull(throttle);
         throttle.setIsForward(true);
         throttle.setSpeedSetting(0.6f);
         RosterSpeedProfile sp = rF1.getSpeedProfile();
@@ -295,11 +294,12 @@ public class RosterSpeedProfileTest {
         // Allow speed step table to be constructed
         //JUnitUtil.waitFor(3000);
         // Note it must be a perfect 0.20
-        JUnitUtil.waitFor(()->(throttle.getSpeedSetting() == 0.20f),"Failed to reach requested speed");
+        JUnitUtil.waitFor(()-> Float.compare(throttle.getSpeedSetting(), 0.20f)==0,
+            "Failed to reach requested speed");
 
         JUnitAppender.assertWarnMessageStartsWith("There is insufficient distance");
         // as the calc goes wrong we immediately set speed to final speed. The entries are rubbish so dont bother checking
-        Assert.assertEquals("SpeedStep Table has incorrect number of entries.", 0, sp.getSpeedStepTrace().size() ) ;
+        assertEquals( 0, sp.getSpeedStepTrace().size(), "SpeedStep Table has incorrect number of entries.");
 
         sp.cancelSpeedChange();
     }
@@ -345,16 +345,16 @@ public class RosterSpeedProfileTest {
 
         SignalSpeedMap ssm = InstanceManager.getDefault(SignalSpeedMap.class);
         setSpeedInterpretation(ssm, SignalSpeedMap.PERCENT_NORMAL);
-        Assertions.assertEquals("0.50 millimeters/sec",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f));
+        assertEquals("0.50 millimeters/sec",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f));
 
         setSpeedInterpretation(ssm, SignalSpeedMap.PERCENT_THROTTLE);
-        Assertions.assertEquals("0.50 millimeters/sec",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f));
+        assertEquals("0.50 millimeters/sec",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f));
 
         setSpeedInterpretation(ssm, SignalSpeedMap.SPEED_KMPH);
-        Assertions.assertEquals("0.16 Kilometers/Hour",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f));
+        assertEquals("0.16 Kilometers/Hour",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f));
 
         setSpeedInterpretation(ssm, SignalSpeedMap.SPEED_MPH);
-        Assertions.assertEquals("0.10 Miles/Hour",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f));
+        assertEquals("0.10 Miles/Hour",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f));
 
     }
 
@@ -416,23 +416,24 @@ public class RosterSpeedProfileTest {
         JUnitUtil.tearDown();
     }
 
-    class ReturnValues {
+    private static class ReturnValues {
         // return values from an individual scene
-        public float totalDistance;
-        public float finalSpeed;
-        public int numberOfElements;
-        public float throttleSpeedSetting;
+        float totalDistance;
+        float finalSpeed;
+        int numberOfElements;
+        float throttleSpeedSetting;
         ReturnValues() {
             totalDistance = 0.0f;
             finalSpeed = 0.0f;
             numberOfElements = 0;
             throttleSpeedSetting = 0.0f;
         }
-        ReturnValues(float totalDistance, float finalSpeed, int numberOfElements) {
-            this.totalDistance = totalDistance;
-            this.finalSpeed = finalSpeed;
-            this.numberOfElements = numberOfElements;
-        }
+        // Unused Ctor
+        //ReturnValues(float totalDistance, float finalSpeed, int numberOfElements) {
+        //    this.totalDistance = totalDistance;
+        //    this.finalSpeed = finalSpeed;
+        //    this.numberOfElements = numberOfElements;
+        //}
         @Override
         public String toString() {
             return Float.toString(totalDistance)
@@ -442,15 +443,15 @@ public class RosterSpeedProfileTest {
         }
     }
 
-    class ReturnValuesFromAct {
+    private static class ReturnValuesFromAct {
         // return values from a collection of scenes
-        public long passedTests;
-        public long failedTests;
-        public long zeroTests;
-        public float finalSpeed;
-        public long[] lengthError = new long[102];
-        public long failedTestEndSpeed;
-        public long testTotalCount;
+        long passedTests;
+        long failedTests;
+        long zeroTests;
+        //float finalSpeed;
+        long[] lengthError = new long[102];
+        long failedTestEndSpeed;
+        long testTotalCount;
     }
 
 }
