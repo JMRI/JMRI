@@ -229,7 +229,7 @@ public class PortalEditFrame extends JmriJFrame {
                 _portal.setToBlock(block, true);
             }
         } catch (IllegalArgumentException ex) {
-            jmri.util.swing.JmriJOptionPane.showMessageDialog(null, ex.getMessage(),
+            jmri.util.swing.JmriJOptionPane.showMessageDialog( fromBlockComboBox, ex.getMessage(),
                 Bundle.getMessage("PortalCreateErrorTitle"), jmri.util.swing.JmriJOptionPane.ERROR_MESSAGE);
             status(Bundle.getMessage("AddPortalFailed", user), true);
             return;
