@@ -372,7 +372,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             _track.setReservationFactor(Integer.parseInt(factorTextField.getText()));
         } else {
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("FactorMustBeNumber"),
-                    Bundle.getMessage("ErrorFactor"), JmriJOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
         }
     }
 

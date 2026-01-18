@@ -81,7 +81,7 @@ public class DownCounterAction extends Action implements PropertyChangeListener 
             getAutomationItem().addPropertyChangeListener(this);
         }
         if (getCount() < 0) {
-            return (Bundle.getMessage("Error"));
+            return (Bundle.getMessage("ErrorTitle"));
         }
         return Integer.toString(getCount());
     }

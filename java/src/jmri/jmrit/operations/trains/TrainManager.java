@@ -500,15 +500,12 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
      *         built.
      */
     public Train getLastTrainBuiltByDepartureTime() {
-        Train train = null;
-        int departure_minutes = 0;
-        for (Train t : getTrainsByTimeList()) {
-            if (t.isBuilt() && t.getDepartTimeMinutes() > departure_minutes) {
-                departure_minutes = t.getDepartTimeMinutes();
-                train = t;
+        for (Train train : getTrainsByReverseTimeList()) {
+            if (train.isBuilt() && train.getDepartTimeMinutes() > 0) {
+                return train;
             }
         }
-        return train;
+        return null;
     }
 
     /**
@@ -598,6 +595,12 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
      */
     public List<Train> getTrainsByTimeList() {
         return getTrainsByIntList(getTrainsByNameList(), GET_TRAIN_TIME);
+    }
+
+    public List<Train> getTrainsByReverseTimeList() {
+        List<Train> out = getTrainsByTimeList();
+        Collections.reverse(out);
+        return out;
     }
 
     /**
@@ -1035,9 +1038,6 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
             @Override
             public void run() {
                 for (Train train : trains) {
-                    if (train.isBuildEnabled() && !checkBuildOrder(train)) {
-                        break;
-                    }
                     if (train.buildIfSelected()) {
                         continue;
                     }
@@ -1056,22 +1056,29 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         build.setName("Build Trains"); // NOI18N
         build.start();
     }
-    
+
     /**
-     * Checks to see if using on time mode and the train to be built has a
-     * departure time after all of the other built trains.
+     * Checks to see if using on time build mode and the train to be built has a
+     * departure time equal to or after all of the other built trains.
      * 
      * @param train the train wanting to be built
      * @return true if okay to build train
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of warning message")
     public boolean checkBuildOrder(Train train) {
         if (Setup.isBuildOnTime()) {
             Train t = getLastTrainBuiltByDepartureTime();
             if (t != null && train.getDepartTimeMinutes() < t.getDepartTimeMinutes()) {
-                JmriJOptionPane.showMessageDialog(null,
-                        Bundle.getMessage("TrainBuildTimeError",
-                                train.getName(), train.getDepartureTime(), t.getName(), t.getDepartureTime()),
-                        Bundle.getMessage("TrainBuildTime"), JmriJOptionPane.ERROR_MESSAGE);
+                if (isBuildMessagesEnabled()) {
+                    JmriJOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("TrainBuildTimeError", train.getName(), train.getDepartureTime(),
+                                    t.getName(), t.getDepartureTime()),
+                            Bundle.getMessage("TrainBuildTime"), JmriJOptionPane.ERROR_MESSAGE);
+                } else {
+                    log.error(Bundle.getMessage("TrainBuildTimeError", train.getName(), train.getDepartureTime(),
+                            t.getName(), t.getDepartureTime()));
+                }
                 return false;
             }
         }
@@ -1151,6 +1158,18 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
             }
         }
         return true;
+    }
+
+    public void resetTrains() {
+        int response = JmriJOptionPane.showConfirmDialog(null,
+                Bundle.getMessage("ConfirmReset"),
+                Bundle.getMessage("ConfirmReset"),
+                JmriJOptionPane.YES_NO_OPTION);
+        if (response == JmriJOptionPane.YES_OPTION) {
+            for (Train train : getTrainsByReverseTimeList()) {
+                train.reset();
+            }
+        }
     }
 
     public void resetBuildFailedTrains() {
