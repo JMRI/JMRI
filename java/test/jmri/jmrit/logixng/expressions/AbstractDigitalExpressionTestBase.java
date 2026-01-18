@@ -1,78 +1,81 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.Locale;
 
-import org.junit.Assert;
-import org.junit.Test;
-
+import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.implementation.DefaultMaleDigitalExpressionSocket.DigitalExpressionDebugConfig;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Base class for classes that tests DigitalAction
  */
 public abstract class AbstractDigitalExpressionTestBase extends AbstractBaseTestBase {
 
-    public abstract NamedBean createNewBean(String systemName) throws Exception;
-    
+    public abstract NamedBean createNewBean(String systemName);
+
     @Test
-    public void testBadSystemName() throws Exception {
-        boolean hasThrown = false;
-        try {
+    public void testBadSystemName() {
+
+        IllegalArgumentException e = assertThrows( IllegalArgumentException.class, () -> {
             // Create a bean with bad system name. This must throw an exception
             NamedBean bean = createNewBean("IQ111");
             // We should never get here.
-            Assert.assertNotNull("Bean is not null", bean);
-        } catch (IllegalArgumentException e) {
-            Assert.assertEquals("Exception is correct", "system name is not valid", e.getMessage());
-            hasThrown = true;
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+            fail("Bean is not null " + bean);
+        }, "Exception is thrown");
+        assertEquals( "system name is not valid", e.getMessage(), "Exception is correct");
     }
-    
+
     @Test
     public void testBundle() {
-        Assert.assertEquals("strings are equal", "Memory", Bundle.getMessage("Memory_Short"));
-        Assert.assertEquals("strings are equal", "Memory IM1 is null", Bundle.getMessage("Memory_Long_CompareNull", "IM1", Bundle.getMessage("MemoryOperation_IsNull")));
-        Assert.assertEquals("strings are equal", "Memory", Bundle.getMessage(Locale.CANADA, "Memory_Short"));
-        Assert.assertEquals("strings are equal", "Memory IM1 is null", Bundle.getMessage(Locale.CANADA, "Memory_Long_CompareNull", "IM1", Bundle.getMessage("MemoryOperation_IsNull")));
+        assertEquals( "Memory", Bundle.getMessage("Memory_Short"), "strings are equal");
+        assertEquals( "Memory IM1 is null", Bundle.getMessage("Memory_Long_CompareNull", "IM1", Bundle.getMessage("MemoryOperation_IsNull")), "strings are equal");
+        assertEquals( "Memory", Bundle.getMessage(Locale.CANADA, "Memory_Short"), "strings are equal");
+        assertEquals( "Memory IM1 is null", Bundle.getMessage(Locale.CANADA, "Memory_Long_CompareNull", "IM1", Bundle.getMessage("MemoryOperation_IsNull")), "strings are equal");
     }
-    
+
     @Test
     public void testGetBeanType() {
-        Assert.assertTrue("String matches", "Digital expression".equals(((DigitalExpressionBean)_base).getBeanType()));
+        assertEquals( "Digital expression", ((DigitalExpressionBean)_base).getBeanType(), "String matches");
     }
-    
+
     @Test
-    public void testEnableAndEvaluate() throws Exception {
+    public void testEnableAndEvaluate() throws JmriException {
         DigitalExpressionBean _expression = (DigitalExpressionBean)_baseMaleSocket;
-        Assert.assertTrue("male socket is enabled", _baseMaleSocket.isEnabled());
-        Assert.assertTrue("evaluate() returns true", _expression.evaluate());
+        assertTrue( _baseMaleSocket.isEnabled(), "male socket is enabled");
+        assertTrue( _expression.evaluate(), "evaluate() returns true");
         _baseMaleSocket.setEnabled(false);
-        Assert.assertFalse("male socket is disabled", _baseMaleSocket.isEnabled());
-        Assert.assertFalse("evaluate() returns false", _expression.evaluate());
+        assertFalse( _baseMaleSocket.isEnabled(), "male socket is disabled");
+        assertFalse( _expression.evaluate(), "evaluate() returns false");
         _baseMaleSocket.setEnabled(true);
-        Assert.assertTrue("male socket is enabled", _baseMaleSocket.isEnabled());
-        Assert.assertTrue("evaluate() returns true", _expression.evaluate());
+        assertTrue( _baseMaleSocket.isEnabled(), "male socket is enabled");
+        assertTrue( _expression.evaluate(), "evaluate() returns true");
     }
-    
+
     @Test
-    public void testDebugConfig() throws Exception {
+    public void testDebugConfig() throws JmriException {
         DigitalExpressionBean _expression = (DigitalExpressionBean)_baseMaleSocket;
-        Assert.assertTrue("evaluate() returns true", _expression.evaluate());
+        assertTrue( _expression.evaluate(), "evaluate() returns true");
         DigitalExpressionDebugConfig debugConfig = new DigitalExpressionDebugConfig();
         debugConfig._forceResult = true;
         debugConfig._result = false;
         _baseMaleSocket.setDebugConfig(debugConfig);
-        Assert.assertFalse("evaluate() returns true", _expression.evaluate());
+        assertFalse( _expression.evaluate(), "evaluate() returns true");
         debugConfig._result = true;
-        Assert.assertTrue("evaluate() returns true", _expression.evaluate());
+        assertTrue( _expression.evaluate(), "evaluate() returns true");
         debugConfig._result = false;
-        Assert.assertFalse("evaluate() returns true", _expression.evaluate());
+        assertFalse( _expression.evaluate(), "evaluate() returns true");
         debugConfig._forceResult = false;
-        Assert.assertTrue("evaluate() returns true", _expression.evaluate());
+        assertTrue( _expression.evaluate(), "evaluate() returns true");
     }
     
 }
