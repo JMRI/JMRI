@@ -1067,6 +1067,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
             if (train == null ||
                     !checkRoute(train.getRoute()) ||
                     !train.isLocalSwitcher() &&
+                            _track != null &&
                             (Setup.getTrainDirection() &
                                     _location.getTrainDirections() &
                                     _track.getTrainDirections()) == 0) {
