@@ -87,12 +87,12 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
                 int factor = Integer.parseInt(factorTextField.getText());
                 if (factor < 0 || factor > 1000) {
                     JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("FactorMustBeNumber"),
-                            Bundle.getMessage("ErrorFactor"), JmriJOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
             } catch (NumberFormatException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("FactorMustBeNumber"),
-                        Bundle.getMessage("ErrorFactor"), JmriJOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             _track.setReservationFactor(Integer.parseInt(factorTextField.getText()));

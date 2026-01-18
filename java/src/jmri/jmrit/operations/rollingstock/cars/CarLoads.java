@@ -327,7 +327,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 return cl.getLoadType();
             }
         }
-        return "error"; // NOI18N
+        return Bundle.getMessage("ErrorTitle"); // NOI18N
     }
 
     /**
@@ -372,7 +372,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 }
             }
         }
-        return "error"; // NOI18N
+        return Bundle.getMessage("ErrorTitle"); // NOI18N
     }
 
     public void setHazardous(String type, String name, boolean isHazardous) {
