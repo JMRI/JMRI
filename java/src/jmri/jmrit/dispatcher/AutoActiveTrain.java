@@ -1162,33 +1162,6 @@ public class AutoActiveTrain implements ThrottleListener {
             _activeTrain.setStatus(ActiveTrain.WAITING);
             return; // prevent any speed change or stop scheduling during delay
         }
-        // Do not alter speed while a distance-based stop is active or armed,
-        // EXCEPT we must always honor a STOP/DANGER/HELD signal to avoid overruns.
-        boolean distanceStopActiveOrPending =
-                (_distanceStopPending || ((_stopByDistanceMm > 0.0f) && _stoppingUsingSpeedProfile));
-        if (distanceStopActiveOrPending) {
-            // SignalHead case
-            if (_activeTrain.getSignalType() == DispatcherFrame.SIGNALHEAD && _controllingSignal != null) {
-                // HELD is an absolute stop; RED/FLASHRED/DARK are treated as stop in head logic
-                int app = _controllingSignal.getAppearance();
-                if (app == SignalHead.HELD || app == SignalHead.RED || app == SignalHead.FLASHRED || app == SignalHead.DARK) {
-                    checkForSignalPassedOrStop(_controllingSignal.getDisplayName(USERSYS));
-                    return;
-                }
-            }
-            // SignalMast case
-            if (_activeTrain.getSignalType() == DispatcherFrame.SIGNALMAST && _controllingSignalMast != null) {
-                final String aspect = _controllingSignalMast.getAspect();
-                final String danger = _controllingSignalMast.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
-                if (_controllingSignalMast.getHeld() || !_controllingSignalMast.getLit() || (danger != null && danger.equals(aspect))) {
-                    checkForSignalPassedOrStop(_controllingSignalMast.getDisplayName(USERSYS));
-                    return;
-                }
-            }
-            // Otherwise, allow the distance-stop to proceed without interference.
-            log.trace("[{}]: distance stop active/pending — suppressing setSpeedBySignal", getActiveTrain().getActiveTrainName());
-            return;
-        }
 
         // only bother to check signal if the next allocation is ours.
         // and the turnouts have been set
@@ -1611,15 +1584,15 @@ public class AutoActiveTrain implements ThrottleListener {
             return;
         }
 
-        // --- Respect delayed start: do not engage distance/profile braking or pre-stop crawl ---
-        if (!_activeTrain.getStarted() && _activeTrain.getDelayedStart() != ActiveTrain.NODELAY) {
-            _autoEngineer.setHalt(true);
-            _autoEngineer.setSpeedImmediate(0.0f);
-            _activeTrain.setStatus(ActiveTrain.WAITING);
+        log.debug("{}: StopInCurrentSection called for {} task[{}] targetspeed[{}]", _activeTrain.getTrainName(),
+                _currentAllocatedSection.getSection().getDisplayName(USERSYS), task, getTargetSpeed());
+
+        if (getTargetSpeed() == 0.0f || isStopping()) {
+            log.debug("{}: train is already stopped or stopping.", _activeTrain.getTrainName());
+            // ignore if train is already stopped or if stopping is in progress
             return;
         }
 
-        log.debug("{}: StopInCurrentSection called for {} task[{}] targetspeed[{}]", _activeTrain.getTrainName(), _currentAllocatedSection.getSection().getDisplayName(USERSYS),task,getTargetSpeed());
 
         /* =======================================================================
          * Distance-based stopping (destination section only) — custom planner.
