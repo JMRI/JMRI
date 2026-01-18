@@ -133,6 +133,7 @@
                     displayed in the Monitor.</li>
                 <li>Updated the OpenLCB library to properly display
                     Stream-related messages.</li>
+                <li>The JmriFaceless application can now open an OpenLCB/LCC Hub</li>
             </ul>
 
         <h4>Powerline</h4>
