@@ -18,7 +18,7 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 public class RosterGroupComboBox extends JComboBox<String> implements RosterGroupSelector {
 
     private Roster _roster;
-    private boolean allEntriesEnabled = false;
+    private boolean allEntriesEnabled = true;
 
     /**
      * Create a RosterGroupComboBox with an arbitrary Roster instead of the
@@ -141,7 +141,7 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
 
     /**
      * Setting this true will display the "All Groups" item in 
-     * addition to the defined groups.  Default is false.
+     * addition to the defined groups.  Default is true.
      * @param allEntriesEnabled the allEntriesEnabled to set
      */
     public void setAllEntriesEnabled(boolean allEntriesEnabled) {
