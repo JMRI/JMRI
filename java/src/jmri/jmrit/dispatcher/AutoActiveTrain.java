@@ -757,7 +757,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     // are we going to reverse at end
                     if ( _activeTrain.getReverseAtEnd() ) {
                         removeCurrentSignal();
-                        stopInCurrentSection(END_REVERSAL, StopContext.DESTINATION);
+                        stopInCurrentSection(END_REVERSAL);
                     }
                     // are we going continuously without delay
                     else if ( _activeTrain.getResetWhenDone() && _activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
@@ -789,7 +789,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         if ( _nextSection == null || !_activeTrain.isInAllocatedList(_nextSection)) {
                             removeCurrentSignal();
                             _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
-                            stopInCurrentSection(BEGINNING_RESET, StopContext.DESTINATION);
+                            stopInCurrentSection(BEGINNING_RESET);
                         } else {
                             _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
                         }
@@ -798,7 +798,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     else {
                         log.debug("{}: Trip end, stop in Current Section, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                         removeCurrentSignal();
-                        stopInCurrentSection(END_TRAIN, StopContext.DESTINATION);
+                        stopInCurrentSection(END_TRAIN);
                     }
                 }
                 // are we entering the start point
@@ -806,13 +806,13 @@ public class AutoActiveTrain implements ThrottleListener {
                     // are we coming back from a reverse and running continiuosly
                     if ( _activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed() ) {
                         removeCurrentSignal();
-                        stopInCurrentSection(BEGINNING_RESET, StopContext.DESTINATION);
+                        stopInCurrentSection(BEGINNING_RESET);
                     }
                     // else we are ending here
                     else {
                         log.debug("{}: Trip end, stop in Current Section, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                         removeCurrentSignal();
-                        stopInCurrentSection(END_TRAIN, StopContext.DESTINATION);
+                        stopInCurrentSection(END_TRAIN);
                     }
                 } else {
                     // if we are not in first and not in last get the next block
@@ -1205,7 +1205,7 @@ public class AutoActiveTrain implements ThrottleListener {
         } else {
             // This might be the last section....
             if (_currentAllocatedSection != null && _currentAllocatedSection.getNextSection() == null) {
-                stopInCurrentSection(END_TRAIN, StopContext.DESTINATION);
+                stopInCurrentSection(END_TRAIN);
             } else {
                 // This will stop it.
                 stopInCurrentSection(NO_TASK);
@@ -1464,7 +1464,7 @@ public class AutoActiveTrain implements ThrottleListener {
         // a held signal always stop
         if ( _controllingSignal != null && _controllingSignal.getAppearance() == SignalHead.HELD ) {
             // Held - Stop
-            stopInCurrentSection(NO_TASK, StopContext.SIGNAL);
+            stopInCurrentSection(NO_TASK);
             return;
         }
 
@@ -1528,7 +1528,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     break;
                 default:
                     log.warn("Signal Head[{}] has invalid Appearence - using stop",_controllingSignal.getAppearance());
-                    stopInCurrentSection(NO_TASK, StopContext.SIGNAL);
+                    stopInCurrentSection(NO_TASK);
             }
 
         }
@@ -1553,7 +1553,7 @@ public class AutoActiveTrain implements ThrottleListener {
             } else {
                 log.debug("{}: stopping for signal [{}] ", _activeTrain.getTrainName(),
                         displayName);
-                stopInCurrentSection(NO_TASK, StopContext.SIGNAL);
+                stopInCurrentSection(NO_TASK);
             }
         }
     }
@@ -1602,17 +1602,7 @@ public class AutoActiveTrain implements ThrottleListener {
         return pct;
     }
 
-    private enum StopContext {
-        DESTINATION,
-        SIGNAL,
-        OTHER
-    }
-
     private synchronized void stopInCurrentSection(int task) {
-        stopInCurrentSection(task, StopContext.OTHER);
-    }
-
-    private synchronized void stopInCurrentSection(int task, StopContext context) {
         if (_currentAllocatedSection == null) {
             log.error("{}: Current allocated section null on entry to stopInCurrentSection", _activeTrain.getTrainName());
             setStopNow();
@@ -1640,12 +1630,7 @@ public class AutoActiveTrain implements ThrottleListener {
          * TODO (future): extend to signal stop points inside sections using the same controller,
          * with an explicit per-section stop origin.
          * ======================================================================= */
-        // Distance-based stopping is currently applied only to destination/platform-style stops.
-        // For signal-driven and other stops, preserve existing Dispatcher stop behavior.
-        boolean allowDistanceStop = (context == StopContext.DESTINATION);
-
-        if (allowDistanceStop) {
-            boolean distanceEnabled = (_stopByDistanceMm > 0.0f);
+        boolean distanceEnabled = (_stopByDistanceMm > 0.0f);
         // Direction-aware profile availability (we must have speeds for the current direction)
         boolean profileAvailable = false;
         if (re != null && re.getSpeedProfile() != null) {
@@ -1800,9 +1785,7 @@ public class AutoActiveTrain implements ThrottleListener {
             return;
         }
 
-    }
-
-    // =======================================================================
+        // =======================================================================
         // Do not exit before destination stop logic;
         // only bail out if the train is already at zero AND no profile/distance stop is requested.
         if (getTargetSpeed() == 0.0f && !_stopBySpeedProfile && _stopByDistanceMm <= 0.0f) {
@@ -2510,6 +2493,33 @@ public class AutoActiveTrain implements ThrottleListener {
             log.debug("{}: _speedIncrement={}", throttle.getLocoAddress(), speedIncrement);
         }
 
+        // Once physics ramping is found to be unusable for this train, permanently disable it
+        // for the remainder of this AutoEngineer instance to avoid repeated stalls or repeated warnings.
+        private boolean physicsRampingDisabled = false;
+
+        private void disablePhysicsRamping(String reason, float weightKg, float powerKw, float tractiveEffortKn) {
+            if (!physicsRampingDisabled) {
+                String id = (rosterEntry != null) ? rosterEntry.getId() : "<unknown>";
+                log.warn(
+                        "{}: Physics ramp disabled ({}). Roster physics: weightKg={}, powerKw={}, tractiveEffortKn={}; forcing RAMP_MEDIUM.",
+                        id, reason, Float.valueOf(weightKg), Float.valueOf(powerKw), Float.valueOf(tractiveEffortKn));
+            }
+            physicsRampingDisabled = true;
+
+            // Ensure the AutoActiveTrain state is no longer RAMP_PHYSICS
+            AutoActiveTrain.this.setRampRate(RAMP_MEDIUM);
+
+            // Ensure this AutoEngineer instance is no longer in physics mode
+            this.ramping = RAMP_MEDIUM;
+
+            // Recompute ramp parameters for medium ramp so speedIncrement matches the selected mode
+            if (AutoActiveTrain.this._dispatcher != null) {
+                setRamping(RAMP_MEDIUM, AutoActiveTrain.this._dispatcher.getFullRampTime(),
+                        AutoActiveTrain.this._dispatcher.getMinThrottleInterval(), RAMP_MEDIUM);
+            }
+        }
+
+
         public  void setIsForward(boolean isForward) {
             throttle.setIsForward(isForward);
         }
@@ -2536,6 +2546,37 @@ public class AutoActiveTrain implements ThrottleListener {
                     AutoActiveTrain.this._activeTrain.getTrainName(),
                     ramping, physicsRamp, profileAvailable, forward, speed);
 
+
+            // If physics ramping is selected, ensure a usable speed profile and defined physics parameters exist.
+            // If not, permanently fall back to RAMP_MEDIUM for this Auto Active Train.
+            if (physicsRamp) {
+                if (physicsRampingDisabled) {
+                    physicsRamp = false;
+                } else if (!profileAvailable) {
+                    disablePhysicsRamping("no speed profile for current direction", 0.0f, 0.0f, 0.0f);
+                    physicsRamp = false;
+                } else {
+                    float wKg = 0.0f;
+                    float pKw = 0.0f;
+                    float teKn = 0.0f;
+                    try {
+                        if (rosterEntry != null) {
+                            wKg = rosterEntry.getPhysicsWeightKg();
+                            pKw = rosterEntry.getPhysicsPowerKw();
+                            teKn = rosterEntry.getPhysicsTractiveEffortKn();
+                        }
+                    } catch (Throwable ex) {
+                        // Older roster entries may not have physics fields
+                        wKg = 0.0f;
+                        pKw = 0.0f;
+                        teKn = 0.0f;
+                    }
+                    if ((wKg <= 0.0f) && (pKw <= 0.0f) && (teKn <= 0.0f)) {
+                        disablePhysicsRamping("no physics parameters defined", wKg, pKw, teKn);
+                        physicsRamp = false;
+                    }
+                }
+            }
             if (physicsRamp && profileAvailable) {
                 // Run physics planner off the EDT
                 Thread phys = jmri.util.ThreadingUtil.newThread(() -> {
