@@ -757,7 +757,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     // are we going to reverse at end
                     if ( _activeTrain.getReverseAtEnd() ) {
                         removeCurrentSignal();
-                        stopInCurrentSection(END_REVERSAL);
+                        stopInCurrentSection(END_REVERSAL, StopContext.DESTINATION);
                     }
                     // are we going continuously without delay
                     else if ( _activeTrain.getResetWhenDone() && _activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
@@ -789,7 +789,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         if ( _nextSection == null || !_activeTrain.isInAllocatedList(_nextSection)) {
                             removeCurrentSignal();
                             _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
-                            stopInCurrentSection(BEGINNING_RESET);
+                            stopInCurrentSection(BEGINNING_RESET, StopContext.DESTINATION);
                         } else {
                             _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
                         }
@@ -798,7 +798,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     else {
                         log.debug("{}: Trip end, stop in Current Section, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                         removeCurrentSignal();
-                        stopInCurrentSection(END_TRAIN);
+                        stopInCurrentSection(END_TRAIN, StopContext.DESTINATION);
                     }
                 }
                 // are we entering the start point
@@ -806,13 +806,13 @@ public class AutoActiveTrain implements ThrottleListener {
                     // are we coming back from a reverse and running continiuosly
                     if ( _activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed() ) {
                         removeCurrentSignal();
-                        stopInCurrentSection(BEGINNING_RESET);
+                        stopInCurrentSection(BEGINNING_RESET, StopContext.DESTINATION);
                     }
                     // else we are ending here
                     else {
                         log.debug("{}: Trip end, stop in Current Section, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                         removeCurrentSignal();
-                        stopInCurrentSection(END_TRAIN);
+                        stopInCurrentSection(END_TRAIN, StopContext.DESTINATION);
                     }
                 } else {
                     // if we are not in first and not in last get the next block
@@ -1180,7 +1180,7 @@ public class AutoActiveTrain implements ThrottleListener {
         } else {
             // This might be the last section....
             if (_currentAllocatedSection != null && _currentAllocatedSection.getNextSection() == null) {
-                stopInCurrentSection(END_TRAIN);
+                stopInCurrentSection(END_TRAIN, StopContext.DESTINATION);
             } else {
                 // This will stop it.
                 stopInCurrentSection(NO_TASK);
@@ -1439,7 +1439,7 @@ public class AutoActiveTrain implements ThrottleListener {
         // a held signal always stop
         if ( _controllingSignal != null && _controllingSignal.getAppearance() == SignalHead.HELD ) {
             // Held - Stop
-            stopInCurrentSection(NO_TASK);
+            stopInCurrentSection(NO_TASK, StopContext.SIGNAL);
             return;
         }
 
@@ -1503,7 +1503,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     break;
                 default:
                     log.warn("Signal Head[{}] has invalid Appearence - using stop",_controllingSignal.getAppearance());
-                    stopInCurrentSection(NO_TASK);
+                    stopInCurrentSection(NO_TASK, StopContext.SIGNAL);
             }
 
         }
@@ -1577,7 +1577,17 @@ public class AutoActiveTrain implements ThrottleListener {
         return pct;
     }
 
+    private enum StopContext {
+        DESTINATION,
+        SIGNAL,
+        OTHER
+    }
+
     private synchronized void stopInCurrentSection(int task) {
+        stopInCurrentSection(task, StopContext.OTHER);
+    }
+
+    private synchronized void stopInCurrentSection(int task, StopContext context) {
         if (_currentAllocatedSection == null) {
             log.error("{}: Current allocated section null on entry to stopInCurrentSection", _activeTrain.getTrainName());
             setStopNow();
@@ -1605,7 +1615,12 @@ public class AutoActiveTrain implements ThrottleListener {
          * TODO (future): extend to signal stop points inside sections using the same controller,
          * with an explicit per-section stop origin.
          * ======================================================================= */
-        boolean distanceEnabled = (_stopByDistanceMm > 0.0f);
+        // Distance-based stopping is currently applied only to destination/platform-style stops.
+        // For signal-driven and other stops, preserve existing Dispatcher stop behavior.
+        boolean allowDistanceStop = (context == StopContext.DESTINATION);
+
+        if (allowDistanceStop) {
+            boolean distanceEnabled = (_stopByDistanceMm > 0.0f);
         // Direction-aware profile availability (we must have speeds for the current direction)
         boolean profileAvailable = false;
         if (re != null && re.getSpeedProfile() != null) {
@@ -1760,7 +1775,9 @@ public class AutoActiveTrain implements ThrottleListener {
             return;
         }
 
-        // =======================================================================
+    }
+
+    // =======================================================================
         // Do not exit before destination stop logic;
         // only bail out if the train is already at zero AND no profile/distance stop is requested.
         if (getTargetSpeed() == 0.0f && !_stopBySpeedProfile && _stopByDistanceMm <= 0.0f) {
