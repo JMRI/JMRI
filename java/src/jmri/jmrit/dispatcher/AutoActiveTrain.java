@@ -1164,7 +1164,9 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         // Do not alter speed while a distance-based stop is active or armed,
         // EXCEPT we must always honor a STOP/DANGER/HELD signal to avoid overruns.
-        if (_stoppingUsingSpeedProfile || _distanceStopPending) {
+        boolean distanceStopActiveOrPending =
+                (_distanceStopPending || ((_stopByDistanceMm > 0.0f) && _stoppingUsingSpeedProfile));
+        if (distanceStopActiveOrPending) {
             // SignalHead case
             if (_activeTrain.getSignalType() == DispatcherFrame.SIGNALHEAD && _controllingSignal != null) {
                 // HELD is an absolute stop; RED/FLASHRED/DARK are treated as stop in head logic
@@ -2545,6 +2547,7 @@ public class AutoActiveTrain implements ThrottleListener {
             log.debug("[{}] setTargetSpeed: ramping={}, physicsRamp={}, profileAvailable={}, forward={}, speedArg={}",
                     AutoActiveTrain.this._activeTrain.getTrainName(),
                     ramping, physicsRamp, profileAvailable, forward, speed);
+
 
 
             // If physics ramping is selected, ensure a usable speed profile and defined physics parameters exist.
