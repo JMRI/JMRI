@@ -1244,31 +1244,46 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h4>On Time</h4>
 
-      On time is an experimental mode of operations that was introduced in January of 2026. On time
-      mode requires the use of a real or fast clock to dictate train movement. To use on time, your
-      trains must run on schedule. They should depart at the correct departure time, and they should
-      complete their work reasonably close to the times provided on the train Manifests. When
-      running OperationsPro in on time mode, tracks that have
+      On time is an experimental mode of operations that was introduced in January of 2026. On Time
+      mode is an extension of aggressive mode. On time mode requires the use of a real or fast clock
+      to dictate train movement. To use on time, your trains must run on schedule. They should
+      depart at the correct departure time, and they should complete their work reasonably close to
+      the times provided on the train Manifests. When running OperationsPro in on time mode, tracks
+      that have
       <a href="#InterchangeQuickService">Quick Service</a> enabled can be reused multiple times
-      based on when cars are set out and picked up.  On Time mode is an extension of aggressive mode.
+      based on when cars are set out and picked up. Cars and engines can travel on multiple trains
+      with train departure times up to 31 days. Therefore you can create sessions that span days,
+      weeks, or even a month!
 
       <p>After selecting the "On Time" radio button, a text field called "Dwell Time" is
         enabled. Dwell time is the number of extra minutes the program will use to determine when a
         track has available space, or when a car is available for pick up. For example, if a car is
         pulled at 1:30 PM and the dwell time is 60 minutes, the track space vacated by the car is
         available at 2:30 PM. For car pick ups, if a car is set out at 2:10 PM and the dwell time is
-        60 minutes, the car can be pulled by a train at or after 3:10. You would normally set the
-        dwell time greater than your worst operator's completion time for a train. For example, if
-        some of your operators normally finish their runs 30 minutes late, you would set the dwell
-        time to 30 or more minutes. Dwell time helps prevent the frustration of not having the track
-        space or car available from a previous train delivery. However, high dwell times will cause
-        less cars to be moved in a given time.</p>
+        60 minutes, the car can be pulled by another train at or after 3:10. You would normally set
+        the dwell time greater than your worst operator's completion time for a train. For example,
+        if some of your operators normally finish their runs 30 minutes late, you would set the
+        dwell time to 30 or more minutes. Dwell time helps prevent the frustration of not having the
+        track space or car available from a previous train delivery. However, high dwell times will
+        cause less cars to be moved in a given time.</p>
 
       <p>
         See <a href="#ModifyLocationsByQuickService">Modify Locations and Tracks by Quick
           Service</a> to modify your tracks for quick service. Only tracks enabled for quick service are
-        reused based on train timing when using the on time mode.
+        reused based on train timing when using the on time mode. Note that train turns servicing
+        locations on both the outbound and inbound legs, will in most cases pull the cars delivered
+        on the outbound leg on the return leg. Use interchange tracks and <a href="#Schedules">spurs/schedules</a>
+        with wait times to hold cars, or <a href="#RestrictingTrackToCertainTrains">restrict the
+          car pick ups by train or route</a>. The program also prevents a car set out at a route
+        location to be pulled by the same route location. This isn't an issue unless you use the
+        same route for multiple trains and expect a later train using the same route to pull the
+        car. If you want the car to be pulled, <a href="#CopyRoute">copy the route</a>, and use the
+        copied route for the later train.
       </p>
+
+      <p>One restriction when using on time mode, is that trains must be built and terminated in
+        chronological order. If you need to reset your trains, reset the last built trains first, or
+        use the reset all train button.</p>
 
       <p>
         To help troubleshoot timing problems with your cars using the on time mode, it is
