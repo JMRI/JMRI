@@ -1,6 +1,12 @@
 package jmri.jmrit.beantable;
 
-import java.awt.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import javax.swing.*;
 
 import jmri.Block;
 import jmri.InstanceManager;
@@ -10,14 +16,14 @@ import jmri.jmrit.logix.*;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
-
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.JemmyUtil;
+
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.*;
 
-import javax.swing.*;
 
 /**
  * Swing tests for the OBlock etc tables.
@@ -32,13 +38,13 @@ public class OBlockTableActionTest {
 
     @Test
     public void testCreate() {
-        Assertions.assertNotNull(a);
-        Assertions.assertNull(a.f); // frame should be null until action invoked
+        assertNotNull(a);
+        assertNull(a.f); // frame should be null until action invoked
     }
 
     @Test
     public void testGetClassDescription() {
-        Assertions.assertEquals("Occupancy Block Table", a.getClassDescription(), "OBlock Table Action class description");
+        assertEquals("Occupancy Block Table", a.getClassDescription(), "OBlock Table Action class description");
     }
 
     /**
@@ -47,12 +53,13 @@ public class OBlockTableActionTest {
      */
     @Test
     public void testIncludeAddButton() {
-        Assertions.assertFalse(a.includeAddButton(), "Default include add button");
+        assertFalse(a.includeAddButton(), "Default include add button");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testInvoke() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // use original _desktop interface
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(false);
 
@@ -61,25 +68,24 @@ public class OBlockTableActionTest {
 
         // Find new table window by name
         JmriJFrame doc = JmriJFrame.getFrame(jmri.jmrit.beantable.oblock.Bundle.getMessage("TitleOBlocks"));
-        Assertions.assertNotNull(doc, "Occupancy window");
+        assertNotNull(doc, "Occupancy window");
         new QueueTool().waitEmpty();
 
-        javax.swing.JDesktopPane dt = (javax.swing.JDesktopPane) doc.getContentPane();
-        javax.swing.JInternalFrame[] fob = dt.getAllFrames();
-        Assertions.assertNotNull(fob, "OBlock window");
+        JDesktopPane dt = assertInstanceOf( JDesktopPane.class, doc.getContentPane());
 
-        Assertions.assertEquals(4, fob.length);
+        JInternalFrame[] fob = dt.getAllFrames();
+        assertNotNull(fob, "OBlock window");
+
+        assertEquals(4, fob.length);
         new QueueTool().waitEmpty();
         // Ask to close add window
-        ThreadingUtil.runOnGUI(() -> {
-            doc.setVisible(false);
-            JUnitUtil.dispose(doc);
-        });
+        JUnitUtil.dispose(doc);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testInvokeTabbed() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // use _tabbed interface
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(true);
 
@@ -88,28 +94,26 @@ public class OBlockTableActionTest {
 
         // Find new table window by name
         JmriJFrame doc = JmriJFrame.getFrame(Bundle.getMessage("TitleOBlocksTabbedFrame"));
-        Assertions.assertNotNull(doc, "Occupancy Blocks tabbed window");
+        assertNotNull(doc, "Occupancy Blocks tabbed window");
         new QueueTool().waitEmpty();
 
         // Ask to close add window
-        ThreadingUtil.runOnGUI(() -> {
-            doc.setVisible(false);
-            JUnitUtil.dispose(doc);
-        });
+        JUnitUtil.dispose(doc);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testAddOBlock() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // use _tabbed interface
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(true);
         a.actionPerformed(new java.awt.event.ActionEvent(a, 2, "")); // show table
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleOBlocksTabbedFrame"), true, true);
-        Assertions.assertNotNull(f);
+        assertNotNull(f);
 
-        a.addOBlockPressed(null);
+        ThreadingUtil.runOnGUI( () -> a.addOBlockPressed(null));
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddOBlock"));  // NOI18N
-        Assertions.assertNotNull(addFrame, "Found Add OBlock Frame");  // NOI18N
+        assertNotNull(addFrame, "Found Add OBlock Frame");  // NOI18N
 
         new JTextFieldOperator(addFrame, 0).setText("105");  // NOI18N
         new JTextFieldOperator(addFrame, 2).setText("OBlock 105");  // NOI18N
@@ -117,37 +121,38 @@ public class OBlockTableActionTest {
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
 
         Block chk105 = jmri.InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock("OBlock 105");  // NOI18N
-        Assertions.assertNotNull(chk105, "Verify OB105 Added");  // NOI18N
-        Assertions.assertEquals("OB105", chk105.getSystemName(), "Verify system name prefix");  // NOI18N
+        assertNotNull(chk105, "Verify OB105 Added");  // NOI18N
+        assertEquals("OB105", chk105.getSystemName(), "Verify system name prefix");  // NOI18N
 
         (new JFrameOperator(f)).requestClose();
         JUnitUtil.dispose(f);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testRenameOBlock() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // use _tabbed interface
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(true);
 
         OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
         OBlock ob = obm.createNewOBlock("OB999", "OBlock Name");  // NOI18N
         Assertions.assertNotNull(ob);
-        Assertions.assertEquals("OBlock Name", ob.getUserName());  // NOI18N
+        assertEquals("OBlock Name", ob.getUserName());  // NOI18N
 
         OPath path = new OPath(ob, "Path");
 
         // Open the OBlock table
         a.actionPerformed(null); // show table
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleOBlocksTabbedFrame"));  // NOI18N
-        Assertions.assertNotNull(jfo);
+        assertNotNull(jfo);
 
         JTabbedPaneOperator tbp = new JTabbedPaneOperator(jfo);
         tbp.selectPage("Occupancy Blocks");
-        Assertions.assertNotNull(tbp);
+        assertNotNull(tbp);
 
         JTableOperator tbo = new JTableOperator(tbp);
-        Assertions.assertNotNull(tbo);
+        assertNotNull(tbo);
 
         // Click on the edit button, set the user name to empty for remove
         tbo.clickOnCell(0, 5);
@@ -176,27 +181,29 @@ public class OBlockTableActionTest {
         tbo.clickOnCell(0, 0);  // deselect the edit button
 
         // Confirm the portal toBlock user name change
-        Assertions.assertEquals("New OBlock Name", path.getBlock().getUserName());
+        assertEquals("New OBlock Name", path.getBlock().getUserName());
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
+        jfo.waitClosed();
     }
 
     @Test
+    @DisabledIfHeadless
     public void testAddPortal() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // use _tabbed interface
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(true);
         a.actionPerformed(new java.awt.event.ActionEvent(a, 2, "")); // show table
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleOBlocksTabbedFrame"), true, true);
-        Assertions.assertNotNull(f);
+        assertNotNull(f);
 
         a.addPortalPressed(null);
 
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddPortal"));  // NOI18N
-        Assertions.assertNotNull(addFrame, "Found Add Portal Frame");  // NOI18N
+        assertNotNull(addFrame, "Found Add Portal Frame");  // NOI18N
 
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonOK")).push();  // NOI18N
-        Assertions.assertNotNull(addFrame, "Add Portal Frame still open after empty entry");  // NOI18N
+        assertNotNull(addFrame, "Add Portal Frame still open after empty entry");  // NOI18N
 
         PortalManager pm = InstanceManager.getDefault(PortalManager.class);
         OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
@@ -209,7 +216,7 @@ public class OBlockTableActionTest {
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonOK")).push();  // NOI18N
 
         jmri.util.JUnitAppender.assertWarnMessage("Portal portal1 needs an OBlock on each side"); // TODO prevent this from showing up when oblocks are defined
-        Assertions.assertEquals(1, pm.getPortalCount(), "Verify Portal Added");
+        assertEquals(1, pm.getPortalCount(), "Verify Portal Added");
 
         // TODO add Edit Portal test
         (new JFrameOperator(f)).requestClose();
@@ -217,13 +224,14 @@ public class OBlockTableActionTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testAddSignal() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // use _tabbed interface
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(true);
         a.actionPerformed(new java.awt.event.ActionEvent(a, 2, "")); // show table
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleOBlocksTabbedFrame"), true, true);
-        Assertions.assertNotNull(f);
+        assertNotNull(f);
 
         OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
         OBlock ob1 = obm.createNewOBlock("OB1", "ob1");  // NOI18N
@@ -245,10 +253,10 @@ public class OBlockTableActionTest {
         jmri.util.JUnitAppender.assertWarnMessage("Portal IP1 needs an OBlock on each side");
 
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddSignal"));  // NOI18N
-        Assertions.assertNotNull(addFrame, "Found Add Signal Frame");  // NOI18N
+        assertNotNull(addFrame, "Found Add Signal Frame");  // NOI18N
 
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonOK")).push();  // NOI18N
-        Assertions.assertNotNull(addFrame, "Add Signal Frame still open after empty entry");  // NOI18N
+        assertNotNull(addFrame, "Add Signal Frame still open after empty entry");  // NOI18N
 
         new JComboBoxOperator(addFrame, 0).setSelectedItem(sm1);  // NOI18N select sm1
         new JComboBoxOperator(addFrame, 2).setSelectedIndex(1);  // NOI18N select port1
@@ -256,15 +264,15 @@ public class OBlockTableActionTest {
         new JTextFieldOperator(addFrame, 0).setText("19.05");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonOK")).push();  // NOI18N
 
-        Assertions.assertNotNull(port1.getToSignal(), "Verify Signal Added");  // NOI18N
-        Assertions.assertEquals("IF$vsm:basic:one-searchlight($1)", port1.getToSignal().getSystemName(), "Check signal name");  // NOI18N
+        assertNotNull(port1.getToSignal(), "Verify Signal Added");  // NOI18N
+        assertEquals("IF$vsm:basic:one-searchlight($1)", port1.getToSignal().getSystemName(), "Check signal name");  // NOI18N
         // TODO add Edit Signal test
         (new JFrameOperator(f)).requestClose();
         JUnitUtil.dispose(f);
     }
 
-        @BeforeEach
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
@@ -274,9 +282,8 @@ public class OBlockTableActionTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         a = null;
-        JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask(); // perhaps invoked via super, must be cleaned up
         JUnitUtil.tearDown();
     }
