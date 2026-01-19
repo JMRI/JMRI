@@ -1566,11 +1566,28 @@ public class AutoActiveTrain implements ThrottleListener {
     // called to cancel a stopping action that is in progress
     private synchronized void cancelStopInCurrentSection() {
         log.trace("[{}]:Cancel Stopping", _activeTrain.getTrainName());
+        // Cancel any pending or in-progress stop-by-distance / profile-based stopping schedules.
+        // If conditions improve (signal clears or allocations become available), we must be able to cancel
+        // the stopping sequence and resume running.
+        _distanceStopPending = false;
+        _distanceStopPendingToMin = false;
+        _distanceStopPendingMm = 0.0f;
+        _distanceStopPendingTask = NO_TASK;
+        if (re != null && re.getSpeedProfile() != null) {
+            try {
+                re.getSpeedProfile().cancelSpeedChange();
+            } catch (RuntimeException ex) {
+                log.warn("{}: cancelSpeedChange failed while cancelling stop", _activeTrain.getTrainName(), ex);
+            }
+        }
+
         cancelStoppingBySensor();
         _stoppingByBlockOccupancy = false;
         _stoppingBlock = null;
         _stoppingUsingSpeedProfile = false;
-        _autoEngineer.slowToStop(false);
+        if (_autoEngineer != null) {
+            _autoEngineer.slowToStop(false);
+        }
     }
 
     /** Clamp throttle [% 0..1] */
@@ -2888,7 +2905,7 @@ public class AutoActiveTrain implements ThrottleListener {
          * assigned.
          *
          * @param rampRate name of ramp rate, such as "RAMP_FAST"
-         * @return integer representing a ramprate constant value
+         * @return integer representing a ramp rate constant value
          */
         public static int getRampRateFromName(String rampRate) {
             if (rampRate.equals(Bundle.getMessage("RAMP_FAST")))
