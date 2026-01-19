@@ -731,6 +731,9 @@ public class AutoActiveTrain implements ThrottleListener {
                     _stoppingUsingSpeedProfile = true; // commit to distance-based braking
                     if (toMin) {
                         // COMBINED (approach-to-min + sensor):
+                        re.getSpeedProfile().setMinCommandIntervalMs(_dispatcher.getMinThrottleInterval());
+                        re.getSpeedProfile().setMinCommandIntervalMs(_dispatcher.getMinThrottleInterval());
+                        re.getSpeedProfile().setMinCommandIntervalMs(_dispatcher.getMinThrottleInterval());
                         re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed,
                                 _maxSpeedScaleKmh, (float) _dispatcher.getScale().getScaleRatio(),
                                 _autoEngineer.getIsForward());
@@ -1652,7 +1655,16 @@ public class AutoActiveTrain implements ThrottleListener {
         if ((distanceEnabled && profileAvailable) && !_stoppingUsingSpeedProfile && !_distanceStopPending) {
 
             // Compute requested travel distance from section entry to stop reference
-            final float distanceMmBase = _stopByDistanceMm + (_stopByDistanceRefTail ? getMaxTrainLengthMM() : 0.0f);
+
+            float distanceMmBase = _stopByDistanceMm + (_stopByDistanceRefTail ? getMaxTrainLengthMM() : 0.0f);
+            // Safety: do not allow stop-by-distance to extend beyond the destination section.
+            // This prevents overrunning into the next section / train ahead when a large distance is configured.
+            float sectionLenMm = (_currentAllocatedSection != null) ? _currentAllocatedSection.getActualLength() : 0.0f;
+            if (sectionLenMm > 0.0f && distanceMmBase > sectionLenMm) {
+                log.warn("{}: stop-by-distance {}mm exceeds section length {}mm; clamping to section length.",
+                        _activeTrain.getTrainName(), Float.valueOf(distanceMmBase), Float.valueOf(sectionLenMm));
+                distanceMmBase = sectionLenMm;
+            }
 
             if (combinedMode) {
                 // --- New combined behaviour ---
@@ -1677,7 +1689,18 @@ public class AutoActiveTrain implements ThrottleListener {
                         float vMin =
                                 re.getSpeedProfile().getSpeed(_minReliableOperatingSpeed, _autoEngineer.getIsForward());
                         float thrMin = re.getSpeedProfile().getThrottleSetting(vMin, _autoEngineer.getIsForward());
-                        _autoEngineer.setSpeedImmediate(clampThrottle(thrMin));
+
+                        // Quantize to a real throttle step to avoid values between 0 and the first speed step.
+                        float q = clampThrottle(thrMin);
+                        float inc = getThrottle().getSpeedIncrement();
+                        if (inc > 0.0f) {
+                            int steps = Math.round(q / inc);
+                            q = steps * inc;
+                            if (q > 0.0f && q < inc)
+                                q = inc;
+                            q = clampThrottle(q);
+                        }
+                        _autoEngineer.setSpeedImmediate(q);
                     } else {
                         // Cancel first; then mark that we are in a distance-based stop (suppresses setSpeedBySignal correctly)
                         cancelStopInCurrentSection();
