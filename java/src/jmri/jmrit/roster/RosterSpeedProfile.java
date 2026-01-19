@@ -961,7 +961,7 @@ public class RosterSpeedProfile {
 
     /**
      * Set the minimum command interval (ms) used by the distance/physics
-     * planners. Values <= 0 revert to the default. Values less than
+     * planners. Values {@code <=} 0 revert to the default. Values less than
      * DEFAULT_MIN_COMMAND_INTERVAL_MS are clamped up to the default.
      *
      * @param ms Minimum interval in milliseconds.
