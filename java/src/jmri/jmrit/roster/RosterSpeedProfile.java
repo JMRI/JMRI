@@ -642,9 +642,10 @@ public class RosterSpeedProfile {
             if ("KnownState".equals(e.getPropertyName())) {
                 try {
                     if (((Integer) e.getNewValue()).intValue() == jmri.Sensor.ACTIVE) {
-                        if (_throttle != null)
+                        if (_throttle != null) {
                             lastIssuedSpeedSetting = 0.0f;
-                        _throttle.setSpeedSetting(0.0f);
+                            _throttle.setSpeedSetting(0.0f);
+                        }
                         finishChange(); // also detaches this listener
                     }
                 } catch (RuntimeException ex) {
@@ -652,7 +653,8 @@ public class RosterSpeedProfile {
                     try {
                         if (_throttle != null)
                             _throttle.setSpeedSetting(0.0f);
-                    } catch (Exception ignore) {
+                    } catch (Exception ex2) {
+                        log.debug("Stop-by-sensor handler could not force stop.", ex2);
                     }
                     finishChange();
                 }
@@ -872,8 +874,16 @@ public class RosterSpeedProfile {
                 int msFinal = Math.max(1, Math.round(dtFinal * 1000.0f));
                 bucketMs += msFinal;
                 bucketSpeedTime += vMid * (msFinal / 1000.0f);
-                travelled = s;
-                v = vNext;
+
+                // Flush the bucket at end of run.
+                float bucketSec = bucketMs / 1000.0f;
+                float avgMms = (bucketSec > 0.0f) ? (bucketSpeedTime / bucketSec) : 0.0f;
+                float thr = throttleForSpeedMms(avgMms, forward, minPct, maxPct);
+                thr = clampPct(thr / speedFactorSafe);
+                thr = quantizeToSpeedStep(_throttle, thr);
+                plan.add(new SpeedSetting(thr, bucketMs, false));
+                bucketMs = 0;
+                bucketSpeedTime = 0.0f;
                 break;
             }
 
@@ -1014,7 +1024,7 @@ public class RosterSpeedProfile {
             try {
                 approachStopSensor.removePropertyChangeListener(approachStopSensorListener);
             } catch (Exception ex) {
-                // ignore
+                log.debug("finishChange: failed to remove approach stop sensor listener", ex);
             }
         }
         approachStopSensor = null;
@@ -1902,7 +1912,8 @@ public class RosterSpeedProfile {
             float kmhRoster = (_re != null) ? _re.getPhysicsMaxSpeedKmh() : 0.0f;
             if (kmhRoster > 0.0f)
                 vCap_fs_roster = kmhRoster / 3.6f;
-        } catch (Throwable ignore) {
+        } catch (Throwable ex) {
+            log.debug("runPhysicsAccelerationToTargetThrottle: could not read roster max speed cap", ex);
         }
         vTarget_fs = Math.min(vTarget_fs, vCap_fs_roster);
 
