@@ -581,7 +581,7 @@ public class RosterSpeedProfile {
      * millimetres).
      * 
      * @param t          The DccThrottle to drive
-     * @param distanceMm Distance in mm (>= 0)
+     * @param distanceMm Distance in mm ({@code >=} 0)
      */
     public void planStopToZeroOverDistance(DccThrottle t, float distanceMm) {
         planStopToZeroOverDistance(t, distanceMm, /* speedFactor */ 1.0f);
@@ -593,9 +593,9 @@ public class RosterSpeedProfile {
      * AutoActiveTrain behaviour).
      * 
      * @param t           The DccThrottle to drive
-     * @param distanceMm  Distance in mm (>= 0)
-     * @param speedFactor If > 0, throttle commands are divided by this factor
-     *                    before enqueuing.
+     * @param distanceMm  Distance in mm ({@code >=} 0)
+     * @param speedFactor If {@code >} 0, throttle commands are divided by this
+     *                    factor before enqueuing.
      */
     public void planStopToZeroOverDistance(DccThrottle t, float distanceMm, float speedFactor) {
         planDistanceSchedule(t, distanceMm, /* toMinOnly */ false, speedFactor);
@@ -607,7 +607,7 @@ public class RosterSpeedProfile {
      * ACTIVE.
      * 
      * @param t          The DccThrottle to drive
-     * @param distanceMm Distance in mm (>= 0)
+     * @param distanceMm Distance in mm ({@code >=} 0)
      * @param stopSensor The sensor on which to stop (must not be null)
      */
     public void planApproachToMinOverDistanceThenStopBySensor(
@@ -623,10 +623,10 @@ public class RosterSpeedProfile {
      * ACTIVE. Supports optional speed factor pre-divide.
      * 
      * @param t           The DccThrottle to drive
-     * @param distanceMm  Distance in mm (>= 0)
+     * @param distanceMm  Distance in mm ({@code >=} 0)
      * @param stopSensor  The sensor on which to stop (must not be null)
-     * @param speedFactor If > 0, throttle commands are divided by this factor
-     *                    before enqueuing.
+     * @param speedFactor If {@code >} 0, throttle commands are divided by this
+     *                    factor before enqueuing.
      */
     public void planApproachToMinOverDistanceThenStopBySensor(
             DccThrottle t, float distanceMm, jmri.Sensor stopSensor, float speedFactor) {
@@ -1065,9 +1065,9 @@ public class RosterSpeedProfile {
     /**
      * Set min/max throttle limits, optionally enforcing a scale km/h cap. If
      * maxSpeedScaleKmh == 0.0f, the percent maxOperatingSpeed takes precedence
-     * (no effect). If maxSpeedScaleKmh > 0.0f, we convert the km/h cap to an
-     * equivalent throttle% using the roster profile and the layout scale ratio,
-     * then take the minimum of that and the percent cap.
+     * (no effect). If maxSpeedScaleKmh {@code >} 0.0f, we convert the km/h cap
+     * to an equivalent throttle% using the roster profile and the layout scale
+     * ratio, then take the minimum of that and the percent cap.
      *
      * @param minReliableOperatingSpeed lowest throttle % the loco reliably
      *                                  moves (0..1)
@@ -1850,16 +1850,23 @@ public class RosterSpeedProfile {
     }
 
     /**
-     * Physics-based acceleration to a target throttle percent (0..1).
-     * Builds and runs a throttle/time schedule using this profile's stepQueue/stopTimer.
+     * Physics-based acceleration to a target throttle percent (0..1). Builds
+     * and runs a throttle/time schedule using this profile's
+     * stepQueue/stopTimer.
      *
-     * @param t                    The DccThrottle to drive (must not be null)
-     * @param targetThrottlePct    Desired throttle percent [0..1]
-     * @param driverPowerPercent   Driver power/regulator percent [0..1] (limits applied power/TE during acceleration)
-     * @param additionalWeightTonnes Extra consist mass in metric tonnes (>= 0)
-     * @param rollingResistanceCoeff Rolling resistance coefficient c_rr (>= 0), e.g., ~0.002
-     * @param layoutScaleRatio     Layout scale ratio (full-scale / model), e.g., 87.0 for HO
-     * @param speedFactor          If > 0, throttle commands are divided by this factor before enqueuing
+     * @param t                      The DccThrottle to drive (must not be null)
+     * @param targetThrottlePct      Desired throttle percent [0..1]
+     * @param driverPowerPercent     Driver power/regulator percent [0..1]
+     *                               (limits applied power/TE during
+     *                               acceleration)
+     * @param additionalWeightTonnes Extra consist mass in metric tonnes
+     *                               ({@code >=} 0)
+     * @param rollingResistanceCoeff Rolling resistance coefficient c_rr
+     *                               ({@code >=} 0), e.g., ~0.002
+     * @param layoutScaleRatio       Layout scale ratio (full-scale / model),
+     *                               e.g., 87.0 for HO
+     * @param speedFactor            If {@code >} 0, throttle commands are
+     *                               divided by this factor before enqueuing
      */
     public void runPhysicsAccelerationToTargetThrottle(
             jmri.DccThrottle t,
