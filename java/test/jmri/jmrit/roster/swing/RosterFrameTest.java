@@ -39,8 +39,9 @@ public class RosterFrameTest {
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
-        ProgDebuggerConfigurator prog = (ProgDebuggerConfigurator) InstanceManager
-                .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer().getConfigurator();
+        var globalProgrammer = InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        Assertions.assertNotNull(globalProgrammer);
+        ProgDebuggerConfigurator prog = (ProgDebuggerConfigurator) globalProgrammer.getConfigurator();
         Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
@@ -78,8 +79,9 @@ public class RosterFrameTest {
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
-        ProgDebuggerConfigurator prog = (ProgDebuggerConfigurator) InstanceManager
-                .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer().getConfigurator();
+        var globalProgrammer = InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        Assertions.assertNotNull(globalProgrammer);
+        ProgDebuggerConfigurator prog = (ProgDebuggerConfigurator) globalProgrammer.getConfigurator();
         Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
@@ -123,8 +125,9 @@ public class RosterFrameTest {
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
-        ProgDebuggerConfigurator prog = (ProgDebuggerConfigurator) InstanceManager
-                .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer().getConfigurator();
+        var globalProgrammer = InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        Assertions.assertNotNull(globalProgrammer);
+        ProgDebuggerConfigurator prog = (ProgDebuggerConfigurator) globalProgrammer.getConfigurator();
         Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
@@ -222,8 +225,9 @@ public class RosterFrameTest {
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
-        ProgDebuggerConfigurator prog = (ProgDebuggerConfigurator) InstanceManager
-                .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer().getConfigurator();
+        var globalProgrammer = InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        Assertions.assertNotNull(globalProgrammer);
+        ProgDebuggerConfigurator prog = (ProgDebuggerConfigurator) globalProgrammer.getConfigurator();
         Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
