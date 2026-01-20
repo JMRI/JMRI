@@ -537,6 +537,18 @@ public class JUnitOperationsUtil {
         route.addLocation(l);
         trainA.setRoute(route);
     }
+    
+    public static void loadTrainServingAllExistingLocations() {
+        TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+        Train trainAll = trainManager.newTrain("Test Train All");
+        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+        Route routeAll = routeManager.newRoute("Route Train All");
+        LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
+        for (Location loc : locationManager.getLocationsByNameList()) {
+            routeAll.addLocation(loc);
+        }
+        trainAll.setRoute(routeAll);
+    }
 
     public static void loadTrains() {
         // Add some cars for the various tests in this suite
