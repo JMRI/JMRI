@@ -486,6 +486,8 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         Assertions.assertEquals(1, InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().size());
         Assertions.assertEquals(2, InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().size());
         JUnitAppender.assertErrorMessage("systemName is already registered: IH:SE8c:\"IT11\";\"IT12\"");
+        new JButtonOperator(jfo,Bundle.getMessage("ButtonCancel")).push();
+        jfo.waitClosed();
 
 
         frame = new SignalHeadAddEditFrame(newHead);
