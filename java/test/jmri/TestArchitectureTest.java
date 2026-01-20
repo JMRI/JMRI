@@ -57,7 +57,6 @@ public class TestArchitectureTest {
      */
     @ArchTest
     public static final ArchRule junit4TestRule = noClasses().that()
-        .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.TestArchitectureTest").and()
         .resideOutsideOfPackage("jmri.jmrit.logixng..").
             and().areNotInnerClasses() // within TestArchitectureTest
@@ -89,7 +88,6 @@ public class TestArchitectureTest {
      */
     @ArchTest
     public static final ArchRule junit4BeforeRule = noClasses().that()
-        .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
         .resideOutsideOfPackage("jmri.jmrit.logixng..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Before");
@@ -99,7 +97,6 @@ public class TestArchitectureTest {
      */
     @ArchTest
     public static final ArchRule junit4AfterRule = noClasses().that()
-        .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
         .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
         .resideOutsideOfPackage("jmri.jmrit.logixng..")
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.After");
@@ -141,7 +138,6 @@ public class TestArchitectureTest {
         // JUnit4
         .and().areDeclaredInClassesThat().resideOutsideOfPackage("jmri.jmrit.logixng..")
         .and().areNotDeclaredIn(jmri.jmrit.display.logixng.ActionPositionableTest.class)
-        .and().areNotDeclaredIn(jmri.util.junit.rules.RetryRuleTest.class)
         .should()
         .beAnnotatedWith(BeforeEach.class)
         .orShould().beAnnotatedWith(BeforeAll.class)
@@ -159,7 +155,6 @@ public class TestArchitectureTest {
         // JUnit4
         .and().areDeclaredInClassesThat().resideOutsideOfPackage("jmri.jmrit.logixng..")
         .and().areNotDeclaredIn(jmri.jmrit.display.logixng.ActionPositionableTest.class)
-        .and().areNotDeclaredIn(jmri.util.junit.rules.RetryRuleTest.class)
         .should()
         .beAnnotatedWith(AfterEach.class)
         .orShould().beAnnotatedWith(AfterAll.class)
