@@ -456,13 +456,13 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
 
     /**
      * Tests for the Foo Class
-     * @author  Your Name   Copyright (C) 2022
+     * @author  Your Name   Copyright (C) 2026
      */
     public class FooTest {
 
         @Test
         public void testCtor() {
-            Assertions.AssertNotNull( new foo(), "Foo Constructor Return");
+            Assertions.assertNotNull( new foo(), "Foo Constructor Return");
         }
 
         @BeforeEach
@@ -554,11 +554,11 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
 
           <pre style="font-family: monospace;">
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 </pre>
