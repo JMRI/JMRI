@@ -4,12 +4,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.util.List;
 
-import javax.swing.JComboBox;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
+import jmri.util.swing.XTableColumnModel;
 
 /**
  * Common table model methods for operations.
@@ -120,6 +120,14 @@ public abstract class OperationsTableModel extends javax.swing.table.AbstractTab
                     }
                 }
             }
+        }
+    }
+
+    protected void setToolTip(String text, int col) {
+        XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
+        JComponent jC = (JComponent) tcm.getColumnByModelIndex(col).getCellRenderer();
+        if (jC != null) {
+            jC.setToolTipText(text);
         }
     }
 

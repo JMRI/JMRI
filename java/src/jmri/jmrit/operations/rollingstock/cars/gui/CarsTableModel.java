@@ -24,7 +24,7 @@ import jmri.util.table.ButtonRenderer;
 /**
  * Table Model for edit of cars used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2016, 2025
+ * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2016, 2025, 2026
  */
 public class CarsTableModel extends OperationsTableModel implements PropertyChangeListener {
 
@@ -573,6 +573,11 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
         Car car = carList.get(row);
         if (car == null) {
             return "ERROR car unknown " + row; // NOI18N
+        }
+        if (car.isClone()) {
+            setToolTip(Bundle.getMessage("DoNotModifyClone", car.toString()), col);
+        } else {
+            setToolTip(null, col);
         }
         switch (col) {
             case SELECT_COLUMN:
