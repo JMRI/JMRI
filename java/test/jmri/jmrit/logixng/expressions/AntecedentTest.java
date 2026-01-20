@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -97,9 +98,9 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
     }
 
     @Override
-    public NamedBean createNewBean(String systemName) throws JmriException {
+    public NamedBean createNewBean(String systemName) {
         Antecedent a = new Antecedent(systemName, null);
-        a.setAntecedent("R1");
+        assertDoesNotThrow( () -> a.setAntecedent("R1"));
         return a;
     }
 
