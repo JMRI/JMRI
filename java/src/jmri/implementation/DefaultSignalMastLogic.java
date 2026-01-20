@@ -2045,7 +2045,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             /*This check is purely for use with the dispatcher, it will check to see if any of the blocks are set to "useExtraColor"
              which is a means to determine if the block is in a section that is occupied and it not ours thus we can set the signal to danger.*/
             if (state && getAssociatedSection() != null
-                    && InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null
+                    && InstanceManager.isInitialized(jmri.jmrit.dispatcher.DispatcherFrame.class)
                     && InstanceManager.getNullableDefault(LayoutBlockManager.class) != null
                     && getAssociatedSection().getState() != Section.FORWARD) {
 
