@@ -1631,11 +1631,15 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     public void printEntry(HardcopyWriter w) {
+        printEntry(w, 3f);
+    }
+
+    public void printEntry(HardcopyWriter w, float overSample) {
         if (getIconPath() != null) {
             ImageIcon icon = new ImageIcon(getIconPath());
             // We use an ImageIcon because it's guaranteed to have been loaded when ctor is complete.
             // We set the imagesize to 150x150 pixels
-            int imagesize = 150;
+            int imagesize = Math.round(150 * overSample);
 
             Image img = icon.getImage();
             int width = img.getWidth(null);
@@ -1643,12 +1647,15 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             double widthratio = (double) width / imagesize;
             double heightratio = (double) height / imagesize;
             double ratio = Math.max(widthratio, heightratio);
-            width = (int) (width / ratio);
-            height = (int) (height / ratio);
-            Image newImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+            Image newImg = img;
+            if (ratio > 1) {
+                width = (int) (width / ratio);
+                height = (int) (height / ratio);
+                newImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+            }
 
             ImageIcon newIcon = new ImageIcon(newImg);
-            w.writeNoScale(newIcon.getImage(), new JLabel(newIcon));
+            w.writeWithScale(newIcon.getImage(), overSample, new JLabel(newIcon));
             // Work out the number of line approx that the image takes up.
             // We might need to pad some areas of the roster out, so that things
             // look correct and text doesn't overflow into the image.
