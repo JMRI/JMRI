@@ -329,12 +329,12 @@ For each, if it doesn't have the right milestone set, add the current milestone 
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.15.1-SNAPSHOT/5.15.3-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.15.2-SNAPSHOT/5.15.3-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=1/release.build=2/g release.properties
+        sed -i.bak s/release.build=2/release.build=3/g release.properties
 ```
  - Check that both those edits left 5.15.3 defined in the two files
  
@@ -574,9 +574,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.15.3+Rfe7ff30e7d.dmg](https://github.com/JMRI/JMRI/releases/download/v5.15.3/JMRI.5.15.3+Rfe7ff30e7d.dmg) | edc3d8c0cd4b408a3401b650be264c59224846df2b3dc197d184452f3ece8ca6
-[JMRI.5.15.3+Rfe7ff30e7d.exe](https://github.com/JMRI/JMRI/releases/download/v5.15.3/JMRI.5.15.3+Rfe7ff30e7d.exe) | c813c2688e5a0d23c26675c97ece6c6cf24018e6e0e5bc05b76b0f87fb364dbf
-[JMRI.5.15.3+Rfe7ff30e7d.tgz](https://github.com/JMRI/JMRI/releases/download/v5.15.3/JMRI.5.15.3+Rfe7ff30e7d.tgz) | d895c57d8d48f25d79c138ba502f8c96e65e9d3d7796d0d83cc77328c30da56b
+[JMRI.5.15.3+R3035b2a0f7.dmg](https://github.com/JMRI/JMRI/releases/download/v5.15.3/JMRI.5.15.3+R3035b2a0f7.dmg) | ccb93368ee19f35db6d6a5a765189d6f760c5346a97e50414190b1277f0d5852
+[JMRI.5.15.3+R3035b2a0f7.exe](https://github.com/JMRI/JMRI/releases/download/v5.15.3/JMRI.5.15.3+R3035b2a0f7.exe) | d674e2e30133144a1293f382877ef96975685fcf3472ce846eaff42ba40a25d0
+[JMRI.5.15.3+R3035b2a0f7.tgz](https://github.com/JMRI/JMRI/releases/download/v5.15.3/JMRI.5.15.3+R3035b2a0f7.tgz) | 5238e2311643b297ecd1cf95a1513e6822fbdc699d14ddd1a795caffa5cf4a3f
 
 ```
 
