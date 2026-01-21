@@ -2640,17 +2640,45 @@ public class TrainBuilderBase extends TrainCommon {
             return false;
         }
         // is the track full? If so, pull immediately, prevents overloading
-        if (!car.isLocalMove() &&
-                car.getTrack().getPool() == null &&
-                car.getTrack().getLength() - car.getTrack().getUsedLength() < car.getTotalKernelLength()) {
+        if (checkForPickUps(car, rl, false)) {
             addLine(SEVEN, Bundle.getMessage("buildNoPickupLaterTrack", car.toString(), rld.getName(),
                     car.getTrackName(), rld.getId(), car.getTrack().getLength() - car.getTrack().getUsedLength(),
                     Setup.getLengthUnit().toLowerCase()));
             return false;
         }
+        // are there any other cars being pull from the same track, route location, and train?
+        if (checkForPickUps(car, rl, true)) {
+            addLine(SEVEN, Bundle.getMessage("buildAlreadyPickups", car.toString(), rld.getName(),
+                    car.getTrackName(), rld.getId(), car.getTrack().getTrackTypeName(), rl.getName(),
+                    car.getTrack().getName(), getTrain().getName()));
+            return false;
+        }
         addLine(SEVEN,
                 Bundle.getMessage("buildPickupLaterOkay", car.toString(), rld.getName(), rld.getId()));
         return true;
+    }
+    
+    /*
+     * checks to see if the train being built already has car pick ups at the
+     * same track, route location rl, and train, and there's a track space issue.
+     * 
+     * return true if there are already pick ups from the car's track
+     */
+    private boolean checkForPickUps(Car car, RouteLocation rl, boolean isCheckForCars) {
+        if (!car.isLocalMove() && rl.isDropAllowed()) {
+            int length = 0;
+            if (isCheckForCars) {
+                for (Car c : carManager.getByTrainList(getTrain())) {
+                    if (car.getTrack() == c.getTrack() && rl == c.getRouteLocation()) {
+                        length += c.getTotalKernelLength();
+                    }
+                }
+            }
+            if (car.getTrack().getLength() - car.getTrack().getUsedLength() < car.getTotalKernelLength() + length) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
