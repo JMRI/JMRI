@@ -3627,7 +3627,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public String getIconName() {
         String name = getName();
         if (isBuilt() && getLeadEngine() != null && Setup.isTrainIconAppendEnabled()) {
-            name += " " + getLeadEngine().getNumber();
+            name += " " + getLeadEngineNumber();
         }
         return name;
     }
@@ -3653,7 +3653,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (getLeadEngine() == null) {
             return NONE;
         }
-        return getLeadEngine().toString();
+        return getLeadEngineRoadName() + " " + getLeadEngineNumber();
     }
 
     public String getLeadEngineDccAddress() {

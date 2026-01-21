@@ -2572,10 +2572,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       The tool "Modify Location by Car Load" allows you to quickly select a car type and decide
       which tracks will service the car's load. Only tracks that can service the car's type are
       enabled.
-      
-       <h4 id="ModifyLocationByQuickService">Modify Location by Quick Service</h4>
-       The tool "Modify Location by Quick Service" allows you to quickly see and decide which
-       tracks support the <a href="#InterchangeQuickService">Quick Service</a> feature.
+
+      <h4 id="ModifyLocationByQuickService">Modify Location by Quick Service</h4>
+      The tool "Modify Location by Quick Service" allows you to quickly see and decide which tracks
+      support the
+      <a href="#InterchangeQuickService">Quick Service</a> feature. Also see <a
+        href="#ModifyLocationsByQuickService">Modify Locations and Tracks by Quick Service</a>
 
       <h4 id="ShowCars">Show Cars</h4>
       If you only want to view cars for a location or track, select "Show Cars" from the "Tools"
@@ -3214,12 +3216,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         trains and you've read and can understand the train build reports.</p>
 
       <h3 id="InterchangeQuickService">Quick Service</h3>
-      The quick service feature for a track allow you to create a Manifest or switch list
-      showing cars being moved more than once. When the quick service feature is enabled, the
-      program will create "clone cars" when building a train that delivers cars to the track,
-      and place the original cars at the track, allowing the train being built or another train
-      built later to have access to the cars. This is an advanced feature and is recommended for
-      operators that have gained some experience with the program.
+      The quick service feature for a track allow you to create a Manifest or switch list showing
+      cars being moved more than once. When the quick service feature is enabled, the program will
+      create "clone cars" when building a train that delivers cars to the track, and place the
+      original cars at the track, allowing the train being built or another train built later to
+      have access to the cars. This is an advanced feature and is recommended for operators that
+      have gained some experience with the program. Also see
+      <a href="#ModifyLocationByQuickService">Modify Location by Quick Service</a> and <a
+        href="#QuickLoadService">Quick Load Service (Turn)</a>.
 
       <h3>Quick Service C/I Example</h3>
       The following example shows how to drop off two boxcars to a location that has an industry
@@ -3675,9 +3679,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       for Repair In Place (RIP) tracks.
 
       <h5 id="QuickLoadService">Spur Option (Quick Load Service)</h5>
-      This feature allows you to create a Manifest that shows a car being spotted and then later pulled
-      from the same location using the train that delivered the car, or another train. Useful for
-      train turns and "Less than a car load" or LCL service.
+      This feature allows you to create a Manifest that shows a car being spotted and then later
+      pulled from the same location using the train that delivered the car, or another train. Useful
+      for train turns and "Less than a car load" or LCL service. Also see <a
+        href="#ModifyLocationByQuickService">Modify Location by Quick Service</a>.
 
       <p>
         For a <a href="#TrainTurnRoute">turn</a>, on the outbound leg of the train's route,
