@@ -435,6 +435,11 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
         if (engine == null) {
             return "ERROR engine unknown " + row; // NOI18N
         }
+        if (engine.isClone()) {
+            setToolTip(Bundle.getMessage("DoNotModifyClone", engine.toString()), col);
+        } else {
+            setToolTip(null, col);
+        }
         switch (col) {
             case SELECT_COLUMN:
                 return engine.isSelected();
