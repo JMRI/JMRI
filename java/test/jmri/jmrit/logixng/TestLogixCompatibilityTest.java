@@ -1,8 +1,9 @@
 package jmri.jmrit.logixng;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * Test that LogixNG has at least the same features as Logix
@@ -59,8 +60,8 @@ public class TestLogixCompatibilityTest {
         Assert.assertTrue("CHANGE".equals(DigitalExpressionBean.TriggerCondition.CHANGE.name()));
     }
 */    
-    // The minimal setup for log4J
-    @Before
+
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -71,7 +72,7 @@ public class TestLogixCompatibilityTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
