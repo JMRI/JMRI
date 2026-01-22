@@ -13,8 +13,6 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -285,7 +283,6 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         super.testMaleSocketIsActive();
     }
 
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
@@ -317,7 +314,6 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         _logixNG.setEnabled(false);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         _logixNG.setEnabled(false);
