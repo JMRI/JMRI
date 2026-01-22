@@ -96,6 +96,8 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
             log.warn("error during printing", ex);
         }
 
+	float overSample = isPreview ? 1.5f : 3.0f;
+
         // Loop through the Roster, printing as needed
         List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all
         log.debug("Roster list size: {}", l.size());
@@ -103,10 +105,10 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
             if (rosterGroup != null) {
                 if (re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)) != null
                         && re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)).equals("yes")) {
-                    re.printEntry(writer);
+                    re.printEntry(writer, overSample);
                 }
             } else {
-                re.printEntry(writer);
+                re.printEntry(writer, overSample);
             }
         }
 

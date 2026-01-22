@@ -1631,14 +1631,16 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     public void printEntry(HardcopyWriter w) {
-        printEntry(w, 3f);
+        printEntry(w, w.getIsPreview() ? 1.5f : 3.0f);
     }
 
     public void printEntry(HardcopyWriter w, float overSample) {
         if (getIconPath() != null) {
             ImageIcon icon = new ImageIcon(getIconPath());
             // We use an ImageIcon because it's guaranteed to have been loaded when ctor is complete.
-            // We set the imagesize to 150x150 pixels
+            // We set the imagesize to 150x150 pixels times the overSample. The
+	    // resulting image on the page will be scaled back down to 150pt x 150pt
+
             int imagesize = Math.round(150 * overSample);
 
             Image img = icon.getImage();
@@ -1652,17 +1654,25 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 width = (int) (width / ratio);
                 height = (int) (height / ratio);
                 newImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-            }
+            } else {
+	        // The image isn't big enough to start with
+                // We don't want to scale it down by the original overSample value
+		// So we adjust the oversample so that it just fits.
+                overSample = Math.max(overSample * (float) ratio, 1f);
+	    }
 
+            blanks = ((int) Math.ceil(height / overSample) - w.getLineAscent()) / w.getLineHeight();
+
+            if (blanks + w.getCurrentLineNumber() > w.getLinesPerPage()) {
+ 	        w.pageBreak();
+            }
             ImageIcon newIcon = new ImageIcon(newImg);
             w.writeWithScale(newIcon.getImage(), overSample, new JLabel(newIcon));
             // Work out the number of line approx that the image takes up.
             // We might need to pad some areas of the roster out, so that things
             // look correct and text doesn't overflow into the image.
-            blanks = (newImg.getHeight(null) - w.getLineAscent()) / w.getLineHeight();
             textSpaceWithIcon
-                    = w.getCharactersPerLine() - ((newImg.getWidth(null) / w.getCharWidth())) - indentWidth - 1;
-
+                    = w.getCharactersPerLine() - ((int)Math.ceil(width / overSample) / w.getCharWidth()) - indentWidth - 1;
         }
         printEntryDetails(w);
     }

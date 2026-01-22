@@ -481,6 +481,16 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
+     * Return a boolean indicating if this is a preview or not
+     *
+     * @return the value of isPreview
+     */
+
+    public boolean getIsPreview() {
+        return isPreview;
+    }
+
+    /**
      * Return the number of columns of characters that fit on a page.
      *
      * @return the number of characters in a line
