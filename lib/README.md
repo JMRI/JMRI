@@ -146,11 +146,12 @@ which checks the dates of the control files to make sure they've been updated wh
 
 ##### openlcb.jar
  - 0.8.6 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.6/openlcb-0.8.6.jar
+ - with PR 298 pre-release https://github.com/openlcb/OpenLCB_Java/pull/298
  
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
-##### jSerialComm-2.10.4.jar
+##### jSerialComm-2.11.4.jar
 - Supported serial lib since JMRI 5.7.1
 - from https://fazecast.github.io/jSerialComm/
 
@@ -173,9 +174,14 @@ which checks the dates of the control files to make sure they've been updated wh
 - JSON processing library com.fasterxml.jackson
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
 
-##### json-schema-validator-1.0.28.jar
+##### json-schema-validator-1.3.3.jar
 - JSON Schema validation library
 - from https://github.com/networknt/json-schema-validator/releases
+
+##### itu-1.14.0.jar
+- Internet Time Utility date-time parser and formatter
+- Required by json-schema-validator-1.3.3
+- from https://mvnrepository.com/artifact/com.ethlo.time/itu/1.14.0 12/12/2025
 
 ##### org.eclipse.paho.client.mqttv3-1.2.5.jar
  - Eclipse Paho library  https://www.eclipse.org/paho/
@@ -388,7 +394,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - used to rebuild Help metadata
 
 ##### objenesis-3.3.jar
-- version 3.3
+- version 3.4
 - Mockito dependency
 
 ##### opentest4j-1.3.0.jar
@@ -411,8 +417,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 2.6
 - batik related
 
-##### BiDiB protocol implementation: jbidibc-*-2.0.29.jar, bidibwizard-*-2.0.30.jar
-- version 2.0.29 / 2.0.30
+##### BiDiB protocol implementation: jbidibc-*-2.0.40.jar, bidibwizard-*-2.0.44.jar
+- version 2.0.40 / 2.0.44
 - bidibwizard*.jar supports the BiDiB connection simulation
 
 ##### commons-collections4-4.4.jar
@@ -450,7 +456,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 1.4.1
 
 ##### byte-buddy-1.14.15
-- version 1.14.15
+- version 1.18.2
 - Mockito dependency
 
 ##### checker-framework directory and contents
@@ -509,7 +515,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Downloaded from Maven Central 2025-09-25
 
 ##### mockito-core mockito-junit-jupiter
-- version 5.12.0
+- version 5.20.0
 
 ##### OpenIDE Utilities
 - org-openide-util-lookup-RELEASE150.jar
@@ -547,10 +553,10 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From FindBugs 3.0.0 from http://findbugs.sourceforge.net
 - Only needed at compile/build time, not runtime
 
-##### spotbugs-annotations-4.8.6.jar
-- From SpotBugs 4.8.6
+##### spotbugs-annotations-4.9.8.jar
+- From SpotBugs 4.9.8
 - Only needed at compile/build time, not runtime
-- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.8.6
+- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.9.8
 
 ##### picocontainer-2.15.jar
 - version 2.15
@@ -558,8 +564,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Used for testing only, not at runtime
 
 
-##### org.jacoco.ant-0.8.11-nodeps.jar
-- version 0.8.11
+##### org.jacoco.ant-0.8.14-nodeps.jar
+- version 0.8.14
 
 ## Older, no longer present:
 

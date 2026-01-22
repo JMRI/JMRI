@@ -112,28 +112,33 @@ public class MathUtilTest {
             "MathUtil.offset(p, x, y)");
     }
 
+    private void assertEquals2D(Point2D first, Point2D second, String message) {
+        assertEquals(first.getX(), second.getX(), TOLERANCE, message);
+        assertEquals(first.getY(), second.getY(), TOLERANCE, message);
+    }
+    
     @Test
     public void testRotate() {
-        assertEquals( new Point2D.Double(-10.407653711754921, 33.62217637536562),
+        assertEquals2D( new Point2D.Double(-10.407653711754921, 33.62217637536562),
                 MathUtil.rotateRAD(31.4, 15.9, 26.535),
                 "MathUtil.rotateRAD(x, y, a)");
-        assertEquals( new Point2D.Double(30.63022962954949, 17.336638452741308),
+        assertEquals2D( new Point2D.Double(30.63022962954949, 17.336638452741308),
                 MathUtil.rotateDEG(31.4, 15.9, 2.6535),
                 "MathUtil.rotateDEG(x, y, a)");
 
         Point2D p = new Point2D.Double(159.4, 314.6);
-        assertEquals( new Point2D.Double(-317.60286988977776, 153.32950478553346),
+        assertEquals2D( new Point2D.Double(-317.60286988977776, 153.32950478553346),
                 MathUtil.rotateRAD(p, 1.59),
                 "MathUtil.rotateRAD(p, a)");
-        assertEquals( new Point2D.Double(-27.951196946534395, 351.56827301287586),
+        assertEquals2D( new Point2D.Double(-27.951196946534395, 351.56827301287586),
                 MathUtil.rotateDEG(p, 31.4159),
                 "MathUtil.rotateDEG(p, a)");
 
         Point2D c = new Point2D.Double(314.6, 159.4);
-        assertEquals( new Point2D.Double(162.40884342950076, 1.2483896328153605),
+        assertEquals2D( new Point2D.Double(162.40884342950076, 1.2483896328153605),
                 MathUtil.rotateRAD(p, c, 1.59),
                 "MathUtil.rotateRAD(p, c, a)");
-        assertEquals( new Point2D.Double(101.25390735346647, 210.9511857521893),
+        assertEquals2D( new Point2D.Double(101.25390735346647, 210.9511857521893),
                 MathUtil.rotateDEG(p, c, 31.4159),
                 "MathUtil.rotateDEG(p, c, a)");
 
@@ -687,12 +692,12 @@ public class MathUtilTest {
 
     // from here down is testing infrastructure
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 

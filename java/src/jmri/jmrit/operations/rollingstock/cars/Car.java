@@ -63,9 +63,6 @@ public class Car extends RollingStock {
     public static final String PASSENGER_EXTENSION = Bundle.getMessage("(P)");
     public static final String UTILITY_EXTENSION = Bundle.getMessage("(U)");
     public static final String HAZARDOUS_EXTENSION = Bundle.getMessage("(H)");
-    public static final String CLONE = TrainCommon.HYPHEN + "(Clone)"; // NOI18N
-    // parentheses are special chars
-    public static final String CLONE_REGEX = TrainCommon.HYPHEN + "\\(Clone\\)"; // NOI18N
 
     public static final String LOAD_CHANGED_PROPERTY = "Car load changed"; // NOI18N
     public static final String RWE_LOAD_CHANGED_PROPERTY = "Car RWE load changed"; // NOI18N
@@ -1118,6 +1115,7 @@ public class Car extends RollingStock {
             int cloneCreationNumber = Integer.parseInt(number[1]);
             if (cloneCreationNumber <= car.getCloneOrder()) {
                 car.setLocation(getLocation(), getTrack(), Car.FORCE);
+                car.setRouteDestination(null); // clear rd
                 car.setLoadName(getLoadName());
                 car.setLastTrain(getLastTrain());
                 car.setLastRouteId(getLastRouteId());

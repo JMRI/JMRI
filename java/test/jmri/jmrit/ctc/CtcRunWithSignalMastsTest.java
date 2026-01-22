@@ -8,6 +8,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalMastManager;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -28,17 +29,19 @@ public class CtcRunWithSignalMastsTest {
     public void testAction() throws Exception {
 
         // Load the test panel and initialize Logix and advanced block routing
-        java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Masts-SML.xml");  // NOI18N
-        InstanceManager.getDefault(jmri.ConfigureManager.class).load(f);
-        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
-        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        ThreadingUtil.runOnGUIWithJmriException(() -> {
+            java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Masts-SML.xml");  // NOI18N
+            InstanceManager.getDefault(jmri.ConfigureManager.class).load(f);
+            InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
+            InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        });
 
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
         JUnitUtil.waitFor(5000);     // Wait for block routing and SML initialization
 
         // Load the CTC run time
-        new CtcRunAction().actionPerformed(null);
+        ThreadingUtil.runOnGUI(() -> new CtcRunAction().actionPerformed(null) );
         JUnitUtil.waitFor(1000);     // Wait for CTC run time to finish its setup
         // Make sure the rum time is active
         JUnitUtil.waitFor(()->{return sm.provideSensor("IS2:NGK").getKnownState() == Sensor.ACTIVE;},"1/2 signal normal indicator not active");

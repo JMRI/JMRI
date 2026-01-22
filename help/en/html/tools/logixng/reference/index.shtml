@@ -80,6 +80,11 @@
         </li>
 
         <li>
+          <a href="chapter11_1.shtml">Chapter 11.1 - Table Icon</a>
+          <span class="since">since 5.15.1</span>
+        </li>
+
+        <li>
           <a href="chapter12.shtml">Chapter 12 - Global Variables</a>
           <span class="since">since 4.99.7</span>
         </li>

@@ -1,7 +1,16 @@
 package jmri.jmrit.logixng;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyVetoException;
+import java.io.IOException;
 import java.util.*;
 
 import jmri.*;
@@ -25,7 +34,6 @@ import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 import jmri.script.ScriptEngineSelector;
 import jmri.util.*;
 
-import org.junit.*;
 
 /**
  * Creates a LogixNG with all actions and expressions to test store and load.
@@ -95,16 +103,24 @@ public class CreateLogixNGTreeScaffold {
     private static NamedBeanReference getNamedBeanReference(
             Collection<NamedBeanReference> collection, String name) {
         for (NamedBeanReference ref : collection) {
-            if (name.equals(ref.getName())) return ref;
+            if (name.equals(ref.getName())) {
+                return ref;
+            }
         }
         return null;
     }
 
-    public void createLogixNGTree() throws PropertyVetoException, Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
+    public void createLogixNGTree() {
+        assertFalse(GraphicsEnvironment.isHeadless(),
+                "Test cannot run headless, please use DisabledIfHeadless annotation.");
         // Ensure the setUp() and tearDown() methods of this class are called.
-        Assert.assertTrue(setupHasBeenCalled);
+        assertTrue(setupHasBeenCalled);
+        assertDoesNotThrow( () ->
+            createLogixNGTreeWithExceptions());
+    }
+
+    private void createLogixNGTreeWithExceptions() throws PropertyVetoException, IOException,
+            SocketAlreadyConnectedException, ParserException, JmriException {
 /*
         audioManager = new jmri.jmrit.audio.DefaultAudioManager(
                 InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
@@ -159,14 +175,12 @@ public class CreateLogixNGTreeScaffold {
         memory3 = InstanceManager.getDefault(MemoryManager.class).provide("IM3");
 
         dp1 = InstanceManager.getDefault(EntryExitPairs.class).getBySystemName("DP1");
-        if (!( dp1 instanceof TransitScaffold.MyDestinationPoints )) {
-            Assert.fail("Destination point not MyDestinationPoints");
-        }
+        assertInstanceOf( TransitScaffold.MyDestinationPoints.class, dp1,
+                "Destination point not MyDestinationPoints");
 
         dp2 = InstanceManager.getDefault(EntryExitPairs.class).getBySystemName("DP2");
-        if (!( dp2 instanceof TransitScaffold.MyDestinationPoints )) {
-            Assert.fail("Destination point not MyDestinationPoints");
-        }
+        assertInstanceOf( TransitScaffold.MyDestinationPoints.class, dp2,
+                "Destination point not MyDestinationPoints");
 
         logixManager = InstanceManager.getDefault(LogixManager.class);
         conditionalManager = InstanceManager.getDefault(ConditionalManager.class);
@@ -198,8 +212,8 @@ public class CreateLogixNGTreeScaffold {
         warrant.addBlockOrder(new BlockOrder(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock("OB99")));
 
         stringIO = InstanceManager.getDefault(StringIOManager.class).provideStringIO("MyStringIO");
-        Assert.assertNotNull(stringIO);
-        Assert.assertEquals("ICMyStringIO", stringIO.getSystemName());
+        assertNotNull(stringIO);
+        assertEquals("ICMyStringIO", stringIO.getSystemName());
 
         logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
@@ -269,7 +283,7 @@ public class CreateLogixNGTreeScaffold {
         // Load table turnout_and_signals.csv
         csvTable = InstanceManager.getDefault(NamedTableManager.class)
                         .loadTableFromCSV("IQT1", null, "program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
-        Assert.assertNotNull(csvTable);
+        assertNotNull(csvTable);
 
         // Create module IQM1
         Module module =
@@ -1001,10 +1015,10 @@ public class CreateLogixNGTreeScaffold {
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         NamedBeanReference ref = getNamedBeanReference(actionListenOnBeans.getReferences(), light1.getSystemName());
-        Assert.assertNotNull(ref);
-        Assert.assertEquals(light1.getSystemName(), ref.getName());
-        Assert.assertEquals(NamedBeanType.Light, ref.getType());
-        Assert.assertFalse(ref.getListenOnAllProperties());
+        assertNotNull(ref);
+        assertEquals(light1.getSystemName(), ref.getName());
+        assertEquals(NamedBeanType.Light, ref.getType());
+        assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
@@ -1015,10 +1029,10 @@ public class CreateLogixNGTreeScaffold {
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         ref = getNamedBeanReference(actionListenOnBeans.getReferences(), light2.getUserName());
-        Assert.assertNotNull(ref);
-        Assert.assertEquals(light2.getUserName(), ref.getName());
-        Assert.assertEquals(NamedBeanType.Light, ref.getType());
-        Assert.assertFalse(ref.getListenOnAllProperties());
+        assertNotNull(ref);
+        assertEquals(light2.getUserName(), ref.getName());
+        assertEquals(NamedBeanType.Light, ref.getType());
+        assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
@@ -1026,10 +1040,10 @@ public class CreateLogixNGTreeScaffold {
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         ref = getNamedBeanReference(actionListenOnBeans.getReferences(), memory1.getSystemName());
-        Assert.assertNotNull(ref);
-        Assert.assertEquals(memory1.getSystemName(), ref.getName());
-        Assert.assertEquals(NamedBeanType.Memory, ref.getType());
-        Assert.assertFalse(ref.getListenOnAllProperties());
+        assertNotNull(ref);
+        assertEquals(memory1.getSystemName(), ref.getName());
+        assertEquals(NamedBeanType.Memory, ref.getType());
+        assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
@@ -1037,10 +1051,10 @@ public class CreateLogixNGTreeScaffold {
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         ref = getNamedBeanReference(actionListenOnBeans.getReferences(), memory2.getUserName());
-        Assert.assertNotNull(ref);
-        Assert.assertEquals(memory2.getUserName(), ref.getName());
-        Assert.assertEquals(NamedBeanType.Memory, ref.getType());
-        Assert.assertTrue(ref.getListenOnAllProperties());
+        assertNotNull(ref);
+        assertEquals(memory2.getUserName(), ref.getName());
+        assertEquals(NamedBeanType.Memory, ref.getType());
+        assertTrue(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
@@ -1048,10 +1062,10 @@ public class CreateLogixNGTreeScaffold {
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         ref = getNamedBeanReference(actionListenOnBeans.getReferences(), sensor1.getSystemName());
-        Assert.assertNotNull(ref);
-        Assert.assertEquals(sensor1.getSystemName(), ref.getName());
-        Assert.assertEquals(NamedBeanType.Sensor, ref.getType());
-        Assert.assertFalse(ref.getListenOnAllProperties());
+        assertNotNull(ref);
+        assertEquals(sensor1.getSystemName(), ref.getName());
+        assertEquals(NamedBeanType.Sensor, ref.getType());
+        assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
@@ -1059,10 +1073,10 @@ public class CreateLogixNGTreeScaffold {
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         ref = getNamedBeanReference(actionListenOnBeans.getReferences(), sensor2.getUserName());
-        Assert.assertNotNull(ref);
-        Assert.assertEquals(sensor2.getUserName(), ref.getName());
-        Assert.assertEquals(NamedBeanType.Sensor, ref.getType());
-        Assert.assertFalse(ref.getListenOnAllProperties());
+        assertNotNull(ref);
+        assertEquals(sensor2.getUserName(), ref.getName());
+        assertEquals(NamedBeanType.Sensor, ref.getType());
+        assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
@@ -1070,10 +1084,10 @@ public class CreateLogixNGTreeScaffold {
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         ref = getNamedBeanReference(actionListenOnBeans.getReferences(), turnout1.getSystemName());
-        Assert.assertNotNull(ref);
-        Assert.assertEquals(turnout1.getSystemName(), ref.getName());
-        Assert.assertEquals(NamedBeanType.Turnout, ref.getType());
-        Assert.assertFalse(ref.getListenOnAllProperties());
+        assertNotNull(ref);
+        assertEquals(turnout1.getSystemName(), ref.getName());
+        assertEquals(NamedBeanType.Turnout, ref.getType());
+        assertFalse(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
@@ -1081,10 +1095,10 @@ public class CreateLogixNGTreeScaffold {
         maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
         ref = getNamedBeanReference(actionListenOnBeans.getReferences(), turnout2.getUserName());
-        Assert.assertNotNull(ref);
-        Assert.assertEquals(turnout2.getUserName(), ref.getName());
-        Assert.assertEquals(NamedBeanType.Turnout, ref.getType());
-        Assert.assertTrue(ref.getListenOnAllProperties());
+        assertNotNull(ref);
+        assertEquals(turnout2.getUserName(), ref.getName());
+        assertEquals(NamedBeanType.Turnout, ref.getType());
+        assertTrue(ref.getListenOnAllProperties());
 
         actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeans.setComment("A comment");
@@ -2792,6 +2806,18 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        ValidationError validationError = new ValidationError(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(validationError);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        validationError = new ValidationError(digitalActionManager.getAutoSystemName(), null);
+        validationError.getSelectMessage().setValue("The value must be between 1 and 10");
+        maleSocket = digitalActionManager.registerAction(validationError);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         WebBrowser webBrowser = new WebBrowser(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(webBrowser);
         maleSocket.setEnabled(false);
@@ -3671,7 +3697,7 @@ public class CreateLogixNGTreeScaffold {
 
 
         errorAction = new jmri.jmrit.logixng.actions.Error(digitalActionManager.getAutoSystemName(), null);
-        errorAction.setMessage("Some error has occurred");
+        validationError.getSelectMessage().setValue("Some error has occurred");
         maleSocket = digitalActionManager.registerAction(errorAction);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -4030,7 +4056,7 @@ public class CreateLogixNGTreeScaffold {
     }
 
     public void createLogixNGTreeSecond(MaleDigitalActionSocket actionManySocket, FemaleSocket femaleRootSocket)
-            throws PropertyVetoException, Exception {
+            throws PropertyVetoException, SocketAlreadyConnectedException, JmriException {
 
         int indexAction = actionManySocket.getChildCount() - 1;
 
@@ -6029,16 +6055,16 @@ public class CreateLogixNGTreeScaffold {
 
 
         // Check that we have actions/expressions in every managers
-        Assert.assertNotEquals(0, logixNG_Manager.getNamedBeanSet().size());
-        Assert.assertNotEquals(0, analogActionManager.getNamedBeanSet().size());
-        Assert.assertNotEquals(0, analogExpressionManager.getNamedBeanSet().size());
-        Assert.assertNotEquals(0, digitalActionManager.getNamedBeanSet().size());
-        Assert.assertNotEquals(0, digitalExpressionManager.getNamedBeanSet().size());
-        Assert.assertNotEquals(0, stringActionManager.getNamedBeanSet().size());
-        Assert.assertNotEquals(0, stringExpressionManager.getNamedBeanSet().size());
-        Assert.assertNotEquals(0, InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().size());
-        Assert.assertNotEquals(0, InstanceManager.getDefault(NamedTableManager.class).getNamedBeanSet().size());
-        Assert.assertNotEquals(0, InstanceManager.getDefault(GlobalVariableManager.class).getNamedBeanSet().size());
+        assertNotEquals(0, logixNG_Manager.getNamedBeanSet().size());
+        assertNotEquals(0, analogActionManager.getNamedBeanSet().size());
+        assertNotEquals(0, analogExpressionManager.getNamedBeanSet().size());
+        assertNotEquals(0, digitalActionManager.getNamedBeanSet().size());
+        assertNotEquals(0, digitalExpressionManager.getNamedBeanSet().size());
+        assertNotEquals(0, stringActionManager.getNamedBeanSet().size());
+        assertNotEquals(0, stringExpressionManager.getNamedBeanSet().size());
+        assertNotEquals(0, InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().size());
+        assertNotEquals(0, InstanceManager.getDefault(NamedTableManager.class).getNamedBeanSet().size());
+        assertNotEquals(0, InstanceManager.getDefault(GlobalVariableManager.class).getNamedBeanSet().size());
 
 
 
@@ -6103,7 +6129,7 @@ public class CreateLogixNGTreeScaffold {
         for (var clazz : missingClasses) {
             log.error("Class {} is not added by CreateLogixNGTreeScaffold.createLogixNGTree()", clazz.getName());
         }
-        Assert.assertTrue(missingClasses.isEmpty());
+        assertTrue(missingClasses.isEmpty());
 
 /*
         if (1==1) {
@@ -6317,17 +6343,17 @@ public class CreateLogixNGTreeScaffold {
             logixNG_InitializationManager.delete(0);
         }
 
-        Assert.assertEquals(0, logixNG_Manager.getNamedBeanSet().size());
-        Assert.assertEquals(0, analogActionManager.getNamedBeanSet().size());
-        Assert.assertEquals(0, analogExpressionManager.getNamedBeanSet().size());
-        Assert.assertEquals(0, digitalActionManager.getNamedBeanSet().size());
-        Assert.assertEquals(0, digitalExpressionManager.getNamedBeanSet().size());
-        Assert.assertEquals(0, stringActionManager.getNamedBeanSet().size());
-        Assert.assertEquals(0, stringExpressionManager.getNamedBeanSet().size());
-        Assert.assertEquals(0, InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().size());
-        Assert.assertEquals(0, InstanceManager.getDefault(NamedTableManager.class).getNamedBeanSet().size());
-        Assert.assertEquals(0, InstanceManager.getDefault(GlobalVariableManager.class).getNamedBeanSet().size());
-        Assert.assertEquals(0, logixNG_InitializationManager.getList().size());
+        assertEquals(0, logixNG_Manager.getNamedBeanSet().size());
+        assertEquals(0, analogActionManager.getNamedBeanSet().size());
+        assertEquals(0, analogExpressionManager.getNamedBeanSet().size());
+        assertEquals(0, digitalActionManager.getNamedBeanSet().size());
+        assertEquals(0, digitalExpressionManager.getNamedBeanSet().size());
+        assertEquals(0, stringActionManager.getNamedBeanSet().size());
+        assertEquals(0, stringExpressionManager.getNamedBeanSet().size());
+        assertEquals(0, InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet().size());
+        assertEquals(0, InstanceManager.getDefault(NamedTableManager.class).getNamedBeanSet().size());
+        assertEquals(0, InstanceManager.getDefault(GlobalVariableManager.class).getNamedBeanSet().size());
+        assertEquals(0, logixNG_InitializationManager.getList().size());
     }
 
 

@@ -38,9 +38,7 @@ public class NonNullArrayListTest {
         assertEquals(0, t.size());
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION",
-        justification = "passing null to non-null to check exception")
-    @SuppressWarnings("null")
+    @SuppressWarnings("null") // passing null to non-null to check exception
     private void addNull(NonNullArrayList<Integer> t){
         t.add(null);
     }
@@ -54,9 +52,7 @@ public class NonNullArrayListTest {
         assertEquals(0, t.size());
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION",
-        justification = "passing null to non-null to check exception")
-    @SuppressWarnings("null")
+    @SuppressWarnings("null") // passing null to non-null to check exception
     private void addZeroNull(NonNullArrayList<Integer> t){
         t.add(0, null);
     }
@@ -70,9 +66,7 @@ public class NonNullArrayListTest {
         assertEquals(0, t.size());
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION",
-        justification = "passing null to non-null to check exception")
-    @SuppressWarnings("null")
+    @SuppressWarnings("null") // passing null to non-null to check exception
     private void setZeroNull(NonNullArrayList<Integer> t){
         t.set(0, null);
     }

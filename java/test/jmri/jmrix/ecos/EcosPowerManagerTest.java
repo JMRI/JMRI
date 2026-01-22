@@ -1,8 +1,10 @@
 package jmri.jmrix.ecos;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,12 +14,12 @@ import org.junit.jupiter.api.*;
 public class EcosPowerManagerTest {
 
     @Test
-    public void testCTor() throws Exception {
+    public void testCTor() {
         EcosTrafficController tc = new EcosInterfaceScaffold();
         EcosPowerManager t = new EcosPowerManager(tc);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
 
-        t.dispose();
+        assertDoesNotThrow( () -> t.dispose() );
         tc.terminateThreads();
     }
 

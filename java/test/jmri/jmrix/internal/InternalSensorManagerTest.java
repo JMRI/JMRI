@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
@@ -193,9 +195,14 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
 
         java.util.SortedSet<Sensor> set = l.getNamedBeanSet();
         UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class,
-            () -> set.add(null));
+            () -> addNullToSet(set));
         assertNotNull(ex);
 
+    }
+
+    @SuppressFBWarnings(value = "NP_NONNULL_PARAM_VIOLATION", justification = "Testing exception")
+    private void addNullToSet( java.util.SortedSet<Sensor> set) {
+        set.add(null);
     }
 
     // from here down is testing infrastructure

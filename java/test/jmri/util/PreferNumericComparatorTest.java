@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Tests for the jmri.util.StringUtil class.
+ * Tests for the jmri.util.PreferNumericComparator class.
  *
  * @author Bob Jacobsen Copyright 2003
  */
@@ -50,6 +50,16 @@ public class PreferNumericComparatorTest {
         assertEquals( -1, c.compare("1.1.0", "2.1.0"), " 1.1.0 < 2.1.0");
         assertEquals( 0, c.compare("1.1.1", "1.1.1"), " 1.1.1 == 1.1.1");
         assertEquals( 1, c.compare("2.1.0", "1.1.0"), " 2.1.0 > 1.1.0");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

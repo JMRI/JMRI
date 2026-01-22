@@ -830,7 +830,6 @@ public class LayoutTurntableView extends LayoutTrackView {
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         log.trace("LayoutTurntable:draw1 at {}", getCoordsCenter());
         float trackWidth = 2.F;
-        float halfTrackWidth = trackWidth / 2.f;
         double diameter = 2.f * getRadius();
 
         if (isBlock && isMain) {
@@ -874,7 +873,17 @@ public class LayoutTurntableView extends LayoutTrackView {
             if (main == isMain) {
                 g2.draw(new Line2D.Double(pt1, pt2));
             }
-            if (isMain && isTurnoutControlled() && (getPosition() == j)) {
+
+            int knownPosition = getPosition();
+            int commandedPosition = turntable.getCommandedPosition();
+
+            // Don't draw the bridge if animating and position is changing
+            if (layoutEditor.isAnimating() && isTurnoutControlled() && knownPosition != commandedPosition) {
+                continue;
+            }
+
+            int currentPositionIndex = (knownPosition != -1) ? getRayIndex(knownPosition) : -1;
+            if (isMain && isTurnoutControlled() && (currentPositionIndex == j) ) {
                 if (isBlock) {
                     LayoutBlock lb = getLayoutBlock();
                     if (lb != null) {
@@ -884,9 +893,12 @@ public class LayoutTurntableView extends LayoutTrackView {
                         g2.setColor(layoutEditor.getDefaultTrackColorColor());
                     }
                 }
-                delta = MathUtil.normalize(delta, getRadius() - halfTrackWidth);
-                pt1 = MathUtil.subtract(getCoordsCenter(), delta);
-                g2.draw(new Line2D.Double(pt1, pt2));
+                // Draw an asymmetric bridge to act as a pointer.
+                // The long end (pt2) points toward the selected ray.
+                // The short end (short_pt1) points away from it, at 0.8 * radius.
+                Point2D short_delta = MathUtil.normalize(delta, getRadius() * 0.8);
+                Point2D short_pt1 = MathUtil.subtract(getCoordsCenter(), short_delta);
+                g2.draw(new Line2D.Double(short_pt1, pt2));
             }
             if (color != null) {
                 g2.setColor(color); /// restore previous color
@@ -930,7 +942,9 @@ public class LayoutTurntableView extends LayoutTrackView {
                 g2.draw(new Line2D.Double(pt1L, pt2L));
                 g2.draw(new Line2D.Double(pt1R, pt2R));
             }
-            if (isMain && isTurnoutControlled() && (getPosition() == j)) {
+            // getPosition() will return -1 if no ray is selected (all turnouts are closed).
+            int currentPositionIndex = (getPosition() != -1) ? getRayIndex(getPosition()) : -1;
+            if (isMain && isTurnoutControlled() && (currentPositionIndex == j)) {
 //                LayoutBlock lb = getLayoutBlock();
 //                if (lb != null) {
 //                    c = g2.getColor();

@@ -1,9 +1,11 @@
 package jmri.jmrix.nce;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import jmri.JmriException;
 import jmri.ProgrammingMode;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -17,61 +19,37 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Test
     @Override
     public void testDefault() {
-        Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
-                programmer.getMode());
+        assertEquals( ProgrammingMode.PAGEMODE, programmer.getMode(),
+            "Check Default");
     }
 
     @Override
     @Test
     public void testDefaultViaBestMode() {
-        Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
-                ((NceProgrammer) programmer).getBestMode());
+        assertEquals( ProgrammingMode.PAGEMODE, ((NceProgrammer) programmer).getBestMode(),
+            "Check Default");
     }
 
     @Override
     @Test
     public void testGetCanWriteAddress() {
-        Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
+        assertFalse( programmer.getCanWrite("1234"), "can write address");
     }
-
-    @Override
-    @BeforeEach
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        // infrastructure objects
-        l = new jmri.ProgListenerScaffold();
-        tc = new NceInterfaceScaffold();
-        tc.setCommandOptions(NceTrafficController.OPTION_2004);
-        programmer = p = new NceProgrammer(tc);
-    }
-
-    @Override
-    @AfterEach
-    public void tearDown() {
-        tc = null;
-        programmer = p = null;
-        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        jmri.util.JUnitUtil.tearDown();
-    }
-
-    // infrastructure objects
-    private NceInterfaceScaffold tc;
-    private NceProgrammer p = null;
-    private jmri.ProgListenerScaffold l;
 
     @Test
-    public void testWriteCvSequenceAscii() throws JmriException, Exception {
+    public void testWriteCvSequenceAscii() throws JmriException {
         // and do the write
         p.writeCV("10", 20, l);
         // correct message sent
-        Assert.assertEquals("mode message sent", 1, tc.outbound.size());
-        Assert.assertEquals("write message contents", "P010 020",
-                ((tc.outbound.elementAt(0))).toString());
+        assertEquals( 1, tc.outbound.size(), "mode message sent");
+        assertEquals( "P010 020",
+                ((tc.outbound.elementAt(0))).toString(),
+                "write message contents");
         // reply from programmer arrives
         NceReply r = new NceReply(tc);
         tc.sendTestReply(r, p);
-        Assert.assertEquals(" got data value back", 20, l.getRcvdValue());
-        Assert.assertEquals(" listener invoked", 1, l.getRcvdInvoked());
+        assertEquals( 20, l.getRcvdValue(), " got data value back");
+        assertEquals( 1, l.getRcvdInvoked(), " listener invoked");
     }
 
     @Test
@@ -82,14 +60,15 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         // and do the write
         p.writeCV("3", 12, l);
         // check "prog mode" message sent
-        Assert.assertEquals("write message sent", 1, tc.outbound.size());
-        Assert.assertEquals("write message contents", "S3 012",
-                ((tc.outbound.elementAt(0))).toString());
+        assertEquals( 1, tc.outbound.size(), "write message sent");
+        assertEquals( "S3 012",
+                ((tc.outbound.elementAt(0))).toString(),
+                "write message contents");
         // reply from programmer arrives
         NceReply r = new NceReply(tc);
         tc.sendTestReply(r, p);
-        Assert.assertEquals(" got data value back", 12, l.getRcvdValue());
-        Assert.assertEquals(" listener invoked", 1, l.getRcvdInvoked());
+        assertEquals( 12, l.getRcvdValue(), " got data value back");
+        assertEquals( 1, l.getRcvdInvoked(), " listener invoked");
     }
 
     @Test
@@ -98,9 +77,10 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         p.readCV("10", l);
 
         // check "read command" message sent
-        Assert.assertEquals("read message sent", 1, tc.outbound.size());
-        Assert.assertEquals("read message contents", "R010",
-                ((tc.outbound.elementAt(0))).toString());
+        assertEquals( 1, tc.outbound.size(), "read message sent");
+        assertEquals( "R010",
+                ((tc.outbound.elementAt(0))).toString(),
+                "read message contents");
         // reply from programmer arrives
         NceReply r = new NceReply(tc);
         r.setElement(0, '0');
@@ -108,8 +88,8 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         r.setElement(2, '0');
         tc.sendTestReply(r, p);
 
-        Assert.assertEquals(" programmer listener invoked", 1, l.getRcvdInvoked());
-        Assert.assertEquals(" value read", 20, l.getRcvdValue());
+        assertEquals( 1, l.getRcvdInvoked(), " programmer listener invoked");
+        assertEquals( 20, l.getRcvdValue(), " value read");
     }
 
     @Test
@@ -121,9 +101,10 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         p.readCV("3", l);
 
         // check "read command" message sent
-        Assert.assertEquals("read message sent", 1, tc.outbound.size());
-        Assert.assertEquals("read message contents", "V3",
-                ((tc.outbound.elementAt(0))).toString());
+        assertEquals( 1, tc.outbound.size(), "read message sent");
+        assertEquals( "V3",
+                ((tc.outbound.elementAt(0))).toString(),
+                "read message contents");
         // reply from programmer arrives
         NceReply r = new NceReply(tc);
         r.setElement(0, '0');
@@ -131,8 +112,35 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         r.setElement(2, '0');
         tc.sendTestReply(r, p);
 
-        Assert.assertEquals(" programmer listener invoked", 1, l.getRcvdInvoked());
-        Assert.assertEquals(" value read", 20, l.getRcvdValue());
+        assertEquals( 1, l.getRcvdInvoked(), " programmer listener invoked");
+        assertEquals( 20, l.getRcvdValue(), " value read");
+    }
+
+    // infrastructure objects
+    private NceInterfaceScaffold tc;
+    private NceProgrammer p = null;
+    private jmri.ProgListenerScaffold l;
+
+    @Override
+    @BeforeEach
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+        // infrastructure objects
+        l = new jmri.ProgListenerScaffold();
+        tc = new NceInterfaceScaffold();
+        tc.setCommandOptions(NceTrafficController.OPTION_2004);
+        p = new NceProgrammer(tc);
+        programmer = p;
+    }
+
+    @Override
+    @AfterEach
+    public void tearDown() {
+        tc.terminateThreads();
+        tc = null;
+        p = null;
+        programmer = null;
+        jmri.util.JUnitUtil.tearDown();
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerTest.class);

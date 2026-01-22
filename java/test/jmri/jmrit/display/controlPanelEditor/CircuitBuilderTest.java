@@ -160,7 +160,7 @@ public class CircuitBuilderTest {
 
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         cpe.dispose();
     }
 

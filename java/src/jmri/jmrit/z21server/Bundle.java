@@ -14,7 +14,8 @@ import java.util.Locale;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
+@SuppressFBWarnings(value = {"NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", "HSM_HIDING_METHOD"},
+    justification = "Desired pattern is repeated class names with package-level access to members")
 public class Bundle extends jmri.jmrit.Bundle {
 
     @CheckForNull

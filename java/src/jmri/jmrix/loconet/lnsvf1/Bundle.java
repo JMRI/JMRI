@@ -11,7 +11,8 @@ import java.util.Locale;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
+@SuppressFBWarnings(value = {"NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", "HSM_HIDING_METHOD"},
+    justification = "Desired pattern is repeated class names with package-level access to members")
 
 @javax.annotation.concurrent.Immutable
 

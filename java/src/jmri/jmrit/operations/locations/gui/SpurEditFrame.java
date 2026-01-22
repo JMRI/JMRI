@@ -14,6 +14,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -85,6 +86,7 @@ public class SpurEditFrame extends TrackEditFrame {
         
         // finish
         panelOrder.setVisible(false); // Car order out of spurs is not available
+        panelQuickService.setVisible(Setup.isBuildOnTime());
         pack();
         setVisible(true);
     }

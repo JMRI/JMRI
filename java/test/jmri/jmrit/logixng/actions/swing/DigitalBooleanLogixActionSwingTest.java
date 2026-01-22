@@ -1,17 +1,16 @@
 package jmri.jmrit.logixng.actions.swing;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.swing.JPanel;
 
 import jmri.util.JUnitUtil;
 import jmri.jmrit.logixng.actions.DigitalBooleanLogixAction;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test DigitalBooleanLogixActionSwing
@@ -21,25 +20,23 @@ import org.junit.Test;
 public class DigitalBooleanLogixActionSwingTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         DigitalBooleanLogixActionSwing t = new DigitalBooleanLogixActionSwing();
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testCreatePanel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        Assert.assertTrue("panel is not null",
-            null != new DigitalBooleanLogixActionSwing().getConfigPanel(new JPanel()));
-        Assert.assertTrue("panel is not null",
-            null != new DigitalBooleanLogixActionSwing().getConfigPanel(new DigitalBooleanLogixAction("IQDB1", null, DigitalBooleanLogixAction.When.Either), new JPanel()));
+        assertNotNull( new DigitalBooleanLogixActionSwing().getConfigPanel(new JPanel()), "panel is not null");
+        assertNotNull( new DigitalBooleanLogixActionSwing().getConfigPanel(new DigitalBooleanLogixAction("IQDB1", null, DigitalBooleanLogixAction.When.Either), new JPanel()),
+                "panel is not null");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -50,7 +47,7 @@ public class DigitalBooleanLogixActionSwingTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

@@ -1,5 +1,10 @@
 package jmri.jmrit.withrottle;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -8,7 +13,6 @@ import jmri.NamedBeanHandleManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -24,7 +28,7 @@ public class MultiThrottleTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", throttle );
+        assertNotNull( throttle, "exists");
     }
 
     @Test
@@ -32,8 +36,8 @@ public class MultiThrottleTest {
        // tests setting the address from the input.  
        // Does not include the prefix.
        throttle.handleMessage("+S1<;>S1");
-       Assert.assertEquals("outgoing message after throttle request", "MAAS1<;>s1",cis.getLastPacket() );
-       Assert.assertTrue("Address Found",tcls.hasAddressBeenFound());
+       assertEquals( "MAAS1<;>s1",cis.getLastPacket(), "outgoing message after throttle request");
+       assertTrue( tcls.hasAddressBeenFound(), "Address Found");
     }
 
     @Test
@@ -41,30 +45,30 @@ public class MultiThrottleTest {
        // tests setting the address from the input.  
        // Does not include the prefix.
        throttle.handleMessage("+L1234<;>L1234");
-       Assert.assertEquals("outgoing message after throttle request", "MAAL1234<;>s1",cis.getLastPacket() );
-       Assert.assertTrue("Address Found",tcls.hasAddressBeenFound());
+       assertEquals( "MAAL1234<;>s1",cis.getLastPacket(), "outgoing message after throttle request");
+       assertTrue( tcls.hasAddressBeenFound(), "Address Found");
     }
 
     @Test
     public void testSetAndReleaseLongAddress(){
        // set the address
        throttle.handleMessage("+L1234<;>L1234");
-       Assert.assertTrue("Address Found",tcls.hasAddressBeenFound());
+       assertTrue( tcls.hasAddressBeenFound(), "Address Found");
        // then release it.
        throttle.handleMessage("-L1234<;>r");
-       Assert.assertEquals("outgoing message after throttle release", "MA-L1234<;>",cis.getLastPacket() );
-       Assert.assertTrue("Address Released",tcls.hasAddressBeenReleased());
+       assertEquals( "MA-L1234<;>",cis.getLastPacket(), "outgoing message after throttle release");
+       assertTrue( tcls.hasAddressBeenReleased(), "Address Released");
     }
 
     @Test
     public void testSetAndDispatchLongAddress(){
        // set the address
        throttle.handleMessage("+L1234<;>L1234");
-       Assert.assertTrue("Address Found",tcls.hasAddressBeenFound());
+       assertTrue( tcls.hasAddressBeenFound(), "Address Found");
        // then dispatch it.
        throttle.handleMessage("-L1234<;>d");
-       Assert.assertEquals("outgoing message after throttle release", "MA-L1234<;>",cis.getLastPacket() );
-       Assert.assertTrue("Address Released",tcls.hasAddressBeenReleased());
+       assertEquals( "MA-L1234<;>",cis.getLastPacket(), "outgoing message after throttle release");
+       assertTrue( tcls.hasAddressBeenReleased(), "Address Released");
     }
 
     @Test
@@ -74,7 +78,7 @@ public class MultiThrottleTest {
        throttle.handleMessage("AL1234<;>V42");
        // query the velocity.
        throttle.handleMessage("AL1234<;>qV");
-       Assert.assertEquals("outgoing message after speed change", "MAAL1234<;>V42",cis.getLastPacket() );
+       assertEquals( "MAAL1234<;>V42",cis.getLastPacket(), "outgoing message after speed change");
     }
 
     @Test
@@ -82,7 +86,7 @@ public class MultiThrottleTest {
        throttle.handleMessage("+L1234<;>L1234");
        // then send EStop.
        throttle.handleMessage("AL1234<;>X");
-       Assert.assertEquals("outgoing message after throttle EStop", "MAAL1234<;>V-126",cis.getLastPacket() );
+       assertEquals( "MAAL1234<;>V-126",cis.getLastPacket(), "outgoing message after throttle EStop");
     }
 
     @Test
@@ -91,7 +95,7 @@ public class MultiThrottleTest {
        // then send EStop.
        throttle.handleMessage("AL1234<;>I");
        throttle.handleMessage("AL1234<;>qV");
-       Assert.assertEquals("outgoing message after throttle EStop", "MAAL1234<;>V0",cis.getLastPacket() );
+       assertEquals( "MAAL1234<;>V0",cis.getLastPacket(), "outgoing message after throttle EStop");
     }
 
     @Test
@@ -99,9 +103,9 @@ public class MultiThrottleTest {
        throttle.handleMessage("+L1234<;>L1234");
        // function "on" from withrottle represents a button click event.
        throttle.handleMessage("AL1234<;>F11");
-       Assert.assertEquals("outgoing message after function on", "MAAL1234<;>F11",cis.getLastPacket() );
+       assertEquals( "MAAL1234<;>F11",cis.getLastPacket(), "outgoing message after function on");
        throttle.handleMessage("AL1234<;>F11");
-       Assert.assertEquals("outgoing message after function off", "MAAL1234<;>F01",cis.getLastPacket() );
+       assertEquals( "MAAL1234<;>F01",cis.getLastPacket(), "outgoing message after function off");
     }
 
     @Test
@@ -109,9 +113,9 @@ public class MultiThrottleTest {
        throttle.handleMessage("+L1234<;>L1234");
        // function "on" from withrottle represents a button click event.
        throttle.handleMessage("AL1234<;>f11");
-       Assert.assertEquals("outgoing message after function on", "MAAL1234<;>F11",cis.getLastPacket() );
+       assertEquals( "MAAL1234<;>F11",cis.getLastPacket(), "outgoing message after function on");
        throttle.handleMessage("AL1234<;>f01");
-       Assert.assertEquals("outgoing message after function off", "MAAL1234<;>F01",cis.getLastPacket() );
+       assertEquals( "MAAL1234<;>F01",cis.getLastPacket(), "outgoing message after function off");
     }
 
     @Test
@@ -120,10 +124,10 @@ public class MultiThrottleTest {
        // function "on" from withrottle represents a button click event.
        throttle.handleMessage("AL1234<;>m128");
        throttle.handleMessage("AL1234<;>qm");
-       Assert.assertEquals("outgoing message after function on", "MAAL1234<;>m128",cis.getLastPacket() );
+       assertEquals( "MAAL1234<;>m128",cis.getLastPacket(), "outgoing message after function on");
        throttle.handleMessage("AL1234<;>m028");
        throttle.handleMessage("AL1234<;>qm");
-       Assert.assertEquals("outgoing message after function off", "MAAL1234<;>m028",cis.getLastPacket() );
+       assertEquals( "MAAL1234<;>m028",cis.getLastPacket(), "outgoing message after function off");
     }
 
     @Test
@@ -131,9 +135,9 @@ public class MultiThrottleTest {
        throttle.handleMessage("+L1234<;>L1234");
        // function "on" from withrottle represents a button click event.
        throttle.handleMessage("AL1234<;>R0");
-       Assert.assertEquals("outgoing message after direction forward", "MAAL1234<;>R0",cis.getLastPacket() );
+       assertEquals( "MAAL1234<;>R0",cis.getLastPacket(), "outgoing message after direction forward");
        throttle.handleMessage("AL1234<;>R1");
-       Assert.assertEquals("outgoing message after direction reverse", "MAAL1234<;>R1",cis.getLastPacket() );
+       assertEquals( "MAAL1234<;>R1",cis.getLastPacket(), "outgoing message after direction reverse");
     }
 
     @Test
@@ -141,9 +145,9 @@ public class MultiThrottleTest {
        throttle.handleMessage("+L1234<;>L1234");
        // function "on" from withrottle represents a button click event.
        throttle.handleMessage("AL1234<;>s1");
-       Assert.assertEquals("outgoing message after direction forward", "MAAL1234<;>s1",cis.getLastPacket() );
+       assertEquals( "MAAL1234<;>s1",cis.getLastPacket(), "outgoing message after direction forward");
        throttle.handleMessage("AL1234<;>s8");
-       Assert.assertEquals("outgoing message after direction reverse", "MAAL1234<;>s8",cis.getLastPacket() );
+       assertEquals( "MAAL1234<;>s8",cis.getLastPacket(), "outgoing message after direction reverse");
     }
 
     @Test
@@ -151,34 +155,34 @@ public class MultiThrottleTest {
        throttle.handleMessage("+L1234<;>L1234");
        // function "on" from withrottle represents a button click event.
        throttle.handleMessage("AL1234<;>Q");
-       Assert.assertEquals("outgoing message after quit", "MA-L1234<;>",cis.getLastPacket() );
+       assertEquals( "MA-L1234<;>",cis.getLastPacket(), "outgoing message after quit");
     }
     
     @Test
     public void testIsValidAddress() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Method m = throttle.getClass().getDeclaredMethod("isValidAddr", String.class);
         m.setAccessible(true);
-        Assert.assertFalse((Boolean)m.invoke(throttle, "hjs"));
+        assertFalse((Boolean)m.invoke(throttle, "hjs"));
         JUnitAppender.assertWarnMessage("JMRI: address 'hjs' must have a letter S or L and then digit(s)");
-        Assert.assertFalse((Boolean)m.invoke(throttle, "s13"));
+        assertFalse((Boolean)m.invoke(throttle, "s13"));
         JUnitAppender.assertWarnMessage("JMRI: address 's13' must have a letter S or L and then digit(s)");
-        Assert.assertFalse((Boolean)m.invoke(throttle, "l13"));
+        assertFalse((Boolean)m.invoke(throttle, "l13"));
         JUnitAppender.assertWarnMessage("JMRI: address 'l13' must have a letter S or L and then digit(s)");
-        Assert.assertFalse((Boolean)m.invoke(throttle, "S"));
+        assertFalse((Boolean)m.invoke(throttle, "S"));
         JUnitAppender.assertWarnMessage("JMRI: address 'S' must have a letter S or L and then digit(s)");
-        Assert.assertFalse((Boolean)m.invoke(throttle, "L"));
+        assertFalse((Boolean)m.invoke(throttle, "L"));
         JUnitAppender.assertWarnMessage("JMRI: address 'L' must have a letter S or L and then digit(s)");
-        Assert.assertFalse((Boolean)m.invoke(throttle, "7"));
+        assertFalse((Boolean)m.invoke(throttle, "7"));
         JUnitAppender.assertWarnMessage("JMRI: address '7' must have a letter S or L and then digit(s)");
-        Assert.assertTrue((Boolean)m.invoke(throttle, "S32"));
-        Assert.assertFalse((Boolean)m.invoke(throttle, "S320"));
+        assertTrue((Boolean)m.invoke(throttle, "S32"));
+        assertFalse((Boolean)m.invoke(throttle, "S320"));
         JUnitAppender.assertWarnMessage("JMRI: address 'S320' not allowed as Short");
-        Assert.assertTrue((Boolean)m.invoke(throttle, "L32"));
-        Assert.assertTrue((Boolean)m.invoke(throttle, "L320"));
+        assertTrue((Boolean)m.invoke(throttle, "L32"));
+        assertTrue((Boolean)m.invoke(throttle, "L320"));
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initRosterConfigManager();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
@@ -190,7 +194,7 @@ public class MultiThrottleTest {
     }
     
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         cis = null;
         tcls = null;
         throttle = null;

@@ -1,8 +1,6 @@
 package jmri.util.swing;
 
 import javax.swing.Icon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action that, when invoked, creates a JmriPanel from its class name
@@ -86,5 +84,5 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriNamedPaneAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriNamedPaneAction.class);
 }

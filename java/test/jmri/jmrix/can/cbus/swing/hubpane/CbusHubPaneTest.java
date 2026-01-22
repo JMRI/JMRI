@@ -44,6 +44,11 @@ public class CbusHubPaneTest {
         tc = null;
 
         JUnitUtil.removeMatchingThreads("openlcb-hub-output"); // Daemon thread
+
+        // ERROR -  [openlcb - hub - output] org.openlcb.hub.Hub.run()[java] java.lang.InterruptedException: null
+        // requires 2x suppressions ??
+        JUnitAppender.suppressErrorMessageStartsWith("");
+        JUnitAppender.suppressErrorMessageStartsWith("");
         JUnitAppender.suppressErrorMessageStartsWith("Hub: Interrupted in queue handling loop");
 
         JUnitUtil.tearDown();

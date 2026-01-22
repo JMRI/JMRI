@@ -1,6 +1,5 @@
 package jmri.managers;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.IdTag;
@@ -42,7 +41,6 @@ public class DefaultRailComManager extends DefaultIdTagManager
         return new DefaultRailCom(systemName, userName);
     }
 
-    @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="defensive programming check of @Nonnull argument")
     private void checkSystemName(@Nonnull String systemName, @CheckForNull String userName) {
         if (systemName == null) {
             log.error("SystemName cannot be null. UserName was {}",

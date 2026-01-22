@@ -82,7 +82,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
               <ul>
                 <li><a href="#SettingsOptions">Options</a>
                   <ul>
-                    <li><a href="#BuildOptions">Build Options (Normal or Aggressive)</a></li>
+                    <li><a href="#BuildOptions">Build Options (Normal, Aggressive or On Time)</a></li>
                     <li><a href="#AllowLocalCarMovements">Switcher Service Options (Local
                         Car Movement with Default Loads)</a></li>
                     <li><a href="#StagingOptions">Staging Options</a></li>
@@ -102,8 +102,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
                 <li><a href="#PrintOptions">Manifest Print Options</a>
                   <ul>
+                    <li><a href="#PrintFont">Manifest Printer Font</a></li>
+                    <li><a href="#PrintFormat">Format</a></li>
                     <li><a href="#PrintOrientation">Orientation and Paper Size</a></li>
                     <li><a href="#PrintSides">Print on One or Two Sides</a></li>
+                    <li><a href="#PrintColor">Text Color</a></li>
                     <li><a href="#ManifestComments">Manifests and Switch List Options</a></li>
                     <li><a href="#AddLogo">Add Logo</a></li>
                     <li><a href="#MisplacedCarsComment">Misplaced Cars Comment</a></li>
@@ -142,6 +145,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#EditCarType">Edit Car Type</a></li>
                 <li><a href="#ModifyLocationByCarType">Modify Location by Car Type</a></li>
                 <li><a href="#ModifyLocationByCarLoad">Modify Location by Car Load</a></li>
+                <li><a href="#ModifyLocationByQuickService">Modify Location by Quick Service</a></li>
                 <li><a href="#ShowCars">Show Cars</a></li>
                 <li><a href="#ShowLocomotives">Show Locomotives</a></li>
                 <li><a href="#ShowTrainsServicingThisLocation">Show Trains Servicing this Location</a></li>
@@ -243,6 +247,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                     Type</a></li>
                 <li><a href="#ModifyLocationsByCarLoad">Modify Locations and Tracks by Car
                     Load</a></li>
+                <li><a href="#ModifyLocationsByQuickService">Modify Locations and Tracks by
+                    Quick Service</a></li>
                 <li><a href="#ExportLocations">Export Locations</a></li>
                 <li><a href="#ImportLocations">Import Locations</a></li>
                 <li><a href="#ShowCarsLocations">Show Cars</a></li>
@@ -1183,14 +1189,22 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <h3 id="BuildOptions">Build Options</h3>
-      There are two build train options, normal and aggressive. It is recommended that you select
-      normal when you first begin using OperationsPro&trade;. Normal builds guarantee that when a
-      car is delivered (set out) by a train that there will be track space available for the car.
-      Normal mode will not fill every track to capacity which is more prototypical. However, normal
-      mode won't swap a set of cars, cars are picked up or set out based on the available track
-      space. Normal mode prevents track overloading. In aggressive mode you can "accidentally"
-      create track overloading by the order you build and run your trains or by using the <a
-        href="#TrainReset">Train Reset</a> function.
+      There are three build train options, normal, aggressive and on time. Note that once you've
+      built a train, the build option can not be changed until all trains are terminated or reset.
+
+      <h4>Normal</h4>
+
+      <p>
+        It is recommended that you select normal when you first begin using OperationsPro&trade;.
+        Normal builds guarantee that when a car is delivered (set out) by a train that there will be
+        track space available for the car. Normal mode will not fill every track to capacity which
+        is more prototypical. However, normal mode won't swap a set of cars, cars are picked up or
+        set out based on the available track space. Normal mode prevents track overloading. In
+        aggressive mode you can "accidentally" create track overloading by the order you build and
+        run your trains or by using the <a href="#TrainReset">Train Reset</a> function.
+      </p>
+
+      <h4>Aggressive</h4>
 
       <p>Aggressive builds makes the car's track space available as soon as a car is scheduled
         for a pick up. Therefore there can be instances where a train was to pick up a car to vacate
@@ -1228,8 +1242,56 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         train again will pull the same cars, each train build can be different depending on the car
         movements created by the other trains.</p>
 
-      <p>Note that once you've built a train, the build option can not be changed until all
-        trains are terminated or reset.</p>
+      <h4>On Time</h4>
+
+      On time is an experimental mode of operations that was introduced in January of 2026. On Time
+      mode is an extension of aggressive mode. On time mode requires the use of a real or fast clock
+      to dictate train movement. To use on time, your trains must run on schedule. They should
+      depart at the correct departure time, and they should complete their work reasonably close to
+      the times provided on the train Manifests. When running OperationsPro in on time mode, tracks
+      that have
+      <a href="#InterchangeQuickService">Quick Service</a> enabled can be reused multiple times
+      based on when cars are set out and picked up. Cars and engines can travel on multiple trains
+      with train departure times up to 31 days. Therefore you can create sessions that span days,
+      weeks, or even a month!
+
+      <p>After selecting the "On Time" radio button, a text field called "Dwell Time" is
+        enabled. Dwell time is the number of extra minutes the program will use to determine when a
+        track has available space, or when a car is available for pick up. For example, if a car is
+        pulled at 1:30 PM and the dwell time is 60 minutes, the track space vacated by the car is
+        available at 2:30 PM. For car pick ups, if a car is set out at 2:10 PM and the dwell time is
+        60 minutes, the car can be pulled by another train at or after 3:10. You would normally set
+        the dwell time greater than your worst operator's completion time for a train. For example,
+        if some of your operators normally finish their runs 30 minutes late, you would set the
+        dwell time to 30 or more minutes. Dwell time helps prevent the frustration of not having the
+        track space or car available from a previous train delivery. However, high dwell times will
+        cause less cars to be moved in a given time.</p>
+
+      <p>
+        See <a href="#ModifyLocationsByQuickService">Modify Locations and Tracks by Quick
+          Service</a> to modify your tracks for quick service. Only tracks enabled for quick service are
+        reused based on train timing when using the on time mode. Note that train turns servicing
+        locations on both the outbound and inbound legs, will in most cases pull the cars delivered
+        on the outbound leg on the return leg. Use interchange tracks and <a href="#Schedules">spurs/schedules</a>
+        with wait times to hold cars, or <a href="#RestrictingTrackToCertainTrains">restrict the
+          car pick ups by train or route</a>. The program also prevents a car set out at a route
+        location to be pulled by the same route location. This isn't an issue unless you use the
+        same route for multiple trains and expect a later train using the same route to pull the
+        car. If you want the car to be pulled, <a href="#CopyRoute">copy the route</a>, and use the
+        copied route for the later train.
+      </p>
+
+      <p>One restriction when using on time mode, is that trains must be built and terminated in
+        chronological order. If you need to reset your trains, reset the last built trains first, or
+        use the reset all train button.</p>
+
+      <p>
+        To help troubleshoot timing problems with your cars using the on time mode, it is
+        recommended that you show the "Last Train" on your Manifests and switch lists for car pick
+        ups. This way if a car isn't found, you'll at least know which train was supposed to drop
+        off the car. You should also enable train, car and engine <a href="#LoggingOptions">logging</a>,
+        and <a href="#SaveTrainManifests">Save Train Manifests, Build Reports, and Switch Lists</a>.
+      </p>
 
       <h4>Number of Passes During Build</h4>
       When building trains in aggressive mode, you can control the number of passes the program
@@ -1822,12 +1884,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         <img src="images/PrintOptions.png" alt="">
       </p>
 
-      <h3>Manifest Printer Font</h3>
+      <h3 id="PrintFont">Manifest Printer Font</h3>
       OperationsPro&trade; supports several types of fonts for printing. Select the desired font and
       size using the pull down menus. You can also select which printer to use when printing out a
       Manifest or switch list. See <a href="#SwitchList">Switch Lists</a> for more details.
 
-      <h3>Format</h3>
+      <h3 id="PrintFormat">Format</h3>
       If you would like your Manifest and switch lists printed in a tabular (columns) format select
       the "Tabular" checkbox. The program uses the longest character length for each of the
       attribute's names (Road, Number, Type, Load, Hazardous, Color, Kernel, Owner, Division, Track,
@@ -1857,8 +1919,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         "Tab" options at the end of the <a href="#MessageFormats">Message Format</a> drop down
         menus. Use these three tabs to space out the Manifest or switch list to your liking. You can
         change the length of the tab characters if you wish, see <a
-          href="#ManifestPrintOptionsTools">Tools</a>. Go to <a href="#PrintingManifests">Printing
-          Manifests</a> to see examples of Manifests and switch lists using the described options.
+          href="#ManifestPrintOptionsTools">Manifest Print Options Tools</a>. Go to <a
+          href="#PrintingManifests">Printing Manifests</a> to see examples of Manifests and switch
+        lists using the described options.
       </p>
 
       <h3 id="PrintOrientation">Orientation and Paper Size</h3>
@@ -1874,7 +1937,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       sides of your paper. Short edge means the pages are bound along the short edge of the page.
       Long edge means the pages are bound along the long edge of the page.
 
-      <h3>Pick Up Locomotive Text Color</h3>
+      <h3 id="PrintColor">Pick Up Locomotive Text Color</h3>
       You can select the text color of your Manifest when the operation is to pick up a locomotive.
       Select the desired color from the drop down box.
 
@@ -2055,14 +2118,27 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3 id="ManifestPrintOptionsTools">Manifest Print Options Tools</h3>
       The menu bar of the "Manifest Print Options" provides additional features that can be found
       under "Tools". The first "More Print Options" allows you to adjust the length of the tab
-      character when using the "Tabular" feature. The next three options "Edit Manifest Header
+      characters when using the
+      <a href="#PrintFormat">Tabular</a> feature.
+
+      <p>
+        <img src="images/MorePrintOptions.png" alt="">
+      </p>
+
+      The tabs can be found at the bottom of the drop down menus.
+
+      <p>
+        <img src="images/ManifestPrintOptionsTab.png" alt="">
+      </p>
+
+      The next three options "Edit Manifest Header
       Text", "Edit Manifest Text" and "Edit Switch List Text" allows you to modify all of the text
       found in a Manifest or switch list. Each text line used by the program is shown along with a
       text box with the same message. Edit the text box to change the default message to your liking
       and press "Save" to complete your change. You can always return the text to the original
       settings by pressing the "Reset" button followed by "Save".
-      
-       <p>
+
+      <p>
         <img src="images/EditManifestText.png" alt="">
       </p>
       
@@ -2090,12 +2166,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         to a file. The radio buttons control how much of that data is actually printed. The
         "Minimal" radio button provides the least amount of information and "Very Detailed" provides
         the most. If you're only interested why a train won't build, the "Minimal" setting might
-        provide you with this information. The "Normal" setting shows the train's route and
-        requirements, along with the choices the program makes for setting out locomotives and cars.
-        The "Detailed" provides additional comments about the build and shows which cars were added
-        to the train. The "Very Detailed" setting produces the most pages, and will show why cars
-        are excluded from the train, and why they are not picked up or set out. Be sure and press
-        "Save" after changing the build report selection.
+        provide you with this information, but most likely not! The "Normal" setting shows the
+        train's route and requirements, along with the choices the program makes for setting out
+        locomotives and cars. The "Detailed" provides additional comments about the build and shows
+        which cars were added to the train. The "Very Detailed" setting produces the most pages, and
+        will show why cars are excluded from the train, and why they are not picked up or set out.
+        Be sure and press "Save" after changing the build report selection.
       </p>
 
       <p>
@@ -2182,7 +2258,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <h3 id="AddLocation">Add or Edit Location</h3>
-      To add a location, press the "Add" button located at the bottom of the "Locations" window. A
+      To add a location, press the "Add Location" button located at the bottom of the "Locations" window. A
       new window should appear. To edit an existing location, press the "Edit" button for the
       location.
 
@@ -2496,6 +2572,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       The tool "Modify Location by Car Load" allows you to quickly select a car type and decide
       which tracks will service the car's load. Only tracks that can service the car's type are
       enabled.
+      
+       <h4 id="ModifyLocationByQuickService">Modify Location by Quick Service</h4>
+       The tool "Modify Location by Quick Service" allows you to quickly see and decide which
+       tracks support the <a href="#InterchangeQuickService">Quick Service</a> feature.
 
       <h4 id="ShowCars">Show Cars</h4>
       If you only want to view cars for a location or track, select "Show Cars" from the "Tools"
@@ -3134,10 +3214,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         trains and you've read and can understand the train build reports.</p>
 
       <h3 id="InterchangeQuickService">Quick Service</h3>
-      The quick service feature for a C/I track allow you to create a Manifest or switch list
+      The quick service feature for a track allow you to create a Manifest or switch list
       showing cars being moved more than once. When the quick service feature is enabled, the
-      program will create "clone cars" when building a train that delivers cars to the C/I track,
-      and place the original cars at the C/I track, allowing the train being built or another train
+      program will create "clone cars" when building a train that delivers cars to the track,
+      and place the original cars at the track, allowing the train being built or another train
       built later to have access to the cars. This is an advanced feature and is recommended for
       operators that have gained some experience with the program.
 
@@ -3958,6 +4038,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       The tool "Modify Locations by Car Load" allows you to quickly select a car type and decide
       which locations and tracks will service the car's load. Only tracks that can service the car's
       type are enabled.
+
+      <h4 id="ModifyLocationsByQuickService">Modify Locations by Quick Service</h4>
+      The tool "Modify Locations by Quick Service" allows you to quickly see and decide which
+      locations and tracks support the
+      <a href="#InterchangeQuickService">Quick Service</a> feature. To enable quick service for all
+      locations and tracks, press the "Select All" button followed by the "Save" button.
 
       <h4 id="ShowCarsLocations">Show Cars</h4>
       To only view cars that have a location assigned to them, select "Show Cars" from the "Tools"
@@ -5155,6 +5241,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         </tr>
       </table>
 
+      <h4>Departure Day</h4>
+
+      The departure day is only used when there's a
+      <a href="#RouteSwitchTime">Departure Time</a>. "0" is today, and "1, 2, 3 ..." are the next
+      days respectively. One you set a departure day, you should also set a departure day for all
+      following route locations that also have a departure time.
+
       <h4 id="RouteSwitchTime">Departure Time</h4>
 
       You can optionally enter the train's departure time from each location in the route. Note that
@@ -5467,11 +5560,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         build report and train tools will refer to unselected locations as being skipped.</p>
 
       <h4 id="TrainDepartureTime">Train Departure Time</h4>
-      Select the time that this train will depart the first location in its route. You can use the
-      departure time to sort your trains in the order that you want them built when using the <a
-        href="#BuildingTrains">Build</a> button at the bottom of the Trains window. Note that if the
-      train's route has a departure time for the first location, the route's departure time is used
-      and the train departure time selection is disabled.
+      Select the day and time that this train will depart the first location in its route. You can
+      use the departure time to sort your trains in the order that you want them built when using
+      the
+      <a href="#BuildingTrains">Build</a> button at the bottom of the Trains window. Note that if
+      the train's route has a departure time for the first location, the route's departure time is
+      used and the train departure time selection is disabled.
 
       <h4 id="TrainRollingStock">Train Rolling Stock</h4>
 
@@ -6171,7 +6265,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h5>Run Automation</h5>
       This action can start an automation from the beginning. You must select an automation from the
-      "Automation" menu.
+      "Automation" menu. Note that automations run in parallel. So if you need an automation to complete
+      before starting another one, use the action "Wait Automation".
 
       <h5>Resume Automation</h5>
       This action can resume an automation that has been stopped or halted. The current pointer for
@@ -6181,11 +6276,26 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h5>Stop Automation</h5>
       This action can stop an automation that is running. You must select an automation from the
       "Automation" menu.
+      
+      <h5>Wait Automation</h5>
+      This action will wait until an automation completes. You must select an automation from the
+      "Automation" menu. The status of the waited automation is provided allowing the HIAF feature
+      to stop the automation sequence.
 
       <h5>Counter</h5>
       This action will increment a count starting from zero. The counter isn't saved when
       OperationsPro is shutdown, and will restart at zero the next time the program is run. To reset
-      the count to zero without restarting OperationsPro, reselect the action "Counter".
+      the count to zero without restarting OperationsPro, reselect the action "Counter", or under
+      tools use "Reset Automation".
+
+      <h5>Down Counter</h5>
+      This action will decrement a count that is entered into the "Show this message if action
+      succeeds" text field. Use the "Add" button found under "Messages" and enter a positive number,
+      followed by the "OK" button to load the down counter. You can use the "If Failure GOTO" and
+      "If Success GOTO" actions to branch when the count is greater than zero, or equal to zero
+      respectively. The action down counter will automatically reload after the count reaches zero
+      and the action is executed. The "Reset Automation" under tools will also reload the down
+      counters.
 
       <h5>Message Yes or No</h5>
       This action can be used to ask a question to which the answer is Yes or No. Use the "If

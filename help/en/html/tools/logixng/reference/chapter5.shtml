@@ -1225,6 +1225,7 @@ LogixNG: IQ:AUTO:0001
         <li><a href="#flow_run_once">Run once</a></li>
         <li><a href="#sequence_id">Sequence</a></li>
         <li><a href="#flow_table_for_each">Table: For each</a></li>
+        <li><a href="#flow_validation_error">Validation Error</a></li>
       </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -1260,7 +1261,18 @@ LogixNG: IQ:AUTO:0001
 
       <h4 id="flow_error">Error</h4>
 
-      <p>Triggers an error. The user can enter an error message if desired.</p>
+      <p>Triggers an error and displays the standard error dialog.</p>
+
+      <p><span class="since">since 5.15.1</span>The error message has been changed from a simple
+      text box to multiple input options including formulas.  This makes it possible to create
+      better messages.  <em>Note:  The storage format has changed. Any existing occurrences of
+      <strong>Error</strong> actions will prevent loading the xml data file with previous versions
+      of JMRI.</em>
+
+      <div style="margin-left: 2em;">
+         <a href="images/chapter5/error_action_dialog.png"><img class="image-border"
+         src="images/chapter5/error_action_dialog.png" alt="Chapter 5 error action dialog"></a>
+      </div>
 
       <p>This might be useful if a particular condition should never occur in the ConditionalNG or
       Module. In this case, the Error action can be used to alert the user.</p>
@@ -1464,6 +1476,21 @@ LogixNG: IQ:AUTO:0001
       true, the next action/expression pair will be started.  The <a href="chapter6#timer_id">Timer</a>
       expression can be used to do a time based step instead of an event based step.</p>
 
+      <p>When a Sequence is created, it has one A/E pair.  To add more pairs, right click the last
+      <strong>Expression</strong> entry and select <strong>Insert new socket after</strong>. To
+      insert a new A/E pair, right click an <strong>Action</strong> item and select <strong>Insert
+      new socket before</strong> or right click an <strong>Expression</strong> item and select
+      <strong>Insert new socket after</strong>.</p>
+
+      <p>If an <strong>Action</strong> is used with a socket <strong>after</strong> or an
+      <strong>Expression</strong> is used with a socket <strong>before</strong>, the new pair will be
+      between the old pair A and E.  Now the sequence is <strong>old A &rArr; new E &rArr; new A &rArr; old E</strong>.
+      The socket names don't actually have any meaning.  It is the sequence in the editor display
+      which creates the actual A/E pairs.</p>
+
+      <p>To delete a pair, right click on the <strong>Action</strong> and select <strong>Remove socket</strong>.
+      The A/E pair has to be empty before it can be removed.</p>
+
       <div style="margin-left: 2em">
         <a href="images/chapter5/action_sequence_options.png"><img src=
         "images/chapter5/action_sequence_options.png" alt="Chapter 5 sequence options"></a>
@@ -1506,6 +1533,22 @@ LogixNG: IQ:AUTO:0001
 
       <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details on
       table actions.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4 id="flow_validation_error">Validation Error<span class="since">since 5.15.1</span></h4>
+
+      <p>This is similar to the Error action but it uses a standard dialog instead of the error dialog.</p>
+
+      <p>Enter the text to be displayed using one of the input types. The <strong>format()</strong>
+      function can be used to insert content such as local variable values into the text string.</p>
+
+      <p>This is a sample dialog.</p>
+
+      <div style="margin-left: 2em;">
+         <a href="images/chapter5/validation_error_dialog.png"><img class="image-border"
+         src="images/chapter5/validation_error_dialog.png" alt="Chapter 5 validation error dialog"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

@@ -93,7 +93,7 @@ public class JsonManifest extends TrainCommon {
             }
             if (routeLocation == train.getTrainDepartsRouteLocation()) {
                 jsonLocation.put(JSON.DEPARTURE_TIME, train.getDepartureTime());
-            } else if (!routeLocation.getDepartureTime().equals(RouteLocation.NONE)) {
+            } else if (!routeLocation.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
                 jsonLocation.put(JSON.DEPARTURE_TIME, routeLocation.getDepartureTime());
             } else {
                 jsonLocation.put(JSON.EXPECTED_DEPARTURE, train.getExpectedDepartureTime(routeLocation));

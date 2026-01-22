@@ -8,6 +8,7 @@ import jmri.implementation.MeterUpdateTask;
 
 import org.bidib.jbidibc.core.DefaultMessageListener;
 import org.bidib.jbidibc.core.MessageListener;
+import org.bidib.jbidibc.messages.CurrentValue;
 import org.bidib.jbidibc.messages.Node;
 import org.bidib.jbidibc.messages.message.BoostQueryMessage;
 import org.bidib.jbidibc.messages.utils.NodeUtils;
@@ -35,12 +36,12 @@ public class BiDiBPredefinedMeters {
     private boolean enabled = false;  // disable by default; prevent polling when not being used.
 
     public BiDiBPredefinedMeters(BiDiBSystemConnectionMemo memo) {
-        
+
         _memo = memo;
         tc = _memo.getBiDiBTrafficController();
-        
+
         updateTask = new UpdateTask(-1);
-        
+
 //        // scan nodes list for booster nodes
         Map<Long, Node> nodes = tc.getNodeList();
         for(Map.Entry<Long, Node> entry : nodes.entrySet()) {
@@ -75,7 +76,7 @@ public class BiDiBPredefinedMeters {
         InstanceManager.getDefault(MeterManager.class).deregister(meter);
         updateTask.dispose(meter);
     }
-    
+
     public void dispose() {
         for(Map.Entry<Integer, Meter> entry : currentMeters.entrySet()) {
             disposeMeter(entry.getValue());
@@ -93,24 +94,24 @@ public class BiDiBPredefinedMeters {
 
 
     private class UpdateTask extends MeterUpdateTask {
-    
+
         MessageListener messageListener = null;
-        
+
         public UpdateTask(int interval) {
             super(interval);
             createBoosterDiagListener();
         }
-    
-        @Override 
+
+        @Override
         public void enable(){
             enabled = true;
             // TODO: set feature to enable booster diag messages - and switch it off by default somewhere
-            tc.addMessageListener(messageListener);        
+            tc.addMessageListener(messageListener);
             log.info("Enabled meter.");
             super.enable();
         }
 
-        @Override 
+        @Override
         public void disable(){
             if (!enabled) return;
             super.disable();
@@ -119,7 +120,7 @@ public class BiDiBPredefinedMeters {
             tc.removeMessageListener(messageListener);
             log.info("Disabled meter.");
         }
-        
+
         private void setCurrent(byte[] address, double value) throws JmriException {
             Meter meter = currentMeters.get(NodeUtils.convertAddress(address));
             log.trace("setCurrent - addr: {}, Meter: {}, value: {}", address, meter, value);
@@ -151,11 +152,11 @@ public class BiDiBPredefinedMeters {
             // to listen messages related to track power.
             messageListener = new DefaultMessageListener() {
                 @Override
-                public void boosterDiag(byte[] address, int messageNum, int current, int voltage, int temperature) {
+                public void boosterDiag(byte[] address, int messageNum, CurrentValue current, int voltage, int temperature) {
                     log.info("METER booster diag was signalled: node addr: {}, current: {}, voltage: {}, temperature: {}",
                             address, current, voltage, temperature);
                     try {
-                        setCurrent(address, current * 1.0f);
+                        setCurrent(address, current.getCurrent() * 1.0f);
                         setVoltage(address, voltage * 100.0f); //units of 100mV
                     } catch (JmriException e) {
                         log.error("exception thrown by setCurrent or setVoltage", e);
@@ -166,7 +167,7 @@ public class BiDiBPredefinedMeters {
 
 
     }
-    
+
     private static final Logger log = LoggerFactory.getLogger(BiDiBPredefinedMeters.class);
 
 }

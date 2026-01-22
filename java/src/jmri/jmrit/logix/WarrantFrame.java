@@ -18,7 +18,6 @@ import javax.annotation.Nonnull;
 
 import javax.swing.*;
 import javax.swing.table.*;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -2161,8 +2160,6 @@ public class WarrantFrame extends WarrantRoute {
         }
 
         @Override
-        @SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-                justification = "put least likely cases last for efficiency")
         public void setValueAt(Object value, int row, int col) {
             if (row >= _throttleCommands.size()) {
                 return;

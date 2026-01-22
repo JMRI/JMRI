@@ -2,7 +2,6 @@ package jmri.jmrix.sprog.simulator;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,9 +12,9 @@ import org.junit.jupiter.api.*;
 public class SimulatorAdapterTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testSprogSimulatorAdapterConstructor(){
        SimulatorAdapter a = new SimulatorAdapter();
-       Assert.assertNotNull(a);
+       Assertions.assertNotNull(a);
 
        // clean up
        a.getSystemConnectionMemo().getSprogTrafficController().dispose();

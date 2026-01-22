@@ -1,12 +1,14 @@
 package jmri.jmrix.roco.z21;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottle;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -22,15 +24,15 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
     public void testCtor() {
         // infrastructure objects
         Z21XNetThrottle t = new Z21XNetThrottle(memo,tc);
-        Assert.assertNotNull(t);
+        assertNotNull(t);
     }
 
     // Test the constructor with an address specified.
     @Test
     @Timeout(1000)
     @Override
-    public void testCtorWithArg() throws Exception {
-        Assert.assertNotNull(instance);
+    public void testCtorWithArg() {
+        assertNotNull(instance);
     }
 
     // run the throttle through the initialization sequence,
@@ -77,7 +79,8 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a group 1 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 F8 00 03 00 1F", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 F8 00 03 00 1F", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -107,7 +110,8 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a group 2 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 F8 00 03 05 1A", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 F8 00 03 05 1A", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -137,7 +141,8 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a group 3 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 F8 00 03 09 16", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 F8 00 03 09 16", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -167,7 +172,8 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a group 4 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 F8 00 03 0D 12", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 F8 00 03 0D 12", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -196,7 +202,8 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a group 5 request.
-        Assert.assertEquals("Throttle Information Request Message", "E4 F8 00 03 15 0A", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 F8 00 03 15 0A", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -212,7 +219,7 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
     @Override
     @Test
     @Timeout(1000)
-    public void testSendStatusInformationRequest() throws Exception {
+    public void testSendStatusInformationRequest() {
         int n = tc.outbound.size();
         Z21XNetThrottle t = (Z21XNetThrottle)instance;
         initThrottle(t,n);
@@ -224,7 +231,8 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
         } // busy loop.  Wait for
         // outbound size to change.
         //The first thing on the outbound queue should be a request for status.
-        Assert.assertEquals("Throttle Information Request Message", "E3 F0 00 03 10", tc.outbound.elementAt(n).toString());
+        assertEquals( "E3 F0 00 03 10", tc.outbound.elementAt(n).toString(),
+            "Throttle Information Request Message");
 
         // And the response to this is a message with the status.
         XNetReply m = new XNetReply();
@@ -246,7 +254,7 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
     @Override
     @Test
     @Timeout(1000)
-    public void sendEmergencyStop() throws Exception {
+    public void testSendEmergencyStop() {
         int n = tc.outbound.size();
         Z21XNetThrottle t = (Z21XNetThrottle)instance;
         initThrottle(t,n);
@@ -261,7 +269,8 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a throttle set speed message.
-        Assert.assertEquals("Throttle Emergency Stop Message", "E4 13 00 03 00 F4", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 13 00 03 00 F4", tc.outbound.elementAt(n).toString(),
+            "Throttle Emergency Stop Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -277,7 +286,7 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
 
     @Override
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         tc = new XNetInterfaceScaffold(new RocoZ21CommandStation());
         memo = new XNetSystemConnectionMemo(tc);
@@ -288,7 +297,7 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
 
     @AfterEach
     @Override
-    public void tearDown() throws Exception {
+    public void tearDown() {
         ((Z21XNetThrottle)instance).throttleDispose();
         tc.terminateThreads();
         tc = null;

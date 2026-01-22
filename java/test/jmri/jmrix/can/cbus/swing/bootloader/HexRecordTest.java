@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus.swing.bootloader;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,8 +14,18 @@ public class HexRecordTest {
     @Test
     public void testCTor() {
         HexRecord r = new HexRecord();
-        Assert.assertNotNull("exists",r);
-        Assert.assertTrue("Record data length", r.data.length == HexRecord.MAX_LEN);
+        Assertions.assertNotNull( r, "exists");
+        Assertions.assertEquals( HexRecord.MAX_LEN, r.data.length, "Record data length");
     }
-        
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

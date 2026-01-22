@@ -1363,7 +1363,8 @@ public abstract class Editor extends JmriJFrameWithPermissions
         if (p.getDisplayLevel() == BKG) {
             return;
         }
-        if (p instanceof BlockContentsIcon || p instanceof MemoryIcon || p instanceof GlobalVariableIcon) {
+        if (p instanceof BlockContentsIcon || p instanceof MemoryIcon
+                || p instanceof GlobalVariableIcon || p instanceof LogixNGTableIcon) {
             JCheckBoxMenuItem hideEmptyItem = new JCheckBoxMenuItem(Bundle.getMessage("SetEmptyHidden"));
             hideEmptyItem.setSelected(p.isEmptyHidden());
             hideEmptyItem.addActionListener(new ActionListener() {
@@ -1396,7 +1397,8 @@ public abstract class Editor extends JmriJFrameWithPermissions
         if (p.getDisplayLevel() == BKG) {
             return;
         }
-        if (p instanceof BlockContentsIcon || p instanceof MemoryIcon || p instanceof GlobalVariableIcon) {
+        if (p instanceof BlockContentsIcon || p instanceof MemoryIcon
+                || p instanceof GlobalVariableIcon || p instanceof LogixNGTableIcon) {
             JCheckBoxMenuItem valueEditDisableItem = new JCheckBoxMenuItem(Bundle.getMessage("SetValueEditDisabled"));
             valueEditDisableItem.setSelected(p.isValueEditDisabled());
             valueEditDisableItem.addActionListener(new ActionListener() {
@@ -1885,7 +1887,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
         l.setHorizontalTextPosition(SwingConstants.CENTER);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setEditable(isEditable());    // match popup mode to editor mode
-        l.setLocation(75, 75);  // fixed location 
+        l.setLocation(75, 75);  // fixed location
         try {
             putItem(l);
         } catch (Positionable.DuplicateIdException e) {
@@ -1965,6 +1967,8 @@ public abstract class Editor extends JmriJFrameWithPermissions
                 addMemoryEditor();
             } else if ("GlobalVariable".equals(name)) {
                 addGlobalVariableEditor();
+            } else if ("LogixNGTable".equals(name)) {
+                addLogixNGTableEditor();
             } else if ("Reporter".equals(name)) {
                 addReporterEditor();
             } else if ("Light".equals(name)) {
@@ -2240,6 +2244,17 @@ public abstract class Editor extends JmriJFrameWithPermissions
         JFrameItem frame = makeAddIconFrame("GlobalVariable", true, true, editor);
         _iconEditorFrame.put("GlobalVariable", frame);
         editor.setPickList(PickListModel.globalVariablePickModelInstance());
+        editor.makeIconPanel(true);
+        editor.complete(addIconAction, false, false, false);
+        frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
+    }
+
+    protected void addLogixNGTableEditor() {
+        IconAdder editor = new IconAdder("LogixNGTable");
+        ActionListener addIconAction = a -> addLogixNGTable();
+        JFrameItem frame = makeAddIconFrame("LogixNGTable", true, true, editor);
+        _iconEditorFrame.put("LogixNGTable", frame);
+        editor.setPickList(PickListModel.namedTablePickModelInstance());
         editor.makeIconPanel(true);
         editor.complete(addIconAction, false, false, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
@@ -2635,6 +2650,21 @@ public abstract class Editor extends JmriJFrameWithPermissions
         return result;
     }
 
+    protected LogixNGTableIcon addLogixNGTable() {
+        IconAdder logixNGTableIconEditor = getIconEditor("LogixNGTable");
+        LogixNGTableIcon result = new LogixNGTableIcon(logixNGTableIconEditor.getTableSelection().getDisplayName(), this);
+        result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
+        result.setDisplayLevel(MEMORIES);
+        setNextLocation(result);
+        try {
+            putItem(result);
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+        return result;
+    }
+
     protected BlockContentsIcon putBlockContents() {
         BlockContentsIcon result = new BlockContentsIcon(new NamedIcon("resources/icons/misc/X-red.gif",
                 "resources/icons/misc/X-red.gif"), this);
@@ -2913,6 +2943,8 @@ public abstract class Editor extends JmriJFrameWithPermissions
             bundleName = "BeanNameBlock";
         } else if ("GlobalVariable".equals(name)) {
             bundleName = "BeanNameGlobalVariable";
+        } else if ("LogixNGTable".equals(name)) {
+            bundleName = "BeanNameLogixNGTable";
         } else if ("Audio".equals(name)) {
             bundleName = "BeanNameAudio";
         } else {

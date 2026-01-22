@@ -1,15 +1,15 @@
 package jmri.jmrix.ztc.ztc611;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.Turnout;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the {@link jmri.jmrix.ztc.ztc611.ZTC611XNetTurnout} class.
@@ -32,18 +32,16 @@ public class ZTC611XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
     @Test
     @Override
     public void testXNetTurnoutMsgSequence() {
-        t.setFeedbackMode(jmri.Turnout.DIRECT);
+        t.setFeedbackMode( Turnout.DIRECT);
         // set closed
-        try {
-            t.setCommandedState(jmri.Turnout.CLOSED);
-        } catch (Exception e) {
-            log.error("TO exception: {}", e);
-        }
+        assertDoesNotThrow( () -> t.setCommandedState( Turnout.CLOSED),
+            "TO exception: ");
 
-        Assert.assertEquals(Turnout.CLOSED, t.getCommandedState());
+        assertEquals(Turnout.CLOSED, t.getCommandedState());
 
-        Assert.assertEquals("on message sent", "52 05 88 DF",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        assertEquals( "52 05 88 DF",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
+                "on message sent");
 
         ((ZTC611XNetTurnout)t).message(lnis.outbound.elementAt(lnis.outbound.size() - 1));
 
@@ -58,16 +56,16 @@ public class ZTC611XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
 
         // no wait here.  The last reply should cause the turnout to
         // set it's state, but it will not cause another reply.
-        Assert.assertEquals(Turnout.CLOSED, t.getKnownState());
+        assertEquals(Turnout.CLOSED, t.getKnownState());
     }
 
     @Override
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         // prepare an interface
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalSensorManager();
         lnis = new XNetInterfaceScaffold(new LenzCommandStation());
 
         t = new ZTC611XNetTurnout("XT", 21, lnis);
@@ -85,6 +83,6 @@ public class ZTC611XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetTurnoutTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ZTC611XNetTurnoutTest.class);
 
 }

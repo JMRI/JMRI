@@ -22,13 +22,13 @@ import static org.junit.jupiter.api.Assertions.fail;
  */
 public class WaitHandlerTest {
 
-    private transient boolean flag1;
-    private transient boolean flag2;
+    private volatile boolean flag1;
+    private volatile boolean flag2;
 
     static final int THREAD_DELAY = 500;   // time to delay thread under test
 
-    private transient long startTime;
-    private transient long endTime;
+    private volatile long startTime;
+    private volatile long endTime;
 
     @Test
     public void testInlineWait() {
@@ -194,12 +194,12 @@ public class WaitHandlerTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 

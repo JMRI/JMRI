@@ -7,6 +7,7 @@ import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.*;
 
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -17,7 +18,6 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.OptionallyTabbedPanel;
-import jmri.util.swing.WrapLayout;
 
 import org.jdom2.Element;
 
@@ -203,7 +203,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      */
     private void initGUI() {
         mainPanel = new OptionallyTabbedPanel(MAX_FUNCTION_BUTTONS_PER_TAB);
-        mainPanel.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         resetFnButtons();
         JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.getViewport().setOpaque(false); // container already gets this done (for play/edit mode)
@@ -212,10 +212,17 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         scrollPane.setViewportBorder( empyBorder );
         scrollPane.setBorder( empyBorder );
         scrollPane.setWheelScrollingEnabled(false); // already used by speed slider
+        scrollPane.getViewport().addChangeListener((e) -> viewPortSizeChanged(e));
+
         setContentPane(scrollPane);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
+    private void viewPortSizeChanged(ChangeEvent e) {
+        // make sure function button area is laid out consistent with sizing
+        mainPanel.revalidate();
+    }
+    
     private void setUpDefaultLightFunctionButton() {
         try {
             functionButtons[0].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");

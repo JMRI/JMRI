@@ -248,7 +248,8 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
         rlNew.setMaxCarMoves(rl.getMaxCarMoves());
         rlNew.setRandomControl(rl.getRandomControl());
         rlNew.setWait(rl.getWait());
-        rlNew.setDepartureTime(rl.getDepartureTime());
+        rlNew.setDepartureTimeHourMinutes(rl.getDepartureTimeHourMinutes());
+        rlNew.setDepartureTimeDay(rl.getDepartureTimeDay());
         rlNew.setComment(rl.getComment());
         rlNew.setCommentColor(rl.getCommentColor());
         if (!invert) {

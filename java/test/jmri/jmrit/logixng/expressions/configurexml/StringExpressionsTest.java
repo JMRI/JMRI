@@ -1,15 +1,17 @@
 package jmri.jmrit.logixng.expressions.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ActionTurnoutXml
@@ -23,13 +25,12 @@ public class StringExpressionsTest {
         AbstractNamedBeanManagerConfigXML b;
 
         b = new StringExpressionMemoryXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -40,7 +41,7 @@ public class StringExpressionsTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

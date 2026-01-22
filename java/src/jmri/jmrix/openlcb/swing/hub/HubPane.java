@@ -58,7 +58,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     public HubPane(int port, boolean sendLineEndings ) {
         super();
         userPreferencesManager = InstanceManager.getDefault(UserPreferencesManager.class);
-        textArea = new java.awt.TextArea();
+        textArea = new javax.swing.JTextArea();
         _send_line_endings = getSendLineEndingsFromUserPref(sendLineEndings);
         hub = new Hub(port, sendLineEndings, getRequireLineEndingsFromUserPref()) {
             @Override
@@ -112,7 +112,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         }
     }
 
-    final private java.awt.TextArea textArea;
+    final private javax.swing.JTextArea textArea;
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
@@ -189,6 +189,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
             }
 
             CanReply workingReply = msg.createReply();
+            workingReply.setSourceLetter("H");
             workingReplySet.add(workingReply);  // save for later recognition
 
             CanMessage result = new CanMessage(workingReply.getNumDataElements(), workingReply.getHeader());
@@ -196,6 +197,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
                 result.setElement(i, workingReply.getElement(i));
             }
             result.setExtended(workingReply.isExtended());
+            result.setSourceLetter("H");
             workingMessageSet.add(result);
             log.trace("Hub forwarder create reply {}", workingReply);
 

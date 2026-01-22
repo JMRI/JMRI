@@ -95,7 +95,7 @@ public class PositionableLabelTest extends PositionableTestBase {
         // make four windows
         InstanceManager.getDefault(ConfigureManager.class)
                 .load(new File("java/test/jmri/jmrit/display/configurexml/valid/backgrounds.xml"));
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         // Find color in label by frame name
         int color1 = getColor("F Bkg none, label Bkg none"); // transparent background
@@ -114,7 +114,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
     int getColor(String name) {
 
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         // Find window by name
         JmriJFrame frame = JmriJFrame.getFrame(name);
@@ -162,7 +162,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
         assertEquals( new Dimension(13, 13).toString(), label.getSize().toString(),
             "icon size");
 
@@ -204,7 +204,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
         assertEquals( new Dimension(13, 13).toString(),
             label.getSize().toString(), "icon size");
 
@@ -214,7 +214,7 @@ public class PositionableLabelTest extends PositionableTestBase {
             label.getSize().toString(), "icon size");
 
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
         assertEquals( new Dimension(19, 19).toString(),
             label.getSize().toString(), "icon size");
 
@@ -264,7 +264,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         assertTrue( label.getSize().width > label.getSize().height,
             () -> "Expect size " + label.getSize() + " wider than height");
@@ -304,12 +304,12 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         label.rotate(90);
 
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         assertTrue( label.getSize().width < label.getSize().height,
             () -> "Expect size " + label.getSize() + " higher than width");
@@ -349,12 +349,12 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         f.add(label);
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         label.rotate(45);
 
         f.pack();
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0, 0));
 

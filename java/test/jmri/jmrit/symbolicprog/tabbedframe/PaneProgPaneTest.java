@@ -46,6 +46,8 @@ public class PaneProgPaneTest {
                 return null;
             }
         };
+        JUnitUtil.waitFor(()->{return pFrame.threadCount.get() == 0;}, "PaneProgFrame threads done");
+
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         log.debug("CvTableModel ctor complete");
         String[] args = {"CV", "Name"};
@@ -79,6 +81,8 @@ public class PaneProgPaneTest {
                 return null;
             }
         };
+        JUnitUtil.waitFor(()->{return pFrame.threadCount.get() == 0;}, "PaneProgFrame threads done");
+
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
@@ -110,6 +114,8 @@ public class PaneProgPaneTest {
                 return null;
             }
         };
+        JUnitUtil.waitFor(()->{return pFrame.threadCount.get() == 0;}, "PaneProgFrame threads done");
+
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
@@ -158,6 +164,7 @@ public class PaneProgPaneTest {
                 return null;
             }
         };
+        JUnitUtil.waitFor(()->{return pFrame.threadCount.get() == 0;}, "PaneProgFrame threads done");
 
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
@@ -214,6 +221,8 @@ public class PaneProgPaneTest {
                 return null;
             }
         };
+        JUnitUtil.waitFor(()->{return pFrame.threadCount.get() == 0;}, "PaneProgFrame threads done");
+
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
@@ -273,6 +282,8 @@ public class PaneProgPaneTest {
                 return null;
             }
         };
+        JUnitUtil.waitFor(()->{return pFrame.threadCount.get() == 0;}, "PaneProgFrame threads done");
+
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel);

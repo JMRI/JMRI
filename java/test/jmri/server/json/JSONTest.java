@@ -29,27 +29,25 @@ public class JSONTest {
     }
 
     @Test
-    public void testConstructor() throws Exception {
-        try {
+    public void testConstructor() {
+
+        // because the constructor throws UnsupportedOperationException, and
+        // that is thrown by newInstance() into an InvocationTargetException
+        // we pass an InvocationTargetException that is caused by an
+        // UnsupportedOperationException and fail everything else.
+
+        InvocationTargetException ex = Assertions.assertThrows( InvocationTargetException.class, () -> {
             Constructor<JSON> constructor;
             constructor = JSON.class.getDeclaredConstructor();
             constructor.setAccessible(true);
             constructor.newInstance();
             fail("Instance of JSON created");
-        } catch (InvocationTargetException ex) {
-            // because the constructor throws UnsupportedOperationException, and
-            // that is thrown by newInstance() into an InvocationTargetException
-            // we pass an InvocationTargetException that is caused by an
-            // UnsupportedOperationException and fail everything else by
-            // re-throwing the unexpected exception to get a stack trace
-            var cause = ex.getCause();
-            assertNotNull(cause);
-            if (!cause.getClass().equals(UnsupportedOperationException.class)) {
-                throw ex;
-            }
-        }
+        });
+        UnsupportedOperationException cause = Assertions.assertInstanceOf(
+            UnsupportedOperationException.class, ex.getCause());
+        assertNotNull(cause);
     }
-    
+
     @Test
     public void testJsonVersions() {
         assertArrayEquals( new String[]{"v5"}, JSON.VERSIONS.toArray(), "JSON protocol versions");

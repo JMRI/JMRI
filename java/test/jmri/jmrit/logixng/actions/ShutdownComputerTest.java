@@ -1,5 +1,11 @@
 package jmri.jmrit.logixng.actions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 
 import jmri.*;
@@ -9,9 +15,10 @@ import jmri.managers.DefaultShutDownManager;
 import jmri.util.*;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ShutdownComputer
@@ -66,26 +73,21 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", new ShutdownComputer("IQDA321", null));
+        assertNotNull( new ShutdownComputer("IQDA321", null), "exists");
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == actionShutdownComputer.getChildCount());
+        assertEquals( 0, actionShutdownComputer.getChildCount(), "getChildCount() returns 0");
 
-        boolean hasThrown = false;
-        try {
-            actionShutdownComputer.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class, () ->
+            actionShutdownComputer.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", LogixNG_Category.OTHER == _base.getCategory());
+        assertSame( LogixNG_Category.OTHER, _base.getCategory(), "Category matches");
     }
 
     @Test
@@ -106,23 +108,23 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
 
         action.getSelectEnum().setEnum(ShutdownComputer.Operation.ShutdownComputer);
         action.execute();
-        Assert.assertEquals(MockShutDownManager.Result.SHUTDOWN_OS, mockShutDownManager.result);
+        assertEquals(MockShutDownManager.Result.SHUTDOWN_OS, mockShutDownManager.result);
 
         action.getSelectEnum().setEnum(ShutdownComputer.Operation.RebootComputer);
         action.execute();
-        Assert.assertEquals(MockShutDownManager.Result.RESTART_OS, mockShutDownManager.result);
+        assertEquals(MockShutDownManager.Result.RESTART_OS, mockShutDownManager.result);
 
         action.getSelectEnum().setEnum(ShutdownComputer.Operation.ShutdownJMRI);
         action.execute();
-        Assert.assertEquals(MockShutDownManager.Result.SHUTDOWN_JMRI, mockShutDownManager.result);
+        assertEquals(MockShutDownManager.Result.SHUTDOWN_JMRI, mockShutDownManager.result);
 
         action.getSelectEnum().setEnum(ShutdownComputer.Operation.RebootJMRI);
         action.execute();
-        Assert.assertEquals(MockShutDownManager.Result.RESTART_JMRI, mockShutDownManager.result);
+        assertEquals(MockShutDownManager.Result.RESTART_JMRI, mockShutDownManager.result);
     }
 
-    // The minimal setup for log4J
     @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -151,12 +153,13 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         _base = actionShutdownComputer;
         _baseMaleSocket = maleSocket;
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
     @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();

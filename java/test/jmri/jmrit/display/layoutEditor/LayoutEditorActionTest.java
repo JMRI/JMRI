@@ -1,8 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,23 +16,23 @@ public class LayoutEditorActionTest {
     @Test
     public void testCtor() {
         LayoutEditorAction b = new LayoutEditorAction();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
     }
 
     @Test
     public void testCtorWithParam() {
         LayoutEditorAction b = new LayoutEditorAction("test");
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
     }
 
     // from here down is testing infrastructure
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorActionTest.class);

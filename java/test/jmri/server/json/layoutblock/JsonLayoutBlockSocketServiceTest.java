@@ -88,10 +88,12 @@ public class JsonLayoutBlockSocketServiceTest {
     /**
      * Test of onMessage method, of class JsonLayoutBlockSocketService.
      *
-     * @throws java.lang.Exception for unexpected errors
+     * @throws java.io.IOException for unexpected errors
+     * @throws jmri.JmriException for unexpected errors
+     * @throws jmri.server.json.JsonException for unexpected errors
      */
     @Test
-    public void testOnMessage() throws Exception {
+    public void testOnMessage() throws IOException, JmriException, JsonException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         LayoutBlockManager manager = InstanceManager.getDefault(LayoutBlockManager.class);
         LayoutBlock lb = manager.createNewLayoutBlock(null, "LayoutBlock1");
@@ -166,10 +168,12 @@ public class JsonLayoutBlockSocketServiceTest {
     /**
      * Test of onList method, of class JsonLayoutBlockSocketService.
      *
-     * @throws java.lang.Exception on unexpected errors
+     * @throws java.io.IOException for unexpected errors
+     * @throws jmri.JmriException for unexpected errors
+     * @throws jmri.server.json.JsonException for unexpected errors
      */
     @Test
-    public void testOnList() throws Exception {
+    public void testOnList() throws IOException, JmriException, JsonException {
         LayoutBlockManager manager = InstanceManager.getDefault(LayoutBlockManager.class);
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         LayoutBlock lb1 = manager.createNewLayoutBlock(null, "LayoutBlock1");
@@ -191,10 +195,12 @@ public class JsonLayoutBlockSocketServiceTest {
     /**
      * Test of onClose method, of class JsonLayoutBlockSocketService.
      *
-     * @throws java.lang.Exception for unexpected errors
+     * @throws java.io.IOException for unexpected errors
+     * @throws jmri.JmriException for unexpected errors
+     * @throws jmri.server.json.JsonException for unexpected errors
      */
     @Test
-    public void testOnClose() throws Exception {
+    public void testOnClose() throws IOException, JmriException, JsonException {
         LayoutBlock lb =
                 InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, "LayoutBlock1");
         assertNotNull( lb, "LayoutBlock is created");

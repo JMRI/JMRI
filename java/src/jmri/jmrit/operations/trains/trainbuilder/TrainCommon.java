@@ -611,14 +611,14 @@ public class TrainCommon {
         }
     }
 
-    protected void setCarPickupAndSetoutTimes(Train train, RouteLocation rl, List<Car> carList) {
+    protected void setPickupAndSetoutTimes(Train train, RouteLocation rl, List<RollingStock> list) {
         String expectedDepartureTime = train.getExpectedDepartureTime(rl, true);
-        for (Car car : carList) {
-            if (car.getRouteLocation() == rl) {
-                car.setPickupTime(expectedDepartureTime);
+        for (RollingStock rs : list) {
+            if (rs.getRouteLocation() == rl) {
+                rs.setPickupTime(expectedDepartureTime);
             }
-            if (car.getRouteDestination() == rl) {
-                car.setSetoutTime(expectedDepartureTime);
+            if (rs.getRouteDestination() == rl) {
+                rs.setSetoutTime(expectedDepartureTime);
             }
         }
 
@@ -645,7 +645,7 @@ public class TrainCommon {
                             new Object[]{routeLocationName,
                                     train.getFormatedDepartureTime(), train.getSplitName(),
                                     train.getDescription(), rl.getLocation().getDivisionName()});
-                } else if (!rl.getDepartureTime().equals(RouteLocation.NONE) &&
+                } else if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE) &&
                         rl != train.getTrainTerminatesRouteLocation()) {
                     // Scheduled work at {0}, departure time {1}
                     msg = MessageFormat.format(messageFormatText = TrainManifestText
@@ -714,7 +714,7 @@ public class TrainCommon {
             } else if (Setup.isUseSwitchListDepartureTimeEnabled() &&
                     rl == train.getCurrentRouteLocation() &&
                     rl != train.getTrainTerminatesRouteLocation() &&
-                    !rl.getDepartureTime().equals(RouteLocation.NONE)) {
+                    !rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
                 // Departs {0} {1}bound at {2}
                 msg = MessageFormat.format(messageFormatText = TrainSwitchListText.getStringDepartsAt(),
                         new Object[]{splitString(rl.getName()), rl.getTrainDirectionString(),
@@ -2159,7 +2159,7 @@ public class TrainCommon {
      * midnight. Note that the string time could be blank, and in that case
      * returns 0 minutes. 
      */
-    protected int convertStringTime(String time) {
+    public static int convertStringTime(String time) {
         int minutes = 0;
         boolean hrFormat = false;
         String[] splitTimePM = time.split(SPACE);
@@ -2190,6 +2190,16 @@ public class TrainCommon {
         log.debug("convert time {} to minutes {}", time, minutes);
         return minutes;
     }
+    
+    public String convertMinutesTime(int minutes) {
+        int days = minutes / (24 * 60);
+        int h = (minutes - (days * 24 * 60))/60;
+        String sHours = String.format("%02d", h);
+        int m = minutes - days * 24 * 60 - h * 60;
+        String sMinutes = String.format("%02d", m);
+        return Integer.toString(days) + ":" + sHours + ":" + sMinutes;
+    }
+        
 
     /**
      * Pads out a string by adding spaces to the end of the string, and will

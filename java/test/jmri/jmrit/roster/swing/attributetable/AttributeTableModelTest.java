@@ -1,11 +1,13 @@
 package jmri.jmrit.roster.swing.attributetable;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,53 +18,53 @@ import org.junit.jupiter.api.*;
 public class AttributeTableModelTest {
 
     @Test
-    public void testTableLength() throws Exception {
+    public void testTableLength() {
         AttributeTableModel t = new AttributeTableModel();
 
-        Assert.assertEquals(NENTRIES, t.getRowCount());
+        assertEquals(NENTRIES, t.getRowCount());
     }
 
     @Test
-    public void testTableWidth() throws Exception {
+    public void testTableWidth() {
         AttributeTableModel t = new AttributeTableModel();
 
-        Assert.assertEquals(NKEYS, t.getColumnCount());
+        assertEquals(NKEYS, t.getColumnCount());
     }
 
     @Test
-    public void testColumnName() throws Exception {
+    public void testColumnName() {
         AttributeTableModel t = new AttributeTableModel();
 
-        Assert.assertEquals("key b", t.getColumnName(1));
+        assertEquals("key b", t.getColumnName(1));
     }
 
     @Test
     public void testGetValueAt() {
         AttributeTableModel t = new AttributeTableModel();
 
-        Assert.assertEquals("value 1", t.getValueAt(0, 0));
-        Assert.assertEquals("", t.getValueAt(0, 1));
-        Assert.assertEquals("", t.getValueAt(0, 2));
-        Assert.assertEquals("", t.getValueAt(0, 3));
-        Assert.assertEquals("value 11", t.getValueAt(1, 0));
-        Assert.assertEquals("value 12", t.getValueAt(1, 1));
-        Assert.assertEquals("value 13", t.getValueAt(1, 2));
-        Assert.assertEquals("value 14", t.getValueAt(1, 3));
-        Assert.assertEquals("", t.getValueAt(2, 0));
-        Assert.assertEquals("", t.getValueAt(2, 1));
-        Assert.assertEquals("", t.getValueAt(2, 2));
-        Assert.assertEquals("", t.getValueAt(2, 3));
+        assertEquals("value 1", t.getValueAt(0, 0));
+        assertEquals("", t.getValueAt(0, 1));
+        assertEquals("", t.getValueAt(0, 2));
+        assertEquals("", t.getValueAt(0, 3));
+        assertEquals("value 11", t.getValueAt(1, 0));
+        assertEquals("value 12", t.getValueAt(1, 1));
+        assertEquals("value 13", t.getValueAt(1, 2));
+        assertEquals("value 14", t.getValueAt(1, 3));
+        assertEquals("", t.getValueAt(2, 0));
+        assertEquals("", t.getValueAt(2, 1));
+        assertEquals("", t.getValueAt(2, 2));
+        assertEquals("", t.getValueAt(2, 3));
     }
 
     // create a standard test roster
-    static int NENTRIES = 3;
-    static int NKEYS = 4;
+    private final static int NENTRIES = 3;
+    private final static int NKEYS = 4;
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
 
         // first entry

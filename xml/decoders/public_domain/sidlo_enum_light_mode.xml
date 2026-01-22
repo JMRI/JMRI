@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!--                                                                         -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under   -->
+<!-- the terms of version 2 of the GNU General Public License as published   -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy      -->
+<!-- of this license.                                                        -->
+<!--                                                                         -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT     -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or   -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License   -->
+<!-- for more details.                                                       -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <enumChoice choice="Continuous lighting" value="3" >
+        <choice>Continuous lighting</choice>
+        <choice xml:lang="cs">Trvalé svícení</choice>
+    </enumChoice>
+    <enumChoice choice="Blinking" value="0" >
+        <choice>Blinking</choice>
+        <choice xml:lang="cs">Blikání</choice>
+    </enumChoice>
+    <enumChoice choice="Opposit blinking" value="1" >
+        <choice>Opposit blinking</choice>
+        <choice xml:lang="cs">Opačné blikání</choice>
+    </enumChoice>
+    <enumChoice choice="Random lighting" value="2" >
+        <choice>Random lighting</choice>
+        <choice xml:lang="cs">Náhodné svícení</choice>
+    </enumChoice>
+    <enumChoice choice="Fluorescent" value="4" >
+        <choice>Fluorescent</choice>
+        <choice xml:lang="cs">Zářivka</choice>
+    </enumChoice>
+    <enumChoice choice="Welding" value="5" >
+        <choice>Welding</choice>
+        <choice xml:lang="cs">Svařování</choice>
+    </enumChoice>
+    <enumChoice choice="Flame" value="6" >
+        <choice>Flame</choice>
+        <choice xml:lang="cs">Plamen</choice>
+    </enumChoice>
+</enumVal>

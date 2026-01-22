@@ -1,17 +1,20 @@
 package jmri.jmrit.logixng.tools;
 
-import java.awt.GraphicsEnvironment;
-
-import org.junit.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jmri.*;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.util.JUnitAppender;
-import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
+import jmri.util.*;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test import of Logix to LogixNG.
@@ -20,15 +23,14 @@ import jmri.util.junit.rules.RetryRule;
  * then import the Logixs to LogixNG, then removes all the Logixs, and then
  * test that the LogixNGs works.
  * <P>
- This test tests expression warrant
+ * This test tests expression warrant
  *
  * @author Daniel Bergqvist  (C) 2021
  * @author Dave Sand         (C) 2021 (Dave Sand created the panel file)
  */
+@DisabledIfHeadless
 public class ImportTest {
 
-    @Rule
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     private LogixManager logixManager;
     private LogixNG_Manager logixNG_Manager;
@@ -50,17 +52,17 @@ public class ImportTest {
     }
 
     private void runTestEntryExit(DestinationPoints dp, Sensor sensor) throws JmriException {
-        Assert.assertFalse(dp.isEnabled());
+        assertFalse(dp.isEnabled());
         sensor.setState(Sensor.INACTIVE);
         JUnitUtil.waitFor(() -> (dp.isEnabled()),"destination point enabled");
-        Assert.assertTrue(dp.isEnabled());
+        assertTrue(dp.isEnabled());
         sensor.setState(Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> (!dp.isEnabled()),"destination point disabled");
-        Assert.assertFalse(dp.isEnabled());
+        assertFalse(dp.isEnabled());
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void testEntryExit() throws JmriException {
         // ENTRYEXIT
         // SET_NXPAIR_ENABLED
@@ -78,12 +80,12 @@ public class ImportTest {
         }
 */
         Sensor sensor201 = InstanceManager.getDefault(SensorManager.class).getByUserName("Set NX Enabled");
-        Assert.assertNotNull(sensor201);
+        assertNotNull(sensor201);
         sensor201.setState(Sensor.ACTIVE);
-        Assert.assertEquals(Sensor.ACTIVE, sensor201.getState());
+        assertEquals(Sensor.ACTIVE, sensor201.getState());
 
         DestinationPoints dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean("NX-Left-TO-A (Left-TO-A) to NX-Right-TO-B (Right-TO-B)");
-        Assert.assertNotNull(dp);
+        assertNotNull(dp);
 
         // Test entry/exit
         runTestEntryExit(dp, sensor201);
@@ -108,36 +110,36 @@ public class ImportTest {
 
     private void runTestSetRoute(Turnout turnout101, Turnout turnout102, Sensor sensor) throws JmriException {
         turnout101.setState(Turnout.THROWN);
-        Assert.assertEquals(Turnout.THROWN, turnout101.getState());
+        assertEquals(Turnout.THROWN, turnout101.getState());
         turnout102.setState(Turnout.THROWN);
-        Assert.assertEquals(Turnout.THROWN, turnout102.getState());
+        assertEquals(Turnout.THROWN, turnout102.getState());
 
         sensor.setState(Sensor.ACTIVE);
 
         JUnitUtil.waitFor(() -> (turnout101.getState() == Turnout.CLOSED),"turnout 101 closed");
         JUnitUtil.waitFor(() -> (turnout102.getState() == Turnout.CLOSED),"turnout 102 closed");
 
-        Assert.assertEquals(Turnout.CLOSED, turnout101.getState());
-        Assert.assertEquals(Turnout.CLOSED, turnout102.getState());
+        assertEquals(Turnout.CLOSED, turnout101.getState());
+        assertEquals(Turnout.CLOSED, turnout102.getState());
     }
 
     @Test
-    public void testSetRoute() throws InterruptedException, JmriException {
+    public void testSetRoute() throws JmriException {
         // TRIGGER_ROUTE
         Sensor sensor210 = InstanceManager.getDefault(SensorManager.class).getByUserName("Trigger Route");
-        Assert.assertNotNull(sensor210);
+        assertNotNull(sensor210);
 //        for (Route r : InstanceManager.getDefault(RouteManager.class).getNamedBeanSet()) {
 //            System.out.format("Route: %s, %s%n", r.getSystemName(), r.getUserName());
 //        }
 
         Route routeTurnouts = InstanceManager.getDefault(RouteManager.class).getRoute("Turnouts");
-        Assert.assertNotNull(routeTurnouts);
+        assertNotNull(routeTurnouts);
 
         Turnout turnout101 = InstanceManager.getDefault(TurnoutManager.class).getBySystemName("IT101");
-        Assert.assertNotNull(turnout101);
+        assertNotNull(turnout101);
 
         Turnout turnout102 = InstanceManager.getDefault(TurnoutManager.class).getBySystemName("IT101");
-        Assert.assertNotNull(turnout102);
+        assertNotNull(turnout102);
 
         // Test route
         runTestSetRoute(turnout101, turnout102, sensor210);
@@ -160,10 +162,8 @@ public class ImportTest {
         JUnitAppender.assertWarnMessage("Import Conditional 'IX:RTXINITIALIZER1T' to LogixNG 'IQ:AUTO:0005'");
     }
 
-    @Before
-    public void setUp() throws JmriException {
-
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @BeforeEach
+    public void setUp() {
 
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -184,10 +184,11 @@ public class ImportTest {
 
 
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        Assert.assertNotNull(cm);
+        assertNotNull(cm);
         java.io.File file = new java.io.File("java/test/jmri/jmrit/logixng/tools/LogixNG_Test_Dave_Sand.xml");
-        boolean results = cm.load(file);
-        Assert.assertTrue(results);
+        boolean results = ThreadingUtil.runOnGUIwithReturn( () ->
+            assertDoesNotThrow( () -> cm.load(file)));
+        assertTrue(results);
 
         logixManager.activateAllLogixs();
         logixNG_Manager.activateAllLogixNGs(false, false);
@@ -227,7 +228,7 @@ public class ImportTest {
 */
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
 
         if ( logixManager != null ) {

@@ -16,7 +16,6 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 public class HexFileFrameTest {
 
     @Test
-    @SuppressWarnings("deprecation")        // Thread.stop()
     public void testCTor() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LnHexFilePort p = new LnHexFilePort();
@@ -38,7 +37,8 @@ public class HexFileFrameTest {
        });
 
         p.dispose();
-        f.sourceThread.stop();
+        p.close();
+        f.sourceThread.interrupt();
         f.sourceThread.join();
         f.packets.terminateThreads();
         f.dispose();

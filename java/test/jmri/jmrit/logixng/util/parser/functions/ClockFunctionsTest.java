@@ -1,19 +1,22 @@
 package jmri.jmrit.logixng.util.parser.functions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.time.Instant;
 import java.util.*;
 
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ClockFunctions
@@ -22,11 +25,11 @@ import org.junit.Test;
  */
 public class ClockFunctionsTest {
 
-    ExpressionNode expr_str_HOUR = new ExpressionNodeString(new Token(TokenType.NONE, "hour", 0));
-    ExpressionNode expr_str_MIN = new ExpressionNodeString(new Token(TokenType.NONE, "min", 0));
-    ExpressionNode expr_str_SEC = new ExpressionNodeString(new Token(TokenType.NONE, "sec", 0));
-    ExpressionNode expr_str_MIN_OF_DAY = new ExpressionNodeString(new Token(TokenType.NONE, "minOfDay", 0));
-    ExpressionNode expr_str_SEC_OF_DAY = new ExpressionNodeString(new Token(TokenType.NONE, "secOfDay", 0));
+    private final ExpressionNode expr_str_HOUR = new ExpressionNodeString(new Token(TokenType.NONE, "hour", 0));
+    private final ExpressionNode expr_str_MIN = new ExpressionNodeString(new Token(TokenType.NONE, "min", 0));
+    private final ExpressionNode expr_str_SEC = new ExpressionNodeString(new Token(TokenType.NONE, "sec", 0));
+    private final ExpressionNode expr_str_MIN_OF_DAY = new ExpressionNodeString(new Token(TokenType.NONE, "minOfDay", 0));
+    private final ExpressionNode expr_str_SEC_OF_DAY = new ExpressionNodeString(new Token(TokenType.NONE, "secOfDay", 0));
 
 
     private List<ExpressionNode> getParameterList(ExpressionNode... exprNodes) {
@@ -41,100 +44,97 @@ public class ClockFunctionsTest {
     }
 
     @Test
-    public void testCurrentTimeMillisFunction() throws Exception {
+    public void testCurrentTimeMillisFunction() throws JmriException {
         Function currentTimeMillisFunction = InstanceManager.getDefault(FunctionManager.class).get("currentTimeMillis");
-        Assert.assertEquals("strings matches", "currentTimeMillis", currentTimeMillisFunction.getName());
+        assertEquals( "currentTimeMillis", currentTimeMillisFunction.getName(), "strings matches");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
         long currentTimeBefore = System.currentTimeMillis();
-        Thread.sleep(10);
+        JUnitUtil.waitFor(10);
         long result = (long) currentTimeMillisFunction.calculate(symbolTable, getParameterList());
-        Thread.sleep(10);
+        JUnitUtil.waitFor(10);
         long currentTimeAfter = System.currentTimeMillis();
 
-        Assert.assertTrue(currentTimeBefore < result);
-        Assert.assertTrue(currentTimeAfter > result);
+        assertTrue(currentTimeBefore < result);
+        assertTrue(currentTimeAfter > result);
     }
 
     @Test
     @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
-    public void testSystemClockFunction() throws Exception {
+    public void testSystemClockFunction() throws JmriException {
         Function systemClockFunction = InstanceManager.getDefault(FunctionManager.class).get("systemClock");
-        Assert.assertEquals("strings matches", "systemClock", systemClockFunction.getName());
+        assertEquals( "systemClock", systemClockFunction.getName(), "strings matches");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
         Date currentTime = Date.from(Instant.now());
         int minSinceMidnight = (currentTime.getHours() * 60) + currentTime.getMinutes();
         int secSinceMidnight = ((currentTime.getHours() * 60) + currentTime.getMinutes()) * 60 + currentTime.getSeconds();
-        Assert.assertTrue(compare(minSinceMidnight, (Integer)systemClockFunction.calculate(symbolTable, getParameterList()), 1));
-        Assert.assertTrue(compare(currentTime.getHours(), (Integer)systemClockFunction.calculate(symbolTable, getParameterList(expr_str_HOUR)), 1));
-        Assert.assertTrue(compare(currentTime.getMinutes(), (Integer)systemClockFunction.calculate(symbolTable, getParameterList(expr_str_MIN)), 1));
-        Assert.assertTrue(compare(currentTime.getSeconds(), (Integer)systemClockFunction.calculate(symbolTable, getParameterList(expr_str_SEC)), 1));
-        Assert.assertTrue(compare(minSinceMidnight, (Integer)systemClockFunction.calculate(symbolTable, getParameterList(expr_str_MIN_OF_DAY)), 1));
-        Assert.assertTrue(compare(secSinceMidnight, (Integer)systemClockFunction.calculate(symbolTable, getParameterList(expr_str_SEC_OF_DAY)), 20));
+        assertTrue(compare(minSinceMidnight, (Integer)systemClockFunction.calculate(symbolTable, getParameterList()), 1));
+        assertTrue(compare(currentTime.getHours(), (Integer)systemClockFunction.calculate(symbolTable, getParameterList(expr_str_HOUR)), 1));
+        assertTrue(compare(currentTime.getMinutes(), (Integer)systemClockFunction.calculate(symbolTable, getParameterList(expr_str_MIN)), 1));
+        assertTrue(compare(currentTime.getSeconds(), (Integer)systemClockFunction.calculate(symbolTable, getParameterList(expr_str_SEC)), 1));
+        assertTrue(compare(minSinceMidnight, (Integer)systemClockFunction.calculate(symbolTable, getParameterList(expr_str_MIN_OF_DAY)), 1));
+        assertTrue(compare(secSinceMidnight, (Integer)systemClockFunction.calculate(symbolTable, getParameterList(expr_str_SEC_OF_DAY)), 20));
     }
 
     @Test
-    @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
-    public void testFastClockFunction() throws Exception {
+    @SuppressWarnings("deprecation")        // new Date(0,0,0,0,0)
+    public void testFastClockFunction() throws JmriException {
         Function fastClockFunction = InstanceManager.getDefault(FunctionManager.class).get("fastClock");
-        Assert.assertEquals("strings matches", "fastClock", fastClockFunction.getName());
+        assertEquals( "fastClock", fastClockFunction.getName(), "strings matches");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        jmri.Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
+        Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
         fastClock.setRun(false);
         fastClock.setTime(new Date(0,0,0,11,05));   // 11:05
 
         int minSinceMidnight = (11 * 60) + 5;
-        Assert.assertEquals(minSinceMidnight, (int)fastClockFunction.calculate(symbolTable, getParameterList()));
-        Assert.assertEquals(11, (int)fastClockFunction.calculate(symbolTable, getParameterList(expr_str_HOUR)));
-        Assert.assertEquals(5, (int)fastClockFunction.calculate(symbolTable, getParameterList(expr_str_MIN)));
-        Assert.assertEquals(minSinceMidnight, (int)fastClockFunction.calculate(symbolTable, getParameterList(expr_str_MIN_OF_DAY)));
+        assertEquals(minSinceMidnight, (int)fastClockFunction.calculate(symbolTable, getParameterList()));
+        assertEquals(11, (int)fastClockFunction.calculate(symbolTable, getParameterList(expr_str_HOUR)));
+        assertEquals(5, (int)fastClockFunction.calculate(symbolTable, getParameterList(expr_str_MIN)));
+        assertEquals(minSinceMidnight, (int)fastClockFunction.calculate(symbolTable, getParameterList(expr_str_MIN_OF_DAY)));
     }
 
     @Test
-    @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
-    public void testFastClockRateFunction() throws Exception {
+    public void testFastClockRateFunction() throws TimebaseRateException, JmriException {
         Function fastClockRateFunction = InstanceManager.getDefault(FunctionManager.class).get("fastClockRate");
-        Assert.assertEquals("strings matches", "fastClockRate", fastClockRateFunction.getName());
+        assertEquals( "fastClockRate", fastClockRateFunction.getName(), "strings matches");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        jmri.Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
+        Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
         fastClock.setRate(1.0);
-        Assert.assertEquals(1.0, (double)fastClockRateFunction.calculate(symbolTable, getParameterList()), 0.000001);
+        assertEquals(1.0, (double)fastClockRateFunction.calculate(symbolTable, getParameterList()), 0.000001);
         fastClock.setRate(2.0);
-        Assert.assertEquals(2.0, (double)fastClockRateFunction.calculate(symbolTable, getParameterList()), 0.000001);
+        assertEquals(2.0, (double)fastClockRateFunction.calculate(symbolTable, getParameterList()), 0.000001);
         fastClock.setRate(60.0);
-        Assert.assertEquals(60.0, (double)fastClockRateFunction.calculate(symbolTable, getParameterList()), 0.000001);
+        assertEquals(60.0, (double)fastClockRateFunction.calculate(symbolTable, getParameterList()), 0.000001);
         fastClock.setRate(1.0);
-        Assert.assertEquals(1.0, (double)fastClockRateFunction.calculate(symbolTable, getParameterList()), 0.000001);
+        assertEquals(1.0, (double)fastClockRateFunction.calculate(symbolTable, getParameterList()), 0.000001);
     }
 
     @Test
-    @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
-    public void testIsFastClockRunningFunction() throws Exception {
+    public void testIsFastClockRunningFunction() throws JmriException {
         Function isFastClockFunction = InstanceManager.getDefault(FunctionManager.class).get("isFastClockRunning");
-        Assert.assertEquals("strings matches", "isFastClockRunning", isFastClockFunction.getName());
+        assertEquals( "isFastClockRunning", isFastClockFunction.getName(), "strings matches");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        jmri.Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
+        Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
         fastClock.setRun(false);
-        Assert.assertFalse((boolean)isFastClockFunction.calculate(symbolTable, getParameterList()));
+        assertFalse((boolean)isFastClockFunction.calculate(symbolTable, getParameterList()));
         fastClock.setRun(true);
-        Assert.assertTrue((boolean)isFastClockFunction.calculate(symbolTable, getParameterList()));
+        assertTrue((boolean)isFastClockFunction.calculate(symbolTable, getParameterList()));
         fastClock.setRun(false);
-        Assert.assertFalse((boolean)isFastClockFunction.calculate(symbolTable, getParameterList()));
+        assertFalse((boolean)isFastClockFunction.calculate(symbolTable, getParameterList()));
         fastClock.setRun(true);
-        Assert.assertTrue((boolean)isFastClockFunction.calculate(symbolTable, getParameterList()));
+        assertTrue((boolean)isFastClockFunction.calculate(symbolTable, getParameterList()));
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -145,7 +145,7 @@ public class ClockFunctionsTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

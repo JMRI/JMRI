@@ -153,6 +153,7 @@
 <!ATTLIST train RequestedCars		CDATA #IMPLIED>
 <!ATTLIST train statusCode			CDATA #IMPLIED>
 <!ATTLIST train oldStatusCode		CDATA #IMPLIED>
+<!ATTLIST train departDay			CDATA #IMPLIED>
 
 <!ATTLIST rowColor name				CDATA #IMPLIED>
 <!ATTLIST rowColor resetRowColor	CDATA #IMPLIED>

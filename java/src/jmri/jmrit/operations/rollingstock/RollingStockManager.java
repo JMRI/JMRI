@@ -407,6 +407,10 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
     public List<T> getByRfidList() {
         return getByList(getByIdList(), BY_RFID);
     }
+    
+    public List<T> getByPickupList() {
+        return getByList(getByDestinationList(), BY_PICKUP);
+    }
 
     /**
      * Get a list of all rolling stock sorted last date used
@@ -453,7 +457,8 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
     protected static final int BY_VALUE = 11;
     protected static final int BY_LAST = 12;
     protected static final int BY_BLOCKING = 13;
-    protected static final int BY_COMMENT = 14;
+    private static final int BY_PICKUP = 14;
+    protected static final int BY_COMMENT = 15;
 
     protected java.util.Comparator<T> getComparator(int attribute) {
         switch (attribute) {
@@ -488,6 +493,8 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
                 return (r1, r2) -> (r1.getLastMoveDate().compareTo(r2.getLastMoveDate()));
             case BY_BLOCKING:
                 return (r1, r2) -> (r1.getBlocking() - r2.getBlocking());
+            case BY_PICKUP:
+                return (r1, r2) -> (r1.getPickupTime().compareToIgnoreCase(r2.getPickupTime()));
             case BY_COMMENT:
                 return (r1, r2) -> (r1.getComment().compareToIgnoreCase(r2.getComment()));
             default:
@@ -616,6 +623,61 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
             out.add(rs);
         });
         return out;
+    }
+    
+    /**
+     * Returns the rolling stock's last clone rolling stock if there's one.
+     * 
+     * @param rs The rolling stock searching for a clone
+     * @return Returns the rolling stock's last clone rolling stock, null if
+     *         there isn't a clone rolling stock.
+     */
+    public T getClone(RollingStock rs) {
+        List<T> list = getByLastDateList();
+        // clone with the highest creation number will be last in the list
+        for (int i = list.size() - 1; i >= 0; i--) {
+            T kar = list.get(i);
+            if (kar.isClone() &&
+                    kar.getDestinationTrack() == rs.getTrack() &&
+                    kar.getRoadName().equals(rs.getRoadName()) &&
+                    kar.getNumber().split(RollingStock.CLONE_REGEX)[0].equals(rs.getNumber())) {
+                return kar;
+            }
+        }
+        return null; // no clone for this rolling stock
+    }
+
+    int cloneCreationOrder = 0;
+
+    /**
+     * Returns the highest clone creation order given to a clone.
+     * 
+     * @return 1 if the first clone created, otherwise the highest found plus
+     *         one. Automatically increments.
+     */
+    protected int getCloneCreationOrder() {
+        if (cloneCreationOrder == 0) {
+            for (RollingStock rs : getList()) {
+                if (rs.isClone()) {
+                    String[] number = rs.getNumber().split(RollingStock.CLONE_REGEX);
+                    int creationOrder = Integer.parseInt(number[1]);
+                    if (creationOrder > cloneCreationOrder) {
+                        cloneCreationOrder = creationOrder;
+                    }
+                }
+            }
+        }
+        return ++cloneCreationOrder;
+    }
+    
+    /**
+     * Adds 4 leading zeros to the number for sorting purposes
+     * 
+     * @param n the number needed leading zeros
+     * @return String "number" with 4 leading zeros
+     */
+    protected String padNumber(int n) {
+        return String.format("%04d", n);
     }
 
     @Override
