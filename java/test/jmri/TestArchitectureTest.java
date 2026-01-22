@@ -57,8 +57,8 @@ public class TestArchitectureTest {
      */
     @ArchTest
     public static final ArchRule junit4TestRule = noClasses()
-        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Test")
-        .because("Tests should normally use org.junit.jupiter.api.Test");
+        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Test") // JUnit4
+        .because("Tests should normally use org.junit.jupiter.api.Test");       // JUnit5
 
     @ArchTest
     public static final ArchRule methodsStartingWithTestShouldBeAnnotatedWithTest =
@@ -85,24 +85,24 @@ public class TestArchitectureTest {
      */
     @ArchTest
     public static final ArchRule junit4BeforeRule = noClasses()
-        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Before")
-        .because("Tests should normally use org.junit.jupiter.api.BeforeEach");
+        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Before") // JUnit4
+        .because("Tests should normally use org.junit.jupiter.api.BeforeEach");   // JUnit5
 
     /**
      * Please use org.junit.jupiter.api.AfterEach
      */
     @ArchTest
     public static final ArchRule junit4AfterRule = noClasses()
-        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.After")
-        .because("Tests should normally use org.junit.jupiter.api.AfterEach");
+        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.After") // JUnit4
+        .because("Tests should normally use org.junit.jupiter.api.AfterEach");   // JUnit5
 
     /**
      * please use org.junit.jupiter.api.Disabled
      */
     @ArchTest
     public static final ArchRule junit4IgnoreRule = noClasses()
-        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Ignore")
-        .because("To Ignore, tests should use org.junit.jupiter.api.Disabled or jmri.util.junit.annotations.NotApplicable");
+        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Ignore") // JUnit4
+        .because("To Ignore, tests should use org.junit.jupiter.api.Disabled or jmri.util.junit.annotations.NotApplicable"); // JUnit5
 
     /**
      * JMRI should not reference org.apache.log4j to allow JMRI
