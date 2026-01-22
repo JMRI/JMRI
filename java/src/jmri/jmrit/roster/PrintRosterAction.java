@@ -96,7 +96,7 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
             log.warn("error during printing", ex);
         }
 
-	float overSample = isPreview ? 1.5f : 3.0f;
+        float overSample = isPreview ? 1.5f : 3.0f;
 
         // Loop through the Roster, printing as needed
         List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all
