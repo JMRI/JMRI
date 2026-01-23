@@ -407,7 +407,8 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Improved how clicks are handled on macOS so they'll
+                be less finicky.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -453,7 +454,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Improved how clicks are handled on macOS so they'll
+                be less finicky.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -494,7 +496,8 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>Improved how clicks are handled on macOS so they'll
+                be less finicky.</li>
         </ul>
 
     <h3>Permissions</h3>

@@ -2,12 +2,19 @@ package jmri.util.swing;
 
 import java.awt.event.MouseEvent;
 
+import jmri.util.SystemType;
+
 /**
  * Replacement for {@link java.awt.event.MouseListener}.
  * This class is used to replace {@link java.awt.event.MouseEvent} with
  * {@link jmri.util.swing.JmriMouseEvent}.
  *
+ * This adds system-type specific behavior for macOS. Since Java 11-21 (at least) on macOS
+ * omits calling mouseClicked if the cursor has moved even a tiny bit while the mouse
+ * is down, this replaces that behavior with a small dead zone on macOS only.
+ *
  * @author Daniel Bergqvist (C) 2022
+ * @author Bob Jacobsen (C) 2026
  */
 public interface JmriMouseListener extends java.util.EventListener {
 
@@ -20,17 +27,29 @@ public interface JmriMouseListener extends java.util.EventListener {
         return new java.awt.event.MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                listener.mouseClicked(new JmriMouseEvent(e));
+                if (! SystemType.isMacOSX()) { // macOS handles clicks in mouseReleased
+                    listener.mouseClicked(new JmriMouseEvent(e));
+                }
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
+                lastX = e.getX();
+                lastY = e.getY();
                 listener.mousePressed(new JmriMouseEvent(e));
             }
 
+            static final int DEADBAND2 = 16;  // 4 pixels, with drag theshold of 5
+            
             @Override
             public void mouseReleased(MouseEvent e) {
                 listener.mouseReleased(new JmriMouseEvent(e));
+                
+                if (SystemType.isMacOSX()) {
+                    if (Math.pow(e.getY()-lastY,2)+Math.pow(e.getX()-lastX,2) <= DEADBAND2) {
+                        listener.mouseClicked(new JmriMouseEvent(e));
+                    }
+                }
             }
 
             @Override
@@ -42,6 +61,8 @@ public interface JmriMouseListener extends java.util.EventListener {
             public void mouseExited(MouseEvent e) {
                 listener.mouseExited(new JmriMouseEvent(e));
             }
+            
+            int lastX, lastY;
         };
     }
 
