@@ -22,34 +22,64 @@ import java.util.List;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Kevin Dickerson Copyright (C) 2012
+ * @author Bob Jacobsen    Copyright (C) 2026
  * @since 2.99.4
  */
 public interface RailCom extends AddressedIdTag {
 
     /**
-     * Constant representing that we do not know the address type of the
-     * decoder. This is the initial state of a newly created object before.
+     * An enum representing the type of address reported
+     * in a RailCom message.
      */
-    int NO_ADDRESS = 0x00;
+    public enum AddressType {
+        /**
+         * Represemts that we do not know the address type of the
+         * decoder. This is the initial state of a newly created object before.
+         */
+        NO_ADDRESS,
+        
+        /**
+         * Represents that the address type reported back is Short.
+         */
+        SHORT_ADDRESS,
+        
+        /**
+         * Represents that the address type reported back is Long.
+         */
+        LONG_ADDRESS,
+        
+        /**
+         * Represents that the address type reported back is part of a
+         * Consist.
+         */
+        CONSIST_ADDRESS
+    }
 
     /**
-     * Constant representing that the address type reported back is Short.
+     * An enum representing the decoder orientation reported
+     * in a RailCom message. The wiring of the RailCom detection hardware
+     * defines the correspondence between the A and B orientations
+     * and the facing direction on the track.
      */
-    int SHORT_ADDRESS = 0x02;
-
-    /**
-     * Constant representing that the address type reported back is Long.
-     */
-    int LONG_ADDRESS = 0x04;
-
-    /**
-     * Constant representing that the address type reported back is part of a
-     * Consist.
-     */
-    int CONSIST_ADDRESS = 0x08;
-
-    int ORIENTA = 0x10;
-    int ORIENTB = 0x20;
+    public enum Orientation {
+        UNKNOWN(0x00),      // historical values should they be needed in scripts
+        ORIENTA(0x10),
+        ORIENTB(0x20);
+        
+        private final int type;
+        Orientation(int type) {
+            this.type = type;
+        }
+        
+        public int getValue() { return type; }
+        
+        public static Orientation getFromInt( int type ) {
+            for (Orientation e : values() ) {
+                if (e.type == type) return e;
+            }
+            return UNKNOWN; // if no match
+        }
+    }
 
     /**
      * Method for a RailCom Reader to set the orientation reported back from a
@@ -57,14 +87,14 @@ public interface RailCom extends AddressedIdTag {
      *
      * @param type the orientation to set
      */
-    void setOrientation(int type);
+    void setOrientation(Orientation type);
 
     /**
      * Gets the Orientation of the Rail Com device on the track
      *
      * @return current orientation
      */
-    int getOrientation();
+    Orientation getOrientation();
 
     /**
      * Method for a RailCom Reader to set the Actual speed reported back from a

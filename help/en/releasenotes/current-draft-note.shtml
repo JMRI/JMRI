@@ -648,6 +648,10 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Some constants in the 
+                <a href="https://www.jmri.org/JavaDoc/doc/jmri/RailCom.html">RailCom class</li>
+                have been converted to Enum values.
+                This primarily affects developers and people who've written scripts for
+                processing RailCom information directly.
         </ul>
 
