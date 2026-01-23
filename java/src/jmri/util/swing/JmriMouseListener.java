@@ -1,6 +1,5 @@
 package jmri.util.swing;
 
-import java.awt.Component;
 import java.awt.event.MouseEvent;
 
 import jmri.util.SystemType;
@@ -49,13 +48,8 @@ public interface JmriMouseListener extends java.util.EventListener {
                 
                 if (SystemType.isMacOSX()) {
                     if (Math.pow(e.getY()-lastY,2)+Math.pow(e.getX()-lastX,2) <= DEADBAND2) {
-                    
-                        Component source = null;
-                        if (e.getSource() instanceof Component) { 
-                            source = (Component) e.getSource();
-                        }
                         listener.mouseClicked(new JmriMouseEvent(
-                            source, e.getID(), e.getWhen(), e.getModifiersEx(),
+                            e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(),
                             e.getX(), e.getY(), lastClickCount, e.isPopupTrigger(),
                             e.getButton()
                         ));
