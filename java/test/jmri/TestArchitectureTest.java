@@ -225,4 +225,11 @@ public class TestArchitectureTest {
         };
     }
 
+    @ArchTest
+    public static final ArchRule noNativeAsserts = noClasses()
+            .that().doNotHaveFullyQualifiedName("jmri.util.junit.AssertTest")
+            .should().accessClassesThat()
+            .haveFullyQualifiedName(AssertionError.class.getName())
+            .because("Please use JUnit Assertions rather than the Java 'assert' keyword");
+
 }
