@@ -1,5 +1,6 @@
 package jmri.util.swing;
 
+import java.awt.Component;
 import java.awt.event.MouseEvent;
 
 import jmri.util.SystemType;
@@ -36,6 +37,7 @@ public interface JmriMouseListener extends java.util.EventListener {
             public void mousePressed(MouseEvent e) {
                 lastX = e.getX();
                 lastY = e.getY();
+                lastClickCount = e.getClickCount();
                 listener.mousePressed(new JmriMouseEvent(e));
             }
 
@@ -47,7 +49,16 @@ public interface JmriMouseListener extends java.util.EventListener {
                 
                 if (SystemType.isMacOSX()) {
                     if (Math.pow(e.getY()-lastY,2)+Math.pow(e.getX()-lastX,2) <= DEADBAND2) {
-                        listener.mouseClicked(new JmriMouseEvent(e));
+                    
+                        Component source = null;
+                        if (e.getSource() instanceof Component) { 
+                            source = (Component) e.getSource();
+                        }
+                        listener.mouseClicked(new JmriMouseEvent(
+                            source, e.getID(), e.getWhen(), e.getModifiersEx(),
+                            e.getX(), e.getY(), lastClickCount, e.isPopupTrigger(),
+                            e.getButton()
+                        ));
                     }
                 }
             }
@@ -62,7 +73,7 @@ public interface JmriMouseListener extends java.util.EventListener {
                 listener.mouseExited(new JmriMouseEvent(e));
             }
             
-            int lastX, lastY;
+            int lastX, lastY, lastClickCount;
         };
     }
 
