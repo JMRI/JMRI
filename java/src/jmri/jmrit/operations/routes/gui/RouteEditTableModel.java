@@ -632,7 +632,7 @@ public class RouteEditTableModel extends OperationsTableModel implements Propert
     
     protected JComboBox<String> getDayComboBox() {
         JComboBox<String> dayBox = new JComboBox<>();
-        for (int i = 0; i < 32; i++) {
+        for (int i = 0; i < Control.numberOfDays; i++) {
             dayBox.addItem(Integer.toString(i));
         }
         return dayBox;

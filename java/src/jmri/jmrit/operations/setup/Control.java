@@ -87,6 +87,8 @@ public class Control {
     
     public static boolean showCloneCars = true;
     
+    public static int numberOfDays = 31; // one month
+    
     public static void setMaxCharLength(int length) {
         max_len_string_attibute = length;
         InstanceManager.getDefault(OperationsSetupXml.class).setDirty(true);
@@ -139,6 +141,9 @@ public class Control {
         // show clones?
         e.addContent(values = new Element(Xml.DISPLAY));
         values.setAttribute(Xml.SHOW_CLONES, showCloneCars ? Xml.TRUE : Xml.FALSE);
+        // days
+        e.addContent(values = new Element(Xml.DAYS));
+        values.setAttribute(Xml.LENGTH, Integer.toString(numberOfDays));
         return e;
     }
 
@@ -247,6 +252,17 @@ public class Control {
             Attribute a;
             if ((a = eDisplay.getAttribute(Xml.SHOW_CLONES)) != null) {
                 showCloneCars = a.getValue().equals(Xml.TRUE);
+            }
+        }
+        Element eDays = eControl.getChild(Xml.DAYS);
+        if (eDays != null) {
+            Attribute a;
+            if ((a = eDays.getAttribute(Xml.LENGTH)) != null) {
+                try {
+                    numberOfDays = a.getIntValue();
+                } catch (DataConversionException e1) {
+                    log.error("Number of days ({}) isn't a number", a.getValue());
+                }
             }
         }
     }
