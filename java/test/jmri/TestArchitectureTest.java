@@ -225,6 +225,11 @@ public class TestArchitectureTest {
         };
     }
 
+    /**
+     * Tests should use JUnit assertions, not native Java asserts.
+     * Note that although we cannot directly test for usage of the assert keyword,
+     * we can check for classes that use java.lang.AssertionError.class
+     */
     @ArchTest
     public static final ArchRule noNativeAsserts = noClasses()
             .that().doNotHaveFullyQualifiedName("jmri.util.junit.AssertTest")
