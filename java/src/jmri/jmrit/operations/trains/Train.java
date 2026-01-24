@@ -549,8 +549,16 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (isSortFormat) {
             d = "0:";
         }
+        
         if (days > 0) {
             d = Integer.toString(days) + ":";
+        }
+        
+        if (!isSortFormat) {
+            String nd = Setup.getDayToName(Integer.toString(days));
+            if (nd != null && !nd.isBlank()) {
+                d = nd + " ";
+            }
         }
 
         // AM_PM field

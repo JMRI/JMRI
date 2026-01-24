@@ -160,7 +160,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         dayBox.setPrototypeDisplayValue("0000"); // needed for font size 9
         hourBox.setPrototypeDisplayValue("0000");
         minuteBox.setPrototypeDisplayValue("0000");
-        for (int i = 0; i < 32; i++) {
+        for (int i = 0; i < Control.numberOfDays; i++) {
             dayBox.addItem(Integer.toString(i));
         }
         for (int i = 0; i < 24; i++) {

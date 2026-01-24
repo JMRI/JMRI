@@ -488,7 +488,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>New tool that allows day to name mapping. Now your Manifest or switch list can show which day or date the train departs or arrives at a location.</li>
         </ul>
 
    <h3>Panel Editor</h3>
