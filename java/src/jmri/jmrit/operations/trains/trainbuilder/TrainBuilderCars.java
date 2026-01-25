@@ -2086,8 +2086,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      * Checks to see if track is requesting a quick service. Since it isn't
      * possible for a car to be pulled and set out twice, this code creates a
      * "clone" car to create the requested Manifest. A car could have multiple
-     * clones, therefore each clone has a creation order number. The first clone
-     * is used to restore a car's location and load in the case of reset.
+     * clones, therefore each clone has a creation order number appended to its
+     * road number. Clones are used to restore a car's location and load in the
+     * case of reset.
      * 
      * @param car   the car possibly needing quick service
      * @param track the destination track
@@ -2114,7 +2115,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         track.scheduleNext(car); // apply schedule to car
         car.loadNext(track); // update load, wait count
         if (car.getWait() > 0) {
-            getCarList().remove(car); // available for next train
+            remove(car); // available for next train
             addLine(FIVE, Bundle.getMessage("buildExcludeCarWait", car.toString(),
                     car.getTypeName(), car.getLocationName(), car.getTrackName(), car.getWait()));
             car.setWait(car.getWait() - 1);

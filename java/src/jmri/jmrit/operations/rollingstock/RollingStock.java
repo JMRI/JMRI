@@ -1398,8 +1398,12 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         setTrain(null);
         setDestination(null, null);
     }
-    
-    protected void distroyCloneReset(RollingStock rs) {
+
+    /*
+     * Clone has been reset and is in the process of being destroyed, move
+     * original car back and restore the car's settings.
+     */
+    protected void destroyCloneReset(RollingStock rs) {
         rs.setLocation(getLocation(), getTrack(), RollingStock.FORCE);
         rs.setRouteDestination(null); // clear rd
         rs.setLastTrain(getLastTrain());
@@ -1489,7 +1493,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if ((a = e.getAttribute(Xml.DIVISION_ID)) != null) {
             _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
         }
-        // TODO remove the following 3 lines in 2022
+        // make xml error "DivisionId" backward compatible
         if ((a = e.getAttribute(Xml.DIVISION_ID_ERROR)) != null) {
             _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
         }

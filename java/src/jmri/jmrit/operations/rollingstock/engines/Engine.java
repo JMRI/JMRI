@@ -407,7 +407,7 @@ public class Engine extends RollingStock {
             Engine engine = engineManager.getByRoadAndNumber(getRoadName(), number[0]);
             int cloneCreationNumber = Integer.parseInt(number[1]);
             if (cloneCreationNumber <= engine.getCloneOrder()) {
-                distroyCloneReset(engine);
+                destroyCloneReset(engine);
                 // remember the last clone destroyed
                 engine.setCloneOrder(cloneCreationNumber);
             }
