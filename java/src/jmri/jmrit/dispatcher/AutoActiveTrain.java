@@ -510,14 +510,6 @@ public class AutoActiveTrain implements ThrottleListener {
                 _autoEngineer.setRamping(_currentRampRate, _dispatcher.getFullRampTime(),
                         _dispatcher.getMinThrottleInterval(), _currentRampRate);
                 _autoEngineer.setSpeedLimits(_minReliableOperatingSpeed, _maxSpeed, _speedFactor);
-
-                // Respect delayed start by forcing immediate stop and WAITING status ---
-                if (_activeTrain.getDelayedStart() != ActiveTrain.NODELAY) {
-                    // Ensure throttle is at zero so the delayed-start guard can engage
-                    _autoEngineer.setHalt(true);
-                    _autoEngineer.setSpeedImmediate(0.0f);
-                    _activeTrain.setStatus(ActiveTrain.WAITING);
-                }
             }
             if (_resumingAutomatic) {
                 _resumingAutomatic = false;
