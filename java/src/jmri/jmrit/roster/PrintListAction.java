@@ -80,7 +80,7 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
             // add the image
             ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
             // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
-            writer.write(icon.getImage(), new JLabel(icon));
+            writer.writeDecoderProIcon(icon.getImage());
             // add a number of blank lines, so that the roster entry starts below the decoderpro logo
             int height = icon.getImage().getHeight(null);
             int blanks = (height - writer.getLineAscent()) / writer.getLineHeight();

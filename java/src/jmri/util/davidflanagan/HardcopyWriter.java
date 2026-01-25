@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.JobAttributes.DefaultSelectionType;
 import java.awt.JobAttributes.SidesType;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
@@ -12,6 +13,7 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
 /**
@@ -32,8 +34,8 @@ public class HardcopyWriter extends Writer {
     protected String line;
     protected int fontsize;
     protected String time;
-    protected Dimension pagesize = new Dimension(612, 792);
-    protected int pagedpi = 72;
+    protected Dimension pagesizePixels;
+    protected Dimension pagesizePoints;
     protected Font font, headerfont;
     protected String fontName = "Monospaced";
     protected int fontStyle = Font.PLAIN;
@@ -100,11 +102,6 @@ public class HardcopyWriter extends Writer {
         }
         if (isLandscape) {
             pageAttributes.setOrientationRequested(PageAttributes.OrientationRequestedType.LANDSCAPE);
-            if (isPreview) {
-                this.pagesize = new Dimension(792, 612);
-            }
-        } else if (isPreview && pagesize != null) {
-            this.pagesize = pagesize;
         }
 
         hardcopyWriter(frame, jobname, fontsize, leftmargin, rightmargin, topmargin, bottommargin, isPreview);
@@ -119,6 +116,9 @@ public class HardcopyWriter extends Writer {
         // set default to color
         pageAttributes.setColor(PageAttributes.ColorType.COLOR);
 
+        pagesizePixels = getPagesizePixels();
+        pagesizePoints = getPagesizePoints();
+
         // skip printer selection if preview
         if (!isPreview) {
             Toolkit toolkit = frame.getToolkit();
@@ -128,8 +128,10 @@ public class HardcopyWriter extends Writer {
             if (job == null) {
                 throw new PrintCanceledException("User cancelled print request");
             }
-            pagesize = job.getPageDimension();
-            pagedpi = job.getPageResolution();
+            pagesizePixels = job.getPageDimension();
+            int printerDpi = job.getPageResolution();
+            pagesizePoints =
+                    new Dimension((72 * pagesizePixels.width) / printerDpi, (72 * pagesizePixels.height) / printerDpi);
             // determine if user selected a range of pages to print out, note that page becomes null if range
             // selected is less than the total number of pages, that's the reason for the page null checks
             if (jobAttributes.getDefaultSelection().equals(DefaultSelectionType.RANGE)) {
@@ -137,10 +139,10 @@ public class HardcopyWriter extends Writer {
             }
         }
 
-        x0 = (int) (leftmargin * pagedpi);
-        y0 = (int) (topmargin * pagedpi);
-        width = pagesize.width - (int) ((leftmargin + rightmargin) * pagedpi);
-        height = pagesize.height - (int) ((topmargin + bottommargin) * pagedpi);
+        x0 = (int) (leftmargin * 72);
+        y0 = (int) (topmargin * 72);
+        width = pagesizePoints.width - (int) ((leftmargin + rightmargin) * 72);
+        height = pagesizePoints.height - (int) ((topmargin + bottommargin) * 72);
 
         // get body font and font size
         font = new Font(fontName, fontStyle, fontsize);
@@ -156,7 +158,7 @@ public class HardcopyWriter extends Writer {
         // header font info
         headerfont = new Font("SansSerif", Font.ITALIC, fontsize);
         headermetrics = frame.getFontMetrics(headerfont);
-        headery = y0 - (int) (0.125 * pagedpi) - headermetrics.getHeight() + headermetrics.getAscent();
+        headery = y0 - (int) (0.125 * 72) - headermetrics.getHeight() + headermetrics.getAscent();
 
         // compute date/time for header
         DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
@@ -173,15 +175,14 @@ public class HardcopyWriter extends Writer {
             previewToolBar.setFloatable(false);
             previewFrame.getContentPane().add(previewToolBar, BorderLayout.NORTH);
             previewPanel = new JPanel();
-            previewPanel.setSize(pagesize.width, pagesize.height);
+            previewPanel.setSize(pagesizePixels.width, pagesizePixels.height);
             // add the panel to the frame and make visible, otherwise creating the image will fail.
             // use a scroll pane to handle print images bigger than the window
             previewFrame.getContentPane().add(new JScrollPane(previewPanel), BorderLayout.CENTER);
             // page width 660 for portrait
-            previewFrame.setSize(pagesize.width + 48, pagesize.height + 100);
+            previewFrame.setSize(pagesizePixels.width + 48, pagesizePixels.height + 100);
             previewFrame.setVisible(true);
         }
-
     }
 
     /**
@@ -247,6 +248,28 @@ public class HardcopyWriter extends Writer {
         previewFrame.invalidate();
         previewFrame.revalidate();
         previewFrame.setVisible(true);
+    }
+
+    /**
+     * Function to get the current page size if this is a preview. This is the
+     * pagesize in points (logical units)
+     * 
+     * @return The page size in points
+     */
+    private Dimension getPagesizePoints() {
+        return new Dimension(612, 792); // This 8.5 * 11.0 -- i.e. US Letter
+    }
+
+    /**
+     * Function to get the current page size if this is a preview. This is the
+     * pagesize in pixels (and not points)
+     * 
+     * @return The page size in pixels
+     */
+    private Dimension getPagesizePixels() {
+        int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+        Dimension pagesizePoints = getPagesizePoints();
+        return new Dimension(pagesizePoints.width * dpi / 72, pagesizePoints.height * dpi / 72);
     }
 
     /**
@@ -337,7 +360,7 @@ public class HardcopyWriter extends Writer {
     public void write(Color c, String s) throws IOException {
         charoffset = 0;
         if (page == null) {
-            newpage();         
+            newpage();
         }
         if (page != null) {
             page.setColor(c);
@@ -551,11 +574,38 @@ public class HardcopyWriter extends Writer {
                     // create a "dummy" page for the pages the user has decided to skip.
                     JFrame f = new JFrame();
                     f.pack();
-                    page = f.createImage(pagesize.width, pagesize.height).getGraphics();
+                    page = f.createImage(pagesizePixels.width, pagesizePixels.height).getGraphics();
+                    Graphics2D g2d = (Graphics2D) page;
+                    double scale = Toolkit.getDefaultToolkit().getScreenResolution() / 72.0;
+                    g2d.scale(scale, scale);
                 }
             } else { // Preview
-                previewImage = previewPanel.createImage(pagesize.width, pagesize.height);
+                previewImage = previewPanel.createImage(pagesizePixels.width, pagesizePixels.height);
                 page = previewImage.getGraphics();
+                Graphics2D g2d = (Graphics2D) page;
+                double scale = Toolkit.getDefaultToolkit().getScreenResolution() / 72.0;
+                g2d.scale(scale, scale);
+
+                // Enable Antialiasing (Smooths the edges)
+                g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+                // Enable Fractional Metrics (Improves character spacing)
+                g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
+                        RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+
+                // High Quality Rendering
+                g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+                        RenderingHints.VALUE_RENDER_QUALITY);
+
+                // Set Interpolation for the Image (The most important for images)
+                g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                        RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+
+                // Enable Antialiasing (Smooths the edges)
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.VALUE_ANTIALIAS_ON);
+
                 page.setColor(Color.white);
                 page.fillRect(0, 0, previewImage.getWidth(previewPanel), previewImage.getHeight(previewPanel));
                 page.setColor(color);
@@ -585,7 +635,8 @@ public class HardcopyWriter extends Writer {
      * Write a graphic to the printout.
      * <p>
      * This was not in the original class, but was added afterwards by Bob
-     * Jacobsen. Modified by D Miller.
+     * Jacobsen. Modified by D Miller. Modified by P Gladstone. The image well
+     * be rendered at 1.5 pixels per point.
      * <p>
      * The image is positioned on the right side of the paper, at the current
      * height.
@@ -594,52 +645,63 @@ public class HardcopyWriter extends Writer {
      * @param i ignored, but maintained for API compatibility
      */
     public void write(Image c, Component i) {
-        writeWithScale(c, 3 / 2f, i);
+        writeSpecificSize(c, new Dimension((int) (c.getWidth(null) / 1.5), (int) (c.getHeight(null) / 1.5)));
     }
 
     /**
-     * Write a graphic to the printout.
-     * <p>
-     * This was not in the original class, but was added afterwards by Kevin
-     * Dickerson. it is a copy of the write, but without the scaling.
+     * Write the decoder pro icon to the output. The icon is scaled to the size
+     * of the small icon divided by 1.5 (this was in the original code). Method
+     * added by P Gladstone. This actually uses the high resolution image.
      * <p>
      * The image is positioned on the right side of the paper, at the current
      * height.
      *
-     * @param c the image to print
-     * @param i ignored but maintained for API compatibility
+     * @param c image to use purely for the size (and then divided by 1.5). Yes,
+     *          this is a bit of a hack.
+     * @return The actual size in points of the icon that was rendered.
      */
-    public void writeNoScale(Image c, Component i) {
-        writeWithScale(c, 1, i);
+    public Dimension writeDecoderProIcon(Image c) {
+        ImageIcon hiresIcon =
+                new ImageIcon(getClass().getResource("/resources/decoderpro_large.png"));
+        Image icon = hiresIcon.getImage();
+        return writeSpecificSize(icon, new Dimension((int) (c.getWidth(null) / 1.5), (int) (c.getHeight(null) / 1.5)));
     }
 
     /**
-     * Write a graphic to the printout.
+     * Write a graphic to the printout at a specific size (in points)
      * <p>
      * This was not in the original class, but was added afterwards by Kevin
-     * Dickerson. it is a copy of the write, but without the scaling.
+     * Dickerson. Heavily modified by P Gladstone.
      * <p>
      * The image is positioned on the right side of the paper, at the current
-     * height.
+     * height. The image aspect ratio is maintained.
      *
-     * @param c the image to print
-     * @param overSample the amount to scale the image by
-     * @param i ignored but maintained for API compatibility
+     * @param c            the image to print
+     * @param requiredSize the dimensions to scale the image to. The image will
+     *                     fit inside the bounding box.
+     * @return the dimensions of the image in points
      */
-    public void writeWithScale(Image c, float overSample, Component i) {
+    public Dimension writeSpecificSize(Image c, Dimension requiredSize) {
         // if we haven't begun a new page, do that now
         if (page == null) {
             newpage();
         }
 
-        int x = x0 + width - (Math.round(   c.getWidth(null) / overSample) + charwidth);
+        float widthScale = (float) requiredSize.width / c.getWidth(null);
+        float heightScale = (float) requiredSize.height / c.getHeight(null);
+        float scale = Math.min(widthScale, heightScale);
+
+        int x = x0 + width - (Math.round(c.getWidth(null) * scale) + charwidth);
         int y = y0 + (linenum * lineheight) + lineascent;
+
+        Dimension d = new Dimension(Math.round(c.getWidth(null) * scale), Math.round(c.getHeight(null) * scale));
 
         if (page != null && pagenum >= prFirst) {
             page.drawImage(c, x, y,
-                           Math.round(c.getWidth(null) / overSample), Math.round(c.getHeight(null) / overSample),
-                           null);
+                    d.width, d.height,
+                    null);
         }
+        return d;
     }
 
     /**

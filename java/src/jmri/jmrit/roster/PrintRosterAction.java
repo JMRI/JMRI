@@ -82,7 +82,7 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
         // add the image
         ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
-        writer.write(icon.getImage(), new JLabel(icon));
+        writer.writeDecoderProIcon(icon.getImage());
         //Add a number of blank lines, so that the roster entry starts below the decoderpro logo
         int height = icon.getImage().getHeight(null);
         int blanks = (height - writer.getLineAscent()) / writer.getLineHeight();
@@ -96,8 +96,6 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
             log.warn("error during printing", ex);
         }
 
-        float overSample = isPreview ? 1.5f : 3.0f;
-
         // Loop through the Roster, printing as needed
         List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all
         log.debug("Roster list size: {}", l.size());
@@ -105,10 +103,10 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
             if (rosterGroup != null) {
                 if (re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)) != null
                         && re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)).equals("yes")) {
-                    re.printEntry(writer, overSample);
+                    re.printEntry(writer);
                 }
             } else {
-                re.printEntry(writer, overSample);
+                re.printEntry(writer);
             }
         }
 

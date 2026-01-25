@@ -54,7 +54,7 @@ public class PrintNceConsistRosterAction extends AbstractAction {
         // add the image
         ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
-        writer.write(icon.getImage(), new JLabel(icon));
+        writer.writeDecoderProIcon(icon.getImage());
 
         // Loop through the Roster, printing as needed
         NceConsistRoster r = InstanceManager.getDefault(NceConsistRoster.class);

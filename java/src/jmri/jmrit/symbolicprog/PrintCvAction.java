@@ -48,7 +48,7 @@ public class PrintCvAction extends AbstractAction {
     public void printInfoSection(HardcopyWriter w) {
         ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
-        w.write(icon.getImage(), new JLabel(icon));
+        w.writeDecoderProIcon(icon.getImage());
         w.setFontStyle(Font.BOLD);
         //Add a number of blank lines
         int height = icon.getImage().getHeight(null);
