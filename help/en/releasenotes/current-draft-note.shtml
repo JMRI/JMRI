@@ -407,7 +407,7 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>Improved how clicks are handled on macOS so they'll
+            <li>Improved how clicks are handled so they'll
                 be less finicky.</li>
         </ul>
         <h4>Circuit Builder</h4>
@@ -454,7 +454,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Improved how clicks are handled on macOS so they'll
+            <li>Improved how clicks are handled so they'll
                 be less finicky.</li>
         </ul>
 
@@ -496,7 +496,7 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>Improved how clicks are handled on macOS so they'll
+            <li>Improved how clicks are handled so they'll
                 be less finicky.</li>
         </ul>
 

@@ -27,9 +27,9 @@ public interface JmriMouseListener extends java.util.EventListener {
         return new java.awt.event.MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (! SystemType.isMacOSX()) { // macOS handles clicks in mouseReleased
-                    listener.mouseClicked(new JmriMouseEvent(e));
-                }
+                // this is suppressed because mouseClicked is now
+                // originating in mouseReleased
+                //     listener.mouseClicked(new JmriMouseEvent(e));
             }
 
             @Override
@@ -46,14 +46,14 @@ public interface JmriMouseListener extends java.util.EventListener {
             public void mouseReleased(MouseEvent e) {
                 listener.mouseReleased(new JmriMouseEvent(e));
                 
-                if (SystemType.isMacOSX()) {
-                    if (Math.pow(e.getY()-lastY,2)+Math.pow(e.getX()-lastX,2) <= DEADBAND2) {
-                        listener.mouseClicked(new JmriMouseEvent(
-                            e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(),
-                            e.getX(), e.getY(), lastClickCount, e.isPopupTrigger(),
-                            e.getButton()
-                        ));
-                    }
+                // we manually check whether the mouse hasn't moved far, and
+                // if so this is interpreted as a click event.
+                if (Math.pow(e.getY()-lastY,2)+Math.pow(e.getX()-lastX,2) <= DEADBAND2) {
+                    listener.mouseClicked(new JmriMouseEvent(
+                        e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(),
+                        e.getX(), e.getY(), lastClickCount, e.isPopupTrigger(),
+                        e.getButton()
+                    ));
                 }
             }
 
