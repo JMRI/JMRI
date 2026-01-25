@@ -2,27 +2,28 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: DecoderPro 3</title>
+  <title>JMRI: DecoderPro</title>
   <meta name="author" content="Nigel Cliffe">
-  <meta name="keywords" content="JMRI help DecoderPro 3"><!--#include virtual="/help/en/parts/Style.shtml" -->
+  <meta name="keywords" content="JMRI help DecoderPro">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-      <h1>Introduction to DecoderPro 3</h1>
+      <h1>Introduction to DecoderPro</h1>
 
       <p><strong>THIS HELP FILE IS WORK IN PROGRESS</strong>. Please help JMRI by contributing to
       improve this help file !</p>
 
-      <p>DecoderPro 3 presents a list of your locomotives (the Roster) and provides access to tools
+      <p>DecoderPro presents a list of your locomotives (the Roster) and provides access to tools
       for programming decoder configuration variables (CV's). Some stationary decoders can also be
       added to this database.</p>
 
-      <h2>Description of DecoderPro 3 Window</h2>
+      <h2>Description of DecoderPro Window</h2>
 
-      <p>The DecoderPro 3 Window is divided into five main sections from top to bottom.</p>
+      <p>The DecoderPro Window is divided into five main sections from top to bottom.</p>
       <img src="../../images/Dp3Roster.png" width="509" height="265" alt="Roster Window">
       <ol>
         <li>
@@ -43,17 +44,17 @@
         posted here.</li>
       </ol>
 
-      <h2>Main Tasks with DecoderPro 3</h2>
+      <h2>Main Tasks with DecoderPro</h2>
 
-      <p>DecoderPro 3 is designed for the management of DCC decoders fitted to locomotives. The
-      locomotives known to DecoderPro 3 are displayed in the Roster Table. The anticipated main
+      <p>DecoderPro is designed for the management of DCC decoders fitted to locomotives. The
+      locomotives known to DecoderPro are displayed in the Roster Table. The anticipated main
       tasks are: creating a new locomotive and changing the settings in an existing locomotive
       (programming).</p>
 
       <h3>New Locomotive</h3>
 
       <p>To add a new locomotive (or first locomotive, or stationary decoder), click on the
-      "New Loco" button on the Tool Bar.<br>
+      "New Entry" button on the Tool Bar.<br>
       This will open a "Create New Loco" window, where the decoder can be either identified or
       selected from the list. To create the locomotive, having selected (or identified) a decoder,
       select the Programmer format (Basic or Comprehensive) and click "Open Programmer". A
@@ -63,9 +64,9 @@
       tab), and set other values. On closing the Programming window, if prompted, save the results
       into the Roster.</p>
 
-      <h3>Identify Existing Locomotive</h3>
+      <h3>Identifying An Existing Locomotive Entry</h3>
 
-      <p>If a locomotive is placed on the Programming Track, the "Identify" button will read
+      <p>If a locomotive is placed on the Programming Track, the "Find in Roster" button will read
       details from the decoder and try to match it to an entry in the Roster Table. Some decoders
       only work with a limited range of programming modes, and it may be necessary to change the
       programming mode with the "Programming Mode" drop down list.<br>
@@ -99,12 +100,12 @@
       <p>Roster Groups are a means of filtering your entries in the Roster. For example, you might
       have "diesel locos", "steam locos", but also "Burlington Locos" and "Canadian Pacific Locos".
       Thus a single locomotive in the Roster could be a member of several groups. Roster Groups are
-      used to filter the Roster View in DecoderPro 3, and select the locomotives offered in an
+      used to filter the Roster View in DecoderPro, and select the locomotives offered in an
       on-screen Throttle.</p>
 
       <p>To create your first Roster Group, use the "Create Roster Group" command on the "Settings"
       menu. When you have created a Roster Group, a new drop-list is added to the Tool Bar in
-      DecoderPro 3. Having created a group, it is initially empty. The next step is to add
+      DecoderPro. Having created a group, it is initially empty. The next step is to add
       locomotives to the group. This is done with the "Roster Group Table Association" command on
       the "Settings" menu. With the "Roster Group Table" window, select the Roster Group in the
       drop-menu, and then place a tick alongside all locomotives requires in that group. Repeat for
@@ -284,7 +285,7 @@
       <h3>Command Station Specific menu</h3>
 
       <p>A menu will appear for the command station connected to JMRI. The command station is set
-      in the Preferences. The content of this menu will be specific to your command station.</p>
+      in the Preferences. The content of this menu will be specific to your command station type.</p>
 
       <h3>Window menu</h3>
 
@@ -293,6 +294,10 @@
       <h3>Help menu</h3>
 
       <p>Window Help opens this page.</p>
+      
+      The tool bar is initially at the top of the DecoderPro window.
+      By grabbing the left end  with your mouse, you can move it to 
+      other places on the screen as desired.
 
       <h2 id="toolbar">Tool Bar</h2>
 
@@ -300,13 +305,17 @@
 
       <p>Opens this page.</p>
 
-      <h3>New Loco button</h3>
+      <h3>New Entry button</h3>
 
       <p>Opens Service Mode Programmer Decoder selection Screen.</p>
 
-      <h3>Identify button</h3>
+      <h3>Find in Roster button</h3>
 
       <p>Attempts to identify the loco on the Programming track.</p>
+
+      <h3>Print Table button</h3>
+
+      <p>Prints the current contents of the roster table.</p>
 
       <h3>Programming mode drop down</h3>
 
