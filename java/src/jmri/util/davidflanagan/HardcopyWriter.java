@@ -250,8 +250,8 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Function to get the current page size if this is a preview. This is the
-     * pagesize in points (logical units). If this is not a preview, it still returns
-     * the page size for the display.
+     * pagesize in points (logical units). If this is not a preview, it still
+     * returns the page size for the display.
      *
      * @return The page size in points
      */
@@ -261,8 +261,8 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Function to get the current page size if this is a preview. This is the
-     * pagesize in pixels (and not points). If this is not a preview, it still returns
-     * the page size for the display.
+     * pagesize in pixels (and not points). If this is not a preview, it still
+     * returns the page size for the display.
      *
      * @return The page size in pixels
      */
@@ -662,7 +662,7 @@ public class HardcopyWriter extends Writer {
      */
     public Dimension writeDecoderProIcon(Image c) {
         ImageIcon hiresIcon =
-                new ImageIcon(getClass().getResource("/resources/decoderpro_large.png"));
+                new ImageIcon(HardcopyWriter.class.getResource("/resources/decoderpro_large.png"));
         Image icon = hiresIcon.getImage();
         return writeSpecificSize(icon, new Dimension((int) (c.getWidth(null) / 1.5), (int) (c.getHeight(null) / 1.5)));
     }
