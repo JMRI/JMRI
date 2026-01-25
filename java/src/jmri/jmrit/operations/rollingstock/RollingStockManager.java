@@ -421,18 +421,14 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
         return getByList(getByIdList(), BY_LAST);
     }
     
+    public List<T> getByLastDateReversedList() {
+        List<T> out = getByLastDateList();
+        Collections.reverse(out);
+        return out;
+    } 
+    
     public List<T> getByCommentList() {
         return getByList(getByIdList(), BY_COMMENT);
-    }
-
-    /**
-     * Sort a specific list of rolling stock last date used
-     *
-     * @param inList list of rolling stock to sort.
-     * @return list of RollingStock ordered by last date
-     */
-    public List<T> getByLastDateList(List<T> inList) {
-        return getByList(inList, BY_LAST);
     }
 
     protected List<T> getByList(List<T> sortIn, int attribute) {
@@ -626,22 +622,21 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
     }
     
     /**
-     * Returns the rolling stock's last clone rolling stock if there's one.
+     * Returns the rolling stock's last clone if there's one.
      * 
      * @param rs The rolling stock searching for a clone
-     * @return Returns the rolling stock's last clone rolling stock, null if
-     *         there isn't a clone rolling stock.
+     * @return Returns the rolling stock's last clone, null if there isn't a
+     *         clone.
      */
     public T getClone(RollingStock rs) {
-        List<T> list = getByLastDateList();
-        // clone with the highest creation number will be last in the list
-        for (int i = list.size() - 1; i >= 0; i--) {
-            T kar = list.get(i);
-            if (kar.isClone() &&
-                    kar.getDestinationTrack() == rs.getTrack() &&
-                    kar.getRoadName().equals(rs.getRoadName()) &&
-                    kar.getNumber().split(RollingStock.CLONE_REGEX)[0].equals(rs.getNumber())) {
-                return kar;
+        List<T> list = getByLastDateReversedList();
+        // clone with the highest creation number will be first in this list
+        for (T clone : list) {
+            if (clone.isClone() &&
+                    clone.getDestinationTrack() == rs.getTrack() &&
+                    clone.getRoadName().equals(rs.getRoadName()) &&
+                    clone.getNumber().split(RollingStock.CLONE_REGEX)[0].equals(rs.getNumber())) {
+                return clone;
             }
         }
         return null; // no clone for this rolling stock
@@ -655,7 +650,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
      * @return 1 if the first clone created, otherwise the highest found plus
      *         one. Automatically increments.
      */
-    protected int getCloneCreationOrder() {
+    private int getCloneCreationOrder() {
         if (cloneCreationOrder == 0) {
             for (RollingStock rs : getList()) {
                 if (rs.isClone()) {
@@ -671,10 +666,53 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
     }
     
     /**
-     * Adds 4 leading zeros to the number for sorting purposes
+     * Creates a clone of rolling stock and places it at the rolling stocks location and track.
+     * @param rs the rolling stock requesting a clone
+     * @return the clone of the rolling stock
+     */
+    protected T createClone(RollingStock rs) {
+        int cloneCreationOrder = getCloneCreationOrder();
+        return createClone(rs, cloneCreationOrder);
+    }
+    
+    protected T createClone(RollingStock rs, int cloneCreationOrder) {
+        @SuppressWarnings("unchecked")
+        T clone = (T) rs.copy();
+        clone.setNumber(rs.getNumber() + RollingStock.CLONE + padNumber(cloneCreationOrder));
+        clone.setClone(true);
+        clone.setMoves(rs.getMoves());
+        // register car before setting location so the car gets logged
+        register(clone);
+        clone.setLocation(rs.getLocation(), rs.getTrack(), RollingStock.FORCE);
+        rs.setCloneOrder(cloneCreationOrder); // for reset
+        return clone;
+    }
+    
+    /**
+     * Moves the rolling stock to the clone's destination track
+     * @param rs rolling stock to be moved
+     * @param track the destination track for the clone
+     * @param train the train that will transport the clone
+     * @param startTime when the rolling stock was moved
+     * @param clone the clone being transported by the train
+     */
+    protected void finshCreateClone(RollingStock rs, Track track, Train train, Date startTime, RollingStock clone) {
+        rs.setMoves(rs.getMoves() + 1); // bump count
+        rs.setLocation(track.getLocation(), track, RollingStock.FORCE);
+        rs.setLastTrain(train);
+        rs.setLastLocationId(clone.getLocationId());
+        rs.setLastTrackId(clone.getTrackId());
+        rs.setLastRouteId(train.getRoute().getId());
+        // this rs was moved during the build process
+        rs.setLastDate(startTime);
+        rs.setDestination(null, null);
+    }
+
+    /**
+     * Pads the number to 4 digits for sorting purposes
      * 
      * @param n the number needed leading zeros
-     * @return String "number" with 4 leading zeros
+     * @return String "number" with leading zeros if necessary
      */
     protected String padNumber(int n) {
         return String.format("%04d", n);

@@ -41,6 +41,7 @@ public class Engine extends RollingStock {
         addPropertyChangeListeners();
     }
 
+    @Override
     public Engine copy() {
         Engine eng = new Engine();
         super.copy(eng);
@@ -406,12 +407,7 @@ public class Engine extends RollingStock {
             Engine engine = engineManager.getByRoadAndNumber(getRoadName(), number[0]);
             int cloneCreationNumber = Integer.parseInt(number[1]);
             if (cloneCreationNumber <= engine.getCloneOrder()) {
-                engine.setLocation(getLocation(), getTrack(), Engine.FORCE);
-                engine.setRouteDestination(null); // clear rd
-                engine.setLastTrain(getLastTrain());
-                engine.setLastRouteId(getLastRouteId());
-                engine.setLastDate(getLastDate());
-                engine.setMoves(getMoves());
+                distroyCloneReset(engine);
                 // remember the last clone destroyed
                 engine.setCloneOrder(cloneCreationNumber);
             }

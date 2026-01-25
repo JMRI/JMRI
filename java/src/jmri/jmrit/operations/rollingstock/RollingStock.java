@@ -127,6 +127,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return _id;
     }
     
+    public abstract RollingStock copy();
+    
     public RollingStock copy(RollingStock rs) {
         rs.setBuilt(getBuilt());
         rs.setColor(getColor());
@@ -142,6 +144,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         rs.setLastDate(getLastDate());
         rs.setLastLocationId(getLastLocationId());
         rs.setLastTrackId(getLastTrackId());
+        rs.setLastRouteId(getLastRouteId());
         rs.setDivision(getDivision());
         return rs;
     }
@@ -1394,6 +1397,15 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         // train's route id
         setTrain(null);
         setDestination(null, null);
+    }
+    
+    protected void distroyCloneReset(RollingStock rs) {
+        rs.setLocation(getLocation(), getTrack(), RollingStock.FORCE);
+        rs.setRouteDestination(null); // clear rd
+        rs.setLastTrain(getLastTrain());
+        rs.setLastRouteId(getLastRouteId());
+        rs.setLastDate(getLastDate());
+        rs.setMoves(getMoves());
     }
 
     /**

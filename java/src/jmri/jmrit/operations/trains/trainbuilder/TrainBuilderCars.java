@@ -2095,13 +2095,18 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      */
     private Car checkQuickServiceArrival(Car car, RouteLocation rld, Track track) {
         if (!track.isQuickServiceEnabled()) {
+            if (Setup.isBuildOnTime()) {
+                addLine(THREE,
+                        Bundle.getMessage("buildTrackNotQuickService", StringUtils.capitalize(track.getTrackTypeName()),
+                                track.getLocation().getName(), track.getName(), car.toString()));
+            }
             return car;
         }
-        addLine(FIVE,
-                Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
-                        track.getLocation().getName(), track.getName()));
         // quick service enabled, create clones
         Car cloneCar = carManager.createClone(car, track, getTrain(), getStartTime());
+        addLine(FIVE,
+                Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
+                        track.getLocation().getName(), track.getName(), cloneCar.toString(), car.toString()));
         // for timing, use arrival times for the train that is building
         // other trains will use their departure time, loaded when creating the Manifest
         String expectedArrivalTime = getTrain().getExpectedArrivalTime(rld, true);

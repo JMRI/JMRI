@@ -23,19 +23,17 @@ import jmri.jmrit.operations.trains.TrainManifestHeaderText;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
-public class EngineManager extends RollingStockManager<Engine>
-        implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
+public class EngineManager extends RollingStockManager<Engine> implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public EngineManager() {
     }
 
     /**
-     * Finds an existing engine or creates a new engine if needed requires engine's
-     * road and number
+     * Finds an existing engine or creates a new engine if needed requires
+     * engine's road and number
      *
      * @param engineRoad   The engine's road initials
      * @param engineNumber The engine's road number
-     *
      * @return new engine or existing engine
      */
     @Override
@@ -118,8 +116,8 @@ public class EngineManager extends RollingStockManager<Engine>
     }
 
     /**
-     * Returns a list of locos sorted by blocking number for a train. This returns a
-     * list of consisted locos in the order that they were entered in.
+     * Returns a list of locos sorted by blocking number for a train. This
+     * returns a list of consisted locos in the order that they were entered in.
      *
      * @param train The Train requesting this list.
      * @return A list of sorted locos.
@@ -132,7 +130,6 @@ public class EngineManager extends RollingStockManager<Engine>
      * Get a list of engine road names.
      *
      * @param model The string model name, can be NONE.
-     *
      * @return List of engine road names.
      */
     public List<String> getEngineRoadNames(String model) {
@@ -160,8 +157,8 @@ public class EngineManager extends RollingStockManager<Engine>
 
     int _commentLength = 0;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-            justification="I18N of Info Message")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "I18N of Info Message")
     public int getMaxCommentLength() {
         if (_commentLength == 0) {
             _commentLength = TrainManifestHeaderText.getStringHeader_Comment().length();
@@ -180,66 +177,39 @@ public class EngineManager extends RollingStockManager<Engine>
         }
         return _commentLength;
     }
-    
+
     /**
-     * Creates a clone for the engine, and clones if the engine is part of a consist.
-     * Note that a engine have have multiple clones.
+     * Creates a clone for the engine, and clones if the engine is part of a
+     * consist. Note that a engine have have multiple clones.
      * 
-     * @param engine       The engine to clone
+     * @param engine    The engine to clone
      * @param track     The destination track for the clones
      * @param train     The train transporting the clones
      * @param startTime The date and time the clones were moved
      * @return clone for this engine
      */
     public Engine createClone(Engine engine, Track track, Train train, Date startTime) {
-        int cloneCreationOrder = getCloneCreationOrder();
-        String creationOrder = padNumber(cloneCreationOrder);
-        Engine cloneEng = engine.copy();
-        cloneEng.setNumber(engine.getNumber() + Engine.CLONE + creationOrder);
-        cloneEng.setClone(true);
-        // register engine before setting location so the engine gets logged
-        register(cloneEng);
-        cloneEng.setLocation(engine.getLocation(), engine.getTrack(), RollingStock.FORCE);
-        // for reset
-        cloneEng.setLastRouteId(engine.getLastRouteId());
-        cloneEng.setMoves(engine.getMoves());
+        Engine clone = createClone(engine);
+        createCloneConsist(engine, track, train, startTime, clone);
+        // move engine to new location for later pick up
+        finshCreateClone(engine, track, train, startTime, clone);
+        return clone;
+    }
+
+    private void createCloneConsist(Engine engine, Track track, Train train, Date startTime, Engine cloneEng) {
         if (engine.getConsist() != null) {
-            String consistName = engine.getConsistName() + Engine.CLONE + creationOrder;
+            String consistName = engine.getConsistName() + Engine.CLONE + padNumber(engine.getCloneOrder());
             Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist(consistName);
             cloneEng.setConsist(consist);
             for (Engine e : engine.getConsist().getEngines()) {
                 if (e != engine) {
-                    Engine nEng = e.copy();
-                    nEng.setNumber(e.getNumber() + Engine.CLONE + creationOrder);
-                    nEng.setClone(true);
-                    nEng.setConsist(consist);
-                    nEng.setMoves(e.getMoves());
-                    register(nEng);
-                    nEng.setLocation(engine.getLocation(), engine.getTrack(), RollingStock.FORCE);
-                    // for reset
+                    Engine nClone = createClone(e, engine.getCloneOrder());
+                    nClone.setConsist(consist);
                     // move engine to new location for later pick up
-                    e.setLocation(track.getLocation(), track, RollingStock.FORCE);
-                    e.setLastTrain(train);
-                    e.setLastLocationId(engine.getLocationId());
-                    e.setLastTrackId(engine.getTrackId());
-                    e.setLastDate(startTime);
-                    e.setMoves(e.getMoves() + 1); // bump count
-                    e.setCloneOrder(cloneCreationOrder); // for reset
+                    finshCreateClone(e, track, train, startTime, nClone);
                 }
             }
         }
-        // move engine to new location for later pick up
-        engine.setLocation(track.getLocation(), track, RollingStock.FORCE);
-        engine.setLastTrain(train);
-        engine.setLastLocationId(cloneEng.getLocationId());
-        engine.setLastTrackId(cloneEng.getTrackId());
-        engine.setLastRouteId(train.getRoute().getId());
-        // this engine was moved during the build process
-        engine.setLastDate(startTime);
-        engine.setMoves(engine.getMoves() + 1); // bump count
-        engine.setCloneOrder(cloneCreationOrder); // for reset
-        engine.setDestination(null, null);    
-        return cloneEng;
     }
 
     public void load(Element root) {
@@ -257,7 +227,6 @@ public class EngineManager extends RollingStockManager<Engine>
      * synchronized with the detailed DTD in operations-engines.dtd.
      *
      * @param root The common Element for operations-engines.dtd.
-     *
      */
     public void store(Element root) {
         Element values;
