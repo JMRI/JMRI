@@ -150,6 +150,8 @@
 
         <li>------------------</li>
 
+        <li>Print Displayed Roster Table</li>
+        
         <li>Print Roster -&gt;
           <ul>
             <li>Selected entry</li>
