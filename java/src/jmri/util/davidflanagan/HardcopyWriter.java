@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.JobAttributes.DefaultSelectionType;
 import java.awt.JobAttributes.SidesType;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
@@ -13,7 +12,6 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
 /**

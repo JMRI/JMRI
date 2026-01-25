@@ -15,7 +15,6 @@ import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
