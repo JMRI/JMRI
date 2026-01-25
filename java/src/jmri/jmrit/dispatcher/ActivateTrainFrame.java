@@ -1357,6 +1357,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                   pattern = "0";
                   break;
               case ACTUAL_CM:
+              default:
                   step = 0.1f; // tenths of a centimetre (1 mm)
                   pattern = "0.0";
                   break;
@@ -1365,10 +1366,6 @@ public class ActivateTrainFrame extends JmriJFrame {
               case SCALE_FEET:
                   step = 0.01f;         // hundredths
                   pattern = "0.00";
-                  break;
-              default:
-                  step = 0.1f;
-                  pattern = "0.0";
                   break;
           }
     
