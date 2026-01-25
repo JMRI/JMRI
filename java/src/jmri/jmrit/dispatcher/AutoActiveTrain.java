@@ -1141,8 +1141,8 @@ public class AutoActiveTrain implements ThrottleListener {
     protected boolean canSpeedBeSetOrChecked() {
         if (_pausingActive || getAutoEngineer() == null ||
                 ((_activeTrain.getStatus() != ActiveTrain.RUNNING) &&
-                        (_activeTrain.getStatus() != ActiveTrain.WAITING) &&
-                        !_activeTrain.getStarted()) ||
+                        (_activeTrain.getStatus() != ActiveTrain.WAITING)) ||
+                !_activeTrain.getStarted() ||
                 (_activeTrain.getMode() != ActiveTrain.AUTOMATIC)) {
             log.debug("{}:Train is not currently eligible for settingspeed or checking ghosts",_activeTrain.getActiveTrainName());
             return false;
@@ -1156,14 +1156,6 @@ public class AutoActiveTrain implements ThrottleListener {
         if (!canSpeedBeSetOrChecked()) {
             log.trace("[{}]:cannot set speed.",getActiveTrain().getActiveTrainName());
             return;
-        }
-
-        // --- Respect delayed start: hold at full stop and do nothing until 'Started' ---
-        if (!_activeTrain.getStarted() && _activeTrain.getDelayedStart() != ActiveTrain.NODELAY) {
-            _autoEngineer.setHalt(true);
-            _autoEngineer.setSpeedImmediate(0.0f);
-            _activeTrain.setStatus(ActiveTrain.WAITING);
-            return; // prevent any speed change or stop scheduling during delay
         }
 
         // only bother to check signal if the next allocation is ours.
@@ -1617,7 +1609,7 @@ public class AutoActiveTrain implements ThrottleListener {
         log.debug("{}: StopInCurrentSection called for {} task[{}] targetspeed[{}]", _activeTrain.getTrainName(),
                 _currentAllocatedSection.getSection().getDisplayName(USERSYS), task, getTargetSpeed());
 
-        if (getTargetSpeed() == 0.0f || isStopping()) {
+        if (((_autoEngineer != null) && _autoEngineer.isStopped()) || isStopping()) {
             log.debug("{}: train is already stopped or stopping.", _activeTrain.getTrainName());
             // ignore if train is already stopped or if stopping is in progress
             return;
@@ -1795,6 +1787,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 } else {
                     _stoppingUsingSpeedProfile = true;
                     cancelStopInCurrentSection();
+
                     re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed, _maxSpeedScaleKmh,
                             (float) _dispatcher.getScale().getScaleRatio(), _autoEngineer.getIsForward());
                     // Delegate pure distance stop-to-zero to RosterSpeedProfile
@@ -2611,6 +2604,12 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
             }
             if (physicsRamp && profileAvailable) {
+                // Physics ramp drives throttle asynchronously via RosterSpeedProfile; keep targetSpeed in sync
+                // so higher-level stop logic does not treat a moving train as already stopped.
+                targetSpeed = applyMaxThrottleAndFactor(speed);
+                // Mark that a RosterSpeedProfile timer/queue may be active so stopAllTimers() can cancel it on terminate.
+                speedProfileStoppingIsRunning = true;
+
                 // Run physics planner off the EDT
                 Thread phys = jmri.util.ThreadingUtil.newThread(() -> {
                     // Ensure min/max limits (including optional scale km/h cap) are in the profile
