@@ -693,6 +693,15 @@ public class ActivateTrainFrame extends JmriJFrame {
     // MPH↔KMH conversion helpers
     private static float mphToKmh(float mph) { return mph * 1.60934f; }
     private static float kmhToMph(float kmh) { return kmh / 1.60934f; }
+
+    // Safe Bundle lookup with fallback; avoids MissingResourceException breaking the UI.
+    private static String bundleOrDefault(String key, String fallback) {
+        try {
+            return Bundle.getMessage(key);
+        } catch (Exception ex) {
+            return fallback;
+        }
+    }
     
 
      // Safe access to current layout scale ratio (prototype/model length ratio)
@@ -1347,6 +1356,10 @@ public class ActivateTrainFrame extends JmriJFrame {
                   step = 1.0f;          // whole millimetres
                   pattern = "0";
                   break;
+              case ACTUAL_CM:
+                  step = 0.1f; // tenths of a centimetre (1 mm)
+                  pattern = "0.0";
+                  break;
               case ACTUAL_INCHES:
               case SCALE_METERS:
               case SCALE_FEET:
@@ -1396,6 +1409,8 @@ public class ActivateTrainFrame extends JmriJFrame {
           switch (units) {
               case ACTUAL_MM:
                   return mm;
+              case ACTUAL_CM:
+                  return mm / 10.0f;
               case ACTUAL_INCHES:
                   return mm / 25.4f;
               case SCALE_METERS: {
@@ -1421,6 +1436,8 @@ public class ActivateTrainFrame extends JmriJFrame {
           switch (units) {
               case ACTUAL_MM:
                   return value;
+              case ACTUAL_CM:
+                  return value * 10.0f;
               case ACTUAL_INCHES:
                   return value * 25.4f;
               case SCALE_METERS: {
@@ -2088,7 +2105,14 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JRadioButton stopByDistanceTail = new JRadioButton(Bundle.getMessage("StopByDistanceTail"));
     private final ButtonGroup stopByDistanceRefGroup = new ButtonGroup();
     private final JCheckBox stopByDistanceEnableCheckBox = new JCheckBox();
-    private enum StopDistanceUnits { ACTUAL_MM, ACTUAL_INCHES, SCALE_METERS, SCALE_FEET }
+
+    private enum StopDistanceUnits {
+        ACTUAL_CM,
+        ACTUAL_MM,
+        ACTUAL_INCHES,
+        SCALE_METERS,
+        SCALE_FEET
+    }
     
     protected static class StopDistanceUnitsItem {
         private final String key;
@@ -2102,7 +2126,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         public StopDistanceUnits getSelectedUnits() {
             // getSelectedItem() is Object in Swing; use a narrow cast or index->getItemAt(i)
             StopDistanceUnitsItem it = (StopDistanceUnitsItem) getSelectedItem();
-            return it != null ? it.getValue() : StopDistanceUnits.ACTUAL_MM;
+            return it != null ? it.getValue() : StopDistanceUnits.ACTUAL_CM;
 
         }
     }    
@@ -2237,7 +2261,7 @@ public class ActivateTrainFrame extends JmriJFrame {
      }
 
     // Track the “current UI units” so we can convert correctly when user changes the dropdown
-    private StopDistanceUnits currentStopDistanceUnits = StopDistanceUnits.ACTUAL_MM;
+    private StopDistanceUnits currentStopDistanceUnits = StopDistanceUnits.ACTUAL_CM;
 
     private final JPanel pa3 = new JPanel();
     private final JCheckBox soundDecoderBox = new JCheckBox(Bundle.getMessage("SoundDecoder"));
@@ -2476,6 +2500,8 @@ public class ActivateTrainFrame extends JmriJFrame {
         
         // Units dropdown next 
         stopByDistanceUnitsComboBox.addItem(
+                new StopDistanceUnitsItem(bundleOrDefault("StopByDistanceUnitsCm", "cm"), StopDistanceUnits.ACTUAL_CM));
+        stopByDistanceUnitsComboBox.addItem(
             new StopDistanceUnitsItem(Bundle.getMessage("StopByDistanceUnitsMm"), StopDistanceUnits.ACTUAL_MM)
         );
         stopByDistanceUnitsComboBox.addItem(
@@ -2515,8 +2541,9 @@ public class ActivateTrainFrame extends JmriJFrame {
         stopByDistanceUnitsComboBox.addActionListener(ev -> handleStopByDistanceUnitsChanged());
     
         updateStopByDistanceEnable();
-        stopByDistanceUnitsComboBox.setSelectedIndex(0); // default to mm (actual)
-        updateStopByDistanceSpinnerModelForUnits(StopDistanceUnits.ACTUAL_MM);
+        stopByDistanceUnitsComboBox.setSelectedIndex(0); // default to cm (actual)
+        updateStopByDistanceSpinnerModelForUnits(StopDistanceUnits.ACTUAL_CM);
+        currentStopDistanceUnits = StopDistanceUnits.ACTUAL_CM;
         pa2b.add(stopByDistanceUnitsComboBox);      
 
          // --- Physics: Additional train weight panel ---
@@ -2890,9 +2917,9 @@ public class ActivateTrainFrame extends JmriJFrame {
         updateStopByDistanceEnable();
         stopByDistanceEnableCheckBox.setSelected(info.getStopByDistanceMm() > 0.0f);
     
-         // Default UI units: mm (actual). Convert the stored mm to current display units.
-         currentStopDistanceUnits = StopDistanceUnits.ACTUAL_MM;
-         stopByDistanceUnitsComboBox.setSelectedIndex(0);
+        // Default UI units: cm (actual). Convert the stored mm to current display units.
+        currentStopDistanceUnits = StopDistanceUnits.ACTUAL_CM;
+        stopByDistanceUnitsComboBox.setSelectedIndex(0);
          float displayValue = convertMmToStopDisplay(currentStopDistanceUnits, info.getStopByDistanceMm());
          stopByDistanceMmSpinner.setValue(Float.valueOf(displayValue));
          updateStopByDistanceSpinnerModelForUnits(currentStopDistanceUnits);
