@@ -252,8 +252,9 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Function to get the current page size if this is a preview. This is the
-     * pagesize in points (logical units)
-     * 
+     * pagesize in points (logical units). If this is not a preview, it still returns
+     * the page size for the display.
+     *
      * @return The page size in points
      */
     private Dimension getPagesizePoints() {
@@ -262,8 +263,9 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Function to get the current page size if this is a preview. This is the
-     * pagesize in pixels (and not points)
-     * 
+     * pagesize in pixels (and not points). If this is not a preview, it still returns
+     * the page size for the display.
+     *
      * @return The page size in pixels
      */
     private Dimension getPagesizePixels() {
