@@ -121,6 +121,13 @@ public class TrainBuilderBase extends TrainCommon {
         _buildReport = printWriter;
     }
 
+    protected void remove(Car car) {
+        // remove this car from the list
+        if (getCarList().remove(car)) {
+            _carIndex--;
+        }
+    }
+
     /**
      * Will also set the termination track if returning to staging
      *
@@ -762,8 +769,8 @@ public class TrainBuilderBase extends TrainCommon {
     protected void removeCaboosesAndCarsWithFred() throws BuildFailedException {
         addLine(SEVEN, BLANK_LINE);
         addLine(SEVEN, Bundle.getMessage("buildRemoveCarsNotNeeded"));
-        for (int i = 0; i < getCarList().size(); i++) {
-            Car car = getCarList().get(i);
+        for (_carIndex = 0; _carIndex < getCarList().size(); _carIndex++) {
+            Car car = getCarList().get(_carIndex);
             if (car.isCaboose() || car.hasFred()) {
                 addLine(SEVEN,
                         Bundle.getMessage("buildExcludeCarTypeAtLoc", car.toString(), car.getTypeName(),
@@ -772,8 +779,7 @@ public class TrainBuilderBase extends TrainCommon {
                 if (car.getTrack() == getDepartureStagingTrack()) {
                     throw new BuildFailedException("ERROR: Attempt to removed car with FRED or Caboose from staging"); // NOI18N
                 }
-                getCarList().remove(car); // remove this car from the list
-                i--;
+                remove(car); // remove this car from the list
             }
         }
         addLine(SEVEN, BLANK_LINE);
@@ -805,8 +811,8 @@ public class TrainBuilderBase extends TrainCommon {
         boolean showCar = true;
         int carListSize = getCarList().size();
         // now remove cars that the train can't service
-        for (int i = 0; i < getCarList().size(); i++) {
-            Car car = getCarList().get(i);
+        for (_carIndex = 0; _carIndex < getCarList().size(); _carIndex++) {
+            Car car = getCarList().get(_carIndex);
             // only show the first 100 cars removed due to wrong car type for
             // train
             if (showCar && carListSize - getCarList().size() == DISPLAY_CAR_LIMIT_100) {
@@ -819,8 +825,7 @@ public class TrainBuilderBase extends TrainCommon {
                 _warnings++;
                 addLine(ONE,
                         Bundle.getMessage("buildWarningRsNoTrack", car.toString(), car.getLocationName()));
-                getCarList().remove(car);
-                i--;
+                remove(car);
                 continue;
             }
             // remove cars that have been reported as missing
@@ -831,8 +836,7 @@ public class TrainBuilderBase extends TrainCommon {
                     throw new BuildFailedException(Bundle.getMessage("buildErrorLocationUnknown", car.getLocationName(),
                             car.getTrackName(), car.toString()));
                 }
-                getCarList().remove(car);
-                i--;
+                remove(car);
                 continue;
             }
             // remove cars that are out of service
@@ -844,8 +848,7 @@ public class TrainBuilderBase extends TrainCommon {
                             Bundle.getMessage("buildErrorLocationOutOfService", car.getLocationName(),
                                     car.getTrackName(), car.toString()));
                 }
-                getCarList().remove(car);
-                i--;
+                remove(car);
                 continue;
             }
             // does car have a destination that is part of this train's route?
@@ -858,8 +861,7 @@ public class TrainBuilderBase extends TrainCommon {
                     if (car.getLocation() == getDepartureLocation() && getDepartureStagingTrack() != null) {
                         throw new BuildFailedException(Bundle.getMessage("buildErrorCarNotPartRoute", car.toString()));
                     }
-                    getCarList().remove(car); // remove this car from the list
-                    i--;
+                    remove(car); // remove this car from the list
                     continue;
                 }
             }
@@ -869,8 +871,7 @@ public class TrainBuilderBase extends TrainCommon {
                 addLine(FIVE,
                         Bundle.getMessage("buildExcludeCarWrongDest", car.toString(), car.getTypeName(),
                                 car.getTypeExtensions(), car.getDestinationName()));
-                getCarList().remove(car);
-                i--;
+                remove(car);
                 continue;
             }
 
@@ -884,22 +885,19 @@ public class TrainBuilderBase extends TrainCommon {
                 addLine(FIVE,
                         Bundle.getMessage("buildExcludeCarWrongDest", car.toString(), car.getTypeName(),
                                 car.getTypeExtensions(), car.getDestinationName()));
-                getCarList().remove(car);
-                i--;
+                remove(car);
                 continue;
             }
 
             // is car at interchange or spur and is this train allowed to pull?
             if (!checkPickupInterchangeOrSpur(car)) {
-                getCarList().remove(car);
-                i--;
+                remove(car);
                 continue;
             }
 
             // is car at interchange with destination restrictions?
             if (!checkPickupInterchangeDestinationRestrictions(car)) {
-                getCarList().remove(car);
-                i--;
+                remove(car);
                 continue;
             }
             // note that for trains departing staging the engine and car roads,
@@ -910,8 +908,7 @@ public class TrainBuilderBase extends TrainCommon {
                 addLine(SEVEN, Bundle.getMessage("buildExcludeCarWrongRoad", car.toString(),
                         car.getLocationName(), car.getTrackName(), car.getTypeName(), car.getTypeExtensions(),
                         car.getRoadName()));
-                getCarList().remove(car);
-                i--;
+                remove(car);
                 continue;
             }
             if (!getTrain().isTypeNameAccepted(car.getTypeName())) {
@@ -920,24 +917,21 @@ public class TrainBuilderBase extends TrainCommon {
                     addLine(SEVEN, Bundle.getMessage("buildExcludeCarWrongType", car.toString(),
                             car.getLocationName(), car.getTrackName(), car.getTypeName()));
                 }
-                getCarList().remove(car);
-                i--;
+                remove(car);
                 continue;
             }
             if (!getTrain().isOwnerNameAccepted(car.getOwnerName())) {
                 addLine(SEVEN,
                         Bundle.getMessage("buildExcludeCarOwnerAtLoc", car.toString(), car.getOwnerName(),
                                 car.getLocationName(), car.getTrackName()));
-                getCarList().remove(car);
-                i--;
+                remove(car);
                 continue;
             }
             if (!getTrain().isBuiltDateAccepted(car.getBuilt())) {
                 addLine(SEVEN,
                         Bundle.getMessage("buildExcludeCarBuiltAtLoc", car.toString(), car.getBuilt(),
                                 car.getLocationName(), car.getTrackName()));
-                getCarList().remove(car);
-                i--;
+                remove(car);
                 continue;
             }
 
@@ -952,16 +946,14 @@ public class TrainBuilderBase extends TrainCommon {
                         !getTrain().isLoadNameAccepted(car.getLoadName(), car.getTypeName())) {
                     addLine(SEVEN, Bundle.getMessage("buildExcludeCarLoadAtLoc", car.toString(),
                             car.getTypeName(), car.getLoadName()));
-                    getCarList().remove(car);
-                    i--;
+                    remove(car);
                     continue;
                 }
                 // remove cars with FRED if not needed by train
                 if (car.hasFred() && !getTrain().isFredNeeded()) {
                     addLine(SEVEN, Bundle.getMessage("buildExcludeCarWithFredAtLoc", car.toString(),
                             car.getTypeName(), (car.getLocationName() + ", " + car.getTrackName())));
-                    getCarList().remove(car); // remove this car from the list
-                    i--;
+                    remove(car); // remove this car from the list
                     continue;
                 }
                 // does the car have a pick up day?
@@ -975,8 +967,7 @@ public class TrainBuilderBase extends TrainCommon {
                             addLine(SEVEN,
                                     Bundle.getMessage("buildExcludeCarSchedule", car.toString(), car.getTypeName(),
                                             car.getLocationName(), car.getTrackName(), sch.getName()));
-                            getCarList().remove(car);
-                            i--;
+                            remove(car);
                             continue;
                         }
                     }
@@ -1001,8 +992,7 @@ public class TrainBuilderBase extends TrainCommon {
                                     car.getTypeName(), oldLoad, newLoad));
                         }
                     }
-                    getCarList().remove(car);
-                    i--;
+                    remove(car);
                     continue;
                 }
             }
@@ -1022,8 +1012,8 @@ public class TrainBuilderBase extends TrainCommon {
         _numOfBlocks = new Hashtable<>();
         addLine(SEVEN, BLANK_LINE);
         addLine(SEVEN, Bundle.getMessage("buildRemoveCarsStaging"));
-        for (int i = 0; i < getCarList().size(); i++) {
-            Car car = getCarList().get(i);
+        for (_carIndex = 0; _carIndex < getCarList().size(); _carIndex++) {
+            Car car = getCarList().get(_carIndex);
             if (car.getLocation() == getDepartureLocation()) {
                 if (car.getTrack() == getDepartureStagingTrack()) {
                     numCarsFromStaging++;
@@ -1046,8 +1036,7 @@ public class TrainBuilderBase extends TrainCommon {
                 } else {
                     addLine(SEVEN, Bundle.getMessage("buildExcludeCarAtLoc", car.toString(),
                             car.getTypeName(), car.getLocationName(), car.getTrackName()));
-                    getCarList().remove(car);
-                    i--;
+                    remove(car);
                 }
             }
         }
@@ -1104,8 +1093,8 @@ public class TrainBuilderBase extends TrainCommon {
             // destinations
             // that aren't part of this route
             int carCount = 0;
-            for (int i = 0; i < getCarList().size(); i++) {
-                Car car = getCarList().get(i);
+            for (_carIndex = 0; _carIndex < getCarList().size(); _carIndex++) {
+                Car car = getCarList().get(_carIndex);
                 if (!car.getLocationName().equals(rl.getName())) {
                     continue;
                 }
@@ -1159,8 +1148,7 @@ public class TrainBuilderBase extends TrainCommon {
                     checkKernel(car); // kernel needs lead car and all cars on
                                       // the same track
                     if (!car.isLead()) {
-                        getCarList().remove(car); // remove this car from the list
-                        i--;
+                        remove(car); // remove this car from the list
                         continue;
                     }
                 }
@@ -3063,12 +3051,12 @@ public class TrainBuilderBase extends TrainCommon {
     }
 
     /**
-     * 
      * Checks to see if rolling stock is departing a quick service track and is
      * allowed to be pulled by this train. To pull, the route location must be
      * different than the one used to deliver the rolling stock. To service the
      * rolling stock, the train must arrive after the rolling stock's clone is
      * set out by this train or by another train.
+     * 
      * @param rs the rolling stock
      * @param rl the route location pulling the rolling stock
      * @return true if rolling stock can be pulled

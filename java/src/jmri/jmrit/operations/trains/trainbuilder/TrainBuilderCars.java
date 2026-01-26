@@ -2127,12 +2127,5 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         return cloneCar; // return clone
     }
 
-    private void remove(Car car) {
-        // remove this car from the list
-        if (getCarList().remove(car)) {
-            _carIndex--;
-        }
-    }
-
     private final static Logger log = LoggerFactory.getLogger(TrainBuilderCars.class);
 }
