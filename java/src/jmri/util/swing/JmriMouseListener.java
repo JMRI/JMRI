@@ -40,7 +40,7 @@ public interface JmriMouseListener extends java.util.EventListener {
                 listener.mousePressed(new JmriMouseEvent(e));
             }
 
-            static final int DEADBAND2 = 16;  // 4 pixels, with drag theshold of 5
+            static final int DEADBAND2 = 4*4;  // 4 pixels, with drag theshold of 5
             
             @Override
             public void mouseReleased(MouseEvent e) {
