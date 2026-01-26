@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -199,14 +201,68 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         floatEditIcon.add(iconGroup6);
 
         floatEditTabsPane.addTab(Bundle.getMessage("TabIcon"), null, floatEditIcon, null);
+
+        // Set tabbed pane to expand to full width
+        floatEditTabsPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, floatEditTabsPane.getPreferredSize().height));
+
+        // Set tabbed panel to expand to full width like tiles section
+        floatEditTabsPanel.setLayout(new BoxLayout(floatEditTabsPanel, BoxLayout.LINE_AXIS));
         floatEditTabsPanel.add(floatEditTabsPane);
         add(floatEditTabsPanel);
 
         // End the tabs structure
-        // The next 3 groups reside under the tab secton
+        // Tiles section - independent panel below tabs with border to match tabbed pane
+        JPanel floatEditTilesPanel = new JPanel();
+        floatEditTilesPanel.setLayout(new BoxLayout(floatEditTilesPanel, BoxLayout.Y_AXIS));
+        floatEditTilesPanel.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(Color.GRAY),
+            "Tiles",
+            TitledBorder.LEFT,
+            TitledBorder.TOP
+        ));
+
+        // First row: tile selection controls
+        JPanel tilesRow1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
+        tilesRow1.add(tileVendorLabel);
+        tilesRow1.add(tileVendorComboBox);
+        tilesRow1.add(tileFamilyLabel);
+        tilesRow1.add(tileFamilyComboBox);
+        tilesRow1.add(tileNameLabel);
+        tilesRow1.add(tileComboBox);
+        floatEditTilesPanel.add(tilesRow1);
+
+        // Second row: direction radio buttons
+        JPanel tilesRow2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
+        tilesRow2.add(tileCurveDirectionLabel);
+        tilesRow2.add(tileLeftButton);
+        tilesRow2.add(tileRightButton);
+        tilesRow2.add(turnoutThroatButton);
+        tilesRow2.add(turnoutNormalButton);
+        tilesRow2.add(turnoutThrownButton);
+        tilesRow2.add(turnoutAButton);
+        tilesRow2.add(turnoutBButton);
+        tilesRow2.add(turnoutCButton);
+        tilesRow2.add(turnoutDButton);
+        floatEditTilesPanel.add(tilesRow2);
+
+        // Set preferred width to match tabbed pane
+        floatEditTilesPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, floatEditTilesPanel.getPreferredSize().height));
+        add(floatEditTilesPanel);
+
+        // The next 3 groups reside under the tab and tiles sections
         JPanel floatEditLocationPanel = new JPanel();
+        floatEditLocationPanel.setLayout(new BoxLayout(floatEditLocationPanel, BoxLayout.LINE_AXIS));
+        floatEditLocationPanel.setBorder(new EmptyBorder(0, 5, 0, 5)); // Add 5px margin left and right
+
+        // Set zoom and location panels to use BoxLayout to allow expansion
+        zoomPanel.setLayout(new BoxLayout(zoomPanel, BoxLayout.LINE_AXIS));
+        locationPanel.setLayout(new BoxLayout(locationPanel, BoxLayout.LINE_AXIS));
+
         floatEditLocationPanel.add(zoomPanel);
+        floatEditLocationPanel.add(Box.createHorizontalStrut(10)); // Add spacing between panels
         floatEditLocationPanel.add(locationPanel);
+        floatEditLocationPanel.add(Box.createHorizontalGlue()); // Glue at the end
+
         add(floatEditLocationPanel);
 
         floatEditTabsPane.addChangeListener((e) -> {
@@ -221,6 +277,24 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         });
         floatEditTabsPane.setSelectedIndex(0);
         floatEditTurnout.add(blockPropertiesPanel);
+
+        // Initialize direction button visibility based on default selection
+        updateDirectionButtons();
+
+        // Add action listeners to update direction buttons when selection changes
+        java.awt.event.ActionListener selectionListAction = (java.awt.event.ActionEvent e) -> {
+            updateDirectionButtons();
+        };
+
+        turnoutRHButton.addActionListener(selectionListAction);
+        turnoutLHButton.addActionListener(selectionListAction);
+        turnoutWYEButton.addActionListener(selectionListAction);
+        doubleXoverButton.addActionListener(selectionListAction);
+        rhXoverButton.addActionListener(selectionListAction);
+        lhXoverButton.addActionListener(selectionListAction);
+        layoutSingleSlipButton.addActionListener(selectionListAction);
+        layoutDoubleSlipButton.addActionListener(selectionListAction);
+        trackButton.addActionListener(selectionListAction);
     }
 
     public JTabbedPane getfloatEditTabsPane() {
