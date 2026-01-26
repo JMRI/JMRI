@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import jmri.util.JmriJFrame;
+import jmri.util.PaperUtils;
 
 /**
  * Provide graphic output to a screen/printer.
@@ -251,12 +252,13 @@ public class HardcopyWriter extends Writer {
     /**
      * Function to get the current page size if this is a preview. This is the
      * pagesize in points (logical units). If this is not a preview, it still
-     * returns the page size for the display.
+     * returns the page size for the display. It makes use of the PaperUtils
+     * class to get the default paper size (based on locale and/or printer settings).
      *
      * @return The page size in points
      */
     private Dimension getPagesizePoints() {
-        return new Dimension(612, 792); // This 8.5 * 11.0 -- i.e. US Letter
+        return PaperUtils.getPaperSizeDimension();
     }
 
     /**
