@@ -1321,7 +1321,107 @@ public class ActivateTrainFrame extends JmriJFrame {
         updateMaxSpeedCapModeAvailability(b);
     }
 
-     private void updateStopByDistanceEnable() {
+    // Map between Stop-by-distance units and Max Train Length units.
+    // Note: Max Train Length has no millimetres; ACTUAL_MM maps to ACTUALCM.
+    private TrainLengthUnits mapStopDistanceUnitsToTrainLengthUnits(StopDistanceUnits units) {
+        switch (units) {
+            case SCALE_FEET:
+                return TrainLengthUnits.TRAINLENGTH_SCALEFEET;
+            case SCALE_METERS:
+                return TrainLengthUnits.TRAINLENGTH_SCALEMETERS;
+            case ACTUAL_INCHES:
+                return TrainLengthUnits.TRAINLENGTH_ACTUALINCHS;
+            case ACTUAL_CM:
+            case ACTUAL_MM:
+            default:
+                return TrainLengthUnits.TRAINLENGTH_ACTUALCM;
+        }
+    }
+
+    private StopDistanceUnits mapTrainLengthUnitsToStopDistanceUnits(TrainLengthUnits units) {
+        switch (units) {
+            case TRAINLENGTH_SCALEFEET:
+                return StopDistanceUnits.SCALE_FEET;
+            case TRAINLENGTH_SCALEMETERS:
+                return StopDistanceUnits.SCALE_METERS;
+            case TRAINLENGTH_ACTUALINCHS:
+                return StopDistanceUnits.ACTUAL_INCHES;
+            case TRAINLENGTH_ACTUALCM:
+            default:
+                return StopDistanceUnits.ACTUAL_CM;
+        }
+    }
+
+    // Default Stop-by-distance units follow the current Max Train Length unit selection.
+    private StopDistanceUnits getPreferredStopDistanceUnitsFromMaxTrainLengthUnits() {
+        Object sel = trainLengthUnitsComboBox.getSelectedItem();
+        TrainLengthUnits units = (sel instanceof TrainLengthUnitsItem) ? ((TrainLengthUnitsItem) sel).getValue()
+                : TrainLengthUnits.TRAINLENGTH_SCALEMETERS;
+        return mapTrainLengthUnitsToStopDistanceUnits(units);
+    }
+
+    private void setStopByDistanceUnitsSelection(StopDistanceUnits units) {
+        for (int i = 0; i < stopByDistanceUnitsComboBox.getItemCount(); i++) {
+            Object o = stopByDistanceUnitsComboBox.getItemAt(i);
+            if (o instanceof StopDistanceUnitsItem && ((StopDistanceUnitsItem) o).getValue() == units) {
+                stopByDistanceUnitsComboBox.setSelectedIndex(i);
+                return;
+            }
+        }
+        if (stopByDistanceUnitsComboBox.getItemCount() > 0) {
+            stopByDistanceUnitsComboBox.setSelectedIndex(0);
+        }
+    }
+
+    private TrainLengthUnits getSelectedMaxTrainLengthUnitsSafe() {
+        Object sel = trainLengthUnitsComboBox.getSelectedItem();
+        return (sel instanceof TrainLengthUnitsItem) ? ((TrainLengthUnitsItem) sel).getValue()
+                : TrainLengthUnits.TRAINLENGTH_SCALEMETERS;
+    }
+
+    private StopDistanceUnits getSelectedStopByDistanceUnitsSafe() {
+        Object sel = stopByDistanceUnitsComboBox.getSelectedItem();
+        return (sel instanceof StopDistanceUnitsItem) ? ((StopDistanceUnitsItem) sel).getValue()
+                : StopDistanceUnits.ACTUAL_CM;
+    }
+
+    private void handleStopByDistanceUnitsComboSelectionChanged() {
+        handleStopByDistanceUnitsChanged();
+        if (suppressDistanceAndTrainLengthUnitSync) {
+            return;
+        }
+        TrainLengthUnits target = mapStopDistanceUnitsToTrainLengthUnits(getSelectedStopByDistanceUnitsSafe());
+        TrainLengthUnits current = getSelectedMaxTrainLengthUnitsSafe();
+        if (target == current) {
+            return;
+        }
+        suppressDistanceAndTrainLengthUnitSync = true;
+        try {
+            trainLengthUnitsComboBox.setSelectedItemByValue(target);
+        } finally {
+            suppressDistanceAndTrainLengthUnitSync = false;
+        }
+    }
+
+    private void handleTrainLengthUnitsComboSelectionChanged() {
+        handleTrainLengthUnitsChanged();
+        if (suppressDistanceAndTrainLengthUnitSync) {
+            return;
+        }
+        StopDistanceUnits target = mapTrainLengthUnitsToStopDistanceUnits(getSelectedMaxTrainLengthUnitsSafe());
+        StopDistanceUnits current = getSelectedStopByDistanceUnitsSafe();
+        if (target == current) {
+            return;
+        }
+        suppressDistanceAndTrainLengthUnitSync = true;
+        try {
+            setStopByDistanceUnitsSelection(target);
+        } finally {
+            suppressDistanceAndTrainLengthUnitSync = false;
+        }
+    }
+
+    private void updateStopByDistanceEnable() {
          // Row is relevant only if Stop-by-speed-profile is available & selected
          boolean baseOn = stopBySpeedProfileCheckBox.isEnabled() && stopBySpeedProfileCheckBox.isSelected();
     
@@ -2259,6 +2359,8 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     // Track the “current UI units” so we can convert correctly when user changes the dropdown
     private StopDistanceUnits currentStopDistanceUnits = StopDistanceUnits.ACTUAL_CM;
+    // Prevent recursion when synchronising Stop-by-distance units with Max Train Length units.
+    private boolean suppressDistanceAndTrainLengthUnitSync = false;
 
     private final JPanel pa3 = new JPanel();
     private final JCheckBox soundDecoderBox = new JCheckBox(Bundle.getMessage("SoundDecoder"));
@@ -2535,12 +2637,13 @@ public class ActivateTrainFrame extends JmriJFrame {
         stopBySpeedProfileCheckBox.addActionListener(ev -> updateStopByDistanceEnable());
     
         // - Units change: convert current displayed value from old units to new, preserving the underlying mm value
-        stopByDistanceUnitsComboBox.addActionListener(ev -> handleStopByDistanceUnitsChanged());
-    
+        stopByDistanceUnitsComboBox.addActionListener(ev -> handleStopByDistanceUnitsComboSelectionChanged());
+
         updateStopByDistanceEnable();
-        stopByDistanceUnitsComboBox.setSelectedIndex(0); // default to cm (actual)
-        updateStopByDistanceSpinnerModelForUnits(StopDistanceUnits.ACTUAL_CM);
-        currentStopDistanceUnits = StopDistanceUnits.ACTUAL_CM;
+        StopDistanceUnits preferredStopUnits = getPreferredStopDistanceUnitsFromMaxTrainLengthUnits();
+        currentStopDistanceUnits = preferredStopUnits;
+        setStopByDistanceUnitsSelection(preferredStopUnits);
+        updateStopByDistanceSpinnerModelForUnits(preferredStopUnits);
         pa2b.add(stopByDistanceUnitsComboBox);      
 
          // --- Physics: Additional train weight panel ---
@@ -2618,7 +2721,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         maxTrainLengthSpinner.setEditor(new JSpinner.NumberEditor(maxTrainLengthSpinner, "###0.0"));
         maxTrainLengthSpinner.setToolTipText(Bundle.getMessage("MaxTrainLengthHint")); // won't be updated while Dispatcher is open
         maxTrainLengthSpinner.addChangeListener( e -> handlemaxTrainLengthChangeUnitsLength());
-        trainLengthUnitsComboBox.addActionListener( e -> handleTrainLengthUnitsChanged());
+        trainLengthUnitsComboBox.addActionListener(e -> handleTrainLengthUnitsComboSelectionChanged());
         trainLengthAltLengthLabel=new JLabel();
         pa4.setLayout(new FlowLayout());
         pa4.add(trainLengthLabel);
@@ -2914,12 +3017,13 @@ public class ActivateTrainFrame extends JmriJFrame {
         updateStopByDistanceEnable();
         stopByDistanceEnableCheckBox.setSelected(info.getStopByDistanceMm() > 0.0f);
     
-        // Default UI units: cm (actual). Convert the stored mm to current display units.
-        currentStopDistanceUnits = StopDistanceUnits.ACTUAL_CM;
-        stopByDistanceUnitsComboBox.setSelectedIndex(0);
-         float displayValue = convertMmToStopDisplay(currentStopDistanceUnits, info.getStopByDistanceMm());
-         stopByDistanceMmSpinner.setValue(Float.valueOf(displayValue));
-         updateStopByDistanceSpinnerModelForUnits(currentStopDistanceUnits);
+        // Default Stop-by-distance units follow current Max Train Length units. Convert the stored mm to current display units.
+        StopDistanceUnits preferredStopUnits = getPreferredStopDistanceUnitsFromMaxTrainLengthUnits();
+        currentStopDistanceUnits = preferredStopUnits;
+        setStopByDistanceUnitsSelection(preferredStopUnits);
+        float displayValue = convertMmToStopDisplay(currentStopDistanceUnits, info.getStopByDistanceMm());
+        stopByDistanceMmSpinner.setValue(Float.valueOf(displayValue));
+        updateStopByDistanceSpinnerModelForUnits(currentStopDistanceUnits);
     
          if (info.getStopByDistanceRef() == TrainInfo.StopReference.TAIL) {
              stopByDistanceTail.setSelected(true);
