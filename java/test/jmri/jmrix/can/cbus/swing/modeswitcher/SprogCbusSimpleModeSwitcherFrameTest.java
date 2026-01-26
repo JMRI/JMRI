@@ -14,7 +14,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Andrew Crosland (C) 2020
  */
-@jmri.util.junit.annotations.DisabledIfHeadless
+@jmri.util.junit.annotations.DisabledIfHeadless()
 public class SprogCbusSimpleModeSwitcherFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private CanSystemConnectionMemo memo = null;
