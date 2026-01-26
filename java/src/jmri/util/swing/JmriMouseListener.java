@@ -7,9 +7,11 @@ import java.awt.event.MouseEvent;
  * This class is used to replace {@link java.awt.event.MouseEvent} with
  * {@link jmri.util.swing.JmriMouseEvent}.
  *
- * This adds system-type specific behavior for macOS. Since Java 11-21 (at least) on macOS
- * omits calling mouseClicked if the cursor has moved even a tiny bit while the mouse
- * is down, this replaces that behavior with a small dead zone on macOS only.
+ * Java 11 through 21 (at least)
+ * omits calling mouseClicked if the cursor has moved even a single pixel while the mouse
+ * is down. This results in mouse clicks feeling intermittent.
+ * This class replaces that behavior with a small dead zone, firing a mouseClicked
+ * event if the mouse has not moved very far between mousePressed and mouseReleased.
  *
  * @author Daniel Bergqvist (C) 2022
  * @author Bob Jacobsen (C) 2026
