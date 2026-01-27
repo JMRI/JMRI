@@ -151,6 +151,15 @@
         <current>closewindow</current>
     </node>
     <node>separator</node><!-- separator -->
+    <node name="Print Displayed Roster Table">
+        <name xml:lang="fr">Imprimer l'Tableu Résumé</name>
+        <name xml:lang="it">Stampa Table Sommario</name>
+        <name xml:lang="de">Drucke Table Übersicht</name>
+        <name xml:lang="ca">Imprimeix la Table Resum</name>
+        <name xml:lang="cs">Tisknout Table Souhrn</name>
+        <name xml:lang="nl">Druk Table Samenvatting</name>
+        <current>printcurrenttable</current>
+    </node>
     <node name="Print Roster">
         <name xml:lang="fr">Imprimer l'Inventaire</name>
         <name xml:lang="it">Stampa Roster</name>

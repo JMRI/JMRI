@@ -430,7 +430,10 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Added new button and File-menu item to 
+                print the roster table as it's currently displayed,
+                with the user's selected roster group, column setup and 
+                sort order.</li>
         </ul>
 
    <h3>Dispatcher</h3>
