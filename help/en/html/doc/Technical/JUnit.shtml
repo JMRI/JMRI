@@ -237,7 +237,7 @@ suite.<br>
         <dt>jmri.util.JUnitUtil.checkSetUpTearDownSequence</dt>
 
         <dd>If true, check for whether JUnitUtil.setUp() and JUnitUtil.tearDown() follow each other
-        int the proper sequence. Print a message if not. (This slows execution a bit due to the
+        in the proper sequence. Print a message if not. (This slows execution a bit due to the
         time needed to keep history for the message)</dd>
 
         <dt>jmri.util.JUnitUtil.checkSequenceDumpsStack</dt>
