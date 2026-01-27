@@ -46,54 +46,48 @@ public class PaperUtils {
      *         points, or null if it is not possible to retrieve the paper size.
      */
     public static Dimension getOrientedPaperSizeInPointsIfPossible() {
-        try {
-            PrintService service = PrintServiceLookup.lookupDefaultPrintService();
-            if (service == null) {
-                log.warn("No default printer found");
-                return null;
-            }
-
-            // Get Physical Paper Dimensions
-            Media mediaName = (MediaSizeName) service.getDefaultAttributeValue(Media.class);
-
-            // Handle missing default media name
-            if (mediaName == null) {
-                Object supported = service.getSupportedAttributeValues(Media.class, null, null);
-                if (supported instanceof Media[] && ((Media[]) supported).length > 0) {
-                    mediaName = ((Media[]) supported)[0];
-                }
-            }
-
-            if (!(mediaName instanceof MediaSizeName)) {
-                return null;
-            }
-
-            MediaSize size = MediaSize.getMediaSizeForName((MediaSizeName) mediaName);
-
-            if (size == null) {
-                return null;
-            }
-
-            int finalWidth = (int) (size.getX(MediaSize.INCH) * 72);
-            int finalHeight = (int) (size.getY(MediaSize.INCH) * 72);
-
-            // Get Orientation and Swap if necessary
-            OrientationRequested orient =
-                    (OrientationRequested) service.getDefaultAttributeValue(OrientationRequested.class);
-
-            // LANDSCAPE and REVERSE_LANDSCAPE mean we swap width and height
-            if (orient == OrientationRequested.LANDSCAPE || orient == OrientationRequested.REVERSE_LANDSCAPE) {
-                int temp = finalWidth;
-                finalWidth = finalHeight;
-                finalHeight = temp;
-            }
-
-            return new Dimension(finalWidth, finalHeight);
-        } catch (Exception e) {
-            // Handle silently
+        PrintService service = PrintServiceLookup.lookupDefaultPrintService();
+        if (service == null) {
+            log.warn("No default printer found");
+            return null;
         }
 
-        return null;
+        // Get Physical Paper Dimensions
+        Media mediaName = (MediaSizeName) service.getDefaultAttributeValue(Media.class);
+
+        // Handle missing default media name
+        if (mediaName == null) {
+            Object supported = service.getSupportedAttributeValues(Media.class, null, null);
+            if (supported instanceof Media[] && ((Media[]) supported).length > 0) {
+                mediaName = ((Media[]) supported)[0];
+            }
+        }
+
+        if (!(mediaName instanceof MediaSizeName)) {
+            return null;
+        }
+
+        MediaSize size = MediaSize.getMediaSizeForName((MediaSizeName) mediaName);
+
+        if (size == null) {
+            return null;
+        }
+
+        int finalWidth = (int) (size.getX(MediaSize.INCH) * 72);
+        int finalHeight = (int) (size.getY(MediaSize.INCH) * 72);
+
+        // Get Orientation and Swap if necessary
+        OrientationRequested orient =
+                (OrientationRequested) service.getDefaultAttributeValue(OrientationRequested.class);
+
+        // LANDSCAPE and REVERSE_LANDSCAPE mean we swap width and height
+        if (orient == OrientationRequested.LANDSCAPE || orient == OrientationRequested.REVERSE_LANDSCAPE) {
+            int temp = finalWidth;
+            finalWidth = finalHeight;
+            finalHeight = temp;
+        }
+
+        return new Dimension(finalWidth, finalHeight);
     }
 
     /**
