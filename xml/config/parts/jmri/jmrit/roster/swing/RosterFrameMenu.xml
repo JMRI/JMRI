@@ -290,33 +290,33 @@
     </node>
     <node>separator</node><!-- separator -->
       <node name="New Entry...">
-          <name xml:lang="it">Nuova Entry...</name>
-          <name xml:lang="da">Nyt Entry...</name>
-          <name xml:lang="de">Neue Entry...</name>
-          <name xml:lang="fr">Nouvelle Entry ...</name>
-          <name xml:lang="ca">Nova Entry...</name>
-          <name xml:lang="cs">Nová Entry...</name>
-          <name xml:lang="nl">Nieuwe Entry...</name>
+          <name xml:lang="it">Nuova Loco...</name>
+          <name xml:lang="da">Nyt Loko...</name>
+          <name xml:lang="de">Neue Lok...</name>
+          <name xml:lang="fr">Nouvelle Loco ...</name>
+          <name xml:lang="ca">Nova Locomotora...</name>
+          <name xml:lang="cs">Nová lokomotiva...</name>
+          <name xml:lang="nl">Nieuwe Loc...</name>
           <adapter>apps.gui3.dp3.PaneProgDp3Action</adapter>
       </node>
     <node name="Duplicate Entry">
-        <name xml:lang="fr">Dupliquer Entry</name>
-        <name xml:lang="it">Duplica Entry</name>
-        <name xml:lang="da">Dupliker Entry</name>
-        <name xml:lang="de">Dupliziere Entry</name>
-		<name xml:lang="ca">Duplica Entry</name>
-        <name xml:lang="cs">Duplikovat Entry</name>
-        <name xml:lang="nl">Dupliceer Entry</name>
+        <name xml:lang="fr">Dupliquer Loco</name>
+        <name xml:lang="it">Duplica Loco</name>
+        <name xml:lang="da">Dupliker Loko</name>
+        <name xml:lang="de">Dupliziere Lok</name>
+        <name xml:lang="ca">Duplica locomotora</name>
+        <name xml:lang="cs">Duplikovat lokomotivu</name>
+        <name xml:lang="nl">Dupliceer Loc</name>
         <current>copyloco</current>
     </node>
     <node name="Delete Entry">
-        <name xml:lang="fr">Supprimer Entry</name>
-        <name xml:lang="it">Cancella Entry</name>
-        <name xml:lang="da">Slet Entry</name>
-        <name xml:lang="de">Lösche Entry</name>
-		<name xml:lang="ca">Suprimeix Entry</name>
-        <name xml:lang="cs">Vymazat Entry</name>
-        <name xml:lang="nl">Wis Entry</name>
+        <name xml:lang="fr">Supprimer Loco</name>
+        <name xml:lang="it">Cancella Loco</name>
+        <name xml:lang="da">Slet Loko</name>
+        <name xml:lang="de">Lösche Lok</name>
+        <name xml:lang="ca">Suprimeix locomotora</name>
+        <name xml:lang="cs">Vymazat lokomotivu</name>
+        <name xml:lang="nl">Wis Loc</name>
         <current>deleteloco</current>
     </node>
     <node>separator</node><!-- separator -->
