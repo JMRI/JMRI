@@ -126,14 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Fixed a problem adding signal masts when the
-                    OpenLCB or LCC system letter is not "M".</li>
-                <li>Improved display of stream data frames in the Monitor.</li>
-                <li>Improved how traffic from an internal hub is 
-                    displayed in the Monitor.</li>
-                <li>Updated the OpenLCB library to properly display
-                    Stream-related messages.</li>
-                <li>The JmriFaceless application can now open an OpenLCB/LCC Hub</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -495,10 +488,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Added new dialog message to the Trains window confirming termination of built trains.</li>
-            <li>Fix a bug that would crash the Train and Route windows if there were departure times in the train's route.</li>
-            <li>Improvements to staging tracks when using the new on time mode.</li>
-            <li>Added a "Reset All Trains" button to the Trains window.</li>
+            <li>New tool that allows day to name mapping. Now your Manifest or switch list can show which day or date the train departs or arrives at a location.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -640,9 +630,7 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li>Fixed a problem introduced in JMRI 5.15.2  where the 
-                "All Entries" roster group would not appear in WiThrotte 
-                and Engine Driver.</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -660,6 +648,10 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Testing - The JUnit4 RetryRule class has been removed as implementing tests have been updated to JUnit5</li>
+            <li>Some constants in the 
+                <a href="https://www.jmri.org/JavaDoc/doc/jmri/RailCom.html">RailCom class</li>
+                have been converted to Enum values.
+                This primarily affects developers and people who've written scripts for
+                processing RailCom information directly.
         </ul>
 

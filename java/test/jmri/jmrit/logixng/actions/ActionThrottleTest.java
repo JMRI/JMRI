@@ -22,8 +22,6 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -708,7 +706,6 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         assertEquals( "Throttle", a2.getLongDescription(), "strings are equal");
     }
 
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
@@ -741,7 +738,6 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         logixNG.setEnabled(true);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

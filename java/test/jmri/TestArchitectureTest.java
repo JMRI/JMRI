@@ -13,7 +13,7 @@ import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.*;
 
 /**
- * Check the architecture of the JMRI library Tests 
+ * Check the architecture of the JMRI library Tests.
 * <p>
  * This is run as part of CI, so it's expected to kept passing at all times.
  * <p>
@@ -21,7 +21,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.*;
  * the ones in target/classes, which come from java/src.  It's relying on the common
  * build procedure to make this distinction.
  * Based on {@link ArchitectureTest}
- * 
+ *
  * See examples in the <a href='https://github.com/TNG/ArchUnit-Examples/tree/master/example-plain/src/test/java/com/tngtech/archunit/exampletest">ArchUnit sample code</a>.
  *
  * @author Bob Jacobsen 2019
@@ -56,11 +56,9 @@ public class TestArchitectureTest {
      * Please use org.junit.jupiter.api.Test
      */
     @ArchTest
-    public static final ArchRule junit4TestRule = noClasses().that()
-        .doNotHaveFullyQualifiedName("jmri.TestArchitectureTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..").
-            and().areNotInnerClasses() // within TestArchitectureTest
-        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Test");
+    public static final ArchRule junit4TestRule = noClasses()
+        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Test") // JUnit4
+        .because("Tests should normally use org.junit.jupiter.api.Test");       // JUnit5
 
     @ArchTest
     public static final ArchRule methodsStartingWithTestShouldBeAnnotatedWithTest =
@@ -73,33 +71,38 @@ public class TestArchitectureTest {
                 boolean notAbstract = !method.getModifiers().contains(JavaModifier.ABSTRACT);
                 boolean isVoid = method.getRawReturnType().isEquivalentTo(void.class);
                 boolean hasAnyTestAnnotation =
-                    method.isAnnotatedWith( ParameterizedTest.class) ||
-                    method.isAnnotatedWith(org.junit.Test.class); // JUnit 4
+                    method.isAnnotatedWith( ParameterizedTest.class);
 
                 // Return true for methods that start with test, have no params, AND are missing the annotations
                 return nameMatches && noParams && notAbstract && isVoid && !hasAnyTestAnnotation;
             }
         })
-        // Point failures towards org.junit.jupiter.api.Test , not JU4 / Parameterized / Abstract
-        .should().beAnnotatedWith(Test.class); // JUnit 5
+        // Point failures towards org.junit.jupiter.api.Test , not Parameterized / Abstract
+        .should().beAnnotatedWith(Test.class);
 
     /**
      * Please use org.junit.jupiter.api.BeforeEach
      */
     @ArchTest
-    public static final ArchRule junit4BeforeRule = noClasses().that()
-        .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..")
-        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Before");
-    
+    public static final ArchRule junit4BeforeRule = noClasses()
+        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Before") // JUnit4
+        .because("Tests should normally use org.junit.jupiter.api.BeforeEach");   // JUnit5
+
     /**
      * Please use org.junit.jupiter.api.AfterEach
      */
     @ArchTest
-    public static final ArchRule junit4AfterRule = noClasses().that()
-        .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..")
-        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.After");
+    public static final ArchRule junit4AfterRule = noClasses()
+        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.After") // JUnit4
+        .because("Tests should normally use org.junit.jupiter.api.AfterEach");   // JUnit5
+
+    /**
+     * please use org.junit.jupiter.api.Disabled
+     */
+    @ArchTest
+    public static final ArchRule junit4IgnoreRule = noClasses()
+        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Ignore") // JUnit4
+        .because("To Ignore, tests should use org.junit.jupiter.api.Disabled or jmri.util.junit.annotations.NotApplicable"); // JUnit5
 
     /**
      * JMRI should not reference org.apache.log4j to allow JMRI
@@ -199,7 +202,7 @@ public class TestArchitectureTest {
      * as this saves invoking both the setUp and tearDown Class methods.
      */
     @ArchTest
-    public static final ArchRule no_empty_test_methods = 
+    public static final ArchRule no_empty_test_methods =
         ArchRuleDefinition.methods()
             .that().areAnnotatedWith(Test.class)
             .and().areNotAnnotatedWith(Disabled.class)
@@ -221,5 +224,17 @@ public class TestArchitectureTest {
             }
         };
     }
+
+    /**
+     * Tests should use JUnit assertions, not native Java asserts.
+     * Note that although we cannot directly test for usage of the assert keyword,
+     * we can check for classes that use java.lang.AssertionError.class
+     */
+    @ArchTest
+    public static final ArchRule noNativeAsserts = noClasses()
+            .that().doNotHaveFullyQualifiedName("jmri.util.junit.AssertTest")
+            .should().accessClassesThat()
+            .haveFullyQualifiedName(AssertionError.class.getName())
+            .because("Please use JUnit Assertions rather than the Java 'assert' keyword");
 
 }

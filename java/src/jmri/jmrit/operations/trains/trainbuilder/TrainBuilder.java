@@ -16,7 +16,7 @@ import jmri.util.swing.JmriJOptionPane;
  * Builds a train and then creates the train's manifest.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
- *         2014, 2015, 2021
+ *         2014, 2015, 2021, 2026
  */
 public class TrainBuilder extends TrainBuilderCars {
 
@@ -102,6 +102,7 @@ public class TrainBuilder extends TrainBuilderCars {
         addCabooseOrFredToTrain(); // caboose and FRED changes
         removeCaboosesAndCarsWithFred(); // done with cabooses and FRED
         blockCarsFromStaging(); // block cars from staging
+        showTracksNotQuickService(); // list tracks that aren't using quick service
 
         addCarsToTrain(); // finds and adds cars to the train (main routine)
 
@@ -312,7 +313,6 @@ public class TrainBuilder extends TrainBuilderCars {
      * @throws BuildFailedException
      */
     private void addCarsToTrain() throws BuildFailedException {
-        addLine(THREE, BLANK_LINE);
         addLine(THREE,
                 Bundle.getMessage("buildTrain", getTrain().getNumberCarsRequested(), getTrain().getName(), getCarList().size()));
 

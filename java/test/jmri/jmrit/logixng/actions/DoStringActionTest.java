@@ -16,8 +16,6 @@ import jmri.jmrit.logixng.expressions.StringExpressionConstant;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -273,7 +271,6 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
         assertEquals( LogixNG_Category.COMMON, _base.getCategory(), "Category matches");
     }
 
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
@@ -305,7 +302,6 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
         logixNG.setEnabled(true);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

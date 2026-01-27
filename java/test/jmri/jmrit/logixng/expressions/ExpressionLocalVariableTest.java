@@ -20,8 +20,6 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -439,7 +437,6 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
     }
 */
 
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
         JUnitUtil.setUp();
@@ -488,7 +485,6 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         logixNG.setEnabled(true);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

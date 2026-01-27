@@ -116,6 +116,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                         <li>Edit Manifest Header Text</li>
                         <li>Edit Manifest Text</li>
                         <li>Edit Switch List Text</li>
+                        <li><a href="#ManifestDayNameMapping">Edit Day to Day Mapping</a></li>
                       </ul></li>
                   </ul></li>
 
@@ -1012,7 +1013,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       operations files. The program will also automatically save the operation files if you close
       the <a href="#Trains">Trains</a> window or shutdown JMRI.
 
-      <h4>Auto Backup</h4>
+      <h4 id="AutoBackup">Auto Backup</h4>
       When selected, the program will create a set of operation backup files each time the program
       is started. This is very useful when experimenting with the program, if you don't like what
       you've done, just restore one of the previous backups. See <a href="#Backup">Backup and
@@ -1074,8 +1075,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       keeping" before changes are made to the main operations files. This way, if anything gets
       messed up, there is a copy of the last known good data that can easily be restored to undo the
       damage. In normal operation, an automatic backup is made each time OperationsPro&trade; starts
-      (if the "Auto Backup" option is checked on the <a href="#Settings">Settings</a> window), and
-      right before a Restore, Reset Database, or Load Demo Files operation is done.
+      if the
+      <a href="#AutoBackup">Auto Backup</a> option is checked in the <a
+        href="#Settings">Settings</a> window, and right before a Restore, Reset Database, or Load
+      Demo Files operation is done.
 
       <p>
         Manual backups are done only when the user requests it by either clicking the "Backup"
@@ -1283,7 +1286,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>One restriction when using on time mode, is that trains must be built and terminated in
         chronological order. If you need to reset your trains, reset the last built trains first, or
-        use the reset all train button.</p>
+        use the reset all trains button.</p>
 
       <p>
         To help troubleshoot timing problems with your cars using the on time mode, it is
@@ -1291,6 +1294,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         ups. This way if a car isn't found, you'll at least know which train was supposed to drop
         off the car. You should also enable train, car and engine <a href="#LoggingOptions">logging</a>,
         and <a href="#SaveTrainManifests">Save Train Manifests, Build Reports, and Switch Lists</a>.
+        Also recommended is that you use <a href="#AutoBackup">Auto Backup</a>. This will allow the
+        developers to reproduce any problems you encounter while using the new on time mode of
+        operations.
       </p>
 
       <h4>Number of Passes During Build</h4>
@@ -2149,6 +2155,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>You can also modify the color of the text by adding the color control text &lt;FONT
         color="red"&gt; at the start of the line, where "red" is the color text you want. Complete
         the color change by placing &lt;/FONT&gt; at the end of the line.</p>
+        
+      <h3 id="ManifestDayNameMapping">Edit Day to Name Mapping</h3>
+
+      When an arrival or departure time is provided on a Manifest or switch list, the normal format
+      is day:hour:minute for arrival and departure times. For example "1:10:50" means the train
+      would arrive or depart the next day at 10:50 in the morning. The Edit Day to Name Mapping tool
+      allows you to replace the day with any text you want. For example you could replace the "1" in
+      day with "Monday", or a date like "January 23, 2026". Now the Manifest would show the departure
+      time as Monday 10:50 or January 23, 2026 10:50 respectively.
 
       <h3 id="BuildReportDetails">Build Report Options</h3>
       From the "Operations&rArr;Settings&rArr;Tools" or "Operations&rArr;Trains&rArr;Tools" menu
@@ -2470,7 +2485,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       location you should do the following:
       <ol>
         <li>Terminate or reset all trains</li>
-        <li>Remove the location from all train routes</li>
+        <li>Remove the location from routes</li>
         <li>Remove all rolling stock from the location's tracks (optional)</li>
       </ol>
 
@@ -2572,10 +2587,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       The tool "Modify Location by Car Load" allows you to quickly select a car type and decide
       which tracks will service the car's load. Only tracks that can service the car's type are
       enabled.
-      
-       <h4 id="ModifyLocationByQuickService">Modify Location by Quick Service</h4>
-       The tool "Modify Location by Quick Service" allows you to quickly see and decide which
-       tracks support the <a href="#InterchangeQuickService">Quick Service</a> feature.
+
+      <h4 id="ModifyLocationByQuickService">Modify Location by Quick Service</h4>
+      The tool "Modify Location by Quick Service" allows you to quickly see and decide which tracks
+      support the
+      <a href="#InterchangeQuickService">Quick Service</a> feature. Also see <a
+        href="#ModifyLocationsByQuickService">Modify Locations and Tracks by Quick Service</a>
 
       <h4 id="ShowCars">Show Cars</h4>
       If you only want to view cars for a location or track, select "Show Cars" from the "Tools"
@@ -3214,12 +3231,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         trains and you've read and can understand the train build reports.</p>
 
       <h3 id="InterchangeQuickService">Quick Service</h3>
-      The quick service feature for a track allow you to create a Manifest or switch list
-      showing cars being moved more than once. When the quick service feature is enabled, the
-      program will create "clone cars" when building a train that delivers cars to the track,
-      and place the original cars at the track, allowing the train being built or another train
-      built later to have access to the cars. This is an advanced feature and is recommended for
-      operators that have gained some experience with the program.
+      The quick service feature for a track allow you to create a Manifest or switch list showing
+      cars being moved more than once. When the quick service feature is enabled, the program will
+      create "clone cars" when building a train that delivers cars to the track, and place the
+      original cars at the track, allowing the train being built or another train built later to
+      have access to the cars. This is an advanced feature and is recommended for operators that
+      have gained some experience with the program. Also see
+      <a href="#ModifyLocationByQuickService">Modify Location by Quick Service</a> and <a
+        href="#QuickLoadService">Quick Load Service (Turn)</a>.
 
       <h3>Quick Service C/I Example</h3>
       The following example shows how to drop off two boxcars to a location that has an industry
@@ -3675,9 +3694,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       for Repair In Place (RIP) tracks.
 
       <h5 id="QuickLoadService">Spur Option (Quick Load Service)</h5>
-      This feature allows you to create a Manifest that shows a car being spotted and then later pulled
-      from the same location using the train that delivered the car, or another train. Useful for
-      train turns and "Less than a car load" or LCL service.
+      This feature allows you to create a Manifest that shows a car being spotted and then later
+      pulled from the same location using the train that delivered the car, or another train. Useful
+      for train turns and "Less than a car load" or LCL service. Also see <a
+        href="#ModifyLocationByQuickService">Modify Location by Quick Service</a>.
 
       <p>
         For a <a href="#TrainTurnRoute">turn</a>, on the outbound leg of the train's route,

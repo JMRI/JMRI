@@ -12,6 +12,7 @@ import javax.swing.table.TableCellEditor;
 
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
+import jmri.jmrit.operations.OperationsTableModel;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -25,13 +26,12 @@ import jmri.util.table.ButtonRenderer;
 /**
  * Table Model for edit of trains used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2012
+ * @author Daniel Boudreau Copyright (C) 2008, 2012, 2026
  */
-public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
+public class TrainsTableModel extends OperationsTableModel implements PropertyChangeListener {
 
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class); // There is only one manager
     volatile List<Train> sysList = trainManager.getTrainsByTimeList();
-    JTable _table = null;
     TrainsTableFrame _frame = null;
 
     // Defines the columns
@@ -148,6 +148,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         tcm.getColumn(BUILD_COLUMN).setCellRenderer(buttonRenderer2);
         tcm.getColumn(BUILD_COLUMN).setCellEditor(buttonEditor);
         _table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
+        
+        // for tool tips
+        DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
+        tcm.getColumn(TIME_COLUMN).setCellRenderer(defaultRenderer);
 
         // set column preferred widths
         for (int i = 0; i < tcm.getColumnCount(); i++) {
@@ -301,6 +305,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             case ID_COLUMN:
                 return Integer.parseInt(train.getId());
             case TIME_COLUMN:
+                setToolTip(Bundle.getMessage("TimeTip"), col);
                 return train.getDepartureTime();
             case NAME_COLUMN:
                 return train.getIconName();
@@ -386,14 +391,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
-        }
-    }
-
-    private void setToolTip(String text, int col) {
-        XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        ButtonRenderer buttonRenderer = (ButtonRenderer) tcm.getColumnByModelIndex(col).getCellRenderer();
-        if (buttonRenderer != null) {
-            buttonRenderer.setToolTipText(text);
         }
     }
 

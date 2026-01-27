@@ -230,5 +230,10 @@ public class Xml {
 
     static final String CATS = "CATS"; // NOI18N
     static final String EXACT_LOCATION_NAME = "exactLocationName"; // NOI18N
+    
+    static final String DAY_NAME_MAP = "dayNameMapping"; // NOI18N
+    static final String MAP = "map"; // NOI18N
+    static final String DAY = "day"; // NOI18N
+    static final String DAYS = "days"; // NOI18N
 
 }

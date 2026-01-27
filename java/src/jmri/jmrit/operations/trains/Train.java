@@ -549,8 +549,16 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (isSortFormat) {
             d = "0:";
         }
+        
         if (days > 0) {
             d = Integer.toString(days) + ":";
+        }
+        
+        if (!isSortFormat) {
+            String nd = Setup.getDayToName(Integer.toString(days));
+            if (nd != null && !nd.isBlank()) {
+                d = nd + " ";
+            }
         }
 
         // AM_PM field
@@ -3627,7 +3635,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public String getIconName() {
         String name = getName();
         if (isBuilt() && getLeadEngine() != null && Setup.isTrainIconAppendEnabled()) {
-            name += " " + getLeadEngine().getNumber();
+            name += " " + getLeadEngineNumber();
         }
         return name;
     }
@@ -3653,7 +3661,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (getLeadEngine() == null) {
             return NONE;
         }
-        return getLeadEngine().toString();
+        return getLeadEngineRoadName() + " " + getLeadEngineNumber();
     }
 
     public String getLeadEngineDccAddress() {

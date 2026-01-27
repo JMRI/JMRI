@@ -20,8 +20,6 @@ import jmri.script.ScriptEngineSelector;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -338,7 +336,6 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         assertEquals( expressionScript.getScript(), "This is a bad script");
     }
 
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, JmriException {
         JUnitUtil.setUp();
@@ -395,7 +392,6 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         logixNG.setEnabled(true);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
