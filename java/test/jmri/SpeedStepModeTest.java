@@ -1,5 +1,7 @@
 package jmri;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -25,6 +27,16 @@ public class SpeedStepModeTest {
 
             assertTrue(mode.increment >= 0);
         }
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }
