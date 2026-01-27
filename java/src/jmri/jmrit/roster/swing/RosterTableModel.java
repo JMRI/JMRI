@@ -11,13 +11,18 @@ import javax.annotation.CheckForNull;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
 
+import jmri.InstanceManager;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.util.gui.GuiLafPreferencesManager;
 
 /**
  * Table data model for display of Roster variable values.
@@ -46,7 +51,8 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     static final int OWNERCOL           = 10;
     static final int DATEUPDATECOL      = 11;
     public static final int PROTOCOL    = 12;
-    public static final int NUMCOL = PROTOCOL + 1;
+    static final int COMMENT            = 13;
+    public static final int NUMCOL = COMMENT + 1;
     private String rosterGroup = null;
     boolean editable = false;
     
@@ -73,6 +79,17 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         }
     }
 
+    JTable associatedTable;
+    public void setAssociatedTable(JTable associatedTable) {
+        this.associatedTable = associatedTable;
+    }
+    
+    RowSorter<RosterTableModel> associatedSorter;
+    public void setAssociatedSorter(RowSorter<RosterTableModel> associatedSorter) {
+        this.associatedSorter = associatedSorter;
+    }
+    
+    
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals(Roster.ADD)) {
@@ -137,6 +154,8 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 return Bundle.getMessage("FieldDateUpdated");
             case PROTOCOL:
                 return Bundle.getMessage("FieldProtocol");
+            case COMMENT:
+                return Bundle.getMessage("FieldComment");
             default:
                 return getColumnNameAttribute(col);
         }
@@ -256,7 +275,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             case ADDRESSCOL:
                 return re.getDccLocoAddress().getNumber();
             case DECODERMFGCOL:
-                var index = jmri.InstanceManager.getDefault(jmri.jmrit.decoderdefn.DecoderIndexFile.class);
+                var index = InstanceManager.getDefault(DecoderIndexFile.class);
                 var matches = index.matchingDecoderList(
                         null, re.getDecoderFamily(),
                         null, null, null,
@@ -285,6 +304,14 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 return re.getDateModified();
             case PROTOCOL:
                 return re.getProtocolAsString();
+            case COMMENT:
+                // have to set height for extra lines
+                var viewRow = associatedSorter.convertRowIndexToView(row);
+                String[] sections = re.getComment().split("\n");
+                int lines = sections.length;
+                int height = lines * (InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize() + 4); // same line height as in RosterTable
+                associatedTable.setRowHeight(viewRow, height);
+                return re.getComment();
             default:
                 break;
         }
@@ -350,6 +377,9 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 break;
             case OWNERCOL:
                 re.setOwner(valueToSet);
+                break;
+            case COMMENT:
+                re.setComment(valueToSet);
                 break;
             default:
                 setValueAtAttribute(valueToSet, re, col);

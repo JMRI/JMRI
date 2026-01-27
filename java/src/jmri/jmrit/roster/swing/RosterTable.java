@@ -31,6 +31,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.RowSorterEvent;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 
@@ -44,6 +45,7 @@ import jmri.util.swing.JmriPanel;
 import jmri.util.swing.JmriMouseAdapter;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
+import jmri.util.swing.MultiLineCellRenderer;
 import jmri.util.swing.XTableColumnModel;
 
 /**
@@ -84,7 +86,19 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
                 sortedRosterEntries = null;
             }
         });
-        dataTable = new JTable(dataModel);
+        dataTable = new JTable(dataModel) {
+            // only use MultiLineRenderer in COMMENTS column
+            @Override
+            public TableCellRenderer getCellRenderer(int row, int column) {
+                var modelColumn = convertColumnIndexToModel(column);
+                if (modelColumn == RosterTableModel.COMMENT) {
+                    return new MultiLineCellRenderer();
+                }
+                return super.getCellRenderer(row, column);
+            }
+        };
+        dataModel.setAssociatedTable(dataTable);  // used for resizing
+        dataModel.setAssociatedSorter(sorter);
         dataTable.setRowSorter(sorter);
         dataScroll = new JScrollPane(dataTable);
         dataTable.setRowHeight(InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize() + 4);
