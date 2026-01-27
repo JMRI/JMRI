@@ -2100,6 +2100,15 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 addLine(THREE,
                         Bundle.getMessage("buildTrackNotQuickService", StringUtils.capitalize(track.getTrackTypeName()),
                                 track.getLocation().getName(), track.getName(), car.toString()));
+                // warn if departing staging that is quick serviced enabled
+                if (car.getTrack().isStaging() && car.getTrack().isQuickServiceEnabled()) {
+                    _warnings++;
+                    addLine(THREE,
+                            Bundle.getMessage("buildWarningQuickService", car.toString(),
+                                    car.getTrack().getTrackTypeName(),
+                                    car.getTrack().getLocation().getName(), car.getTrack().getName(),
+                                    getTrain().getName(), StringUtils.capitalize(car.getTrack().getTrackTypeName())));
+                }
             }
             return car;
         }
