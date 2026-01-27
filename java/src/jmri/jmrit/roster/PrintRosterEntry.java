@@ -8,7 +8,6 @@ import java.util.Hashtable;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -27,7 +26,6 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneContainer;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
 import jmri.util.BusyGlassPane;
-import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.jdom2.*;
@@ -352,12 +350,11 @@ public class PrintRosterEntry implements PaneContainer {
      * @param w the active HardcopyWriter instance to be used
      */
     public void printInfoSection(HardcopyWriter w) {
-        ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
-        // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
-        w.writeDecoderProIcon(icon.getImage());
+        // Output the icon
+        Dimension iconSize = w.writeDecoderProIcon();
         w.setFontStyle(Font.BOLD);
         // add a number of blank lines
-        int height = icon.getImage().getHeight(null);
+        int height = iconSize.height;
         int blanks = (height - w.getLineAscent()) / w.getLineHeight();
 
         try {

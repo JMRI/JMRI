@@ -122,11 +122,14 @@ public class HardcopyWriter extends Writer {
         if (!isPreview) {
             Toolkit toolkit = frame.getToolkit();
 
+            PaperUtils.syncPageAttributesToPrinter(pageAttributes);
+
             job = toolkit.getPrintJob(frame, jobname, jobAttributes, pageAttributes);
 
             if (job == null) {
                 throw new PrintCanceledException("User cancelled print request");
             }
+
             pagesizePixels = job.getPageDimension();
             int printerDpi = job.getPageResolution();
             pagesizePoints =
@@ -651,22 +654,19 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Write the decoder pro icon to the output. The icon is scaled to the size
-     * of the small icon divided by 1.5 (this was in the original code). Method
-     * added by P Gladstone. This actually uses the high resolution image.
+     * Write the decoder pro icon to the output. Method added by P Gladstone.
+     * This actually uses the high resolution image.
      * <p>
      * The image is positioned on the right side of the paper, at the current
      * height.
      *
-     * @param c image to use purely for the size (and then divided by 1.5). Yes,
-     *          this is a bit of a hack.
      * @return The actual size in points of the icon that was rendered.
      */
-    public Dimension writeDecoderProIcon(Image c) {
+    public Dimension writeDecoderProIcon() {
         ImageIcon hiresIcon =
                 new ImageIcon(HardcopyWriter.class.getResource("/resources/decoderpro_large.png"));
         Image icon = hiresIcon.getImage();
-        return writeSpecificSize(icon, new Dimension((int) (c.getWidth(null) / 1.5), (int) (c.getHeight(null) / 1.5)));
+        return writeSpecificSize(icon, new Dimension(icon.getWidth(null) / 6, icon.getHeight(null) / 6));
     }
 
     /**
