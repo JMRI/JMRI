@@ -220,7 +220,9 @@ suite.<br>
       <dl>
         <dt>jmri.skipschematests</dt>
 
-        <dd>If true, JUnit tests will skip checking the schema of all the test XML files.</dd>
+        <dd>If true, JUnit tests will skip checking the schema of XML files
+            including decoder definitions, signal system definitions, and
+            some test panel files.</dd>
 
         <dt>jmri.skipjythontests</dt>
 
@@ -234,7 +236,7 @@ suite.<br>
 
         <dt>jmri.util.JUnitUtil.checkSetUpTearDownSequence</dt>
 
-        <dd>If true, check for whether JUnitUtil.setUp() and JUnitUtil.teardown() follow each other
+        <dd>If true, check for whether JUnitUtil.setUp() and JUnitUtil.tearDown() follow each other
         int the proper sequence. Print a message if not. (This slows execution a bit due to the
         time needed to keep history for the message)</dd>
 
@@ -243,6 +245,11 @@ suite.<br>
         <dd>If true, makes jmri.util.JUnitUtil.checkSetUpTearDownSequence more verbose by also
         including the current stack trace along with the traces of the most recent setUp and
         tearDown calls.</dd>
+
+        <dt>jmri.util.JUnitUtil.checkSequenceFailsTest</dt>
+
+        <dd>If true, makes jmri.util.JUnitUtil.checkSetUpTearDownSequence more strict by also
+        failing the current test if the setUp/tearDown sequence isn't followed.</dd>
 
         <dt>jmri.util.JUnitUtil.checkRemnantThreads</dt>
 
