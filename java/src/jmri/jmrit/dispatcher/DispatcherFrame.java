@@ -379,10 +379,16 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             at.setTrainType(info.getTrainType());
             at.setTerminateWhenDone(info.getTerminateWhenDone());
             at.setNextTrain(info.getNextTrain());
+            at.setUseStopSensor(info.getUseStopSensor());  // Honour "Override stop sensors" from TrainInfo
             if (info.getAutoRun()) {
                 AutoActiveTrain aat = new AutoActiveTrain(at);
                 aat.setSpeedFactor(info.getSpeedFactor());
                 aat.setMaxSpeed(info.getMaxSpeed());
+                aat.setSpeedFactor(info.getSpeedFactor());
+                aat.setMaxSpeed(info.getMaxSpeed());
+                // NEW: scale km/h cap (uses roster speed profile + layout scale at runtime)
+                aat.setMaxSpeedScaleKmh(info.getMaxSpeedScaleKmh());
+                aat.setMinReliableOperatingSpeed(info.getMinReliableOperatingSpeed());
                 aat.setMinReliableOperatingSpeed(info.getMinReliableOperatingSpeed());
                 aat.setRampRate(AutoActiveTrain.getRampRateFromName(info.getRampRate()));
                 aat.setRunInReverse(info.getRunInReverse());
@@ -391,6 +397,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 aat.setStopBySpeedProfile(info.getStopBySpeedProfile());
                 aat.setStopBySpeedProfileAdjust(info.getStopBySpeedProfileAdjust());
                 aat.setUseSpeedProfile(info.getUseSpeedProfile());
+                aat.setStopByDistanceMm(info.getStopByDistanceMm());
+                aat.setStopByDistanceRefTail(info.getStopByDistanceRef() == TrainInfo.StopReference.TAIL);
+                // Physics: runtime parameters from TrainInfo
+                aat.setAdditionalTrainWeightMetricTonnes(info.getAdditionalTrainWeightMetricTonnes());
+                aat.setRollingResistanceCoeff(info.getRollingResistanceCoeff());
                 aat.setFunctionLight(info.getFNumberLight());
                 getAutoTrainsFrame().addAutoActiveTrain(aat);
                 if (!aat.initialize()) {

@@ -61,7 +61,6 @@ public class RosterEntryPane extends javax.swing.JPanel {
 
     Component pane;
     RosterEntry re;
-
     public RosterEntryPane(RosterEntry r) {
 
         maxSpeedSpinner.setModel(new SpinnerNumberModel(1.00d, 0.00d, 1.00d, 0.01d));
@@ -253,6 +252,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         cR.gridy = cL.gridy; // JSpinner is initialised in RosterEntryPane()
         gbLayout.setConstraints(maxSpeedSpinner, cR);
         super.add(maxSpeedSpinner);
+        
+         
 
         cL.gridy++;
         JLabel row8Label = new JLabel(Bundle.getMessage("FieldComment") + ":");
@@ -385,11 +386,6 @@ public class RosterEntryPane extends javax.swing.JPanel {
         }
     }
 
-    /**
-     *
-     * @return true if the value in the id JTextField is a duplicate of some
-     *         other RosterEntry in the roster
-     */
     public boolean checkDuplicate() {
         // check it's not a duplicate
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, id.getText());
@@ -429,7 +425,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         r.setDecoderFamily(decoderFamily.getText());
         r.setDecoderModel(decoderModel.getText());
         r.setDecoderComment(decoderComment.getText());
-    }
+   }
+
 
     /**
      * Fill GUI from roster contents.
