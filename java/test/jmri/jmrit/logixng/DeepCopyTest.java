@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import jmri.*;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
+import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -221,14 +222,16 @@ public class DeepCopyTest {
 
     @BeforeEach
     public void setUp() {
+        JUnitUtil.setUp();
         createLogixNGTreeScaffold = new CreateLogixNGTreeScaffold();
-        createLogixNGTreeScaffold.setUp();
+        createLogixNGTreeScaffold.setUpScaffold();
     }
 
     @AfterEach
     public void tearDown() {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
-        createLogixNGTreeScaffold.tearDown();
+        createLogixNGTreeScaffold.tearDownScaffold();
+        JUnitUtil.tearDown();
     }
 
 

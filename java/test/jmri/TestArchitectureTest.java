@@ -1,9 +1,13 @@
 package jmri;
 
+import java.lang.annotation.Annotation;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 
 import com.tngtech.archunit.base.DescribedPredicate;
+import com.tngtech.archunit.core.domain.JavaClass;
 import com.tngtech.archunit.core.domain.JavaMethod;
 import com.tngtech.archunit.core.domain.JavaModifier;
 import com.tngtech.archunit.lang.*;
@@ -138,9 +142,6 @@ public class TestArchitectureTest {
         .that().haveName("setUp")
         .and().doNotHaveModifier(JavaModifier.ABSTRACT)
         .and().areNotDeclaredIn(jmri.util.JUnitUtil.class)
-        // JUnit4
-        .and().areDeclaredInClassesThat().resideOutsideOfPackage("jmri.jmrit.logixng..")
-        .and().areNotDeclaredIn(jmri.jmrit.display.logixng.ActionPositionableTest.class)
         .should()
         .beAnnotatedWith(BeforeEach.class)
         .orShould().beAnnotatedWith(BeforeAll.class)
@@ -155,9 +156,6 @@ public class TestArchitectureTest {
         .that().haveName("tearDown")
         .and().doNotHaveModifier(JavaModifier.ABSTRACT)
         .and().areNotDeclaredIn(jmri.util.JUnitUtil.class)
-        // JUnit4
-        .and().areDeclaredInClassesThat().resideOutsideOfPackage("jmri.jmrit.logixng..")
-        .and().areNotDeclaredIn(jmri.jmrit.display.logixng.ActionPositionableTest.class)
         .should()
         .beAnnotatedWith(AfterEach.class)
         .orShould().beAnnotatedWith(AfterAll.class)
@@ -236,5 +234,77 @@ public class TestArchitectureTest {
             .should().accessClassesThat()
             .haveFullyQualifiedName(AssertionError.class.getName())
             .because("Please use JUnit Assertions rather than the Java 'assert' keyword");
+
+    @ArchTest
+    public static final ArchRule tests_should_use_JUnitUtil = classes()
+            .that().areNotInterfaces()
+            .and().doNotHaveModifier(JavaModifier.ABSTRACT ) // exclude abstract classes
+            .should(haveJUnitUtilSetupAndTeardown());
+
+    private static ArchCondition<JavaClass> haveJUnitUtilSetupAndTeardown() {
+        return new SetupTearDownCondition("have JUnitUtil.setUp/tearDown in @BeforeEach/@AfterEach (or super)");
+    }
+
+    private static class SetupTearDownCondition extends ArchCondition<JavaClass> {
+
+        SetupTearDownCondition(String description) {
+            super(description);
+        }
+
+        @Override
+        public void check(JavaClass javaClass, ConditionEvents events) {
+            if (!isJUnitTestClass(javaClass) || isBundleTest(javaClass) ) {
+                return;
+            }
+
+            boolean hasSetup =
+                hasAnnotatedMethodCallingJUnitUtil(javaClass, BeforeEach.class, "setUp")
+                || hasAnnotatedMethodCallingJUnitUtil(javaClass, BeforeAll.class, "setUp")
+                || hasAnnotatedMethodCallingJUnitUtil(javaClass, BeforeEach.class, "setUpLoggingAndCommonProperties")
+                || hasAnnotatedMethodCallingJUnitUtil(javaClass, BeforeAll.class, "setUpLoggingAndCommonProperties");
+
+            boolean hasTeardown =
+                hasAnnotatedMethodCallingJUnitUtil(javaClass, AfterEach.class, "tearDown")
+                || hasAnnotatedMethodCallingJUnitUtil(javaClass, AfterAll.class, "tearDown");
+
+            if (!hasSetup) {
+                events.add(SimpleConditionEvent.violated( javaClass,
+                        javaClass.getName() + " has tests but no @BeforeEach or super calling JUnitUtil.setUp()"
+                ));
+            }
+            if (!hasTeardown) {
+                events.add(SimpleConditionEvent.violated( javaClass,
+                        javaClass.getName() + " has tests but no @AfterEach or super calling JUnitUtil.tearDown()"
+                ));
+            }
+        }
+    }
+
+    private static boolean isJUnitTestClass(JavaClass c) {
+        return c.getMethods().stream().anyMatch(m ->
+            m.isAnnotatedWith( Test.class)
+            || m.isAnnotatedWith( ParameterizedTest.class));
+    }
+
+    private static boolean isBundleTest(JavaClass c) {
+        return c.getSimpleName().endsWith("BundleTest");
+    }
+
+    private static final String JUNIT_UTIL = "jmri.util.JUnitUtil";
+
+    private static boolean hasAnnotatedMethodCallingJUnitUtil( JavaClass clazz,
+            Class<? extends Annotation> annotationType, String junitUtilMethodName) {
+
+        // Build a stream of this class plus all its raw superclasses
+        Stream<JavaClass> classesToCheck =
+                Stream.concat(Stream.of(clazz), clazz.getAllRawSuperclasses().stream());
+
+        return classesToCheck
+            .flatMap(c -> c.getMethods().stream())
+            .filter(m -> m.isAnnotatedWith(annotationType))
+            .anyMatch(m -> m.getMethodCallsFromSelf().stream().anyMatch(call ->
+                    call.getTargetOwner().getName().equals(JUNIT_UTIL)
+                            && call.getName().equals(junitUtilMethodName)));
+    }
 
 }

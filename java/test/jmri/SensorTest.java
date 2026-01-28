@@ -1,5 +1,7 @@
 package jmri;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,4 +22,15 @@ public class SensorTest {
         assertTrue( (Sensor.ON & Sensor.INCONSISTENT) == 0, "On and Inconsistent differ");
         assertTrue( (Sensor.OFF & Sensor.INCONSISTENT) == 0, "Off and Inconsistent differ");
     }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

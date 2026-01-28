@@ -220,15 +220,17 @@ public class StoreAndLoadTest {
 
     @BeforeEach
     public void setUp() {
+        JUnitUtil.setUp();
         createLogixNGTreeScaffold = new CreateLogixNGTreeScaffold();
-        createLogixNGTreeScaffold.setUp();
+        createLogixNGTreeScaffold.setUpScaffold();
         InstanceManager.getDefault(jmri.jmrit.logixng.LogixNGPreferences.class).setInstallDebugger(false);
     }
 
     @AfterEach
     public void tearDown() {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
-        createLogixNGTreeScaffold.tearDown();
+        createLogixNGTreeScaffold.tearDownScaffold();
+        JUnitUtil.tearDown();
     }
 
 
