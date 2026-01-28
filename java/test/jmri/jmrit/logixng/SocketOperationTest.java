@@ -192,14 +192,16 @@ public class SocketOperationTest {
 
     @BeforeEach
     public void setUp() {
+        JUnitUtil.setUp();
         createLogixNGTreeScaffold = new CreateLogixNGTreeScaffold();
-        createLogixNGTreeScaffold.setUp();
+        createLogixNGTreeScaffold.setUpScaffold();
     }
 
     @AfterEach
     public void tearDown() {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
-        createLogixNGTreeScaffold.tearDown();
+        createLogixNGTreeScaffold.tearDownScaffold();
+        JUnitUtil.tearDown();
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SocketOperationTest.class);
