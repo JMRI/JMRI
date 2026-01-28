@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.JobAttributes.DefaultSelectionType;
 import java.awt.JobAttributes.SidesType;
 import java.awt.event.ActionEvent;
+import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.Writer;
@@ -624,11 +625,14 @@ public class HardcopyWriter extends Writer {
             page.setFont(headerfont);
             page.drawString(jobname, x0, headery);
 
+            FontRenderContext frc = ((Graphics2D) page).getFontRenderContext();
+
             String s = "- " + pagenum + " -"; // print page number centered
-            int w = headermetrics.stringWidth(s);
-            page.drawString(s, x0 + (this.width - w) / 2, headery);
-            w = headermetrics.stringWidth(time);
-            page.drawString(time, x0 + width - w, headery);
+            Rectangle2D bounds = headerfont.getStringBounds(s, frc);
+            page.drawString(s, (int) (x0 + (this.width - bounds.getWidth()) / 2), headery);
+
+            bounds = headerfont.getStringBounds(time, frc);
+            page.drawString(time, (int) (x0 + width - bounds.getWidth()), headery);
 
             // draw a line under the header
             int y = headery + headermetrics.getDescent() + 1;
@@ -659,14 +663,13 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Write the decoder pro icon to the output. Method added by P Gladstone.
-     * This actually uses the high resolution image. It also advances the linenum
-     * appropriately (unless no_advance is True)
+     * This actually uses the high resolution image. It also advances the
+     * linenum appropriately (unless no_advance is True)
      * <p>
      * The image is positioned on the right side of the paper, at the current
      * height.
      * 
      * @param no_advance if true, do not advance the linenum
-     *
      * @return The actual size in points of the icon that was rendered.
      */
     public Dimension writeDecoderProIcon(boolean no_advance) {
@@ -683,8 +686,8 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Write the decoder pro icon to the output. Method added by P Gladstone.
-     * This actually uses the high resolution image. It also advances the linenum
-     * appropriately.
+     * This actually uses the high resolution image. It also advances the
+     * linenum appropriately.
      * <p>
      * The image is positioned on the right side of the paper, at the current
      * height.
