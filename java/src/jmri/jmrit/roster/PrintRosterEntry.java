@@ -1,7 +1,6 @@
 package jmri.jmrit.roster;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;

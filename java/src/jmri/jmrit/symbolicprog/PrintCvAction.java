@@ -1,9 +1,7 @@
 package jmri.jmrit.symbolicprog;
 
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.util.Locale;
 
 import javax.swing.AbstractAction;
