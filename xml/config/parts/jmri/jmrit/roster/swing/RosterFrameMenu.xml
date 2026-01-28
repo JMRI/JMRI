@@ -291,31 +291,31 @@
     <node>separator</node><!-- separator -->
       <node name="New Entry...">
           <name xml:lang="it">Nuova Impresso...</name>
-          <name xml:lang="da">Nyt Loko...</name>
+          <name xml:lang="da">Nyt Indgang...</name>
           <name xml:lang="de">Neue EinTrag...</name>
           <name xml:lang="fr">Nouvelle Entrée ...</name>
-          <name xml:lang="ca">Nova Locomotora...</name>
-          <name xml:lang="cs">Nová lokomotiva...</name>
+          <name xml:lang="ca">Nova entrada...</name>
+          <name xml:lang="cs">Nová seznam...</name>
           <name xml:lang="nl">Nieuwe Ingang...</name>
           <adapter>apps.gui3.dp3.PaneProgDp3Action</adapter>
       </node>
     <node name="Duplicate Entry">
         <name xml:lang="fr">Dupliquer Entrée</name>
         <name xml:lang="it">Duplica Impresso</name>
-        <name xml:lang="da">Dupliker Loko</name>
+        <name xml:lang="da">Dupliker Indgang</name>
         <name xml:lang="de">Dupliziere EinTrag</name>
-        <name xml:lang="ca">Duplica locomotora</name>
-        <name xml:lang="cs">Duplikovat lokomotivu</name>
+        <name xml:lang="ca">Duplica entrada</name>
+        <name xml:lang="cs">Duplikovat seznam</name>
         <name xml:lang="nl">Dupliceer Ingang</name>
         <current>copyloco</current>
     </node>
     <node name="Delete Entry">
         <name xml:lang="fr">Supprimer Entrée</name>
         <name xml:lang="it">Cancella Impresso</name>
-        <name xml:lang="da">Slet Loko</name>
+        <name xml:lang="da">Slet Indgang</name>
         <name xml:lang="de">Lösche EinTrag</name>
-        <name xml:lang="ca">Suprimeix locomotora</name>
-        <name xml:lang="cs">Vymazat lokomotivu</name>
+        <name xml:lang="ca">Suprimeix entrada</name>
+        <name xml:lang="cs">Vymazat seznam</name>
         <name xml:lang="nl">Wis Ingang</name>
         <current>deleteloco</current>
     </node>
