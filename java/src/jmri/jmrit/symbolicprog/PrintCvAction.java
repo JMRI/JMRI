@@ -45,20 +45,9 @@ public class PrintCvAction extends AbstractAction {
 
     public void printInfoSection(HardcopyWriter w) {
         // Write out the icon
-        Dimension iconSize = w.writeDecoderProIcon();
+        w.writeDecoderProIcon();
         w.setFontStyle(Font.BOLD);
-        //Add a number of blank lines
-        int height = iconSize.height;
-        int blanks = (height - w.getLineAscent()) / w.getLineHeight();
 
-        try {
-            for (int i = 0; i < blanks; i++) {
-                String s = "\n";
-                w.write(s, 0, s.length());
-            }
-        } catch (IOException e) {
-            log.warn("error during printing", e);
-        }
         mRoster.printEntry(w);
         w.setFontStyle(Font.PLAIN);
     }

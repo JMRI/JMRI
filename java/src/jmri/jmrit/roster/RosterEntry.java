@@ -1665,7 +1665,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             // We might need to pad some areas of the roster out, so that things
             // look correct and text doesn't overflow into the image.
             textSpaceWithIcon
-                    = w.getCharactersPerLine() - (d.width / w.getCharWidth()) - indentWidth - 1;
+                    = (int) (w.getCharactersPerLine() - (d.width / w.getCharWidth()) - indentWidth - 1);
             // Update blanks to be the number of lines the image takes up.
             blanks = (d.height - w.getLineAscent()) / w.getLineHeight();
         }

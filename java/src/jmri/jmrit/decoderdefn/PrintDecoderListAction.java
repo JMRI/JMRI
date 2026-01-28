@@ -49,7 +49,7 @@ public class PrintDecoderListAction extends AbstractAction {
         }
 
         // add the icon
-        writer.writeDecoderProIcon();
+        writer.writeDecoderProIcon(true);
 
         // Loop through the decoder index, printing as needed
         String lastMfg = "";

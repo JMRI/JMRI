@@ -78,19 +78,7 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
         }
 
         // Write out the decoder pro logo
-        Dimension iconSize = writer.writeDecoderProIcon();
-        //Add a number of blank lines, so that the roster entry starts below the decoderpro logo
-        int height = iconSize.height;
-        int blanks = (height - writer.getLineAscent()) / writer.getLineHeight();
-
-        try {
-            for (int i = 0; i < blanks; i++) {
-                String s = "\n";
-                writer.write(s, 0, s.length());
-            }
-        } catch (IOException ex) {
-            log.warn("error during printing", ex);
-        }
+        writer.writeDecoderProIcon();
 
         // Loop through the Roster, printing as needed
         List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all

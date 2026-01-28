@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.JobAttributes.DefaultSelectionType;
 import java.awt.JobAttributes.SidesType;
 import java.awt.event.ActionEvent;
+import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
@@ -43,13 +44,13 @@ public class HardcopyWriter extends Writer {
     protected int x0, y0;
     protected int height, width;
     protected int headery;
-    protected int charwidth;
+    protected float charwidth;
     protected int lineheight;
     protected int lineascent;
     protected int chars_per_line;
     protected int lines_per_page;
     protected int charnum = 0, linenum = 0;
-    protected int charoffset = 0;
+    protected float charoffset = 0;
     protected int pagenum = 0;
     protected int prFirst = 1;
     protected Color color = Color.black;
@@ -151,10 +152,11 @@ public class HardcopyWriter extends Writer {
         metrics = frame.getFontMetrics(font);
         lineheight = metrics.getHeight();
         lineascent = metrics.getAscent();
-        charwidth = metrics.charWidth('m');
+        Rectangle2D bounds = metrics.getStringBounds("mmmmmmmmmm", frame.getGraphics());
+        charwidth = (float) (bounds.getWidth() / 10);
 
         // compute lines and columns within margins
-        chars_per_line = width / charwidth;
+        chars_per_line = (int) (width / charwidth);
         lines_per_page = height / lineheight;
 
         // header font info
@@ -256,7 +258,8 @@ public class HardcopyWriter extends Writer {
      * Function to get the current page size if this is a preview. This is the
      * pagesize in points (logical units). If this is not a preview, it still
      * returns the page size for the display. It makes use of the PaperUtils
-     * class to get the default paper size (based on locale and/or printer settings).
+     * class to get the default paper size (based on locale and/or printer
+     * settings).
      *
      * @return The page size in points
      */
@@ -337,14 +340,14 @@ public class HardcopyWriter extends Writer {
                 if (buffer[i] == '\t') {
                     int tab = 8 - (charnum % 8);
                     charnum += tab;
-                    charoffset = charnum * metrics.charWidth('m');
+                    charoffset = charnum * charwidth;
                     for (int t = 0; t < tab; t++) {
                         line += " ";
                     }
                 } else {
                     line += buffer[i];
                     charnum++;
-                    charoffset += metrics.charWidth(buffer[i]);
+                    charoffset += charwidth;
                 }
             }
             if (page != null && pagenum >= prFirst) {
@@ -450,7 +453,7 @@ public class HardcopyWriter extends Writer {
         return this.fontsize;
     }
 
-    public int getCharWidth() {
+    public float getCharWidth() {
         return this.charwidth;
     }
 
@@ -468,10 +471,11 @@ public class HardcopyWriter extends Writer {
                 metrics = frame.getFontMetrics(font);
                 lineheight = metrics.getHeight();
                 lineascent = metrics.getAscent();
-                charwidth = metrics.charWidth('m');
+                Rectangle2D bounds = metrics.getStringBounds("mmmmmmmmmm", frame.getGraphics());
+                charwidth = (float) (bounds.getWidth() / 10);
 
                 // compute lines and columns within margins
-                chars_per_line = width / charwidth;
+                chars_per_line = (int) (width / charwidth);
                 lines_per_page = height / lineheight;
             } catch (RuntimeException e) {
                 font = current;
@@ -655,7 +659,32 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Write the decoder pro icon to the output. Method added by P Gladstone.
-     * This actually uses the high resolution image.
+     * This actually uses the high resolution image. It also advances the linenum
+     * appropriately (unless no_advance is True)
+     * <p>
+     * The image is positioned on the right side of the paper, at the current
+     * height.
+     * 
+     * @param no_advance if true, do not advance the linenum
+     *
+     * @return The actual size in points of the icon that was rendered.
+     */
+    public Dimension writeDecoderProIcon(boolean no_advance) {
+        ImageIcon hiresIcon =
+                new ImageIcon(HardcopyWriter.class.getResource("/resources/decoderpro_large.png"));
+        Image icon = hiresIcon.getImage();
+        Dimension size = writeSpecificSize(icon, new Dimension(icon.getWidth(null) / 6, icon.getHeight(null) / 6));
+        if (!no_advance) {
+            // Advance the linenum by the number of lines the icon takes up, plus one to leave some white space below it
+            linenum += (int) Math.ceil((double) size.height / lineheight) + 1;
+        }
+        return size;
+    }
+
+    /**
+     * Write the decoder pro icon to the output. Method added by P Gladstone.
+     * This actually uses the high resolution image. It also advances the linenum
+     * appropriately.
      * <p>
      * The image is positioned on the right side of the paper, at the current
      * height.
@@ -663,10 +692,7 @@ public class HardcopyWriter extends Writer {
      * @return The actual size in points of the icon that was rendered.
      */
     public Dimension writeDecoderProIcon() {
-        ImageIcon hiresIcon =
-                new ImageIcon(HardcopyWriter.class.getResource("/resources/decoderpro_large.png"));
-        Image icon = hiresIcon.getImage();
-        return writeSpecificSize(icon, new Dimension(icon.getWidth(null) / 6, icon.getHeight(null) / 6));
+        return writeDecoderProIcon(false);
     }
 
     /**
@@ -693,7 +719,7 @@ public class HardcopyWriter extends Writer {
         float heightScale = (float) requiredSize.height / c.getHeight(null);
         float scale = Math.min(widthScale, heightScale);
 
-        int x = x0 + width - (Math.round(c.getWidth(null) * scale) + charwidth);
+        int x = x0 + width - (int) (Math.round(c.getWidth(null) * scale) + charwidth);
         int y = y0 + (linenum * lineheight) + lineascent;
 
         Dimension d = new Dimension(Math.round(c.getWidth(null) * scale), Math.round(c.getHeight(null) * scale));
@@ -768,8 +794,8 @@ public class HardcopyWriter extends Writer {
         if (page == null) {
             newpage();
         }
-        int xStart = x0 + (colStart - 1) * charwidth + charwidth / 2;
-        int xEnd = x0 + (colEnd - 1) * charwidth + charwidth / 2;
+        int xStart = (int) (x0 + (colStart - 1) * charwidth + charwidth / 2);
+        int xEnd = (int) (x0 + (colEnd - 1) * charwidth + charwidth / 2);
         int yStart = y0 + rowStart * lineheight + (lineheight - lineascent) / 2;
         int yEnd = y0 + rowEnd * lineheight + (lineheight - lineascent) / 2;
         if (page != null && pagenum >= prFirst) {

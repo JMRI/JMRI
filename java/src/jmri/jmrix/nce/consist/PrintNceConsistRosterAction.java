@@ -49,7 +49,7 @@ public class PrintNceConsistRosterAction extends AbstractAction {
         }
 
         // add the icon
-        writer.writeDecoderProIcon();
+        writer.writeDecoderProIcon(true);
 
         // Loop through the Roster, printing as needed
         NceConsistRoster r = InstanceManager.getDefault(NceConsistRoster.class);

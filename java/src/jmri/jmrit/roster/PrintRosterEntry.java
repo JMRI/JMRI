@@ -351,20 +351,9 @@ public class PrintRosterEntry implements PaneContainer {
      */
     public void printInfoSection(HardcopyWriter w) {
         // Output the icon
-        Dimension iconSize = w.writeDecoderProIcon();
+        w.writeDecoderProIcon();
         w.setFontStyle(Font.BOLD);
-        // add a number of blank lines
-        int height = iconSize.height;
-        int blanks = (height - w.getLineAscent()) / w.getLineHeight();
 
-        try {
-            for (int i = 0; i < blanks; i++) {
-                String s = "\n";
-                w.write(s, 0, s.length());
-            }
-        } catch (IOException e) {
-            log.warn("error during printing: ", e);
-        }
         _rosterEntry.printEntry(w);
         w.setFontStyle(Font.PLAIN);
     }

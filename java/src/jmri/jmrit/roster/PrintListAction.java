@@ -76,19 +76,7 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
         try ( HardcopyWriter writer = new HardcopyWriter(mFrame, title, 10, .5, .5, .5, .5, isPreview); ) {
 
             // add the icon
-            Dimension iconSize = writer.writeDecoderProIcon();
-            // add a number of blank lines, so that the roster entry starts below the decoderpro logo
-            int height = iconSize.height;
-            int blanks = (height - writer.getLineAscent()) / writer.getLineHeight();
-
-            try {
-                for (int i = 0; i < blanks; i++) {
-                    String s = "\n";
-                    writer.write(s, 0, s.length());
-                }
-            } catch (IOException ex) {
-                log.warn("error during printing", ex);
-            }
+            writer.writeDecoderProIcon();
 
             // Loop through the Roster, printing a 1 line list entry as needed
             List<RosterEntry> l;
