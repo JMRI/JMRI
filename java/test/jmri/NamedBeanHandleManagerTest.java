@@ -88,7 +88,7 @@ public class NamedBeanHandleManagerTest {
     private NamedBeanHandleManager nbhm = null;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
@@ -96,7 +96,7 @@ public class NamedBeanHandleManagerTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

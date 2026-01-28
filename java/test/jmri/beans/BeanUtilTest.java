@@ -36,7 +36,7 @@ public class BeanUtilTest {
     private Object introspectedTarget;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         interfaceTarget = new InterfaceTarget();
         hashedTarget = new ArbitraryTarget();
@@ -44,7 +44,7 @@ public class BeanUtilTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         interfaceTarget = null;
         hashedTarget = null;
         introspectedTarget = null;
