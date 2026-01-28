@@ -435,7 +435,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Added: physics-based acceleration</li>
+			 <li>Added: Distance based stopping (including overriding stop sensors and slowing to minimum speed within the set distance and stopping by stop sensor)</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -518,7 +519,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Added: physics parameters for physics based acceleration</li>
         </ul>
 
     <h3>Routes</h3>
