@@ -80,7 +80,7 @@ public class ThrottleWindow extends JmriJFrame {
      * @param connectionConfig the connection config
      */
     public ThrottleWindow(jmri.jmrix.ConnectionConfig connectionConfig) {
-        super();
+        super(Bundle.getMessage("ThrottleTitle"));
         this.connectionConfig = connectionConfig;
         if (connectionConfig != null) {
             this.throttleManager = connectionConfig.getAdapter().getSystemConnectionMemo().get(jmri.ThrottleManager.class);

@@ -692,7 +692,17 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
                     if (SystemType.isLinux()) {
                         // Linux generally has a bar across the top and/or bottom
                         // of the screen, but lets you have the full width.
-                        heightInset = 70;
+                        // Linux generally has a bar across the top and/or bottom
+                        // of the main screen, but lets you have the full width.
+                        int screen = 0;
+                        try {
+                            screen = (int) sd.getGraphicsDevice().getClass().getMethod("getScreen").invoke(sd.getGraphicsDevice()) ;
+                        } catch (Exception e) {
+                            log.warn("Couldn't determine if primary or secondary screen: {}", e.getMessage());
+                        }
+                        if ( screen == 0) {
+                            heightInset = 70;
+                        }
                     } // Windows generally has values, but not always,
                     // so we provide observed values just in case
                     else if (osName.equals("Windows XP") || osName.equals("Windows 98")
