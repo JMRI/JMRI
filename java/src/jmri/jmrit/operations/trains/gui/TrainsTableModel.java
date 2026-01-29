@@ -153,6 +153,7 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
         // for tool tips
         DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
         tcm.getColumn(TIME_COLUMN).setCellRenderer(defaultRenderer);
+        tcm.getColumn(DONE_COLUMN).setCellRenderer(defaultRenderer);
 
         // set column preferred widths
         for (int i = 0; i < tcm.getColumnCount(); i++) {

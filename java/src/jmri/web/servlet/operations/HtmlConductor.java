@@ -140,7 +140,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                         routeLocation.getFormatedDepartureTime())); // NOI18N
             } else if (Setup.isUseDepartureTimeEnabled()
                     && routeLocation != train.getTrainTerminatesRouteLocation()
-                    && !train.getExpectedDepartureTime(routeLocation).equals(Train.ALREADY_SERVICED)) {
+                    && !train.getExpectedArrivalTime(routeLocation).equals(Train.ALREADY_SERVICED)) {
                 builder.append(String.format(locale, strings.getProperty("WorkDepartureTime"), routeLocationName, train  // NOI18N
                         .getExpectedDepartureTime(routeLocation)));
             } else if (!train.getExpectedArrivalTime(routeLocation).equals(Train.ALREADY_SERVICED)) {
