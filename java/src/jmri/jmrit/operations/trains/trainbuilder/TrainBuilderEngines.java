@@ -912,6 +912,16 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                 addLine(THREE,
                         Bundle.getMessage("buildTrackNotQuickService", StringUtils.capitalize(track.getTrackTypeName()),
                                 track.getLocation().getName(), track.getName(), engine.toString()));
+                // warn if departing staging that is quick serviced enabled
+                if (engine.getTrack().isStaging() && engine.getTrack().isQuickServiceEnabled()) {
+                    _warnings++;
+                    addLine(THREE,
+                            Bundle.getMessage("buildWarningQuickService", engine.toString(),
+                                    engine.getTrack().getTrackTypeName(),
+                                    engine.getTrack().getLocation().getName(), engine.getTrack().getName(),
+                                    getTrain().getName(),
+                                    StringUtils.capitalize(engine.getTrack().getTrackTypeName())));
+                }
             }
             return engine;
         }

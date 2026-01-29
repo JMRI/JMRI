@@ -412,7 +412,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public String getExpectedDepartureTime(RouteLocation routeLocation, boolean isSortFormat) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
         if (minutes == -1) {
-            return ALREADY_SERVICED;
+            minutes = 0; // provide the work time at routeLocation
         }
         if (!routeLocation.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
             return parseTime(checkForDepartureTime(minutes, routeLocation), isSortFormat);

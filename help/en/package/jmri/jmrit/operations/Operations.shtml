@@ -113,9 +113,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                     <li><a href="#HazardousComment">Hazardous Comment</a></li>
                     <li><a href="#ManifestPrintOptionsTools">Manifest Print Options Tools</a>
                       <ul>
-                        <li>Edit Manifest Header Text</li>
-                        <li>Edit Manifest Text</li>
-                        <li>Edit Switch List Text</li>
+                        <li><a href="#EditManifestHeaderText">Edit Manifest Header Text</a></li>
+                        <li><a href="#EditManifestHeaderText">Edit Manifest Text</a></li>
+                        <li><a href="#EditManifestHeaderText">Edit Switch List Text</a></li>
                         <li><a href="#ManifestDayNameMapping">Edit Day to Day Mapping</a></li>
                       </ul></li>
                   </ul></li>
@@ -1289,6 +1289,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         use the reset all trains button.</p>
 
       <p>
+        When selecting on time mode, a new column named "Done" in the <a href="#Trains">Trains</a>
+        window will appear. The "Done" column shows when a built train will complete its work. This
+        is useful when determining if a future train will have access to the the train's rolling
+        stock. Once a train departs using the <a href="#Trains">Move</a> button, the "Done" column
+        then shows the estimated number of days, hours and minutes it should take to complete the
+        train's work.
+      </p>
+
+      <p>
         To help troubleshoot timing problems with your cars using the on time mode, it is
         recommended that you show the "Last Train" on your Manifests and switch lists for car pick
         ups. This way if a car isn't found, you'll at least know which train was supposed to drop
@@ -2123,8 +2132,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h3 id="ManifestPrintOptionsTools">Manifest Print Options Tools</h3>
       The menu bar of the "Manifest Print Options" provides additional features that can be found
-      under "Tools". The first "More Print Options" allows you to adjust the length of the tab
-      characters when using the
+      under "Tools".
+
+      <h3>More Print Options</h3>
+      The tool "More Print Options" allows you to adjust the length of the tab characters when using
+      the
       <a href="#PrintFormat">Tabular</a> feature.
 
       <p>
@@ -2136,13 +2148,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>
         <img src="images/ManifestPrintOptionsTab.png" alt="">
       </p>
+      
+      <h3 id="EditManifestHeaderText">Edit Manifest Header Text</h3>
 
-      The next three options "Edit Manifest Header
-      Text", "Edit Manifest Text" and "Edit Switch List Text" allows you to modify all of the text
-      found in a Manifest or switch list. Each text line used by the program is shown along with a
-      text box with the same message. Edit the text box to change the default message to your liking
-      and press "Save" to complete your change. You can always return the text to the original
-      settings by pressing the "Reset" button followed by "Save".
+      The tools "Edit Manifest Header Text", "Edit Manifest Text" and "Edit Switch List Text" allow
+      you to modify all of the text found in a Manifest or switch list. Each text line used by the
+      program is shown along with a text box with the same message. Edit the text box to change the
+      default message to your liking and press "Save" to complete your change. You can always return
+      the text to the original settings by pressing the "Reset" button followed by "Save".
 
       <p>
         <img src="images/EditManifestText.png" alt="">
