@@ -240,8 +240,10 @@ public class TestArchitectureTest {
 
     @ArchTest
     public static final ArchRule noQueueToolTimedWaitEmpty = noClasses()
+        .that().doNotHaveFullyQualifiedName("jmri.jmrit.operations.OperationsTestCase") // used in non-CI tearDown testing
         .should( callMethod(QueueTool.class, "waitEmpty", long.class))
-            .because("Please call new QueueTool().waitEmpty() without a timeout, or use JUnitUtil.waitFor(xx)");
+        .because("Due to timers or cursor flashes, the queue may never become empty for a duration. "
+            + "Please call new QueueTool().waitEmpty() without a timeout, or use JUnitUtil.waitFor(xx)");
 
     @ArchTest
     public static final ArchRule tests_should_use_JUnitUtil = classes()
