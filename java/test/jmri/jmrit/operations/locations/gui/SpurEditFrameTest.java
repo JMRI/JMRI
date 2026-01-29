@@ -144,6 +144,10 @@ public class SpurEditFrameTest extends OperationsTestCase {
     @Test
     public void testAddCloseAndRestore() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        // improve test coverage by having a through train
+        JUnitOperationsUtil.loadTrainServingAllExistingLocations();
+        
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Spur Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly

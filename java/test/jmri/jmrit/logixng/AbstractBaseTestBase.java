@@ -1,5 +1,15 @@
 package jmri.jmrit.logixng;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.beans.PropertyChangeEvent;
 import java.io.StringWriter;
 import java.io.PrintWriter;
@@ -15,8 +25,7 @@ import jmri.jmrit.logixng.implementation.AbstractBase;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test AbstractAnalogExpression
@@ -25,7 +34,7 @@ import org.junit.Test;
  */
 public abstract class AbstractBaseTestBase {
 
-    public final String TREE_INDENT = "   ";
+    final static String TREE_INDENT = "   ";
     protected Base _base;
     protected MaleSocket _baseMaleSocket;
     protected LogixNG_Category _category;
@@ -74,33 +83,30 @@ public abstract class AbstractBaseTestBase {
 
     @Test
     public void testGetConditionalNG() {
-        if (getConditionalNG() == null) {
-            log.warn("Method getConditionalNG() returns null for class {}", this.getClass().getName());
-            log.error("Method getConditionalNG() returns null for class {}", this.getClass().getName());
-        }
-        Assert.assertTrue("ConditionalNG is equal", getConditionalNG() == _base.getConditionalNG());
+        assertNotNull( getConditionalNG(),
+            () -> "Method getConditionalNG() returns null for class "+ this.getClass().getName());
+        assertSame( getConditionalNG(), _base.getConditionalNG(), "ConditionalNG is equal");
 
         _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
-        Assert.assertNull("ConditionalNG is null", _base.getConditionalNG());
+        assertNull( _base.getConditionalNG(), "ConditionalNG is null");
     }
 
     @Test
     public void testGetLogixNG() {
-        if (getLogixNG() == null) {
-            log.warn("Method getLogixNG() returns null for class {}", this.getClass().getName());
-        }
-        Assert.assertTrue("LogixNG is equal", getLogixNG() == _base.getLogixNG());
+        assertNotNull( getLogixNG(),
+            () -> "Method getLogixNG() returns null for class "+ this.getClass().getName());
+        assertSame( getLogixNG(), _base.getLogixNG(), "LogixNG is equal");
 
         _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
-        Assert.assertNull("LogixNG is null", _base.getLogixNG());
+        assertNull( _base.getLogixNG(), "LogixNG is null");
     }
 
     @Test
     public void testMaleSocketGetConditionalNG() {
-        Assert.assertTrue("conditionalNG is equal",
-                _base.getConditionalNG() == _baseMaleSocket.getConditionalNG());
+        assertSame( _base.getConditionalNG(), _baseMaleSocket.getConditionalNG(),
+            "conditionalNG is equal");
 //        _base.getConditionalNG().setEnabled(false);
 //        _base.setParent(null);
 //        Assert.assertTrue("conditionalNG is equal",
@@ -109,8 +115,8 @@ public abstract class AbstractBaseTestBase {
 
     @Test
     public void testMaleSocketGetLogixNG() {
-        Assert.assertTrue("logixNG is equal",
-                _base.getLogixNG() == _baseMaleSocket.getLogixNG());
+        assertSame( _base.getLogixNG(), _baseMaleSocket.getLogixNG(),
+            "logixNG is equal");
 //        _base.getConditionalNG().setEnabled(false);
 //        _base.setParent(null);
 //        Assert.assertTrue("logixNG is equal",
@@ -119,22 +125,22 @@ public abstract class AbstractBaseTestBase {
 
     @Test
     public void testMaleSocketGetRoot() {
-        Assert.assertTrue("root is equal", _base.getRoot() == _baseMaleSocket.getRoot());
+        assertSame( _base.getRoot(), _baseMaleSocket.getRoot(), "root is equal");
         _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
-        Assert.assertTrue("root is equal", _base.getRoot() == _baseMaleSocket.getRoot());
+        assertSame( _base.getRoot(), _baseMaleSocket.getRoot(), "root is equal");
     }
 
     @Test
     public void testGetParent() {
-        Assert.assertTrue("Object of _baseMaleSocket is _base", _base == getLastMaleSocket(_baseMaleSocket).getObject());
-        Assert.assertTrue("Parent of _base is _baseMaleSocket", _base.getParent() == getLastMaleSocket(_baseMaleSocket));
+        assertSame( _base, getLastMaleSocket(_baseMaleSocket).getObject(), "Object of _baseMaleSocket is _base");
+        assertSame( _base.getParent(), getLastMaleSocket(_baseMaleSocket), "Parent of _base is _baseMaleSocket");
     }
 
     @Test
     public void testFemaleSocketSystemName() {
         for (int i=0; i < _base.getChildCount(); i++) {
-            Assert.assertEquals(_base.getSystemName(), _base.getChild(i).getSystemName());
+            assertEquals(_base.getSystemName(), _base.getChild(i).getSystemName());
         }
     }
 
@@ -209,35 +215,31 @@ public abstract class AbstractBaseTestBase {
      */
     public abstract String getExpectedPrintedTree();
 
-//    @Ignore
     @Test
     public void testGetPrintTree() {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT, new MutableInt(0));
-        Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
+        assertEquals( getExpectedPrintedTree(), stringWriter.toString(), "Tree is equal");
     }
 
-//    @Ignore
     @Test
     public void testMaleSocketGetPrintTree() {
         /// Test that the male socket of the item prints the same tree
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT, new MutableInt(0));
-        Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
+        assertEquals( getExpectedPrintedTree(), stringWriter.toString(), "Tree is equal");
     }
 
-//    @Ignore
     @Test
     public void testGetPrintTreeWithStandardLocale() {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _baseMaleSocket.printTree(printWriter, TREE_INDENT, new MutableInt(0));
-        Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
+        assertEquals( getExpectedPrintedTree(), stringWriter.toString(), "Tree is equal");
     }
 
-//    @Ignore
     @Test
     public void testMaleSocketGetPrintTreeWithStandardLocale() {
         Locale oldLocale = Locale.getDefault();
@@ -245,7 +247,7 @@ public abstract class AbstractBaseTestBase {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _baseMaleSocket.printTree(printWriter, TREE_INDENT, new MutableInt(0));
-        Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
+        assertEquals( getExpectedPrintedTree(), stringWriter.toString(), "Tree is equal");
         Locale.setDefault(oldLocale);
     }
 
@@ -255,13 +257,12 @@ public abstract class AbstractBaseTestBase {
      */
     public abstract String getExpectedPrintedTreeFromRoot();
 
-//    @Ignore
     @Test
     public void testGetPrintTreeFromRoot() {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _base.getRoot().printTree(Locale.ENGLISH, printWriter, TREE_INDENT, new MutableInt(0));
-        Assert.assertEquals("Tree is equal", getExpectedPrintedTreeFromRoot(), stringWriter.toString());
+        assertEquals( getExpectedPrintedTreeFromRoot(), stringWriter.toString(), "Tree is equal");
     }
 
     @Test
@@ -283,25 +284,15 @@ public abstract class AbstractBaseTestBase {
         stringWriter = new StringWriter();
         printWriter = new PrintWriter(stringWriter);
 
-        Assert.assertTrue(copy != null);
+        assertNotNull(copy );
 
         copy.printTree(Locale.ENGLISH, printWriter, TREE_INDENT, new MutableInt(0));
         String copyTree = stringWriter.toString();
 
-        if (! originalTree.equals(copyTree)) {
-            System.out.format("---------------------%n%nOriginal tree:%n%s%n---------------------%n%nCopy tree:%n%s%n---------------------%n%n", originalTree, copyTree);
-        }
-
-        // REMOVE LATER!!!!!!!!
-        // REMOVE LATER!!!!!!!!
-        // REMOVE LATER!!!!!!!!
-//        Assume.assumeTrue(originalTree.equals(copyTree));
-        // REMOVE LATER!!!!!!!!
-        // REMOVE LATER!!!!!!!!
-        // REMOVE LATER!!!!!!!!
-
-        Assert.assertEquals("Tree is equal", originalTree, copyTree);
-
+        assertEquals( originalTree, copyTree,
+            () -> "Tree should be equal --------------------" +
+                String.format("-%n%nOriginal tree:%n%s%n---------------------%n%nCopy tree:%n%s%n---------------------%n%n",
+                    originalTree, copyTree)    );
 
         // Test that we can give the copied items new system names and user names
 
@@ -335,60 +326,55 @@ public abstract class AbstractBaseTestBase {
         });
 
         for (int i=0; i < originalList.size(); i++) {
-            Assert.assertEquals(copyList.get(i).getSystemName(),
+            assertEquals(copyList.get(i).getSystemName(),
                     systemNames.get(originalList.get(i).getSystemName()));
 
-            Assert.assertEquals(copyList.get(i).getUserName(),
+            assertEquals(copyList.get(i).getUserName(),
                     userNames.get(originalList.get(i).getSystemName()));
 
-            Assert.assertEquals(copyList.get(i).getComment(),
+            assertEquals(copyList.get(i).getComment(),
                     comments.get(originalList.get(i).getSystemName()));
         }
     }
 
     @Test
     public void testIsActive() {
-        Assert.assertEquals(_base.getParent(), getLastMaleSocket(_baseMaleSocket));
+        assertEquals(_base.getParent(), getLastMaleSocket(_baseMaleSocket));
 
-        Assert.assertTrue("_base is active", _base.isActive());
+        assertTrue( _base.isActive(), "_base is active");
         _baseMaleSocket.setEnabled(false);
-        Assert.assertFalse("_base is not active", _base.isActive());
+        assertFalse( _base.isActive(), "_base is not active");
         _baseMaleSocket.setEnabled(true);
-        Assert.assertTrue("_base is active", _base.isActive());
+        assertTrue( _base.isActive(), "_base is active");
 
-        Assert.assertTrue(_base.isActive());
+        assertTrue(_base.isActive());
         ConditionalNG conditionalNG = _base.getConditionalNG();
-        if (conditionalNG != null) {
-            conditionalNG.setEnabled(false);
-            Assert.assertFalse("_base is not active", _base.isActive());
-            conditionalNG.setEnabled(true);
-        } else {
-            log.error("_base has no ConditionalNG as ancestor");
-        }
+        assertNotNull( conditionalNG, "_base has no ConditionalNG as ancestor");
+        conditionalNG.setEnabled(false);
+        assertFalse( _base.isActive(), "_base is not active");
+        conditionalNG.setEnabled(true);
+        
 
-        Assert.assertTrue("_base is active", _base.isActive());
+        assertTrue( _base.isActive(), "_base is active");
         LogixNG logixNG = _base.getLogixNG();
-        if (logixNG != null) {
-            logixNG.setEnabled(false);
-            Assert.assertFalse("_base is not active", _base.isActive());
-            logixNG.setEnabled(true);
-            Assert.assertTrue("_base is active", _base.isActive());
-        } else {
-            log.error("_base has no LogixNG as ancestor");
-        }
+        assertNotNull( logixNG, "_base has no LogixNG as ancestor");
+        logixNG.setEnabled(false);
+        assertFalse( _base.isActive(), "_base is not active");
+        logixNG.setEnabled(true);
+        assertTrue( _base.isActive(), "_base is active");
 
-        Assert.assertTrue("_base is active", _base.isActive());
+        assertTrue( _base.isActive(), "_base is active");
         _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
-        Assert.assertTrue("_base is active", _base.isActive());
+        assertTrue( _base.isActive(), "_base is active");
     }
 
     @Test
     public void testMaleSocketIsActive() {
         _baseMaleSocket.setEnabled(false);
-        Assert.assertFalse("_baseMaleSocket is not active", _baseMaleSocket.isActive());
+        assertFalse( _baseMaleSocket.isActive(), "_baseMaleSocket is not active");
         _baseMaleSocket.setEnabled(true);
-        Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
+        assertTrue( _baseMaleSocket.isActive(), "_baseMaleSocket is active");
 
         Base parent = _baseMaleSocket.getParent();
         while ((parent != null) && !(parent instanceof MaleSocket)) {
@@ -396,58 +382,52 @@ public abstract class AbstractBaseTestBase {
         }
         if (parent != null) {
             ((MaleSocket)parent).setEnabled(false);
-            Assert.assertFalse("_baseMaleSocket is not active", _baseMaleSocket.isActive());
+            assertFalse( _baseMaleSocket.isActive(), "_baseMaleSocket is not active");
             ((MaleSocket)parent).setEnabled(true);
         }
 
-        Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
+        assertTrue( _baseMaleSocket.isActive(), "_baseMaleSocket is active");
         ConditionalNG conditionalNG = _baseMaleSocket.getConditionalNG();
-        if (conditionalNG != null) {
-            conditionalNG.setEnabled(false);
-            Assert.assertFalse("_baseMaleSocket is not active", _baseMaleSocket.isActive());
-            conditionalNG.setEnabled(true);
-        } else {
-            log.error("_base has no ConditionalNG as ancestor");
-        }
+        assertNotNull( conditionalNG, "_base has no ConditionalNG as ancestor");
+        conditionalNG.setEnabled(false);
+        assertFalse( _baseMaleSocket.isActive(), "_baseMaleSocket is not active");
+        conditionalNG.setEnabled(true);
 
-        Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
+        assertTrue( _baseMaleSocket.isActive(), "_baseMaleSocket is active");
         LogixNG logixNG = _baseMaleSocket.getLogixNG();
-        if (logixNG != null) {
-            logixNG.setEnabled(false);
-            Assert.assertFalse("_baseMaleSocket is not active", _baseMaleSocket.isActive());
-            logixNG.setEnabled(true);
-            Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
-        } else {
-            log.error("_base has no LogixNG as ancestor");
-        }
+        assertNotNull( logixNG, "_base has no LogixNG as ancestor");
+        logixNG.setEnabled(false);
+        assertFalse( _baseMaleSocket.isActive(), "_baseMaleSocket is not active");
+        logixNG.setEnabled(true);
+        assertTrue( _baseMaleSocket.isActive(), "_baseMaleSocket is active");
 
-        Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
+        assertTrue( _baseMaleSocket.isActive(), "_baseMaleSocket is active");
         _base.getConditionalNG().setEnabled(false);
         _baseMaleSocket.setParent(null);
-        Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
+        assertTrue( _baseMaleSocket.isActive(), "_baseMaleSocket is active");
     }
 
     @Test
     public void testConstants() {
-        Assert.assertTrue("String matches", "ChildCount".equals(Base.PROPERTY_CHILD_COUNT));
-        Assert.assertTrue("String matches", "SocketConnected".equals(Base.PROPERTY_SOCKET_CONNECTED));
-        Assert.assertEquals("integer matches", 0x02, Base.SOCKET_CONNECTED);
-        Assert.assertEquals("integer matches", 0x04, Base.SOCKET_DISCONNECTED);
+        assertTrue( "ChildCount".equals(Base.PROPERTY_CHILD_COUNT), "String matches");
+        assertTrue( "SocketConnected".equals(Base.PROPERTY_SOCKET_CONNECTED), "String matches 2");
+        assertEquals( 0x02, Base.SOCKET_CONNECTED, "integer matches");
+        assertEquals( 0x04, Base.SOCKET_DISCONNECTED, "integer matches 2");
     }
 
     @Test
     public void testNames() {
-        Assert.assertNotNull("system name not null", _base.getSystemName());
-        Assert.assertFalse("system name is not empty string", _base.getSystemName().isEmpty());
+        assertNotNull( _base.getSystemName(), "system name not null");
+        assertFalse( _base.getSystemName().isEmpty(), "system name is not empty string");
 
         _base.setUserName("One user name");
-        Assert.assertTrue("User name matches", "One user name".equals(_base.getUserName()));
+        assertTrue( "One user name".equals(_base.getUserName()), "User name matches");
         _base.setUserName("Another user name");
-        Assert.assertTrue("User name matches", "Another user name".equals(_base.getUserName()));
+        assertTrue( "Another user name".equals(_base.getUserName()), "User name matches");
         _base.setUserName(null);
-        Assert.assertNull("User name matches", _base.getUserName());
+        assertNull( _base.getUserName(), "User name matches");
         _base.setUserName("One user name");
-        Assert.assertTrue("User name matches", "One user name".equals(_base.getUserName()));
+        assertTrue( "One user name".equals(_base.getUserName()), "User name matches");
     }
 
     @Test
@@ -455,17 +435,17 @@ public abstract class AbstractBaseTestBase {
         _base.getConditionalNG().setEnabled(false);
         MyBase a = new MyBase();
         _base.setParent(null);
-        Assert.assertNull("Parent matches", _base.getParent());
+        assertNull( _base.getParent(), "Parent matches");
         _base.setParent(a);
-        Assert.assertTrue("Parent matches", a == _base.getParent());
+        assertSame( a, _base.getParent(), "Parent matches");
         _base.setParent(null);
-        Assert.assertNull("Parent matches", _base.getParent());
+        assertNull( _base.getParent(), "Parent matches");
     }
 
     @Test
     public void testIsEnabled() {
         MyBase a = new MyBase();
-        Assert.assertTrue("isEnabled() returns true by default", a.isEnabled());
+        assertTrue( a.isEnabled(), "isEnabled() returns true by default");
     }
 
     @Test
@@ -480,30 +460,29 @@ public abstract class AbstractBaseTestBase {
         // is to ensure that all the other tests behave as they should.
         // If a test want to test with runOnGUIDelayed true, that test can
         // set runOnGUIDelayed to true.
-        Assert.assertFalse("runOnGUIDelayed is false",
-                _base.getConditionalNG().getRunDelayed());
+        assertFalse( _base.getConditionalNG().getRunDelayed(),
+            "runOnGUIDelayed is false");
     }
 
     @Test
     public void testChildAndChildCount() {
-        Assert.assertEquals("childCount is equal", _base.getChildCount(), _baseMaleSocket.getChildCount());
+        assertEquals( _base.getChildCount(), _baseMaleSocket.getChildCount(), "childCount is equal");
         for (int i=0; i < _base.getChildCount(); i++) {
-            Assert.assertTrue("child is equal", _base.getChild(i) == _baseMaleSocket.getChild(i));
+            assertSame( _base.getChild(i), _baseMaleSocket.getChild(i), "child is equal");
         }
     }
 
     @Test
     public void testBeanType() {
-        Assert.assertEquals("getbeanType() is equal",
-                ((NamedBean)_base).getBeanType(),
-                ((NamedBean)_baseMaleSocket).getBeanType());
+        assertEquals( ((NamedBean)_base).getBeanType(),
+            ((NamedBean)_baseMaleSocket).getBeanType(), "getbeanType() is equal");
     }
 
     @Test
     public void testDescribeState() {
-        Assert.assertEquals("description matches",
-                "Unknown",
-                ((NamedBean)_baseMaleSocket).describeState(NamedBean.UNKNOWN));
+        assertEquals( "Unknown",
+                ((NamedBean)_baseMaleSocket).describeState(NamedBean.UNKNOWN),
+                "description matches");
     }
 
     @Test
@@ -521,15 +500,15 @@ public abstract class AbstractBaseTestBase {
         _baseMaleSocket.setEnabled(false);
 
         // Some item doesn't support adding new sockets.
-        // Return if the item under test doesn't.
-        if (!addNewSocket()) return;
+        // End here if the item under test doesn't.
+        org.junit.Assume.assumeTrue( "Item doesn't support adding new sockets", addNewSocket());
 
-        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
-        Assert.assertEquals(Base.PROPERTY_CHILD_COUNT, ar.get().getPropertyName());
-        Assert.assertTrue(ar.get().getNewValue() instanceof List);
+        assertTrue( ab.get(), "PropertyChangeEvent fired");
+        assertEquals(Base.PROPERTY_CHILD_COUNT, ar.get().getPropertyName());
+        assertInstanceOf( List.class, ar.get().getNewValue());
         List<?> list = (List<?>)ar.get().getNewValue();
         for (Object o : list) {
-            Assert.assertTrue(o instanceof FemaleSocket);
+            assertInstanceOf( FemaleSocket.class, o);
         }
     }
 /*
@@ -976,7 +955,7 @@ public abstract class AbstractBaseTestBase {
     }
 */
 
-    private class MyBase extends AbstractBase {
+    private static class MyBase extends AbstractBase {
 
         private MyBase() {
             super("IQ1");
@@ -1089,21 +1068,18 @@ public abstract class AbstractBaseTestBase {
      * @param arraySize the size of the array
      */
     public void assertIndexOutOfBoundsException(RunnableWithIndex r, int index, int arraySize) {
-        boolean hasThrown = false;
-        try {
-            r.run(index);
-        } catch (IndexOutOfBoundsException ex) {
-            hasThrown = true;
-            String msg1 = String.format("Index: %d, Size: %d", index, arraySize);
-            String msg2 = String.format("Index %d out of bounds for length %d", index, arraySize);
-            if (!msg1.equals(ex.getMessage()) && !msg2.equals(ex.getMessage())) {
-                Assert.fail("Wrong error message: " + ex.getMessage());
-            }
+        IndexOutOfBoundsException ex = assertThrows( IndexOutOfBoundsException.class,
+            () -> r.run(index), "Exception is thrown");
+
+        String msg1 = String.format("Index: %d, Size: %d", index, arraySize);
+        String msg2 = String.format("Index %d out of bounds for length %d", index, arraySize);
+        if (!msg1.equals(ex.getMessage()) && !msg2.equals(ex.getMessage())) {
+            fail("Wrong error message: " + ex.getMessage());
         }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBaseTestBase.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBaseTestBase.class);
 
 }

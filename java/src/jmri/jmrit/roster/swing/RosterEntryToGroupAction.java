@@ -52,6 +52,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
         roster = Roster.getDefault();
 
         selections = new RosterGroupComboBox();
+        boolean allEntriesEnabled = selections.isAllEntriesEnabled();
         selections.setAllEntriesEnabled(false);
         if (lastGroupSelect != null) {
             selections.setSelectedItem(lastGroupSelect);
@@ -81,6 +82,8 @@ public class RosterEntryToGroupAction extends AbstractAction {
         Roster.getDefault().writeRoster();
         re.updateFile();
         actionPerformed(event);
+        
+        selections.setAllEntriesEnabled(allEntriesEnabled);
     }
 
     void rosterEntryUpdate() {

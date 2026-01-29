@@ -5,9 +5,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import jmri.JmriException;
-import jmri.Sensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.RailCom;
 
 /**
  * Concrete implementation of the {@link jmri.RailCom} interface.
@@ -23,9 +21,10 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Kevin Dickerson Copyright (C) 2012
+ 8 @author Bob Jacobsen    (C) 2026
  * @since 2.99.3
  */
-public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
+public class DefaultRailCom extends DefaultIdTag implements RailCom {
 
     private int currentState = 0x00;
 
@@ -50,14 +49,15 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
     }
 
     @Override
-    public void setOrientation(int type) {
+    public void setOrientation(Orientation type) {
         setProperty("orientation", type);
     }
 
     @Override
-    public int getOrientation() {
-        Integer t = (Integer)getProperty("orientation");
-        return ( t != null ? t : Sensor.UNKNOWN );
+    public RailCom.Orientation getOrientation() {
+        var t = (Orientation)getProperty("orientation");
+        if (t == null) return RailCom.Orientation.UNKNOWN;
+        return t;
     }
 
     @Override
@@ -240,5 +240,5 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         return sb.toString();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultRailCom.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultRailCom.class);
 }

@@ -19,8 +19,6 @@ import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.operations.logixng.CategoryOperations;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 /**
@@ -184,8 +182,6 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
             "maps are equal");
     }
 
-    // The minimal setup for log4J
-    @Before
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -222,7 +218,6 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         }, "A1");
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

@@ -25,8 +25,6 @@ import jmri.jmrit.logixng.util.LineEnding;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.*;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 /**
@@ -571,8 +569,6 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
     }
 
 
-    // The minimal setup for log4J
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, ParserException, IOException {
         JUnitUtil.setUp();
@@ -607,7 +603,6 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         _logixNG.setEnabled(true);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();

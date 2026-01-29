@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.*;
 import java.io.*;
 import java.util.*;
@@ -9,13 +11,17 @@ import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
 
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test AbstractFemaleSocket
@@ -92,23 +98,23 @@ public class AbstractFemaleSocketTest {
 
         // Check isActive when parent is not null
 
-        Assert.assertNotNull("Parent is not null", socket.getParent());
+        assertNotNull( socket.getParent(), "Parent is not null");
 
         base._active = false;
         socket._enabled = false;
-        Assert.assertFalse("Socket is not active", socket.isActive());
+        assertFalse( socket.isActive(), "Socket is not active");
 
         base._active = true;
         socket._enabled = false;
-        Assert.assertFalse("Socket is not active", socket.isActive());
+        assertFalse( socket.isActive(), "Socket is not active");
 
         base._active = false;
         socket._enabled = true;
-        Assert.assertFalse("Socket is not active", socket.isActive());
+        assertFalse( socket.isActive(), "Socket is not active");
 
         base._active = true;
         socket._enabled = true;
-        Assert.assertTrue("Socket is active", socket.isActive());
+        assertTrue( socket.isActive(), "Socket is active");
 
 /*
         // Check isActive when parent is null
@@ -152,7 +158,7 @@ public class AbstractFemaleSocketTest {
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("Not supported");
 
-        thrown = catchThrowable( () -> socket.vetoableChange(null));
+        thrown = catchThrowable( () -> passNullVetoableChangeToSocket(socket));
         assertThat(thrown)
                 .withFailMessage("Method throws an exception")
                 .isNotNull()
@@ -188,7 +194,12 @@ public class AbstractFemaleSocketTest {
                 .hasMessage("Not supported");
     }
 
-    // The minimal setup for log4J
+    @SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION",
+            justification = "Passing null to test exception handling")
+    private void passNullVetoableChangeToSocket( MyFemaleSocket socket ) throws PropertyVetoException {
+        socket.vetoableChange(null);
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -222,9 +233,9 @@ public class AbstractFemaleSocketTest {
 
     private static class MyFemaleSocket extends AbstractFemaleSocket {
 
-        private boolean _enabled = false;
+        boolean _enabled = false;
 
-        public MyFemaleSocket(Base parent, FemaleSocketListener listener, String name) {
+        MyFemaleSocket(Base parent, FemaleSocketListener listener, String name) {
             super(parent, listener, name);
         }
 
@@ -263,7 +274,7 @@ public class AbstractFemaleSocketTest {
 
     private static class MyBase implements Base {
 
-        private boolean _active = false;
+        boolean _active = false;
 
         @Override
         public boolean isActive() {

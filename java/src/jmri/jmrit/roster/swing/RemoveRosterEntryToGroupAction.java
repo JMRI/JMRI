@@ -59,6 +59,7 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     public void actionPerformed(ActionEvent event) {
         frame = new JmriJFrame(Bundle.getMessage("DeleteFromGroup"));
         rosterBox = new RosterEntrySelectorPanel();
+        boolean allEntriesEnabled = rosterBox.getRosterGroupComboBox().isAllEntriesEnabled();
         rosterBox.getRosterGroupComboBox().setAllEntriesEnabled(false);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         JPanel p;
@@ -84,6 +85,9 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
                 dispose();
             }
         });
+        
+        rosterBox.getRosterGroupComboBox().setAllEntriesEnabled(allEntriesEnabled);
+        
         frame.getContentPane().add(p);
         frame.pack();
         frame.setVisible(true);

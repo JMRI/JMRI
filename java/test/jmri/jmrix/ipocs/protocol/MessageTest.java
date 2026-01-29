@@ -11,25 +11,26 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 
 public class MessageTest {
-  private final byte[] testMessage = { 0x09, 0x56, 0x78, 0x39, 0x31, 0x00, 0x17, 0x03, 0x00 };
 
-  @Test
-  public void testSerialize() {
-    Message m = new Message();
-    m.setObjectName("Vx91");
-    m.getPackets().add(new SignOfLifePacket());
-    ByteBuffer buffer = m.serialize();
-    assertArrayEquals(testMessage, buffer.array(), "Message not as expected");
-  }
+    private final byte[] testMessage = { 0x09, 0x56, 0x78, 0x39, 0x31, 0x00, 0x17, 0x03, 0x00 };
 
-  @Test
-  public void testParse() {
-    Message m = Message.parse(ByteBuffer.wrap(testMessage), testMessage.length);
-    assert m != null;
-    assertEquals("Vx91", m.getObjectName());
-    assertEquals(1, m.getPackets().size());
-    assertEquals(SignOfLifePacket.class, m.getPackets().get(0).getClass());
-  }
+    @Test
+    public void testSerialize() {
+        Message m = new Message();
+        m.setObjectName("Vx91");
+        m.getPackets().add(new SignOfLifePacket());
+        ByteBuffer buffer = m.serialize();
+        assertArrayEquals(testMessage, buffer.array(), "Message not as expected");
+    }
+
+    @Test
+    public void testParse() {
+        Message m = Message.parse(ByteBuffer.wrap(testMessage), testMessage.length);
+        Assertions.assertNotNull(m);
+        assertEquals("Vx91", m.getObjectName());
+        assertEquals(1, m.getPackets().size());
+        assertEquals(SignOfLifePacket.class, m.getPackets().get(0).getClass());
+    }
 
     @BeforeEach
     public void setUp() {

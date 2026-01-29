@@ -755,7 +755,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         lineIncrement = -1;  // reload on next request, hoping for a viewed row
                     }
                     return new String(result);
-                default: return "Illegal row "+row+" "+col;
+                default: return "Illegal column at "+row+" "+col;
             }
         }
 

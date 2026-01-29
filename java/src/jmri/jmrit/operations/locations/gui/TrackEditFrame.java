@@ -1064,7 +1064,13 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
     private void autoTrainComboBox(JComboBox<Train> box) {
         for (int i = 0; i < box.getItemCount(); i++) {
             Train train = box.getItemAt(i);
-            if (train == null || !checkRoute(train.getRoute())) {
+            if (train == null ||
+                    !checkRoute(train.getRoute()) ||
+                    !train.isLocalSwitcher() &&
+                            _track != null &&
+                            (Setup.getTrainDirection() &
+                                    _location.getTrainDirections() &
+                                    _track.getTrainDirections()) == 0) {
                 box.removeItemAt(i--);
             }
         }

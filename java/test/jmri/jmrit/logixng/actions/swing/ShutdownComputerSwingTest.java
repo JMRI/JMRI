@@ -1,18 +1,17 @@
 package jmri.jmrit.logixng.actions.swing;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import jmri.util.JUnitUtil;
 import jmri.jmrit.logixng.actions.ShutdownComputer;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ShutdownComputerSwing
@@ -22,27 +21,25 @@ import org.junit.Test;
 public class ShutdownComputerSwingTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         ShutdownComputerSwing t = new ShutdownComputerSwing();
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testCreatePanel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JDialog dialog = new JDialog();
 
-        Assert.assertTrue("panel is not null",
-            null != new ShutdownComputerSwing(dialog).getConfigPanel(new JPanel()));
-        Assert.assertTrue("panel is not null",
-            null != new ShutdownComputerSwing(dialog).getConfigPanel(new ShutdownComputer("IQDA1", null), new JPanel()));
+        assertNotNull( new ShutdownComputerSwing(dialog).getConfigPanel(new JPanel()), "panel is not null");
+        assertNotNull( new ShutdownComputerSwing(dialog).getConfigPanel(new ShutdownComputer("IQDA1", null), new JPanel()),
+                "panel is not null");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -53,7 +50,7 @@ public class ShutdownComputerSwingTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

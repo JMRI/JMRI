@@ -1,9 +1,10 @@
 package apps.util;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,7 +21,7 @@ public class Log4JUtilTest {
 
         log.debug("DEBUG message"); // should be suppressed see tests_lcf.xml
 
-        Assert.assertTrue(JUnitAppender.verifyNoBacklog());        
+        assertTrue(JUnitAppender.verifyNoBacklog());        
     }
 
     @Test
@@ -33,16 +34,16 @@ public class Log4JUtilTest {
 
         logger.log(java.util.logging.Level.FINER, "j.u.l FINER message"); // should be suppressed see tests_lcf.xml
 
-        Assert.assertTrue(JUnitAppender.verifyNoBacklog());
+        assertTrue(JUnitAppender.verifyNoBacklog());
     }
-    
+
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

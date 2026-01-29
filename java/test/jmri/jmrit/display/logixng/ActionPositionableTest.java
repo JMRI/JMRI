@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrit.logixng.actions.*;
 
 import java.util.ArrayList;
@@ -21,8 +19,6 @@ import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 /**
@@ -497,11 +493,8 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
         assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, Positionable.DuplicateIdException {
-        // Following line can be removed once super Tests are JUnit5, @DisabledIfHeadless not JUnit4
-        org.junit.Assume.assumeFalse( "Not Headless", GraphicsEnvironment.isHeadless());
 
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -560,7 +553,6 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
         });
     }
 
-    @After
     @AfterEach
     public void tearDown() {
 

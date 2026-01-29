@@ -35,7 +35,7 @@ import jmri.util.swing.JmriJOptionPane;
  * Represents a train on the layout
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
- *         2014, 2015
+ *         2014, 2015, 2026
  * @author Rodney Black Copyright (C) 2011
  */
 public class Train extends PropertyChangeSupport implements Identifiable, PropertyChangeListener {
@@ -83,7 +83,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     protected String _engineRoad = NONE; // required road name for engines assigned to this train
     protected String _engineModel = NONE; // required model of engines assigned to this train
     protected String _cabooseRoad = NONE; // required road name for cabooses assigned to this train
-    protected String _departureTime = "00:00:00"; // departure time day:hour:minutes 
+    protected String _departureTime = "0:00:00"; // departure time day:hour:minutes 
     protected String _leadEngineId = NONE; // lead engine for train icon info
     protected String _builtStartYear = NONE; // built start year
     protected String _builtEndYear = NONE; // built end year
@@ -165,6 +165,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public static final String TRAIN_EN_ROUTE = Bundle.getMessage("TrainEnRoute");
     public static final String TERMINATED = Bundle.getMessage("Terminated");
     public static final String MANIFEST_MODIFIED = Bundle.getMessage("Modified");
+    public static final String ERROR = Bundle.getMessage("ErrorTitle");
 
     // Train status codes
     public static final int CODE_TRAIN_RESET = 0;
@@ -176,6 +177,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public static final int CODE_TRAIN_EN_ROUTE = CODE_BUILT + 0x08;
     public static final int CODE_TERMINATED = 0x80;
     public static final int CODE_MANIFEST_MODIFIED = 0x200;
+    public static final int CODE_ERROR = 0x400;
     public static final int CODE_UNKNOWN = 0xFFFF;
 
     // train requirements
@@ -410,7 +412,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public String getExpectedDepartureTime(RouteLocation routeLocation, boolean isSortFormat) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
         if (minutes == -1) {
-            return ALREADY_SERVICED;
+            minutes = 0; // provide the work time at routeLocation
         }
         if (!routeLocation.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
             return parseTime(checkForDepartureTime(minutes, routeLocation), isSortFormat);
@@ -547,8 +549,16 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (isSortFormat) {
             d = "0:";
         }
+        
         if (days > 0) {
             d = Integer.toString(days) + ":";
+        }
+        
+        if (!isSortFormat) {
+            String nd = Setup.getDayToName(Integer.toString(days));
+            if (nd != null && !nd.isBlank()) {
+                d = nd + " ";
+            }
         }
 
         // AM_PM field
@@ -909,6 +919,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 return TRAIN_RESET;
             case CODE_MANIFEST_MODIFIED:
                 return MANIFEST_MODIFIED;
+            case CODE_ERROR:
+                return ERROR;
             case CODE_UNKNOWN:
             default:
                 return UNKNOWN;
@@ -3167,10 +3179,15 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return True if build successful.
      */
     public synchronized boolean build() {
+        TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+        if (!trainManager.checkBuildOrder(this)) {
+            setStatusCode(CODE_ERROR);
+            return false;
+        }
         reset();
         // check to see if any other trains are building
         int count = 1200; // wait up to 120 seconds
-        while (InstanceManager.getDefault(TrainManager.class).isAnyTrainBuilding() && count > 0) {
+        while (trainManager.isAnyTrainBuilding() && count > 0) {
             count--;
             try {
                 wait(100); // 100 msec
@@ -3618,7 +3635,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public String getIconName() {
         String name = getName();
         if (isBuilt() && getLeadEngine() != null && Setup.isTrainIconAppendEnabled()) {
-            name += " " + getLeadEngine().getNumber();
+            name += " " + getLeadEngineNumber();
         }
         return name;
     }
@@ -3644,7 +3661,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (getLeadEngine() == null) {
             return NONE;
         }
-        return getLeadEngine().toString();
+        return getLeadEngineRoadName() + " " + getLeadEngineNumber();
     }
 
     public String getLeadEngineDccAddress() {

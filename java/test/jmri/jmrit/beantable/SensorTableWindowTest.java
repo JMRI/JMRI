@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,10 +13,10 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
+
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
@@ -32,8 +33,8 @@ import org.netbeans.jemmy.util.NameComponentChooser;
 public class SensorTableWindowTest {
 
     @Test
-    public void testShowAndClose() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testShowAndClose() {
 
         // ask for the window to open
         SensorTableAction a = new SensorTableAction();
@@ -48,11 +49,11 @@ public class SensorTableWindowTest {
 
         // Find add window by name
         JmriJFrame fa = JmriJFrame.getFrame("Add New Sensor");
-        Assert.assertNotNull("add window", fa);
+        assertNotNull( fa, "add window");
 
         // Find hardware address field
         JTextField hwAddressField = JTextFieldOperator.findJTextField(fa, new NameComponentChooser("hwAddressTextField"));
-        Assert.assertNotNull("hwAddressTextField", hwAddressField);
+        assertNotNull( hwAddressField, "hwAddressTextField");
 
         // set to "1"
         new JTextFieldOperator(hwAddressField).typeText("1");
@@ -60,15 +61,15 @@ public class SensorTableWindowTest {
         createButton.setEnabled(true); // skip validation
 
         new QueueTool().waitEmpty();
-        Assert.assertEquals("name content", "1", hwAddressField.getText());
+        assertEquals( "1", hwAddressField.getText(), "name content");
 
         // Find system combobox
         JComboBox<?> prefixBox = JComboBoxOperator.findJComboBox(fa, new NameComponentChooser("prefixBox"));
-        Assert.assertNotNull(prefixBox);
+        assertNotNull(prefixBox);
         // set to "Internal"
         prefixBox.setSelectedItem("Internal");
         SensorManager internal = InstanceManager.getDefault(InternalSystemConnectionMemo.class).getSensorManager();
-        Assert.assertEquals("Selected system item", internal, prefixBox.getSelectedItem());
+        assertEquals( internal, prefixBox.getSelectedItem(), "Selected system item");
 
         // Find and click the Add Create button to add sensor
         JUnitUtil.pressButton(fa, Bundle.getMessage("ButtonCreate"));
@@ -82,12 +83,12 @@ public class SensorTableWindowTest {
         new QueueTool().waitEmpty();
 
         // check for existing sensor
-        Assert.assertNotNull(jmri.InstanceManager.sensorManagerInstance().getSensor("IS1"));
+        assertNotNull(jmri.InstanceManager.sensorManagerInstance().getSensor("IS1"));
     }
 
     @Test
-    public void testMenus() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testMenus() {
 
         SensorTableAction a = new SensorTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
@@ -102,7 +103,7 @@ public class SensorTableWindowTest {
         new QueueTool().waitEmpty();
         // Find new dialog window by name
         java.awt.Container dialog = JUnitUtil.findContainer(Bundle.getMessage("SensorGlobalDebounceMessageTitle"));
-        Assert.assertNotNull("Not found Global Debounce dialog", dialog);
+        assertNotNull( dialog, "Not found Global Debounce dialog");
         // Find the cancel button
         JUnitUtil.pressButton(dialog, Bundle.getMessage("ButtonCancel"));
 
@@ -113,7 +114,7 @@ public class SensorTableWindowTest {
         new QueueTool().waitEmpty();
         // Find new dialog window by name
         dialog = JUnitUtil.findContainer(Bundle.getMessage("InitialSensorState"));
-        Assert.assertNotNull("Not found Global Debounce dialog", dialog);
+        assertNotNull( dialog, "Not found Global Debounce dialog");
         // Find the cancel button
         JUnitUtil.pressButton(dialog, Bundle.getMessage("ButtonCancel"));
 
@@ -124,7 +125,7 @@ public class SensorTableWindowTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -133,7 +134,7 @@ public class SensorTableWindowTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

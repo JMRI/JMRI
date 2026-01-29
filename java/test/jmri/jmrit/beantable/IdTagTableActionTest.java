@@ -1,13 +1,16 @@
 package jmri.jmrit.beantable;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import jmri.IdTag;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
@@ -19,7 +22,7 @@ public class IdTagTableActionTest extends AbstractTableActionBase<IdTag> {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists", a);
+        assertNotNull( a, "exists");
     }
 
     @Override
@@ -30,7 +33,8 @@ public class IdTagTableActionTest extends AbstractTableActionBase<IdTag> {
     @Override
     @Test
     public void testGetClassDescription() {
-        Assert.assertEquals("IdTag Table Action class description", "ID Tag Table", a.getClassDescription());
+        assertEquals( "ID Tag Table", a.getClassDescription(),
+                "IdTag Table Action class description");
     }
 
     /**
@@ -40,7 +44,7 @@ public class IdTagTableActionTest extends AbstractTableActionBase<IdTag> {
     @Override
     @Test
     public void testIncludeAddButton() {
-        Assert.assertTrue("Default include add button", a.includeAddButton());
+        assertTrue( a.includeAddButton(), "Default include add button");
     }
 
     @Override
@@ -50,9 +54,10 @@ public class IdTagTableActionTest extends AbstractTableActionBase<IdTag> {
 
     @Test
     @Override
+    @DisabledIfHeadless
     public void testAddThroughDialog() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
+
+        assertTrue(a.includeAddButton());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 

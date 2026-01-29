@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -23,8 +24,6 @@ import jmri.jmrit.logixng.expressions.Antecedent.ExpressionEntry;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -97,9 +96,9 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
     }
 
     @Override
-    public NamedBean createNewBean(String systemName) throws JmriException {
+    public NamedBean createNewBean(String systemName) {
         Antecedent a = new Antecedent(systemName, null);
-        a.setAntecedent("R1");
+        assertDoesNotThrow( () -> a.setAntecedent("R1"));
         return a;
     }
 
@@ -674,7 +673,6 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         // Do nothing
     }
 
-    @Before
     @BeforeEach
     public void setUp() throws JmriException {
         JUnitUtil.setUp();
@@ -723,7 +721,6 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         logixNG.setEnabled(true);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

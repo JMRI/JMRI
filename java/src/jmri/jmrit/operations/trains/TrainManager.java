@@ -494,6 +494,21 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     }
 
     /**
+     * Gets the last train built by departure time.
+     * 
+     * @return last train built by departure time, or null if no trains are
+     *         built.
+     */
+    public Train getLastTrainBuiltByDepartureTime() {
+        for (Train train : getTrainsByReverseTimeList()) {
+            if (train.isBuilt() && train.getDepartTimeMinutes() > 0) {
+                return train;
+            }
+        }
+        return null;
+    }
+
+    /**
      * @param car         The car looking for a train.
      * @param buildReport The optional build report for logging.
      * @return Train that can service car from its current location to the its
@@ -580,6 +595,12 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
      */
     public List<Train> getTrainsByTimeList() {
         return getTrainsByIntList(getTrainsByNameList(), GET_TRAIN_TIME);
+    }
+
+    public List<Train> getTrainsByReverseTimeList() {
+        List<Train> out = getTrainsByTimeList();
+        Collections.reverse(out);
+        return out;
     }
 
     /**
@@ -1036,6 +1057,34 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         build.start();
     }
 
+    /**
+     * Checks to see if using on time build mode and the train to be built has a
+     * departure time equal to or after all of the other built trains.
+     * 
+     * @param train the train wanting to be built
+     * @return true if okay to build train
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of warning message")
+    public boolean checkBuildOrder(Train train) {
+        if (Setup.isBuildOnTime()) {
+            Train t = getLastTrainBuiltByDepartureTime();
+            if (t != null && train.getDepartTimeMinutes() < t.getDepartTimeMinutes()) {
+                if (isBuildMessagesEnabled()) {
+                    JmriJOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("TrainBuildTimeError", train.getName(), train.getDepartureTime(),
+                                    t.getName(), t.getDepartureTime()),
+                            Bundle.getMessage("TrainBuildTime"), JmriJOptionPane.ERROR_MESSAGE);
+                } else {
+                    log.error(Bundle.getMessage("TrainBuildTimeError", train.getName(), train.getDepartureTime(),
+                            t.getName(), t.getDepartureTime()));
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean printSelectedTrains(List<Train> trains) {
         boolean status = true;
         for (Train train : trains) {
@@ -1109,6 +1158,18 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
             }
         }
         return true;
+    }
+
+    public void resetTrains() {
+        int response = JmriJOptionPane.showConfirmDialog(null,
+                Bundle.getMessage("ConfirmReset"),
+                Bundle.getMessage("ConfirmReset"),
+                JmriJOptionPane.YES_NO_OPTION);
+        if (response == JmriJOptionPane.YES_OPTION) {
+            for (Train train : getTrainsByReverseTimeList()) {
+                train.reset();
+            }
+        }
     }
 
     public void resetBuildFailedTrains() {

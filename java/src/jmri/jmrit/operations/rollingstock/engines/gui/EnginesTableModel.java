@@ -178,7 +178,7 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
             case SORTBY_COMMENT:
                 return Bundle.getMessage("Comment");
             default:
-                return "Error"; // NOI18N
+                return Bundle.getMessage("ErrorTitle"); // NOI18N
         }
     }
 
@@ -434,6 +434,11 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
         Engine engine = engineList.get(row);
         if (engine == null) {
             return "ERROR engine unknown " + row; // NOI18N
+        }
+        if (engine.isClone()) {
+            setToolTip(Bundle.getMessage("DoNotModifyClone", engine.toString()), col);
+        } else {
+            setToolTip(null, col);
         }
         switch (col) {
             case SELECT_COLUMN:
