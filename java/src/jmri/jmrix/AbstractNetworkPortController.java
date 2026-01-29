@@ -47,7 +47,9 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             return;
         }
         try {
-            socketConn = new Socket(getHostAddress(), m_port);
+            var address = getHostAddress();
+            log.info("Attempting to open connecton to {}:{}", address, m_port);
+            socketConn = new Socket(address, m_port);
             socketConn.setKeepAlive(true);
             socketConn.setSoTimeout(getConnectionTimeout());
             opened = true;
