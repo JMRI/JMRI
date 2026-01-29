@@ -108,7 +108,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                         rlPrevious = rl;
                         continue;
                     }
-                    String expectedArrivalTime = train.getExpectedArrivalTime(rl);
+                    String expectedArrivalTime = train.getExpectedArrivalTime(rl, true);
                     if (expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
                         trainDone = true;
                     }
@@ -134,7 +134,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                         } else {
                             fileOut.printRecord("DL", Bundle.getMessage("csvDepartureLocationName"),
                                     splitString(train.getTrainDepartsName())); // NOI18N
-                            printDepartureTime(fileOut, train.getFormatedDepartureTime());
+                            printDepartureTime(fileOut, train.getExpectedDepartureTime(rl, true));
                             if (rl == train.getTrainDepartsRouteLocation() && !train.isLocalSwitcher()) {
                                 printTrainDeparts(fileOut, rl.getSplitName(), rl.getTrainDirectionString());
                             }
