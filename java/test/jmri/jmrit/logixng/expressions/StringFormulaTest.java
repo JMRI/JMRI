@@ -23,8 +23,6 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 /**
@@ -683,7 +681,6 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
     }
 */
 
-    @Before
     @BeforeEach
     public void setUp() throws ParserException, SocketAlreadyConnectedException {
         JUnitUtil.setUp();
@@ -736,7 +733,6 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         logixNG.setEnabled(true);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         // JUnitAppender.clearBacklog();    REMOVE THIS!!!

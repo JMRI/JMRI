@@ -25,8 +25,6 @@ import jmri.jmrit.logixng.expressions.StringExpressionMemory;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.NotApplicable;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -391,7 +389,6 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         assertFalse( socket.getDoI18N(), "do_i18n is false");
     }
 
-    @Before
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -441,7 +438,6 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         _femaleSocket = _femaleGenericSocket;
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

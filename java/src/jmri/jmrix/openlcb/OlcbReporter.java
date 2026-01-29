@@ -218,9 +218,9 @@ public final class OlcbReporter extends AbstractIdTagReporter {
         }
         RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
         if (direction != 0) {
-            tag.setOrientation(RailCom.ORIENTB);
+            tag.setOrientation(RailCom.Orientation.ORIENTB);
         } else {
-            tag.setOrientation(RailCom.ORIENTA);
+            tag.setOrientation(RailCom.Orientation.ORIENTA);
         }
         notify(tag);
     }

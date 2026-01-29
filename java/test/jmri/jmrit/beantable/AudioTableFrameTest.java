@@ -1,15 +1,15 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@DisabledIfHeadless
 public class AudioTableFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @BeforeEach
@@ -20,7 +20,7 @@ public class AudioTableFrameTest extends jmri.util.JmriJFrameTestBase {
         JUnitUtil.initDefaultUserMessagePreferences();
 
         AudioTableAction a = new AudioTableAction();
-        AudioTablePanel p = (AudioTablePanel) a.getPanel();
+        AudioTablePanel p = Assertions.assertInstanceOf(AudioTablePanel.class, a.getPanel());
         frame = new AudioTableFrame(p, "Audio Table Frame Test");
     }
 

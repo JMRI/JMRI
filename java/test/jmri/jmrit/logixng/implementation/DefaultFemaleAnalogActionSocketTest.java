@@ -17,8 +17,6 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.AnalogActionMemory;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 /**
@@ -120,8 +118,7 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         }
     }
 */
-    // The minimal setup for log4J
-    @Before
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -160,7 +157,6 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         }, "A1");
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

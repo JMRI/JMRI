@@ -59,7 +59,7 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<Condi
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -80,7 +80,7 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<Condi
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         l = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

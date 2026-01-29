@@ -87,31 +87,18 @@ public class Car extends RollingStock {
         addPropertyChangeListeners();
     }
 
+    @Override
     public Car copy() {
         Car car = new Car();
-        car.setBuilt(getBuilt());
-        car.setColor(getColor());
-        car.setLength(getLength());
+        super.copy(car);
         car.setLoadName(getLoadName());
-        car.setWeightTons(getWeightTons());
         car.setReturnWhenEmptyLoadName(getReturnWhenEmptyLoadName());
         car.setReturnWhenLoadedLoadName(getReturnWhenLoadedLoadName());
-        car.setNumber(getNumber());
-        car.setOwnerName(getOwnerName());
-        car.setRoadName(getRoadName());
-        car.setTypeName(getTypeName());
-        car.setComment(getComment());
         car.setCarHazardous(isCarHazardous());
         car.setCaboose(isCaboose());
         car.setFred(hasFred());
         car.setPassenger(isPassenger());
-        car.setBlocking(getBlocking());
-        car.setLastTrain(getLastTrain());
-        car.setLastDate(getLastDate());
-        car.setLastLocationId(getLastLocationId());
-        car.setLastTrackId(getLastTrackId());
         car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
-        car.setDivision(getDivision());
         car.loaded = true;
         return car;
     }
@@ -1102,33 +1089,34 @@ public class Car extends RollingStock {
 
     /*
      * This routine destroys the clone and restores the cloned car to its
-     * original location and load. Note there can be multiple clones for a car.
-     * Only the first clone created has the right info. A clone has creation
-     * order number appended to the road number.
+     * original location and settings. Note there can be multiple clones for a
+     * car. A clone has uses the original car's road, number, and the creation
+     * order number which is appended to the road number using the CLONE_REGEX
      */
     private void destroyClone() {
         if (isClone()) {
             // move cloned car back to original location
             CarManager carManager = InstanceManager.getDefault(CarManager.class);
+            // get the original car's road and number
             String[] number = getNumber().split(Car.CLONE_REGEX);
             Car car = carManager.getByRoadAndNumber(getRoadName(), number[0]);
-            int cloneCreationNumber = Integer.parseInt(number[1]);
-            if (cloneCreationNumber <= car.getCloneOrder()) {
-                car.setLocation(getLocation(), getTrack(), Car.FORCE);
-                car.setRouteDestination(null); // clear rd
-                car.setLoadName(getLoadName());
-                car.setLastTrain(getLastTrain());
-                car.setLastRouteId(getLastRouteId());
-                car.setLastDate(getLastDate());
-                car.setFinalDestination(getPreviousFinalDestination());
-                car.setFinalDestinationTrack(getPreviousFinalDestinationTrack());
-                car.setPreviousFinalDestination(getPreviousFinalDestination());
-                car.setPreviousFinalDestinationTrack(getPreviousFinalDestinationTrack());
-                car.setScheduleItemId(getPreviousScheduleId());
-                car.setWait(0);
-                car.setMoves(getMoves());
-                // remember the last clone destroyed
-                car.setCloneOrder(cloneCreationNumber);
+            if (car != null) {
+                int cloneCreationNumber = Integer.parseInt(number[1]);
+                if (cloneCreationNumber <= car.getCloneOrder()) {
+                    // move car back and restore
+                    destroyCloneReset(car);
+                    car.setLoadName(getLoadName());
+                    car.setFinalDestination(getPreviousFinalDestination());
+                    car.setFinalDestinationTrack(getPreviousFinalDestinationTrack());
+                    car.setPreviousFinalDestination(getPreviousFinalDestination());
+                    car.setPreviousFinalDestinationTrack(getPreviousFinalDestinationTrack());
+                    car.setScheduleItemId(getPreviousScheduleId());
+                    car.setWait(0);
+                    // remember the last clone destroyed
+                    car.setCloneOrder(cloneCreationNumber);
+                }
+            } else {
+                log.error("Not able to find and restore car ({}, {})", getRoadName(), number[0]);
             }
             InstanceManager.getDefault(KernelManager.class).deleteKernel(getKernelName());
             carManager.deregister(this);

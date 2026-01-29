@@ -113,7 +113,7 @@ public class CreateLogixNGTreeScaffold {
     public void createLogixNGTree() {
         assertFalse(GraphicsEnvironment.isHeadless(),
                 "Test cannot run headless, please use DisabledIfHeadless annotation.");
-        // Ensure the setUp() and tearDown() methods of this class are called.
+        // Ensure the setUpScaffold() and tearDownScaffold() methods of this class are called.
         assertTrue(setupHasBeenCalled);
         assertDoesNotThrow( () ->
             createLogixNGTreeWithExceptions());
@@ -6357,8 +6357,8 @@ public class CreateLogixNGTreeScaffold {
     }
 
 
-    public void setUp() {
-        JUnitUtil.setUp();
+    public void setUpScaffold() {
+
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
@@ -6401,7 +6401,7 @@ public class CreateLogixNGTreeScaffold {
         CreateLogixNGTreeScaffold.setUpCalled(true);
     }
 
-    public void tearDown() {
+    public void tearDownScaffold() {
         CreateLogixNGTreeScaffold.setUpCalled(false);     // Reset for the next test
 
         _cbusTrafficController.terminateThreads();
@@ -6416,7 +6416,6 @@ public class CreateLogixNGTreeScaffold {
         cleanup();
 
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
     }
 
 

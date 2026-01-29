@@ -182,7 +182,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
             // check comparison file exists
             if (!fileA.exists()) {
-                log.warn("Comparison file {} doesn't exist, test skipped", fileA.getName());
+                log.info("Comparison file {} doesn't exist, test skipped", fileA.getName());
                 return 0;  // consider this passed with message
             }
             // get buffer data from both files

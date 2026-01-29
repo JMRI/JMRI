@@ -152,6 +152,7 @@ public class DispatcherFrameTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testCancelRestartButton() {
         assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"),
             "Ignoring intermittent test");

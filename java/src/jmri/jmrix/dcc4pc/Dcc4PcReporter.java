@@ -6,9 +6,6 @@ import jmri.RailCom;
 import jmri.Sensor;
 import jmri.implementation.AbstractRailComReporter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Extend jmri.implementation.AbstractRailComReporter for Dcc4Pc Reporters.
  * Implementation for providing status of rail com decoders at this
@@ -108,7 +105,10 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
     }
 
     int state = Sensor.UNKNOWN;
-
+    
+    static final int REPRESENTS_RAILCOM_ORIENTA = 0x10;
+    static final int REPRESENTS_RAILCOM_ORIENTB = 0x20;
+        
     public void setRailComState(int ori) {
         if (state == ori) {
             return;
@@ -132,9 +132,12 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
             cvNumber = -1;
             cvValues = new Hashtable<>();
             setReport(null);
-        } else if (ori == RailCom.ORIENTA || ori == RailCom.ORIENTB) {
+        } else if (ori == REPRESENTS_RAILCOM_ORIENTA || ori == REPRESENTS_RAILCOM_ORIENTB) {
             if (super.getCurrentReport() != null && super.getCurrentReport() instanceof RailCom) {
-                ((RailCom) super.getCurrentReport()).setOrientation(state);
+                var orientation = RailCom.Orientation.ORIENTA;
+                if (ori == REPRESENTS_RAILCOM_ORIENTB) orientation = RailCom.Orientation.ORIENTB;
+                
+                ((RailCom) super.getCurrentReport()).setOrientation(orientation);
             }
             firePropertyChange("currentReport", null, null);
         }
@@ -148,7 +151,7 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
         if (super.getCurrentReport() != null && super.getCurrentReport() instanceof RailCom) {
             return ((RailCom) super.getCurrentReport()).getTagID();
         }
-        if ((getRailComState() < RailCom.ORIENTA) || (rcPacket[0] == null) || rcPacket[0].getPacket() == null) {
+        if ((getRailComState() < REPRESENTS_RAILCOM_ORIENTA) || (rcPacket[0] == null) || rcPacket[0].getPacket() == null) {
             return "";
         }
         return "";
@@ -454,6 +457,6 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
         ACK_4, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR};
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReporter.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Dcc4PcReporter.class);
 
 }

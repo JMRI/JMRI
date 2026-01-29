@@ -1,5 +1,10 @@
 package jmri.jmrit.logixng.actions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import jmri.StringIO;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -7,8 +12,7 @@ import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.StringActionBean;
 import jmri.util.JUnitAppender;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test AbstractStringAction
@@ -17,26 +21,22 @@ import org.junit.Test;
  */
 public abstract class AbstractStringActionTestBase extends AbstractBaseTestBase {
 
-    public abstract NamedBean createNewBean(String systemName) throws Exception;
+    public abstract NamedBean createNewBean(String systemName);
     
     @Test
-    public void testBadSystemName() throws Exception {
-        boolean hasThrown = false;
-        try {
+    public void testBadSystemName() {
+        IllegalArgumentException e = assertThrows( IllegalArgumentException.class, () -> {
             // Create a bean with bad system name. This must throw an exception
             NamedBean bean = createNewBean("IQ111");
             // We should never get here.
-            Assert.assertNotNull("Bean is not null", bean);
-        } catch (IllegalArgumentException e) {
-            Assert.assertEquals("Exception is correct", "system name is not valid: IQ111", e.getMessage());
-            hasThrown = true;
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+            fail("Bean is not null " + bean);
+        }, "Exception is thrown");
+        assertEquals( "system name is not valid: IQ111", e.getMessage(), "Exception is correct");
     }
     
     @Test
     public void testGetBeanType() {
-        Assert.assertTrue("String matches", "String action".equals(((StringActionBean)_base).getBeanType()));
+        assertEquals( "String action", ((StringActionBean)_base).getBeanType(), "String matches");
     }
     
     @Test
@@ -44,15 +44,15 @@ public abstract class AbstractStringActionTestBase extends AbstractBaseTestBase 
         StringActionBean _action = (StringActionBean)_base;
         _action.setState(StringIO.INCONSISTENT);
         JUnitAppender.assertWarnMessage("Unexpected call to setState in AbstractStringAction.");
-        Assert.assertTrue("State matches", StringIO.INCONSISTENT == _action.getState());
+        assertSame( StringIO.INCONSISTENT, _action.getState(), "State matches");
         JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractStringAction.");
         _action.setState(StringIO.UNKNOWN);
         JUnitAppender.assertWarnMessage("Unexpected call to setState in AbstractStringAction.");
-        Assert.assertTrue("State matches", StringIO.UNKNOWN == _action.getState());
+        assertSame( StringIO.UNKNOWN, _action.getState(), "State matches");
         JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractStringAction.");
         _action.setState(StringIO.INCONSISTENT);
         JUnitAppender.assertWarnMessage("Unexpected call to setState in AbstractStringAction.");
-        Assert.assertTrue("State matches", StringIO.INCONSISTENT == _action.getState());
+        assertSame( StringIO.INCONSISTENT, _action.getState(), "State matches");
         JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractStringAction.");
     }
     

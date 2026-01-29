@@ -14,6 +14,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 
+import jmri.jmrit.operations.OperationsTableModel;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -27,9 +28,9 @@ import jmri.util.table.ButtonRenderer;
 /**
  * Table Model for edit of route locations used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2013, 2025
+ * @author Daniel Boudreau Copyright (C) 2008, 2013, 2025, 2026
  */
-public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
+public class RouteEditTableModel extends OperationsTableModel implements PropertyChangeListener {
 
     // Defines the columns
     private static final int ID_COLUMN = 0;
@@ -54,7 +55,6 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
     private static final int HIGHEST_COLUMN = DELETE_COLUMN + 1;
 
-    private JTable _table;
     private Route _route;
     private RouteEditFrame _frame;
     List<RouteLocation> _routeList = new ArrayList<>();
@@ -87,7 +87,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         initTable(table);
     }
 
-    private void initTable(JTable table) {
+    @Override
+    public void initTable(JTable table) {
         // Use XTableColumnModel so we can control which columns are visible
         XTableColumnModel tcm = new XTableColumnModel();
         _table.setColumnModel(tcm);
@@ -631,7 +632,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     
     protected JComboBox<String> getDayComboBox() {
         JComboBox<String> dayBox = new JComboBox<>();
-        for (int i = 0; i < 32; i++) {
+        for (int i = 0; i < Control.numberOfDays; i++) {
             dayBox.addItem(Integer.toString(i));
         }
         return dayBox;
@@ -643,14 +644,6 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             text = Bundle.getMessage("TipTrainTerminates", rl.getName());
         }
         setToolTip(text, NAME_COLUMN);
-    }
-    
-    private void setToolTip(String text, int col) {
-        XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        JComponent jC = (JComponent) tcm.getColumnByModelIndex(col).getCellRenderer();
-        if (jC != null) {
-            jC.setToolTipText(text);
-        }
     }
 
     // this table listens for changes to a route and it's locations
