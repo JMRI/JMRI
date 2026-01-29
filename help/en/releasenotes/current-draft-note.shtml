@@ -434,6 +434,12 @@
                 print the roster table as it's currently displayed,
                 with the user's selected roster group, column setup and 
                 sort order.</li>
+            <li>The roster entry's comment field is now available
+                as a column in the main DecoderPro display.  Multi-line
+                comments will be displayed as multiple lines in a row
+                with extended height.  If you don't want to see this
+                column, right-click/ctrl-click in the column heading 
+                and deselect it.</li>
         </ul>
 
    <h3>Dispatcher</h3>
