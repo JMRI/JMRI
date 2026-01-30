@@ -2175,8 +2175,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       is day:hour:minute for arrival and departure times. For example "1:10:50" means the train
       would arrive or depart the next day at 10:50 in the morning. The Edit Day to Name Mapping tool
       allows you to replace the day with any text you want. For example you could replace the "1" in
-      day with "Monday", or a date like "January 23, 2026". Now the Manifest would show the departure
-      time as Monday 10:50 or January 23, 2026 10:50 respectively.
+      day with "Monday", or a date like "January 23, 2026" by entering the text in "Day 1". Now the
+      Manifest would show the departure time as Monday 10:50 or January 23, 2026 10:50 respectively.
+
+      <p>The button "Load Days of the Week" will automatically load the days of the week
+        starting with Sunday. You can also manually enter a different day of the week to start with
+        in "Day 0".</p>
+
+      <p>The button "Load Dates" will automatically load the current date in "Day 0", and load
+        the other fields with the following days dates. You can also manually enter a different date
+        to start with in "Day 0". In addition to the month day, year format, you can enter month
+        day, and month/day/year.</p>
 
       <h3 id="BuildReportDetails">Build Report Options</h3>
       From the "Operations&rArr;Settings&rArr;Tools" or "Operations&rArr;Trains&rArr;Tools" menu
