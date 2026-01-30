@@ -28,6 +28,13 @@ public class RosterPhysicsPane extends JPanel {
 
     private RosterEntry re;
 
+    // Persist unit selections per roster entry (stored as non-localised codes in RosterEntry attributes)
+    private static final String PHYSICS_WEIGHT_UNIT_ATTR = "physicsWeightUnit";
+    private static final String PHYSICS_POWER_UNIT_ATTR = "physicsPowerUnit";
+    private static final String PHYSICS_TE_UNIT_ATTR = "physicsTractiveEffortUnit";
+    private static final String PHYSICS_SPEED_UNIT_ATTR = "physicsMaxSpeedUnit";
+
+
     // --- Physics (locomotive-level) controls ---
     private final JRadioButton physicsSteamRadio = new JRadioButton(Bundle.getMessage("PhysicsSteam"));
     private final JRadioButton physicsDieselElectricRadio =
@@ -77,6 +84,8 @@ public class RosterPhysicsPane extends JPanel {
         initGui();
         wireListeners();
 
+        // Apply any per-roster saved unit selections before showing values
+        applyUnitSelectionsFromRosterEntry(re);
         // Initialize display from current roster entry (metric storage -> chosen units)
         refreshFromRosterEntry();
     }
@@ -161,8 +170,8 @@ public class RosterPhysicsPane extends JPanel {
         add(physicsWeightLabel);
 
         JPanel weightRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
-        physicsWeightSpinner.setModel(new SpinnerNumberModel(0.0d, 0.0d, 1_000_000.0d, 0.001d));
-        physicsWeightSpinner.setEditor(new JSpinner.NumberEditor(physicsWeightSpinner, "0.000"));
+        physicsWeightSpinner.setModel(new SpinnerNumberModel(0.0d, 0.0d, 1_000_000.0d, 0.1d));
+        physicsWeightSpinner.setEditor(new JSpinner.NumberEditor(physicsWeightSpinner, "0.0"));
         physicsWeightUnitCombo.addItem(Bundle.getMessage("PhysicsWeightUnitTonne"));
         physicsWeightUnitCombo.addItem(Bundle.getMessage("PhysicsWeightUnitLongTon"));
         physicsWeightUnitCombo.addItem(Bundle.getMessage("PhysicsWeightUnitShortTon"));
@@ -185,7 +194,7 @@ public class RosterPhysicsPane extends JPanel {
 
         JPanel powerRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
         physicsPowerSpinner.setModel(new SpinnerNumberModel(0.0d, 0.0d, 1_000_000.0d, 0.1d));
-        physicsPowerSpinner.setEditor(new JSpinner.NumberEditor(physicsPowerSpinner, "0.000"));
+        physicsPowerSpinner.setEditor(new JSpinner.NumberEditor(physicsPowerSpinner, "0.0"));
         physicsPowerUnitCombo.addItem(Bundle.getMessage("PhysicsPowerUnitKW"));
         physicsPowerUnitCombo.addItem(Bundle.getMessage("PhysicsPowerUnitHP"));
         powerRow.add(physicsPowerSpinner);
@@ -206,8 +215,8 @@ public class RosterPhysicsPane extends JPanel {
         add(physicsTeLabel);
 
         JPanel teRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
-        physicsTractiveEffortSpinner.setModel(new SpinnerNumberModel(0.0d, 0.0d, 1_000_000.0d, 0.001d));
-        physicsTractiveEffortSpinner.setEditor(new JSpinner.NumberEditor(physicsTractiveEffortSpinner, "0.000"));
+        physicsTractiveEffortSpinner.setModel(new SpinnerNumberModel(0.0d, 0.0d, 1_000_000.0d, 0.1d));
+        physicsTractiveEffortSpinner.setEditor(new JSpinner.NumberEditor(physicsTractiveEffortSpinner, "0.0"));
         physicsTeUnitCombo.addItem(Bundle.getMessage("PhysicsTeUnitKN"));
         physicsTeUnitCombo.addItem(Bundle.getMessage("PhysicsTeUnitLbf"));
         teRow.add(physicsTractiveEffortSpinner);
@@ -230,7 +239,7 @@ public class RosterPhysicsPane extends JPanel {
 
         JPanel speedRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
         physicsMaxSpeedSpinner.setModel(new SpinnerNumberModel(0.0d, 0.0d, 1_000.0d, 0.1d));
-        physicsMaxSpeedSpinner.setEditor(new JSpinner.NumberEditor(physicsMaxSpeedSpinner, "0.000"));
+        physicsMaxSpeedSpinner.setEditor(new JSpinner.NumberEditor(physicsMaxSpeedSpinner, "0.0"));
         physicsSpeedUnitCombo.addItem(Bundle.getMessage("PhysicsSpeedUnitKmh"));
         physicsSpeedUnitCombo.addItem(Bundle.getMessage("PhysicsSpeedUnitMph"));
         speedRow.add(physicsMaxSpeedSpinner);
@@ -288,10 +297,34 @@ public class RosterPhysicsPane extends JPanel {
         });
 
         // Unit combo changes -> refresh display from stored metric
-        physicsWeightUnitCombo.addActionListener(ev -> refreshFromRosterEntry());
-        physicsPowerUnitCombo.addActionListener(ev -> refreshFromRosterEntry());
-        physicsTeUnitCombo.addActionListener(ev -> refreshFromRosterEntry());
-        physicsSpeedUnitCombo.addActionListener(ev -> refreshFromRosterEntry());
+        physicsWeightUnitCombo.addActionListener(ev -> {
+            if (refreshing)
+                return;
+            persistUnitSelectionOnRosterEntry(re, PHYSICS_WEIGHT_UNIT_ATTR,
+                    weightUnitIndexToCode(physicsWeightUnitCombo.getSelectedIndex()));
+            refreshFromRosterEntry();
+        });
+        physicsPowerUnitCombo.addActionListener(ev -> {
+            if (refreshing)
+                return;
+            persistUnitSelectionOnRosterEntry(re, PHYSICS_POWER_UNIT_ATTR,
+                    powerUnitIndexToCode(physicsPowerUnitCombo.getSelectedIndex()));
+            refreshFromRosterEntry();
+        });
+        physicsTeUnitCombo.addActionListener(ev -> {
+            if (refreshing)
+                return;
+            persistUnitSelectionOnRosterEntry(re, PHYSICS_TE_UNIT_ATTR,
+                    teUnitIndexToCode(physicsTeUnitCombo.getSelectedIndex()));
+            refreshFromRosterEntry();
+        });
+        physicsSpeedUnitCombo.addActionListener(ev -> {
+            if (refreshing)
+                return;
+            persistUnitSelectionOnRosterEntry(re, PHYSICS_SPEED_UNIT_ATTR,
+                    speedUnitIndexToCode(physicsSpeedUnitCombo.getSelectedIndex()));
+            refreshFromRosterEntry();
+        });
 
         // Spinner changes -> update stored metric in RosterEntry
         physicsWeightSpinner.addChangeListener(ev -> {
@@ -329,6 +362,16 @@ public class RosterPhysicsPane extends JPanel {
     public void update(RosterEntry r) {
         if (r == null)
             return;
+        // Persist current unit selections onto the roster entry being saved
+        persistUnitSelectionOnRosterEntry(r, PHYSICS_WEIGHT_UNIT_ATTR,
+                weightUnitIndexToCode(physicsWeightUnitCombo.getSelectedIndex()));
+        persistUnitSelectionOnRosterEntry(r, PHYSICS_POWER_UNIT_ATTR,
+                powerUnitIndexToCode(physicsPowerUnitCombo.getSelectedIndex()));
+        persistUnitSelectionOnRosterEntry(r, PHYSICS_TE_UNIT_ATTR,
+                teUnitIndexToCode(physicsTeUnitCombo.getSelectedIndex()));
+        persistUnitSelectionOnRosterEntry(r, PHYSICS_SPEED_UNIT_ATTR,
+                speedUnitIndexToCode(physicsSpeedUnitCombo.getSelectedIndex()));
+
         RosterEntry.TractionType t = physicsSteamRadio.isSelected()
                 ? RosterEntry.TractionType.STEAM
                 : RosterEntry.TractionType.DIESEL_ELECTRIC;
@@ -347,6 +390,7 @@ public class RosterPhysicsPane extends JPanel {
      */
     public void updateGUI(RosterEntry r) {
         re = r;
+        applyUnitSelectionsFromRosterEntry(re);
         refreshFromRosterEntry();
     }
 
@@ -389,6 +433,132 @@ public class RosterPhysicsPane extends JPanel {
             return true;
 
         return false;
+    }
+
+    // --- Helpers: persist unit selections per roster entry (non-localised codes) ---
+    private String weightUnitIndexToCode(int ix) {
+        switch (ix) {
+            case 1:
+                return "LT"; // long ton
+            case 2:
+                return "ST"; // short ton
+            case 0:
+            default:
+                return "T"; // metric tonne
+        }
+    }
+
+    private int weightUnitCodeToIndex(String code) {
+        if (code == null) {
+            return 0;
+        }
+        if ("LT".equalsIgnoreCase(code)) {
+            return 1;
+        }
+        if ("ST".equalsIgnoreCase(code)) {
+            return 2;
+        }
+        return 0;
+    }
+
+    private String powerUnitIndexToCode(int ix) {
+        switch (ix) {
+            case 1:
+                return "HP";
+            case 0:
+            default:
+                return "KW";
+        }
+    }
+
+    private int powerUnitCodeToIndex(String code) {
+        if (code == null) {
+            return 0;
+        }
+        if ("HP".equalsIgnoreCase(code)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    private String teUnitIndexToCode(int ix) {
+        switch (ix) {
+            case 1:
+                return "LBF";
+            case 0:
+            default:
+                return "KN";
+        }
+    }
+
+    private int teUnitCodeToIndex(String code) {
+        if (code == null) {
+            return 0;
+        }
+        if ("LBF".equalsIgnoreCase(code)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    private String speedUnitIndexToCode(int ix) {
+        switch (ix) {
+            case 1:
+                return "MPH";
+            case 0:
+            default:
+                return "KMH";
+        }
+    }
+
+    private int speedUnitCodeToIndex(String code) {
+        if (code == null) {
+            return 0;
+        }
+        if ("MPH".equalsIgnoreCase(code)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    private void persistUnitSelectionOnRosterEntry(RosterEntry target, String key, String code) {
+        if (target == null) {
+            return;
+        }
+        if (refreshing) {
+            return;
+        }
+        target.putAttribute(key, (code != null) ? code : "");
+    }
+
+    private String readUnitSelectionFromRosterEntry(RosterEntry target, String key) {
+        if (target == null) {
+            return null;
+        }
+        return target.getAttribute(key);
+    }
+
+    private void applyUnitSelectionsFromRosterEntry(RosterEntry target) {
+        if (target == null) {
+            return;
+        }
+        int wIx = weightUnitCodeToIndex(readUnitSelectionFromRosterEntry(target, PHYSICS_WEIGHT_UNIT_ATTR));
+        int pIx = powerUnitCodeToIndex(readUnitSelectionFromRosterEntry(target, PHYSICS_POWER_UNIT_ATTR));
+        int teIx = teUnitCodeToIndex(readUnitSelectionFromRosterEntry(target, PHYSICS_TE_UNIT_ATTR));
+        int sIx = speedUnitCodeToIndex(readUnitSelectionFromRosterEntry(target, PHYSICS_SPEED_UNIT_ATTR));
+
+        if (wIx >= 0 && wIx < physicsWeightUnitCombo.getItemCount()) {
+            physicsWeightUnitCombo.setSelectedIndex(wIx);
+        }
+        if (pIx >= 0 && pIx < physicsPowerUnitCombo.getItemCount()) {
+            physicsPowerUnitCombo.setSelectedIndex(pIx);
+        }
+        if (teIx >= 0 && teIx < physicsTeUnitCombo.getItemCount()) {
+            physicsTeUnitCombo.setSelectedIndex(teIx);
+        }
+        if (sIx >= 0 && sIx < physicsSpeedUnitCombo.getItemCount()) {
+            physicsSpeedUnitCombo.setSelectedIndex(sIx);
+        }
     }
 
     // --- Helpers: convert between metric storage (RosterEntry) and display units ---
