@@ -9,7 +9,8 @@
     <year>2009</year>
     <year>2010</year>
     <year>2024</year>
-      <holder>JMRI</holder>
+    <year>2026</year>
+    <holder>JMRI</holder>
   </copyright>
   
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -46,6 +47,13 @@
       <revremark>Initial release for use in new "basic-enhanced" signal system</revremark>
     </revision>
 
+     <revision>
+      <revnumber>2.0</revnumber>
+      <date>2026-01-30</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>added alternate color-distinguished icon set</revremark>
+    </revision>
+
   </revhistory>
 
   <aspecttable>basic-enhanced</aspecttable>
@@ -60,14 +68,16 @@
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-281.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-G.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-Y.gif</imagelink>
-    </appearance>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-285.gif</imagelink>
+     <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-Y.gif</imagelink>
+     </appearance>
 
     <appearance>
       <aspectname>Advanced Approach</aspectname>
@@ -79,12 +89,14 @@
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-292.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-R.gif</imagelink>
     </appearance>
     
     <appearance>
       <aspectname>Unlit</aspectname>
       <show>dark</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/searchlights/one-high-dark.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-dark.gif</imagelink>
     </appearance>
 

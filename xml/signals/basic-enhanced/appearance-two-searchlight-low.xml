@@ -9,6 +9,7 @@
     <year>2010</year>
     <year>2020</year>
     <year>2024</year>
+    <year>2026</year>
     <holder>JMRI</holder>
   </copyright>
 
@@ -33,7 +34,7 @@
         <firstname>Bob</firstname>
         <surname>Jacobsen</surname>
       </personname>
-      <email>jake@physics.berkeley.edu</email>
+      <email>rgj1927@gmail.com</email>
     </author>
 
   </authorgroup>
@@ -45,6 +46,13 @@
       <date>2024-11-14</date>
       <authorinitials>JDP</authorinitials>
       <revremark>Initial release for use in new "basic-enhanced" signal system</revremark>
+    </revision>
+
+     <revision>
+      <revnumber>2.0</revnumber>
+      <date>2026-01-30</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>added alternate color-distinguished icon set</revremark>
     </revision>
 
   </revhistory>
@@ -63,6 +71,7 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <show>red</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-low/rule-287.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-low/SL-2-low-G-R.gif</imagelink>
     </appearance>
 
@@ -70,6 +79,7 @@
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <show>red</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-low/rule-288.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-low/SL-2-low-Y-R.gif</imagelink>
     </appearance>
 
@@ -85,6 +95,7 @@
       <aspectname>Stop</aspectname>
       <show>red</show>
       <show>red</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-low/rule-292.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-low/SL-2-low-R-R.gif</imagelink>
     </appearance>
 
@@ -92,6 +103,7 @@
       <aspectname>Diverging Clear</aspectname>
       <show>red</show>
       <show>green</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-low/rule-283.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-low/SL-2-low-R-G.gif</imagelink>
     </appearance>
 
@@ -99,6 +111,7 @@
       <aspectname>Diverging Approach</aspectname>
       <show>red</show>
       <show>yellow</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-low/rule-286.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-low/SL-2-low-R-Y.gif</imagelink>
     </appearance>
 
