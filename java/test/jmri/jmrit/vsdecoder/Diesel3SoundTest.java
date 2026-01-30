@@ -4,7 +4,6 @@ import jmri.*;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,7 +15,7 @@ public class Diesel3SoundTest {
     @Test
     public void testCTor() {
         Diesel3Sound t = new Diesel3Sound("test");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
 
         // this created an audio manager, clean that up
         InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
