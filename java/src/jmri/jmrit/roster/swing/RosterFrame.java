@@ -56,6 +56,7 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
 import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.jmrit.throttle.ThrottleWindow;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
@@ -1293,14 +1294,20 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         popupMenu.add(menuItem);
         menuItem = new JMenuItem(Bundle.getMessage("Throttle"));
         menuItem.addActionListener((ActionEvent e1) -> {
-            ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
-            tf.toFront();
-            tf.getAddressPanel().getRosterEntrySelector().setSelectedRosterGroup(getSelectedRosterGroup());
-            tf.getAddressPanel().setRosterEntry(re);
+            ThrottleWindow tw = null;
+            for (RosterEntry re : rtable.getSelectedRosterEntries()) {
+                ThrottleFrame tf;
+                if (tw == null) {
+                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+                    tw = tf.getThrottleWindow();
+                } else {
+                    tf = tw.addThrottleFrame();
+                }
+                tf.toFront();
+                tf.getAddressPanel().getRosterEntrySelector().setSelectedRosterGroup(getSelectedRosterGroup());
+                tf.getAddressPanel().setRosterEntry(re);
+            }
         });
-        if (re == null) {
-            menuItem.setEnabled(false);
-        }
         popupMenu.add(menuItem);
         popupMenu.addSeparator();
 
