@@ -2184,8 +2184,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>The button "Load Dates" will automatically load the current date in "Day 0", and load
         the other fields with the following days dates. You can also manually enter a different date
-        to start with in "Day 0". In addition to the month day, year format, you can enter month
-        day, and month/day/year.</p>
+        to start with in "Day 0". In addition to the month day, year format "January 23, 2026", you
+        can enter month day "January 23", and month/day/year "01/23/2026".</p>
 
       <h3 id="BuildReportDetails">Build Report Options</h3>
       From the "Operations&rArr;Settings&rArr;Tools" or "Operations&rArr;Trains&rArr;Tools" menu
@@ -5088,7 +5088,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>
-        The "Routes" window shows for every route created the id, name, comment, the shortest train
+        The "Routes" window shows for every route created the id, route name, route comment, train's
+        departure direction, the departure time if there's one in the route, the shortest train
         length between any two locations, the longest train length between any two locations, and
         status of the route. If there's a problem with the route, the status will be reported as
         "Error". If the route hasn't been assigned to a train, the status for the route is reported
@@ -5113,11 +5114,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         select the location the train will depart by selecting the location in the menu box located
         at the left bottom side of the window. Press "Add Location". You should now see the train's
         departure location in the table along with the train's departure direction, the requested
-        number of car moves, whether car set outs or pick ups are allowed, the train's travel time,
-        the maximum train length departing the location, and the track grade between this location
-        and the next location in the train's route. The X and Y values are where to place the <a
-          href="#PanelOptionsTrainIcons">train icon</a> on a panel. The <a href="#EditRoute">Edit
-          Route</a> below provides additional details about a location in a route.
+        number of car moves, whether car pick ups, set outs or local moves are allowed, the
+        departure day and time, the train's travel time, the maximum train length departing the
+        location, and the track grade between this location and the next location in the train's
+        route. The X and Y values are where to place the <a href="#PanelOptionsTrainIcons">train
+          icon</a> on a panel. The <a href="#EditRoute">Edit Route</a> below provides additional details
+        about a location in a route.
       </p>
 
       <p>
