@@ -1428,26 +1428,35 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void updateStopByDistanceEnable() {
-         // Row is relevant only if Stop-by-speed-profile is available & selected
-         boolean baseOn = stopBySpeedProfileCheckBox.isEnabled() && stopBySpeedProfileCheckBox.isSelected();
-    
-         stopByDistanceLabel.setEnabled(baseOn);
-         stopByDistanceEnableCheckBox.setEnabled(baseOn);
-    
-         boolean distanceMode = baseOn && stopByDistanceEnableCheckBox.isSelected();
-    
-         // Distance controls active only in distanceMode
-         stopByDistanceMmSpinner.setEnabled(distanceMode);
-         stopByDistanceUnitsComboBox.setEnabled(distanceMode);
-         stopByDistanceHead.setEnabled(distanceMode);
-         stopByDistanceTail.setEnabled(distanceMode);
-    
-         // Adjust % spinner is the inverse (active when not in distanceMode, but only if baseOn)
-         if (baseOn) {
-             stopBySpeedProfileAdjustLabel.setEnabled(!distanceMode);
-             stopBySpeedProfileAdjustSpinner.setEnabled(!distanceMode);
-         }
-     }
+        // Row is relevant only if Stop-by-speed-profile is available & selected
+        boolean baseOn = stopBySpeedProfileCheckBox.isEnabled() && stopBySpeedProfileCheckBox.isSelected();
+        stopByDistanceLabel.setEnabled(baseOn);
+        stopByDistanceEnableCheckBox.setEnabled(baseOn);
+
+        boolean distanceMode = baseOn && stopByDistanceEnableCheckBox.isSelected();
+
+        // Distance controls are active only in distanceMode
+        stopByDistanceMmSpinner.setEnabled(distanceMode);
+        stopByDistanceUnitsComboBox.setEnabled(distanceMode);
+        stopByDistanceHead.setEnabled(distanceMode);
+        stopByDistanceTail.setEnabled(distanceMode);
+
+        // Stop-by-% into block is still meaningful even when distance stopping is enabled,
+        // because it applies to non-destination (intermediate) stops.
+        stopBySpeedProfileAdjustLabel.setEnabled(baseOn);
+        stopBySpeedProfileAdjustSpinner.setEnabled(baseOn);
+
+        // Update tooltip to explain interaction with distance-based stopping.
+        String baseTip = Bundle.getMessage("StopBySpeedProfileAdjustHint");
+        if (distanceMode) {
+            stopBySpeedProfileAdjustSpinner.setToolTipText(
+                    bundleOrDefault("StopBySpeedProfileAdjustHintWithDistance",
+                            baseTip +
+                                    " When distance stopping is enabled, this percentage still applies to non-destination stops."));
+        } else {
+            stopBySpeedProfileAdjustSpinner.setToolTipText(baseTip);
+        }
+    }
    
       // Dynamically adjust spinner precision & format to match selected units.
       // NOTE: This does not convert units; that’s handled by handleStopByDistanceUnitsChanged().
