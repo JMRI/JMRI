@@ -240,6 +240,10 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         return getDefaultValidStateNames();
     }
 
+    @Override
+    public void updateOutput() {
+    }
+
     /**
      * Check if a given turnout is used on this head.
      *

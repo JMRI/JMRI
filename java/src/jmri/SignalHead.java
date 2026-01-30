@@ -81,7 +81,7 @@ public interface SignalHead extends Signal {
      */
     void setAppearance(int newAppearance);
 
-    
+
     /**
      * Get the current Signal Head Appearance Key.
      * @return Key, or empty String if no valid appearance set.
@@ -160,5 +160,7 @@ public interface SignalHead extends Signal {
      * @return array of translated appearance names
      */
     String[] getValidStateNames();
+
+    void updateOutput();
 
 }

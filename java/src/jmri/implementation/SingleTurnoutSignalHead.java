@@ -98,7 +98,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
     }
 
     @Override
-    protected void updateOutput() {
+    public void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         if (!mLit) {
             setTurnoutState(Turnout.CLOSED);

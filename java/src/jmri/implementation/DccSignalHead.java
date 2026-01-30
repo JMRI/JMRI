@@ -120,7 +120,7 @@ public class DccSignalHead extends AbstractSignalHead {
         }
     }
 
-    protected void updateOutput() {
+    public void updateOutput() {
         if (c != null) {
             int aspect = getOutputForAppearance(SignalHead.DARK);
 
