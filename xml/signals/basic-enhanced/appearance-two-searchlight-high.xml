@@ -86,6 +86,7 @@
       <aspectname>Advanced Approach</aspectname>
       <show>flashyellow</show>
       <show>red</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-282.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-FY-R-animated.gif</imagelink>
       <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-FY-R-static.gif</imagelink>
     </appearance>
