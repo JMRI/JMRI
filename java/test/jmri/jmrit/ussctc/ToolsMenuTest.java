@@ -2,7 +2,6 @@ package jmri.jmrit.ussctc;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class ToolsMenuTest {
     @Test
     public void testCTor() {
         ToolsMenu t = new ToolsMenu();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
