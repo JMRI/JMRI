@@ -1,5 +1,7 @@
 package jmri;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
@@ -254,6 +256,7 @@ public class InstanceManagerTest {
         }
 
         @Override
+        @SuppressFBWarnings("SLF4J_SIGN_ONLY_FORMAT") // using constant to confirm message
         public void dispose() {
             increaseDisposedCount();
             log.warn("{} {}", MESSAGE, times);
