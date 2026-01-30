@@ -1,15 +1,13 @@
 package jmri.jmrit.symbolicprog;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -18,8 +16,9 @@ import org.junit.Assume;
 public class PrintActionTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
@@ -33,7 +32,7 @@ public class PrintActionTest {
         JUnitUtil.waitFor(()->{return pFrame.threadCount.get() == 0;}, "PaneProgFrame threads done");
 
         PrintAction t = new PrintAction("Test Action", pFrame, true);
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull( t, "exists");
         pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
     }
 
@@ -48,6 +47,7 @@ public class PrintActionTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetWindows(false, false); // Detachable frame : "Comments : test frame"
         JUnitUtil.tearDown();
     }
 

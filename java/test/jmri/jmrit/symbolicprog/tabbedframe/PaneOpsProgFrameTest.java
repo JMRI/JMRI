@@ -1,18 +1,17 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -21,8 +20,9 @@ import org.junit.Assume;
 public class PaneOpsProgFrameTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         DecoderFile df = new DecoderFile("NMRA", "", "NMRA standard CV definitions", "0", "255",
                 "NMRA standard CV definitions", "0NMRA.xml", 16, 3, root);
@@ -30,7 +30,7 @@ public class PaneOpsProgFrameTest {
         PaneOpsProgFrame t = new PaneOpsProgFrame(df,re,"test frame", "programmers/Basic.xml",p);
         JUnitUtil.waitFor(()->{return t.threadCount.get() == 0;}, "PaneProgFrame threads done");
 
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
         t.dispatchEvent(new WindowEvent(t, WindowEvent.WINDOW_CLOSING));
     }
 
@@ -46,6 +46,7 @@ public class PaneOpsProgFrameTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetWindows(false, false); // Detachable frame : "Comments : test frame"
         JUnitUtil.tearDown();
     }
 
@@ -108,7 +109,6 @@ public class PaneOpsProgFrameTest {
                 )
         ); // end of adding contents
 
-        return;
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PaneOpsProgFrameTest.class.getName());
