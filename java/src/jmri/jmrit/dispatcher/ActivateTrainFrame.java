@@ -33,6 +33,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
+import java.awt.Color;
 
 import jmri.Block;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -1004,6 +1007,9 @@ public class ActivateTrainFrame extends JmriJFrame {
         } else {
             setSpeedProfileOptions(trainInfo,false);
         }
+        ensureRampRateRendererInstalled();
+        enforcePhysicsRampSelectionAllowed();
+        rampRateBox.repaint();
         handleMinReliableOperatingSpeedUpdate(); // update the min-speed label to reflect current units
     }
 
@@ -2186,6 +2192,11 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JPanel pa2 = new JPanel();
     private final JLabel rampRateLabel = new JLabel(Bundle.getMessage("RampRateBoxLabel"));
     private final JComboBox<String> rampRateBox = new JComboBox<>();
+    private boolean suppressRampRateEvents = false;
+    // Remember last non-Physics selection so we can revert if Physics is disallowed
+    private String lastNonPhysicsRampSelection = null;
+    private boolean rampRateRendererInstalled = false;
+
     private final JPanel pa2a = new JPanel();
     private final JLabel useSpeedProfileLabel = new JLabel(Bundle.getMessage("UseSpeedProfileLabel"));
     private final JCheckBox useSpeedProfileCheckBox = new JCheckBox( );
@@ -2234,6 +2245,107 @@ public class ActivateTrainFrame extends JmriJFrame {
         String sel = (String) rampRateBox.getSelectedItem();
         return sel != null && sel.equals(Bundle.getMessage("RAMP_PHYSICS"));
     }
+
+    // Determine if the Physics ramp option should be allowed for the current context.
+    // Requirement: If a concrete roster entry has been selected (Trains From Roster, and an actual entry chosen),
+    // then Physics must only be selectable when that roster entry has physics metadata configured.
+    // Otherwise (e.g. Set Later, user-defined, ops trains, or no roster entry chosen yet), Physics remains selectable.
+    private boolean isPhysicsRampAllowedForCurrentContext() {
+        if (!radioTrainsFromRoster.isSelected()) {
+            return true;
+        }
+        Object sel = rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+        if (!(sel instanceof RosterEntry)) {
+            // Either "Select Loco" placeholder or nothing selected yet: allow Physics.
+            return true;
+        }
+        return rosterEntryHasPhysicsParameters((RosterEntry) sel);
+    }
+
+    // Return true if the roster entry contains any non-default physics metadata.
+    // Defaults are all numeric fields == 0, traction type == DIESEL_ELECTRIC, mechanical transmission == false.
+    private boolean rosterEntryHasPhysicsParameters(RosterEntry re) {
+        if (re == null) {
+            return false;
+        }
+        boolean anyNumeric = (re.getPhysicsWeightKg() > 0.0f) ||
+                (re.getPhysicsPowerKw() > 0.0f) ||
+                (re.getPhysicsTractiveEffortKn() > 0.0f) ||
+                (re.getPhysicsMaxSpeedKmh() > 0.0f);
+        boolean anyNonDefaultTraction = (re.getPhysicsTractionType() != null &&
+                re.getPhysicsTractionType() != RosterEntry.TractionType.DIESEL_ELECTRIC);
+        boolean mech = re.isPhysicsMechanicalTransmission();
+        return anyNumeric || anyNonDefaultTraction || mech;
+    }
+
+    // Renderer that greys out the Physics option when present but not allowed.
+    private class RampRateCellRenderer extends DefaultListCellRenderer {
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
+                boolean cellHasFocus) {
+            Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            if (value != null &&
+                    value.equals(Bundle.getMessage("RAMP_PHYSICS")) &&
+                    !isPhysicsRampAllowedForCurrentContext()) {
+                c.setForeground(Color.GRAY);
+            }
+            return c;
+        }
+    }
+
+    // Ensure the ramp-rate combobox has our custom renderer installed once.
+    private void ensureRampRateRendererInstalled() {
+        if (rampRateRendererInstalled) {
+            return;
+        }
+        rampRateBox.setRenderer(new RampRateCellRenderer());
+        rampRateRendererInstalled = true;
+    }
+
+    // If Physics is selected but disallowed, immediately revert selection to a safe non-Physics value.
+    private void enforcePhysicsRampSelectionAllowed() {
+        if (!isPhysicsRampSelected()) {
+            return;
+        }
+        if (isPhysicsRampAllowedForCurrentContext()) {
+            return;
+        }
+        suppressRampRateEvents = true;
+        try {
+            String fallback = lastNonPhysicsRampSelection;
+            if (fallback == null ||
+                    !comboContainsItem(rampRateBox, fallback) ||
+                    Bundle.getMessage("RAMP_PHYSICS").equals(fallback)) {
+                // Prefer Speed Profile if present, else first item.
+                String sp = Bundle.getMessage("RAMP_SPEEDPROFILE");
+                if (comboContainsItem(rampRateBox, sp)) {
+                    fallback = sp;
+                } else if (rampRateBox.getItemCount() > 0) {
+                    fallback = (String) rampRateBox.getItemAt(0);
+                }
+            }
+            if (fallback != null) {
+                rampRateBox.setSelectedItem(fallback);
+            }
+        } finally {
+            suppressRampRateEvents = false;
+        }
+        pa2Physics.setVisible(false);
+    }
+
+    private boolean comboContainsItem(JComboBox box, String item) {
+        if (item == null) {
+            return false;
+        }
+        for (int i = 0; i < box.getItemCount(); i++) {
+            Object o = box.getItemAt(i);
+            if (item.equals(o)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
   
      // Add/remove "Physics" in the ramp rate box depending on speed-profile being enabled & selected
      // Preserve the previous selection if it still exists after the rebuild.
@@ -2292,8 +2404,29 @@ public class ActivateTrainFrame extends JmriJFrame {
      }
     
      // Selection changed -> toggle physics panel
+     // Selection changed -> toggle physics panel
      private void handleRampRateSelectionChanged() {
+         if (suppressRampRateEvents) {
+             return;
+         }
+         ensureRampRateRendererInstalled();
+         String sel = (String) rampRateBox.getSelectedItem();
+         if (sel == null) {
+             pa2Physics.setVisible(false);
+             return;
+         }
+         // Track last non-Physics choice for fallback
+         if (!sel.equals(Bundle.getMessage("RAMP_PHYSICS"))) {
+             lastNonPhysicsRampSelection = sel;
+         }
+         if (sel.equals(Bundle.getMessage("RAMP_PHYSICS")) && !isPhysicsRampAllowedForCurrentContext()) {
+             // Disallowed: revert immediately
+             enforcePhysicsRampSelectionAllowed();
+             rampRateBox.repaint();
+             return;
+         }
          pa2Physics.setVisible(isPhysicsRampSelected());
+         rampRateBox.repaint();
      }
   
     private final StopDistanceUnitsJCombo stopByDistanceUnitsComboBox = new StopDistanceUnitsJCombo();
@@ -3155,6 +3288,8 @@ public class ActivateTrainFrame extends JmriJFrame {
         rampRateBox.addItem(Bundle.getMessage("RAMP_MED_SLOW"));
         rampRateBox.addItem(Bundle.getMessage("RAMP_SLOW"));
         rampRateBox.addItem(Bundle.getMessage("RAMP_SPEEDPROFILE"));
+        // Default fallback if Physics cannot be selected
+        lastNonPhysicsRampSelection = Bundle.getMessage("RAMP_SPEEDPROFILE");
         rampRateBox.addItem(Bundle.getMessage("RAMP_PHYSICS")); // Visible only when speed-profile is enabled & selected
         // Note: the order above must correspond to the numbers in AutoActiveTrain.java
     }
