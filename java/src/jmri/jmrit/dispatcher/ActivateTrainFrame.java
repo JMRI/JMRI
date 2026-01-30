@@ -1435,7 +1435,7 @@ public class ActivateTrainFrame extends JmriJFrame {
 
         boolean distanceMode = baseOn && stopByDistanceEnableCheckBox.isSelected();
 
-        // Distance controls are active only in distanceMode
+        // Distance controls active only in distanceMode
         stopByDistanceMmSpinner.setEnabled(distanceMode);
         stopByDistanceUnitsComboBox.setEnabled(distanceMode);
         stopByDistanceHead.setEnabled(distanceMode);
@@ -1446,17 +1446,16 @@ public class ActivateTrainFrame extends JmriJFrame {
         stopBySpeedProfileAdjustLabel.setEnabled(baseOn);
         stopBySpeedProfileAdjustSpinner.setEnabled(baseOn);
 
-        // Update tooltip to explain interaction with distance-based stopping.
+        // Tooltip: when distance stopping is enabled, clarify that the % adjustment still applies to non-destination stops.
         String baseTip = Bundle.getMessage("StopBySpeedProfileAdjustHint");
         if (distanceMode) {
             stopBySpeedProfileAdjustSpinner.setToolTipText(
-                    bundleOrDefault("StopBySpeedProfileAdjustHintWithDistance",
-                            baseTip +
-                                    " When distance stopping is enabled, this percentage still applies to non-destination stops."));
+                    bundleOrDefault("StopBySpeedProfileAdjustHintWithDistance", baseTip));
         } else {
             stopBySpeedProfileAdjustSpinner.setToolTipText(baseTip);
         }
     }
+
    
       // Dynamically adjust spinner precision & format to match selected units.
       // NOTE: This does not convert units; that’s handled by handleStopByDistanceUnitsChanged().
@@ -2330,7 +2329,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 if (comboContainsItem(rampRateBox, sp)) {
                     fallback = sp;
                 } else if (rampRateBox.getItemCount() > 0) {
-                    fallback = (String) rampRateBox.getItemAt(0);
+                    fallback = rampRateBox.getItemAt(0);
                 }
             }
             if (fallback != null) {
@@ -2342,12 +2341,12 @@ public class ActivateTrainFrame extends JmriJFrame {
         pa2Physics.setVisible(false);
     }
 
-    private boolean comboContainsItem(JComboBox box, String item) {
+    private boolean comboContainsItem(JComboBox<String> box, String item) {
         if (item == null) {
             return false;
         }
         for (int i = 0; i < box.getItemCount(); i++) {
-            Object o = box.getItemAt(i);
+            String o = box.getItemAt(i);
             if (item.equals(o)) {
                 return true;
             }
