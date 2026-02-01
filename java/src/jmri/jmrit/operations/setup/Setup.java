@@ -349,6 +349,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean printCabooseLoad = false; // when true print caboose load
     private boolean printPassengerLoad = false; // when true print passenger car load
     private boolean showTrackMoves = false; // when true show track moves in table
+    
+    private Hashtable<String, String> hashTableDayToName = new Hashtable<>();
 
     // property changes
     public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; // NOI18N
@@ -1987,6 +1989,16 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             return 0; // return unknown
         }
     }
+    
+    public static void setDayToName(String day, String name) {
+        if (name != null) {
+            getDefault().hashTableDayToName.put(day, name);
+        }
+    }
+    
+    public static String getDayToName(String day) {
+        return getDefault().hashTableDayToName.get(day);
+    }
 
     // must synchronize changes with operation-config.dtd
     public static Element store() {
@@ -2211,11 +2223,22 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             e.addContent(values = new Element(Xml.VSD));
             values.setAttribute(Xml.ENABLE_PHYSICAL_LOCATIONS, isVsdPhysicalLocationEnabled() ? Xml.TRUE : Xml.FALSE);
         }
-
         // Save CATS setting
         e.addContent(values = new Element(Xml.CATS));
         values.setAttribute(Xml.EXACT_LOCATION_NAME,
                 AbstractOperationsServer.isExactLoationNameEnabled() ? Xml.TRUE : Xml.FALSE);
+        // day to name mapping
+        e.addContent(values = new Element(Xml.DAY_NAME_MAP));
+        for (int i = 0; i < Control.numberOfDays; i++) {
+            Element map;
+            String day = Integer.toString(i);
+            String name = getDefault().hashTableDayToName.get(day);
+            if (name != null && !name.isBlank()) {
+                values.addContent(map = new Element(Xml.MAP));
+                map.setAttribute(Xml.DAY, day);
+                map.setAttribute(Xml.NAME, name);
+            }
+        }
         return e;
     }
 
@@ -3142,6 +3165,17 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String enable = a.getValue();
                 log.debug("trainLogger: {}", enable);
                 getDefault().trainLogger = enable.equals(Xml.TRUE);
+            }
+        }
+        if (operations.getChild(Xml.DAY_NAME_MAP) != null) {
+            List<Element> eMap = operations.getChild(Xml.DAY_NAME_MAP).getChildren(Xml.MAP);
+            for (Element eDay : eMap) {
+                if (eDay.getAttribute(Xml.DAY) != null && eDay.getAttribute(Xml.NAME) != null) {
+                    String day = eDay.getAttribute(Xml.DAY).getValue();
+                    String name = eDay.getAttribute(Xml.NAME).getValue();
+                    setDayToName(day, name);
+                    log.debug("Mapping day: {} to name: {}", day, name);
+                }
             }
         }
     }

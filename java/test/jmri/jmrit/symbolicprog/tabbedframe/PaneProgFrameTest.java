@@ -10,12 +10,12 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for PaneProgFrame.
@@ -26,7 +26,7 @@ public class PaneProgFrameTest {
 
     // test creating a pane in config file
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testPane() {
         setupDoc();
 
@@ -57,7 +57,7 @@ public class PaneProgFrameTest {
 
     // show me the specially-created frame
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testFrame() {
         setupDoc();
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
@@ -88,7 +88,7 @@ public class PaneProgFrameTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testLoadDecoderFileUpdateMaxFnNum() {
         // create test Element
         org.jdom2.Element e = new org.jdom2.Element("locomotive")
@@ -189,15 +189,15 @@ public class PaneProgFrameTest {
     }
 
     // variables for internal classes to report their interpretations
-    String result = "";
-    int colCount = -1;
-    int varCount = -1;
+    private String result = "";
+    private int colCount = -1;
+    private int varCount = -1;
 
-    // static variables for the test XML structures
-    Element root = null;
-    Document doc = null;
+    // variables for the test XML structures
+    private Element root = null;
+    private Document doc = null;
 
-    // provide a test document in the above static variables
+    // provide a test document in the above variables
     void setupDoc() {
         Assertions.assertNull( result);
         Assertions.assertEquals(-1, colCount);
@@ -275,6 +275,7 @@ public class PaneProgFrameTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetWindows(false, false); // Detachable frame : "Basic : test frame"
         JUnitUtil.tearDown();
     }
 

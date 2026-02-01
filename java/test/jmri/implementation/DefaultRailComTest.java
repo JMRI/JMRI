@@ -109,9 +109,9 @@ public class DefaultRailComTest {
     @Test
     public void testGetSetOrientation(){
         RailCom r = new DefaultRailCom("ID0415556BC1");
-        assertEquals( Sensor.UNKNOWN , r.getOrientation(), "getorientation is UNKNOWN at start");
-        r.setOrientation(RailCom.ORIENTA);
-        assertEquals( RailCom.ORIENTA , r.getOrientation(), "getorientation is RailCom.ORIENTA");
+        assertEquals( RailCom.Orientation.UNKNOWN , r.getOrientation(), "getorientation is UNKNOWN at start");
+        r.setOrientation(RailCom.Orientation.ORIENTA);
+        assertEquals( RailCom.Orientation.ORIENTA , r.getOrientation(), "getorientation is RailCom.ORIENTA");
     }
 
     @Test
@@ -183,10 +183,10 @@ public class DefaultRailComTest {
         DefaultRailCom r = new DefaultRailCom("ID1234");
         assertEquals( "Unknown Orientation Address 1234(L) " , r.toReportString(), "Basic Report String");
 
-        r.setOrientation(RailCom.ORIENTA);
+        r.setOrientation(RailCom.Orientation.ORIENTA);
         assertEquals( "Orientation A Address 1234(L) " , r.toReportString(), "Report String ORIENTA");
 
-        r.setOrientation(RailCom.ORIENTB);
+        r.setOrientation(RailCom.Orientation.ORIENTB);
         assertEquals( "Orientation B Address 1234(L) " , r.toReportString(), "Report String ORIENTB");
 
         r.setWaterLevel(2);

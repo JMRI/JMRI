@@ -1,8 +1,9 @@
 package jmri.jmrit.vsdecoder.swing;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,10 +14,21 @@ import org.junit.jupiter.api.*;
  */
 public class ManageLocationsTableModelTest {
 
+    // no Ctor test, class only supplies other classes / constants.
+
     @Test
-    public void testCtor() {
-        ManageLocationsTableModel frame = new ManageLocationsTableModel();
-        Assert.assertNotNull("exists", frame);
+    public void testManageLocationsTableModelCtors() {
+
+        final Object[][] objects = {};
+
+        var a = new ManageLocationsTableModel.ListenerTableModel(objects);
+        assertNotNull( a, "exists");
+
+        var b = new ManageLocationsTableModel.LocationTableModel(objects);
+        assertNotNull( b, "exists");
+
+        var c = new ManageLocationsTableModel.ReporterBlockTableModel(objects);
+        assertNotNull( c, "exists");
     }
 
     @BeforeEach

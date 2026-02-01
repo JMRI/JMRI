@@ -113,9 +113,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                     <li><a href="#HazardousComment">Hazardous Comment</a></li>
                     <li><a href="#ManifestPrintOptionsTools">Manifest Print Options Tools</a>
                       <ul>
-                        <li>Edit Manifest Header Text</li>
-                        <li>Edit Manifest Text</li>
-                        <li>Edit Switch List Text</li>
+                        <li><a href="#EditManifestHeaderText">Edit Manifest Header Text</a></li>
+                        <li><a href="#EditManifestHeaderText">Edit Manifest Text</a></li>
+                        <li><a href="#EditManifestHeaderText">Edit Switch List Text</a></li>
+                        <li><a href="#ManifestDayNameMapping">Edit Day to Day Mapping</a></li>
                       </ul></li>
                   </ul></li>
 
@@ -1012,7 +1013,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       operations files. The program will also automatically save the operation files if you close
       the <a href="#Trains">Trains</a> window or shutdown JMRI.
 
-      <h4>Auto Backup</h4>
+      <h4 id="AutoBackup">Auto Backup</h4>
       When selected, the program will create a set of operation backup files each time the program
       is started. This is very useful when experimenting with the program, if you don't like what
       you've done, just restore one of the previous backups. See <a href="#Backup">Backup and
@@ -1074,8 +1075,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       keeping" before changes are made to the main operations files. This way, if anything gets
       messed up, there is a copy of the last known good data that can easily be restored to undo the
       damage. In normal operation, an automatic backup is made each time OperationsPro&trade; starts
-      (if the "Auto Backup" option is checked on the <a href="#Settings">Settings</a> window), and
-      right before a Restore, Reset Database, or Load Demo Files operation is done.
+      if the
+      <a href="#AutoBackup">Auto Backup</a> option is checked in the <a
+        href="#Settings">Settings</a> window, and right before a Restore, Reset Database, or Load
+      Demo Files operation is done.
 
       <p>
         Manual backups are done only when the user requests it by either clicking the "Backup"
@@ -1283,7 +1286,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>One restriction when using on time mode, is that trains must be built and terminated in
         chronological order. If you need to reset your trains, reset the last built trains first, or
-        use the reset all train button.</p>
+        use the reset all trains button.</p>
+
+      <p>
+        When selecting on time mode, a new column named "Done" in the <a href="#Trains">Trains</a>
+        window will appear. The "Done" column shows when a built train will complete its work. This
+        is useful when determining if a future train will have access to the the train's rolling
+        stock. Once a train departs using the <a href="#Trains">Move</a> button, the "Done" column
+        then shows the estimated number of days, hours and minutes it should take to complete the
+        train's work.
+      </p>
 
       <p>
         To help troubleshoot timing problems with your cars using the on time mode, it is
@@ -1291,6 +1303,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         ups. This way if a car isn't found, you'll at least know which train was supposed to drop
         off the car. You should also enable train, car and engine <a href="#LoggingOptions">logging</a>,
         and <a href="#SaveTrainManifests">Save Train Manifests, Build Reports, and Switch Lists</a>.
+        Also recommended is that you use <a href="#AutoBackup">Auto Backup</a>. This will allow the
+        developers to reproduce any problems you encounter while using the new on time mode of
+        operations.
       </p>
 
       <h4>Number of Passes During Build</h4>
@@ -2117,8 +2132,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h3 id="ManifestPrintOptionsTools">Manifest Print Options Tools</h3>
       The menu bar of the "Manifest Print Options" provides additional features that can be found
-      under "Tools". The first "More Print Options" allows you to adjust the length of the tab
-      characters when using the
+      under "Tools".
+
+      <h3>More Print Options</h3>
+      The tool "More Print Options" allows you to adjust the length of the tab characters when using
+      the
       <a href="#PrintFormat">Tabular</a> feature.
 
       <p>
@@ -2130,13 +2148,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>
         <img src="images/ManifestPrintOptionsTab.png" alt="">
       </p>
+      
+      <h3 id="EditManifestHeaderText">Edit Manifest Header Text</h3>
 
-      The next three options "Edit Manifest Header
-      Text", "Edit Manifest Text" and "Edit Switch List Text" allows you to modify all of the text
-      found in a Manifest or switch list. Each text line used by the program is shown along with a
-      text box with the same message. Edit the text box to change the default message to your liking
-      and press "Save" to complete your change. You can always return the text to the original
-      settings by pressing the "Reset" button followed by "Save".
+      The tools "Edit Manifest Header Text", "Edit Manifest Text" and "Edit Switch List Text" allow
+      you to modify all of the text found in a Manifest or switch list. Each text line used by the
+      program is shown along with a text box with the same message. Edit the text box to change the
+      default message to your liking and press "Save" to complete your change. You can always return
+      the text to the original settings by pressing the "Reset" button followed by "Save".
 
       <p>
         <img src="images/EditManifestText.png" alt="">
@@ -2149,6 +2168,24 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>You can also modify the color of the text by adding the color control text &lt;FONT
         color="red"&gt; at the start of the line, where "red" is the color text you want. Complete
         the color change by placing &lt;/FONT&gt; at the end of the line.</p>
+        
+      <h3 id="ManifestDayNameMapping">Edit Day to Name Mapping</h3>
+
+      When an arrival or departure time is provided on a Manifest or switch list, the normal format
+      is day:hour:minute for arrival and departure times. For example "1:10:50" means the train
+      would arrive or depart the next day at 10:50 in the morning. The Edit Day to Name Mapping tool
+      allows you to replace the day with any text you want. For example you could replace the "1" in
+      day with "Monday", or a date like "January 23, 2026" by entering the text in "Day 1". Now the
+      Manifest would show the departure time as Monday 10:50 or January 23, 2026 10:50 respectively.
+
+      <p>The button "Load Days of the Week" will automatically load the days of the week
+        starting with Sunday. You can also manually enter a different day of the week to start with
+        in "Day 0".</p>
+
+      <p>The button "Load Dates" will automatically load the current date in "Day 0", and load
+        the other fields with the following days dates. You can also manually enter a different date
+        to start with in "Day 0". In addition to the month day, year format "January 23, 2026", you
+        can enter month day "January 23", and month/day/year "01/23/2026".</p>
 
       <h3 id="BuildReportDetails">Build Report Options</h3>
       From the "Operations&rArr;Settings&rArr;Tools" or "Operations&rArr;Trains&rArr;Tools" menu
@@ -2470,7 +2507,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       location you should do the following:
       <ol>
         <li>Terminate or reset all trains</li>
-        <li>Remove the location from all train routes</li>
+        <li>Remove the location from routes</li>
         <li>Remove all rolling stock from the location's tracks (optional)</li>
       </ol>
 
@@ -5051,7 +5088,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>
-        The "Routes" window shows for every route created the id, name, comment, the shortest train
+        The "Routes" window shows for every route created the id, route name, route comment, train's
+        departure direction, the departure time if there's one in the route, the shortest train
         length between any two locations, the longest train length between any two locations, and
         status of the route. If there's a problem with the route, the status will be reported as
         "Error". If the route hasn't been assigned to a train, the status for the route is reported
@@ -5076,11 +5114,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         select the location the train will depart by selecting the location in the menu box located
         at the left bottom side of the window. Press "Add Location". You should now see the train's
         departure location in the table along with the train's departure direction, the requested
-        number of car moves, whether car set outs or pick ups are allowed, the train's travel time,
-        the maximum train length departing the location, and the track grade between this location
-        and the next location in the train's route. The X and Y values are where to place the <a
-          href="#PanelOptionsTrainIcons">train icon</a> on a panel. The <a href="#EditRoute">Edit
-          Route</a> below provides additional details about a location in a route.
+        number of car moves, whether car pick ups, set outs or local moves are allowed, the
+        departure day and time, the train's travel time, the maximum train length departing the
+        location, and the track grade between this location and the next location in the train's
+        route. The X and Y values are where to place the <a href="#PanelOptionsTrainIcons">train
+          icon</a> on a panel. The <a href="#EditRoute">Edit Route</a> below provides additional details
+        about a location in a route.
       </p>
 
       <p>

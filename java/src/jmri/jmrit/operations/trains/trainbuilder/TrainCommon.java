@@ -650,14 +650,12 @@ public class TrainCommon {
                     // Scheduled work at {0}, departure time {1}
                     msg = MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringWorkDepartureTime(),
-                            new Object[]{routeLocationName,
-                                    expectedArrivalTime.equals(Train.ALREADY_SERVICED)
-                                            ? rl.getFormatedDepartureTime() : train.getExpectedDepartureTime(rl),
+                            new Object[]{routeLocationName, train.getExpectedDepartureTime(rl),
                                     train.getSplitName(), train.getDescription(),
                                     rl.getLocation().getDivisionName()});
                 } else if (Setup.isUseDepartureTimeEnabled() &&
                         rl != train.getTrainTerminatesRouteLocation() &&
-                        !train.getExpectedDepartureTime(rl).equals(Train.ALREADY_SERVICED)) {
+                        !expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
                     // Scheduled work at {0}, departure time {1}
                     msg = MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringWorkDepartureTime(),

@@ -877,6 +877,29 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /**
+     * Print the displayed table, as displayed.
+     *
+     */
+    protected void printCurrentTable() {
+        try {
+            var cal = java.util.Calendar.getInstance();
+            var sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String time = sdf.format(cal.getTime());
+
+            var selectedRosterGroup = getSelectedRosterGroup();
+            String g = (selectedRosterGroup != null) ? selectedRosterGroup : "All Entries";
+            String group = String.format("%-20s",g);  // pad to right to fixed length
+
+            rtable.getTable().print(javax.swing.JTable.PrintMode.FIT_WIDTH,
+                            null,  // no header
+                            new java.text.MessageFormat(group+" - {0} -   "+time)  // spaces for heuristic formatting, don't change
+                            );
+        } catch (java.awt.print.PrinterException ep) {
+            log.error("While printing",ep);
+        }    
+    }
+    
+    /**
      * Match the first argument in the array against a locally-known method.
      *
      * @param args Array of arguments, we take with element 0
@@ -887,6 +910,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         switch (args[0]) {
             case "identifyloco":
                 startIdentifyLoco();
+                break;
+            case "printcurrenttable":
+                    printCurrentTable();
                 break;
             case "printloco":
                 if (checkIfEntrySelected()) {

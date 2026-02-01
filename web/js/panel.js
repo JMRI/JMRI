@@ -3270,13 +3270,13 @@ function $drawTurnout($widget) {
         //if closed or thrown, draw the selected leg and erase the other one
         if ($widget.state == CLOSED || $widget.state == THROWN) {
             if ($widget.state == $widget.continuing) {
-                $drawLineP(cen, c, $eraseColor, $widthC); //erase center to C (diverging leg)
+                $drawLineP(cen, c, $eraseColor, $widthC+1); //erase center to C (diverging leg)
                 if ($gPanel.turnoutdrawunselectedleg == 'yes') {
                     $drawLineP(c, $point_midpoint(cen, c), $colorC, $widthC); //C to midC (diverging leg)
                 }
                 $drawLineP(cen, b, $colorB, $widthB); //center to B (straight leg)
             } else {
-                    $drawLineP(cen, b, $eraseColor, $widthB); //erase center to B (straight leg)
+                    $drawLineP(cen, b, $eraseColor, $widthB+1); //erase center to B (straight leg)
                 if ($gPanel.turnoutdrawunselectedleg == 'yes') {
                     $drawLineP(b, $point_midpoint(cen, b), $colorB, $widthB); //B to midB (straight leg)
                 }
@@ -3420,13 +3420,13 @@ function $getLegWidth(cs, bn) {
         var blk = $gBlks[bn];
         if (isDefined(blk)) {
             if (cs.mainline=="yes") {        
-                width = $gPanel.mainlineblockwidth;;
+                width = $gPanel.mainlineblockwidth;
             } else {
-                width = $gPanel.sidelineblockwidth;;
+                width = $gPanel.sidelineblockwidth;
             }
         }
     }
-    return width;
+    return width*1.0; //insure numeric
 }
 
 // compute color of turnout leg based on connected segment, then its block color

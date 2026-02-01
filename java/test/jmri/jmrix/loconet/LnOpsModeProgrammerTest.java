@@ -736,7 +736,9 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
             assertEquals( 1, lnis.outbound.size(),
                 "outbound size (i="+Integer.toString(i)+") ");
             log.debug("  testcase checks lnis.outbound.size() as 1 and was ok.");
-            assertEquals( 0, pl.getRcvdInvoked(), "no programmingListener reply (yet)");
+            assertEquals( 0, pl.getRcvdInvoked(),
+                () -> "no programmingListener reply (yet) but was status:" + pl.getRcvdStatus()
+                + " value:" + pl.getRcvdValue());
 
             String snum = "0"+Integer.toHexString(num-1);
             if (snum.length() >= 3) {
@@ -776,7 +778,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
             // receive a LACK "accepted" from "command station"
             m = new LocoNetMessage(new int[]{0xB4, 0x6d, 0x7f, 0x64});
 
-            log.debug("   testcase is sending c.s.'s 'long_ack' as {}", m.toString());
+            log.debug("   testcase is sending c.s.'s 'long_ack' as {}", m);
             lnis.sendTestMessage(m);  // (Command station default response)
 
             assertEquals( 1, lnis.outbound.size(), "saw 1 message sent");
@@ -786,13 +788,14 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
             final int j= incoming;
             log.debug("   testcase getRcvdInvolked = {}; j = incoming = {}.",
                     pl.getRcvdInvoked(), Integer.toString(j));
-            JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 0;},"getRcvdInvoked not set after CS long_ack");
+            JUnitUtil.waitFor(()-> pl.getRcvdInvoked() == 0,
+                () -> "getRcvdInvoked not 0 after CS long_ack, was " + pl.getRcvdInvoked());
             assertEquals( -1, pl.getRcvdStatus(), "Still Reply status not ready");
 
             // Now "receive" the reply from the 7th-gen Accy device
 
-            log.debug("   testcase device opc_long_ack reply being sent: "+m.toString()+
-                    "; j = "+Integer.toString(j)+" before sent.");
+            log.debug("   testcase device opc_long_ack reply being sent: {}; j = {} before sent.",
+                m, Integer.toString(j));
 
             // wait a while for the device to reply
             JUnitUtil.waitFor(1);
@@ -908,8 +911,8 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
             // Now "receive" the reply from the 7th-gen Accy device
 
-            log.debug("   checkSome7thGenAccyWrites testcase device opc_long_ack reply being sent: "+m.toString()+
-                    "; j = "+Integer.toString(j)+" before sent.");
+            log.debug("   checkSome7thGenAccyWrites testcase device opc_long_ack reply being sent: {}; j = {} before sent.",
+                m, Integer.toString(j));
 
             // wait a while for the device to reply
             JUnitUtil.waitFor(1);

@@ -326,14 +326,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return train's departure time in the String format hh:mm or hh:mm AM/PM
      */
     public String getFormatedDepartureTime() {
-        // check to see if the route has a departure time
-        RouteLocation rl = getTrainDepartsRouteLocation();
-        if (rl != null && !rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
-            // need to forward any changes to departure time
-            rl.removePropertyChangeListener(this);
-            rl.addPropertyChangeListener(this);
-            return rl.getFormatedDepartureTime();
-        }
         return (parseTime(getDepartTimeMinutes()));
     }
 
@@ -412,7 +404,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public String getExpectedDepartureTime(RouteLocation routeLocation, boolean isSortFormat) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
         if (minutes == -1) {
-            return ALREADY_SERVICED;
+            minutes = 0; // provide the work time at routeLocation
         }
         if (!routeLocation.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
             return parseTime(checkForDepartureTime(minutes, routeLocation), isSortFormat);
@@ -468,9 +460,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public int getExpectedTravelTimeInMinutes(RouteLocation routeLocation) {
         int minutes = 0;
         if (!isTrainEnRoute()) {
-            minutes += Integer.parseInt(getDepartureTimeMinute());
-            minutes += 60 * Integer.parseInt(getDepartureTimeHour());
-            minutes += 24 * 60 * Integer.parseInt(getDepartureTimeDay());
+            minutes += getDepartTimeMinutes();
         } else {
             minutes = -1; // -1 means train has already served the location
         }
@@ -507,14 +497,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     continue;
                 }
                 // now add the work at the location
-                minutes = minutes + getWorkTimeAtLocation(rl);
+                minutes += getWorkTimeAtLocation(rl);
             }
         }
         return minutes;
     }
 
     private int checkForDepartureTime(int minutes, RouteLocation rl) {
-        if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE) && !isTrainEnRoute()) {
+        if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
             int departMinute = 24 * 60 * Integer.parseInt(rl.getDepartureTimeDay()) +
                     60 * Integer.parseInt(rl.getDepartureTimeHour()) +
                     Integer.parseInt(rl.getDepartureTimeMinute());
@@ -549,8 +539,16 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (isSortFormat) {
             d = "0:";
         }
+        
         if (days > 0) {
             d = Integer.toString(days) + ":";
+        }
+        
+        if (!isSortFormat) {
+            String nd = Setup.getDayToName(Integer.toString(days));
+            if (nd != null && !nd.isBlank()) {
+                d = nd + " ";
+            }
         }
 
         // AM_PM field

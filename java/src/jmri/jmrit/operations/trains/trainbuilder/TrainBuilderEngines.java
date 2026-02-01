@@ -415,7 +415,6 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                 }
             }
             // load engines at the start of the route for this train
-            addLine(THREE, BLANK_LINE);
             if (getEngines(getTrain().getNumberEngines(), getTrain().getEngineModel(), getTrain().getEngineRoad(),
                     getTrain().getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
                 // when adding a caboose later in the route, no engine change
@@ -428,6 +427,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                 _secondLeadEngine = _lastEngine;
                 _thirdLeadEngine = _lastEngine;
             } else {
+                addLine(THREE, BLANK_LINE);
                 throw new BuildFailedException(Bundle.getMessage("buildErrorEngines", getTrain().getNumberEngines(),
                         getTrain().getTrainDepartsName(), engineTerminatesFirstLeg.getName()));
             }
@@ -908,13 +908,28 @@ public class TrainBuilderEngines extends TrainBuilderBase {
      */
     private Engine checkQuickServiceArrival(Engine engine, RouteLocation rld, Track track) {
         if (!track.isQuickServiceEnabled()) {
+            if (Setup.isBuildOnTime()) {
+                addLine(THREE,
+                        Bundle.getMessage("buildTrackNotQuickService", StringUtils.capitalize(track.getTrackTypeName()),
+                                track.getLocation().getName(), track.getName(), engine.toString()));
+                // warn if departing staging that is quick serviced enabled
+                if (engine.getTrack().isStaging() && engine.getTrack().isQuickServiceEnabled()) {
+                    _warnings++;
+                    addLine(THREE,
+                            Bundle.getMessage("buildWarningQuickService", engine.toString(),
+                                    engine.getTrack().getTrackTypeName(),
+                                    engine.getTrack().getLocation().getName(), engine.getTrack().getName(),
+                                    getTrain().getName(),
+                                    StringUtils.capitalize(engine.getTrack().getTrackTypeName())));
+                }
+            }
             return engine;
         }
-        addLine(FIVE,
-                Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
-                        track.getLocation().getName(), track.getName()));
         // quick service enabled, create clones
         Engine cloneEng = engineManager.createClone(engine, track, getTrain(), getStartTime());
+        addLine(FIVE,
+                Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
+                        track.getLocation().getName(), track.getName(), cloneEng.toString(), engine.toString()));
         // for timing, use arrival times for the train that is building
         // other trains will use their departure time, loaded when creating the Manifest
         String expectedArrivalTime = getTrain().getExpectedArrivalTime(rld, true);

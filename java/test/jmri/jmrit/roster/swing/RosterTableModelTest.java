@@ -33,8 +33,8 @@ public class RosterTableModelTest {
         RosterTableModel t = new RosterTableModel(true); // set Editable
 
         // hard-coded value is number of columns expected
-        // 13 normal columns + 4 attribute columns
-        assertEquals(17, t.getColumnCount());
+        // 14 normal columns + 4 attribute columns
+        assertEquals(18, t.getColumnCount());
         
         
         assertTrue(t.isCellEditable(0, RosterTableModel.IDCOL));
@@ -182,8 +182,8 @@ public class RosterTableModelTest {
         RosterTableModel t = new RosterTableModel(true); // set Editable
 
         // hard-coded value is number of columns expected
-        // 13 normal columns + 2 attribute columns
-        assertEquals(15, t.getColumnCount());
+        // 14 normal columns + 2 attribute columns
+        assertEquals(16, t.getColumnCount());
         assertTrue(java.util.Date.class == t.getColumnClass(RosterTableModel.NUMCOL));
 
         assertNotNull(t.getValueAt(0, RosterTableModel.NUMCOL));

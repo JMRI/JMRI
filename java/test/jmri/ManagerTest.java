@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests the static methods of the interface.
@@ -31,26 +32,29 @@ public class ManagerTest {
 
     @Test
     public void testGetSystemPrefixLengthThrow1() {
-        Exception ex = assertThrows( NamedBean.BadSystemNameException.class,
-            () -> Manager.getSystemPrefixLength(".T1"),
-            "Should have thrown");
+        Exception ex = assertThrows( NamedBean.BadSystemNameException.class, () -> {
+            int fail = Manager.getSystemPrefixLength(".T1");
+            fail("Should have thrown, not counted " + fail);
+        }, "Should have thrown");
         assertNotNull(ex);
     }
 
     @Test
     public void testGetSystemPrefixLengthThrow2() {
-        Exception ex = assertThrows( NamedBean.BadSystemNameException.class,
-            () -> Manager.getSystemPrefixLength("1T1"),
-            "Should have thrown");
+        Exception ex = assertThrows( NamedBean.BadSystemNameException.class, () -> {
+            int fail = Manager.getSystemPrefixLength("1T1");
+            fail("Should have thrown, not counted " + fail);
+        }, "Should have thrown");
         assertNotNull(ex);
     }
 
 
     @Test
     public void testGetSystemPrefixLengthBad() {
-        Exception ex = assertThrows( NamedBean.BadSystemNameException.class,
-            () -> Manager.getSystemPrefixLength(""),
-            "Should have thrown");
+        Exception ex = assertThrows( NamedBean.BadSystemNameException.class, () -> {
+            int fail = Manager.getSystemPrefixLength("");
+            fail("Should have thrown, not counted " + fail);
+        }, "Should have thrown");
         assertNotNull(ex);
     }
 
@@ -70,9 +74,10 @@ public class ManagerTest {
 
     @Test
     public void testGetSystemPrefixBad() {
-        Exception ex = assertThrows( NamedBean.BadSystemNameException.class,
-            () -> Manager.getSystemPrefix(""),
-            "Should have thrown");
+        Exception ex = assertThrows( NamedBean.BadSystemNameException.class, () ->  {
+            String fail = Manager.getSystemPrefix("");
+            fail("Should have thrown, not found prefix: \"" + fail + "\"");
+            }, "Should have thrown");
         assertNotNull(ex);
     }
 
@@ -92,7 +97,7 @@ public class ManagerTest {
         NamedBean n3 = new BogusBean("BB3");
         NamedBean n4 = new BogusBean("BB4");
         NamedBean n5 = new BogusBean("BB5");
-        new BogusBean("BB5");  // created, but not used directly
+        assertNotNull(new BogusBean("BB5"));  // created, but not used directly
 
         TreeSet<NamedBean> set1 = new TreeSet<>();
 
@@ -191,8 +196,8 @@ public class ManagerTest {
         return true;
     }
 
-    static class BogusBean extends jmri.implementation.AbstractNamedBean {
-        public BogusBean(String n) { super(n); }
+    private static class BogusBean extends jmri.implementation.AbstractNamedBean {
+        BogusBean(String n) { super(n); }
         @Override
         public int getState() { return -1; }
         @Override
