@@ -581,6 +581,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             rs.setLocation(null, null);
         } else {
             rs.setLastRouteId(RollingStock.NONE); // clear last route id
+            rs.setLastTrain(null); // clear last train
             String status = rs.setLocation((Location) locationBox.getSelectedItem(),
                     (Track) trackLocationBox.getSelectedItem());
             if (!status.equals(Track.OKAY)) {

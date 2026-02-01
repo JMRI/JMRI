@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -110,4 +110,26 @@ public class TrainCommonTest extends OperationsTestCase {
         s = tc.setoutUtilityCars(cars, cars.get(4), !TrainCommon.LOCAL, !TrainCommon.IS_MANIFEST);
         Assert.assertNull("should be null", s);
     }
+    
+    @Test
+    public void testConvertStringTime() {
+        Assert.assertEquals("blank time", 0, TrainCommon.convertStringTime(""));
+        // 21 x 60 + 45
+        Assert.assertEquals("time", 1305, TrainCommon.convertStringTime("21:45"));
+        // 10 x 60 + 5
+        Assert.assertEquals("am time", 605, TrainCommon.convertStringTime("10:05 AM"));
+        // 9 x 60 + 12 x 60 + 3
+        Assert.assertEquals("pm time", 1263, TrainCommon.convertStringTime("9:03 PM"));
+        // 3 x 24 x 60 + 3 x 60 + 17
+        Assert.assertEquals("time with days", 4,517, TrainCommon.convertStringTime("3:03:17"));
+        // 20 x 24 x 60 + 6 x 60 + 12 x 60 + 1
+        Assert.assertEquals("pm time with days", 29881, TrainCommon.convertStringTime("20:06:01 PM"));
+        // test 12 in the morning
+        Assert.assertEquals("am time", 5, TrainCommon.convertStringTime("12:05 AM"));
+        // test 12 afternoon 12 x 60 + 4
+        Assert.assertEquals("pm time", 724, TrainCommon.convertStringTime("12:04 PM"));
+        // 30 x 24 x 60 + 12 x 60 + 59
+        Assert.assertEquals("pm time with days", 43979, TrainCommon.convertStringTime("30:12:59 PM"));
+    }
+    
 }

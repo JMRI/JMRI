@@ -10,6 +10,7 @@
     <year>2009</year>
     <year>2010</year>
     <year>2024</year>
+    <year>2026</year>
     <holder>JMRI</holder>
   </copyright>
 
@@ -41,7 +42,7 @@
         <firstname>Bob</firstname>
         <surname>Jacobsen</surname>
       </personname>
-      <email>jake@physics.berkeley.edu</email>
+      <email>rgj1927@gmail.com</email>
     </author>
 
   </authorgroup>
@@ -52,6 +53,12 @@
       <date>2024-11-14</date>
       <authorinitials>JDP</authorinitials>
       <revremark>Initial release for new "basic-enhanced" signal system</revremark>
+    </revision>
+    <revision>
+      <revnumber>2.0</revnumber>
+      <date>2026-01-30</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Add alternate icon set</revremark>
     </revision>
 
   </revhistory>
@@ -144,6 +151,7 @@
   </aspects>
 
   <imagetypes>
+    <imagetype type="discriminated" />
     <imagetype type="aspects" />
     <imagetype type="noflash" />
   </imagetypes>

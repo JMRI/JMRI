@@ -311,13 +311,16 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
 
     public void createDefaultSchedules() {
         log.debug("creating default schedules");
-        newSchedule(Bundle.getMessage("Sunday"));
-        newSchedule(Bundle.getMessage("Monday"));
-        newSchedule(Bundle.getMessage("Tuesday"));
-        newSchedule(Bundle.getMessage("Wednesday"));
-        newSchedule(Bundle.getMessage("Thursday"));
-        newSchedule(Bundle.getMessage("Friday"));
-        newSchedule(Bundle.getMessage("Saturday"));
+        for (String s : getDaysOfWeek()) {
+            newSchedule(s);
+        }
+    }
+    
+    public String[] getDaysOfWeek() {
+        String[] s = {Bundle.getMessage("Sunday"), Bundle.getMessage("Monday"), Bundle.getMessage("Tuesday"),
+                Bundle.getMessage("Wednesday"), Bundle.getMessage("Thursday"), Bundle.getMessage("Friday"),
+                Bundle.getMessage("Saturday")};
+        return s;
     }
 
     @Override

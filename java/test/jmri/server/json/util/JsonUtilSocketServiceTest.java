@@ -57,11 +57,12 @@ public class JsonUtilSocketServiceTest {
      * Test of onMessage method, of class JsonUtilSocketService. Tests only
      * responses that are expected to be consistent between a
      *
-     * @throws java.lang.Exception if an exception unexpected in the context of
-     *                             these tests occurs
+     * @throws java.io.IOException if an unexpected exception occurs.
+     * @throws jmri.JmriException if an unexpected exception occurs.
+     * @throws jmri.server.json.JsonException if an unexpected exception occurs.
      */
     @Test
-    public void testOnMessage() throws Exception {
+    public void testOnMessage() throws IOException, JmriException, JsonException {
         JsonNode message;
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -118,15 +119,16 @@ public class JsonUtilSocketServiceTest {
     }
 
     /**
-     * Test of onMessage method, of class JsonUtilSocketService. Tests PANEL
-     * JSON type if not running headless.
+     * Test of onMessage method, of class JsonUtilSocketService.
+     * Tests PANEL JSON type if not running headless.
      *
-     * @throws java.lang.Exception if an exception unexpected in the context of
-     *                             these tests occurs
+     * @throws java.io.IOException if an unexpected exception occurs.
+     * @throws jmri.JmriException if an unexpected exception occurs.
+     * @throws jmri.server.json.JsonException if an unexpected exception occurs.
      */
     @Test
     @DisabledIfHeadless
-    public void testOnMessagePanels() throws Exception {
+    public void testOnMessagePanels() throws IOException, JmriException, JsonException {
 
         Editor editor = new SwitchboardEditor("json test switchboard");
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -152,11 +154,12 @@ public class JsonUtilSocketServiceTest {
      * that. Does not test PANEL JSON type, see {@link #testOnListPanels()} for
      * that.
      *
-     * @throws java.lang.Exception if an exception unexpected in the context of
-     *                             these tests occurs
+     * @throws java.io.IOException if an unexpected exception occurs.
+     * @throws jmri.JmriException if an unexpected exception occurs.
+     * @throws jmri.server.json.JsonException if an unexpected exception occurs.
      */
     @Test
-    public void testOnList() throws Exception {
+    public void testOnList() throws IOException, JmriException, JsonException {
         ObjectMapper mapper = new ObjectMapper();
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
@@ -175,11 +178,12 @@ public class JsonUtilSocketServiceTest {
      * Test of onList method for CONFIG_PROFILE JSON type, of class
      * JsonUtilSocketService.
      *
-     * @throws java.lang.Exception if an exception unexpected in the context of
-     *                             these tests occurs
+     * @throws java.io.IOException if an unexpected exception occurs.
+     * @throws jmri.JmriException if an unexpected exception occurs.
+     * @throws jmri.server.json.JsonException if an unexpected exception occurs.
      */
     @Test
-    public void testOnListConfigProfile() throws Exception {
+    public void testOnListConfigProfile() throws IOException, JmriException, JsonException {
         ObjectMapper mapper = new ObjectMapper();
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
@@ -194,12 +198,13 @@ public class JsonUtilSocketServiceTest {
      * Test of onList method, of class JsonUtilSocketService. Tests PANEL JSON
      * type if not running headless.
      *
-     * @throws java.lang.Exception if an exception unexpected in the context of
-     *                             these tests occurs
+     * @throws java.io.IOException if an unexpected exception occurs.
+     * @throws jmri.JmriException if an unexpected exception occurs.
+     * @throws jmri.server.json.JsonException if an unexpected exception occurs.
      */
     @Test
     @DisabledIfHeadless
-    public void testOnListPanels() throws Exception {
+    public void testOnListPanels() throws IOException, JmriException, JsonException {
 
         Editor switchboard = new SwitchboardEditor("json test switchboard");
         Editor controlPanel = new ControlPanelEditor("json test control panel");
@@ -215,11 +220,9 @@ public class JsonUtilSocketServiceTest {
         JsonNode message = connection.getMessage();
         assertNotNull( message, "Message is not null");
         assertTrue( message.isArray(), "Message is array");
-        if (message.size() != 4) {
-            log.error(message.toString()); // what panel was left in place that
-                                           // triggered this?
-        }
-        assertEquals( 4, message.size(), "Array has four elements");
+        assertEquals( 4, message.size(),
+            () -> "Array has four elements, what panel was left in place that triggered this? "
+                + message.toString());
         JUnitUtil.dispose(switchboard.getTargetFrame());
         JUnitUtil.dispose(switchboard);
         JUnitUtil.dispose(controlPanel.getTargetFrame());
@@ -314,5 +317,5 @@ public class JsonUtilSocketServiceTest {
 
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonUtilSocketServiceTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonUtilSocketServiceTest.class);
 }

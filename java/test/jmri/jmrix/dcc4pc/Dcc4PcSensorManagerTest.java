@@ -71,6 +71,7 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         // creae a reporter for DR0:4, because it has railcom data.
         rm.provideReporter("DR0:4");
         ((Dcc4PcSensorManager) l).reply(rep);
+        JUnitUtil.waitThreadTerminated("Dcc4PCSensor Process Packet for 0");
         
         /* Asserts below fail. The Sensor does not go active */
         

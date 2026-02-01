@@ -184,6 +184,8 @@ public class Xml {
     static final String BUILD_OPTIONS = "buildOptions"; // NOI18N
     static final String AGGRESSIVE = "aggressive"; // NOI18N
     static final String NUMBER_PASSES = "numberPasses";  // NOI18N
+    static final String ON_TIME = "onTime"; // NOI18N
+    static final String DWELL_TIME = "dwellTime";  // NOI18N
 
     static final String ALLOW_LOCAL_INTERCHANGE = "allowLocalInterchange"; // NOI18N
     static final String ALLOW_LOCAL_SPUR = "allowLocalSpur"; // NOI18N
@@ -228,5 +230,10 @@ public class Xml {
 
     static final String CATS = "CATS"; // NOI18N
     static final String EXACT_LOCATION_NAME = "exactLocationName"; // NOI18N
+    
+    static final String DAY_NAME_MAP = "dayNameMapping"; // NOI18N
+    static final String MAP = "map"; // NOI18N
+    static final String DAY = "day"; // NOI18N
+    static final String DAYS = "days"; // NOI18N
 
 }

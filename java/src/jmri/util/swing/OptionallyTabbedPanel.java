@@ -32,7 +32,7 @@ public class OptionallyTabbedPanel extends JPanel {
         currentlyTabbed = false;
         tabbedPane.setVisible(false);
         
-        singlePane.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
+        singlePane.setLayout(new WrapLayout(FlowLayout.LEFT, 2, 2));
     }
 
     final private int tabMax;  // must be provided in ctor
@@ -65,7 +65,7 @@ public class OptionallyTabbedPanel extends JPanel {
                 
                 // move existing contents to a 1st pane in the JTabbedPane
                 currentTab = new JPanel();
-                currentTab.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
+                currentTab.setLayout(new WrapLayout(FlowLayout.LEFT, 2, 2));
                 tabbedPane.add(currentTab, "0-"+(tabMax-1));
                 for (var item : components) {
                     currentTab.add(item);
@@ -73,7 +73,7 @@ public class OptionallyTabbedPanel extends JPanel {
                 
                 // create a new (2nd) tab
                 currentTab = new JPanel();
-                currentTab.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
+                currentTab.setLayout(new WrapLayout(FlowLayout.LEFT, 2, 2));
                 // Add that tab; label will be overridden in updateTabLabel below
                 tabbedPane.add(currentTab, ""+fullCount+"-"+(fullCount+1)); 
                 
@@ -89,7 +89,7 @@ public class OptionallyTabbedPanel extends JPanel {
                 if (paneCount >= tabMax) {
                     // create a new pane in the tabbed pane, make it current tab
                     currentTab = new JPanel();
-                    currentTab.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
+                    currentTab.setLayout(new WrapLayout(FlowLayout.LEFT, 2, 2));
                     tabbedPane.add(currentTab, ""+fullCount+"-"+(fullCount+1));
                 }
                 // add the component

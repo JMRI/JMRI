@@ -351,6 +351,13 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected boolean change(Car car) {
+        // don't modify clones
+        if (car.isClone()) {
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("RsIsClone", car.toString()),
+                    Bundle.getMessage("DoNotModifyClone"), JmriJOptionPane.WARNING_MESSAGE);
+            return false;
+        }
         // save the auto button
         autoReturnWhenEmptyTrackCheckBoxSelected = autoReturnWhenEmptyTrackCheckBox.isSelected();
         autoReturnWhenLoadedTrackCheckBoxSelected = autoReturnWhenLoadedTrackCheckBox.isSelected();

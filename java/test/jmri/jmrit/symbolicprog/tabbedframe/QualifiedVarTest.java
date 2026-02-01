@@ -1,6 +1,5 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
@@ -9,15 +8,14 @@ import javax.swing.JPanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.junit.Assume;
+
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test PaneProg with qualified variables.
@@ -28,8 +26,8 @@ public class QualifiedVarTest {
 
     // show me a specially-created frame
     @Test
-    public void testFrame() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testFrame() {
 
         setupDoc();
         DecoderFile df = new DecoderFile("NMRA", "", "NMRA standard CV definitions", "0", "255",
@@ -74,19 +72,19 @@ public class QualifiedVarTest {
     }
 
     // static variables for internal classes to report their interpretations
-    static String result = null;
-    static int colCount = -1;
-    static int varCount = -1;
+    // static String result = null;
+    // static int colCount = -1;
+    // static int varCount = -1;
 
-    // static variables for the test XML structures
-    Element root = null;
-    Document doc = null;
+    // variables for the test XML structures
+    private Element root = null;
+    // Document doc = null;
 
     // provide a test document in the above static variables
     void setupDoc() {
         // create a JDOM tree with just some elements
         root = new Element("programmer-config");
-        doc = new Document(root);
+        Document doc = new Document(root);
         doc.setDocType(new DocType("programmer-config", "programmer-config.dtd"));
 
         // add some elements
@@ -184,7 +182,7 @@ public class QualifiedVarTest {
         ); // end of adding contents
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QualifiedVarTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(QualifiedVarTest.class);
 
     @BeforeEach
     public void setUp() {
@@ -196,6 +194,7 @@ public class QualifiedVarTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetWindows(false, false); // Detachable frame : "Comments : test qualified var"
         JUnitUtil.tearDown();
     }
 

@@ -407,7 +407,8 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Improved how clicks are handled so they'll
+                be less finicky.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -429,7 +430,16 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Added new button and File-menu item to 
+                print the roster table as it's currently displayed,
+                with the user's selected roster group, column setup and 
+                sort order.</li>
+            <li>The roster entry's comment field is now available
+                as a column in the main DecoderPro display.  Multi-line
+                comments will be displayed as multiple lines in a row
+                with extended height.  If you don't want to see this
+                column, right-click/ctrl-click in the column heading 
+                and deselect it.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -454,7 +464,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Improved how clicks are handled so they'll
+                be less finicky.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -489,13 +500,14 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>New tool that allows day to name mapping. Now your Manifest or switch list can show which day or date the train departs or arrives at a location.</li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>Improved how clicks are handled so they'll
+                be less finicky.</li>
         </ul>
 
     <h3>Permissions</h3>
@@ -519,7 +531,8 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Added: physics parameters for physics based acceleration</li>
+            <li>Added: physics parameters for physics based acceleration.</li>
+            <li>Improved the locomotive image resolution in printed rosters.</li>
         </ul>
 
     <h3>Routes</h3>
@@ -541,7 +554,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Added a color-discriminated alternate icon set to the basic-enhanced definition</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -649,6 +662,10 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Some constants in the 
+                <a href="https://www.jmri.org/JavaDoc/doc/jmri/RailCom.html">RailCom class</li>
+                have been converted to Enum values.
+                This primarily affects developers and people who've written scripts for
+                processing RailCom information directly.
         </ul>
 

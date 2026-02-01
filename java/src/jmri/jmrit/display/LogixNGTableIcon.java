@@ -303,6 +303,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
     @Override
     public void remove() {
         _tableModel.dispose();
+        super.remove();
     }
 
     // ------------ Table Models ------------

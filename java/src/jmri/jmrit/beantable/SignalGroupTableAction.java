@@ -812,7 +812,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         SignalMast mMast = mainSignalComboBox.getSelectedItem();
         if (mMast == null) {
             //log.warn("Signal Mast not selected. mainSignal = {}", mainSignalComboBox.getSelectedItem());
-            JmriJOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog( mainSignalComboBox,
                     Bundle.getMessage("NoMastSelectedWarning"),
                     Bundle.getMessage("ErrorTitle"),
                     JmriJOptionPane.WARNING_MESSAGE);

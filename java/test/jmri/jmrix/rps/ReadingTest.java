@@ -1,6 +1,9 @@
 package jmri.jmrix.rps;
 
-import org.junit.Assert;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,17 +17,17 @@ public class ReadingTest {
     public void testCtorAndID() {
         double[] v = new double[]{0., 1., 2.};
         Reading r = new Reading("21", v);
-        Assert.assertEquals("ID ok", "21", r.getId());
+        assertEquals( "21", r.getId(), "ID ok");
     }
 
     @Test
     public void testValues() {
         Reading r1 = new Reading("21", new double[]{0., 1., 2.});
         double[] val = r1.getValues();
-        Assert.assertEquals("Value 1 array", 1, (int) val[1]);
-        Assert.assertEquals("Value 1 call ", 1, (int) r1.getValue(1));
-        Assert.assertEquals("Value 2 array", 2, (int) val[2]);
-        Assert.assertEquals("Value 2 call ", 2, (int) r1.getValue(2));
+        assertEquals( 1, (int) val[1], "Value 1 array");
+        assertEquals( 1, (int) r1.getValue(1), "Value 1 call ");
+        assertEquals( 2, (int) val[2], "Value 2 array");
+        assertEquals( 2, (int) r1.getValue(2), "Value 2 call ");
     }
 
     @Test
@@ -32,22 +35,32 @@ public class ReadingTest {
         Reading r1 = new Reading("21", new double[]{0., 1., 2.});
         double[] val = r1.getValues();
         val[1] = 3.;
-        Assert.assertEquals("Value 1 call ", 1, (int) r1.getValue(1));
-        Assert.assertEquals("Value 2 call ", 2, (int) r1.getValue(2));
+        assertEquals( 1, (int) r1.getValue(1), "Value 1 call ");
+        assertEquals( 2, (int) r1.getValue(2), "Value 2 call ");
     }
 
     @Test
     public void testCopyCtorID() {
         Reading r1 = new Reading("21", new double[]{0., 1., 2.});
         Reading r2 = new Reading(r1);
-        Assert.assertEquals("ID ok", "21", r2.getId());
+        assertEquals( "21", r2.getId(), "ID ok");
     }
 
     @Test
     public void testCopyCtorData() {
         Reading r1 = new Reading("21", new double[]{0., 1., 2.});
         Reading r2 = new Reading(r1);
-        Assert.assertEquals("value 1", 1, (int) r2.getValue(1));
+        assertEquals( 1, (int) r2.getValue(1), "value 1");
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

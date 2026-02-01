@@ -1,5 +1,11 @@
 package jmri.jmrit.logixng.actions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -9,10 +15,9 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ForEach
@@ -21,13 +26,13 @@ import org.junit.Test;
  */
 public class ForEachTest extends AbstractDigitalActionTestBase {
 
-    Memory _memory;
-    Memory _memoryResult;
-    LogixNG _logixNG;
-    ConditionalNG _conditionalNG;
-    ForEach _forEach;
-    MaleSocket _maleSocket;
-    DigitalFormula _formula;
+    private Memory _memory;
+    private Memory _memoryResult;
+    private LogixNG _logixNG;
+    private ConditionalNG _conditionalNG;
+    private ForEach _forEach;
+    private MaleSocket _maleSocket;
+    private DigitalFormula _formula;
 
     @Override
     public ConditionalNG getConditionalNG() {
@@ -85,39 +90,35 @@ public class ForEachTest extends AbstractDigitalActionTestBase {
     @Test
     public void testCtor() {
         TableForEach t = new TableForEach("IQDA321", null);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
         t = new TableForEach("IQDA321", null);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 1", 1 == _forEach.getChildCount());
+        assertEquals( 1, _forEach.getChildCount(), "getChildCount() returns 1");
 
-        Assert.assertNotNull("getChild(0) returns a non null value",
-                _forEach.getChild(0));
+        assertNotNull( _forEach.getChild(0), "getChild(0) returns a non null value");
 
-        boolean hasThrown = false;
-        try {
-            _forEach.getChild(1);
-        } catch (IllegalArgumentException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "index has invalid value: 1", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () ->
+            _forEach.getChild(1), "Exception is thrown");
+        assertEquals( "index has invalid value: 1", ex.getMessage(),
+                "Error message is correct");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", LogixNG_Category.FLOW_CONTROL == _base.getCategory());
+        assertSame( LogixNG_Category.FLOW_CONTROL, _base.getCategory(), "Category matches");
     }
 
     @Test
     public void testDescription() {
         ForEach a1 = new ForEach("IQDA321", null);
-        Assert.assertEquals("strings are equal", "For each", a1.getShortDescription());
+        assertEquals( "For each", a1.getShortDescription(), "strings are equal");
         ForEach a2 = new ForEach("IQDA321", null);
-        Assert.assertEquals("strings are equal", "For each value, set variable \"\" and execute action A. Values from Sensors", a2.getLongDescription());
+        assertEquals( "For each value, set variable \"\" and execute action A. Values from Sensors",
+                a2.getLongDescription(), "strings are equal");
     }
 
     @Test
@@ -128,8 +129,9 @@ public class ForEachTest extends AbstractDigitalActionTestBase {
         _memoryResult.setValue("");
         _formula.setFormula("writeMemory(\"IMResult\", readMemory(\"IMResult\") + item + \", \")");
         _logixNG.execute();
-        Assert.assertEquals("", _memoryResult.getValue());
-        Assert.assertEquals("For each value, set variable \"item\" and execute action A. Values from memory IM1", _forEach.getLongDescription());
+        assertEquals("", _memoryResult.getValue());
+        assertEquals("For each value, set variable \"item\" and execute action A. Values from memory IM1",
+                _forEach.getLongDescription());
 
         List<String> list = new ArrayList<>();
         list.add("A");
@@ -139,8 +141,9 @@ public class ForEachTest extends AbstractDigitalActionTestBase {
         _memoryResult.setValue("");
         _formula.setFormula("writeMemory(\"IMResult\", readMemory(\"IMResult\") + item + \", \")");
         _logixNG.execute();
-        Assert.assertEquals("A, B, C, ", _memoryResult.getValue());
-        Assert.assertEquals("For each value, set variable \"item\" and execute action A. Values from memory IM1", _forEach.getLongDescription());
+        assertEquals("A, B, C, ", _memoryResult.getValue());
+        assertEquals("For each value, set variable \"item\" and execute action A. Values from memory IM1",
+                _forEach.getLongDescription());
 
         Map<String, Integer> map = new HashMap<>();
         map.put("A", 10);
@@ -150,8 +153,9 @@ public class ForEachTest extends AbstractDigitalActionTestBase {
         _memoryResult.setValue("");
         _formula.setFormula("writeMemory(\"IMResult\", readMemory(\"IMResult\") + item.getKey() + \":\" + str(item.getValue()) + \", \")");
         _logixNG.execute();
-        Assert.assertEquals("A:10, B:20, C:-3, ", _memoryResult.getValue());
-        Assert.assertEquals("For each value, set variable \"item\" and execute action A. Values from memory IM1", _forEach.getLongDescription());
+        assertEquals("A:10, B:20, C:-3, ", _memoryResult.getValue());
+        assertEquals("For each value, set variable \"item\" and execute action A. Values from memory IM1",
+                _forEach.getLongDescription());
 
         map = new HashMap<>();
         map.put("A", 8);
@@ -161,8 +165,9 @@ public class ForEachTest extends AbstractDigitalActionTestBase {
         _memoryResult.setValue("");
         _formula.setFormula("writeMemory(\"IMResult\", readMemory(\"IMResult\") + \"toString:>\" + item.toString() + \"<\" + \", \")");
         _logixNG.execute();
-        Assert.assertEquals("toString:>A=8<, toString:>B=-55<, toString:>C=32<, ", _memoryResult.getValue());
-        Assert.assertEquals("For each value, set variable \"item\" and execute action A. Values from memory IM1", _forEach.getLongDescription());
+        assertEquals("toString:>A=8<, toString:>B=-55<, toString:>C=32<, ", _memoryResult.getValue());
+        assertEquals("For each value, set variable \"item\" and execute action A. Values from memory IM1",
+                _forEach.getLongDescription());
 
         map = new HashMap<>();
         map.put("A", 8);
@@ -172,15 +177,18 @@ public class ForEachTest extends AbstractDigitalActionTestBase {
         _memoryResult.setValue("");
         _formula.setFormula("writeMemory(\"IMResult\", readMemory(\"IMResult\") + \"getClass().getName():>\" + item.getClass().getName() + \"<\" + \", \")");
         _logixNG.execute();
-        Assert.assertEquals("getClass().getName():>java.util.HashMap$Node<, getClass().getName():>java.util.HashMap$Node<, getClass().getName():>java.util.HashMap$Node<, ", _memoryResult.getValue());
-        Assert.assertEquals("For each value, set variable \"item\" and execute action A. Values from memory IM1", _forEach.getLongDescription());
+        assertEquals("getClass().getName():>java.util.HashMap$Node<, getClass().getName():>java.util.HashMap$Node<, getClass().getName():>java.util.HashMap$Node<, ",
+                _memoryResult.getValue());
+        assertEquals("For each value, set variable \"item\" and execute action A. Values from memory IM1",
+                _forEach.getLongDescription());
 
         _memory.setValue(new String[]{"A", "B", "C"});
         _memoryResult.setValue("");
         _formula.setFormula("writeMemory(\"IMResult\", readMemory(\"IMResult\") + item + \", \")");
         _logixNG.execute();
-        Assert.assertEquals("A, B, C, ", _memoryResult.getValue());
-        Assert.assertEquals("For each value, set variable \"item\" and execute action A. Values from memory IM1", _forEach.getLongDescription());
+        assertEquals("A, B, C, ", _memoryResult.getValue());
+        assertEquals("For each value, set variable \"item\" and execute action A. Values from memory IM1",
+                _forEach.getLongDescription());
 
         _memoryResult.setValue("");
         _forEach.setUseCommonSource(true);
@@ -189,8 +197,9 @@ public class ForEachTest extends AbstractDigitalActionTestBase {
         InstanceManager.getDefault(SensorManager.class).provideSensor("ISSomethingElse");
         _formula.setFormula("writeMemory(\"IMResult\", readMemory(\"IMResult\") + item.getSystemName() + \", \")");
         _logixNG.execute();
-        Assert.assertEquals("ISCLOCKRUNNING, ISSomething, ISSomethingElse, ", _memoryResult.getValue());
-        Assert.assertEquals("For each value, set variable \"item\" and execute action A. Values from Sensors", _forEach.getLongDescription());
+        assertEquals("ISCLOCKRUNNING, ISSomething, ISSomethingElse, ", _memoryResult.getValue());
+        assertEquals("For each value, set variable \"item\" and execute action A. Values from Sensors",
+                _forEach.getLongDescription());
 
         _memoryResult.setValue("");
         _forEach.setUseCommonSource(true);
@@ -199,8 +208,9 @@ public class ForEachTest extends AbstractDigitalActionTestBase {
         InstanceManager.getDefault(TurnoutManager.class).provideTurnout("ITSomethingElse");
         _formula.setFormula("writeMemory(\"IMResult\", readMemory(\"IMResult\") + item.getSystemName() + \", \")");
         _logixNG.execute();
-        Assert.assertEquals("ITSomething, ITSomethingElse, ", _memoryResult.getValue());
-        Assert.assertEquals("For each value, set variable \"item\" and execute action A. Values from Turnouts", _forEach.getLongDescription());
+        assertEquals("ITSomething, ITSomethingElse, ", _memoryResult.getValue());
+        assertEquals("For each value, set variable \"item\" and execute action A. Values from Turnouts",
+                _forEach.getLongDescription());
 
         _memoryResult.setValue("");
         _forEach.setUseCommonSource(true);
@@ -209,8 +219,9 @@ public class ForEachTest extends AbstractDigitalActionTestBase {
         InstanceManager.getDefault(LightManager.class).provideLight("ILSomethingElse");
         _formula.setFormula("writeMemory(\"IMResult\", readMemory(\"IMResult\") + item.getSystemName() + \", \")");
         _logixNG.execute();
-        Assert.assertEquals("ILSomething, ILSomethingElse, ", _memoryResult.getValue());
-        Assert.assertEquals("For each value, set variable \"item\" and execute action A. Values from Lights", _forEach.getLongDescription());
+        assertEquals("ILSomething, ILSomethingElse, ", _memoryResult.getValue());
+        assertEquals("For each value, set variable \"item\" and execute action A. Values from Lights",
+                _forEach.getLongDescription());
 
         _memoryResult.setValue("");
         _forEach.setUseCommonSource(true);
@@ -219,8 +230,10 @@ public class ForEachTest extends AbstractDigitalActionTestBase {
         InstanceManager.getDefault(MemoryManager.class).provideMemory("IMSomethingElse");
         _formula.setFormula("writeMemory(\"IMResult\", readMemory(\"IMResult\") + item.getSystemName() + \", \")");
         _logixNG.execute();
-        Assert.assertEquals("IM1, IMCURRENTTIME, IMRATEFACTOR, IMResult, IMSomething, IMSomethingElse, ", _memoryResult.getValue());
-        Assert.assertEquals("For each value, set variable \"item\" and execute action A. Values from Memories", _forEach.getLongDescription());
+        assertEquals("IM1, IMCURRENTTIME, IMRATEFACTOR, IMResult, IMSomething, IMSomethingElse, ",
+                _memoryResult.getValue());
+        assertEquals("For each value, set variable \"item\" and execute action A. Values from Memories",
+                _forEach.getLongDescription());
     }
 
     @Test
@@ -237,8 +250,7 @@ public class ForEachTest extends AbstractDigitalActionTestBase {
         super.testMaleSocketIsActive();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, ParserException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -281,12 +293,12 @@ public class ForEachTest extends AbstractDigitalActionTestBase {
         _forEach.getChild(0).connect(InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(_formula));
 
-        if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( _logixNG.setParentForAllChildren(new ArrayList<>()));
         _logixNG.activate();
         _logixNG.setEnabled(false);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         _logixNG.setEnabled(false);
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

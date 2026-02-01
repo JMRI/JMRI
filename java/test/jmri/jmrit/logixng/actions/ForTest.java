@@ -1,5 +1,11 @@
 package jmri.jmrit.logixng.actions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -10,10 +16,9 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test TableForEach
@@ -22,10 +27,10 @@ import org.junit.Test;
  */
 public class ForTest extends AbstractDigitalActionTestBase {
 
-    LogixNG _logixNG;
-    ConditionalNG _conditionalNG;
-    For _for;
-    MaleSocket _maleSocket;
+    private LogixNG _logixNG;
+    private ConditionalNG _conditionalNG;
+    private For _for;
+    private MaleSocket _maleSocket;
 
     @Override
     public ConditionalNG getConditionalNG() {
@@ -93,9 +98,9 @@ public class ForTest extends AbstractDigitalActionTestBase {
     @Test
     public void testCtor() {
         TableForEach t = new TableForEach("IQDA321", null);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
         t = new TableForEach("IQDA321", null);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 /* DISABLE FOR NOW
     @Test
@@ -199,32 +204,28 @@ public class ForTest extends AbstractDigitalActionTestBase {
 */
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 4", 4 == _for.getChildCount());
+        assertEquals( 4, _for.getChildCount(), "getChildCount() returns 4");
 
-        Assert.assertNotNull("getChild(0) returns a non null value",
-                _for.getChild(0));
+        assertNotNull( _for.getChild(0),
+                "getChild(0) returns a non null value");
 
-        boolean hasThrown = false;
-        try {
-            _for.getChild(4);
-        } catch (IllegalArgumentException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "index has invalid value: 4", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () ->
+            _for.getChild(4), "Exception is thrown");
+        assertEquals( "index has invalid value: 4", ex.getMessage(), "Error message is correct");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", LogixNG_Category.FLOW_CONTROL == _base.getCategory());
+        assertSame( LogixNG_Category.FLOW_CONTROL, _base.getCategory(), "Category matches");
     }
 
     @Test
     public void testDescription() {
         TableForEach a1 = new TableForEach("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Table: For each", a1.getShortDescription());
+        assertEquals( "Table: For each", a1.getShortDescription(), "strings are equal");
         TableForEach a2 = new TableForEach("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Table: For each column of row \"-- Header --\" in table \"''\" set variable \"\" and execute action A1", a2.getLongDescription());
+        assertEquals( "Table: For each column of row \"-- Header --\" in table \"''\" set variable \"\" and execute action A1",
+                a2.getLongDescription(), "strings are equal");
     }
 
     @Test
@@ -363,7 +364,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
 //        System.out.format("%n%n%ndebug: %s%n", debug.getValue());
 
         // The memory "result" should have a list of the first 10 fibonacci numbers
-        Assert.assertEquals("0, 1, 1, 2, 3, 5, 8, 13, 21, 34",
+        assertEquals("0, 1, 1, 2, 3, 5, 8, 13, 21, 34",
                 result.getValue());
     }
 
@@ -381,8 +382,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
         super.testMaleSocketIsActive();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -412,12 +412,12 @@ public class ForTest extends AbstractDigitalActionTestBase {
                 .registerAction(new DigitalMany(
                         InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null)));
 
-        if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( _logixNG.setParentForAllChildren(new ArrayList<>()));
         _logixNG.activate();
         _logixNG.setEnabled(false);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         _logixNG.setEnabled(false);
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

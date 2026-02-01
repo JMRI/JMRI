@@ -42,6 +42,8 @@ public class ImportRoutesTest extends OperationsTestCase {
         RouteLocation rl = route3.getTerminatesRouteLocation();
         rl.setComment("This comment is for testing");
         rl.setCommentTextColor("blue");
+        rl.setDepartureTime("04:28");
+        rl.setDepartureTimeDay("3");
 
         ExportRoutes exportRoutes = new ExportRoutes();
         Assert.assertNotNull("exists", exportRoutes);
@@ -100,5 +102,7 @@ public class ImportRoutesTest extends OperationsTestCase {
         Assert.assertEquals("confirm location name", "Chelmsford", rl.getName());
         Assert.assertEquals("confirm comment", "This comment is for testing", rl.getComment());
         Assert.assertEquals("confirm comment color", "blue", rl.getCommentTextColor());
+        Assert.assertEquals("confirm departure day", "3", rl.getDepartureTimeDay());
+        Assert.assertEquals("confirm departure time", "04:28", rl.getDepartureTimeHourMinutes());
     }
 }

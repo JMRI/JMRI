@@ -1,22 +1,21 @@
 package jmri.jmrix.ieee802154.xbee.configurexml;
 
 import com.digi.xbee.api.XBeeDevice;
-import jmri.jmrix.ieee802154.xbee.XBeeNode;
-import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
-import jmri.util.JUnitUtil;
-
-import jmri.util.ThreadingUtil;
-import org.jdom2.Element;
-import org.junit.Assume;
-import org.junit.jupiter.api.*;
-
-import jmri.jmrix.ieee802154.xbee.ConnectionConfig;
-import org.mockito.Mockito;
 
 import javax.swing.*;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
+import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrix.ieee802154.xbee.ConnectionConfig;
+import jmri.jmrix.ieee802154.xbee.XBeeNode;
+import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
+import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
+
+import org.jdom2.Element;
+
+import org.junit.jupiter.api.*;
+
+import org.mockito.Mockito;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -29,14 +28,14 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
 
 
     @Test
-    public void testLoadWithNode(){
-        Assume.assumeNotNull(cc);
+    public void testLoadWithNode() throws JmriConfigureXmlException{
+        Assertions.assertNotNull(cc);
         // reset the profile manager for this test, so it can run independently.
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         // This test requires a configure manager.
-        jmri.util.JUnitUtil.initConfigureManager();
+        JUnitUtil.initConfigureManager();
         // Running this on the UI thread fixes some ConcurrentModificationExceptions errors.
-        ThreadingUtil.runOnGUI(()->{
+        boolean returned = ThreadingUtil.runOnGUIwithReturn(()->{
             cc.loadDetails(new JPanel());
             cc.setDisabled(true); // so we don't try to start the connection on load.
 
@@ -45,22 +44,26 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
             XBeeTrafficController tc = Mockito.mock(XBeeTrafficController.class);
             Mockito.when(tc.getXBee()).thenReturn(localDevice);
             ((jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo) cc.getAdapter().getSystemConnectionMemo())
-                    .setTrafficController(new XBeeTrafficController());
+                    .setTrafficController(tc);
 
             byte pan[] = {(byte) 0x00, (byte) 0x42};
             byte uad[] = {(byte) 0x6D, (byte) 0x97};
             byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
             XBeeNode node = new XBeeNode(pan,uad,gad);
-            node.setIdentifier("foo");
+            // The following line causes NullPointerException:
+            // Cannot invoke "com.digi.xbee.api.RemoteXBeeDevice.setNodeID(String)" because "this.device" is null
+            // node.setIdentifier("foo");
             ((jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo) cc.getAdapter().getSystemConnectionMemo())
                     .getTrafficController().registerNode(node);
+            return true;
         });
+        Assertions.assertTrue(returned, "GUI code did not complete");
         // load details MAY produce an error message if no ports are found.
         jmri.util.JUnitAppender.suppressErrorMessage("No usable ports returned");
         Element e = xmlAdapter.store(cc);
         //load what we just produced.
-        Throwable thrown = catchThrowable( () -> xmlAdapter.load(e, e));
-        assertThat(thrown).isNull();
+        Assertions.assertDoesNotThrow( () ->
+            xmlAdapter.load(e, e));
     }
 
     @BeforeEach

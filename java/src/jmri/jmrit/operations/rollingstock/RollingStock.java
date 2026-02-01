@@ -34,6 +34,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public static final int MAX_BLOCKING_ORDER = 100;
     public static final boolean FORCE = true; // ignore length, type, etc. when setting car's track
     protected static final String DEFAULT_WEIGHT = "0";
+    
+    public static final String CLONE = TrainCommon.HYPHEN + "(Clone)"; // NOI18N
+    // parentheses are special chars
+    public static final String CLONE_REGEX = TrainCommon.HYPHEN + "\\(Clone\\)"; // NOI18N
 
     protected String _id = NONE;
     protected String _number = NONE;
@@ -121,6 +125,28 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     @Override
     public String getId() {
         return _id;
+    }
+    
+    public abstract RollingStock copy();
+    
+    public RollingStock copy(RollingStock rs) {
+        rs.setBuilt(getBuilt());
+        rs.setColor(getColor());
+        rs.setLength(getLength());
+        rs.setWeightTons(getWeightTons());
+        rs.setNumber(getNumber());
+        rs.setOwnerName(getOwnerName());
+        rs.setRoadName(getRoadName());
+        rs.setTypeName(getTypeName());
+        rs.setComment(getComment());
+        rs.setBlocking(getBlocking());
+        rs.setLastTrain(getLastTrain());
+        rs.setLastDate(getLastDate());
+        rs.setLastLocationId(getLastLocationId());
+        rs.setLastTrackId(getLastTrackId());
+        rs.setLastRouteId(getLastRouteId());
+        rs.setDivision(getDivision());
+        return rs;
     }
 
     /**
@@ -1366,10 +1392,24 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     public void reset() {
+        setPickupTime(NONE);
         // the order of the next two instructions is important, otherwise rs will have
         // train's route id
         setTrain(null);
         setDestination(null, null);
+    }
+
+    /*
+     * Clone has been reset and is in the process of being destroyed, move
+     * original car back and restore the car's settings.
+     */
+    protected void destroyCloneReset(RollingStock rs) {
+        rs.setLocation(getLocation(), getTrack(), RollingStock.FORCE);
+        rs.setRouteDestination(null); // clear rd
+        rs.setLastTrain(getLastTrain());
+        rs.setLastRouteId(getLastRouteId());
+        rs.setLastDate(getLastDate());
+        rs.setMoves(getMoves());
     }
 
     /**
@@ -1453,7 +1493,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if ((a = e.getAttribute(Xml.DIVISION_ID)) != null) {
             _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
         }
-        // TODO remove the following 3 lines in 2022
+        // make xml error "DivisionId" backward compatible
         if ((a = e.getAttribute(Xml.DIVISION_ID_ERROR)) != null) {
             _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
         }

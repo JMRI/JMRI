@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.Locale;
@@ -14,12 +16,15 @@ import jmri.util.JUnitUtil;
 
 import jmri.jmrit.logixng.implementation.DefaultMaleStringActionSocket.StringActionDebugConfig;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
@@ -38,10 +43,12 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
     @Test
     public void testCtor() {
         StringActionBean action = new StringActionMemory("IQSA321", null);
-        Assert.assertNotNull("exists", new DefaultMaleStringActionSocket(manager, action));
+        assertNotNull( new DefaultMaleStringActionSocket(manager, action), "exists");
     }
 
     @Test
+    @SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION",
+        justification="testing setting socket to null")
     public void testEvaluate() throws JmriException {
         ConditionalNG conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
 
@@ -49,7 +56,7 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         action.setParent(conditionalNG);
 
         DefaultMaleStringActionSocket socket = new DefaultMaleStringActionSocket(manager, action);
-        Assert.assertNotNull("exists", socket);
+        assertNotNull( socket, "exists");
 
         socket.setParent(conditionalNG);
         socket.setEnabled(true);
@@ -58,13 +65,13 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         action.je = null;
         action.re = null;
         socket.setValue("Something");
-        Assert.assertEquals("Something", action._value);
+        assertEquals("Something", action._value);
         socket.setValue("Something else");
-        Assert.assertEquals("Something else", action._value);
+        assertEquals("Something else", action._value);
         socket.setValue("");
-        Assert.assertEquals("", action._value);
+        assertEquals("", action._value);
         socket.setValue(null);
-        Assert.assertNull(action._value);
+        assertNull(action._value);
 
         action.je = new JmriException("Test JmriException");
         action.re = null;
@@ -101,18 +108,18 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         config._dontExecute = true;
         action._value = "Hello";
         socket.setValue("Something");
-        Assert.assertEquals("Hello", action._value);
+        assertEquals("Hello", action._value);
         config._dontExecute = false;
         action._value = "Hello";
         socket.setValue("Something else");
-        Assert.assertEquals("Something else", action._value);
+        assertEquals("Something else", action._value);
     }
 
     @Test
     public void testVetoableChange() {
         MyStringAction action = new MyStringAction("IQSA321");
         DefaultMaleStringActionSocket socket = new DefaultMaleStringActionSocket(manager, action);
-        Assert.assertNotNull("exists", socket);
+        assertNotNull( socket, "exists");
 
         PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
 
@@ -139,17 +146,16 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         MyStringAction action2 = new MyStringAction("IQSA01");
         DefaultMaleStringActionSocket socket2 = new DefaultMaleStringActionSocket(manager, action2);
 
-        Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                -1, socket1.compareSystemNameSuffix("01", "1", socket2));
-        Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                0, socket1.compareSystemNameSuffix("1", "1", socket2));
-        Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                0, socket1.compareSystemNameSuffix("01", "01", socket2));
-        Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                +1, socket1.compareSystemNameSuffix("1", "01", socket2));
+        assertEquals( -1, socket1.compareSystemNameSuffix("01", "1", socket2),
+            "compareSystemNameSuffix returns correct value");
+        assertEquals( 0, socket1.compareSystemNameSuffix("1", "1", socket2),
+            "compareSystemNameSuffix returns correct value");
+        assertEquals( 0, socket1.compareSystemNameSuffix("01", "01", socket2),
+            "compareSystemNameSuffix returns correct value");
+        assertEquals( +1, socket1.compareSystemNameSuffix("1", "01", socket2),
+            "compareSystemNameSuffix returns correct value");
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     @Override
     public void setUp() {
@@ -162,21 +168,21 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         JUnitUtil.initLogixNGManager();
 
         StringActionBean actionA = new StringActionMemory("IQSA321", null);
-        Assert.assertNotNull("exists", actionA);
+        assertNotNull( actionA, "exists");
         StringActionBean actionB = new MyStringAction("IQSA322");
-        Assert.assertNotNull("exists", actionA);
+        assertNotNull( actionB, "exists");
 
         manager = InstanceManager.getDefault(StringActionManager.class);
 
         maleSocketA =
                 InstanceManager.getDefault(StringActionManager.class)
                         .registerAction(actionA);
-        Assert.assertNotNull("exists", maleSocketA);
+        assertNotNull( maleSocketA, "exists");
 
         maleSocketB =
                 InstanceManager.getDefault(StringActionManager.class)
                         .registerAction(actionB);
-        Assert.assertNotNull("exists", maleSocketB);
+        assertNotNull( maleSocketB, "exists");
     }
 
     @AfterEach
@@ -191,7 +197,7 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
     /**
      * This action is different from MyAnalogAction and is used to test the male socket.
      */
-    private class MyStringAction extends AbstractStringAction {
+    private static class MyStringAction extends AbstractStringAction {
 
         JmriException je = null;
         RuntimeException re = null;
@@ -248,15 +254,23 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
+        @SuppressFBWarnings( value = "THROWS_METHOD_THROWS_RUNTIMEEXCEPTION",
+            justification="testing exception types")
         public void setValue(String value) throws JmriException {
-            if (je != null) throw je;
-            if (re != null) throw re;
+            if (je != null) {
+                throw je;
+            }
+            if (re != null) {
+                throw re;
+            }
             _value = value;
         }
 
         @Override
         public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-            if (_vetoChange) throw new java.beans.PropertyVetoException("Veto change", evt);
+            if (_vetoChange) {
+                throw new java.beans.PropertyVetoException("Veto change", evt);
+            }
         }
 
         @Override

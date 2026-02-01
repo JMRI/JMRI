@@ -1,5 +1,15 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
@@ -28,10 +38,9 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ExpressionLight
@@ -96,87 +105,76 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testCtor() {
         ExpressionLight expression2;
-        Assert.assertNotNull("light is not null", light);
+        assertNotNull( light, "light is not null");
         light.setState(Light.ON);
 
         expression2 = new ExpressionLight("IQDE321", null);
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Light '' is On", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
+        assertEquals( "Light '' is On", expression2.getLongDescription(), "String matches");
 
         expression2 = new ExpressionLight("IQDE321", "My light");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My light", expression2.getUserName());
-        Assert.assertEquals("String matches", "Light '' is On", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My light", expression2.getUserName(), "Username matches");
+        assertEquals( "Light '' is On", expression2.getLongDescription(), "String matches");
 
         expression2 = new ExpressionLight("IQDE321", null);
         expression2.getSelectNamedBean().setNamedBean(light);
-        Assert.assertTrue("light is correct", light == expression2.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Light IL1 is On", expression2.getLongDescription());
+        assertSame( light, expression2.getSelectNamedBean().getNamedBean().getBean(), "light is correct");
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
+        assertEquals( "Light IL1 is On", expression2.getLongDescription(), "String matches");
 
         Light l = InstanceManager.getDefault(LightManager.class).provide("IL2");
         expression2 = new ExpressionLight("IQDE321", "My light");
         expression2.getSelectNamedBean().setNamedBean(l);
-        Assert.assertTrue("light is correct", l == expression2.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My light", expression2.getUserName());
-        Assert.assertEquals("String matches", "Light IL2 is On", expression2.getLongDescription());
+        assertSame( l, expression2.getSelectNamedBean().getNamedBean().getBean(), "light is correct");
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My light", expression2.getUserName(), "Username matches");
+        assertEquals( "Light IL2 is On", expression2.getLongDescription(), "String matches");
 
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            new ExpressionLight("IQE55:12:XY11", null);
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () -> {
+            var t = new ExpressionLight("IQE55:12:XY11", null);
+            fail("Did not throw, created " + t);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            new ExpressionLight("IQE55:12:XY11", "A name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows( IllegalArgumentException.class, () -> {
+            var t = new ExpressionLight("IQE55:12:XY11", "A name");
+            fail("Did not throw, created " + t);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == expressionLight.getChildCount());
+        assertEquals( 0, expressionLight.getChildCount(), "getChildCount() returns 0");
 
-        boolean hasThrown = false;
-        try {
-            expressionLight.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class, () ->
+            expressionLight.getChild(0),"Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
     @Test
     public void testLightState() {
-        Assert.assertEquals("String matches", "Off", ExpressionLight.LightState.Off.toString());
-        Assert.assertEquals("String matches", "On", ExpressionLight.LightState.On.toString());
-        Assert.assertEquals("String matches", "Other", ExpressionLight.LightState.Other.toString());
+        assertEquals( "Off", ExpressionLight.LightState.Off.toString(), "String matches");
+        assertEquals( "On", ExpressionLight.LightState.On.toString(), "String matches");
+        assertEquals( "Other", ExpressionLight.LightState.Other.toString(), "String matches");
 
-        Assert.assertTrue("objects are equal", ExpressionLight.LightState.Off == ExpressionLight.LightState.get(Light.OFF));
-        Assert.assertTrue("objects are equal", ExpressionLight.LightState.On == ExpressionLight.LightState.get(Light.ON));
-        Assert.assertTrue("objects are equal", ExpressionLight.LightState.Other == ExpressionLight.LightState.get(Light.UNKNOWN));
-        Assert.assertTrue("objects are equal", ExpressionLight.LightState.Other == ExpressionLight.LightState.get(Light.INCONSISTENT));
-        Assert.assertTrue("objects are equal", ExpressionLight.LightState.Other == ExpressionLight.LightState.get(-1));
+        assertSame( ExpressionLight.LightState.Off, ExpressionLight.LightState.get(Light.OFF), "objects are equal");
+        assertSame( ExpressionLight.LightState.On, ExpressionLight.LightState.get(Light.ON), "objects are equal");
+        assertSame( ExpressionLight.LightState.Other, ExpressionLight.LightState.get(Light.UNKNOWN), "objects are equal");
+        assertSame( ExpressionLight.LightState.Other, ExpressionLight.LightState.get(Light.INCONSISTENT), "objects are equal");
+        assertSame( ExpressionLight.LightState.Other, ExpressionLight.LightState.get(-1), "objects are equal");
 
-        Assert.assertEquals("ID matches", Light.ON, ExpressionLight.LightState.On.getID());
-        Assert.assertEquals("ID matches", Light.OFF, ExpressionLight.LightState.Off.getID());
-        Assert.assertEquals("ID matches", -1, ExpressionLight.LightState.Other.getID());
+        assertEquals( Light.ON, ExpressionLight.LightState.On.getID(), "ID matches");
+        assertEquals( Light.OFF, ExpressionLight.LightState.Off.getID(), "ID matches");
+        assertEquals( -1, ExpressionLight.LightState.Other.getID(), "ID matches");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", LogixNG_Category.ITEM == _base.getCategory());
+        assertSame( LogixNG_Category.ITEM, _base.getCategory(), "Category matches");
     }
 
     @Test
@@ -185,16 +183,16 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
 
         expressionLight.getSelectNamedBean().removeNamedBean();
-        Assert.assertTrue("Light".equals(expressionLight.getShortDescription()));
-        Assert.assertTrue("Light '' is On".equals(expressionLight.getLongDescription()));
+        assertEquals( "Light", expressionLight.getShortDescription());
+        assertEquals( "Light '' is On", expressionLight.getLongDescription());
         expressionLight.getSelectNamedBean().setNamedBean(light);
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionLight.setBeanState(ExpressionLight.LightState.Off);
-        Assert.assertTrue("Light IL1 is Off".equals(expressionLight.getLongDescription()));
+        assertEquals( "Light IL1 is Off", expressionLight.getLongDescription());
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.IsNot);
-        Assert.assertTrue("Light IL1 is not Off".equals(expressionLight.getLongDescription()));
+        assertEquals( "Light IL1 is not Off", expressionLight.getLongDescription());
         expressionLight.setBeanState(ExpressionLight.LightState.Other);
-        Assert.assertTrue("Light IL1 is not Other".equals(expressionLight.getLongDescription()));
+        assertEquals( "Light IL1 is not Other", expressionLight.getLongDescription());
     }
 
     @Test
@@ -206,39 +204,39 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG
         conditionalNG.setEnabled(false);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
         // Turn the light on. This should not execute the conditional.
         light.setCommandedState(Light.ON);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
         // Close the switch. This should not execute the conditional.
         light.setCommandedState(Light.OFF);
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
         // Turn the light on. This should execute the conditional.
         light.setCommandedState(Light.ON);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        assertTrue( atomicBoolean.get(), "atomicBoolean is true");
         // Clear the atomic boolean.
         atomicBoolean.set(false);
         // Turn the light off. This should not execute the conditional.
         light.setCommandedState(Light.OFF);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
 
         // Test IS_NOT
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         // Turn the light on. This should not execute the conditional.
         light.setCommandedState(Light.ON);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
         // Turn the light off. This should not execute the conditional.
         light.setCommandedState(Light.OFF);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        assertTrue( atomicBoolean.get(), "atomicBoolean is true");
     }
 
     @Test
@@ -246,18 +244,18 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         expressionLight.unregisterListeners();
 
         Light otherLight = InstanceManager.getDefault(LightManager.class).provide("IL99");
-        Assert.assertNotEquals("Lights are different", otherLight, expressionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertNotEquals( otherLight, expressionLight.getSelectNamedBean().getNamedBean().getBean(), "Lights are different");
         expressionLight.getSelectNamedBean().setNamedBean(otherLight);
-        Assert.assertEquals("Lights are equal", otherLight, expressionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( otherLight, expressionLight.getSelectNamedBean().getNamedBean().getBean(), "Lights are equal");
 
         NamedBeanHandle<Light> otherLightHandle =
                 InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(otherLight.getDisplayName(), otherLight);
         expressionLight.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull("Light is null", expressionLight.getSelectNamedBean().getNamedBean());
+        assertNull( expressionLight.getSelectNamedBean().getNamedBean(), "Light is null");
         expressionLight.getSelectNamedBean().setNamedBean(otherLightHandle);
-        Assert.assertEquals("Lights are equal", otherLight, expressionLight.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertEquals("LightHandles are equal", otherLightHandle, expressionLight.getSelectNamedBean().getNamedBean());
+        assertEquals( otherLight, expressionLight.getSelectNamedBean().getNamedBean().getBean(), "Lights are equal");
+        assertEquals( otherLightHandle, expressionLight.getSelectNamedBean().getNamedBean(), "LightHandles are equal");
     }
 
     @Test
@@ -273,55 +271,49 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         light14.setUserName("Some user name");
 
         expressionLight.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull("light handle is null", expressionLight.getSelectNamedBean().getNamedBean());
+        assertNull( expressionLight.getSelectNamedBean().getNamedBean(), "light handle is null");
 
         expressionLight.getSelectNamedBean().setNamedBean(light11);
-        Assert.assertTrue("light is correct", light11 == expressionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertSame( light11, expressionLight.getSelectNamedBean().getNamedBean().getBean(), "light is correct");
 
         expressionLight.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull("light handle is null", expressionLight.getSelectNamedBean().getNamedBean());
+        assertNull( expressionLight.getSelectNamedBean().getNamedBean(), "light handle is null");
 
         expressionLight.getSelectNamedBean().setNamedBean(lightHandle12);
-        Assert.assertTrue("light handle is correct", lightHandle12 == expressionLight.getSelectNamedBean().getNamedBean());
+        assertSame( lightHandle12, expressionLight.getSelectNamedBean().getNamedBean(), "light handle is correct");
 
         expressionLight.getSelectNamedBean().setNamedBean("A non existent light");
-        Assert.assertNull("light handle is null", expressionLight.getSelectNamedBean().getNamedBean());
+        assertNull( expressionLight.getSelectNamedBean().getNamedBean(), "light handle is null");
         JUnitAppender.assertErrorMessage("Light \"A non existent light\" is not found");
 
         expressionLight.getSelectNamedBean().setNamedBean(light13.getSystemName());
-        Assert.assertTrue("light is correct", light13 == expressionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertSame( light13, expressionLight.getSelectNamedBean().getNamedBean().getBean(), "light is correct");
 
         String userName = light14.getUserName();
-        Assert.assertNotNull("light is not null", userName);
+        assertNotNull( userName, "light is not null");
         expressionLight.getSelectNamedBean().setNamedBean(userName);
-        Assert.assertTrue("light is correct", light14 == expressionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertSame( light14, expressionLight.getSelectNamedBean().getNamedBean().getBean(), "light is correct");
     }
 
     @Test
     public void testSetLightException() {
         // Test setLight() when listeners are registered
-        Assert.assertNotNull("Light is not null", light);
-        Assert.assertNotNull("Light is not null", expressionLight.getSelectNamedBean().getNamedBean());
+        assertNotNull( light, "Light is not null");
+        assertNotNull( expressionLight.getSelectNamedBean().getNamedBean(), "Light is not null");
         expressionLight.registerListeners();
-        boolean thrown = false;
-        try {
-            expressionLight.getSelectNamedBean().setNamedBean("A light");
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        RuntimeException ex = assertThrows( RuntimeException.class, () ->
+            expressionLight.getSelectNamedBean().setNamedBean("A light"),
+                "Expected exception thrown");
+        assertNotNull(ex);
         JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
-        thrown = false;
-        try {
+        ex = assertThrows( RuntimeException.class, () -> {
             Light light99 = InstanceManager.getDefault(LightManager.class).provide("IL99");
             NamedBeanHandle<Light> lightHandle99 =
                     InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(light99.getDisplayName(), light99);
             expressionLight.getSelectNamedBean().setNamedBean(lightHandle99);
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        }, "Expected exception thrown");
+        assertNotNull(ex);
         JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
     }
 
@@ -339,45 +331,41 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
 
         // Get the expression and set the light
-        Assert.assertNotNull("Light is not null", light);
+        assertNotNull( light, "Light is not null");
 
         // Get some other light for later use
         Light otherLight = InstanceManager.getDefault(LightManager.class).provide("IM99");
-        Assert.assertNotNull("Light is not null", otherLight);
-        Assert.assertNotEquals("Light is not equal", light, otherLight);
+        assertNotNull( otherLight, "Light is not null");
+        assertNotEquals( light, otherLight, "Light is not equal");
 
         // Test vetoableChange() for some other propery
         expressionLight.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Light matches", light, expressionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( light, expressionLight.getSelectNamedBean().getNamedBean().getBean(), "Light matches");
 
         // Test vetoableChange() for a string
         expressionLight.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Light matches", light, expressionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( light, expressionLight.getSelectNamedBean().getNamedBean().getBean(), "Light matches");
         expressionLight.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Light matches", light, expressionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( light, expressionLight.getSelectNamedBean().getNamedBean().getBean(), "Light matches");
 
         // Test vetoableChange() for another light
         expressionLight.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherLight, null));
-        Assert.assertEquals("Light matches", light, expressionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( light, expressionLight.getSelectNamedBean().getNamedBean().getBean(), "Light matches");
         expressionLight.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherLight, null));
-        Assert.assertEquals("Light matches", light, expressionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( light, expressionLight.getSelectNamedBean().getNamedBean().getBean(), "Light matches");
 
         // Test vetoableChange() for its own light
-        boolean thrown = false;
-        try {
-            expressionLight.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", light, null));
-        } catch (PropertyVetoException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        PropertyVetoException ex = assertThrows( PropertyVetoException.class, () ->
+            expressionLight.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", light, null)),
+                "Expected exception thrown");
+        assertNotNull(ex);
 
-        Assert.assertEquals("Light matches", light, expressionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( light, expressionLight.getSelectNamedBean().getNamedBean().getBean(), "Light matches");
         expressionLight.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", light, null));
-        Assert.assertNull("Light is null", expressionLight.getSelectNamedBean().getNamedBean());
+        assertNull( expressionLight.getSelectNamedBean().getNamedBean(), "Light is null");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -419,12 +407,12 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         expressionLight.getSelectNamedBean().setNamedBean(light);
         light.setCommandedState(Light.ON);
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

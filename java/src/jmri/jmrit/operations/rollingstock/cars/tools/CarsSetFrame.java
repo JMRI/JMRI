@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.JTable;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.gui.CarSetFrame;
 import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableModel;
 import jmri.util.swing.JmriJOptionPane;

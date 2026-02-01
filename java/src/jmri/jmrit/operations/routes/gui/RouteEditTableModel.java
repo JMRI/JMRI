@@ -14,6 +14,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 
+import jmri.jmrit.operations.OperationsTableModel;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -27,9 +28,9 @@ import jmri.util.table.ButtonRenderer;
 /**
  * Table Model for edit of route locations used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2013, 2025
+ * @author Daniel Boudreau Copyright (C) 2008, 2013, 2025, 2026
  */
-public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
+public class RouteEditTableModel extends OperationsTableModel implements PropertyChangeListener {
 
     // Defines the columns
     private static final int ID_COLUMN = 0;
@@ -40,7 +41,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     private static final int PICKUP_COLUMN = RANDOM_CONTROL_COLUMN + 1;
     private static final int DROP_COLUMN = PICKUP_COLUMN + 1;
     private static final int LOCAL_COLUMN = DROP_COLUMN + 1;
-    private static final int DEPARTURE_TIME_COLUMN = LOCAL_COLUMN + 1;
+    private static final int DEPARTURE_DAY_COLUMN = LOCAL_COLUMN + 1;
+    private static final int DEPARTURE_TIME_COLUMN = DEPARTURE_DAY_COLUMN + 1;
     private static final int TRAVEL_COLUMN = DEPARTURE_TIME_COLUMN + 1;
     private static final int MAXLENGTH_COLUMN = TRAVEL_COLUMN + 1;
     private static final int GRADE_COLUMN = MAXLENGTH_COLUMN + 1;
@@ -53,7 +55,6 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
     private static final int HIGHEST_COLUMN = DELETE_COLUMN + 1;
 
-    private JTable _table;
     private Route _route;
     private RouteEditFrame _frame;
     List<RouteLocation> _routeList = new ArrayList<>();
@@ -86,7 +87,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         initTable(table);
     }
 
-    private void initTable(JTable table) {
+    @Override
+    public void initTable(JTable table) {
         // Use XTableColumnModel so we can control which columns are visible
         XTableColumnModel tcm = new XTableColumnModel();
         _table.setColumnModel(tcm);
@@ -124,6 +126,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(DROP_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(LOCAL_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(TRAVEL_COLUMN).setPreferredWidth(65);
+        table.getColumnModel().getColumn(DEPARTURE_DAY_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(DEPARTURE_TIME_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(MAXLENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(GRADE_COLUMN).setPreferredWidth(50);
@@ -175,6 +178,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 return Bundle.getMessage("LocalMoves");
             case TRAVEL_COLUMN:
                 return Bundle.getMessage("Travel");
+            case DEPARTURE_DAY_COLUMN:
+                return Bundle.getMessage("Day");
             case DEPARTURE_TIME_COLUMN:
                 return Bundle.getMessage("Time");
             case MAXLENGTH_COLUMN:
@@ -217,6 +222,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case PICKUP_COLUMN:
             case DROP_COLUMN:
             case LOCAL_COLUMN:
+            case DEPARTURE_DAY_COLUMN:
             case DEPARTURE_TIME_COLUMN:
                 return JComboBox.class;
             case COMMENT_COLUMN:
@@ -240,6 +246,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case DROP_COLUMN:
             case LOCAL_COLUMN:
             case TRAVEL_COLUMN:
+            case DEPARTURE_DAY_COLUMN:
             case DEPARTURE_TIME_COLUMN:
             case MAXLENGTH_COLUMN:
             case GRADE_COLUMN:
@@ -302,10 +309,16 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 setToolTip(Bundle.getMessage("TipColTravelTime"), col);
                 return rl.getWait() + Setup.getTravelTime();
             }
+            case DEPARTURE_DAY_COLUMN: {
+                JComboBox<String> cb = getDayComboBox();
+                cb.setToolTipText(Bundle.getMessage("TipDepartureDay", rl.getName()));
+                cb.setSelectedItem(rl.getDepartureTimeDay());
+                return cb;
+            }
             case DEPARTURE_TIME_COLUMN: {
                 JComboBox<String> cb = getTimeComboBox();
                 cb.setToolTipText(Bundle.getMessage("TipDepartureTime", rl.getName()));
-                cb.setSelectedItem(rl.getDepartureTime());
+                cb.setSelectedItem(rl.getDepartureTimeHourMinutes());
                 return cb;
             }
             case MAXLENGTH_COLUMN:
@@ -379,6 +392,9 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 break;
             case TRAVEL_COLUMN:
                 setTravel(value, rl);
+                break;
+            case DEPARTURE_DAY_COLUMN:
+                setDepartureDay(value, rl);
                 break;
             case DEPARTURE_TIME_COLUMN:
                 setDepartureTime(value, rl);
@@ -476,7 +492,11 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     private void setDepartureTime(Object value, RouteLocation rl) {
-        rl.setDepartureTime(((String) ((JComboBox<?>) value).getSelectedItem()));
+        rl.setDepartureTimeHourMinutes((String) ((JComboBox<?>) value).getSelectedItem());
+    }
+    
+    private void setDepartureDay(Object value, RouteLocation rl) {
+        rl.setDepartureTimeDay((String) ((JComboBox<?>) value).getSelectedItem());
     }
 
     private void setMaxTrainLength(Object value, RouteLocation rl) {
@@ -599,26 +619,23 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
     protected JComboBox<String> getTimeComboBox() {
         JComboBox<String> timeBox = new JComboBox<>();
-        String hour;
-        String minute;
         timeBox.addItem("");
         for (int i = 0; i < 24; i++) {
-            if (i < 10) {
-                hour = "0" + Integer.toString(i);
-            } else {
-                hour = Integer.toString(i);
-            }
-            for (int j = 0; j < 60; j += 1) {
-                if (j < 10) {
-                    minute = "0" + Integer.toString(j);
-                } else {
-                    minute = Integer.toString(j);
-                }
-
+            String hour = String.format("%02d", i);
+            for (int j = 0; j < 60; j++) {
+                String minute = String.format("%02d", j);
                 timeBox.addItem(hour + ":" + minute);
             }
         }
         return timeBox;
+    }
+    
+    protected JComboBox<String> getDayComboBox() {
+        JComboBox<String> dayBox = new JComboBox<>();
+        for (int i = 0; i < Control.numberOfDays; i++) {
+            dayBox.addItem(Integer.toString(i));
+        }
+        return dayBox;
     }
 
     private void setLocationToolTip(RouteLocation rl) {
@@ -627,14 +644,6 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             text = Bundle.getMessage("TipTrainTerminates", rl.getName());
         }
         setToolTip(text, NAME_COLUMN);
-    }
-    
-    private void setToolTip(String text, int col) {
-        XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        JComponent jC = (JComponent) tcm.getColumnByModelIndex(col).getCellRenderer();
-        if (jC != null) {
-            jC.setToolTipText(text);
-        }
     }
 
     // this table listens for changes to a route and it's locations

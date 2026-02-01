@@ -1,5 +1,13 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import jmri.StringIO;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -8,8 +16,7 @@ import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.implementation.DefaultMaleStringExpressionSocket.StringExpressionDebugConfig;
 import jmri.util.JUnitAppender;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test AbstractStringExpression
@@ -18,75 +25,71 @@ import org.junit.Test;
  */
 public abstract class AbstractStringExpressionTestBase extends AbstractBaseTestBase {
 
-    public abstract NamedBean createNewBean(String systemName) throws Exception;
-    
+    public abstract NamedBean createNewBean(String systemName);
+
     @Test
-    public void testBadSystemName() throws Exception {
-        boolean hasThrown = false;
-        try {
+    public void testBadSystemName() {
+        IllegalArgumentException e = assertThrows( IllegalArgumentException.class, () -> {
             // Create a bean with bad system name. This must throw an exception
             NamedBean bean = createNewBean("IQ111");
             // We should never get here.
-            Assert.assertNotNull("Bean is not null", bean);
-        } catch (IllegalArgumentException e) {
-            Assert.assertEquals("Exception is correct", "system name is not valid", e.getMessage());
-            hasThrown = true;
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+            fail("Bean is not null " +  bean);
+        });
+        assertEquals( "system name is not valid", e.getMessage(), "Exception is correct");
     }
-    
+
     @Test
     public void testGetBeanType() {
-        Assert.assertTrue("String matches", "String expression".equals(((StringExpressionBean)_base).getBeanType()));
+        assertEquals( "String expression", ((StringExpressionBean)_base).getBeanType(), "String matches");
     }
-    
+
     @Test
     public void testState() throws JmriException {
         StringExpressionBean _expression = (StringExpressionBean)_base;
         _expression.setState(StringIO.INCONSISTENT);
         JUnitAppender.assertWarnMessage("Unexpected call to setState in AbstractStringExpression.");
-        Assert.assertTrue("State matches", StringIO.INCONSISTENT == _expression.getState());
+        assertSame( StringIO.INCONSISTENT, _expression.getState(), "State matches");
         JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractStringExpression.");
         _expression.setState(StringIO.UNKNOWN);
         JUnitAppender.assertWarnMessage("Unexpected call to setState in AbstractStringExpression.");
-        Assert.assertTrue("State matches", StringIO.UNKNOWN == _expression.getState());
+        assertSame( StringIO.UNKNOWN, _expression.getState(), "State matches");
         JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractStringExpression.");
         _expression.setState(StringIO.INCONSISTENT);
         JUnitAppender.assertWarnMessage("Unexpected call to setState in AbstractStringExpression.");
-        Assert.assertTrue("State matches", StringIO.INCONSISTENT == _expression.getState());
+        assertSame( StringIO.INCONSISTENT, _expression.getState(), "State matches");
         JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractStringExpression.");
     }
-    
+
     @Test
-    public void testEnableAndEvaluate() throws Exception {
+    public void testEnableAndEvaluate() throws JmriException {
         StringExpressionBean _expression = (StringExpressionBean)_baseMaleSocket;
-        Assert.assertTrue("male socket is enabled", _baseMaleSocket.isEnabled());
-        Assert.assertNotEquals("Strings don't match", "", _expression.evaluate());
+        assertTrue( _baseMaleSocket.isEnabled(), "male socket is enabled");
+        assertNotEquals( "", _expression.evaluate(), "Strings don't match");
         _baseMaleSocket.setEnabled(false);
-        Assert.assertFalse("male socket is disabled", _baseMaleSocket.isEnabled());
-        Assert.assertEquals("Strings match", "", _expression.evaluate());
+        assertFalse( _baseMaleSocket.isEnabled(), "male socket is disabled");
+        assertEquals( "", _expression.evaluate(), "Strings match");
         _baseMaleSocket.setEnabled(true);
-        Assert.assertTrue("male socket is enabled", _baseMaleSocket.isEnabled());
-        Assert.assertNotEquals("Strings don't match", "", _expression.evaluate());
+        assertTrue( _baseMaleSocket.isEnabled(), "male socket is enabled");
+        assertNotEquals( "", _expression.evaluate(), "Strings don't match");
     }
-    
+
     @Test
-    public void testDebugConfig() throws Exception {
+    public void testDebugConfig() throws JmriException {
         String value1 = "Something else";
         String value2 = "Some other thing";
         StringExpressionBean _expression = (StringExpressionBean)_baseMaleSocket;
-        Assert.assertNotEquals("Strings don't match", value1, _expression.evaluate());
-        Assert.assertNotEquals("Strings don't match", value2, _expression.evaluate());
+        assertNotEquals( value1, _expression.evaluate(), "Strings don't match");
+        assertNotEquals( value2, _expression.evaluate(), "Strings don't match");
         StringExpressionDebugConfig debugConfig = new StringExpressionDebugConfig();
         debugConfig._forceResult = true;
         debugConfig._result = value1;
         _baseMaleSocket.setDebugConfig(debugConfig);
-        Assert.assertEquals("String match", value1, _expression.evaluate());
+        assertEquals( value1, _expression.evaluate(), "String match");
         debugConfig._result = value2;
-        Assert.assertEquals("String match", value2, _expression.evaluate());
+        assertEquals( value2, _expression.evaluate(), "String match");
         debugConfig._forceResult = false;
-        Assert.assertNotEquals("String don't match", value1, _expression.evaluate());
-        Assert.assertNotEquals("String don't match", value2, _expression.evaluate());
+        assertNotEquals( value1, _expression.evaluate(), "String don't match");
+        assertNotEquals( value2, _expression.evaluate(), "String don't match");
     }
-    
+
 }

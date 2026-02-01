@@ -2,7 +2,6 @@ package jmri.jmrit.z21server;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class Service40Test {
     @Test
     public void testCtor() {
         Service40 obj = new Service40();
-        Assert.assertNotNull("exists", obj);
+        Assertions.assertNotNull( obj, "exists");
     }
 
     @BeforeEach
@@ -24,7 +23,7 @@ public class Service40Test {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

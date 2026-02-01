@@ -1,6 +1,8 @@
 package jmri.jmrit.beantable;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
@@ -13,10 +15,11 @@ import jmri.jmrix.cmri.serial.SerialTurnoutManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
+
 import org.junit.jupiter.api.*;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -27,8 +30,9 @@ import org.netbeans.jemmy.operators.*;
 public class TurnoutTableWindowTest {
 
     @Test
-    public void testShowAndClose() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testShowAndClose() {
+
         TurnoutManager cmri = new SerialTurnoutManager(new CMRISystemConnectionMemo("C", "CMRI"));
         InstanceManager.setTurnoutManager(cmri);
         TurnoutManager internal = InstanceManager.getDefault(InternalSystemConnectionMemo.class).getTurnoutManager();
@@ -44,7 +48,7 @@ public class TurnoutTableWindowTest {
         JCheckBoxOperator jcbo = new JCheckBoxOperator(jfo,Bundle.getMessage("AutomaticRetry"));
         // Click checkbox to select automatic retry
         jcbo.doClick();
-        Assert.assertNotNull("AR selected", jcbo.getSelectedObjects());
+        assertNotNull( jcbo.getSelectedObjects(), "AR selected");
 
         // Find the Show Feedback information checkbox
         JLabelOperator jlo = new JLabelOperator(jfo,Bundle.getMessage("ShowFeedbackInfo"));
@@ -52,7 +56,7 @@ public class TurnoutTableWindowTest {
         jcbo = new JCheckBoxOperator(jcb);
         // Click checkbox to select Show feedback information
         jcbo.doClick();
-        Assert.assertNotNull("FBbox selected", jcbo.getSelectedObjects());
+        assertNotNull( jcbo.getSelectedObjects(), "FBbox selected");
 
         // Find the Show Lock information checkbox
         jlo = new JLabelOperator(jfo,Bundle.getMessage("ShowLockInfo"));
@@ -60,7 +64,7 @@ public class TurnoutTableWindowTest {
         jcbo = new JCheckBoxOperator(jcb);
         // Click checkbox to select Show feedback information
         jcbo.doClick();
-        Assert.assertNotNull("LKbox selected", jcbo.getSelectedObjects());
+        assertNotNull( jcbo.getSelectedObjects(), "LKbox selected");
 
         // Find the Show Turnout Speed details checkbox
         jlo = new JLabelOperator(jfo,Bundle.getMessage("ShowTurnoutSpeedDetails"));
@@ -68,7 +72,7 @@ public class TurnoutTableWindowTest {
         jcbo = new JCheckBoxOperator(jcb);
         // Click checkbox to select Show feedback information
         jcbo.doClick();
-        Assert.assertNotNull("TSbox selected", jcbo.getSelectedObjects());
+        assertNotNull( jcbo.getSelectedObjects(), "TSbox selected");
 
         // Find the Add... button
         JButtonOperator jbo = new JButtonOperator(jfo,Bundle.getMessage("ButtonAdd"));
@@ -81,7 +85,7 @@ public class TurnoutTableWindowTest {
         // Find hardware address field
         jlo = new JLabelOperator(afo,Bundle.getMessage("LabelHardwareAddress"));
         JTextField hwAddressField = (JTextField) jlo.getLabelFor();
-        Assert.assertNotNull("hwAddressTextField", hwAddressField);
+        assertNotNull( hwAddressField, "hwAddressTextField");
 
         // Find system combobox
         JComboBoxOperator cbo = new JComboBoxOperator(afo); // finds first combo box.
@@ -91,7 +95,7 @@ public class TurnoutTableWindowTest {
         hwAddressField.setText("a");
         // test silent entry validation
         boolean _valid = hwAddressField.getInputVerifier().verify(hwAddressField);
-        Assert.assertEquals("invalid entry", false, _valid);
+        assertFalse( _valid, "invalid entry");
 
         // set address to "1"
         // The following line works on the CI servers, but not in some standalone cases
@@ -101,11 +105,12 @@ public class TurnoutTableWindowTest {
         jbo = new JButtonOperator(afo,Bundle.getMessage("ButtonCreate"));
         jbo.setEnabled(true); // skip validation
 
-        Assert.assertEquals("name content", "1", hwAddressField.getText());
+        assertEquals( "1", hwAddressField.getText(), "name content");
 
         cbo.selectItem("Internal");
         jtfo.setText("1");
-        Assert.assertEquals("Selected system item", internal, cbo.getSelectedItem()); // this connection type is always available
+        assertEquals( internal, cbo.getSelectedItem(),
+                "Selected system item"); // this connection type is always available
 
         // Find the Add Create button
         jbo = new JButtonOperator(afo,Bundle.getMessage("ButtonCreate"));
@@ -129,15 +134,16 @@ public class TurnoutTableWindowTest {
         efo.requestClose();
 
         // Ask to close turnout table window
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
+        jfo.waitClosed();
 
         // check that turnout was created
-        Assert.assertNotNull(jmri.InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
+        assertNotNull(jmri.InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
     }
 
     @Test
-    public void testMenus() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testMenus() {
 
         TurnoutTableAction a = new TurnoutTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
@@ -156,22 +162,22 @@ public class TurnoutTableWindowTest {
         JemmyUtil.pressDialogButton(Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"), Bundle.getMessage("ButtonCancel"));
 
         // Ask to close table window
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
+        jfo.waitClosed();
 
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
-        JUnitUtil.resetWindows(false,false);
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

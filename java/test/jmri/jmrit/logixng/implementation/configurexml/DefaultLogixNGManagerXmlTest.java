@@ -1,5 +1,10 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.LogixNG;
@@ -7,12 +12,13 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.implementation.DefaultLogixNGManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.Element;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test DefaultLogixNGManagerXml
@@ -23,14 +29,14 @@ public class DefaultLogixNGManagerXmlTest {
     @Test
     public void testCTor() {
         DefaultLogixNGManagerXml b = new DefaultLogixNGManagerXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
     }
 
-    @Ignore("Fix later")
+    @Disabled("Fix later")
     @Test
     public void testLoad() {
         DefaultLogixNGManagerXml b = new DefaultLogixNGManagerXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
 
         // Test loading a logixng without system name
         Element e = new Element("LogixNGs");
@@ -66,8 +72,8 @@ public class DefaultLogixNGManagerXmlTest {
         e = new Element("LogixNGs");
         e2 = new Element("LogixNG");
         String systemName = "IQ1001";
-        Assert.assertNotNull("bean exists",
-                InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName(systemName));
+        assertNotNull( InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName(systemName),
+            "bean exists");
         e2.addContent(new Element("systemName").addContent(systemName));
         e.addContent(e2);
         b.loadLogixNGs(e);
@@ -82,8 +88,8 @@ public class DefaultLogixNGManagerXmlTest {
         e.addContent(e2);
         b.loadLogixNGs(e);
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ1003");
-        Assert.assertNotNull("bean is not null", logixNG);
-        Assert.assertFalse("bean is not enabled", logixNG.isEnabled());
+        assertNotNull( logixNG, "bean is not null");
+        assertFalse( logixNG.isEnabled(), "bean is not enabled");
 
         // Test load LogixNG with attribute "enable" as invalid value
         e = new Element("LogixNGs");
@@ -95,8 +101,8 @@ public class DefaultLogixNGManagerXmlTest {
         e.addContent(e2);
         b.loadLogixNGs(e);
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ1004");
-        Assert.assertNotNull("bean is not null", logixNG);
-        Assert.assertFalse("bean is not enabled", logixNG.isEnabled());
+        assertNotNull( logixNG, "bean is not null");
+        assertFalse( logixNG.isEnabled(), "bean is not enabled");
 
         // Test load LogixNG with attribute "enable" as yes
         e = new Element("LogixNGs");
@@ -108,8 +114,8 @@ public class DefaultLogixNGManagerXmlTest {
         e.addContent(e2);
         b.loadLogixNGs(e);
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ1005");
-        Assert.assertNotNull("bean is not null", logixNG);
-        Assert.assertTrue("bean is enabled", logixNG.isEnabled());
+        assertNotNull( logixNG, "bean is not null");
+        assertTrue( logixNG.isEnabled(), "bean is enabled");
 
 /*
         // Test loading the same class twice, in order to check field "xmlClasses"
@@ -148,12 +154,12 @@ public class DefaultLogixNGManagerXmlTest {
     @Test
     public void testStore() {
         DefaultLogixNGManagerXml b = new DefaultLogixNGManagerXml();
-        Assert.assertNotNull("exists", b);
+        assertNotNull( b, "exists");
         // Calling store() with null is OK.
         b.store((Object)null);
     }
 
-    @Ignore("LogixNG thread is already started so this test fails")
+    @Disabled("LogixNG thread is already started so this test fails")
     @Test
     public void testReplaceActionManagerWithoutConfigManager() {
 /*
@@ -175,28 +181,28 @@ public class DefaultLogixNGManagerXmlTest {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNGS);
         }
 
-        Assert.assertTrue("manager is a MyManager",
-                InstanceManager.getDefault(LogixNG_Manager.class)
-                        instanceof MyManager);
+        assertInstanceOf( MyManager.class,
+            InstanceManager.getDefault(LogixNG_Manager.class),
+                "manager is a MyManager");
 
         // Test replacing the manager
         DefaultLogixNGManagerXml b = new DefaultLogixNGManagerXml();
         b.replaceLogixNGManager();
 
-        Assert.assertFalse("manager is not a MyManager",
-                InstanceManager.getDefault(LogixNG_Manager.class)
-                        instanceof MyManager);
+        assertFalse( InstanceManager.getDefault(LogixNG_Manager.class)
+            instanceof MyManager,
+                "manager is not a MyManager");
 
         // Test replace the manager when where is no manager registered yet
         InstanceManager.deregister(
                 InstanceManager.getDefault(LogixNG_Manager.class),
                 LogixNG_Manager.class);
 
-        Assert.assertNotNull("manager is not null",
-                InstanceManager.getDefault(LogixNG_Manager.class));
+        assertNotNull( InstanceManager.getDefault(LogixNG_Manager.class),
+            "manager is not null");
     }
 
-    @Ignore("LogixNG thread is already started so this test fails")
+    @Disabled("LogixNG thread is already started so this test fails")
 //    @Ignore("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
     @Test
     public void testReplaceActionManagerWithConfigManager() {
@@ -221,21 +227,20 @@ public class DefaultLogixNGManagerXmlTest {
             cmOD.registerConfig(pManager, jmri.Manager.LOGIXNGS);
         }
 
-        Assert.assertTrue("manager is a MyManager",
-                InstanceManager.getDefault(LogixNG_Manager.class)
-                        instanceof MyManager);
+        assertInstanceOf( MyManager.class,
+                InstanceManager.getDefault(LogixNG_Manager.class),
+                "manager is a MyManager");
 
         // Test replacing the manager
         DefaultLogixNGManagerXml b = new DefaultLogixNGManagerXml();
         b.replaceLogixNGManager();
 
-        Assert.assertFalse("manager is not a MyManager",
-                InstanceManager.getDefault(LogixNG_Manager.class)
-                        instanceof MyManager);
+        assertFalse( InstanceManager.getDefault(LogixNG_Manager.class)
+            instanceof MyManager,
+                "manager is not a MyManager");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -244,7 +249,7 @@ public class DefaultLogixNGManagerXmlTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
@@ -277,7 +282,7 @@ public class DefaultLogixNGManagerXmlTest {
         }
     }
 */
-    class MyManager extends DefaultLogixNGManager {
+    static class MyManager extends DefaultLogixNGManager {
     }
 
 }

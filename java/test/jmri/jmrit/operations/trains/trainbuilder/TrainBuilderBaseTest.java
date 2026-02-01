@@ -6,9 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 
@@ -71,18 +69,18 @@ public class TrainBuilderBaseTest extends OperationsTestCase {
         c.setLocation(A, interchangeTrack);
 
         // and set the car list up.
-        tbb._carList = new java.util.ArrayList<>();
-        tbb._carList.add(a);
-        tbb._carList.add(b);
-        tbb._carList.add(c);
+        tbb.setCarList(new java.util.ArrayList<>());
+        tbb.getCarList().add(a);
+        tbb.getCarList().add(b);
+        tbb.getCarList().add(c);
 
         try {
             // with Track.NORMAL order, the car you ask for is the
             // car you get.
             sortCarsOnFifoLifoTracks.invoke(tbb);
-            Assert.assertEquals("NORMAL Order, 123 first", a, tbb._carList.get(0));
-            Assert.assertEquals("NORMAL Order, 321 second", b, tbb._carList.get(1));
-            Assert.assertEquals("NORMAL Order, 111 last", c, tbb._carList.get(2));
+            Assert.assertEquals("NORMAL Order, 123 first", a, tbb.getCarList().get(0));
+            Assert.assertEquals("NORMAL Order, 321 second", b, tbb.getCarList().get(1));
+            Assert.assertEquals("NORMAL Order, 111 last", c, tbb.getCarList().get(2));
         } catch (java.lang.IllegalAccessException iae) {
             Assert.fail("Could not access method getCarOrder in TrackBuilder class");
         } catch (java.lang.reflect.InvocationTargetException ite) {
@@ -129,17 +127,17 @@ public class TrainBuilderBaseTest extends OperationsTestCase {
         c.setLocation(A, interchangeTrack);
 
         // and set the car list up.
-        tbb._carList = new java.util.ArrayList<>();
-        tbb._carList.add(c);
-        tbb._carList.add(a);
-        tbb._carList.add(b);
+        tbb.setCarList(new java.util.ArrayList<>());
+        tbb.getCarList().add(c);
+        tbb.getCarList().add(a);
+        tbb.getCarList().add(b);
 
         try {
             // FIFO
             sortCarsOnFifoLifoTracks.invoke(tbb);
-            Assert.assertEquals("FIFO Order, 123 first", a, tbb._carList.get(0));
-            Assert.assertEquals("FIFO Order, 321 second", b, tbb._carList.get(1));
-            Assert.assertEquals("FIFO Order, 111 last", c, tbb._carList.get(2));
+            Assert.assertEquals("FIFO Order, 123 first", a, tbb.getCarList().get(0));
+            Assert.assertEquals("FIFO Order, 321 second", b, tbb.getCarList().get(1));
+            Assert.assertEquals("FIFO Order, 111 last", c, tbb.getCarList().get(2));
         } catch (java.lang.IllegalAccessException iae) {
             Assert.fail("Could not access method getCarOrder in TrackBuilder class");
         } catch (java.lang.reflect.InvocationTargetException ite) {
@@ -186,17 +184,17 @@ public class TrainBuilderBaseTest extends OperationsTestCase {
         c.setLocation(A, interchangeTrack);
 
         // and set the car list up.
-        tbb._carList = new java.util.ArrayList<>();
-        tbb._carList.add(c);
-        tbb._carList.add(a);
-        tbb._carList.add(b);
+        tbb.setCarList(new java.util.ArrayList<>());
+        tbb.getCarList().add(c);
+        tbb.getCarList().add(a);
+        tbb.getCarList().add(b);
 
         try {
             // LIFO
             sortCarsOnFifoLifoTracks.invoke(tbb);
-            Assert.assertEquals("LIFO Order, 123 first", c, tbb._carList.get(0));
-            Assert.assertEquals("LIFO Order, 321 second", b, tbb._carList.get(1));
-            Assert.assertEquals("LIFO Order, 111 last", a, tbb._carList.get(2));
+            Assert.assertEquals("LIFO Order, 123 first", c, tbb.getCarList().get(0));
+            Assert.assertEquals("LIFO Order, 321 second", b, tbb.getCarList().get(1));
+            Assert.assertEquals("LIFO Order, 111 last", a, tbb.getCarList().get(2));
         } catch (java.lang.IllegalAccessException iae) {
             Assert.fail("Could not access method getCarOrder in TrackBuilder class");
         } catch (java.lang.reflect.InvocationTargetException ite) {

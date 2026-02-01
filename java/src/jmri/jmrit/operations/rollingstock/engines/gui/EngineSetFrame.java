@@ -145,6 +145,12 @@ public class EngineSetFrame extends RollingStockSetFrame<Engine> {
     }
 
     protected boolean change(Engine engine) {
+        if (engine.isClone()) {
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("RsIsClone", engine.toString()),
+                    Bundle.getMessage("DoNotModifyClone"), JmriJOptionPane.WARNING_MESSAGE);
+            return false;
+        }
         // consist
         if (consistComboBox.getSelectedItem() != null) {
             if (consistComboBox.getSelectedItem().equals(ConsistManager.NONE)) {

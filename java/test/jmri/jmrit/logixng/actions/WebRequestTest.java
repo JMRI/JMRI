@@ -25,8 +25,6 @@ import jmri.jmrit.logixng.util.LineEnding;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.*;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 /**
@@ -508,49 +506,42 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
     private void storeXmlFile() throws Exception {
 
         jmri.ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm == null) {
-            log.error("Unable to get default configure manager");
-        } else {
-            FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
-            File firstFile = new File(FileUtil.getUserFilesPath() + "temp/" + "WebRequest_temp.xml");
-            File secondFile = new File(FileUtil.getUserFilesPath() + "temp/" + "WebRequest.xml");
-            log.info("Temporary first file: {}", firstFile.getAbsoluteFile());
-            log.info("Temporary second file: {}", secondFile.getAbsoluteFile());
+        assertNotNull( cm, "Unable to get default configure manager");
+
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
+        File firstFile = new File(FileUtil.getUserFilesPath() + "temp/" + "WebRequest_temp.xml");
+        File secondFile = new File(FileUtil.getUserFilesPath() + "temp/" + "WebRequest.xml");
+        log.info("Temporary first file: {}", firstFile.getAbsoluteFile());
+        log.info("Temporary second file: {}", secondFile.getAbsoluteFile());
 //            System.out.format("Temporary first file: %s%n", firstFile.getAbsoluteFile());
 //            System.out.format("Temporary second file: %s%n", secondFile.getAbsoluteFile());
 
-            boolean results = cm.storeUser(firstFile);
-            log.debug(results ? "store was successful" : "store failed");
-            if (!results) {
-                log.error("Failed to store panel");
-                fail("Failed to store panel");
-            }
+        assertTrue(cm.storeUser(firstFile), "Failed to store panel");
 
-            // Add the header comment to the xml file
-            addHeader(firstFile, secondFile);
+        // Add the header comment to the xml file
+        addHeader(firstFile, secondFile);
 
-            boolean dataHasChanged = true;
+        boolean dataHasChanged = true;
 
-            File fileInDocumentationFolder =
-                    new File(FileUtil.getProgramPath() + "help/en/html/tools/logixng/reference/WebRequestExample/" + "WebRequest.xml");
+        File fileInDocumentationFolder =
+                new File(FileUtil.getProgramPath() + "help/en/html/tools/logixng/reference/WebRequestExample/" + "WebRequest.xml");
 
-            try {
-                // Ignore Timebase changes
-                InstanceManager.getDefault(ShutdownPreferences.class).setIgnoreTimebase(true);
-                // Note: The comparision is made with the first xml file that doesn't have the header comment.
-                dataHasChanged = checkFile(fileInDocumentationFolder, firstFile);
-            } catch (FileNotFoundException e) {
-                // Ignore this. If this happens, just copy the new file to the documentation folder
-                System.out.format("File not found!!! %s%n", e.getMessage());
-            }
-
-            if (dataHasChanged) {
-                java.nio.file.Files.copy(secondFile.toPath(), fileInDocumentationFolder.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-//                System.out.format("File copied from %s to %s%n", secondFile, fileInDocumentationFolder);
-            }
-
-//            System.out.format("File compare %s with %s resulted in: %b%n", fileInDocumentationFolder, secondFile, dataHasChanged);
+        try {
+            // Ignore Timebase changes
+            InstanceManager.getDefault(ShutdownPreferences.class).setIgnoreTimebase(true);
+            // Note: The comparision is made with the first xml file that doesn't have the header comment.
+            dataHasChanged = checkFile(fileInDocumentationFolder, firstFile);
+        } catch (FileNotFoundException e) {
+            // Ignore this. If this happens, just copy the new file to the documentation folder
+            System.out.format("File not found!!! %s%n", e.getMessage());
         }
+
+        if (dataHasChanged) {
+            java.nio.file.Files.copy(secondFile.toPath(), fileInDocumentationFolder.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+//            System.out.format("File copied from %s to %s%n", secondFile, fileInDocumentationFolder);
+        }
+
+//        System.out.format("File compare %s with %s resulted in: %b%n", fileInDocumentationFolder, secondFile, dataHasChanged);
     }
 
 
@@ -578,8 +569,6 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
     }
 
 
-    // The minimal setup for log4J
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, ParserException, IOException {
         JUnitUtil.setUp();
@@ -614,7 +603,6 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         _logixNG.setEnabled(true);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
