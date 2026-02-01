@@ -34,7 +34,7 @@ public class PaneSetTest {
         JUnitUtil.waitFor(()->{return pc.threadCount.get() == 0;}, "PaneProgFrame threads done");
 
         PaneSet t = new PaneSet(pc, re, p);
-        Assertions.assertNotNull( t, "exists");
+        Assertions.assertNotNull(t, "exists");
         JUnitUtil.waitFor(10);
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         pc.dispatchEvent(new WindowEvent(pc, WindowEvent.WINDOW_CLOSING));
@@ -51,6 +51,7 @@ public class PaneSetTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetWindows(false, false); // Detachable frame : "Comments : test frame"
         JUnitUtil.tearDown();
     }
 
