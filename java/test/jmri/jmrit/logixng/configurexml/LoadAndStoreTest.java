@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.configurexml.*;
 
 import java.io.File;
@@ -48,8 +51,9 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
-    public void loadAndStoreTest(File file, boolean pass) throws Exception {
-        super.loadLoadStoreFileCheck(file);
+    public void loadAndStoreTest(File file, boolean pass) {
+        assertDoesNotThrow( () ->
+            super.loadLoadStoreFileCheck(file));
     }
 
     public LoadAndStoreTest() {
@@ -64,8 +68,9 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
         // We do this to test that DestinationPoints are stored in the file
         // as system name, not as user name.
         DestinationPoints dp1 = InstanceManager.getDefault(EntryExitPairs.class).getBySystemName("DP1");
+        assertNotNull(dp1);
         NamedBeanHandleManager nbm = InstanceManager.getDefault(NamedBeanHandleManager.class);
-        NamedBeanHandle nb = nbm.getNamedBeanHandle(dp1.getSystemName(), dp1);
+        NamedBeanHandle<?> nb = nbm.getNamedBeanHandle(dp1.getSystemName(), dp1);
         nb.setName(dp1.getUserName());
     }
 
