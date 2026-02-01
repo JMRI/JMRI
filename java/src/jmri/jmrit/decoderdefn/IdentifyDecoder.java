@@ -37,8 +37,6 @@ import org.slf4j.LoggerFactory;
  * <li>QSI: (mfgID == 113) write {@literal 254=>CV49}, write {@literal 4=>CV50},
  *  then CV56 is high byte, write {@literal 5=>CV50}, then CV56 is low byte of
  *  ID</li>
- * <li>PIKO: (mfgID = 168) write {@literal 254=>CV49}, write {@literal 4=>CV50},
- * then read CV315, CV316, CV317 and do a decimal concatenation
  * <li>SoundTraxx: (mfgID == 141, modelID == 70, 71 or 72) The product ID is made from
  *   <ul>
  *    <li>CV 256 bits 0-7
