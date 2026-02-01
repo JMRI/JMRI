@@ -307,26 +307,26 @@
         field</li>
 
         <li><strong>Memory</strong> - selects a label showing the contents of the memory whose name
-        is entered on the right</li>
+        is selected on the right</li>
 
         <li><strong>Global Variable</strong> - selects a label showing the contents of the LogixNG
-        Global Variable whose name is entered on the right<span class="since">since 5.3.1</span></li>
+        Global Variable whose name is selected on the right<span class="since">since 5.3.1</span></li>
 
         <li><strong>Block Contents</strong> - selects a label showing the contents of the block
-        whose name is entered</li>
+        whose name is selected</li>
 
         <li><strong>Multi-sensor</strong> - selects a multi-sensor--A dialog is displayed allowing
         the multi-sensor to be defined. Before creating the multi-sensor, a name must be entered
         for every sensor to define the multi-sensor completely.</li>
 
         <li><strong>Sensor Icon</strong> - selects a sensor icon showing the sensor whose name is
-        entered on the right.</li>
+        selected on the right.</li>
 
         <li><strong>Signal Icon</strong> - selects a signal head icon showing the signal head whose
-        name is entered on the right</li>
+        name is selected on the right</li>
 
         <li><strong>Signal Mast Icon</strong> - selects a signal mast icon showing the signal mast
-        whose name is entered on the right</li>
+        whose name is selected on the right</li>
 
         <li><strong>Icon Label</strong> - selects a general purpose icon</li>
 
@@ -368,6 +368,13 @@
         a rectangle, draw three lines (four points) and select closed.  Note:  The drag process is
         the same as drawing track segments except there is no destination point until the mouse is
         released.</li>
+
+        <li><span class="since">since 5.15.4</span>If the item is a <strong>Memory Variable</strong>,
+        a dialog will be displayed.  Click on <strong>Yes</strong> to create the traditional memory
+        label.  Click on <strong>No</strong> to create a memory text box.  A second dialog will
+        request the size of the text box.  The text box contents can be edited directly on the panel
+        instead using a pop-up dialog.  This makes it possible to change memory values when using a
+        browser with the JMRI Web Server.</li>
       </ol>
 
       <p>A Track Segment is a piece of track connecting two connection points (<strong><span style=
@@ -460,8 +467,8 @@
         <li><strong>Label Text</strong> (field) - applies to Text Label - Entry is required if
         anything is to be displayed in the new Text Label.</li>
 
-        <li><strong>Memory</strong> (ComboBox) - applies to Memory Label. Select an entry from
-        the drop down list.</li>
+        <li><strong>Memory</strong> (ComboBox) - applies to Memory Label or Memory text field. Select
+        an entry from the drop down list.</li>
 
         <li><strong>Global Variable</strong> (ComboBox) - applies to LogixNG Global Variable Label.
         Select an entry from the drop down list.<span class="since">since 5.3.1</span></li>
@@ -1035,7 +1042,7 @@
 
       <p>Every item on a panel has a popup menu. <strong>Except for Markers, popup menus are only
       active in edit mode.</strong> To access the popup menu of an icon-based item (sensor icon,
-      signal icon, text label, memory label, global variable label, block contents label,
+      signal icon, text label, memory label or text box, global variable label, block contents label,
       multi-sensor, fast clock, icon label, marker,
       recorder, or background): on Windows systems, right-click on the icon; on Macintosh systems,
       control-click on the icon (hold down the control key and click the mouse button on any point
@@ -1162,7 +1169,7 @@
       You can change this to drawing a "?" character instead using the contextual
       menu on the turnout.
       </p>
-      
+
       <p>After linking, you can toggle each turnout on your layout by clicking on the
       center point of its drawing (provided <strong>Disabled</strong> is not checked in the Options
       menu, and your system supports computer control of turnouts). The ability to toggle by

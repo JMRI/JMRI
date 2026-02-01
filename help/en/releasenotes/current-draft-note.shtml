@@ -453,7 +453,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Provide an option to add a memory variable as an input text field instead of as a label.
+            This makes it possible to change memory values when using the JMRI web server.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>

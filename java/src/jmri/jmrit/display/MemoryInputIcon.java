@@ -2,6 +2,8 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -31,10 +33,11 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2009
  * @since 2.7.2
  */
-public class MemoryInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
+public class MemoryInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener, FocusListener {
 
     JTextField _textBox = new JTextField();
     int _nCols;
+    boolean _textBoxHasFocus = false;
 
     // the associated Memory object
     private NamedBeanHandle<Memory> namedMemory;
@@ -61,6 +64,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         _textBox.setColumns(_nCols);
         _textBox.addMouseMotionListener(_mouseMotionListener);
         _textBox.addMouseListener(_mouseListener);
+        _textBox.addFocusListener(this);
         setPopupUtility(new PositionablePopupUtil(this, _textBox));
     }
 
@@ -84,6 +88,20 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     public void mouseExited(JmriMouseEvent e) {
         updateMemory();
         super.mouseExited(e);
+    }
+
+    @Override
+    public void focusGained(java.awt.event.FocusEvent e) {
+        _textBoxHasFocus = true;
+    }
+
+    @Override
+    public void focusLost(java.awt.event.FocusEvent e) {
+        _textBoxHasFocus = false;
+    }
+
+    public boolean textBoxHasFocus() {
+        return _textBoxHasFocus;
     }
 
     /**
@@ -262,6 +280,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         if (_textBox != null) {
             _textBox.removeMouseMotionListener(_mouseMotionListener);
             _textBox.removeMouseListener(_mouseListener);
+            _textBox.removeFocusListener(this);
         }
         namedMemory = null;
     }
