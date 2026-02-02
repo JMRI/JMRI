@@ -14,7 +14,7 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
     @Test
     @Override
     public void testLoadDetails(){
-        jmri.util.ThreadingUtil.runOnGUI( () -> {
+        boolean returned = jmri.util.ThreadingUtil.runOnGUIwithReturn( () -> {
             // verify no exceptions thrown
             Assertions.assertDoesNotThrow( () -> {
                 cc.loadDetails(new javax.swing.JPanel());});
@@ -22,7 +22,9 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
             jmri.util.JUnitAppender.suppressErrorMessageStartsWith("Unable to use bluetooth device");
             // load details MAY produce an error message if no ports are found.
             jmri.util.JUnitAppender.suppressErrorMessage("No usable ports returned");
+            return true;
         });
+        Assertions.assertTrue(returned);
     }
 
    @BeforeEach

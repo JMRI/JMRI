@@ -1,5 +1,10 @@
 package jmri.managers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import jmri.*;
 
 import java.beans.PropertyVetoException;
@@ -7,8 +12,6 @@ import java.lang.reflect.Field;
 import jmri.util.JUnitAppender;
 import org.slf4j.event.Level;
 
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 /**
@@ -27,8 +30,8 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
     @Test
     public void testProvideEmpty() {
         ProvidingManager<E> m = l;
-        Exception ex = Assert.assertThrows(IllegalArgumentException.class, () ->  m.provide(""));
-        Assertions.assertNotNull(ex);
+        Exception ex = assertThrows(IllegalArgumentException.class, () ->  m.provide(""));
+        assertNotNull(ex);
         JUnitAppender.suppressErrorMessageStartsWith("Invalid system name for");
     }
 
@@ -46,10 +49,10 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
     public void testRegisterDuplicateSystemName(ProvidingManager<E> m, String s1, String s2)
             throws PropertyVetoException, NoSuchFieldException,
             IllegalArgumentException, IllegalAccessException {
-        Assert.assertNotNull(s1);
-        Assert.assertFalse(s1.isEmpty());
-        Assert.assertNotNull(s2);
-        Assert.assertFalse(s2.isEmpty());
+        assertNotNull(s1);
+        assertFalse(s1.isEmpty());
+        assertNotNull(s2);
+        assertFalse(s2.isEmpty());
 
         E e1;
         E e2;
@@ -61,9 +64,9 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
                 IllegalArgumentException  ex) {
             // Some other tests give an IllegalArgumentException here.
             // If the test is unable to provide a named bean, abort this test.
-            JUnitAppender.clearBacklog(Level.WARN);
-            log.debug("Cannot provide a named bean", ex);
-            Assume.assumeTrue("We got no exception", false);
+            int numWarnings = JUnitAppender.clearBacklog(Level.WARN);
+            // log.debug("Cannot provide a named bean, {} warnings", numWarnings, ex);
+            Assumptions.abort( "We got " + numWarnings + " warnings and exception: " + ex.getMessage());
             return;
         }
 
@@ -88,16 +91,14 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
         // Register bean twice. This gives only a debug message.
         l.register(e1);
 
+        // Register different bean with existing systemName.
+        // This should fail with an DuplicateSystemNameException.
         String expectedMessage = "systemName is already registered: " + e1.getSystemName();
-        try {
-            // Register different bean with existing systemName.
-            // This should fail with an DuplicateSystemNameException.
-            l.register(e2);
-            Assert.fail("Expected exception not thrown");
-        } catch (NamedBean.DuplicateSystemNameException ex) {
-            Assert.assertEquals("exception message is correct", expectedMessage, ex.getMessage());
+        NamedBean.DuplicateSystemNameException e = assertThrows( NamedBean.DuplicateSystemNameException.class,
+            () -> l.register(e2),
+            "Expected exception not thrown");
+        assertEquals( expectedMessage, e.getMessage(), "exception message is correct");
             JUnitAppender.assertErrorMessage(expectedMessage);
-        }
 
         l.deregister(e1);
     }
@@ -115,6 +116,6 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
         return null;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProvidingManagerTestBase.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProvidingManagerTestBase.class);
 
 }

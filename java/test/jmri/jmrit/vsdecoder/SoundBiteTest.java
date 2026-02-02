@@ -1,14 +1,19 @@
 package jmri.jmrit.vsdecoder;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -29,9 +34,10 @@ public class SoundBiteTest {
     @Test
     public void testCreateSimple() {
         SoundBite uut = new SoundBite("unitUnderTest"); // QUEUE_MODE
-        Assert.assertEquals("sound name", "unitUnderTest", uut.getName());
-        Assert.assertTrue("initialized", uut.isInitialized());
-        Assert.assertFalse("is playing", uut.getSource().getState() == jmri.Audio.STATE_PLAYING);
+        assertEquals("unitUnderTest", uut.getName(), "sound name");
+        assertTrue(uut.isInitialized(), "initialized");
+        assertNotEquals(jmri.Audio.STATE_PLAYING, uut.getSource().getState(), "is playing");
+        uut.shutdown();
     }
 
     private final static String FILENAME = "java/test/jmri/jmrit/vsdecoder/test.wav";
@@ -39,21 +45,25 @@ public class SoundBiteTest {
     @Test
     public void testCreateFull() {
         SoundBite uut = new SoundBite(null, FILENAME, "sysname", "uname"); // BOUND_MODE
-        Assert.assertEquals("sound name", "uname", uut.getName());
-        Assert.assertEquals("file name", FILENAME, uut.getFileName());
-        Assert.assertEquals("system name", "sysname", uut.getSystemName());
-        Assert.assertEquals("user name", "uname", uut.getUserName());
-        Assert.assertTrue("initialized", uut.isInitialized());
+        assertEquals("uname", uut.getName(), "sound name");
+        assertEquals(FILENAME, uut.getFileName(), "file name");
+        assertEquals("sysname", uut.getSystemName(), "system name");
+        assertEquals("uname", uut.getUserName(), "user name");
+        assertTrue(uut.isInitialized(), "initialized");
         uut.setLooped(true);
-        Assert.assertFalse("is playing", uut.getSource().getState() == jmri.Audio.STATE_PLAYING);
+        assertNotEquals(jmri.Audio.STATE_PLAYING, uut.getSource().getState(), "is playing");
+        JUnitAppender.suppressWarnMessage("Requested operation is not valid");
+        JUnitAppender.suppressWarnMessage("Error creating JoalAudioBuffer (IAB$VSD:sysname)");
+        JUnitAppender.suppressErrorMessage("Unhandled audio format type 0");
+
     }
 
     @Test
-    public void TestSetGet() {
+    public void testSetGet() {
         SoundBite uut = new SoundBite("unitUnderTest"); // QUEUE_MODE
         uut.setName("new name");
-        Assert.assertEquals("set name", "new name", uut.getName());
-        Assert.assertTrue("initialized", uut.isInitialized());
+        assertEquals("new name", uut.getName(), "set name");
+        assertTrue(uut.isInitialized(), "initialized");
     }
 
     private Element buildTestXML() {
@@ -69,7 +79,7 @@ public class SoundBiteTest {
         Element e = buildTestXML();
         uut.setXml(e);
         // SoundBite.setXml() does nothing.
-        Assert.assertEquals("xml name", "unitUnderTest", uut.getName());
+        assertEquals("unitUnderTest", uut.getName(), "xml name");
     }
 
     @BeforeEach
@@ -83,6 +93,9 @@ public class SoundBiteTest {
     @AfterEach
     public void tearDown() {
         jmri.util.JUnitAppender.suppressErrorMessage("Unhandled audio format type 0");
+
+        InstanceManager.getDefault(AudioManager.class).dispose();
+
         InstanceManager.getDefault(ShutDownManager.class).deregister(damsdt);
         JUnitUtil.tearDown();
     }
