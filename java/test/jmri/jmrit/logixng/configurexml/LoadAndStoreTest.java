@@ -21,6 +21,7 @@ import jmri.jmrix.can.*;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,6 +44,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
  */
+@DisabledIfHeadless
 public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
     public static Stream<Arguments> data() {
