@@ -380,7 +380,7 @@ if [ -z "${JAVA_HOME}" ] ; then
             # JAVA_HOME is still not defined, so prompt to install Java for OS X
             /usr/bin/osascript << EOT
             try
-                display alert "To use JMRI you must install a supported Java version, at least 11, 21 recommended." \
+                display alert "To use JMRI you must install a supported Java version, at least Java 11. Java 21 is recommended." \
                     message "Click \"More Info...\" to learn more about installing Java." \
                     buttons {"More Info...", "OK"} \
                     default button "OK" \
