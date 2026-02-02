@@ -214,7 +214,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private List<SignalHeadIcon> signalHeadImage = new ArrayList<>();       // signal head images
 
     // PositionableLabel's
-    private List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); // BlockContentsIcon Label List
+    private List<BlockContentsIcon> blockContentsLabelList = new ArrayList<>(); // BlockContents Label List
+    private List<BlockContentsInputIcon> blockContentsInputList = new ArrayList<>(); // BlockContents Input List
     private List<MemoryIcon> memoryLabelList = new ArrayList<>();               // Memory Label List
     private List<MemoryInputIcon> memoryInputList = new ArrayList<>();          // Memory Input List
     private List<GlobalVariableIcon> globalVariableLabelList = new ArrayList<>(); // LogixNG Global Variable Label List
@@ -247,6 +248,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Nonnull
     public List<MemoryInputIcon> getMemoryInputList() {
         return memoryInputList;
+    }
+
+    @Nonnull
+    public List<BlockContentsInputIcon> getBlockContensInputList() {
+        return blockContentsInputList;
     }
 
     @Nonnull
@@ -2291,6 +2297,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         listOfListsOfComponents.add(memoryInputList);
         listOfListsOfComponents.add(globalVariableLabelList);
         listOfListsOfComponents.add(blockContentsLabelList);
+        listOfListsOfComponents.add(blockContentsInputList);
         listOfListsOfComponents.add(sensorList);
         listOfListsOfComponents.add(signalMastList);
         // combine their bounds
@@ -2674,6 +2681,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         List<Positionable> positionables = new ArrayList<>(getContents());
         positionables.addAll(backgroundImage);
         positionables.addAll(blockContentsLabelList);
+        positionables.addAll(blockContentsInputList);
         positionables.addAll(labelImage);
         positionables.addAll(memoryLabelList);
         positionables.addAll(memoryInputList);
@@ -3013,7 +3021,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @return true when active.
      */
     private boolean isInputTextBox(JmriMouseEvent event) {
-        if (!(event.getComponent() instanceof MemoryInputIcon)) {
+        if (!(event.getComponent() instanceof PositionableJPanel)) {
             return false;
         }
 
@@ -3105,7 +3113,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         selectedObject = checkJPanelPopUps(dLoc);
                         if (selectedObject != null) {
                             selectedHitPointType = HitPointType.LAYOUT_POS_JPNL;
-                            startDelta = MathUtil.subtract(((MemoryInputIcon) selectedObject).getLocation(), dLoc);
+                            startDelta = MathUtil.subtract(((PositionableJPanel) selectedObject).getLocation(), dLoc);
                         }
                     } // End CheckLabel
 
@@ -3556,6 +3564,27 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
             }
         }
+
+        if (result == null) {
+            for (int i = blockContentsInputList.size() - 1; i >= 0; i--) {
+                PositionableJPanel s = blockContentsInputList.get(i);
+                double x = s.getX();
+                double y = s.getY();
+                double w = s.getWidth();
+                double h = s.getHeight();
+
+                Rectangle2D r = new Rectangle2D.Double(x, y, w, h);
+
+                if (r.contains(loc)) {
+                    if (s.getDisplayLevel() >= level) {
+                        // Check to make sure that we are returning the highest level label.
+                        result = s;
+                        level = s.getDisplayLevel();
+                    }
+                }
+            }
+        }
+
         return result;
     }
 
@@ -3761,7 +3790,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 } else if (leToolBarPanel.globalVariableButton.isSelected()) {
                     addGlobalVariable();
                 } else if (leToolBarPanel.blockContentsButton.isSelected()) {
-                    addBlockContents();
+                    selectBlockContentsType();
                 } else if (leToolBarPanel.iconLabelButton.isSelected()) {
                     addIcon();
                 } else if (leToolBarPanel.logixngButton.isSelected()) {
@@ -4149,7 +4178,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     popupSet = false;
                 }
                 // Don't show the icon menu item for the MemoryInputIcon
-                if (!(p instanceof MemoryInputIcon)) {
+                if (!(p instanceof PositionableJPanel)) {
                     popupSet |= p.setEditIconMenu(popup);
                 }
                 popupSet |= p.setTextEditMenu(popup);
@@ -4298,9 +4327,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                         if (ls != null) {
                                             amendSelectionGroup(ls);
                                         } else {
-                                            MemoryInputIcon mi = (MemoryInputIcon) checkJPanelPopUps(dLoc);
-                                            if (mi != null) {
-                                                amendSelectionGroup(mi);
+                                            PositionableJPanel jp = (PositionableJPanel) checkJPanelPopUps(dLoc);
+                                            if (jp != null) {
+                                                amendSelectionGroup(jp);
                                             }
                                         }
                                     }
@@ -5243,7 +5272,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         }
 
                         case LAYOUT_POS_JPNL: {
-                            MemoryInputIcon c = (MemoryInputIcon) selectedObject;
+                            PositionableJPanel c = (PositionableJPanel) selectedObject;
 
                             if (c.isPositionable()) {
                                 c.setLocation((int) currentPoint.getX(), (int) currentPoint.getY());
@@ -6061,6 +6090,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
         if (blockContentsLabelList.contains(s)) {
             blockContentsLabelList.remove(s);
+            found = true;
+        }
+        if (blockContentsInputList.contains(s)) {
+            blockContentsInputList.remove(s);
             found = true;
         }
         if (multiSensors.contains(s)) {
@@ -7082,6 +7115,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             globalVariableLabelList.add((GlobalVariableIcon) l);
         } else if (l instanceof BlockContentsIcon) {
             blockContentsLabelList.add((BlockContentsIcon) l);
+        } else if (l instanceof BlockContentsInputIcon) {
+            blockContentsInputList.add((BlockContentsInputIcon) l);
         } else if (l instanceof AnalogClock2Display) {
             clocks.add((AnalogClock2Display) l);
         } else if (l instanceof MultiSensorIcon) {
@@ -7100,8 +7135,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
-     * When adding a memory variable, provide an option to create the normal memory variable label
-     * or create a memory input text field.  The label requires a pop-up dialog to change the value
+     * When adding a memory variable, provide an option to create the normal label
+     * or create an input text field.  The label requires a pop-up dialog to change the value
      * while the text field makes it possible to change the value on the panel.  This also makes
      * it possible to change the value using the web server.
      */
@@ -7223,6 +7258,38 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
     }
 
+    /**
+     * When adding a blopck contents object, provide an option to create the normal label
+     * or create an input text field.  The label requires a pop-up dialog to change the value
+     * while the text field makes it possible to change the value on the panel.  This also makes
+     * it possible to change the value using the web server.
+     */
+    void selectBlockContentsType() {
+        int response = JmriJOptionPane.showConfirmDialog(null,
+            Bundle.getMessage("BlockSelectType"),
+            Bundle.getMessage("BlockSelectTitle"),
+            JmriJOptionPane.YES_NO_OPTION);
+
+        if (response == JmriJOptionPane.YES_OPTION) {
+            addBlockContents();
+            return;
+        }
+
+        var length = JmriJOptionPane.showInputDialog(null,
+            Bundle.getMessage("BlockSelectSize"),
+            "5");
+
+        int textLength;
+        try {
+           textLength = Integer.parseInt(length);
+        }
+        catch (NumberFormatException e) {
+           textLength = 5;
+        }
+
+        addInputBlockContents(textLength);
+    }
+
     void addBlockContents() {
         String newName = leToolBarPanel.blockContentsComboBox.getSelectedItemDisplayName();
         if (newName == null) {
@@ -7248,6 +7315,31 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);
+        l.setForeground(defaultTextColor);
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+    }
+
+    void addInputBlockContents(int textFieldLength) {
+        String newName = leToolBarPanel.blockContentsComboBox.getSelectedItemDisplayName();
+        if (newName == null) {
+            newName = "";
+        }
+
+        if (newName.isEmpty()) {
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error11b"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        BlockContentsInputIcon l = new BlockContentsInputIcon(textFieldLength, this);
+        l.setBlock(newName);
+        setNextLocation(l);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setDisplayLevel(Editor.MEMORIES);
         l.setForeground(defaultTextColor);
         try {
             putItem(l); // note: this calls unionToPanelBounds & setDirty()
