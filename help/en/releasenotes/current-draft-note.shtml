@@ -463,8 +463,9 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Provide an option to add a memory variable as an input text field instead of as a label.
-            This makes it possible to change memory values when using the JMRI web server.</li>
+            <li>Provide an option to add a memory variable or a block contents field as an input text
+            field instead of as a label.  This makes it possible to change memory or block values
+            when using the JMRI web server.</li>
             <li>Improved how clicks are handled so they'll
                 be less finicky.</li>
         </ul>

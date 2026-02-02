@@ -369,12 +369,13 @@
         the same as drawing track segments except there is no destination point until the mouse is
         released.</li>
 
-        <li><span class="since">since 5.15.4</span>If the item is a <strong>Memory Variable</strong>,
-        a dialog will be displayed.  Click on <strong>Yes</strong> to create the traditional memory
-        label.  Click on <strong>No</strong> to create a memory text box.  A second dialog will
+        <li><span class="since">since 5.15.4</span>If the item is a <strong>Memory Variable</strong>
+        or a <strong>Block Contents</strong> label, a dialog will be displayed.  Click on
+        <strong>Yes</strong> to create the traditional memory or block contents label.  Click on
+        <strong>No</strong> to create a memory or block contents text box.  A second dialog will
         request the size of the text box.  The text box contents can be edited directly on the panel
-        instead using a pop-up dialog.  This makes it possible to change memory values when using a
-        browser with the JMRI Web Server.</li>
+        instead using a pop-up dialog.  This makes it possible to change memory and block values
+        when using a browser with the JMRI Web Server.</li>
       </ol>
 
       <p>A Track Segment is a piece of track connecting two connection points (<strong><span style=
