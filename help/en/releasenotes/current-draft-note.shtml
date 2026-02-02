@@ -665,5 +665,7 @@
                 have been converted to Enum values.
                 This primarily affects developers and people who've written scripts for
                 processing RailCom information directly.
+            <li>The macOS launchers have been updated to allow more Java versions and to 
+                have more useful error messages.
         </ul>
 

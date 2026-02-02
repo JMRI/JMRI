@@ -354,18 +354,18 @@ if [ -z "${JAVA_HOME}" ] ; then
         JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
         if [ -x "${JAVA_HOME}/bin/java" ] ; then
             JAVACMD="${JAVA_HOME}/bin/java"
-            # Test if java is present and version 11 through 21 
+            # Test if java is present and at least version 11
             java_version="$( "${JAVACMD}" -version 2>&1 | grep version )"
             [ -n "${DEBUG}" ] && echo "JAVA_HOME/bin/java: '${java_version}'" | tee -a ${launcher_log}
-            if [[ ! "${java_version}" =~ \"11|\"12|\"13|\"14|\"15|\"16|\"17|\"18|\"19|\"20|\"21 ]] ; then
+            if [[ ! "${java_version}" =~ \"21|\"20|\"19|\"18|\"17|\"16|\"15|\"14|\"13|\"12|\"11|\"22|\"23|\"24|\"25|\"26|\"27|\"28|\"29 ]] ; then
                 JAVA_HOME=""
             fi
         else
             # Reset JAVA_HOME since there is no java executable in it
             JAVA_HOME=""
         fi
-        # Find an installed JRE/JDK location
-        for jversion in 11 12 13 14 15 16 17 18 19 20 21; do
+        # Find an installed JRE/JDK location; note search order
+        for jversion in 21 20 19 18 17 16 15  14 13 12 11 22 23 24 25 26 27 28 29; do
             if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
                 # Test for any JDKs
                 [ -n "${DEBUG}" ] && echo "test for Java: '${jversion}'" | tee -a ${launcher_log}
@@ -380,8 +380,8 @@ if [ -z "${JAVA_HOME}" ] ; then
             # JAVA_HOME is still not defined, so prompt to install Java for OS X
             /usr/bin/osascript << EOT
             try
-                display alert "To use JMRI you need to install Java 11." \
-                    message "Click \"More Info...\" to learn more about installing Java 11." \
+                display alert "To use JMRI you must install a supported Java version, at least 11, 21 recommended." \
+                    message "Click \"More Info...\" to learn more about installing Java." \
                     buttons {"More Info...", "OK"} \
                     default button "OK" \
                     cancel button "More Info..."
@@ -396,7 +396,8 @@ EOT
         JAVACMD=$( which java )
         JAVA_HOME="$( dirname ${JAVACMD} )/.."
     else
-        echo "Please install Java 11 per your operating system vendor's instructions." | tee -a ${launcher_log}
+        # we don't know that osascript is available here; macOS shouldn't reach here
+        echo "Please install Java 21 per your operating system vendor's instructions." | tee -a ${launcher_log}
         exit 1
     fi
 else
