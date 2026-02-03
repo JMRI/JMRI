@@ -82,8 +82,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("version") != null ) {
                         try {
                             version = traininfo.getAttribute("version").getIntValue();
-                        }
-                        catch(Exception ex) {
+                        } catch (org.jdom2.DataConversionException ex) {
                             log.error("Traininfo file version number not an integer: assuming version 1");
                             version = 1;
                         }
@@ -317,6 +316,14 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("maxspeed") != null) {
                         tInfo.setMaxSpeed(Float.parseFloat(traininfo.getAttribute("maxspeed").getValue()));
                     }
+                    // Optional scale km/h cap (absent in older files).
+                    if (traininfo.getAttribute("maxspeedscalekmh") != null) {
+                        try {
+                            tInfo.setMaxSpeedScaleKmh(traininfo.getAttribute("maxspeedscalekmh").getFloatValue());
+                        } catch (org.jdom2.DataConversionException ex) {
+                            // Malformed value: leave unset (0.0f) for backward compatibility.
+                        }
+                    }
                     if (traininfo.getAttribute("minreliableoperatingspeed") != null) {
                         tInfo.setMinReliableOperatingSpeed(Float.parseFloat(traininfo.getAttribute("minreliableoperatingspeed").getValue()));
                     }
@@ -380,9 +387,66 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             tInfo.setStopBySpeedProfile(true);
                         }
                     }
-                    if (traininfo.getAttribute("stopbyspeedprofileadjust") != null) {
-                        tInfo.setStopBySpeedProfileAdjust(traininfo.getAttribute("stopbyspeedprofileadjust").getFloatValue());
-                    }
+
+                 // Read the per-train stop-by-speed-profile adjust factor (fraction of block length)
+                 // Preferred attribute name since v5+: "stopbyspeedprofileadjust"
+                 // Backward-compatibility: accept a couple of historical synonyms if present.
+                 org.jdom2.Attribute adjAttr = traininfo.getAttribute("stopbyspeedprofileadjust");
+                 if (adjAttr == null) {
+                     // Legacy fallbacks seen in older files/tests
+                     adjAttr = traininfo.getAttribute("speedprofileadjust");
+                 }
+                 if (adjAttr == null) {
+                     adjAttr = traininfo.getAttribute("usespeedprofileadjust");
+                 }
+                 if (adjAttr != null) {
+                     try {
+                         float v = adjAttr.getFloatValue();
+                         // Sanity: bounds to [0.0, 1.0] if needed; older content is a fraction (not percent)
+                         if (v < 0.0f) v = 0.0f;
+                         if (v > 1.0f) v = 1.0f;
+                         tInfo.setStopBySpeedProfileAdjust(v);
+                     } catch (org.jdom2.DataConversionException ex) {
+                         // Malformed value -> leave adjust at default for backward compatibility
+                     }
+                 }
+
+                 // Preferred: "overridestopsensor" (yes/no or true/false or 1/0)
+                 // Fallback:  legacy "usestopsensor" (yes/no or true/false or 1/0)
+                 // Default:   use sensors (existing behavior)
+                 boolean useSensors = true; // default preserves existing behavior
+
+                 if (traininfo.getAttribute("overridestopsensor") != null) {
+                     String v = traininfo.getAttribute("overridestopsensor").getValue();
+                     boolean override = "yes".equalsIgnoreCase(v) || "true".equalsIgnoreCase(v) || "1".equals(v);
+                     useSensors = !override;
+                 } else if (traininfo.getAttribute("usestopsensor") != null) {
+                     String v = traininfo.getAttribute("usestopsensor").getValue();
+                     boolean legacyUse = "yes".equalsIgnoreCase(v) || "true".equalsIgnoreCase(v) || "1".equals(v);
+                     useSensors = legacyUse;
+                 }
+                 tInfo.setUseStopSensor(useSensors);
+
+                 if (traininfo.getAttribute("stopbydistance_mm") != null) {
+                     try {
+                         float mm = traininfo.getAttribute("stopbydistance_mm").getFloatValue();
+                         if (mm > 0.0f) {
+                             tInfo.setStopByDistanceMm(mm);
+                             // HEAD by default; override if attribute present and equals "TAIL"
+                             if (traininfo.getAttribute("stopbydistance_ref") != null) {
+                                 String ref = traininfo.getAttribute("stopbydistance_ref").getValue();
+                                 if ("TAIL".equalsIgnoreCase(ref)) {
+                                     tInfo.setStopByDistanceRef(TrainInfo.StopReference.TAIL);
+                                 } else {
+                                     tInfo.setStopByDistanceRef(TrainInfo.StopReference.HEAD);
+                                 }
+                             }
+                         }
+                     } catch (org.jdom2.DataConversionException ex) {
+                         // Malformed value => leave unset for backward compatibility
+                     }
+                 }
+                    
                     if (traininfo.getAttribute("waittime") != null) {
                         tInfo.setWaitTime(traininfo.getAttribute("waittime").getFloatValue());
                     }
@@ -398,6 +462,37 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("fnumberhorn") != null) {
                         tInfo.setFNumberHorn(Integer.parseInt(traininfo.getAttribute("fnumberhorn").getValue()));
                     }
+                    
+                    // Physics: read additional train weight (metric tonnes)
+                    if (traininfo.getAttribute("additionaltrainweight_tonnes") != null) {
+                        try {
+                            tInfo.setAdditionalTrainWeightMetricTonnes(traininfo.getAttribute("additionaltrainweight_tonnes").getFloatValue());
+                        } catch (org.jdom2.DataConversionException ex) {
+                            // Malformed value -> leave default (0.0f) for backward compatibility
+                        }
+                    }
+                     
+                    // Physics: read rolling resistance coefficient (dimensionless)
+                    if (traininfo.getAttribute("rollingresistancecoeff") != null) {
+                        try {
+                            tInfo.setRollingResistanceCoeff(traininfo.getAttribute("rollingresistancecoeff").getFloatValue());
+                        } catch (org.jdom2.DataConversionException ex) {
+                            // Malformed value -> leave default (0.002f) for backward compatibility
+                        }
+                    }
+                     
+                      // Physics: read driver power percent (stored as fraction 0..1; default 1.0 if absent)
+                     if (traininfo.getAttribute("driverpowerpercent") != null) {
+                         try {
+                             float dp = traininfo.getAttribute("driverpowerpercent").getFloatValue();
+                             if (dp < 0.0f) dp = 0.0f;
+                             if (dp > 1.0f) dp = 1.0f;
+                             tInfo.setDriverPowerPercent(dp);
+                         } catch (org.jdom2.DataConversionException ex) {
+                             // Malformed: ignore and leave TrainInfo default (typically 1.0f)
+                         }
+                     }
+            
                     if (version == 1) {
                         String parseArray[];
                         // If you only have a systemname then its everything before the dash
@@ -411,7 +506,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             try {
                                 tInfo.setStartBlockSeq(Integer.parseInt(parseArray[parseArray.length -1]));
                             }
-                            catch (Exception Ex) {
+                            catch (NumberFormatException Ex) {
                                 log.error("Invalid StartBlockSequence{}",parseArray[parseArray.length -1]);
                             }
                         }
@@ -424,7 +519,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             try {
                                 tInfo.setDestinationBlockSeq(Integer.parseInt(parseArray[parseArray.length -1]));
                             }
-                            catch (Exception Ex) {
+                            catch (NumberFormatException Ex) {
                                 log.error("Invalid StartBlockSequence{}",parseArray[parseArray.length -1]);
                             }
                         }
@@ -456,7 +551,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             try {
                                 tInfo.setStartBlockSeq(traininfo.getAttribute("startblockseq").getIntValue());
                             }
-                            catch (Exception ex) {
+                            catch (org.jdom2.DataConversionException ex) {
                                 log.error("Start block sequence invalid when reading TrainInfoFile");
                             }
                         } else {
@@ -467,7 +562,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             try {
                                 tInfo.setDestinationBlockSeq(traininfo.getAttribute("endblockseq").getIntValue());
                             }
-                            catch (Exception ex) {
+                            catch (org.jdom2.DataConversionException ex) {
                                 log.error("Destination block sequence invalid when reading TrainInfoFile {}", name);
                             }
                         } else {
@@ -524,7 +619,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         // save Dispatcher TrainInfo in xml format
         Element traininfo = new Element("traininfo");
         // write version number
-        traininfo.setAttribute("version", "7");
+        traininfo.setAttribute("version", "8");
         traininfo.setAttribute("transitname", tf.getTransitName());
         traininfo.setAttribute("transitid", tf.getTransitId());
         traininfo.setAttribute("dynamictransit", (tf.getDynamicTransit() ? "yes" : "no"));
@@ -599,6 +694,11 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         // here save items related to automatically running active trains
         traininfo.setAttribute("speedfactor", Float.toString(tf.getSpeedFactor()));
         traininfo.setAttribute("maxspeed", Float.toString(tf.getMaxSpeed()));
+        // Persist maximum speed in scale km/h when the user selected a speed cap.
+        // Omit when 0.0f (means "use throttle cap" for backward compatibility).
+        if (tf.getMaxSpeedScaleKmh() > 0.0f) {
+            traininfo.setAttribute("maxspeedscalekmh", Float.toString(tf.getMaxSpeedScaleKmh()));
+        }
         traininfo.setAttribute("minreliableoperatingspeed", Float.toString(tf.getMinReliableOperatingSpeed()));
         traininfo.setAttribute("ramprate", tf.getRampRate());
         traininfo.setAttribute("runinreverse", "" + (tf.getRunInReverse() ? "yes" : "no"));
@@ -608,11 +708,26 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("usespeedprofile", "" + (tf.getUseSpeedProfile() ? "yes" : "no"));
         traininfo.setAttribute("stopbyspeedprofile", "" + (tf.getStopBySpeedProfile() ? "yes" : "no"));
         traininfo.setAttribute("stopbyspeedprofileadjust", Float.toString(tf.getStopBySpeedProfileAdjust()));
+        traininfo.setAttribute("usestopsensor", (tf.getUseStopSensor() ? "yes" : "no"));
+        traininfo.setAttribute("overridestopsensor", (tf.getUseStopSensor() ? "no" : "yes"));
         traininfo.setAttribute("waittime", Float.toString(tf.getWaitTime()));
         traininfo.setAttribute("blockname", tf.getBlockName());
         traininfo.setAttribute("fnumberlight", Integer.toString(tf.getFNumberLight()));
         traininfo.setAttribute("fnumberbell", Integer.toString(tf.getFNumberBell()));
         traininfo.setAttribute("fnumberhorn", Integer.toString(tf.getFNumberHorn()));
+        // Physics: persist additional train weight (metric tonnes, float)
+        traininfo.setAttribute("additionaltrainweight_tonnes", Float.toString(tf.getAdditionalTrainWeightMetricTonnes()));
+        // Physics: persist rolling resistance coefficient (dimensionless)
+        traininfo.setAttribute("rollingresistancecoeff", Float.toString(tf.getRollingResistanceCoeff()));
+        traininfo.setAttribute("driverpowerpercent", Float.toString(tf.getDriverPowerPercent()));
+            
+         // Only write these when the user has set a positive distance in mm; otherwise omit.
+         if (tf.getStopByDistanceMm() > 0.0f) {
+             // Persist the explicit distance (mm) into the stop block
+             traininfo.setAttribute("stopbydistance_mm", Float.toString(tf.getStopByDistanceMm()));
+             // Persist whether the distance applies to the HEAD or TAIL of the train
+             traininfo.setAttribute("stopbydistance_ref", tf.getStopByDistanceRef().name()); // HEAD | TAIL
+         }
 
         root.addContent(traininfo);
 

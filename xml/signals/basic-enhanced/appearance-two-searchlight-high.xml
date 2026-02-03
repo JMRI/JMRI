@@ -86,7 +86,6 @@
       <aspectname>Advanced Approach</aspectname>
       <show>flashyellow</show>
       <show>red</show>
-      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-282.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-FY-R-animated.gif</imagelink>
       <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-FY-R-static.gif</imagelink>
     </appearance>
@@ -127,6 +126,7 @@
       <aspectname>Unlit</aspectname>
       <show>dark</show>
       <show>dark</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/searchlights/two-high-dark.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-dark.gif</imagelink>
     </appearance>
 
@@ -138,10 +138,13 @@
      </danger>
     <held>
       <aspect>Stop</aspect>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/searchlights/two-high-held.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-held.gif</imagelink>
     </held>
     <dark>
       <aspect>Unlit</aspect>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/searchlights/two-high-dark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-dark.gif</imagelink>
     </dark>
   </specificappearances><!-- End of Specific Appearances list -->
 

@@ -69,6 +69,10 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         loadComboBox = carLoads.getComboBox(_type);
         carLoads.addPropertyChangeListener(this);
         loadComboBox.setSelectedItem(selectedItem);
+        // user adding new load name?
+        if (!loadComboBox.getSelectedItem().equals(selectedItem)) {
+            addTextBox.setText(selectedItem);
+        }
         updateLoadType();
         updatePriority();
         updateHazardous();
