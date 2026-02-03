@@ -96,6 +96,7 @@
     <appearance>
       <aspectname>Unlit</aspectname>
       <show>dark</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/searchlights/one-low-dark.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-dark.gif</imagelink>
     </appearance>
 
@@ -110,6 +111,7 @@
 
     <held>
       <aspect>Stop</aspect>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/searchlights/one-low-held.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-held.gif</imagelink>
     </held>
 
