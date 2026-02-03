@@ -359,6 +359,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         // allow up to two engine and caboose swaps in the train's route
         RouteLocation engineTerminatesFirstLeg = getTrain().getTrainTerminatesRouteLocation();
         RouteLocation engineTerminatesSecondLeg = getTrain().getTrainTerminatesRouteLocation();
+        RouteLocation engineTerminatesThirdLeg = getTrain().getTrainTerminatesRouteLocation();
 
         // Adjust where the locos will terminate
         if ((getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
@@ -372,6 +373,15 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             if ((getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) != Train.CHANGE_ENGINES) {
                 engineTerminatesFirstLeg = getTrain().getThirdLegStartRouteLocation();
             }
+        }
+        // optionally set out added engines
+        if ((getTrain().getSecondLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES &&
+                getTrain().getSecondLegEndRouteLocation() != null) {
+            engineTerminatesSecondLeg = getTrain().getSecondLegEndRouteLocation();
+        }
+        if ((getTrain().getThirdLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES &&
+                getTrain().getThirdLegEndRouteLocation() != null) {
+            engineTerminatesThirdLeg = getTrain().getThirdLegEndRouteLocation();
         }
 
         if (getTrain().getLeadEngine() == null) {
@@ -481,11 +491,11 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             }
             if (getEngines(getTrain().getThirdLegNumberEngines(), getTrain().getThirdLegEngineModel(),
                     getTrain().getThirdLegEngineRoad(), getTrain().getThirdLegStartRouteLocation(),
-                    getTrain().getTrainTerminatesRouteLocation())) {
+                    engineTerminatesThirdLeg)) {
                 _thirdLeadEngine = _lastEngine;
             } else if (getConsist(getTrain().getThirdLegNumberEngines(), getTrain().getThirdLegEngineModel(),
                     getTrain().getThirdLegEngineRoad(), getTrain().getThirdLegStartRouteLocation(),
-                    getTrain().getTrainTerminatesRouteLocation())) {
+                    engineTerminatesThirdLeg)) {
                 _thirdLeadEngine = _lastEngine;
             } else {
                 throw new BuildFailedException(
@@ -628,8 +638,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
     protected void checkEngineHP() throws BuildFailedException {
         if (Setup.getHorsePowerPerTon() != 0) {
             if (getTrain().getNumberEngines().equals(Train.AUTO_HPT)) {
-                checkEngineHP(getTrain().getLeadEngine(), getTrain().getEngineModel(), getTrain().getEngineRoad()); // 1st
-                // leg
+                checkEngineHP(getTrain().getLeadEngine(), getTrain().getEngineModel(), getTrain().getEngineRoad());
             }
             if ((getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
                     getTrain().getSecondLegNumberEngines().equals(Train.AUTO_HPT)) {

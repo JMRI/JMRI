@@ -501,6 +501,7 @@
         <a id="Operations" name="Operations"></a>
         <ul>
             <li>New tool that allows day to name mapping. Now your Manifest or switch list can show which day or date the train departs or arrives at a location.</li>
+            <li>New feature, the "Add Locomotives" in the "Train Build Options" allows you to select where the locomotives will terminate.</li>
         </ul>
 
    <h3>Panel Editor</h3>
