@@ -440,6 +440,8 @@
                 with extended height.  If you don't want to see this
                 column, right-click/ctrl-click in the column heading 
                 and deselect it.</li>
+            <li>Decoder product ID determination has been added
+                for PIKO decoders.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -667,5 +669,7 @@
                 have been converted to Enum values.
                 This primarily affects developers and people who've written scripts for
                 processing RailCom information directly.
+            <li>The macOS launchers have been updated to allow more Java versions and to 
+                have more useful error messages.
         </ul>
 

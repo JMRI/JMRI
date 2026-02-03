@@ -462,6 +462,9 @@
 
         <li>@gitophile, who found the fix for a broken link.</li>
 
+        <li>Philip Gladstone, <!-- pjsg -->
+        who improved the printing code.
+
         <li>Qun and Sven G&ouml;thel  of
         <a href="https://jausoft.com">G&ouml;thel Software</a> who maintain the JOAL library we use
         for advanced audio.
@@ -544,6 +547,9 @@
         who improved how the throttle handles speed steps and improved the quality of the code and
         documentation.</li>
 
+        <li>Rene Hentschel,
+        who contributed a decoder definition.
+        
         <li>Max Hearnden, <!-- MaxHearnden -->
         who improved how local HTML help is handled.</li>
 
