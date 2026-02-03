@@ -20,6 +20,7 @@ import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.BlockOrder;
 import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.*;
@@ -208,8 +209,12 @@ public class CreateLogixNGTreeScaffold {
         InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class)
                 .register(new Warrant("IW99", "Test Warrant"));
         Warrant warrant = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).getWarrant("IW99");
-        warrant.addBlockOrder(new BlockOrder(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock("OB98")));
-        warrant.addBlockOrder(new BlockOrder(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock("OB99")));
+        OBlock ob98 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB98");
+        assertNotNull(ob98);
+        warrant.addBlockOrder(new BlockOrder(ob98));
+        OBlock ob99 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB99");
+        assertNotNull(ob99);
+        warrant.addBlockOrder(new BlockOrder(ob99));
 
         stringIO = InstanceManager.getDefault(StringIOManager.class).provideStringIO("MyStringIO");
         assertNotNull(stringIO);
@@ -247,9 +252,6 @@ public class CreateLogixNGTreeScaffold {
                     .createGlobalVariable("TestVariable_"+type.name()+"_3");
             globalVariable.setInitialValueType(type);
             switch (type) {
-                case None:
-                    globalVariable.setInitialValueData("");
-                    break;
                 case Boolean:
                     globalVariable.setInitialValueData("true");
                     break;
@@ -262,6 +264,7 @@ public class CreateLogixNGTreeScaffold {
                 case String:
                     globalVariable.setInitialValueData("Hello");
                     break;
+                case None:
                 case Array:
                 case Map:
                 case LocalVariable:
@@ -2525,7 +2528,9 @@ public class CreateLogixNGTreeScaffold {
         // Test an action there the turnout is given by the user name.
         // The user name should be stored and loaded from the panel file.
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
-        actionTurnout.getSelectNamedBean().setNamedBean(turnout2.getUserName());
+        String to2uName = turnout2.getUserName();
+        assertNotNull(to2uName);
+        actionTurnout.getSelectNamedBean().setNamedBean(to2uName);
         set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
                 NamedBeanAddressing.Direct);
         actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Inconsistent);
