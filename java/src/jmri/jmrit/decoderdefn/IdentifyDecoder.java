@@ -32,6 +32,8 @@ import org.slf4j.LoggerFactory;
  *         {@link #setOptionalCv(boolean flag) setOptionalCv()} and
  *         {@link #isOptionalCv() isOptionalCv()} as documented below.)</li>
  *      </ul>
+ * <li>PIKO: (mfgID = 168) write {@literal 0=>CV31}, write {@literal 255=>CV32},
+ * then read CV315, CV316, CV317 and do a decimal concatenation
  * <li>QSI: (mfgID == 113) write {@literal 254=>CV49}, write {@literal 4=>CV50},
  *  then CV56 is high byte, write {@literal 5=>CV50}, then CV56 is low byte of
  *  ID</li>
@@ -110,6 +112,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         ESU(151),
         HARMAN(98),
         HORNBY(48),
+        PIKO(168),
         QSI(113),
         SOUNDTRAXX(141),
         TCS(153),
@@ -155,6 +158,10 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         modelID = value;
         if (mfgID == null) return true; // done
         switch (mfgID) {
+        case PIKO:
+            statusUpdate("Set PI for Read Product ID High Byte");
+            writeCV("31", 0);
+            return false;
         case QSI:
             statusUpdate("Set PI for Read Product ID High Byte");
             writeCV("49", 254);
@@ -220,6 +227,10 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     @Override
     public boolean test4(int value) {
         switch (mfgID) {
+        case PIKO:
+            statusUpdate("Set SI for Read Product ID High Byte");
+            writeCV("32", 255);
+            return false;
         case QSI:
             statusUpdate("Set SI for Read Product ID High Byte");
             writeCV("50", 4);
@@ -302,6 +313,10 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     @Override
     public boolean test5(int value) {
         switch (mfgID) {
+        case PIKO:
+            statusUpdate("Read Product ID Highest Byte");
+            readCV("315");
+            return false;
         case QSI:
             statusUpdate("Read Product ID High Byte");
             readCV("56");
@@ -355,6 +370,11 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     @Override
     public boolean test6(int value) {
         switch (mfgID) {
+        case PIKO:
+            productID = value;
+            statusUpdate("Read Product ID Middle Byte");
+            readCV("316");
+            return false;
         case QSI:
             productIDhigh = value;
             statusUpdate("Set SI for Read Product ID Low Byte");
@@ -397,6 +417,11 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     @Override
     public boolean test7(int value) {
         switch (mfgID) {
+        case PIKO:
+            productID = productID*100+value;
+            statusUpdate("Read Product ID Lowest Byte");
+            readCV("317");
+            return false;
         case QSI:
             statusUpdate("Read Product ID Low Byte");
             readCV("56");
@@ -433,6 +458,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     @Override
     public boolean test8(int value) {
         switch (mfgID) {
+        case PIKO:
+            productID = productID*100+value;
+            return true;
         case QSI:
             productIDlow = value;
             productID = (productIDhigh * 256) + productIDlow;
