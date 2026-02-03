@@ -1,17 +1,18 @@
 package jmri.jmrit.ctc;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SignalHeadManager;
+import jmri.*;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -24,8 +25,8 @@ public class CtcRunWithSignalHeadsTest {
     static final boolean PAUSE = false;
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testAction() throws Exception {
+    @DisabledIfHeadless
+    public void testAction() throws JmriException {
 
         // Load the test panel and initialize Logix and advanced block routing
         java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Heads-SSL.xml");  // NOI18N
@@ -51,10 +52,10 @@ public class CtcRunWithSignalHeadsTest {
         sm.provideSensor("IS2:CB").setKnownState(Sensor.ACTIVE);
 
         JUnitUtil.waitFor(()->{return sm.provideSensor("IS2:RDGK").getKnownState() == Sensor.ACTIVE;},"1/2 signal right indicator not active");
-        Assert.assertTrue(sm.provideSensor("IS2:RDGK").getKnownState() == Sensor.ACTIVE);
+        assertEquals(Sensor.ACTIVE, sm.provideSensor("IS2:RDGK").getKnownState());
         var shALAU = shm.getSignalHead("SH-Alpha-Left-AU");
-        Assertions.assertNotNull(shALAU);
-        Assert.assertFalse(shALAU.getHeld());
+        assertNotNull(shALAU);
+        assertFalse(shALAU.getHeld());
 
         if (PAUSE) JUnitUtil.waitFor(2000);
 
@@ -62,7 +63,7 @@ public class CtcRunWithSignalHeadsTest {
         sm.provideSensor("IS3:LEVER").setKnownState(Sensor.INACTIVE);
         sm.provideSensor("IS4:CB").setKnownState(Sensor.ACTIVE);
         JUnitUtil.waitFor(()->{return sm.provideSensor("IS3:SWRI").getKnownState() == Sensor.ACTIVE;},"3/4 turnout thrown indicator not active");
-        Assert.assertTrue(sm.provideSensor("IS3:SWRI").getKnownState() == Sensor.ACTIVE);
+        assertEquals(Sensor.ACTIVE, sm.provideSensor("IS3:SWRI").getKnownState());
 
         if (PAUSE) JUnitUtil.waitFor(2000);
 
@@ -79,18 +80,18 @@ public class CtcRunWithSignalHeadsTest {
         if (PAUSE) JUnitUtil.waitFor(2000);
 
         JUnitUtil.waitFor(()->{return sm.provideSensor("IS4:LDGK").getKnownState() == Sensor.ACTIVE;},"3/4 signal left indicator not active");
-        Assert.assertTrue(sm.provideSensor("IS4:LDGK").getKnownState() == Sensor.ACTIVE);
+        assertEquals(Sensor.ACTIVE, sm.provideSensor("IS4:LDGK").getKnownState());
         var shARAL = shm.getSignalHead("SH-Alpha-Right-AL");
-        Assertions.assertNotNull(shARAL);
-        Assert.assertFalse(shARAL.getHeld());
+        assertNotNull(shARAL);
+        assertFalse(shARAL.getHeld());
 
         if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Simulate left to right train
         sm.provideSensor("S-Alpha-Left").setKnownState(Sensor.ACTIVE);
         JUnitUtil.waitFor(()->{return sm.provideSensor("IS2:NGK").getKnownState() == Sensor.ACTIVE;},"1/2 signal normal indicator not active");
-        Assert.assertTrue(sm.provideSensor("IS2:NGK").getKnownState() == Sensor.ACTIVE);
-        Assert.assertTrue(shALAU.getHeld());
+        assertEquals(Sensor.ACTIVE, sm.provideSensor("IS2:NGK").getKnownState());
+        assertTrue(shALAU.getHeld());
 
         // Cancel left to right call on
         sm.provideSensor("IS4:CB").setKnownState(Sensor.INACTIVE);

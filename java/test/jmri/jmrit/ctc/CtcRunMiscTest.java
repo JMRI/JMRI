@@ -1,16 +1,15 @@
 package jmri.jmrit.ctc;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
+import jmri.*;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -23,8 +22,8 @@ public class CtcRunMiscTest {
     static final boolean PAUSE = false;
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testAction() throws Exception {
+    @DisabledIfHeadless
+    public void testAction() throws JmriException {
 
         // Load the test panel and initialize Logix and advanced block routing
         java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Misc_Scenarios.xml");  // NOI18N
@@ -44,13 +43,13 @@ public class CtcRunMiscTest {
         // Do auto code button
         sm.provideSensor("IS7:LEVER").setKnownState(Sensor.INACTIVE);
         JUnitUtil.waitFor(()->{return sm.provideSensor("IS7:SWRI").getKnownState() == Sensor.ACTIVE;},"7/8 turnout thrown indicator not active");
-        Assert.assertTrue(sm.provideSensor("IS7:SWRI").getKnownState() == Sensor.ACTIVE);
+        assertEquals(Sensor.ACTIVE, sm.provideSensor("IS7:SWRI").getKnownState());
 
         sm.provideSensor("IS8:RDGL").setKnownState(Sensor.INACTIVE);
         sm.provideSensor("IS8:NGL").setKnownState(Sensor.INACTIVE);
         sm.provideSensor("IS8:LDGL").setKnownState(Sensor.ACTIVE);
         JUnitUtil.waitFor(()->{return sm.provideSensor("IS8:LDGK").getKnownState() == Sensor.ACTIVE;},"7/8 signal left indicator not active");
-        Assert.assertTrue(sm.provideSensor("IS8:LDGK").getKnownState() == Sensor.ACTIVE);
+        assertEquals(Sensor.ACTIVE, sm.provideSensor("IS8:LDGK").getKnownState());
 
         if (PAUSE) JUnitUtil.waitFor(2000);
 
@@ -67,7 +66,7 @@ public class CtcRunMiscTest {
         sm.provideSensor("IS6:LOCKTOGGLE").setKnownState(Sensor.ACTIVE);
         sm.provideSensor("IS6:CB").setKnownState(Sensor.ACTIVE);
         JUnitUtil.waitFor(()->{return sm.provideSensor("IS6:UNLOCKEDINDICATOR").getKnownState() == Sensor.ACTIVE;},"5/6 unlocked indicator not active");
-        Assert.assertTrue(sm.provideSensor("IS6:UNLOCKEDINDICATOR").getKnownState() == Sensor.ACTIVE);
+        assertEquals(Sensor.ACTIVE, sm.provideSensor("IS6:UNLOCKEDINDICATOR").getKnownState());
 
         if (PAUSE) JUnitUtil.waitFor(2000);
 
@@ -75,7 +74,7 @@ public class CtcRunMiscTest {
         sm.provideSensor("IS:RELOADCTC").setKnownState(Sensor.ACTIVE);
         // See if the reload reset the signal indicaotr state
         JUnitUtil.waitFor(()->{return sm.provideSensor("IS8:NGK").getKnownState() == Sensor.ACTIVE;},"7/8 normal indicator not active");
-        Assert.assertTrue(sm.provideSensor("IS8:NGK").getKnownState() == Sensor.ACTIVE);
+        assertEquals(Sensor.ACTIVE, sm.provideSensor("IS8:NGK").getKnownState());
 
         if (PAUSE) JUnitUtil.waitFor(5000);
 
