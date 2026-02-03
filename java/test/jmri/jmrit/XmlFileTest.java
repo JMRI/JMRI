@@ -1,5 +1,13 @@
 package jmri.jmrit;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.*;
 
 import jmri.util.FileUtil;
@@ -8,9 +16,6 @@ import jmri.util.JUnitUtil;
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the XmlFile class.
@@ -84,7 +89,7 @@ public class XmlFileTest {
                     
                     content += ending;
 
-                    boolean result = false;
+                    boolean result;
 
                     try {
                         XmlFile xf = new XmlFile() {};   // odd syntax is due to XmlFile being abstract
@@ -93,17 +98,18 @@ public class XmlFileTest {
                         result = true;
                     } catch (IOException | JDOMException ex) {
                         result = false;
-                        log.debug(ex.toString());
+                        log.debug("result false: ", ex);
                     }
 
                     log.debug("DTD: {} SCHEMA: {} ({}) expects {} was {}{}", theDTD, theSchema, validate, passes, result, passes != result ? " !!!!!!!!!!!!!!!!!!!!!!!!!" : "");
-                    Assert.assertEquals("DTD: "+theDTD+" SCHEMA: "+theSchema+" ("+validate+")", passes, result);
+                    assertEquals( passes, result,
+                        () -> "DTD: "+theDTD+" SCHEMA: "+theSchema+" ("+validate+")");
 
                 }
             }
         }
     }
-    
+
     @Test
     public void testProgIncludeRelative() {
         validateFileAndDtdAccess(new File(testFileDir + "ProgramMainRelative.xml"));
@@ -136,15 +142,12 @@ public class XmlFileTest {
 
 
     private void validateFileAndDtdAccess(File file) {  // don't check Schema so can check DTD
-        try {
+        assertDoesNotThrow( () ->  {
             XmlFile xf = new XmlFile() {
             };   // odd syntax is due to XmlFile being abstract
             xf.setValidate(XmlFile.Validate.CheckDtd);
             xf.rootFromFile(file);
-        } catch (Exception ex) {
-            Assert.fail(ex.toString());
-            return;
-        }
+        });
     }
 
     @Test
@@ -157,25 +160,23 @@ public class XmlFileTest {
         // the resulting files go into the test tree area.  This is not
         // a test of the user's files directory, and shouldn't use that.
         FileUtil.createDirectory("temp" + File.separator + "prefs");
-        Assert.assertTrue("existing file ", x.checkFile("decoders"));  // should be in xml
-        Assert.assertTrue("non-existing file ", !x.checkFile("dummy file not expected to exist"));
+        assertTrue( x.checkFile("decoders"), "existing file ");  // should be in xml
+        assertFalse( x.checkFile("dummy file not expected to exist"), "non-existing file ");
     }
 
     @Test
-    public void testNotVoid() throws org.jdom2.JDOMException, java.io.IOException {
+    public void testNotVoid() throws JDOMException, IOException {
         // XmlFile is abstract, so can't check ctor directly; use local class
         XmlFile x = new XmlFile() {
         };
         // get Element from non-existant file
-        try {
-            Element e = x.rootFromFile(new File("nothingwerelikelytofind.xml"));
-            Assert.assertTrue("Never returns void", e != null);
-            Assert.assertTrue("Never returns if file not found", false);
-        } catch (java.io.FileNotFoundException e) { /* OK, desired exit */ }
+        FileNotFoundException e = assertThrows( FileNotFoundException.class,
+            () -> x.rootFromFile(new File("nothingwerelikelytofind.xml")));
+        assertNotNull(e, "Throws if file not found");
     }
 
     @Test
-    public void testWriteFile() throws java.io.IOException {
+    public void testWriteFile() throws IOException {
         XmlFile x = new XmlFile() {
         };
         // create a minimal XML file
@@ -193,11 +194,11 @@ public class XmlFileTest {
 
         x.writeXML(f, doc);
 
-        Assert.assertTrue("File expected to be present", f.exists());
+        assertTrue( f.exists(), "File expected to be present");
     }
 
     @Test
-    public void testReadFile() throws org.jdom2.JDOMException, java.io.IOException {
+    public void testReadFile() throws JDOMException, IOException {
         // ensure file present
         testWriteFile();
 
@@ -209,41 +210,34 @@ public class XmlFileTest {
         x.setValidate(XmlFile.Validate.None);
         
         Element e = x.rootFromName("temp" + File.separator + "prefs" + File.separator + "test.xml");
-        Assert.assertTrue("Element found", e != null);
+        assertNotNull( e, "Element found");
     }
 
     @Test
-    public void testProcessPI() throws org.jdom2.JDOMException, java.io.IOException {
+    public void testProcessPI() throws JDOMException, IOException {
         // Document from test file
         Document doc;
         Element e;
-        FileInputStream fs = new FileInputStream(new File("java/test/jmri/jmrit/XmlFileTest_PI.xml"));
-        try {
+        try (FileInputStream fs = new FileInputStream(new File("java/test/jmri/jmrit/XmlFileTest_PI.xml"))) {
             SAXBuilder builder = XmlFile.getBuilder(XmlFile.Validate.None);  // argument controls validation
             doc = builder.build(new BufferedInputStream(fs));
-            Assert.assertNotNull("Original Document found", doc);
+            assertNotNull( doc, "Original Document found");
             e = doc.getRootElement();
-            Assert.assertNotNull("Original root element found", e);
+            assertNotNull( e, "Original root element found");
 
             XmlFile x = new XmlFile() {
             };
             Document d = x.processInstructions(doc);
-            Assert.assertNotNull(d);
+            assertNotNull(d);
 
             // test transform changes <contains> element to <content>
             e = d.getRootElement();
-            Assert.assertNotNull("Transformed root element found", e);
-            Assert.assertTrue("Transformed root element is right type", e.getName().equals("top"));
-            Assert.assertTrue("Old element gone", e.getChild("contains") == null);
-            Assert.assertTrue("New element there", e.getChild("content") != null);
-            Assert.assertTrue("New element has content", e.getChild("content").getChildren().size() == 2);
+            assertNotNull( e, "Transformed root element found");
+            assertEquals( "top", e.getName(), "Transformed root element is right type");
+            assertNull( e.getChild("contains"), "Old element gone");
+            assertNotNull( e.getChild("content"), "New element there");
+            assertEquals( 2, e.getChild("content").getChildren().size(), "New element has content");
 
-        } catch (java.io.IOException ex) {
-            throw ex;
-        } catch (org.jdom2.JDOMException ex) {
-            throw ex;
-        } finally {
-            fs.close();
         }
 
     }
@@ -258,6 +252,6 @@ public class XmlFileTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XmlFileTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XmlFileTest.class);
 
 }
