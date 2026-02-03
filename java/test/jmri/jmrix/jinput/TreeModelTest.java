@@ -1,12 +1,9 @@
 package jmri.jmrix.jinput;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of TreeModel
@@ -17,12 +14,13 @@ import org.junit.Assume;
 public class TreeModelTest {
 
     @Test
+    @DisabledIfHeadless
     public void testInstance() throws InterruptedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         try {
-            Assert.assertNotNull("exists", TreeModel.instance());
+            Assertions.assertNotNull( TreeModel.instance(), "exists");
         } catch (Throwable e) {
-            log.warn("TreeModelTest caught {}", e);
+            log.warn("TreeModelTest caught ", e);
             if (e instanceof UnsatisfiedLinkError) {
                 log.info("TreeModel.instance threw UnsatisfiedLinkError, which means we can't test on this platform");
                 return;
@@ -30,7 +28,7 @@ public class TreeModelTest {
                 log.info("TreeModel.instance threw ClassNotFoundException, which means we can't test on this platform");
                 return;
             } else {
-                Assert.fail("instance threw "+e);
+                Assertions.fail("instance threw ", e);
             }
         }
         // then kill the thread
