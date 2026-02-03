@@ -112,6 +112,7 @@
 
     <held>
       <aspect>Stop</aspect>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/searchlights/one-high-held.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-held.gif</imagelink>
     </held>
 

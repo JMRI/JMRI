@@ -167,7 +167,9 @@ public class CarEditFrame extends RollingStockEditFrame {
             if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("loadNameNotExist",
                     car.getLoadName()), Bundle.getMessage("addLoad"),
                     JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
-                InstanceManager.getDefault(CarLoads.class).addName(car.getTypeName(), car.getLoadName());
+                carLoadEditFrame = new CarLoadEditFrame();
+                carLoadEditFrame.initComponents(car.getTypeName(),
+                        car.getLoadName());
             }
         }
         InstanceManager.getDefault(CarLoads.class).updateComboBox(car.getTypeName(), loadComboBox);

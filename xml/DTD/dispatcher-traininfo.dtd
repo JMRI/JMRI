@@ -66,4 +66,12 @@
     <!ATTLIST traininfo blockname               CDATA #IMPLIED>
     <!ATTLIST traininfo fnumberlight            CDATA "0">
     <!ATTLIST traininfo fnumberbell             CDATA "1">
-    <!ATTLIST traininfo fnumberhorn             CDATA "2">
+    <!ATTLIST traininfo fnumberhorn             CDATA "2">  
+	<!ATTLIST traininfo
+	    stopbydistance_mm   CDATA  #IMPLIED
+	    stopbydistance_ref  CDATA  #IMPLIED
+	>	
+	<!ATTLIST traininfo
+	    maxspeedscalekmh CDATA #IMPLIED
+	>
+

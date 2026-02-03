@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.trains.trainbuilder;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -498,8 +497,9 @@ public class TrainBuilder extends TrainBuilderCars {
         new TrainManifest(getTrain());
         try {
             new JsonManifest(getTrain()).build();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             log.error("Unable to create JSON manifest: {}", ex.getLocalizedMessage());
+            log.error("JSON manifest stack trace:", ex);
             throw new BuildFailedException(ex);
         }
         new TrainCsvManifest(getTrain());

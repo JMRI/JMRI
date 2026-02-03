@@ -1,12 +1,9 @@
 package jmri.jmrix.jinput.treecontrol;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of TreeAction
@@ -16,10 +13,10 @@ import org.junit.Assume;
 public class TreeActionTest {
 
     @Test
+    @DisabledIfHeadless
     public void testStringCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TreeAction action = new TreeAction("Light Control Action");
-        Assert.assertNotNull("exists", action);
+        Assertions.assertNotNull(action, "exists");
     }
 
     @BeforeEach
@@ -28,5 +25,8 @@ public class TreeActionTest {
     }
 
     @AfterEach
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }
