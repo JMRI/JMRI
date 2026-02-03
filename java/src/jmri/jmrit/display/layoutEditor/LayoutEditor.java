@@ -4327,7 +4327,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                         if (ls != null) {
                                             amendSelectionGroup(ls);
                                         } else {
-                                            PositionableJPanel jp = (PositionableJPanel) checkJPanelPopUps(dLoc);
+                                            PositionableJPanel jp = checkJPanelPopUps(dLoc);
                                             if (jp != null) {
                                                 amendSelectionGroup(jp);
                                             }
