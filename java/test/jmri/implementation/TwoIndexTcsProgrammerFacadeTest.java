@@ -77,10 +77,10 @@ public class TwoIndexTcsProgrammerFacadeTest {
         waitReply();
         Assert.assertEquals("index 1 written", 100 + 10, dp.getCvVal(201));
         Assert.assertEquals("index 2 written", 20, dp.getCvVal(202));
-        Assert.assertEquals("dummy 204 written", 100, dp.getCvVal(204)); // TCS says this is arbitrary, so
+        Assert.assertEquals("dummy 204 written", 0, dp.getCvVal(204)); // TCS says this is arbitrary, so
         // we write the offset value
 
-        Assert.assertEquals("read back", 12 * 256 + 100, readValue);         // We get 100 from the LSB
+        Assert.assertEquals("read back", 12 * 256 + 0, readValue);         // We get 0 from the LSB
         // because we wrote the offset
         // and the test Programmer remembers that
     }

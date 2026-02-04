@@ -1098,59 +1098,51 @@ public class LayoutSlipView extends LayoutTurnoutView {
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         if (!isDisabled() && !(isDisabledWhenOccupied() && isOccupied())) {
-            // TODO: query user base if this is "acceptable" (can obstruct state)
-//             if (false) {
-//                 int stateA = UNKNOWN;
-//                 Turnout toA = getTurnout();
-//                 if (toA != null) {
-//                     stateA = toA.getKnownState();
-//                 }
-//
-//                 Color foregroundColor = g2.getColor();
-//                 Color backgroundColor = g2.getBackground();
-//
-//                 if (stateA == Turnout.THROWN) {
-//                     g2.setColor(backgroundColor);
-//                 } else if (stateA != Turnout.CLOSED) {
-//                     g2.setColor(Color.GRAY);
-//                 }
-//                 Point2D rightCircleCenter = getCoordsRight();
-//                 if (layoutEditor.isTurnoutFillControlCircles()) {
-//                     g2.fill(trackControlCircleAt(rightCircleCenter));
-//                 } else {
-//                     g2.draw(trackControlCircleAt(rightCircleCenter));
-//                 }
-//                 if (stateA != Turnout.CLOSED) {
-//                     g2.setColor(foregroundColor);
-//                 }
-//
-//                 int stateB = UNKNOWN;
-//                 Turnout toB = getTurnoutB();
-//                 if (toB != null) {
-//                     stateB = toB.getKnownState();
-//                 }
-//
-//                 if (stateB == Turnout.THROWN) {
-//                     g2.setColor(backgroundColor);
-//                 } else if (stateB != Turnout.CLOSED) {
-//                     g2.setColor(Color.GRAY);
-//                 }
-//                 // drawHidden left/right turnout control circles
-//                 Point2D leftCircleCenter = getCoordsLeft();
-//                 if (layoutEditor.isTurnoutFillControlCircles()) {
-//                     g2.fill(trackControlCircleAt(leftCircleCenter));
-//                 } else {
-//                     g2.draw(trackControlCircleAt(leftCircleCenter));
-//                 }
-//                 if (stateB != Turnout.CLOSED) {
-//                     g2.setColor(foregroundColor);
-//                 }
-//             } else {
-                Point2D rightCircleCenter = getCoordsRight();
-                g2.draw(trackControlCircleAt(rightCircleCenter));
-                Point2D leftCircleCenter = getCoordsLeft();
+            int stateA = UNKNOWN;
+            Turnout toA = getTurnout();
+            if (toA != null) {
+                stateA = toA.getKnownState();
+            }
+
+            Color foregroundColor = g2.getColor();
+            Color backgroundColor = g2.getBackground();
+
+            if (stateA == Turnout.THROWN) {
+                g2.setColor(backgroundColor);
+            } else if (stateA != Turnout.CLOSED) {
+                g2.setColor(foregroundColor);
+            }
+            Point2D leftCircleCenter = getCoordsLeft();
+            if (layoutEditor.isTurnoutFillControlCircles()) {
+                g2.fill(trackControlCircleAt(leftCircleCenter));
+            } else {
                 g2.draw(trackControlCircleAt(leftCircleCenter));
-//             }
+            }
+            if (stateA != Turnout.CLOSED) {
+                g2.setColor(foregroundColor);
+            }
+
+            int stateB = UNKNOWN;
+            Turnout toB = getTurnoutB();
+            if (toB != null) {
+                stateB = toB.getKnownState();
+            }
+
+            if (stateB == Turnout.THROWN) {
+                g2.setColor(backgroundColor);
+            } else if (stateB != Turnout.CLOSED) {
+                g2.setColor(foregroundColor);
+            }
+            // drawHidden left/right turnout control circles
+            Point2D rightCircleCenter = getCoordsRight();
+            if (layoutEditor.isTurnoutFillControlCircles()) {
+                g2.fill(trackControlCircleAt(rightCircleCenter));
+            } else {
+                g2.draw(trackControlCircleAt(rightCircleCenter));
+            }
+            if (stateB != Turnout.CLOSED) {
+                g2.setColor(foregroundColor);
+            }
         }
     } // drawTurnoutControls
 

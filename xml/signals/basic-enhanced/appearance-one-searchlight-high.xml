@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+  xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd">
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year>
+    <year>2010</year>
+    <year>2024</year>
+    <year>2026</year>
+    <holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>John</firstname>
+        <surname>Purcell</surname>
+      </personname>
+    </author>
+
+    <author>
+      <personname>
+        <firstname>Dick</firstname>
+        <surname>Bronson</surname>
+      </personname>
+    </author> 
+
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+      <email>rgj1927@gmail.com</email>
+    </author>
+
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+
+    <revision>
+      <revnumber>1.0</revnumber>
+      <date>2024-11-14</date>
+      <authorinitials>JDP</authorinitials>
+      <revremark>Initial release for use in new "basic-enhanced" signal system</revremark>
+    </revision>
+
+     <revision>
+      <revnumber>2.0</revnumber>
+      <date>2026-01-30</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>added alternate color-distinguished icon set</revremark>
+    </revision>
+
+  </revhistory>
+
+  <aspecttable>basic-enhanced</aspecttable>
+  <name>Single searchlight high signal</name>
+  <reference>(similar to basic signals described in various magazine articles)</reference>
+  <description>A simple signal mast based on similar mast used in the "basic" signal system, but
+    with addition of an Advanced Approach appearance.
+  </description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-281.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-G.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-285.gif</imagelink>
+     <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-Y.gif</imagelink>
+     </appearance>
+
+    <appearance>
+      <aspectname>Advanced Approach</aspectname>
+      <show>flashyellow</show>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-FY-animated.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-FY-static.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-292.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-R.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/searchlights/one-high-dark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-dark.gif</imagelink>
+    </appearance>
+
+
+  </appearances>
+  
+  <specificappearances>
+    <!-- Start of Specific Appearances list -->
+
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+
+    <held>
+      <aspect>Stop</aspect>
+      <imagelink type="discriminated">../../../resources/icons/smallschematics/searchlights/one-high-held.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-held.gif</imagelink>
+    </held>
+
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
+
+  </specificappearances><!-- End of Specific Appearances list -->
+  
+  <aspectMappings><!-- Start of Aspect Mapping -->
+
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Advanced Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advanced Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Approach</advancedAspect>
+      <ourAspect>Advanced Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Secondary Diverging Approach</advancedAspect>
+      <ourAspect>Advanced Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Advanced Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+       <advancedAspect>Secondary Diverging Advanced Approach</advancedAspect>
+       <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Secondary Diverging Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings><!-- End of Aspect Mapping -->
+
+</appearancetable>  

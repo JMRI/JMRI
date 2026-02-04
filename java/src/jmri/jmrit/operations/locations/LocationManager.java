@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.*;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 
@@ -156,11 +157,11 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         if (location == null) {
             _id++;
             location = new Location(Integer.toString(_id), name);
-            Integer oldSize = Integer.valueOf(_locationHashTable.size());
+            int oldSize = _locationHashTable.size();
             _locationHashTable.put(location.getId(), location);
             resetNameLengths();
             setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                    Integer.valueOf(_locationHashTable.size()));
+                    _locationHashTable.size());
         }
         return location;
     }
@@ -171,14 +172,14 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
      * @param location The Location to add.
      */
     public void register(Location location) {
-        Integer oldSize = Integer.valueOf(_locationHashTable.size());
+        int oldSize = _locationHashTable.size();
         _locationHashTable.put(location.getId(), location);
         // find last id created
         int id = Integer.parseInt(location.getId());
         if (id > _id) {
             _id = id;
         }
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _locationHashTable.size());
     }
 
     /**
@@ -191,9 +192,9 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
             return;
         }
         location.dispose();
-        Integer oldSize = Integer.valueOf(_locationHashTable.size());
+        int oldSize = _locationHashTable.size();
         _locationHashTable.remove(location.getId());
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _locationHashTable.size());
     }
 
     /**
@@ -360,6 +361,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
     public JComboBox<Location> getComboBox() {
         JComboBox<Location> box = new JComboBox<>();
         updateComboBox(box);
+        OperationsPanel.padComboBox(box, getMaxLocationNameLength());
         return box;
     }
 

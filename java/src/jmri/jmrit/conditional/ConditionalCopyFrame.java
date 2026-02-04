@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.SortedSet;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.*;
@@ -30,21 +31,15 @@ import jmri.util.table.ButtonRenderer;
  */
 public class ConditionalCopyFrame extends ConditionalFrame {
 
-    CopyTableModel _actionTableModel = null;
-    CopyTableModel _variableTableModel = null;
-    JTextField _antecedentField;
-    JPanel _antecedentPanel;
+    private Conditional.ItemType _saveType = Conditional.ItemType.NONE;
 
-    Conditional.ItemType _saveType = Conditional.ItemType.NONE;
 
-    // ------------------------------------------------------------------
-    
-    ConditionalCopyFrame(String title, Conditional conditional, ConditionalList parent) {
+    ConditionalCopyFrame(String title, @Nonnull Conditional conditional, ConditionalList parent) {
         super(title, conditional, parent);
         makeConditionalFrame(conditional);
     }
 
-    void makeConditionalFrame(Conditional conditional) {
+    private void makeConditionalFrame(@Nonnull Conditional conditional) {
         addHelpMenu(
                 "package.jmri.jmrit.conditional.ConditionalCopy", true);  // NOI18N
         Container contentPane = getContentPane();
@@ -56,12 +51,12 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         logicPanel.setLayout(new BoxLayout(logicPanel, BoxLayout.Y_AXIS));
 
         // add Antecedent Expression Panel - ONLY appears for MIXED operator statements
-        _antecedentField = new JTextField(65);
-        _antecedentField.setText(ConditionalEditBase.translateAntecedent(_antecedent, false));
-        _antecedentField.setFont(new Font("SansSerif", Font.BOLD, 14));  // NOI18N
-        _antecedentPanel = makeEditPanel(_antecedentField, "LabelAntecedent", "LabelAntecedentHint");  // NOI18N
-        _antecedentPanel.setVisible(_logicType == Conditional.AntecedentOperator.MIXED);
-        logicPanel.add(_antecedentPanel);
+        JTextField antecedentField = new JTextField(65);
+        antecedentField.setText(ConditionalEditBase.translateAntecedent(_antecedent, false));
+        antecedentField.setFont(new Font("SansSerif", Font.BOLD, 14));  // NOI18N
+        JPanel antecedentPanel = makeEditPanel(antecedentField, "LabelAntecedent", "LabelAntecedentHint");  // NOI18N
+        antecedentPanel.setVisible(_logicType == Conditional.AntecedentOperator.MIXED);
+        logicPanel.add(antecedentPanel);
 
         // add state variable table title
         JPanel varTitle = new JPanel();
@@ -69,8 +64,9 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         varTitle.add(new JLabel(Bundle.getMessage("StateVariableTableTitle")));  // NOI18N
         logicPanel.add(varTitle);
         // initialize table of state variables
-        _variableTableModel = new VariableCopyTableModel(false, _parent._selectionMode != SelectionMode.USESINGLE);
-        JTable variableTable = new JTable(_variableTableModel);
+        CopyTableModel variableTableModel = new VariableCopyTableModel(
+            false, _parent._selectionMode != SelectionMode.USESINGLE);
+        JTable variableTable = new JTable(variableTableModel);
         variableTable.setRowSelectionAllowed(false);
         int rowHeight = variableTable.getRowHeight();
 
@@ -83,7 +79,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         TableColumn nameColumn = variableColumnModel.getColumn(VariableCopyTableModel.NAME_COLUMN);
         nameColumn.setResizable(false);
         if (_parent._selectionMode != SelectionMode.USESINGLE) {
-            nameColumn.setCellEditor(new NameCellEditor(new JComboBox<String>()));
+            nameColumn.setCellEditor(new NameCellEditor(new JComboBox<>()));
         } else {
             nameColumn.setCellEditor(new NameCellEditor(new JTextField()));            
         }
@@ -120,8 +116,9 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         conseqentPanel.add(actTitle);
 
         // set up action consequents table
-        _actionTableModel = new ActionCopyTableModel(true, _parent._selectionMode != SelectionMode.USESINGLE);
-        JTable actionTable = new JTable(_actionTableModel);
+        CopyTableModel actionTableModel = new ActionCopyTableModel(
+            true, _parent._selectionMode != SelectionMode.USESINGLE);
+        JTable actionTable = new JTable(actionTableModel);
         actionTable.setRowSelectionAllowed(false);
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         actionTable.setDefaultRenderer(JButton.class, buttonRenderer);
@@ -134,7 +131,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         nameColumn = actionColumnModel.getColumn(ActionCopyTableModel.NAME_COLUMN);
         nameColumn.setResizable(false);
         if (_parent._selectionMode != SelectionMode.USESINGLE) {
-            nameColumn.setCellEditor(new NameCellEditor(new JComboBox<String>()));
+            nameColumn.setCellEditor(new NameCellEditor(new JComboBox<>()));
         } else {
             nameColumn.setCellEditor(new NameCellEditor(new JTextField()));            
         }
@@ -177,12 +174,12 @@ public class ConditionalCopyFrame extends ConditionalFrame {
             }
         });
         // initialize state variable table
-        _variableTableModel.fireTableDataChanged();
+        variableTableModel.fireTableDataChanged();
         // initialize action variables
-        _actionTableModel.fireTableDataChanged();
+        actionTableModel.fireTableDataChanged();
     }   // end makeConditionalFrame
 
-    class NameCellEditor extends DefaultCellEditor {
+    private class NameCellEditor extends DefaultCellEditor {
 
         NameCellEditor(JComboBox<String> comboBox) {
             super(comboBox);
@@ -201,7 +198,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
             CopyTableModel model = (CopyTableModel) table.getModel();
             if (log.isDebugEnabled()) {
                 log.debug("getTableCellEditorComponent: row= {}, column= {} selected = {} isComboTable= {}",
-                        row, column, isSelected, model._isComboTable);
+                        row, column, isSelected, model.isComboTable());
             }
             Conditional.ItemType itemType;
             String name;
@@ -214,7 +211,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
                 itemType = variable.getType().getItemType();
                 name = variable.getName();
             }
-            if (model._isComboTable) {
+            if (model.isComboTable()) {
                 SortedSet<NamedBean> namedBeans = (SortedSet<NamedBean>)getItemNamedBeamns(itemType);
                 JComboBox<String> comboBox = (JComboBox<String>)getComponent();
                 comboBox.removeAllItems();
@@ -262,6 +259,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
                 return new java.util.TreeSet<String>();             // Skip any other items.
         }
     }
+
     /**
      * Respond to the Cancel button in the Edit Conditional frame.
      * <p>
@@ -284,7 +282,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
      * @param variable ConditionalVariable to validate
      * @return true if all data checks out OK, otherwise false
      */
-    boolean validateVariable(String name, ConditionalVariable variable) {
+    boolean validateVariable(String name, @Nonnull ConditionalVariable variable) {
         Conditional.ItemType itemType = variable.getType().getItemType();
 
         if (!checkIsAction(name, itemType) ) {
@@ -295,6 +293,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         }
         return (true);
     }
+
     /**
      * Validate Action item name change.
      * <p>
@@ -306,7 +305,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
      * @param action ConditionalAction to validate
      * @return true if all data checks out OK, otherwise false
      */
-    boolean validateAction(String name, ConditionalAction action) {
+    boolean validateAction(@Nonnull String name, ConditionalAction action) {
         if (!checkReferenceByMemory(name)) {
             return false;
         }
@@ -327,89 +326,57 @@ public class ConditionalCopyFrame extends ConditionalFrame {
                 return false;
             }
         }
-        return (true);
+        return true;
     }
 
-    boolean isValidType( Conditional.ItemType itemType, String name) {
+    boolean isValidType( @Nonnull Conditional.ItemType itemType, String sname) {
+        String name = sname;
         switch (itemType) {
             case SENSOR:
                 name = _parent.validateSensorReference(name);
-                if (name == null) {
-                    return false;
-                }
                 break;
             case TURNOUT:
                 name = _parent.validateTurnoutReference(name);
-                if (name == null) {
-                    return false;
-                }
                 break;
             case CONDITIONAL:
                 name = _parent.validateConditionalReference(name);
-                if (name == null) {
-                    return false;
-                }
                 break;
             case LIGHT:
                 name = _parent.validateLightReference(name);
-                if (name == null) {
-                    return false;
-                }
                 break;
             case SIGNALHEAD:
                 name = _parent.validateSignalHeadReference(name);
-                if (name == null) {
-                    return false;
-                }
                 break;
             case SIGNALMAST:
                 name = _parent.validateSignalMastReference(name);
-                if (name == null) {
-                    return false;
-                }
                 break;
             case MEMORY:
                 name = _parent.validateMemoryReference(name);
-                if (name == null) {
-                    return false;
-                }
                 break;
             case LOGIX:
                 name = _parent.validateLogixReference(name);
-                if (name == null) {
-                    return false;
-                }
                 break;
             case WARRANT:
                 name = _parent.validateWarrantReference(name);
-                if (name == null) {
-                    return false;
-                }
                 break;
             case OBLOCK:
                 name = _parent.validateOBlockReference(name);
-                if (name == null) {
-                    return false;
-                }
                 break;
             case ENTRYEXIT:
                 name = _parent.validateEntryExitReference(name);
-                if (name == null) {
-                    return false;
-                }
                 break;
             default:
                 break;
         }
-        return true;
+        return name != null;
     }
 
     //------------------- Table Models ----------------------
 
-    abstract class CopyTableModel extends AbstractTableModel{
+    private abstract class CopyTableModel extends AbstractTableModel{
         
         boolean _isActionTable;
-        boolean _isComboTable;
+        private final boolean _isComboTable;
 
         CopyTableModel(boolean isAction, boolean isCombo) {
             _isActionTable = isAction;
@@ -426,7 +393,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         }
     }
 
-    class VariableCopyTableModel extends CopyTableModel{
+    private class VariableCopyTableModel extends CopyTableModel{
         
         static final int ROWNUM_COLUMN = 0;
         static final int NAME_COLUMN = 1;
@@ -440,7 +407,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         public Class<?> getColumnClass(int c) {
             switch (c) {
                 case NAME_COLUMN:
-                    if (_isComboTable) {
+                    if (isComboTable()) {
                         return JComboBox.class;
                     } else {
                         return JTextField.class;
@@ -461,10 +428,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
 
         @Override
         public boolean isCellEditable(int r, int col) {
-            if (col == NAME_COLUMN) {
-                return true;
-            }
-            return false;
+            return col == NAME_COLUMN;
         }
 
         @Override
@@ -480,20 +444,6 @@ public class ConditionalCopyFrame extends ConditionalFrame {
                     break;
             }
             return "";
-        }
-
-        public int getPreferredWidth(int col) {
-            switch (col) {
-                case ROWNUM_COLUMN:
-                    return 10;
-                case NAME_COLUMN:
-                    return 200;
-                case DESCRIPTION_COLUMN:
-                    return 600;
-                default:
-                    break;
-            }
-            return 10;
         }
 
         @Override
@@ -535,14 +485,11 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         }        
     }
 
-    class ActionCopyTableModel extends CopyTableModel {
+    private class ActionCopyTableModel extends CopyTableModel {
         
         static final int NAME_COLUMN = 0;
         static final int DESCRIPTION_COLUMN = 1;
         static final int DELETE_COLUMN = 2;
-
-        boolean _isActionTable;
-        boolean _isComboTable;
 
         ActionCopyTableModel(boolean isAction, boolean isCombo) {
             super(isAction, isCombo);
@@ -552,7 +499,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         public Class<?> getColumnClass(int c) {
             switch (c) {
                 case NAME_COLUMN:
-                    if (_isComboTable) {
+                    if (isComboTable()) {
                         return JComboBox.class;
                     } else {
                         return JTextField.class;
@@ -575,10 +522,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
 
         @Override
         public boolean isCellEditable(int r, int col) {
-            if (col == DESCRIPTION_COLUMN) {
-                return false;
-            }
-            return true;
+            return col != DESCRIPTION_COLUMN;
         }
 
         @Override
@@ -594,18 +538,6 @@ public class ConditionalCopyFrame extends ConditionalFrame {
                     break;
             }
             return "";
-        }
-
-        public int getPreferredWidth(int col) {
-            switch (col) {
-                case NAME_COLUMN:
-                    return 200;
-                case DESCRIPTION_COLUMN:
-                    return 600;
-                default:
-                    break;
-            }
-            return 10;
         }
 
         @Override
@@ -651,5 +583,5 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         }        
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalCopyFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalCopyFrame.class);
 }

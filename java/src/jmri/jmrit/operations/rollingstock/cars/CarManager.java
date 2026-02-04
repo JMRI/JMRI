@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.*;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -20,17 +21,16 @@ import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 /**
  * Manages the cars.
  *
- * @author Daniel Boudreau Copyright (C) 2008
+ * @author Daniel Boudreau Copyright (C) 2008, 2026
  */
-public class CarManager extends RollingStockManager<Car>
-        implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
+public class CarManager extends RollingStockManager<Car> implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public CarManager() {
     }
 
     /**
-     * Finds an existing Car or creates a new Car if needed requires car's road and
-     * number
+     * Finds an existing Car or creates a new Car if needed requires car's road
+     * and number
      *
      * @param road   car road
      * @param number car number
@@ -95,6 +95,10 @@ public class CarManager extends RollingStockManager<Car>
         return getByList(getByLocationList(), BY_RWL);
     }
 
+    public List<Car> getByRouteList() {
+        return getByList(getByLocationList(), BY_ROUTE);
+    }
+
     public List<Car> getByDivisionList() {
         return getByList(getByLocationList(), BY_DIVISION);
     }
@@ -112,8 +116,9 @@ public class CarManager extends RollingStockManager<Car>
         return getByList(getByIdList(), BY_WAIT);
     }
 
+    @Override
     public List<Car> getByPickupList() {
-        return getByList(getByIdList(), BY_PICKUP);
+        return getByList(getByDestinationList(), BY_PICKUP);
     }
 
     // The special sort options for cars
@@ -125,8 +130,9 @@ public class CarManager extends RollingStockManager<Car>
     private static final int BY_PICKUP = 35;
     private static final int BY_HAZARD = 36;
     private static final int BY_RWL = 37; // Return When loaded
-    private static final int BY_DIVISION = 38;
-    
+    private static final int BY_ROUTE = 38;
+    private static final int BY_DIVISION = 39;
+
     // the name of the location and track is "split"
     private static final int BY_SPLIT_FINAL_DEST = 40;
     private static final int BY_SPLIT_LOCATION = 41;
@@ -151,6 +157,8 @@ public class CarManager extends RollingStockManager<Car>
             case BY_FINAL_DEST:
                 return (c1, c2) -> (c1.getFinalDestinationName() + c1.getFinalDestinationTrackName())
                         .compareToIgnoreCase(c2.getFinalDestinationName() + c2.getFinalDestinationTrackName());
+            case BY_ROUTE:
+                return (c1, c2) -> (c1.getRoutePath().compareToIgnoreCase(c2.getRoutePath()));
             case BY_DIVISION:
                 return (c1, c2) -> (c1.getDivisionName().compareToIgnoreCase(c2.getDivisionName()));
             case BY_WAIT:
@@ -175,12 +183,12 @@ public class CarManager extends RollingStockManager<Car>
     }
 
     /**
-     * Return a list available cars (no assigned train or car already assigned to
-     * this train) on a route, cars are ordered least recently moved to most
-     * recently moved.
+     * Return a list available cars (no assigned train or car already assigned
+     * to this train) on a route, cars are ordered least recently moved to most
+     * recently moved. Note that it is possible for a car to have a location,
+     * but no track assignment.
      *
      * @param train The Train to use.
-     *
      * @return List of cars with no assigned train on a route
      */
     public List<Car> getAvailableTrainList(Train train) {
@@ -211,8 +219,8 @@ public class CarManager extends RollingStockManager<Car>
                 destination = null; // include cars at destination
             }
         }
-        // get rolling stock by priority and then by moves
-        List<Car> sortByPriority = sortByPriority(getByMovesList());
+        // get rolling stock by track priority, load priority and then by moves
+        List<Car> sortByPriority = sortByTrackPriority(sortByLoadPriority(getByMovesList()));
         // now build list of available Car for this route
         for (Car car : sortByPriority) {
             // only use Car with a location
@@ -230,7 +238,7 @@ public class CarManager extends RollingStockManager<Car>
     }
 
     // sorts the high priority cars to the start of the list
-    protected List<Car> sortByPriority(List<Car> list) {
+    protected List<Car> sortByLoadPriority(List<Car> list) {
         List<Car> out = new ArrayList<>();
         // move high priority cars to the start
         for (Car car : list) {
@@ -456,9 +464,7 @@ public class CarManager extends RollingStockManager<Car>
 
     public List<Car> getCarsLocationUnknown() {
         List<Car> mias = new ArrayList<>();
-        List<Car> cars = getByIdList();
-        for (Car rs : cars) {
-            Car car = rs;
+        for (Car car : getByIdList()) {
             if (car.isLocationUnknown()) {
                 mias.add(car); // return unknown location car
             }
@@ -480,7 +486,7 @@ public class CarManager extends RollingStockManager<Car>
         nf.setMaximumFractionDigits(1);
         return nf.format(doubleCarWeight); // car weight in ounces.
     }
-    
+
     /**
      * Used to determine if any car has been assigned a division
      * 
@@ -494,11 +500,66 @@ public class CarManager extends RollingStockManager<Car>
         }
         return false;
     }
-    
+
+    /**
+     * Used to determine if there are clone cars.
+     * 
+     * @return true if there are clone cars, otherwise false.
+     */
+    public boolean isThereClones() {
+        for (Car car : getList()) {
+            if (car.isClone()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Creates a clone for the car, and clones if the car is part of a kernel.
+     * Note that a car have have multiple clones.
+     * 
+     * @param car       The car to clone
+     * @param track     The destination track for the clones
+     * @param train     The train transporting the clones
+     * @param startTime The date and time the clones were moved
+     * @return clone for this car
+     */
+    public Car createClone(Car car, Track track, Train train, Date startTime) {
+        Car clone = createClone(car);
+        // for reset
+        clone.setPreviousFinalDestination(car.getPreviousFinalDestination());
+        clone.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
+        clone.setPreviousScheduleId(car.getScheduleItemId());
+        createCloneConsist(car, track, train, startTime, clone);
+        // move car to new location for later pick up
+        finshCreateClone(car, track, train, startTime, clone);
+        return clone;
+    }
+
+    private void createCloneConsist(Car car, Track track, Train train, Date startTime, Car cloneCar) {
+        if (car.getKernel() != null) {
+            String kernelName = car.getKernelName() + Car.CLONE + padNumber(car.getCloneOrder());
+            Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel(kernelName);
+            cloneCar.setKernel(kernel);
+            for (Car kar : car.getKernel().getCars()) {
+                if (kar != car) {
+                    Car nClone = createClone(kar, car.getCloneOrder());
+                    nClone.setKernel(kernel);
+                    // for reset
+                    nClone.setPreviousFinalDestination(car.getPreviousFinalDestination());
+                    nClone.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
+                    // move car to new location for later pick up
+                    finshCreateClone(kar, track, train, startTime, nClone);
+                }
+            }
+        }
+    }
+
     int _commentLength = 0;
-    
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-            justification="I18N of Info Message")
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "I18N of Info Message")
     public int getMaxCommentLength() {
         if (_commentLength == 0) {
             _commentLength = TrainManifestHeaderText.getStringHeader_Comment().length();
@@ -537,7 +598,7 @@ public class CarManager extends RollingStockManager<Car>
     public void store(Element root) {
         // nothing to save under options
         root.addContent(new Element(Xml.OPTIONS));
-        
+
         Element values;
         root.addContent(values = new Element(Xml.CARS));
         // add entries
@@ -553,7 +614,7 @@ public class CarManager extends RollingStockManager<Car>
         InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
         super.firePropertyChange(p, old, n);
     }
-    
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(Car.COMMENT_CHANGED_PROPERTY)) {

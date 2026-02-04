@@ -2,7 +2,6 @@ package jmri.jmrix.sprog;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,14 +17,13 @@ public class SprogCSThrottleManagerTest {
 
     @Test
     public void testCtor(){
-       Assert.assertNotNull("exists",op);
+        Assertions.assertNotNull( op, "exists");
     }
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         // prepare an interface
-        jmri.util.JUnitUtil.resetInstanceManager();
 
         m = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
         stcs = new SprogTrafficControlScaffold(m);
@@ -39,7 +37,7 @@ public class SprogCSThrottleManagerTest {
     public void tearDown() {
         m.getSlotThread().interrupt();
         m.dispose();
-        JUnitUtil.waitFor(() -> { return !m.getSlotThread().isAlive(); });
+        JUnitUtil.waitThreadTerminated(m.getSlotThread().getName());
         stcs.dispose();
         op = null;
         stcs = null;

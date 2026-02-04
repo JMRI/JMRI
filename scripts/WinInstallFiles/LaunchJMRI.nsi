@@ -25,6 +25,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.31.0
+; - Make /noisy do what its supposed to do and display the console
+; - NB version 0.1.30.0 seems to have been skipped
+; -------------------------------------------------------------------------
 ; - Version 0.1.28.1
 ; - Do not set the jinput.plugins property
 ; -------------------------------------------------------------------------
@@ -177,8 +181,8 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
-!define COPYRIGHT  "(C) 1997-2024 JMRI Community" ; Copyright string
-!define VER        "0.1.29.0"                     ; Launcher version
+!define COPYRIGHT  "(C) 1997-2026 JMRI Community" ; Copyright string
+!define VER        "0.1.31.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -561,6 +565,9 @@ Section "Main"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
   StrCpy $OPTIONS "$OPTIONS -Djogamp.gluegen.UseTempJarCache=false"
   StrCpy $OPTIONS "$OPTIONS -Dswing.defaultlaf=com.sun.java.swing.plaf.windows.WindowsLookAndFeel"
+  ; following line is for DarkLAF
+  StrCpy $OPTIONS "$OPTIONS --add-exports=java.desktop/sun.awt=ALL-UNNAMED"
+  
   StrCmp ${ARCH_64BIT} $x64JRE x64Libs x86Libs
   x86Libs:
     ; -- 32-bit libraries
@@ -743,9 +750,19 @@ Section "Main"
 
   ; -- Launch the Java class.
   LaunchJMRI:
-  DetailPrint "Launching JMRI"
-  ; -- use $7 to hold return value
-  ExecWait `"$JEXEPATH" $OPTIONS -Djava.class.path="$CLASSPATH" $CLASS $PARAMETERS` $7
+    DetailPrint "Launching JMRI"
+    ; -- use $7 to hold return value
+    StrCmp $NOISY ${SW_NORMAL} IsNoisyExec
+    ExecWait `"$JEXEPATH" $OPTIONS -Djava.class.path="$CLASSPATH" $CLASS $PARAMETERS` $7
+    Goto IsNotNoisy
+
+  IsNoisyExec:
+    ; -- use $7 to hold return value
+    nsExec::ExecToLog `"$JEXEPATH" $OPTIONS -Djava.class.path="$CLASSPATH" $CLASS $PARAMETERS`
+    Pop $0
+    Pop $7    ;-- response code
+
+  IsNotNoisy:
 
   ; -- We're no longer active
   DetailPrint "Return code from process: $7"

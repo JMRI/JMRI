@@ -300,6 +300,10 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             }
             addTransitPopup(popup);
         } else {
+            if (!isControlling()) {
+                log.debug("The signal mast icon is disabled, skip the aspect list popup");
+                return false;
+            }
             final java.util.Vector<String> aspects = getSignalMast().getValidAspects();
             for (int i = 0; i < aspects.size(); i++) {
                 final int index = i;

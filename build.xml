@@ -25,7 +25,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2024"/>
+    <property name="jmri.copyright.year" value="1997-2026"/>
 
     <property environment="env"/>
 
@@ -133,12 +133,12 @@
     <path id="runtime.class.path">
         <pathelement location="${libdir}/JavaVersionCheckWindow.jar"/> <!-- Java 8 check, keep at start -->
         <pathelement location="${libdir}/jmri.script.jsr223graalpython.jar"/> <!-- Optional GraalVM-built code -->
-        <pathelement location="${libdir}/jSerialComm-2.10.4.jar"/>
+        <pathelement location="${libdir}/jSerialComm-2.11.4.jar"/>
         <pathelement location="${libdir}/purejavacomm-1.0.5.jar"/>
         <pathelement location="${libdir}/xercesImpl-2.12.2.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
         <pathelement location="${libdir}/commons-csv-1.9.0.jar"/>
-        <pathelement location="${libdir}/jdom2-2.0.6.jar"/>
+        <pathelement location="${libdir}/jdom2-2.0.6.1.jar"/>
         <pathelement location="${libdir}/jhall.jar"/>
         <pathelement location="${libdir}/jinput-2.0.9-natives-all.jar"/>
         <pathelement location="${libdir}/jinput-2.0.9.jar"/>
@@ -147,7 +147,7 @@
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
         <pathelement location="${libdir}/jsoup-1.15.3.jar"/>
-        <pathelement location="${libdir}/jython-standalone-2.7.2.jar"/>
+        <pathelement location="${libdir}/jython-standalone-2.7.4.jar"/>
         <pathelement location="${libdir}/slf4j-api-2.0.7.jar"/><!-- sl4fj API -->
         <pathelement location="${libdir}/jul-to-slf4j-2.0.7.jar"/><!-- java.util.logging to sl4fj -->
         <pathelement location="${libdir}/log4j-slf4j2-impl-2.20.0.jar"/><!-- sl4fj to log4j2 -->
@@ -198,7 +198,8 @@
         <pathelement location="${libdir}/usb4java-javax-1.3.0.jar"/>
         <pathelement location="${libdir}/hid4java-0.5.0.jar"/>
         <pathelement location="${libdir}/org.eclipse.paho.client.mqttv3-1.2.5.jar"/>
-        <pathelement location="${libdir}/json-schema-validator-1.0.28.jar"/>
+        <pathelement location="${libdir}/json-schema-validator-1.3.3.jar"/>
+        <pathelement location="${libdir}/itu-1.14.0.jar"/>
         <pathelement location="${libdir}/jinputvalidator-0.8.0.jar"/>
         <pathelement location="${libdir}/jsplitbutton-1.3.1.jar"/>
         <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
@@ -224,18 +225,45 @@
         <pathelement location="${libdir}/batik-svggen-1.14.jar"/>
         <pathelement location="${libdir}/xml-apis-ext-1.3.04.jar"/>
         <pathelement location="${libdir}/xmlgraphics-commons-2.6.jar"/>
+
+        <!-- Alternate LaF's -->
+        <pathelement location="${libdir}/darklaf-compatibility-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-core-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-iconset-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-macos-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-native-utils-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-platform-base-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-platform-decorations-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-platform-preferences-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-property-loader-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-theme-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-theme-spec-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-utils-3.0.2.jar"/>
+
+        <pathelement location="${libdir}/swing-dsl-0.1.0.jar"/>
+        <pathelement location="${libdir}/swing-dsl-core-0.1.0.jar"/>
+        <pathelement location="${libdir}/swing-dsl-laf-support-0.1.0.jar"/>
+
+        <pathelement location="${libdir}/swing-extensions-laf-support-0.1.3.jar"/>
+        <pathelement location="${libdir}/swing-extensions-visual-padding-0.1.3.jar"/>
+
+        <pathelement location="${libdir}/jsvg-1.7.0.jar"/>
+
+        <pathelement location="${libdir}/swingx-core-1.6.5-1.jar"/>
+
         <!-- //BiDiB client library -->
-        <pathelement location="${libdir}/jbidibc-core-2.0.18.jar"/>
-        <pathelement location="${libdir}/jbidibc-messages-2.0.18.jar"/>
-        <pathelement location="${libdir}/jbidibc-net-serial-over-tcp-2.0.18.jar"/>
-        <pathelement location="${libdir}/jbidibc-purejavacomm-2.0.18.jar"/>
-        <pathelement location="${libdir}/jbidibc-serial-2.0.18.jar"/>
-        <pathelement location="${libdir}/jbidibc-simulation-2.0.18.jar"/>
-        <pathelement location="${libdir}/bidibwizard-common-2.0.18.jar"/>
-        <pathelement location="${libdir}/bidibwizard-model-2.0.18.jar"/>
-        <pathelement location="${libdir}/bidibwizard-simulation-2.0.18.jar"/>
+        <pathelement location="${libdir}/jbidibc-core-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-messages-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-netbidib-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-net-serial-over-tcp-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-jserialcomm-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-serial-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-simulation-2.0.40.jar"/>
+        <pathelement location="${libdir}/bidibwizard-common-2.0.44.jar"/>
+        <pathelement location="${libdir}/bidibwizard-model-2.0.44.jar"/>
+        <pathelement location="${libdir}/bidibwizard-simulation-2.0.44.jar"/>
         <!-- BiDiB dependencies -->
-        <pathelement location="${libdir}/commons-collections4-4.4.jar"/>
+        <pathelement location="${libdir}/commons-collections4-4.5.0.jar"/>
         <pathelement location="${libdir}/eventbus-1.4.jar"/>
         <pathelement location="${libdir}/javax.activation-api-1.2.0.jar"/>
         <pathelement location="${libdir}/jaxb-api-2.3.1.jar"/>
@@ -243,34 +271,37 @@
         <pathelement location="${libdir}/jaxb-impl-2.3.2.jar"/>
         <pathelement location="${libdir}/jgoodies-binding-2.13.0.jar"/>
         <pathelement location="${libdir}/jgoodies-common-1.8.1.jar"/>
+        <pathelement location="${libdir}/jackson-datatype-jsr310-2.13.4.jar"/>
         <!-- //BiDiB -->
+        <pathelement location="${libdir}/reflections-0.10.2.jar"/>
+        <pathelement location="${libdir}/javassist-3.28.0-GA.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
     <!-- jars that are needed at build and/or test time -->
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
-        <pathelement location="${libdir}/junit-jupiter-5.9.1.jar"/>
-        <pathelement location="${libdir}/junit-platform-console-standalone-1.9.1.jar"/>
-        <pathelement location="${libdir}/junit-platform-commons-1.9.1.jar"/>
-        <pathelement location="${libdir}/junit-platform-engine-1.9.1.jar"/>
-        <pathelement location="${libdir}/junit-platform-launcher-1.9.1.jar"/>
-        <pathelement location="${libdir}/junit-platform-runner-1.9.1.jar"/>
-        <pathelement location="${libdir}/junit-platform-suite-api-1.9.1.jar"/>
-        <pathelement location="${libdir}/junit-vintage-engine-5.9.1.jar"/>
-        <pathelement location="${libdir}/junit-jupiter-api-5.9.1.jar"/>
-        <pathelement location="${libdir}/junit-jupiter-engine-5.9.1.jar"/>
-        <pathelement location="${libdir}/junit-jupiter-params-5.9.1.jar"/>
-        <pathelement location="${libdir}/opentest4j-1.2.0.jar"/>
+        <pathelement location="${libdir}/junit-jupiter-5.13.4.jar"/>
+        <pathelement location="${libdir}/junit-platform-console-standalone-1.13.4.jar"/>
+        <pathelement location="${libdir}/junit-platform-commons-1.13.4.jar"/>
+        <pathelement location="${libdir}/junit-platform-engine-1.13.4.jar"/>
+        <pathelement location="${libdir}/junit-platform-launcher-1.13.4.jar"/>
+        <pathelement location="${libdir}/junit-platform-runner-1.13.4.jar"/>
+        <pathelement location="${libdir}/junit-platform-suite-api-1.13.4.jar"/>
+        <pathelement location="${libdir}/junit-vintage-engine-5.13.4.jar"/>
+        <pathelement location="${libdir}/junit-jupiter-api-5.13.4.jar"/>
+        <pathelement location="${libdir}/junit-jupiter-engine-5.13.4.jar"/>
+        <pathelement location="${libdir}/junit-jupiter-params-5.13.4.jar"/>
+        <pathelement location="${libdir}/opentest4j-1.3.0.jar"/>
         <pathelement location="${libdir}/apiguardian-api-1.1.0.jar"/>
-        <pathelement location="${libdir}/archunit-1.0.0-rc1.jar"/>
-        <pathelement location="${libdir}/archunit-junit5-api-1.0.0-rc1.jar"/>
-        <pathelement location="${libdir}/archunit-junit5-engine-1.0.0-rc1.jar"/>
-        <pathelement location="${libdir}/archunit-junit5-engine-api-1.0.0-rc1.jar"/>
+        <pathelement location="${libdir}/archunit-1.4.1.jar"/>
+        <pathelement location="${libdir}/archunit-junit5-api-1.4.1.jar"/>
+        <pathelement location="${libdir}/archunit-junit5-engine-1.4.1.jar"/>
+        <pathelement location="${libdir}/archunit-junit5-engine-api-1.4.1.jar"/>
         <!-- SpotBugs annotations -->
         <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
         <pathelement location="${libdir}/jsr305.jar"/>
-        <pathelement location="${libdir}/spotbugs-annotations-4.7.3.jar"/>
+        <pathelement location="${libdir}/spotbugs-annotations-4.9.8.jar"/>
     </path>
 
     <!-- path to run regular executables -->
@@ -294,18 +325,14 @@
         <pathelement path="${cp.append}"/>    <!-- appended by user -->
     </path>
 
-    <!-- path to run tests -->
-    <path id="test.class.path">
-        <pathelement location="${jartarget}"/>
-        <path refid="compile.class.path"/>
-        <pathelement location="${libdir}/mockito-core-3.5.11.jar"/>
-        <pathelement location="${libdir}/mockito-inline-3.5.11.jar"/>
-        <pathelement location="${libdir}/mockito-junit-jupiter-3.5.11.jar"/>
-        <pathelement location="${libdir}/byte-buddy-1.10.14.jar"/>
-        <pathelement location="${libdir}/byte-buddy-agent-1.10.14.jar"/>
+    <!-- path containing jar files required while running tests -->
+    <path id="test.jars.path">
+        <pathelement location="${libdir}/mockito-core-5.20.0.jar"/>
+        <pathelement location="${libdir}/mockito-junit-jupiter-5.20.0.jar"/>
+        <pathelement location="${libdir}/byte-buddy-1.18.2.jar"/>
+        <pathelement location="${libdir}/byte-buddy-agent-1.18.2.jar"/>
         <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
-        <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
-        <pathelement location="${libdir}/objenesis-2.2.jar"/>
+        <pathelement location="${libdir}/objenesis-3.4.jar"/>
         <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE125.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
         <!-- cucumber and it's dependencies -->
@@ -336,6 +363,13 @@
         <pathelement location="${libdir}/assertj-core-3.12.0.jar"/>
         <pathelement location="${libdir}/assertj-swing-3.9.2.jar"/>
         <pathelement location="${libdir}/assertj-swing-junit-3.9.2.jar"/>
+    </path>
+
+    <!-- path to run tests -->
+    <path id="test.class.path">
+        <pathelement location="${jartarget}"/>
+        <path refid="compile.class.path"/>
+        <path refid="test.jars.path"/>
         <!-- include JMRI classes last -->
         <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->
@@ -371,7 +405,7 @@
 
     <!-- Java Code Coverage -->
     <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-        <classpath path="lib/org.jacoco.ant-0.8.11-nodeps.jar" />
+        <classpath path="lib/org.jacoco.ant-0.8.14-nodeps.jar" />
     </taskdef>
 
     <!-- fileset for the jacoco targets. -->
@@ -582,9 +616,12 @@
         <!-- Copy top level resources to include in jar file -->
         <copy todir="${target}/resources/">
             <fileset dir="${resourcedir}" includes="*.gif"/>
+            <fileset dir="${resourcedir}" includes="decoderpro*"/>
         </copy>
         <copy todir="${target}">
-            <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png,**/*.json"/>
+            <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png,**/*.json">
+                <exclude name="**/junit-platform.properties"/><!-- Only required for tests -->
+            </fileset>
         </copy>
     </target>
 
@@ -710,13 +747,13 @@
                    includes="@{javac.includes}"
                    srcdir="@{javac.source}"
                    destdir="@{javac.target}"
-                   source="${source_version}"
-                   target="${jre_version}"
                    includeantruntime="false"
                    fork="true"
                    deprecation="@{javac.deprecation}"
                    debug="${java.debugging}">
                 <classpath refid="@{javac.classpath}"/>
+                <compilerarg value="--release"/><compilerarg value="${jre_version}"/><!-- intentionally on one line, as these two go together-->
+                <compilerarg value="-proc:full"/>
                 <compilerarg value="-XDignore.symbol.file"/> <!-- suppresses sun.misc warnings on Java 9 -->
                 <compilerarg line="-encoding utf-8"/>
                 <compilerarg value="-Xlint:unchecked"/>
@@ -809,13 +846,12 @@
         <javac compiler="modern"
                srcdir="${source}"
                destdir="${target}"
-               source="${source_version}"
-               target="${jre_version}"
                includeantruntime="false"
                fork="true"
                deprecation="on"
                debug="${java.debugging}">
             <classpath refid="compile.class.path"/>
+            <compilerarg value="--release"/><compilerarg value="${jre_version}"/>
             <compilerarg line="-encoding utf-8"/>
             <compilerarg value="-Xlint:unchecked"/>
             <compilerarg value="-Xpkginfo:always"/>  <!-- compile all package-info.java to avoid empty-file warnings -->
@@ -833,13 +869,12 @@
         <javac compiler="modern"
                srcdir="${test};${acceptancetest}"
                destdir="${testtarget}"
-               source="${source_version}"
-               target="${jre_version}"
                includeantruntime="false"
                fork="true"
                deprecation="on"
                debug="${java.debugging}">
             <classpath refid="test.class.path"/>
+            <compilerarg value="--release"/><compilerarg value="${jre_version}"/>
             <compilerarg line="-encoding utf-8"/>
             <compilerarg value="-Xlint:unchecked"/>
             <compilerarg value="-Xpkginfo:always"/>  <!-- compile all package-info.java to avoid empty-file warnings -->
@@ -874,17 +909,20 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipLinkedWarrantTest" value="false"/><!-- skip LinkedWarrantTest -->
             <sysproperty key="jmri.skipBuildHelpFilesTest" value="false"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
 
+            <arg value="execute" />
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
             <arg value="--include-engine=junit-vintage"/>
             <arg line="-n ${test.includes}"/>
             <arg line="--reports-dir '${testreport}'" />
+            <arg value="--fail-if-no-tests" />
             <jvmarg value="-Xmx1536m"/>
             <jvmarg value="-ea"/>
         <jvmarg line="${test-single.jvmargs}"/>
@@ -912,17 +950,20 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipLinkedWarrantTest" value="false"/><!-- skip LinkedWarrantTest -->
             <sysproperty key="jmri.skipBuildHelpFilesTest" value="false"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
 
+            <arg value="execute" />
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
             <arg value="--include-engine=junit-vintage"/>
             <arg line="-n ${test.includes}"/>
             <arg line="--reports-dir ${testreport}" />
+            <arg value="--fail-if-no-tests" />
             <jvmarg value="-Xmx1536m"/>
             <jvmarg value="-ea"/>
             <jvmarg value="${jacocoagent}"/>
@@ -965,6 +1006,7 @@
                 <compilerclasspath>
                     <pathelement path="${libdir}/ecj.jar"/>
                 </compilerclasspath>
+                <!-- <compilerarg value="-\-release"/><compilerarg value="${jre_version}"/> commented out pending module system implementation -->
                 <javac-options/>
                 <classpath refid="@{javac.classpath}"/>
             </javac>
@@ -1182,6 +1224,10 @@
             <sysproperty key="purejavacomm.loglevel" value="${purejavacomm.loglevel}"/>
             <jvmarg value="-Xms256m"/>
             <jvmarg value="-Xmx640m"/>
+            <!-- This next is for DarkLAF -->
+            <jvmarg value="--add-exports"/>
+            <jvmarg value="java.desktop/sun.awt=ALL-UNNAMED"/>
+
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> --><!-- for JTune -->
@@ -1240,6 +1286,15 @@
         <antcall target="-run-jmri-application">
             <param name="application.classname" value="apps.DecoderPro.DecoderPro"/>
             <param name="antargline" value="DecoderProConfig2.xml"/>
+        </antcall>
+    </target>
+
+    <target name="lccpro"
+            description="build and run LccPro app"
+            depends="debug, copyfiles">
+        <antcall target="-run-jmri-application">
+            <param name="application.classname" value="apps.gui3.lccpro.LccPro"/>
+            <param name="antargline" value="LccProConfig.xml"/>
         </antcall>
     </target>
 
@@ -1599,12 +1654,14 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipLinkedWarrantTest" value="true"/><!-- skip LinkedWarrantTest -->
             <sysproperty key="jmri.skipBuildHelpFilesTest" value="true"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="java.awt.headless" value="true"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
 
+            <arg value="execute" />
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
@@ -1612,6 +1669,7 @@
             <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
             <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
+            <arg value="--fail-if-no-tests" />
             <jvmarg value="-Xmx1536m"/>
             <jvmarg value="${jacocoagent}"/>
             <jvmarg line="${jvm.args}"/>
@@ -1691,6 +1749,7 @@
                     <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
                     <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
                     <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/>
+                    <sysproperty key="jmri.skipLinkedWarrantTest" value="true"/><!-- skip LinkedWarrantTest -->
                     <sysproperty key="jmri.skipBuildHelpFilesTest" value="true"/><!-- skip BuildHelpFilesTest test -->
                     <sysproperty key="user.language" value="en"/>
                     <sysproperty key="user.country" value="US"/>
@@ -1747,10 +1806,12 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipLinkedWarrantTest" value="true"/><!-- skip LinkedWarrantTest -->
             <sysproperty key="jmri.skipBuildHelpFilesTest" value="true"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
 
+            <arg value="execute" />
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
@@ -1758,6 +1819,7 @@
             <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
             <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
+            <arg value="--fail-if-no-tests" />
             <jvmarg value="-Xmx1536m"/>
             <jvmarg value="${jacocoagent}"/>
             <jvmarg line="${jvm.args}"/>
@@ -2004,6 +2066,7 @@
             <arg value="-Dapple.awt.graphics.EnableQ2DX=true"/>
             <arg value="-Dlog4j.ignoreTCL=true/"/>
             <arg value="-Dfile.encoding=UTF-8"/>
+
             <arg value="-Djava.library.path.:${arch.lib.path}:${libdir}"/>
 
             <arg value="apps.PanelPro.PanelPro"/>
@@ -2039,7 +2102,7 @@
                 <include name="jmri/**"/>
             </packageset>
 
-            <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
+            <arg value="-Xdoclint:all,-missing"/>
             <arg value="-Xmaxwarns"/>
             <arg value="100"/><!-- default is 100; keep synced with pom.xml, other javadoc targets -->
 
@@ -2066,18 +2129,17 @@
             </doctitle>
             <bottom><![CDATA[Made from JMRI version ${release.version-string}
                     <br><i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
-                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
+                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro, LccPro and associated logos are our trademarks.</i>
                        <br><a href="https://www.jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                 ]]>
             </bottom>
 
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
-            <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
+            <!-- <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" /> redirection issue as of 2024-09-16 -->
 
             <link href="https://fazecast.github.io/jSerialComm/javadoc" />
             
-            <!-- <link href="https://static.javadoc.io/org.openlcb/openlcb/0.7.23/"/>  redirected to next line -->
-            <link href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.23/" />
+            <link href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.37/" />
 
             <!-- <link href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>  redirected to next line -->
             <link href="https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
@@ -2085,12 +2147,12 @@
             <!-- <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>  redirected to next line -->
             <link href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
 
-            <link href="http://docs.oracle.com/en/java/javase/11/docs/api/"/>
-            <link href="http://www.jdom.org/docs/apidocs/"/>
+            <link href="https://docs.oracle.com/en/java/javase/11/docs/api/"/>
+            <!-- <link href="http://www.jdom.org/docs/apidocs/"/> domain responding with a 403 forbidden access 2024-09-16 -->
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
-            <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
+            <link href="https://logging.apache.org/log4j/1.x/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.7.3/"/>
+            <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.9.8/"/>
             <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
             <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
             <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
@@ -2174,18 +2236,20 @@
             </doctitle>
             <bottom><![CDATA[Made from JMRI version ${release.version-string}
                     <br><i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
-                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
+                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro, LccPro and associated logos are our trademarks.</i>
                        <br><a href="https://www.jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                 ]]>
             </bottom>
 
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
-            <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
+            <!-- <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" /> redirection issue as of 2024-09-16 -->
 
             <link href="https://fazecast.github.io/jSerialComm/javadoc" />
 
+            <link href="https://www.javadoc.io/doc/org.openlcb/openlcb/latest/" />
+
             <link href="http://docs.oracle.com/en/java/javase/11/docs/api/"/>
-            <link href="http://www.jdom.org/docs/apidocs/"/>
+            <!-- <link href="http://www.jdom.org/docs/apidocs/"/> domain responding with a 403 forbidden access 2024-09-16 -->
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
@@ -2194,10 +2258,9 @@
             <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
             <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
 
-            <link offline="true" href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.23/" packagelistLoc="openlcb-0.7.23-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
-             <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.7.3/"/>
+             <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.9.8/"/>
             <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
 
         </javadoc>
@@ -2317,6 +2380,11 @@
         </spotbugs>
     </target>
 
+    <path id="tests.spotbugs.aux.class.path">
+        <path refid="compile.class.path"/>
+        <path refid="test.jars.path"/>
+    </path>
+
     <target name="tests-spotbugs" depends="dist-tests" description="generate SpotBugs (HTML) report over test code. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
         <spotbugs home="${spotbugs.home}"
                   output="html"
@@ -2330,7 +2398,7 @@
                   >
             <sourcePath path="${test}/"/>
             <class location="${jartarget}/jmri-tests.jar"/>
-            <auxClasspath refid="test.class.path" />
+            <auxClasspath refid="tests.spotbugs.aux.class.path"/>
         </spotbugs>
     </target>
 
@@ -2364,7 +2432,7 @@
                   >
             <sourcePath path="${test}/"/>
             <class location="${jartarget}/jmri-tests.jar"/>
-            <auxClasspath refid="test.class.path" />
+            <auxClasspath refid="tests.spotbugs.aux.class.path"/>
         </spotbugs>
     </target>
 
@@ -2396,7 +2464,7 @@
                   >
             <sourcePath path="${test}/"/>
             <class location="${jartarget}/jmri-tests.jar"/>
-            <auxClasspath refid="test.class.path" />
+            <auxClasspath refid="tests.spotbugs.aux.class.path"/>
         </spotbugs>
     </target>
 
@@ -2430,7 +2498,7 @@
                   >
             <sourcePath path="${test}/"/>
             <class location="${jartarget}/jmri-tests.jar"/>
-            <auxClasspath refid="test.class.path" />
+            <auxClasspath refid="tests.spotbugs.aux.class.path"/>
         </spotbugs>
     </target>
 
@@ -2489,13 +2557,12 @@
           <jsr308.javac
                srcdir="${source}"
                destdir="${target}"
-               source="${source_version}"
-               target="${jre_version}"
                includeantruntime="false"
                fork="true"
                deprecation="${deprecation}"
                debug="${java.debugging}">
             <classpath refid="compile.class.path"/>
+            <compilerarg value="--release"/><compilerarg value="${jre_version}"/>
             <compilerarg line="-proc:only"/> <!-- just check, don't generate .class files -->
             <compilerarg value="-AskipUses=^(java\.awt\.|javax\.swing\.)"/> <!-- don't check uses of library methods: -->
             <compilerarg line="-Xmaxerrs 5000"/>
@@ -2607,7 +2674,7 @@
                      excludes="help/en/manual/**,web/app/**" />
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
-                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/"/>
+                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/,LccPro.app/"/>
             <fileset dir="scripts"
                      includes="default_lcf.xml,COPYING"/>
             <fileset dir="."
@@ -2615,6 +2682,9 @@
         </copy>
         <copy todir="${dist.macosx}/JMRI/">
             <fileset dir="." includesfile="web/app/package.files"/>
+        </copy>
+        <copy todir="${dist.macosx}/JMRI/">
+            <fileset file="${dist.scripts}/JmriFaceless.command"/>
         </copy>
         <mkdir dir="${dist.macosx}/JMRI/lib"/>
         <copy todir="${dist.macosx}/JMRI/lib" flatten="true">
@@ -2634,7 +2704,11 @@
                 <include name="JMRI Demo.app/Contents/MacOS/StartJMRI"/>
                 <include name="PanelPro.app/Contents/MacOS/StartJMRI"/>
                 <include name="SoundPro.app/Contents/MacOS/StartJMRI"/>
+                <include name="LccPro.app/Contents/MacOS/StartJMRI"/>
             </fileset>
+        </chmod>
+        <chmod perm="ugo+rx">
+            <fileset file="${dist.macosx}/JMRI/JmriFaceless.command"/>
         </chmod>
         <mkdir dir="${dist.release}"/>
         <exec executable="${scriptdir}/diskimage.sh"
@@ -2713,6 +2787,7 @@
                 <exclude name="JMRI/DecoderPro"/>
                 <exclude name="JMRI/PanelPro"/>
                 <exclude name="JMRI/SoundPro"/>
+                <exclude name="JMRI/LccPro"/>
                 <exclude name="JMRI/InstallTest"/>
                 <exclude name="JMRI/JmriFaceless"/>
                 <exclude name="JMRI/CreateJmriApps.sh"/>
@@ -2721,6 +2796,7 @@
                 <include name="JMRI/DecoderPro"/>
                 <include name="JMRI/PanelPro"/>
                 <include name="JMRI/SoundPro"/>
+                <include name="JMRI/LccPro"/>
                 <include name="JMRI/InstallTest"/>
                 <include name="JMRI/JmriFaceless"/>
                 <include name="JMRI/CreateJmriApps.sh"/>
@@ -2794,6 +2870,7 @@
         <make-startup-script script.name="DecoderPro"   script.class="apps.gui3.dp3.DecoderPro3"/>
         <make-startup-script script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
         <make-startup-script script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
+        <make-startup-script script.name="LccPro"        script.class="apps.gui3.lccpro.LccPro"/>
         <make-startup-script script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
         <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless"/>
     </target>
@@ -2803,7 +2880,9 @@
                                              script.icon="DecoderPro"/>
         <create-macosx-application-directory script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
         <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
+        <create-macosx-application-directory script.name="LccPro"        script.class="apps.gui3.lccpro.LccPro"/>
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
+        <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless" dest="${dist.scripts}/JmriFaceless.command"/>
     </target>
 
 

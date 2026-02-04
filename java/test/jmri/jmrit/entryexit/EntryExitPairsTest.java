@@ -13,9 +13,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -26,7 +24,7 @@ import org.netbeans.jemmy.operators.JDialogOperator;
  * @author Paul Bender Copyright (C) 2017
  * @author Dave Sand Copyright (C) 2018
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class EntryExitPairsTest {
 
     private EntryExitTestTools tools;
@@ -40,7 +38,8 @@ public class EntryExitPairsTest {
     @Test
     public void testCTor() {
         EntryExitPairs t = new EntryExitPairs();
-        Assert.assertNotNull("exists", t);  // NOI18N
+        Assertions.assertNotNull( t, "exists");
+        t.dispose();
     }
 
     @Test
@@ -52,14 +51,14 @@ public class EntryExitPairsTest {
     @Test
     public void testGetSourceList() {
         List<Object> list = eep.getSourceList(panels.get("Alpha"));  // NOI18N
-        Assert.assertEquals("test source list", 4, list.size());  // NOI18N
+        Assertions.assertEquals( 4, list.size(), "test source list");
     }
 
     @Test
     public void testSetSingleSegmentRoute() {
         DestinationPoints dp = tools.getDestinationPoint(sm.getSensor("NX-AE"),  // NOI18N
                 sm.getSensor("NX-AW-Main"), panels.get("Alpha"), eep);  // NOI18N
-        Assert.assertNotNull("single segment route", dp);  // NOI18N
+        Assertions.assertNotNull( dp, "single segment route");
         eep.setSingleSegmentRoute(dp.getUniqueId());
         new EventTool().waitNoEvent(1000);
 
@@ -74,7 +73,7 @@ public class EntryExitPairsTest {
     }
 
     @Test
-    public void testDiscoverPairs() throws Exception {
+    public void testDiscoverPairs() throws jmri.JmriException {
         eep.automaticallyDiscoverEntryExitPairs(panels.get("Alpha"), EntryExitPairs.FULLINTERLOCK);  // NOI18N
     }
 
@@ -82,12 +81,12 @@ public class EntryExitPairsTest {
     public void testNxPairDelete() {
         Sensor sensor = sm.getSensor("NX-From-Alpha");  // NOI18N
         boolean chkDelete = eep.deleteNxPair(sensor);
-        Assert.assertTrue("delete empty", chkDelete);  // NOI18N
+        Assertions.assertTrue( chkDelete, "delete empty");
 
         createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonNo"));  // NOI18N
         sensor = sm.getSensor("NX-Alpha-EB");  // NOI18N
         chkDelete = eep.deleteNxPair(sensor);
-        Assert.assertFalse("delete active denied", chkDelete);  // NOI18N
+        Assertions.assertFalse( chkDelete, "delete active denied");
     }
 
     void createModalDialogOperatorThread(String dialogTitle, String buttonText) {
@@ -102,14 +101,21 @@ public class EntryExitPairsTest {
         t.start();
     }
 
+    @Test
+    public void testTypeHandledName(){
+        Assertions.assertEquals("Entry Exit", eep.getBeanTypeHandled());
+        Assertions.assertEquals("Entry Exit", eep.getBeanTypeHandled(false));
+        Assertions.assertEquals("Entry Exits", eep.getBeanTypeHandled(true));
+    }
+
     @BeforeEach
-    public void before() throws Exception {
+    public void before() throws jmri.JmriException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         tools = new EntryExitTestTools();
         panels = EntryExitTestTools.getPanels();
-        Assert.assertNotNull("Get LE panels", panels);  // NOI18N
+        Assertions.assertNotNull( panels, "Get LE panels");
         eep = InstanceManager.getDefault(EntryExitPairs.class);
         lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         sm = InstanceManager.getDefault(SensorManager.class);

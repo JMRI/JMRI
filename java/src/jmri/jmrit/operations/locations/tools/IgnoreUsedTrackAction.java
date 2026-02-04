@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import jmri.jmrit.operations.locations.TrackEditFrame;
+import jmri.jmrit.operations.locations.gui.TrackEditFrame;
 
 /**
  * Action to allow a user to define how much used track space is to be ignored

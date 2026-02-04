@@ -2,7 +2,6 @@ package jmri.configurexml;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,8 +14,8 @@ public class ScaleConfigXMLTest {
 
     @Test
     public void testLoad() {
-        boolean loadResult = ScaleConfigXML.doLoad();
-        Assert.assertTrue("load worked", loadResult);
+        Assertions.assertTrue(ScaleConfigXML.doLoad(), "load worked");
+        Assertions.assertTrue( jmri.ScaleManager.getScales().size() > 11, "scales present" );
     }
 
     @BeforeEach

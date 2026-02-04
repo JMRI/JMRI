@@ -246,7 +246,7 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
      * @return speed formatted as %1.3f
      */
     public String formatValue(double value) {
-        return String.format(String.format("%%1.%df", _numDecimals), value);
+        return String.format(Locale.US, String.format("%%1.%df", _numDecimals), value);
     }
 
     public String getDescription(Locale locale) {

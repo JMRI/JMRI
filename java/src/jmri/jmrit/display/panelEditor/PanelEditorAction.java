@@ -33,6 +33,7 @@ public class PanelEditorAction extends AbstractAction {
             }
         }
         PanelEditor frame = new PanelEditor(name);
+        frame.setKeepSize(false);
         InstanceManager.getDefault(EditorManager.class).add(frame);
         frame.setLocation(20, 20);
 

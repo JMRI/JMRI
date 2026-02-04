@@ -82,7 +82,7 @@
       <p>Any <a href=
       "https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/prog_guide/api.html"
       target="_blank">Java Scripting API</a> (commonly refered to JSR-223) compliant scripting
-      language can be added to JMRI, however, only JavaScript and Python (Jython) are directly
+      language can be added to JMRI, however, only Python (Jython) is directly
       supported in the default installation. If you want to add another scripting language, find a
       JSR-223 compliant interpreter and add it to the JMRI classpath as <a href=
       "../../doc/Technical/StartUpScripts.shtml" target="_blank">documented for your operating

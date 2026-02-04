@@ -1,20 +1,22 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.FakeParent;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test AbstractDigitalExpression
@@ -25,21 +27,16 @@ public class AbstractDigitalExpressionTest {
     @Test
     public void testGetNewSocketName() {
         MyExpression expression = new MyExpression();
-        boolean hasThrown = false;
-        try {
+        RuntimeException e = assertThrows( RuntimeException.class, () -> {
             // Create a bean with bad system name. This must throw an exception
             String socketName = expression.getNewSocketName();
             // We should never get here.
-            Assert.assertNotNull("Name is not null", socketName);
-        } catch (RuntimeException e) {
-            Assert.assertEquals("Exception is correct", "Unable to find a new socket name", e.getMessage());
-            hasThrown = true;
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+            fail("Name is not null " +  socketName);
+        }, "Exception is thrown");
+        assertEquals( "Unable to find a new socket name", e.getMessage(), "Exception is correct");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -48,7 +45,7 @@ public class AbstractDigitalExpressionTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
@@ -69,7 +66,7 @@ public class AbstractDigitalExpressionTest {
 
         private final MyFemaleSocket child = new MyFemaleSocket(this, this, "E1");
 
-        public MyExpression() {
+        MyExpression() {
             super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
         }
 
@@ -160,7 +157,7 @@ public class AbstractDigitalExpressionTest {
 
     private static class MyFemaleSocket extends AbstractFemaleSocket {
 
-        public MyFemaleSocket(Base parent, FemaleSocketListener listener, String name) {
+        MyFemaleSocket(Base parent, FemaleSocketListener listener, String name) {
             super(parent, listener, name);
         }
 

@@ -13,6 +13,18 @@
     .ctr {
         text-align: center;
     }
+
+    table {
+        border: 3px solid;
+    }
+
+    th {
+        border: 1px solid;
+    }
+
+    td {
+        border: 1px solid;
+    }
   </style>
 </head>
 <body>
@@ -106,7 +118,7 @@
 
       <p>The table below summarizes these possibilities.</p>
 
-      <table border="3">
+      <table>
         <tr>
           <th rowspan="2">Connection Type</th>
           <th rowspan="2">Usage</th>
@@ -117,7 +129,7 @@
 
         <tr>
           <th>System Connection</th>
-          <th class="ctr">JMRI Command Station Type</th>
+          <th class=".ctr">JMRI Command Station Type</th>
         </tr>
 
         <tr class="ctr">

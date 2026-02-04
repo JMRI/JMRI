@@ -102,9 +102,11 @@ class WiimoteThrottle2(Jynstrument, PropertyChangeListener, AddressListener, Wii
         self.speedTimer = None
         self.throttle = None
         self.advFunctions = None
-        self.getContext().removePropertyChangeListener(self)
-        self.addressPanel.removeAddressListener(self)
-        self.addressPanel = None    
+        if (self.getContext() != None):
+            self.getContext().removePropertyChangeListener(self)
+        if (self.addressPanel != None):
+            self.addressPanel.removeAddressListener(self)
+            self.addressPanel = None    
     #Wiimote discoverer events
         
     def findFinished(self, nb):
@@ -222,11 +224,13 @@ class WiimoteThrottle2(Jynstrument, PropertyChangeListener, AddressListener, Wii
     def propertyChange(self, event):
         self.speedTimer.stop()                     
         if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
-            event.oldValue.getAddressPanel().removeAddressListener(self)
-            self.addressPanel = event.newValue.getAddressPanel()
-            self.throttle = self.addressPanel.getThrottle()
-            self.speedAction.setThrottle( self.throttle )
-            self.addressPanel.addAddressListener(self)
+            if event.oldValue != None :
+                event.oldValue.getAddressPanel().removeAddressListener(self)
+            if event.newValue != None :
+                self.addressPanel = event.newValue.getAddressPanel()
+                self.throttle = self.addressPanel.getThrottle()
+                self.speedAction.setThrottle( self.throttle )
+                self.addressPanel.addAddressListener(self)
 
 #AddressListener part: to listen for address changes in address panel (release, acquired)
     def notifyAddressChosen(self, address):

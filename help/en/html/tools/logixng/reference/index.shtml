@@ -80,6 +80,11 @@
         </li>
 
         <li>
+          <a href="chapter11_1.shtml">Chapter 11.1 - Table Icon</a>
+          <span class="since">since 5.15.1</span>
+        </li>
+
+        <li>
           <a href="chapter12.shtml">Chapter 12 - Global Variables</a>
           <span class="since">since 4.99.7</span>
         </li>
@@ -89,6 +94,20 @@
           <span class="since">since 4.99.7</span>
         </li>
       </ul>
+
+      <h3>LogixNG Examples</h3>
+
+      <p>The examples are detailed explanations of using various LogixNG features.  Each example
+      has a zip file that contains the layout configuration data xml file and any supporting files,
+      such as CSV files for table driven logic.  The minimum JMRI version is in parentheses.</p>
+
+      <ul>
+        <li>
+          <a href="YardLadderExample/">Set a yard ladder</a> (5.6)
+        </li>
+
+      </ul>
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

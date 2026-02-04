@@ -160,11 +160,11 @@ public class DmiPanelA extends JPanel {
         };
     }
 
-    protected void setLimitedSupervisionSpeed(int spd){
+    protected void setLimitedSupervisionSpeed(float spd){
         if ( spd < 0 ) {
             speedString="";
         } else {
-            speedString = (String.valueOf(spd));
+            speedString = (String.valueOf(Math.round(spd)));
         }
         repaint();
     }
@@ -174,8 +174,8 @@ public class DmiPanelA extends JPanel {
         a4Label.setToolTipText(newVal ?  Bundle.getMessage("AdhesionFactorOn") : null);
     }
 
-    protected void setDistanceToTarget(int distance) {
-        distanceToTarget = distance;
+    protected void setDistanceToTarget(float distance) {
+        distanceToTarget = Math.round(distance);
         a2Label.setVisible(distanceToTarget >= 0 );
         int nearestTen = ((distanceToTarget + 5) / 10) * 10;
         a2Label.setText(String.valueOf(nearestTen));

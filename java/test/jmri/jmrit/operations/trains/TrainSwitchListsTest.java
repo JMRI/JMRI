@@ -1,27 +1,17 @@
 package jmri.jmrit.operations.trains;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.JUnitOperationsUtil;
@@ -90,7 +80,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertTrue(switchListFileA.exists());
 
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list", 29, in.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 30, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -260,9 +250,9 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         tsl.buildSwitchList(locationD);
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list", 19, inA.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 20, inA.lines().count());
         inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
-        Assert.assertEquals("confirm number of lines in switch list", 23, inB.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 25, inB.lines().count());
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 20, inC.lines().count());
         inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
@@ -277,11 +267,11 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         tsl.buildSwitchList(locationD);
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list", 19, inA.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 20, inA.lines().count());
         inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 20, inB.lines().count());
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
-        Assert.assertEquals("confirm number of lines in switch list", 17, inC.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 19, inC.lines().count());
         inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 12, inD.lines().count());
 
@@ -296,7 +286,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         tsl.buildSwitchList(locationD);
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list", 19, inA.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 20, inA.lines().count());
         inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 20, inB.lines().count());
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
@@ -313,7 +303,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         tsl.buildSwitchList(locationD);
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list", 19, inA.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 20, inA.lines().count());
         inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 20, inB.lines().count());
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
@@ -330,7 +320,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         tsl.buildSwitchList(locationD);
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list", 19, inA.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 20, inA.lines().count());
         inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 19, inB.lines().count());
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
@@ -347,7 +337,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         tsl.buildSwitchList(locationD);
 
         inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list", 18, inA.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 19, inA.lines().count());
         inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 16, inB.lines().count());
         inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
@@ -403,7 +393,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertTrue(switchListFileA.exists());
 
         BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list", 29, inA.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 30, inA.lines().count());
         inA.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -432,7 +422,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertTrue(switchListFileA.exists());
 
         BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list", 38, inA.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 39, inA.lines().count());
         inA.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -473,7 +463,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertTrue(switchListFileA.exists());
 
         BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list", 23, inA.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 26, inA.lines().count());
         inA.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -503,7 +493,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertTrue(switchListFileA.exists());
 
         BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
-        Assert.assertEquals("confirm number of lines in switch list", 28, inA.lines().count());
+        Assert.assertEquals("confirm number of lines in switch list", 29, inA.lines().count());
         inA.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();

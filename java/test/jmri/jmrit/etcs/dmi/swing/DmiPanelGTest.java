@@ -3,12 +3,13 @@ package jmri.jmrit.etcs.dmi.swing;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
+import jmri.InstanceManager;
+import jmri.Timebase;
 import jmri.jmrit.etcs.*;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -17,11 +18,13 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  * Tests for DmiPanelG.
  * @author Steve Young Copyright (C) 2024
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class DmiPanelGTest {
 
     @Test
     public void testPanelG1G2() {
+
+        int clockPCLsAtStart = InstanceManager.getDefault(Timebase.class).getPropertyChangeListeners().length;
 
         DmiFrame df = new DmiFrame("testPanelG1G2");
         DmiPanel p = df.getDmiPanel();
@@ -144,18 +147,36 @@ public class DmiPanelGTest {
         p.setDwellTime(1,9);
 
         // JUnitUtil.waitFor(1000);
-        
+
         p.advance(8500);
         // JUnitUtil.waitFor(1000);
-        
+
         p.setIndicationMarker(300,0);
         // JUnitUtil.waitFor(5000);
-        
+
         p.setMode(DmiPanel.MODE_AUTOMATIC_DRIVING);
-        // JUnitUtil.waitFor(5000);
-        
-        jfo.requestClose();
+        // JUnitUtil.waitFor(10000);
+
+
+        Assertions.assertTrue( clockPCLsAtStart <
+            InstanceManager.getDefault(Timebase.class).getPropertyChangeListeners().length);
+
+        Assertions.assertDoesNotThrow( () -> {
+            InstanceManager.getDefault(Timebase.class).userSetRate(3+(2/3d));
+        });
+        // JUnitUtil.waitFor(10000);
+        InstanceManager.getDefault(Timebase.class).setRun(false);
+        // JUnitUtil.waitFor(10000);
+        InstanceManager.getDefault(Timebase.class).setRun(true);
+        // JUnitUtil.waitFor(10000);
+        InstanceManager.getDefault(Timebase.class).setRun(false);
+
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
+
+        Assertions.assertEquals(clockPCLsAtStart,
+            InstanceManager.getDefault(Timebase.class).getPropertyChangeListeners().length);
+
     }
 
     private boolean triggered = false;

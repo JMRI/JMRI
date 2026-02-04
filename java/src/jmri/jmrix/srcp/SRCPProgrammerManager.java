@@ -32,7 +32,7 @@ public class SRCPProgrammerManager extends DefaultProgrammerManager {
     //    return new SRCPOpsModeProgrammer(pAddress, pLongAddress,_memo);
     //}
     @Override
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }

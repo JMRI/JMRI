@@ -169,6 +169,66 @@ public interface Turnout extends DigitalIO, VariableControlSpanBean {
     static final int LOCKED = 1;
 
     /**
+     * String constant for Property Change to set Commanded State.
+     */
+    String PROPERTY_COMMANDED_STATE = "CommandedState";
+
+    /**
+     * String constant for Property Change to set Feedback Mode.
+     */
+    String PROPERTY_FEEDBACK_MODE = "feedbackchange";
+
+    /**
+     * String constant for Property Change to set the Inverted Mode.
+     */
+    String PROPERTY_INVERTED = "inverted";
+
+    /**
+     * String constant for Property Change to set the Locked state.
+     */
+    String PROPERTY_LOCKED = "locked";
+
+    /**
+     * String constant for Property Change to set the Report Locked state.
+     */
+    String PROPERTY_REPORT_LOCKED = "reportlocked";
+
+    /**
+     * String constant for Property Change to set Decoder Name.
+     */
+    String PROPERTY_DECODER_NAME = "decoderNameChange";
+
+    /**
+     * String constant for Property Change to set Turnout Operator.
+     */
+    String PROPERTY_TURNOUT_OPERATION_STATE = "TurnoutOperationState";
+
+    /**
+     * String constant for when changing the First Feedback Sensor in use.
+     */
+    String PROPERTY_TURNOUT_FEEDBACK_FIRST_SENSOR = "turnoutFeedbackFirstSensorChange";
+
+    /**
+     * String constant for when changing the Second Feedback Sensor in use.
+     */
+    String PROPERTY_TURNOUT_FEEDBACK_SECOND_SENSOR = "turnoutFeedbackSecondSensorChange";
+
+    /**
+     * String constant for when the Diverging Speed has changed.
+     */
+    String PROPERTY_TURNOUT_DIVERGING_SPEED = "TurnoutDivergingSpeedChange";
+
+    /**
+     * String constant for when the Straight Speed has changed.
+     */
+    String PROPERTY_TURNOUT_STRAIGHT_SPEED = "TurnoutStraightSpeedChange";
+
+    /**
+     * String constant for when the Leading Turnout is set.
+     */
+    String PROPERTY_LEADING_TURNOUT = "LeadingTurnout";
+
+    /**
      * Get a list of valid feedback types. The valid types depend on the
      * implemented system.
      *
@@ -601,7 +661,7 @@ public interface Turnout extends DigitalIO, VariableControlSpanBean {
      * Used to insert a delay before calling {@link #setCommandedState(int)} to spread out a series of
      * output commands, as in {@link jmri.implementation.MatrixSignalMast#updateOutputs(char[])} and
      * {@link jmri.implementation.DefaultRoute} class SetRouteThread#run().
-     * Interval value is kept in the Memo per hardware connection, default = 0
+     * Interval value is kept in the Memo per hardware connection.
      *
      * @param s turnout state to forward
      */

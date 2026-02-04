@@ -31,7 +31,7 @@ public class OlcbTurnoutTest {
     @Test
     public void testIncomingChange() {
         Assert.assertNotNull("exists", t);
-        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.systemConnectionMemo);
         s.finishLoad();
 
         // message for Active and Inactive
@@ -68,7 +68,7 @@ public class OlcbTurnoutTest {
     @Test
     public void testLocalChange() {
         // load dummy TrafficController
-        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.systemConnectionMemo);
         s.finishLoad();
 
         s.addPropertyChangeListener(l);
@@ -81,7 +81,7 @@ public class OlcbTurnoutTest {
         Assert.assertEquals("called twice",2,l.getCallCount());
         Assert.assertEquals(Turnout.THROWN, s.getCommandedState());
         log.debug("recv msg: {} header {}", t.tc.rcvMessage, Integer.toHexString(t.tc.rcvMessage.getHeader()));
-        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.8").match(t.tc.rcvMessage));
+        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.8", null).match(t.tc.rcvMessage));
 
         l.resetPropertyChanged();
         t.tc.rcvMessage = null;
@@ -90,7 +90,7 @@ public class OlcbTurnoutTest {
         JUnitUtil.waitFor( () -> l.getPropertyChanged(), "no prop change thrown > closed");
         Assert.assertEquals("called twice",2,l.getCallCount());
         Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
-        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
+        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9", null).match(t.tc.rcvMessage));
 
         // repeated set of local state
         t.tc.rcvMessage = null;
@@ -99,12 +99,12 @@ public class OlcbTurnoutTest {
         Assert.assertTrue(l.getPropertyChanged());
         Assert.assertEquals("called twice",2,l.getCallCount());
         Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
-        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
+        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9", null).match(t.tc.rcvMessage));
     }
 
     @Test
     public void testAuthoritative() {
-        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.systemConnectionMemo);
         s.setFeedbackMode(Turnout.MONITORING);
         s.finishLoad();
 
@@ -141,9 +141,9 @@ public class OlcbTurnoutTest {
     public void testLoopback() {
         // Two turnouts behaving in opposite ways. One will be used to generate an event and the
         // other will be observed to make sure it catches it.
-        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.systemConnectionMemo);
         s.finishLoad();
-        OlcbTurnout r = new OlcbTurnout("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.8", t.iface);
+        OlcbTurnout r = new OlcbTurnout("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.8", t.systemConnectionMemo);
         r.finishLoad();
 
         r.addPropertyChangeListener(l);
@@ -164,7 +164,7 @@ public class OlcbTurnoutTest {
 
     @Test
     public void testForgetState() {
-        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.systemConnectionMemo);
         s.setProperty(OlcbUtils.PROPERTY_LISTEN, Boolean.FALSE.toString());
         s.finishLoad();
 
@@ -218,7 +218,7 @@ public class OlcbTurnoutTest {
 
     @Test
     public void testQueryState() {
-        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.systemConnectionMemo);
         s.finishLoad();
 
         t.tc.rcvMessage = null;
@@ -242,8 +242,8 @@ public class OlcbTurnoutTest {
     */
     @Test
     public void testListenerOutOfOrder() {
-        final OlcbTurnout r = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
-        final OlcbTurnout u = new OlcbTurnout("M", "1.2.3.4.5.6.7.a;1.2.3.4.5.6.7.b", t.iface);
+        final OlcbTurnout r = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.systemConnectionMemo);
+        final OlcbTurnout u = new OlcbTurnout("M", "1.2.3.4.5.6.7.a;1.2.3.4.5.6.7.b", t.systemConnectionMemo);
         r.finishLoad();
         u.finishLoad();
         r.setCommandedState(Turnout.CLOSED);
@@ -269,7 +269,7 @@ public class OlcbTurnoutTest {
 
     @Test
     public void testEventTable() {
-        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.systemConnectionMemo);
         s.finishLoad();
 
         EventTable.EventTableEntry[] elist = t.iface.getEventTable()
@@ -296,7 +296,7 @@ public class OlcbTurnoutTest {
     @Test
     public void testNameFormatXlower() {
         // load dummy TrafficController
-        OlcbTurnout s = new OlcbTurnout("M", "x0501010114FF2000;x0501010114FF2001", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "x0501010114FF2000;x0501010114FF2001", t.systemConnectionMemo);
         s.finishLoad();
         Assert.assertNotNull("to exists", s);
 
@@ -327,7 +327,7 @@ public class OlcbTurnoutTest {
     @Test
     public void testNameFormatXupper() {
         // load dummy TrafficController
-        OlcbTurnout s = new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2001", t.iface);
+        OlcbTurnout s = new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2001", t.systemConnectionMemo);
         s.finishLoad();
         Assert.assertNotNull("to exists", s);
 
@@ -361,10 +361,10 @@ public class OlcbTurnoutTest {
         // test by putting into a tree set, then extracting and checking order
         TreeSet<Turnout> set = new TreeSet<>(new NamedBeanComparator<>());
 
-        set.add(new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface));
-        set.add(new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2011", t.iface));
-        set.add(new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2001", t.iface));
-        set.add(new OlcbTurnout("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", t.iface));
+        set.add(new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.systemConnectionMemo));
+        set.add(new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2011", t.systemConnectionMemo));
+        set.add(new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2001", t.systemConnectionMemo));
+        set.add(new OlcbTurnout("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", t.systemConnectionMemo));
 
         Iterator<Turnout> it = set.iterator();
 
@@ -388,7 +388,7 @@ public class OlcbTurnoutTest {
         l = new PropertyChangeListenerScaffold();
 
         // load dummy TrafficController
-        t = new OlcbTestInterface();
+        t = new OlcbTestInterface(new OlcbTestInterface.CreateConfigurationManager());
         t.waitForStartup();
     }
 

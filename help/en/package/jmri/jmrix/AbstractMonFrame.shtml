@@ -20,14 +20,18 @@
       <h2>Controls</h2>
 
       <dl>
+        <dt>Copy to clipboard</dt>
+
+        <dd>Copies the log area to the system clipboard.</dd>
+
         <dt>Clear Screen</dt>
 
-        <dd>Erases the log area at the top of the screen</dd>
+        <dd>Erases the log area at the top of the screen.</dd>
 
         <dt>Freeze Screen</dt>
 
         <dd>Stops acquiring new information, so that the captured information stops scrolling
-        up</dd>
+        up.</dd>
 
         <dt>Show raw data</dt>
 

@@ -4,11 +4,11 @@ import java.io.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
-import jmri.jmrit.operations.rollingstock.ImportRollingStock;
+import jmri.jmrit.operations.rollingstock.ImportCommon;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -18,7 +18,7 @@ import jmri.util.swing.JmriJOptionPane;
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2013
  */
-public class ImportEngines extends ImportRollingStock {
+public class ImportEngines extends ImportCommon {
 
     private static final String DEFAULT_ENGINE_TYPE = Bundle.getMessage("engineDefaultType");
     private static final String DEFAULT_ENGINE_HP = Bundle.getMessage("engineDefaultHp");
@@ -89,7 +89,7 @@ public class ImportEngines extends ImportRollingStock {
         }
 
         while (true) {
-            lineNumber.setText(Bundle.getMessage("LineNumber") + " " + Integer.toString(++lineNum));
+            lineNumber.setText(Bundle.getMessage("LineNumber", Integer.toString(++lineNum)));
             try {
                 line = in.readLine();
             } catch (IOException e) {
@@ -481,6 +481,7 @@ public class ImportEngines extends ImportRollingStock {
         try {
             in.close();
         } catch (IOException e) {
+            log.error("Import Engines failed: {}", e.getLocalizedMessage());
         }
 
         if (importOkay) {

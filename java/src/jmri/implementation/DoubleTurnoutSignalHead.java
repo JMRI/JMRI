@@ -143,7 +143,7 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
     }
 
     @Override
-    boolean isTurnoutUsed(Turnout t) {
+    public boolean isTurnoutUsed(Turnout t) {
         if (getRed() != null && t.equals(getRed().getBean())) {
             return true;
         }

@@ -1,6 +1,9 @@
 package jmri;
 
 import javax.annotation.CheckForNull;
+
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -412,11 +415,11 @@ public class NmraPacket {
      * @param aspect     Aspect Number starting with 0 and a maximum of 31
      * @return the instruction packet
      */
+    @Nonnull
     public static byte[] accSignalDecoderPkt(int outputAddr, int aspect) {
 
         if (outputAddr < accIdLowLimit || outputAddr > accIdHighLimit) {
             log.error("invalid signal decoder address {}", outputAddr);
-            return null;
         }
 
         outputAddr -= 1; // Make the address 0 based
@@ -649,11 +652,11 @@ public class NmraPacket {
      * @param aspect     Aspect Number starting with 0 and a maximum of 31
      * @return a packet
      */
+    @Nonnull
     public static byte[] altAccSignalDecoderPkt(int outputAddr, int aspect) {
 
         if (outputAddr < 1 || outputAddr > 2048) {
             log.error("invalid signal decoder address {}", outputAddr);
-            return null;
         }
 
         outputAddr -= 1; // Make the address 0 based
@@ -711,11 +714,11 @@ public class NmraPacket {
         return retVal;
     }
 
+    @Nonnull
     protected static byte[] accSignalDecoderPktCommon(int lowAddr, int boardAddr, int aspect) {
 
         if (aspect < 0 || aspect > 31) {
             log.error("invalid signal decoder aspect {}", aspect);
-            return null;
         }
 
         int midAddr = boardAddr & 0x3F;

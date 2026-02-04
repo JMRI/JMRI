@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
+@SuppressFBWarnings(value = {"NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", "HSM_HIDING_METHOD"},
+    justification = "Desired pattern is repeated class names with package-level access to members")
 
 @javax.annotation.concurrent.Immutable
 
@@ -26,7 +27,7 @@ import org.slf4j.LoggerFactory;
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
     @CheckForNull
-    private final static String name = "jmri.jmrix.loconet.lnsvf2.LnSvF2Bundle"; // NOI18N
+    private final static String name = "jmri.jmrix.loconet.lnsvf2.Lnsvf2Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

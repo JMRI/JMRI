@@ -57,12 +57,15 @@ nohup.out
 /web/app/nbproject/private
 /scripts/config-portable/nbproject/private
 /.idea/workspace.xml
+/.idea/modules.xml
 local.properties
 /test
 /test/jmri.conf
 *.original~
 .metadata
 RemoteSystemsTempFiles
+.idea/codeStyles/Project.xml
+.idea/jarRepositories.xml
 .idea/libraries/**
 .idea/sonarlint/issuestore
 .factorypath

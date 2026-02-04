@@ -10,6 +10,7 @@ import javax.jmdns.NetworkTopologyListener;
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
+import javax.jmdns.impl.constants.DNSConstants;
 import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ public class ZeroConfClient {
 
     private ServiceListener mdnsServiceListener = null;
     private final static Logger log = LoggerFactory.getLogger(ZeroConfClient.class);
+    private long timeout = DNSConstants.SERVICE_INFO_TIMEOUT;
 
     // mdns related routines.
     public void startServiceListener(@Nonnull String service) {
@@ -45,7 +47,7 @@ public class ZeroConfClient {
      */
     public ServiceInfo getService(@Nonnull String service) {
         for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values()) {
-            ServiceInfo[] infos = server.list(service);
+            ServiceInfo[] infos = server.list(service, timeout);
             if (infos != null) {
                 return infos[0];
             }
@@ -64,8 +66,9 @@ public class ZeroConfClient {
     public List<ServiceInfo> getServices(@Nonnull String service) {
         ArrayList<ServiceInfo> services = new ArrayList<>();
         for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values()) {
-            if (server.list(service) != null) {
-                services.addAll(Arrays.asList(server.list(service)));
+            ServiceInfo[] infos = server.list(service, timeout);
+            if (infos != null) {
+                services.addAll(Arrays.asList(infos));
             }
         }
         return services;
@@ -81,7 +84,7 @@ public class ZeroConfClient {
      */
     public ServiceInfo getServiceOnHost(@Nonnull String service, @Nonnull String hostname) {
         for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values()) {
-            ServiceInfo[] infos = server.list(service);
+            ServiceInfo[] infos = server.list(service, timeout);
             for (ServiceInfo info : infos) {
                 if (info.getServer().equals(hostname)) {
                     return info;
@@ -102,7 +105,7 @@ public class ZeroConfClient {
      */
     public ServiceInfo getServicebyAdName(@Nonnull String service, @Nonnull String adName) {
         for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values()) {
-            ServiceInfo[] infos = server.list(service);
+            ServiceInfo[] infos = server.list(service, timeout);
             for (ServiceInfo info : infos) {
                 log.debug("Found Name: {}", info.getQualifiedName());
                 if (info.getQualifiedName().equals(adName)) {
@@ -117,12 +120,30 @@ public class ZeroConfClient {
     public String[] getHostList(@Nonnull String service) {
         ArrayList<String> hostlist = new ArrayList<>();
         for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values()) {
-            ServiceInfo[] infos = server.list(service);
+            ServiceInfo[] infos = server.list(service, timeout);
             for (ServiceInfo info : infos) {
                 hostlist.add(info.getServer());
             }
         }
         return hostlist.toArray(new String[hostlist.size()]);
+    }
+    
+    /**
+     * Get current timeout
+     * 
+     * @return timeout as long in milliseconds
+     */
+    public long getTimeout() {
+        return timeout;
+    }
+    
+    /**
+     * Set timeout
+     * 
+     * @param timeout in milliseconds
+     */
+    public void setTimeout(long timeout) {
+        this.timeout = timeout;
     }
 
     public static class NetworkServiceListener implements ServiceListener, NetworkTopologyListener {

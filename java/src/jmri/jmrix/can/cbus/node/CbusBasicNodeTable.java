@@ -29,35 +29,39 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
     protected ArrayList<CbusNode> _mainArray;
     protected final CanSystemConnectionMemo _memo;
     protected CbusDccProgrammerManager progMan;
-    
+
     // column order needs to match list in column tooltips
-    static public final int NODE_NUMBER_COLUMN = 0; 
-    static public final int NODE_TYPE_NAME_COLUMN = 1; 
-    static public final int NODE_USER_NAME_COLUMN = 2;
-    static public final int NODE_RESYNC_BUTTON_COLUMN = 3;
-    static public final int NODE_EDIT_BUTTON_COLUMN = 4;
-    static public final int COMMAND_STAT_NUMBER_COLUMN = 5;
-    static public final int CANID_COLUMN = 6;
-    static public final int NODE_EVENTS_COLUMN = 7;
-    static public final int BYTES_REMAINING_COLUMN = 8;
-    static public final int NODE_TOTAL_BYTES_COLUMN = 9;
-    static public final int NODE_IN_LEARN_MODE_COLUMN = 10;
-    static public final int NODE_EVENT_INDEX_VALID_COLUMN = 11;
-    static public final int SESSION_BACKUP_STATUS_COLUMN = 12;
-    static public final int NUMBER_BACKUPS_COLUMN = 13;
-    static public final int LAST_BACKUP_COLUMN = 14;
-    static public final int MAX_COLUMN = 15;
+    public static final int NODE_NUMBER_COLUMN = 0; 
+    public static final int NODE_TYPE_NAME_COLUMN = 1; 
+    public static final int NODE_USER_NAME_COLUMN = 2;
+    public static final int NODE_RESYNC_BUTTON_COLUMN = 3;
+    public static final int NODE_EDIT_BUTTON_COLUMN = 4;
+    public static final int COMMAND_STAT_NUMBER_COLUMN = 5;
+    public static final int CANID_COLUMN = 6;
+    public static final int NODE_EVENTS_COLUMN = 7;
+    public static final int BYTES_REMAINING_COLUMN = 8;
+    public static final int NODE_TOTAL_BYTES_COLUMN = 9;
+    public static final int NODE_IN_LEARN_MODE_COLUMN = 10;
+    public static final int NODE_EVENT_INDEX_VALID_COLUMN = 11;
+    public static final int SESSION_BACKUP_STATUS_COLUMN = 12;
+    public static final int NUMBER_BACKUPS_COLUMN = 13;
+    public static final int LAST_BACKUP_COLUMN = 14;
+    public static final int MAX_COLUMN = 15;
 
     public CbusBasicNodeTable(@Nonnull CanSystemConnectionMemo memo, int row, int column) {
         _mainArray = new ArrayList<>();
         _memo = memo;
-        try {
-            progMan = memo.get(CbusConfigurationManager.class).get(GlobalProgrammerManager.class);
-        } catch (NullPointerException e) {
-            log.info("No Global Programmer available for NV programming");
+        var cfgMan = memo.get(CbusConfigurationManager.class);
+        if ( cfgMan != null ) {
+            progMan = cfgMan.get(GlobalProgrammerManager.class);
+            if ( progMan == null ) {
+                log.info("No Global Programmer available for NV programming");
+            }
+        } else {
+            log.info("No CbusConfigurationManager available for NV programming");
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -191,9 +195,8 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
         switch (col) {
             case NODE_USER_NAME_COLUMN:
                 _mainArray.get(row).setUserName( (String) value );
-                ThreadingUtil.runOnGUI( ()->{
-                    fireTableCellUpdated(row, col);
-                }); break;
+                ThreadingUtil.runOnGUI( () -> fireTableCellUpdated(row, col) );
+                break;
             case NODE_RESYNC_BUTTON_COLUMN:
                 _mainArray.get(row).saveForResync();
                 _mainArray.get(row).resetNodeAll();
@@ -226,7 +229,8 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
                     }
                     String progTitle = "CBUS NV Programmer";
                     String progFile = "programmers" + File.separator + "Cbus" + ".xml";
-                    JFrame p = new PaneServiceProgFrame(decoderFile, re, progTitle, progFile, progMan.getGlobalProgrammer());
+                    JFrame p = new PaneServiceProgFrame(
+                        decoderFile, re, progTitle, progFile, progMan.getGlobalProgrammer());
                     p.pack();
                     p.setVisible(true);
                 } else {

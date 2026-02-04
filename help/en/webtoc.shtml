@@ -730,6 +730,18 @@
                     </li>
                       
                     <li>
+                        <a href="package/apps/gui3/lccpro/LccPro.shtml">LccPro </a>
+                        <ul>
+                               
+                            <li>
+                                <a href="package/apps/gui3/lccpro/LccPro.shtml">Intro </a>
+                                <ul></ul>
+                            </li>
+                              
+                        </ul>
+                    </li>
+                      
+                    <li>
                         <a href="html/apps/index.shtml#addapp">Additional Applications with connections to JMRI </a>
                         <ul>
                                
@@ -814,6 +826,11 @@
                       
                     <li>
                         <a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table </a>
+                        <ul></ul>
+                    </li>
+                      
+                    <li>
+                        <a href="package/jmri/jmrit/beantable/StringIOTable.shtml">StringIO Table </a>
                         <ul></ul>
                     </li>
                       
@@ -1375,17 +1392,17 @@
                     <li>
                         <a href="html/tools/Sensors.shtml">Sensors </a>
                         <ul>
-                               
+                                
                             <li>
                                 <a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table </a>
                                 <ul></ul>
                             </li>
-                               
+                                
                             <li>
                                 <a href="package/jmri/jmrit/beantable/SensorAddEdit.shtml">Add/Edit Sensors </a>
                                 <ul></ul>
                             </li>
-                               
+                                 
                             <li>
                                 <a href="package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml">Sensor Groups </a>
                                 <ul></ul>
@@ -1394,6 +1411,25 @@
                         </ul>
                     </li>
                       
+  
+                    <li>
+                        <a href="html/tools/StringIOs.shtml">StringIOs </a>
+                        <ul>
+                                
+                            <li>
+                                <a href="package/jmri/jmrit/beantable/StringIOTable.shtml">StringIO Table </a>
+                                <ul></ul>
+                            </li>
+                                
+                            <li>
+                                <a href="package/jmri/jmrit/beantable/StringIOAddEdit.shtml">Add/Edit StringIOs </a>
+                                <ul></ul>
+                            </li>
+                              
+                        </ul>
+                    </li>
+                      
+  
                     <li>
                         <a href="html/tools/signaling/index.shtml">Signaling </a>
                         <ul>
@@ -1509,6 +1545,12 @@
                                 <ul></ul>
                             </li>
                                
+                            <li>
+                                <a href="package/jmri/jmrit/z21server/z21server.shtml">Z21 Throttle (Z21 App and WlanMaus) </a>
+                                <ul></ul>
+                            </li>
+                               
+   
                             <li>
                                 <a href="package/jmri/jmrit/webThrottle/webThrottle.shtml">webThrottle - Web Throttles and Panels </a>
                                 <ul></ul>
@@ -1797,12 +1839,12 @@
                             </li>
                                
                             <li>
-                                <a href="package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">LNCV Programmer </a>
+                                <a href="package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">Manage LNCV Modules </a>
                                 <ul></ul>
                             </li>
                                
                             <li>
-                                <a href="package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">LocoIO Configuration Tool </a>
+                                <a href="package/jmri/jmrix/loconet/swing/lnsv1prog/Lnsv1ProgPane.shtml">Manage LocoIO Modules </a>
                                 <ul></ul>
                             </li>
                                

@@ -2,7 +2,6 @@ package jmri.jmrit.vsdecoder;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,8 +12,8 @@ public class EngineSoundEventTest {
 
     @Test
     public void testCTor() {
-        EngineSoundEvent t = new EngineSoundEvent();
-        Assert.assertNotNull("exists",t);
+        EngineSoundEvent t = new EngineSoundEvent("test");
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

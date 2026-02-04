@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved    -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <!-- Decoder Information -->
+    <variable CV="261:4.31=0.32=255" readOnly="yes" item="ProId">
+        <splitHexVal case="upper"/>
+        <label>Product ID</label>
+        <label xml:lang="de">Produkt ID</label>
+    </variable>
+    <variable CV="261:4.31=0.32=255" readOnly="yes" item="ProId 2">
+        <splitVal/>
+        <label> (decimal)</label>
+        <label xml:lang="de"> (dezimal)</label>
+    </variable>
+    <variable CV="265:4.31=0.32=255" readOnly="yes" item="SerNo">
+        <splitHexVal case="upper"/>
+        <label>Serial No.</label>
+        <label xml:lang="de">Serien-Nr.</label>
+    </variable>
+    <variable CV="265:4.31=0.32=255" readOnly="yes" item="SerNo 2">
+        <splitVal/>
+        <label> (decimal)</label>
+        <label xml:lang="de"> (decimal)</label>
+    </variable>	
+    <variable CV="269:4.31=0.32=255" readOnly="yes" item="PDate">
+        <splitDateTimeVal display="dateOnly" base="2000-01-01T00:00:00"/>
+        <label>Production Date</label>
+        <label xml:lang="de">Produktionsdatum</label>
+    </variable>
+
+    <variable CV="317.31=0.32=255" readOnly="no" item="BCode Build Number">
+        <decVal/>
+        <label>Bootcode Build Build Number</label>
+    </variable>
+    <variable CV="316.31=0.32=255" readOnly="no" item="BCode Minor Version">
+        <decVal/>
+        <label>Bootcode Minor Version</label>
+    </variable>
+    <variable CV="315.31=0.32=255" readOnly="no" item="BCode Major Version">
+        <decVal/>
+        <label>Bootcode Major Version</label>
+    </variable>
+
+    <variable CV="282.31=0.32=255" readOnly="no" item="ACode Build Number">
+        <decVal/>
+        <label>Firmware Build Number</label>
+    </variable>
+    <variable CV="281.31=0.32=255" readOnly="no" item="ACode Minor Version">
+        <decVal/>
+        <label>Firmware Minor Version</label>
+    </variable>
+    <variable CV="280.31=0.32=255" readOnly="no" item="ACode Major Version">
+        <decVal/>
+        <label>Firmware Major Version</label>
+    </variable>
+	
+    <variable CV="318.31=0.32=255" readOnly="yes" item="PCode Major Version">
+        <decVal/>
+    </variable>
+    <variable CV="319.31=0.32=255" readOnly="yes" item="PCode Minor Version">
+        <decVal/>
+    </variable>	
+    <variable CV="317.31=0.32=255,316.31=0.32=255,315.31=0.32=255" readOnly="no" item="Product Number">
+        <splitVal factor="1" offset="0"/>
+        <label>Project Number: </label>
+        <label xml:lang="de">Projektnummer: </label>
+    </variable>	
+</variables>

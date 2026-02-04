@@ -20,7 +20,7 @@ public class UncaughtExceptionHandlerTest {
     private Thread.UncaughtExceptionHandler defaultExceptionHandler;
 
     @Test
-    public void testThread() throws Exception {
+    public void testThread() {
         Thread t = new Thread(() -> {
             throwNullPointerException();
         });
@@ -51,7 +51,7 @@ public class UncaughtExceptionHandlerTest {
     }
 
     @Test
-    public void testSwing() throws Exception {
+    public void testSwing() throws InterruptedException {
         try {
             javax.swing.SwingUtilities.invokeAndWait(() -> {
                 throwNullPointerException();
@@ -81,7 +81,7 @@ public class UncaughtExceptionHandlerTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
 
         this.defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
@@ -89,7 +89,7 @@ public class UncaughtExceptionHandlerTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         Thread.setDefaultUncaughtExceptionHandler(this.defaultExceptionHandler);
         JUnitUtil.tearDown();
 

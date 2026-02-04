@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,9 +20,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.Path;
+import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +50,6 @@ import org.slf4j.LoggerFactory;
  **/
 public class WarrantTableAction extends AbstractAction {
 
-    static int STRUT_SIZE = 10;
     private JMenu _warrantMenu;
     
     private boolean _hasErrors = false;
@@ -83,7 +85,7 @@ public class WarrantTableAction extends AbstractAction {
      * @return a menu containing warrant actions
      */
     public JMenu makeWarrantMenu(boolean edit) {
-        if (jmri.InstanceManager.getDefault(OBlockManager.class).getNamedBeanSet().size() > 1) {
+        if ( InstanceManager.getDefault(OBlockManager.class).getNamedBeanSet().size() > 1) {
             synchronized (this) {
                 _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
                 updateWarrantMenu();
@@ -94,7 +96,7 @@ public class WarrantTableAction extends AbstractAction {
     }
 
     @InvokeOnGuiThread
-    synchronized protected void updateWarrantMenu() {
+    protected synchronized void updateWarrantMenu() {
         _warrantMenu.removeAll();
         _warrantMenu.add(getDefault());
         JMenu editWarrantMenu = new JMenu(Bundle.getMessage("EditWarrantMenu"));
@@ -102,13 +104,12 @@ public class WarrantTableAction extends AbstractAction {
         ActionListener editWarrantAction = (ActionEvent e) -> openWarrantFrame(e.getActionCommand());
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         if (manager.getObjectCount() == 0) { // when there are no Warrants, enter the word "None" to the submenu
-            JMenuItem _noWarrants = new JMenuItem(Bundle.getMessage("None"));
-            editWarrantMenu.add(_noWarrants);
+            JMenuItem noWarrants = new JMenuItem(Bundle.getMessage("None"));
+            editWarrantMenu.add(noWarrants);
             // disable it
-            _noWarrants.setEnabled(false);
+            noWarrants.setEnabled(false);
         } else { // when there are warrants, add them to the submenu
             for (Warrant warrant : manager.getNamedBeanSet()) {
-                // Warrant warrent = (Warrant) object;
                 JMenuItem mi = new JMenuItem(warrant.getDisplayName());
                 mi.setActionCommand(warrant.getDisplayName());
                 mi.addActionListener(editWarrantAction);
@@ -146,7 +147,7 @@ public class WarrantTableAction extends AbstractAction {
                     OpSessionLog.close();
                     _logging = false;
                 };
-                jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
+                InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
                 updateWarrantMenu();
             });
         } else {
@@ -156,7 +157,7 @@ public class WarrantTableAction extends AbstractAction {
             mi = new JMenuItem(Bundle.getMessage("stopLog"));
             mi.addActionListener((ActionEvent e) -> {
                 OpSessionLog.close();
-                jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(_shutDownTask);
+                InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(_shutDownTask);
                 _shutDownTask = null;
                 _logging = false;
                 updateWarrantMenu();
@@ -268,7 +269,7 @@ public class WarrantTableAction extends AbstractAction {
         for (OBlock block : manager.getNamedBeanSet()) {
             textArea.append(checkPathPortals(block));
         }
-        return showPathPortalErrors(textArea);
+        return ThreadingUtil.runOnGUIwithReturn( () -> showPathPortalErrors(textArea));
     }
 
     /**

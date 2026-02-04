@@ -323,7 +323,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     }
                 } else {
                     lastReportedSpeed = (float) e.getNewValue();
-                    if (speedSlider.isValid()) {
+                    if (speedSlider.isVisible()) {
                         speedSlider.setValue(Math.round(lastReportedSpeed * 100.0f));
                     }
                 }
@@ -538,7 +538,9 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 if (speedSlider.isVisible()) {
                     int val = ((JSlider) (e.getSource())).getValue();
                     float speedValue = val * 0.01f;
-                    autoActiveTrain.getAutoEngineer().setSpeedImmediate(speedValue);
+                    // bypass auto-engineer limits, ramping etc
+                    // when in manual.
+                    autoActiveTrain.getThrottle().setSpeedSetting(speedValue);
                 }
             });
 

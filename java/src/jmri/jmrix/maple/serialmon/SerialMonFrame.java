@@ -59,7 +59,8 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             if (l.getNumDataElements() > 12) {
                 // this is the write command
                 int n = l.getNumItems();
-                StringBuilder s = new StringBuilder(String.format("Transmit node=%d ADDR = %d N = %d OB=", l.getUA(), l.getAddress(), n));
+                StringBuilder s = new StringBuilder(String.format("Transmit node=%d ADDR = %d N = %d OB=",
+                    l.getUA(), l.getAddress(), n));
                 int i = 11;
                 while (n > 0) {
                     for (int j = 0; (j < 8) && (n > 0); j++, n--) {

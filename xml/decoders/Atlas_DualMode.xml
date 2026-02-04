@@ -14,7 +14,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="Peter Ulvestad" version="6" lastUpdated="20091027"/>
   <version author="Michael Mosher" version="5" lastUpdated="20030706"/>
-  <!-- V3 add versionID range -->
+  <!-- V3 - add versionID range -->
   <!-- V4 - add consist direction - jake -->
   <!-- V5 - renamed and few tweeks to co-exist with four function decoder, fixed vstart bug -->
   <!-- V6 - Added factory reset, added CV2 max value -->
@@ -77,14 +77,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <!-- Atlas-specific variables -->
       <variable CV="50" mask="XXXXXXVX" item="Consist Adjustments Active">
-        <enumVal>
-          <enumChoice choice="Not Active">
-            <choice>Not Active</choice>
-          </enumChoice>
-          <enumChoice choice="Active">
-            <choice>Active</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Consist Accel and Decel Trims</label>
       </variable>
       <variable CV="50" mask="XXXXXVXX" item="DC Brake Momentum">

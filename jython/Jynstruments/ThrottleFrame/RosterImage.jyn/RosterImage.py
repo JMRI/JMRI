@@ -28,7 +28,8 @@ class RosterImage(Jynstrument):
         self.getContext().getAddressPanel().addAddressListener(self.image)
 
     def quit(self):   # very important to clean up everything to make sure GC will collect us
-        self.getContext().getAddressPanel().removeAddressListener(self.image)
+        if (( self.getContext() != None) and ( self.getContext().getAddressPanel() != None)) :
+            self.getContext().getAddressPanel().removeAddressListener(self)
 
 
 

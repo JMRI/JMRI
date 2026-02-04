@@ -1,8 +1,9 @@
 package jmri.jmrix.loconet.duplexgroup;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,10 +12,11 @@ import org.junit.jupiter.api.*;
  */
 public class LnDplxGrpInfoImplConstantsTest {
 
+    // no Ctor test, tested class only supplies static methods
+
     @Test
-    public void testCTor() {
-        LnDplxGrpInfoImplConstants t = new LnDplxGrpInfoImplConstants();
-        Assert.assertNotNull("exists",t);
+    public void testLnDplxGrpInfoImplConstants() {
+        assertEquals( 11, LnDplxGrpInfoImplConstants.DPLX_MIN_CH);
     }
 
     @BeforeEach

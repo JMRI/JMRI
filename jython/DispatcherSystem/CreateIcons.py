@@ -4,6 +4,12 @@
 # Part of the JMRI distribution
 
 from javax.swing import JOptionPane
+from java.awt.geom import Point2D
+from java.awt import Color
+
+
+# from jython.DispatcherSystem.Startup import OptionDialog
+
 
 # IS:DSCT:nnn  Control sensors
 # IS:DSMT:nnn  Move TO sensors
@@ -31,9 +37,19 @@ from javax.swing import JOptionPane
 
 class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
+    if "list" in globals() and type(globals()["list"]).__name__ != "type":
+        # print(" Detected shadowed 'list' type: ", type(globals()["list"]))  # list is being used in JMRI. This enables us to use list in Jython
+        del globals()["list"]
+
+    if "set" in globals() and type(globals()["set"]).__name__ != "type":
+        print(" Detected shadowed 'set' type: ", type(globals()["set"]))  # set is being used in JMRI. This enables us to use set in Jython
+        del globals()["set"]
+
     logLevel = 0
+    version_no = 0.2    #used to delete DispatcherPanel for new versions if the number of controlsensors/icons has changed
 
     list_of_stopping_points = []
+    blockPoints1 = {}
     blockPoints = {}   # Block center points used by direct access process
     editorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
 
@@ -41,7 +57,8 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     i = 1
     controlSensors = []
     controlSensors.append([i, 'startDispatcherSensor', 'Run Dispatcher System', 0, 0]); i += 1
-    controlSensors.append([i, 'stopMasterSensor', 'Stop/Modify Dispatcher System', 0, 0]); i += 1
+    controlSensors.append([i, 'stopMasterSensor', 'Stop Dispatcher System', 0, 0]); i += 1
+    controlSensors.append([i, 'modifyMasterSensor', 'Modify Dispatcher System', 0, 0]); i += 1
 
     controlSensors.append([i, 'Express', 'Express Train (no stopping)', 10, 5]); i += 1
     controlSensors.append([i, 'newTrainSensor', 'Setup Train in Section', 10, 5]); i += 1
@@ -61,10 +78,12 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     controlSensors.append([i, 'runRouteSensor', 'Run Route', 10, 5]); i += 1
     controlSensors.append([i, 'editRoutesSensor', 'View/Edit Routes', 10, 5]); i += 1
     controlSensors.append([i, 'viewScheduledSensor', 'View/Edit Scheduled Trains', 10, 5]); i += 1
-    controlSensors.append([i, 'schedulerStartTimeSensor', 'Set Scheduler Start Time', 10, 5]); i += 1
     controlSensors.append([i, 'showClockSensor', 'Show Analog Clock', 10, 5]); i += 1
     controlSensors.append([i, 'startSchedulerSensor', 'Start Scheduler', 10, 5]); i += 1
+    controlSensors.append([i, 'timetableSensor', 'Show Timetable', 10, 5]); i += 1
+    controlSensors.append([i, 'departureTimeSensor', 'Setup Departure Times', 10, 5]); i += 1
     controlSensors.append([i, 'helpSensor', 'Help', 0, 5]); i += 1
+
 
 
     def __init__(self):
@@ -84,18 +103,43 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.tryme(self.updatePanels, "Cannot update Panels: Contact Developer")
             self.tryme(self.get_list_of_stopping_points, "Cannot get list of stopping points, Contact Developer")
             self.addSensors()
-            self.tryme(self.generateSML, "Cannot generate Signal Mast Logic: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
+            self.generateSML()
             self.show_progress(60)
-            self.tryme(self.generateSections, "Cannot generate Sections: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
+            self.generateSections()   # if it fails need a better fail message
+            # self.tryme(self.generateSections, "Cannot generate Sections: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
             self.show_progress(80)
             self.tryme(self.addLogix, "Cannot generate startup Logix: Contact Developer")
             self.addIcons()
             self.tryme(self.retrieveForwardStoppingSensors, "Cannot retrieve Stopping Sensors: Contact Developer")
+            self.setVersionNo()
             self.stop_all_threads()
             self.end_show_progress()
 
+        else:
+            self.result = "Failure"
+
     def __str__(self):
-        return self.result      # allow return value from calling processPanels()
+        return self.result
+
+
+    def setVersionNo(self):
+        memory = memories.provideMemory('IS:ISMEM:' + "versionNo")
+        if memory is not None:
+            memory.setValue(self.version_no)
+
+    def version_number_changed(self):
+        memory = memories.getMemory('IMIS:ISMEM:' + "versionNo")
+        # print "memory", memory, type(memory)
+        if memory is None:
+            # print "version_no changed", "memory:", "version", self.version_no
+            return True
+        elif memory.getValue() != self.version_no:
+            # print "version_no changed", "memory:", memory.getValue(), "version", self.version_no
+            return True
+        else:
+            # print "version_no not changed", "memory:", memory.getValue(), "version", self.version_no
+            return False
+
 
     def stop_all_threads(self):
         summary = jmri.jmrit.automat.AutomatSummary.instance()
@@ -137,6 +181,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         block_sensors_OK = False
         stops_OK = False
         lengths_OK = False
+        speed_profiles_OK = False
 
         #JOptionPane.showMessageDialog(None, "Performing some preliminary checks to ensure the trains run correctly\nAll errors will need to be fixed for Dispatcher to run correctly\nSome errors will cause the panel to be set up incorrectly in this stage", 'Checks', JOptionPane.WARNING_MESSAGE)
 
@@ -179,8 +224,6 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             elif myAnswer == JOptionPane.CLOSED_OPTION:
                 if self.logLevel > 0: print "You closed the window. How rude!"
         else:
-
-            if self.logLevel > 0: print(2)
             block_sensors_OK  = True
 
         if self.check_sufficient_number_of_blocks() == False:
@@ -201,9 +244,6 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             elif myAnswer == JOptionPane.CLOSED_OPTION:
                 if self.logLevel > 0: print "You closed the window. How rude!"
         else:
-            if self.logLevel > 0: print("4a")
-
-            if self.logLevel > 0: print(4)
             stops_OK = True
 
         if self.check_all_blocks_have_lengths() == False:
@@ -224,11 +264,28 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             elif myAnswer == JOptionPane.CLOSED_OPTION:
                 if self.logLevel > 0: print "You closed the window. How rude!"
         else:
-            if self.logLevel > 0: print("4a")
-            #Message = "All blocks have lengths\n OK to continue \nNote that trains should also be set up with a speed profile to stop correctly"
-            #JOptionPane.showMessageDialog(None, Message, 'Message', JOptionPane.INFORMATION_MESSAGE)
-            if self.logLevel > 0: print(4)
             lengths_OK = True
+
+        if self.check_engines_with_speed_profiles_exist() == False:
+            self.msg5 = "There are no engines with speed profiles\n" + self.msg5 + "\n***********************\n To continue either set up speed profiles for a train, \nor for a quick examination of Dispatcher System you can install the speed profiles stored in the Dispatcher System Folder\n*********Do you wish to continue?**************"
+            if self.logLevel > 0: print(3)
+            myAnswer = JOptionPane.showConfirmDialog(None, self.msg5)
+            if myAnswer == JOptionPane.YES_OPTION:
+                JOptionPane.showMessageDialog(None, 'Please install some of the speed profiles provided', "Look in the speed profile folder in the Dispatcher System Folder", JOptionPane.WARNING_MESSAGE)
+                return False
+            elif myAnswer == JOptionPane.NO_OPTION:
+                msg = 'Stopping'
+                JOptionPane.showMessageDialog(None, "Please run your trains over a suitable track with 3 blocks - see help" , "Install speed profiles" , JOptionPane.WARNING_MESSAGE)
+                return False
+            elif myAnswer == JOptionPane.CANCEL_OPTION:
+                msg = 'Stopping'
+                JOptionPane.showMessageDialog(None, 'Stopping', "Have a cup of Tea", JOptionPane.WARNING_MESSAGE)
+                return False
+            elif myAnswer == JOptionPane.CLOSED_OPTION:
+                if self.logLevel > 0: print "You closed the window. How rude!"
+
+        else:
+            speed_profiles_OK = True
 
         msg =  ""
         some_checks_OK = False
@@ -244,11 +301,17 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         if lengths_OK:
             msg = msg + "All blocks have lengths\n"
             some_checks_OK = True
+        if speed_profiles_OK:
+            msg = msg + "You have engine(s) with speed profile\n"
+            some_checks_OK = True
 
         if some_checks_OK:
-            msg = "Performed some prelimiary checks to ensure the trains run correctly\n\nAll Checks OK"
-            reply = Query().customQuestionMessage2(msg, "Checks", "Continue", "Look in more detail")
-            if reply == JOptionPane.NO_OPTION:
+            msg = "Performed some preliminary checks to ensure the trains run correctly\n\nAll Checks OK"
+            title = "Checks"
+            opt1 = "Continue"
+            opt2 = "Look in more detail"
+            reply = Query().customQuestionMessage2str(msg, title, opt1, opt2)
+            if reply == opt2:
                 if sensors_OK:
                     Message = "All blocks have sensors"
                     JOptionPane.showMessageDialog(None, Message, 'Message', JOptionPane.INFORMATION_MESSAGE)
@@ -261,7 +324,12 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 if lengths_OK:
                     Message = "All blocks have lengths\n OK to continue \nNote that trains should also be set up with a speed profile to stop correctly"
                     JOptionPane.showMessageDialog(None, Message, 'Message', JOptionPane.INFORMATION_MESSAGE)
-
+                if speed_profiles_OK:
+                    msg = ""
+                    for engine in self.get_all_roster_entries_with_speed_profile():
+                        msg += "\n" + str(engine)
+                    Message = "You have the following trains with speed profiles" + msg
+                    JOptionPane.showMessageDialog(None, Message, 'Message', JOptionPane.INFORMATION_MESSAGE)
         return True
 
     def check_all_blocks_have_sensors(self):
@@ -309,19 +377,19 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             success = False
         self.msg1 = ""
         for message in list_of_errors:
-            self.msg1 = self.msg1 +"\n" + message
+            self.msg1 = self.msg1 + "\n" + message
 
         return success
 
 
-    def get_duplicate_values_in_dict(self, dict):
+    def get_duplicate_values_in_dict(self, input_dict):
 
         # finding duplicate values
         # from dictionary
         # using a naive approach
         rev_dict = {}
 
-        for key, value in dict.items():
+        for key, value in input_dict.items():
             rev_dict.setdefault(value, set()).add(key)
 
         result = ["blocks " +', '.join(values) + " have the same sensor " + str( key) for key, values in rev_dict.items()
@@ -386,6 +454,24 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
         return success
 
+    def check_engines_with_speed_profiles_exist(self):
+        roster_entries_with_speed_profile = self.get_all_roster_entries_with_speed_profile()
+        if roster_entries_with_speed_profile == []:
+            return False
+        else:
+            return True
+            # return True
+
+    def get_all_roster_entries_with_speed_profile(self):
+        roster_entries_with_speed_profile = []
+        r = jmri.jmrit.roster.Roster.getDefault()
+        for roster_entry in jmri.jmrit.roster.Roster.getAllEntries(r):
+            if self.logLevel > 0: print "roster_entry.getSpeedProfile()",roster_entry,roster_entry.getSpeedProfile()
+            if roster_entry.getSpeedProfile() != None:
+                roster_entries_with_speed_profile.append(roster_entry.getId())
+                if self.logLevel > 0: print "roster_entry.getId()",roster_entry.getId()
+        return roster_entries_with_speed_profile
+
     def updatePanels(self):
         for panel in self.editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
             if panel.getTitle() != 'Dispatcher System':
@@ -397,9 +483,15 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # **************************************************
     # remove icons and labels from panels
     # **************************************************
+
     def removeIconsAndLabels(self):
+
         for panel in self.editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
             if panel.getTitle() == 'Dispatcher System':
+                if self.version_number_changed():
+                    # print "removing panel, version number changed"
+                    self.editorManager.remove(panel)
+                    panel.dispose()
                 # Skip the Dispatcher System control panel if it exists
                 continue
 
@@ -545,11 +637,26 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # gets the list of stopping points (stations, sidings etc.)
     # ***********************************************************
     def get_list_of_stopping_points(self):
+        stopping_points_set = set()
+
+        # First, get stopping points from block comments
         for block in blocks.getNamedBeanSet():
             comment = block.getComment()
             if comment != None:
                 if "stop" in comment.lower():
-                    self.list_of_stopping_points.append(block.getUserName())
+                    stopping_points_set.add(block.getUserName())
+
+        # Second, automatically add blocks associated with LayoutTurntables
+        editorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
+        for editor in editorManager.getAll():
+            if isinstance(editor, jmri.jmrit.display.layoutEditor.LayoutEditor):
+                # The returned object is a Java Set, which needs to be converted to a list for safe iteration in Jython
+                for turntable in list(editor.getLayoutTurntables()):
+                    layout_block = turntable.getLayoutBlock()
+                    if layout_block is not None and layout_block.getUserName() is not None:
+                        stopping_points_set.add(layout_block.getUserName())
+
+        self.list_of_stopping_points = sorted(list(stopping_points_set))
 
     # **************************************************
     # add sensors
@@ -563,6 +670,8 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         # Create a dummy sensor
         sensor = sensors.provideSensor('IS:DSCT:' + str(0))
         sensor.setUserName("DummyControlSensor")
+        sensor = sensors.provideSensor('IS:DSCTA:' + str(0))
+        sensor.setUserName("Jdialog_closed")
 
         # Create the stop sensors
         index = 0
@@ -582,17 +691,24 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # **************************************************
     def generateSML(self):
         layoutblocks.enableAdvancedRouting(True)
+        # print "Generating Signal Mast Logic"
         smlManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
         smlManager.automaticallyDiscoverSignallingPairs()
+        # print "Signal Mast Logic Generated"
 
     # **************************************************
     # generate sections
     # **************************************************
     def generateSections(self):
+        # print "Generating Sections"
         smlManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
+        # generate sections()
         smlManager.generateSection()
+        # print "Sections Generated"
         self.show_progress(80)
+        # print "+++++++++++++++++++++++ generate block sections ++++++++++++++++++++++++++++++"
         sections.generateBlockSections()
+        # print "+++++++++++++++++++++++ end generate block sections ++++++++++++++++++++++++++++++"
 
     # **************************************************
     # add Logix
@@ -609,7 +725,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             vars.append(jmri.ConditionalVariable(False, jmri.Conditional.Operator.AND, jmri.Conditional.Type.SENSOR_ACTIVE, 'startDispatcherSensor', True))
             cdl.setStateVariables(vars)
             actions = []
-            actions.append(jmri.implementation.DefaultConditionalAction(1, jmri.Conditional.Action.RUN_SCRIPT, '', -1, 'program:jython/DispatcherSystem/RunDispatchMaster.py'))
+            actions.append(jmri.implementation.DefaultConditionalAction(1, jmri.Conditional.Action.RUN_SCRIPT, '', -1, 'program:jython/DispatcherSystem/Startup.py'))
             cdl.setAction(actions)
             lgx.activateLogix()
 
@@ -625,11 +741,145 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         #add control icons in separate editor panel
         self.addControlIconsAndLabels()
 
-    def getBlockCenterPoints(self, panel):
+    def getCenterPointOfNearestBlockToMid(self, panel):
+
+        self.index = 0
         self.blockPoints.clear()
+
+        # reassign the blockpoints to the nearest track segment to mid if one exists
         for tsv in panel.getTrackSegmentViews():
+
             blk = tsv.getBlockName()
 
+            pt1 = panel.getCoords(tsv.getConnect1(), tsv.getType1())
+            pt2 = panel.getCoords(tsv.getConnect2(), tsv.getType2())
+
+            [x1,y1] = [pt1.getX(), pt1.getY()]
+            [x2,y2] = [pt2.getX(), pt2.getY()]
+
+
+            if blk in self.list_of_stopping_points:
+                if abs(float(y1)-float(y2)) < 15.0:     # East-West place icon to right of circle
+                    x_reqd = int((float(x1)+float(x2))/2.0)+25  # to put to right of circle
+                    y_reqd = int((float(y1)+float(y2))/2.0)     # to put just under track
+                else:                                   # North south place icon under circle
+                    x_reqd = int((float(x1)+float(x2))/2.0)-20  #  to centralise
+                    y_reqd = int((float(y1)+float(y2))/2.0)+15  #  to put under circle
+            else:
+                x_reqd = int((float(x1)+float(x2))/2.0)  # to put to right of circle
+                y_reqd = int((float(y1)+float(y2))/2.0)
+
+            pt_to_try = Point2D.Double(x_reqd, y_reqd)
+            if blk in self.blockPoints1:
+                pt_mid =  self.blockPoints1[blk]
+                self.updateCoords1(blk, pt_to_try, pt_mid)
+
+        # Handle turntables
+        for turntableView in panel.getLayoutTurntableViews():
+            turntable = turntableView.getTurntable()
+            layoutBlock = turntable.getLayoutBlock()
+            if layoutBlock is not None:
+                blk = layoutBlock.getUserName()
+                if blk in self.blockPoints1:
+                    pt_mid = self.blockPoints1[blk]
+                    # For a turntable, the icon position is calculated relative to its own center
+                    [x_reqd, y_reqd] = self.get_icon_position(turntable, turntableView)
+                    pt_to_try = Point2D.Double(x_reqd, y_reqd)
+                    self.updateCoords1(blk, pt_to_try, pt_mid)
+
+    def get_icon_position(self, turntable, turntableView):
+        import math
+        # print "--- Calculating icon position for turntable:", turntable.getName(), "---"
+        turntable_center = turntableView.getCoordsCenter()
+        radius = turntable.getRadius()
+        rays = turntable.getRayTrackList()
+
+        if len(rays) < 2:
+            # Fallback for turntables with 0 or 1 ray: place icon bottom-right
+            # print "  Fewer than 2 rays, using fallback position."
+            x_reqd = int(turntable_center.getX()) + 30
+            y_reqd = int(turntable_center.getY()) + 25
+            return [x_reqd, y_reqd]
+
+        # Get all ray angles in degrees and sort them
+        angles = sorted([ray.getAngle() for ray in rays])
+        # print "  Sorted ray angles (degrees):", angles
+
+        # Calculate angular gaps between adjacent rays
+        gaps = []
+        for i in range(len(angles) - 1):
+            gap = angles[i+1] - angles[i]
+            gaps.append(gap)
+
+        # Add the wrap-around gap between the last and first ray
+        wrap_around_gap = (360.0 - angles[-1]) + angles[0]
+        gaps.append(wrap_around_gap)
+        # print "  Calculated gaps:", gaps
+
+        max_gap = max(gaps)
+        # print "  Max gap found:", max_gap
+
+        # Find all gaps that are the largest
+        best_mid_angle = -1
+        min_angle_diff = 361 # Larger than any possible angle difference
+
+        # Define a preferred angle for tie-breaking (bottom-right quadrant)
+        preferred_angle = math.degrees(math.atan2(25, 30)) # atan2(y, x)
+        # print "  Preferred angle for tie-breaking:", preferred_angle
+
+        for i in range(len(gaps)):
+            if abs(gaps[i] - max_gap) < 1e-6: # Compare floats with a tolerance
+                # print "  Found a max gap at index", i
+                if i < len(angles) - 1:
+                    mid_angle = angles[i] + max_gap / 2.0
+                else: # Wrap-around case
+                    mid_angle = (angles[-1] + max_gap / 2.0) % 360.0
+                # print "    Mid-angle of this gap:", mid_angle
+
+                # Normalize angle difference for tie-breaking
+                angle_diff = abs(mid_angle - preferred_angle)
+                # print "    Difference from preferred angle:", angle_diff
+                if angle_diff < min_angle_diff:
+                    # print "    This is the new best candidate."
+                    min_angle_diff = angle_diff
+                    best_mid_angle = mid_angle
+
+        # print "  Final chosen mid-angle:", best_mid_angle
+        # Convert the final angle to radians for trig functions
+        final_angle_rad = math.radians(best_mid_angle)
+        if best_mid_angle > 180.0 and best_mid_angle < 360.0:
+            icon_distance = radius + 70 # Place icon 20 pixels out from the turntable radius plus a bit to allow for the icon length
+        else:
+            icon_distance = radius + 30 # Place icon 20 pixels out from the turntable radius
+        x_reqd = int(turntable_center.getX() + icon_distance * math.sin(final_angle_rad))
+        y_reqd = int(turntable_center.getY() - icon_distance * math.cos(final_angle_rad))
+        # print "  Turntable Centre (x, y):", int(turntable_center.getX()), ",", int(turntable_center.getY())
+        # print "  Calculated position (x, y):", x_reqd, ",", y_reqd
+        # print "----------------------------------------------------"
+        return [x_reqd, y_reqd]
+
+    def updateCoords1(self, blk, pt_to_try, pt_mid):
+        if blk is not None:
+            if blk in self.blockPoints:
+                if (jmri.util.MathUtil.distance(pt_mid, pt_to_try) < \
+                        jmri.util.MathUtil.distance(pt_mid, self.blockPoints[blk])):
+                    self.blockPoints[blk] = pt_to_try
+            else:
+                self.blockPoints[blk] = pt_to_try
+
+    def updateCoords(self, blk, xy):
+        if blk is not None:
+            if blk in self.blockPoints1:
+                self.blockPoints1[blk] = jmri.util.MathUtil.midPoint(self.blockPoints1[blk], xy)
+            else:
+                self.blockPoints1[blk] = xy
+
+    def getBlockCenterPoints(self, panel):
+        self.index = 0
+        self.blockPoints1.clear()
+        for tsv in panel.getTrackSegmentViews():
+            blk = tsv.getBlockName()
+            #print "blk", blk
             pt1 = panel.getCoords(tsv.getConnect1(), tsv.getType1())
             pt2 = panel.getCoords(tsv.getConnect2(), tsv.getType2())
 
@@ -665,12 +915,19 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.updateCoords(blkAC, xyA)
             self.updateCoords(blkBD, xyD)
 
-    def updateCoords(self, blk, xy):
-        if blk is not None:
-            if blk in self.blockPoints:
-                self.blockPoints[blk] = jmri.util.MathUtil.midPoint(self.blockPoints[blk], xy)
-            else:
-                self.blockPoints[blk] = xy
+        # Handle turntables
+        for turntableView in panel.getLayoutTurntableViews():
+            turntable = turntableView.getTurntable()
+            layoutBlock = turntable.getLayoutBlock()
+            if layoutBlock is not None:
+                blockName = layoutBlock.getUserName()
+                # The center of the turntable is its main coordinate, get it from the View
+                centerCoords = turntableView.getCoordsCenter()
+                self.updateCoords(blockName, centerCoords)
+
+        # place the stations at the block nearest the mid-point
+
+        self.getCenterPointOfNearestBlockToMid(panel)
 
     # **************************************************
     # stop icons
@@ -678,6 +935,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     def addStopIcons(self, panel):
         for blockName in self.list_of_stopping_points:
             if blockName in self.blockPoints.keys():
+                # print "addStopIcons blockName", blockName
                 x = self.blockPoints[blockName].getX()
                 y = self.blockPoints[blockName].getY()
 
@@ -709,8 +967,10 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # control sensor icons and label
     # **************************************************
     def addControlIconsAndLabels(self):
-        if self.editorManager.get("Dispatcher System") is not None:
+        if (not self.version_number_changed()) and self.dispatcher_system_panel_exists():
+            if self.logLevel > 0: print "not adding control Icons and labels"
             return
+
         # Create the Dispatcher System control panel
         panel = jmri.jmrit.display.layoutEditor.LayoutEditor("Dispatcher System")
         self.editorManager.add(panel)
@@ -724,9 +984,18 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 x += 20
                 self.addTextLabel(panel, control[2], x, y)
 
-        panel.setSize(300, 540)
+        panel.setSize(300,600)
         panel.setAllEditable(False)
         panel.setVisible(True)
+
+    def dispatcher_system_panel_exists(self):
+        for frame1 in java.awt.Frame.getFrames():
+            # print "frame", frame1.getName()
+            if frame1.getName() == "Dispatcher System":
+                if frame1.isVisible():
+                    return True
+        # print "Dispatcher System Panel does not exist"
+        return False
 
     # **************************************************
     # small icon
@@ -771,13 +1040,20 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         icn.setIcon("SensorStateInactive", jmri.jmrit.catalog.NamedIcon("resources/icons/markers/loco-red.gif", "inactive"));
         icn.setIcon("BeanStateInconsistent", jmri.jmrit.catalog.NamedIcon("resources/icons/markers/loco-yellow.gif", "incons"));
         icn.setIcon("BeanStateUnknown", jmri.jmrit.catalog.NamedIcon("resources/icons/markers/loco-gray.gif", "unknown"));
+        if len(blockName) > 9:
+            icn.setText(blockName[:11])
+            icn.getPopupUtility().setFontSize(9)
+        else:
+            icn.setText(blockName[:9])
+            icn.getPopupUtility().setFontSize(11)
 
-        icn.setText(blockName[:9])
 
         icn.setTextActive(Color.RED)
         icn.setTextInActive(Color.YELLOW)
         icn.setTextInconsistent(Color.BLACK)
         icn.setTextUnknown(Color.BLUE)
+
+
 
         # Assign the sensor and set the location
         icn.setSensor(sensor.getDisplayName())
@@ -817,6 +1093,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             [sections.getSection(section_name).setForwardStoppingSensorName(forward_stopping_sensor_name) \
              for [sn_prompt, section_name, fss_prompt, forward_stopping_sensor_name] in forward_stop_sensors \
              if forward_stop_sensors is not [] and sections.getSection(section_name) is not None]
+
     def directory(self):
         path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "forwardStoppingSensors"
         if not os.path.exists(path):
@@ -867,10 +1144,8 @@ class DisplayProgress:
         self.frame1 = None
 
 
-
-
 class Query:
-    def customQuestionMessage2(self, msg, title, opt1, opt2):
+    def customQuestionMessage2str(self, msg, title, opt1, opt2):
         self.CLOSED_OPTION = False
         options = [opt1, opt2]
         s = JOptionPane.showOptionDialog(None,
@@ -880,11 +1155,15 @@ class Query:
                                          JOptionPane.QUESTION_MESSAGE,
                                          None,
                                          options,
-                                         options[0])
+                                         options[1])
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
             return
-        return s
+        if s == JOptionPane.YES_OPTION:
+            s1 = opt1
+        else:
+            s1 = opt2
+        return s1
 
     def displayMessage(self, msg, title = ""):
         self.CLOSED_OPTION = False

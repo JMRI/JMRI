@@ -2,6 +2,7 @@ package jmri.jmrit.beantable.usermessagepreferences;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,18 +19,21 @@ import javax.swing.JTabbedPane;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.beantable.AudioTableAction;
 import jmri.jmrit.beantable.BlockTableAction;
+import jmri.jmrit.beantable.IdTagTableAction;
 import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrit.beantable.LightTableAction;
 import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrit.beantable.MemoryTableAction;
 import jmri.jmrit.beantable.ReporterTableAction;
 import jmri.jmrit.beantable.RouteTableAction;
+import jmri.jmrit.beantable.SectionTableAction;
 import jmri.jmrit.beantable.SensorTableAction;
 import jmri.jmrit.beantable.SignalGroupTableAction;
 import jmri.jmrit.beantable.SignalHeadTableAction;
 import jmri.jmrit.beantable.SignalMastTableAction;
 import jmri.jmrit.beantable.TransitTableAction;
 import jmri.jmrit.beantable.TurnoutTableAction;
+import jmri.jmrit.logixng.LogixNG_UserPreferences;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.JmriPanel;
 import org.openide.util.lookup.ServiceProvider;
@@ -37,12 +41,28 @@ import org.openide.util.lookup.ServiceProvider;
 /**
  * Pane to show User Message Preferences.
  *
+ * <p>Class based preferences are returned from {@link jmri.managers.JmriUserPreferencesManager}.
+ * If a class has more than one possible message, it will have its own tab.</p>
+ *
+ * <p>Classes with a single possible message will be in the <b>Misc items</b> tab.  These are only
+ * shown when active.</p>
+ *
+ * <p>The <b>Misc items</b> tab includes an option to show only tabs that have active messages. The
+ * normal tabs list is quite long.</p>
+ *
  * @author Kevin Dickerson Copyright (C) 2009
  */
 @ServiceProvider(service = PreferencesPanel.class)
 public class UserMessagePreferencesPane extends JmriPanel implements PreferencesPanel {
 
     UserPreferencesManager p;
+
+    JTabbedPane tab = new JTabbedPane();
+
+    private HashMap<JComboBox<Object>, ListItems> _comboBoxes = new HashMap<>();
+    private HashMap<JCheckBox, ListItems> _checkBoxes = new HashMap<>();
+
+    private JCheckBox tabsOption = new JCheckBox(Bundle.getMessage("ShowTabsCheckBox"));
 
     public UserMessagePreferencesPane() {
         super();
@@ -52,9 +72,18 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
                 refreshOptions();
             }
         });
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        setMinimumMessagePref();
+        tabsOption.setSelected(p.getCheckboxPreferenceState(getClassName() + ".tabsOption", false));
+        tabsOption.addActionListener((ActionEvent e) -> {
+            p.setCheckboxPreferenceState(getClassName() + ".tabsOption", tabsOption.isSelected());
+        });
+
+        if (!tabsOption.isSelected()) {
+            setMinimumMessagePref();
+        }
+
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        newMessageTab();
         add(tab);
     }
 
@@ -62,6 +91,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         //This ensures that as a minimum that the following items are at least initialised and appear in the preference panel
         p.setClassDescription(AudioTableAction.class.getName());
         p.setClassDescription(BlockTableAction.class.getName());
+        p.setClassDescription(IdTagTableAction.class.getName());
 
         p.setClassDescription(LightTableAction.class.getName());
         p.setClassDescription(LogixTableAction.class.getName());
@@ -71,6 +101,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         p.setClassDescription(ReporterTableAction.class.getName());
         p.setClassDescription(RouteTableAction.class.getName());
 
+        p.setClassDescription(SectionTableAction.class.getName());
         p.setClassDescription(SensorTableAction.class.getName());
         p.setClassDescription(SignalGroupTableAction.class.getName());
         p.setClassDescription(SignalHeadTableAction.class.getName());
@@ -79,13 +110,8 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         p.setClassDescription(TransitTableAction.class.getName());
         p.setClassDescription(TurnoutTableAction.class.getName());
 
-        newMessageTab();
+        p.setClassDescription(LogixNG_UserPreferences.class.getName());
     }
-
-    JTabbedPane tab = new JTabbedPane();
-
-    private HashMap<JComboBox<Object>, ListItems> _comboBoxes = new HashMap<>();
-    private HashMap<JCheckBox, ListItems> _checkBoxes = new HashMap<>();
 
     private synchronized void newMessageTab() {
         remove(tab);
@@ -96,7 +122,9 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         _checkBoxes = new HashMap<>();
 
         ArrayList<String> preferenceClassList = p.getPreferencesClasses();
+        java.util.Collections.sort(preferenceClassList);
         for (String strClass : preferenceClassList) {
+
             JPanel classholder = new JPanel();
             classholder.setLayout(new BorderLayout());
 
@@ -256,6 +284,17 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
                     miscPanel.add(itemPanel);
                 }
             }
+
+            // Include the tabs option
+            JPanel activePanel = new JPanel();
+            JPanel activeItem = new JPanel();
+            activeItem.setLayout(new BoxLayout(activeItem, BoxLayout.Y_AXIS));
+            activeItem.setBorder(BorderFactory.createLineBorder(java.awt.Color.black));
+            activeItem.add(new JLabel(Bundle.getMessage("TabsOption")), JLabel.CENTER);
+            activeItem.add(tabsOption);
+            activePanel.add(activeItem);
+            mischolder.add(activePanel);
+
         }
 
         add(tab);
@@ -263,7 +302,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         JScrollPane miscScrollPane = new JScrollPane(mischolder);
         miscScrollPane.setPreferredSize(new Dimension(300, 300));
 
-        tab.add(miscScrollPane, "Misc items");
+        tab.add(miscScrollPane, Bundle.getMessage("MiscItems"));
         revalidate();
     }
 
@@ -386,6 +425,10 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         updating = false;
         p.finishLoading();
         refreshOptions();
+    }
+
+    protected String getClassName() {
+        return UserMessagePreferencesPane.class.getName();
     }
 
     private void refreshOptions() {

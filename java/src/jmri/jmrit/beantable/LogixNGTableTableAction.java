@@ -16,6 +16,7 @@ import jmri.jmrit.logixng.Table;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
+import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
@@ -47,6 +48,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     ButtonGroup _csvGroup = new ButtonGroup();
     JRadioButton _csvTabbed = new JRadioButton(Table.CsvType.TABBED.toString());
     JRadioButton _csvComma = new JRadioButton(Table.CsvType.COMMA.toString());
+    JRadioButton _csvSemicolon = new JRadioButton(Table.CsvType.SEMICOLON.toString());
 
     JLabel _csvLabel = new JLabel(Bundle.getMessage("LogixNG_CsvType") + ":");
     /**
@@ -121,7 +123,11 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
                 return InstanceManager.getDefault(NamedTableManager.class)
                         .newCSVTable(systemName, userName, fileName, Table.CsvType.TABBED);
             } else if (_csvComma.isSelected()) {
-                return InstanceManager.getDefault(NamedTableManager.class).newCSVTable(systemName, userName, fileName, Table.CsvType.COMMA);
+                return InstanceManager.getDefault(NamedTableManager.class)
+                        .newCSVTable(systemName, userName, fileName, Table.CsvType.COMMA);
+            } else if (_csvSemicolon.isSelected()) {
+                return InstanceManager.getDefault(NamedTableManager.class)
+                        .newCSVTable(systemName, userName, fileName, Table.CsvType.SEMICOLON);
             }
         } else if (_typeInternalTable.isSelected()) {
             // Open table editor
@@ -150,7 +156,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     }
 
     @Override
-    protected String getBeanText(NamedTable bean) {
+    protected String getBeanText(NamedTable bean, Base.PrintTreeSettings printTreeSettings) {
         int maxColumnWidth = 0;
         int columnWidth[] = new int[bean.numColumns()+1];
         String[][] cells = new String[bean.numRows()+1][];
@@ -274,9 +280,11 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         csvPanel.setLayout(new FlowLayout());
         _csvGroup.add(_csvTabbed);
         _csvGroup.add(_csvComma);
+        _csvGroup.add(_csvSemicolon);
         _csvTabbed.setSelected(true);
         csvPanel.add(_csvTabbed);
         csvPanel.add(_csvComma);
+        csvPanel.add(_csvSemicolon);
         c.gridx = 1;
         p.add(csvPanel,c);
         c.gridx = 0;
@@ -349,7 +357,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
         panel5.add(cancel);
         cancel.addActionListener(this::cancelAddPressed);
-        cancel.setToolTipText(Bundle.getMessage("CancelLogixNGButtonHint"));      // NOI18N
+        cancel.setToolTipText(Bundle.getMessage("CancelLogixNGTableButtonHint"));      // NOI18N
 
         addLogixNGFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override

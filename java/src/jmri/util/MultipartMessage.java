@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -52,13 +54,16 @@ public class MultipartMessage {
      * @param requestURL URL to which this request should be sent
      * @param charSet    character set encoding of this message
      * @throws IOException if {@link OutputStream} cannot be created
+     * @throws URISyntaxException if the requestURL has wrong syntax
      */
-    public MultipartMessage(String requestURL, String charSet) throws IOException {
+    public MultipartMessage(String requestURL, String charSet)
+            throws IOException, URISyntaxException {
+
         this.charSet = charSet;
 
         // create unique multi-part message boundary
         boundary = "===" + System.currentTimeMillis() + "===";
-        URL url = new URL(requestURL);
+        URL url = new URI(requestURL).toURL();
         httpConn = (HttpURLConnection) url.openConnection();
         httpConn.setUseCaches(false);
         httpConn.setDoOutput(true);

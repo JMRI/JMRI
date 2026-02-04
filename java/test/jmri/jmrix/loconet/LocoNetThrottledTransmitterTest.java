@@ -20,15 +20,18 @@ public class LocoNetThrottledTransmitterTest {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(new LocoNetInterfaceScaffold(memo), false);
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
+        JUnitUtil.waitThreadTerminated(q.theServiceThread);
     }
 
     @Test
     public void testMemoCtor() {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(new LocoNetInterfaceScaffold(memo), false);
-        new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS);
+        Assertions.assertNotNull(
+            new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS));
 
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
+        JUnitUtil.waitThreadTerminated(q.theServiceThread);
     }
 
     @Test
@@ -62,6 +65,7 @@ public class LocoNetThrottledTransmitterTest {
 
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
+        JUnitUtil.waitThreadTerminated(q.theServiceThread);
     }
 
     @Test
@@ -84,6 +88,7 @@ public class LocoNetThrottledTransmitterTest {
 
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
+        JUnitUtil.waitThreadTerminated(q.theServiceThread);
     }
 
     @Test
@@ -113,6 +118,7 @@ public class LocoNetThrottledTransmitterTest {
 
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
+        JUnitUtil.waitThreadTerminated(q.theServiceThread);
     }
 
     @Test
@@ -141,9 +147,10 @@ public class LocoNetThrottledTransmitterTest {
 
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
+        JUnitUtil.waitThreadTerminated(q.theServiceThread);
     }
 
-    LocoNetSystemConnectionMemo memo;
+    private LocoNetSystemConnectionMemo memo;
 
     @BeforeEach
     public void setUp() {
@@ -153,6 +160,8 @@ public class LocoNetThrottledTransmitterTest {
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(memo);
+        memo.dispose();
         memo = null;
         JUnitUtil.tearDown();
     }

@@ -1,20 +1,21 @@
 package jmri.configurexml;
 
+import java.io.File;
 import java.util.Set;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.JFileChooser;
 
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.jmrit.logixng.LogixNGPreferences;
-import jmri.JmriException;
+import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.logixng.LogixNG_Manager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Load configuration information from an XML file.
@@ -40,15 +41,21 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        loadFile(getConfigFileChooser());
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .ensureAtLeastPermission(LoadAndStorePermissionOwner.LOAD_XML_FILE_PERMISSION,
+                        BooleanPermission.BooleanValue.TRUE)) {
+            return;
+        }
+        loadFile(getConfigFileChooser(), JmriJOptionPane.findWindowForObject( e == null ? null : e.getSource()));
     }
 
     /**
-     *
+     * Load a File from a given JFileChooser.
      * @param fileChooser {@link JFileChooser} to use for file selection
+     * @param component a Component which has called the File Chooser.
      * @return true if successful
      */
-    protected boolean loadFile(JFileChooser fileChooser) {
+    protected boolean loadFile(@Nonnull JFileChooser fileChooser, @CheckForNull Component component ) {
         Set<Editor> editors = InstanceManager.getDefault(EditorManager.class).getAll();
         if (!editors.isEmpty()) {
             InstanceManager.getDefault(jmri.UserPreferencesManager.class).showWarningMessage(
@@ -59,7 +66,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
         }
 
         boolean results = false;
-        java.io.File file = getFile(fileChooser);
+        File file = getFile(fileChooser, component);
         if (file != null) {
             log.info("Loading selected file: {}", file); // NOI18N
             try {
@@ -84,6 +91,12 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                                 && logixNG_Manager.isStartLogixNGsOnLoad()) {
                             logixNG_Manager.activateAllLogixNGs();
                         }
+
+                        // If a LE panel specified "openDispatcher", it creates the DispatcherFrame instance.
+                        // The presence of the instance is use to trigger calling loadAtStartup after file loading is done.
+                        if (InstanceManager.isInitialized(DispatcherFrame.class)) {
+                            InstanceManager.getDefault(DispatcherFrame.class).loadAtStartup();
+                        }
                     }
                 }
             } catch (JmriException e) {
@@ -95,24 +108,64 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
         return results;
     }
 
-    static public java.io.File getFile(JFileChooser fileChooser) {
-        fileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
-        return getFileCustom(fileChooser);
+    /**
+     * Get the File from a given JFileChooser.
+     * @return the selected File.
+     * @deprecated use {@link #getFile(JFileChooser fileChooser, Component component)}
+     * @param fileChooser the JFileChooser for the file.
+     */
+    @CheckForNull
+    @Deprecated (since="5.7.8",forRemoval=true)
+    public static File getFile(@Nonnull JFileChooser fileChooser) {
+        return getFile(fileChooser, null);
     }
 
-    static public java.io.File getFileCustom(JFileChooser fileChooser) {
+    /**
+     * Get the File from an Open File JFileChooser.
+     * If a Component is provided, this helps the JFileChooser to not get stuck
+     * behind an Always On Top Window.
+     * @param fileChooser the FileChooser to get from.
+     * @param component a Component within a JFrame / Window / Popup Menu,
+     *                  or the JFrame or Window itself.
+     * @return the File, may be null if none selected.
+     */
+    @CheckForNull
+    public static File getFile(@Nonnull JFileChooser fileChooser, @CheckForNull Component component) {
+        fileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
+        return getFileCustom(fileChooser, component);
+    }
+
+    /**
+     * @return the selected File.
+     * @deprecated use {@link #getFile(JFileChooser fileChooser, Component component)}
+     * @param fileChooser the FileChooser to get from.
+     */
+    @CheckForNull
+    @Deprecated (since="5.7.8",forRemoval=true)
+    public static File getFileCustom(@Nonnull JFileChooser fileChooser) {
+        return getFileCustom(fileChooser, null);
+    }
+
+    /**
+     * Get the File from a JFileChooser.
+     * If a Component is provided, this helps the JFileChooser to not get stuck
+     * behind an Always On Top Window.
+     * @param fileChooser the FileChooser to get from.
+     * @param component a Component within a JFrame / Window / Popup Menu,
+     *                  or the JFrame or Window itself.
+     * @return the File, may be null if none selected.
+     */
+    @CheckForNull
+    public static File getFileCustom(@Nonnull JFileChooser fileChooser, @CheckForNull Component component){
         fileChooser.rescanCurrentDirectory();
-        int retVal = fileChooser.showDialog(null, Bundle.getMessage("MenuItemLoad"));  // NOI18N
+        int retVal = fileChooser.showDialog(component, Bundle.getMessage("MenuItemLoad"));  // NOI18N
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return null;  // give up if no file selected
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Open file: {}", fileChooser.getSelectedFile().getPath());  // NOI18N
-        }
+        log.debug("Open file: {}", fileChooser.getSelectedFile().getPath());
         return fileChooser.getSelectedFile();
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LoadXmlConfigAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadXmlConfigAction.class);
 
 }

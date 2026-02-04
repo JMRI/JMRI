@@ -4,7 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -38,6 +42,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
     protected String _decoderVersionID;
     protected String _id;
     protected String _nonSelectedItem = Bundle.getMessage("RosterEntryComboBoxNoSelection");
+    protected List<RosterEntry> _excludedItems = new ArrayList<RosterEntry>();
     protected RosterEntry[] _currentSelection = null;
 
     private final static Logger log = LoggerFactory.getLogger(RosterEntryComboBox.class);
@@ -186,7 +191,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
      * <p>
      * All other constructors call this constructor with various default
      * parameters.
-     * 
+     *
      * @param roster roster to use.
      * @param rosterGroup group to display.
      * @param roadName road name.
@@ -353,16 +358,18 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
             setSelectedItem(_nonSelectedItem);
         }
         for (RosterEntry r : l) {
-            if (rosterGroup != null && !rosterGroup.equals(Roster.ALLENTRIES)) {
-                if (r.getAttribute(Roster.getRosterGroupProperty(rosterGroup)) != null
-                        && r.getAttribute(Roster.getRosterGroupProperty(rosterGroup)).equals("yes")) {
+            if (!_excludedItems.contains(r)) {
+                if (rosterGroup != null && !rosterGroup.equals(Roster.ALLENTRIES)) {
+                    if (r.getAttribute(Roster.getRosterGroupProperty(rosterGroup)) != null &&
+                            r.getAttribute(Roster.getRosterGroupProperty(rosterGroup)).equals("yes")) {
+                        addItem(r);
+                    }
+                } else {
                     addItem(r);
                 }
-            } else {
-                addItem(r);
-            }
-            if (r.equals(selection)) {
-                this.setSelectedItem(r);
+                if (r.equals(selection)) {
+                    this.setSelectedItem(r);
+                }
             }
         }
         if (log.isDebugEnabled()) {
@@ -404,6 +411,26 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
         return _nonSelectedItem;
     }
 
+    /**
+     * Set a list of RosterEntrys to be excluded from  the combobox.
+     *
+     * @param excludedItems  a ListArray of items to be excluded, cannot be null.
+     */
+    public void setExcludeItems(@Nonnull List<RosterEntry> excludedItems) {
+        _excludedItems = excludedItems;
+        update();
+    }
+
+    /**
+     * Gets the current list of excluded items.
+     * If there are no items an empty list is returned The List cannot be modified.
+     *
+     * @return a ListArray  of currently excluded items.
+     */
+    public List<RosterEntry> excludedItems() {
+        return Collections.unmodifiableList(_excludedItems);
+    }
+
     @Override
     public RosterEntry[] getSelectedRosterEntries() {
         return getSelectedRosterEntries(false);
@@ -429,5 +456,7 @@ public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntr
                 _currentSelection,
                 this.getSelectedRosterEntries(true));
     }
+
+    // private final static Logger log = LoggerFactory.getLogger(RosterEntryComboBoxTest.class);
 
 }

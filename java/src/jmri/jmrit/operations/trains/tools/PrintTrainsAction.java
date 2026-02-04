@@ -4,11 +4,10 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import jmri.jmrit.operations.trains.TrainsTableFrame;
+import jmri.jmrit.operations.trains.gui.TrainsTableFrame;
 
 /**
  * Action to print a summary of each train in operations.
- * <p>
  * 
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2009, 2014, 2023

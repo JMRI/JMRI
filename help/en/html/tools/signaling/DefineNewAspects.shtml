@@ -14,15 +14,24 @@
 
     <div id="mainContent">
       <h1>JMRI: Defining Your Own Signaling System</h1>
-      This page describes how to define a new signaling system to JMRI.
+
+      <p>This page describes how to define a new signaling system to JMRI.</p>
+
       <p>We go through creating one from scratch, but it's often easier to copy and modify one of
-      the existing ones in the <a href="https://www.jmri.org/xml/signals/">xml/signals</a>
+      the existing ones in the JMRI install <a href="https://www.jmri.org/xml/signals/">xml/signals</a>
       directory.</p>
 
       <h2>Creating a New Signaling System</h2>
-      First, you need to manually create a new directory in the JMRI system file directory under
-      the "xml/signals" or in the user preferences directory "resources/signals" which will hold
-      your new signal definition. By convention, the name of this directory (e.g. "basic" or
+
+      <p>First, you need to manually create new directories to hold the new signal system.  Custom
+      signal systems are placed in the <strong>users file location</strong>.  The path to the custom
+      signal system is <strong>resources/signals/&lt;system name&gt;</strong>.</p>
+
+      <p>If the new system is intended to be included in the JMRI distribution, the path is
+      <strong>xml/signals</strong> in the JMRI install location.  Be aware that a JMRI update can result in the loss
+      of the changes.</p>
+
+      <p>By convention, the name of this directory (e.g. "basic" or
       "AAR-1946") provides the system name for your signal definition. Any Signal Masts you create
       that use your new signal system definition will include the signaling system's system name in
       their own (mast's) system name, so it's inconvenient to change the system name of the signal
@@ -32,7 +41,7 @@
       Note: do not use any special characters like ampersands (&amp;) or spaces in names for files
       and directories. JMRI runs on lots of computers, and filenames with spaces or special
       characters can cause problems for other people if you ever contribute your files back to JMRI
-      for distribution.
+      for distribution.</p>
       <p>Then, provide these files:</p>
 
       <ul>
@@ -276,17 +285,19 @@ entered, the corresponding <code>&lt;aspect&gt;</code> entry must be a valid
       right elements are in the right places, checks some of the contents, etc.</p>
 
       <h3>Amendments to an existing Signaling System</h3>
-      There are a number of signaling definitions already provided within JMRI which are located in
-      the "xml/signals" directory, some of these may generally meet your existing requirements
-      however some might require changes to suit the hardware that you use, or there are local
-      variation in operations, or simply that you do not have the facility to work to a fully
-      prototypical set of signals.
+
+      <p>There are a number of signaling definitions already provided within JMRI which are located
+      in the JMRI install "xml/signals" directory, some of these may generally meet your existing
+      requirements, however some might require changes to suit the hardware that you use, or there
+      are local variation in operations, or simply that you do not have the facility to work to a
+      fully prototypical set of signals.</p>
+
       <p>In this case it is possible to amend and create your own appearance files that will
       over-ride the JMRI provided ones. You will need to first create a sub-directory in the
-      resource directory located in the user preference area called "signals", you will then need
-      to create a sub-directory in there which has exactly the same name as the JMRI provided one.
-      From there any appearance files you create or copy into will either be added to the mast list
-      for that signaling system or overwrite the predefined JMRI Signal Mast.</p>
+      <strong>resource</strong> directory located in the user preference area called <strong>signals</strong>, you
+      will then need to create a sub-directory in there which has exactly the same name as the JMRI
+      provided one. From there any appearance files you create or copy into will either be added to
+      the mast list for that signaling system or overwrite the predefined JMRI Signal Mast.</p>
 
       <p>The advantage of placing new and amended signal mast Appearance files here is that when
       JMRI is updated, then these files will not get overwritten and lost!</p>

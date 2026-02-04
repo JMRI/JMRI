@@ -99,6 +99,12 @@
            "<code>git pull</code>"
            as usual.
 
+        <p>Finally, open JMRI, go to the <strong>Load and store</strong> pane
+           in the Preferences, and select the checkboxes to exclude dynamic content.
+           This omits various time and version information from the XML files that
+           JMRI writes, which will reduce un-necessary merge conflicts as you
+           work with those XML files.  Commit this change and "git push"
+           it to GitHub.
 
       <h3>Step 2 - Sharing To Another Computer</h3>
 
@@ -132,6 +138,7 @@
 
       <pre>
             git pull /path/to/USB/directory
+            
 </pre><!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

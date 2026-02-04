@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-engine-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"engine\"",
@@ -56,6 +56,13 @@
             ],
             "description": "name of train engine is assigned to, null if not assigned"
         },
+        "trainIconName": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "icon name of train engine is assigned to, null if not assigned"
+        },
         "destination": {
             "type": [
                 "object",
@@ -77,6 +84,10 @@
         "model": {
             "type": "string",
             "description": "The model of engine"
+        },
+        "hp": {
+            "type": "string",
+            "description": "The HP of engine"
         },
         "outOfService": {
             "type": "boolean",
@@ -111,24 +122,24 @@
             ],
             "description": "The timestamp of the last reported sighting of the tag"
         },
-        "carType": {
+        "type": {
             "type": "string",
             "description": "The engine type as displayed in manifests and switch lists"
         },
         "carSubType": {
             "type": [
-            	"string",
-            	"null"
-        	],
+                "string",
+                "null"
+            ],
             "description": "The engine sub type; not displayed in manifests and switch lists"
         },
         "weight": {
             "type": "number",
-            "description": "Weight of car in onces"
+            "description": "Weight of engine in tons"
         },
         "weightTons": {
-            "type": "number",
-            "description": "Weight of car in tons"
+            "type": "string",
+            "description": "Weight of engine in tons"
         }
     },
     "additionalProperties": false,
@@ -144,10 +155,11 @@
         "length",
         "location",
         "model",
+        "hp",
         "outOfService",
         "owner",
         "rfid",
-        "carType",
+        "type",
         "weight",
         "weightTons"
     ]

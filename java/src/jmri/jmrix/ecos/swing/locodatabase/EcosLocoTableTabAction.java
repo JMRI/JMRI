@@ -1,16 +1,17 @@
 package jmri.jmrix.ecos.swing.locodatabase;
 
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+
 import jmri.*;
 import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.beantable.AbstractTableTabAction;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 
-public class EcosLocoTableTabAction extends AbstractTableTabAction<NamedBean> {  // there is no specific subtype of NamedBean here, see EcosLocoAddressManager
+/**
+ * There is no specific subtype of NamedBean here, see EcosLocoAddressManager.
+ */
+public class EcosLocoTableTabAction extends AbstractTableTabAction<NamedBean> {
 
     public EcosLocoTableTabAction(String s) {
         super(s);
@@ -22,35 +23,24 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction<NamedBean> { 
 
     @Override
     protected void createModel() {
-        dataPanel = new JPanel();
         dataTabs = new JTabbedPane();
-        dataPanel.setLayout(new BorderLayout());
-        java.util.List<EcosSystemConnectionMemo> list = jmri.InstanceManager.getList(EcosSystemConnectionMemo.class);
+        java.util.List<EcosSystemConnectionMemo> list = InstanceManager.getList(EcosSystemConnectionMemo.class);
         for (EcosSystemConnectionMemo eMemo : list) {
             //We only want to add connections that have an active loco address manager
             if (eMemo.getLocoAddressManager() != null) {
-                TabbedTableItem<NamedBean> itemModel = new TabbedTableItem<>(eMemo.getUserName(), true, eMemo.getLocoAddressManager(), getNewTableAction(eMemo.getUserName(), eMemo));
+                TabbedTableItem<NamedBean> itemModel = new TabbedTableItem<>(
+                    eMemo.getUserName(), true, eMemo.getLocoAddressManager(),
+                    getNewTableAction(eMemo.getUserName(), eMemo));
                 tabbedTableArray.add(itemModel);
             }
         }
-        if (tabbedTableArray.size() == 1) {
-            EcosLocoTableAction table = (EcosLocoTableAction) tabbedTableArray.get(0).getAAClass();
+
+        for (int x = 0; x < tabbedTableArray.size(); x++) {
+            EcosLocoTableAction table = (EcosLocoTableAction) tabbedTableArray.get(x).getAAClass();
             table.addToPanel(this);
-            dataPanel.add(tabbedTableArray.get(0).getPanel(), BorderLayout.CENTER);
-        } else {
-            for (int x = 0; x < tabbedTableArray.size(); x++) {
-                EcosLocoTableAction table = (EcosLocoTableAction) tabbedTableArray.get(x).getAAClass();
-                table.addToPanel(this);
-                dataTabs.addTab(tabbedTableArray.get(x).getItemString(), null, tabbedTableArray.get(x).getPanel(), null);
-            }
-            dataTabs.addChangeListener(new ChangeListener() {
-                @Override
-                public void stateChanged(ChangeEvent evt) {
-                    setMenuBar(f);
-                }
-            });
-            dataPanel.add(dataTabs, BorderLayout.CENTER);
+            dataTabs.addTab(tabbedTableArray.get(x).getItemString(), tabbedTableArray.get(x).getPanel());
         }
+        dataTabs.addChangeListener((ChangeEvent evt) -> setMenuBar(f));
         init = true;
     }
 

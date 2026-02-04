@@ -50,8 +50,8 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
                     List<Element> elements = new ArrayList<>();
                     // The male socket may be embedded in other male sockets
                     MaleDigitalExpressionSocket a = expression;
+                    elements.add(storeMaleSocket(a));
                     while (!(a instanceof DefaultMaleDigitalExpressionSocket)) {
-                        elements.add(storeMaleSocket(a));
                         a = (MaleDigitalExpressionSocket) a.getObject();
                     }
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(a.getObject());

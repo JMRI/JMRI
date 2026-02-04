@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: StringIOs</title>
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>JMRI: StringIO Documentation</h1>
+      <span class="since">since 5.11.2</span>
+      A JMRI StringIO object usually connects to some ability of a hardware
+      system to get and put strings.
+      <h2>The StringIO Table</h2>
+      The <a href="../../package/jmri/jmrit/beantable/StringIOTable.shtml">StringIO Table</a> lets you
+      see what StringIOs have been defined,
+      what value they currently contain, and to send new values to the layout.
+      You can type a new string value into a
+      StringIO.
+      <h4>StringIO Table controls</h4>
+
+      <ul>
+        <li>Below the StringIO Table you'll find the <a href=
+        "../../package/jmri/jmrit/beantable/StringIOAddEdit.shtml">Add...</a> button to add new
+        StringIOs. The exact format of the hardware address depends on what type of
+        hardware is being addressed.  Consult the documentation for StringIOs for your
+        particular connection type.  Internal StringIOs, which don't connect to hardware,
+        use a free-form name:  Any alphanumeric characters except dollar sign ($)
+        colon (:) and quotes.
+        </li>
+      </ul>
+
+      <h2>Using StringIOs with LogixNG</h2>
+      <p>A LogixNG can test a StringIO for particular contents, and set the contents of a StringIO to
+      whatever string is needed.  See
+      <a href="logixng/reference/chapter5.shtml#string_values">Read string and set string</a>.  An
+      example IF statement is at <a href="logixng/reference/chapter6.shtml#sio_expression">
+      StringIO expression.</a></p>
+
+      <h3 id="addBlock">Saving StringIOs to disk</h3>
+
+      <p>StringIOs are kept in your <em>layout configuration</em>, along with Turnouts, Sensors,
+      Signal Heads, etc. To store this information on disk, allowing you to <a href=
+      "../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload it</a> next time you run JMRI,
+      see <a href="../apps/LoadStoreWork.shtml">Loading and Storing Your Work</a>.
+      </p>
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

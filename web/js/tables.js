@@ -1,7 +1,6 @@
 /*
  * TablesServlet specific JavaScript
  *
- * TODO: add filter to tables
  * TODO: add enum descriptions to schema and use them for converting states, and
  *         for calc'ing the "next" state
  * TODO: improve performance when client is sitting on page while lengthy list is loaded into JMRI
@@ -54,7 +53,7 @@ function rebuildTable(data) {
         data.forEach(function (item) { //loop thru rows in json
             var keep = true;
             $.each(params, function (index, value) { //compare against filter parms, skipping unless all match
-                if (displayCellValue(item.type, index, item.data[index]) != value) {
+                if (displayCellValue(item.type, index, item.data[index]).toLowerCase() != value.toLowerCase()) {
                     keep = false;
                     jmri.log("no match for " +index+"="+value+" != " + item.data[index])
                     return false;

@@ -92,6 +92,11 @@
           does not matter.
       </p>
       
+      <h4>netBiDiB</h4>
+      
+      <p><a href="https://bidib.org/transport/bidib_net_e.html">netBiDiB</a> allows the transport of the BiDiB protocol over a network connection (TCP). The connection is authorized once through the pairing process, so that a device cannot simply be controlled by someone else. To simplify configuration, BiDiB devices should announce themself in the network (mDNS/Bonjour) and can be selected in a combo box field in the JMRI settings for BiDiB. If this discovery is not available, automatic configuration can be switched off and the IP address of the device entered manually. The standard port number is 62875. JMRI supports a continuous keep-alive test (local ping) so that connection drops are quickly detected. Since not all BiDiB devices support this, it can be configured in the connection settings under "Keep-Alive."
+      </p>
+      
       <h4>BiDiB over TCP</h4>
       <p>
       In this case the hardware is not directly connected to JMRI, but JMRI connects to a TCP server which in turn connects to the hardware. This may be usefull if another program is used
@@ -105,7 +110,13 @@
       
       <h3>Settings</h3>
       
+      <p>Dialog for the serial interface:</p>
+      
       <img src="images/BiDiB_Connection.png" alt="BiDiB Connection" height="480">
+      
+      <p>Dialog for netBiDiB with discovery (Automatic Configuration):</p>
+      
+      <img src="images/BiDiB_netBiDiB_Connection.png" alt="netBiDiB Connection" height="525">
       
       <h4>BiDiB Naming</h4>
       <p>JMRI System Names generally consist of a system connection prefix Xn where X is the system connection letter and n is either empty or a number for multi-connections, followed by the type letter ("T" for turnout, "L" for lights, "S" for sensors and "R" for reporters (loco address feedback) and the system address.
@@ -322,8 +333,8 @@
       
       <a name="tools" id="tools"></a>
 
-      <h2>JMRI BiDiB Tools</h2><img src="BiDiBMenu.png"
-      width="100" height="100" align="right" alt="Menu">
+      <h2>JMRI BiDiB Tools</h2><img src="images/BiDiBMenu.png"
+      height="100" align="right" alt="Menu"></p>
 
       <p>When JMRI is connected to a layout via this system, an
       <b>BiDiB</b> menu is shown:</p>
@@ -332,6 +343,7 @@
         <li><b>Traffic Monitor</b><br>
         <li><b>Start/Stop BiDiB over TCP server</b><br>the server listens to port 62875 for incoming clients, forwards all messages from the client to the system connection and sends
         all response messages comming in from the connection to all connected clients. This is something like the opposite of the "BiDiB over TCP" system connection mentioned above.<br>
+        <li><b>netBiDiB Logon/Logoff</b> (netBiDiB only)<br>JMRI is logged on/off on the connected device. Logging off can be useful to allow another program (e.g. the BiDiB Wizard) access to the device. After logging off of the other program, JMRI can be logged on again.<br>
 <!--
         <a href="images/OpenLCBMonitor.png"><img src=
         "images/OpenLCBMonitor.png" alt="Monitor Pane" width="488"

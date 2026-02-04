@@ -4,6 +4,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
+import jmri.jmrit.dispatcher.ActiveTrain.TrainLengthUnits;
 import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 
 /**
@@ -26,12 +27,17 @@ public class TrainInfo {
 
     // instance variables for both manual and automatic operation
     private int version = 1;
+    private boolean dynamicTransit = false;
+    private boolean dynamicTransitCloseLoopIfPossible = false;
     private String transitName = "";
     private String transitId = "";
     private String trainName = "";
-    private String dccAddress = "";
+    private String rosterID = "";
+    private String trainUserName = "";
+    private String dccAddress = "3";
     private boolean trainInTransit = false;
     private String startBlockName = "";
+    private String viaBlockName = "";
     private String startBlockId = "";
     private int startBlockSeq = -1;
     private String destinationBlockName = "";
@@ -70,20 +76,37 @@ public class TrainInfo {
 
     // instance variables for automatic operation
     private float speedFactor = 1.0f;
-    private float maxSpeed = 0.6f;
+    private float maxSpeed = 1.0f;
+    // Maximum speed in scale km/h (0.0f means "use throttle % cap")
+    private float maxSpeedScaleKmh = 0.0f;
+    private float minReliableOperatingSpeed = 0.0f;
     private String rampRate = Bundle.getMessage("RAMP_NONE");
-    private TrainDetection trainDetection = TrainDetection.TRAINDETECTION_HEADONLY;
+    private TrainDetection trainDetection = TrainDetection.TRAINDETECTION_WHOLETRAIN;
     private boolean runInReverse = false;
     private boolean soundDecoder = false;
-    private float maxTrainLength = 200.0f;
+    private float maxTrainLength = 100.0f;
+    private float maxTrainLengthMeters = 30.0f;
+    private TrainLengthUnits trainLengthUnits = TrainLengthUnits.TRAINLENGTH_SCALEFEET; // units used to enter value
     private boolean useSpeedProfile = false;
     private boolean stopBySpeedProfile = false;
     private float stopBySpeedProfileAdjust = 1.0f;
+    private int fNumberLight = 0;
+    private int fNumberBell = 1;
+    private int fNumberHorn = 2;
 
-    private float waitTime = 1.0f; //required only by dispatcher system to pause train at beginning of transit (station)
+    private float waitTime = 3.0f; //seconds:  required only by dispatcher system to pause train at beginning of transit (station)
 
     private String blockName = ""; //required only by Dispatcher System to inhibit running of transit if this block is occupied
+    
+    private Float stopByDistanceMm = 0.0f;
+    private StopReference stopByDistanceRef = StopReference.HEAD; // default choice
+    
+    // Physics: additional train weight, stored as metric tonnes (t)
+    private float additionalTrainWeightMetricTonnes = 0.0f;
+    
+    private boolean useStopSensor = true;
 
+    public enum StopReference { HEAD, TAIL }
 
     //
     // Access methods for manual and automatic instance variables
@@ -111,12 +134,51 @@ public class TrainInfo {
         return transitId;
     }
 
+    public void setDynamicTransit(boolean b) {
+        dynamicTransit = b;
+    }
+
+    public boolean getDynamicTransit() {
+        return dynamicTransit;
+    }
+
+    public void setDynamicTransitCloseLoopIfPossible(boolean b) {
+        dynamicTransitCloseLoopIfPossible = b;
+    }
+
+    public boolean getDynamicTransitCloseLoopIfPossible() {
+        return dynamicTransitCloseLoopIfPossible;
+    }
     public void setTrainName(String s) {
         trainName = s;
     }
 
     public String getTrainName() {
         return trainName;
+    }
+
+    public void setRosterId(String s) {
+        rosterID = s;
+    }
+
+    public String getRosterId() {
+        return rosterID;
+    }
+    
+    public boolean getUseStopSensor() {
+        return useStopSensor;
+    }
+    
+    public void setUseStopSensor(boolean value) {
+        this.useStopSensor = value;
+    }
+
+    public void setTrainUserName(String s) {
+        trainUserName = s;
+    }
+
+    public String getTrainUserName() {
+        return trainUserName;
     }
 
     public void setDccAddress(String s) {
@@ -141,6 +203,14 @@ public class TrainInfo {
 
     public String getStartBlockName() {
         return startBlockName;
+    }
+
+    public void setViaBlockName(String s) {
+        viaBlockName = s;
+    }
+
+    public String getViaBlockName() {
+        return viaBlockName;
     }
 
     public void setStartBlockId(String s) {
@@ -169,6 +239,22 @@ public class TrainInfo {
 
     public void setDestinationBlockId(String s) {
         destinationBlockId = s;
+    }
+    
+    public void setStopByDistanceMm(float value) {
+        stopByDistanceMm = value;
+    }
+    
+    public void setStopByDistanceRef(StopReference value) {
+        stopByDistanceRef = value;
+    }
+    
+    public float getStopByDistanceMm() {
+        return stopByDistanceMm;
+    }
+    
+    public StopReference getStopByDistanceRef() {
+        return stopByDistanceRef;
     }
 
     public String getDestinationBlockId() {
@@ -525,6 +611,26 @@ public class TrainInfo {
     public Float getMaxSpeed() {
         return maxSpeed;
     }
+    
+    /**
+     * Sets the maximum speed in scale km/h. Use 0.0f to disable and fall back to throttle percent.
+     * @param kmh scale kilometers per hour
+     */
+    public void setMaxSpeedScaleKmh(float kmh) { maxSpeedScaleKmh = kmh; }
+
+    /**
+     * Gets the maximum speed in scale km/h. 0.0f means "disabled".
+     * @return scale km/h
+     */
+    public float getMaxSpeedScaleKmh() { return maxSpeedScaleKmh; }
+
+    public void setMinReliableOperatingSpeed(float f) {
+        minReliableOperatingSpeed = f;
+    }
+
+    public float getMinReliableOperatingSpeed() {
+        return minReliableOperatingSpeed;
+    }
 
     public void setRampRate(String s) {
         rampRate = s;
@@ -591,12 +697,120 @@ public class TrainInfo {
         return soundDecoder;
     }
 
+    /**
+     * Sets F number for the Light
+     * @param value F Number.
+     */
+    public void setFNumberLight(int value) {
+        fNumberLight = value;
+    }
+
+    /**
+     * returns the F number for the Light
+     * @return F Number
+     */
+    public int getFNumberLight() {
+        return fNumberLight;
+    }
+
+    /**
+     * Sets F number for the Bell
+     * @param value F Number.
+     */
+    public void setFNumberBell(int value) {
+        fNumberBell = value;
+    }
+
+    /**
+     * returns the F number for the Bell
+     * @return F Number
+     */
+    public int getFNumberBell() {
+        return fNumberBell;
+    }
+
+    /**
+     * Sets F number for the Horn
+     * @param value F Number.
+     */
+    public void setFNumberHorn(int value) {
+        fNumberHorn = value;
+    }
+
+    /**
+     * returns the F number for the Horn
+     * @return F Number
+     */
+    public int getFNumberHorn() {
+        return fNumberHorn;
+    }
+
+    /**
+     * @deprecated use {@link #setMaxTrainLengthScaleMeters}
+     *               or {@link #setMaxTrainLengthScaleMeters}
+     * @param f train length
+     */
+    @Deprecated (since="5.9.7",forRemoval=true)
     public void setMaxTrainLength(float f) {
         maxTrainLength = f;
     }
 
+    /**
+     * @deprecated use {@link #getMaxTrainLengthScaleMeters}
+     *              or {@link #getMaxTrainLengthScaleFeet}
+     * @return train length of in units of the writing application
+     */
+    @Deprecated (since="5.9.7",forRemoval=true)
     public float getMaxTrainLength() {
         return maxTrainLength;
+    }
+
+    /**
+     * Sets the max train length expected during run
+     * @param f scale Meters.
+     */
+    public void setMaxTrainLengthScaleMeters(float f) {
+        maxTrainLengthMeters = f;
+    }
+
+    /**
+     * Gets the Max train length expected during run
+     * @return scale meters
+     */
+    public float getMaxTrainLengthScaleMeters() {
+        return maxTrainLengthMeters;
+    }
+
+    /**
+     * Sets the max train length expected
+     * @param f scale Meters.
+     */
+    public void setMaxTrainLengthScaleFeet(float f) {
+        maxTrainLengthMeters = f / 3.28084f;
+    }
+
+    /**
+     * Gets the Max train length expected during route
+     * @return scale meters
+     */
+    public float getMaxTrainLengthScaleFeet() {
+        return maxTrainLengthMeters * 3.28084f;
+    }
+
+   /**
+     * Sets the gui units used to enter or display (The units are always held in scale meters)
+     * @param value {@link ActiveTrain.TrainLengthUnits}
+     */
+    public void setTrainLengthUnits(TrainLengthUnits value) {
+        trainLengthUnits = value;
+    }
+
+    /**
+     * Get the GUI units entered (The data is held in scale Meters)
+     * @return  {@link ActiveTrain.TrainLengthUnits}
+     */
+    public TrainLengthUnits getTrainLengthUnits() {
+        return trainLengthUnits;
     }
 
     public void setWaitTime(float f) { waitTime = f; }
@@ -609,4 +823,25 @@ public class TrainInfo {
 
     public String getBlockName() { return blockName; }
 
+    // --- Physics additional weight (metric tonnes) ---
+    public void setAdditionalTrainWeightMetricTonnes(float value) { additionalTrainWeightMetricTonnes = value; }
+    public float getAdditionalTrainWeightMetricTonnes() { return additionalTrainWeightMetricTonnes; }
+
+     // --- Physics rolling resistance coefficient (dimensionless), defaults ~0.002
+     private float rollingResistanceCoeff = 0.002f;
+     public void setRollingResistanceCoeff(float value) { rollingResistanceCoeff = Math.max(0.0f, value); }
+     public float getRollingResistanceCoeff() { return rollingResistanceCoeff; }
+     
+
+     // --- Physics: driver's applied power/regulator during acceleration (0.0..1.0); default 1.0 (=100%)
+     private float driverPowerPercent = 1.0f;
+     /** Sets the driver's applied power/regulator during acceleration (0.0..1.0). */
+     public void setDriverPowerPercent(float value) {
+         // Clamp 0..1
+         driverPowerPercent = (value < 0.0f) ? 0.0f : ((value > 1.0f) ? 1.0f : value);
+     }
+     /** Gets the driver's applied power/regulator during acceleration (0.0..1.0). */
+     public float getDriverPowerPercent() { return driverPowerPercent; }
 }
+
+

@@ -2,7 +2,6 @@ package jmri.jmrix.sproggen5;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,27 +12,28 @@ import org.junit.jupiter.api.*;
 public class SprogGen5ConnectionTypeListTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testSprogGen5ConnectionTypeListConstructor(){
        SprogGen5ConnectionTypeList ct = new SprogGen5ConnectionTypeList();
-       Assert.assertNotNull(ct);
+       Assertions.assertNotNull(ct);
    }
 
    @Test
-   public void ManfacturerString(){
+   public void testManfacturerString(){
        SprogGen5ConnectionTypeList ct = new SprogGen5ConnectionTypeList();
-       Assert.assertEquals("Manufacturers",new String[]{"SPROG DCC Generation 5"}, ct.getManufacturers());
+       Assertions.assertArrayEquals(new String[]{"SPROG DCC Generation 5"}, ct.getManufacturers(), "Manufacturers");
    }
 
    @Test
-   public void ProtocolClassList(){
+   public void testProtocolClassList(){
        SprogGen5ConnectionTypeList ct = new SprogGen5ConnectionTypeList();
-       Assert.assertEquals("Protocol Class List", new String[]{
+       Assertions.assertArrayEquals( new String[]{
             "jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.CanisbConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.Sprog3PlusConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.PiSprog3PlusConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.PiSprog3v2ConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.PiSprog3ConnectionConfig"},
-            ct.getAvailableProtocolClasses());
+            ct.getAvailableProtocolClasses(),
+            "Protocol Class List");
    }
 
     @BeforeEach

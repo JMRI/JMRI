@@ -12,7 +12,7 @@ import jmri.managers.DefaultProgrammerManager;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Ken Cameron Copyright (C) 2014
  * @author Kevin Dickerson Copyright (C) 2014
- * 
+ *
  */
 public class MrcProgrammerManager extends DefaultProgrammerManager {
 
@@ -42,12 +42,12 @@ public class MrcProgrammerManager extends DefaultProgrammerManager {
     }
 
     @Override
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new MrcOpsModeProgrammer(memo, pAddress, pLongAddress);
     }
 
     @Override
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }

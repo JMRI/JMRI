@@ -182,7 +182,7 @@ public class CbusNodeBackupManager {
                 // UserName
                 details = root.getChild("UserName");  // NOI18N
                 if (details != null && (!details.getValue().isEmpty())) {
-                    ((CbusNode) _node).setUserName(details.getValue());
+                    _node.setUserName(details.getValue());
                 }
 
                 // Module Type Name
@@ -347,8 +347,9 @@ public class CbusNodeBackupManager {
             org.jdom2.Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance")); // NOI18N
         root.setAttribute("NodeNum", ""+_node.getNodeNumber() );  // NOI18N
 
-        if (!((CbusNode) _node).getUserName().isEmpty()) {
-            root.addContent(new Element("UserName").addContent(((CbusNode) _node).getUserName() )); // NOI18N
+        String uName = _node.getUserName();
+        if (!uName.isEmpty()) {
+            root.addContent(new Element("UserName").addContent( uName ));
         }
         if (!((CbusNode) _node).getNodeNameFromName().isEmpty()) {
             root.addContent(new Element("ModuleTypeName").addContent(((CbusNode) _node).getNodeNameFromName() )); // NOI18N

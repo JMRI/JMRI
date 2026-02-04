@@ -64,8 +64,8 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
 
         URL url;
         try {
-            url = new URL(urlname);
-        } catch (MalformedURLException e){
+            url = new URI(urlname).toURL();
+        } catch (MalformedURLException | URISyntaxException e){
             log.error("Unexpected failure in URL parsing", e);
             return;
         }

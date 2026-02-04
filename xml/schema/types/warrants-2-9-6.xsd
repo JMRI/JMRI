@@ -21,27 +21,27 @@
           Define the XML structure for storing the contents of a WarrantManager implementation.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">mri.jmrit.logix.configurexml.WarrantManagerXml</jmri:usingclass>
+          <jmri:usingclass configurexml="true">mri.jmrit.logix.configurexml.WarrantManagerXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
         <xs:element name="nxparams" minOccurs="0" maxOccurs="1">
-         	<xs:complexType>
-         	  <xs:sequence>
-        		<xs:element name="scale" minOccurs="0" maxOccurs="1" type="xs:decimal">
-        		</xs:element>
-        		<xs:element name="maxspeed" minOccurs="0" maxOccurs="1" type="xs:decimal">
-        		</xs:element>
-        		<xs:element name="minspeed" minOccurs="0" maxOccurs="1" type="xs:decimal">
-        		</xs:element>
-        		<xs:element name="timeinterval" minOccurs="0" maxOccurs="1" type="xs:decimal">
-        		</xs:element>
-        		<xs:element name="numsteps" minOccurs="0" maxOccurs="1" type="xs:nonNegativeInteger">
-        		</xs:element>
-        		<xs:element name="haltstart" minOccurs="0" maxOccurs="1" type="yesNoType">
-        		</xs:element>
-        	  </xs:sequence>	
-          	</xs:complexType>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="scale" minOccurs="0" maxOccurs="1" type="xs:decimal">
+              </xs:element>
+              <xs:element name="maxspeed" minOccurs="0" maxOccurs="1" type="xs:decimal">
+              </xs:element>
+              <xs:element name="minspeed" minOccurs="0" maxOccurs="1" type="xs:decimal">
+              </xs:element>
+              <xs:element name="timeinterval" minOccurs="0" maxOccurs="1" type="xs:decimal">
+              </xs:element>
+              <xs:element name="numsteps" minOccurs="0" maxOccurs="1" type="xs:nonNegativeInteger">
+              </xs:element>
+              <xs:element name="haltstart" minOccurs="0" maxOccurs="1" type="yesNoType">
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
         </xs:element>
         <xs:element name="warrant" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
@@ -103,19 +103,20 @@
               <xs:element name="throttleSetting" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
                   <xs:sequence>
-               	    <xs:element name="command" minOccurs="0" maxOccurs="1">
+                    <xs:element name="command" minOccurs="0" maxOccurs="1">
                       <xs:complexType>
                         <xs:attribute name="commandType" type="xs:string" use="required"/>
                         <xs:attribute name="fKey" type="xs:integer"/>
                       </xs:complexType>
-              	    </xs:element>
-              	    <xs:element name="commandValue" minOccurs="0" maxOccurs="1">
+                    </xs:element>
+                    <xs:element name="commandValue" minOccurs="0" maxOccurs="1">
                       <xs:complexType>
                         <xs:attribute name="valueType" type="xs:nonNegativeInteger" use="required"/>
                         <xs:attribute name="speedMode" type="xs:string"/>
                         <xs:attribute name="floatValue" type="xs:float"/>
+                        <xs:attribute name="textValue" type="xs:string"/>
                       </xs:complexType>
-              	    </xs:element>
+                    </xs:element>
                   </xs:sequence>
                   <xs:attribute name="elapsedTime" type="xs:integer" use="required"></xs:attribute>
                   <xs:attribute name="beanName" type="xs:string" use="required"></xs:attribute>
@@ -151,7 +152,6 @@
             <xs:attribute name="forward" type="trueFalseType"></xs:attribute>
           </xs:complexType>
         </xs:element>
-            
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
     </xs:complexType>

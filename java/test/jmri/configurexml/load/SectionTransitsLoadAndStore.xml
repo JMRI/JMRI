@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-5-5-5.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
+  <jmriversion>
+    <major>5</major>
+    <minor>11</minor>
+    <test>3</test>
+    <modifier>-ClubBase-2024-202502040834</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>IS0</systemName>
+      <userName>S0</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS1</systemName>
+      <userName>S1</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2</systemName>
+      <userName>S2</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3</systemName>
+      <userName>S3</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4</systemName>
+      <userName>S4</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS5</systemName>
+      <userName>S5</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6</systemName>
+      <userName>S6</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS7</systemName>
+      <userName>S7</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8</systemName>
+      <userName>S8</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS9</systemName>
+      <userName>S9</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10</systemName>
+      <userName>S10</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS11</systemName>
+      <userName>S11</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS12</systemName>
+      <userName>S12</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS13</systemName>
+      <userName>S13</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS14</systemName>
+      <userName>S14</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS15</systemName>
+      <userName>S15</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS16</systemName>
+      <userName>S16</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS17</systemName>
+      <userName>S17</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS18</systemName>
+      <userName>S18</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS19</systemName>
+      <userName>S19</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT11</systemName>
+      <comment>SignalHead:IH1:Green</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT12</systemName>
+      <comment>SignalHead:IH1:Yellow</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT13</systemName>
+      <comment>SignalHead:IH1:Red</comment>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="3:49 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="BBABR">
+      <systemName>IMLayoutBaseName</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.TripleTurnoutSignalHeadXml">
+      <systemName>IH1</systemName>
+      <userName>SIGHEAD1</userName>
+      <turnoutname defines="green">IT11</turnoutname>
+      <turnoutname defines="yellow">IT12</turnoutname>
+      <turnoutname defines="red">IT13</turnoutname>
+    </signalhead>
+  </signalheads>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:CCOR-1967:SL-3-high($0001)</systemName>
+      <userName>SigMast1</userName>
+      <unlit allowed="no" />
+      <disabledAspects>
+        <disabledAspect>Advance Approach</disabledAspect>
+        <disabledAspect>Advance Approach Alt</disabledAspect>
+        <disabledAspect>Approach Diverging</disabledAspect>
+        <disabledAspect>Diverging Clear</disabledAspect>
+        <disabledAspect>Diverging Clear Alt</disabledAspect>
+        <disabledAspect>Diverging Advance Approach</disabledAspect>
+        <disabledAspect>Diverging Approach</disabledAspect>
+        <disabledAspect>Restricting</disabledAspect>
+        <disabledAspect>Restricting Lunar</disabledAspect>
+        <disabledAspect>Restricting Lunar Div</disabledAspect>
+        <disabledAspect>Flashing Stop and Proceed</disabledAspect>
+        <disabledAspect>Flashing Stop and Proceed Div</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+  </signalmasts>
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB:AUTO:0002">
+      <systemName>IB:AUTO:0002</systemName>
+      <userName>B1</userName>
+    </block>
+    <block systemName="IB:AUTO:0003">
+      <systemName>IB:AUTO:0003</systemName>
+      <userName>B2</userName>
+    </block>
+    <block systemName="IB:AUTO:0004">
+      <systemName>IB:AUTO:0004</systemName>
+      <userName>B3</userName>
+    </block>
+    <block systemName="IB:AUTO:0002" length="1000.0" curve="0">
+      <systemName>IB:AUTO:0002</systemName>
+      <userName>B1</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S1</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0003" />
+    </block>
+    <block systemName="IB:AUTO:0003" length="2000.0" curve="0">
+      <systemName>IB:AUTO:0003</systemName>
+      <userName>B2</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S2</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0002" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0004" />
+    </block>
+    <block systemName="IB:AUTO:0004" length="3000.0" curve="0">
+      <systemName>IB:AUTO:0004</systemName>
+      <userName>B3</userName>
+      <permissive>no</permissive>
+      <occupancysensor>S3</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0003" />
+    </block>
+  </blocks>
+  <sections class="jmri.configurexml.SectionManagerXml">
+    <section systemName="IY:AUTO:0001" userName="SEC1" creationtype="userdefined" fstopsensorname="S6" rstopsensorname="S7" fsensorname="S4" rsensorname="S5">
+      <systemName>IY:AUTO:0001</systemName>
+      <userName>SEC1</userName>
+      <blockentry sName="IB:AUTO:0002" order="0" />
+      <entrypoint fromblock="IB:AUTO:0003" toblock="IB:AUTO:0002" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0003" userName="SEC2" creationtype="userdefined" fstopsensorname="S9" rstopsensorname="S10" fsensorname="S7" rsensorname="S9">
+      <systemName>IY:AUTO:0003</systemName>
+      <userName>SEC2</userName>
+      <blockentry sName="IB:AUTO:0003" order="0" />
+      <entrypoint fromblock="IB:AUTO:0002" toblock="IB:AUTO:0003" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB:AUTO:0004" toblock="IB:AUTO:0003" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0005" userName="SEC3" creationtype="userdefined" fstopsensorname="S13" rstopsensorname="S14" fsensorname="S11" rsensorname="S12">
+      <systemName>IY:AUTO:0005</systemName>
+      <userName>SEC3</userName>
+      <blockentry sName="IB:AUTO:0004" order="0" />
+      <entrypoint fromblock="IB:AUTO:0003" toblock="IB:AUTO:0004" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+  </sections>
+  <transits class="jmri.configurexml.TransitManagerXml">
+    <transit systemName="IZ:AUTO:0001" userName="TRAN1">
+      <systemName>IZ:AUTO:0001</systemName>
+      <userName>TRAN1</userName>
+      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="">
+        <transitsectionaction whencode="1" whatcode="1" whendata="0" whenstring="" whatdata1="1" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="2" whendata="1000" whenstring="" whatdata1="11" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="3" whendata="2000" whenstring="" whatdata1="17" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="4" whendata="3000" whenstring="" whatdata1="19" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="5" whendata="4000" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS19" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="6" whendata="5000" whenstring="" whatdata1="0" whatdata2="0" whatstring="On" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="6" whendata="6000" whenstring="" whatdata1="0" whatdata2="0" whatstring="Off" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="7" whendata="7000" whenstring="" whatdata1="0" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="8" whendata="8000" whenstring="" whatdata1="0" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="9" whendata="9000" whenstring="" whatdata1="101" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="10" whendata="1000" whenstring="" whatdata1="211" whatdata2="307" whatstring="lsl" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="11" whendata="1100" whenstring="" whatdata1="3" whatdata2="0" whatstring="On" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="11" whendata="1200" whenstring="" whatdata1="5" whatdata2="0" whatstring="Off" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="12" whendata="1300" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS18" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="13" whendata="1400" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS17" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="14" whendata="0" whenstring="" whatdata1="0" whatdata2="0" whatstring="IF$vsm:CCOR-1967:SL-3-high($0001)" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="15" whendata="0" whenstring="" whatdata1="0" whatdata2="0" whatstring="IF$vsm:CCOR-1967:SL-3-high($0001)" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="16" whendata="0" whenstring="" whatdata1="0" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="0" whatcode="18" whendata="0" whenstring="" whatdata1="0" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="1" whatcode="19" whendata="0" whenstring="" whatdata1="0" whatdata2="1" whatstring="0.xml" whatstring2="11-CP1413-FWD" />
+        <transitsectionaction whencode="0" whatcode="20" whendata="0" whenstring="" whatdata1="0" whatdata2="0" whatstring="" whatstring2="11-CP1413-FWD" />
+      </transitsection>
+      <transitsection sectionname="IY:AUTO:0003" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="">
+        <transitsectionaction whencode="2" whatcode="1" whendata="0" whenstring="" whatdata1="1" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="2" whatcode="2" whendata="1000" whenstring="" whatdata1="11" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="2" whatcode="3" whendata="2000" whenstring="" whatdata1="17" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="2" whatcode="4" whendata="3000" whenstring="" whatdata1="19" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="2" whatcode="5" whendata="4000" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS19" whatstring2="" />
+        <transitsectionaction whencode="2" whatcode="6" whendata="5000" whenstring="" whatdata1="0" whatdata2="0" whatstring="On" whatstring2="" />
+        <transitsectionaction whencode="2" whatcode="6" whendata="6000" whenstring="" whatdata1="0" whatdata2="0" whatstring="Off" whatstring2="" />
+        <transitsectionaction whencode="2" whatcode="7" whendata="7000" whenstring="" whatdata1="0" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="2" whatcode="8" whendata="8000" whenstring="" whatdata1="0" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="2" whatcode="9" whendata="9000" whenstring="" whatdata1="101" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="2" whatcode="10" whendata="1000" whenstring="" whatdata1="211" whatdata2="307" whatstring="lsl" whatstring2="" />
+        <transitsectionaction whencode="2" whatcode="11" whendata="1100" whenstring="" whatdata1="3" whatdata2="0" whatstring="On" whatstring2="" />
+        <transitsectionaction whencode="2" whatcode="11" whendata="1200" whenstring="" whatdata1="5" whatdata2="0" whatstring="Off" whatstring2="" />
+        <transitsectionaction whencode="2" whatcode="12" whendata="1300" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS18" whatstring2="" />
+        <transitsectionaction whencode="2" whatcode="13" whendata="1400" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS17" whatstring2="" />
+      </transitsection>
+      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="">
+        <transitsectionaction whencode="3" whatcode="1" whendata="0" whenstring="" whatdata1="1" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="3" whatcode="2" whendata="1000" whenstring="" whatdata1="11" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="3" whatcode="3" whendata="2000" whenstring="" whatdata1="17" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="3" whatcode="4" whendata="3000" whenstring="" whatdata1="19" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="3" whatcode="5" whendata="4000" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS19" whatstring2="" />
+        <transitsectionaction whencode="3" whatcode="6" whendata="5000" whenstring="" whatdata1="0" whatdata2="0" whatstring="On" whatstring2="" />
+        <transitsectionaction whencode="3" whatcode="6" whendata="6000" whenstring="" whatdata1="0" whatdata2="0" whatstring="Off" whatstring2="" />
+        <transitsectionaction whencode="3" whatcode="7" whendata="7000" whenstring="" whatdata1="0" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="3" whatcode="8" whendata="8000" whenstring="" whatdata1="0" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="3" whatcode="9" whendata="9000" whenstring="" whatdata1="101" whatdata2="0" whatstring="" whatstring2="" />
+        <transitsectionaction whencode="3" whatcode="10" whendata="1000" whenstring="" whatdata1="211" whatdata2="307" whatstring="lsl" whatstring2="" />
+        <transitsectionaction whencode="3" whatcode="11" whendata="1100" whenstring="" whatdata1="3" whatdata2="0" whatstring="On" whatstring2="" />
+        <transitsectionaction whencode="3" whatcode="11" whendata="1200" whenstring="" whatdata1="5" whatdata2="0" whatstring="Off" whatstring2="" />
+        <transitsectionaction whencode="3" whatcode="12" whendata="1300" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS18" whatstring2="" />
+        <transitsectionaction whencode="3" whatcode="13" whendata="1400" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS17" whatstring2="" />
+      </transitsection>
+    </transit>
+  </transits>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Feb 09 15:06:12 EST 2025" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Feb 09 15:48:21 EST 2025</date>
+      <filename>PanelPro (v5.11.3-ClubBase-2024-202502040834)</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Feb 09 15:48:44 EST 2025</date>
+      <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/SectionTransitsLoadAndStore.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Sun Feb 09 15:06:11 EST 2025</date>
+          <filename>PanelPro (v5.11.3-ClubBase-2024-202502040834)</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sun Feb 09 15:30:17 EST 2025</date>
+          <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/SectionTransitsLoadAndStore.xml</filename>
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Feb 09 15:49:27 EST 2025</date>
+      <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/SectionTransitsLoadAndStore.xml</filename>
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 5.11.3-ClubBase-2024-202502040834+Rdc7a8cb on Sun Feb 09 15:49:27 EST 2025-->
+</layout-config>

@@ -25,13 +25,15 @@ import org.slf4j.LoggerFactory;
  * <li>Harman: (mfgID == 98) CV112 is high byte, CV113 is low byte of ID</li>
  * <li>Hornby: (mfgID == 48) <ul>
  *     <li>If CV7 = 254, this is a HN7000 series decoder. The ID is in 
- *         CV47(MSB), CV48, CV49 (LSB)
+ *         CV200(MSB), CV201 (LSB)
  *     <li>Otherwise CV159 is the ID. If (CV159 == 143), CV159 is
  *         low byte of ID and CV158 is high byte of ID. C159 is not present in some
  *         models, in which case no "productID" can be determined. (This code uses
  *         {@link #setOptionalCv(boolean flag) setOptionalCv()} and
  *         {@link #isOptionalCv() isOptionalCv()} as documented below.)</li>
  *      </ul>
+ * <li>PIKO: (mfgID = 168) write {@literal 0=>CV31}, write {@literal 255=>CV32},
+ * then read CV315, CV316, CV317 and do a decimal concatenation
  * <li>QSI: (mfgID == 113) write {@literal 254=>CV49}, write {@literal 4=>CV50},
  *  then CV56 is high byte, write {@literal 5=>CV50}, then CV56 is low byte of
  *  ID</li>
@@ -110,6 +112,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         ESU(151),
         HARMAN(98),
         HORNBY(48),
+        PIKO(168),
         QSI(113),
         SOUNDTRAXX(141),
         TCS(153),
@@ -155,6 +158,10 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         modelID = value;
         if (mfgID == null) return true; // done
         switch (mfgID) {
+        case PIKO:
+            statusUpdate("Set PI for Read Product ID High Byte");
+            writeCV("31", 0);
+            return false;
         case QSI:
             statusUpdate("Set PI for Read Product ID High Byte");
             writeCV("49", 254);
@@ -165,8 +172,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             return false;
         case HORNBY:
             if (modelID == 254) { // HN7000
-                statusUpdate("Read decoder ID CV 47");
-                readCV("47");
+                statusUpdate("Read Product ID High Byte CV 200");
+               
+                readCV("200");
                 return false;
             } else { // other than HN7000
                 statusUpdate("Read optional decoder ID CV 159");
@@ -219,6 +227,10 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     @Override
     public boolean test4(int value) {
         switch (mfgID) {
+        case PIKO:
+            statusUpdate("Set SI for Read Product ID High Byte");
+            writeCV("32", 255);
+            return false;
         case QSI:
             statusUpdate("Set SI for Read Product ID High Byte");
             writeCV("50", 4);
@@ -236,9 +248,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             }
         case HORNBY:
             if (modelID == 254) { // HN7000
-                productIDhighest = value;
-                statusUpdate("Read decoder ID CV 48");
-                readCV("48");
+                productIDhigh = value;
+                statusUpdate("ProductID High - " + productIDhigh + " - reading CV201");
+                readCV("201");
                 return false;
             } else { // other than HN7000
                 if (isOptionalCv()) {
@@ -301,16 +313,20 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     @Override
     public boolean test5(int value) {
         switch (mfgID) {
+        case PIKO:
+            statusUpdate("Read Product ID Highest Byte");
+            readCV("315");
+            return false;
         case QSI:
             statusUpdate("Read Product ID High Byte");
             readCV("56");
             return false;
         case HORNBY:
             if (modelID == 254) { // HN7000
-                productIDhigh = value;
-                statusUpdate("Read decoder ID CV 49");
-                readCV("49");
-                return false;
+                productIDlow = value;
+                productID = productIDlow + (productIDhigh * 256);
+                statusUpdate("ProductID is " + productID);
+                return true;
             } else { // other than HN7000
                 productIDhigh = value;
                 productID = (productIDhigh << 8) | productIDlow;
@@ -354,6 +370,11 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     @Override
     public boolean test6(int value) {
         switch (mfgID) {
+        case PIKO:
+            productID = value;
+            statusUpdate("Read Product ID Middle Byte");
+            readCV("316");
+            return false;
         case QSI:
             productIDhigh = value;
             statusUpdate("Set SI for Read Product ID Low Byte");
@@ -396,6 +417,11 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     @Override
     public boolean test7(int value) {
         switch (mfgID) {
+        case PIKO:
+            productID = productID*100+value;
+            statusUpdate("Read Product ID Lowest Byte");
+            readCV("317");
+            return false;
         case QSI:
             statusUpdate("Read Product ID Low Byte");
             readCV("56");
@@ -432,6 +458,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     @Override
     public boolean test8(int value) {
         switch (mfgID) {
+        case PIKO:
+            productID = productID*100+value;
+            return true;
         case QSI:
             productIDlow = value;
             productID = (productIDhigh * 256) + productIDlow;

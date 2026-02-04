@@ -19,7 +19,7 @@ public class WarrantManagerThrowExceptionScaffold extends WarrantManager {
     
     /** {@inheritDoc} */
     @Override
-    public Warrant createNewWarrant(String systemName, String userName, boolean SCWa, long TTP) {
+    public Warrant createNewWarrant(String systemName, String userName, boolean sCWa, long tTP) {
         throw new IllegalArgumentException("Illegal argument");
     }
     

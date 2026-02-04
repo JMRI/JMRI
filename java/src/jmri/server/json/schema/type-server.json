@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-type-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"type\"",
@@ -18,5 +18,9 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "client", "server"]
+    "required": [
+        "name",
+        "client",
+        "server"
+    ]
 }

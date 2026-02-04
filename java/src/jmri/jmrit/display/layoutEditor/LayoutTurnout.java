@@ -1223,10 +1223,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * to locate and set the turnout associated with this is LayoutTurnout.
      * This is different from {@link #getTurnout()}, which returns an
      * actual Turnout reference or null.
-     * @param tName provide empty string for none; never null
+     * @param name provide empty string for none; never null
      */
-    public void setTurnout(@Nonnull String tName) {
-        assert tName != null;
+    public void setTurnout(@Nonnull String name) {
+        String tName = Objects.requireNonNull(name);
         if (namedTurnout != null) {
             deactivateTurnout();
         }
@@ -1263,10 +1263,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * @param tName provide empty string for none (not null)
+     * @param name provide empty string for none (not null)
      */
-    public void setSecondTurnout(@Nonnull String tName) {
-        assert tName != null;
+    public void setSecondTurnout(@Nonnull String name) {
+        String tName = Objects.requireNonNull(name);
         if (tName.equals(secondTurnoutName)) { // haven't changed anything
             return;
         }

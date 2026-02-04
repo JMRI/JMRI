@@ -1,13 +1,16 @@
 package jmri.jmrit.logixng.actions;
 
-import java.util.Locale;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.Assert;
-import org.junit.Test;
+import java.util.Locale;
 
 import jmri.NamedBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.DigitalBooleanActionBean;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Base class for classes that tests DigitalBooleanAction
@@ -18,36 +21,32 @@ public abstract class AbstractDigitalBooleanActionTestBase extends AbstractBaseT
 
     @Test
     public void testBadSystemName() {
-        boolean hasThrown = false;
-        try {
+        IllegalArgumentException e = assertThrows( IllegalArgumentException.class, () -> {
             // Create a bean with bad system name. This must throw an exception
             NamedBean bean = createNewBean("IQ111");
             // We should never get here.
-            Assert.assertNotNull("Bean is not null", bean);
-        } catch (IllegalArgumentException e) {
-            Assert.assertEquals("Exception is correct", "system name is not valid: IQ111", e.getMessage());
-            hasThrown = true;
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+            fail("Bean is not null " +  bean);
+        }, "Exception is thrown");
+        assertEquals( "system name is not valid: IQ111", e.getMessage(), "Exception is correct");
     }
 
     @Test
     public void testBundle() {
-        Assert.assertEquals("strings are equal", "Logix Action", Bundle.getMessage("DigitalBooleanLogixAction_Short"));
+        assertEquals( "Logix Action", Bundle.getMessage("DigitalBooleanLogixAction_Short"), "strings are equal");
 //        Assert.assertEquals("strings are equal", "Set memory IM1 to null", Bundle.getMessage("DigitalBooleanLogixAction_Long_Change", "IM1"));
-        Assert.assertEquals("strings are equal", "Logix Action", Bundle.getMessage(Locale.CANADA, "DigitalBooleanLogixAction_Short"));
+        assertEquals( "Logix Action", Bundle.getMessage(Locale.CANADA, "DigitalBooleanLogixAction_Short"), "strings are equal");
 //        Assert.assertEquals("strings are equal", "Set memory IM1 to null", Bundle.getMessage(Locale.CANADA, "DigitalBooleanLogixAction_Long_Change", "IM1"));
 
         // The bundle in jmri.jmrit.logixng.actions doesn't
         // currently has a property that uses arguments so test a property
         // in jmri.jmrit.logixng bundle instead.
-        Assert.assertEquals("strings are equal", "Test Bundle BB AA CC", Bundle.getMessage("TestBundle", "AA", "BB", "CC"));
-        Assert.assertEquals("strings are equal", "Test Bundle BB AA CC", Bundle.getMessage(Locale.CANADA, "TestBundle", "AA", "BB", "CC"));
+        assertEquals( "Test Bundle BB AA CC", Bundle.getMessage("TestBundle", "AA", "BB", "CC"), "strings are equal");
+        assertEquals( "Test Bundle BB AA CC", Bundle.getMessage(Locale.CANADA, "TestBundle", "AA", "BB", "CC"), "strings are equal");
     }
 
     @Test
     public void testGetBeanType() {
-        Assert.assertTrue("String matches", "Digital boolean action".equals(((DigitalBooleanActionBean)_base).getBeanType()));
+        assertEquals( "Digital boolean action", ((DigitalBooleanActionBean)_base).getBeanType(), "String matches");
     }
 
 }

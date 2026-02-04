@@ -189,6 +189,7 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup1() {
     }
 
@@ -197,6 +198,7 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup2() {
     }
 
@@ -205,6 +207,7 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup3() {
     }
 
@@ -217,6 +220,7 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo = new EasyDccSystemConnectionMemo(tc);
         tm = new EasyDccThrottleManager(memo);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        memo.store(tm, jmri.ThrottleManager.class);
         instance = new EasyDccThrottle(memo, new jmri.DccLocoAddress(100, true));
     }
 
@@ -228,6 +232,7 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         }
         tc.terminateThreads();
         tc = null;
+        memo.dispose();
         memo = null;
         JUnitUtil.tearDown();
     }

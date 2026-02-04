@@ -1,6 +1,5 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
@@ -9,15 +8,14 @@ import javax.swing.JPanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.junit.Assume;
+
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test PaneProg with qualified variables.
@@ -28,64 +26,65 @@ public class QualifiedVarTest {
 
     // show me a specially-created frame
     @Test
-    public void testFrame() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testFrame() {
 
-        // run all following on Swing thread
-        javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
+        setupDoc();
+        DecoderFile df = new DecoderFile("NMRA", "", "NMRA standard CV definitions", "0", "255",
+                "NMRA standard CV definitions", "0NMRA.xml", 16, 3, root);
+        var progDebug = new jmri.progdebugger.ProgDebugger();
+        PaneProgFrame p = new PaneProgFrame(df, new RosterEntry(),
+                "test qualified var", "programmers/Basic.xml",
+                progDebug, false) {
+            // dummy implementations
             @Override
-            public void run() {
-                setupDoc();
-                PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
-                        "test qualified var", "programmers/Basic.xml",
-                        new jmri.progdebugger.ProgDebugger(), false) {
-                    // dummy implementations
-                    @Override
-                    protected JPanel getModePane() {
-                        return null;
-                    }
-                    // prevent this test from prompting to save file
-                    @Override
-                    protected boolean checkDirtyFile() {
-                        return false;
-                    }
-                };
+            protected JPanel getModePane() {
+                return null;
+            }
+            // prevent this test from prompting to save file
+            @Override
+            protected boolean checkDirtyFile() {
+                return false;
+            }
+        };
+        
+        JUnitUtil.waitFor(()->{return p.threadCount.get() == 0;}, "PaneProgFrame threads done");
 
-                // get the sample info
-                try {
-                    jmri.jmrit.XmlFile file = new jmri.jmrit.XmlFile() {
-                    };
-                    org.jdom2.Element el = file.rootFromFile(new java.io.File("java/test/jmri/jmrit/symbolicprog/tabbedframe/pass/DecoderWithQualifier.xml"));
+        // get the sample info
+        try {
+            jmri.jmrit.XmlFile file = new jmri.jmrit.XmlFile() {
+            };
+            org.jdom2.Element el = file.rootFromFile(new java.io.File("java/test/jmri/jmrit/symbolicprog/tabbedframe/pass/DecoderWithQualifier.xml"));
 
-                    DecoderFile df = new DecoderFile();  // used as a temporary
-                    df.loadVariableModel(el.getChild("decoder"), p.variableModel);
-                } catch (IOException | JDOMException e) {
-                    log.error("Exception during setup", e);
-                }
-                p.readConfig(root, new RosterEntry());
-                p.pack();
-                p.setVisible(true);
-
-                // close the window for cleanliness
-                p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
+            DecoderFile df1 = new DecoderFile();  // used as a temporary
+            df1.loadVariableModel(el.getChild("decoder"), p.variableModel);
+        } catch (IOException | JDOMException e) {
+            log.error("Exception during setup", e);
         }
-        });
+
+
+        p.readConfig(root, new RosterEntry());
+        p.pack();
+        p.setVisible(true);
+
+        // close the window for cleanliness
+        p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
     }
 
     // static variables for internal classes to report their interpretations
-    static String result = null;
-    static int colCount = -1;
-    static int varCount = -1;
+    // static String result = null;
+    // static int colCount = -1;
+    // static int varCount = -1;
 
-    // static variables for the test XML structures
-    Element root = null;
-    Document doc = null;
+    // variables for the test XML structures
+    private Element root = null;
+    // Document doc = null;
 
     // provide a test document in the above static variables
     void setupDoc() {
         // create a JDOM tree with just some elements
         root = new Element("programmer-config");
-        doc = new Document(root);
+        Document doc = new Document(root);
         doc.setDocType(new DocType("programmer-config", "programmer-config.dtd"));
 
         // add some elements
@@ -183,7 +182,7 @@ public class QualifiedVarTest {
         ); // end of adding contents
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QualifiedVarTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(QualifiedVarTest.class);
 
     @BeforeEach
     public void setUp() {
@@ -195,6 +194,7 @@ public class QualifiedVarTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetWindows(false, false); // Detachable frame : "Comments : test qualified var"
         JUnitUtil.tearDown();
     }
 

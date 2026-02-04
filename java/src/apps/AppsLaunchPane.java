@@ -111,7 +111,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
     }
 
     protected String line2() {
-        return "http://jmri.org/";
+        return "https://jmri.org/";
     }
 
     protected String line3() {

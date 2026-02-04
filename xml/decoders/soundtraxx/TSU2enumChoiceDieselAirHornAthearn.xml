@@ -165,4 +165,7 @@
     <enumChoice>
           <choice>Leslie RS3K</choice>
     </enumChoice>    
+    <enumChoice>
+          <choice>Air Raid Siren</choice>
+    </enumChoice>    
 </enumChoiceGroup>

@@ -13,6 +13,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanPanelInterface;
 import jmri.jmrix.openlcb.swing.ClientActions;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriPanel;
 
 import org.openlcb.Connection;
 import org.openlcb.MimicNodeStore;
@@ -27,10 +28,18 @@ import org.openlcb.swing.networktree.TreePane;
 
 /**
  * Frame displaying tree of OpenLCB nodes.
+ * <p>
+ * This uses a {@link CanSystemConnectionMemo} for access to various 
+ * org.openlcb.*
+ * OpenLCB context objects from the 
+ * <a href="https://github.com/openlcb/OpenLCB_Java">OpenLCB_Java project</a>.
+ * The {@link org.openlcb.MimicNodeStore} fills out the tree of known nodes.
+ * When requested to configure a node, that node's CDI is loaded
+ * and presented using a {@link org.openlcb.swing.networktree.TreePane}.
  *
- * @author Bob Jacobsen Copyright (C) 2009, 2010, 2012
+ * @author Bob Jacobsen Copyright (C) 2009, 2010, 2012, 2024
  */
-public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
+public class NetworkTreePane extends JmriPanel implements CanListener, CanPanelInterface {
 
     public NetworkTreePane() {
         super();
@@ -112,7 +121,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Network Tree");
+            return (memo.getUserName() + " " + Bundle.getMessage("PaneTitle"));
         }
         return "LCC / OpenLCB Network Tree";
     }
@@ -225,4 +234,39 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         }
     }
 
+    // Create the panel-name of this node depending on what's available
+    static public String augmentedNodeName(MimicNodeStore.NodeMemo nodememo) {
+        var node = nodememo.getNodeID();
+        var ident = nodememo.getSimpleNodeIdent();
+
+        var description = new StringBuilder();
+        if (ident.getUserName() != null) {
+            description.append(ident.getUserName());
+        }
+        if (ident.getUserDesc() != null && ident.getUserDesc().length() > 0) {
+            if (description.length() > 0) {
+                description.append(" - ");
+            }
+            description.append(ident.getUserDesc());
+        }
+        if (description.length() == 0) {
+            if (ident.getMfgName() != null && ident.getMfgName().length() > 0) {
+                description.append(ident.getMfgName());
+            }
+            if (ident.getModelName() != null && ident.getModelName().length() > 0) {
+                if (description.length() > 0) {
+                    description.append(" - ");
+                }
+                description.append(ident.getModelName());
+            }
+        }
+        if (description.length() == 0) {
+            description.append(node.toString());
+        } else {
+            description.append(" (");
+            description.append(node.toString());
+            description.append(")");
+        }
+        return description.toString();
+    }
 }

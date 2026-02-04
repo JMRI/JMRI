@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.util.swing;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
@@ -28,6 +29,9 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
 
     private final JDialog _dialog;
     private final LogixNG_SelectTableSwing _selectTableSwing;
+    
+    private LogixNG_SelectEnumSwing_EnumDialog<E> _enumDialog;
+    private E[] _enumArray;
 
     private JTabbedPane _tabbedPane;
     private JComboBox<E> _enumComboBox;
@@ -59,6 +63,8 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
     public JPanel createPanel(
             @CheckForNull LogixNG_SelectEnum<E> selectEnum, E[] enumArray, E defaultValue) {
 
+        _enumArray = enumArray;
+
         JPanel panel = new JPanel();
 
         _tabbedPane = new JTabbedPane();
@@ -78,6 +84,7 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
 
         _panelMemory.setLayout(new BoxLayout(_panelMemory, BoxLayout.Y_AXIS));
         _panelMemory.add(_memoryPanel);
+        _panelMemory.add(createEnumDialogButton());
         _panelMemory.add(_listenToMemoryCheckBox);
 
         _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
@@ -97,15 +104,21 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
 
         _referenceTextField = new JTextField();
         _referenceTextField.setColumns(30);
+        _panelReference.setLayout(new BoxLayout(_panelReference, BoxLayout.Y_AXIS));
         _panelReference.add(_referenceTextField);
+        _panelReference.add(createEnumDialogButton());
 
         _localVariableTextField = new JTextField();
         _localVariableTextField.setColumns(30);
+        _panelLocalVariable.setLayout(new BoxLayout(_panelLocalVariable, BoxLayout.Y_AXIS));
         _panelLocalVariable.add(_localVariableTextField);
+        _panelLocalVariable.add(createEnumDialogButton());
 
         _formulaTextField = new JTextField();
         _formulaTextField.setColumns(30);
+        _panelFormula.setLayout(new BoxLayout(_panelFormula, BoxLayout.Y_AXIS));
         _panelFormula.add(_formulaTextField);
+        _panelFormula.add(createEnumDialogButton());
 
 
         if (defaultValue != null) {
@@ -134,6 +147,21 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
 
         panel.add(_tabbedPane);
         return panel;
+    }
+    
+    public JButton createEnumDialogButton() {
+        JButton enumDialogButton = new JButton(Bundle.getMessage("LogixNG_SelectEnumSwing_ButtonEnumDialog"));  // NOI18N
+        enumDialogButton.addActionListener(this::showEnumDialog);
+        return enumDialogButton;
+    }
+    
+    public void showEnumDialog(ActionEvent e) {
+        if (_enumDialog != null) {
+            _enumDialog.setVisible(true);
+        } else {
+            Runnable windowIsClosed = () -> { _enumDialog = null; };
+            _enumDialog = new LogixNG_SelectEnumSwing_EnumDialog<>(_enumArray, windowIsClosed);
+        }
     }
 
     public void addAddressingListener(ChangeListener listener) {
@@ -247,6 +275,11 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
 
     public void dispose() {
         _selectTableSwing.dispose();
+        if (_enumDialog != null) {
+            _enumDialog.setVisible(false);
+            _enumDialog.dispose();
+            _enumDialog = null;
+        }
     }
 
 

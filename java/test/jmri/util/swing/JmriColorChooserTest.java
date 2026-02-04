@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import javax.swing.JColorChooser;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
@@ -21,30 +24,30 @@ public class JmriColorChooserTest {
     public void testAddRecentColor() {
         JmriColorChooser.addRecentColor(Color.WHITE);
         ArrayList<Color> colors = JmriColorChooser.getRecentColors();
-        Assert.assertFalse("recent color count > 0", colors.isEmpty());  // NOI18N
+        assertFalse( colors.isEmpty(), "recent color count > 0");
     }
 
     @Test
     public void testGetRecentList() {
         ArrayList<Color> colors = JmriColorChooser.getRecentColors();
-        Assert.assertNotNull("exists", colors);  // NOI18N
+        assertNotNull( colors, "exists");
     }
 
     @Test
     public void testExtendColorChooser() {
         JColorChooser jmriTab = JmriColorChooser.extendColorChooser(new JColorChooser(Color.WHITE));
-        Assert.assertNotNull("exists", jmriTab);
+        assertNotNull( jmriTab, "exists");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testShowDialog() {
 
         Thread t = JemmyUtil.createModalDialogOperatorThread("Test Title", "OK");  // NOI18N
         JmriColorChooser.addRecentColor(Color.WHITE);
         Color newColor = JmriColorChooser.showDialog(null, "Test Title", Color.RED);  // NOI18N
-        Assert.assertNotNull("exists", newColor);
-        Assert.assertEquals(Color.RED, newColor);
+        assertNotNull( newColor, "exists");
+        assertEquals(Color.RED, newColor);
         JUnitUtil.waitFor(() -> ( !t.isAlive() ), "ColorChooser Dialog did not click ok");
         JUnitUtil.waitFor(5); // jemmy still finishing button push
     }

@@ -2,45 +2,51 @@ package jmri.implementation;
 
 import jmri.InstanceManager;
 import jmri.SignalHead;
+import jmri.SignalHeadManager;
 import jmri.SignalMast;
 import jmri.SignalSystem;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for the SignalHeadSignalMast implementation
  *
  * @author Bob Jacobsen Copyright (C) 2009
  * updated to JUnit4 2016
+ * updated to JUnit5 2024
  */
 public class SignalHeadSignalMastTest {
 
     @Test
     public void testSetup() {
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalHeadManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1"));
+        assertNotNull(InstanceManager.getDefault(SignalHeadManager.class));
+        assertNotNull(InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH1"));
     }
 
     @Test
     public void testTwoNameOneHeadCtorOK() {
-        new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)", "user");
+        assertNotNull(
+            new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)", "user"));
     }
 
     @Test
     public void testHeld() {
         SignalMast m = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)", "user");
 
-        Assert.assertTrue(!m.getHeld());
+        assertFalse(m.getHeld());
 
         m.setHeld(true);
-        Assert.assertTrue(m.getHeld());
-        Assert.assertTrue(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1").getHeld());
+        assertTrue(m.getHeld());
+        SignalHead ih1 = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH1");
+        assertNotNull(ih1);
+        assertTrue( ih1.getHeld() );
 
         m.setHeld(false);
-        Assert.assertTrue(!m.getHeld());
-        Assert.assertTrue(!InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1").getHeld());
+        assertFalse( m.getHeld());
+        assertFalse( ih1.getHeld());
 
     }
 
@@ -48,29 +54,31 @@ public class SignalHeadSignalMastTest {
     public void testLit() {
         SignalMast m = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)", "user");
 
-        Assert.assertTrue(m.getLit());
+        assertTrue(m.getLit());
 
         m.setLit(false);
-        Assert.assertTrue(!m.getLit());
-        Assert.assertTrue(!InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1").getLit());
+        assertFalse( m.getLit());
+        SignalHead ih1 = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH1");
+        assertNotNull( ih1 );
+        assertFalse( ih1.getLit());
 
         m.setLit(true);
-        Assert.assertTrue(m.getLit());
-        Assert.assertTrue(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1").getLit());
+        assertTrue(m.getLit());
+        assertTrue(ih1.getLit());
 
     }
 
     @Test
     public void testTwoNameSe8cHeadCtorOK() {
         // create the SE8c heads 
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
+        InstanceManager.getDefault(SignalHeadManager.class).register(
                 new DefaultSignalHead("IH:SE8C:\"255\";\"256\"") {
                     @Override
                     protected void updateOutput() {
                     }
                 }
         );
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
+        InstanceManager.getDefault(SignalHeadManager.class).register(
                 new DefaultSignalHead("IH:SE8C:\"257\";\"258\"") {
                     @Override
                     protected void updateOutput() {
@@ -78,35 +86,37 @@ public class SignalHeadSignalMastTest {
                 }
         );
 
-        // test uses those        
-        new SignalHeadSignalMast("IF$shsm:AAR-1946:PL-2-high(IH:SE8C:\"255\";\"256\")(IH:SE8C:\"257\";\"258\")", "user");
+        // test uses those
+        assertNotNull(
+        new SignalHeadSignalMast("IF$shsm:AAR-1946:PL-2-high(IH:SE8C:\"255\";\"256\")(IH:SE8C:\"257\";\"258\")", "user"));
     }
 
     @Test
     public void testOneNameOneHeadCtorOK() {
-        new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)");
+        assertNotNull(
+            new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)"));
     }
 
     @Test
     public void testOldTwoNameCtorOK() {
-        new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
+        assertNotNull(
+            new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user"));
     }
 
     @Test
     public void testOldOneNameCtorOK() {
-        new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1");
+        assertNotNull(
+            new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1"));
     }
 
     @Test
     public void testOldOneNameCtorFailNoSystem() {
-        try {
-            new SignalHeadSignalMast("IF$shsm:notanaspect:one-searchlight:IH1");
-            Assert.fail("should have thrown exception");
-        } catch (IllegalArgumentException e1) {
-            jmri.util.JUnitAppender.assertErrorMessage("Did not find signal definition: notanaspect");
-        } catch (Exception e2) {
-            Assert.fail("wrong exception: " + e2);
-        }
+        Exception ex = assertThrows(IllegalArgumentException.class, () ->
+            new SignalHeadSignalMast("IF$shsm:notanaspect:one-searchlight:IH1").setHeld(true),
+            "should have thrown exception");
+        assertNotNull(ex);
+        assertTrue(ex.getMessage().contains("notanaspect"));
+        jmri.util.JUnitAppender.assertErrorMessage("Did not find signal definition: notanaspect");
     }
 
     @Test
@@ -114,9 +124,9 @@ public class SignalHeadSignalMastTest {
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 
         s.setAspect("Clear");
-        Assert.assertEquals("check clear", "Clear", s.getAspect());
+        assertEquals( "Clear", s.getAspect(), "check clear");
         s.setAspect("Stop");
-        Assert.assertEquals("check stop", "Stop", s.getAspect());
+        assertEquals( "Stop", s.getAspect(), "check stop");
     }
 
     @Test
@@ -124,7 +134,7 @@ public class SignalHeadSignalMastTest {
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 
         s.setAspect("Clear");
-        Assert.assertEquals("../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-281.gif",
+        assertEquals("../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-281.gif",
                 s.getAppearanceMap().getProperty("Clear", "imagelink"));
     }
 
@@ -132,7 +142,7 @@ public class SignalHeadSignalMastTest {
     public void testAspectNotSet() {
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 
-        Assert.assertNull("check null", s.getAspect());
+        assertNull( s.getAspect(), "check null");
     }
 
     @Test
@@ -141,16 +151,13 @@ public class SignalHeadSignalMastTest {
 
         s.setAspect("Clear");
 
-        try {
-            s.setAspect("Not An Aspect, I Hope");
-            Assert.fail("should have thrown exception");
-        } catch (IllegalArgumentException e1) {
-            jmri.util.JUnitAppender.assertWarnMessage("attempting to set invalid aspect: Not An Aspect, I Hope on mast: user");
-        } catch (Exception e2) {
-            Assert.fail("wrong exception: " + e2);
-        }
+        Exception ex = assertThrows( IllegalArgumentException.class, () ->
+            s.setAspect("Not An Aspect, I Hope"));
+        assertNotNull( ex );
+        assertTrue(ex.getMessage().contains("Not An Aspect, I Hope"));
+        jmri.util.JUnitAppender.assertWarnMessage("attempting to set invalid aspect: Not An Aspect, I Hope on mast: user");
 
-        Assert.assertEquals("check clear", "Clear", s.getAspect()); // unchanged after failed request
+        assertEquals( "Clear", s.getAspect(), "check clear unchanged after failed request");
     }
 
     @Test
@@ -158,12 +165,12 @@ public class SignalHeadSignalMastTest {
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 
         s.setAspect("Clear");
-        Assert.assertEquals("check green", SignalHead.GREEN,
-                InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1").getAppearance());
+        SignalHead ih1 = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH1");
+        assertNotNull( ih1 );
+        assertEquals( SignalHead.GREEN, ih1.getAppearance(), "check green");
 
         s.setAspect("Approach");
-        Assert.assertEquals("check yellow", SignalHead.YELLOW,
-                InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1").getAppearance());
+        assertEquals( SignalHead.YELLOW, ih1.getAppearance(), "check yellow");
     }
 
     @Test
@@ -171,29 +178,31 @@ public class SignalHeadSignalMastTest {
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:two-searchlight:IH1:IH2", "user");
 
         s.setAspect("Clear");
-        Assert.assertEquals("Clear head 1 green", SignalHead.GREEN,
-                InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1").getAppearance());
-        Assert.assertEquals("Clear head 2 red", SignalHead.RED,
-                InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH2").getAppearance());
+        SignalHead ih1 = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH1");
+        assertNotNull( ih1 );
+        SignalHead ih2 = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH2");
+        assertNotNull( ih2 );
+        assertEquals( SignalHead.GREEN,ih1.getAppearance(), "Clear head 1 green");
+        assertEquals( SignalHead.RED, ih2.getAppearance(), "Clear head 2 red");
 
         s.setAspect("Diverging Approach");
-        Assert.assertEquals("Diverging Approach head 1 red", SignalHead.RED,
-                InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1").getAppearance());
-        Assert.assertEquals("Diverging Approach head 2 yellow", SignalHead.YELLOW,
-                InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH2").getAppearance());
+        assertEquals( SignalHead.RED, ih1.getAppearance(), "Diverging Approach head 1 red");
+        assertEquals( SignalHead.YELLOW, ih2.getAppearance(), "Diverging Approach head 2 yellow");
     }
 
     @Test
     public void testOneSearchLightViaManager() {
         SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast("IF$shsm:basic:one-searchlight:IH2");
 
+        SignalHead ih2 = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH2");
+        assertNotNull( ih2 );
+
         s.setAspect("Clear");
-        Assert.assertEquals("check green", SignalHead.GREEN,
-                InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH2").getAppearance());
+        assertEquals( SignalHead.GREEN, ih2.getAppearance(), "check green");
 
         s.setAspect("Approach");
-        Assert.assertEquals("check yellow", SignalHead.YELLOW,
-                InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH2").getAppearance());
+        assertEquals( SignalHead.YELLOW,
+                ih2.getAppearance(), "check yellow");
     }
 
     @Test
@@ -201,9 +210,9 @@ public class SignalHeadSignalMastTest {
         SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast("IF$shsm:basic:one-searchlight:IH2");
 
         SignalSystem sy = s.getSignalSystem();
-        Assert.assertNotNull(sy);
+        assertNotNull(sy);
 
-        Assert.assertEquals("Proceed", s.getSignalSystem().getProperty("Clear", "indication"));
+        assertEquals( s.getSignalSystem().getProperty("Clear", "indication"), "Proceed");
     }
 
     // from here down is testing infrastructure
@@ -212,21 +221,21 @@ public class SignalHeadSignalMastTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalSignalHeadManager();
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
+        InstanceManager.getDefault(SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
                     @Override
                     protected void updateOutput() {
                     }
                 }
         );
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
+        InstanceManager.getDefault(SignalHeadManager.class).register(
                 new DefaultSignalHead("IH2") {
                     @Override
                     protected void updateOutput() {
                     }
                 }
         );
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
+        InstanceManager.getDefault(SignalHeadManager.class).register(
                 new DefaultSignalHead("IH3") {
                     @Override
                     protected void updateOutput() {

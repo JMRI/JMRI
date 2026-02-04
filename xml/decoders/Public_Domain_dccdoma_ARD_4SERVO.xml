@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no" >
+    <version version="1" author="Petr Šídlo sidlo64@hotmail.com" lastUpdated="20241118"/>
+    <!-- Accessory decoder  -->
+    <!-- Description of circuit diagram https://sites.google.com/site/sidloweb1 -->
+    <!-- Program description https://sites.google.com/site/sidloweb1 -->
+    <!-- e-shop https://dccdoma-eshop.cz/ -->
+    
+    <decoder>
+
+        <family name="dccdoma.cz" mfg="Public-domain and DIY" >  
+            <model model="ARD-4SERVO" lowVersionID="00" highVersionID="19" productID="16843777" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="4" connector="other" />
+        </family>
+
+        <programming direct="yes" paged="no" register="no" ops="yes">
+            <capability>
+                <name>Ops Mode Accessory Programming</name>
+                <parameter name="Address Type">signal</parameter>
+                <parameter name="Delay">500</parameter>
+            </capability>
+            <mode>OPSACCEXTBYTEMODE</mode>
+        </programming>    
+        
+    <variables>
+    	
+      <variable CV="1" item="Short Address" default="501" >
+        <splitVal highCV="9"  min="1" max="2044" />
+        <label>Decoder Address:</label>
+        <label xml:lang="cs">Adresa dekodéru:</label>
+        <tooltip>Accessory decoder address. CV1 - LSB. CV9 - MSB.</tooltip>
+        <tooltip xml:lang="cs">Adresa dekodéru příslušenství. CV1 - LSB. CV9 - MSB.</tooltip>
+      </variable>
+      
+      <variable CV="7" item="Decoder Version" readOnly="yes" >
+        <decVal/>
+        <label>Decoder Version:</label>
+        <label xml:lang="cs">Verze software:</label>
+      </variable>
+      
+      <variable CV="8" item="Manufacturer" readOnly="yes" default="13" >
+        <decVal/>
+        <label>Manufacturer:</label>
+        <label xml:lang="cs">Výrobce ID:</label>
+      </variable>
+    
+      <variable item="Key" CV="15" default="0">
+        <decVal/>
+        <label>Key:</label>
+        <label xml:lang="cs">Klíč:</label>
+        <tooltip>Key for lock. Universal key is 255.</tooltip>
+        <tooltip xml:lang="cs">Klíč k zámku. Univerzální klíč je 255.</tooltip>
+      </variable>
+    
+      <variable item="Lock" CV="16" default="0">
+        <decVal/>
+        <label>Lock:</label>
+        <label xml:lang="cs">Zámek:</label>
+        <tooltip>Value other than 0 lock the decoder.</tooltip>
+        <tooltip xml:lang="cs">Jiná hodnota než 0 zamkne dekodér.</tooltip>
+      </variable>
+    
+      <variable item="Addressing" CV="34" default="0">
+      	<enumVal>
+      		<enumChoice choice="NMRA"/>
+      		<enumChoice choice="ROCO"/>
+      	</enumVal>
+        <label>Addressing:</label>
+        <label xml:lang="cs">Adresování:</label>
+        <tooltip>ROCO addressing is NMRA addressing + 4.</tooltip>
+        <tooltip xml:lang="cs">ROCO adresování je NMRA adresování + 4.</tooltip>
+      </variable>
+    
+      <variable item="Button mode" CV="38" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-InputOutput.xml"/>
+        <label>Button mode:</label>
+        <label xml:lang="cs">Režim tlačítek:</label>
+        <tooltip>Button pins mode.</tooltip>
+        <tooltip xml:lang="cs">Režim pinů tlačítek.</tooltip>
+      </variable>
+    
+      <variable CV="47" item="ProductID1" readOnly="yes" default="1" >
+        <decVal/>
+        <label>Product ID #1</label>
+        <label xml:lang="cs">Výrobek ID #1:</label>
+        <tooltip>Product ID #1</tooltip>
+        <tooltip xml:lang="cs">Výrobek ID #1</tooltip>
+      </variable>
+      
+      <variable CV="48" item="ProductID2" readOnly="yes" default="1" >
+        <decVal/>
+        <label>Product ID #2</label>
+        <label xml:lang="cs">Výrobek ID #2:</label>
+        <tooltip>Product ID #2</tooltip>
+        <tooltip xml:lang="cs">Výrobek ID #2</tooltip>
+      </variable>
+      
+      <variable CV="49" item="ProductID3" readOnly="yes" default="4" >
+        <decVal/>
+        <label>Product ID #3</label>
+        <label xml:lang="cs">Výrobek ID #3:</label>
+        <tooltip>Product ID #3</tooltip>
+        <tooltip xml:lang="cs">Výrobek ID #3</tooltip>
+      </variable>
+      
+      <variable CV="50" item="ProductID4" readOnly="yes" default="1" >
+        <decVal/>
+        <label>Product ID #4</label>
+        <label xml:lang="cs">Výrobek ID #4:</label>
+        <tooltip>Product ID #4</tooltip>
+        <tooltip xml:lang="cs">Výrobek ID #4</tooltip>
+      </variable>
+      
+      
+<!--  Servo 1 ============================================================== -->
+
+      <variable CV="129" item="Servo 1 min" default="20" >
+        <decVal min="0" max="180" />
+        <label xml:lang="cs">Servo 1 min</label>
+        <tooltip>Range 0 – 180</tooltip>
+        <tooltip xml:lang="cs">Meze 0 – 180</tooltip>
+      </variable>     
+
+      <variable CV="130" item="Servo 1 max" default="160" >
+        <decVal min="0" max="180" />
+        <label xml:lang="cs">Servo 1 max</label>
+        <tooltip>Range 0 – 180</tooltip>
+        <tooltip xml:lang="cs">Meze 0 – 180</tooltip>
+      </variable>     
+      
+      <variable CV="131" item="Servo 1 speed" default="10" >
+        <decVal min="1" max="20" />
+        <label xml:lang="cs">Servo 1 rychlost</label>
+        <tooltip>Range 1 – 20</tooltip>
+        <tooltip xml:lang="cs">Meze 1 – 20</tooltip>
+      </variable>     
+      
+      <variable CV="132" item="Servo 1 direction" default="0" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
+        <label xml:lang="cs">Servo 1 směr</label>
+        <tooltip>Reverse servo movement</tooltip>
+        <tooltip xml:lang="cs">Obrácený pohyb serva</tooltip>
+      </variable>     
+
+      <variable CV="133" item="Servo 1 last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label xml:lang="cs">Servo 1 poslední poloha</label>
+        <tooltip>Servo 1 last position</tooltip>
+        <tooltip xml:lang="cs">Servo 1 poslední pozice</tooltip>
+      </variable>     
+   
+            
+<!--  Servo 2 ============================================================== -->
+
+      <variable CV="134" item="Servo 2 min" default="20" >
+        <decVal min="0" max="180" />
+        <label xml:lang="cs">Servo 2 min</label>
+        <tooltip>Range 0 – 180</tooltip>
+        <tooltip xml:lang="cs">Meze 0 – 180</tooltip>
+      </variable>     
+      
+      <variable CV="135" item="Servo 2 max" default="160" >
+        <decVal min="0" max="180" />
+        <label xml:lang="cs">Servo 2 max</label>
+        <tooltip>Range 0 – 180</tooltip>
+        <tooltip xml:lang="cs">Meze 0 – 180</tooltip>
+      </variable>     
+      
+      <variable CV="136" item="Servo 2 speed" default="10" >
+        <decVal min="1" max="20" />
+        <label xml:lang="cs">Servo 2 rychlost</label>
+        <tooltip>Range 1 – 20</tooltip>
+        <tooltip xml:lang="cs">Meze 1 – 20</tooltip>
+      </variable>     
+      
+      <variable CV="137" item="Servo 2 direction" default="0" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
+        <label xml:lang="cs">Servo 2 směr</label>
+        <tooltip>Reverse servo movement</tooltip>
+        <tooltip xml:lang="cs">Obrácený pohyb serva</tooltip>
+      </variable>     
+            
+      <variable CV="138" item="Servo 2 last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label xml:lang="cs">Servo 2 poslední poloha</label>
+        <tooltip>Servo 2 last position</tooltip>
+        <tooltip xml:lang="cs">Servo 2 poslední pozice</tooltip>
+      </variable>     
+      
+            
+<!--  Servo 3 ============================================================== -->
+
+      <variable CV="139" item="Servo 3 min" default="20" >
+        <decVal min="0" max="180" />
+        <label xml:lang="cs">Servo 3 min</label>
+        <tooltip>Range 0 – 180</tooltip>
+        <tooltip xml:lang="cs">Meze 0 – 180</tooltip>
+      </variable>     
+      
+      <variable CV="140" item="Servo 3 max" default="160" >
+        <decVal min="0" max="180" />
+        <label xml:lang="cs">Servo 3 max</label>
+        <tooltip>Range 0 – 180</tooltip>
+        <tooltip xml:lang="cs">Meze 0 – 180</tooltip>
+      </variable>     
+      
+      <variable CV="141" item="Servo 3 speed" default="10" >
+        <decVal min="1" max="20" />
+        <label xml:lang="cs">Servo 3 rychlost</label>
+        <tooltip>Range 1 – 20</tooltip>
+        <tooltip xml:lang="cs">Meze 1 – 20</tooltip>
+      </variable>     
+      
+      <variable CV="142" item="Servo 3 direction" default="0" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
+        <label xml:lang="cs">Servo 3 směr</label>
+        <tooltip>Reverse servo movement</tooltip>
+        <tooltip xml:lang="cs">Obrácený pohyb serva</tooltip>
+      </variable>     
+            
+      <variable CV="143" item="Servo 3 last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label xml:lang="cs">Servo 3 poslední poloha</label>
+        <tooltip>Servo 3 last position</tooltip>
+        <tooltip xml:lang="cs">Servo 3 poslední pozice</tooltip>
+      </variable>     
+      
+            
+<!--  Servo 4 ============================================================== -->
+
+      <variable CV="144" item="Servo 4 min" default="20" >
+        <decVal min="0" max="180" />
+        <label xml:lang="cs">Servo 4 min</label>
+        <tooltip>Range 0 – 180</tooltip>
+        <tooltip xml:lang="cs">Meze 0 – 180</tooltip>
+      </variable>     
+      
+      <variable CV="145" item="Servo 4 max" default="160" >
+        <decVal min="0" max="180" />
+        <label xml:lang="cs">Servo 4 max</label>
+        <tooltip>Range 0 – 180</tooltip>
+        <tooltip xml:lang="cs">Meze 0 – 180</tooltip>
+      </variable>     
+      
+      <variable CV="146" item="Servo 4 speed" default="10" >
+        <decVal min="1" max="20" />
+        <label xml:lang="cs">Servo 4 rychlost</label>
+        <tooltip>Range 1 – 20</tooltip>
+        <tooltip xml:lang="cs">Meze 1 – 20</tooltip>
+      </variable>     
+      
+      <variable CV="147" item="Servo 4 direction" default="0" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
+        <label xml:lang="cs">Servo 4 směr</label>
+        <tooltip>Reverse servo movement</tooltip>
+        <tooltip xml:lang="cs">Obrácený pohyb serva</tooltip>
+      </variable>     
+            
+      <variable CV="148" item="Servo 4 last position" default="0" readOnly="yes" >
+        <decVal min="0" max="1" />
+        <label xml:lang="cs">Servo 4 poslední poloha</label>
+        <tooltip>Servo 4 last position</tooltip>
+        <tooltip xml:lang="cs">Servo 4 poslední pozice</tooltip>
+      </variable>     
+      
+            
+    </variables> 
+
+    <resets>
+      <factReset CV="8" default="33">
+        <label>Reset All CVs</label>
+        <label xml:lang="cs">Reset všech CV</label>
+      </factReset>
+    </resets>
+
+  </decoder>
+
+  
+    <pane>
+<!--  Pane Decoder ========================================================= -->      
+  	<name>Decoder</name>
+        <name xml:lang="cs">Dekodér</name>
+        <column>
+            <display item="Addressing" />
+            <display item="Button mode" /> 
+            <display item="Key" />
+            <display item="Lock" />
+        </column>
+        <column>
+            <display item="ProductID1" />
+            <display item="ProductID2" />
+            <display item="ProductID3" />
+            <display item="ProductID4" />
+        </column>
+    </pane>
+  
+
+    <pane>
+<!--  Pane Servos ========================================================= --> 
+  	<name>Servos</name>
+        <name xml:lang="cs">Serva</name>
+        
+  	<column>
+  	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Servo 1&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Servo 1&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <display item="Servo 1 min" >
+            <label>Minimal position of lever</label>
+           	<label xml:lang="cs">Minimální pozice páky</label>
+       	</display>
+       	
+       	<display item="Servo 1 max" >
+       	    <label>Maximal position of lever</label>
+           	<label xml:lang="cs">Maximální pozice páky</label>
+       	</display>
+
+        <display item="Servo 1 speed" >
+            <label>Speed of lever movement</label>
+           	<label xml:lang="cs">Rychlost pohybu páky</label>
+       	</display>
+        
+       	<display item="Servo 1 direction" >
+            <label>Direction of lever movement</label>
+           	<label xml:lang="cs">Směr pohybu páky</label>
+       	</display>
+       	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Servo 3&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Servo 3&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <display item="Servo 3 min"  >
+            <label>Minimal position of lever</label>
+           	<label xml:lang="cs">Minimální pozice páky</label>
+       	</display>
+       	
+       	<display item="Servo 3 max" >
+       	    <label>Maximal position of lever</label>
+           	<label xml:lang="cs">Maximální pozice páky</label>
+       	</display>
+
+        <display item="Servo 3 speed" >
+            <label>Speed of lever movement</label>
+           	<label xml:lang="cs">Rychlost pohybu páky</label>
+       	</display>
+        <display item="Servo 3 direction" >
+            <label>Direction of lever movement</label>
+           	<label xml:lang="cs">Směr pohybu páky</label>
+       	</display>
+
+        <separator />        
+        
+  	</column>
+
+  	<column>
+  	
+        <separator />
+        
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Servo 2&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Servo 2&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <display item="Servo 2 min"  >
+            <label>Minimal position of lever</label>
+           	<label xml:lang="cs">Minimální pozice páky</label>
+       	</display>
+       	
+       	<display item="Servo 2 max" >
+       	    <label>Maximal position of lever</label>
+           	<label xml:lang="cs">Maximální pozice páky</label>
+       	</display>
+       	
+        <display item="Servo 2 speed" >
+            <label>Speed of lever movement</label>
+           	<label xml:lang="cs">Rychlost pohybu páky</label>
+       	</display>
+        <display item="Servo 2 direction" >
+            <label>Direction of lever movement</label>
+           	<label xml:lang="cs">Směr pohybu páky</label>
+       	</display>
+
+        <separator />
+                
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	<label>
+           	<text>&lt;html&gt;&lt;strong&gt;Servo 4&lt;/strong&gt;&lt;/html&gt;</text>
+           	<text xml:lang="cs">&lt;html&gt;&lt;strong&gt;Servo 4&lt;/strong&gt;&lt;/html&gt;</text>
+       	</label>
+       	<label>
+           	<text> </text>
+           	<text xml:lang="cs"> </text>
+       	</label>
+       	
+        <display item="Servo 4 min"  >
+            <label>Minimal position of lever</label>
+           	<label xml:lang="cs">Minimální pozice páky</label>
+       	</display>
+       	
+       	<display item="Servo 4 max" >
+       	    <label>Maximal position of lever</label>
+           	<label xml:lang="cs">Maximální pozice páky</label>
+       	</display>
+
+        <display item="Servo 4 speed" >
+            <label>Speed of lever movement</label>
+           	<label xml:lang="cs">Rychlost pohybu páky</label>
+       	</display>
+        <display item="Servo 4 direction" >
+            <label>Direction of lever movement</label>
+           	<label xml:lang="cs">Směr pohybu páky</label>
+       	</display>
+
+        <separator />
+        
+        
+  	</column>
+
+    </pane>
+  
+
+</decoder-config>

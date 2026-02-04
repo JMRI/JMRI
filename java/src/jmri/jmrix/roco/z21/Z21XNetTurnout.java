@@ -146,6 +146,8 @@ public class Z21XNetTurnout extends XNetTurnout {
        sendOffMessage(getCommandedState());
     }
 
+    @SuppressWarnings("deprecation")    // The method getId() from the type Thread is deprecated since version 19
+                                        // The replacement Thread.threadId() isn't available before version 19
     protected synchronized void sendOffMessage(int state) {
         // We need to tell the turnout to shut off the output.
         if (log.isDebugEnabled()) {

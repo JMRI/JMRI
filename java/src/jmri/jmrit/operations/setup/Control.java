@@ -1,12 +1,11 @@
 package jmri.jmrit.operations.setup;
 
-import org.jdom2.Attribute;
-import org.jdom2.DataConversionException;
-import org.jdom2.Element;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.InstanceManager;
 
 /**
  * Controls for operations developers. Debug Property changes and instance
@@ -84,6 +83,17 @@ public class Control {
 
     public static boolean disablePrintingIfCustom = false;
 
+    public static int speedHpt = 36;
+    
+    public static boolean showCloneCars = true;
+    
+    public static int numberOfDays = 31; // one month
+    
+    public static void setMaxCharLength(int length) {
+        max_len_string_attibute = length;
+        InstanceManager.getDefault(OperationsSetupXml.class).setDirty(true);
+    }
+
     // must synchronize changes with operation-config.dtd
     public static Element store() {
         Element values;
@@ -125,7 +135,15 @@ public class Control {
         // print control
         e.addContent(values = new Element(Xml.PRINT_OPTIONS));
         values.setAttribute(Xml.DISABLE_PRINT_IF_CUSTOM, disablePrintingIfCustom ? Xml.TRUE : Xml.FALSE);
-
+        // HPT speed for calculations
+        e.addContent(values = new Element(Xml.SPEED_HPT));
+        values.setAttribute(Xml.MPH, Integer.toString(speedHpt));
+        // show clones?
+        e.addContent(values = new Element(Xml.DISPLAY));
+        values.setAttribute(Xml.SHOW_CLONES, showCloneCars ? Xml.TRUE : Xml.FALSE);
+        // days
+        e.addContent(values = new Element(Xml.DAYS));
+        values.setAttribute(Xml.LENGTH, Integer.toString(numberOfDays));
         return e;
     }
 
@@ -216,6 +234,35 @@ public class Control {
             Attribute format;
             if ((format = ePrintOptions.getAttribute(Xml.DISABLE_PRINT_IF_CUSTOM)) != null) {
                 disablePrintingIfCustom = format.getValue().equals(Xml.TRUE);
+            }
+        }
+        Element eSpeedHtp = eControl.getChild(Xml.SPEED_HPT);
+        if (eSpeedHtp != null) {
+            Attribute a;
+            if ((a = eSpeedHtp.getAttribute(Xml.MPH)) != null) {
+                try {
+                    speedHpt = a.getIntValue();
+                } catch (DataConversionException e1) {
+                    log.error("HPT speed in MPH ({}) isn't a number", a.getValue());
+                }
+            }
+        }
+        Element eDisplay = eControl.getChild(Xml.DISPLAY);
+        if (eDisplay != null) {
+            Attribute a;
+            if ((a = eDisplay.getAttribute(Xml.SHOW_CLONES)) != null) {
+                showCloneCars = a.getValue().equals(Xml.TRUE);
+            }
+        }
+        Element eDays = eControl.getChild(Xml.DAYS);
+        if (eDays != null) {
+            Attribute a;
+            if ((a = eDays.getAttribute(Xml.LENGTH)) != null) {
+                try {
+                    numberOfDays = a.getIntValue();
+                } catch (DataConversionException e1) {
+                    log.error("Number of days ({}) isn't a number", a.getValue());
+                }
             }
         }
     }

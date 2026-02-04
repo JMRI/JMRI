@@ -2,6 +2,7 @@ package jmri.jmrix;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -76,6 +77,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     // these should call nextLine(String line, String raw) with their updates
 
     // member declarations
+    protected JButton copyToClipBoardButton = new JButton();
     protected JButton clearButton = new JButton();
     protected JToggleButton freezeButton = new JToggleButton();
     protected JScrollPane jScrollPane1 = new JScrollPane();
@@ -169,6 +171,9 @@ public abstract class AbstractMonPane extends JmriPanel {
         UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
 
         // the following code sets the frame's initial state
+        copyToClipBoardButton.setText(java.util.ResourceBundle.getBundle("apps.AppsBundle").getString("ButtonCopyClip"));
+        copyToClipBoardButton.setVisible(true);
+
         clearButton.setText(Bundle.getMessage("ButtonClearScreen")); // NOI18N
         clearButton.setVisible(true);
         clearButton.setToolTipText(Bundle.getMessage("TooltipClearMonHistory")); // NOI18N
@@ -304,6 +309,7 @@ public abstract class AbstractMonPane extends JmriPanel {
             }
         };
         pane1.setLayout(new WrapLayout());
+        pane1.add(copyToClipBoardButton);
         pane1.add(clearButton);
         pane1.add(freezeButton);
         pane1.add(rawCheckBox);
@@ -332,6 +338,8 @@ public abstract class AbstractMonPane extends JmriPanel {
         add(paneA);
 
         // connect actions to buttons
+        copyToClipBoardButton.addActionListener(this::copyToClipBoardButtonActionPerformed);
+
         clearButton.addActionListener((java.awt.event.ActionEvent e) -> {
             clearButtonActionPerformed(e);
         });
@@ -560,6 +568,11 @@ public abstract class AbstractMonPane extends JmriPanel {
         // clear the monitoring history
         linesBuffer.setLength(0);
         monTextPane.setText("");
+    }
+
+    public synchronized void copyToClipBoardButtonActionPerformed(java.awt.event.ActionEvent e) {
+        StringSelection text = new StringSelection(monTextPane.getText());
+        java.awt.Toolkit.getDefaultToolkit().getSystemClipboard().setContents(text, text);
     }
 
     public String getFilePathAndName() {

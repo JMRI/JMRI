@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: LccPro</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI LCC OpenLCC LccPro">
+  <!-- make these specific, always include JMRI -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>JMRI: LccPro</h1>
+      <img src="LccPro-128x128.png" 
+        class="floatRight" height="64" width="64" alt="LccPro logo" align="right"></a>
+      
+      <p><span class="since">Since <a href="http://jmri.org/releasenotes/jmri5.11.1.shtml">JMRI 5.11.1</a></span>
+      <strong>Note that LccPro is a work in progress.</strong> 
+      Feedback welcome!   
+      Help us improve this by 
+      <a href=https://groups.io/g/jmriusers">telling us</a>
+      what would make it more useful to you.
+      </p>   
+      
+      <p>
+      LccPro is a 
+      <a href="../../../../html/apps/index.shtml">JMRI application</a>
+      that focuses on configuring your LCC network.
+      </p>
+      
+      <a href="LccProMainWindow.png">
+      <img src="LccProMainWindow.png" 
+        class="floatRight" height="251" width="472" alt="LccPro main window"></a>
+
+      <p>
+      The main LccPro window is a table showing all the LCC nodes on your network.
+      Each row shows information about a single LCC node.
+      If the node supports it, there are "Configure" and "Upgrade"
+      buttons that will open functional windows for 
+      <a href="../../../jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml#configure">configuring the node</a>
+      and 
+      <a href="../../../jmri/jmrix/openlcb/swing/downloader/LoaderFrame.shtml">upgrading its firmware</a>
+      respectively.
+      </p>
+      
+      <p>
+      When you select a row, more information about that node is shown
+      on the lower left. The node's list of supported LCC protocols is
+      shown in the bottom-center panel.  You can resize those bottom
+      panels using the slider bars between them, and open or close them
+      using the small disclosure triangles on the slider bars.
+      </p>
+      
+      <p>
+      In the bottom right is a search field.  Start typing there
+      and LccPro will select the first row in the table with a matching
+      name.  As you continue typing, this will narrow down to finally
+      matching just the right entry. The search ignores the lower vs upper case.
+      
+
+
+      <p><span class="since">Since <a href="http://jmri.org/releasenotes/jmri5.11.2.shtml">JMRI 5.11.2</a></span>
+      <a name="nodegroups" id="nodegroups">
+      Below that is a selection box that will let you display "(All)"
+      nodes or just ones that you've entered into a specific "Node Group".
+      To add or remove nodes from a group, use the popup menu (right-click or ctrl-click)
+      on the node's row in the main table.  You can also use the
+      node groups you've defined here to specify what should be visible in the
+      <a href="../../../jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a>.
+      <p>
+      Across the top is a tear-off set of buttons that will open
+      other LCC tools, including 
+      <ul>
+        <li>The
+            <a href="../../../jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a>
+        <li>The
+            <a href="../../../jmri/jmrix/AbstractMonFrame.shtml">LCC Traffic Monitor</a>
+        <li>The
+            <a href="../../../jmri/jmrix/openlcb/swing/stleditor/StlEditorPane.shtml">STL Editor</a>
+      </ul>
+      It also includes a "Refresh" button that will reload the table
+      and a "Help" button that will bring you to this page.
+      </p>
+      
+      <p>
+      At the bottom of the window is a status bar containing the name of the currently
+      configured connection, and an indicator of whether that LCC connection
+      is currently active with traffic or not.
+      </p>
+      
+      <p>
+      Because LccPro is a work in progress, the lower right region is not populated yet.  
+      <a href="https://groups.io/g/jmriusers">Suggestions</a> 
+      about what to put there would be appreciated!
+      </p>
+      
+      
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

@@ -1,5 +1,7 @@
 package jmri.jmrit.beantable;
 
+import java.awt.BorderLayout;
+
 import jmri.jmrit.logix.OBlock;
 
 import javax.swing.*;
@@ -14,7 +16,7 @@ import javax.swing.*;
  */
 public class OBlockTableFrame extends BeanTableFrame<OBlock> {
 
-    OBlockTablePanel oblockPanel;
+    private final OBlockTablePanel oblockPanel;
 
     public OBlockTableFrame(OBlockTablePanel panel, String helpTarget) {
 
@@ -23,7 +25,7 @@ public class OBlockTableFrame extends BeanTableFrame<OBlock> {
         oblockPanel = panel;
 
         // general GUI config
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        getContentPane().setLayout(new BorderLayout());
 
         // add save menu item
         JMenuBar menuBar = new JMenuBar();
@@ -40,12 +42,8 @@ public class OBlockTableFrame extends BeanTableFrame<OBlock> {
         addHelpMenu(helpTarget, true);
 
         // install items in GUI
-        getContentPane().add(oblockPanel);
-        bottomBox = Box.createHorizontalBox();
-        bottomBox.add(Box.createHorizontalGlue()); // stays at end of box
-        bottomBoxIndex = 0;
-
-        getContentPane().add(bottomBox);
+        getContentPane().add(oblockPanel, BorderLayout.CENTER);
+        getContentPane().add(bottomBox, BorderLayout.SOUTH);
 
         // add extras, if desired by subclass
         extras();

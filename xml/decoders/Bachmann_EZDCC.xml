@@ -141,9 +141,9 @@
             <choice>Loco runs under DC analog voltage control</choice>
             <choice xml:lang="cs">Lokomotiva používá pro řízení analogové stejnosměrné napětí</choice>
             <choice xml:lang="fr">Loco roule sous contrôle analogique</choice>
-            <choice xml:lang="de">Lok fährt unter DC Analogspannung weiter</choice>
+            <choice xml:lang="de">Lok läuft unter DC Analogspannung weiter</choice>
             <choice xml:lang="it">Loco va in Analogico</choice>
-            <choice xml:lang="nl">Lok rijd onder DC analoog spanning</choice>
+            <choice xml:lang="nl">Loc rijdt onder DC analoog spanning</choice>
           </enumChoice>
           <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
             <choice>Loco brakes to a stop using momentum set in CV4</choice>

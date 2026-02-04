@@ -19,9 +19,6 @@ import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriMouseEvent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * An icon to display a status of a turnout.
  * <p>
@@ -69,7 +66,6 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     // the associated Turnout object
-    //Turnout turnout = null;
     private NamedBeanHandle<Turnout> namedTurnout = null;
 
     /**
@@ -81,7 +77,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         if (InstanceManager.getNullableDefault(jmri.TurnoutManager.class) != null) {
             try {
                 Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout(pName);
-                setTurnout(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, turnout));
+                setTurnout(InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, turnout));
             } catch (IllegalArgumentException ex) {
                 log.error("Turnout '{}' not available, icon won't see changes", pName);
             }
@@ -154,8 +150,10 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     @Override
     public int maxHeight() {
         int max = 0;
-        for (NamedIcon namedIcon : _iconStateMap.values()) {
-            max = Math.max(namedIcon.getIconHeight(), max);
+        if (_iconStateMap != null) {
+            for (NamedIcon namedIcon : _iconStateMap.values()) {
+                max = Math.max(namedIcon.getIconHeight(), max);
+            }
         }
         return max;
     }
@@ -163,8 +161,10 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     @Override
     public int maxWidth() {
         int max = 0;
-        for (NamedIcon namedIcon : _iconStateMap.values()) {
-            max = Math.max(namedIcon.getIconWidth(), max);
+        if ( _iconStateMap != null ) {
+            for (NamedIcon namedIcon : _iconStateMap.values()) {
+                max = Math.max(namedIcon.getIconWidth(), max);
+            }
         }
         return max;
     }
@@ -193,7 +193,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         // animation
         if (getTristate()
                 && (getTurnout().getFeedbackMode() != Turnout.DIRECT)
-                && (e.getPropertyName().equals("CommandedState"))) {
+                && (e.getPropertyName().equals(Turnout.PROPERTY_COMMANDED_STATE))) {
             if (getTurnout().getCommandedState() != getTurnout().getKnownState()) {
                 int now = Turnout.INCONSISTENT;
                 displayState(now);
@@ -205,7 +205,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
             }
         }
 
-        if (e.getPropertyName().equals("KnownState")) {
+        if (e.getPropertyName().equals(Turnout.PROPERTY_KNOWN_STATE)) {
             int now = (Integer) e.getNewValue();
             displayState(now);
         }
@@ -242,7 +242,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
     private boolean tristate = false;
 
-    boolean momentary = false;
+    private boolean momentary = false;
 
     public boolean getMomentary() {
         return momentary;
@@ -252,7 +252,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         momentary = m;
     }
 
-    boolean directControl = false;
+    private boolean directControl = false;
 
     public boolean getDirectControl() {
         return directControl;
@@ -262,8 +262,8 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         directControl = m;
     }
 
-    JCheckBoxMenuItem momentaryItem = new JCheckBoxMenuItem(Bundle.getMessage("Momentary"));
-    JCheckBoxMenuItem directControlItem = new JCheckBoxMenuItem(Bundle.getMessage("DirectControl"));
+    private final JCheckBoxMenuItem momentaryItem = new JCheckBoxMenuItem(Bundle.getMessage("Momentary"));
+    private final JCheckBoxMenuItem directControlItem = new JCheckBoxMenuItem(Bundle.getMessage("DirectControl"));
 
     /**
      * Pop-up displays unique attributes of turnouts
@@ -284,12 +284,12 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
             directControlItem.setSelected(getDirectControl());
             directControlItem.addActionListener(e -> setDirectControl(directControlItem.isSelected()));
         } else if (getDirectControl()) {
-            getTurnout().setCommandedState(jmri.Turnout.THROWN);
+            getTurnout().setCommandedState(Turnout.THROWN);
         }
         return true;
     }
 
-    javax.swing.JCheckBoxMenuItem tristateItem = null;
+    private javax.swing.JCheckBoxMenuItem tristateItem = null;
 
     void addTristateEntry(JPopupMenu popup) {
         tristateItem = new javax.swing.JCheckBoxMenuItem(Bundle.getMessage("Tristate"));
@@ -331,6 +331,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
 
     /**
      * Drive the current state of the display from the state of the turnout.
+     * {@inheritDoc}
      */
     @Override
     public void displayState(int state) {
@@ -467,7 +468,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     public void doMousePressed(JmriMouseEvent e) {
         if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
             // this is a momentary button press
-            getTurnout().setCommandedState(jmri.Turnout.THROWN);
+            getTurnout().setCommandedState(Turnout.THROWN);
         }
         super.doMousePressed(e);
     }
@@ -476,7 +477,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     public void doMouseReleased(JmriMouseEvent e) {
         if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
             // this is a momentary button release
-            getTurnout().setCommandedState(jmri.Turnout.CLOSED);
+            getTurnout().setCommandedState(Turnout.CLOSED);
         }
         super.doMouseReleased(e);
     }
@@ -491,21 +492,21 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         }
 
         if (getDirectControl() && !isEditable()) {
-            getTurnout().setCommandedState(jmri.Turnout.CLOSED);
+            getTurnout().setCommandedState(Turnout.CLOSED);
         } else {
             alternateOnClick();
         }
     }
 
     void alternateOnClick() {
-        if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) {  // if clear known state, set to opposite
-            getTurnout().setCommandedState(jmri.Turnout.THROWN);
-        } else if (getTurnout().getKnownState() == jmri.Turnout.THROWN) {
-            getTurnout().setCommandedState(jmri.Turnout.CLOSED);
-        } else if (getTurnout().getCommandedState() == jmri.Turnout.CLOSED) {
-            getTurnout().setCommandedState(jmri.Turnout.THROWN);  // otherwise, set to opposite of current commanded state if known
+        if (getTurnout().getKnownState() == Turnout.CLOSED) {  // if clear known state, set to opposite
+            getTurnout().setCommandedState(Turnout.THROWN);
+        } else if (getTurnout().getKnownState() == Turnout.THROWN) {
+            getTurnout().setCommandedState(Turnout.CLOSED);
+        } else if (getTurnout().getCommandedState() == Turnout.CLOSED) {
+            getTurnout().setCommandedState(Turnout.THROWN);  // otherwise, set to opposite of current commanded state if known
         } else {
-            getTurnout().setCommandedState(jmri.Turnout.CLOSED);  // just force closed.
+            getTurnout().setCommandedState(Turnout.CLOSED);  // just force closed.
         }
     }
 
@@ -536,5 +537,5 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         return clone;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutIcon.class);
 }

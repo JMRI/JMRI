@@ -1,7 +1,6 @@
 package jmri.jmrix.jinput.treecontrol;
 
 import java.awt.Container;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import jmri.util.JmriJFrame;
 
@@ -12,8 +11,6 @@ import jmri.util.JmriJFrame;
  */
 public class TreeFrame extends JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.jinput.treecontrol.TreeBundle");
-
     /**
      * {@inheritDoc}
      */
@@ -21,7 +18,7 @@ public class TreeFrame extends JmriJFrame {
     public void initComponents() {
 
         // set the frame's initial state
-        setTitle(rb.getString("WindowTitle"));
+        setTitle(Bundle.getMessage("WindowTitle"));
 
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

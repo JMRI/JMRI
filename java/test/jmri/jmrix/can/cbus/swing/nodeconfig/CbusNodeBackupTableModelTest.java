@@ -1,12 +1,8 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import jmri.util.JUnitUtil;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of CbusNodeBackupTableModel
@@ -19,9 +15,9 @@ public class CbusNodeBackupTableModelTest {
     @Test
     public void testCtor() {
         t = new CbusNodeBackupTableModel(null);
-        assertThat(t).isNotNull();
+        Assertions.assertNotNull(t);
     }
-    
+
     private CbusNodeBackupTableModel t;
 
     @BeforeEach

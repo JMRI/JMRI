@@ -55,6 +55,8 @@
 <!ATTLIST engine lastTrackId			CDATA #IMPLIED>
 <!ATTLIST engine train					CDATA #IMPLIED>
 <!ATTLIST engine trainId 				CDATA #IMPLIED>  
+<!ATTLIST engine lastTrain				CDATA #IMPLIED>  
+<!ATTLIST engine lastTrainId			CDATA #IMPLIED>
 <!ATTLIST engine owner					CDATA #IMPLIED>  
 <!ATTLIST engine moves					CDATA #IMPLIED>                    
 <!ATTLIST engine comment				CDATA #IMPLIED>
@@ -66,6 +68,9 @@
 <!ATTLIST engine selected				(true | false ) "false">
 <!ATTLIST engine blocking				CDATA #IMPLIED>
 <!ATTLIST engine bUnit					(true | false ) "false">
+<!ATTLIST engine clone					(true | false ) "false">
+<!ATTLIST engine pickupTime				CDATA #IMPLIED>
+<!ATTLIST engine setoutTime				CDATA #IMPLIED>
 
 <!ELEMENT models (model*)*>
 <!ELEMENT model EMPTY>

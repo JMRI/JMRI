@@ -1,12 +1,8 @@
 package jmri.jmrix.can.cbus.swing.console;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of CbusConsoleLogEntry
@@ -17,14 +13,12 @@ import org.junit.Assume;
 public class CbusConsoleLogEntryTest  {
 
     @Test
-    public void testInitComponents() throws Exception{
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // for now, just makes sure there isn't an exception.
+    public void testCbusConsoleLogEntryCtor() {
         CbusConsoleLogEntry t = new CbusConsoleLogEntry("Frame","Decoded",-1); // -1 = No Highlight
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
         
     }
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -34,6 +28,5 @@ public class CbusConsoleLogEntryTest  {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

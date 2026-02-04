@@ -99,7 +99,7 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
             ActionListener cancelListener = (ActionEvent e1) -> {
                 cancelPressed(e1);
             };
-            AddNewBeanPanel anbp = new AddNewBeanPanel(sysNameField, userNameField, numberToAddSpinner, rangeBox, autoSystemNameBox, "ButtonCreate", okListener, cancelListener, statusBarLabel); 
+            AddNewBeanPanel anbp = new AddNewBeanPanel(sysNameField, userNameField, numberToAddSpinner, rangeBox, autoSystemNameBox, "ButtonCreate", okListener, cancelListener, statusBarLabel);
             addFrame.add(anbp);
             addFrame.getRootPane().setDefaultButton(anbp.ok);
             addFrame.setEscapeKeyClosesWindow(true);
@@ -238,6 +238,15 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleMemoryTable");
+    }
+
+    @Override
+    public void setMessagePreferencesDetails() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setPreferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("HideDupUserError"));  // NOI18N
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setPreferenceItemDetails(getClassName(), "duplicateSystemName", Bundle.getMessage("HideDupSysError"));  // NOI18N
+        super.setMessagePreferencesDetails();
     }
 
     /** {@inheritDoc} */

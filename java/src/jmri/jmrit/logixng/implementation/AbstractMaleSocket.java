@@ -2,18 +2,18 @@ package jmri.jmrit.logixng.implementation;
 
 import java.beans.*;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
+import jmri.jmrit.logixng.actions.*;
 import jmri.jmrit.logixng.implementation.swing.ErrorHandlingDialog;
 import jmri.jmrit.logixng.implementation.swing.ErrorHandlingDialog_MultiLine;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.LoggingUtil;
 import jmri.util.ThreadingUtil;
 
@@ -38,9 +38,107 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     private boolean _catchAbortExecution;
     private boolean _listen = true;     // By default, actions and expressions listen
 
+
+    private static class ErrorHandlingModuleClass {
+
+        private static final ErrorHandlingModuleClass INSTANCE = new ErrorHandlingModuleClass();
+
+        private final LogixNG errorHandlingLogixNG;
+        private final ConditionalNG errorHandlingConditionalNG;
+        private final Module errorHandlingModule;
+        private final Map<String, Object> _variablesWithValues;
+
+        private ErrorHandlingModuleClass() {
+            errorHandlingLogixNG = new DefaultLogixNG("IQ:JMRI:ErrorHandlingLogixNG", null);
+            errorHandlingConditionalNG = new DefaultConditionalNG("IQC:JMRI:ErrorHandlingCondtionalNG", null, LogixNG_Thread.ERROR_HANDLING_LOGIXNG_THREAD);
+            errorHandlingLogixNG.addConditionalNG(errorHandlingConditionalNG);
+
+            Module tempErrorHandlingModule = InstanceManager.getDefault(ModuleManager.class).getBySystemName(LogixNG_Manager.ERROR_HANDLING_MODULE_NAME);
+            if (tempErrorHandlingModule != null) {
+                errorHandlingModule = tempErrorHandlingModule;
+            } else {
+                FemaleSocketManager.SocketType socketType = InstanceManager.getDefault(
+                        FemaleSocketManager.class).getSocketTypeByType("DefaultFemaleDigitalActionSocket");
+                errorHandlingModule = new DefaultModule(LogixNG_Manager.ERROR_HANDLING_MODULE_NAME, null, socketType, false, false);
+                InstanceManager.getDefault(ModuleManager.class).register(errorHandlingModule);
+            }
+
+
+            DigitalMany many = new DigitalMany("IQDA:JMRI:ErrorHandlingAction", null);
+            MaleSocket maleSocketMany = new DefaultMaleDigitalActionSocket(
+                    InstanceManager.getDefault(DigitalActionManager.class), many);
+            many.setParent(maleSocketMany);
+
+            maleSocketMany.addLocalVariable("logixng", SymbolTable.InitialValueType.String, null);
+            maleSocketMany.addLocalVariable("conditionalng", SymbolTable.InitialValueType.String, null);
+            maleSocketMany.addLocalVariable("module", SymbolTable.InitialValueType.String, null);
+            maleSocketMany.addLocalVariable("item", SymbolTable.InitialValueType.String, null);
+            maleSocketMany.addLocalVariable("message", SymbolTable.InitialValueType.String, null);
+            maleSocketMany.addLocalVariable("messageList", SymbolTable.InitialValueType.String, null);
+            maleSocketMany.addLocalVariable("exception", SymbolTable.InitialValueType.String, null);
+
+            try {
+                errorHandlingConditionalNG.getFemaleSocket().connect(maleSocketMany);
+            } catch (SocketAlreadyConnectedException e) {
+                log.error("Exception when creating error handling LogixNG: ", e);
+            }
+
+            SetLocalVariables setLocalVariables = new SetLocalVariables("IQDA:JMRI:ErrorHandlingAction", null);
+            MaleSocket maleSocketSetLocalVariables = new DefaultMaleDigitalActionSocket(
+                    InstanceManager.getDefault(DigitalActionManager.class), setLocalVariables);
+            setLocalVariables.setParent(maleSocketSetLocalVariables);
+            _variablesWithValues = setLocalVariables.getMap();
+
+            try {
+                maleSocketMany.getChild(maleSocketMany.getChildCount()-1).connect(maleSocketSetLocalVariables);
+            } catch (SocketAlreadyConnectedException e) {
+                log.error("Exception when creating error handling LogixNG: ", e);
+            }
+
+            DigitalCallModule action = new DigitalCallModule("IQDA:JMRI:ErrorHandlingAction", null);
+            action.getSelectNamedBean().setNamedBean(errorHandlingModule);
+            action.addParameter("__logixng__", SymbolTable.InitialValueType.LocalVariable, "logixng", Module.ReturnValueType.None, null);
+            action.addParameter("__conditionalng__", SymbolTable.InitialValueType.LocalVariable, "conditionalng", Module.ReturnValueType.None, null);
+            action.addParameter("__module__", SymbolTable.InitialValueType.LocalVariable, "module", Module.ReturnValueType.None, null);
+            action.addParameter("__item__", SymbolTable.InitialValueType.LocalVariable, "item", Module.ReturnValueType.None, null);
+            action.addParameter("__message__", SymbolTable.InitialValueType.LocalVariable, "message", Module.ReturnValueType.None, null);
+            action.addParameter("__messageList__", SymbolTable.InitialValueType.LocalVariable, "messageList", Module.ReturnValueType.None, null);
+            action.addParameter("__exception__", SymbolTable.InitialValueType.LocalVariable, "exception", Module.ReturnValueType.None, null);
+            MaleSocket maleSocket = new DefaultMaleDigitalActionSocket(InstanceManager.getDefault(DigitalActionManager.class), action);
+            action.setParent(maleSocket);
+            try {
+                maleSocketMany.getChild(maleSocketMany.getChildCount()-1).connect(maleSocket);
+            } catch (SocketAlreadyConnectedException e) {
+                log.error("Exception when creating error handling LogixNG: ", e);
+            }
+            List<String> errors = new ArrayList<>();
+            errorHandlingLogixNG.setParentForAllChildren(errors);
+            if (!errors.isEmpty()) {
+                for (String s : errors) {
+                    log.error("Error: {}", s);
+                }
+            }
+        }
+    }
+
+
     public AbstractMaleSocket(BaseManager<? extends NamedBean> manager, Base object) {
         _manager = manager;
         _object = object;
+    }
+
+    public static FemaleSocket getErrorHandlingModuleSocket() {
+        return ErrorHandlingModuleClass.INSTANCE.errorHandlingModule.getRootSocket();
+    }
+
+    public static boolean isErrorHandlingModuleEnabled() {
+        // Does the error handling module exist?
+        Module errorHandlingModule = InstanceManager.getDefault(ModuleManager.class)
+                .getBySystemName(LogixNG_Manager.ERROR_HANDLING_MODULE_NAME);
+        if (errorHandlingModule == null) {
+            return false;
+        }
+        return errorHandlingModule.getRootSocket().isConnected();
     }
 
     /** {@inheritDoc} */
@@ -618,6 +716,57 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         }
     }
 
+    /**
+     * Executes the error handling module.
+     * @param  item           the item that had the error
+     * @param  message        the error message
+     * @param  messageList    a list of error messages
+     * @param  e              the exception that has happened
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"SLF4J_SIGN_ONLY_FORMAT"})
+            // justification="The message is on several lines")
+    public void executeErrorHandlingModule(
+            Base item,
+            String message,
+            List<String> messageList,
+            Exception e) {
+
+        // Don't call the error handling module if it doesnt exist.
+        Module errorHandlingModule = InstanceManager.getDefault(ModuleManager.class)
+                .getBySystemName(LogixNG_Manager.ERROR_HANDLING_MODULE_NAME);
+        if (errorHandlingModule == null) {
+            return;
+        }
+
+        // Don't call the error handling module if it hasn't any children.
+        if (!ErrorHandlingModuleClass.INSTANCE.errorHandlingModule.getRootSocket().isConnected()) {
+            return;
+        }
+
+        // Don't call the error handling module recursively. It would happen
+        // if there is an error in the error handling module.
+        if (item.getModule() == ErrorHandlingModuleClass.INSTANCE.errorHandlingModule) {
+            log.warn("Exception in LogixNG error handling module. Can't execute error handling module recursively.");
+            if (messageList != null) {
+                for (String s : messageList) {
+                    log.warn("   {}", s);
+                }
+            } else {
+                log.warn("   {}", message);
+            }
+            log.warn("Exception: ", e);
+        }
+
+        ErrorHandlingModuleClass.INSTANCE._variablesWithValues.put("logixng", item.getLogixNG());
+        ErrorHandlingModuleClass.INSTANCE._variablesWithValues.put("conditionalng", item.getConditionalNG());
+        ErrorHandlingModuleClass.INSTANCE._variablesWithValues.put("module", item.getModule());
+        ErrorHandlingModuleClass.INSTANCE._variablesWithValues.put("item", item);
+        ErrorHandlingModuleClass.INSTANCE._variablesWithValues.put("message", message);
+        ErrorHandlingModuleClass.INSTANCE._variablesWithValues.put("messageList", messageList);
+        ErrorHandlingModuleClass.INSTANCE._variablesWithValues.put("exception", e);
+        ErrorHandlingModuleClass.INSTANCE.errorHandlingConditionalNG.execute();
+    }
+
     @Override
     public void handleError(Base item, String message, JmriException e, Logger log) throws JmriException {
 
@@ -629,6 +778,8 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             errorHandlingType = InstanceManager.getDefault(LogixNGPreferences.class)
                     .getErrorHandlingType();
         }
+
+        executeErrorHandlingModule(item, message, null, e);
 
         switch (errorHandlingType) {
             case ShowDialogBox:
@@ -654,6 +805,9 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
                 throw new AbortConditionalNGExecutionException(this, e);
 
+            case AbortWithoutError:
+                throw new AbortConditionalNG_IgnoreException(this, e);
+
             default:
                 throw e;
         }
@@ -673,6 +827,8 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             errorHandlingType = InstanceManager.getDefault(LogixNGPreferences.class)
                     .getErrorHandlingType();
         }
+
+        executeErrorHandlingModule(item, message, messageList, e);
 
         switch (errorHandlingType) {
             case ShowDialogBox:
@@ -698,6 +854,9 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
                 throw new AbortConditionalNGExecutionException(this, e);
 
+            case AbortWithoutError:
+                throw new AbortConditionalNG_IgnoreException(this, e);
+
             default:
                 throw e;
         }
@@ -711,6 +870,8 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             errorHandlingType = InstanceManager.getDefault(LogixNGPreferences.class)
                     .getErrorHandlingType();
         }
+
+        executeErrorHandlingModule(item, message, null, e);
 
         switch (errorHandlingType) {
             case ShowDialogBox:
@@ -736,6 +897,9 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
             case AbortExecution:
                 throw new AbortConditionalNGExecutionException(this, e);
+
+            case AbortWithoutError:
+                throw new AbortConditionalNG_IgnoreException(this, e);
 
             default:
                 throw e;

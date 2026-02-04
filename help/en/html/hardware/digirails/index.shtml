@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Hardware Support - Digikeijs (Digirails)</title>
+  <title>JMRI Hardware Support - Digikeijs / YAMORC</title>
   <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
@@ -12,14 +12,14 @@
     <!--#include virtual="../SidebarUp.shtml" -->
 
     <div id="mainContent">
-      <h1>Hardware Support: Digikeijs (Digirails)</h1>
+      <h1>Hardware Support: Digikeijs / YAMORC</h1>
 
       <h2 id="hardware">Supported Hardware</h2>
 
       <h3>Command Station</h3>
 
-      <p>JMRI can connect to a Digikeijs DR5000 Digicentral command station via a network
-      connection or USB connection.</p>
+      <p>JMRI can connect to a Digikeijs DR5000 Digicentral command station, or the
+      new YAMORC command stations via a network connection or USB connection.</p>
 
       <h2 id="limitations">Limitations</h2>
 
@@ -65,7 +65,9 @@
 
         <li>Select whatever as Command station type (DCS210 Evolution Command Station)</li>
 
-        <li>Under Additional Connection settings, set port to 5550</li>
+        <li>Under Additional Connection settings, set port to 5550 if you use an original Digikeijs DR5000. 
+            Set port to 1234 if you use a YaMoRC Command Station 
+            or a Digikeijs DR5000 with YaMoRC Upgrade 9401.</li>
       </ul>
 
       <h4>Via USB</h4>
@@ -118,13 +120,12 @@
 
       <h2 id="tools">Third Party info</h2>
 
-      <p>For more information on how to connect and use a DR5000, refer to the following:</p>
+      <p>For more information on how to connect and use YAMORC products, refer to the following.
+      The old DR5000 works in a similar way.</p>
 
       <ul>
         <li>
-          <a href=
-          "https://support.digikeijs.com/hc/en-us/articles/360001203338-DR5000-ADJ-Manuals-Downloads">
-          Digikeijs DR5000 documentation</a>
+          <a href="http://yamorc.de/products/">YAMORC product documentation</a>
         </li>
       </ul>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->

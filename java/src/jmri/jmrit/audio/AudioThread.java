@@ -39,7 +39,7 @@ public interface AudioThread extends Runnable {
      *
      * @return true, while thread is alive; false, when all cleanup has finished
      */
-    boolean alive();
+    boolean isThreadAlive();
 
     /**
      * Method used to tell the thread that it should shutdown

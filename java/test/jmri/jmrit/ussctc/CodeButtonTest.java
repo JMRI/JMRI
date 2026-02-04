@@ -13,7 +13,7 @@ public class CodeButtonTest {
 
     @Test
     public void testConstruction() {
-        new CodeButton("IS21", "IS22");
+        Assertions.assertNotNull( new CodeButton("IS21", "IS22") );
     }
 
     @BeforeEach

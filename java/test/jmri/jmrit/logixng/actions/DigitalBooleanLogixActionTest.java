@@ -1,5 +1,12 @@
 package jmri.jmrit.logixng.actions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 
 import jmri.*;
@@ -9,10 +16,9 @@ import jmri.jmrit.logixng.actions.DigitalBooleanLogixAction.When;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test OnChange
@@ -21,10 +27,10 @@ import org.junit.Test;
  */
 public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionTestBase {
 
-    LogixNG logixNG;
-    ConditionalNG conditionalNG;
-    DigitalBooleanLogixAction _actionOnChange;
-    ActionTurnout _actionTurnout;
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private DigitalBooleanLogixAction _actionOnChange;
+    private ActionTurnout _actionTurnout;
 
     @Override
     public ConditionalNG getConditionalNG() {
@@ -81,69 +87,69 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
     @Test
     public void testCtor() {
         DigitalBooleanActionBean t = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.Either);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testCtorAndSetup1() {
         DigitalBooleanLogixAction action = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.Either);
-        Assert.assertNotNull("exists", action);
-        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+        assertNotNull( action, "exists");
+        assertEquals( 1, action.getChildCount(), "action has 1 female socket");
         action.getChild(0).setName("ZH12");
         action.setActionSocketSystemName("IQDA554");
 
-        Assert.assertEquals("action female socket name is ZH12",
-                "ZH12", action.getChild(0).getName());
-        Assert.assertEquals("action female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
-                action.getChild(0).getClass().getName());
-        Assert.assertFalse("action female socket is not connected",
-                action.getChild(0).isConnected());
+        assertEquals( "ZH12", action.getChild(0).getName(),
+                "action female socket name is ZH12");
+        assertEquals( "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName(),
+                "action female socket is of correct class");
+        assertFalse( action.getChild(0).isConnected(),
+                "action female socket is not connected");
 
         // Setup action. This connects the child actions to this action
         action.setup();
 
         jmri.util.JUnitAppender.assertMessage("cannot load digital action IQDA554");
 
-        Assert.assertEquals("action female socket name is ZH12",
-                "ZH12", action.getChild(0).getName());
-        Assert.assertEquals("action female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
-                action.getChild(0).getClass().getName());
-        Assert.assertFalse("action female socket is not connected",
-                action.getChild(0).isConnected());
+        assertEquals( "ZH12", action.getChild(0).getName(),
+                "action female socket name is ZH12");
+        assertEquals( "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName(),
+                "action female socket is of correct class");
+        assertFalse( action.getChild(0).isConnected(),
+                "action female socket is not connected");
 
-        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+        assertEquals( 1, action.getChildCount(), "action has 1 female socket");
     }
 
     @Test
     public void testCtorAndSetup2() {
         DigitalBooleanLogixAction action = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.Either);
-        Assert.assertNotNull("exists", action);
-        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+        assertNotNull( action, "exists");
+        assertEquals( 1, action.getChildCount(), "action has 1 female socket");
         action.getChild(0).setName("ZH12");
         action.setActionSocketSystemName(null);
 
-        Assert.assertEquals("action female socket name is ZH12",
-                "ZH12", action.getChild(0).getName());
-        Assert.assertEquals("action female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
-                action.getChild(0).getClass().getName());
-        Assert.assertFalse("action female socket is not connected",
-                action.getChild(0).isConnected());
+        assertEquals( "ZH12", action.getChild(0).getName(),
+                "action female socket name is ZH12");
+        assertEquals( "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName(),
+                "action female socket is of correct class");
+        assertFalse( action.getChild(0).isConnected(),
+                "action female socket is not connected");
 
         // Setup action. This connects the child actions to this action
         action.setup();
 
-        Assert.assertEquals("action female socket name is ZH12",
-                "ZH12", action.getChild(0).getName());
-        Assert.assertEquals("action female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
-                action.getChild(0).getClass().getName());
-        Assert.assertFalse("action female socket is not connected",
-                action.getChild(0).isConnected());
+        assertEquals( "ZH12", action.getChild(0).getName(),
+                "action female socket name is ZH12");
+        assertEquals( "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName(),
+                "action female socket is of correct class");
+        assertFalse( action.getChild(0).isConnected(),
+                "action female socket is not connected");
 
-        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+        assertEquals( 1, action.getChildCount(), "action has 1 female socket");
     }
 
     @Test
@@ -153,88 +159,85 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
         MaleSocket childSocket0 = m1.registerAction(new ActionMemory("IQDA554", null));
 
         DigitalBooleanLogixAction action = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.Either);
-        Assert.assertNotNull("exists", action);
-        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+        assertNotNull( action, "exists");
+        assertEquals( 1, action.getChildCount(), "action has 1 female socket");
         action.getChild(0).setName("ZH12");
         action.setActionSocketSystemName("IQDA554");
 
-        Assert.assertEquals("action female socket name is ZH12",
-                "ZH12", action.getChild(0).getName());
-        Assert.assertEquals("action female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
-                action.getChild(0).getClass().getName());
-        Assert.assertFalse("action female socket is not connected",
-                action.getChild(0).isConnected());
+        assertEquals( "ZH12", action.getChild(0).getName(),
+                "action female socket name is ZH12");
+        assertEquals( "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName(),
+                "action female socket is of correct class");
+        assertFalse( action.getChild(0).isConnected(),
+                "action female socket is not connected");
 
         // Setup action. This connects the child actions to this action
         action.setup();
 
-        Assert.assertTrue("action female socket is connected",
-                action.getChild(0).isConnected());
-        Assert.assertEquals("child is correct bean",
-                childSocket0,
-                action.getChild(0).getConnectedSocket());
+        assertTrue( action.getChild(0).isConnected(),
+                "action female socket is connected");
+        assertEquals( childSocket0,
+                action.getChild(0).getConnectedSocket(),
+                "child is correct bean");
 
-        Assert.assertEquals("action has 1 female sockets", 1, action.getChildCount());
+        assertEquals( 1, action.getChildCount(),
+                "action has 1 female sockets");
 
         // Try run setup() again. That should not cause any problems.
         action.setup();
 
-        Assert.assertEquals("action has 1 female sockets", 1, action.getChildCount());
+        assertEquals( 1, action.getChildCount(), "action has 1 female sockets");
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 1", 1 == _actionOnChange.getChildCount());
+        assertEquals( 1, _actionOnChange.getChildCount(), "getChildCount() returns 1");
 
-        Assert.assertNotNull("getChild(0) returns a non null value",
-                _actionOnChange.getChild(0));
+        assertNotNull( _actionOnChange.getChild(0),
+                "getChild(0) returns a non null value");
 
-        boolean hasThrown = false;
-        try {
-            _actionOnChange.getChild(1);
-        } catch (IllegalArgumentException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "index has invalid value: 1", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () ->
+            _actionOnChange.getChild(1), "Exception is thrown");
+        assertEquals( "index has invalid value: 1", ex.getMessage(),
+                "Error message is correct");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
+        assertSame( LogixNG_Category.COMMON, _base.getCategory(), "Category matches");
     }
 
     @Test
     public void testGetShortDescription() {
         DigitalBooleanActionBean a1 = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.True);
-        Assert.assertEquals("strings are equal", "Logix Action", a1.getShortDescription());
+        assertEquals( "Logix Action", a1.getShortDescription(), "strings are equal");
         DigitalBooleanActionBean a2 = new DigitalBooleanLogixAction("IQDB322", null, DigitalBooleanLogixAction.When.False);
-        Assert.assertEquals("strings are equal", "Logix Action", a2.getShortDescription());
+        assertEquals( "Logix Action", a2.getShortDescription(), "strings are equal");
         DigitalBooleanActionBean a3 = new DigitalBooleanLogixAction("IQDB323", null, DigitalBooleanLogixAction.When.Either);
-        Assert.assertEquals("strings are equal", "Logix Action", a3.getShortDescription());
+        assertEquals( "Logix Action", a3.getShortDescription(), "strings are equal");
     }
 
     @Test
     public void testGetLongDescription() {
         DigitalBooleanActionBean a1 = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.True);
-        Assert.assertEquals("strings are equal", "Logix Action. True", a1.getLongDescription());
+        assertEquals( "Logix Action. True", a1.getLongDescription(), "strings are equal");
         DigitalBooleanActionBean a2 = new DigitalBooleanLogixAction("IQDB322", null, DigitalBooleanLogixAction.When.False);
-        Assert.assertEquals("strings are equal", "Logix Action. False", a2.getLongDescription());
+        assertEquals( "Logix Action. False", a2.getLongDescription(), "strings are equal");
         DigitalBooleanActionBean a3 = new DigitalBooleanLogixAction("IQDB323", null, DigitalBooleanLogixAction.When.Either);
-        Assert.assertEquals("strings are equal", "Logix Action. Either", a3.getLongDescription());
+        assertEquals( "Logix Action. Either", a3.getLongDescription(), "strings are equal");
     }
 
     @Test
     public void testTrigger() {
         _actionOnChange.setTrigger(When.Either);
-        Assert.assertEquals(When.Either, _actionOnChange.getTrigger());
+        assertEquals(When.Either, _actionOnChange.getTrigger());
 
         _actionOnChange.setTrigger(When.False);
-        Assert.assertEquals(When.False, _actionOnChange.getTrigger());
+        assertEquals(When.False, _actionOnChange.getTrigger());
 
         _actionOnChange.setTrigger(When.True);
-        Assert.assertEquals(When.True, _actionOnChange.getTrigger());
+        assertEquals(When.True, _actionOnChange.getTrigger());
     }
 
     @Test
@@ -251,13 +254,13 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
         _actionOnChange.setTrigger(When.Either);
         turnout.setState(Turnout.CLOSED);
         _actionOnChange.execute(true);
-        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        assertEquals(Turnout.THROWN, turnout.getState());
         turnout.setState(Turnout.CLOSED);
         _actionOnChange.execute(false);
-        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        assertEquals(Turnout.THROWN, turnout.getState());
         turnout.setState(Turnout.CLOSED);
         _actionOnChange.execute(true);
-        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        assertEquals(Turnout.THROWN, turnout.getState());
 
         // Ensure last execute is false
         _actionOnChange.execute(false);
@@ -266,13 +269,13 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
         _actionOnChange.setTrigger(When.False);
         turnout.setState(Turnout.CLOSED);
         _actionOnChange.execute(true);
-        Assert.assertEquals(Turnout.CLOSED, turnout.getState());
+        assertEquals(Turnout.CLOSED, turnout.getState());
         turnout.setState(Turnout.CLOSED);
         _actionOnChange.execute(false);
-        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        assertEquals(Turnout.THROWN, turnout.getState());
         turnout.setState(Turnout.CLOSED);
         _actionOnChange.execute(true);
-        Assert.assertEquals(Turnout.CLOSED, turnout.getState());
+        assertEquals(Turnout.CLOSED, turnout.getState());
 
         // Ensure last execute is false
         _actionOnChange.execute(false);
@@ -281,17 +284,16 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
         _actionOnChange.setTrigger(When.True);
         turnout.setState(Turnout.CLOSED);
         _actionOnChange.execute(true);
-        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        assertEquals(Turnout.THROWN, turnout.getState());
         turnout.setState(Turnout.CLOSED);
         _actionOnChange.execute(false);
-        Assert.assertEquals(Turnout.CLOSED, turnout.getState());
+        assertEquals(Turnout.CLOSED, turnout.getState());
         turnout.setState(Turnout.CLOSED);
         _actionOnChange.execute(true);
-        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        assertEquals(Turnout.THROWN, turnout.getState());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -303,7 +305,7 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
         InstanceManager.getDefault(LogixNGPreferences.class).setInstallDebugger(false);
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.COMMON;
+        _category = LogixNG_Category.COMMON;
         _isExternal = false;
 
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
@@ -335,12 +337,12 @@ public class DigitalBooleanLogixActionTest extends AbstractDigitalBooleanActionT
         _base = _actionOnChange;
         _baseMaleSocket = maleSocketActionOnChange;
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

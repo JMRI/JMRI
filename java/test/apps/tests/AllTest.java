@@ -1,20 +1,17 @@
 package apps.tests;
 
-import org.junit.platform.launcher.Launcher;
-import org.junit.platform.launcher.LauncherDiscoveryRequest;
-import org.junit.platform.launcher.TestExecutionListener;
-import org.junit.platform.launcher.TestPlan;
+import static org.junit.platform.engine.discovery.ClassNameFilter.excludeClassNamePatterns;
+import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
+import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPackage;
+
+import java.io.PrintWriter;
+
+import org.junit.platform.launcher.*;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
 import org.junit.platform.suite.api.SuiteDisplayName;
-
-import java.io.PrintWriter;
-
-import static org.junit.platform.engine.discovery.ClassNameFilter.excludeClassNamePatterns;
-import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
-import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPackage;
 
 /**
  * Invoke all the JMRI project JUnit tests via a GUI interface.
@@ -59,6 +56,8 @@ public class AllTest {
      * Run tests with a specified RunListener.
      *
      * @param listener the listener for the tests
+     * @param includePatterns include patterns
+     * @param excludePatterns exclude patterns
      */
     public static void run(TestExecutionListener listener, String[] includePatterns, String[] excludePatterns) {
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()

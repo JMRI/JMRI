@@ -1,16 +1,17 @@
 package jmri.jmrit.logixng.swing;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test SwingToolsTest
@@ -20,43 +21,38 @@ import org.junit.Test;
 public class SwingToolsTest {
 
     @Test
+    @DisabledIfHeadless
     public void testSwingTools() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         DigitalActionBean action = new ActionTurnout("IQDA1", null);
-        Class actionClass = ActionTurnout.class;
+        Class<ActionTurnout> actionClass = ActionTurnout.class;
 
-        Assert.assertTrue("Class name is correct",
-                "jmri.jmrit.logixng.actions.swing.ActionTurnoutSwing"
-                        .equals(SwingTools.adapterNameForObject(action)));
+        assertEquals(  "jmri.jmrit.logixng.actions.swing.ActionTurnoutSwing",
+            SwingTools.adapterNameForObject(action), "Class name is correct");
 
-        Assert.assertTrue("Class name is correct",
-                "jmri.jmrit.logixng.actions.swing.ActionTurnoutSwing"
-                        .equals(SwingTools.adapterNameForClass(actionClass)));
+        assertEquals( "jmri.jmrit.logixng.actions.swing.ActionTurnoutSwing",
+            SwingTools.adapterNameForClass(actionClass), "Class name is correct");
 
-        Assert.assertTrue("Class is correct",
-                "jmri.jmrit.logixng.actions.swing.ActionTurnoutSwing"
-                        .equals(SwingTools.getSwingConfiguratorForObject(action).getClass().getName()));
+        assertEquals( "jmri.jmrit.logixng.actions.swing.ActionTurnoutSwing",
+            SwingTools.getSwingConfiguratorForObject(action).getClass().getName(), "Class name is correct");
 
-        Assert.assertTrue("Class is correct",
-                "jmri.jmrit.logixng.actions.swing.ActionTurnoutSwing"
-                        .equals(SwingTools.getSwingConfiguratorForClass(actionClass).getClass().getName()));
+        assertEquals( "jmri.jmrit.logixng.actions.swing.ActionTurnoutSwing",
+            SwingTools.getSwingConfiguratorForClass(actionClass).getClass().getName(), "Class name is correct");
 
         // The class SwingToolsTest does not have a swing configurator
         SwingConfiguratorInterface iface = SwingTools.getSwingConfiguratorForObject(this);
-        Assert.assertNull("interface is null", iface);
-        jmri.util.JUnitAppender.assertErrorMessage("Cannot load SwingConfiguratorInterface adapter for jmri.jmrit.logixng.swing.SwingToolsTest");
-        jmri.util.JUnitAppender.assertErrorMessage("Cannot load SwingConfiguratorInterface for jmri.jmrit.logixng.swing.SwingToolsTest");
+        assertNull( iface, "interface is null");
+        JUnitAppender.assertErrorMessage("Cannot load SwingConfiguratorInterface adapter for jmri.jmrit.logixng.swing.SwingToolsTest");
+        JUnitAppender.assertErrorMessage("Cannot load SwingConfiguratorInterface for jmri.jmrit.logixng.swing.SwingToolsTest");
 
         // The class SwingToolsTest does not have a swing configurator
         iface = SwingTools.getSwingConfiguratorForClass(this.getClass());
-        Assert.assertNull("interface is null", iface);
-        jmri.util.JUnitAppender.assertErrorMessage("Cannot load SwingConfiguratorInterface adapter for jmri.jmrit.logixng.swing.SwingToolsTest");
-        jmri.util.JUnitAppender.assertErrorMessage("Cannot load SwingConfiguratorInterface for jmri.jmrit.logixng.swing.SwingToolsTest");
+        assertNull( iface, "interface is null");
+        JUnitAppender.assertErrorMessage("Cannot load SwingConfiguratorInterface adapter for jmri.jmrit.logixng.swing.SwingToolsTest");
+        JUnitAppender.assertErrorMessage("Cannot load SwingConfiguratorInterface for jmri.jmrit.logixng.swing.SwingToolsTest");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -67,7 +63,7 @@ public class SwingToolsTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

@@ -13,12 +13,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to current and voltage meters from the DCC++ Base Station
+ * Provide access to current meters from the DCC++ Base Station
  *   Creates meters based on values sent from command station
- *   User can create new meters in the sketch.
  *
  * @author Mark Underwood    Copyright (C) 2015
  * @author Daniel Bergqvist  Copyright (C) 2020
+ * @author mstevetodd        Copyright (C) 2025
  */
 public class DCCppPredefinedMeters implements DCCppListener {
 
@@ -35,10 +35,14 @@ public class DCCppPredefinedMeters implements DCCppListener {
         beanType = InstanceManager.getDefault(MeterManager.class).typeLetter();
         tc = memo.getDCCppTrafficController();
 
-        updateTask = new MeterUpdateTask(10000, 10000) {
+        updateTask = new MeterUpdateTask(0, 10000) {
             @Override
             public void requestUpdateFromLayout() {
-                tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), DCCppPredefinedMeters.this);
+                if (tc.getCommandStation().isCurrentListSupported()) {
+                    tc.sendDCCppMessage(DCCppMessage.makeCurrentValuesMsg(), DCCppPredefinedMeters.this);
+                } else {
+                    tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), DCCppPredefinedMeters.this);
+                }
             }
         };
 
@@ -47,10 +51,16 @@ public class DCCppPredefinedMeters implements DCCppListener {
         // at some point this will have to be customized.
         tc.addDCCppListener(DCCppInterface.CS_INFO, this);
 
-        updateTask.initTimer();
-
         //request one 'c' reply to set up the meters
-        tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), DCCppPredefinedMeters.this);
+        if (!tc.getCommandStation().isCurrentListSupported()) {
+            tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), DCCppPredefinedMeters.this);
+        }
+
+        // send <JG> to get current maximums, response used to build list of Meters (no check here as version might not be ready yet)
+        tc.sendDCCppMessage(DCCppMessage.makeCurrentMaxesMsg(), DCCppPredefinedMeters.this);
+
+        updateTask.initTimer();
+        
     }
 
     public void setDCCppTrafficController(DCCppTrafficController controller) {
@@ -65,8 +75,64 @@ public class DCCppPredefinedMeters implements DCCppListener {
     @Override
     public void message(DCCppReply r) {
 
+        if (r.isCurrentMaxesReply()) {
+            //create a meter for each Track           
+            for (int t = 0; t <= r.getCurrentMaxesList().size()-1; t++) {
+                Integer maxValue = r.getCurrentMaxesList().get(t);
+                Meter newMeter;
+                String sysName = systemPrefix + beanType + t;
+                if (meters.get(sysName) == null) {
+                    String mode = tc.getCommandStation().getTrackMode(t);
+                    String userName = "Track " + String.valueOf((char)('A'+t)) + " " + mode + " (" + systemPrefix + ")";
+                    log.debug("Adding new current meter {} ({})", sysName, userName);
+                    newMeter = new DefaultMeter.DefaultCurrentMeter(
+                            sysName, jmri.Meter.Unit.Milli, -5.0, maxValue, 1.0, updateTask);
+                    newMeter.setUserName(userName);
+                    //store and register new Meter
+                    meters.put(sysName, newMeter);
+                    InstanceManager.getDefault(MeterManager.class).register(newMeter);
+                } else {
+                    log.debug("not creating duplicate meter '{}'", sysName);
+                }
+            }            
+            return;
+        }
+        
+        if (r.isCurrentValuesReply()) {
+            //update the meter for each Track
+            for (int t = 0; t <= r.getCurrentValuesList().size()-1; t++) {
+                String sysName = systemPrefix + beanType + t;
+                //set the newValue for the meter
+                Meter meter = meters.get(sysName);
+                Integer meterValue = Math.max(r.getCurrentValuesList().get(t), 0); //get the value, ignore negative values
+                log.debug("Setting value for '{}' to {}" , sysName, meterValue);
+                try {
+                    meter.setCommandedAnalogValue(meterValue);
+                } catch (JmriException e) {
+                    log.error("exception thrown when setting meter '{}' to value {}", sysName, meterValue, e);
+                }
+            }            
+            return;
+        }
+        
+        if (r.isTrackManagerReply()) {
+            //recalculate the username since mode may have changed 
+            int trackNum = r.getTrackManagerLetter() - 'A'; //get track number from track letter
+            String userName = "Track " + r.getTrackManagerLetter() + " " + r.getTrackManagerMode() + " (" + systemPrefix + ")";
+            String sysName = systemPrefix + beanType + trackNum;
+            Meter meter = meters.get(sysName);
+            if (meter != null) {
+                log.debug("Updating username for current meter {} to '{}'", sysName, userName);
+                meter.setUserName(userName); //TODO: fix Meter to redraw title for this change
+            }
+            return;
+        }
+        
         //bail if other message types received
         if (!r.isCurrentReply() && !r.isMeterReply()) return;
+
+        //also stop processing the older replies if the newer lists are supported
+        if (tc.getCommandStation().isCurrentListSupported()) return;
 
         log.debug("Handling reply: '{}'", r);
 

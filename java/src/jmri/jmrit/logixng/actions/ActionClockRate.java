@@ -56,18 +56,19 @@ public class ActionClockRate extends AbstractDigitalAction
     }
 
     /**
-     * Convert speed to a decimal string.
+     * Convert speed to an I18N decimal string.
+     * @param locale The Locale to use for the String conversion.
      * @param speed The speed
      * @return speed formatted as %1.3f
      */
-    public static String formatSpeed(double speed) {
-        return String.format("%1.3f", speed);
+    public static String formatSpeed(Locale locale, double speed) {
+        return String.format(locale,"%1.3f", speed);
     }
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     /** {@inheritDoc} */
@@ -130,7 +131,7 @@ public class ActionClockRate extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         String value;
         if (_selectSpeed.isDirectAddressing()) {
-            value = formatSpeed(_selectSpeed.getValue());
+            value = formatSpeed( locale, _selectSpeed.getValue());
         } else {
             value = _selectSpeed.getDescription(locale);
         }

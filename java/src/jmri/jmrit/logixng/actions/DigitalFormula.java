@@ -12,6 +12,8 @@ import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
+import jmri.NamedBean;
+import jmri.NamedBeanUsageReport;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.util.parser.ParserException;
@@ -132,8 +134,8 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.COMMON;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.COMMON;
     }
 
     /** {@inheritDoc} */
@@ -393,6 +395,19 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
     public void disposeMe() {
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("getUsageReport :: Action DigitalFormula: bean = {}, f = \"{}\", cdl = {}", bean, getFormula(), cdl);
+        if (bean != null) {
+            // Search for possible bean references using system and user names.  False positives are possible.
+            var formula = getFormula();
+            var uname = bean.getUserName();
+            if (formula.contains(bean.getSystemName()) || (uname != null && formula.contains(uname))) {
+                report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
+            }
+        }
+    }
 
     public static class SocketData {
         public final String _socketName;

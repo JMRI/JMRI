@@ -1,12 +1,10 @@
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SortOrder;
+
+import javax.swing.*;
 import javax.swing.table.TableRowSorter;
+
 import jmri.NamedBean;
 import jmri.swing.RowSorterUtil;
 
@@ -23,14 +21,14 @@ import jmri.swing.RowSorterUtil;
  * invoke {@link #addToBottomBox} as needed.
  *
  * @author Bob Jacobsen Copyright (C) 2003
+ * @param <E> the Bean displayed in the Pane.................
  */
 public class BeanTablePane<E extends NamedBean> extends jmri.util.swing.JmriPanel {
 
-    BeanTableDataModel<E> dataModel;
-    JTable dataTable;
-    JScrollPane dataScroll;
-    Box bottomBox;  // panel at bottom for extra buttons etc
-    int bottomBoxIndex; // index to insert extra stuff
+    private BeanTableDataModel<E> dataModel;
+    private JTable dataTable;
+    private JScrollPane dataScroll;
+    private JPanel bottomBox;  // panel at bottom for extra buttons etc
     static final int bottomStrutWidth = 20;
 
     public void init(BeanTableDataModel<E> model) {
@@ -53,9 +51,8 @@ public class BeanTablePane<E extends NamedBean> extends jmri.util.swing.JmriPane
 
         // install items in GUI
         add(dataScroll);
-        bottomBox = Box.createHorizontalBox();
-        bottomBox.add(Box.createHorizontalGlue()); // stays at end of box
-        bottomBoxIndex = 0;
+        bottomBox = new JPanel();
+        bottomBox.setLayout(new jmri.util.swing.WrapLayout(jmri.util.swing.WrapLayout.LEFT, bottomStrutWidth, 5));
 
         add(bottomBox);
 
@@ -70,8 +67,8 @@ public class BeanTablePane<E extends NamedBean> extends jmri.util.swing.JmriPane
         dataScroll.getViewport().setPreferredSize(dataTableSize);
 
         // set preferred scrolling options
-        dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        dataScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        dataScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     }
 
     /**
@@ -80,22 +77,12 @@ public class BeanTablePane<E extends NamedBean> extends jmri.util.swing.JmriPane
     void extras() {
     }
 
-    protected Box getBottomBox() {
-        return bottomBox;
-    }
-
     /**
      * Add a component to the bottom box.
-     * <p>
-     * Takes care of organising glue, struts etc.
-     *
      * @param comp {@link Component} to add
      */
     protected void addToBottomBox(Component comp) {
-        bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);
-        ++bottomBoxIndex;
-        bottomBox.add(comp, bottomBoxIndex);
-        ++bottomBoxIndex;
+        bottomBox.add(comp);
     }
 
     @Override

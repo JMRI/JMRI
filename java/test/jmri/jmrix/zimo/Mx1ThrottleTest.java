@@ -347,6 +347,7 @@ public class Mx1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup1() {
     }
 
@@ -355,6 +356,7 @@ public class Mx1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup2() {
     }
 
@@ -363,6 +365,7 @@ public class Mx1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup3() {
     }
 
@@ -371,6 +374,7 @@ public class Mx1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup4() {
     }
 
@@ -379,6 +383,7 @@ public class Mx1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup5() {
     }
 
@@ -397,13 +402,17 @@ public class Mx1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
            }
         };
         memo = new Mx1SystemConnectionMemo(tc);
+        Mx1ThrottleManager tm = new Mx1ThrottleManager(memo);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        memo.store(tm, jmri.ThrottleManager.class);
         instance = new Mx1Throttle(memo, new jmri.DccLocoAddress(42,false));
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new Mx1ThrottleManager(memo));
     }
 
     @AfterEach
     @Override
     public void tearDown() {
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
     }
 

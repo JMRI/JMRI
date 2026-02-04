@@ -248,7 +248,13 @@
                     <display item="SwitchPilot Servo 1 Bouncing at Position D" format="checkbox" layout="right"/>
                     <label>
                         <text> </text>
-                    </label>
+                    </label>            
+                    <group include="SwitchPilot Servo V3.0">
+                        <display item="SwitchPilot Servo 1 proportional mode" format="checkbox" layout="right"/>
+                        <label>
+                            <text> </text>
+                        </label>
+                    </group>
                     <separator/>
                     <label>
                         <text> </text>
@@ -313,6 +319,12 @@
                     <label>
                         <text> </text>
                     </label>
+                    <group include="SwitchPilot Servo V3.0">
+                        <display item="SwitchPilot Servo 2 proportional mode" format="checkbox" layout="right"/>
+                        <label>
+                            <text> </text>
+                        </label>
+                    </group>
                 </column>
             </griditem>
             <group exclude="SwitchPilot,SwitchPilot V2.0">
@@ -382,6 +394,12 @@
                         <label>
                             <text> </text>
                         </label>
+                        <group include="SwitchPilot Servo V3.0">
+                            <display item="SwitchPilot Servo 3 proportional mode" format="checkbox" layout="right"/>
+                            <label>
+                                <text> </text>
+                            </label>
+                        </group>
                         <separator/>
                         <label>
                             <text> </text>
@@ -446,6 +464,304 @@
                         <label>
                             <text> </text>
                         </label>
+                        <group include="SwitchPilot Servo V3.0">
+                            <display item="SwitchPilot Servo 4 proportional mode" format="checkbox" layout="right"/>
+                            <label>
+                                <text> </text>
+                            </label>
+                        </group>
+                    </column>
+                </griditem>
+            </group>
+            
+            
+            <group include="SwitchPilot Servo V3.0">
+                <griditem>
+                    <column>
+                        <separator/>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <label>
+                            <text>Servo 5</text>
+                        </label>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <row>
+                            <display item="SwitchPilot Servo 5 Transit Time to A" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 5 Transit Time to A" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 5 Transit Time to A, C" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 5 Transit Time to A, C" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 5 Transit Time" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 5 Transit Time" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 5 Transit Time to B" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 5 Transit Time to B" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 5 Transit Time to B, D" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 5 Transit Time to B, D" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 5 Position A" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 5 Position A" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 5 Position B" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 5 Position B" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 5 Position C" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 5 Position C" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 5 Position D" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 5 Position D" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 5 Number of Bounces" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 5 Number of Bounces" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 5 Max Bouncing Strength" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 5 Max Bouncing Strength" format="hslider" layout="above"/>
+                        </row>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <display item="SwitchPilot Servo 5 Bouncing at Position A" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 5 Bouncing at Position B" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 5 Bouncing at Position C" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 5 Bouncing at Position D" format="checkbox" layout="right"/>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <group include="SwitchPilot Servo V3.0">
+                            <display item="SwitchPilot Servo 5 proportional mode" format="checkbox" layout="right"/>
+                            <label>
+                                <text> </text>
+                            </label>
+                        </group>
+                        <separator/>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <label>
+                            <text>Servo 6</text>
+                        </label>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <row>
+                            <display item="SwitchPilot Servo 6 Transit Time to A" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 6 Transit Time to A" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 6 Transit Time to A, C" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 6 Transit Time to A, C" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 6 Transit Time" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 6 Transit Time" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 6 Transit Time to B" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 6 Transit Time to B" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 6 Transit Time to B, D" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 6 Transit Time to B, D" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 6 Position A" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 6 Position A" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 6 Position B" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 6 Position B" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 6 Position C" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 6 Position C" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 6 Position D" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 6 Position D" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 6 Number of Bounces" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 6 Number of Bounces" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 6 Max Bouncing Strength" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 6 Max Bouncing Strength" format="hslider" layout="above"/>
+                        </row>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <display item="SwitchPilot Servo 6 Bouncing at Position A" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 6 Bouncing at Position B" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 6 Bouncing at Position C" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 6 Bouncing at Position D" format="checkbox" layout="right"/>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <group include="SwitchPilot Servo V3.0">
+                            <display item="SwitchPilot Servo 6 proportional mode" format="checkbox" layout="right"/>
+                            <label>
+                                <text> </text>
+                            </label>
+                        </group>
+                    </column>
+                </griditem>
+                <griditem>
+                    <column>
+                        <separator/>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <label>
+                            <text>Servo 7</text>
+                        </label>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <row>
+                            <display item="SwitchPilot Servo 7 Transit Time to A" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 7 Transit Time to A" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 7 Transit Time to A, C" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 7 Transit Time to A, C" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 7 Transit Time" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 7 Transit Time" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 7 Transit Time to B" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 7 Transit Time to B" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 7 Transit Time to B, D" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 7 Transit Time to B, D" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 7 Position A" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 7 Position A" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 7 Position B" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 7 Position B" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 7 Position C" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 7 Position C" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 7 Position D" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 7 Position D" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 7 Number of Bounces" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 7 Number of Bounces" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 7 Max Bouncing Strength" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 7 Max Bouncing Strength" format="hslider" layout="above"/>
+                        </row>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <display item="SwitchPilot Servo 7 Bouncing at Position A" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 7 Bouncing at Position B" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 7 Bouncing at Position C" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 7 Bouncing at Position D" format="checkbox" layout="right"/>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <group include="SwitchPilot Servo V3.0">
+                            <display item="SwitchPilot Servo 7 proportional mode" format="checkbox" layout="right"/>
+                            <label>
+                                <text> </text>
+                            </label>
+                        </group>
+                        <separator/>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <label>
+                            <text>Servo 8</text>
+                        </label>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <row>
+                            <display item="SwitchPilot Servo 8 Transit Time to A" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 8 Transit Time to A" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 8 Transit Time to A, C" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 8 Transit Time to A, C" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 8 Transit Time" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 8 Transit Time" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 8 Transit Time to B" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 8 Transit Time to B" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 8 Transit Time to B, D" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 8 Transit Time to B, D" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 8 Position A" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 8 Position A" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 8 Position B" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 8 Position B" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 8 Position C" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 8 Position C" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 8 Position D" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 8 Position D" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 8 Number of Bounces" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 8 Number of Bounces" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 8 Max Bouncing Strength" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 8 Max Bouncing Strength" format="hslider" layout="above"/>
+                        </row>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <display item="SwitchPilot Servo 8 Bouncing at Position A" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 8 Bouncing at Position B" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 8 Bouncing at Position C" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 8 Bouncing at Position D" format="checkbox" layout="right"/>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <group include="SwitchPilot Servo V3.0">
+                            <display item="SwitchPilot Servo 8 proportional mode" format="checkbox" layout="right"/>
+                            <label>
+                                <text> </text>
+                            </label>
+                        </group>
                     </column>
                 </griditem>
             </group>

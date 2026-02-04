@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.actions.swing;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -12,12 +13,13 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionSensor;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -28,29 +30,27 @@ import org.netbeans.jemmy.operators.*;
 public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         ActionSensorSwing t = new ActionSensorSwing();
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testCreatePanel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JDialog dialog = new JDialog();
 
-        Assert.assertTrue("panel is not null",
-            null != new ActionSensorSwing(dialog).getConfigPanel(new JPanel()));
-        Assert.assertTrue("panel is not null",
-            null != new ActionSensorSwing(dialog).getConfigPanel(new ActionSensor("IQDA1", null), new JPanel()));
+        assertNotNull( new ActionSensorSwing(dialog).getConfigPanel(new JPanel()), "panel is not null");
+        assertNotNull( new ActionSensorSwing(dialog).getConfigPanel(new ActionSensor("IQDA1", null), new JPanel()), "panel is not null");
     }
 
-    @org.junit.Ignore("Fails in Java 11 testing")
+    @Disabled("Fails in Java 11 testing")
     @Test
+    @DisabledIfHeadless
     public void testDialogUseExistingSensor() throws SocketAlreadyConnectedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Sensor s1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         InstanceManager.getDefault(SensorManager.class).provide("IS2");
@@ -69,14 +69,13 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionSensor.SensorState.Inactive);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
 
-        JUnitUtil.waitFor(() -> {return action.getSelectNamedBean().getNamedBean() != null;});
+        JUnitUtil.waitFor(() -> {return action.getSelectNamedBean().getNamedBean() != null;}, "nb not null");
 
-        Assert.assertEquals("IS1", action.getSelectNamedBean().getNamedBean().getBean().getSystemName());
-        Assert.assertEquals(ActionSensor.SensorState.Inactive, action.getSelectEnum().getEnum());
+        assertEquals("IS1", action.getSelectNamedBean().getNamedBean().getBean().getSystemName());
+        assertEquals(ActionSensor.SensorState.Inactive, action.getSelectEnum().getEnum());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -88,7 +87,7 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

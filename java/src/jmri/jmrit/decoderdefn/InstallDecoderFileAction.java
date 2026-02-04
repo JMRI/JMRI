@@ -1,6 +1,7 @@
 package jmri.jmrit.decoderdefn;
 
 import java.io.File;
+import java.net.URI;
 import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.JFileChooser;
@@ -50,7 +51,7 @@ public class InstallDecoderFileAction extends InstallDecoderURLAction {
                 log.debug("located file {} for XML processing", file);
             }
             try {
-                return new URL("file:" + file.getCanonicalPath());
+                return new URI("file:" + file.getCanonicalPath()).toURL();
             } catch (Exception e) {
                 log.error("Unexpected exception in new URL", e);
                 return null;

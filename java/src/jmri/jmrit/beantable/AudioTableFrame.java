@@ -1,7 +1,7 @@
 package jmri.jmrit.beantable;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
+import java.awt.BorderLayout;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
@@ -25,7 +25,7 @@ import jmri.Audio;
  */
 public class AudioTableFrame extends BeanTableFrame<Audio> {
 
-    AudioTablePanel audioPanel;
+    private final AudioTablePanel audioPanel;
 
     public AudioTableFrame(AudioTablePanel panel, String helpTarget) {
 
@@ -34,7 +34,7 @@ public class AudioTableFrame extends BeanTableFrame<Audio> {
         audioPanel = panel;
 
         // general GUI config
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        getContentPane().setLayout(new BorderLayout());
 
         // add save menu item
         JMenuBar menuBar = new JMenuBar();
@@ -48,12 +48,8 @@ public class AudioTableFrame extends BeanTableFrame<Audio> {
         addHelpMenu(helpTarget, true);
 
         // install items in GUI
-        getContentPane().add(audioPanel);
-        bottomBox = Box.createHorizontalBox();
-        bottomBox.add(Box.createHorizontalGlue()); // stays at end of box
-        bottomBoxIndex = 0;
-
-        getContentPane().add(bottomBox);
+        getContentPane().add(audioPanel, BorderLayout.CENTER);
+        getContentPane().add(bottomBox, BorderLayout.SOUTH);
 
         // add extras, if desired by subclass
         extras();

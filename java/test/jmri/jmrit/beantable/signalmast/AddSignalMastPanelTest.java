@@ -32,23 +32,27 @@ public class AddSignalMastPanelTest {
     }
 
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     @Disabled("possible cause of 'No output has been received in the last 10m0s' failure")    
     public void testIssueWarningUserName() {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // show and cancel each of the error dialogs
         AddSignalMastPanel a = new AddSignalMastPanel();
 
         jmri.util.ThreadingUtil.runOnLayoutEventually(() -> { a.issueWarningUserName("user name");});
-        new JDialogOperator("Warning").close();
+        JDialogOperator jdo = new JDialogOperator("Warning");
+        jdo.requestClose();
+        jdo.waitClosed();
         JUnitAppender.assertErrorMessage("User Name \"user name\" is already in use");
     }
     
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     @Disabled("possible cause of 'No output has been received in the last 10m0s' failure")    
     public void testIssueWarningUserNameAsSystem() {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // show and cancel each of the error dialogs
         AddSignalMastPanel a = new AddSignalMastPanel();
 
@@ -58,10 +62,11 @@ public class AddSignalMastPanelTest {
     }
     
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     @Disabled("possible cause of 'No output has been received in the last 10m0s' failure")
     public void testIssueNoUserNameGiven() {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // show and cancel each of the error dialogs
         AddSignalMastPanel a = new AddSignalMastPanel();
 
@@ -70,6 +75,7 @@ public class AddSignalMastPanelTest {
     }
     
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     @Disabled("possible cause of 'No output has been received in the last 10m0s' failure")
     public void testIssueDialogFailMessage() {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));

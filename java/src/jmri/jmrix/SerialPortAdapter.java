@@ -139,20 +139,6 @@ public interface SerialPortAdapter extends PortAdapter {
     void configureOption4(String value);
 
     /**
-     * Error handling for busy port at open.
-     *
-     * @param p        the exception being handled, if additional information
-     *                 from it is desired.
-     * @param portName name of the port being accessed.
-     * @param log      where to log a status message.
-     * @return Localized message, in case separate presentation to user is
-     *         desired.
-     * @see jmri.jmrix.AbstractSerialPortController
-     */
-    //@Deprecated(forRemoval=true)  // with PureJavaComm
-    String handlePortBusy(purejavacomm.PortInUseException p, String portName, org.slf4j.Logger log);
-
-    /**
      * Get the System Manufacturers Name.
      */
     @Override

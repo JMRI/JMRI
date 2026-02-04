@@ -1,11 +1,19 @@
 package jmri.jmrit.logixng.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.File;
 import java.io.IOException;
 
 import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Test LogixNGPreferences
@@ -14,26 +22,23 @@ import org.junit.*;
  */
 public class LogixNGPreferencesTest {
 
-    @Rule
-    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
-
     @Test
     public void testCompareValuesDifferent() {
         DefaultLogixNGPreferences prefsA = new DefaultLogixNGPreferences();
         DefaultLogixNGPreferences prefsB = new DefaultLogixNGPreferences();
-        Assert.assertFalse("prefs are equal", prefsA.compareValuesDifferent(prefsB));
-        Assert.assertFalse("prefs are equal", prefsB.compareValuesDifferent(prefsA));
+        assertFalse( prefsA.compareValuesDifferent(prefsB), "prefs are equal");
+        assertFalse( prefsB.compareValuesDifferent(prefsA), "prefs are equal");
 
         prefsA.setInstallDebugger(false);
         prefsB.setInstallDebugger(true);
-        Assert.assertTrue("prefs are not equal", prefsA.compareValuesDifferent(prefsB));
-        Assert.assertTrue("prefs are not equal", prefsB.compareValuesDifferent(prefsA));
+        assertTrue( prefsA.compareValuesDifferent(prefsB), "prefs are not equal");
+        assertTrue( prefsB.compareValuesDifferent(prefsA), "prefs are not equal");
         prefsB.setInstallDebugger(false);
 
         prefsA.setStartLogixNGOnStartup(false);
         prefsB.setStartLogixNGOnStartup(true);
-        Assert.assertTrue("prefs are not equal", prefsA.compareValuesDifferent(prefsB));
-        Assert.assertTrue("prefs are not equal", prefsB.compareValuesDifferent(prefsA));
+        assertTrue( prefsA.compareValuesDifferent(prefsB), "prefs are not equal");
+        assertTrue( prefsB.compareValuesDifferent(prefsA), "prefs are not equal");
         prefsB.setStartLogixNGOnStartup(false);
     }
 
@@ -42,16 +47,16 @@ public class LogixNGPreferencesTest {
         DefaultLogixNGPreferences prefs = new DefaultLogixNGPreferences();
 
         prefs.setStartLogixNGOnStartup(true);
-        Assert.assertTrue(prefs.getStartLogixNGOnStartup());
+        assertTrue(prefs.getStartLogixNGOnStartup());
 
         prefs.setStartLogixNGOnStartup(false);
-        Assert.assertFalse(prefs.getStartLogixNGOnStartup());
+        assertFalse(prefs.getStartLogixNGOnStartup());
 
         prefs.setInstallDebugger(true);
-        Assert.assertTrue(prefs.getInstallDebugger());
+        assertTrue(prefs.getInstallDebugger());
 
         prefs.setInstallDebugger(false);
-        Assert.assertFalse(prefs.getInstallDebugger());
+        assertFalse(prefs.getInstallDebugger());
     }
 
     @Test
@@ -61,31 +66,31 @@ public class LogixNGPreferencesTest {
 
         prefsA.setStartLogixNGOnStartup(false);
         prefsB.setStartLogixNGOnStartup(true);
-        Assert.assertFalse(prefsA.getStartLogixNGOnStartup());
-        Assert.assertTrue(prefsB.getStartLogixNGOnStartup());
+        assertFalse(prefsA.getStartLogixNGOnStartup());
+        assertTrue(prefsB.getStartLogixNGOnStartup());
         prefsA.apply(prefsB);
-        Assert.assertTrue(prefsA.getStartLogixNGOnStartup());
+        assertTrue(prefsA.getStartLogixNGOnStartup());
 
         prefsA.setStartLogixNGOnStartup(true);
         prefsB.setStartLogixNGOnStartup(false);
-        Assert.assertTrue(prefsA.getStartLogixNGOnStartup());
-        Assert.assertFalse(prefsB.getStartLogixNGOnStartup());
+        assertTrue(prefsA.getStartLogixNGOnStartup());
+        assertFalse(prefsB.getStartLogixNGOnStartup());
         prefsA.apply(prefsB);
-        Assert.assertFalse(prefsA.getStartLogixNGOnStartup());
+        assertFalse(prefsA.getStartLogixNGOnStartup());
 
         prefsA.setInstallDebugger(false);
         prefsB.setInstallDebugger(true);
-        Assert.assertFalse(prefsA.getInstallDebugger());
-        Assert.assertTrue(prefsB.getInstallDebugger());
+        assertFalse(prefsA.getInstallDebugger());
+        assertTrue(prefsB.getInstallDebugger());
         prefsA.apply(prefsB);
-        Assert.assertTrue(prefsA.getInstallDebugger());
+        assertTrue(prefsA.getInstallDebugger());
 
         prefsA.setInstallDebugger(true);
         prefsB.setInstallDebugger(false);
-        Assert.assertTrue(prefsA.getInstallDebugger());
-        Assert.assertFalse(prefsB.getInstallDebugger());
+        assertTrue(prefsA.getInstallDebugger());
+        assertFalse(prefsB.getInstallDebugger());
         prefsA.apply(prefsB);
-        Assert.assertFalse(prefsA.getInstallDebugger());
+        assertFalse(prefsA.getInstallDebugger());
     }
 
     @Test
@@ -96,67 +101,66 @@ public class LogixNGPreferencesTest {
         prefsA.setStartLogixNGOnStartup(false);
         prefsA.save();
         prefsB = new DefaultLogixNGPreferences();
-        Assert.assertFalse(prefsB.getStartLogixNGOnStartup());
+        assertFalse(prefsB.getStartLogixNGOnStartup());
 
         prefsA.setStartLogixNGOnStartup(true);
         prefsA.save();
         prefsB = new DefaultLogixNGPreferences();
-        Assert.assertTrue(prefsB.getStartLogixNGOnStartup());
+        assertTrue(prefsB.getStartLogixNGOnStartup());
 
         prefsA.setInstallDebugger(false);
         prefsA.save();
         prefsB = new DefaultLogixNGPreferences();
-        Assert.assertFalse(prefsB.getInstallDebugger());
+        assertFalse(prefsB.getInstallDebugger());
 
         prefsA.setInstallDebugger(true);
         prefsA.save();
         prefsB = new DefaultLogixNGPreferences();
-        Assert.assertTrue(prefsB.getInstallDebugger());
+        assertTrue(prefsB.getInstallDebugger());
 
         prefsA.setStrictTypingGlobalVariables(false);
         prefsA.save();
         prefsB = new DefaultLogixNGPreferences();
-        Assert.assertFalse(prefsB.getStrictTypingGlobalVariables());
+        assertFalse(prefsB.getStrictTypingGlobalVariables());
 
         prefsA.setStrictTypingGlobalVariables(true);
         prefsA.save();
         prefsB = new DefaultLogixNGPreferences();
-        Assert.assertTrue(prefsB.getStrictTypingGlobalVariables());
+        assertTrue(prefsB.getStrictTypingGlobalVariables());
 
         prefsA.setStrictTypingLocalVariables(false);
         prefsA.save();
         prefsB = new DefaultLogixNGPreferences();
-        Assert.assertFalse(prefsB.getStrictTypingLocalVariables());
+        assertFalse(prefsB.getStrictTypingLocalVariables());
 
         prefsA.setStrictTypingLocalVariables(true);
         prefsA.save();
         prefsB = new DefaultLogixNGPreferences();
-        Assert.assertTrue(prefsB.getStrictTypingLocalVariables());
+        assertTrue(prefsB.getStrictTypingLocalVariables());
 
         prefsA.setIfThenElseExecuteTypeDefault(IfThenElse.ExecuteType.AlwaysExecute);
         prefsA.save();
         prefsB = new DefaultLogixNGPreferences();
-        Assert.assertEquals(IfThenElse.ExecuteType.AlwaysExecute, prefsB.getIfThenElseExecuteTypeDefault());
+        assertEquals(IfThenElse.ExecuteType.AlwaysExecute, prefsB.getIfThenElseExecuteTypeDefault());
 
         prefsA.setIfThenElseExecuteTypeDefault(IfThenElse.ExecuteType.ExecuteOnChange);
         prefsA.save();
         prefsB = new DefaultLogixNGPreferences();
-        Assert.assertEquals(IfThenElse.ExecuteType.ExecuteOnChange, prefsB.getIfThenElseExecuteTypeDefault());
+        assertEquals(IfThenElse.ExecuteType.ExecuteOnChange, prefsB.getIfThenElseExecuteTypeDefault());
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() throws IOException {
+    @BeforeEach
+    public void setUp(@TempDir File tempDir) throws IOException  {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(tempDir));
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

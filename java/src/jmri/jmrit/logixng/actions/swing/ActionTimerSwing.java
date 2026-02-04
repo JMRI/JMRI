@@ -11,7 +11,7 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionTimer;
-import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.util.TimerUnit;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -200,14 +200,23 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
     public boolean validate(@Nonnull List<String> errorMessages) {
         ActionTimer tempAction = new ActionTimer("IQDA1", null);
 
-        boolean hasErrors = false;
+        tempAction.setNumActions(numActions);
+
         for (int i=0; i < numActions; i++) {
-            if (! tempAction.getActionSocket(0).validateName(_timerSocketNames[i].getText())) {
+            if (! tempAction.getActionSocket(i).validateName(_timerSocketNames[i].getText())) {
                 errorMessages.add(Bundle.getMessage("InvalidSocketName", _timerSocketNames[i].getText()));
-                hasErrors = true;
+            }
+            try {
+                tempAction.setDelay(i, Integer.parseInt(_timerDelays[i].getText()));
+                if (tempAction.getDelay(i) < 0) {
+                    errorMessages.add(Bundle.getMessage("ActionTimerSwing_NegativeDelay", _timerDelays[i].getText(), _timerSocketNames[i].getText()));
+                }
+            } catch (NumberFormatException e) {
+                errorMessages.add(Bundle.getMessage("ActionTimerSwing_InvalidDelay", _timerDelays[i].getText(), _timerSocketNames[i].getText()));
             }
         }
-        return !hasErrors;
+
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */

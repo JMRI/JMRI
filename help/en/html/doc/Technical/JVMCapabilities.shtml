@@ -116,6 +116,14 @@
         </tr>
 
         <tr>
+          <td>
+            Java 11 (2018-09-25) is a Long Term Support (LTS) version.
+          </td>
+          <td>11</td>
+          <td>11</td>
+        </tr>
+
+        <tr>
           <td>Completion of Optional class: isEmpty()</td>
           <td>11</td>
           <td>11</td>
@@ -231,6 +239,14 @@
 
         <tr>
           <td>
+            Switch Expressions for more compact, readable code.
+          </td>
+          <td>12</td>
+          <td>12</td>
+        </tr>
+
+        <tr>
+          <td>
             Improvements to the String API: transform, indent
           </td>
           <td>12</td>
@@ -250,7 +266,7 @@
             Improved handling and reporting of NPE, which will help
             debugging
           </td>
-          <td>14</td>
+          <td>11</td>
           <td>14</td>
         </tr>
 
@@ -292,10 +308,8 @@
 
         <tr>
           <td>
-            The module system prevents LibUSB (ch.ntb.usb) from accessing the
-            hardware.  This is used in a few scripts.  Not clear if its
-            developers will be issuing an update or not; possibly JMRI will
-            have to switch to a different library.
+            <code>Objects</code> class has extensions for testing for
+            equality, handling null cases and index manipulation.
           </td>
           <td>16</td>
           <td>16</td>
@@ -303,11 +317,19 @@
 
         <tr>
           <td>
-            <code>Objects</code> class has extensions for testing for
-            equality, handling null cases and index manipulation.
+            Instanceof Pattern Matching reduced the need for type casting,
+            making code more readable.
           </td>
           <td>16</td>
           <td>16</td>
+        </tr>
+
+        <tr>
+          <td>
+            Java 17 (2021-09-14) is the next LTS version after Java 11.
+          </td>
+          <td>17</td>
+          <td>17</td>
         </tr>
 
         <tr>
@@ -331,7 +353,7 @@
 
         <tr>
           <td>
-            Java 17 is the next LTS version after Java 11.
+            Java 17 is the technical baseline for the JUnit 6 testing framework.
           </td>
           <td>17</td>
           <td>17</td>
@@ -341,6 +363,8 @@
           <td>
             The sun.misc package is replaced by jdk.internal.misc, access
             to which requires the use of the module system.
+            (JMRI only uses sun.misc.Signal, which is not yet
+            present in jdk.internal.misc as of Java 21)
           </td>
           <td>18</td>
           <td>18</td>
@@ -348,11 +372,20 @@
 
         <tr>
           <td>
+            Java 19 is the last version to support 32-bit computer
+            architectures.
+          </td>
+          <td>19</td>
+          <td>19</td>
+        </tr>
+
+        <tr>
+          <td>
             Various elements of the Thread and Locale APIs are marked for deletion,
-            resulting in about 50 compilation warnings.
+            resulting in compilation warnings.
           </td>
           <td>20</td>
-          <td>20</td>
+          <td></td>
         </tr>
 
         <tr>
@@ -361,7 +394,15 @@
             <a href="https://blogs.oracle.com/javamagazine/post/java-javadoc-snippet">code snippets</a>.
           </td>
           <td>20</td>
-          <td>20</td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>
+            Java 21 (2023-09-19) is the next LTS version after Java 17.
+          </td>
+          <td>21</td>
+          <td>21</td>
         </tr>
 
         <tr>
@@ -374,10 +415,55 @@
 
         <tr>
           <td>
-            Java 21 is the next LTS version after Java 17.
+            Scoped Values and Structured Concurrency allows 
+            smaller units of work, which in turn would make
+            JMRI more responsive.
           </td>
-          <td>21</td>
-          <td>21</td>
+          <td>22</td>
+          <td>22</td>
+        </tr>
+
+        <tr>
+          <td>
+            Statements Before Super simplifies subclass object
+            creation, which makes particularly Swing subclassing
+            easier and more effective.
+          </td>
+          <td>22</td>
+          <td>22</td>
+        </tr>
+
+        <tr>
+          <td>
+            More readable Javadoc comments using Markdown formatting
+          </td>
+          <td>23</td>
+          <td>23</td>
+        </tr>
+
+        <tr>
+          <td>
+            Null-Controlled Value Types provide a cleaner way of avoiding NPEs.
+          </td>
+          <td>24</td>
+          <td>24</td>
+        </tr>
+
+        <tr>
+          <td>
+            Primitive Patterns in switch and instanceof (Preview)
+            simplify decoding.
+          </td>
+          <td>24</td>
+          <td>24</td>
+        </tr>
+
+        <tr>
+          <td>
+            Java 25 (2025-09-16) is the next LTS version after Java 21.
+          </td>
+          <td>25</td>
+          <td>25</td>
         </tr>
 
       </table>
@@ -478,7 +564,39 @@
         </li>
 
         <li>
-          <a href="https://openjdk.java.net/projects/jdk/17/">Java 17 (Sept 2021)</a>
+          <a href="https://openjdk.java.net/projects/jdk/17/">Java 17 LTS (Sept 2021)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/18/">Java 18 (March 2022)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/19/">Java 19 (Sept 2022)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/20/">Java 20 (March 2023)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/21/">Java 21 LTS (Sept 2023)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/22/">Java 22 (March 2024)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/23/">Java 23 (Sept 2024)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/24/">Java 24 (March 2025)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/25/">Java 25 LTS (Sept 2025)</a>
         </li>
 
       </ul>
@@ -490,8 +608,10 @@
       of the developers use dual-purpose machines that are required to meet various security and
       update standards. For those, Java 8 has increasing become a liability.
 
-      <p>Java 11 JDK from Oracle only runs on 64-bit Windows versions (no 32-bit). <a href=
-      "https://adoptium.net">Adoptium (formerly AdoptOpenJDK)</a> provides 32 bit x86 versions up to Java 19. As of 2024, they continue to provide 64-bit JREs and JDKs.
+      <p>Java 11 JDK from Oracle only runs on 64-bit Windows versions (no 32-bit). 
+      <a href="https://adoptium.net">Adoptium (formerly AdoptOpenJDK)</a> provides 
+      32 bit x86 versions up to Java 19. 
+      As of 2024, they continue to provide 64-bit JREs and JDKs.
       Light red indicates unable to run Java 8 or later; darker red means able to
       run Java 8, but not Java 11.</p>
 
@@ -821,35 +941,31 @@
         </tbody>
       </table>
 
-      <a id="jdk17">
-      <h2>Running JMRI 5 on Java 17 or later</h2>
-      There are some known problems when running JMRI
-      on Java versions later than the recommended Java 11.
-      Specifically, for JMRI 5 on Java 17 these include:
+      <h2>Running JMRI 5 on Java 21 or later</h2>
+      There are some issues when using JMRI
+      on Java versions later than the required Java 11.
+      Specifically, for JMRI 5 these include:
 
       <ol>
         <li>There is no JavaScript (ECMAscript) interpreter available
+            in Java 15 or later
             so .js scripts can't be run within JMRI.  Note that this
             does not affect JavaScript run on a web browser, so that
             JMRI's webserver capability will still work OK.
-        <li>The module system prevents LibUSB (ch.ntb.usb) from accessing the hardware.
-            This is used in a few scripts. Not clear if its developers will
-            be issuing an update or not; possibly JMRI will have to
-            switch to a different library.
+            <p>
+            It's possible that someday GraalVM or Rhino will provide a solution for this, 
+            but it's still a ways in the future.  
+            The Windows and macOS versions of GraalVM are still tricky to install 
+            and for some older OSs aren't available at all. 
+            Rhino doesn't yet provide full access to the JMRI Java classes.
         <li>The Java module system will in certain circumstances emit a large
-            number of "access violation" messages.  These are just advisory
-            with Java 17, but will become mandatory failures in some later
-            version of Java (Java 21?)
-        <li>There's been a problem reported where OpenLCB/LCC network GridConnect
-            connections can't get networking information to create their 
-            local Node ID under Java 21.
-            The workaround is to manually enter a node ID in the connection preferences.
-        <li>(Development only) Improved error checking in the Javadoc
-            process generates hundreds of warnings that can hide real problems.
-            These will need to be cleaned up.
-        <li>(Development only) Deprecations that are marked for removal
-            generate un-suppressible warning messages.
-            These will need to be cleaned up.
+            number of "access violation" messages to the log.  These are just advisory
+            with Java 21, but will become mandatory failures in some
+            version after Java 21.
+        <li>(Developers only) Deprecations that are marked for removal
+            generate un-suppressible compilation messages in Java 21.
+            These will need to be cleaned up before the references
+            are removed in some Java version after Java 21.
       </ol>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->

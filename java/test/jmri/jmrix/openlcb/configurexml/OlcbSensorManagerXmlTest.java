@@ -1,7 +1,14 @@
 package jmri.jmrix.openlcb.configurexml;
 
-import jmri.InstanceManager;
-import jmri.Sensor;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
+
+import jmri.*;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.openlcb.OlcbSensor;
 import jmri.jmrix.openlcb.OlcbSensorManager;
@@ -10,10 +17,8 @@ import jmri.jmrix.openlcb.OlcbUtils;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * OlcbSensorManagerXmlTest.java
@@ -26,7 +31,7 @@ import org.slf4j.LoggerFactory;
 public class OlcbSensorManagerXmlTest {
 
     @Test
-    public void testSaveAndRestoreWithProperties() throws Exception {
+    public void testSaveAndRestoreWithProperties() throws JmriConfigureXmlException, JmriException {
         log.debug("FIRST START");
         t = new OlcbTestInterface(new OlcbTestInterface.CreateConfigurationManager());
         OlcbSensorManager mgr = t.configurationManager.getSensorManager();
@@ -36,7 +41,7 @@ public class OlcbSensorManagerXmlTest {
         t.flush();
         CanMessage expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,8}, 0x198F4C4C);
         expected.setExtended(true);
-        Assert.assertEquals(expected, t.tc.rcvMessage);
+        assertEquals(expected, t.tc.rcvMessage);
         t.tc.rcvMessage = null;
 
         // Send a state query command
@@ -49,15 +54,15 @@ public class OlcbSensorManagerXmlTest {
         t.flush();
         expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,8}, 0x194C4C4C);
         expected.setExtended(true);
-        Assert.assertEquals(expected, t.tc.rcvMessage);
+        assertEquals(expected, t.tc.rcvMessage);
         t.tc.rcvMessage = null;
 
         s.setProperty(OlcbUtils.PROPERTY_QUERY_AT_STARTUP, false);
         s.setAuthoritative(false);
-        Assert.assertEquals(1, mgr.getNamedBeanSet().size());
+        assertEquals(1, mgr.getNamedBeanSet().size());
 
         Element stored = xmlmgr.store(mgr);
-        Assert.assertNotNull(stored);
+        assertNotNull(stored);
         InstanceManager.getDefault().clearAll();
 
         log.debug("SECOND START");
@@ -68,9 +73,9 @@ public class OlcbSensorManagerXmlTest {
         xmlmgr.load(stored, null);
 
         Sensor s2 = mgr.getBySystemName("MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9");
-        Assert.assertNotNull(s2);
-        Assert.assertEquals(false, s2.getProperty(OlcbUtils.PROPERTY_QUERY_AT_STARTUP));
-        Assert.assertNull(s2.getProperty(OlcbUtils.PROPERTY_IS_CONSUMER));
+        assertNotNull(s2);
+        assertFalse( (Boolean)s2.getProperty(OlcbUtils.PROPERTY_QUERY_AT_STARTUP));
+        assertNull(s2.getProperty(OlcbUtils.PROPERTY_IS_CONSUMER));
 
         t.flush();
 
@@ -78,7 +83,7 @@ public class OlcbSensorManagerXmlTest {
         // init is disabled.
         expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,9}, 0x194C7C4C);
         expected.setExtended(true);
-        Assert.assertEquals(expected, t.tc.rcvMessage);
+        assertEquals(expected, t.tc.rcvMessage);
         t.tc.rcvMessage = null;
 
         log.debug("SET STATE");
@@ -86,7 +91,7 @@ public class OlcbSensorManagerXmlTest {
         t.flush();
         expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,8}, 0x195B4C4C);
         expected.setExtended(true);
-        Assert.assertEquals(expected, t.tc.rcvMessage);
+        assertEquals(expected, t.tc.rcvMessage);
         t.tc.rcvMessage = null;
 
         // Another query will get back unknown state due to the property loaded.
@@ -94,17 +99,17 @@ public class OlcbSensorManagerXmlTest {
         t.flush();
         expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,8}, 0x194C7C4C);
         expected.setExtended(true);
-        Assert.assertEquals(expected, t.tc.rcvMessage);
+        assertEquals(expected, t.tc.rcvMessage);
         t.dispose();
     }
 
-    OlcbTestInterface t;
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensorManagerXmlTest.class);
+    private OlcbTestInterface t;
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbSensorManagerXmlTest.class);
 
     @BeforeAll
     static public void checkSeparate() {
        // this test is run separately because it leaves a lot of threads behind
-        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
     }
 
     @BeforeEach

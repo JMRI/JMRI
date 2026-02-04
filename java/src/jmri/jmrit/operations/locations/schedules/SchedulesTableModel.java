@@ -79,10 +79,8 @@ public class SchedulesTableModel extends OperationsTableModel implements Propert
     }
 
     List<Schedule> sysList = null;
-    JTable _table;
 
     public void initTable(SchedulesTableFrame frame, JTable table) {
-        this._table = table;
         super.initTable(table);
         
         // Install the button handlers

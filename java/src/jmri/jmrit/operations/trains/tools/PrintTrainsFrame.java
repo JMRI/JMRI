@@ -17,7 +17,11 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.gui.TrainsTableFrame;
+import jmri.jmrit.operations.trains.gui.TrainsTableModel;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -126,15 +130,15 @@ public class PrintTrainsFrame extends OperationsFrame {
         }
 
         // obtain a HardcopyWriter to do this
-        boolean landscape = false;
+        boolean isLandscape = false;
         if (manifestOrientationComboBox.getSelectedItem() != null &&
                 manifestOrientationComboBox.getSelectedItem().equals(Setup.LANDSCAPE)) {
-            landscape = true;
+            isLandscape = true;
         }
 
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
         try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleTrainsTable"),
-                fontSize, .5, .5, .5, .5, _isPreview, "", landscape, true, null);) {
+                fontSize, .5, .5, .5, .5, _isPreview, "", isLandscape, true, null, null);) {
 
             List<Train> trains = _trainsTableFrame.getSortByList((String) sortByComboBox.getSelectedItem());
 
@@ -164,9 +168,9 @@ public class PrintTrainsFrame extends OperationsFrame {
                 }
             }
         } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
+            log.debug("Print canceled");
         } catch (IOException e1) {
-            log.error("Exception in print train details");
+            log.error("Exception in print train details: {}", e1.getLocalizedMessage());
         }
     }
 
@@ -221,9 +225,9 @@ public class PrintTrainsFrame extends OperationsFrame {
 
             printTrain(writer, _train);
         } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
+            log.debug("Print canceled");
         } catch (IOException ex) {
-            log.error("Exception in print train");
+            log.error("Exception in print train: {}", ex.getLocalizedMessage());
         }
     }
 

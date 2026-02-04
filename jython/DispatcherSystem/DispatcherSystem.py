@@ -10,6 +10,7 @@ from javax.swing import JFileChooser,JTextField, BorderFactory
 from javax.swing import SwingWorker, SwingUtilities
 from javax.swing import WindowConstants, JDialog, JTextArea
 from java.awt import Color, Font
+from java.awt.event import WindowEvent
 import jmri
 
 from xml.etree.ElementTree import ElementTree
@@ -69,7 +70,9 @@ def CreateIcons_action(event):
     global f1
     initialPanelFilename = start_file
     finalPanelFilename = icons_file
+    # print "save panel"
     saveOrigPanel()
+    # print "process panels"
     result = processPanels()    # result is "Success" or "Failure"
     # stage2
     if str(result) == "Success":
@@ -78,7 +81,7 @@ def CreateIcons_action(event):
         title = "Error in Routine"
         msg = "Not creating Transits as failure in earlier routine"
         Query().displayMessage(msg,title)
-    #print "Created Transits"
+    # print "Created Transits"
 
 def saveOrigPanel():
     global backup_file
@@ -206,22 +209,8 @@ def CreateTransits_action(event):
 def CreateTransits():
     global g
     global le
-    #global DisplayProgress_global
     global logLevel
     global dpg
-
-    print( "in createTransits")
-    #the displayProgress is in CreateTransits
-    # CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
-    # exec(open (CreateTransits).read())
-    #DisplayProgress_global = DisplayProgress
-    # progress = 5
-    # DisplayProgress()
-    # dpg.Update("creating transits: " + str(progress)+ "% complete")
-
-    # initialPanelFilename = icons_file
-    # finalPanelFilename = run_file
-    #initialPanelFilename = start_file
 
     #print "Setting up Graph"
     my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/jars/jgrapht.jar')
@@ -231,25 +220,6 @@ def CreateTransits():
     exec(open (CreateGraph).read())
     le = LabelledEdge
     g = StationGraph()
-
-    # progress = 10
-    # dpg.Update("creating transits: " + str(progress)+ "% complete")
-
-    #if logLevel > 0: print "updating logic"
-    #     CreateSignalLogic = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateSignalLogicAndSections.py')
-    #     exec(open (CreateSignalLogic).read())
-    #     usl = Update_Signal_Logic()
-    #print "updating logic stage1"
-
-    #     ans = usl.create_autologic_and_sections()
-    #ans = True
-
-
-    #print "updating logic stage2"
-    #         usl.update_logic(run_file)
-
-    #progress = 15
-    #dpg.Update("creating transits: " + str(progress)+ "% complete")
 
     #print "Creating Transits"
     CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
@@ -264,7 +234,6 @@ def CreateTransits():
     ct.run_transits()
     #print "ran CreateTransits"
 
-    #dpg.killLabel()
 
 def show_options_message(msg):
     dialog = JDialog(None, 'Confirm Dispatcher Options', False)
@@ -314,7 +283,9 @@ def ChangeOptions_action(event):
     y = threading.Timer(0.1, function = show_options_pane)
     y.start()
 
-    msg = "You need to set the following: \n\n Use connectivity from Layout panels\n Trains from Roster\n Layout has block detection hardware\n Automatically allocate Sections to Active Trains\n Automatically set turnouts when a Section is allocated\n\n You also need to set SignalMasts/SML (top RH)\n and the Layout scale\n\nSave your Options in the Menu in the Dispatcher Frame after checking.\n "
+    msg = "You need to set the following: \n\n Use connectivity from Layout panels\n Trains from Roster\n Layout has block detection hardware\n Automatically allocate Sections to Active Trains\n Automatically set turnouts when a Section is allocated\n Apply Connections Turnout Delay\n\n The last option will set any turnouts sequentially with a delay between each to stop putting excessive demand on the controllers\n The default delay is 1000ms for most connections, 100ms for CAN connections\n This can be changed in Preferences > Connections > Connection Tab > Additional Connection Settings > Output Interval\n\n You also need to set SignalMasts/SML (top RH)\n and the Layout scale\n\n Save your Options in the Menu in the Dispatcher Frame after checking.\n ---------------------------------------------------------------------\n " + \
+        "\n IMPORTANT: After setting the options above you also need to set the Layout Scale in Preferences:Warrants \n to ensure the trains stop correctly\n"
+
     x = threading.Timer(2.0, function=show_options_message, args=(msg,))
     x.start()
 
@@ -354,9 +325,18 @@ CreateIcons = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherS
 execfile(CreateIcons)
 
 
+# delete previous Dispatch System Frames
+
+for frame1 in java.awt.Frame.getFrames():
+    # print "frame", frame1.getName()
+    if frame1.getName() == "Dispatch System":
+        # print "deleting frame", frame.getName()
+        frame1.dispatchEvent(WindowEvent(frame, WindowEvent.WINDOW_CLOSING))
+
 
 #*****************
 frame = jmri.util.JmriJFrame('Dispatch System');
+frame.setName("Dispatch System")
 frame.addHelpMenu('html.scripthelp.DispatcherSystem.DispatcherSystem' , True)
 
 panel = JPanel()
@@ -523,6 +503,8 @@ panel.add(leftJustify(rowStage1Separator))
 #stage2
 panel.add(leftJustify(rowStage2))
 panel.add(leftJustify(rowStage2Separator))
+
+frame.setPreferredSize(Dimension(700, 300))
 
 frame.pack()
 frame.setVisible(True)

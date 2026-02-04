@@ -81,9 +81,7 @@ public class ExpressionClockSwing extends AbstractDigitalExpressionSwing {
     public boolean validate(@Nonnull List<String> errorMessages) {
         _beginMinutes = validateTime(errorMessages, _beginTextField);
         _endMinutes = validateTime(errorMessages, _endTextField);
-
-        if (!errorMessages.isEmpty()) return false;
-        return true;
+        return errorMessages.isEmpty();
     }
 
     private int validateTime(List<String> errorMessages, JTextField timeField) {

@@ -1,8 +1,9 @@
 package jmri.jmrix.loconet;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -10,29 +11,30 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-
 public class LocoNetMessageExceptionTest {
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("LocoNetMessageException constructor",new LocoNetMessageException());
-   }
+    @Test
+    public void lnMsgExcpConstructorTest(){
+        assertNotNull( new LocoNetMessageException(),
+            "LocoNetMessageException constructor");
+    }
 
-   @Test
-   public void StringConstructorTest(){
-      Assert.assertNotNull("LocoNetMessageException string constructor",new LocoNetMessageException("test exception"));
-   }
+    @Test
+    public void lnMsgExcpStringConstructorTest(){
+        assertNotNull( new LocoNetMessageException("test exception"),
+            "LocoNetMessageException string constructor");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-   }
+        JUnitUtil.initDefaultUserMessagePreferences();
+    }
 
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         JUnitUtil.tearDown();
-   }
+    }
 
 }

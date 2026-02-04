@@ -1,26 +1,30 @@
 package jmri.jmrix.pricom.pockettester;
 
-import jmri.util.JUnitUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * JUnit tests for the DataSource class
  *
  * @author Bob Jacobsen Copyright 2005
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@DisabledIfHeadless
 public class DataSourceTest {
 
     @Test
     public void testCreate() {
-        Assert.assertTrue("no instance before ctor", DataSource.instance() == null);
+        assertNull( DataSource.instance() , "no instance before ctor");
         DataSource d = new DataSource();
-        Assert.assertTrue("no instance after ctor", DataSource.instance() == null);
+        assertNull( DataSource.instance() , "no instance after ctor");
         d.initComponents();
-        Assert.assertTrue("valid instance after init", DataSource.instance() != null);
+        assertNotNull( DataSource.instance(), "valid instance after init");
         d.dispose();
     }
 
@@ -32,11 +36,11 @@ public class DataSourceTest {
 
         message = "nothing interesing";
         f.nextLine(message);
-        Assert.assertTrue("pass misc ", !message.equals(f.version.getText()));
+        assertNotEquals( message, f.version.getText(), "pass misc ");
 
         message = TestConstants.version;
         f.nextLine(message);
-        Assert.assertTrue("show version ", message.equals(f.version.getText()));
+        assertEquals( message, f.version.getText(), "show version ");
 
         f.dispose();
     }
@@ -50,7 +54,7 @@ public class DataSourceTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

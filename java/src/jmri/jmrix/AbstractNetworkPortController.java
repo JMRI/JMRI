@@ -47,7 +47,9 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             return;
         }
         try {
-            socketConn = new Socket(getHostAddress(), m_port);
+            var address = getHostAddress();
+            log.info("Attempting to open connecton to {}:{}", address, m_port);
+            socketConn = new Socket(address, m_port);
             socketConn.setKeepAlive(true);
             socketConn.setSoTimeout(getConnectionTimeout());
             opened = true;
@@ -88,6 +90,19 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
 
     @Override
     public String getHostName() {
+        final String envVar = "JMRI_HOSTNAME";
+        String fromEnv = System.getenv(envVar);
+        log.debug("Environment {} {} was {}", envVar, fromEnv, m_HostName);
+        String fromProp = System.getProperty(envVar);
+        log.debug("Property {} {} was {}", envVar, fromProp, m_HostName);
+        if (fromEnv != null ) {
+            jmri.util.LoggingUtil.infoOnce(log,"{} set, using environment \"{}\" as Host Name", envVar, fromEnv);
+            return fromEnv;
+        }
+        if (fromProp != null ) {
+            jmri.util.LoggingUtil.infoOnce(log,"{} set, using property \"{}\" as Host Name", envVar, fromProp);
+            return fromProp;
+        }
         return m_HostName;
     }
 
@@ -108,8 +123,9 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
 
     protected String getHostAddress() {
         if (m_HostAddress == null) {
-            return m_HostName;
+            return getHostName();
         }
+        log.info("getHostAddress is {}", m_HostAddress);
         return m_HostAddress;
     }
 

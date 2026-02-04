@@ -31,7 +31,7 @@
       <name xml:lang="de">Weichensteuerung...</name>
       <name xml:lang="cs">Ovládání výhybek</name>
       <name xml:lang="ca">Control d'Agulles</name>
-      <name xml:lang="nl">Wisselaansturing...</name>
+      <name xml:lang="nl">Wisselbediening...</name>
     </node>
     <node>
       <name>Light Control</name>

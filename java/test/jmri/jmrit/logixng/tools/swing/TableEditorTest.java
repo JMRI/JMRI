@@ -1,16 +1,11 @@
 package jmri.jmrit.logixng.tools.swing;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test TableEditor
@@ -20,16 +15,16 @@ import org.junit.Test;
 public class TableEditorTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         InstanceManager.getDefault(NamedTableManager.class).newInternalTable("IQT1", null, 2, 3);
         TableEditor b = new TableEditor(null, "IQT1");
-        Assert.assertNotNull("exists", b);
+        Assertions.assertNotNull( b, "exists");
+        b.finishDone();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -38,7 +33,7 @@ public class TableEditorTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.clearShutDownManager();

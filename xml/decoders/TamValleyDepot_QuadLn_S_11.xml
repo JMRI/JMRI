@@ -12,8 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
-   <version author="robin@n3ix.com" version="3.03.0" lastUpdated="20240301"/>
-   <decoder>
+    <version author="robin@n3ix.com" version="3.04.0" lastUpdated="20240924"/>
+    <decoder>
         <family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN_S is programmed in OPs mode except for the device address.">
             <model model="Quad-LN_S_v1" comment="4 or 8 Servo Driver with Signaling and Detection options" lowVersionID="6"/>
             <model model="Quad-LN_S_v3" comment="4, 8, 12 or 16 Servo Driver with Signaling and Detection options" lowVersionID="7"/>
@@ -23,10 +23,10 @@
         </programming>
       
         <variables>
-          <variable item="Version" CV="4" readOnly="yes">
+            <variable item="Version" CV="4" readOnly="yes" default="0" >
                 <decVal/>
             </variable>
-            <variable item="Major Version" CV="4" mask="VVVVXXXX" readOnly="yes" default="1">
+            <variable item="Major Version" CV="4" mask="VVVVXXXX" readOnly="yes" default="0">
                 <decVal/>
             </variable>
             <variable item="Minor Version" CV="4" mask="XXXXVVVV" readOnly="yes" default="0">
@@ -44,322 +44,346 @@
             <variable item="Manufacturer ID" CV="8" readOnly="yes" default="59">
                 <decVal/>
             </variable>
+            <variable item="Long Address" CV="17" default="11000" comment="Range 1-16383">
+                <longAddressVal/>
+            </variable>
 
-            <variable item="Expansion" CV="11" mask="XXXXXXVV" default="0">
-                <enumVal>
-                    <enumChoice choice="Relay"/>
-                    <enumChoice choice="Signaling"/>
-                    <enumChoice choice="Servo" include="Quad-LN_S_v1" />
-                    <enumChoice choice="Turnout" value="2" include="Quad-LN_S_v3" />
-                </enumVal>
-            </variable>
-            <variable item="ServoExp" CV="11" mask="XXXXXXVX" default="0" include="Quad-LN_S_v3">
-                <decVal/>
-            </variable>
-            <variable item="ServoExp" CV="11" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
-                <decVal/>
-            </variable>
-         
-            <variable item="IO Mode" CV="11" mask="XXVVXXXX" default="0" include="Quad-LN_S_v3">
-                <enumVal>
-                    <enumChoice choice="Both IO"/>
-                    <enumChoice choice="Main IO, Aux Servo" include="Quad-LN_S_v1" />
-                    <enumChoice choice="Main IO, Aux Turnout" include="Quad-LN_S_v3" />
-                    <enumChoice choice="Both Servo" value="3" include="Quad-LN_S_v1" />
-                    <enumChoice choice="Both Turnout" value="3" include="Quad-LN_S_v3" />
-                </enumVal>
-            </variable>
-            <variable item="ServoMain" CV="11" mask="XXVXXXXX" default="0" include="Quad-LN_S_v3">
-                <decVal/>
-            </variable>
-            <variable item="ServoAux" CV="11" mask="XXXVXXXX" default="0" exclude="Quad-LN_S_v1">
-                <decVal/>
-            </variable>
-            <variable item="ServoMain" CV="11" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
-                <decVal/>
-            </variable>
-            <variable item="ServoAux" CV="11" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
-                <decVal/>
-            </variable>
-            <variable item="Servo16" CV="11" mask="XXVVXXVX" default="0" exclude="Quad-LN_S_v1">
-                <decVal/>
-            </variable>
-            <variable item="Servo16" CV="11" mask="XXXXXXVX" default="0" include="Quad-LN_S_v1">
-                <decVal/>
-            </variable>
-            <variable item="Send Output Off" CV="11" mask="XXXVXXXX" default="1" include="Quad-LN_S_v1">
-                <enumVal>
-                    <enumChoice choice="Disable"/>
-                    <enumChoice choice="Enable"/>
-                </enumVal>
-            </variable>
-            <variable item="Local Actions" CV="11" mask="XXVXXXXX" default="1" include="Quad-LN_S_v1">
-                <enumVal>
-                    <enumChoice choice="Perform Internally"/>
-                    <enumChoice choice="Visible on Loconet"/>
-                </enumVal>
-            </variable>
-             <variable item="IO Mode" CV="11" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
-                <enumVal>
-                    <enumChoice choice="Both IO"/>
-                </enumVal>
-            </variable>
-         
-            <variable item="Servo State Memory" CV="11" mask="XXXXXVXX" default="1" include="Quad-LN_S_v1">
-                <enumVal>
-                    <enumChoice choice="Disable"/>
-                    <enumChoice choice="Enable"/>
-                </enumVal>
-            </variable>
-            <variable item="Turnout State Memory" CV="11" mask="XXXXXVXX" default="1" exclude="Quad-LN_S_v1">
-                <enumVal>
-                    <enumChoice choice="Disable"/>
-                    <enumChoice choice="Enable"/>
-                </enumVal>
-            </variable>
-            <variable item="Signal State Memory" CV="11" mask="XXXXVXXX" default="0">
-                <enumVal>
-                    <enumChoice choice="Disable"/>
-                    <enumChoice choice="Enable"/>
-                </enumVal>
-            </variable>
+           
             <variables>
                 <qualifier>
-                    <variableref>Servo16</variableref>
-                    <relation>lt</relation>
-                    <value>24</value>
+                    <variableref>Version</variableref>
+                    <relation>ge</relation>
+                    <value>1</value>
                 </qualifier>
-                <variable item="Lock Indicator" CV="11" mask="XVXXXXXX" default="0">
-                   <enumVal>
-                        <enumChoice choice="Blink when Locked"/>
-                        <enumChoice choice="Blink when Unlocked"/>
+
+                <variable item="Expansion" CV="11" mask="XXXXXXVV" default="0">
+                    <enumVal>
+                        <enumChoice choice="Relay"/>
+                        <enumChoice choice="Signaling"/>
+                        <enumChoice choice="Servo" include="Quad-LN_S_v1" />
+                        <enumChoice choice="Turnout" value="2" include="Quad-LN_S_v3" />
                     </enumVal>
                 </variable>
-                <variable item="Sensor Input Polarity" CV="12" mask="XXXXXXXV" default="0">
-                   <enumVal>
-                        <enumChoice choice="Normal"/>
-                        <enumChoice choice="Inverted"/>
+                <variable item="ServoExp" CV="11" mask="XXXXXXVX" default="0" include="Quad-LN_S_v3">
+                    <decVal/>
+                </variable>
+                <variable item="ServoExp" CV="11" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
+                    <decVal/>
+                </variable>
+             
+                <variable item="IO Mode" CV="11" mask="XXVVXXXX" default="0" include="Quad-LN_S_v3">
+                    <enumVal>
+                        <enumChoice choice="Both IO"/>
+                        <enumChoice choice="Main IO, Aux Turnout" />
+                        <enumChoice choice="Both Turnout" value="3" />
                     </enumVal>
                 </variable>
-                <variable item="Local Actions" CV="12" mask="XXXXVXXX" default="1" exclude="Quad-LN_S_v1">
+                <variable item="ServoMain" CV="11" mask="XXVXXXXX" default="0" include="Quad-LN_S_v3">
+                    <decVal/>
+                </variable>
+                <variable item="ServoAux" CV="11" mask="XXXVXXXX" default="0" exclude="Quad-LN_S_v1">
+                    <decVal/>
+                </variable>
+                <variable item="ServoMain" CV="11" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
+                    <decVal/>
+                </variable>
+                <variable item="ServoAux" CV="11" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
+                    <decVal/>
+                </variable>
+                <variable item="Servo16" CV="11" mask="XXVVXXVX" default="0" exclude="Quad-LN_S_v1">
+                    <decVal/>
+                </variable>
+                <variable item="Servo16" CV="11" mask="XXXXXXVX" default="0" include="Quad-LN_S_v1">
+                    <decVal/>
+                </variable>
+                <variable item="Send Output Off" CV="11" mask="XXXVXXXX" default="1" include="Quad-LN_S_v1">
+                    <enumVal>
+                        <enumChoice choice="Disable"/>
+                        <enumChoice choice="Enable"/>
+                    </enumVal>
+                </variable>
+                <variable item="Local Actions" CV="11" mask="XXVXXXXX" default="1" include="Quad-LN_S_v1">
                     <enumVal>
                         <enumChoice choice="Perform Internally"/>
                         <enumChoice choice="Visible on Loconet"/>
                     </enumVal>
                 </variable>
-            </variables>
-            <variable item="DCC Busy Retry" CV="11" mask="VXXXXXXX" default="1">
-                <enumVal>
-                    <enumChoice choice="Disable"/>
-                    <enumChoice choice="Enable"/>
-                </enumVal>
-            </variable>
-            <variables>
-                <qualifier>
-                    <variableref>Version</variableref>
-                    <relation>ge</relation>
-                    <value>49</value>
-                </qualifier>
-                <variable item="Lock Scope" CV="12" mask="XXXXXXVX" default="0">
+                 <variable item="IO Mode" CV="11" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
                     <enumVal>
-                        <enumChoice choice="Local IO Only"/>
-                        <enumChoice choice="Local and LocoNet"/>
+                        <enumChoice choice="Both IO"/>
                     </enumVal>
                 </variable>
-                <variable item="CV7 Interrogate" CV="12" mask="VXXXXXXX" default="0">
+             
+                <variable item="Servo State Memory" CV="11" mask="XXXXXVXX" default="1" include="Quad-LN_S_v1">
                     <enumVal>
-                        <enumChoice choice="Ignore"/>
-                        <enumChoice choice="Respond"/>
+                        <enumChoice choice="Disable"/>
+                        <enumChoice choice="Enable"/>
+                    </enumVal>
+                </variable>
+                <variable item="Turnout State Memory" CV="11" mask="XXXXXVXX" default="1" exclude="Quad-LN_S_v1">
+                    <enumVal>
+                        <enumChoice choice="Disable"/>
+                        <enumChoice choice="Enable"/>
+                    </enumVal>
+                </variable>
+                <variable item="Signal State Memory" CV="11" mask="XXXXVXXX" default="0">
+                    <enumVal>
+                        <enumChoice choice="Disable"/>
+                        <enumChoice choice="Enable"/>
+                    </enumVal>
+                </variable>
+                <variables>
+                    <qualifier>
+                        <variableref>Servo16</variableref>
+                        <relation>lt</relation>
+                        <value>24</value>
+                    </qualifier>
+                    <variable item="Lock Indicator" CV="11" mask="XVXXXXXX" default="0">
+                       <enumVal>
+                            <enumChoice choice="Blink when Locked"/>
+                            <enumChoice choice="Blink when Unlocked"/>
+                        </enumVal>
+                    </variable>
+                    <variable item="Sensor Input Polarity" CV="12" mask="XXXXXXXV" default="0">
+                       <enumVal>
+                            <enumChoice choice="Normal"/>
+                            <enumChoice choice="Inverted"/>
+                        </enumVal>
+                    </variable>
+                    <variable item="Local Actions" CV="12" mask="XXXXVXXX" default="1" exclude="Quad-LN_S_v1">
+                        <enumVal>
+                            <enumChoice choice="Perform Internally"/>
+                            <enumChoice choice="Visible on Loconet"/>
+                        </enumVal>
+                    </variable>
+                </variables>
+                <variable item="DCC Busy Retry" CV="11" mask="VXXXXXXX" default="1">
+                    <enumVal>
+                        <enumChoice choice="Disable"/>
+                        <enumChoice choice="Enable"/>
                     </enumVal>
                 </variable>
                 <variables>
                     <qualifier>
                         <variableref>Version</variableref>
                         <relation>ge</relation>
-                        <value>50</value>
+                        <value>49</value>
                     </qualifier>
-                    <variable item="Refresh Servos" CV="24" mask="XXXXXXXV" default="0">
+                    <variable item="Lock Scope" CV="12" mask="XXXXXXVX" default="0">
                         <enumVal>
-                            <enumChoice choice="Disable"/>
-                            <enumChoice choice="Enable"/>
+                            <enumChoice choice="Local IO Only"/>
+                            <enumChoice choice="Local and LocoNet"/>
                         </enumVal>
                     </variable>
-                    <variable item="Repower Servo" CV="24" mask="XXXXXXVX" default="0">
+                    <variable item="CV7 Interrogate" CV="12" mask="VXXXXXXX" default="0">
                         <enumVal>
-                            <enumChoice choice="Always"/>
-                            <enumChoice choice="On Change Only"/>
+                            <enumChoice choice="Ignore"/>
+                            <enumChoice choice="Respond"/>
                         </enumVal>
                     </variable>
                     <variables>
                         <qualifier>
                             <variableref>Version</variableref>
                             <relation>ge</relation>
-                            <value>51</value>
+                            <value>50</value>
                         </qualifier>
-                        <variable item="Lock Span" CV="24" mask="XXXXXVXX" default="0">
+                        <variable item="Refresh Servos" CV="24" mask="XXXXXXXV" default="0">
                             <enumVal>
-                                <enumChoice choice="One Turnout"/>
-                                <enumChoice choice="Whole Port"/>
+                                <enumChoice choice="Disable"/>
+                                <enumChoice choice="Enable"/>
                             </enumVal>
                         </variable>
-                        <variable item="Report DCC Change" CV="24" mask="XXXXVXXX" default="0">
+                        <variable item="Repower Servo" CV="24" mask="XXXXXXVX" default="0">
                             <enumVal>
-                                <enumChoice choice="No Report"/>
-                                <enumChoice choice="Sensor Report"/>
+                                <enumChoice choice="Always"/>
+                                <enumChoice choice="On Change Only"/>
                             </enumVal>
                         </variable>
+                        <variables>
+                            <qualifier>
+                                <variableref>Version</variableref>
+                                <relation>ge</relation>
+                                <value>51</value>
+                            </qualifier>
+                            <variable item="Lock Span" CV="24" mask="XXXXXVXX" default="0">
+                                <enumVal>
+                                    <enumChoice choice="One Turnout"/>
+                                    <enumChoice choice="Whole Port"/>
+                                </enumVal>
+                            </variable>
+                            <variable item="Report DCC Change" CV="24" mask="XXXXVXXX" default="0">
+                                <enumVal>
+                                    <enumChoice choice="No Report"/>
+                                    <enumChoice choice="Sensor Report"/>
+                                </enumVal>
+                            </variable>
+                        </variables>
+                        <variables>
+                            <qualifier>
+                                <variableref>Version</variableref>
+                                <relation>ge</relation>
+                                <value>52</value>
+                            </qualifier>
+                            <variable item="Soft Start" CV="24" mask="XXXVXXXX" default="1">
+                                <enumVal>
+                                    <enumChoice choice="Disable Soft Start"/>
+                                    <enumChoice choice="Enable Soft Start"/>
+                                </enumVal>
+                            </variable>
+                        </variables>
                     </variables>
+                </variables>
+                
+                <variable item="Servo Drive" CV="12" mask="XXXXXXVX" default="0" include="Quad-LN_S_v1">
+                    <enumVal>
+                        <enumChoice choice="Always On"/>
+                        <enumChoice choice="Off when Stopped"/>
+                    </enumVal>
+                </variable>
+
+                <variable item="No CS" CV="12" mask="XXXXXVXX" default="0">
+                    <enumVal>
+                        <enumChoice choice="Disable"/>
+                        <enumChoice choice="Enable"/>
+                    </enumVal>
+                </variable>
+                <variable item="Route Delay" CV="12" mask="XXVVXXXX" default="0">
+                    <enumVal>
+                        <enumChoice choice="1 Sec"/>
+                        <enumChoice choice="2 Sec"/>
+                        <enumChoice choice="4 Sec"/>
+                        <enumChoice choice="8 Sec"/>
+                    </enumVal>
+                </variable>
+                <variable item="Disable Interrogate" CV="12" mask="XVXXXXXX" default="0">
+                    <enumVal>
+                        <enumChoice choice="Normal"/>
+                        <enumChoice choice="Disable"/>
+                    </enumVal>
+                </variable>
+
+                <variables>
+                    <qualifier>
+                        <variableref>Version</variableref>
+                        <relation>lt</relation>
+                        <value>51</value>
+                    </qualifier>
+                    <variable item="Lock Start Address" CV="13,14" mask="VVVVVVVV XXXXXVVV" default="100">
+                        <splitVal offset="1" min="1" max="2045" /> 
+                    </variable>
+
+                    <variable item="Servo Start Address" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0" include="Quad-LN_S_v1">
+                        <splitVal offset="1" min="1" max="2045" />
+                    </variable>
+                    <variable item="Turnout Start Address" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0" include="Quad-LN_S_v3">
+                        <splitVal offset="1" min="1" max="2045" />
+                    </variable>
+                    <variable item="Main IO Start Address" CV="9,10" mask="VVVVVVVV XXXXVVVV" default="0">
+                        <qualifier>
+                            <variableref>ServoMain</variableref>
+                            <relation>eq</relation>
+                            <value>0</value>
+                        </qualifier>
+                        <splitVal offset="1" min="1" max="4093" /> 
+                    </variable>
+
+                    <variable item="Aux IO Start Address" CV="15,16" mask="VVVVVVVV XXXXVVVV" default="4">
+                        <qualifier>
+                            <variableref>ServoAux</variableref>
+                            <relation>eq</relation>
+                            <value>0</value>
+                        </qualifier>
+                        <splitVal offset="1" min="1" max="4093" /> 
+                    </variable>
+                </variables>
+                <variables>
+                    <qualifier>
+                        <variableref>Version</variableref>
+                        <relation>ge</relation>
+                        <value>51</value>
+                    </qualifier>
+                    <variable item="SERVO Turnout Start Address" CV="33,34" mask="VVVVVVVV XXXXXVVV" default="0">
+                        <splitVal offset="1" min="1" max="2045" />
+                    </variable>
+                    <variable item="MAIN Turnout Start Address" CV="35,36" mask="VVVVVVVV XXXXXVVV" default="0">
+                        <qualifier>
+                            <variableref>ServoMain</variableref>
+                            <relation>ne</relation>
+                            <value>0</value>
+                        </qualifier>
+                        <splitVal offset="1" min="1" max="2045" />
+                    </variable>
+                    <variable item="AUX Turnout Start Address" CV="37,38" mask="VVVVVVVV XXXXXVVV" default="0">
+                        <qualifier>
+                            <variableref>ServoAux</variableref>
+                            <relation>ne</relation>
+                            <value>0</value>
+                        </qualifier>
+                        <splitVal offset="1" min="1" max="2045" />
+                    </variable>
+                    <variable item="EXP Turnout Start Address" CV="39,40" mask="VVVVVVVV XXXXXVVV" default="0">
+                        <qualifier>
+                            <variableref>ServoExp</variableref>
+                            <relation>ne</relation>
+                            <value>0</value>
+                        </qualifier>
+                        <splitVal offset="1" min="1" max="2045" />
+                    </variable>
+                    <variable item="SERVO Lock Start Address" CV="41,42" mask="VVVVVVVV XXXXXVVV" default="100">
+                        <splitVal offset="1" min="1" max="2045" /> 
+                    </variable>
+                    <variable item="MAIN Lock Start Address" CV="43,44" mask="VVVVVVVV XXXXXVVV" default="100">
+                        <qualifier>
+                            <variableref>ServoMain</variableref>
+                            <relation>ne</relation>
+                            <value>0</value>
+                        </qualifier>
+                        <splitVal offset="1" min="1" max="2045" /> 
+                    </variable>
+                    <variable item="AUX Lock Start Address" CV="45,46" mask="VVVVVVVV XXXXXVVV" default="100">
+                        <qualifier>
+                            <variableref>ServoAux</variableref>
+                            <relation>ne</relation>
+                            <value>0</value>
+                        </qualifier>
+                        <splitVal offset="1" min="1" max="2045" /> 
+                    </variable>
+                    <variable item="EXP Lock Start Address" CV="47,48" mask="VVVVVVVV XXXXXVVV" default="100">
+                        <qualifier>
+                            <variableref>ServoExp</variableref>
+                            <relation>ne</relation>
+                            <value>0</value>
+                        </qualifier>
+                        <splitVal offset="1" min="1" max="2045" /> 
+                    </variable>
+                    <variable item="MAIN Input Start Address" CV="51,52" mask="VVVVVVVV XXXXVVVV" default="0">
+                        <splitVal offset="1" min="1" max="4093" />
+                    </variable>
+                    <variable item="AUX Input Start Address" CV="53,54" mask="VVVVVVVV XXXXVVVV" default="0">
+                        <qualifier>
+                            <variableref>ServoAux</variableref>
+                            <relation>eq</relation>
+                            <value>0</value>
+                        </qualifier>
+                        <splitVal offset="1" min="1" max="4093" />
+                    </variable>
+                    <variable item="DCC Input Sensor Address" CV="57,58" mask="VVVVVVVV XXXXVVVV" default="0">
+                        <qualifier>
+                            <variableref>Report DCC Change</variableref>
+                            <relation>ne</relation>
+                            <value>0</value>
+                        </qualifier>
+                        <splitVal offset="1" min="1" max="4093" />
+                    </variable>
                 </variables>
             </variables>
             
-            <variable item="Servo Drive" CV="12" mask="XXXXXXVX" default="0" include="Quad-LN_S_v1">
-                <enumVal>
-                    <enumChoice choice="Always On"/>
-                    <enumChoice choice="Off when Stopped"/>
-                </enumVal>
-            </variable>
-
-            <variable item="No CS" CV="12" mask="XXXXXVXX" default="0">
-                <enumVal>
-                    <enumChoice choice="Disable"/>
-                    <enumChoice choice="Enable"/>
-                </enumVal>
-            </variable>
-            <variable item="Route Delay" CV="12" mask="XXVVXXXX" default="0">
-                <enumVal>
-                    <enumChoice choice="1 Sec"/>
-                    <enumChoice choice="2 Sec"/>
-                    <enumChoice choice="4 Sec"/>
-                    <enumChoice choice="8 Sec"/>
-                </enumVal>
-            </variable>
-            <variable item="Disable Interrogate" CV="12" mask="XVXXXXXX" default="0">
-                <enumVal>
-                    <enumChoice choice="Normal"/>
-                    <enumChoice choice="Disable"/>
-                </enumVal>
-            </variable>
-
-            <variable item="Long Address" CV="17" default="11000" comment="Range 1-16383">
-                <longAddressVal/>
-            </variable>
-
-            <variables>
-                <qualifier>
-                    <variableref>Version</variableref>
-                    <relation>lt</relation>
-                    <value>51</value>
-                </qualifier>
-                <variable item="Lock Start Address" CV="13,14" mask="VVVVVVVV XXXXXVVV" default="100">
-                    <splitVal offset="1" min="1" max="2045" /> 
-                </variable>
-
-                <variable item="Servo Start Address" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0" include="Quad-LN_S_v1">
-                    <splitVal offset="1" min="1" max="2045" />
-                </variable>
-                <variable item="Turnout Start Address" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0" include="Quad-LN_S_v3">
-                    <splitVal offset="1" min="1" max="2045" />
-                </variable>
-                <variable item="Main IO Start Address" CV="9,10" mask="VVVVVVVV XXXXVVVV" default="0">
-                    <qualifier>
-                        <variableref>ServoMain</variableref>
-                        <relation>eq</relation>
-                        <value>0</value>
-                    </qualifier>
-                    <splitVal offset="1" min="1" max="4093" /> 
-                </variable>
-
-                <variable item="Aux IO Start Address" CV="15,16" mask="VVVVVVVV XXXXVVVV" default="4">
-                    <qualifier>
-                        <variableref>ServoAux</variableref>
-                        <relation>eq</relation>
-                        <value>0</value>
-                    </qualifier>
-                    <splitVal offset="1" min="1" max="4093" /> 
-                </variable>
-            </variables>
-            <variables>
+            <variable item="One Choice Enum" CV="1" mask="XXXXXXXX">
                 <qualifier>
                     <variableref>Version</variableref>
                     <relation>ge</relation>
-                    <value>51</value>
+                    <value>1</value>
                 </qualifier>
-                <variable item="SERVO Turnout Start Address" CV="33,34" mask="VVVVVVVV XXXXXVVV" default="0">
-                    <splitVal offset="1" min="1" max="2045" />
-                </variable>
-                <variable item="MAIN Turnout Start Address" CV="35,36" mask="VVVVVVVV XXXXXVVV" default="0">
-                    <qualifier>
-                        <variableref>ServoMain</variableref>
-                        <relation>ne</relation>
-                        <value>0</value>
-                    </qualifier>
-                    <splitVal offset="1" min="1" max="2045" />
-                </variable>
-                <variable item="AUX Turnout Start Address" CV="37,38" mask="VVVVVVVV XXXXXVVV" default="0">
-                    <qualifier>
-                        <variableref>ServoAux</variableref>
-                        <relation>ne</relation>
-                        <value>0</value>
-                    </qualifier>
-                    <splitVal offset="1" min="1" max="2045" />
-                </variable>
-                <variable item="EXP Turnout Start Address" CV="39,40" mask="VVVVVVVV XXXXXVVV" default="0">
-                    <qualifier>
-                        <variableref>ServoExp</variableref>
-                        <relation>ne</relation>
-                        <value>0</value>
-                    </qualifier>
-                    <splitVal offset="1" min="1" max="2045" />
-                </variable>
-                <variable item="SERVO Lock Start Address" CV="41,42" mask="VVVVVVVV XXXXXVVV" default="100">
-                    <splitVal offset="1" min="1" max="2045" /> 
-                </variable>
-                <variable item="MAIN Lock Start Address" CV="43,44" mask="VVVVVVVV XXXXXVVV" default="100">
-                    <qualifier>
-                        <variableref>ServoMain</variableref>
-                        <relation>ne</relation>
-                        <value>0</value>
-                    </qualifier>
-                    <splitVal offset="1" min="1" max="2045" /> 
-                </variable>
-                <variable item="AUX Lock Start Address" CV="45,46" mask="VVVVVVVV XXXXXVVV" default="100">
-                    <qualifier>
-                        <variableref>ServoAux</variableref>
-                        <relation>ne</relation>
-                        <value>0</value>
-                    </qualifier>
-                    <splitVal offset="1" min="1" max="2045" /> 
-                </variable>
-                <variable item="EXP Lock Start Address" CV="47,48" mask="VVVVVVVV XXXXXVVV" default="100">
-                    <qualifier>
-                        <variableref>ServoExp</variableref>
-                        <relation>ne</relation>
-                        <value>0</value>
-                    </qualifier>
-                    <splitVal offset="1" min="1" max="2045" /> 
-                </variable>
-                <variable item="MAIN Input Start Address" CV="51,52" mask="VVVVVVVV XXXXVVVV" default="0">
-                    <splitVal offset="1" min="1" max="4093" />
-                </variable>
-                <variable item="AUX Input Start Address" CV="53,54" mask="VVVVVVVV XXXXVVVV" default="0">
-                    <qualifier>
-                        <variableref>ServoAux</variableref>
-                        <relation>eq</relation>
-                        <value>0</value>
-                    </qualifier>
-                    <splitVal offset="1" min="1" max="4093" />
-                </variable>
-                <variable item="DCC Input Sensor Address" CV="57,58" mask="VVVVVVVV XXXXVVVV" default="0">
-                    <qualifier>
-                        <variableref>Report DCC Change</variableref>
-                        <relation>ne</relation>
-                        <value>0</value>
-                    </qualifier>
-                    <splitVal offset="1" min="1" max="4093" />
-                </variable>
-            </variables>
-            
-            <variable item="One Choice Enum" CV="1" mask="XXXXXXXX">
                 <enumVal>
                     <enumChoice choice="" />
                 </enumVal>
@@ -533,6 +557,9 @@
                     <display item="Lock Span" format="checkbox" tooltip="One Lock per Port instead of one per turnout">
                         <label>One Lock Per Port</label>
                     </display>
+                    <display item="Soft Start" format="checkbox" tooltip="Start one servo at a time at powerup to reduce current surge">
+                        <label>Servo Soft Start</label>
+                    </display>
                     <display item="Report DCC Change" format="checkbox" tooltip="Send Sensor Report when DCC Power goes on or off">
                         <label>Report DCC Change</label>
                     </display>
@@ -567,19 +594,19 @@
             <row>
                 <column>
                     <display item="Major Version">
-                        <tooltip>Software major version number</tooltip>
-                        <label>Software Version</label>
+                        <tooltip>Firmware major version number</tooltip>
+                        <label>Firmware Version</label>
                     </display>
                 </column>
                 <column>
                     <display item="Minor Version">
-                        <tooltip>Software minor version number</tooltip>
+                        <tooltip>Firmware minor version number</tooltip>
                         <label>.</label>
                     </display>
                 </column>
                 <column>
                     <display item="Build Num">
-                        <tooltip>Software build number</tooltip>
+                        <tooltip>Firmware build number</tooltip>
                         <label>  Build Number</label>
                     </display>
                 </column>
@@ -589,48 +616,140 @@
             </row>
             <row>
                 <column>
-                    <group include="Quad-LN_S_v3">
+                    <group>
                         <qualifier>
-                            <variableref>Major Version</variableref>
-                            <relation>le</relation>
-                            <value>2</value>
+                            <variableref>Version</variableref>
+                            <relation>eq</relation>
+                            <value>0</value>
                         </qualifier>
                         <label>
-                            <text>FIRMWARE VERSION 3.0 OR LATER IS REQUIRED TO USE THE Quad-LN_S_v3 TEMPLATE.</text>
+                            <text>&lt;html&gt;&lt;b&gt;ACTION REQUIRED: The installed FIRMWARE VERSION must be READ from the Quad-LN_S&lt;/b&gt;&lt;/html&gt;  </text>
                         </label>
                         <label>
-                            <text>DO A READ SHEET.  IF THIS MESSAGE IS STILL PRESENT THEN USE THE Quad-LN_S_v1 TEMPLATE OR UPDATE YOUR FIRMWARE.</text>
+                            <text>   </text>
+                        </label>
+                        <label>
+                            <text>Note: the Quad-LN_S Board Address must match the Board Address in this Roster Entry.  See below.  </text>
+                        </label>
+                        <label>
+                            <text>   </text>
+                        </label>
+                        <label>
+                            <text>&lt;html&gt;&lt;b&gt;Reading the Quad-LN_S Firmware Version&lt;/b&gt;&lt;/html&gt;   </text>
+                        </label>
+                        <label>
+                            <text>* OPEN this roster entry using "Programming on Main" (Ops Mode Programmer).  </text>
+                        </label>
+                        <label>
+                            <text>* Go to the Quad-LN_S Tab.  </text>
+                        </label>
+                        <label>
+                            <text>* If you need to change the Board Address in this Roster Entry then Save, Close and Reopen the Roster Entry.  </text>
+                        </label>
+                        <label>
+                            <text>* Do a "Read full sheet".  </text>
+                        </label>
+                        <label>
+                            <text>* When the Read is finished this message will disappear.  </text>
+                        </label>
+                        <label>
+                            <text>* SAVE the Roster Entry.  </text>
+                        </label>
+                        <label>
+                            <text>Note: if JMRI shows Programming Errors while Reading, STOP the Read and confirm that the Quad-LN_S Board Address is programmed properly.  </text>
+                        </label>
+                        <label>
+                            <text>   </text>
+                        </label>
+                        <label>
+                            <text>&lt;html&gt;&lt;b&gt;Programming the Board Address in the Quad-LN_S to match this Roster Entry&lt;/b&gt;&lt;/html&gt; </text>
+                        </label>
+                        <label>
+                            <text>* Ensure that there is no loco on your programming track.  </text>
+                        </label>
+                        <label>
+                            <text>* OPEN this Roster Entry using "On Programming Track" (Service Mode Programmer).  </text>
+                        </label>
+                        <label>
+                            <text>  (If Quad-LN_S firmware 3.3 or later is installed you can also use "Programming On Main" (Ops Mode Programmer) when setting the board address.)  </text>
+                        </label>
+                        <label>
+                            <text>* Install the ADDR JUMPER on the Quad-LN_S.  </text>
+                        </label>
+                        <label>
+                            <text>* Observe that the LEDs on the Quad-LN_S are flashing.  </text>
+                        </label>
+                        <label>
+                            <text>* Go to the CV TAB, then WRITE CV17 and WRITE CV18 in that order.  </text>
+                        </label>
+                        <label>
+                            <text>* Confirm that the LEDs on the Quad-LN_S have stopped flashing.  </text>
+                        </label>
+                        <label>
+                            <text>* REMOVE the ADDR JUMPER.  </text>
+                        </label>
+                        <label>
+                            <text>* CLOSE the Roster Entry.  </text>
+                        </label>
+                        <label>
+                            <text>You are now done using "On Programming Track" (Service Mode Prgrammer) for this Quad-LN_S.  </text>
+                        </label>
+                        <label>
+                            <text>Use "Program On Main" (Ops Mode Programmer) anytime you wish to change settings (other than the Board Address) on this QuadLN_S.  </text>
+                        </label>
+                        <label>
+                            <text>   </text>
                         </label>
                     </group>
-                    <group include="Quad-LN_S_v1">
+                    <group>
                         <qualifier>
-                             <variableref>Major Version</variableref>
-                             <relation>ge</relation>
-                             <value>3</value>
+                            <variableref>Version</variableref>
+                            <relation>ge</relation>
+                            <value>1</value>
                         </qualifier>
-                        <label>
-                            <text>FIRMWARE VERSION 3.0 REQUIRES USE OF THE Quad-LN_S_v3 TEMPLATE.</text>
-                        </label>
-                        <label>
-                            <text>DO A READ SHEET.  IF THIS MESSAGE IS STILL PRESENT THEN USE THE Quad-LN_S_v3 TEMPLATE.</text>
-                        </label>
-                    </group>
-                    <group include="Quad-LN_S_v1">
-                        <qualifier>
-                            <variableref>Major Version</variableref>
-                            <relation>lt</relation>
-                            <value>2</value>
-                        </qualifier>
-                        <label>
-                            <text>Firmware version 2.0 or later is required when using the Detector Board.</text>
-                        </label>
-                        <label>
-                            <text>Do a Read Sheet.  If this message is still present then update your firmware if you wish to use the Detector Board.</text>
-                        </label>
+                        <group include="Quad-LN_S_v3">
+                            <qualifier>
+                                <variableref>Major Version</variableref>
+                                <relation>le</relation>
+                                <value>2</value>
+                            </qualifier>
+                            <label>
+                                <text>FIRMWARE VERSION 3.0 OR LATER IS REQUIRED TO USE THE Quad-LN_S_v3 TEMPLATE.</text>
+                            </label>
+                            <label>
+                                <text>DO A READ SHEET.  IF THIS MESSAGE IS STILL PRESENT THEN USE THE Quad-LN_S_v1 TEMPLATE OR UPDATE YOUR FIRMWARE.</text>
+                            </label>
+                        </group>
+                        <group include="Quad-LN_S_v1">
+                            <qualifier>
+                                 <variableref>Major Version</variableref>
+                                 <relation>ge</relation>
+                                 <value>3</value>
+                            </qualifier>
+                            <label>
+                                <text>FIRMWARE VERSION 3.0 REQUIRES USE OF THE Quad-LN_S_v3 TEMPLATE.</text>
+                            </label>
+                            <label>
+                                <text>DO A READ SHEET.  IF THIS MESSAGE IS STILL PRESENT THEN USE THE Quad-LN_S_v3 TEMPLATE.</text>
+                            </label>
+                        </group>
+                        <group include="Quad-LN_S_v1">
+                            <qualifier>
+                                <variableref>Major Version</variableref>
+                                <relation>lt</relation>
+                                <value>2</value>
+                            </qualifier>
+                            <label>
+                                <text>Firmware version 2.0 or later is required when using the Detector Board.</text>
+                            </label>
+                            <label>
+                                <text>Do a Read Sheet.  If this message is still present then update your firmware if you wish to use the Detector Board.</text>
+                            </label>
+                        </group>
                     </group>
                     <label label=" "/>
                     <label>
-                        <text>Decoder Template File Version: 3.03.1</text>
+                        <text>Decoder Template File Version: 3.04.0</text>
                     </label>
                     <label>
                         <text>Decoder Transform File Version: x.xx.x</text>
@@ -645,39 +764,59 @@
         <name>Basic</name>
     </pane>
 
-	<pane>
+    <pane>
         <name>Group 1/4</name>
         <qualifier>
             <variableref>Servo16</variableref>
             <relation>eq</relation>
             <value>0</value>
         </qualifier>
+        <qualifier>
+            <variableref>Version</variableref>
+            <relation>ge</relation>
+            <value>1</value>
+        </qualifier>
     </pane>
-   <pane>
+    <pane>
         <name>Group 2/4</name>
         <qualifier>
             <variableref>Servo16</variableref>
             <relation>eq</relation>
             <value>0</value>
         </qualifier>
+        <qualifier>
+            <variableref>Version</variableref>
+            <relation>ge</relation>
+            <value>1</value>
+        </qualifier>
     </pane>
-   <pane>
+    <pane>
         <name>Group 3/4</name>
         <qualifier>
             <variableref>Servo16</variableref>
             <relation>eq</relation>
             <value>0</value>
         </qualifier>
+        <qualifier>
+            <variableref>Version</variableref>
+            <relation>ge</relation>
+            <value>1</value>
+        </qualifier>
     </pane>
-   <pane>
+    <pane>
         <name>Group 4/4</name>
         <qualifier>
             <variableref>Servo16</variableref>
             <relation>eq</relation>
             <value>0</value>
         </qualifier>
+        <qualifier>
+            <variableref>Version</variableref>
+            <relation>ge</relation>
+            <value>1</value>
+        </qualifier>
     </pane>
-   <pane>
+    <pane>
         <name>Group 1</name>
         <qualifier>
             <variableref>Servo16</variableref>
@@ -685,7 +824,7 @@
             <value>0</value>
         </qualifier>
     </pane>
-   <pane>
+    <pane>
         <name>Group 2</name>
         <qualifier>
             <variableref>Servo16</variableref>
@@ -693,7 +832,7 @@
             <value>0</value>
         </qualifier>
     </pane>
-   <pane>
+    <pane>
         <name>Group 3</name>
         <qualifier>
             <variableref>Servo16</variableref>
@@ -701,7 +840,7 @@
             <value>0</value>
         </qualifier>
     </pane>
-   <pane>
+    <pane>
         <name>Group 4</name>
         <qualifier>
             <variableref>Servo16</variableref>
@@ -709,7 +848,7 @@
             <value>0</value>
         </qualifier>
     </pane>
-   <pane>
+    <pane>
         <name>Group 5</name>
         <!-- Octo -->
         <qualifier>
@@ -718,7 +857,7 @@
             <value>0</value>
         </qualifier>
     </pane>
-   <pane>
+    <pane>
         <name>Group 6</name>
         <!-- Octo -->
         <qualifier>
@@ -727,7 +866,7 @@
             <value>0</value>
         </qualifier>
     </pane>
-   <pane>
+    <pane>
         <name>Group 7</name>
         <!-- Octo -->
         <qualifier>
@@ -736,7 +875,7 @@
             <value>0</value>
         </qualifier>
     </pane>
-   <pane>
+    <pane>
         <name>Group 8</name>
         <!-- Octo -->
         <qualifier>
@@ -746,7 +885,7 @@
         </qualifier>
     </pane>
 
-   <pane include="Quad-LN_S_v3">
+    <pane include="Quad-LN_S_v3">
         <name>Group 9</name>
         <!-- Dodeca version -->
         <qualifier>
@@ -756,7 +895,7 @@
         </qualifier>
     </pane>
    
-   <pane include="Quad-LN_S_v3">
+    <pane include="Quad-LN_S_v3">
         <name>Group 10</name>
         <!-- Dodeca version -->
         <qualifier>
@@ -766,7 +905,7 @@
         </qualifier>
     </pane>
    
-   <pane include="Quad-LN_S_v3">
+    <pane include="Quad-LN_S_v3">
         <name>Group 11</name>
         <!-- Dodeca version -->
         <qualifier>
@@ -776,7 +915,7 @@
         </qualifier>
     </pane>
    
-   <pane include="Quad-LN_S_v3">
+    <pane include="Quad-LN_S_v3">
         <name>Group 12</name>
         <!-- Dodeca version -->
         <qualifier>
@@ -786,7 +925,7 @@
         </qualifier>
     </pane>
    
-   <pane include="Quad-LN_S_v3">
+    <pane include="Quad-LN_S_v3">
         <name>Group 13</name>
         <!-- Hex version -->
         <qualifier>
@@ -796,7 +935,7 @@
         </qualifier>
     </pane>
    
-   <pane include="Quad-LN_S_v3">
+    <pane include="Quad-LN_S_v3">
         <name>Group 14</name>
         <!-- Hex version -->
         <qualifier>
@@ -806,7 +945,7 @@
         </qualifier>
     </pane>
    
-   <pane include="Quad-LN_S_v3">
+    <pane include="Quad-LN_S_v3">
         <name>Group 15</name>
         <!-- Hex version -->
         <qualifier>
@@ -816,7 +955,7 @@
         </qualifier>
     </pane>
    
-   <pane include="Quad-LN_S_v3">
+    <pane include="Quad-LN_S_v3">
         <name>Group 16</name>
         <!-- Hex version -->
         <qualifier>
@@ -826,11 +965,16 @@
         </qualifier>
     </pane>
    
-   <pane>
+    <pane>
         <name>Routes</name>
+        <qualifier>
+            <variableref>Version</variableref>
+            <relation>ge</relation>
+            <value>1</value>
+        </qualifier>
     </pane>
     
-   <pane>
+    <pane>
         <name>LED 1-12</name>
         <qualifier>
             <variableref>Expansion</variableref>
@@ -838,32 +982,62 @@
             <value>1</value>
         </qualifier>
     </pane>
-   <pane>
+    <pane>
         <name>LED 13-24</name>
         <qualifier>
             <variableref>Expansion</variableref>
             <relation>eq</relation>
             <value>1</value>
         </qualifier>
-   </pane>
+    </pane>
                 
     <pane>
         <name>Aspect 1-8</name>
+        <qualifier>
+            <variableref>Version</variableref>
+            <relation>ge</relation>
+            <value>1</value>
+        </qualifier>
     </pane>
     <pane>
         <name>Aspect 9-16</name>
+        <qualifier>
+            <variableref>Version</variableref>
+            <relation>ge</relation>
+            <value>1</value>
+        </qualifier>
     </pane>
     <pane>
         <name>Aspect 17-24</name>
+        <qualifier>
+            <variableref>Version</variableref>
+            <relation>ge</relation>
+            <value>1</value>
+        </qualifier>
     </pane>
     <pane>
         <name>Aspect 25-32</name>
+        <qualifier>
+            <variableref>Version</variableref>
+            <relation>ge</relation>
+            <value>1</value>
+        </qualifier>
     </pane>
     <pane>
         <name>Aspect 33-40</name>
+        <qualifier>
+            <variableref>Version</variableref>
+            <relation>ge</relation>
+            <value>1</value>
+        </qualifier>
     </pane>
     <pane>
         <name>Aspect 41-48</name>
+        <qualifier>
+            <variableref>Version</variableref>
+            <relation>ge</relation>
+            <value>1</value>
+        </qualifier>
     </pane>
    <!--</programmer>-->
 </decoder-config>

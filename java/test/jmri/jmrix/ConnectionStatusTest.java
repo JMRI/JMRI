@@ -13,12 +13,6 @@ import org.junit.jupiter.api.*;
 public class ConnectionStatusTest {
 
     @Test
-    public void testCtor() {
-        ConnectionStatus cs = new ConnectionStatus();
-        Assert.assertNotNull("exists", cs);
-    }
-
-    @Test
     public void testInstance() {
         ConnectionStatus cs = ConnectionStatus.instance();
         Assert.assertNotNull("exists", cs);
@@ -26,15 +20,15 @@ public class ConnectionStatusTest {
 
     @Test
     public void test2ParamterGetState() {
-        ConnectionStatus cs = new ConnectionStatus();
+        ConnectionStatus cs = ConnectionStatus.instance();
         Assert.assertEquals("connection status", ConnectionStatus.CONNECTION_UNKNOWN, cs.getConnectionState("Foo", "Bar"));
     }
 
     @Test
     public void testAddAnd2ParameterGetState() {
-        ConnectionStatus cs = new ConnectionStatus();
+        ConnectionStatus cs = ConnectionStatus.instance();
         cs.addConnection("Foo", "Bar");
-        // set the status of the new connection so we know we are not 
+        // set the status of the new connection so we know we are not
         // retreiving a new value.
         cs.setConnectionState("Foo", "Bar", ConnectionStatus.CONNECTION_UP);
         Assert.assertEquals("connection status", ConnectionStatus.CONNECTION_UP, cs.getConnectionState("Foo", "Bar"));
@@ -42,14 +36,14 @@ public class ConnectionStatusTest {
 
     @Test
     public void test2ParameterSetAndGetState() {
-        ConnectionStatus cs = new ConnectionStatus();
+        ConnectionStatus cs = ConnectionStatus.instance();
         cs.setConnectionState("Foo", "Bar", ConnectionStatus.CONNECTION_UP);
         Assert.assertEquals("connection status", ConnectionStatus.CONNECTION_UP, cs.getConnectionState("Foo", "Bar"));
     }
 
     @Test
     public void test2ParamterIsConnectionOk() {
-        ConnectionStatus cs = new ConnectionStatus();
+        ConnectionStatus cs = ConnectionStatus.instance();
         cs.setConnectionState("Foo", "Bar", ConnectionStatus.CONNECTION_UP);
         Assert.assertTrue("connection OK", cs.isConnectionOk("Foo", "Bar"));
         cs.setConnectionState("Foo", "Bar", ConnectionStatus.CONNECTION_DOWN);
@@ -58,7 +52,7 @@ public class ConnectionStatusTest {
 
     @Test
     public void testIsSystemOk() {
-        ConnectionStatus cs = new ConnectionStatus();
+        ConnectionStatus cs = ConnectionStatus.instance();
         cs.setConnectionState("Foo", "Bar", ConnectionStatus.CONNECTION_UP);
         Assert.assertTrue("connection OK", cs.isSystemOk("Foo"));
         cs.setConnectionState("Foo", "Bar", ConnectionStatus.CONNECTION_DOWN);
@@ -67,16 +61,16 @@ public class ConnectionStatusTest {
 
     @Test
     public void testIsUnrecognizedSystemOk() {
-        ConnectionStatus cs = new ConnectionStatus();
+        ConnectionStatus cs = ConnectionStatus.instance();
         Assert.assertTrue("connection OK", cs.isConnectionOk("Foo", "Bar"));
         Assert.assertTrue("connection OK", cs.isConnectionOk(null, "Bar"));
     }
 
     @Test
     public void testGetSateForSystemName() {
-        ConnectionStatus cs = new ConnectionStatus();
+        ConnectionStatus cs = ConnectionStatus.instance();
         cs.addConnection("Foo", "Bar");
-        // set the status of the new connection so we know we are not 
+        // set the status of the new connection so we know we are not
         // retreiving a new value.
         cs.setConnectionState("Foo", "Bar", ConnectionStatus.CONNECTION_UP);
         Assert.assertTrue("connection OK", cs.isConnectionOk("Foo", "Bar"));
@@ -85,7 +79,7 @@ public class ConnectionStatusTest {
 
     @Test
     public void testIsConnectionOkWNull() {
-        ConnectionStatus cs = new ConnectionStatus();
+        ConnectionStatus cs = ConnectionStatus.instance();
         cs.setConnectionState(null, "Bar", ConnectionStatus.CONNECTION_UP);
         Assert.assertTrue("connection OK", cs.isConnectionOk(null, "Bar"));
         cs.setConnectionState(null, "Bar", ConnectionStatus.CONNECTION_DOWN);
@@ -94,6 +88,7 @@ public class ConnectionStatusTest {
 
     @BeforeEach
     public void setUp() {
+        ConnectionStatus.clearInstance();
         JUnitUtil.setUp();
     }
 

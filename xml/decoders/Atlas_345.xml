@@ -39,17 +39,21 @@
       <variable CV="3" item="Accel" default="1" comment="Range 1-255">
         <decVal max="255"/>
         <label>Acceleration momentum</label>
-        <label xml:lang="it">Accellerazione (0-255)</label>
-        <label xml:lang="fr">Accelération (0-255)</label>
-        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
+        <label xml:lang="it">Accellerazione (1-255)</label>
+        <label xml:lang="fr">Accelération (1-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (1-255)</label>
+        <label xml:lang="nl">Versnelling (1-255)</label>
+        <label xml:lang="es">Aceleración (1-255)</label>
         <comment>Range 1-255</comment>
       </variable>
       <variable CV="4" item="Decel" default="1" comment="Range 1-255">
         <decVal max="255"/>
         <label>Brake momentum</label>
-        <label xml:lang="it">Decellerazione (0-255)</label>
-        <label xml:lang="fr">Décélération (0-255)</label>
-        <label xml:lang="de">Bremszeit (0-255)</label>
+        <label xml:lang="it">Decellerazione (1-255)</label>
+        <label xml:lang="fr">Décélération (1-255)</label>
+        <label xml:lang="de">Bremszeit (1-255)</label>
+        <label xml:lang="nl">Remvertraging (1-255)</label>
+        <label xml:lang="es">Desaceleración</label>
         <comment>Range 1-255</comment>
       </variable>
       <variable CV="7" item="Decoder Version" readOnly="yes">
@@ -58,6 +62,8 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
+        <label xml:lang="nl">Decoderversie: </label>
+        <label xml:lang="es">Verción del decodificador: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="127" comment="Atlas - 127">
         <decVal/>
@@ -65,6 +71,8 @@
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
+        <label xml:lang="nl">Fabrikant-ID: </label>
+        <label xml:lang="es">ID del fabricante: </label>
         <comment>Atlas - 127</comment>
         <comment xml:lang="it">Atlas - 127</comment>
       </variable>
@@ -103,16 +111,9 @@
         <comment>Controls how headlight dims (CV 52 controls amount)</comment>
       </variable>
       <variable item="Output A dimming" CV="51" comment="Controls how front headlights dim" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="Output A cannot dim">
-            <choice>Output A cannot dim</choice>
-          </enumChoice>
-          <enumChoice choice="Output A can dim">
-            <choice>Output A can dim</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Output A dimming</label>
-        <comment>Controls how front headlights dim</comment>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Output A can dim</label>
+        <comment>Controls whether front headlights dim</comment>
       </variable>
       <variable item="Output A is Gyrolight" CV="51" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -147,16 +148,9 @@
         <label>Output B dimming control</label>
       </variable>
       <variable item="Output B dimming" CV="57" comment="Controls how back headlights dims" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="Output B cannot dim">
-            <choice>Output B cannot dim</choice>
-          </enumChoice>
-          <enumChoice choice="Output B can dim">
-            <choice>Output B can dim</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Output B dimming</label>
-        <comment>Controls how back headlights dims</comment>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Output B can dim</label>
+        <comment>Controls whether back headlights dim</comment>
       </variable>
       <variable item="Output B is Gyrolight" CV="57" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -234,7 +228,10 @@
       <label>
         <text> </text>
       </label>
-      <display item="Output A dimming"/>
+      <label>
+        <text>Output A</text>
+      </label>
+      <display item="Output A dimming" format="checkbox"/>
       <display item="Output A dimming control"/>
       <display item="Output A is Gyrolight" format="checkbox"/>
       <display item="Output A is Mars light" format="checkbox"/>
@@ -244,7 +241,10 @@
       <label>
         <text> </text>
       </label>
-      <display item="Output B dimming"/>
+      <label>
+        <text>Output B</text>
+      </label>
+      <display item="Output B dimming" format="checkbox"/>
       <display item="Output B dimming control"/>
       <display item="Output B is Gyrolight" format="checkbox"/>
       <display item="Output B is Mars light" format="checkbox"/>

@@ -1,11 +1,6 @@
 package jmri.jmrit.logix;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
-
-import java.awt.GraphicsEnvironment;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -15,9 +10,8 @@ public class WarrantShutdownTaskTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         WarrantShutdownTask t = new WarrantShutdownTask("test warrant shutdown task");
-        assertThat(t).withFailMessage("exists").isNotNull();
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

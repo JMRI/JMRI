@@ -407,7 +407,7 @@ public class BiDiBOutputMessageHandler extends DefaultMessageListener {
         log.trace("portConfigx: {}", lcConfigX);
         if (addr.getNode().isPortFlatModelAvailable()) {
             ReconfigPortConfigValue p = (ReconfigPortConfigValue)lcConfigX.getPortConfig().get(BidibLibrary.BIDIB_PCFG_RECONFIG);
-            log.warn("reconfig: {}, type: {}", p, p.getCurrentOutputType());
+            log.info("reconfig: {}, type: {}", p, p.getCurrentOutputType());
             if (lcType != p.getCurrentOutputType()) {
                 log.warn("** reconfig: {}, type changed: {} -> {}", p, lcType, p.getCurrentOutputType());
             }

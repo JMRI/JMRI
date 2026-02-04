@@ -6,8 +6,7 @@ import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.*;
 
@@ -86,6 +85,9 @@ public class OperationsSetupXml extends OperationsXml implements InstanceManager
         // load control settings
         Control.load(root);
         
+        // train log files also save file back up dates, so start now if enabled
+        InstanceManager.getDefault(TrainLogger.class).enableTrainLogging(Setup.isTrainLoggerEnabled());
+
         // clear dirty bit
         setDirty(false);
     }

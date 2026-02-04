@@ -46,6 +46,16 @@
               <xs:element name="topic" type="LogixNG_SelectStringType" minOccurs="1" maxOccurs="1" />
               <xs:element name="message" type="LogixNG_SelectStringType" minOccurs="1" maxOccurs="1" />
 
+              <xs:element name="retain" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="Default"/>
+                    <xs:enumeration value="Yes"/>
+                    <xs:enumeration value="No"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>

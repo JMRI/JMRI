@@ -67,6 +67,22 @@
       Adapter class to invoke
       </xs:documentation></xs:annotation>
     </xs:element>
+    <xs:element name="instanceManagerOptionalClass" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      If this menu item is optional, this element tells which class to
+      be loaded by the InstanceManager to tell if this menu item should
+      be loaded.
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="optionalFunction" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      If this menu item is optional, this element tells which method
+      to be called of the class referenced by instanceManagerOptionalClass.
+      This method doesn't take any parameters and it returns a boolean
+      value. If the method returns true, this menu item is loaded.
+      Otherwise it's not loaded.
+      </xs:documentation></xs:annotation>
+    </xs:element>
     <xs:element name="panel" minOccurs="0" maxOccurs="1">
       <xs:annotation><xs:documentation>
       Panel class to invoke

@@ -9,10 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.DccThrottle;
+import jmri.DccLocoAddress;
 import jmri.Throttle;
 import jmri.implementation.SignalSpeedMap;
 
@@ -24,7 +22,7 @@ import jmri.implementation.SignalSpeedMap;
  */
 public class LearnSpeedPanel extends JInternalFrame implements java.beans.PropertyChangeListener {
 
-    private Warrant _warrant;
+    private final Warrant _warrant;
     private JLabel _scaleSpeed;
     private JLabel _direction;
 
@@ -64,22 +62,23 @@ public class LearnSpeedPanel extends JInternalFrame implements java.beans.Proper
         throttle.addPropertyChangeListener(this);
         _scaleSpeed.setText(setSpeed(throttle.getSpeedSetting()));
         if (log.isDebugEnabled()) {
-            jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
-            log.debug("new address is {}", Address.toString());
+            DccLocoAddress address = (DccLocoAddress) throttle.getLocoAddress();
+            log.debug("new address is {}", address );
         }
         setSpeed(0);
     }
 
     /**
-     * update the state of this panel if direction or speed change
+     * Update the state of this panel if direction or speed change.
+     * {@inheritDoc }
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals(Throttle.SPEEDSETTING)) {
-            _scaleSpeed.setText(setSpeed(((Float) e.getNewValue()).floatValue()));
+            _scaleSpeed.setText(setSpeed((Float) e.getNewValue()));
         } else if (e.getPropertyName().equals(Throttle.ISFORWARD)) {
             String direction;
-            if ((Boolean)e.getNewValue()) {
+            if ( Boolean.TRUE.equals(e.getNewValue()) ) {
                 direction = Bundle.getMessage("forward");
             } else {
                 direction = Bundle.getMessage("reverse");
@@ -130,13 +129,13 @@ public class LearnSpeedPanel extends JInternalFrame implements java.beans.Proper
         if (throttle != null) {
             throttle.removePropertyChangeListener(this);
             if (log.isDebugEnabled()) {
-                jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
-                log.debug("Address {} destroyed", Address.toString());
+                DccLocoAddress address = (DccLocoAddress) throttle.getLocoAddress();
+                log.debug("Address {} destroyed", address);
             }
 //            _throttle = null;
         }
     }
-    
 
-    private static final Logger log = LoggerFactory.getLogger(LearnSpeedPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LearnSpeedPanel.class);
+
 }

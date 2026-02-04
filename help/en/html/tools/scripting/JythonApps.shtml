@@ -15,7 +15,7 @@
 
       <h1>JMRI: Jython Apps for JMRI</h1>
 
-      <p>Some JMRI users have implemented sophiticated capabilities using the JMRI jython scripting
+      <p>Some JMRI users have implemented sophisticated capabilities using the JMRI jython scripting
       facilities. These are much more than the relatively simple examples presented on <a href=
       "Examples.shtml">the Scripting Examples</a> page. The developers have provided more
       documentation for these "apps" (available in the <a href="../../scripthelp/">"scripthelp"
@@ -32,12 +32,12 @@
       <p><a href="../../scripthelp/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System</a>
       </p>
 
-      <p>The Dispatcher System extends <a href=
-      "../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">JMRI DispatcherPro</a> to make it
-      easier to run trains between locations of your choosing. It uses your panel that has signal
-      logic and sections to generate another panel that you can use to drive trains by pressing the
-      created "Move To" buttons. Additional features include stopping and fast mode, and station
-      announcements.</p>
+      <p>Dispatcher System aims to simplify the setup of <a href=
+        "../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">JMRI DispatcherPro</a>, automatically
+        creating everything (signal logic, sections, transits and train info files) required to
+        run trains using Dispatcher.</p>
+      <p> It allows you to run trains between stations, by clicking provided station buttons, or by
+        using routes. The routes can be scheduled, and the schedules displayed on timetables.</p>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

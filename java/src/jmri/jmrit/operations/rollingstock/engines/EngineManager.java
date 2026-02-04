@@ -3,11 +3,15 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.beans.PropertyChangeEvent;
 import java.util.*;
 
+import javax.swing.JComboBox;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.*;
+import jmri.jmrit.operations.OperationsPanel;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -19,19 +23,17 @@ import jmri.jmrit.operations.trains.TrainManifestHeaderText;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
-public class EngineManager extends RollingStockManager<Engine>
-        implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
+public class EngineManager extends RollingStockManager<Engine> implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public EngineManager() {
     }
 
     /**
-     * Finds an existing engine or creates a new engine if needed requires engine's
-     * road and number
+     * Finds an existing engine or creates a new engine if needed requires
+     * engine's road and number
      *
      * @param engineRoad   The engine's road initials
      * @param engineNumber The engine's road number
-     *
      * @return new engine or existing engine
      */
     @Override
@@ -93,19 +95,19 @@ public class EngineManager extends RollingStockManager<Engine>
     }
 
     /**
-     * return a list available engines (no assigned train) engines are ordered least
-     * recently moved to most recently moved.
+     * Returns a list of available engines (no assigned train). Engines are
+     * ordered by track priority and least recently moved to most recently
+     * moved.
      *
      * @param train The Train requesting this list.
-     *
      * @return Ordered list of engines not assigned to a train
      */
     public List<Engine> getAvailableTrainList(Train train) {
         // now build list of available engines for this route
         List<Engine> out = new ArrayList<>();
-        // get engines by moves list
-        for (RollingStock rs : getByMovesList()) {
-            Engine engine = (Engine) rs;
+        // get engines by track priority and moves
+        List<Engine> sortByPriority = sortByTrackPriority(getByMovesList());
+        for (Engine engine : sortByPriority) {
             if (engine.getTrack() != null && (engine.getTrain() == null || engine.getTrain() == train)) {
                 out.add(engine);
             }
@@ -114,8 +116,8 @@ public class EngineManager extends RollingStockManager<Engine>
     }
 
     /**
-     * Returns a list of locos sorted by blocking number for a train. This returns a
-     * list of consisted locos in the order that they were entered in.
+     * Returns a list of locos sorted by blocking number for a train. This
+     * returns a list of consisted locos in the order that they were entered in.
      *
      * @param train The Train requesting this list.
      * @return A list of sorted locos.
@@ -128,7 +130,6 @@ public class EngineManager extends RollingStockManager<Engine>
      * Get a list of engine road names.
      *
      * @param model The string model name, can be NONE.
-     *
      * @return List of engine road names.
      */
     public List<String> getEngineRoadNames(String model) {
@@ -144,10 +145,20 @@ public class EngineManager extends RollingStockManager<Engine>
         return names;
     }
 
+    public void updateEngineRoadComboBox(String engineModel, JComboBox<String> roadEngineBox) {
+        roadEngineBox.removeAllItems();
+        roadEngineBox.addItem(NONE);
+        List<String> roads = getEngineRoadNames(engineModel);
+        for (String roadName : roads) {
+            roadEngineBox.addItem(roadName);
+        }
+        OperationsPanel.padComboBox(roadEngineBox);
+    }
+
     int _commentLength = 0;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-            justification="I18N of Info Message")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "I18N of Info Message")
     public int getMaxCommentLength() {
         if (_commentLength == 0) {
             _commentLength = TrainManifestHeaderText.getStringHeader_Comment().length();
@@ -167,6 +178,40 @@ public class EngineManager extends RollingStockManager<Engine>
         return _commentLength;
     }
 
+    /**
+     * Creates a clone for the engine, and clones if the engine is part of a
+     * consist. Note that a engine have have multiple clones.
+     * 
+     * @param engine    The engine to clone
+     * @param track     The destination track for the clones
+     * @param train     The train transporting the clones
+     * @param startTime The date and time the clones were moved
+     * @return clone for this engine
+     */
+    public Engine createClone(Engine engine, Track track, Train train, Date startTime) {
+        Engine clone = createClone(engine);
+        createCloneConsist(engine, track, train, startTime, clone);
+        // move engine to new location for later pick up
+        finshCreateClone(engine, track, train, startTime, clone);
+        return clone;
+    }
+
+    private void createCloneConsist(Engine engine, Track track, Train train, Date startTime, Engine cloneEng) {
+        if (engine.getConsist() != null) {
+            String consistName = engine.getConsistName() + Engine.CLONE + padNumber(engine.getCloneOrder());
+            Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist(consistName);
+            cloneEng.setConsist(consist);
+            for (Engine e : engine.getConsist().getEngines()) {
+                if (e != engine) {
+                    Engine nClone = createClone(e, engine.getCloneOrder());
+                    nClone.setConsist(consist);
+                    // move engine to new location for later pick up
+                    finshCreateClone(e, track, train, startTime, nClone);
+                }
+            }
+        }
+    }
+
     public void load(Element root) {
         if (root.getChild(Xml.ENGINES) != null) {
             List<Element> engines = root.getChild(Xml.ENGINES).getChildren(Xml.ENGINE);
@@ -182,7 +227,6 @@ public class EngineManager extends RollingStockManager<Engine>
      * synchronized with the detailed DTD in operations-engines.dtd.
      *
      * @param root The common Element for operations-engines.dtd.
-     *
      */
     public void store(Element root) {
         Element values;

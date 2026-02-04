@@ -4,26 +4,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import jmri.ConfigureManager;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.ShutDownManager;
-import jmri.ShutDownTask;
-//import jmri.ShutDownManager;
-//import jmri.ShutDownTask;
+import jmri.*;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.WindowOperator;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.netbeans.jemmy.operators.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for the Warrant creation
@@ -37,8 +27,8 @@ public class LearnWarrantTest {
     private OBlockManager _OBlockMgr;
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testLearnWarrant() throws Exception {
+    @DisabledIfHeadless
+    public void testLearnWarrant() throws JmriException {
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         // load and display
@@ -56,12 +46,13 @@ public class LearnWarrantTest {
          * OB1/WestSiding - OB6/EastSiding  Route {OB1, OB6}
         */
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+        JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        InstanceManager.getDefault(SensorManager.class);
 
-        WarrantFrame frame = new WarrantFrame(null, null);
+        WarrantFrame frame = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new WarrantFrame(null, null);
+        });
 
         frame._origin.blockBox.setText("OB1");
         frame._destination.blockBox.setText("OB5");
@@ -72,13 +63,13 @@ public class LearnWarrantTest {
 
         JUnitUtil.waitFor(() -> (frame.getOrders() != null), "Found orders");
         List<BlockOrder> orders = frame.getOrders();
-        assertThat(orders.size()).withFailMessage("5 BlockOrders").isEqualTo(5);
+        assertEquals(5, orders.size(), "5 BlockOrders");
 
         frame._speedUtil.setAddress("99");
         frame.setTrainInfo("Student");
         JUnitUtil.waitFor(() -> (frame._speedUtil.getDccAddress() != null), "Found address");
         jmri.DccLocoAddress address = frame._speedUtil.getDccAddress();
-        assertThat(address.getNumber()).withFailMessage("address=99").isEqualTo(99);
+        assertEquals(99, address.getNumber(),"address=99");
 
         pressButton(jfo, Bundle.getMessage("Start"));
         // dismiss warning "starting block not occupied
@@ -86,14 +77,16 @@ public class LearnWarrantTest {
 
         // occupy starting block
         final OBlock block0 = _OBlockMgr.getOBlock(route[0]);
+        assertNotNull(block0);
         Sensor sensor = block0.getSensor();
         NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, block0);
 
         JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block0), "Train occupies block ");
         pressButton(jfo, Bundle.getMessage("Start"));
 
-        JUnitUtil.waitFor(() -> (frame._learnThrottle != null), "Found throttle");
-        assertThat(frame._speedUtil.getThrottle()).withFailMessage("Throttle not found").isNotNull();
+        JFrameOperator learnThrottleFrame = new JFrameOperator("Student - 99(S)");
+        
+        assertNotNull(frame._speedUtil.getThrottle(),"Throttle not found");
 
         Sensor lastSensor = recordtimes(route, frame._speedUtil.getThrottle());
 
@@ -105,7 +98,7 @@ public class LearnWarrantTest {
         // warrant has been recorded using engine 99
 
         List<ThrottleSetting> list = frame.getThrottleCommands();
-        assertThat(list.size()).withFailMessage("12 ThrottleCommands was "+list.size()).isEqualTo(12);
+        assertEquals(12, list.size(),"12 ThrottleCommands");
 
         // now playback using engine 111
         NXFrameTest.setAndConfirmSensorAction(lastSensor, Sensor.INACTIVE,
@@ -115,7 +108,7 @@ public class LearnWarrantTest {
         frame.setTrainInfo("111");
         JUnitUtil.waitFor(() -> (frame._speedUtil.getDccAddress() != null), "Found address");
         address = frame._speedUtil.getDccAddress();
-        assertThat(address.getNumber()).withFailMessage("address=111").isEqualTo(111);
+        assertEquals(111, address.getNumber(),"address=111");
 
         NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, block0);
         JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block0), "Train 111 occupies first block ");
@@ -125,33 +118,39 @@ public class LearnWarrantTest {
 //        confirmJOptionPane(jfo, Bundle.getMessage("WarningTitle"), "OK");
 
         sensor = NXFrameTest.runtimes(route, _OBlockMgr);
-        assertThat(sensor).withFailMessage("Sensor not null").isNotNull();
+        assertNotNull(sensor,"Sensor not null");
 
         final OBlock block4 = _OBlockMgr.getOBlock(route[4]);
+        assertNotNull(block4);
         sensor = block4.getSensor();
         NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, block4);
 
         JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block4), "Train 111 occupies last block ");
 
-/*
-        JUnitAppender.assertWarnMessageStartsWith("block: OB2 Path distance or SpeedProfile unreliable! pathDist= 1270.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: OB3 Path distance or SpeedProfile unreliable! pathDist= 762.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: OB4 Path distance or SpeedProfile unreliable! pathDist= 1905.0,");
-*/
-        frame._userNameBox.setText("SavedIt");
+        JLabelOperator jlo = new JLabelOperator(jfo, Bundle.getMessage("LabelUserName"));
+        ((javax.swing.JTextField) jlo.getLabelFor()).setText("SavedIt");
+
         pressButton(jfo, Bundle.getMessage("ButtonSave"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
-        assertThat(tableFrame).withFailMessage("Warrant Table save").isNotNull();
+        assertNotNull(tableFrame,"Warrant Table save");
 
         // passed test - cleanup.  Do it here so failure leaves traces.
-        jfo.requestClose();
-        JFrameOperator jfo2 = new JFrameOperator(tableFrame);
-        jfo2.requestClose();
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
-        assert panel != null;
-        panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
-//        jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length.");
+        Assertions.assertNotNull(panel);
+
+        learnThrottleFrame.requestClose();
+        learnThrottleFrame.waitClosed();
+
+        // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+        Boolean retVal = ThreadingUtil.runOnGUIwithReturn(() -> {
+            panel.dispose();
+            tableFrame.dispose();
+            frame.dispose();
+            return true;
+        });
+        assertTrue(retVal);
+
     }
 
     private boolean oBlockOccupiedOrAllocated(OBlock b){
@@ -176,18 +175,15 @@ public class LearnWarrantTest {
      * @param route Array of OBlock names
      * @param throttle assigned to run the train
      * @return Active end sensor
-     * @throws Exception when null throttle was set
      */
-    private Sensor recordtimes(String[] route, DccThrottle throttle) throws Exception {
+    private Sensor recordtimes(String[] route, DccThrottle throttle) {
         JUnitUtil.waitFor(100);     // waitEmpty(100) causes a lot of failures on Travis GUI
 //        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         float speed = 0.1f;
-        if (throttle == null) {
-            throw new Exception("recordtimes: No Throttle");
-        }
+        assertNotNull( throttle, "recordtimes: No Throttle");
         throttle.setSpeedSetting(speed);
         OBlock block = _OBlockMgr.getBySystemName(route[0]);
-        assert block != null;
+        assertNotNull(block);
         Sensor sensor = block.getSensor();
         for (int i=1; i<route.length; i++) {
             // Need to have some time elapse between commands. - Especially the last
@@ -217,8 +213,7 @@ public class LearnWarrantTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
@@ -235,7 +230,7 @@ public class LearnWarrantTest {
         JUnitUtil.removeMatchingThreads("Engineer(");
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
             List<ShutDownTask> list = new ArrayList<>();
-            ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+            ShutDownManager sm = InstanceManager.getDefault( ShutDownManager.class);
             for (Runnable r : sm.getRunnables()) {
                 if (r instanceof jmri.jmrit.logix.WarrantShutdownTask) {
                     list.add((ShutDownTask)r);

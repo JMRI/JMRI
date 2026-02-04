@@ -54,6 +54,37 @@ import jmri.beans.VetoableChangeProvider;
 public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeProvider, VetoableChangeProvider {
 
     /**
+     * String constant to represent if a Bean can be deleted.
+     */
+    String PROPERTY_CAN_DELETE = "CanDelete";
+
+    /**
+     * String constant to tell the Manager to actually delete the Bean.
+     */
+    String PROPERTY_DO_DELETE = "DoDelete";
+
+    /**
+     * String constant to represent if a Bean should NOT be deleted.
+     */
+    String PROPERTY_DO_NOT_DELETE = "DoNotDelete";
+
+    /**
+     * String constant for changes to the number of managed Beans,
+     * normally silenced during panel load.
+     */
+    String PROPERTY_BEANS = "beans";
+
+    /**
+     * String constant for number of managed Beans
+     */
+    String PROPERTY_LENGTH = "length";
+
+    /**
+     * String constant for DisplayListName.
+     */
+    String PROPERTY_DISPLAY_LIST_NAME = "DisplayListName";
+
+    /**
      * Get the system connection for this manager.
      *
      * @return the system connection for this manager

@@ -283,7 +283,8 @@ public class ExpressionScriptSwing extends AbstractDigitalExpressionSwing {
         } catch (ParserException e) {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
         }
-        return true;
+
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */

@@ -2,6 +2,7 @@ package jmri.jmrit.roster;
 
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
+import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.File;
@@ -14,7 +15,6 @@ import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
@@ -80,7 +80,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String DECODER_DEVELOPERID = "developerID"; // NOI18N
     public static final String DECODER_MANUFACTURERID = "manufacturerID"; // NOI18N
     public static final String DECODER_PRODUCTID = "productID"; // NOI18N
+    public static final String PROGRAMMING = "programming"; // NOI18N
     public static final String DECODER_FAMILY = "decoderfamily"; // NOI18N
+    public static final String DECODER_MODES = "decoderModes"; // NOI18N
     public static final String DECODER_COMMENT = "decodercomment"; // NOI18N
     public static final String DECODER_MAXFNNUM = "decodermaxFnNum"; // NOI18N
     public static final String DEFAULT_MAXFNNUM = "28"; // NOI18N
@@ -100,6 +102,15 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String SOUND_LABEL = "soundlabel"; // NOI18N
     public static final String ATTRIBUTE_OPERATING_DURATION = "OperatingDuration"; // NOI18N
     public static final String ATTRIBUTE_LAST_OPERATED = "LastOperated"; // NOI18N
+     // ---- Physics (locomotive-level) metadata (not tied to decoder CVs) ----
+     public static final String PHYSICS_TRACTION_TYPE      = "physicsTractionType";     // STEAM or DIESEL_ELECTRIC
+     public static final String PHYSICS_WEIGHT_KG          = "physicsWeightKg";         // float kg
+     public static final String PHYSICS_POWER_KW           = "physicsPowerKw";          // float kW
+     public static final String PHYSICS_TRACTIVE_EFFORT_KN = "physicsTractiveEffortKn"; // float kN
+     public static final String PHYSICS_MAX_SPEED_KMH      = "physicsMaxSpeedKmh";      // float km/h
+     public static final String PHYSICS_MECH_TRANSMISSION = "physicsMechanicalTransmission"; // boolean
+     public enum TractionType { STEAM, DIESEL_ELECTRIC }
+
 
     // members to remember all the info
     protected String _fileName = null;
@@ -123,6 +134,25 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _developerID = "";
     protected String _manufacturerID = "";
     protected String _productID = "";
+    protected String _programmingModes = "";
+     // Physics fields (stored in metric units; defaults of 0 mean "no extra limit")
+     protected TractionType _physicsTractionType = TractionType.DIESEL_ELECTRIC;
+     protected float _physicsWeightKg = 0.0f;
+     protected float _physicsPowerKw = 0.0f;
+     protected float _physicsTractiveEffortKn = 0.0f;
+     protected float _physicsMaxSpeedKmh = 0.0f;
+
+      // Mechanical transmission flag (4-speed epicyclic DMU behaviour)
+      protected boolean _physicsMechanicalTransmission = false;
+    
+      public void setPhysicsMechanicalTransmission(boolean value) {
+          boolean old = _physicsMechanicalTransmission;
+          _physicsMechanicalTransmission = value;
+          firePropertyChange(PHYSICS_MECH_TRANSMISSION, old, _physicsMechanicalTransmission);
+      }
+      public boolean isPhysicsMechanicalTransmission() {
+          return _physicsMechanicalTransmission;
+      }
 
     /**
      * Get the highest valid Fn key number for this roster entry.
@@ -148,6 +178,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected Map<Integer, String> functionSelectedImages;
     protected Map<Integer, String> functionImages;
     protected Map<Integer, Boolean> functionLockables;
+    protected Map<Integer, Boolean> functionVisibles;
     protected String _isShuntingOn = "";
 
     protected final TreeMap<String, String> attributePairs = new TreeMap<>();
@@ -167,6 +198,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         functionSelectedImages = Collections.synchronizedMap(new HashMap<>());
         functionImages = Collections.synchronizedMap(new HashMap<>());
         functionLockables = Collections.synchronizedMap(new HashMap<>());
+        functionVisibles = Collections.synchronizedMap(new HashMap<>());
     }
 
     /**
@@ -206,6 +238,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         _developerID = pEntry._developerID;
         _manufacturerID = pEntry._manufacturerID;
         _productID = pEntry._productID;
+        _programmingModes = pEntry._programmingModes;
         _decoderComment = pEntry._decoderComment;
         _owner = pEntry._owner;
         _imageFilePath = pEntry._imageFilePath;
@@ -249,6 +282,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 }
             });
         }
+        if (pEntry.functionVisibles != null) {
+            pEntry.functionVisibles.forEach((key, value) -> {
+                if (value != null) {
+                    functionVisibles.put(key, value);
+                }
+            });
+        }
     }
 
     /**
@@ -287,6 +327,56 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public String getPathName() {
         return Roster.getDefault().getRosterFilesLocation() + _fileName;
     }
+    
+
+     // Traction type
+     public void setPhysicsTractionType(TractionType t) {
+         TractionType old = _physicsTractionType;
+         _physicsTractionType = (t != null) ? t : TractionType.DIESEL_ELECTRIC;
+         firePropertyChange(PHYSICS_TRACTION_TYPE, old, _physicsTractionType);
+     }
+     public TractionType getPhysicsTractionType() { return _physicsTractionType; }
+    
+     // Weight (kg)
+     public void setPhysicsWeightKg(float kg) {
+         float old = _physicsWeightKg;
+         _physicsWeightKg = Math.max(0.0f, kg);
+         firePropertyChange(PHYSICS_WEIGHT_KG, old, _physicsWeightKg);
+     }
+     public float getPhysicsWeightKg() { return _physicsWeightKg; }
+    
+     // Power (kW)
+     public void setPhysicsPowerKw(float kw) {
+         float old = _physicsPowerKw;
+         _physicsPowerKw = Math.max(0.0f, kw);
+         firePropertyChange(PHYSICS_POWER_KW, old, _physicsPowerKw);
+     }
+     public float getPhysicsPowerKw() { return _physicsPowerKw; }
+    
+     // Tractive effort (kN)
+     public void setPhysicsTractiveEffortKn(float kn) {
+         float old = _physicsTractiveEffortKn;
+         _physicsTractiveEffortKn = Math.max(0.0f, kn);
+         firePropertyChange(PHYSICS_TRACTIVE_EFFORT_KN, old, _physicsTractiveEffortKn);
+     }
+     public float getPhysicsTractiveEffortKn() { return _physicsTractiveEffortKn; }
+    
+     // Max speed (km/h)
+     public void setPhysicsMaxSpeedKmh(float kmh) {
+         float old = _physicsMaxSpeedKmh;
+         _physicsMaxSpeedKmh = Math.max(0.0f, kmh);
+         firePropertyChange(PHYSICS_MAX_SPEED_KMH, old, _physicsMaxSpeedKmh);
+     }
+     public float getPhysicsMaxSpeedKmh() { return _physicsMaxSpeedKmh; }
+    
+     // Helper: parse traction type from text safely
+     private void setPhysicsTractionTypeFromString(String s) {
+         if (s == null) { setPhysicsTractionType(TractionType.DIESEL_ELECTRIC); return; }
+         s = s.trim().toUpperCase(Locale.ROOT);
+         if ("STEAM".equals(s)) setPhysicsTractionType(TractionType.STEAM);
+         else setPhysicsTractionType(TractionType.DIESEL_ELECTRIC);
+     }
+
 
     /**
      * Ensure the entry has a valid filename.
@@ -473,15 +563,34 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         return _manufacturerID;
     }
 
-    public void setProductID(String s) {
+    public void setProductID(@CheckForNull String s) {
         String old = _productID;
-        if (s == null) {s="";}
+        if (s == null) {s = "";}
         _productID = s;
         firePropertyChange(DECODER_PRODUCTID, old, s);
     }
 
     public String getProductID() {
         return _productID;
+    }
+
+    /**
+     * Set programming modes as defined in a roster entry's decoder definition.
+     * @param s a comma separated string of predefined mode elements
+     */
+    public void setProgrammingModes(@CheckForNull String s) {
+        String old = _programmingModes;
+        if (s == null) {s = "";}
+        _programmingModes = s;
+        firePropertyChange(DECODER_MODES, old, s);
+    }
+
+    /**
+     * Get the modes as defined in a roster entry's decoder definition.
+     * @return a comma separated string of predefined mode elements
+     */
+    public String getProgrammingModes() {
+        return _programmingModes;
     }
 
     public void setDecoderFamily(String s) {
@@ -569,7 +678,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setDateModified(@Nonnull Date date) {
         Date old = this.dateModified;
-        this.dateModified = date;
+        this.dateModified = new Date(date.getTime());
         this.firePropertyChange(RosterEntry.DATE_UPDATED, old, date);
     }
 
@@ -598,8 +707,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 try {
                     setDateModified(customFmt.parse(date));
                 } catch (ParseException ex3) {
-                    // then try with a specific format to handle e.g. "01-Oct-2016 9:13:36"
-                    customFmt = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");
+                    // then try with a specific format to handle e.g. "01-Oct-2016 21:13:36"
+                    customFmt = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
                     setDateModified(customFmt.parse(date));
                 }
             }
@@ -607,7 +716,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             // warn that there's perhaps something wrong with the classpath
             log.error(
                     "IllegalArgumentException in RosterEntry.setDateModified - this may indicate a problem with the classpath, specifically multiple copies of the 'jackson` library. See release notes");
-            // parse using defaults since thats how it was saved if saved
+            // parse using defaults since that is how it was saved if saved
             // by earlier versions of JMRI
             this.setDateModified(DateFormat.getDateTimeInstance().parse(date));
         }
@@ -688,9 +797,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         functionSelectedImages = Collections.synchronizedMap(new HashMap<>());
         functionImages = Collections.synchronizedMap(new HashMap<>());
         functionLockables = Collections.synchronizedMap(new HashMap<>());
-        if (log.isDebugEnabled()) {
-            log.debug("ctor from element {}", e);
-        }
+        functionVisibles = Collections.synchronizedMap(new HashMap<>());
+        log.debug("ctor from element {}", e);
         Attribute a;
         if ((a = e.getAttribute("id")) != null) {
             _id = a.getValue();
@@ -756,8 +864,33 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         if ((a = e.getAttribute(RosterEntry.SHUNTING_FUNCTION)) != null) {
             _isShuntingOn = a.getValue();
         }
+        
+         // Physics (optional)
+         if ((a = e.getAttribute(PHYSICS_TRACTION_TYPE)) != null) {
+             setPhysicsTractionTypeFromString(a.getValue());
+         }
+         if ((a = e.getAttribute(PHYSICS_WEIGHT_KG)) != null) {
+             try { setPhysicsWeightKg(Float.parseFloat(a.getValue())); } catch (NumberFormatException ignore) {}
+         }
+         if ((a = e.getAttribute(PHYSICS_MECH_TRANSMISSION)) != null) {
+             setPhysicsMechanicalTransmission("true".equalsIgnoreCase(a.getValue()));
+         }
+         if ((a = e.getAttribute(PHYSICS_POWER_KW)) != null) {
+             try { setPhysicsPowerKw(Float.parseFloat(a.getValue())); } catch (NumberFormatException ignore) {}
+         }
+         if ((a = e.getAttribute(PHYSICS_TRACTIVE_EFFORT_KN)) != null) {
+             try { setPhysicsTractiveEffortKn(Float.parseFloat(a.getValue())); } catch (NumberFormatException ignore) {}
+         }
+         if ((a = e.getAttribute(PHYSICS_MAX_SPEED_KMH)) != null) {
+             try { setPhysicsMaxSpeedKmh(Float.parseFloat(a.getValue())); } catch (NumberFormatException ignore) {}
+         }
+              
         if ((a = e.getAttribute(RosterEntry.MAX_SPEED)) != null) {
-            _maxSpeedPCT = Integer.parseInt(a.getValue());
+            try {
+                _maxSpeedPCT = Integer.parseInt(a.getValue());
+            } catch ( NumberFormatException ex ) {
+                log.error("Could not set maxSpeedPCT from {} , {}", a.getValue(), ex.getMessage());
+            }
         }
 
         if ((a = e.getAttribute(DECODER_DEVELOPERID)) != null) {
@@ -770,6 +903,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
         if ((a = e.getAttribute(DECODER_PRODUCTID)) != null) {
             _productID = a.getValue();
+        }
+
+        if ((a = e.getAttribute(DECODER_MODES)) != null) {
+            _programmingModes = a.getValue();
         }
 
         Element e3;
@@ -785,7 +922,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 _dccAddress = "";
                 _protocol = LocoAddress.Protocol.DCC_SHORT;
             }
-        } else {// Did not find "locoaddress" element carrying the short/long, probably
+        } else { // Did not find "locoaddress" element carrying the short/long, probably
             // because this is an older-format file, so try to use system default.
             // This is generally the best we can do without parsing the decoder file now
             // but may give the wrong answer in some cases (low value long addresses on NCE)
@@ -847,7 +984,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             _sp = new RosterSpeedProfile(this);
             _sp.load(e.getChild(RosterEntry.SPEED_PROFILE));
         }
-
     }
 
     boolean loadedOnce = false;
@@ -887,13 +1023,20 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             for (Element fn : l) {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
                 String lock = fn.getAttribute("lockable").getValue();
+                String visible = null;
+                if (fn.getAttribute("visible") != null) {
+                    visible = fn.getAttribute("visible").getValue();
+                }
                 String val = LocaleSelector.getAttribute(fn, "text");
                 if (val == null) {
                     val = fn.getText();
                 }
                 if ((this.getFunctionLabel(num) == null) || (source.equalsIgnoreCase("model"))) {
                     this.setFunctionLabel(num, val);
-                    this.setFunctionLockable(num, lock.equals("true"));
+                    this.setFunctionLockable(num, "true".equals(lock));
+                    if (visible != null){
+                        this.setFunctionVisible(num, "true".equals(visible));
+                    }
                     Attribute a;
                     if ((a = fn.getAttribute("functionImage")) != null && !a.getValue().isEmpty()) {
                         try {
@@ -933,7 +1076,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         }
     }
 
-    boolean soundLoadedOnce = false;
+    private boolean soundLoadedOnce = false;
 
     /**
      * Loads sound names from a JDOM element. Does not change values that are
@@ -1095,16 +1238,45 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Return the lockable state of a specific function. Defaults to true.
+     * Return the lockable/latchable state of a specific function. Defaults to true.
      *
      * @param fn function number, starting with 0
-     * @return true if function is lockable
+     * @return true if function is lockable/latchable
      */
     public boolean getFunctionLockable(int fn) {
         if (functionLockables == null) {
             return true;
         }
         return ((functionLockables.get(fn) != null) ? functionLockables.get(fn) : true);
+    }
+
+    /**
+     * Define whether a specific function button is visible.
+     *
+     * @param fn       function number, starting with 0
+     * @param visible  true if function button is visible; false to hide
+     */
+    public void setFunctionVisible(int fn, boolean visible) {
+        if (functionVisibles == null) {
+            functionVisibles = Collections.synchronizedMap(new HashMap<>());
+            functionVisibles.put(fn, true);
+        }
+        boolean old = ((functionVisibles.get(fn) != null) ? functionVisibles.get(fn) : true);
+        functionVisibles.put(fn, visible);
+        this.firePropertyChange(RosterEntry.FUNCTION_LOCKABLE + fn, old, visible);
+    }
+
+    /**
+     * Return the UI visibility of a specific function button. Defaults to true.
+     *
+     * @param fn function number, starting with 0
+     * @return true if function button is visible
+     */
+    public boolean getFunctionVisible(int fn) {
+        if (functionVisibles == null) {
+            return true;
+        }
+        return ((functionVisibles.get(fn) != null) ? functionVisibles.get(fn) : true);
     }
 
     @Override
@@ -1141,7 +1313,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     @Override
     public String[] getAttributeList() {
-        return attributePairs.keySet().toArray(new String[attributePairs.size()]);
+        return attributePairs.keySet().toArray(new String[0]);
     }
 
     /**
@@ -1224,6 +1396,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         e.setAttribute(DECODER_DEVELOPERID, getDeveloperID());
         e.setAttribute(DECODER_MANUFACTURERID, getManufacturerID());
         e.setAttribute(DECODER_PRODUCTID, getProductID());
+        e.setAttribute(DECODER_MODES, getProgrammingModes());
         e.setAttribute(RosterEntry.MAX_SPEED, (Integer.toString(getMaxSpeedPCT())));
         // file path are saved without default xml config path
         e.setAttribute("imageFilePath",
@@ -1232,6 +1405,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 (this.getIconPath() != null) ? FileUtil.getPortableFilename(this.getIconPath()) : "");
         e.setAttribute("URL", getURL());
         e.setAttribute(RosterEntry.SHUNTING_FUNCTION, getShuntingFunction());
+         // Physics (stored in metric units)
+         e.setAttribute(PHYSICS_TRACTION_TYPE, getPhysicsTractionType().name());
+         e.setAttribute(PHYSICS_WEIGHT_KG, Float.toString(getPhysicsWeightKg()));
+         e.setAttribute(PHYSICS_POWER_KW, Float.toString(getPhysicsPowerKw()));
+         e.setAttribute(PHYSICS_TRACTIVE_EFFORT_KN, Float.toString(getPhysicsTractiveEffortKn()));
+         e.setAttribute(PHYSICS_MAX_SPEED_KMH, Float.toString(getPhysicsMaxSpeedKmh()));
+         e.setAttribute(PHYSICS_MECH_TRANSMISSION, Boolean.toString(isPhysicsMechanicalTransmission()));
         if (_dateUpdated.isEmpty()) {
             // set date updated to now if never set previously
             this.changeDateUpdated();
@@ -1260,6 +1440,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                     Element fne = new Element(RosterEntry.FUNCTION_LABEL);
                     fne.setAttribute("num", "" + key);
                     fne.setAttribute("lockable", getFunctionLockable(key) ? "true" : "false");
+                    fne.setAttribute("visible", getFunctionVisible(key) ? "true" : "false");
                     fne.setAttribute("functionImage",
                             (getFunctionImage(key) != null) ? FileUtil.getPortableFilename(getFunctionImage(key)) : "");
                     fne.setAttribute("functionImageSelected", (getFunctionSelectedImage(key) != null)
@@ -1310,38 +1491,41 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     @Override
     public String toString() {
-        String out = "[RosterEntry: "
-                + _id
-                + " "
-                + (_fileName != null ? _fileName : "<null>")
-                + " "
-                + _roadName
-                + " "
-                + _roadNumber
-                + " "
-                + _mfg
-                + " "
-                + _owner
-                + " "
-                + _model
-                + " "
-                + _dccAddress
-                + " "
-                + _comment
-                + " "
-                + _decoderModel
-                + " "
-                + _decoderFamily
-                + " "
-                + _developerID
-                + " "
-                + _manufacturerID
-                + " "
-                + _productID
-                + " "
-                + _decoderComment
-                + "]";
-        return out;
+        return new StringBuilder()
+            .append("[RosterEntry: ")
+            .append(_id)
+            .append(" ")
+            .append(_fileName != null ? _fileName : "<null>")
+            .append(" ")
+            .append(_roadName)
+            .append(" ")
+            .append(_roadNumber)
+            .append(" ")
+            .append(_mfg)
+            .append(" ")
+            .append(_owner)
+            .append(" ")
+            .append(_model)
+            .append(" ")
+            .append(_dccAddress)
+            .append(" ")
+            .append(_comment)
+            .append(" ")
+            .append(_decoderModel)
+            .append(" ")
+            .append(_decoderFamily)
+            .append(" ")
+            .append(_developerID)
+            .append(" ")
+            .append(_manufacturerID)
+            .append(" ")
+            .append(_productID)
+            .append(" ")
+            .append(_programmingModes)
+            .append(" ")
+            .append(_decoderComment)
+            .append("]")
+            .toString();
     }
 
     /**
@@ -1477,7 +1661,20 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Ultra compact list view of roster entries. Shows text from fields as
+     * Function to get the size of an image in points when shrunk
+     * to fit a given size.
+     *
+     * @param img the image to get the size of
+     * @param size the size to shrink the image to (in points)
+     * @return the size of the image in points
+     */
+    public static Dimension getImageSize(Image img, Dimension size) {
+        double scale = Math.min((double) size.width / img.getWidth(null), (double) size.height / img.getHeight(null));
+        return new Dimension((int) (img.getWidth(null) * scale), (int) (img.getHeight(null) * scale));
+    }
+
+    /**
+     * Ultra-compact list view of roster entries. Shows text from fields as
      * initially visible in the Roster frame table.
      * <p>
      * Header is created in
@@ -1555,28 +1752,27 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         if (getIconPath() != null) {
             ImageIcon icon = new ImageIcon(getIconPath());
             // We use an ImageIcon because it's guaranteed to have been loaded when ctor is complete.
-            // We set the imagesize to 150x150 pixels
-            int imagesize = 150;
+            // We set the imagesize to 150x150 pixels times the overSample. The
+            // resulting image on the page will be scaled back down to 150pt x 150pt
 
             Image img = icon.getImage();
-            int width = img.getWidth(null);
-            int height = img.getHeight(null);
-            double widthratio = (double) width / imagesize;
-            double heightratio = (double) height / imagesize;
-            double ratio = Math.max(widthratio, heightratio);
-            width = (int) (width / ratio);
-            height = (int) (height / ratio);
-            Image newImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+            Dimension shape = new Dimension(150, 150);   // in points
+            Dimension actualShape = getImageSize(img, shape);
 
-            ImageIcon newIcon = new ImageIcon(newImg);
-            w.writeNoScale(newIcon.getImage(), new JLabel(newIcon));
+            blanks = (actualShape.height - w.getLineAscent()) / w.getLineHeight();
+
+            if (blanks + w.getCurrentLineNumber() > w.getLinesPerPage()) {
+                w.pageBreak();
+            }
+
+            Dimension d = w.writeSpecificSize(img, shape);
             // Work out the number of line approx that the image takes up.
             // We might need to pad some areas of the roster out, so that things
             // look correct and text doesn't overflow into the image.
-            blanks = (newImg.getHeight(null) - w.getLineAscent()) / w.getLineHeight();
             textSpaceWithIcon
-                    = w.getCharactersPerLine() - ((newImg.getWidth(null) / w.getCharWidth())) - indentWidth - 1;
-
+                    = (int) (w.getCharactersPerLine() - (d.width / w.getCharWidth()) - indentWidth - 1);
+            // Update blanks to be the number of lines the image takes up.
+            blanks = (d.height - w.getLineAscent()) / w.getLineHeight();
         }
         printEntryDetails(w);
     }
@@ -1588,7 +1784,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     String newLine = "\n";
 
     /**
-     * Print the roster information.
+     * Print the roster entry information.
      * <p>
      * Updated to allow for multiline comment and decoder comment fields.
      * Separate write statements for text and line feeds to work around the
@@ -1685,14 +1881,14 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             // If there is a comment field, then wrap it using the new wrapCommment()
             // method and print it
             if (!(_comment.isEmpty())) {
-                //Because the text will fill the width if the roster entry has an icon
-                //then we need to add some blank lines to prevent the comment text going
-                //through the picture.
+                // Because the text will fill the width if the roster entry has an icon
+                // then we need to add some blank lines to prevent the comment text going
+                // through the picture.
                 for (int i = 0; i < (blanks - linesAdded); i++) {
                     w.write(newLine, 0, 1);
                 }
-                //As we have added the blank lines to pad out the comment we will
-                //reset the number of blanks to 0.
+                // As we have added the blank lines to pad out the comment we will
+                // reset the number of blanks to 0.
                 if (blanks != 0) {
                     blanks = 0;
                 }
@@ -1720,17 +1916,27 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                     linesAdded = writeWrappedComment(w, _decoderFamily, leftMargin + title, textSpace) + linesAdded;
                 }
             }
+            if (!(_programmingModes.isEmpty())) {
+                title = String.format("%-" + labelColumn + "s",
+                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldDecoderModes")))); // I18N Programming Mode(s):
+                if ((textSpaceWithIcon != 0) && (linesAdded < blanks)) {
+                    linesAdded
+                            = writeWrappedComment(w, _programmingModes, leftMargin + title, textSpaceWithIcon) + linesAdded;
+                } else {
+                    linesAdded = writeWrappedComment(w, _programmingModes, leftMargin + title, textSpace) + linesAdded;
+                }
+            }
 
-            //If there is a decoderComment field, need to wrap it
+            // If there is a decoderComment field, need to wrap it
             if (!(_decoderComment.isEmpty())) {
-                //Because the text will fill the width if the roster entry has an icon
-                //then we need to add some blank lines to prevent the comment text going
-                //through the picture.
+                // Because the text will fill the width if the roster entry has an icon
+                // then we need to add some blank lines to prevent the comment text going
+                // through the picture.
                 for (int i = 0; i < (blanks - linesAdded); i++) {
                     w.write(newLine, 0, 1);
                 }
-                //As we have added the blank lines to pad out the comment we will
-                //reset the number of blanks to 0.
+                // As we have added the blank lines to pad out the comment we will
+                // reset the number of blanks to 0.
                 if (blanks != 0) {
                     blanks = 0;
                 }
@@ -1750,9 +1956,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     private int writeWrappedComment(Writer w, String text, String title, int textSpace) {
         Vector<String> commentVector = wrapComment(text, textSpace);
 
-        //Now have a vector of text pieces and line feeds that will all
-        //fit in the allowed space. Print each piece, prefixing the first one
-        //with the label and indenting any remaining.
+        // Now have a vector of text pieces and line feeds that will all
+        // fit in the allowed space. Print each piece, prefixing the first one
+        // with the label and indenting any remaining.
         String s;
         int k = 0;
         try {

@@ -1,6 +1,10 @@
 package jmri.jmrit.logixng;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.beans.PropertyVetoException;
 import java.io.*;
 import java.util.*;
@@ -8,24 +12,28 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import jmri.*;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
+import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import org.junit.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Do a deep copy of all the LogixNG actions and expressions.
  */
 public class DeepCopyTest {
 
-    public final String TREE_INDENT = "     ";
+    public static final String TREE_INDENT = "     ";
 
     private CreateLogixNGTreeScaffold createLogixNGTreeScaffold;
 
     @Test
-    public void testLogixNGs() throws PropertyVetoException, Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testLogixNGs() throws PropertyVetoException, JmriException {
 
         // Add new LogixNG actions and expressions to jmri.jmrit.logixng.CreateLogixNGTreeScaffold
         createLogixNGTreeScaffold.createLogixNGTree();
@@ -81,7 +89,7 @@ public class DeepCopyTest {
 //                        System.out.format("%n%n%n------------------------------------%n%n%s%n%n------------------------------------%n%n%n", originStr);
 //                        System.out.format("%n%n%n------------------------------------%n%n%s%n%n------------------------------------%n%n%n", copyStr);
 
-                    Assert.assertEquals(originStr, copyStr);
+                    assertEquals(originStr, copyStr);
                 }
             }
         }
@@ -99,6 +107,7 @@ public class DeepCopyTest {
         while (base instanceof MaleSocket) {
             base = ((MaleSocket)base).getObject();
         }
+        assertNotNull(base);
         return base.getClass().getName();
     }
 
@@ -123,7 +132,7 @@ public class DeepCopyTest {
         stringWriter = new StringWriter();
         printWriter = new PrintWriter(stringWriter);
 
-        Assert.assertTrue(copy != null);
+        assertNotNull(copy);
 
         copy.printTree(Locale.ENGLISH, printWriter, TREE_INDENT, new MutableInt(0));
 
@@ -160,15 +169,14 @@ public class DeepCopyTest {
         });
 
         for (int i=0; i < originalList.size(); i++) {
-            Assert.assertEquals(copyList.get(i).getSystemName(),
+            assertEquals(copyList.get(i).getSystemName(),
                     systemNames.get(originalList.get(i).getSystemName()));
 
-            if (!copyList.get(i).getUserName().equals(userNames.get(originalList.get(i).getSystemName()))) {
-                Assert.fail(String.format("Username is wrong for item %s",
-                        getItem(baseMaleSocket, originalList.get(i).getSystemName())));
-            }
-            Assert.assertEquals(copyList.get(i).getUserName(),
-                    userNames.get(originalList.get(i).getSystemName()));
+            assertEquals(copyList.get(i).getUserName(),
+                    userNames.get(originalList.get(i).getSystemName()),
+                    String.format("Username is wrong for item %s",
+                        getItem(baseMaleSocket, originalList.get(i).getSystemName()))
+                    );
 
             String origComment = comments.get(originalList.get(i).getSystemName());
             String copyComment = copyList.get(i).getComment();
@@ -176,17 +184,17 @@ public class DeepCopyTest {
                     || (origComment == null && copyComment != null)
                     || (origComment != null && copyComment != null && !origComment.equals(copyComment))
                     ) {
-                Assert.fail(String.format("Comment is wrong for item %s",
+                fail(String.format("Comment is wrong for item %s",
                         getItem(baseMaleSocket, originalList.get(i).getSystemName())));
             }
-            Assert.assertEquals(copyList.get(i).getComment(),
+            assertEquals(copyList.get(i).getComment(),
                     comments.get(originalList.get(i).getSystemName()));
         }
     }
 
     @Test
-    public void testGetDeepCopy() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testGetDeepCopy() {
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
 
@@ -199,10 +207,12 @@ public class DeepCopyTest {
                 FemaleSocket femaleSocket = aLogixNG.getConditionalNG(i).getFemaleSocket();
 
                 if (femaleSocket.isConnected()) {
-                    femaleSocket.getConnectedSocket().forEntireTreeWithException((Base b) -> {
-                        if (b instanceof MaleSocket) {
-                            testCopySocket((MaleSocket) b);
-                        }
+                    assertDoesNotThrow( () -> {
+                        femaleSocket.getConnectedSocket().forEntireTreeWithException((Base b) -> {
+                            if (b instanceof MaleSocket) {
+                                testCopySocket((MaleSocket) b);
+                            }
+                        });
                     });
                 }
             }
@@ -210,16 +220,18 @@ public class DeepCopyTest {
     }
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
+        JUnitUtil.setUp();
         createLogixNGTreeScaffold = new CreateLogixNGTreeScaffold();
-        createLogixNGTreeScaffold.setUp();
+        createLogixNGTreeScaffold.setUpScaffold();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
-        createLogixNGTreeScaffold.tearDown();
+        createLogixNGTreeScaffold.tearDownScaffold();
+        JUnitUtil.tearDown();
     }
 
 

@@ -4,8 +4,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -15,7 +13,7 @@ public class WarrantPreferencesTest {
     @Test
     public void testCTor() {
         WarrantPreferences t = new WarrantPreferences();
-        assertThat(t).withFailMessage("exists").isNotNull();
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

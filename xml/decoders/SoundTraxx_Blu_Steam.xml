@@ -37,10 +37,19 @@
             <authorinitials>MM</authorinitials>
             <revremark>Added Blunami 4408 model with productID change for 11 bit Soundtraxx ID</revremark>
         </revision>
+        <revision>
+            <revnumber>3</revnumber>
+            <date>2024-05-22</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>Added Blunami 21PNEM models</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Blunami Steam" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" comment="These are the -retail- version Blunami Steam decoders">
+            <model model="BLU-21PNEM8 Steam-2" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2157" comment="Model 884608">
+                <size length="30.5" width="15.5" height="6.5" units="mm"/>
+            </model>
             <model model="BLU-2200 Steam-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2138" comment="Model 884607">
                 <size length="41.9" width="18.8" height="6.8" units="mm"/>
             </model>

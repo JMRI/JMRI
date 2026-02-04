@@ -7,10 +7,8 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
-import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.JmriJOptionPane;
@@ -26,9 +24,10 @@ import jmri.util.swing.JmriJOptionPane;
 public class ExportEngines extends XmlFile {
 
     protected static final String LOCATION_TRACK_SEPARATOR = "-";
+    List<Engine> _engineList;
 
-    public ExportEngines() {
-        // nothing to do
+    public ExportEngines(List<Engine> engineList) {
+        _engineList = engineList;
     }
 
     /**
@@ -53,7 +52,8 @@ public class ExportEngines extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete", e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}",
+                    e.getLocalizedMessage());
         }
     }
 
@@ -67,9 +67,6 @@ public class ExportEngines extends XmlFile {
 
         try (CSVPrinter fileOut = new CSVPrinter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
                 CSVFormat.DEFAULT)) {
-
-            EngineManager manager = InstanceManager.getDefault(EngineManager.class);
-            List<Engine> engineList = manager.getByNumberList();
 
             // create header
             fileOut.printRecord(Bundle.getMessage("Number"),
@@ -92,7 +89,7 @@ public class ExportEngines extends XmlFile {
                     Bundle.getMessage("Miscellaneous"));
 
             // store engine number, road, model, length, owner, built date, location - track
-            for (Engine engine : engineList) {
+            for (Engine engine : _engineList) {
                 fileOut.printRecord(engine.getNumber(),
                         engine.getRoadName(),
                         engine.getModel(),
@@ -104,7 +101,7 @@ public class ExportEngines extends XmlFile {
                         engine.getTrackName(),
                         engine.getConsistName(),
                         engine.getMoves(),
-                        engine.getLastDate(),
+                        engine.getSortDate(),
                         engine.getValue(),
                         engine.getHp(),
                         engine.getWeightTons(),
@@ -112,14 +109,12 @@ public class ExportEngines extends XmlFile {
                         engine.getComment(),
                         engine.isOutOfService() ? Bundle.getMessage("OutOfService") : "");
             }
-            fileOut.flush();
-            fileOut.close();
-            log.info("Exported {} engines to file {}", engineList.size(), defaultOperationsFilename());
+            log.info("Exported {} engines to file {}", _engineList.size(), defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ExportedEnginesToFile",
-                    engineList.size(), defaultOperationsFilename()), Bundle.getMessage("ExportComplete"),
+                    _engineList.size(), defaultOperationsFilename()), Bundle.getMessage("ExportComplete"),
                     JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
-            log.error("Can not open export engines CSV file: {}", file.getName());
+            log.error("Can not open export engines CSV file: {}", e.getLocalizedMessage());
             JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ExportedEnginesToFile",
                     0, defaultOperationsFilename()), Bundle.getMessage("ExportFailed"),
                     JmriJOptionPane.ERROR_MESSAGE);

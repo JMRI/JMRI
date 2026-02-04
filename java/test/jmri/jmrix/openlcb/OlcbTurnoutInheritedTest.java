@@ -27,10 +27,10 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
         JUnitUtil.setUp();
        // this test is run separately because it leaves a lot of threads behind
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        tif = new OlcbTestInterface();
+        tif = new OlcbTestInterface(new OlcbTestInterface.CreateConfigurationManager());
         tif.waitForStartup();
         baselineListeners = tif.iface.numMessageListeners();
-        OlcbTurnout ot = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", tif.iface);
+        OlcbTurnout ot = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", tif.systemConnectionMemo);
         ot.finishLoad();
         t = ot;
         l = new PropertyChangeListenerScaffold();

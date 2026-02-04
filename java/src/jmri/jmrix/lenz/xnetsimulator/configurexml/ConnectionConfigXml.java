@@ -84,4 +84,9 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         this.register(new ConnectionConfig(adapter));
     }
 
+    @Override
+    protected void dispose() {
+        adapter.dispose();
+    }
+
 }

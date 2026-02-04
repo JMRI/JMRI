@@ -5,7 +5,7 @@ import jmri.util.JUnitUtil;
 import org.apache.logging.log4j.LogManager;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2003, 2010
  * @author Steve Young Copyright(C) 2023
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
@@ -24,14 +24,15 @@ public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
         LoggerFactory.getLogger("apps.foo");
         LoggerFactory.getLogger("jmri.util");
 
-        new jmri.util.swing.JmriNamedPaneAction("Log4J Tree",
+        jmri.util.ThreadingUtil.runOnGUI( () ->
+            new jmri.util.swing.JmriNamedPaneAction("Log4J Tree",
                 new jmri.util.swing.sdi.JmriJFrameInterface(),
-                "apps.jmrit.log.Log4JTreePane").actionPerformed(null);
+                "apps.jmrit.log.Log4JTreePane").actionPerformed(null));
         
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("MenuItemLogTreeAction"));
         Assertions.assertNotNull(jfo);
 
-        jfo.requestClose();
+        JUnitUtil.dispose( jfo.getWindow() );
         jfo.waitClosed();
         
     }
@@ -40,9 +41,10 @@ public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
     public void testChangeALoggingLevel(){
         String testLoggerName = "apps.jmrit.log.Log4JTreePaneTest.testChangeALoggingLevel";
 
-        new jmri.util.swing.JmriNamedPaneAction("Log4J Tree",
+        jmri.util.ThreadingUtil.runOnGUI( () ->
+            new jmri.util.swing.JmriNamedPaneAction("Log4J Tree",
                 new jmri.util.swing.sdi.JmriJFrameInterface(),
-                "apps.jmrit.log.Log4JTreePane").actionPerformed(null);
+                "apps.jmrit.log.Log4JTreePane").actionPerformed(null));
 
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("MenuItemLogTreeAction"));
         Assertions.assertNotNull(jfo);
@@ -66,7 +68,7 @@ public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.waitFor(() -> !LogManager.getLogger(testLoggerName).isTraceEnabled() , "log level changed to error");
         Assertions.assertFalse(LogManager.getLogger(testLoggerName).isTraceEnabled());
 
-        jfo.requestClose();
+        JUnitUtil.dispose( jfo.getWindow() );
         jfo.waitClosed();
 
     }
@@ -75,7 +77,6 @@ public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
 
         panel = new Log4JTreePane();

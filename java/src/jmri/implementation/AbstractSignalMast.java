@@ -2,13 +2,15 @@ package jmri.implementation;
 
 import java.util.*;
 import javax.annotation.*;
+
+import jmri.NamedBean;
+import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
+
 import jmri.InstanceManager;
 import jmri.SignalAppearanceMap;
 import jmri.SignalMast;
 import jmri.SignalSystem;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class providing the basic logic of the SignalMast interface.
@@ -17,8 +19,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractSignalMast extends AbstractNamedBean
         implements SignalMast, java.beans.VetoableChangeListener {
-
-    private final static Logger log = LoggerFactory.getLogger(AbstractSignalMast.class);
 
     public AbstractSignalMast(String systemName, String userName) {
         super(systemName, userName);
@@ -33,7 +33,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         String oldAspect = this.aspect;
         this.aspect = aspect;
         this.speed = (String) getSignalSystem().getProperty(aspect, "speed");
-        firePropertyChange("Aspect", oldAspect, aspect);
+        firePropertyChange(PROPERTY_ASPECT, oldAspect, aspect);
     }
 
     @Override
@@ -98,9 +98,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         boolean oldLit = mLit;
         mLit = newLit;
         if (oldLit != newLit) {
-            //updateOutput();
-            // notify listeners, if any
-            firePropertyChange("Lit", oldLit, newLit);
+            firePropertyChange(PROPERTY_LIT, oldLit, newLit);
         }
     }
 
@@ -118,21 +116,20 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         boolean oldHeld = mHeld;
         mHeld = newHeld;
         if (oldHeld != newHeld) {
-            // notify listeners, if any
-            firePropertyChange("Held", oldHeld, newHeld);
+            firePropertyChange(PROPERTY_HELD, oldHeld, newHeld);
         }
     }
 
     @Override
     public boolean isAtStop() {
-        if  (speed.equals("0")) return true;  // should this also include DANGER?
-        return false;
+        // should this also include DANGER?
+        return "0".equals(speed);
     }
 
     @Override
     public boolean isShowingRestricting() {
         String displayedAspect = getAspect();
-        if ( displayedAspect != null && displayedAspect.equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE))) return true;
+        if ( displayedAspect != null && displayedAspect.equals(getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.PERMISSIVE))) return true;
         return false;
     }
 
@@ -142,9 +139,9 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         if ( displayedAspect == null ) {
             return false;
         }
-        if (displayedAspect.equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE))) return false;
-        if (displayedAspect.equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD))) return false;
-        if (displayedAspect.equals(getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER))) return false;
+        if (displayedAspect.equals(getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.PERMISSIVE))) return false;
+        if (displayedAspect.equals(getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.HELD))) return false;
+        if (displayedAspect.equals(getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER))) return false;
         return true;
     }
 
@@ -152,11 +149,13 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     SignalSystem systemDefn;
 
     boolean disablePermissiveSignalMastLogic = false;
+
     @Override
     public void setPermissiveSmlDisabled(boolean disabled) {
         disablePermissiveSignalMastLogic = disabled;
-        firePropertyChange("PermissiveSmlDisabled", null, disabled);
+        firePropertyChange(PROPERTY_PERMISSIVE_SML_DISABLED, null, disabled);
     }
+
     /**
      * {@inheritDoc }
      */
@@ -208,7 +207,10 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
      * {@inheritDoc }
      */
     @Override
-    public String getMastType() { return mastType; }
+    public String getMastType() {
+        return mastType;
+    }
+
     @Override
     public void setMastType(@Nonnull String type) {
         Objects.requireNonNull(type, "MastType cannot be null");
@@ -232,7 +234,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     }
 
     public void setAspectDisabled(String aspect) {
-        if (aspect == null || aspect.equals("")) {
+        if (aspect == null || aspect.isEmpty()) {
             return;
         }
         if (!map.checkAspect(aspect)) {
@@ -241,12 +243,12 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         }
         if (!disabledAspects.contains(aspect)) {
             disabledAspects.add(aspect);
-            firePropertyChange("aspectDisabled", null, aspect);
+            firePropertyChange(PROPERTY_ASPECT_DISABLED, null, aspect);
         }
     }
 
     public void setAspectEnabled(String aspect) {
-        if (aspect == null || aspect.equals("")) {
+        if (aspect == null || aspect.isEmpty()) {
             return;
         }
         if (!map.checkAspect(aspect)) {
@@ -255,7 +257,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         }
         if (disabledAspects.contains(aspect)) {
             disabledAspects.remove(aspect);
-            firePropertyChange("aspectEnabled", null, aspect);
+            firePropertyChange(PROPERTY_ASPECT_ENABLED, null, aspect);
         }
     }
 
@@ -268,7 +270,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         return disabledAspects.contains(aspect);
     }
 
-    boolean allowUnLit = true;
+    private boolean allowUnLit = true;
 
     @Override
     public void setAllowUnLit(boolean boo) {
@@ -288,5 +290,40 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalMast");
     }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean instanceof jmri.Turnout) {
+                if (this instanceof jmri.implementation.TurnoutSignalMast) {
+                    var m = (jmri.implementation.TurnoutSignalMast) this;
+                    var t = (jmri.Turnout) bean;
+                    if (m.isTurnoutUsed(t)) {
+                        report.add(new NamedBeanUsageReport("SignalMastTurnout"));  // NOI18N
+                    }
+                } else if (this instanceof jmri.implementation.MatrixSignalMast) {
+                    var m = (jmri.implementation.MatrixSignalMast) this;
+                    var t = (jmri.Turnout) bean;
+                    if (m.isTurnoutUsed(t)) {
+                        report.add(new NamedBeanUsageReport("SignalMastTurnout"));  // NOI18N
+                    }
+                }
+            } else if (bean instanceof jmri.SignalHead) {
+                if (this instanceof jmri.implementation.SignalHeadSignalMast) {
+                    var m = (jmri.implementation.SignalHeadSignalMast) this;
+                    var h = (jmri.SignalHead) bean;
+                    for (NamedBeanHandle<jmri.SignalHead> handle : m.getHeadsUsed()) {
+                        if (h.equals(handle.getBean())) {
+                            report.add(new NamedBeanUsageReport("SignalMastSignalHead"));  // NOI18N
+                        }
+                    }
+                }
+            }
+        }
+        return report;
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSignalMast.class);
 
 }

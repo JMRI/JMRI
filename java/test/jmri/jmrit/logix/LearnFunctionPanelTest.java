@@ -1,27 +1,24 @@
 package jmri.jmrit.logix;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
  * @author Pete Cressman Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class LearnFunctionPanelTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         WarrantFrame wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
         LearnThrottleFrame ltf = new LearnThrottleFrame(wf);
         LearnFunctionPanel t = new LearnFunctionPanel(ltf);
-        assertThat(t).withFailMessage("exists").isNotNull();
+        Assertions.assertNotNull( t, "exists");
         JUnitUtil.dispose(ltf);
         JUnitUtil.dispose(wf);
     }

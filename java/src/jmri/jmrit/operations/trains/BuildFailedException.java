@@ -6,7 +6,7 @@ package jmri.jmrit.operations.trains;
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  * 2014
  */
-class BuildFailedException extends Exception {
+public class BuildFailedException extends Exception {
 
     public final static String NORMAL = "normal"; // NOI18N
     public final static String STAGING = "staging"; // NOI18N

@@ -43,7 +43,7 @@ public abstract class IssueReport extends Bean {
     @Nonnull
     public URI submit(GitHubRepository repository) throws URISyntaxException, IOException, IssueReport414Exception {
         prepare();
-        URI uri = new URI(String.format("https://github.com/%s/%s/issues/new?title=%s;body=%s",
+        URI uri = new URI(String.format("https://github.com/%s/%s/issues/new?title=%s&body=%s",
                 repository.getOwner(),
                 repository.getName(),
                 URLEncoder.encode(title, StandardCharsets.UTF_8.toString()),

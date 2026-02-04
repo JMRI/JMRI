@@ -8,6 +8,9 @@ package jmri.jmrix.sprog;
 
 public final class SprogConstants {
 
+    // prevent new instance, Class supplies static constants.
+    private SprogConstants(){}
+
     /* SPROG mode */
     public final static int SPROG = 0;
     public final static int SPROG_CS = 1;

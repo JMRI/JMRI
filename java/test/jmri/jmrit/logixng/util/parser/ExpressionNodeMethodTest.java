@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng.util.parser;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.awt.geom.Point2D;
 import java.io.*;
 import java.util.*;
 
@@ -9,9 +12,9 @@ import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test ExpressionNodeMethod.
@@ -56,27 +59,45 @@ public class ExpressionNodeMethodTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testMethodWithBooleanParameter() throws JmriException {
         var editor = new jmri.jmrit.display.layoutEditor.LayoutEditor("My layout");
-        var trackSegment = new TrackSegment("Id", "A", HitPointType.TRACK, "B", HitPointType.TRACK, false, editor);
+
+        // code retained for any future debug
+        // jmri.util.ThreadingUtil.runOnGUI( () -> editor.setVisible(true));
+        // jmri.jmrit.display.EditorFrameOperator efo = new jmri.jmrit.display.EditorFrameOperator("My layout");
+        // Assertions.assertNotNull(efo);
+
+        PositionablePoint p1 = new PositionablePoint("A", PositionablePoint.PointType.ANCHOR, editor);
+        PositionablePointView p1v = new PositionablePointView(p1, new Point2D.Double(210.0, 220.0), editor);
+        editor.addLayoutTrack(p1, p1v);
+
+        PositionablePoint p2 = new PositionablePoint("B", PositionablePoint.PointType.ANCHOR, editor);
+        PositionablePointView p2v = new PositionablePointView(p2, new Point2D.Double(220.0, 233.0), editor);
+        editor.addLayoutTrack(p2, p2v);
+
+        var trackSegment = new TrackSegment("Id", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, false, editor);
         var trackSegmentView = new TrackSegmentView(trackSegment, editor);
         editor.addLayoutTrack(trackSegment, trackSegmentView);
+
         var segments = editor.getTrackSegmentViews();
         var segment = segments.get(0);
         segment.setHidden(false);
         Assertions.assertFalse(segment.isHidden());
         testCall(segment, "setHidden", null, new Object[]{true});
         Assertions.assertTrue(segment.isHidden());
+
+        JUnitUtil.dispose(editor);
     }
 
     /**
      * This method creates the ExpressionNodeMethodPrimTest.java source file.
-     * Uncomment the line "@org.junit.Ignore" and run this test to create the file.
+     * Comment out the line "@Disabled" and run this test to create the file.
      * @throws IOException if an I/O exception occurs.
      */
-    @org.junit.Ignore
+    @Disabled("Comment out this line to regenerate tests")
     @Test
+    @SuppressFBWarnings( value="VA_FORMAT_STRING_USES_NEWLINE", justification="JMRI uses LF line endings, not platform specific")
     public void testCreateTestMethods() throws IOException {
 
         String filename = "java/test/jmri/jmrit/logixng/util/parser/ExpressionNodeMethodPrimTest.java";
@@ -86,12 +107,13 @@ public class ExpressionNodeMethodTest {
             writer.format(
                     "package jmri.jmrit.logixng.util.parser;\n" +
                     "\n" +
-                    "/*\n" +
-                    "    Important!!!\n" +
-                    "    This file is created by ExpressionNodeMethodTest.testCreateTestMethods()\n" +
-                    "    Comment @org.junit.Ignore if you want to regenerate this file.\n" +
-                    "*/\n" +
+                    "/**\n" +
+                    " * Important!!!\n" +
+                    " * This file is created by ExpressionNodeMethodTest.testCreateTestMethods()\n" +
+                    " * Comment out @Disabled if you want to regenerate this file.\n" +
+                    " */\n" +
                     "\n" +
+                    "import static org.junit.jupiter.api.Assertions.assertEquals;\n\n" +
                     "import java.util.*;\n" +
                     "\n" +
                     "import jmri.JmriException;\n" +
@@ -100,10 +122,9 @@ public class ExpressionNodeMethodTest {
                     "import jmri.jmrit.logixng.implementation.DefaultSymbolTable;\n" +
                     "import jmri.util.JUnitUtil;\n" +
                     "\n" +
-                    "import org.junit.After;\n" +
-                    "import org.junit.Assert;\n" +
-                    "import org.junit.Before;\n" +
-                    "import org.junit.Test;\n" +
+                    "import org.junit.jupiter.api.AfterEach;\n" +
+                    "import org.junit.jupiter.api.BeforeEach;\n" +
+                    "import org.junit.jupiter.api.Test;\n" +
                     "\n" +
                     "/**\n" +
                     " * Test ParsedExpression\n" +
@@ -128,7 +149,7 @@ public class ExpressionNodeMethodTest {
                     "        ExpressionNodeMethod t = new ExpressionNodeMethod(method, variables, parameterList);\n" +
                     "        Object result = t.calculate(object, symbolTable);\n" +
                     "\n" +
-                    "        Assert.assertEquals(expectedResult, result);\n" +
+                    "        assertEquals(expectedResult, result);\n" +
                     "    }\n" +
                     "\n" +
                     "");
@@ -164,23 +185,26 @@ public class ExpressionNodeMethodTest {
                             if (("float".equals(types[l]) || "double".equals(types[l]))
                                     && (!"Float".equals(classes[j]) && !"Double".equals(classes[j]))) continue;
 
-                            writer.format("        testCall(tc, \"test%s%s\", null, new Object[]{(%s)2,(%s)4});%n", classes[i], classes[j], types[k], types[l]);
-                            writer.format("        testCall(tc, \"test%s%sResult\", %s, new Object[]{(%s)2,(%s)4});%n", classes[i], classes[j], result, types[k], types[l]);
+                            String object1 = ( "int".equals(types[k]) ? "" : "(" + types[k] + ")");
+                            String object2 = ( "int".equals(types[l]) ? "" : "(" + types[l] + ")");
+
+                            writer.format("        testCall(tc, \"test%s%s\", null, new Object[]{%s2,%s4});\n", classes[i], classes[j], object1, object2);
+                            writer.format("        testCall(tc, \"test%s%sResult\", %s, new Object[]{%s2,%s4});\n", classes[i], classes[j], result, object1, object2);
                         }
                     }
                 }
             }
 
-            writer.format("    }%n");
+            writer.format("    }\n");
 
             writer.format(
-                    "    // The minimal setup for log4J\n" +
-                    "    @Before\n" +
+                    "\n" +
+                    "    @BeforeEach\n" +
                     "    public void setUp() {\n" +
                     "        JUnitUtil.setUp();\n" +
                     "    }\n" +
                     "\n" +
-                    "    @After\n" +
+                    "    @AfterEach\n" +
                     "    public void tearDown() {\n" +
                     "        JUnitUtil.tearDown();\n" +
                     "    }\n" +
@@ -218,18 +242,19 @@ public class ExpressionNodeMethodTest {
                     if ("Double".equals(classes[i])) result = "double";
                     if ("Float".equals(classes[j])) result = "double";
                     if ("Double".equals(classes[j])) result = "double";
-                    writer.format("        public void test%s%s(%s a, %s b) { }%n", classes[i], classes[j], types[i], types[j]);
-                    writer.format("        public %s test%s%sResult(%s a, %s b) { return a*b; }%n", result, classes[i], classes[j], types[i], types[j]);
+                    String longReturn = (  "long".equals(result) ? "1L * " : "" );
+
+                    writer.format("        public void test%s%s(%s a, %s b) { }\n", classes[i], classes[j], types[i], types[j]);
+                    writer.format("        public %s test%s%sResult(%s a, %s b) { return %sa*b; }\n", result, classes[i], classes[j], types[i], types[j], longReturn);
                 }
             }
 
-            writer.format("    }%n");
-            writer.format("%n");
-            writer.format("}%n");
+            writer.format("    }\n");
+            writer.format("\n");
+            writer.format("}\n");
         }
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

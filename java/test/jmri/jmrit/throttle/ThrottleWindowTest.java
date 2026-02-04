@@ -1,8 +1,7 @@
 package jmri.jmrit.throttle;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.InstanceManager;
+import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -12,6 +11,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class ThrottleWindowTest extends jmri.util.JmriJFrameTestBase {
 
     @BeforeEach
@@ -21,16 +21,20 @@ public class ThrottleWindowTest extends jmri.util.JmriJFrameTestBase {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugThrottleManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            // this will disable svg icons, batik randomly crashes JUnit tests
-            InstanceManager.getDefault(ThrottlesPreferences.class).setUseLargeSpeedSlider(false);
-            frame = new ThrottleWindow();
-        }
+        // this will disable svg icons, batik randomly crashes JUnit tests
+        InstanceManager.getDefault(ThrottlesPreferences.class).setUseLargeSpeedSlider(false);
+        frame = new ThrottleWindow();
     }
 
     @AfterEach
     @Override
     public void tearDown() {
+
+        JmriJFrame throttleListFrame = JmriJFrame.getFrame(Bundle.getMessage("ThrottleListFrameTile"));
+        if ( throttleListFrame != null ) {
+            JUnitUtil.dispose(throttleListFrame);
+        }
+
         JUnitUtil.clearShutDownManager();
         super.tearDown();
     }

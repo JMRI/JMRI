@@ -2,10 +2,7 @@ package jmri.jmrit.logixng.util.parser;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test ParsedExpression
@@ -18,16 +15,15 @@ public class ExpressionNodeNumberTest {
     public void testCtor() {
         Token token = new Token(TokenType.NONE, "13.22", 0);
         ExpressionNodeFloatingNumber t = new ExpressionNodeFloatingNumber(token);
-        Assert.assertNotNull("not null", t);
+        Assertions.assertNotNull( t, "not null");
     }
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

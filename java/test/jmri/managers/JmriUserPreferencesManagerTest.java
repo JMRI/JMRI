@@ -1,5 +1,11 @@
 package jmri.managers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import apps.AppConfigBase;
 
 import java.awt.Component;
@@ -22,12 +28,11 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.node.NodeIdentity;
 import jmri.util.swing.JmriJOptionPane;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -44,44 +49,44 @@ public class JmriUserPreferencesManagerTest {
     public void testAllowSave() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.isSaveAllowed());
+        assertFalse(m.isSaveAllowed());
         m.setSaveAllowed(true);
-        Assert.assertTrue(m.isSaveAllowed());
+        assertTrue(m.isSaveAllowed());
     }
 
     @Test
     public void testDisallowSave() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
-        Assert.assertTrue(m.isSaveAllowed());
+        assertTrue(m.isSaveAllowed());
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.isSaveAllowed());
+        assertFalse(m.isSaveAllowed());
         m.setSaveAllowed(true);
-        Assert.assertTrue(m.isSaveAllowed());
+        assertTrue(m.isSaveAllowed());
     }
 
     @Test
     public void testSetSaveAllowed() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.isSaveAllowed());
+        assertFalse(m.isSaveAllowed());
         m.setSaveAllowed(true);
-        Assert.assertTrue(m.isSaveAllowed());
+        assertTrue(m.isSaveAllowed());
     }
 
     @Test
     public void testIsSaveAllowed() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
-        Assert.assertTrue(m.isSaveAllowed());
+        assertTrue(m.isSaveAllowed());
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.isSaveAllowed());
+        assertFalse(m.isSaveAllowed());
         m.setSaveAllowed(true);
-        Assert.assertTrue(m.isSaveAllowed());
+        assertTrue(m.isSaveAllowed());
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testGetScreen() {
-        Assert.assertEquals(Toolkit.getDefaultToolkit().getScreenSize(), (new JmriUserPreferencesManager()).getScreen());
+        assertEquals(Toolkit.getDefaultToolkit().getScreenSize(), (new JmriUserPreferencesManager()).getScreen());
     }
 
     @Test
@@ -89,15 +94,15 @@ public class JmriUserPreferencesManagerTest {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
 
-        Assert.assertFalse(m.getSimplePreferenceState("one"));
+        assertFalse(m.getSimplePreferenceState("one"));
 
         m.setSimplePreferenceState("one", true);
-        Assert.assertTrue(m.getSimplePreferenceState("one"));
-        Assert.assertFalse(m.getSimplePreferenceState("two"));
+        assertTrue(m.getSimplePreferenceState("one"));
+        assertFalse(m.getSimplePreferenceState("two"));
 
         m.setSimplePreferenceState("one", false);
-        Assert.assertFalse(m.getSimplePreferenceState("one"));
-        Assert.assertFalse(m.getSimplePreferenceState("two"));
+        assertFalse(m.getSimplePreferenceState("one"));
+        assertFalse(m.getSimplePreferenceState("two"));
     }
 
     @Test
@@ -105,15 +110,15 @@ public class JmriUserPreferencesManagerTest {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
 
-        Assert.assertFalse(m.getSimplePreferenceState("one"));
+        assertFalse(m.getSimplePreferenceState("one"));
 
         m.setSimplePreferenceState("one", true);
-        Assert.assertTrue(m.getSimplePreferenceState("one"));
-        Assert.assertFalse(m.getSimplePreferenceState("two"));
+        assertTrue(m.getSimplePreferenceState("one"));
+        assertFalse(m.getSimplePreferenceState("two"));
 
         m.setSimplePreferenceState("one", false);
-        Assert.assertFalse(m.getSimplePreferenceState("one"));
-        Assert.assertFalse(m.getSimplePreferenceState("two"));
+        assertFalse(m.getSimplePreferenceState("one"));
+        assertFalse(m.getSimplePreferenceState("two"));
     }
 
     @Test
@@ -121,20 +126,20 @@ public class JmriUserPreferencesManagerTest {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
         // defaults to empty
-        Assert.assertEquals(0, m.getSimplePreferenceStateList().size());
+        assertEquals(0, m.getSimplePreferenceStateList().size());
         m.setSimplePreferenceState("test1", true);
         // setting a preference to true adds it
-        Assert.assertEquals(1, m.getSimplePreferenceStateList().size());
+        assertEquals(1, m.getSimplePreferenceStateList().size());
         m.setSimplePreferenceState("test1", false);
         // setting a preference to false removes it
-        Assert.assertEquals(0, m.getSimplePreferenceStateList().size());
+        assertEquals(0, m.getSimplePreferenceStateList().size());
         m.setSimplePreferenceState("test1", true);
         m.setSimplePreferenceState("test2", true);
         // setting a preference to true adds it
-        Assert.assertEquals(2, m.getSimplePreferenceStateList().size());
+        assertEquals(2, m.getSimplePreferenceStateList().size());
         m.setSimplePreferenceState("test2", true);
         // setting a preference to true twice adds it once
-        Assert.assertEquals(2, m.getSimplePreferenceStateList().size());
+        assertEquals(2, m.getSimplePreferenceStateList().size());
     }
 
     @Test
@@ -142,15 +147,15 @@ public class JmriUserPreferencesManagerTest {
         UserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
 
-        Assert.assertFalse(m.getPreferenceState(strClass, "test1"));
+        assertFalse(m.getPreferenceState(strClass, "test1"));
 
         m.setPreferenceState(strClass, "test1", true);
-        Assert.assertTrue(m.getPreferenceState(strClass, "test1"));
-        Assert.assertFalse(m.getPreferenceState(strClass, "test2"));
+        assertTrue(m.getPreferenceState(strClass, "test1"));
+        assertFalse(m.getPreferenceState(strClass, "test2"));
 
         m.setPreferenceState(strClass, "test1", false);
-        Assert.assertFalse(m.getPreferenceState(strClass, "test1"));
-        Assert.assertFalse(m.getPreferenceState(strClass, "test2"));
+        assertFalse(m.getPreferenceState(strClass, "test1"));
+        assertFalse(m.getPreferenceState(strClass, "test2"));
 
         // non-existant class should not cause an error
         m.setPreferenceState("non.existant.class", "test1", true);
@@ -162,26 +167,26 @@ public class JmriUserPreferencesManagerTest {
         UserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
 
-        Assert.assertFalse(m.getPreferenceState(strClass, "test1"));
+        assertFalse(m.getPreferenceState(strClass, "test1"));
 
         m.setPreferenceState(strClass, "test1", true);
-        Assert.assertTrue(m.getPreferenceState(strClass, "test1"));
-        Assert.assertFalse(m.getPreferenceState(strClass, "test2"));
+        assertTrue(m.getPreferenceState(strClass, "test1"));
+        assertFalse(m.getPreferenceState(strClass, "test2"));
 
         m.setPreferenceState(strClass, "test1", false);
-        Assert.assertFalse(m.getPreferenceState(strClass, "test1"));
-        Assert.assertFalse(m.getPreferenceState(strClass, "test2"));
+        assertFalse(m.getPreferenceState(strClass, "test1"));
+        assertFalse(m.getPreferenceState(strClass, "test2"));
     }
 
     @Test
     public void testSetPreferenceItemDetails() {
         UserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertNull(m.getPreferenceItemDescription(strClass, "test1"));
+        assertNull(m.getPreferenceItemDescription(strClass, "test1"));
         m.setPreferenceItemDetails(strClass, "test1", "description1");
-        Assert.assertEquals("description1", m.getPreferenceItemDescription(strClass, "test1"));
+        assertEquals("description1", m.getPreferenceItemDescription(strClass, "test1"));
         m.setPreferenceItemDetails(strClass, "test1", null);
-        Assert.assertNull(m.getPreferenceItemDescription(strClass, "test1"));
+        assertNull(m.getPreferenceItemDescription(strClass, "test1"));
     }
 
     @Test
@@ -189,15 +194,15 @@ public class JmriUserPreferencesManagerTest {
         UserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
 
-        Assert.assertTrue(m.getPreferenceList(strClass).isEmpty());
+        assertTrue(m.getPreferenceList(strClass).isEmpty());
 
         m.setPreferenceState(strClass, "test1", true);
-        Assert.assertTrue(m.getPreferenceState(strClass, "test1"));
-        Assert.assertFalse(m.getPreferenceState(strClass, "test2"));
+        assertTrue(m.getPreferenceState(strClass, "test1"));
+        assertFalse(m.getPreferenceState(strClass, "test2"));
 
         m.setPreferenceState(strClass, "test1", false);
-        Assert.assertFalse(m.getPreferenceState(strClass, "test1"));
-        Assert.assertFalse(m.getPreferenceState(strClass, "test2"));
+        assertFalse(m.getPreferenceState(strClass, "test1"));
+        assertFalse(m.getPreferenceState(strClass, "test2"));
     }
 
     @Test
@@ -205,170 +210,170 @@ public class JmriUserPreferencesManagerTest {
         UserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
 
-        Assert.assertTrue(m.getPreferenceList(strClass).isEmpty());
+        assertTrue(m.getPreferenceList(strClass).isEmpty());
 
-        Assert.assertNull(m.getPreferenceItemName(strClass, 0));
+        assertNull(m.getPreferenceItemName(strClass, 0));
 
         m.setPreferenceState(strClass, "test1", true);
-        Assert.assertEquals("test1", m.getPreferenceItemName(strClass, 0));
-        Assert.assertNull("test2", m.getPreferenceItemName(strClass, 1));
+        assertEquals("test1", m.getPreferenceItemName(strClass, 0));
+        assertNull( m.getPreferenceItemName(strClass, 1), "test2");
 
         m.setPreferenceState(strClass, "test1", false);
-        Assert.assertEquals("test1", m.getPreferenceItemName(strClass, 0));
-        Assert.assertNull("test2", m.getPreferenceItemName(strClass, 1));
+        assertEquals("test1", m.getPreferenceItemName(strClass, 0));
+        assertNull( m.getPreferenceItemName(strClass, 1), "test2");
     }
 
     @Test
     public void testGetPreferenceItemDescription() {
         UserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertNull(m.getPreferenceItemDescription(strClass, "test1"));
+        assertNull(m.getPreferenceItemDescription(strClass, "test1"));
         m.setPreferenceItemDetails(strClass, "test1", "description1");
-        Assert.assertEquals("description1", m.getPreferenceItemDescription(strClass, "test1"));
+        assertEquals("description1", m.getPreferenceItemDescription(strClass, "test1"));
         m.setPreferenceItemDetails(strClass, "test1", null);
-        Assert.assertNull(m.getPreferenceItemDescription(strClass, "test1"));
+        assertNull(m.getPreferenceItemDescription(strClass, "test1"));
     }
 
     @Test
     public void testSetSessionPreferenceState() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.getSessionPreferenceState("test1"));
-        Assert.assertFalse(m.getSessionPreferenceState("test2"));
+        assertFalse(m.getSessionPreferenceState("test1"));
+        assertFalse(m.getSessionPreferenceState("test2"));
         m.setSessionPreferenceState("test1", true);
-        Assert.assertTrue(m.getSessionPreferenceState("test1"));
-        Assert.assertFalse(m.getSessionPreferenceState("test2"));
+        assertTrue(m.getSessionPreferenceState("test1"));
+        assertFalse(m.getSessionPreferenceState("test2"));
         m.setSessionPreferenceState("test1", false);
-        Assert.assertFalse(m.getSessionPreferenceState("test1"));
-        Assert.assertFalse(m.getSessionPreferenceState("test2"));
+        assertFalse(m.getSessionPreferenceState("test1"));
+        assertFalse(m.getSessionPreferenceState("test2"));
         m.setSessionPreferenceState("test2", true);
-        Assert.assertFalse(m.getSessionPreferenceState("test1"));
-        Assert.assertTrue(m.getSessionPreferenceState("test2"));
+        assertFalse(m.getSessionPreferenceState("test1"));
+        assertTrue(m.getSessionPreferenceState("test2"));
     }
 
     @Test
     public void testGetSessionPreferenceState() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.getSessionPreferenceState("test1"));
-        Assert.assertFalse(m.getSessionPreferenceState("test2"));
+        assertFalse(m.getSessionPreferenceState("test1"));
+        assertFalse(m.getSessionPreferenceState("test2"));
         m.setSessionPreferenceState("test1", true);
-        Assert.assertTrue(m.getSessionPreferenceState("test1"));
-        Assert.assertFalse(m.getSessionPreferenceState("test2"));
+        assertTrue(m.getSessionPreferenceState("test1"));
+        assertFalse(m.getSessionPreferenceState("test2"));
         m.setSessionPreferenceState("test1", false);
-        Assert.assertFalse(m.getSessionPreferenceState("test1"));
-        Assert.assertFalse(m.getSessionPreferenceState("test2"));
+        assertFalse(m.getSessionPreferenceState("test1"));
+        assertFalse(m.getSessionPreferenceState("test2"));
         m.setSessionPreferenceState("test2", true);
-        Assert.assertFalse(m.getSessionPreferenceState("test1"));
-        Assert.assertTrue(m.getSessionPreferenceState("test2"));
+        assertFalse(m.getSessionPreferenceState("test1"));
+        assertTrue(m.getSessionPreferenceState("test2"));
     }
 
     @Test
     public void testShowInfoMessage_4args() {
         TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertNull(m.title);
-        Assert.assertNull(m.message);
-        Assert.assertNull(m.strClass);
-        Assert.assertNull(m.item);
-        Assert.assertNull(m.alwaysRemember);
-        Assert.assertNull(m.sessionOnly);
-        Assert.assertEquals(-1, m.type);
+        assertNull(m.title);
+        assertNull(m.message);
+        assertNull(m.strClass);
+        assertNull(m.item);
+        assertNull(m.alwaysRemember);
+        assertNull(m.sessionOnly);
+        assertEquals(-1, m.type);
         m.showInfoMessage("title1", "message1", strClass, "item1");
-        Assert.assertEquals("title1", m.title);
-        Assert.assertEquals("message1", m.message);
-        Assert.assertEquals(strClass, m.strClass);
-        Assert.assertEquals("item1", m.item);
-        Assert.assertTrue(m.alwaysRemember);
-        Assert.assertFalse(m.sessionOnly);
-        Assert.assertEquals(JmriJOptionPane.INFORMATION_MESSAGE, m.type);
+        assertEquals("title1", m.title);
+        assertEquals("message1", m.message);
+        assertEquals(strClass, m.strClass);
+        assertEquals("item1", m.item);
+        assertTrue(m.alwaysRemember);
+        assertFalse(m.sessionOnly);
+        assertEquals(JmriJOptionPane.INFORMATION_MESSAGE, m.type);
     }
 
     @Test
     public void testShowErrorMessage() {
         TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertNull(m.title);
-        Assert.assertNull(m.message);
-        Assert.assertNull(m.strClass);
-        Assert.assertNull(m.item);
-        Assert.assertNull(m.alwaysRemember);
-        Assert.assertNull(m.sessionOnly);
-        Assert.assertEquals(-1, m.type);
+        assertNull(m.title);
+        assertNull(m.message);
+        assertNull(m.strClass);
+        assertNull(m.item);
+        assertNull(m.alwaysRemember);
+        assertNull(m.sessionOnly);
+        assertEquals(-1, m.type);
         m.showErrorMessage("title1", "message1", strClass, "item1", true, true);
-        Assert.assertEquals("title1", m.title);
-        Assert.assertEquals("message1", m.message);
-        Assert.assertEquals(strClass, m.strClass);
-        Assert.assertEquals("item1", m.item);
-        Assert.assertTrue(m.alwaysRemember);
-        Assert.assertTrue(m.sessionOnly);
-        Assert.assertEquals(JmriJOptionPane.ERROR_MESSAGE, m.type);
+        assertEquals("title1", m.title);
+        assertEquals("message1", m.message);
+        assertEquals(strClass, m.strClass);
+        assertEquals("item1", m.item);
+        assertTrue(m.alwaysRemember);
+        assertTrue(m.sessionOnly);
+        assertEquals(JmriJOptionPane.ERROR_MESSAGE, m.type);
         m.showErrorMessage("title2", "message2", strClass, "item2", false, false);
-        Assert.assertEquals("title2", m.title);
-        Assert.assertEquals("message2", m.message);
-        Assert.assertEquals(strClass, m.strClass);
-        Assert.assertEquals("item2", m.item);
-        Assert.assertFalse(m.alwaysRemember);
-        Assert.assertFalse(m.sessionOnly);
-        Assert.assertEquals(JmriJOptionPane.ERROR_MESSAGE, m.type);
+        assertEquals("title2", m.title);
+        assertEquals("message2", m.message);
+        assertEquals(strClass, m.strClass);
+        assertEquals("item2", m.item);
+        assertFalse(m.alwaysRemember);
+        assertFalse(m.sessionOnly);
+        assertEquals(JmriJOptionPane.ERROR_MESSAGE, m.type);
     }
 
     @Test
     public void testShowInfoMessage_6args() {
         TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertNull(m.title);
-        Assert.assertNull(m.message);
-        Assert.assertNull(m.strClass);
-        Assert.assertNull(m.item);
-        Assert.assertNull(m.alwaysRemember);
-        Assert.assertNull(m.sessionOnly);
-        Assert.assertEquals(-1, m.type);
+        assertNull(m.title);
+        assertNull(m.message);
+        assertNull(m.strClass);
+        assertNull(m.item);
+        assertNull(m.alwaysRemember);
+        assertNull(m.sessionOnly);
+        assertEquals(-1, m.type);
         m.showInfoMessage("title1", "message1", strClass, "item1", true, true);
-        Assert.assertEquals("title1", m.title);
-        Assert.assertEquals("message1", m.message);
-        Assert.assertEquals(strClass, m.strClass);
-        Assert.assertEquals("item1", m.item);
-        Assert.assertTrue(m.alwaysRemember);
-        Assert.assertTrue(m.sessionOnly);
-        Assert.assertEquals(JmriJOptionPane.INFORMATION_MESSAGE, m.type);
+        assertEquals("title1", m.title);
+        assertEquals("message1", m.message);
+        assertEquals(strClass, m.strClass);
+        assertEquals("item1", m.item);
+        assertTrue(m.alwaysRemember);
+        assertTrue(m.sessionOnly);
+        assertEquals(JmriJOptionPane.INFORMATION_MESSAGE, m.type);
         m.showInfoMessage("title2", "message2", strClass, "item2", false, false);
-        Assert.assertEquals("title2", m.title);
-        Assert.assertEquals("message2", m.message);
-        Assert.assertEquals(strClass, m.strClass);
-        Assert.assertEquals("item2", m.item);
-        Assert.assertFalse(m.alwaysRemember);
-        Assert.assertFalse(m.sessionOnly);
-        Assert.assertEquals(JmriJOptionPane.INFORMATION_MESSAGE, m.type);
+        assertEquals("title2", m.title);
+        assertEquals("message2", m.message);
+        assertEquals(strClass, m.strClass);
+        assertEquals("item2", m.item);
+        assertFalse(m.alwaysRemember);
+        assertFalse(m.sessionOnly);
+        assertEquals(JmriJOptionPane.INFORMATION_MESSAGE, m.type);
     }
 
     @Test
     public void testShowWarningMessage() {
         TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertNull(m.title);
-        Assert.assertNull(m.message);
-        Assert.assertNull(m.strClass);
-        Assert.assertNull(m.item);
-        Assert.assertNull(m.alwaysRemember);
-        Assert.assertNull(m.sessionOnly);
-        Assert.assertEquals(-1, m.type);
+        assertNull(m.title);
+        assertNull(m.message);
+        assertNull(m.strClass);
+        assertNull(m.item);
+        assertNull(m.alwaysRemember);
+        assertNull(m.sessionOnly);
+        assertEquals(-1, m.type);
         m.showWarningMessage("title1", "message1", strClass, "item1", true, true);
-        Assert.assertEquals("title1", m.title);
-        Assert.assertEquals("message1", m.message);
-        Assert.assertEquals(strClass, m.strClass);
-        Assert.assertEquals("item1", m.item);
-        Assert.assertTrue(m.alwaysRemember);
-        Assert.assertTrue(m.sessionOnly);
-        Assert.assertEquals(JmriJOptionPane.WARNING_MESSAGE, m.type);
+        assertEquals("title1", m.title);
+        assertEquals("message1", m.message);
+        assertEquals(strClass, m.strClass);
+        assertEquals("item1", m.item);
+        assertTrue(m.alwaysRemember);
+        assertTrue(m.sessionOnly);
+        assertEquals(JmriJOptionPane.WARNING_MESSAGE, m.type);
         m.showWarningMessage("title2", "message2", strClass, "item2", false, false);
-        Assert.assertEquals("title2", m.title);
-        Assert.assertEquals("message2", m.message);
-        Assert.assertEquals(strClass, m.strClass);
-        Assert.assertEquals("item2", m.item);
-        Assert.assertFalse(m.alwaysRemember);
-        Assert.assertFalse(m.sessionOnly);
-        Assert.assertEquals(JmriJOptionPane.WARNING_MESSAGE, m.type);
+        assertEquals("title2", m.title);
+        assertEquals("message2", m.message);
+        assertEquals(strClass, m.strClass);
+        assertEquals("item2", m.item);
+        assertFalse(m.alwaysRemember);
+        assertFalse(m.sessionOnly);
+        assertEquals(JmriJOptionPane.WARNING_MESSAGE, m.type);
     }
 
     @Test
@@ -376,90 +381,90 @@ public class JmriUserPreferencesManagerTest {
         // TODO: Use Jemmy to test showing real message
         TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertNull(m.title);
-        Assert.assertNull(m.message);
-        Assert.assertNull(m.strClass);
-        Assert.assertNull(m.item);
-        Assert.assertNull(m.alwaysRemember);
-        Assert.assertNull(m.sessionOnly);
-        Assert.assertEquals(-1, m.type);
+        assertNull(m.title);
+        assertNull(m.message);
+        assertNull(m.strClass);
+        assertNull(m.item);
+        assertNull(m.alwaysRemember);
+        assertNull(m.sessionOnly);
+        assertEquals(-1, m.type);
         m.showMessage(null, "title1", "message1", strClass, "item1", true, true, JmriJOptionPane.INFORMATION_MESSAGE);
-        Assert.assertEquals("title1", m.title);
-        Assert.assertEquals("message1", m.message);
-        Assert.assertEquals(strClass, m.strClass);
-        Assert.assertEquals("item1", m.item);
-        Assert.assertTrue(m.alwaysRemember);
-        Assert.assertTrue(m.sessionOnly);
+        assertEquals("title1", m.title);
+        assertEquals("message1", m.message);
+        assertEquals(strClass, m.strClass);
+        assertEquals("item1", m.item);
+        assertTrue(m.alwaysRemember);
+        assertTrue(m.sessionOnly);
         m.showMessage(null, "title2", "message2", strClass, "item2", false, false, JmriJOptionPane.INFORMATION_MESSAGE);
-        Assert.assertEquals("title2", m.title);
-        Assert.assertEquals("message2", m.message);
-        Assert.assertEquals(strClass, m.strClass);
-        Assert.assertEquals("item2", m.item);
-        Assert.assertFalse(m.alwaysRemember);
-        Assert.assertFalse(m.sessionOnly);
+        assertEquals("title2", m.title);
+        assertEquals("message2", m.message);
+        assertEquals(strClass, m.strClass);
+        assertEquals("item2", m.item);
+        assertFalse(m.alwaysRemember);
+        assertFalse(m.sessionOnly);
     }
 
     @Test
     public void testAddComboBoxLastSelection() {
         TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertEquals(0, m.getComboBoxLastSelection().size());
+        assertEquals(0, m.getComboBoxLastSelection().size());
         m.setComboBoxLastSelection("test1", "value1");
-        Assert.assertEquals(1, m.getComboBoxLastSelection().size());
+        assertEquals(1, m.getComboBoxLastSelection().size());
         m.setComboBoxLastSelection("test1", "value2");
-        Assert.assertEquals(1, m.getComboBoxLastSelection().size());
+        assertEquals(1, m.getComboBoxLastSelection().size());
         m.setComboBoxLastSelection("test2", "value1");
-        Assert.assertEquals(2, m.getComboBoxLastSelection().size());
+        assertEquals(2, m.getComboBoxLastSelection().size());
     }
 
     @Test
     public void testGetComboBoxLastSelection_String() {
         TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertEquals(0, m.getComboBoxLastSelection().size());
+        assertEquals(0, m.getComboBoxLastSelection().size());
         m.setComboBoxLastSelection("test1", "value2");
         m.setComboBoxLastSelection("test2", "value1");
-        Assert.assertEquals("value2", m.getComboBoxLastSelection("test1"));
-        Assert.assertEquals("value1", m.getComboBoxLastSelection("test2"));
-        Assert.assertNull(m.getComboBoxLastSelection("test3"));
+        assertEquals("value2", m.getComboBoxLastSelection("test1"));
+        assertEquals("value1", m.getComboBoxLastSelection("test2"));
+        assertNull(m.getComboBoxLastSelection("test3"));
     }
 
     @Test
     public void testSetComboBoxLastSelection() {
         TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertEquals(0, m.getComboBoxLastSelection().size());
+        assertEquals(0, m.getComboBoxLastSelection().size());
         m.setComboBoxLastSelection("test1", "value1");
-        Assert.assertEquals("value1", m.getComboBoxLastSelection("test1"));
+        assertEquals("value1", m.getComboBoxLastSelection("test1"));
         m.setComboBoxLastSelection("test1", "value2");
-        Assert.assertEquals("value2", m.getComboBoxLastSelection("test1"));
+        assertEquals("value2", m.getComboBoxLastSelection("test1"));
         m.setComboBoxLastSelection("test2", "value1");
-        Assert.assertEquals("value1", m.getComboBoxLastSelection("test2"));
-        Assert.assertNull(m.getComboBoxLastSelection("test3"));
+        assertEquals("value1", m.getComboBoxLastSelection("test2"));
+        assertNull(m.getComboBoxLastSelection("test3"));
     }
 
     @Test
     public void testGetComboBoxSelectionSize() {
         TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertEquals(0, m.getComboBoxLastSelection().size());
+        assertEquals(0, m.getComboBoxLastSelection().size());
         m.setComboBoxLastSelection("test1", "value1");
-        Assert.assertEquals(1, m.getComboBoxLastSelection().size());
+        assertEquals(1, m.getComboBoxLastSelection().size());
         m.setComboBoxLastSelection("test1", "value2");
-        Assert.assertEquals(1, m.getComboBoxLastSelection().size());
+        assertEquals(1, m.getComboBoxLastSelection().size());
         m.setComboBoxLastSelection("test2", "value1");
-        Assert.assertEquals(2, m.getComboBoxLastSelection().size());
+        assertEquals(2, m.getComboBoxLastSelection().size());
     }
 
     @Test
     public void testGetChangeMade() {
         JmriUserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.getChangeMade());
+        assertFalse(m.getChangeMade());
         m.setChangeMade(false);
-        Assert.assertTrue(m.getChangeMade());
+        assertTrue(m.getChangeMade());
         m.resetChangeMade();
-        Assert.assertFalse(m.getChangeMade());
+        assertFalse(m.getChangeMade());
     }
 
     @Test
@@ -468,10 +473,10 @@ public class JmriUserPreferencesManagerTest {
         m.setSaveAllowed(false);
         Listener l = new Listener();
         m.addPropertyChangeListener(l);
-        Assert.assertFalse(m.getChangeMade());
+        assertFalse(m.getChangeMade());
         m.setChangeMade(false);
-        Assert.assertTrue(m.getChangeMade());
-        Assert.assertNull(l.event);
+        assertTrue(m.getChangeMade());
+        assertNull(l.event);
         m.setChangeMade(true);
         JUnitUtil.waitFor(() -> {
             return l.event != null && l.event.getPropertyName().equals(UserPreferencesManager.PREFERENCES_UPDATED);
@@ -482,48 +487,48 @@ public class JmriUserPreferencesManagerTest {
     public void testResetChangeMade() {
         JmriUserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.getChangeMade());
+        assertFalse(m.getChangeMade());
         m.setChangeMade(false);
-        Assert.assertTrue(m.getChangeMade());
+        assertTrue(m.getChangeMade());
         m.resetChangeMade();
-        Assert.assertFalse(m.getChangeMade());
+        assertFalse(m.getChangeMade());
         m.resetChangeMade();
-        Assert.assertFalse(m.getChangeMade());
+        assertFalse(m.getChangeMade());
     }
 
     @Test
     public void testIsLoading() {
         TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.isLoading());
+        assertFalse(m.isLoading());
         m.setLoading();
-        Assert.assertTrue(m.isLoading());
+        assertTrue(m.isLoading());
         m.finishLoading();
-        Assert.assertFalse(m.isLoading());
+        assertFalse(m.isLoading());
     }
 
     @Test
     public void testSetLoading() {
         TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.isLoading());
+        assertFalse(m.isLoading());
         m.setLoading();
-        Assert.assertTrue(m.isLoading());
+        assertTrue(m.isLoading());
         m.finishLoading();
-        Assert.assertFalse(m.isLoading());
+        assertFalse(m.isLoading());
     }
 
     @Test
     public void testFinishLoading() {
         TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.isLoading());
+        assertFalse(m.isLoading());
         m.finishLoading();
-        Assert.assertFalse(m.isLoading());
+        assertFalse(m.isLoading());
         m.setLoading();
-        Assert.assertTrue(m.isLoading());
+        assertTrue(m.isLoading());
         m.finishLoading();
-        Assert.assertFalse(m.isLoading());
+        assertFalse(m.isLoading());
     }
 
     @Test
@@ -532,23 +537,23 @@ public class JmriUserPreferencesManagerTest {
         m.setSaveAllowed(false);
         m.setLoading();
         m.displayRememberMsg();
-        Assert.assertNull(m.title);
-        Assert.assertNull(m.message);
-        Assert.assertNull(m.strClass);
-        Assert.assertNull(m.item);
-        Assert.assertNull(m.alwaysRemember);
-        Assert.assertNull(m.sessionOnly);
-        Assert.assertEquals(-1, m.type);
+        assertNull(m.title);
+        assertNull(m.message);
+        assertNull(m.strClass);
+        assertNull(m.item);
+        assertNull(m.alwaysRemember);
+        assertNull(m.sessionOnly);
+        assertEquals(-1, m.type);
         m.finishLoading();
         //Bundle.getMessage("Reminder"), Bundle.getMessage("ReminderLine"), getClassName(), "reminder"
         m.displayRememberMsg();
-        Assert.assertEquals(Bundle.getMessage("Reminder"), m.title);
-        Assert.assertEquals(Bundle.getMessage("ReminderLine"), m.message);
-        Assert.assertEquals(m.getClass().getName(), m.strClass);
-        Assert.assertEquals("reminder", m.item);
-        Assert.assertTrue(m.alwaysRemember);
-        Assert.assertFalse(m.sessionOnly);
-        Assert.assertEquals(JmriJOptionPane.INFORMATION_MESSAGE, m.type);
+        assertEquals(Bundle.getMessage("Reminder"), m.title);
+        assertEquals(Bundle.getMessage("ReminderLine"), m.message);
+        assertEquals(m.getClass().getName(), m.strClass);
+        assertEquals("reminder", m.item);
+        assertTrue(m.alwaysRemember);
+        assertFalse(m.sessionOnly);
+        assertEquals(JmriJOptionPane.INFORMATION_MESSAGE, m.type);
     }
 
     @Test
@@ -558,7 +563,7 @@ public class JmriUserPreferencesManagerTest {
         Point windowLocation = new Point(69, 96);
         m.setWindowLocation(strClass, windowLocation);
         Point savedWindowLocation = m.getWindowLocation(strClass);
-        Assert.assertEquals(windowLocation, savedWindowLocation);
+        assertEquals(windowLocation, savedWindowLocation);
     }
 
     @Test
@@ -568,51 +573,51 @@ public class JmriUserPreferencesManagerTest {
         Dimension windowSize = new Dimension(666, 999);
         m.setWindowSize(strClass, windowSize);
         Dimension savedWindowSize = m.getWindowSize(strClass);
-        Assert.assertEquals(windowSize, savedWindowSize);
+        assertEquals(windowSize, savedWindowSize);
     }
 
     @Test
     public void testGetSaveWindowSize() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.getSaveWindowSize(strClass));
+        assertFalse(m.getSaveWindowSize(strClass));
         m.setSaveWindowSize(strClass, true);
-        Assert.assertTrue(m.getSaveWindowSize(strClass));
+        assertTrue(m.getSaveWindowSize(strClass));
         m.setSaveWindowSize(strClass, false);
-        Assert.assertFalse(m.getSaveWindowSize(strClass));
+        assertFalse(m.getSaveWindowSize(strClass));
     }
 
     @Test
     public void testGetSaveWindowLocation() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.getSaveWindowLocation(strClass));
+        assertFalse(m.getSaveWindowLocation(strClass));
         m.setSaveWindowLocation(strClass, true);
-        Assert.assertTrue(m.getSaveWindowLocation(strClass));
+        assertTrue(m.getSaveWindowLocation(strClass));
         m.setSaveWindowLocation(strClass, false);
-        Assert.assertFalse(m.getSaveWindowLocation(strClass));
+        assertFalse(m.getSaveWindowLocation(strClass));
     }
 
     @Test
     public void testSetSaveWindowSize() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.getSaveWindowSize(strClass));
+        assertFalse(m.getSaveWindowSize(strClass));
         m.setSaveWindowSize(strClass, true);
-        Assert.assertTrue(m.getSaveWindowSize(strClass));
+        assertTrue(m.getSaveWindowSize(strClass));
         m.setSaveWindowSize(strClass, false);
-        Assert.assertFalse(m.getSaveWindowSize(strClass));
+        assertFalse(m.getSaveWindowSize(strClass));
     }
 
     @Test
     public void testSetSaveWindowLocation() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.getSaveWindowLocation(strClass));
+        assertFalse(m.getSaveWindowLocation(strClass));
         m.setSaveWindowLocation(strClass, true);
-        Assert.assertTrue(m.getSaveWindowLocation(strClass));
+        assertTrue(m.getSaveWindowLocation(strClass));
         m.setSaveWindowLocation(strClass, false);
-        Assert.assertFalse(m.getSaveWindowLocation(strClass));
+        assertFalse(m.getSaveWindowLocation(strClass));
     }
 
     @Test
@@ -622,7 +627,7 @@ public class JmriUserPreferencesManagerTest {
         Point windowLocation = new Point(69, 96);
         m.setWindowLocation(strClass, windowLocation);
         Point savedWindowLocation = m.getWindowLocation(strClass);
-        Assert.assertEquals(windowLocation, savedWindowLocation);
+        assertEquals(windowLocation, savedWindowLocation);
     }
 
     @Test
@@ -632,110 +637,110 @@ public class JmriUserPreferencesManagerTest {
         Dimension windowSize = new Dimension(666, 999);
         m.setWindowSize(strClass, windowSize);
         Dimension savedWindowSize = m.getWindowSize(strClass);
-        Assert.assertEquals(windowSize, savedWindowSize);
+        assertEquals(windowSize, savedWindowSize);
     }
 
     @Test
     public void testGetWindowList() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertTrue(m.getWindowList().isEmpty());
+        assertTrue(m.getWindowList().isEmpty());
         Point location = new Point(69, 96);
         m.setWindowLocation(strClass, location);
-        Assert.assertEquals(1, m.getWindowList().size());
-        Assert.assertEquals(strClass, m.getWindowList().get(0));
+        assertEquals(1, m.getWindowList().size());
+        assertEquals(strClass, m.getWindowList().get(0));
         Dimension windowSize = new Dimension(666, 999);
         m.setWindowSize(strClass, windowSize);
-        Assert.assertEquals(1, m.getWindowList().size());
-        Assert.assertEquals(strClass, m.getWindowList().get(0));
+        assertEquals(1, m.getWindowList().size());
+        assertEquals(strClass, m.getWindowList().get(0));
     }
 
     @Test
     public void testSetProperty() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertNull(m.getProperty(strClass, "test1"));
+        assertNull(m.getProperty(strClass, "test1"));
         m.setProperty(strClass, "test1", log);
-        Assert.assertEquals(log, m.getProperty(strClass, "test1"));
+        assertEquals(log, m.getProperty(strClass, "test1"));
         m.setProperty(strClass, "test1", null);
-        Assert.assertNull(m.getProperty(strClass, "test1"));
+        assertNull(m.getProperty(strClass, "test1"));
     }
 
     @Test
     public void testGetProperty() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertNull(m.getProperty(strClass, "test1"));
+        assertNull(m.getProperty(strClass, "test1"));
         m.setProperty(strClass, "test1", log);
-        Assert.assertEquals(log, m.getProperty(strClass, "test1"));
+        assertEquals(log, m.getProperty(strClass, "test1"));
         m.setProperty(strClass, "test1", null);
-        Assert.assertNull(m.getProperty(strClass, "test1"));
+        assertNull(m.getProperty(strClass, "test1"));
     }
 
     @Test
     public void testGetPropertyKeys() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertNull(m.getPropertyKeys(strClass));
+        assertNull(m.getPropertyKeys(strClass));
         m.setProperty(strClass, "test1", log);
         m.setProperty(strClass, "test2", new Object());
-        Assert.assertEquals(2, m.getPropertyKeys(strClass).size());
-        Assert.assertTrue(m.getPropertyKeys(strClass).contains("test1"));
-        Assert.assertTrue(m.getPropertyKeys(strClass).contains("test2"));
-        Assert.assertFalse(m.getPropertyKeys(strClass).contains("test3"));
+        assertEquals(2, m.getPropertyKeys(strClass).size());
+        assertTrue(m.getPropertyKeys(strClass).contains("test1"));
+        assertTrue(m.getPropertyKeys(strClass).contains("test2"));
+        assertFalse(m.getPropertyKeys(strClass).contains("test3"));
         m.setProperty(strClass, "test2", null);
-        Assert.assertEquals(1, m.getPropertyKeys(strClass).size());
-        Assert.assertTrue(m.getPropertyKeys(strClass).contains("test1"));
-        Assert.assertFalse(m.getPropertyKeys(strClass).contains("test2"));
-        Assert.assertFalse(m.getPropertyKeys(strClass).contains("test3"));
+        assertEquals(1, m.getPropertyKeys(strClass).size());
+        assertTrue(m.getPropertyKeys(strClass).contains("test1"));
+        assertFalse(m.getPropertyKeys(strClass).contains("test2"));
+        assertFalse(m.getPropertyKeys(strClass).contains("test3"));
     }
 
     @Test
     public void testHasProperties() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertFalse(m.hasProperties(strClass));
+        assertFalse(m.hasProperties(strClass));
         m.setProperty(strClass, "test1", log);
         m.setProperty(strClass, "test2", null);
-        Assert.assertTrue(m.hasProperties(strClass));
+        assertTrue(m.hasProperties(strClass));
     }
 
     @Test
     public void testGetClassDescription_String() {
         UserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertNotNull(m.getClassDescription(strClass));
-        Assert.assertTrue(m.getClassDescription(strClass).isEmpty());
+        assertNotNull(m.getClassDescription(strClass));
+        assertTrue(m.getClassDescription(strClass).isEmpty());
         m.setPreferenceState(strClass, "test1", true);
-        Assert.assertNull(m.getClassDescription(strClass));
+        assertNull(m.getClassDescription(strClass));
         m.setPreferenceState(AppConfigBase.class.getName(), "test1", true);
         String d = ResourceBundle.getBundle("apps.AppsConfigBundle").getString("Application");
-        Assert.assertEquals(d, m.getClassDescription(AppConfigBase.class.getName()));
+        assertEquals(d, m.getClassDescription(AppConfigBase.class.getName()));
     }
 
     @Test
     public void testGetPreferencesClasses() {
         UserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertEquals(1, m.getPreferencesClasses().size());
-        Assert.assertEquals(m.getClass().getName(), m.getPreferencesClasses().get(0));
+        assertEquals(1, m.getPreferencesClasses().size());
+        assertEquals(m.getClass().getName(), m.getPreferencesClasses().get(0));
         m.setPreferenceState(strClass, "test1", true);
-        Assert.assertEquals(2, m.getPreferencesClasses().size());
-        Assert.assertEquals(strClass, m.getPreferencesClasses().get(1));
+        assertEquals(2, m.getPreferencesClasses().size());
+        assertEquals(strClass, m.getPreferencesClasses().get(1));
     }
 
     @Test
     public void testSetClassDescription() {
         UserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertNotNull(m.getClassDescription(strClass));
-        Assert.assertTrue(m.getClassDescription(strClass).isEmpty());
+        assertNotNull(m.getClassDescription(strClass));
+        assertTrue(m.getClassDescription(strClass).isEmpty());
         m.setClassDescription(strClass);
-        Assert.assertNotNull(m.getClassDescription(strClass));
-        Assert.assertTrue(m.getClassDescription(strClass).isEmpty());
+        assertNotNull(m.getClassDescription(strClass));
+        assertTrue(m.getClassDescription(strClass).isEmpty());
         m.setClassDescription(AppConfigBase.class.getName());
         String d = ResourceBundle.getBundle("apps.AppsConfigBundle").getString("Application");
-        Assert.assertEquals(d, m.getClassDescription(AppConfigBase.class.getName()));
+        assertEquals(d, m.getClassDescription(AppConfigBase.class.getName()));
     }
 
     @Test
@@ -744,9 +749,9 @@ public class JmriUserPreferencesManagerTest {
         m.setSaveAllowed(false);
         HashMap<Integer, String> options = new HashMap<>();
         options.put(1, "test1");
-        Assert.assertTrue(m.getChoiceOptions(strClass, "item1").isEmpty());
+        assertTrue(m.getChoiceOptions(strClass, "item1").isEmpty());
         m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
-        Assert.assertEquals(options, m.getChoiceOptions(strClass, "item1"));
+        assertEquals(options, m.getChoiceOptions(strClass, "item1"));
     }
 
     @Test
@@ -755,9 +760,9 @@ public class JmriUserPreferencesManagerTest {
         m.setSaveAllowed(false);
         HashMap<Integer, String> options = new HashMap<>();
         options.put(1, "test1");
-        Assert.assertTrue(m.getChoiceOptions(strClass, "item1").isEmpty());
+        assertTrue(m.getChoiceOptions(strClass, "item1").isEmpty());
         m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
-        Assert.assertEquals(options, m.getChoiceOptions(strClass, "item1"));
+        assertEquals(options, m.getChoiceOptions(strClass, "item1"));
     }
 
     @Test
@@ -766,9 +771,9 @@ public class JmriUserPreferencesManagerTest {
         m.setSaveAllowed(false);
         HashMap<Integer, String> options = new HashMap<>();
         options.put(1, "test1");
-        Assert.assertEquals(0, m.getMultipleChoiceSize(strClass));
+        assertEquals(0, m.getMultipleChoiceSize(strClass));
         m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
-        Assert.assertEquals(1, m.getMultipleChoiceSize(strClass));
+        assertEquals(1, m.getMultipleChoiceSize(strClass));
     }
 
     @Test
@@ -777,10 +782,10 @@ public class JmriUserPreferencesManagerTest {
         m.setSaveAllowed(false);
         HashMap<Integer, String> options = new HashMap<>();
         options.put(1, "test1");
-        Assert.assertTrue(m.getMultipleChoiceList(strClass).isEmpty());
+        assertTrue(m.getMultipleChoiceList(strClass).isEmpty());
         m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
-        Assert.assertEquals(1, m.getMultipleChoiceList(strClass).size());
-        Assert.assertEquals("item1", m.getMultipleChoiceList(strClass).get(0));
+        assertEquals(1, m.getMultipleChoiceList(strClass).size());
+        assertEquals("item1", m.getMultipleChoiceList(strClass).get(0));
     }
 
     @Test
@@ -789,9 +794,9 @@ public class JmriUserPreferencesManagerTest {
         m.setSaveAllowed(false);
         HashMap<Integer, String> options = new HashMap<>();
         options.put(1, "test1");
-        Assert.assertNull(m.getChoiceName(strClass, 0));
+        assertNull(m.getChoiceName(strClass, 0));
         m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
-        Assert.assertEquals("item1", m.getChoiceName(strClass, 0));
+        assertEquals("item1", m.getChoiceName(strClass, 0));
     }
 
     @Test
@@ -800,9 +805,9 @@ public class JmriUserPreferencesManagerTest {
         m.setSaveAllowed(false);
         HashMap<Integer, String> options = new HashMap<>();
         options.put(1, "test1");
-        Assert.assertNull(m.getChoiceDescription(strClass, "item1"));
+        assertNull(m.getChoiceDescription(strClass, "item1"));
         m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
-        Assert.assertEquals("description1", m.getChoiceDescription(strClass, "item1"));
+        assertEquals("description1", m.getChoiceDescription(strClass, "item1"));
     }
 
     @Test
@@ -811,9 +816,9 @@ public class JmriUserPreferencesManagerTest {
         m.setSaveAllowed(false);
         HashMap<Integer, String> options = new HashMap<>();
         options.put(1, "test1");
-        Assert.assertEquals(0, m.getMultipleChoiceOption(strClass, "item1"));
+        assertEquals(0, m.getMultipleChoiceOption(strClass, "item1"));
         m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
-        Assert.assertEquals(0, m.getMultipleChoiceOption(strClass, "item1"));
+        assertEquals(0, m.getMultipleChoiceOption(strClass, "item1"));
     }
 
     @Test
@@ -822,9 +827,9 @@ public class JmriUserPreferencesManagerTest {
         m.setSaveAllowed(false);
         HashMap<Integer, String> options = new HashMap<>();
         options.put(1, "test1");
-        Assert.assertEquals(0, m.getMultipleChoiceDefaultOption(strClass, "item1"));
+        assertEquals(0, m.getMultipleChoiceDefaultOption(strClass, "item1"));
         m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
-        Assert.assertEquals(0, m.getMultipleChoiceDefaultOption(strClass, "item1"));
+        assertEquals(0, m.getMultipleChoiceDefaultOption(strClass, "item1"));
     }
 
     @Test
@@ -835,13 +840,13 @@ public class JmriUserPreferencesManagerTest {
         HashMap<Integer, String> options = new HashMap<>();
         options.put(1, "test1");
         options.put(2, "test2");
-        Assert.assertEquals(0, m.getMultipleChoiceOption(strClass, "item1"));
+        assertEquals(0, m.getMultipleChoiceOption(strClass, "item1"));
         m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
-        Assert.assertEquals(0, m.getMultipleChoiceOption(strClass, "item1"));
+        assertEquals(0, m.getMultipleChoiceOption(strClass, "item1"));
         m.setMultipleChoiceOption(strClass, "item1", "test1");
-        Assert.assertEquals(1, m.getMultipleChoiceOption(strClass, "item1"));
+        assertEquals(1, m.getMultipleChoiceOption(strClass, "item1"));
         m.setMultipleChoiceOption(strClass, "item1", "test2");
-        Assert.assertEquals(2, m.getMultipleChoiceOption(strClass, "item1"));
+        assertEquals(2, m.getMultipleChoiceOption(strClass, "item1"));
     }
 
     @Test
@@ -852,47 +857,47 @@ public class JmriUserPreferencesManagerTest {
         HashMap<Integer, String> options = new HashMap<>();
         options.put(1, "test1");
         options.put(2, "test2");
-        Assert.assertEquals(0, m.getMultipleChoiceOption(strClass, "item1"));
+        assertEquals(0, m.getMultipleChoiceOption(strClass, "item1"));
         m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
-        Assert.assertEquals(0, m.getMultipleChoiceOption(strClass, "item1"));
+        assertEquals(0, m.getMultipleChoiceOption(strClass, "item1"));
         m.setMultipleChoiceOption(strClass, "item1", 1);
-        Assert.assertEquals(1, m.getMultipleChoiceOption(strClass, "item1"));
+        assertEquals(1, m.getMultipleChoiceOption(strClass, "item1"));
         m.setMultipleChoiceOption(strClass, "item1", 2);
-        Assert.assertEquals(2, m.getMultipleChoiceOption(strClass, "item1"));
+        assertEquals(2, m.getMultipleChoiceOption(strClass, "item1"));
     }
 
     @Test
     public void testGetClassDescription_0args() {
         JmriUserPreferencesManager m = new JmriUserPreferencesManager();
-        Assert.assertEquals("Preference Manager", m.getClassDescription());
+        assertEquals("Preference Manager", m.getClassDescription());
     }
 
     @Test
     public void testGetClassName() {
         JmriUserPreferencesManager m = new JmriUserPreferencesManager();
-        Assert.assertEquals(JmriUserPreferencesManager.class.getName(), m.getClassName());
+        assertEquals(JmriUserPreferencesManager.class.getName(), m.getClassName());
     }
 
     @Test
     public void testGetClassPreferences() {
         JmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertNull(m.getClassPreferences(strClass));
+        assertNull(m.getClassPreferences(strClass));
         m.setPreferenceState(strClass, "test1", true);
-        Assert.assertNotNull(m.getClassPreferences(strClass));
-        Assert.assertEquals(1, m.getClassPreferences(strClass).getPreferenceListSize());
-        Assert.assertEquals("test1", m.getClassPreferences(strClass).getPreferenceList().get(0).getItem());
+        assertNotNull(m.getClassPreferences(strClass));
+        assertEquals(1, m.getClassPreferences(strClass).getPreferenceListSize());
+        assertEquals("test1", m.getClassPreferences(strClass).getPreferenceList().get(0).getItem());
     }
 
     @Test
     public void testGetPreferencesSize() {
         JmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
         m.setSaveAllowed(false);
-        Assert.assertNull(m.getClassPreferences(strClass));
-        Assert.assertEquals(0, m.getPreferencesSize(strClass));
+        assertNull(m.getClassPreferences(strClass));
+        assertEquals(0, m.getPreferencesSize(strClass));
         m.setPreferenceState(strClass, "test1", true);
-        Assert.assertNotNull(m.getClassPreferences(strClass));
-        Assert.assertEquals(1, m.getPreferencesSize(strClass));
+        assertNotNull(m.getClassPreferences(strClass));
+        assertEquals(1, m.getPreferencesSize(strClass));
 
     }
 
@@ -915,10 +920,10 @@ public class JmriUserPreferencesManagerTest {
         m1.setComboBoxLastSelection(strClass, "selection1");
         m1.setSaveAllowed(true);
         Profile profile = ProfileManager.getDefault().getActiveProfile();
-        Assert.assertNotNull(profile); // test with profile
+        assertNotNull(profile); // test with profile
         File target = new File(new File(new File(profile.getPath(), "profile"), NodeIdentity.storageIdentity()), "user-interface.xml");
-        Assert.assertTrue(target.exists());
-        Assert.assertTrue(target.isFile());
+        assertTrue(target.exists());
+        assertTrue(target.isFile());
         if (log.isDebugEnabled()) {
             Files.lines(target.toPath()).forEach((line) -> log.debug(line));
         }
@@ -926,16 +931,16 @@ public class JmriUserPreferencesManagerTest {
         JUnitUtil.resetPreferencesProviders();
         JmriUserPreferencesManager m2 = new JmriUserPreferencesManager();
         m2.readUserPreferences();
-        Assert.assertEquals("value1", m2.getProperty(strClass, "test1"));
-        Assert.assertEquals(42, (int)m2.getProperty(strClass, "intTest"));
-        Assert.assertEquals(Math.PI, (double)m2.getProperty(strClass, "doubleTest"), 0.001);
-        Assert.assertEquals(true, (boolean)m2.getProperty(strClass, "booleanTest"));
-        Assert.assertEquals(location, m2.getWindowLocation(strClass));
-        Assert.assertEquals(windowSize, m2.getWindowSize(strClass));
-        Assert.assertEquals(true, m2.getPreferenceState(strClass, "test2"));
-        Assert.assertEquals(false, m2.getPreferenceState(strClass, "test3"));
-        Assert.assertEquals(true, m2.getSimplePreferenceState(strClass));
-        Assert.assertEquals("selection1", m2.getComboBoxLastSelection(strClass));
+        assertEquals("value1", m2.getProperty(strClass, "test1"));
+        assertEquals(42, (int)m2.getProperty(strClass, "intTest"));
+        assertEquals(Math.PI, (double)m2.getProperty(strClass, "doubleTest"), 0.001);
+        assertEquals(true, m2.getProperty(strClass, "booleanTest"));
+        assertEquals(location, m2.getWindowLocation(strClass));
+        assertEquals(windowSize, m2.getWindowSize(strClass));
+        assertEquals(true, m2.getPreferenceState(strClass, "test2"));
+        assertEquals(false, m2.getPreferenceState(strClass, "test3"));
+        assertEquals(true, m2.getSimplePreferenceState(strClass));
+        assertEquals("selection1", m2.getComboBoxLastSelection(strClass));
     }
 
     @Test
@@ -957,10 +962,10 @@ public class JmriUserPreferencesManagerTest {
         m1.setComboBoxLastSelection(strClass, "selection1");
         m1.setSaveAllowed(true);
         Profile profile = ProfileManager.getDefault().getActiveProfile();
-        Assert.assertNotNull(profile); // test with profile
+        assertNotNull(profile); // test with profile
         File target = new File(new File(new File(profile.getPath(), "profile"), NodeIdentity.storageIdentity()), "user-interface.xml");
-        Assert.assertTrue(target.exists());
-        Assert.assertTrue(target.isFile());
+        assertTrue(target.exists());
+        assertTrue(target.isFile());
         if (log.isDebugEnabled()) {
             Files.lines(target.toPath()).forEach((line) -> log.debug(line));
         }
@@ -968,20 +973,20 @@ public class JmriUserPreferencesManagerTest {
         JUnitUtil.resetPreferencesProviders();
         JmriUserPreferencesManager m2 = new JmriUserPreferencesManager();
         m2.readUserPreferences();
-        Assert.assertEquals("value1", m2.getProperty(strClass, "test1"));
-        Assert.assertEquals(42, (int)m2.getProperty(strClass, "intTest"));
-        Assert.assertEquals(Math.PI, (double)m2.getProperty(strClass, "doubleTest"), 0.001);
-        Assert.assertEquals(true, (boolean)m2.getProperty(strClass, "booleanTest"));
-        Assert.assertEquals(location, m2.getWindowLocation(strClass));
-        Assert.assertEquals(windowSize, m2.getWindowSize(strClass));
-        Assert.assertEquals(true, m2.getPreferenceState(strClass, "test2"));
-        Assert.assertEquals(false, m2.getPreferenceState(strClass, "test3"));
-        Assert.assertEquals(true, m2.getSimplePreferenceState(strClass));
-        Assert.assertEquals("selection1", m2.getComboBoxLastSelection(strClass));
+        assertEquals("value1", m2.getProperty(strClass, "test1"));
+        assertEquals(42, (int)m2.getProperty(strClass, "intTest"));
+        assertEquals(Math.PI, (double)m2.getProperty(strClass, "doubleTest"), 0.001);
+        assertEquals(true, m2.getProperty(strClass, "booleanTest"));
+        assertEquals(location, m2.getWindowLocation(strClass));
+        assertEquals(windowSize, m2.getWindowSize(strClass));
+        assertEquals(true, m2.getPreferenceState(strClass, "test2"));
+        assertEquals(false, m2.getPreferenceState(strClass, "test3"));
+        assertEquals(true, m2.getSimplePreferenceState(strClass));
+        assertEquals("selection1", m2.getComboBoxLastSelection(strClass));
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetPreferencesProviders();
@@ -990,7 +995,7 @@ public class JmriUserPreferencesManagerTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

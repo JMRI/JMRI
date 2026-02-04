@@ -8,5 +8,5 @@ package jmri.jmrix.loconet.alm;
 public enum AlmMsgTypes {
     NOT_ALM_MSG, ALM_ROUTCAPQ, ALM_ROUTCAPREP,
     ALM_RDQ, ALM_ROUTDATW, ALM_ROUTDATREP,
-    ALM_BAW, ALM_UNKNOWN
+    ALM_BAW, ALM_ROUTECSCAPREP, ALM_UNKNOWN
 }

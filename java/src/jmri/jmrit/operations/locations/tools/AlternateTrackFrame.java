@@ -9,7 +9,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.TrackEditFrame;
+import jmri.jmrit.operations.locations.gui.TrackEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.JmriJOptionPane;
@@ -47,6 +47,7 @@ class AlternateTrackFrame extends OperationsFrame implements java.beans.Property
 
         if (_track != null) {
             updateTrackCombobox();
+            _track.addPropertyChangeListener(this);
             _track.getLocation().addPropertyChangeListener(this);
         }
 
@@ -59,10 +60,10 @@ class AlternateTrackFrame extends OperationsFrame implements java.beans.Property
 
         getContentPane().add(pAlternate);
         getContentPane().add(pControls);
-        
+
         addHelpMenu("package.jmri.jmrit.operations.Operations_AlternateTrack", true); // NOI18N
 
-        initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight200));
+        initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
     }
 
     private void updateTrackCombobox() {
@@ -90,12 +91,22 @@ class AlternateTrackFrame extends OperationsFrame implements java.beans.Property
     }
 
     @Override
+    public void dispose() {
+        if (_track != null) {
+            _track.removePropertyChangeListener(this);
+            _track.getLocation().removePropertyChangeListener(this);
+        }
+        super.dispose();
+    }
+
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
-        if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Track.ALTERNATE_TRACK_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
             updateTrackCombobox();
         }
     }

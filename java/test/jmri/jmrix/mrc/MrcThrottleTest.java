@@ -345,6 +345,7 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup1() {
     }
 
@@ -353,6 +354,7 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup2() {
     }
 
@@ -361,6 +363,7 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup3() {
     }
 
@@ -369,6 +372,7 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup4() {
     }
 
@@ -377,24 +381,32 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup5() {
     }
+
+    private MrcSystemConnectionMemo memo;
 
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        MrcSystemConnectionMemo memo = new MrcSystemConnectionMemo();
+        memo = new MrcSystemConnectionMemo();
         MrcInterfaceScaffold tc = new MrcInterfaceScaffold();
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
-        jmri.InstanceManager.store(new MrcThrottleManager(memo),jmri.ThrottleManager.class);
+        MrcThrottleManager tm = new MrcThrottleManager(memo);
+        jmri.InstanceManager.store( tm,jmri.ThrottleManager.class);
+        memo.store(tm, jmri.ThrottleManager.class);
         instance = new MrcThrottle(memo,new jmri.DccLocoAddress(42,false));
     }
 
     @AfterEach
     @Override
     public void tearDown() {
+        memo.dispose();
+        memo = null;
+        instance = null;
         JUnitUtil.tearDown();
     }
 

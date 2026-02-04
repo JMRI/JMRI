@@ -6,9 +6,6 @@ import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrix.AbstractPortController;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
@@ -71,8 +68,14 @@ public class SprogTrafficController implements SprogInterface,
     public boolean status() {
         return (ostream != null && istream != null);
     }
-    
-    protected boolean isTcThreadAlive() {
+
+    /**
+     * Check if the Sprog TC Thread ( started on construction of
+     * SprogTrafficController ) is alive.
+     * For testing purposes.
+     * @return true if alive, else false.
+     */
+    public boolean isTcThreadAlive() {
         return tcThread.isAlive();
     }
 
@@ -459,9 +462,14 @@ public class SprogTrafficController implements SprogInterface,
     }
 
     public void dispose(){
-       tcThread.interrupt();
+        tcThread.interrupt();
+        try {
+            tcThread.join();
+        } catch (InterruptedException e) {
+            // Do nothing
+        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogTrafficController.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SprogTrafficController.class);
 
 }

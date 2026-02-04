@@ -10,10 +10,10 @@ import jmri.jmrix.xpa.XpaTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.UnsupportedCommOperationException;
+import jmri.jmrix.purejavacomm.CommPortIdentifier;
+import jmri.jmrix.purejavacomm.NoSuchPortException;
+import jmri.jmrix.purejavacomm.PortInUseException;
+import jmri.jmrix.purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for a modem connected to an XPA.
@@ -39,7 +39,7 @@ public class SerialDriverAdapter extends XpaPortController {
         this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
-    purejavacomm.SerialPort activeSerialPort = null;
+    jmri.jmrix.purejavacomm.SerialPort activeSerialPort = null;
 
     @Override
     public String openPort(String portName, String appName) {
@@ -48,7 +48,7 @@ public class SerialDriverAdapter extends XpaPortController {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = (purejavacomm.SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
+                activeSerialPort = portID.open(appName, 2000);  // name of program, msec to wait
             } catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }
@@ -56,9 +56,9 @@ public class SerialDriverAdapter extends XpaPortController {
             // try to set it for communication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(9600,
-                        purejavacomm.SerialPort.DATABITS_8,
-                        purejavacomm.SerialPort.STOPBITS_1,
-                        purejavacomm.SerialPort.PARITY_NONE);
+                        jmri.jmrix.purejavacomm.SerialPort.DATABITS_8,
+                        jmri.jmrix.purejavacomm.SerialPort.STOPBITS_1,
+                        jmri.jmrix.purejavacomm.SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();

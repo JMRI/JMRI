@@ -81,8 +81,10 @@ public class RouteEditFrame extends AbstractRouteAddEditFrame {
 
     @Override
     protected JPanel getButtonPanel() {
-        final JButton cancelEditButton = new JButton(Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit"))); // I18N for word sequence "Cancel Edit"
-        final JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameRoute")); // I18N "Delete Route"
+        final JButton cancelEditButton = new JButton( // I18N for word sequence "Cancel Edit"
+            Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
+        final JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " "
+            + Bundle.getMessage("BeanNameRoute")); // I18N "Delete Route"
         final JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
         final JButton exportButton = new JButton(Bundle.getMessage("ButtonExport"));
         // add Buttons panel
@@ -90,11 +92,11 @@ public class RouteEditFrame extends AbstractRouteAddEditFrame {
         pb.setLayout(new FlowLayout(FlowLayout.TRAILING));
         // CancelEdit button
         pb.add(cancelEditButton);
-        cancelEditButton.addActionListener(this::cancelPressed);
+        cancelEditButton.addActionListener( e -> cancelEdit());
         cancelEditButton.setToolTipText(Bundle.getMessage("TooltipCancelRoute"));
         // Delete Route button
         pb.add(deleteButton);
-        deleteButton.addActionListener(this::deletePressed);
+        deleteButton.addActionListener( e -> deletePressed());
         deleteButton.setToolTipText(Bundle.getMessage("TooltipDeleteRoute"));
         // Update Route button
         pb.add(updateButton);
@@ -102,7 +104,7 @@ public class RouteEditFrame extends AbstractRouteAddEditFrame {
         updateButton.setToolTipText(Bundle.getMessage("TooltipUpdateRoute"));
         // Export button
         pb.add(exportButton);
-        exportButton.addActionListener(this::exportButtonPressed);
+        exportButton.addActionListener( e -> exportButtonPressed());
         exportButton.setToolTipText(Bundle.getMessage("TooltipExportRoute"));
 
         // Show the initial buttons, and hide the others
@@ -115,10 +117,8 @@ public class RouteEditFrame extends AbstractRouteAddEditFrame {
 
     /**
      * Respond to the export button.
-     *
-     * @param e the action event
      */
-    private void exportButtonPressed(ActionEvent e){
+    private void exportButtonPressed(){
         new RouteExportToLogix(_systemName.getText()).export();
         status1.setText(Bundle.getMessage("BeanNameRoute")
                 + "\"" + _systemName.getText() + "\" " +
@@ -131,20 +131,9 @@ public class RouteEditFrame extends AbstractRouteAddEditFrame {
     }
 
     /**
-     * Respond to the CancelEdit button.
-     *
-     * @param e the action event
-     */
-    private void cancelPressed(ActionEvent e) {
-        cancelEdit();
-    }
-
-    /**
      * Respond to the Delete button.
-     *
-     * @param e the action event
      */
-    private void deletePressed(ActionEvent e) {
+    private void deletePressed() {
         // route is already deactivated, just delete it
         routeManager.deleteRoute(curRoute);
 

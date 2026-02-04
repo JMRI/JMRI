@@ -8,7 +8,7 @@ import org.junit.Assume;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainEditFrame;
+import jmri.jmrit.operations.trains.gui.TrainEditFrame;
 import jmri.util.JUnitUtil;
 
 /**

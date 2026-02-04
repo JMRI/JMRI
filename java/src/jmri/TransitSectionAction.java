@@ -70,7 +70,8 @@ public class TransitSectionAction {
     public static final int PRESTARTRESUME = 17; // Resume after prestart
     public static final int TERMINATETRAIN = 18; // terminate train
     public static final int LOADTRAININFO = 19; // terminate train and run traininfo file
-    public static final int NUM_WHATS = 19; // Must correspond to the number of entries above
+    public static final int FORCEALLOCATEPASSSAFESECTION = 20;  // attempt to force allocation to safesection beyond next safe section.
+    public static final int NUM_WHATS = 20; // Must correspond to the number of entries above
     // other action 'whats" may be defined above, increment NUM_WHATS to match
 
     // For loadtraininfo loco address type
@@ -149,7 +150,8 @@ public class TransitSectionAction {
     private int mDataWhen = -1; // negative number signified no data 
     private int mDataWhat1 = -1;    // negative number signified no data 
     private float mDataWhat1Float = -1.0f;
-    private int mDataWhat2 = -1;    // negative number signified no data 
+    private int mDataWhat2 = -1;    // negative number signified no data
+    private float mDataWhat2Float = -1.0f;
     private String mStringWhen = "";
     private String mStringWhat = "";
     private String mStringWhat2 = "";
@@ -194,6 +196,14 @@ public class TransitSectionAction {
 
     public void setDataWhat1Float(float n) {
         mDataWhat1Float = n;
+    }
+
+    public float getDataWhat2Float() {
+        return mDataWhat2Float;
+    }
+
+    public void setDataWhat2Float(float n) {
+        mDataWhat2Float = n;
     }
 
     public int getDataWhat1() {

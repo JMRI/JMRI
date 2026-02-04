@@ -2,7 +2,6 @@ package jmri.profile;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class ProfileFileFilterTest {
     @Test
     public void testCTor() {
         ProfileFileFilter t = new ProfileFileFilter();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

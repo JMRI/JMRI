@@ -6,16 +6,17 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
 import jmri.*;
+import jmri.jmrit.beantable.block.BlockTableDataModel;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.*;
 
@@ -53,8 +54,8 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         Assert.assertTrue("Default include add button", a.includeAddButton());
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
+    @DisabledIfHeadless
     public void testInvoke() {
 
         // create a couple of blocks, and see if they show
@@ -98,8 +99,8 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
 
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
+    @DisabledIfHeadless
     public void testAddBlock() {
 
         ThreadingUtil.runOnGUI( ()-> {
@@ -125,13 +126,13 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         Assert.assertNotNull("Verify IB105 Added", chk105);  // NOI18N
         Assert.assertEquals("Verify system name prefix", "IB105", chk105.getSystemName());  // NOI18N
 
-        f.requestClose();
+        JUnitUtil.dispose(f.getWindow());
         f.waitClosed();
 
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
+    @DisabledIfHeadless
     public void testRenameBlock() {
 
         // Create a Layout Block which will create the Block entry
@@ -193,7 +194,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         Assert.assertEquals("New Block Name", layoutBlock.getUserName());
 
         JUnitAppender.assertWarnMessage("Cannot remove user name for block Block Name");  // NOI18N
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 
@@ -202,9 +203,9 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         return Bundle.getMessage("TitleAddBlock");
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     @Override
+    @DisabledIfHeadless
     public void testAddThroughDialog() {
 
         Assert.assertTrue(a.includeAddButton());
@@ -226,24 +227,20 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCancel"));  // NOI18N
         jf.waitClosed();
 
-        f.requestClose();
+        JUnitUtil.dispose(f.getWindow());
         f.waitClosed();
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
+    @DisabledIfHeadless
     public void testSetDefaultSpeed() {
 
         Assert.assertTrue(a.includeAddButton());
-        ThreadingUtil.runOnGUI( ()-> {
-            a.actionPerformed(null); // show table
-        });
+        ThreadingUtil.runOnGUI( ()-> a.actionPerformed(null));
         JFrameOperator main = new JFrameOperator(getTableFrameName());
 
         // find the "Add... " button and press it.
-        ThreadingUtil.runOnGUI( ()-> {
-            JemmyUtil.pressButton(main, Bundle.getMessage("ButtonAdd"));
-        });
+        JemmyUtil.pressButton(main, Bundle.getMessage("ButtonAdd"));
         JFrameOperator jf = new JFrameOperator(getAddFrameName());
 
         //Enter 1 in the text field labeled "System Name:"
@@ -286,20 +283,18 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         }, "Dismiss Default Speeds Thread finished");
 
         // clean up
-        main.requestClose();
+        JUnitUtil.dispose(main.getWindow());
         main.waitClosed();
 
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     @Override
+    @DisabledIfHeadless
     public void testEditButton() {
 
         Assert.assertTrue(a.includeAddButton());
-        ThreadingUtil.runOnGUI( ()-> {
-            a.actionPerformed(null);
-        });
+        ThreadingUtil.runOnGUI( ()-> a.actionPerformed(null));
 
         JFrameOperator jfo = new JFrameOperator(getTableFrameName());
 
@@ -331,13 +326,85 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         jf.requestClose();
         jf.waitClosed();
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 
     @Override
     public String getEditFrameName() {
         return Bundle.getMessage("TitleEditBlock") + " IB1";
+    }
+
+    @Test
+    @DisabledIfHeadless
+    public void testSensorReporterComboBoxes(){
+
+        Block b1 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+        Block b2 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB2");
+        Block b3 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB3");
+        InstanceManager.getDefault(BlockManager.class).provideBlock("IB4");
+        Block b5 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB5");
+        Block b6 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB6");
+
+        InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
+        Sensor is2 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS2");
+        Sensor is3 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS3");
+
+        b1.setSensor("IS1");
+        b2.setSensor("IS2");
+        b3.setSensor("IS3");
+
+
+        Reporter ir5 = InstanceManager.getDefault(ReporterManager.class).provide("IR5");
+        b5.setReporter(ir5);
+        b6.setReporter(InstanceManager.getDefault(ReporterManager.class).provide("IR6"));
+
+        ThreadingUtil.runOnGUI( ()-> a.actionPerformed(null));
+
+        JFrameOperator jfo = new JFrameOperator(getTableFrameName());
+
+        org.netbeans.jemmy.operators.JTableOperator jto = new JTableOperator(jfo);
+        Assertions.assertNotNull(jto);
+
+        jto.clickOnCell(0, BlockTableDataModel.STATECOL); // does nothing
+
+        jto.clickOnCell(1, BlockTableDataModel.SENSORCOL);
+        JComboBoxOperator jc = new JComboBoxOperator(jfo);
+        Assertions.assertNotNull(jc);
+        Assertions.assertEquals(is2, jc.getSelectedItem());
+        jc.setSelectedIndex(0); // null;
+        jc.getQueueTool().waitEmpty();
+        Assertions.assertNull(b2.getSensor());
+
+        jto.clickOnCell(2, BlockTableDataModel.SENSORCOL);
+        jc = new JComboBoxOperator(jfo);
+        Assertions.assertNotNull(jc);
+        Assertions.assertEquals(is3, jc.getSelectedItem());
+        jc.setSelectedIndex(2); // IS2
+        jc.getQueueTool().waitEmpty();
+        Assertions.assertEquals( is2, b3.getSensor());
+
+        jto.clickOnCell(4, BlockTableDataModel.REPORTERCOL);
+        jc = new JComboBoxOperator(jfo);
+        Assertions.assertNotNull(jc);
+        Assertions.assertEquals(ir5, jc.getSelectedItem());
+        jc.setSelectedIndex(0); // null;
+        jc.getQueueTool().waitEmpty();
+        Assertions.assertNull(b5.getReporter());
+
+        jto.clickOnCell(1, BlockTableDataModel.REPORTERCOL);
+        jc = new JComboBoxOperator(jfo);
+        Assertions.assertNotNull(jc);
+        Assertions.assertNull( jc.getSelectedItem());
+        jc.setSelectedIndex(1); // IR5
+        jc.getQueueTool().waitEmpty();
+        Assertions.assertEquals(ir5, b2.getReporter());
+
+        // JUnitUtil.waitFor(20000); // debug
+
+        JUnitUtil.dispose(jfo.getWindow());
+        jfo.waitClosed();
+
     }
 
     @BeforeEach

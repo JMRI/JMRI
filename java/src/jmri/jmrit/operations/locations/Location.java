@@ -15,6 +15,7 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -23,7 +24,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.PhysicalLocation;
 
 /**
@@ -1070,6 +1071,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         for (Track track : tracks) {
             box.addItem(track);
         }
+        OperationsPanel.padComboBox(box, InstanceManager.getDefault(LocationManager.class).getMaxTrackNameLength());
     }
 
     /**
@@ -1111,7 +1113,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      */
     public Pool addPool(String name) {
         Pool pool = getPoolByName(name);
-        if (pool == null) {
+        if (pool == null && !name.isBlank()) {
             _idPoolNumber++;
             String id = getId() + "p" + Integer.toString(_idPoolNumber);
             log.debug("creating new pool ({}) id: {}", name, id);
@@ -1318,10 +1320,37 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         return false;
     }
     
+    public boolean hasQuickService() {
+        for (Track track : getTracksList()) {
+            if (track.isQuickServiceEnabled()) {
+                return true;
+            }
+        }
+        return Setup.isBuildOnTime();
+    }
+
     public boolean hasTracksWithRestrictedTrainDirections() {
         int trainDirections = getTrainDirections() & Setup.getTrainDirection();
         for (Track track : getTracksList()) {
             if (trainDirections != (track.getTrainDirections() & trainDirections)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasTrackMessages() {
+        for (Track track : getTracksList()) {
+            if (track.hasMessages()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasTrackPriortyChanges() {
+        for (Track track : getTracksList()) {
+            if (!track.getTrackPriority().equals(Track.PRIORITY_NORMAL)) {
                 return true;
             }
         }

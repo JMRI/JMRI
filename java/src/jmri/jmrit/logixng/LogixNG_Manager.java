@@ -2,11 +2,12 @@ package jmri.jmrit.logixng;
 
 import java.io.PrintWriter;
 import java.util.Locale;
+import java.util.Map;
+
+import org.apache.commons.lang3.mutable.MutableInt;
 
 import jmri.Manager;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
-
-import org.apache.commons.lang3.mutable.MutableInt;
 
 /**
  * Manager for LogixNG
@@ -17,11 +18,22 @@ import org.apache.commons.lang3.mutable.MutableInt;
 public interface LogixNG_Manager extends Manager<LogixNG> {
 
     /**
+     * This property is fired when the {@link #setupAllLogixNGs()} method is completed.
+     */
+    public static final String PROPERTY_SETUP = "LogixNG_Setup";
+
+    /**
+     * This is the name of the error handling module.
+     */
+    public static final String ERROR_HANDLING_MODULE_NAME = "IQM:JMRI:ErrorHandlingModule";
+
+    /**
      * Create a new LogixNG if the LogixNG does not exist.
      *
      * @param systemName the system name
      * @param userName   the user name
      * @return a new LogixNG or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     LogixNG createLogixNG(String systemName, String userName)
             throws IllegalArgumentException;
@@ -33,6 +45,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param userName   the user name
      * @param inline     true if this LogixNG is an inline LogixNG
      * @return a new LogixNG or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     LogixNG createLogixNG(String systemName, String userName, boolean inline)
             throws IllegalArgumentException;
@@ -43,6 +56,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      *
      * @param userName the user name
      * @return a new LogixNG or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     LogixNG createLogixNG(String userName)
             throws IllegalArgumentException;
@@ -54,6 +68,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param userName  the user name
      * @param inline    true if this LogixNG is an inline LogixNG
      * @return a new LogixNG or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     LogixNG createLogixNG(String userName, boolean inline)
             throws IllegalArgumentException;
@@ -272,5 +287,40 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param task the task
      */
     void registerSetupTask(Runnable task);
+
+    /**
+     * Executes a LogixNG Module.
+     * Note that the module must be a Digital Action Module.
+     * @param module     The module to be executed
+     * @param parameter  The parameter. The module must have exactly one parameter.
+     * @throws IllegalArgumentException If module is null or if module is not a
+     *                   DigitalActionModule.
+     */
+    void executeModule(Module module, Object parameter)
+            throws IllegalArgumentException;
+
+    /**
+     * Executes a LogixNG Module.
+     * Note that the module must be a Digital Action Module.
+     * @param module      The module to be executed
+     * @param parameters  The parameters
+     * @throws IllegalArgumentException If module or parameters is null or if module
+     *                    is not a DigitalActionModule.
+     */
+    void executeModule(Module module, Map<String, Object> parameters)
+            throws IllegalArgumentException;
+
+    /**
+     * Get the female socket of the error handling module.
+     * @return the socket.
+     */
+    FemaleSocket getErrorHandlingModuleSocket();
+
+    /**
+     * Is the error handling module enabled?
+     * It's enabled if it exists and the root socket is connected.
+     * @return true if it's in use, false otherwise.
+     */
+    boolean isErrorHandlingModuleEnabled();
 
 }

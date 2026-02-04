@@ -433,16 +433,17 @@ pour plus d'informations.
   <li><a href="LocoNetTools.shtml">Outils pour les &#233;quipements LocoNet&reg; </a></li>
 <li> Outils relatifs &#224; LocoNet
     <ul>
-      <li><a href="../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">Moniteurr LocoNet</a></li>
+      <li><a href="../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">Moniteur LocoNet</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Moniteur Slots</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/clockmon/ClockMonFrame.shtml">Moniteur Horloge</a></li>
-      <li><a href="../../../package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml">Moniteurr Statistiques LocoNet</a></li>
+      <li><a href="../../../package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml">Moniteur Statistiques LocoNet</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">Configuration de BDL16x</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">Configuration de DS64</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">Configuration de PM4x</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">Configuration de SE8C</a></li>
-      <li><a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configuration de LocoIO</a> (d&#233;sapprouv&#233;, utilisez <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a>)</li>
-      <li><a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Configuration de la centrale </a></li>
+      <li><a href="../../../package/jmri/jmrix/loconet/swing/lnsv1prog/Lnsv1ProgPane.shtml">Gestion des Modules LocoIO</a></li>
+      <li><a href="../../../package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">Gestion des Modules LNCV</a></li>
+      <li><a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Configuration de la centrale</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">Configuration de LocoNet ID</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">Configuration de Duplex Group</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/swing/throttlemsg/MessageFrame.shtml">Envoi de Message R&#233;gulateur</a></li>
@@ -452,7 +453,7 @@ pour plus d'informations.
       <li><a href="../../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">T&#233;l&#233;charger des Sons</a></li>
     </ul>
   </li>
-   <li>autres Centrales
+   <li>Autres Centrales
    <ul>
         <li><a href="Fleischmann.shtml">Fleischmann Twin Centre</a></li>
         <li><a href="Uhlenbrock.shtml">Uhlenbrock Command Station</a></li>

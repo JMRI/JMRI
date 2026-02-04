@@ -42,7 +42,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JSpinner delaySpinner;
 
     JCheckBox momF2CB;
-    
+
     JCheckBox exclusiveCB;
 
     JSpinner port;
@@ -97,7 +97,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         delaySpinner.setValue(localPrefs.getEStopDelay());
 
         momF2CB.setSelected(localPrefs.isUseMomF2());
-        
+
         exclusiveCB.setSelected(localPrefs.isExclusiveUseOfAddress());
 
         port.setValue(localPrefs.getPort());
@@ -128,7 +128,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         localPrefs.setEStopDelay((Integer) delaySpinner.getValue());
 
         localPrefs.setUseMomF2(momF2CB.isSelected());
-        
+
         localPrefs.setExclusiveUseOfAddress(exclusiveCB.isSelected());
 
         int portNum;
@@ -187,12 +187,23 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     private JPanel exclusivePanel() {
         JPanel panel = new JPanel();
 
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JPanel eCbPanel = new JPanel();
         exclusiveCB = new JCheckBox(Bundle.getMessage("LabelExclusive"));
         exclusiveCB.setToolTipText(Bundle.getMessage("ToolTipExclusive"));
-        panel.add(exclusiveCB);
+        eCbPanel.add(exclusiveCB);
+        panel.add(eCbPanel);
+
+        // only display hint if silent share option is enabled in main throttle prefs
+        var tm = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
+        if ( tm != null && tm.enablePrefSilentShareOption() ) {
+            JPanel sscHint = new JPanel();
+            sscHint.add(new JLabel(Bundle.getMessage("LabelStealShare")));
+            panel.add(sscHint);
+        }
         return panel;
     }
-    
+
     private JPanel networkPanel() {
         JPanel nPanelRow1 = new JPanel();
         JPanel nPanelRow2 = new JPanel();
@@ -213,6 +224,14 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
             this.startupCB.removeItemListener(this.startupItemListener);
             StartupActionsManager manager = InstanceManager.getDefault(StartupActionsManager.class);
             if (this.startupCB.isSelected()) {
+                // Delete any existing WiThrottle start up actions.
+                // Manually adding a start up action sets the start up check box active which triggers
+                // the creation of a second start up action.
+                manager.getActions(PerformActionModel.class).stream().filter((model) -> (WiThrottleCreationAction.class.getName().equals(model.getClassName()))).forEach((model) -> {
+                    this.startupActionPosition = Arrays.asList(manager.getActions()).indexOf(model);
+                    manager.removeAction(model);
+                });
+
                 PerformActionModel model = new PerformActionModel();
                 model.setClassName(WiThrottleCreationAction.class.getName());
                 if (this.startupActionPosition == -1 || this.startupActionPosition >= manager.getActions().length) {

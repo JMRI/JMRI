@@ -1,36 +1,62 @@
 package jmri.jmrit.logixng.util.parser;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Locale;
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Test Bundle
- * 
+ *
  * @author Daniel Bergqvist 2019
  */
 public class BundleTest {
 
     @Test
-    public void testBundle() {
-        Assert.assertTrue("bundle is correct", "Generic".equals(Bundle.getMessage("SocketTypeGeneric")));
-        Assert.assertTrue("bundle is correct", "Test Bundle bb aa cc".equals(Bundle.getMessage("TestBundle", "aa", "bb", "cc")));
-        Assert.assertTrue("bundle is correct", "Generic".equals(Bundle.getMessage(Locale.US, "SocketTypeGeneric")));
-        Assert.assertTrue("bundle is correct", "Test Bundle bb aa cc".equals(Bundle.getMessage(Locale.US, "TestBundle", "aa", "bb", "cc")));
-    }
-    
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
+    public void testGoodKeysMessage() {
+
+        assertEquals( "Generic", Bundle.getMessage("SocketTypeGeneric"));
+
+        assertEquals("Tools", Bundle.getMessage("MenuTools"));
+        assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+    @Test
+    public void testBadKeyMessage() {
+        assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
     }
-    
+
+    @Test
+    public void testGoodKeysMessageArg() {
+
+        assertEquals( "Test Bundle bb aa cc", Bundle.getMessage("TestBundle", "aa", "bb", "cc"));
+
+        assertEquals("Tools", Bundle.getMessage("MenuTools", "foo"));
+        assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", "foo"));
+        assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
+    }
+
+    @Test
+    public void testBadKeyMessageArg() {
+        assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
+    }
+
+    @Test
+    public void testLocaleMessage() {
+
+        assertEquals( "Generic", Bundle.getMessage(Locale.US, "SocketTypeGeneric"));
+
+        assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout"));
+    }
+
+    @Test
+    public void testLocaleMessageArg() {
+
+        assertEquals( "Test Bundle bb aa cc", Bundle.getMessage(Locale.US, "TestBundle", "aa", "bb", "cc"));
+
+        assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
+        assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
+    }
+
 }

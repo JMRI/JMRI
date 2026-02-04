@@ -28,11 +28,15 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
     public final static String SHOW_CV_NUMBERS = "showCvNumbers";
     public final static String CAN_CACHE_DEFAULT = "canCacheDefault";
     public final static String DO_CONFIRM_READ = "doConfirmRead";
+    public final static String DISABLE_PROGRAMMING_TRACK = "disableProgrammingTrack";
+    public final static String DISABLE_PROGRAMMING_ON_MAIN = "disableProgrammingOnMain";
     private String defaultFile = null;
     private boolean showEmptyPanes = true;
     private boolean showCvNumbers = false;
     private boolean canCacheDefault = false;
     private boolean doConfirmRead = false;
+    private boolean disableProgrammingTrack = false;
+    private boolean disableProgrammingOnMain = false;
 
     @Override
     public void initialize(Profile profile) throws InitializationException {
@@ -42,19 +46,25 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
                 this.setDefaultFile(preferences.get(DEFAULT_FILE, this.getDefaultFile()));
                 ProgDefault.setDefaultProgFile(this.getDefaultFile());
             }
-            
+
             this.setShowEmptyPanes(preferences.getBoolean(SHOW_EMPTY_PANES, this.isShowEmptyPanes()));
             PaneProgFrame.setShowEmptyPanes(this.isShowEmptyPanes());
-            
+
             this.setShowCvNumbers(preferences.getBoolean(SHOW_CV_NUMBERS, this.isShowCvNumbers()));
             PaneProgFrame.setShowCvNumbers(this.isShowCvNumbers());
-            
+
             this.setCanCacheDefault(preferences.getBoolean(CAN_CACHE_DEFAULT, this.isCanCacheDefault()));
             PaneProgFrame.setCanCacheDefault(this.isCanCacheDefault());
-            
+
             this.setDoConfirmRead(preferences.getBoolean(DO_CONFIRM_READ, this.isDoConfirmRead()));
             PaneProgFrame.setDoConfirmRead(this.isDoConfirmRead());
-            
+
+            this.setDisableProgrammingTrack(preferences.getBoolean(DISABLE_PROGRAMMING_TRACK, this.isDisableProgrammingTrack()));
+            PaneProgFrame.setDisableProgrammingTrack(this.isDisableProgrammingTrack());
+
+            this.setDisableProgrammingOnMain(preferences.getBoolean(DISABLE_PROGRAMMING_ON_MAIN, this.isDisableProgrammingOnMain()));
+            PaneProgFrame.setDisableProgrammingOnMain(this.isDisableProgrammingOnMain());
+
             this.setInitialized(profile, true);
         }
     }
@@ -89,6 +99,8 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
         preferences.putBoolean(SHOW_CV_NUMBERS, this.showCvNumbers);
         preferences.putBoolean(CAN_CACHE_DEFAULT, this.canCacheDefault);
         preferences.putBoolean(DO_CONFIRM_READ, this.doConfirmRead);
+        preferences.putBoolean(DISABLE_PROGRAMMING_TRACK, this.disableProgrammingTrack);
+        preferences.putBoolean(DISABLE_PROGRAMMING_ON_MAIN, this.disableProgrammingOnMain);
         try {
             preferences.sync();
         } catch (BackingStoreException ex) {
@@ -168,12 +180,44 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
     }
 
     /**
+     * @return the disableProgrammingTrack
+     */
+    public boolean isDisableProgrammingTrack() {
+        return disableProgrammingTrack;
+    }
+
+    /**
+     * @return the disableProgrammingOnMain
+     */
+    public boolean isDisableProgrammingOnMain() {
+        return disableProgrammingOnMain;
+    }
+
+    /**
      * @param doConfirmRead new value
      */
     public void setDoConfirmRead(boolean doConfirmRead) {
         boolean oldDoConfirmRead = this.doConfirmRead;
         this.doConfirmRead = doConfirmRead;
         firePropertyChange(DO_CONFIRM_READ, oldDoConfirmRead, doConfirmRead);
+    }
+
+    /**
+     * @param disableProgrammingTrack new value
+     */
+    public void setDisableProgrammingTrack(boolean disableProgrammingTrack) {
+        boolean oldDisableProgrammingTrack = this.disableProgrammingTrack;
+        this.disableProgrammingTrack = disableProgrammingTrack;
+        firePropertyChange(DISABLE_PROGRAMMING_TRACK, oldDisableProgrammingTrack, disableProgrammingTrack);
+    }
+
+    /**
+     * @param disableProgrammingOnMain new value
+     */
+    public void setDisableProgrammingOnMain(boolean disableProgrammingOnMain) {
+        boolean oldDisableProgrammingOnMain = this.disableProgrammingOnMain;
+        this.disableProgrammingOnMain = disableProgrammingOnMain;
+        firePropertyChange(DISABLE_PROGRAMMING_ON_MAIN, oldDisableProgrammingOnMain, disableProgrammingOnMain);
     }
 
 }

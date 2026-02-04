@@ -3,6 +3,7 @@ package apps.TrainCrew;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.JPanel;
@@ -52,7 +53,7 @@ public class InstallFromURL extends JmriAbstractAction {
         
         try {
             // create URL
-            URL url = new URL(urlString);
+            URL url = new URI(urlString).toURL();
 
             try {
                 // open connection
@@ -65,7 +66,7 @@ public class InstallFromURL extends JmriAbstractAction {
             } catch (java.io.IOException ex) {
                 log.error("Error in transfer", ex);
             }
-        } catch (java.net.MalformedURLException ex) {
+        } catch (java.net.MalformedURLException | java.net.URISyntaxException ex) {
             log.error("Invalid URL", ex);
         }
     }

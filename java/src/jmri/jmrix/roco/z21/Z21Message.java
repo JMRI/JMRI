@@ -1,8 +1,18 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.AbstractMRMessage;
+
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import jmri.util.StringUtil;
 
 /**
  * Class for messages in the z21/Z21 protocol.
@@ -82,12 +92,15 @@ public class Z21Message extends AbstractMRMessage {
 
     /**
      * This ctor interprets the byte array as a sequence of characters to send.
-     *
+     * @deprecated 5.13.5, unused, requires further development.
      * @param a Array of bytes to send
      * @param l unused.
      */
+    @Deprecated( since="5.13.5", forRemoval=true)
     public Z21Message(byte[] a, int l) {
-        super(String.valueOf(a));
+        // super(String.valueOf(a)); // Spotbug toString on array
+        // requires further development to produce correct values for hardware type.
+        super(StringUtil.hexStringFromBytes(a).replaceAll("\\s", ""));
         setBinary(true);
     }
 
@@ -258,33 +271,30 @@ public class Z21Message extends AbstractMRMessage {
         return retval;
     }
 
+    private static List<Z21MessageFormatter> formatterList = new ArrayList<>();
+
     @Override
     public String toMonitorString() {
-        switch(getOpCode()){
-           case 0x0010:
-               return Bundle.getMessage("Z21MessageStringSerialNoRequest");
-           case 0x001A:
-               return Bundle.getMessage("Z21MessageStringVersionRequest");
-           case 0x0040:
-               return Bundle.getMessage("Z21MessageXpressNetTunnelRequest",new Z21XNetMessage(this).toMonitorString());
-           case 0x0050:
-               return Bundle.getMessage("Z21MessageSetBroadcastFlags",Z21MessageUtils.interpretBroadcastFlags(_dataChars));
-           case 0x0051:
-               return Bundle.getMessage("Z21MessageRequestBroadcastFlags");
-           case 0x00A2:
-               return Bundle.getMessage("Z21LocoNetLanMessage", getLocoNetMessage().toMonitorString());
-           case 0x0081:
-               return Bundle.getMessage("Z21RMBusGetDataRequest", getElement(4));
-           case 0x0082:
-               return Bundle.getMessage("Z21RMBusProgramModuleRequest", getElement(4));
-           case 0x0089:
-               return Bundle.getMessage("Z21_RAILCOM_GETDATA");
-           case 0x00C4:
-               int networkID = ( getElement(4) & 0xFF) + ((getElement(5) & 0xFF) << 8);
-               return Bundle.getMessage("Z21CANDetectorRequest",networkID);
-           default:
+        if(formatterList.isEmpty()) {
+            try {
+
+                Reflections reflections = new Reflections("jmri.jmrix.roco.z21.messageformatters");
+                Set<Class<? extends Z21MessageFormatter>> f = reflections.getSubTypesOf(Z21MessageFormatter.class);
+                for (Class<?> c : f) {
+                    log.debug("Found formatter: {}", f.getClass().getName());
+                    Constructor<?> ctor = c.getConstructor();
+                    formatterList.add((Z21MessageFormatter) ctor.newInstance());
+                }
+            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException |
+                     IllegalArgumentException | InvocationTargetException e) {
+                log.error("Error instantiating formatter", e);
+            }
         }
-        return toString();
+
+        return formatterList.stream()
+                .filter(f -> f.handlesMessage(this))
+                .findFirst().map(f -> f.formatMessage(this))
+                .orElse(this.toString());
     }
 
     // handle LocoNet messages tunneled in Z21 messages
@@ -300,7 +310,7 @@ public class Z21Message extends AbstractMRMessage {
        return (getOpCode() == 0x00A4);
     }
 
-    jmri.jmrix.loconet.LocoNetMessage getLocoNetMessage() {
+    public jmri.jmrix.loconet.LocoNetMessage getLocoNetMessage() {
         jmri.jmrix.loconet.LocoNetMessage lnr = null;
         if (isLocoNetTunnelMessage()) {
             int i = 4;

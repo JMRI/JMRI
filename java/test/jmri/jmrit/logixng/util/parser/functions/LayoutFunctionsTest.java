@@ -1,9 +1,15 @@
 package jmri.jmrit.logixng.util.parser.functions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.jmrit.logix.OBlockManager;
@@ -14,9 +20,7 @@ import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -63,68 +67,60 @@ public class LayoutFunctionsTest {
     }
 
     @Test
-    public void testTurnoutExistsFunction() throws Exception {
+    public void testTurnoutExistsFunction() throws JmriException {
         Function turnoutExistsFunction = InstanceManager.getDefault(FunctionManager.class).get("turnoutExists");
-        Assert.assertEquals("strings matches", "turnoutExists", turnoutExistsFunction.getName());
-        Assert.assertNotNull("Function has description", turnoutExistsFunction.getDescription());
-
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        assertEquals( "turnoutExists", turnoutExistsFunction.getName(), "strings matches");
+        assertNotNull( turnoutExistsFunction.getDescription(), "Function has description");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        hasThrown.set(false);
-        try {
-            turnoutExistsFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class,
+            () -> turnoutExistsFunction.calculate(symbolTable, getParameterList()),
+            "exception is thrown");
+        assertNotNull(e);
 
-        Assert.assertFalse("Turnout doesn't exists",
-                (boolean)turnoutExistsFunction.calculate(symbolTable, getParameterList(exprTurnoutIT1)));
+        assertFalse( (boolean)turnoutExistsFunction.calculate(symbolTable, getParameterList(exprTurnoutIT1)),
+            "Turnout doesn't exist");
 
-        Assert.assertFalse("Turnout doesn't exists",
-                (boolean)turnoutExistsFunction.calculate(symbolTable, getParameterList(exprTurnoutMyTurnout)));
+        assertFalse( (boolean)turnoutExistsFunction.calculate(symbolTable, getParameterList(exprTurnoutMyTurnout)),
+            "Turnout doesn't exist 2");
 
         MyTurnout t = new MyTurnout();
         InstanceManager.getDefault(TurnoutManager.class).register(t);
-        Assert.assertTrue("Turnout exists",
-                (boolean)turnoutExistsFunction.calculate(symbolTable, getParameterList(exprTurnoutIT1)));
-        Assert.assertTrue("Turnout exists",
-                (boolean)turnoutExistsFunction.calculate(symbolTable, getParameterList(exprTurnoutMyTurnout)));
+        assertTrue( (boolean)turnoutExistsFunction.calculate(symbolTable, getParameterList(exprTurnoutIT1)),
+            "Turnout exists");
+        assertTrue( (boolean)turnoutExistsFunction.calculate(symbolTable, getParameterList(exprTurnoutMyTurnout)),
+            "Turnout exists 2");
     }
 
     @Test
-    public void testGetSetTurnoutStateFunction() throws Exception {
+    public void testGetSetTurnoutStateFunction() throws JmriException {
         Function getTurnoutStateFunction = InstanceManager.getDefault(FunctionManager.class).get("getTurnoutState");
-        Assert.assertEquals("strings matches", "getTurnoutState", getTurnoutStateFunction.getName());
-        Assert.assertNotNull("Function has description", getTurnoutStateFunction.getDescription());
+        assertEquals( "getTurnoutState", getTurnoutStateFunction.getName(), "strings matches");
+        assertNotNull( getTurnoutStateFunction.getDescription(), "Function has description");
 
         Function setTurnoutStateFunction = InstanceManager.getDefault(FunctionManager.class).get("setTurnoutState");
-        Assert.assertEquals("strings matches", "setTurnoutState", setTurnoutStateFunction.getName());
-        Assert.assertNotNull("Function has description", setTurnoutStateFunction.getDescription());
-
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        assertEquals( "setTurnoutState", setTurnoutStateFunction.getName(), "strings matches");
+        assertNotNull( setTurnoutStateFunction.getDescription(), "Function has description");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        hasThrown.set(false);
-        try {
-            getTurnoutStateFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        WrongNumberOfParametersException e = assertThrows(WrongNumberOfParametersException.class,
+            () -> getTurnoutStateFunction.calculate(symbolTable, getParameterList()),
+            "exception is thrown");
+        assertNotNull(e);
 
-        Assertions.assertThrows(CalculateException.class, () -> {
-            Assert.assertEquals("Turnout has correct state", Turnout.THROWN,
-                    (int)getTurnoutStateFunction.calculate(symbolTable, getParameterList(exprTurnoutIT1)));
+        CalculateException ex = assertThrows(CalculateException.class, () -> {
+            int tmp = (int)getTurnoutStateFunction.calculate(symbolTable, getParameterList(exprTurnoutIT1));
+            assertEquals( Turnout.THROWN, tmp, "Turnout has correct state, Should have thrown" );
         });
+        assertNotNull(ex);
 
-        Assertions.assertThrows(CalculateException.class, () -> {
-            Assert.assertEquals("Turnout has correct state", Turnout.THROWN,
-                    (int)getTurnoutStateFunction.calculate(symbolTable, getParameterList(exprTurnoutMyTurnout)));
+        ex = assertThrows(CalculateException.class, () -> {
+            int tmp = (int)getTurnoutStateFunction.calculate(symbolTable, getParameterList(exprTurnoutMyTurnout));
+            assertEquals( Turnout.THROWN, tmp, "Turnout has correct state, Should have thrown" );
         });
+        assertNotNull(ex);
 
         MyTurnout t = new MyTurnout();
         InstanceManager.getDefault(TurnoutManager.class).register(t);
@@ -132,117 +128,116 @@ public class LayoutFunctionsTest {
 
         t._lastSetState = -1;
         t._knownState = Turnout.THROWN;
-        Assert.assertEquals("Turnout has correct state", Turnout.THROWN,
-                (int)getTurnoutStateFunction.calculate(symbolTable, getParameterList(exprTurnoutIT1)));
-        Assert.assertEquals("Turnout is not set", -1, t._lastSetState);
+        assertEquals( Turnout.THROWN,
+                (int)getTurnoutStateFunction.calculate(symbolTable, getParameterList(exprTurnoutIT1)),
+                "Turnout has correct state");
+        assertEquals( -1, t._lastSetState, "Turnout is not set");
 
         t._knownState = Turnout.THROWN;
-        Assert.assertEquals("Turnout has correct state", Turnout.THROWN,
-                (int)getTurnoutStateFunction.calculate(symbolTable, getParameterList(exprTurnoutMyTurnout)));
-        Assert.assertEquals("Turnout is not set", -1, t._lastSetState);
+        assertEquals( Turnout.THROWN,
+                (int)getTurnoutStateFunction.calculate(symbolTable, getParameterList(exprTurnoutMyTurnout)),
+                "Turnout has correct state");
+        assertEquals( -1, t._lastSetState, "Turnout is not set");
 
         t._knownState = Turnout.CLOSED;
-        Assert.assertEquals("Turnout has correct state", Turnout.CLOSED,
-                (int)getTurnoutStateFunction.calculate(symbolTable, getParameterList(exprTurnoutIT1)));
-        Assert.assertEquals("Turnout is not set", -1, t._lastSetState);
+        assertEquals( Turnout.CLOSED,
+                (int)getTurnoutStateFunction.calculate(symbolTable, getParameterList(exprTurnoutIT1)),
+                "Turnout has correct state");
+        assertEquals( -1, t._lastSetState, "Turnout is not set");
 
         t._knownState = Turnout.CLOSED;
-        Assert.assertEquals("Turnout has correct state", Turnout.CLOSED,
-                (int)getTurnoutStateFunction.calculate(symbolTable, getParameterList(exprTurnoutMyTurnout)));
-        Assert.assertEquals("Turnout is not set", -1, t._lastSetState);
-
-        t._lastSetState = -1;
-        t._knownState = Turnout.THROWN;
-        Assert.assertEquals("Turnout has correct state", Turnout.UNKNOWN,
-                (int)setTurnoutStateFunction.calculate(symbolTable,
-                        getParameterList(exprTurnoutIT1, exprTurnoutThrown)));
-        Assert.assertEquals("Turnout is set", Turnout.THROWN, t._lastSetState);
+        assertEquals( Turnout.CLOSED,
+                (int)getTurnoutStateFunction.calculate(symbolTable, getParameterList(exprTurnoutMyTurnout)),
+                "Turnout has correct state");
+        assertEquals( -1, t._lastSetState, "Turnout is not set");
 
         t._lastSetState = -1;
         t._knownState = Turnout.THROWN;
-        Assert.assertEquals("Turnout has correct state", Turnout.UNKNOWN,
+        assertEquals( Turnout.UNKNOWN,
                 (int)setTurnoutStateFunction.calculate(symbolTable,
-                        getParameterList(exprTurnoutMyTurnout, exprTurnoutThrown)));
-        Assert.assertEquals("Turnout is set", Turnout.THROWN, t._lastSetState);
+                        getParameterList(exprTurnoutIT1, exprTurnoutThrown)),
+                "Turnout has correct state");
+        assertEquals( Turnout.THROWN, t._lastSetState, "Turnout is set");
+
+        t._lastSetState = -1;
+        t._knownState = Turnout.THROWN;
+        assertEquals( Turnout.UNKNOWN,
+                (int)setTurnoutStateFunction.calculate(symbolTable,
+                        getParameterList(exprTurnoutMyTurnout, exprTurnoutThrown)),
+                "Turnout has correct state");
+        assertEquals( Turnout.THROWN, t._lastSetState, "Turnout is set");
 
         t._lastSetState = -1;
         t._knownState = Turnout.CLOSED;
-        Assert.assertEquals("Turnout has correct state", Turnout.UNKNOWN,
+        assertEquals( Turnout.UNKNOWN,
                 (int)setTurnoutStateFunction.calculate(symbolTable,
-                        getParameterList(exprTurnoutIT1, exprTurnoutClosed)));
-        Assert.assertEquals("Turnout is set", Turnout.CLOSED, t._lastSetState);
+                        getParameterList(exprTurnoutIT1, exprTurnoutClosed)),
+                "Turnout has correct state");
+        assertEquals( Turnout.CLOSED, t._lastSetState, "Turnout is set");
 
         t._lastSetState = -1;
         t._knownState = Turnout.CLOSED;
-        Assert.assertEquals("Turnout has correct state", Turnout.UNKNOWN,
+        assertEquals( Turnout.UNKNOWN,
                 (int)setTurnoutStateFunction.calculate(symbolTable,
-                        getParameterList(exprTurnoutMyTurnout, exprTurnoutClosed)));
-        Assert.assertEquals("Turnout is set", Turnout.CLOSED, t._lastSetState);
+                        getParameterList(exprTurnoutMyTurnout, exprTurnoutClosed)),
+                "Turnout has correct state");
+        assertEquals( Turnout.CLOSED, t._lastSetState, "Turnout is set");
     }
 
     @Test
-    public void testSensorExistsFunction() throws Exception {
+    public void testSensorExistsFunction() throws JmriException {
         Function sensorExistsFunction = InstanceManager.getDefault(FunctionManager.class).get("sensorExists");
-        Assert.assertEquals("strings matches", "sensorExists", sensorExistsFunction.getName());
-        Assert.assertNotNull("Function has description", sensorExistsFunction.getDescription());
-
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        assertEquals( "sensorExists", sensorExistsFunction.getName(), "strings matches");
+        assertNotNull( sensorExistsFunction.getDescription(), "Function has description");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        hasThrown.set(false);
-        try {
-            sensorExistsFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class,
+            () -> sensorExistsFunction.calculate(symbolTable, getParameterList()),
+            "exception is thrown");
+        assertNotNull( e);
 
-        Assert.assertFalse("Sensor doesn't exists",
-                (boolean)sensorExistsFunction.calculate(symbolTable, getParameterList(exprSensorIS1)));
+        assertFalse( (boolean)sensorExistsFunction.calculate(symbolTable, getParameterList(exprSensorIS1)),
+            "Sensor doesn't exist");
 
-        Assert.assertFalse("Sensor doesn't exists",
-                (boolean)sensorExistsFunction.calculate(symbolTable, getParameterList(exprSensorMySensor)));
+        assertFalse( (boolean)sensorExistsFunction.calculate(symbolTable, getParameterList(exprSensorMySensor)),
+            "Sensor doesn't exist");
 
         MySensor t = new MySensor();
         InstanceManager.getDefault(SensorManager.class).register(t);
-        Assert.assertTrue("Sensor exists",
-                (boolean)sensorExistsFunction.calculate(symbolTable, getParameterList(exprSensorIS1)));
-        Assert.assertTrue("Sensor exists",
-                (boolean)sensorExistsFunction.calculate(symbolTable, getParameterList(exprSensorMySensor)));
+        assertTrue( (boolean)sensorExistsFunction.calculate(symbolTable, getParameterList(exprSensorIS1)),
+            "Sensor exists");
+        assertTrue( (boolean)sensorExistsFunction.calculate(symbolTable, getParameterList(exprSensorMySensor)),
+            "Sensor exists");
     }
 
     @Test
-    public void testGetSetSensorStateFunction() throws Exception {
+    public void testGetSetSensorStateFunction() throws JmriException {
         Function getSensorStateFunction = InstanceManager.getDefault(FunctionManager.class).get("getSensorState");
-        Assert.assertEquals("strings matches", "getSensorState", getSensorStateFunction.getName());
-        Assert.assertNotNull("Function has description", getSensorStateFunction.getDescription());
+        assertEquals( "getSensorState", getSensorStateFunction.getName(), "strings matches");
+        assertNotNull( getSensorStateFunction.getDescription(), "Function has description");
 
         Function setSensorStateFunction = InstanceManager.getDefault(FunctionManager.class).get("setSensorState");
-        Assert.assertEquals("strings matches", "setSensorState", setSensorStateFunction.getName());
-        Assert.assertNotNull("Function has description", setSensorStateFunction.getDescription());
-
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        assertEquals( "setSensorState", setSensorStateFunction.getName(), "strings matches");
+        assertNotNull( setSensorStateFunction.getDescription(), "Function has description");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class,
+            () -> getSensorStateFunction.calculate(symbolTable, getParameterList()),
+            "exception is thrown");
+        assertNotNull(e);
 
-        hasThrown.set(false);
-        try {
-            getSensorStateFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
-
-        Assertions.assertThrows(CalculateException.class, () -> {
-            Assert.assertEquals("Sensor has correct state", Sensor.ACTIVE,
-                    (int)getSensorStateFunction.calculate(symbolTable, getParameterList(exprSensorIS1)));
+        CalculateException ex = assertThrows(CalculateException.class, () -> {
+            int noInt = (int)getSensorStateFunction.calculate(symbolTable, getParameterList(exprSensorIS1));
+            assertEquals( Sensor.ACTIVE, noInt, "Should have thrown, Sensor has correct state");
         });
+        assertNotNull(ex);
 
-        Assertions.assertThrows(CalculateException.class, () -> {
-            Assert.assertEquals("Sensor has correct state", Sensor.ACTIVE,
-                    (int)getSensorStateFunction.calculate(symbolTable, getParameterList(exprSensorMySensor)));
+        ex = assertThrows(CalculateException.class, () -> {
+            int noInt = (int)getSensorStateFunction.calculate(symbolTable, getParameterList(exprSensorMySensor));
+            assertEquals( Sensor.ACTIVE, noInt, "Should have thrown, Sensor has correct state");
         });
+        assertNotNull(ex);
 
         MySensor s = new MySensor();
         InstanceManager.getDefault(SensorManager.class).register(s);
@@ -250,117 +245,117 @@ public class LayoutFunctionsTest {
 
         s._lastSetState = -1;
         s.setTestKnownState(Sensor.ACTIVE);
-        Assert.assertEquals("Sensor has correct state", Sensor.ACTIVE,
-                (int)getSensorStateFunction.calculate(symbolTable, getParameterList(exprSensorIS1)));
-        Assert.assertEquals("Sensor is not set", -1, s._lastSetState);
+        assertEquals( Sensor.ACTIVE,
+                (int)getSensorStateFunction.calculate(symbolTable, getParameterList(exprSensorIS1)),
+                "Sensor has correct state");
+        assertEquals( -1, s._lastSetState, "Sensor is not set");
 
         s.setTestKnownState(Sensor.ACTIVE);
-        Assert.assertEquals("Sensor has correct state", Sensor.ACTIVE,
-                (int)getSensorStateFunction.calculate(symbolTable, getParameterList(exprSensorMySensor)));
-        Assert.assertEquals("Sensor is not set", -1, s._lastSetState);
+        assertEquals( Sensor.ACTIVE,
+                (int)getSensorStateFunction.calculate(symbolTable, getParameterList(exprSensorMySensor)),
+                "Sensor has correct state");
+        assertEquals( -1, s._lastSetState, "Sensor is not set");
 
         s.setTestKnownState(Sensor.INACTIVE);
-        Assert.assertEquals("Sensor has correct state", Sensor.INACTIVE,
-                (int)getSensorStateFunction.calculate(symbolTable, getParameterList(exprSensorIS1)));
-        Assert.assertEquals("Sensor is not set", -1, s._lastSetState);
+        assertEquals( Sensor.INACTIVE,
+                (int)getSensorStateFunction.calculate(symbolTable, getParameterList(exprSensorIS1)),
+                "Sensor has correct state");
+        assertEquals( -1, s._lastSetState, "Sensor is not set");
 
         s.setTestKnownState(Sensor.INACTIVE);
-        Assert.assertEquals("Sensor has correct state", Sensor.INACTIVE,
-                (int)getSensorStateFunction.calculate(symbolTable, getParameterList(exprSensorMySensor)));
-        Assert.assertEquals("Sensor is not set", -1, s._lastSetState);
-
-        s._lastSetState = -1;
-        s.setTestKnownState(Sensor.ACTIVE);
-        Assert.assertEquals("Sensor has correct state", Sensor.UNKNOWN,
-                (int)setSensorStateFunction.calculate(symbolTable,
-                        getParameterList(exprSensorIS1, exprSensorActive)));
-        Assert.assertEquals("Sensor is set", Sensor.ACTIVE, s._lastSetState);
+        assertEquals( Sensor.INACTIVE,
+                (int)getSensorStateFunction.calculate(symbolTable, getParameterList(exprSensorMySensor)),
+                "Sensor has correct state");
+        assertEquals( -1, s._lastSetState, "Sensor is not set");
 
         s._lastSetState = -1;
         s.setTestKnownState(Sensor.ACTIVE);
-        Assert.assertEquals("Sensor has correct state", Sensor.UNKNOWN,
+        assertEquals( Sensor.UNKNOWN,
                 (int)setSensorStateFunction.calculate(symbolTable,
-                        getParameterList(exprSensorMySensor, exprSensorActive)));
-        Assert.assertEquals("Sensor is set", Sensor.ACTIVE, s._lastSetState);
+                        getParameterList(exprSensorIS1, exprSensorActive)),
+                "Sensor has correct state");
+        assertEquals( Sensor.ACTIVE, s._lastSetState, "Sensor is set");
+
+        s._lastSetState = -1;
+        s.setTestKnownState(Sensor.ACTIVE);
+        assertEquals( Sensor.UNKNOWN,
+                (int)setSensorStateFunction.calculate(symbolTable,
+                        getParameterList(exprSensorMySensor, exprSensorActive)),
+                "Sensor has correct state");
+        assertEquals( Sensor.ACTIVE, s._lastSetState, "Sensor is set");
 
         s._lastSetState = -1;
         s.setTestKnownState(Sensor.INACTIVE);
-        Assert.assertEquals("Sensor has correct state", Sensor.UNKNOWN,
+        assertEquals( Sensor.UNKNOWN,
                 (int)setSensorStateFunction.calculate(symbolTable,
-                        getParameterList(exprSensorIS1, exprSensorInactive)));
-        Assert.assertEquals("Sensor is set", Sensor.INACTIVE, s._lastSetState);
+                        getParameterList(exprSensorIS1, exprSensorInactive)),
+                "Sensor has correct state");
+        assertEquals( Sensor.INACTIVE, s._lastSetState, "Sensor is set");
 
         s._lastSetState = -1;
         s.setTestKnownState(Sensor.INACTIVE);
-        Assert.assertEquals("Sensor has correct state", Sensor.UNKNOWN,
+        assertEquals( Sensor.UNKNOWN,
                 (int)setSensorStateFunction.calculate(symbolTable,
-                        getParameterList(exprSensorMySensor, exprSensorInactive)));
-        Assert.assertEquals("Sensor is set", Sensor.INACTIVE, s._lastSetState);
+                        getParameterList(exprSensorMySensor, exprSensorInactive)),
+                "Sensor has correct state");
+        assertEquals( Sensor.INACTIVE, s._lastSetState, "Sensor is set");
     }
 
     @Test
-    public void testLightExistsFunction() throws Exception {
+    public void testLightExistsFunction() throws JmriException {
         Function lightExistsFunction = InstanceManager.getDefault(FunctionManager.class).get("lightExists");
-        Assert.assertEquals("strings matches", "lightExists", lightExistsFunction.getName());
-        Assert.assertNotNull("Function has description", lightExistsFunction.getDescription());
-
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        assertEquals( "lightExists", lightExistsFunction.getName(), "string matches");
+        assertNotNull("Function has description", lightExistsFunction.getDescription());
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        hasThrown.set(false);
-        try {
-            lightExistsFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class,
+            () -> lightExistsFunction.calculate(symbolTable, getParameterList()),
+            "exception is thrown");
+        assertNotNull(e);
 
-        Assert.assertFalse("Light doesn't exists",
-                (boolean)lightExistsFunction.calculate(symbolTable, getParameterList(exprLightIL1)));
+        assertFalse( (boolean)lightExistsFunction.calculate(symbolTable, getParameterList(exprLightIL1)),
+            "Light doesn't exist");
 
-        Assert.assertFalse("Light doesn't exists",
-                (boolean)lightExistsFunction.calculate(symbolTable, getParameterList(exprLightMyLight)));
+        assertFalse( (boolean)lightExistsFunction.calculate(symbolTable, getParameterList(exprLightMyLight)),
+            "Light doesn't exist 2");
 
         MyLight t = new MyLight();
         InstanceManager.getDefault(LightManager.class).register(t);
-        Assert.assertTrue("Light exists",
-                (boolean)lightExistsFunction.calculate(symbolTable, getParameterList(exprLightIL1)));
-        Assert.assertTrue("Light exists",
-                (boolean)lightExistsFunction.calculate(symbolTable, getParameterList(exprLightMyLight)));
+        assertTrue( (boolean)lightExistsFunction.calculate(symbolTable, getParameterList(exprLightIL1)),
+                "Light exists");
+        assertTrue( (boolean)lightExistsFunction.calculate(symbolTable, getParameterList(exprLightMyLight)),
+                "Light exists 2");
     }
 
     @Test
-    public void testGetSetLightStateFunction() throws Exception {
+    public void testGetSetLightStateFunction() throws JmriException {
         Function getLightStateFunction = InstanceManager.getDefault(FunctionManager.class).get("getLightState");
-        Assert.assertEquals("strings matches", "getLightState", getLightStateFunction.getName());
-        Assert.assertNotNull("Function has description", getLightStateFunction.getDescription());
+        assertEquals( "getLightState", getLightStateFunction.getName(), "strings match");
+        assertNotNull( getLightStateFunction.getDescription(), "Function has description");
 
         Function setLightStateFunction = InstanceManager.getDefault(FunctionManager.class).get("setLightState");
-        Assert.assertEquals("strings matches", "setLightState", setLightStateFunction.getName());
-        Assert.assertNotNull("Function has description", setLightStateFunction.getDescription());
-
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        assertEquals( "setLightState", setLightStateFunction.getName(), "strings match 2");
+        assertNotNull( setLightStateFunction.getDescription(), "Function has description 2");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        hasThrown.set(false);
-        try {
-            getLightStateFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class,
+            () -> getLightStateFunction.calculate(symbolTable, getParameterList()),
+            "exception is thrown");
+        assertNotNull(e);
 
-        Assertions.assertThrows(CalculateException.class, () -> {
-            Assert.assertEquals("Light has correct state", Light.ON,
-                    (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightIL1)));
+        CalculateException ex = assertThrows(CalculateException.class, () -> {
+            int notInt = (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightIL1));
+            assertEquals( Light.ON, notInt, "Light has correct state");
         });
+        assertNotNull(ex);
 
-        Assertions.assertThrows(CalculateException.class, () -> {
-            Assert.assertEquals("Light has correct state", Light.ON,
-                    (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightMyLight)));
+        ex = assertThrows(CalculateException.class, () -> {
+            int notInt = (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightMyLight));
+            assertEquals( Light.ON, notInt, "Light has correct state 2");
         });
+        assertNotNull(ex);
 
         MyLight s = new MyLight();
         InstanceManager.getDefault(LightManager.class).register(s);
@@ -368,117 +363,117 @@ public class LayoutFunctionsTest {
 
         s._lastSetState = -1;
         s.setTestKnownState(Light.ON);
-        Assert.assertEquals("Light has correct state", Light.ON,
-                (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightIL1)));
-        Assert.assertEquals("Light is not set", -1, s._lastSetState);
+        assertEquals( Light.ON,
+                (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightIL1)),
+                "Light has correct state");
+        assertEquals( -1, s._lastSetState, "Light is not set");
 
         s.setTestKnownState(Light.ON);
-        Assert.assertEquals("Light has correct state", Light.ON,
-                (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightMyLight)));
-        Assert.assertEquals("Light is not set", -1, s._lastSetState);
+        assertEquals( Light.ON,
+                (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightMyLight)),
+                "Light has correct state");
+        assertEquals( -1, s._lastSetState, "Light is not set");
 
         s.setTestKnownState(Light.OFF);
-        Assert.assertEquals("Light has correct state", Light.OFF,
-                (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightIL1)));
-        Assert.assertEquals("Light is not set", -1, s._lastSetState);
+        assertEquals( Light.OFF,
+                (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightIL1)),
+                "Light has correct state");
+        assertEquals( -1, s._lastSetState, "Light is not set");
 
         s.setTestKnownState(Light.OFF);
-        Assert.assertEquals("Light has correct state", Light.OFF,
-                (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightMyLight)));
-        Assert.assertEquals("Light is not set", -1, s._lastSetState);
-
-        s._lastSetState = -1;
-        s.setTestKnownState(Light.ON);
-        Assert.assertEquals("Light has correct state", Light.UNKNOWN,
-                (int)setLightStateFunction.calculate(symbolTable,
-                        getParameterList(exprLightIL1, exprLightOn)));
-        Assert.assertEquals("Light is set", Light.ON, s._lastSetState);
+        assertEquals( Light.OFF,
+                (int)getLightStateFunction.calculate(symbolTable, getParameterList(exprLightMyLight)),
+                "Light has correct state");
+        assertEquals( -1, s._lastSetState, "Light is not set");
 
         s._lastSetState = -1;
         s.setTestKnownState(Light.ON);
-        Assert.assertEquals("Light has correct state", Light.UNKNOWN,
+        assertEquals( Light.UNKNOWN,
                 (int)setLightStateFunction.calculate(symbolTable,
-                        getParameterList(exprLightMyLight, exprLightOn)));
-        Assert.assertEquals("Light is set", Light.ON, s._lastSetState);
+                        getParameterList(exprLightIL1, exprLightOn)),
+                "Light has correct state");
+        assertEquals( Light.ON, s._lastSetState, "Light is set");
+
+        s._lastSetState = -1;
+        s.setTestKnownState(Light.ON);
+        assertEquals( Light.UNKNOWN,
+                (int)setLightStateFunction.calculate(symbolTable,
+                        getParameterList(exprLightMyLight, exprLightOn)),
+                "Light has correct state");
+        assertEquals( Light.ON, s._lastSetState, "Light is set");
 
         s._lastSetState = -1;
         s.setTestKnownState(Light.OFF);
-        Assert.assertEquals("Light has correct state", Light.UNKNOWN,
+        assertEquals( Light.UNKNOWN,
                 (int)setLightStateFunction.calculate(symbolTable,
-                        getParameterList(exprLightIL1, exprLightOff)));
-        Assert.assertEquals("Light is set", Light.OFF, s._lastSetState);
+                        getParameterList(exprLightIL1, exprLightOff)),
+                "Light has correct state");
+        assertEquals( Light.OFF, s._lastSetState, "Light is set");
 
         s._lastSetState = -1;
         s.setTestKnownState(Light.OFF);
-        Assert.assertEquals("Light has correct state", Light.UNKNOWN,
+        assertEquals( Light.UNKNOWN,
                 (int)setLightStateFunction.calculate(symbolTable,
-                        getParameterList(exprLightMyLight, exprLightOff)));
-        Assert.assertEquals("Light is set", Light.OFF, s._lastSetState);
+                        getParameterList(exprLightMyLight, exprLightOff)),
+                "Light has correct state");
+        assertEquals( Light.OFF, s._lastSetState, "Light is set");
     }
 
     @Test
-    public void testSignalHeadExistsFunction() throws Exception {
+    public void testSignalHeadExistsFunction() throws JmriException {
         Function signalHeadExistsFunction = InstanceManager.getDefault(FunctionManager.class).get("signalHeadExists");
-        Assert.assertEquals("strings matches", "signalHeadExists", signalHeadExistsFunction.getName());
-        Assert.assertNotNull("Function has description", signalHeadExistsFunction.getDescription());
-
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        assertEquals( "signalHeadExists", signalHeadExistsFunction.getName(), "strings matches");
+        assertNotNull( signalHeadExistsFunction.getDescription(), "Function has description");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        hasThrown.set(false);
-        try {
-            signalHeadExistsFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class,
+            () -> signalHeadExistsFunction.calculate(symbolTable, getParameterList()),
+            "exception is thrown");
+        assertNotNull(e);
 
-        Assert.assertFalse("SignalHead doesn't exists",
-                (boolean)signalHeadExistsFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1)));
+        assertFalse( (boolean)signalHeadExistsFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1)),
+            "SignalHead doesn't exists");
 
-        Assert.assertFalse("SignalHead doesn't exists",
-                (boolean)signalHeadExistsFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead)));
+        assertFalse( (boolean)signalHeadExistsFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead)),
+            "SignalHead doesn't exists");
 
         MySignalHead t = new MySignalHead();
         InstanceManager.getDefault(SignalHeadManager.class).register(t);
-        Assert.assertTrue("SignalHead exists",
-                (boolean)signalHeadExistsFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1)));
-        Assert.assertTrue("SignalHead exists",
-                (boolean)signalHeadExistsFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead)));
+        assertTrue( (boolean)signalHeadExistsFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1)),
+            "SignalHead exists");
+        assertTrue( (boolean)signalHeadExistsFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead)),
+            "SignalHead exists");
     }
 
     @Test
-    public void testGetSetSignalHeadAppearanceFunction() throws Exception {
+    public void testGetSetSignalHeadAppearanceFunction() throws JmriException {
         Function getSignalHeadStateFunction = InstanceManager.getDefault(FunctionManager.class).get("getSignalHeadAppearance");
-        Assert.assertEquals("strings matches", "getSignalHeadAppearance", getSignalHeadStateFunction.getName());
-        Assert.assertNotNull("Function has description", getSignalHeadStateFunction.getDescription());
+        assertEquals( "getSignalHeadAppearance", getSignalHeadStateFunction.getName(), "strings matches");
+        assertNotNull( getSignalHeadStateFunction.getDescription(), "Function has description");
 
         Function setSignalHeadStateFunction = InstanceManager.getDefault(FunctionManager.class).get("setSignalHeadAppearance");
-        Assert.assertEquals("strings matches", "setSignalHeadAppearance", setSignalHeadStateFunction.getName());
-        Assert.assertNotNull("Function has description", setSignalHeadStateFunction.getDescription());
-
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        assertEquals( "setSignalHeadAppearance", setSignalHeadStateFunction.getName(), "strings matches");
+        assertNotNull( setSignalHeadStateFunction.getDescription(), "Function has description");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        hasThrown.set(false);
-        try {
-            getSignalHeadStateFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class,
+            () -> getSignalHeadStateFunction.calculate(symbolTable, getParameterList()),
+            "exception is thrown");
+        assertNotNull(e);
 
-        Assertions.assertThrows(CalculateException.class, () -> {
-            Assert.assertEquals("SignalHead has correct appearance", SIGNAL_HEAD_GREEN,
-                    (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1)));
+        CalculateException ex = assertThrows(CalculateException.class, () -> {
+            int notInt = (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1));
+            assertEquals( SIGNAL_HEAD_GREEN, notInt, "Throws, not SignalHead has correct appearance");
         });
+        assertNotNull(ex);
 
-        Assertions.assertThrows(CalculateException.class, () -> {
-            Assert.assertEquals("SignalHead has correct appearance", SIGNAL_HEAD_GREEN,
-                    (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead)));
+        ex = assertThrows(CalculateException.class, () -> {
+            int notInt = (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead));
+            assertEquals( SIGNAL_HEAD_GREEN, notInt, "SignalHead has correct appearance");
         });
+        assertNotNull(ex);
 
         MySignalHead sh = new MySignalHead();
         InstanceManager.getDefault(SignalHeadManager.class).register(sh);
@@ -487,117 +482,117 @@ public class LayoutFunctionsTest {
 
         sh._lastAppearance = -1;
         sh._appearance = SIGNAL_HEAD_GREEN;
-        Assert.assertEquals("SignalHead has correct appearance", SIGNAL_HEAD_GREEN,
-                (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1)));
-        Assert.assertEquals("SignalHead is not set", -1, sh._lastAppearance);
+        assertEquals( SIGNAL_HEAD_GREEN,
+                (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1)),
+                "SignalHead has correct appearance");
+        assertEquals( -1, sh._lastAppearance, "SignalHead is not set");
 
         sh._appearance = SIGNAL_HEAD_GREEN;
-        Assert.assertEquals("SignalHead has correct appearance", SIGNAL_HEAD_GREEN,
-                (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead)));
-        Assert.assertEquals("SignalHead is not set", -1, sh._lastAppearance);
+        assertEquals( SIGNAL_HEAD_GREEN,
+                (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead)),
+                "SignalHead has correct appearance");
+        assertEquals( -1, sh._lastAppearance, "SignalHead is not set");
 
         sh._appearance = SIGNAL_HEAD_RED;
-        Assert.assertEquals("SignalHead has correct appearance", SIGNAL_HEAD_RED,
-                (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1)));
-        Assert.assertEquals("SignalHead is not set", -1, sh._lastAppearance);
+        assertEquals( SIGNAL_HEAD_RED,
+                (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1)),
+                "SignalHead has correct appearance");
+        assertEquals( -1, sh._lastAppearance, "SignalHead is not set");
 
         sh._appearance = SIGNAL_HEAD_RED;
-        Assert.assertEquals("SignalHead has correct appearance", SIGNAL_HEAD_RED,
-                (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead)));
-        Assert.assertEquals("SignalHead is not set", -1, sh._lastAppearance);
-
-        sh._lastAppearance = -1;
-        sh._appearance = SIGNAL_HEAD_GREEN;
-        Assert.assertEquals("SignalHead has correct appearance", -1,
-                (int)setSignalHeadStateFunction.calculate(symbolTable,
-                        getParameterList(exprSignalHeadIH1, exprSignalHeadGreen)));
-        Assert.assertEquals("SignalHead is set", SIGNAL_HEAD_GREEN, sh._lastAppearance);
+        assertEquals( SIGNAL_HEAD_RED,
+                (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead)),
+                "SignalHead has correct appearance");
+        assertEquals( -1, sh._lastAppearance, "SignalHead is not set");
 
         sh._lastAppearance = -1;
         sh._appearance = SIGNAL_HEAD_GREEN;
-        Assert.assertEquals("SignalHead has correct appearance", -1,
+        assertEquals( -1,
                 (int)setSignalHeadStateFunction.calculate(symbolTable,
-                        getParameterList(exprSignalHeadMySignalHead, exprSignalHeadGreen)));
-        Assert.assertEquals("SignalHead is set", SIGNAL_HEAD_GREEN, sh._lastAppearance);
+                        getParameterList(exprSignalHeadIH1, exprSignalHeadGreen)),
+                "SignalHead has correct appearance");
+        assertEquals( SIGNAL_HEAD_GREEN, sh._lastAppearance, "SignalHead is set");
+
+        sh._lastAppearance = -1;
+        sh._appearance = SIGNAL_HEAD_GREEN;
+        assertEquals( -1,
+                (int)setSignalHeadStateFunction.calculate(symbolTable,
+                        getParameterList(exprSignalHeadMySignalHead, exprSignalHeadGreen)),
+                "SignalHead has correct appearance");
+        assertEquals( SIGNAL_HEAD_GREEN, sh._lastAppearance, "SignalHead is set");
 
         sh._lastAppearance = -1;
         sh._appearance = SIGNAL_HEAD_RED;
-        Assert.assertEquals("SignalHead has correct appearance", -1,
+        assertEquals( -1,
                 (int)setSignalHeadStateFunction.calculate(symbolTable,
-                        getParameterList(exprSignalHeadIH1, exprSignalHeadRed)));
-        Assert.assertEquals("SignalHead is set", SIGNAL_HEAD_RED, sh._lastAppearance);
+                        getParameterList(exprSignalHeadIH1, exprSignalHeadRed)),
+                "SignalHead has correct appearance");
+        assertEquals( SIGNAL_HEAD_RED, sh._lastAppearance, "SignalHead is set");
 
         sh._lastAppearance = -1;
         sh._appearance = SIGNAL_HEAD_RED;
-        Assert.assertEquals("SignalHead has correct appearance", -1,
+        assertEquals( -1,
                 (int)setSignalHeadStateFunction.calculate(symbolTable,
-                        getParameterList(exprSignalHeadMySignalHead, exprSignalHeadRed)));
-        Assert.assertEquals("SignalHead is set", SIGNAL_HEAD_RED, sh._lastAppearance);
+                        getParameterList(exprSignalHeadMySignalHead, exprSignalHeadRed)),
+                "SignalHead has correct appearance");
+        assertEquals( SIGNAL_HEAD_RED, sh._lastAppearance, "SignalHead is set");
     }
 
     @Test
-    public void testSignalMastExistsFunction() throws Exception {
+    public void testSignalMastExistsFunction() throws JmriException {
         Function signalMastExistsFunction = InstanceManager.getDefault(FunctionManager.class).get("signalMastExists");
-        Assert.assertEquals("strings matches", "signalMastExists", signalMastExistsFunction.getName());
-        Assert.assertNotNull("Function has description", signalMastExistsFunction.getDescription());
-
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        assertEquals( "signalMastExists", signalMastExistsFunction.getName(), "strings matches");
+        assertNotNull( signalMastExistsFunction.getDescription(), "Function has description");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        hasThrown.set(false);
-        try {
-            signalMastExistsFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class,
+            () -> signalMastExistsFunction.calculate(symbolTable, getParameterList()),
+            "exception is thrown");
+        assertNotNull(e);
 
-        Assert.assertFalse("SignalMast doesn't exists",
-                (boolean)signalMastExistsFunction.calculate(symbolTable, getParameterList(exprSignalMastIF1)));
+        assertFalse( (boolean)signalMastExistsFunction.calculate(symbolTable, getParameterList(exprSignalMastIF1)),
+            "SignalMast doesn't exist");
 
-        Assert.assertFalse("SignalMast doesn't exists",
-                (boolean)signalMastExistsFunction.calculate(symbolTable, getParameterList(exprSignalMastMySignalMast)));
+        assertFalse( (boolean)signalMastExistsFunction.calculate(symbolTable, getParameterList(exprSignalMastMySignalMast)),
+            "SignalMast doesn't exist 2");
 
         MySignalMast t = new MySignalMast();
         InstanceManager.getDefault(SignalMastManager.class).register(t);
-        Assert.assertTrue("SignalMast exists",
-                (boolean)signalMastExistsFunction.calculate(symbolTable, getParameterList(exprSignalMastIF1)));
-        Assert.assertTrue("SignalMast exists",
-                (boolean)signalMastExistsFunction.calculate(symbolTable, getParameterList(exprSignalMastMySignalMast)));
+        assertTrue( (boolean)signalMastExistsFunction.calculate(symbolTable, getParameterList(exprSignalMastIF1)),
+            "SignalMast exists");
+        assertTrue( (boolean)signalMastExistsFunction.calculate(symbolTable, getParameterList(exprSignalMastMySignalMast)),
+            "SignalMast exists 2");
     }
 
     @Test
-    public void testGetSetSignalMastAspectFunction() throws Exception {
+    public void testGetSetSignalMastAspectFunction() throws JmriException {
         Function getSignalMastAspectFunction = InstanceManager.getDefault(FunctionManager.class).get("getSignalMastAspect");
-        Assert.assertEquals("strings matches", "getSignalMastAspect", getSignalMastAspectFunction.getName());
-        Assert.assertNotNull("Function has description", getSignalMastAspectFunction.getDescription());
+        assertEquals( "getSignalMastAspect", getSignalMastAspectFunction.getName(), "string matches");
+        assertNotNull( getSignalMastAspectFunction.getDescription(), "Function has description");
 
         Function setSignalMastAspectFunction = InstanceManager.getDefault(FunctionManager.class).get("setSignalMastAspect");
-        Assert.assertEquals("strings matches", "setSignalMastAspect", setSignalMastAspectFunction.getName());
-        Assert.assertNotNull("Function has description", setSignalMastAspectFunction.getDescription());
-
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        assertEquals( "setSignalMastAspect", setSignalMastAspectFunction.getName(), "string matches 2");
+        assertNotNull( setSignalMastAspectFunction.getDescription(), "Function has description");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        hasThrown.set(false);
-        try {
-            getSignalMastAspectFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class,
+            () -> getSignalMastAspectFunction.calculate(symbolTable, getParameterList()),
+            "exception is thrown");
+        assertNotNull(e);
 
-        Assertions.assertThrows(CalculateException.class, () -> {
-            Assert.assertEquals("SignalMast has correct aspect", "Green",
-                    getSignalMastAspectFunction.calculate(symbolTable, getParameterList(exprSignalMastIF1)));
+        CalculateException ex = assertThrows(CalculateException.class, () -> {
+            Object notExist = getSignalMastAspectFunction.calculate(symbolTable, getParameterList(exprSignalMastIF1));
+            assertEquals( "Green", notExist, "Should have thrown SignalMast has correct aspect");
         });
+        assertNotNull(ex);
 
-        Assertions.assertThrows(CalculateException.class, () -> {
-            Assert.assertEquals("SignalMast has correct aspect", "Green",
-                    getSignalMastAspectFunction.calculate(symbolTable, getParameterList(exprSignalMastMySignalMast)));
+        ex = assertThrows(CalculateException.class, () -> {
+            Object notExist = getSignalMastAspectFunction.calculate(symbolTable, getParameterList(exprSignalMastMySignalMast));
+            assertEquals( "Green", notExist, "SignalMast has correct aspect");
         });
+        assertNotNull(ex);
 
         MySignalMast sm = new MySignalMast();
         InstanceManager.getDefault(SignalMastManager.class).register(sm);
@@ -605,84 +600,88 @@ public class LayoutFunctionsTest {
 
         sm._lastAspect = null;
         sm._aspect = "Green";
-        Assert.assertEquals("SignalMast has correct aspect", "Green",
-                getSignalMastAspectFunction.calculate(symbolTable, getParameterList(exprSignalMastIF1)));
-        Assert.assertNull("SignalMast is not set", sm._lastAspect);
+        assertEquals( "Green",
+                getSignalMastAspectFunction.calculate(symbolTable, getParameterList(exprSignalMastIF1)),
+                "SignalMast has correct aspect");
+        assertNull( sm._lastAspect, "SignalMast is not set");
 
         sm._aspect = "Green";
-        Assert.assertEquals("SignalMast has correct aspect", "Green",
-                getSignalMastAspectFunction.calculate(symbolTable, getParameterList(exprSignalMastMySignalMast)));
-        Assert.assertNull("SignalMast is not set", sm._lastAspect);
+        assertEquals( "Green",
+                getSignalMastAspectFunction.calculate(symbolTable, getParameterList(exprSignalMastMySignalMast)),
+                "SignalMast has correct aspect");
+        assertNull( sm._lastAspect, "SignalMast is not set");
 
         sm._aspect = "Red";
-        Assert.assertEquals("SignalMast has correct aspect", "Red",
-                getSignalMastAspectFunction.calculate(symbolTable, getParameterList(exprSignalMastIF1)));
-        Assert.assertNull("SignalMast is not set", sm._lastAspect);
+        assertEquals( "Red",
+                getSignalMastAspectFunction.calculate(symbolTable, getParameterList(exprSignalMastIF1)),
+                "SignalMast has correct aspect");
+        assertNull( sm._lastAspect, "SignalMast is not set");
 
         sm._aspect = "Red";
-        Assert.assertEquals("SignalMast has correct aspect", "Red",
-                getSignalMastAspectFunction.calculate(symbolTable, getParameterList(exprSignalMastMySignalMast)));
-        Assert.assertNull("SignalMast is not set", sm._lastAspect);
-
-        sm._lastAspect = null;
-        sm._aspect = "Green";
-        Assert.assertNull("SignalMast has correct aspect",
-                setSignalMastAspectFunction.calculate(symbolTable,
-                        getParameterList(exprSignalMastIF1, exprSignalMastGreen)));
-        Assert.assertEquals("SignalMast is set", "Green", sm._lastAspect);
+        assertEquals( "Red",
+                getSignalMastAspectFunction.calculate(symbolTable, getParameterList(exprSignalMastMySignalMast)),
+                "SignalMast has correct aspect");
+        assertNull( sm._lastAspect, "SignalMast is not set");
 
         sm._lastAspect = null;
         sm._aspect = "Green";
-        Assert.assertNull("SignalMast has correct aspect",
-                setSignalMastAspectFunction.calculate(symbolTable,
-                        getParameterList(exprSignalMastMySignalMast, exprSignalMastGreen)));
-        Assert.assertEquals("SignalMast is set", "Green", sm._lastAspect);
+        assertNull( setSignalMastAspectFunction.calculate(symbolTable,
+                getParameterList(exprSignalMastIF1, exprSignalMastGreen)),
+                "SignalMast has Null aspect");
+        assertEquals( "Green", sm._lastAspect, "SignalMast is set");
+
+        sm._lastAspect = null;
+        sm._aspect = "Green";
+        assertNull( setSignalMastAspectFunction.calculate(symbolTable,
+                getParameterList(exprSignalMastMySignalMast, exprSignalMastGreen)),
+                "SignalMast has correct aspect");
+        assertEquals( "Green", sm._lastAspect, "SignalMast is set");
 
         sm._lastAspect = null;
         sm._aspect = "Red";
-        Assert.assertNull("SignalMast has correct aspect",
-                setSignalMastAspectFunction.calculate(symbolTable,
-                        getParameterList(exprSignalMastIF1, exprSignalMastRed)));
-        Assert.assertEquals("SignalMast is set", "Red", sm._lastAspect);
+        assertNull( setSignalMastAspectFunction.calculate(symbolTable,
+                getParameterList(exprSignalMastIF1, exprSignalMastRed)),
+                "SignalMast has correct aspect");
+        assertEquals( "Red", sm._lastAspect, "SignalMast is set");
 
         sm._lastAspect = null;
         sm._aspect = "Red";
-        Assert.assertNull("SignalMast has correct aspect",
-                setSignalMastAspectFunction.calculate(symbolTable,
-                        getParameterList(exprSignalMastMySignalMast, exprSignalMastRed)));
-        Assert.assertEquals("SignalMast is set", "Red", sm._lastAspect);
+        assertNull( setSignalMastAspectFunction.calculate(symbolTable,
+               getParameterList(exprSignalMastMySignalMast, exprSignalMastRed)),
+                "SignalMast has correct aspect");
+        assertEquals( "Red", sm._lastAspect, "SignalMast is set");
     }
 
     @Test
     public void testManagers() {
         FunctionManager functionManager = InstanceManager.getDefault(FunctionManager.class);
 
-        Assert.assertEquals(functionManager.getConstant("sensors").getValue(), InstanceManager.getDefault(SensorManager.class));
-        Assert.assertEquals(functionManager.getConstant("turnouts").getValue(), InstanceManager.getDefault(TurnoutManager.class));
-        Assert.assertEquals(functionManager.getConstant("lights").getValue(), InstanceManager.getDefault(LightManager.class));
-        Assert.assertEquals(functionManager.getConstant("signals").getValue(), InstanceManager.getDefault(SignalHeadManager.class));
-        Assert.assertEquals(functionManager.getConstant("masts").getValue(), InstanceManager.getDefault(SignalMastManager.class));
-        Assert.assertEquals(functionManager.getConstant("routes").getValue(), InstanceManager.getDefault(RouteManager.class));
-        Assert.assertEquals(functionManager.getConstant("blocks").getValue(), InstanceManager.getDefault(BlockManager.class));
-        Assert.assertEquals(functionManager.getConstant("oblocks").getValue(), InstanceManager.getDefault(OBlockManager.class));
-        Assert.assertEquals(functionManager.getConstant("reporters").getValue(), InstanceManager.getDefault(ReporterManager.class));
-        Assert.assertEquals(functionManager.getConstant("memories").getValue(), InstanceManager.getDefault(MemoryManager.class));
-        Assert.assertEquals(functionManager.getConstant("powermanager").getValue(), InstanceManager.getDefault(PowerManager.class));
-        Assert.assertEquals(functionManager.getConstant("addressedProgrammers").getValue(), InstanceManager.getDefault(AddressedProgrammerManager.class));
-        Assert.assertEquals(functionManager.getConstant("globalProgrammers").getValue(), InstanceManager.getDefault(GlobalProgrammerManager.class));
-        Assert.assertEquals(functionManager.getConstant("dcc").getValue(), InstanceManager.getDefault(CommandStation.class));
-        Assert.assertEquals(functionManager.getConstant("audio").getValue(), InstanceManager.getDefault(AudioManager.class));
-        Assert.assertEquals(functionManager.getConstant("shutdown").getValue(), InstanceManager.getDefault(ShutDownManager.class));
-        Assert.assertEquals(functionManager.getConstant("layoutblocks").getValue(), InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class));
-        Assert.assertEquals(functionManager.getConstant("warrants").getValue(), InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class));
-        Assert.assertEquals(functionManager.getConstant("sections").getValue(), InstanceManager.getDefault(SectionManager.class));
-        Assert.assertEquals(functionManager.getConstant("transits").getValue(), InstanceManager.getDefault(TransitManager.class));
+        assertEquals(functionManager.getConstant("sensors").getValue(), InstanceManager.getDefault(SensorManager.class));
+        assertEquals(functionManager.getConstant("turnouts").getValue(), InstanceManager.getDefault(TurnoutManager.class));
+        assertEquals(functionManager.getConstant("lights").getValue(), InstanceManager.getDefault(LightManager.class));
+        assertEquals(functionManager.getConstant("signals").getValue(), InstanceManager.getDefault(SignalHeadManager.class));
+        assertEquals(functionManager.getConstant("masts").getValue(), InstanceManager.getDefault(SignalMastManager.class));
+        assertEquals(functionManager.getConstant("routes").getValue(), InstanceManager.getDefault(RouteManager.class));
+        assertEquals(functionManager.getConstant("blocks").getValue(), InstanceManager.getDefault(BlockManager.class));
+        assertEquals(functionManager.getConstant("oblocks").getValue(), InstanceManager.getDefault(OBlockManager.class));
+        assertEquals(functionManager.getConstant("reporters").getValue(), InstanceManager.getDefault(ReporterManager.class));
+        assertEquals(functionManager.getConstant("memories").getValue(), InstanceManager.getDefault(MemoryManager.class));
+        assertEquals(functionManager.getConstant("powermanager").getValue(), InstanceManager.getDefault(PowerManager.class));
+        assertEquals(functionManager.getConstant("addressedProgrammers").getValue(), InstanceManager.getDefault(AddressedProgrammerManager.class));
+        assertEquals(functionManager.getConstant("globalProgrammers").getValue(), InstanceManager.getDefault(GlobalProgrammerManager.class));
+        assertEquals(functionManager.getConstant("dcc").getValue(), InstanceManager.getDefault(CommandStation.class));
+        assertEquals(functionManager.getConstant("audio").getValue(), InstanceManager.getDefault(AudioManager.class));
+        assertEquals(functionManager.getConstant("shutdown").getValue(), InstanceManager.getDefault(ShutDownManager.class));
+        assertEquals(functionManager.getConstant("layoutblocks").getValue(), InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class));
+        assertEquals(functionManager.getConstant("warrants").getValue(), InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class));
+        assertEquals(functionManager.getConstant("sections").getValue(), InstanceManager.getDefault(SectionManager.class));
+        assertEquals(functionManager.getConstant("transits").getValue(), InstanceManager.getDefault(TransitManager.class));
 
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
+        JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();

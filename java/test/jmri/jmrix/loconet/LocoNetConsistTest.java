@@ -1,29 +1,34 @@
 package jmri.jmrix.loconet;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import jmri.Consist;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.consisttool.ConsistPreferencesManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2016,2017
  */
-
 public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestBase {
 
     // infrastructure objects, populated by setUp;
-    LocoNetInterfaceScaffold lnis;
-    SlotManager slotmanager;
-    LocoNetSystemConnectionMemo memo;
-    LnThrottleManager ltm;
+    private LocoNetInterfaceScaffold lnis;
+    private SlotManager slotmanager;
+    private LocoNetSystemConnectionMemo memo;
+    private LnThrottleManager ltm;
 
     //utility function, handle slot messages required to suppress
     // errors from the LnThrottleManager after constructor call.
-    private void ReturnSlotInfo(){
+    private void returnSlotInfo(){
                // echo of the original message
         LocoNetMessage m1 = new LocoNetMessage(4);
         m1.setOpCode(0xBF);
@@ -49,62 +54,70 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         slotmanager.message(m2);
     }
 
-    @Test public void testCtor2() {
+    @Test
+    public void testCtor2() {
         // DccLocoAddress constructor test.
-        LocoNetConsist c = new LocoNetConsist(new DccLocoAddress(3, false),memo);
-        ReturnSlotInfo();
-        Assert.assertNotNull(c);
+        c = new LocoNetConsist(new DccLocoAddress(3, false),memo);
+        returnSlotInfo();
+        assertNotNull(c);
     }
 
     @Test
     @Override
     public void testGetConsistType(){
         // LocoNet consists default to CS consists.
-        Assert.assertEquals("default consist type",jmri.Consist.CS_CONSIST,c.getConsistType());
+        assertEquals( Consist.CS_CONSIST,c.getConsistType(),
+            "default consist type");
     }
 
     @Test
     @Override
     public void testSetConsistTypeCS(){
-        c.setConsistType(jmri.Consist.CS_CONSIST);
-        Assert.assertEquals("default consist type",jmri.Consist.CS_CONSIST,c.getConsistType());
+        c.setConsistType( Consist.CS_CONSIST);
+        assertEquals( Consist.CS_CONSIST, c.getConsistType(),
+            "default consist type");
     }
 
     @Override
-    @Test public void checkAddressAllowedBad(){
+    @Test
+    @jmri.util.junit.annotations.NotApplicable("LocoNet CS consists allow any valid address")
+    public void checkAddressAllowedBad(){
         // LocoNet CS consists allow any valid address, so this test is empty
     }
 
-    @Test public void checkAddressAllowedGoodAdvanced(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
-        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
-        Assert.assertTrue("AddressAllowed", c.isAddressAllowed(new jmri.DccLocoAddress(200,true)));
+    @Test
+    public void testAddressAllowedGoodAdvanced(){
+        returnSlotInfo();
+        c.setConsistType( Consist.ADVANCED_CONSIST);
+        assertTrue( c.isAddressAllowed( new DccLocoAddress(200,true)),
+            "AddressAllowed");
     }
 
-    @Test public void checkAddressAllowedBadAdvanced(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
-        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
-        Assert.assertFalse("AddressAllowed", c.isAddressAllowed(new jmri.DccLocoAddress(0,false)));
+    @Test
+    public void testAddressAllowedBadAdvanced(){
+        returnSlotInfo();
+        c.setConsistType( Consist.ADVANCED_CONSIST);
+        assertFalse( c.isAddressAllowed( new DccLocoAddress(0,false)),
+            "AddressAllowed");
     }
 
-    @Test public void checkSizeLimitCS(){
-        c.setConsistType(jmri.Consist.CS_CONSIST);
-        Assert.assertEquals("CS Consist Limit",-1,c.sizeLimit());
+    @Test
+    public void testSizeLimitCS(){
+        c.setConsistType( Consist.CS_CONSIST);
+        assertEquals( -1, c.sizeLimit(), "CS Consist Limit");
     }
 
-    @Test public void checkGetLocoDirectionCS(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
-        c.setConsistType(jmri.Consist.CS_CONSIST);
-        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
-        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
-        c.restore(A,true); // use restore here, as it does not send
+    @Test
+    public void testGetLocoDirectionCS(){
+        returnSlotInfo();
+        c.setConsistType( Consist.CS_CONSIST);
+        DccLocoAddress addrA = new DccLocoAddress(200,true);
+        DccLocoAddress addrB = new DccLocoAddress(250,true);
+        c.restore(addrA,true); // use restore here, as it does not send
                            // any data to the command station
-        c.restore(B,false); // revese direction.
-        Assert.assertTrue("Direction in CS Consist", c.getLocoDirection(A));
-        Assert.assertFalse("Direction in CS Consist", c.getLocoDirection(B));
+        c.restore(addrB,false); // revese direction.
+        assertTrue( c.getLocoDirection(addrA), "Direction in CS Consist");
+        assertFalse( c.getLocoDirection(addrB), "Direction in CS Consist");
     }
 
     @BeforeEach
@@ -122,25 +135,24 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         memo.setThrottleManager(ltm);
         memo.setLnTrafficController(lnis);
 
-        try {
-        // set slot 3 to address 3
-        LocoNetMessage m = new LocoNetMessage(13);
-        m.setOpCode(LnConstants.OPC_WR_SL_DATA);
-        m.setElement(1, 0x0E);
-        m.setElement(2, 0x03);
-        m.setElement(4, 0x03);
-        slotmanager.slot(3).setSlot(m);
+        assertDoesNotThrow( () -> {
+            // set slot 3 to address 3
+            LocoNetMessage m = new LocoNetMessage(13);
+            m.setOpCode(LnConstants.OPC_WR_SL_DATA);
+            m.setElement(1, 0x0E);
+            m.setElement(2, 0x03);
+            m.setElement(4, 0x03);
+            slotmanager.slot(3).setSlot(m);
 
-        // set slot 4 to address 255
-        m.setElement(2, 0x04);
-        m.setElement(4, 0x7F);
-        m.setElement(9, 0x01);
-        slotmanager.slot(4).setSlot(m);
-        } catch(LocoNetException lne) {
-          Assert.fail("failed to add addresses to slot during setup");
-        }
+            // set slot 4 to address 255
+            m.setElement(2, 0x04);
+            m.setElement(4, 0x7F);
+            m.setElement(9, 0x01);
+            slotmanager.slot(4).setSlot(m);
+        }, "failed to add addresses to slot during setup");
+
         c = new LocoNetConsist(3,memo);
-        ReturnSlotInfo();
+        returnSlotInfo();
 
     }
 

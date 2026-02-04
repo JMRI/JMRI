@@ -5,8 +5,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -14,13 +12,12 @@ import org.slf4j.LoggerFactory;
  */
 public class AbstractAutomatonTest {
 
-    Sensor sensor1;
-    Sensor sensor2;
-    Sensor sensor3;
-    Sensor sensor4;
-    volatile boolean done;
-    volatile boolean running;
-    
+    private Sensor sensor1 = null;
+    private Sensor sensor2;
+    private Sensor sensor3;
+    private Sensor sensor4;
+    private volatile boolean done;
+
     @Test
     public void testCTor() {
         AbstractAutomaton t = new AbstractAutomaton();
@@ -38,11 +35,11 @@ public class AbstractAutomatonTest {
                 return false; // done
             }
         };
-        
+
         a.start();
         JUnitUtil.waitFor(()->{return done;}, "done");
     }
-        
+
     @Test
     public void testSensorInterlock() throws JmriException {
         // more of a test of infrastructure
@@ -58,14 +55,14 @@ public class AbstractAutomatonTest {
                 return true; // repeat
             }
         };
-        
+
         a.start();
-        
+
         sensor1.setKnownState(Sensor.ACTIVE);
-        
+
         JUnitUtil.waitFor(()->{return done;}, "done");
     }
-    
+
     @Test
     public void testStop() throws JmriException {
         log.debug("start testWaitChange");
@@ -79,7 +76,7 @@ public class AbstractAutomatonTest {
                 return false; // done
             }
         };
-        
+
         log.debug("before start test automat testStop");
         a.start();
         JUnitUtil.waitFor(()->{return a.isRunning();}, "running");
@@ -87,7 +84,7 @@ public class AbstractAutomatonTest {
         JUnitUtil.waitFor(()->{return ! a.isRunning();}, "stopped");
         Assert.assertTrue("didn't complete handle", ! done);
     }
-    
+
     @Test
     public void testWaitSensorChange() throws JmriException {
         log.debug("start testWaitChange");
@@ -110,18 +107,17 @@ public class AbstractAutomatonTest {
                 return false; // done
             }
         };
-        
+
         log.debug("before start test automat testWaitChange");
         a.start();
         JUnitUtil.waitFor(()->{return a.isWaiting();}, "waiting");
-        
+
         log.debug("after start test automat, before change sensor");
         sensor2.setKnownState(Sensor.ACTIVE);
-        
+
         log.debug("after change sensor, before waitFor");
         JUnitUtil.waitFor(()->{return done;}, "done");
     }
-
 
     @Test
     public void testWaitChange() throws JmriException {
@@ -140,18 +136,18 @@ public class AbstractAutomatonTest {
                 return false; // done
             }
         };
-        
+
         log.debug("before start test automat testWaitChange");
         a.start();
         JUnitUtil.waitFor(()->{return a.isWaiting();}, "waiting");
-        
+
         log.debug("after start test automat, before change sensor");
         sensor2.setKnownState(Sensor.ACTIVE);
-        
+
         log.debug("after change sensor, before waitFor");
         JUnitUtil.waitFor(()->{return done;}, "done");
     }
-    
+
     @Test
     public void testWaitChangePreCheckQuick() throws JmriException {
         log.debug("start testWaitChangePreCheck");
@@ -169,14 +165,14 @@ public class AbstractAutomatonTest {
                 return false; // done
             }
         };
-        
+
         a.waitChangePrecheck(new NamedBean[]{sensor1, sensor2, sensor3, sensor4});
         log.debug("before start test automat testWaitChangePreCheckQuick");
         a.start();
-        
+
         log.debug("after start test automat, before change sensor");
         sensor2.setKnownState(Sensor.ACTIVE);
-        
+
         log.debug("after change sensor, before waitFor");
         JUnitUtil.waitFor(()->{return done;}, "done");
     }
@@ -198,15 +194,15 @@ public class AbstractAutomatonTest {
                 return false; // done
             }
         };
-        
+
         a.waitChangePrecheck(new NamedBean[]{sensor1, sensor2, sensor3, sensor4});
         log.debug("before start test automat testWaitChangePreCheckLater");
         a.start();
         JUnitUtil.waitFor(()->{return a.isWaiting();}, "waiting");
-        
+
         log.debug("after start test automat, before change sensor");
         sensor2.setKnownState(Sensor.ACTIVE);
-        
+
         log.debug("after change sensor, before waitFor");
         JUnitUtil.waitFor(()->{return done;}, "done");
     }
@@ -215,40 +211,39 @@ public class AbstractAutomatonTest {
     public void testWaitChangeBadPreCheck() throws JmriException {
         log.debug("start testWaitChangeBadPreCheck");
         // more of a test of infrastructure
-        running = false;
         done = false;
         sensor1 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
         sensor2 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS2");
         sensor3 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS3");
         sensor4 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS4");
-        
+
         AbstractAutomaton a = new AbstractAutomaton(){
             @Override
             public boolean handle() {
-                running = true;
                 waitChange(new NamedBean[]{sensor2, sensor1, sensor3, sensor4}); // not same as precheck
                 done = true;
                 return false; // done
             }
         };
-        
+
         a.waitChangePrecheck(new NamedBean[]{sensor1, sensor2, sensor3, sensor4});
         log.debug("before start test automat testWaitChangeBadPreCheck");
         a.start();
         JUnitUtil.waitFor(()->{return a.isWaiting();}, "waiting");
-                
+
         log.debug("after start test automat, before change sensor");
         sensor2.setKnownState(Sensor.ACTIVE);
-        
+
         log.debug("after change sensor, before waitFor");
         JUnitUtil.waitFor(()->{return done;}, "done");
-        
+
         jmri.util.JUnitAppender.assertWarnMessage("Precheck ignored because of mismatch in bean 0");
     }
-    
+
     @BeforeEach
     public void setUp() {
-        JUnitUtil.setUp();        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.setUp();
+        JUnitUtil.initInternalSensorManager();
     }
 
     @AfterEach
@@ -256,6 +251,6 @@ public class AbstractAutomatonTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractAutomatonTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractAutomatonTest.class);
 
 }

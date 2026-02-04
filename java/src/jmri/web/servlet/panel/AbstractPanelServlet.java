@@ -7,8 +7,7 @@ import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import java.awt.Container;
-import java.awt.Frame;
+
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,20 +23,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JComponent;
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SignalMast;
-import jmri.SignalMastManager;
+import javax.swing.JFrame;
+
+import jmri.*;
 import jmri.configurexml.ConfigXmlManager;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.EditorManager;
-import jmri.jmrit.display.MultiSensorIcon;
-import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.*;
 import jmri.server.json.JSON;
 import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
+import jmri.web.servlet.permission.PermissionServlet;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,6 +92,14 @@ public abstract class AbstractPanelServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("Handling GET request for {}", request.getRequestURI());
+
+        String sessionId = PermissionServlet.getSessionId(request);
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .hasAtLeastRemotePermission(sessionId, EditorPermissions.EDITOR_PERMISSION,
+                        EditorPermissions.EditorPermissionEnum.View)) {
+            PermissionServlet.permissionDenied(request, response);
+            return;
+        }
         if (request.getRequestURI().equals("/web/showPanel.html")) { // NOI18N
             response.sendRedirect("/panel/"); // NOI18N
             return;
@@ -210,11 +215,9 @@ public abstract class AbstractPanelServlet extends HttpServlet {
     @CheckForNull
     protected Editor getEditor(String name) {
         for (Editor editor : InstanceManager.getDefault(EditorManager.class).getAll()) {
-            Container container = editor.getTargetPanel().getTopLevelAncestor();
-            if (container instanceof Frame) {
-                if (((Frame) container).getTitle().equals(name)) {
-                    return editor;
-                }
+            JFrame frame = editor.getTargetFrame();
+            if (frame.getTitle().equals(name)) {
+                return editor;
             }
         }
         return null;

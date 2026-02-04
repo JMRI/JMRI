@@ -32,7 +32,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
     // private control members
     private Thread sourceThread;
-    private SprogTrafficController control;
+    private final SprogTrafficController control;
 
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
@@ -127,7 +127,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         } else { // default, also used after Locale change
             operatingMode = SprogMode.OPS;
         }
-        
+
         String slots = getOptionState("NumSlots");
         int numSlots;
         try {
@@ -136,7 +136,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         catch (NumberFormatException e) {
             numSlots = 16;
         }
-        
+
         this.getSystemConnectionMemo().setSprogMode(operatingMode);         // first update mode in memo
         this.getSystemConnectionMemo().configureCommandStation(numSlots);   // CS only if in OPS mode, memo will take care of that
         this.getSystemConnectionMemo().configureManagers();                 // wait for mode to be correct
@@ -423,6 +423,12 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
             msg.setElement(i, rcvBuffer[i] & 0xFF);
         }
         return msg;
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        control.dispose();
     }
 
     // streams to share with user class

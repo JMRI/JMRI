@@ -84,7 +84,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
         if (!dieException) {
             // wait for up to 5 seconds for thread to end
             for (int i = 0; i < 50; i++) {
-                if (!audioCommandThread.alive()) {
+                if (!audioCommandThread.isThreadAlive()) {
                     break;
                 }
                 AbstractAudioThread.snooze(100);

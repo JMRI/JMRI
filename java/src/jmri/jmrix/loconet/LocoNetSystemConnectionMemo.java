@@ -71,12 +71,14 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
     }
 
-    ComponentFactory cf = null;
+    ComponentFactory cf;
     private LnTrafficController lt;
     protected LocoNetThrottledTransmitter tm;
     private SlotManager sm;
     private LncvDevicesManager lncvdm = null;
+    private Lnsv1DevicesManager lnsv1dm = null;
     private LnMessageManager lnm = null;
+    private Ln7gAccyRoutesManager ln7gAcRtm;
 
     /**
      * Provide access to the SlotManager for this particular connection.
@@ -127,6 +129,10 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         this.lncvdm = lncvdm;
     }
 
+    public void setLnsv1DevicesManager(Lnsv1DevicesManager lnsv1dm) {
+        this.lnsv1dm = lnsv1dm;
+    }
+
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
     protected boolean mInterrogateAtStart = true;
@@ -141,7 +147,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
      * @param mTurnoutExtraSpace Is the user configuration set for extra time
      *                           between turnout operations?
      * @param mTranspondingAvailable    Is the layout configured to provide
-     *                                  transopnding reports
+     *                                  transponding reports
      * @param mInterrogate       Send interrogate messages at start up
      * @param mLoconetProtocolAutoDetect Do we automatically detect the protocol to use or force LocoNet 1.1
      */
@@ -199,7 +205,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         InstanceManager.setLightManager(
                 getLightManager());
 
-        InstanceManager.setDefault(StringIOManager.class, getStringIOManager());
+        InstanceManager.setStringIOManager(getStringIOManager());
 
         InstanceManager.setThrottleManager(
                 getThrottleManager());
@@ -237,6 +243,12 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
         // This must be done after the memo is registered
         getThrottleStringIO();
+
+        ln7gAcRtm =
+                setLn7gAccyRoutesManager(
+                getLn7gAccyRoutesManager());
+        log.debug("Established Ln Accy Rt Mgr with memo {}",ln7gAcRtm.getMemo());
+
     }
 
     public LnPowerManager getPowerManager() {
@@ -259,6 +271,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             LnCommandStationType cmdstation = getSlotManager().getCommandStationType();
             log.debug("getThrottleManager constructs for {}", cmdstation.getName());
             throttleManager = cmdstation.getThrottleManager(this);
+            assert throttleManager != null;
             log.debug("result was type {}", throttleManager.getClass());
             store(throttleManager,ThrottleManager.class);
         }
@@ -304,6 +317,17 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         return (LnLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class<?> c) -> new LnLightManager(this));
     }
 
+    public Lnsv1DevicesManager getLnsv1DevicesManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (lnsv1dm == null) {
+            setLnsv1DevicesManager(new Lnsv1DevicesManager(this));
+            log.debug("Auto create of Lnsv1DevicesManager for initial configuration");
+        }
+        return lnsv1dm;
+    }
+
     public LncvDevicesManager getLncvDevicesManager() {
         if (getDisabled()) {
             return null;
@@ -320,6 +344,23 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             return null;
         }
         return (LnStringIOManager) classObjectMap.computeIfAbsent(StringIOManager.class, (Class<?> c) -> new LnStringIOManager(this));
+    }
+
+    public Ln7gAccyRoutesManager setLn7gAccyRoutesManager(Ln7gAccyRoutesManager ln7gaccyrm) {
+        this.ln7gAcRtm = ln7gaccyrm;
+        if (this.ln7gAcRtm != null) {
+            // this can only be true when getDisabled() == false
+            this.ln7gAcRtm.initContext(this);
+        }
+        return this.ln7gAcRtm;
+    }
+
+     public Ln7gAccyRoutesManager getLn7gAccyRoutesManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        return (Ln7gAccyRoutesManager) classObjectMap.computeIfAbsent(Ln7gAccyRoutesManager.class,
+                (Class<?> c) -> new Ln7gAccyRoutesManager());
     }
 
     protected LnPredefinedMeters predefinedMeters;
@@ -397,6 +438,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (predefinedMeters != null) {
             predefinedMeters.dispose();
         }
+        LnPowerManager pm = (LnPowerManager) classObjectMap.get(PowerManager.class);
         InstanceManager.deregister(this, LocoNetSystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, ComponentFactory.class);
@@ -423,6 +465,9 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (lt != null){
             lt.dispose();
             lt = null;
+        }
+        if (pm != null){
+            pm.dispose();
         }
         super.dispose();
     }

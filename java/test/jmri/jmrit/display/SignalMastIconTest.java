@@ -1,7 +1,5 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -9,8 +7,8 @@ import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.implementation.DefaultSignalHead;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,12 +18,13 @@ import org.junit.jupiter.api.*;
  */
 public class SignalMastIconTest extends PositionableIconTest {
 
-    SignalMast s = null;
-    SignalMastIcon to = null;
+    private SignalMast s = null;
+    private SignalMastIcon to = null;
 
     @Test
+    @DisabledIfHeadless
     public void testShowText() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // this one is for Layout editor, which for now
         // is still in text form.
         JFrame jf = new JFrame("SignalMast Icon Text Test");
@@ -46,13 +45,12 @@ public class SignalMastIconTest extends PositionableIconTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testShowIcon() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame jf = new JFrame("SignalMastIcon Icon Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        SignalMastIcon to = new SignalMastIcon(editor);
         to.setShowAutoText(false);
 
         jf.getContentPane().add(new JLabel("Should be yellow/red: "));
@@ -78,39 +76,38 @@ public class SignalMastIconTest extends PositionableIconTest {
     @BeforeEach
     @Override
     public void setUp() {
-        super.setUp();
+        super.setUp(); // creates editor
         JUnitUtil.initInternalSignalHeadManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            editor = new EditorScaffold();
-            p = new SignalMastIcon(editor);
-            to = new SignalMastIcon(editor);
-            to.setShowAutoText(true);
 
-            // reset instance manager & create test heads
-            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
-                    new DefaultSignalHead("IH1") {
-                        @Override
-                        protected void updateOutput() {
-                        }
-                    });
-            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
-                    new DefaultSignalHead("IH2") {
-                        @Override
-                        protected void updateOutput() {
-                        }
-                    });
-            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
-                    new DefaultSignalHead("IH3") {
-                        @Override
-                        protected void updateOutput() {
-                        }
-                    });
+        p = new SignalMastIcon(editor);
+        to = new SignalMastIcon(editor);
+        to.setShowAutoText(true);
 
-            s = InstanceManager.getDefault(jmri.SignalMastManager.class)
-                    .provideSignalMast("IF$shsm:basic:one-searchlight:IH1");
+        // reset instance manager & create test heads
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
+                new DefaultSignalHead("IH1") {
+                    @Override
+                    protected void updateOutput() {
+                    }
+                });
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
+                new DefaultSignalHead("IH2") {
+                    @Override
+                    protected void updateOutput() {
+                    }
+                });
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
+                new DefaultSignalHead("IH3") {
+                    @Override
+                    protected void updateOutput() {
+                    }
+                });
 
-            to.setSignalMast(new jmri.NamedBeanHandle<>(s.getSystemName(), s));
-        }
+        s = InstanceManager.getDefault(jmri.SignalMastManager.class)
+                .provideSignalMast("IF$shsm:basic:one-searchlight:IH1");
+
+        to.setSignalMast(new jmri.NamedBeanHandle<>(s.getSystemName(), s));
+
     }
 
     @AfterEach

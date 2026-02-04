@@ -139,6 +139,11 @@ abstract public class AbstractStreamConnectionConfigXml extends AbstractConnecti
         unpackElement(element, element);
     }
 
+    @Override
+    protected void dispose() {
+        adapter.dispose();
+    }
+
     // initialize logging
     private static final Logger log
             = LoggerFactory.getLogger(AbstractStreamConnectionConfigXml.class);

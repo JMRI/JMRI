@@ -62,7 +62,12 @@ public class RecursiveDescentParser {
             return null;
         }
 
-        ExpressionNodeAndState exprNodeAndState = firstRule.parse(new State(0, _tokens.get(0), 0, new Token()));
+        ExpressionNodeAndState exprNodeAndState;
+        try {
+            exprNodeAndState = firstRule.parse(new State(0, _tokens.get(0), 0, new Token()));
+        } catch (NullPointerException e) {
+            throw new ParserException(Bundle.getMessage("UnableToParseFormula"));
+        }
 
         if (exprNodeAndState == null) {
             while (!_tokens.isEmpty() && _tokens.get(0)._tokenType.equals(TokenType.SPACE)) {

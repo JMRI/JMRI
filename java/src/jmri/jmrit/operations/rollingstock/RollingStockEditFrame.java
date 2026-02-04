@@ -17,7 +17,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -581,6 +581,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             rs.setLocation(null, null);
         } else {
             rs.setLastRouteId(RollingStock.NONE); // clear last route id
+            rs.setLastTrain(null); // clear last train
             String status = rs.setLocation((Location) locationBox.getSelectedItem(),
                     (Track) trackLocationBox.getSelectedItem());
             if (!status.equals(Track.OKAY)) {

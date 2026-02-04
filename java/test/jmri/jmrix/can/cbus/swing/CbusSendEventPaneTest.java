@@ -1,20 +1,21 @@
 package jmri.jmrix.can.cbus.swing;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import javax.swing.JFrame;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
 import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Test simple functioning of CbusSendEventPane
@@ -22,51 +23,52 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2020
 */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CbusSendEventPaneTest  {
 
     @Test
-    public void testInitComponents() throws Exception{
-        // for now, just makes sure there isn't an exception.
+    public void testCbusSendEventPaneCtor() {
         CbusSendEventPane t = new CbusSendEventPane(mainConsolePane);
-        assertThat(t).isNotNull();        
+        assertNotNull(t);
     }
-    
+
     @Test
-    public void testSendEvents() throws Exception{
-        // for now, just makes sure there isn't an exception.
+    public void testSendEvents() {
+
         CbusSendEventPane t = new CbusSendEventPane(mainConsolePane);
-        JmriJFrame f = new JmriJFrame();
-        
+        JFrame f = new JFrame();
+
         f.add(t);
         f.setTitle("Test CBUS Send Event");
-        f.pack();
-        f.setVisible(true);
-        
+        jmri.util.ThreadingUtil.runOnGUI( () -> {
+            f.pack();
+            f.setVisible(true);
+        });
+
         JFrameOperator jfo = new JFrameOperator( "Test CBUS Send Event" );
-        
+
         new JTextFieldOperator(jfo,1).setText("1");
-        
+
         new JRadioButtonOperator(jfo,Bundle.getMessage("InitialStateOff")).setSelected(true);
         new JButtonOperator(jfo,Bundle.getMessage("ButtonSend")).doClick();
-        Assertions.assertNotNull(tc);
-        assertThat( tc.outbound.size()).isEqualTo(1);
+        assertNotNull(tc);
+        assertEquals( 1, tc.outbound.size());
         assertEquals("[5f8] 99 00 00 00 01",tc.outbound.get(0).toString());
-        
+
         new JRadioButtonOperator(jfo,Bundle.getMessage("InitialStateOn")).setSelected(true);
         new JButtonOperator(jfo,Bundle.getMessage("ButtonSend")).doClick();
-        assertThat( tc.outbound.size()).isEqualTo(2);
+        assertEquals( 2, tc.outbound.size());
         assertEquals("[5f8] 98 00 00 00 01",tc.outbound.get(1).toString());
-        
+
         new JRadioButtonOperator(jfo,Bundle.getMessage("CbusEventRequest")).setSelected(true);
         new JButtonOperator(jfo,Bundle.getMessage("ButtonSend")).doClick();
-        assertThat( tc.outbound.size()).isEqualTo(3);
+        assertEquals( 3, tc.outbound.size());
         assertEquals("[5f8] 9A 00 00 00 01",tc.outbound.get(2).toString());
-        
-        f.dispose();
+
+        JUnitUtil.dispose(jfo.getWindow());
+        jfo.waitClosed();
     }
-    
-    
+
     private CanSystemConnectionMemo memo = null;
     private TrafficControllerScaffold tc = null;
     private CbusConsolePane mainConsolePane = null;
@@ -83,11 +85,11 @@ public class CbusSendEventPaneTest  {
 
     @AfterEach
     public void tearDown() {
-        Assertions.assertNotNull(mainConsolePane);
+        assertNotNull(mainConsolePane);
         mainConsolePane.dispose();
-        Assertions.assertNotNull(tc);
+        assertNotNull(tc);
         tc.terminateThreads();
-        Assertions.assertNotNull(memo);
+        assertNotNull(memo);
         memo.dispose();
         tc = null;
         memo = null;

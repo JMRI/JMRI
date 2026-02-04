@@ -154,6 +154,10 @@
       have to figure out what somebody's code does (the test documents exactly what should
       happen!), and when you track down a bug (make sure it doesn't come back).</p>
 
+      <p>Alongside the JUnit tests, we also perform static analysis and other types of testing on the code.
+      See <a href="ContinuousIntegration.shtml">JMRI: Continuous Integration</a> for more details.
+      </p>
+
       <h2 id="run">Running the Tests</h2>
       To run the existing tests, say
 
@@ -216,7 +220,9 @@ suite.<br>
       <dl>
         <dt>jmri.skipschematests</dt>
 
-        <dd>If true, JUnit tests will skip checking the schema of all the test XML files.</dd>
+        <dd>If true, JUnit tests will skip checking the schema of XML files
+            including decoder definitions, signal system definitions, and
+            some test panel files.</dd>
 
         <dt>jmri.skipjythontests</dt>
 
@@ -230,8 +236,8 @@ suite.<br>
 
         <dt>jmri.util.JUnitUtil.checkSetUpTearDownSequence</dt>
 
-        <dd>If true, check for whether JUnitUtil.setUp() and JUnitUtil.teardown() follow each other
-        int the proper sequence. Print a message if not. (This slows execution a bit due to the
+        <dd>If true, check for whether JUnitUtil.setUp() and JUnitUtil.tearDown() follow each other
+        in the proper sequence. Print a message if not. (This slows execution a bit due to the
         time needed to keep history for the message)</dd>
 
         <dt>jmri.util.JUnitUtil.checkSequenceDumpsStack</dt>
@@ -239,6 +245,11 @@ suite.<br>
         <dd>If true, makes jmri.util.JUnitUtil.checkSetUpTearDownSequence more verbose by also
         including the current stack trace along with the traces of the most recent setUp and
         tearDown calls.</dd>
+
+        <dt>jmri.util.JUnitUtil.checkSequenceFailsTest</dt>
+
+        <dd>If true, makes jmri.util.JUnitUtil.checkSetUpTearDownSequence more strict by also
+        failing the current test if the setUp/tearDown sequence isn't followed.</dd>
 
         <dt>jmri.util.JUnitUtil.checkRemnantThreads</dt>
 
@@ -321,6 +332,7 @@ suite.<br>
       </dl>
       For more on setting these, see the <a href="StartUpScripts.shtml#prop">start-up scripts
       page</a>.
+
       <h3 id="I18N">A Note on Internationalization (I18N)</h3>
       Tests check the correctness of text in GUI elements, warning messages, and other places. Many
       of these are <a href="I8N.shtml">internationalized</a>, varying depending on the computer's
@@ -340,13 +352,23 @@ suite.<br>
 on <a href="StartUpScripts.shtml">startup scripts</a>.
 
       <h2 id="Continuous">Continuous Integration Test Execution</h2>
-      The <a href="ContinuousIntegration.shtml">continuous integration environment</a> senses
+      <p>The <a href="ContinuousIntegration.shtml">continuous integration environment</a> senses
       changes in the code repository, rebuilds the code, performs a variety of checks. If no fatal
       issues are found, the continuous integration process executes the "alltest" ant target
-      against the build to run the tests against the successful build of the code base.
+      against the build to run the tests against the successful build of the code base.</p>
+
+      <p>JMRI uses the <a href="https://docs.junit.org/current/user-guide/#launcher-api"
+      >JUnit Platform Launcher</a> to discover and execute tests.
+      Some launchers ( e.g. for <a href="ContinuousIntegration.shtml#architectureTests">Architecture</a>
+      and <a href="ContinuousIntegration.shtml#cucumberTests">Cucumber</a> tests ) are
+      excluded from some ant test runs.</p>
+
+      <p>Tests will generally return exit code 0 for successful executions,
+        exit code 1 for test failures and exit code 2 for no tests executed.</p>
+
       <h3 id="Reporting">Error Reporting</h3>
-      If a test fails during the continuous integration execution of "alltest", an e-mail is sent
-      to the developers who have checked in code which was included in the build.
+      <p>If a test fails during the continuous integration execution of "alltest", an e-mail is sent
+      to the developers who have checked in code which was included in the build.</p>
 
       <p>You can monitor the "dashboard" at the <a href=
       "ContinuousIntegration.shtml">continuous integration</a> website.</p>
@@ -441,13 +463,13 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
 
     /**
      * Tests for the Foo Class
-     * @author  Your Name   Copyright (C) 2022
+     * @author  Your Name   Copyright (C) 2026
      */
     public class FooTest {
 
         @Test
         public void testCtor() {
-            Assertions.AssertNotNull( new foo(), "Foo Constructor Return");
+            Assertions.assertNotNull( new foo(), "Foo Constructor Return");
         }
 
         @BeforeEach
@@ -503,7 +525,7 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       <p>Assertions can be loaded as a static class, eg.</p>
       <pre style="font-family: monospace;">import static org.junit.jupiter.api.Assertions.*;</pre>
 
-      <p>Many tests use the Assertions from
+      <p>Many tests still use the JUnit4 Assertions from
       <pre style="font-family: monospace;">import org.junit.Assert;</pre>
       
       <h3 id="HandlingLogOutput">Handling Logging Output from Tests</h3>
@@ -539,11 +561,11 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
 
           <pre style="font-family: monospace;">
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 </pre>
@@ -800,7 +822,7 @@ TemporaryDir</a>.
       with annotation based extensions. Extensions may
       be applied at the class level, the method level, and sometimes to individual fields. The
       following is a list of a few extensions we have utilized in testing JMRI.
-      <ol>
+      <ul>
         <li>
           <a href=
           "https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/io/TempDir.html"><code>@org.junit.jupiter.api.io.Tempdir</code></a>
@@ -819,7 +841,8 @@ TemporaryDir</a>.
           <code>@Test</code> annotated methods within the class. <a href=
           "#tempFileCreation">described previously</a>
         </li>
-      </ol>
+        <li><code>@Disabled</code>, <code>@DisabledIfHeadless</code> and <code>@DisabledIfSystemProperty</code> are discussed below.</li>
+      </ul>
 
       
       <h3 id="control">Tools for Controlling JUnit tests</h3>
@@ -828,20 +851,20 @@ TemporaryDir</a>.
         <li>
           <a href=
           "https://junit.org/junit5/docs/current/user-guide/#writing-tests-tagging-and-filtering">Tags
-          and Filters</a> - useful ones in our case could be headless/not headless, hardware
+          and Filters</a> - useful ones in our case could be hardware
           specific (loco buffer attached, NCE PowerPro attached, etc)
         </li>
 
         <li>JUnit 5 provides a collection of <a href=
         "https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/condition/package-summary.html">
-          conditional annotations</a>. JMRI makes extensive use of <a href=
+          conditional annotations</a>.
+
+         JMRI makes extensive use of <a href=
           "https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/condition/DisabledIfSystemProperty.html">
-          <code>@DisabledIfSystemProperty</code></a> to conditionally ignore a test. For example, a
-          test that would fail in a headless environment should be ignored in headless mode. Adding
-          the following annotation to the test method<br>
-          <code>@DisabledIfSystemProperty( named = "java.awt.headless", matches = "true")</code><br>
-          will cause the test to be ignored in headless mode. If a whole class is to be disabled in
-          headless mode, this same annotation may be applied to the test class.
+          <code>@DisabledIfSystemProperty</code></a> to conditionally ignore a test.
+          For example, to skip many of the Jython Script tests,<br>
+          <code>@DisabledIfSystemProperty(named = "jmri.skipjythontests", matches = "true")</code><br>
+          will cause the tests to be ignored if the <code>jmri.skipjythontests</code> system property is set true.
         </li>
 
         <li>
@@ -862,9 +885,7 @@ argument. <code>@Disabled</code> without an argument will compile, but Jenkins w
 error.
           <p>Also note the <code>@jmri.util.junit.annotations.ToDo</code>
           annotation</a> which indicates that this needs work and provides some more information
-          about what needs to be done. The <code>@ToDo</code> is required when an empty test is
-          provided to ensure that the parent class test doesn't run, but the parent class is
-          applicable to the class under test.</p>
+          about what needs to be done.</p>
 
           <p>In general, we'd rather have working tests rather than ignored ones, so we track the
           number that have been ignored in a Jenkins job, see the image to the right.</p>
@@ -887,6 +908,10 @@ error.
           Tests</a> page shows the trend line for disabled tests. Click on the image to get
           details.</p>
         </li>
+        <li>If a Test is annotated with <code>@Disabled</code>,
+            <code>@DisabledIfHeadless</code> ( and the system is Headless ) or 
+            <code>@NotApplicable</code>, the setUp and tearDown methods
+            for that Test will not be called, speeding up test runs.<br/></li>
       </ul>
       
       <h3 id="AssertJ">AssertJ Tools</h3>
@@ -897,20 +922,25 @@ error.
       Assert</a> class tools.
 
       <h2 id="testSwingCode">Testing Swing Code</h2>
-      AWT and Swing code runs on a separate thread from JUnit tests. Once a Swing or AWT object has
-      been displayed (via <code>show()</code> or <code>setVisible(true)</code>), it cannot be
-      reliably accessed from the JUnit thread. Even using the listener delay technique described
-      above isn't reliable.
-      <p>For the simplest possible test, displaying a window for manual interaction, it's OK to
-      create and invoke a Swing object from a JUnit test. Just don't try to interact with it once
-      it's been displayed!</p>
-
+      AWT and Swing code runs on a separate thread from JUnit tests. The Java documentation
+      has always said that it is only safe to create and manipulate Swing objects from the Swing/AWT thread, 
+      with only minor exceptions.  
+      
+      <p>The lore for early Java versions was that it was
+      OK to create and manipulate a Swing object off the Swing/AWT thread, e.g. on the 
+      JUnit thread, <u>until</u> the enclosing frame was displayed via 
+      <code>show()</code> or <code>setVisible(true)</code>.  Starting with Java
+      23, this lore is explicitly <u>not</u> true.  As that will someday (not today) be
+      a supported version for JMRI, as you write new tests please move your Swing
+      object manipulations to the Swing/AWT thread. The most straight-forward
+      way to do that is to use the 
+      <a href="Threads.shtml">ThreadingUtil class</a>.
+ 
       <p>Because we run tests in "headless" mode during the <a href=
-      "ContinuousIntegration.shtml">continuous integration builds</a>, it's important that tests
-      needing access to the screen are annotated with:</p>
+      "ContinuousIntegration.shtml">continuous integration builds</a>, it's important that test methods
+      or classes needing access to the screen are annotated with:</p>
 
-      <pre><code>@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")</code></pre>
-      <p>This will only run the setUp, test and tearDown methods when a display is available.<br/>
+      <pre><code><strong>@jmri.util.junit.annotations.DisabledIfHeadless</strong></code></pre>
 
       <p>GUI tests should close windows when they're done, and in general clean up after
       themselves. If you want to keep windows around so you can manipulate them, e.g. for manual
@@ -1117,10 +1147,17 @@ milliseconds can improve the reliability of tests. Also, setting
       <p>Is the Test inheriting objects from other tests?  It may be worth running the tests with a
       completely fresh <a href="#io">JMRI User Profile in a Temporary Directory</a>.</p>
 
+      <p>If GUI elements are unreliable, are they being packed and set visible from the swing thread?</p>
+
+      <p>For tracking down the cause of a flaky test, it may be worth temporarily adding a
+      delay ( e.g. JUnitUtil.waitFor(500); ) to the test.
+      This can often help to catch timing issues which may be present within the test.</p>
+
       <p>Mocking Frameworks can create a more controlled environment for the class under test by simulating
       external dependencies.  JMRI uses <a href="https://site.mockito.org/">Mockito</a>, org.mockito.Mockito.</p>
 
       <p>Spotbugs Static Analysis reports can be generated for the Test classes.
+      tests-spotbugs.html is created witin the root JMRI directory following a call to
       <pre style="font-family: monospace;">    ant tests-spotbugs</pre>
 
       <p>Compile source &amp; tests with CI ECJ warnings on ( this is run as routine CI )

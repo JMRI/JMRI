@@ -437,7 +437,6 @@
 
     <!--   Begin additional extraMemu elements - Jacobsen / Cliffe,   Feb 2022 -->
     <xi:include href="http://jmri.org/xml/decoders/zimo/LoadCalibrationExtraMenu.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/zimo/PseudoIncrementalExtraMenu.xml"/>
     <!--   End additional extraMemu elements - Jacobsen / Cliffe,   Feb 2022  -->
 
   </decoder>

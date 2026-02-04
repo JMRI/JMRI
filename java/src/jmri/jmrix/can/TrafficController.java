@@ -32,4 +32,19 @@ abstract public class TrafficController extends AbstractCanTrafficController {
         _canid = canid;
     }
 
+    /**
+     * Set the CAN ID by numerical String value.
+     * @param canId String value of CAN ID.
+     */
+    public void setCanId( @javax.annotation.CheckForNull String canId) {
+        try {
+            setCanId(Integer.parseInt(canId));
+        } catch (NumberFormatException e) {
+            log.error("Cannot parse CAN ID \"{}\" - check your preference settings", canId, e);
+            log.error("Now using CAN ID {}",getCanid());
+        }
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrafficController.class);
+
 }

@@ -5,8 +5,6 @@ import javax.swing.JMenu;
 import jmri.InstanceManager;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.util.prefs.JmriPreferencesActionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Create a "Systems" menu containing the Jmri ECoS-specific tools.
@@ -36,15 +34,8 @@ public class EcosMenu extends JMenu {
             }
         }
 
-        if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
-            try {
-                new jmri.jmrit.beantable.ListedTableFrame<jmri.Turnout>();
-            } catch (java.lang.NullPointerException ex) {
-                log.error("Unable to register ECoS table");
-            }
-        }
-
-        add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemDatabase"), "jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction"));
+        add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemDatabase"),
+            "jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction"));
         add(InstanceManager.getDefault(JmriPreferencesActionFactory.class).
                 getCategorizedAction(Bundle.getMessage("MenuItemECoSPrefs"), "ECoS", title));
         if (memo != null) {
@@ -70,6 +61,6 @@ public class EcosMenu extends JMenu {
         String load;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosMenu.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EcosMenu.class);
 
 }

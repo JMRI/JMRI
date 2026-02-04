@@ -27,9 +27,6 @@ import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriMouseEvent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * An icon to display a status of a Sensor.
  *
@@ -588,7 +585,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public void doMousePressed(JmriMouseEvent e) {
-        log.debug("doMousePressed buttonLive={}, getMomentary={}", buttonLive(), getMomentary());
+        log.debug("doMousePressed {},{} clicks={}, buttonLive={}, getMomentary={}", 
+            e.getX(), e.getY(), e.getClickCount(),
+            buttonLive(), getMomentary());
+            
         if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
             // this is a momentary button press
             try {
@@ -602,6 +602,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public void doMouseReleased(JmriMouseEvent e) {
+        log.debug("doMouseReleased {},{} clicks={}, buttonLive={}, getMomentary={}", 
+            e.getX(), e.getY(), e.getClickCount(),
+            buttonLive(), getMomentary());
+        
         if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
             // this is a momentary button release
             try {
@@ -615,6 +619,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public void doMouseClicked(JmriMouseEvent e) {
+        log.debug("doMouseClicked {},{} clicks={}, buttonLive={}, getMomentary={}", 
+            e.getX(), e.getY(), e.getClickCount(),
+            buttonLive(), getMomentary());
+
         if (buttonLive() && !getMomentary()) {
             // this button responds to clicks
             if (!e.isMetaDown() && !e.isAltDown()) {
@@ -1053,6 +1061,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorIcon.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorIcon.class);
 
 }

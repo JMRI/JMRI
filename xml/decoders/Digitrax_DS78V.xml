@@ -9,42 +9,60 @@
                 >
 
     <version author="Bob Jacobsen" version="1" lastUpdated="20230205" />
+    <version author="Bob Milhaupt" version="2" lastUpdated="20240708" />
 
     <decoder>
-
         <family name="Series 7 Boards" mfg="Digitrax">
             <model model="DS78V"/>
         </family>
 
-        <programming direct="no" paged="yes" register="no" ops="no"><!-- paged yes allows initial setup and change of address -->
+        <programming direct="no" paged="yes" register="no" ops="no">
+            <!-- paged yes allows initial setup and change of address -->
             <mode>LOCONETBD7OPSWMODE</mode>
         </programming>
 
         <variables>
 
-          <variable CV="1" comment="Board address" item="Long Address" default="40" infoOnly="yes">
-            <!-- needed to set the board address value -->
-            <decVal min="1" max="2045" />
-            <label>Board Address</label>
+          <variable CV="1" comment="Base Address" item="Long Address" default="1" infoOnly="yes" >
+            <!-- This is needed to set the Base Address value.
+                2033 is a practical maximum when set for "2-position Servo" mode,
+                or 2025 is a practican max, when set for "3-pos. Servo" mode.
+                Note that the DS78V will allow higher numbers
+                to be set, but they will conflict with the
+                "interrogate" switches.  -->
+            <splitVal highCV="2" upperMask="XXXXXVVV" default="0" min="1" max="2025"/>
+            <label>Board Address </label>
           </variable>
 
            <!-- CV7 is the product ID. Should be 0x7c (124 decimal) -->
-           
-           <variable CV="11" item="Output Type" default="0"
-                tooltip="OpSw1-4" mask="XXXXVVVV">
+          <variable CV="7" item="Device Type" readOnly="yes">
+            <decVal min="0" max="255"/>
+            <label>Device Type</label>
+          </variable>
+
+          <variable CV="8" item="Device Mfgr" readOnly="yes">
+            <decVal min="0" max="255"/>
+            <label>Device Manufacturer (NMRA number) </label>
+          </variable>
+
+          <variable CV="9" item="Serial Number" default="0" mask="VVVVVVVV" readOnly="yes">
+            <splitVal highCV="10" upperMask="VVVVVVVV"/>
+            <label>Serial Number</label>
+          </variable>
+
+           <variable CV="11" item="Output Type" default="2" tooltip="OpSw1-4" mask="XXXXVVVV">
             <enumVal>
-              <enumChoice>
-                <choice value="13">Two Position Servo (Thrown/Closed)</choice>
+              <enumChoice value="2">
+                <choice>Two Position Servo (Thrown/Closed)</choice>
               </enumChoice>
-              <enumChoice>
-                <choice value="9">Three Position Servo (Semaphore)</choice>
+              <enumChoice value="6">
+                <choice>Three Position Servo (Semaphore)</choice>
               </enumChoice>
             </enumVal>
             <label>Output type: </label>
           </variable>
 
-          <variable CV="11" item="Internal Routes" default="0"
-                tooltip="OpSw06" mask="XXVXXXXX">
+          <variable CV="11" item="Internal Routes" default="0" tooltip="OpSw06" mask="XXVXXXXX">
             <enumVal>
               <enumChoice>
                 <choice>enabled</choice>
@@ -56,8 +74,7 @@
             <label>Internal Routes are</label>
           </variable>
 
-          <variable CV="12" item="Bushby" default="0"
-                tooltip="OpSw10" mask="XXXXXXVX">
+          <variable CV="12" item="Bushby" default="0" tooltip="OpSw10" mask="XXXXXXVX">
             <enumVal>
               <enumChoice>
                 <choice>disabled</choice>
@@ -69,8 +86,7 @@
             <label>Bushby Bit is</label>
           </variable>
 
-          <variable CV="12" item="Input Lines" default="0"
-                tooltip="OpSw11" mask="XXXXXVXX">
+          <variable CV="12" item="Input Lines" default="0" tooltip="OpSw11" mask="XXXXXVXX">
             <enumVal>
               <enumChoice>
                 <choice>do turnout, sensor commands</choice>
@@ -82,8 +98,7 @@
             <label>Input Lines</label>
           </variable>
 
-          <variable CV="12" item="Command Source" default="0"
-                tooltip="OpSw14" mask="XXVXXXXX">
+          <variable CV="12" item="Command Source" default="0" tooltip="OpSw14" mask="XXVXXXXX">
             <enumVal>
               <enumChoice>
                 <choice>Loconet switch commands</choice>
@@ -95,8 +110,7 @@
             <label>Command source is</label>
           </variable>
 
-          <variable CV="12" item="Route Echo" default="0"
-                tooltip="OpSw15" mask="XVXXXXXX">
+          <variable CV="12" item="Route Echo" default="0" tooltip="OpSw15" mask="XVXXXXXX">
             <enumVal>
               <enumChoice>
                 <choice>echo to Loconet</choice>
@@ -110,115 +124,221 @@
 
           <variable CV="0.25" item="Servo 1 Thrown Angle" default="10">
             <decVal min="1" max="2045" />
+            <label>SERVO 1 - 'Thrown' Angle:</label>
           </variable>
           <variable CV="0.26" item="Servo 1 Closed Angle" default="240">
             <decVal min="1" max="2045" />
+            <label>"Closed" Angle:</label>
           </variable>
           <variable CV="0.27" item="Servo 1 Approach Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
+
             <decVal min="1" max="2045" />
+            <label>"Approach" Angle:</label>
           </variable>
           <variable CV="0.28" item="Servo 1 Approach Medium Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach Medium" Angle:</label>
           </variable>
 
           <variable CV="1.25" item="Servo 2 Thrown Angle" default="10">
             <decVal min="1" max="2045" />
+            <label>SERVO 2 - 'Thrown' Angle:</label>
           </variable>
           <variable CV="1.26" item="Servo 2 Closed Angle" default="240">
             <decVal min="1" max="2045" />
+            <label>"Closed" Angle:</label>
           </variable>
           <variable CV="1.27" item="Servo 2 Approach Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach" Angle:</label>
           </variable>
           <variable CV="1.28" item="Servo 2 Approach Medium Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach Medium" Angle:</label>
           </variable>
 
           <variable CV="2.25" item="Servo 3 Thrown Angle" default="10">
             <decVal min="1" max="2045" />
+            <label>SERVO 3 - 'Thrown' Angle:</label>
           </variable>
           <variable CV="2.26" item="Servo 3 Closed Angle" default="240">
             <decVal min="1" max="2045" />
+            <label>"Closed" Angle:</label>
           </variable>
           <variable CV="2.27" item="Servo 3 Approach Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach" Angle:</label>
           </variable>
           <variable CV="2.28" item="Servo 3 Approach Medium Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach Medium" Angle:</label>
           </variable>
 
           <variable CV="3.25" item="Servo 4 Thrown Angle" default="10">
             <decVal min="1" max="2045" />
+            <label>SERVO 4 - 'Thrown' Angle:</label>
           </variable>
           <variable CV="3.26" item="Servo 4 Closed Angle" default="240">
             <decVal min="1" max="2045" />
+            <label>"Closed" Angle:</label>
           </variable>
           <variable CV="3.27" item="Servo 4 Approach Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach" Angle:</label>
           </variable>
           <variable CV="3.28" item="Servo 4 Approach Medium Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach Medium" Angle:</label>
           </variable>
 
           <variable CV="4.25" item="Servo 5 Thrown Angle" default="10">
             <decVal min="1" max="2045" />
+            <label>SERVO 5 - 'Thrown' Angle:</label>
           </variable>
           <variable CV="4.26" item="Servo 5 Closed Angle" default="240">
             <decVal min="1" max="2045" />
+            <label>"Closed" Angle:</label>
           </variable>
           <variable CV="4.27" item="Servo 5 Approach Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach" Angle:</label>
           </variable>
           <variable CV="4.28" item="Servo 5 Approach Medium Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach Medium" Angle:</label>
           </variable>
 
           <variable CV="5.25" item="Servo 6 Thrown Angle" default="10">
             <decVal min="1" max="2045" />
+            <label>SERVO 6 - 'Thrown' Angle:</label>
           </variable>
           <variable CV="5.26" item="Servo 6 Closed Angle" default="240">
             <decVal min="1" max="2045" />
+            <label>"Closed" Angle:</label>
           </variable>
           <variable CV="5.27" item="Servo 6 Approach Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach" Angle:</label>
           </variable>
           <variable CV="5.28" item="Servo 6 Approach Medium Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach Medium" Angle:</label>
           </variable>
 
           <variable CV="6.25" item="Servo 7 Thrown Angle" default="10">
             <decVal min="1" max="2045" />
+            <label>SERVO 7 - 'Thrown' Angle:</label>
           </variable>
           <variable CV="6.26" item="Servo 7 Closed Angle" default="240">
             <decVal min="1" max="2045" />
+            <label>"Closed" Angle:</label>
           </variable>
           <variable CV="6.27" item="Servo 7 Approach Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach" Angle:</label>
           </variable>
           <variable CV="6.28" item="Servo 7 Approach Medium Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach Medium" Angle:</label>
           </variable>
 
           <variable CV="7.25" item="Servo 8 Thrown Angle" default="10">
             <decVal min="1" max="2045" />
+            <label>SERVO 8 - 'Thrown' Angle:</label>
           </variable>
           <variable CV="7.26" item="Servo 8 Closed Angle" default="240">
             <decVal min="1" max="2045" />
+            <label>"Closed" Angle:</label>
           </variable>
           <variable CV="7.27" item="Servo 8 Approach Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach" Angle:</label>
           </variable>
           <variable CV="7.28" item="Servo 8 Approach Medium Angle" default="125">
+            <qualifier>
+                <variableref>Output Type</variableref>
+                <relation>eq</relation>
+                <value>6</value>
+            </qualifier>
             <decVal min="1" max="2045" />
+            <label>"Approach Medium" Angle:</label>
           </variable>
-
         </variables>
-        <resets>
-            <mode>LOCONETBD7OPSWMODE</mode>
-            <factReset label="Factory Reset" CV="15" default="128">
-                <label>Reset All CVs</label>
-            </factReset>
-        </resets>
     </decoder>
   <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
     <name>CVs</name>
@@ -229,16 +349,14 @@
         <row>
             <column>
                 <label>
-                    <text>&lt;html&gt;The "CV" column in the table above shows CV
-                        numbers, not the Op Switch number.  To see those, hover
-                        your mouse over a variable on the OpSw Settings pane.
-                        &lt;p&gt;&lt;p&gt;The top-most row above reflects the Board
-                        Address configured on the "Basic" sheet.
-                    </text>
+                    <text>&lt;html&gt;&lt;p&gt;CVs 1 and 2 are the low and high (respectively) 8-bit
+                        "Base Address" values.&lt;p&gt;The "Base Address" is practically limited to
+                        2029 (in "2-position servo" mode), or &lt;p&gt;2025 (in "3-position
+                        Servo" mode).&lt;p&gt;The "Roster" tool and its
+                        Roster entries &lt;em&gt; cannot&lt;/em&gt; change the
+                        "Base Address".</text>
                 </label>
-                <label>
-                    <text> </text>
-                </label>
+                <label><text> </text></label>
             </column>
         </row>
     </column>
@@ -249,31 +367,32 @@
       <column>
           <display item="Long Address"/>
           <label>
-              <text> </text>
-          </label>
-          <label>
-            <text>&lt;html&gt;&lt;p&gt;
+            <text>&lt;html&gt;
                 &lt;p&gt;This roster entry will only access the specified
-                board if the Board Address (i.e. Board ID), specified above,
-                &lt;br&gt;was correctly entered when the roster entry was first created.
-                You cannot change it here.
-                &lt;p&gt;Note that some Digitrax documentation refers
-                to Board Address, while other documentation refers to
-                &lt;p&gt;Board ID.  These are equivalent concepts.
+                board if the Base Address specified above &lt;br&gt;was
+                correctly entered when the roster entry was first created.
+                You &lt;em&gt;cannot&lt;/em&gt; change it in the Roster Entry.
             &lt;/html&gt;</text>
           </label>
+          <label>
+              <text> </text>
+          </label>
+          <display item="Device Type"/>
+          <display item="Device Mfgr"/>
+          <display item="Serial Number"/>
       </column>
   </pane>
 
     <pane>
         <name>OpSw Settings</name>
         <column>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Output Controls Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
             <display item="Output Type"/>
-            <display item="Internal Routes"/>
             <display item="Bushby"/>
-
-            <display item="Input Lines"/>
             <display item="Command Source"/>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;p&gt;&lt;h2&gt;&lt;strong&gt;Output Controls Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <display item="Input Lines"/>
+            <display item="Internal Routes"/>
             <display item="Route Echo"/>
         </column>
     </pane>
@@ -281,6 +400,7 @@
     <pane>
         <name>Servos</name>
         <column>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Servo Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
             <row>
                 <display item="Servo 1 Thrown Angle"/>
                 <display item="Servo 1 Closed Angle"/>
@@ -329,7 +449,23 @@
                 <display item="Servo 8 Approach Angle"/>
                 <display item="Servo 8 Approach Medium Angle"/>
             </row>
+            <row>
+
+                <label>
+                    <qualifier>
+                        <variableref>Output Type</variableref>
+                        <relation>eq</relation>
+                        <value>2</value>
+                    </qualifier>
+                    <text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;p&gt;
+                "Aproach" and "Approach Medium" settings are only used&lt;p&gt;
+                when operating in "Three-position" mode.  Those values are&lt;p&gt;
+                irrelevant for "Two-position" Servo mode and are not shown&lt;p&gt;
+                here.&lt;/html&gt;</text>
+                </label>
+            </row>
         </column>
+
     </pane>
 
 </decoder-config>

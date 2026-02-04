@@ -48,6 +48,7 @@
         <xs:element name="globalVariableIcon" type="EditorGlobalVariableIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="globalVariableInputIcon" type="EditorGlobalVariableInputIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="globalVariableComboIcon" type="EditorGlobalVariableComboIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="logixNGTableIcon" type="EditorLogixNGTableIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="signalheadicon" type="EditorSignalHeadIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="signalmasticon" type="EditorSignalMastIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="reportericon" type="EditorReporterIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
@@ -63,6 +64,7 @@
         <xs:element name="PortalIcon" type="EditorPortalIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="LightIcon" type="EditorLightIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="BlockContentsIcon"  type="EditorBlockContentsIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="blockContentsInputIcon" type="EditorBlockContentsInputIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="audioicon" type="EditorAudioIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="logixngicon" type="EditorLogixNGIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
 

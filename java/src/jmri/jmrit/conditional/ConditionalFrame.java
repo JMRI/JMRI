@@ -3,6 +3,8 @@ package jmri.jmrit.conditional;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -11,10 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import jmri.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.util.JmriJFrame;
 
 /**
@@ -37,13 +35,13 @@ public class ConditionalFrame extends JmriJFrame {
     boolean _referenceByMemory;
 
     // ------------------ Common window parts --------------
-    JTextField _conditionalUserName;
+    private JTextField _conditionalUserName;
 
     static final int STRUT = 10;
 
     // ------------------------------------------------------------------
 
-    ConditionalFrame(String title, Conditional conditional, ConditionalList parent) {
+    ConditionalFrame(String title, @Nonnull Conditional conditional, ConditionalList parent) {
         super(title, false, false);
         _parent = parent;
         _variableList = conditional.getCopyOfStateVariables();
@@ -52,7 +50,7 @@ public class ConditionalFrame extends JmriJFrame {
         _antecedent = conditional.getAntecedentExpression();
     }
 
-    JPanel makeTopPanel(Conditional conditional) {
+    JPanel makeTopPanel(@Nonnull Conditional conditional) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel panel1 = new JPanel();
@@ -80,7 +78,7 @@ public class ConditionalFrame extends JmriJFrame {
      * @param hint  property key for tooltip for this sub pane
      * @return JPanel containing interface
      */
-    JPanel makeEditPanel(JComponent comp, String label, String hint) {
+    JPanel makeEditPanel(@Nonnull JComponent comp, @Nonnull String label, @javax.annotation.CheckForNull String hint) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
@@ -106,7 +104,8 @@ public class ConditionalFrame extends JmriJFrame {
         String pref = InstanceManager.getDefault(jmri.LogixManager.class).getSystemPrefix();
         // The IX:RTXINITIALIZER keyword has a type of NONE
         // Safely remove elements from the list  (or use array.remove) if more than 1
-        _variableList.removeIf(cvar -> (cvar.getType() == Conditional.Type.NONE && !cvar.getName().equals(pref + "X:RTXINITIALIZER")));
+        _variableList.removeIf( cvar ->
+                (cvar.getType() == Conditional.Type.NONE && !cvar.getName().equals(pref + "X:RTXINITIALIZER")));
         // and actions
         _actionList.removeIf(cact -> cact.getType() == Conditional.Action.NONE);
         if (_parent.updateConditional(_conditionalUserName.getText(), _logicType, _trigger, _antecedent)) {
@@ -130,7 +129,7 @@ public class ConditionalFrame extends JmriJFrame {
         _parent.closeConditionalFrame();
     }
 
-    boolean checkReferenceByMemory(String name) {
+    boolean checkReferenceByMemory(@Nonnull String name) {
         _referenceByMemory = false;
         if (name.length() > 0 && name.charAt(0) == '@') {
             String memName = name.substring(1);
@@ -153,7 +152,7 @@ public class ConditionalFrame extends JmriJFrame {
      * @return true if action is not an action of if the user OK's
      * its use as such.
      */
-    boolean checkIsAction(String name, Conditional.ItemType itemType) {
+    boolean checkIsAction(@Nonnull String name, Conditional.ItemType itemType) {
         String actionName = null;
         for (ConditionalAction action : _actionList) {
             Conditional.ItemType actionType = action.getType().getItemType();
@@ -183,19 +182,19 @@ public class ConditionalFrame extends JmriJFrame {
      * @return true if action is not a state variable of if the user OK's
      * its use as such.
      */
-    boolean checkIsVariable(String name, Conditional.ItemType itemType) {
+    boolean checkIsVariable(@Nonnull String name, Conditional.ItemType itemType) {
         String varName = null;
-        for (ConditionalVariable var : _variableList) {
-            Conditional.ItemType varType = var.getType().getItemType();
+        for (ConditionalVariable condVar : _variableList) {
+            Conditional.ItemType varType = condVar.getType().getItemType();
             if (itemType == varType) {
-                if (name.equals(var.getName())) {
-                    varName = var.getName();
+                if (name.equals(condVar.getName())) {
+                    varName = condVar.getName();
                 } else {
-                    NamedBean bean  = var.getBean();
+                    NamedBean bean  = condVar.getBean();
                     if (bean != null &&
                         (name.equals(bean.getSystemName()) ||
                                 name.equals(bean.getUserName()))) {
-                        varName = var.getName();
+                        varName = condVar.getName();
                    }
                 }
             }
@@ -206,6 +205,6 @@ public class ConditionalFrame extends JmriJFrame {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalFrame.class);
 
 }

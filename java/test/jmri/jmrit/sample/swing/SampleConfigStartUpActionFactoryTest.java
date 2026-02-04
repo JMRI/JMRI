@@ -12,7 +12,7 @@ public class SampleConfigStartUpActionFactoryTest {
     @Test
     // test creation
     public void testCreate() {
-        new SampleConfigStartUpActionFactory();
+        Assertions.assertNotNull( new SampleConfigStartUpActionFactory() );
     }
 
     @BeforeEach

@@ -689,7 +689,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
                     InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                             showInfoMessage(Bundle.getMessage("ReminderTitle"),
                                     Bundle.getMessage("ReminderSaveString", Bundle.getMessage("SignalGroup")),
-                                    "beantable.SignalGroupTableAction",
+                                    getClassName(),
                                     "remindSignalGroup"); // NOI18N
                     signalGroupDirty = false;
                 }
@@ -812,7 +812,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         SignalMast mMast = mainSignalComboBox.getSelectedItem();
         if (mMast == null) {
             //log.warn("Signal Mast not selected. mainSignal = {}", mainSignalComboBox.getSelectedItem());
-            JmriJOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog( mainSignalComboBox,
                     Bundle.getMessage("NoMastSelectedWarning"),
                     Bundle.getMessage("ErrorTitle"),
                     JmriJOptionPane.WARNING_MESSAGE);
@@ -1759,6 +1759,13 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleSignalGroupTable");
+    }
+
+    @Override
+    public void setMessagePreferencesDetails() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setPreferenceItemDetails(getClassName(), "remindSignalGroup", Bundle.getMessage("HideSaveReminder"));  // NOI18N
+        super.setMessagePreferencesDetails();
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalGroupTableAction.class);

@@ -1,7 +1,9 @@
 package jmri.jmrit.pragotronclock;
 
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
+import javax.swing.Icon;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
 
 /**
  * Swing action to create and register a PragotronClockFrame object.
@@ -10,7 +12,7 @@ import javax.swing.AbstractAction;
  *
  * Based on Nixie clock by Bob Jacobsen.
  */
-public class PragotronClockAction extends AbstractAction {
+public class PragotronClockAction extends JmriAbstractAction {
 
     public PragotronClockAction() {
         this("Pragotron Clock");
@@ -20,6 +22,14 @@ public class PragotronClockAction extends AbstractAction {
         super(s);
     }
 
+    public PragotronClockAction(String s, WindowInterface wi) {
+        super(s, wi);
+    }
+
+    public PragotronClockAction(String s, Icon i, WindowInterface wi) {
+        super(s, i, wi);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -27,4 +37,6 @@ public class PragotronClockAction extends AbstractAction {
         f.setVisible(true);
     }
 
+    @Override
+    public jmri.util.swing.JmriPanel makePanel() { return null; } // not used here
 }

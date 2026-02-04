@@ -78,7 +78,7 @@
           <p>But we don't need a unique tag for each model. We only need to identify what CVs are
           present and what they mean; two decoders that are running the same software will have the
           same CVs present. (We handle as a special case the number of outputs that are physically
-          available, etc)</p>
+          available, etc.)</p>
         </li>
 
         <li>Manufacturers are concerned that users and dealers will use the version identification

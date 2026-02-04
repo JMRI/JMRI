@@ -19,6 +19,12 @@ import org.slf4j.LoggerFactory;
  */
 public class LnPowerManager extends AbstractPowerManager<LocoNetSystemConnectionMemo> implements LocoNetListener {
 
+    /**
+     * Constant for the name of the Track Status Update Thread.
+     * Requires the connection UserName prepending.
+     */
+    public static final String TRACK_STATUS_UPDATE_THREAD_NAME = " LnPowerManager LnTrackStatusUpdateThread";
+
     public LnPowerManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
         // standard LocoNet - connect
@@ -133,7 +139,7 @@ public class LnPowerManager extends AbstractPowerManager<LocoNetSystemConnection
      */
     private void updateTrackPowerStatus() {
         thread = new LnTrackStatusUpdateThread(tc);
-        thread.setName("LnPowerManager LnTrackStatusUpdateThread");
+        thread.setName( memo.getUserName() + TRACK_STATUS_UPDATE_THREAD_NAME );
         thread.start();
     }
 

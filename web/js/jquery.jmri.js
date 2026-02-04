@@ -456,8 +456,17 @@
                     });
                 }
             };
+            // React to live updates on railroad name via socket
             jmri.getRailroad = function (name) {
-                jmri.socket.send("railroad", { name: name });
+                jmri.socket.send("railroad", { name: name } );
+            };
+            // Change Railroad name
+            jmri.setRailroad = function (name) {
+                if (jmri.socket) {
+                    jmri.socket.send("railroad", { name: name }, 'post');
+                } else {
+                    jmri.warn("Tried to send change railroad name message but socket is unavailable and no fallback implemented");
+                }
             };
             jmri.getReporter = function (name) {
                 if (jmri.socket) {
@@ -1021,6 +1030,9 @@
                 power: function (e) {
                     jmri.power(e.data.state);
                 },
+                railroad: function (e) {
+                    jmri.railroad(e.data.name);
+                },
                 reporter: function (e) {
                     jmri.reporter(e.data.name, e.data.value, e.data);
                 },
@@ -1147,7 +1159,7 @@
                                 } else if (!o.type) {
                                     log.error("ERROR: missing type property in " + o);
                                 } else if (!h) {
-                                    jmri.log("Ignoring JSON type '" + o.type + "'");
+                                    jmri.log("Ignoring unhandled JSON type '" + o.type + "'");
                                 }
                             })
                         } else {
@@ -1158,7 +1170,7 @@
                             } else if (!m.type) {
                                 log.error("ERROR: missing type property in " + m);
                             } else if (!h) {
-                                jmri.log("Ignoring JSON type '" + m.type + "'");
+                                jmri.log("Ignoring unhandled JSON type '" + m.type + "'");
                             }
                         }
                     }

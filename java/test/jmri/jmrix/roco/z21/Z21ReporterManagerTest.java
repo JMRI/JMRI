@@ -22,8 +22,8 @@ public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
         return "ZR" + i;
     }
 
-   @Test
-   public void testAutomaticCreateFromRailComReply(){
+    @Test
+    public void testAutomaticCreateFromRailComReply(){
        Z21ReporterManager zr = (Z21ReporterManager) l;
        zr.enableInternalReporterCreationFromMessages();  // defaults to disabled
        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
@@ -32,40 +32,40 @@ public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
        jmri.util.ThreadingUtil.runOnLayout( () -> { zr.reply(reply); });
        JUnitUtil.waitFor( ()-> { return zr.getReporter("ZR1") != null; },"wait for reporter creation");
        Assert.assertNotNull("Reporter Created via message", zr.getReporter("ZR1"));
-   }
-   
-    // No test for manager-specific system name validation at present
+    }
+
     @Test
     @Override
+    @Disabled("No test for manager-specific system name validation at present")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
-    
-    // No test for manager-specific system name validation at present
+
     @Test
     @Override
+    @Disabled("No test for manager-specific system name validation at present")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
-   @BeforeEach
+    @BeforeEach
     @Override
-   public void setUp() {
+    public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
         memo = new Z21SystemConnectionMemo();
         tc = new Z21InterfaceScaffold();
         memo.setTrafficController(tc);
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
         l = new Z21ReporterManager(memo);
-   }
+    }
 
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         l = null;
         tc.terminateThreads();
         memo = null;
         tc = null;
         JUnitUtil.clearShutDownManager(); // clears "Writing IdTags" from DefaultIdTagManager
         JUnitUtil.tearDown();
-   }
+    }
 
     @Override
     protected int maxN() { return 1; }

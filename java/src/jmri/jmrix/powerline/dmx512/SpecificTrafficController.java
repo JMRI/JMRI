@@ -5,7 +5,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
 
 import java.io.IOException;
 
-import jmri.jmrix.AbstractSerialPortController.SerialPort;
+import jmri.jmrix.SerialPort;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

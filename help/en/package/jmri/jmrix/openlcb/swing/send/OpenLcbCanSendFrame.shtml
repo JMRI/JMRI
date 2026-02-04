@@ -14,7 +14,7 @@
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
       <h1>Send OpenLCB Frame</h1>
-      <a href="SendFrame.jpg"><img src="SendFrame.jpg" width="221" height="176" alt=
+      <a href="SendFrame.jpg"><img src="SendFrame.jpg" width="368" height="410" alt=
       "Send Frame Tool image" class="floatRight"></a><br>
       The "Send OpenLCB Frame" tool lets you directly send <a href=
       "../../../../../../html/hardware/can/index.shtml">CAN frames</a>, and certain kinds of
@@ -35,49 +35,86 @@
 
       <p>Below that are sections for sending various OpenLCB messages.</p>
 
-      <p>Under "Send special frame", the "Send CIM" button formats up a "CIM" frame from the source
+      <p>Under "Send control frame with source alias:", 
+      the "Send CIM" button formats up a "CIM" frame from the source
       node alias that you provide and then sends it. This is part of the OpenLCB technique for
       allocating node aliases.</p>
 
-      <p>In the "Send OpenLCB message" section, you can format and send frames that contains
-      specific OpenLCB messages:</p>
+      <p>In the next sections, you can format and send frames that contains
+      specific OpenLCB messages.  All of these are sent with the source alias you
+      provided above</p>
 
       <ul>
-        <li>"Send Verify Node": Using the source alias you provided in the upper section and a node
-        ID specified here, this sends a request for a verification reply from the node.</li>
-
-        <li>"Send Request Events": Using the source alias you provided in the upper section and a
-        node ID specified here, this sends a request for infomration on the nodes produced and
-        consumed by the node.</li>
-
+        <li>"Send Verify Nodes Global": This sends a request for all nodes to 
+        identify themselves.  You'll see the response(s) in the monitor window.</li>
+        
+        <li>"Send Verify Nodes Global with NodeID": This sends a request for a specific node to 
+        identify themselves.  You'll see the response in the monitor window.</li>
+      </ul>  
+        
+      The following section sends messages that contain an event ID that you can 
+      specify here.  You can also specify the Unknown/Valid/Invalid status 
+      for Consumer/Producer Identified messages.
+      
+      <ul> 
+        
         <li>"Send Request Consumers": Using the source alias you provided in the upper section and
-        an event ID specified here, this sends a request for a reply from any node that consumes
+        the event ID specified here, this sends a request for a reply from any node that consumes
+        that event ID.</li>
+
+        <li>"Send Consumer Identified": Using the source alias you provided in the upper section and
+        the event ID specified here, this sends reply that the node consumes
         that event ID.</li>
 
         <li>"Send Request Producers": Using the source alias you provided in the upper section and
         an event ID specified here, this sends a request for a reply from any node that produces
         that event ID.</li>
 
+        <li>"Send Producer Identified": Using the source alias you provided in the upper section and
+        the event ID specified here, this sends reply that the node consumes
+        that event ID.</li>
+
         <li>"Send Event Produced": Using the source alias you provided in the upper section and an
         event ID specified here, this sends an announcement that the given event has been
         produced.</li>
 
+    </ul>
+    
+    <p>Next is a section that will allow you to send addressed messages to specific nodes.
+    You select the destination node here, then click the buttons to send a Request Events,
+    Send PIP Request or Send SNIP Request to that node.</p>
+    
+    <p>Next is a section that allows you to send an arbitrary datagram to the node
+    selected above.</p>
+
+    
+    <ul>
         <li>"Send Datagram": Using the source alias and destination alias you provided in the upper
-        section and data bytes you provide here, this sends a datagram to the destination node. The
-        "Send Confirm" button sends a confirmation reply to any datagram received.</li>
-      </ul>
+        section and data bytes you provide here, this sends a datagram to the destination node.</li>
+        <li>The "Send Confirm" button sends a confirmation reply to any datagram received.</li>
+    </ul>
 
-      <p>In the "Send OpenLCB configuration command" section, you can use the OpenLCB configuration
+      <p>In the "Send OpenLCB memory request" section, you can use the OpenLCB configuration
       protocol to read and write from node memory. Set your source node alias and the destination
-      node alias in the "Send special frame" section above.</p>
+      node sections above.
+      Next select the memory address to start reading or writing at, and which address space
+      you'd like to read or write from. (Configuration Definition Information, etc).
+      Then, either enter the desired number of bytes and click Read, 
+      or the data to write and push Write.</p>
 
-      <p>Next select the memory address to start reading or writing at, and which address space
-      you'd like to read or write from. (Configuration Definition Information, etc).</p>
-
-      <p>Then, either enter the desired number of bytes and click Read, or the data to write (two
-      bytes in this implementation) and push "Write".</p>
-
-      <p>"Send Confirm" sends the confirmation to any datagrams you receive in reply.</p>
+      <p>Finally, there are some high-level operations:
+      <ul>
+      <li>The "Restart" button will restart (reboot) the selected
+      node.</li>
+      <li>The "Open CDI Config Tool" button will open a configuration window
+      for the node selected above. The button is only enabled if that node
+      has indicated that it does have CDI information.</li>
+      <li>The "Force CDI Reload" button will close any 
+      configuration windows for the selected node, and then
+      force a reload of the configuration description information (CDI) the
+      next time the node's configuration window is opened.</li>
+      </ul>
+      
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>

@@ -145,7 +145,7 @@ public class AudioUtil {
         if (af == null) {
             return false;
         } else {
-            return ((jmri.jmrit.audio.AudioThread) af.getCommandThread()).alive();
+            return ((jmri.jmrit.audio.AudioThread) af.getCommandThread()).isThreadAlive();
         }
     }
 

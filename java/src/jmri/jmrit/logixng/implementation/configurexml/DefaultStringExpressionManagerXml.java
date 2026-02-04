@@ -48,8 +48,8 @@ public class DefaultStringExpressionManagerXml extends AbstractManagerXml {
                     List<Element> elements = new ArrayList<>();
                     // The male socket may be embedded in other male sockets
                     MaleStringExpressionSocket a = expression;
+                    elements.add(storeMaleSocket(a));
                     while (!(a instanceof DefaultMaleStringExpressionSocket)) {
-                        elements.add(storeMaleSocket(a));
                         a = (MaleStringExpressionSocket) a.getObject();
                     }
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(a.getObject());

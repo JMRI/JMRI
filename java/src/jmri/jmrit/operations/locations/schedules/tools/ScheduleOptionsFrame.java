@@ -70,7 +70,10 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
         getContentPane().add(pAlternate);
         getContentPane().add(pControls);
         
+        _track.addPropertyChangeListener(this);
         _track.getLocation().addPropertyChangeListener(this);
+
+        addHelpMenu("package.jmri.jmrit.operations.Operations_ControllingCarsToSpur", true); // NOI18N
 
         initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
         
@@ -84,12 +87,12 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
                 int factor = Integer.parseInt(factorTextField.getText());
                 if (factor < 0 || factor > 1000) {
                     JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("FactorMustBeNumber"),
-                            Bundle.getMessage("ErrorFactor"), JmriJOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
             } catch (NumberFormatException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("FactorMustBeNumber"),
-                        Bundle.getMessage("ErrorFactor"), JmriJOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 return;
             }
             _track.setReservationFactor(Integer.parseInt(factorTextField.getText()));
@@ -112,13 +115,24 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
     }
 
     @Override
+    public void dispose() {
+        _track.removePropertyChangeListener(this);
+        _track.getLocation().removePropertyChangeListener(this);
+        super.dispose();
+    }
+
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
-        if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Track.ALTERNATE_TRACK_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
             updateTrackCombobox();
+        }
+        if (e.getPropertyName().equals(Track.TRACK_FACTOR_CHANGED_PROPERTY)) {
+            factorTextField.setText(Integer.toString(_track.getReservationFactor()));
         }
     }
 

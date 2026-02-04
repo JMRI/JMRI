@@ -1026,7 +1026,7 @@ public class CarManagerTest extends OperationsTestCase {
         c6.setLastDate(time); // one year ago.
 
         // now get cars by last move date.
-        List<Car> carList = manager.getByLastDateList(manager.getByIdList());
+        List<Car> carList = manager.getByLastDateList();
         Assert.assertEquals("Number of Cars by last move date", 6, carList.size());
         Assert.assertEquals("1st car in list by move date", c6, carList.get(0));
         Assert.assertEquals("2nd car in list by move date", c4, carList.get(1));

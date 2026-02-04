@@ -1,10 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.geom.*;
 import static java.lang.Float.POSITIVE_INFINITY;
+import java.text.ParseException;
 import java.util.*;
 
 import javax.annotation.CheckForNull;
@@ -16,6 +18,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout.Geometry;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout.LinkType;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
+import jmri.util.IntlUtilities;
 import jmri.util.MathUtil;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
@@ -257,6 +260,8 @@ public class LayoutTurnoutView extends LayoutTrackView {
     public Point2D pointC = new Point2D.Double(60, 20);
     public Point2D pointD = new Point2D.Double(20, 20);
 
+    public boolean showUnknown = false; // if true, show "?" when state is UNKNOWN
+    
     private int version = 1;
 
     private final boolean useBlockSpeed = false;
@@ -460,6 +465,14 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.removeBeanReference(nb);
     }
 
+    public void setShowUnknown(boolean show) {
+        showUnknown = show;
+    }
+    
+    public boolean getShowUnknown() {
+        return showUnknown;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -1256,12 +1269,11 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 || (getTurnoutType() == TurnoutType.LH_XOVER)) {
             dispA = new Point2D.Double(x, y);
             // adjust to maintain the parallelogram
-            double a = 0.0;
             double b = -y;
             double xi = 0.0;
             double yi = b;
             if ((dispB.getX() + x) != 0.0) {
-                a = (dispB.getY() + y) / (dispB.getX() + x);
+                double a = (dispB.getY() + y) / (dispB.getX() + x);
                 b = -y + (a * x);
                 xi = -b / (a + (1.0 / a));
                 yi = (a * xi) + b;
@@ -1307,7 +1319,6 @@ public class LayoutTurnoutView extends LayoutTrackView {
         } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
                 || (getTurnoutType() == TurnoutType.LH_XOVER)) {
             // adjust to maintain the parallelogram
-            double a = 0.0;
             double b = y;
             double xi = 0.0;
             double yi = b;
@@ -1318,7 +1329,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                     don't have a divide by zero issue */
                     x = x - 0.0000000001;
                 }
-                a = (dispA.getY() - y) / (dispA.getX() - x);
+                double a = (dispA.getY() - y) / (dispA.getX() - x);
                 b = y - (a * x);
                 xi = -b / (a + (1.0 / a));
                 yi = (a * xi) + b;
@@ -1350,7 +1361,6 @@ public class LayoutTurnoutView extends LayoutTrackView {
             dispB = MathUtil.multiply(dispB, newLength / oldLength);
         } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
                 || (getTurnoutType() == TurnoutType.LH_XOVER)) {
-            double a = 0.0;
             double b = -y;
             double xi = 0.0;
             double yi = b;
@@ -1362,7 +1372,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
                     x = x - 0.0000000001;
                 }
-                a = (-dispB.getY() + y) / (-dispB.getX() + x);
+                double a = (-dispB.getY() + y) / (-dispB.getX() + x);
                 b = -y + (a * x);
                 xi = -b / (a + (1.0 / a));
                 yi = (a * xi) + b;
@@ -1393,12 +1403,11 @@ public class LayoutTurnoutView extends LayoutTrackView {
         } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
                 || (getTurnoutType() == TurnoutType.LH_XOVER)) {
             // adjust to maintain the parallelogram
-            double a = 0.0;
             double b = y;
             double xi = 0.0;
             double yi = b;
             if ((dispA.getX() + x) != 0.0) {
-                a = (dispA.getY() + y) / (dispA.getX() + x);
+                double a = (dispA.getY() + y) / (dispA.getX() + x);
                 b = -y + (a * x);
                 xi = -b / (a + (1.0 / a));
                 yi = (a * xi) + b;
@@ -1692,15 +1701,23 @@ public class LayoutTurnoutView extends LayoutTrackView {
             JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
             hiddenCheckBoxMenuItem.setSelected(isHidden());
             popup.add(hiddenCheckBoxMenuItem);
-            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
+            hiddenCheckBoxMenuItem.addActionListener( e1 -> {
                 JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
                 setHidden(o.isSelected());
             });
 
+            JCheckBoxMenuItem showUnknownCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowUnknown"));
+            showUnknownCheckBoxMenuItem.setSelected(getShowUnknown());
+            popup.add(showUnknownCheckBoxMenuItem);
+            showUnknownCheckBoxMenuItem.addActionListener( e1 -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
+                setShowUnknown(o.isSelected());
+            });
+            
             JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
             cbmi.setSelected(isDisabled());
             popup.add(cbmi);
-            cbmi.addActionListener((java.awt.event.ActionEvent e2) -> {
+            cbmi.addActionListener( e2 -> {
                 JCheckBoxMenuItem o = (JCheckBoxMenuItem) e2.getSource();
                 setDisabled(o.isSelected());
             });
@@ -1711,7 +1728,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
             }
             cbmi.setSelected(isDisabledWhenOccupied());
             popup.add(cbmi);
-            cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            cbmi.addActionListener( e3 -> {
                 JCheckBoxMenuItem o = (JCheckBoxMenuItem) e3.getSource();
                 setDisableWhenOccupied(o.isSelected());
             });
@@ -1720,41 +1737,11 @@ public class LayoutTurnoutView extends LayoutTrackView {
 //            if ((getConnectA() == null) && (getConnectB() == null)
 //                    && (getConnectC() == null)
 //                    && (getConnectD() == null))
-            {
-                JMenuItem rotateItem = new JMenuItem(Bundle.getMessage("Rotate_",
-                        String.format("%.1f", getRotationDEG())) + "...");
-                popup.add(rotateItem);
-                rotateItem.addActionListener((ActionEvent event) -> {
-                    boolean entering = true;
-                    boolean error = false;
-                    String newAngle = "";
-                    while (entering) {
-                        // prompt for rotation angle
-                        error = false;
-                        newAngle = JmriJOptionPane.showInputDialog(layoutEditor,
-                                Bundle.getMessage("MakeLabel", Bundle.getMessage("EnterRotation")),"");
-                        if (newAngle==null || newAngle.isEmpty()) {
-                            return;  // cancelled
-                        }
-                        double rot = 0.0;
-                        try {
-                            rot = Double.parseDouble(newAngle);
-                        } catch (Exception e1) {
-                            JmriJOptionPane.showMessageDialog(layoutEditor, Bundle.getMessage("Error3")
-                                    + " " + e1, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-                            error = true;
-                            newAngle = "";
-                        }
-                        if (!error) {
-                            entering = false;
-                            if (rot != 0.0) {
-                                rotateCoords(rot);
-                                layoutEditor.redrawPanel();
-                            }
-                        }
-                    }
-                });
-            }
+
+            JMenuItem rotateItem = new JMenuItem(Bundle.getMessage("Rotate_",
+                    String.format(Locale.getDefault(), "%.1f", getRotationDEG())) + "...");
+            popup.add(rotateItem);
+            rotateItem.addActionListener( event -> displayRotationDialog());
 
             popup.add(new AbstractAction(Bundle.getMessage("UseSizeAsDefault")) {
                 @Override
@@ -1894,6 +1881,29 @@ public class LayoutTurnoutView extends LayoutTrackView {
         }
         return popup;
     } // showPopup
+
+    private void displayRotationDialog(){
+        boolean entering = true;
+        while (entering) {
+            // prompt for rotation angle
+            String newAngle = JmriJOptionPane.showInputDialog(layoutEditor,
+                    Bundle.getMessage("MakeLabel", Bundle.getMessage("EnterRotation")),"");
+            if (newAngle==null || newAngle.isEmpty()) {
+                return; // cancelled
+            }
+            try {
+                double rot = IntlUtilities.doubleValue(newAngle);
+                entering = false;
+                if ( Double.compare(rot, 0.0d) != 0 ) { // i.e. rot != 0
+                    rotateCoords(rot);
+                    layoutEditor.redrawPanel();
+                }
+            } catch (ParseException e1) {
+                JmriJOptionPane.showMessageDialog(layoutEditor, Bundle.getMessage("Error3")
+                    + " " + e1, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
 
     public String[] getBlockBoundaries() {
         return turnout.getBlockBoundaries();
@@ -2044,6 +2054,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         }
 
         TurnoutType type = getTurnoutType();
+
         if (type == TurnoutType.DOUBLE_XOVER) {
             if (state != Turnout.THROWN && state != INCONSISTENT) { // unknown or continuing path - not crossed over
                 if (isMain == mainlineA) {
@@ -2281,6 +2292,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         } else if (isTurnoutTypeSlip()) {
             log.error("{}.draw1(...); slips should be being drawn by LayoutSlip sub-class", getName());
         } else {    // LH, RH, or WYE Turnouts
+                            
             // draw A<===>center
             if (isMain == mainlineA) {
                 g2.setColor(colorA);
@@ -2315,8 +2327,62 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 }
             }
         }
+
+        // Overwrite with "?" if UNKNOWN and showUnknown requesting
+        if (showUnknown && state == UNKNOWN) {
+            // Draw the circle over the track drawing
+            //Color previousColor = g2.getColor();
+            //g2.setColor(g2.getBackground());
+            g2.fill(trackControlCircleAt(getCoordsCenter()));
+            //g2.setColor(previousColor);
+
+            drawForShowUnknown(g2, pM, g2.getColor(), true);
+            return;
+        }    
     }   // draw1
 
+    /** 
+     * Draw a "?" for the UNKNOWN state.
+     *
+     * To be invoked if getShowUnknown() is true
+     * 
+     * @param g2 the graphics context to draw in
+     * @param center where to center the "?"
+     * @param color the base color for drawing
+     * @param complement true means select black or white to complement the base color
+     */
+    private void drawForShowUnknown(Graphics2D g2, Point2D center, Color color, boolean complement) {
+        var originalFont = g2.getFont();
+        var originalColor = g2.getColor();
+                
+        // convert color to HSV to get intensity
+        int v = Math.max(Math.max(color.getBlue(), color.getGreen()), color.getRed());
+        
+        Color drawColor = color; 
+        
+        if (complement) {
+            drawColor = Color.BLACK;
+            if ( v < 255*0.5) { 
+                drawColor = Color.WHITE;
+            }
+        }
+            
+        g2.setColor(drawColor);
+        
+        int size = (int) layoutEditor.circleDiameter;
+        
+        g2.setFont(new Font("SansSerif", Font.BOLD, size));
+        
+        var metrics = g2.getFontMetrics();
+        double x = center.getX() - ((double) metrics.charWidth('?'))/2; // - to move left
+        double y = center.getY() + (metrics.getAscent()*0.9)/2;    // + to move down
+        
+        g2.drawString("?", (float) x, (float) y);
+        
+        g2.setColor(originalColor);
+        g2.setFont(originalFont);
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -3037,6 +3103,11 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
             if (layoutEditor.isTurnoutFillControlCircles()) {
                 g2.fill(trackControlCircleAt(getCoordsCenter()));
+                // do we need to draw a ? for unknown over the circle?
+                if (showUnknown && getState() == UNKNOWN) {
+                    drawForShowUnknown(g2, getCoordsCenter(), g2.getBackground(), true);
+                    return;
+                }    
             } else {
                 g2.draw(trackControlCircleAt(getCoordsCenter()));
             }
@@ -3045,6 +3116,8 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 // then restore foreground color
                 g2.setColor(foregroundColor);
             }
+            
+            
         }
     }
 
@@ -3184,7 +3257,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         private final String blockName;
         private final LayoutBlock layoutBlock;
 
-        public AbstractActionImpl(String name, String blockName, LayoutBlock layoutBlock) {
+        AbstractActionImpl(String name, String blockName, LayoutBlock layoutBlock) {
             super(name);
             this.blockName = blockName;
             this.layoutBlock = layoutBlock;

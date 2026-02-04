@@ -1,22 +1,22 @@
 package apps.DecoderPro;
 
 import apps.Apps;
+
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import jmri.InstanceManager;
 import jmri.jmrit.roster.swing.RosterFrameAction;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI application for configuring DCC decoders.
@@ -57,13 +57,12 @@ public class DecoderPro extends Apps {
 
     @Override
     protected String line1() {
-        return MessageFormat.format(Bundle.getMessage("DecoderProVersionCredit"),
-                new Object[]{jmri.Version.name()});
+        return Bundle.getMessage("DecoderProVersionCredit", jmri.Version.name());
     }
 
     @Override
     protected String line2() {
-        return "http://jmri.org/DecoderPro";
+        return "https://jmri.org/DecoderPro";
     }
 
     /**
@@ -86,11 +85,11 @@ public class DecoderPro extends Apps {
         };
 
         JButton roster = new JButton(new RosterFrameAction());
-        roster.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        roster.setAlignmentX(Component.CENTER_ALIGNMENT);
         j.add(roster);
         JButton b1 = new JButton(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         b1.addActionListener(serviceprog);
-        b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        b1.setAlignmentX(Component.CENTER_ALIGNMENT);
         j.add(b1);
         if (InstanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) == null
                 || !InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).isGlobalProgrammerAvailable()) {
@@ -99,7 +98,7 @@ public class DecoderPro extends Apps {
         }
         JButton m1 = new JButton(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         m1.addActionListener(opsprog);
-        m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        m1.setAlignmentX(Component.CENTER_ALIGNMENT);
         j.add(m1);
         if (InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class) == null
                 || !InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).isAddressedModePossible()) {
@@ -111,11 +110,11 @@ public class DecoderPro extends Apps {
         p3.setLayout(new FlowLayout());
         h1 = new JButton(Bundle.getMessage("ButtonHelp"));
         // as globalHelpBroker is still null, wait to attach help target after help menu is created
-        h1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        h1.setAlignmentX(Component.CENTER_ALIGNMENT);
         p3.add(h1);
         JButton q1 = new JButton(Bundle.getMessage("ButtonQuit"));
         q1.addActionListener(quit);
-        q1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        q1.setAlignmentX(Component.CENTER_ALIGNMENT);
         p3.add(q1);
         j.add(p3);
 
@@ -157,5 +156,5 @@ public class DecoderPro extends Apps {
         splash(false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DecoderPro.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DecoderPro.class);
 }

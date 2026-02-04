@@ -1,8 +1,10 @@
 package jmri.jmrix.rfid.protocol.parallax;
 
-import jmri.jmrix.AbstractMRReply;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.Assert.assertEquals;
+import jmri.jmrix.AbstractMRReply;
 
 import org.junit.jupiter.api.*;
 
@@ -13,8 +15,8 @@ import org.junit.jupiter.api.*;
  */
 public class ParallaxRfidProtocolTest {
 
-    AbstractMRReply msgStandalone = new AbstractMRReplyImpl("\n7800656EB6\r");
-    AbstractMRReply msgInvalidStandalone = new AbstractMRReplyImpl("\r\n7800656EB6");
+    private final AbstractMRReply msgStandalone = new AbstractMRReplyImpl("\n7800656EB6\r");
+    private final AbstractMRReply msgInvalidStandalone = new AbstractMRReplyImpl("\r\n7800656EB6");
 
     /**
      * Test of getMaxSize method, of class ParallaxRfidProtocol.
@@ -48,7 +50,7 @@ public class ParallaxRfidProtocolTest {
     @Test
     public void testProvidesChecksum() {
         ParallaxRfidProtocol instance = new ParallaxRfidProtocol();
-        assertEquals(false, instance.providesChecksum());
+        assertFalse( instance.providesChecksum());
     }
 
     /**
@@ -66,8 +68,8 @@ public class ParallaxRfidProtocolTest {
     @Test
     public void testIsValid() {
         ParallaxRfidProtocol instance = new ParallaxRfidProtocol();
-        assertEquals(true, instance.isValid(msgStandalone));
-        assertEquals(false, instance.isValid(msgInvalidStandalone));
+        assertTrue( instance.isValid(msgStandalone));
+        assertFalse( instance.isValid(msgInvalidStandalone));
     }
 
     /**
@@ -76,7 +78,7 @@ public class ParallaxRfidProtocolTest {
     @Test
     public void testEndOfMessage() {
         ParallaxRfidProtocol instance = new ParallaxRfidProtocol();
-        assertEquals(true, instance.endOfMessage(msgStandalone));
+        assertTrue( instance.endOfMessage(msgStandalone));
     }
 
     /**
@@ -99,11 +101,7 @@ public class ParallaxRfidProtocolTest {
         assertEquals(expResult, instance.toMonitorString(msgStandalone));
     }
 
-    class AbstractMRReplyImpl extends AbstractMRReply {
-
-        AbstractMRReplyImpl() {
-            super();
-        }
+    private static class AbstractMRReplyImpl extends AbstractMRReply {
 
         AbstractMRReplyImpl(String s) {
             super(s);
@@ -117,12 +115,12 @@ public class ParallaxRfidProtocolTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 

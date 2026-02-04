@@ -43,7 +43,7 @@ public class DmiSpeedoDialPanelTest {
         stepSpeeds(p, 400);
         // stepSpeeds(p, 600);
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 
@@ -66,7 +66,7 @@ public class DmiSpeedoDialPanelTest {
 
         // JUnitUtil.waitFor(1000);
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
 
     }
@@ -75,7 +75,7 @@ public class DmiSpeedoDialPanelTest {
 
         p.setMaxDialSpeed(maxSpeed);
         // JUnitUtil.waitFor(1000);
-        for (int i = 0; i <= maxSpeed; i++) {
+        for (float i = 0; i <= maxSpeed; i += 0.4f) {
             p.setActualSpeed(i);
 
             DmiCircularSpeedGuideSection csg = new DmiCircularSpeedGuideSection(
@@ -109,7 +109,7 @@ public class DmiSpeedoDialPanelTest {
         // JUnitUtil.waitFor(1000);
     }
 
-    private void setSpeedHookSpeed(int speedHookSpeed, DmiPanel p){
+    private void setSpeedHookSpeed(float speedHookSpeed, DmiPanel p){
     
         ArrayList<DmiCircularSpeedGuideSection> csgSectionList = new ArrayList<>();
         csgSectionList.add(new DmiCircularSpeedGuideSection(DmiCircularSpeedGuideSection.CSG_TYPE_NORMAL,

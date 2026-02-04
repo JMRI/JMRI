@@ -1,5 +1,8 @@
 package apps.gui3.paned;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -10,15 +13,13 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class PanedTest {
 
     @Test
@@ -56,14 +57,18 @@ public class PanedTest {
             }
 
         };
-        Assert.assertNotNull(a);
+        assertNotNull(a);
         // shutdown the application
-        AppsBase.handleQuit();
+        assertFalse(AppsBase.handleQuit());
         JUnitUtil.disposeFrame("DecoderPro Wizard", true, true);
         
         JUnitUtil.waitFor(() -> {
             return JUnitAppender.checkForMessageStartingWith("No pre-existing config file found, searched for ") != null;
         }, "no existing config Info line seen");
+
+        JUnitUtil.waitFor( () ->
+            ((jmri.managers.DefaultShutDownManager)InstanceManager.getDefault(
+            jmri.ShutDownManager.class)).isShutDownComplete(),"Shutdown complete");
     }
 
     @BeforeEach

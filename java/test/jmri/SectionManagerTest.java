@@ -3,7 +3,8 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
@@ -14,13 +15,13 @@ public class SectionManagerTest {
     @Test
     public void testCTor() {
         SectionManager t = new jmri.managers.DefaultSectionManager();
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testInstanceManagerAccess() {
         SectionManager t = InstanceManager.getDefault(SectionManager.class);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @BeforeEach

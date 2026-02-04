@@ -170,6 +170,8 @@ public class WebAppServlet extends HttpServlet {
         response.getWriter().print(FileUtil.readFile(script));
     }
 
+    @SuppressWarnings("deprecation")    // The constructor Locale(String) is deprecated since version 19
+                                        // The replacement Locale.of(String) isn't available before version 19
     private void processLocale(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType(UTF8_APPLICATION_JSON);
         Profile profile = ProfileManager.getDefault().getActiveProfile();

@@ -58,7 +58,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     public HubPane(int port, boolean sendLineEndings ) {
         super();
         userPreferencesManager = InstanceManager.getDefault(UserPreferencesManager.class);
-        textArea = new java.awt.TextArea();
+        textArea = new javax.swing.JTextArea();
         _send_line_endings = getSendLineEndingsFromUserPref(sendLineEndings);
         hub = new Hub(port, sendLineEndings, getRequireLineEndingsFromUserPref()) {
             @Override
@@ -112,7 +112,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         }
     }
 
-    final private java.awt.TextArea textArea;
+    final private javax.swing.JTextArea textArea;
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
@@ -189,6 +189,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
             }
 
             CanReply workingReply = msg.createReply();
+            workingReply.setSourceLetter("H");
             workingReplySet.add(workingReply);  // save for later recognition
 
             CanMessage result = new CanMessage(workingReply.getNumDataElements(), workingReply.getHeader());
@@ -196,6 +197,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
                 result.setElement(i, workingReply.getElement(i));
             }
             result.setExtended(workingReply.isExtended());
+            result.setSourceLetter("H");
             workingMessageSet.add(result);
             log.trace("Hub forwarder create reply {}", workingReply);
 
@@ -209,15 +211,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         t.start();
         log.debug("hub thread started");
         advertise(port);
-    }
-
-    // For testing
-    @SuppressWarnings("deprecation") // Thread.stop
-    void stopHubThread() {
-        if (t != null) {
-            t.stop();
-            t = null;
-        }
     }
 
     ArrayList<CanReply> workingReplySet = new ArrayList<>(); // collection of self-sent replies
@@ -304,7 +297,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         if ( _zero_conf_service != null ) { // set on void advertise(int port)
             _zero_conf_service.stop();
         }
-        stopHubThread();
         hub.dispose();
     }
 

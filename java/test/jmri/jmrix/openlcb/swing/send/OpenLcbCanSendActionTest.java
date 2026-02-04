@@ -11,22 +11,20 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.mockito.Mockito;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
-
 /**
  * @author Bob Jacobsen Copyright 2013
  * @author Paul Bender Copyright(C) 2016
  */
 public class OpenLcbCanSendActionTest {
 
-    jmri.jmrix.can.CanSystemConnectionMemo memo;
+    private jmri.jmrix.can.CanSystemConnectionMemo memo;
     // jmri.jmrix.can.TrafficController tc;
 
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCtor() {
         OpenLcbCanSendAction h = new OpenLcbCanSendAction();
-        assertThat(h).withFailMessage("Action object non-null").isNotNull();
+        Assertions.assertNotNull( h, "Action object non-null");
     }
 
     @BeforeEach

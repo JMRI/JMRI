@@ -1,34 +1,31 @@
 package jmri.jmrix.nce.macro;
 
+import java.awt.*;
+
+import javax.swing.*;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
 import jmri.InstanceManager;
-import jmri.jmrix.nce.NceBinaryCommand;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.NceTrafficController;
+import jmri.jmrix.nce.*;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
- * Frame for user edit of NCE macros
- *
- * NCE macros are stored in Command Station (CS) memory starting at address
- * xC800 (PH5 0x6000). Each macro consists of 20 bytes. The last macro 255 is at address
- * xDBEC.
- *
- * Macro addr 0 xC800 1 xC814 2 xC828 3 xC83C . . . . 255 xDBEC
- *
+ * Frame for user edit of NCE macros NCE macros are stored in Command Station
+ * (CS) memory starting at address xC800 (PH5 0x6000). Each macro consists of 20
+ * bytes. The last macro 255 is at address xDBEC.
+ * <p>
+ * Macro addr 0 xC800
+ * <p>
+ * Macro addr 1 xC814
+ * <p>
+ * Macro addr 2 xC828
+ * <p>
+ * Macro addr 3 xC83C
+ * <p>
+ * . . . .
+ * <p>
+ * Macro addr 255 xDBEC
+ * <p>
  * Each macro can close or throw up to ten accessories. Macros can also be
  * linked together. Two bytes (16 bit word) define an accessory address and
  * command, or the address of the next macro to be executed. If the upper byte
@@ -36,41 +33,39 @@ import jmri.util.swing.JmriJOptionPane;
  * next macro to be executed by the NCE CS. For example, xFF08 means link to
  * macro 8. NCE uses the NMRA DCC accessory decoder packet format for the word
  * definition of their macros.
- *
- * Macro data byte:
- *
- * bit 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 _ _ _ _ 1 0 A A A A A A 1 A A A C D
- * D D addr bit 7 6 5 4 3 2 10 9 8 1 0 turnout T
- *
+ * <p>
+ * Macro data byte: bit 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0
+ * <p>
+ * _ _ _ _ _ _ _ _ _ _ _ 1 0 A A A A A A 1 A A A C D D D
+ * <p>
+ * addr bit 7 6 5 4 3 2 10 9 8 1 0 turnout T
+ * <p>
  * By convention, MSB address bits 10 - 8 are one's complement. NCE macros
  * always set the C bit to 1. The LSB "D" (0) determines if the accessory is to
  * be thrown (0) or closed (1). The next two bits "D D" are the LSBs of the
  * accessory address. Note that NCE display addresses are 1 greater than NMRA
  * DCC. Note that address bit 2 isn't supposed to be inverted, but it is the way
- * NCE implemented their macros.
- *
- * Examples:
- *
- * 81F8 = accessory 1 thrown 9FFC = accessory 123 thrown B5FD = accessory 211
- * close BF8F = accessory 2044 close
- *
+ * NCE implemented their macros. Examples: 81F8 = accessory 1 thrown 9FFC =
+ * accessory 123 thrown B5FD = accessory 211 close BF8F = accessory 2044 close
  * FF10 = link macro 16
- *
- * Updated for including the USB 7.* for 1.65 command station
- *
- * Variables found on cab context page 14 (Cab address 14)
- *
- * ;macro table MACRO_TBL ;table of macros, 16 entries of 16 bytes organized as:
- * ; macro 0, high byte, low byte - 7 more times (8 accy commands total) ; macro
- * 1, high byte, low byte - 7 more times (8 accy commands total) ; ; macro 16,
- * high byte, low byte - 7 more times (8 accy commands total)
- *
- *
- * @author Dan Boudreau Copyright (C) 2007
+ * <p>
+ * Updated for including the USB 7.* for 1.65 command station Variables found on
+ * cab context page 14 (Cab address 14) macro table 0xE00-0xEFF, cab address =
+ * 0x0E 16 entries of 16 bytes organized as:
+ * <p>
+ * macro 0, high byte, low byte - 7 more times (8 accy commands total)
+ * <p>
+ * macro 1, high byte, low byte - 7 more times (8 accy commands total)
+ * <p>
+ * . . . .
+ * <p>
+ * macro 16, high byte, low byte - 7 more times (8 accy commands total)
+ * 
+ * @author Dan Boudreau Copyright (C) 2007, 2024
  * @author Ken Cameron Copyright (C) 2013, 2023
  */
 public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
-    
+
     private NceTrafficController tc = null;
     private int memBase;
     private int maxNumMacros;
@@ -95,6 +90,8 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     private static final String ACCESSORY = Bundle.getMessage("accessory");
 
     private static final String LINK = Bundle.getMessage("LinkMacro");// Line 10 alternative to Delete
+
+    private static final int FAILED = -1;
 
     Thread nceMemoryThread;
     private boolean readRequested = false;
@@ -240,6 +237,14 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
 
     /**
+     * The minimum frame size for font size 16
+     */
+    @Override
+    public Dimension getMinimumDimension() {
+        return new Dimension(500, 500);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -252,7 +257,6 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) &&
                 (tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
             isUsb = true;
-            memBase = -1;
         }
 
         // the following code sets the frame's initial state
@@ -265,11 +269,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         previousButton.setToolTipText(Bundle.getMessage("toolTipSearchDecrementing"));
         nextButton.setToolTipText(Bundle.getMessage("toolTipSearchIncrementing"));
         getButton.setToolTipText(Bundle.getMessage("toolTipReadMacro"));
-        if (isUsb) {
-            macroTextField.setToolTipText(Bundle.getMessage("toolTipEnterMacroUsb"));
-        } else {
-            macroTextField.setToolTipText(Bundle.getMessage("toolTipEnterMacroSerial"));
-        }
+        macroTextField.setToolTipText(Bundle.getMessage("toolTipEnterMacro", maxNumMacros - 1));
         saveButton.setToolTipText(Bundle.getMessage("toolTipUpdateMacro"));
         backUpButton.setToolTipText(Bundle.getMessage("toolTipBackUp"));
         restoreButton.setToolTipText(Bundle.getMessage("toolTipRestore"));
@@ -555,7 +555,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             if (deleteButton10.getText().equals(LINK)) {
                 if (!macroValid) { // Error user input incorrect
                     JmriJOptionPane.showMessageDialog(this,
-                            Bundle.getMessage("GetMacroNumber"),
+                            Bundle.getMessage("GetMacroNumber", maxNumMacros - 1),
                             Bundle.getMessage("NceMacro"),
                             JmriJOptionPane.ERROR_MESSAGE);
                     return;
@@ -563,7 +563,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 int linkMacro = validMacro(accyTextField10.getText());
                 if (linkMacro == -1) {
                     JmriJOptionPane.showMessageDialog(this,
-                            Bundle.getMessage("EnterMacroNumberLine10"),
+                            Bundle.getMessage("EnterMacroNumberLastLine", maxNumMacros - 1),
                             Bundle.getMessage("NceMacro"),
                             JmriJOptionPane.ERROR_MESSAGE);
                     return;
@@ -592,15 +592,6 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     private int getMacro() {
         // Set all fields to default and build from there
         initAccyFields();
-        //        if (firstTime) {
-        //            try {
-        //                Thread.sleep(firstTimeSleep); // wait for panel to display
-        //            } catch (InterruptedException e) {
-        //                log.error("Thread unexpectedly interrupted", e);
-        //            }
-        //        }
-        //
-        //        firstTime = false;
         String m = macroTextField.getText();
         if (m.isEmpty()) {
             m = "0";
@@ -609,7 +600,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         if (mN < 0) {
             macroReply.setText(Bundle.getMessage("error"));
             JmriJOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("EnterMacroNumber"),
+                    Bundle.getMessage("EnterMacroNumber", maxNumMacros - 1),
                     Bundle.getMessage("NceMacro"),
                     JmriJOptionPane.ERROR_MESSAGE);
             macroValid = false;
@@ -619,14 +610,14 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             macroReply.setText(Bundle.getMessage("searching"));
             if (macroSearchInc) {
                 mN++;
-                if (mN >= maxNumMacros + 1) {
+                if (mN >= maxNumMacros) {
                     mN = 0;
                 }
             }
             if (macroSearchDec) {
                 mN--;
                 if (mN <= -1) {
-                    mN = maxNumMacros;
+                    mN = maxNumMacros - 1;
                 }
             }
         } else {
@@ -639,26 +630,15 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     /**
      * Writes all bytes to NCE CS memory as long as there are no user input
      * errors
-     *
      */
     private boolean saveMacro() {
-        //        if (firstTime) {
-        //            try {
-        //                Thread.sleep(firstTimeSleep); // wait for panel to display
-        //            } catch (InterruptedException e) {
-        //                log.error("Thread unexpectedly interrupted", e);
-        //            }
-        //        }
-        //
-        //        firstTime = false;
         byte[] macroAccy = new byte[macroSize]; // NCE Macro data
         int index = 0;
         int accyNum = 0;
         // test the inputs, convert from text
         accyNum = getAccyRow(macroAccy, index, textAccy1, accyTextField1, cmdButton1);
-        if (accyNum < 0) //error
-        {
-            return false;
+        if (accyNum < 0) {
+            return false; //error
         }
         if (accyNum > 0) {
             index += 2;
@@ -724,7 +704,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         accyNum = getAccyRow(macroAccy, index, textAccy10, accyTextField10, cmdButton10);
         if (accyNum < 0) {
             JmriJOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("EnterMacroNumberLine10"),
+                    Bundle.getMessage("EnterMacroNumberLastLine", maxNumMacros - 1),
                     Bundle.getMessage("NceMacro"),
                     JmriJOptionPane.ERROR_MESSAGE);
             return false;
@@ -812,227 +792,249 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         nceMemoryThread.start();
     }
 
-    // Reads 16/20 bytes of NCE macro memory
+    // Reads entire macro from NCE memory
     private int readMacroMemory(int mN) {
-        int entriesRead = 0;
         if (isUsb) {
-            setUsbCabMemoryPointer(tc.csm.getMacroAddr(), (mN * macroSize));
-            if (!waitNce()) {
-                return -1;
-            }
-            // 1st word of macro
-            readUsbMemoryN(2);
-            if (!waitNce()) {
-                return -1;
-            }
-            int accyAddr = getMacroAccyAdr(recChars);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(recChars), textAccy1, accyTextField1, cmdButton1,
-                    deleteButton1);
-            // 2nd word of macro
-            readUsbMemoryN(2);
-            if (!waitNce()) {
-                return -1;
-            }
-            accyAddr = getMacroAccyAdr(recChars);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(recChars), textAccy2, accyTextField2, cmdButton2,
-                    deleteButton2);
-            // 3rd word of macro
-            readUsbMemoryN(2);
-            if (!waitNce()) {
-                return -1;
-            }
-            accyAddr = getMacroAccyAdr(recChars);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(recChars), textAccy3, accyTextField3, cmdButton3,
-                    deleteButton3);
-            // 4th word of macro
-            readUsbMemoryN(2);
-            if (!waitNce()) {
-                return -1;
-            }
-            accyAddr = getMacroAccyAdr(recChars);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(recChars), textAccy4, accyTextField4, cmdButton4,
-                    deleteButton4);
-            // 5th word of macro
-            readUsbMemoryN(2);
-            if (!waitNce()) {
-                return -1;
-            }
-            accyAddr = getMacroAccyAdr(recChars);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(recChars), textAccy5, accyTextField5, cmdButton5,
-                    deleteButton5);
-            // 6th word of macro
-            readUsbMemoryN(2);
-            if (!waitNce()) {
-                return -1;
-            }
-            accyAddr = getMacroAccyAdr(recChars);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(recChars), textAccy6, accyTextField6, cmdButton6,
-                    deleteButton6);
-            // 7th word of macro
-            readUsbMemoryN(2);
-            if (!waitNce()) {
-                return -1;
-            }
-            accyAddr = getMacroAccyAdr(recChars);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(recChars), textAccy7, accyTextField7, cmdButton7,
-                    deleteButton7);
-            // 8th word of macro
-            readUsbMemoryN(2);
-            if (!waitNce()) {
-                return -1;
-            }
-            accyAddr = getMacroAccyAdr(recChars);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(recChars), textAccy8, accyTextField8, cmdButton8,
-                    deleteButton8);
-            return entriesRead;
-        } else {
-            int memPtr = tc.csm.getMacroAddr() + (mN * macroSize);
-            int readPtr = 0;
-            int[] workBuf = new int[2];
-            // 1st word of macro
-            readSerialMemory16(memPtr);
-            if (!waitNce()) {
-                return -1;
-            }
-            workBuf[0] = recChars[readPtr++];
-            workBuf[1] = recChars[readPtr++];
-            int accyAddr = getMacroAccyAdr(workBuf);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(workBuf), textAccy1, accyTextField1, cmdButton1,
-                    deleteButton1);
-            // 2nd word of macro
-            workBuf[0] = recChars[readPtr++];
-            workBuf[1] = recChars[readPtr++];
-            accyAddr = getMacroAccyAdr(workBuf);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(workBuf), textAccy2, accyTextField2, cmdButton2,
-                    deleteButton2);
-            // 3rd word of macro
-            workBuf[0] = recChars[readPtr++];
-            workBuf[1] = recChars[readPtr++];
-            accyAddr = getMacroAccyAdr(workBuf);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(workBuf), textAccy3, accyTextField3, cmdButton3,
-                    deleteButton3);
-            // 4th word of macro
-            workBuf[0] = recChars[readPtr++];
-            workBuf[1] = recChars[readPtr++];
-            accyAddr = getMacroAccyAdr(workBuf);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(workBuf), textAccy4, accyTextField4, cmdButton4,
-                    deleteButton4);
-            // 5th word of macro
-            workBuf[0] = recChars[readPtr++];
-            workBuf[1] = recChars[readPtr++];
-            accyAddr = getMacroAccyAdr(workBuf);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(workBuf), textAccy5, accyTextField5, cmdButton5,
-                    deleteButton5);
-            // 6th word of macro
-            workBuf[0] = recChars[readPtr++];
-            workBuf[1] = recChars[readPtr++];
-            accyAddr = getMacroAccyAdr(workBuf);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(workBuf), textAccy6, accyTextField6, cmdButton6,
-                    deleteButton6);
-            // 7th word of macro
-            workBuf[0] = recChars[readPtr++];
-            workBuf[1] = recChars[readPtr++];
-            accyAddr = getMacroAccyAdr(workBuf);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(workBuf), textAccy7, accyTextField7, cmdButton7,
-                    deleteButton7);
-            // 8th word of macro
-            workBuf[0] = recChars[readPtr++];
-            workBuf[1] = recChars[readPtr++];
-            accyAddr = getMacroAccyAdr(workBuf);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(workBuf), textAccy8, accyTextField8, cmdButton8,
-                    deleteButton8);
-            // 9th word of macro
-            memPtr += 16;
-            readPtr = 0;
-            readSerialMemory16(memPtr);
-            if (!waitNce()) {
-                return -1;
-            }
-            workBuf[0] = recChars[readPtr++];
-            workBuf[1] = recChars[readPtr++];
-            accyAddr = getMacroAccyAdr(workBuf);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(workBuf), textAccy9, accyTextField9, cmdButton9,
-                    deleteButton9);
-            // 10th word of macro
-            workBuf[0] = recChars[readPtr++];
-            workBuf[1] = recChars[readPtr++];
-            accyAddr = getMacroAccyAdr(workBuf);
-            if (accyAddr <= 0) {
-                return entriesRead;
-            }
-            entriesRead++;
-            setAccy(accyAddr, getAccyCmd(workBuf), textAccy10, accyTextField10, cmdButton10,
-                    deleteButton10);
+            return readUsbMacroMemory(mN);
+        }
+        return readCommandStationMacroMemory(mN);
+    }
+
+    /**
+     * Reads 16 byes of NCE macro memory
+     * 
+     * @param mN macro number
+     * @return number of accessory addresses read
+     */
+    private int readUsbMacroMemory(int mN) {
+        setUsbCabMemoryPointer(memBase, (mN * macroSize));
+        if (!waitNce()) {
+            return FAILED;
+        }
+        int entriesRead = 0;
+        // 1st word of macro
+        readUsbMemoryN(2);
+        if (!waitNce()) {
+            return FAILED;
+        }
+        int accyAddr = getMacroAccyAdr(recChars);
+        if (accyAddr <= 0) {
             return entriesRead;
         }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(recChars), textAccy1, accyTextField1, cmdButton1,
+                deleteButton1);
+        // 2nd word of macro
+        readUsbMemoryN(2);
+        if (!waitNce()) {
+            return FAILED;
+        }
+        accyAddr = getMacroAccyAdr(recChars);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(recChars), textAccy2, accyTextField2, cmdButton2,
+                deleteButton2);
+        // 3rd word of macro
+        readUsbMemoryN(2);
+        if (!waitNce()) {
+            return FAILED;
+        }
+        accyAddr = getMacroAccyAdr(recChars);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(recChars), textAccy3, accyTextField3, cmdButton3,
+                deleteButton3);
+        // 4th word of macro
+        readUsbMemoryN(2);
+        if (!waitNce()) {
+            return FAILED;
+        }
+        accyAddr = getMacroAccyAdr(recChars);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(recChars), textAccy4, accyTextField4, cmdButton4,
+                deleteButton4);
+        // 5th word of macro
+        readUsbMemoryN(2);
+        if (!waitNce()) {
+            return FAILED;
+        }
+        accyAddr = getMacroAccyAdr(recChars);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(recChars), textAccy5, accyTextField5, cmdButton5,
+                deleteButton5);
+        // 6th word of macro
+        readUsbMemoryN(2);
+        if (!waitNce()) {
+            return FAILED;
+        }
+        accyAddr = getMacroAccyAdr(recChars);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(recChars), textAccy6, accyTextField6, cmdButton6,
+                deleteButton6);
+        // 7th word of macro
+        readUsbMemoryN(2);
+        if (!waitNce()) {
+            return FAILED;
+        }
+        accyAddr = getMacroAccyAdr(recChars);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(recChars), textAccy7, accyTextField7, cmdButton7,
+                deleteButton7);
+        // 8th word of macro
+        readUsbMemoryN(2);
+        if (!waitNce()) {
+            return FAILED;
+        }
+        accyAddr = getMacroAccyAdr(recChars);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(recChars), textAccy10, accyTextField10, cmdButton10,
+                deleteButton10);
+        return entriesRead;
+    }
+
+    /**
+     * Reads 20 byes of NCE command station macro memory
+     * 
+     * @param mN macro number
+     * @return number of accessory addresses read
+     */
+    private int readCommandStationMacroMemory(int mN) {
+        int memPtr = memBase + (mN * macroSize);
+        int readPtr = 0;
+        int[] workBuf = new int[2];
+        int entriesRead = 0;
+
+        // 1st word of macro
+        readSerialMemory16(memPtr);
+        if (!waitNce()) {
+            return FAILED;
+        }
+        workBuf[0] = recChars[readPtr++];
+        workBuf[1] = recChars[readPtr++];
+        int accyAddr = getMacroAccyAdr(workBuf);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(workBuf), textAccy1, accyTextField1, cmdButton1,
+                deleteButton1);
+        // 2nd word of macro
+        workBuf[0] = recChars[readPtr++];
+        workBuf[1] = recChars[readPtr++];
+        accyAddr = getMacroAccyAdr(workBuf);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(workBuf), textAccy2, accyTextField2, cmdButton2,
+                deleteButton2);
+        // 3rd word of macro
+        workBuf[0] = recChars[readPtr++];
+        workBuf[1] = recChars[readPtr++];
+        accyAddr = getMacroAccyAdr(workBuf);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(workBuf), textAccy3, accyTextField3, cmdButton3,
+                deleteButton3);
+        // 4th word of macro
+        workBuf[0] = recChars[readPtr++];
+        workBuf[1] = recChars[readPtr++];
+        accyAddr = getMacroAccyAdr(workBuf);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(workBuf), textAccy4, accyTextField4, cmdButton4,
+                deleteButton4);
+        // 5th word of macro
+        workBuf[0] = recChars[readPtr++];
+        workBuf[1] = recChars[readPtr++];
+        accyAddr = getMacroAccyAdr(workBuf);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(workBuf), textAccy5, accyTextField5, cmdButton5,
+                deleteButton5);
+        // 6th word of macro
+        workBuf[0] = recChars[readPtr++];
+        workBuf[1] = recChars[readPtr++];
+        accyAddr = getMacroAccyAdr(workBuf);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(workBuf), textAccy6, accyTextField6, cmdButton6,
+                deleteButton6);
+        // 7th word of macro
+        workBuf[0] = recChars[readPtr++];
+        workBuf[1] = recChars[readPtr++];
+        accyAddr = getMacroAccyAdr(workBuf);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(workBuf), textAccy7, accyTextField7, cmdButton7,
+                deleteButton7);
+        // 8th word of macro
+        workBuf[0] = recChars[readPtr++];
+        workBuf[1] = recChars[readPtr++];
+        accyAddr = getMacroAccyAdr(workBuf);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(workBuf), textAccy8, accyTextField8, cmdButton8,
+                deleteButton8);
+
+        // 9th word of macro
+        memPtr += 16;
+        readPtr = 0;
+        readSerialMemory16(memPtr);
+        if (!waitNce()) {
+            return FAILED;
+        }
+        workBuf[0] = recChars[readPtr++];
+        workBuf[1] = recChars[readPtr++];
+        accyAddr = getMacroAccyAdr(workBuf);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(workBuf), textAccy9, accyTextField9, cmdButton9,
+                deleteButton9);
+        // 10th word of macro
+        workBuf[0] = recChars[readPtr++];
+        workBuf[1] = recChars[readPtr++];
+        accyAddr = getMacroAccyAdr(workBuf);
+        if (accyAddr <= 0) {
+            return entriesRead;
+        }
+        entriesRead++;
+        setAccy(accyAddr, getAccyCmd(workBuf), textAccy10, accyTextField10, cmdButton10,
+                deleteButton10);
+        return entriesRead;
     }
 
     // Updates the accessory line when the user hits the command button
@@ -1227,7 +1229,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     /**
      * Check for valid macro, return number if valid, -1 if not.
      *
-     * @param s  string of macro number
+     * @param s string of macro number
      * @return mN - int of macro number or -1 if invalid
      */
     private int validMacro(String s) {
@@ -1237,7 +1239,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         } catch (NumberFormatException e) {
             return -1;
         }
-        if (mN < 0 || mN > maxNumMacros) {
+        if (mN < 0 || mN > maxNumMacros - 1) {
             return -1;
         } else {
             return mN;
@@ -1246,14 +1248,14 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
     /**
      * writes bytes of NCE macro memory
-     *
      */
     private boolean writeMacroMemory(int macroNum, byte[] b) {
         if (isUsb) {
-            setUsbCabMemoryPointer(tc.csm.getMacroAddr(), (macroNum * macroSize));
+            setUsbCabMemoryPointer(memBase, (macroNum * macroSize));
             if (!waitNce()) {
                 return false;
             }
+            // write one byte at a time
             for (int i = 0; i < macroSize; i++) {
                 writeUsbMemory1(b[i]);
                 if (!waitNce()) {
@@ -1262,7 +1264,8 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             }
         } else {
             int nceMemoryAddr = (macroNum * macroSize) + memBase;
-            byte[] buf = new byte[16];            
+            // write 16 bytes
+            byte[] buf = new byte[16];
             for (int i = 0; i < 16; i++) {
                 buf[i] = b[i];
             }
@@ -1270,6 +1273,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             if (!waitNce()) {
                 return false;
             }
+            // write 4 bytes
             buf = new byte[4];
             for (int i = 0; i < 4; i++) {
                 buf[i] = b[i + 16];
@@ -1312,85 +1316,8 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     public void message(NceMessage m) {
     } // ignore replies
 
-    // public void replyOrig(NceReply r) {
-    //  // Macro command
-    //  if (replyLen == NceMessage.REPLY_1) {
-    //   // Looking for proper response
-    //   int recChar = r.getElement(0);
-    //   if (recChar == '!')
-    //    macroReply.setText(Bundle.getMessage("okay"));
-    //   if (recChar == '0')
-    //    macroReply.setText(Bundle.getMessage("macroEmpty"));
-    //  }
-    //  // Macro memory read
-    //  if (replyLen == NceMessage.REPLY_16) {
-    //   // NCE macros consists of 20 bytes on serial, 16 on USB
-    //   // so either 4 or 5 reads
-    //   if (secondRead) {
-    //    // Second memory read for accessories 9 and 10
-    //    secondRead = false;
-    //    loadAccy9and10(r);
-    //
-    //   } else {
-    //    int recChar = r.getElement(0);
-    //    recChar = recChar << 8;
-    //    recChar = recChar + r.getElement(1);
-    //    if (recChar == 0) {
-    //     if (checkBoxEmpty.isSelected()) {
-    //      if (macroCount > 0) {
-    //       macroSearchInc = false;
-    //       macroSearchDec = false;
-    //      }
-    //     }
-    //     // Macro is empty so init the accessory fields
-    //     macroReply.setText(Bundle.getMessage("macroEmpty"));
-    //     initAccyFields();
-    //     macroValid = true;
-    //    } else {
-    //     if (checkBoxEmpty.isSelected() == false) {
-    //      if (macroCount > 0) {
-    //       macroSearchInc = false;
-    //       macroSearchDec = false;
-    //      }
-    //     }
-    //     macroReply.setText(Bundle.getMessage("macroFound"));
-    //     secondRead = loadAccy1to8(r);
-    //     macroValid = true;
-    //    }
-    //    // if we're searching, don't bother with second read
-    //    if (macroSearchInc || macroSearchDec)
-    //     secondRead = false;
-    //    // Do we need to read more CS memory?
-    //    if (secondRead)
-    //     // force second read of CS memory
-    //     getMacro2ndHalf(macroNum);
-    //    // when searching, have we read all of the possible
-    //    // macros?
-    //    macroCount++;
-    //    if (macroCount > maxNumMacros) {
-    //     macroSearchInc = false;
-    //     macroSearchDec = false;
-    //    }
-    //    if (macroSearchInc) {
-    //     macroNum++;
-    //     if (macroNum == maxNumMacros + 1)
-    //      macroNum = 0;
-    //    }
-    //    if (macroSearchDec) {
-    //     macroNum--;
-    //     if (macroNum == -1)
-    //      macroNum = maxNumMacros;
-    //    }
-    //    if (macroSearchInc || macroSearchDec) {
-    //     macroTextField.setText(Integer.toString(macroNum));
-    //     macroNum = getMacro();
-    //    }
-    //   }
-    //  }
-    // }
     /**
      * response from read
-     *
      */
     int recChar = 0;
     int[] recChars = new int[16];
@@ -1412,6 +1339,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
         for (int i = 0; i < replyLen; i++) {
             recChars[i] = r.getElement(i);
+            log.debug("{} recieve: {}", i, String.format("%1X", r.getElement(i)));
         }
         // wake up thread
         synchronized (this) {
@@ -1421,6 +1349,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
     // USB set cab memory pointer
     private void setUsbCabMemoryPointer(int cab, int offset) {
+        log.debug("Macro base address: {}, offset: {}", Integer.toHexString(cab), offset);
         replyLen = NceMessage.REPLY_1; // Expect 1 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.usbMemoryPointer(cab, offset);
@@ -1453,12 +1382,13 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     /**
      * USB Write 1 byte of NCE memory
      *
-     * @param value  byte being written
+     * @param value byte being written+
      */
-    private void writeUsbMemory1(int value) {
+    private void writeUsbMemory1(byte value) {
+        log.debug("Write byte: {}", String.format("%2X", value));
         replyLen = NceMessage.REPLY_1; // Expect 1 byte response
         waiting++;
-        byte[] bl = NceBinaryCommand.usbMemoryWrite1((byte) value);
+        byte[] bl = NceBinaryCommand.usbMemoryWrite1(value);
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
         tc.sendNceMessage(m, this);
     }
@@ -1555,7 +1485,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         initAccyRow(7, num7, textAccy7, accyTextField7, cmdButton7, deleteButton7);
         initAccyRow(8, num8, textAccy8, accyTextField8, cmdButton8, deleteButton8);
         initAccyRow(9, num9, textAccy9, accyTextField9, cmdButton9, deleteButton9);
-        initAccyRow(10, num10, textAccy10, accyTextField10, cmdButton10, deleteButton10);
+        initAccyRow(isUsb ? 8 : 10, num10, textAccy10, accyTextField10, cmdButton10, deleteButton10);
     }
 
     private void initAccyRow(int row, JLabel num, JLabel textAccy, JTextField accyTextField, JButton cmdButton,
@@ -1576,7 +1506,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         accyTextField.setMaximumSize(new Dimension(accyTextField
                 .getMaximumSize().width,
                 accyTextField.getPreferredSize().height));
-        if (row == 10) {
+        if (isUsb && row == 8 || row == 10) {
             initAccyRow10();
         }
     }
@@ -1586,7 +1516,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         deleteButton10.setText(LINK);
         deleteButton10.setEnabled(true);
         deleteButton10.setToolTipText(Bundle.getMessage("toolTipLink"));
-        accyTextField10.setToolTipText(Bundle.getMessage("toolTip10"));
+        accyTextField10.setToolTipText(Bundle.getMessage("toolTip10", maxNumMacros - 1));
     }
 
     /**

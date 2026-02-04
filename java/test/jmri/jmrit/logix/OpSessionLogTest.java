@@ -1,9 +1,7 @@
 package jmri.jmrit.logix;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
+
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JDialogOperator;
 
@@ -13,41 +11,44 @@ import org.netbeans.jemmy.operators.JDialogOperator;
  */
 public class OpSessionLogTest {
 
-    jmri.util.JmriJFrame f;
-    boolean retval;
-    
+    private jmri.util.JmriJFrame f;
+    private boolean retval;
+
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void openAndClose() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-                
+
+        // create a thread that waits to close the dialog box opened later
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("logSession"));
+            jdo.requestClose();
+            jdo.waitClosed();
+        });
+        t.setName("OpSessionLog File Chooser Dialog Close Thread");
+        t.start();
+
         // create the window and make the log file on Swing thread
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             f = new jmri.util.JmriJFrame("OpSessionLog Chooser Test");
-            
-            // create a thread that waits to close the dialog box opened later
-            Thread t = new Thread(() -> {
-                // constructor for jdo will wait until the dialog is visible
-                JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("logSession"));
-                jdo.close();
-            });
-            t.setName("OpSessionLog File Chooser Dialog Close Thread");
-            t.start();
 
             // get the result of closing
             retval = OpSessionLog.makeLogFile(f);
         });
-        
+
+        JUnitUtil.waitFor( () -> !t.isAlive(), "OpSessionLog File Chooser Dialog Close Thread complete");
+
         // check results
-        Assert.assertFalse(retval);
-        
+        Assertions.assertFalse(retval);
+
         // done
         f.dispose();
     }
 
     @Test
     @Disabled("needs more thought")
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void makeLogFileCheck() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
        // This is going to be a graphical check.
        // make sure the log file is correctly chosen and created.
     }
@@ -55,7 +56,7 @@ public class OpSessionLogTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @AfterEach

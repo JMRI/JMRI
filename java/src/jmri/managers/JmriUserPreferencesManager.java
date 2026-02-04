@@ -48,12 +48,102 @@ import org.openide.util.lookup.ServiceProvider;
 /**
  * Implementation of {@link UserPreferencesManager} that saves user interface
  * preferences that should be automatically remembered as they are set.
- * <p>
- * This class is intended to be a transitional class from a single user
+ * <p>This class is intended to be a transitional class from a single user
  * interface preferences manager to multiple, domain-specific (windows, tables,
  * dialogs, etc) user interface preferences managers. Domain-specific managers
  * can more efficiently, both in the API and at runtime, handle each user
- * interface preference need than a single monolithic manager.
+ * interface preference need than a single monolithic manager.</p>
+ *
+ * <p>The following items are available.  Each item has its own section in the
+ * <b>user-interface.xml</b> file.</p>
+ *
+ * <dl>
+ *   <dt><b>Class Preferences</b></dt>
+ *   <dd>This contains reminders and selections from dialogs displayed to users.  These are normally
+ *      related to the JMRI NamedBeans represented by the various PanelPro tables. The
+ *      responses are shown in <b>Preferences -&gt; Messages</b>.  This provides the ability to
+ *      revert previous choices.  See {@link jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane}
+ *
+ *      <p>The dialogs are invoked by the various <b>show&lt;Info|Warning|Error&gt;Message</b> dialogs.
+ *
+ *      There are two types of messages created by the dialogs.</p>
+ *      <dl>
+ *        <dt><b>multipleChoice</b></dt>
+ *        <dd>The multiple choice message has a keyword and the selected option. It only exists when the
+ *          selected option index is greater than zero.</dd>
+ *
+ *        <dt><b>reminderPrompts</b></dt>
+ *        <dd>The reminder prompt message has a keyword, such as <i>remindSaveRoute</i>.  It only exists when
+ *          the reminder is active.</dd>
+ *      </dl>
+ *
+ *      <p>When the <i>Skip message in future?</i> or <i>Remember this setting for next time?</i> is selected,
+ *      an entry will be added.  The {@link #setClassDescription(String)} method will use Java reflection
+ *      to request additional information from the class that was used to the show dialog.  This requires some
+ *      specific changes to the originating class.</p>
+ *
+ *      <dl>
+ *        <dt><b>Class Constructor</b></dt>
+ *        <dd>A constructor without parameters is required.  This is used to get the class so that
+ *        the following public methods can be invoked.</dd>
+ *
+ *        <dt><b>getClassDescription()</b></dt>
+ *        <dd>This returns a string that will be used by <b>Preferences -&gt; Messages</b>.</dd>
+ *
+ *        <dt><b>setMessagePreferenceDetails()</b></dt>
+ *        <dd>This does not return anything directly.  It makes call backs using two methods.
+ *          <dl>
+ *            <dt>{@link #setMessageItemDetails(String, String, String, HashMap, int)}</dt>
+ *            <dd>Descriptive information, the items for a combo box and the current selection are sent.
+ *            This information is used to create the <b>multipleChoice</b> item.</dd>
+ *
+ *            <dt>{@link #setPreferenceItemDetails(String, String, String)}</dt>
+ *            <dd>Descriptive information is sent to create the <b>reminderPrompt</b> item.</dd>
+ *          </dl>
+ *        </dd>
+ *      </dl>
+ *      <p>The messages are normally created by the various NamedBean classes.  LogixNG uses a
+ *      separate class instead of changing each affected class.  This provides a concise example
+ *      of the required changes at
+ * <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/logixng/LogixNG_UserPreferences.java">LogixNG_UserPreferences</a></p>
+ *   </dd>
+ *
+ *   <dt><b>Checkbox State</b></dt>
+ *   <dd>Contains the last checkbox state.<br>Methods:
+ *     <ul>
+ *       <li>{@link #getCheckboxPreferenceState(String, boolean)}</li>
+ *       <li>{@link #setCheckboxPreferenceState(String, boolean)}</li>
+ *     </ul>
+ *   </dd>
+ *
+ *   <dt><b>Combobox Selection</b></dt>
+ *   <dd>Contains the last combo box selection.<br>Methods:
+ *     <ul>
+ *       <li>{@link #getComboBoxLastSelection(String)}</li>
+ *       <li>{@link #setComboBoxLastSelection(String, String)}</li>
+ *     </ul>
+ *   </dd>
+ *
+ *   <dt><b>Settings</b></dt>
+ *   <dd>The existence of an entry indicates a true state.<br>Methods:
+ *     <ul>
+ *       <li>{@link #getSimplePreferenceState(String)}</li>
+ *       <li>{@link #setSimplePreferenceState(String, boolean)}</li>
+ *     </ul>
+ *   </dd>
+ *
+ *   <dt><b>Window Details</b></dt>
+ *   <dd>The main data is the window location and size.  This is handled by
+ *     {@link jmri.util.JmriJFrame}.  The window details can also include
+ *     window specific properties.<br>Methods:
+ *     <ul>
+ *       <li>{@link #getProperty(String, String)}</li>
+ *       <li>{@link #setProperty(String, String, Object)}</li>
+ *     </ul>
+ *   </dd>
+ * </dl>
+ *
+ *
  *
  * @author Randall Wood (C) 2016
  */
@@ -950,7 +1040,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     mc.getChildren("option").stream().forEach(option -> {
                         int value = 0;
                         try {
-                            option.getAttribute(VALUE).getIntValue();
+                            value = option.getAttribute(VALUE).getIntValue();
                         } catch (DataConversionException ex) {
                             log.error("failed to convert positional attribute");
                         }

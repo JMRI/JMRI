@@ -2,6 +2,8 @@ package jmri.jmrix.loconet.uhlenbrock;
 
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContents;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +12,7 @@ import java.util.Objects;
 
 /**
  * Supporting class for Uhlenbrock LocoNet LNCV Programming and Direct Format messaging.
- * Structure adapted from {@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents}
+ * Structure adapted from {@link Lnsv2MessageContents}
  * 
  * Some of the message formats used in this class are Copyright Uhlenbrock.de
  * and used with permission as part of the JMRI project. That permission does
@@ -264,7 +266,7 @@ public class LncvMessageContents {
                 returnString = Bundle.getMessage(locale, "LNCV_READ_INTERPRETED", sArt, sMod, sCvn);
                 break;
             case LNCV_READ_REPLY: // mod positions store CV value in ReadReply
-            case LNCV_READ_REPLY2: // for Digikeijs DK5088RC not following specs? experimental EBR
+            case LNCV_READ_REPLY2: // for Digikeijs DK5088RC not following specs
                 returnString = Bundle.getMessage(locale, "LNCV_READ_REPLY_INTERPRETED", sArt, sCvn, sMod);
                 break;
             case LNCV_DIRECT_LED1: // CV position contains module address, Value position contains LED 0-15 on/off

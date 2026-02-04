@@ -1,5 +1,12 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -14,10 +21,9 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test AnalogExpressionConstant
@@ -78,65 +84,62 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
 
     @Test
     public void testCtor() {
-        Assert.assertTrue("object exists", _base != null);
+        assertNotNull( _base, "object exists");
 
         AnalogExpressionConstant expression2;
 
         expression2 = new AnalogExpressionConstant("IQAE11", null);
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", null, expression2.getUserName());
-        Assert.assertEquals("String matches", "Get analog constant 0", expression2.getLongDescription(Locale.ENGLISH));
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
+        assertEquals( "Get analog constant 0", expression2.getLongDescription(Locale.ENGLISH), "String matches");
 
         expression2 = new AnalogExpressionConstant("IQAE11", "My constant value");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My constant value", expression2.getUserName());
-        Assert.assertEquals("String matches", "Get analog constant 0", expression2.getLongDescription(Locale.ENGLISH));
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My constant value", expression2.getUserName(), "Username matches");
+        assertEquals( "Get analog constant 0", expression2.getLongDescription(Locale.ENGLISH), "String matches");
 
         expression2 = new AnalogExpressionConstant("IQAE11", null);
         expression2.setValue(12.34);
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", null, expression2.getUserName());
-        Assert.assertEquals("String matches", "Get analog constant 12.34", expression2.getLongDescription(Locale.ENGLISH));
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
+        assertEquals( "Get analog constant 12.34", expression2.getLongDescription(Locale.ENGLISH), "String matches");
 
         expression2 = new AnalogExpressionConstant("IQAE11", "My constant");
         expression2.setValue(98.76);
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My constant", expression2.getUserName());
-        Assert.assertEquals("String matches", "Get analog constant 98.76", expression2.getLongDescription(Locale.ENGLISH));
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My constant", expression2.getUserName(), "Username matches");
+        assertEquals( "Get analog constant 98.76", expression2.getLongDescription(Locale.ENGLISH), "String matches");
 
         // Call setup(). It doesn't do anything, but we call it for coverage
         expression2.setup();
 
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            new AnalogExpressionConstant("IQA55:12:XY11", null);
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class,
+            () -> {
+                AnalogExpressionConstant aec = new AnalogExpressionConstant("IQA55:12:XY11", null);
+                assertNull(aec, "Should not reach here");
+            },
+            "Expected Illegal system name exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            new AnalogExpressionConstant("IQA55:12:XY11", "A name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows( IllegalArgumentException.class,
+            () -> {
+                AnalogExpressionConstant aec = new AnalogExpressionConstant("IQA55:12:XY11", "A name");
+                assertNull(aec, "Should not reach here");
+            },
+            "Expected Illegal system name exception thrown");
+        assertNotNull(ex);
+
     }
 
     @Test
     public void testSetValueWithListenersRegistered() {
-        boolean exceptionThrown = false;
-        try {
-            AnalogExpressionConstant expression = (AnalogExpressionConstant)_base;
-            expression.registerListeners();
-            expression.setValue(1.2);
-        } catch (RuntimeException e) {
-            exceptionThrown = true;
-        }
-        Assert.assertTrue("Exception thrown", exceptionThrown);
+        RuntimeException e = assertThrows( RuntimeException.class,
+            () -> {
+                AnalogExpressionConstant expression = (AnalogExpressionConstant)_base;
+                expression.registerListeners();
+                expression.setValue(1.2);
+            }, "Exception thrown");
+        assertNotNull(e);
         JUnitAppender.assertErrorMessage("setValue must not be called when listeners are registered");
     }
 
@@ -146,9 +149,9 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         conditionalNG.setEnabled(false);
         AnalogExpressionConstant expression = (AnalogExpressionConstant)_base;
         expression.setValue(0.0d);
-        Assert.assertTrue("Evaluate matches", 0.0d == expression.evaluate());
+        assertEquals( 0.0d, expression.evaluate(), "Evaluate matches");
         expression.setValue(10.0d);
-        Assert.assertTrue("Evaluate matches", 10.0d == expression.evaluate());
+        assertEquals( 10.0d, expression.evaluate(), "Evaluate matches");
     }
 
     @Test
@@ -157,11 +160,11 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         // Set the memory
         _memoryOut.setValue(0.0);
         // The double should be 0.0
-        Assert.assertTrue("memory is 0.0", 0.0 == (Double)_memoryOut.getValue());
+        assertEquals( 0.0, (Double)_memoryOut.getValue(), "memory is 0.0");
         // Execute the logixNG
         logixNG.execute();
         // The action is executed so the double should be 10.2
-        Assert.assertTrue("memory is 10.2", 10.2 == (Double)_memoryOut.getValue());
+        assertEquals( 10.2, (Double)_memoryOut.getValue(), "memory is 10.2");
 
         // Disable the conditionalNG
         conditionalNG.setEnabled(false);
@@ -173,39 +176,34 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         logixNG.execute();
         conditionalNG.setEnabled(false);
         // The action is executed so the double should be 1.0
-        Assert.assertTrue("memory is 1.0", 1.0 == (Double)_memoryOut.getValue());
+        assertEquals( 1.0, (Double)_memoryOut.getValue(), "memory is 1.0");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+        assertSame( LogixNG_Category.ITEM, _base.getCategory(), "Category matches");
     }
 
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Analog constant", _base.getShortDescription());
+        assertEquals( "Analog constant", _base.getShortDescription(), "String matches");
     }
 
     @Test
     public void testLongDescription() {
-        Assert.assertEquals("String matches", "Get analog constant 10.2", _base.getLongDescription(Locale.ENGLISH));
+        assertEquals( "Get analog constant 10.2", _base.getLongDescription(Locale.ENGLISH), "String matches");
     }
 
     @Test
     public void testChild() {
-        Assert.assertTrue("Num children is zero", 0 == _base.getChildCount());
-        boolean hasThrown = false;
-        try {
-            _base.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertTrue("Error message is correct", "Not supported.".equals(ex.getMessage()));
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        assertEquals( 0, _base.getChildCount(), "Num children is zero");
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class,
+            () -> _base.getChild(0),
+            "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -248,12 +246,12 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         _base = expressionConstant;
         _baseMaleSocket = socketExpression;
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
 //        JUnitAppender.clearBacklog();
         _base.dispose();

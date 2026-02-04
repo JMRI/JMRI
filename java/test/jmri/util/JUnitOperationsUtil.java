@@ -1,12 +1,13 @@
 package jmri.util;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
+
 import java.awt.GraphicsEnvironment;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle; // for access operations keys directly.
 
-import org.junit.Assert;
-import org.junit.Assume;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -75,7 +76,7 @@ public class JUnitOperationsUtil {
         FileUtil.createDirectory(file);
 
         // there can be test concurrency issues if auto save is on
-        Assert.assertFalse("Confirm disabled", Setup.isAutoSaveEnabled());
+        assertFalse( Setup.isAutoSaveEnabled(), "Confirm disabled");
     }
 
     /**
@@ -159,12 +160,12 @@ public class JUnitOperationsUtil {
         Location locationNorthEnd = lmanager.getLocationById("1");
         Track northEndStaging1 = locationNorthEnd.getTrackById("1s1");
         Track northEndStaging2 = locationNorthEnd.getTrackById("1s2");
-        Assert.assertNotNull(northEndStaging1);
-        Assert.assertNotNull(northEndStaging2);
+        assertNotNull(northEndStaging1);
+        assertNotNull(northEndStaging2);
 
         // termination staging
         Location locationSouthEnd = lmanager.getLocationById("3");
-        Assert.assertNotNull(locationSouthEnd);
+        assertNotNull(locationSouthEnd);
 
         // Create 2 cabooses, 5 Boxcars, 2 Flats
         // Place Cabooses on Staging tracks
@@ -232,7 +233,7 @@ public class JUnitOperationsUtil {
         train1.setCabooseRoad("CP");
         train1.deleteTypeName("Flat");
         train1.setRoute(route1);
-        train1.setDepartureTime("6", "5");
+        train1.setDepartureTime("0", "6", "5");
         train1.setComment("Test comment for train STF");
         train1.setDescription("Train STF");
 
@@ -244,7 +245,7 @@ public class JUnitOperationsUtil {
 
         Train train2 = new Train("2", "SFF");
         train2.setRoute(route1);
-        train2.setDepartureTime("22", "45");
+        train2.setDepartureTime("0", "22", "45");
         train2.setDescription("Train SFF");
         tmanager.register(train2);
 
@@ -262,7 +263,7 @@ public class JUnitOperationsUtil {
 
         Location locationNorthEnd = new Location("1", "North End Staging");
 
-        Assert.assertEquals("confirm default", DIRECTION_ALL, locationNorthEnd.getTrainDirections());
+        assertEquals( DIRECTION_ALL, locationNorthEnd.getTrainDirections(), "confirm default");
 
         locationNorthEnd.setComment("Test comment for location North End");
         lmanager.register(locationNorthEnd);
@@ -270,10 +271,10 @@ public class JUnitOperationsUtil {
         Track l1staging1 = new Track("1s1", "North End 1", Track.STAGING, locationNorthEnd);
 
         // confirm defaults
-        Assert.assertEquals("confirm default", DIRECTION_ALL, l1staging1.getTrainDirections());
-        Assert.assertEquals("confirm default", Track.ALL_ROADS, l1staging1.getRoadOption());
-        Assert.assertEquals("confirm default", Track.ANY, l1staging1.getDropOption());
-        Assert.assertEquals("confirm default", Track.ANY, l1staging1.getPickupOption());
+        assertEquals( DIRECTION_ALL, l1staging1.getTrainDirections(), "confirm default");
+        assertEquals( Track.ALL_ROADS, l1staging1.getRoadOption(), "confirm default");
+        assertEquals( Track.ANY, l1staging1.getDropOption(), "confirm default");
+        assertEquals( Track.ANY, l1staging1.getPickupOption(), "confirm default");
 
         l1staging1.setLength(300);
         l1staging1.setCommentBoth("Test comment for North End 1 drops and pulls");
@@ -520,14 +521,14 @@ public class JUnitOperationsUtil {
         car.setColor("Black");
 
         if (track != null) {
-            Assert.assertEquals("place car", Track.OKAY, car.setLocation(track.getLocation(), track));
+            assertEquals( Track.OKAY, car.setLocation(track.getLocation(), track), "place car");
         }
 
         return car;
     }
 
     public static void loadTrain(Location l) {
-        Assert.assertNotNull("Test Loc", l);
+        assertNotNull( l, "Test Loc");
         TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
         Train trainA = trainManager.newTrain("Test Train A");
         // train needs to service location "l" or error message when saving track edit frame
@@ -535,6 +536,18 @@ public class JUnitOperationsUtil {
         Route route = routeManager.newRoute("Route Train A");
         route.addLocation(l);
         trainA.setRoute(route);
+    }
+    
+    public static void loadTrainServingAllExistingLocations() {
+        TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+        Train trainAll = trainManager.newTrain("Test Train All");
+        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+        Route routeAll = routeManager.newRoute("Route Train All");
+        LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
+        for (Location loc : locationManager.getLocationsByNameList()) {
+            routeAll.addLocation(loc);
+        }
+        trainAll.setRoute(routeAll);
     }
 
     public static void loadTrains() {
@@ -618,7 +631,7 @@ public class JUnitOperationsUtil {
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         Location location = lmanager.getLocationByName("North Industries");
 
-        Assert.assertNotNull("Must initOperationsData() before creating schedule", location);
+        assertNotNull( location, "Must initOperationsData() before creating schedule");
         Track spur1 = location.addTrack("Test Spur 1", Track.SPUR);
         Track spur2 = location.addTrack("Test Spur 2", Track.SPUR);
         Track alternate = location.addTrack("Test Alternate", Track.YARD);
@@ -650,10 +663,10 @@ public class JUnitOperationsUtil {
 
     public static Automation createAutomation() {
         AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
-        Assert.assertNotNull("test creation", manager);
+        assertNotNull( manager, "test creation");
         Automation automation = manager.newAutomation("TestAutomation");
         automation.setComment("test comment for automation");
-        Assert.assertEquals(1, manager.getSize());
+        assertEquals(1, manager.getSize());
 
         AutomationItem item1 = automation.addItem();
         item1.setAction(new BuildTrainAction());
@@ -697,37 +710,37 @@ public class JUnitOperationsUtil {
         } catch (FileNotFoundException e) {
 
         }
-        Assert.assertNotNull(in);
+        assertNotNull(in);
         return in;
     }
-    
+
     public static void testCloseWindowOnSave(String title) {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrameOperator jfo = new JFrameOperator(title);
-        Assert.assertNotNull("visible and found", jfo);
+        assertNotNull( jfo, "visible and found");
         // confirm window appears
         JmriJFrame f = JmriJFrame.getFrame(title);
-        Assert.assertNotNull("exists", f);
+        assertNotNull( f, "exists");
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
         f = JmriJFrame.getFrame(title);
-        Assert.assertNotNull("exists", f);
+        assertNotNull( f, "exists");
         // now close window with save button
         Setup.setCloseWindowOnSaveEnabled(true);
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave")).doClick();
         jfo.waitClosed();
         // confirm window is closed
         f = JmriJFrame.getFrame(title);
-        Assert.assertNull("does not exist", f);
+        assertNull( f, "does not exist");
     }
 
     public static void checkOperationsShutDownTask() {
         // remove the operations shut down tasks
-        Assert.assertTrue(InstanceManager.containsDefault(ShutDownManager.class));
+        assertTrue(InstanceManager.containsDefault(ShutDownManager.class));
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         var list = sm.getRunnables();
         // only one operations shut down task, the others can be NCE shutdown and EditorManager shutdown.
-        Assert.assertTrue("Two shut down tasks max", list.size() < 4);
+        assertTrue( list.size() < 4, "Two shut down tasks max");
         ShutDownTask operationShutdownTask = null;
         for (var task : list) {
             if (((ShutDownTask)task).getName().equals("Operations Train Window Check")
@@ -735,7 +748,7 @@ public class JUnitOperationsUtil {
                 operationShutdownTask = ((ShutDownTask)task);
             }
         }
-        Assert.assertNotNull(operationShutdownTask);
+        assertNotNull(operationShutdownTask);
         sm.deregister(operationShutdownTask);
     }
 

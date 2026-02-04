@@ -39,7 +39,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
+import javax.swing.JTable;
 import javax.swing.JToggleButton;
+import javax.swing.SwingUtilities;
+import javax.swing.table.JTableHeader;
 
 import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
@@ -84,7 +87,7 @@ public class JmriJFrameServlet extends HttpServlet {
         int x = xg - c.getLocation().x;
         int y = yg - c.getLocation().y;
         // log.debug("component is {}", c);
-        log.debug("Local click at {},{}", x, y);
+        log.debug("Local click at {},{} in {}", x, y, c.getClass());
 
         if (c.getClass().equals(JButton.class)) {
             ((AbstractButton) c).doClick();
@@ -155,13 +158,18 @@ public class JmriJFrameServlet extends HttpServlet {
              * to adjust the click position for the offset of the Component
              * relative to the frame.
              */
-            // was incorrect for zoomed panels, turned off
-            // Point pc = c.getLocationOnScreen();
-            // Point pf = FrameContentPane.getLocationOnScreen();
-            // x -= (int)(pc.getX() - pf.getX());
-            // y -= (int)(pc.getY() - pf.getY());
+            if (c instanceof JTable || c instanceof JTableHeader) {
+                // need to make clicks on a JTable and JTableHeader all relative
+                Rectangle rT = c.getBounds();
+                Rectangle r = SwingUtilities.convertRectangle(c.getParent(), rT, frameContentPane);
+                // need to adjust table click, note that table can scroll
+                x += (int) rT.getX() - (int) r.getX();
+                y += (int) rT.getY() - (int) r.getY();
+                log.debug("New JTable x: {} and y: {}", x, y);
+            }
+
             for (MouseListener ml : la) {
-                log.debug("Send click sequence at {},{}", x, y);
+                log.trace("Send click sequence at {},{}", x, y);
                 sendClickSequence(ml, c, x, y);
             }
         }
@@ -170,7 +178,7 @@ public class JmriJFrameServlet extends HttpServlet {
     private void sendClickSequence(MouseListener m, Component c, int x, int y) {
         /*
          * create the sequence of mouse events needed to click on a control:
-         * MOUSE_ENTERED MOUSE_PRESSED MOUSE_RELEASED MOUSE_CLICKED
+         * MOUSE_ENTERED MOUSE_PRESSED MOUSE_RELEASED MOUSE_CLICKED MOUSE_EXITED
          */
         MouseEvent e = new MouseEvent(c,
                 MouseEvent.MOUSE_ENTERED,

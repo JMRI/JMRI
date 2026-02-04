@@ -1,13 +1,17 @@
 package jmri.jmrix;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.SystemConnectionMemo;
 
 /**
@@ -155,7 +159,7 @@ abstract public class AbstractPortController implements PortAdapter {
     @Override
     public String[] getOptions() {
         Set<String> keySet = options.keySet();
-        String[] result = keySet.toArray(new String[keySet.size()]);
+        String[] result = keySet.toArray(String[]::new);
         java.util.Arrays.sort(result);
         return result;
     }
@@ -183,8 +187,6 @@ abstract public class AbstractPortController implements PortAdapter {
      * @return the option value
      */
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
-    justification = "availability was checked before, should never get here")
     public String getOptionState(String option) {
         if (options.containsKey(option)) {
             return options.get(option).getCurrent();
@@ -228,8 +230,6 @@ abstract public class AbstractPortController implements PortAdapter {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
-    justification = "availability was checked before, should never get here")
     public String getOptionDisplayName(String option) {
         if (options.containsKey(option)) {
             return options.get(option).getDisplayText();
@@ -247,7 +247,7 @@ abstract public class AbstractPortController implements PortAdapter {
 
     protected HashMap<String, Option> options = new HashMap<>();
 
-    static protected class Option {
+    protected static class Option {
 
         public enum Type {
             JCOMBOBOX,
@@ -255,26 +255,33 @@ abstract public class AbstractPortController implements PortAdapter {
             PASSWORD
         }
 
-        String currentValue = null;
+        private String currentValue = null;
 
         /**
          * As a heuristic, we consider the 1st non-null
          * currentValue as the configured value. Changes away from that
          * mark an Option object as "dirty".
          */
-        String configuredValue = null;
+        private String configuredValue = null;
 
         String displayText;
         String[] options;
+        private final String defaultChoice;
         Type type;
 
-        Boolean advancedOption = true;  // added options in advanced section by default
+        boolean advancedOption = true;  // added options in advanced section by default
 
-        public Option(String displayText, @Nonnull String[] options, boolean advanced, Type type) {
+        public Option(String displayText, @Nonnull String[] options,
+            boolean advanced, Type type, @CheckForNull String defaultValue ) {
             this.displayText = displayText;
             this.options = java.util.Arrays.copyOf(options, options.length);
             this.advancedOption = advanced;
             this.type = type;
+            this.defaultChoice = defaultValue;
+        }
+
+        public Option(String displayText, @Nonnull String[] options, boolean advanced, Type type) {
+            this(displayText, options, advanced, type, null);
         }
 
         public Option(String displayText, String[] options, boolean advanced) {
@@ -289,19 +296,23 @@ abstract public class AbstractPortController implements PortAdapter {
             this(displayText, options, true, Type.JCOMBOBOX);
         }
 
+        public Option(String displayText, String[] options, @CheckForNull String defaultValue) {
+            this(displayText, options, true, Type.JCOMBOBOX, defaultValue);
+        }
+
         void configure(String value) {
-            log.trace("Option.configure({}) with \"{}\", \"{}\"", value, configuredValue, currentValue);
-            if (configuredValue == null ) {
-                configuredValue = value;
+            log.trace("Option.configure({}) with \"{}\", \"{}\"", value, getConfiguredValue(), getCurrentValue());
+            if (getConfiguredValue() == null ) {
+                setConfiguredValue(value);
             }
-            currentValue = value;
+            setCurrentValue(value);
         }
 
         String getCurrent() {
-            if (currentValue == null) {
-                return options[0];
+            if (getCurrentValue() == null) {
+                return defaultChoice != null ? defaultChoice : options[0];
             }
-            return currentValue;
+            return getCurrentValue();
         }
 
         String[] getOptions() {
@@ -321,7 +332,23 @@ abstract public class AbstractPortController implements PortAdapter {
         }
 
         boolean isDirty() {
-            return (currentValue != null && !currentValue.equals(configuredValue));
+            return (getCurrentValue() != null && !getCurrentValue().equals(getConfiguredValue()));
+        }
+
+        public String getCurrentValue() {
+            return currentValue;
+        }
+
+        public void setCurrentValue(String currentValue) {
+            this.currentValue = currentValue;
+        }
+
+        public String getConfiguredValue() {
+            return configuredValue;
+        }
+
+        public void setConfiguredValue(String configuredValue) {
+            this.configuredValue = configuredValue;
         }
     }
 
@@ -561,7 +588,7 @@ abstract public class AbstractPortController implements PortAdapter {
      * @throws IOException if the stream is e.g. closed due to failure to open the port completely
      */
      @SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
-     protected static void purgeStream(@Nonnull java.io.InputStream serialStream) throws IOException {
+     public static void purgeStream(@Nonnull java.io.InputStream serialStream) throws IOException {
         int count = serialStream.available();
         log.debug("input stream shows {} bytes available", count);
         while (count > 0) {

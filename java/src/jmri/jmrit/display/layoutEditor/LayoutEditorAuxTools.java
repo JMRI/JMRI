@@ -446,7 +446,8 @@ final public class LayoutEditorAuxTools {
                                 p.addSetting(bs);
                             } else {
                                 log.error("No assigned turnout (J): LTO = {}, blk = {}", // NOI18N
-                                        ((LayoutTurnout) curConnection).getName(), ((LayoutTurnout) curConnection).getLayoutBlock().getDisplayName());
+                                    curConnection.getName(),
+                                    ((LayoutTurnout) curConnection).getLayoutBlock().getDisplayName());
                             }
                             prevConnection = curConnection;
                             if (typeCurConnection == HitPointType.TURNOUT_A) {
@@ -476,7 +477,8 @@ final public class LayoutEditorAuxTools {
                             p.addSetting(bs);
                         } else {
                             log.error("No assigned turnout (K): LTO = {}, blk = {}", // NOI18N
-                                    ((LayoutTurnout) curConnection).getName(), ((LayoutTurnout) curConnection).getLayoutBlock().getDisplayName());
+                                curConnection.getName(),
+                                ((LayoutTurnout) curConnection).getLayoutBlock().getDisplayName());
                         }
                         prevConnection = curConnection;
                         curConnection = ((LayoutTurnout) curConnection).getConnectA();
@@ -492,7 +494,8 @@ final public class LayoutEditorAuxTools {
                             p.addSetting(bs);
                         } else {
                             log.error("No assigned turnout (L): LTO = {}, blk = {}", // NOI18N
-                                    ((LayoutTurnout) curConnection).getName(), ((LayoutTurnout) curConnection).getLayoutBlock().getDisplayName());
+                                curConnection.getName(),
+                                ((LayoutTurnout) curConnection).getLayoutBlock().getDisplayName());
                         }
                         prevConnection = curConnection;
                         curConnection = ((LayoutTurnout) curConnection).getConnectA();

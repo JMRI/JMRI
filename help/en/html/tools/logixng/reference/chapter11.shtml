@@ -363,7 +363,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Find table row or column<span class="since">since 5.1.6</span></h5>
+      <h5 id="find_in_table">Find table row or column<span class="since">since 5.1.6</span></h5>
 
       <p>Search table cells for a cell that contains the string value in the bean local variable.
       When a match is found, a <strong>map</strong> of the cells for the row or column is in the row
@@ -397,7 +397,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Listen on beans - Table</h5>
+      <h5 id="lob_table">Listen on beans - Table</h5>
 
       <p>Since the items in the table, such as turnouts and sensors, are accessed using references,
       when their state changes, there is no notification of the event. See <a href=
@@ -471,6 +471,9 @@
       </div>
 
       <hr>
+
+      <p><a href="chapter11_1.shtml">Chapter 11.1 - Table Icon</a>
+      </p>
 
       <p><a href="chapter12.shtml">Chapter 12 - Global Variables</a>
       </p>

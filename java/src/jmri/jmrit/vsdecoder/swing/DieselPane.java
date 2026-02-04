@@ -50,7 +50,7 @@ public class DieselPane extends EnginePane {
     public static final String VOLUME = "VSDDP:Volume"; // NOI18N
 
     JSpinner throttle_spinner;
-    public JSlider volume_slider;
+    private JSlider volume_slider;
     JToggleButton start_button;
 
     int throttle_setting;
@@ -173,7 +173,7 @@ public class DieselPane extends EnginePane {
 
     // Respond to a start button press with stateChanged
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification="I18N of Headless Info Message")
+            justification="I18N of Headless Info Message")
     public void startButtonStateChange(ChangeEvent ev) {
         AbstractButton abstractButton = (AbstractButton) ev.getSource();
         ButtonModel buttonModel = abstractButton.getModel();
@@ -266,6 +266,14 @@ public class DieselPane extends EnginePane {
     @Override
     public void setSpeed(float s) {
         lastSpeed = s;
+    }
+
+    /**
+     * Get Volume Slider.
+     * @return current volume slider.
+     */
+    public JSlider getVolumeSlider() {
+        return volume_slider;
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DieselPane.class);

@@ -117,6 +117,10 @@ public interface Positionable extends Cloneable, InlineLogixNG {
 
     boolean isEmptyHidden();
 
+    void setValueEditDisabled(boolean disabled);
+
+    boolean isValueEditDisabled();
+
     int getDisplayLevel();
 
     void setDisplayLevel(int l);

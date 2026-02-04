@@ -11,7 +11,6 @@ import org.bidib.jbidibc.messages.helpers.DefaultContext;
 
 /**
  * Abstract base for classes representing a BiDiB communications port
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Eckart Meyer Copyright (C) 2019-2023

@@ -1,8 +1,6 @@
 package jmri.jmrix.nce.macro;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -71,6 +69,14 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
     }
 
     /**
+     * The minimum frame size for font size 16
+     */
+    @Override
+    public Dimension getMinimumDimension() {
+        return new Dimension(200, 200);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -84,7 +90,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
 
         // load tool tips
         sendButton.setToolTipText(Bundle.getMessage("toolTipExecuteMacro"));
-        packetTextField.setToolTipText(Bundle.getMessage("toolTipEnterMacroSerial"));
+        packetTextField.setToolTipText(Bundle.getMessage("toolTipEnterMacro", 255));
 
         packetTextField.setMaximumSize(new Dimension(packetTextField
                 .getMaximumSize().width, packetTextField.getPreferredSize().height));
@@ -117,7 +123,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         if (m == null) {
             macroReply.setText(Bundle.getMessage("error"));
             JmriJOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("EnterMacroNumber"),
+                    Bundle.getMessage("EnterMacroNumber", 255),
                     Bundle.getMessage("NceMacro"),
                     JmriJOptionPane.ERROR_MESSAGE);
             return;

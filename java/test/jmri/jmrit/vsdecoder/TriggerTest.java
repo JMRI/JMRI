@@ -11,6 +11,7 @@ import org.junit.jupiter.api.*;
 public class TriggerTest {
 
     @Test
+    @Disabled("Test requires further development")
     public void testStateConstants() {
         // Maybe check the enums here?
     }
@@ -62,6 +63,16 @@ public class TriggerTest {
         };
         uut.setCallback(tl);
         Assert.assertSame("set callback", tl, uut.getCallback());
+    }
+
+    @BeforeEach
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

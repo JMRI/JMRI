@@ -338,6 +338,7 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup1() {
     }
 
@@ -346,6 +347,7 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup2() {
     }
 
@@ -354,6 +356,7 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup3() {
     }
 
@@ -362,6 +365,7 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup4() {
     }
 
@@ -370,6 +374,7 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup5() {
     }
 
@@ -394,7 +399,7 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }
-    
+
     @BeforeEach
     @Override
     public void setUp() {
@@ -404,10 +409,11 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
         m.configureCommandStation();
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new SprogCSThrottleManager(m));
-
+        var tm = new SprogCSThrottleManager(m);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,tm);
+        m.store(tm, jmri.ThrottleManager.class);
         instance = new SprogCSThrottle(m,new jmri.DccLocoAddress(2,false));
-        
+
         setMaxFns(SprogConstants.MAX_FUNCTIONS);
     }
 
@@ -417,7 +423,7 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         try {
             m.getSlotThread().interrupt();
             m.dispose();
-            JUnitUtil.waitFor(() -> { return !m.getSlotThread().isAlive(); });
+            JUnitUtil.waitThreadTerminated(m.getSlotThread().getName());
             stcs.dispose();
         } finally {
             JUnitUtil.tearDown();

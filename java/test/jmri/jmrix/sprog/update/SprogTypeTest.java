@@ -2,7 +2,6 @@ package jmri.jmrix.sprog.update;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class SprogTypeTest {
     @Test
     public void testCTor() {
         SprogType t = new SprogType(SprogType.UNKNOWN);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

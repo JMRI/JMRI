@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -39,7 +40,8 @@ public class ExportRoutes extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete", e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}",
+                    e.getLocalizedMessage());
         }
     }
 
@@ -72,7 +74,8 @@ public class ExportRoutes extends XmlFile {
                                 rl.getRandomControl(),
                                 rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
                                 rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
-                                rl.getWait(),
+                                rl.isLocalMovesAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
+                                rl.getWait() + Setup.getTravelTime(),
                                 rl.getFormatedDepartureTime(),
                                 rl.getMaxTrainLength(),
                                 rl.getGrade(),
@@ -92,10 +95,8 @@ public class ExportRoutes extends XmlFile {
                             count, defaultOperationsFilename()),
                     Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
 
-            fileOut.flush();
-            fileOut.close();
         } catch (IOException e) {
-            log.error("Can not open export Routes CSV file: {}", file.getName());
+            log.error("Can not open export Routes CSV file: {}", e.getLocalizedMessage());
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ExportedRoutesToFile",
                             0, defaultOperationsFilename()),
@@ -111,7 +112,8 @@ public class ExportRoutes extends XmlFile {
                 Bundle.getMessage("Random"),
                 Bundle.getMessage("Pickups"),
                 Bundle.getMessage("Drops"),
-                Bundle.getMessage("Wait"),
+                Bundle.getMessage("LocalMoves"),
+                Bundle.getMessage("Travel"),
                 Bundle.getMessage("DepartTime"),
                 Bundle.getMessage("MaxLength"),
                 Bundle.getMessage("Grade"),

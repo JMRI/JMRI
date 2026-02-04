@@ -25,14 +25,29 @@ package jmri.jmrix.roco.z21;
  * <li>0x04000000 send Turnout specific LocoNet data to the client.</li>
  * <li>0x08000000 send Occupancy information from LocoNet to the client</li>
  * <li>0x00040000 Automatically send updates for Railcom data to the client</li>
- * <li>0x00080000 send can detector messages to the client</li>
+ * <li>0x00080000 send CAN detector messages to the client</li>
+ * <li>0x00020000 send CAN booster status messages to the client.</li>
+ * <li>0x00000010 send Fast Clock time messages to the client.</li>
  * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001 
- * @author      Paul Bender Copyright (C) 2016
+ * @author      Paul Bender Copyright (C) 2016,2025
  */
 public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
 
+    private static final int XPressNetFlag = 0x00000001;
+    private static final int RMBusFlag = 0x00000002;
+    private static final int RailComFlag = 0x00000004;
+    private static final int SystemStateFlag = 0x00000100;
+    private static final int XPressNetLocomotiveFlag = 0x00010000;
+    private static final int LocoNetDataFlag = 0x01000000;
+    private static final int LocoNetLocomotiveFlag = 0x02000000;
+    private static final int LocoNetTurnoutFlag = 0x04000000;
+    private static final int LocoNetOccupancyFlag = 0x08000000;
+    private static final int AutoMaticRailComFlag = 0x00040000;
+    private static final int CANDetectorFlag = 0x00080000;
+    private static final int CANBoosterFlag = 0x00020000;
+    private static final int FastClockFlag = 0x00000010;
     private int broadcast_flags = 0; // holds the value of the broadcast flags.
     private int serial_number = 0; // holds the serial number of the Z21.
     private float software_version = 0; // holds the software version of the Z21.
@@ -103,6 +118,79 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
    }
 
    /**
+    * get the current value of the broadcast flags as a string
+    * @return string representing the broadcast flags.
+    */
+    public String getZ21BroadcastFlagsString() {
+        return getZ21BroadcastFlagsString(broadcast_flags);
+    }
+
+    /**
+     * Get the value of the specified broadcast flags as a string
+     *
+     * @param flags the flags to be interpreted
+     * @return string representing the broadcast flags.
+     */
+    static public String getZ21BroadcastFlagsString(int flags) {
+        StringBuilder flagStringBuilder = new StringBuilder();
+        if((flags & XPressNetFlag) == XPressNetFlag){
+            flagStringBuilder.append("XpressNet Messages");
+            flagStringBuilder.append("\n");
+        }
+        if((flags & RMBusFlag) == RMBusFlag){
+            flagStringBuilder.append("RMBus Messages");
+            flagStringBuilder.append("\n");
+        }
+        if((flags & RailComFlag) == RailComFlag){
+            flagStringBuilder.append("Railcom Messages");
+            flagStringBuilder.append("\n");
+        }
+        if((flags & SystemStateFlag) == SystemStateFlag){
+            flagStringBuilder.append("System State Messages");
+            flagStringBuilder.append("\n");
+        }
+        if((flags & XPressNetLocomotiveFlag) == XPressNetLocomotiveFlag){
+            flagStringBuilder.append("XpressNet Locomotive Messages");
+            flagStringBuilder.append("\n");
+        }
+        if((flags & LocoNetDataFlag) == LocoNetDataFlag){
+            flagStringBuilder.append("LocoNet Messages");
+            flagStringBuilder.append("\n");
+        }
+        if((flags & LocoNetLocomotiveFlag) == LocoNetLocomotiveFlag){
+            flagStringBuilder.append("LocoNet Locomotive Messages");
+            flagStringBuilder.append("\n");
+        }
+        if((flags & LocoNetTurnoutFlag) == LocoNetTurnoutFlag){
+            flagStringBuilder.append("LocoNet Turnout Messages");
+            flagStringBuilder.append("\n");
+        }
+        if((flags & LocoNetOccupancyFlag) == LocoNetOccupancyFlag){
+            flagStringBuilder.append("LocoNet Occupancy Messages");
+            flagStringBuilder.append("\n");
+        }
+        if ((flags & AutoMaticRailComFlag) == AutoMaticRailComFlag) {
+            flagStringBuilder.append("Railcom Automatic Messages");
+            flagStringBuilder.append("\n");
+        }
+        if ((flags & CANDetectorFlag) == CANDetectorFlag) {
+            flagStringBuilder.append("CAN Detector Messages");
+            flagStringBuilder.append("\n");
+        }
+
+        if((flags & CANBoosterFlag) == CANBoosterFlag){
+            flagStringBuilder.append("CAN Booster Status Messages");
+            flagStringBuilder.append("\n");
+        }
+        if((flags & FastClockFlag) == FastClockFlag){
+            flagStringBuilder.append("Fast Clock Messages");
+            flagStringBuilder.append("\n");
+        }
+
+        return flagStringBuilder.toString();
+    }
+
+    /**
     * Is flag bit 0x00000001 which tells the command station to send 
     * XpressNet related information (track power on/off, programming
     * mode, short circuit, broadcast stop, locomotive information, 
@@ -110,7 +198,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     * @return true if flag is set.
     */
     public boolean getXPressNetMessagesFlag(){
-        return((broadcast_flags & 0x00000001) == 0x00000001);
+        return((broadcast_flags & XPressNetFlag) == XPressNetFlag);
     }
 
    /**
@@ -122,10 +210,10 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     */
     public void setXPressNetMessagesFlag(boolean flag){
         if(flag) {
-           broadcast_flags = broadcast_flags | 0x00000001;
+           broadcast_flags = broadcast_flags | XPressNetFlag;
         }
         else {
-           broadcast_flags = broadcast_flags & (~(0x00000001));
+           broadcast_flags = broadcast_flags & (~XPressNetFlag);
         }
     }
 
@@ -135,7 +223,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     * @return true if flag is set.
     */
     public boolean getRMBusMessagesFlag(){
-        return((broadcast_flags & 0x00000002) == 0x00000002);
+        return((broadcast_flags & RMBusFlag) == RMBusFlag);
     }
 
    /**
@@ -145,10 +233,10 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     */
     public void setRMBusMessagesFlag(boolean flag){
         if(flag) {
-           broadcast_flags = broadcast_flags | 0x00000002;
+           broadcast_flags = broadcast_flags | RMBusFlag;
         }
         else {
-           broadcast_flags = broadcast_flags & (~(0x00000002));
+           broadcast_flags = broadcast_flags & (~RMBusFlag);
         }
     }
 
@@ -159,7 +247,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     * @return true if flag is set.
     */
     public boolean getRailComMessagesFlag(){
-        return((broadcast_flags & 0x00000004) == 0x00000004);
+        return((broadcast_flags & RailComFlag) == RailComFlag);
     }
 
    /**
@@ -170,10 +258,10 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     */
     public void setRailComMessagesFlag(boolean flag){
         if(flag) {
-           broadcast_flags = broadcast_flags | 0x00000004;
+           broadcast_flags = broadcast_flags | RailComFlag;
         }
         else {
-           broadcast_flags = broadcast_flags & (~(0x00000004));
+           broadcast_flags = broadcast_flags & (~RailComFlag);
         }
     }
 
@@ -183,7 +271,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     * @return true if flag is set.
     */
     public boolean getRailComAutomaticFlag(){
-        return((broadcast_flags & 0x00040000) == 0x00040000);
+        return((broadcast_flags & AutoMaticRailComFlag) == AutoMaticRailComFlag);
     }
 
    /**
@@ -193,10 +281,10 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     */
     public void setRailComAutomaticFlag(boolean flag){
         if(flag) {
-           broadcast_flags = broadcast_flags | 0x00040000;
+           broadcast_flags = broadcast_flags | AutoMaticRailComFlag;
         }
         else {
-           broadcast_flags = broadcast_flags & (~(0x00040000));
+           broadcast_flags = broadcast_flags & (~AutoMaticRailComFlag);
         }
     }
 
@@ -206,7 +294,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     * @return true if flag is set.
     */
     public boolean getCanDetectorFlag(){
-        return((broadcast_flags & 0x00080000) == 0x00080000);
+        return((broadcast_flags & CANDetectorFlag) == CANDetectorFlag);
     }
 
    /**
@@ -216,13 +304,34 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     */
     public void setCanDetectorFlag(boolean flag){
         if(flag) {
-           broadcast_flags = broadcast_flags | 0x00080000;
+           broadcast_flags = broadcast_flags | CANDetectorFlag;
         }
         else {
-           broadcast_flags = broadcast_flags & (~(0x00080000));
+           broadcast_flags = broadcast_flags & (~CANDetectorFlag);
         }
     }
 
+    /**
+     * Is flag bit 0x00020000, which tells the command station to
+     * send CAN booster data to the client set.
+     * @return true if flag is set.
+     */
+    public boolean getCanBoosterFlag(){
+        return((broadcast_flags & CANBoosterFlag) == CANBoosterFlag);
+    }
+
+    /**
+     * Set flag bit 0x00020000, which tells the command station to
+     * send CAN detector data to the client.
+     * @param flag true if flag is to be set.
+     */
+    public void setCanBoosterFlag(boolean flag) {
+        if (flag) {
+            broadcast_flags = broadcast_flags | CANBoosterFlag;
+        } else {
+            broadcast_flags = broadcast_flags & (~CANBoosterFlag);
+        }
+    }
 
 
    /**
@@ -231,7 +340,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     * @return true if flag is set.
     */
     public boolean getSystemStatusMessagesFlag(){
-        return((broadcast_flags & 0x00000100) == 0x00000100);
+        return((broadcast_flags & SystemStateFlag) == SystemStateFlag);
     }
 
    /**
@@ -241,10 +350,10 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     */
     public void setSystemStatusMessagesFlag(boolean flag){
         if(flag) {
-           broadcast_flags = broadcast_flags | 0x00000100;
+           broadcast_flags = broadcast_flags | SystemStateFlag;
         }
         else {
-           broadcast_flags = broadcast_flags & (~(0x00000100));
+           broadcast_flags = broadcast_flags & (~SystemStateFlag);
         }
     }
 
@@ -255,7 +364,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     * @return true if flag is set
     */
     public boolean getXPressNetLocomotiveMessagesFlag(){
-        return((broadcast_flags & 0x00010000) == 0x00010000);
+        return((broadcast_flags & XPressNetLocomotiveFlag) == XPressNetLocomotiveFlag);
     }
 
    /**
@@ -265,10 +374,10 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     */
     public void setXPressNetLocomotiveMessagesFlag(boolean flag){
         if(flag) {
-           broadcast_flags = broadcast_flags | 0x00010000;
+           broadcast_flags = broadcast_flags | XPressNetLocomotiveFlag;
         }
         else {
-           broadcast_flags = broadcast_flags & (~(0x00010000));
+           broadcast_flags = broadcast_flags & (~XPressNetLocomotiveFlag);
         }
     }
 
@@ -278,7 +387,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     * @return true if flag is set.
     */
     public boolean getLocoNetMessagesFlag(){
-        return((broadcast_flags & 0x01000000) == 0x01000000);
+        return((broadcast_flags & LocoNetDataFlag) == LocoNetDataFlag);
     }
 
    /**
@@ -288,10 +397,10 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     */
     public void setLocoNetMessagesFlag(boolean flag){
         if(flag) {
-           broadcast_flags = broadcast_flags | 0x01000000;
+           broadcast_flags = broadcast_flags | LocoNetDataFlag;
         }
         else {
-           broadcast_flags = broadcast_flags & (~(0x01000000));
+           broadcast_flags = broadcast_flags & (~LocoNetDataFlag);
         }
     }
 
@@ -301,7 +410,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     * @return true if flag is set.
     */
     public boolean getLocoNetLocomotiveMessagesFlag(){
-        return((broadcast_flags & 0x02000000) == 0x02000000);
+        return((broadcast_flags & LocoNetLocomotiveFlag) == LocoNetLocomotiveFlag);
     }
 
    /**
@@ -311,10 +420,10 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     */
     public void setLocoNetLocomotiveMessagesFlag(boolean flag){
         if(flag) {
-           broadcast_flags = broadcast_flags | 0x02000000;
+           broadcast_flags = broadcast_flags | LocoNetLocomotiveFlag;
         }
         else {
-           broadcast_flags = broadcast_flags & (~(0x02000000));
+           broadcast_flags = broadcast_flags & (~LocoNetLocomotiveFlag);
         }
     }
 
@@ -324,7 +433,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     * @return true if flag is set.
     */
     public boolean getLocoNetTurnoutMessagesFlag(){
-        return((broadcast_flags & 0x04000000) == 0x04000000);
+        return((broadcast_flags & LocoNetTurnoutFlag) == LocoNetTurnoutFlag);
     }
 
    /**
@@ -334,10 +443,10 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     */
     public void setLocoNetTurnoutMessagesFlag(boolean flag){
         if(flag) {
-           broadcast_flags = broadcast_flags | 0x04000000;
+           broadcast_flags = broadcast_flags | LocoNetTurnoutFlag;
         }
         else {
-           broadcast_flags = broadcast_flags & (~(0x04000000));
+           broadcast_flags = broadcast_flags & (~LocoNetTurnoutFlag);
         }
     }
 
@@ -347,7 +456,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     * @return true if flag is set.
     */
     public boolean getLocoNetOccupancyMessagesFlag(){
-        return((broadcast_flags & 0x08000000) == 0x08000000);
+        return((broadcast_flags & LocoNetOccupancyFlag) == LocoNetOccupancyFlag);
     }
 
    /**
@@ -365,10 +474,33 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     */
     public void setLocoNetOccupancyMessagesFlag(boolean flag){
         if(flag) {
-           broadcast_flags = broadcast_flags | 0x08000000;
+           broadcast_flags = broadcast_flags | LocoNetOccupancyFlag;
         }
         else {
-           broadcast_flags = broadcast_flags & (~(0x08000000));
+           broadcast_flags = broadcast_flags & (~LocoNetOccupancyFlag);
+        }
+    }
+    //* <li>0x00000010 send Fast Clock time messages to the client.</li>
+    /**
+     * Is flag bit 0x00000100 which tells the command station to send
+     * changes in system state (such as track voltage) set?
+     * @return true if flag is set.
+     */
+    public boolean getFastClockFlag(){
+        return((broadcast_flags & FastClockFlag) == FastClockFlag);
+    }
+
+    /**
+     * Set flag bit 0x00000010 which tells the command station to send
+     * changes in the fast clock to.
+     * @param flag true if flag is to be set.
+     */
+    public void setFastClockFlag(boolean flag){
+        if(flag) {
+            broadcast_flags = broadcast_flags | FastClockFlag;
+        }
+        else {
+            broadcast_flags = broadcast_flags & (~FastClockFlag);
         }
     }
 

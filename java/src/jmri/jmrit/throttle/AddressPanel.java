@@ -318,7 +318,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                         throttleManager.responseThrottleDecision(address, this, DecisionType.SHARE );
                         return;
                     }
-                    String[] options = new String[] {Bundle.getMessage("StealButton"), Bundle.getMessage("ShareButton"), Bundle.getMessage("CancelButton")};
+                    String[] options = new String[] {Bundle.getMessage("StealButton"), Bundle.getMessage("ShareButton"), Bundle.getMessage("ButtonCancel")};
                     jmri.util.ThreadingUtil.runOnGUI(() -> {
                         int response = JmriJOptionPane.showOptionDialog(AddressPanel.this,
                                 Bundle.getMessage("StealShareQuestionText",address.toString()), Bundle.getMessage("StealShareRequestTitle"),
@@ -696,7 +696,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         if (throttle != null) {
             int usageCount  = throttleManager.getThrottleUsageCount(throttle.getLocoAddress()) - 1;
             if ( usageCount != 0 ) {
-                JmriJOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("CannotDisptach", usageCount));
+                JmriJOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("CannotDispatch", usageCount));
                 return;
             }
             notifyThrottleDisposed();

@@ -122,27 +122,24 @@ public class AllocatedSection {
         if (mSection == null) {
             return length;
         }
+        int bStart = mSection.getBlockSequenceNumber(block);
         if (mSection.getState() == Section.FORWARD) {
-            for (int ix = 0;ix < mSection.getNumBlocks();ix++) {
+            for (int ix = bStart;ix < mSection.getNumBlocks();ix++) {
                 Block b = (mSection.getBlockBySequenceNumber(ix));
                 if (b != null) {
-                    if (length > 0.0f || b == block) {
-                        length += b.getLengthMm();
-                    }
+                    length += b.getLengthMm();
                 }
             }
         }
         else if (mSection.getState() == Section.REVERSE) {
-            for (int ix =  mSection.getNumBlocks()-1;ix > -1 ;ix--) {
+            for (int ix =  0 ;ix <= bStart ;ix++) {
                 Block b = (mSection.getBlockBySequenceNumber(ix));
                 if (b != null) {
-                    if (length > 0.0f || b == block) {
-                        length += b.getLengthMm();
-                    }
+                    length += b.getLengthMm();
                 }
             }
         }
-        log.debug("Remaining length in section[{}] is [{}]",mSection.getDisplayName(), length);
+        log.trace("Remaining length in section[{}] is [{}]",mSection.getDisplayName(), length);
         return length;
     }
 
@@ -268,9 +265,8 @@ public class AllocatedSection {
         return mSection.getState();
     }
 
-    public int getLength() {
-        return mSection.getLengthI(InstanceManager.getDefault(DispatcherFrame.class).getUseScaleMeters(),
-                InstanceManager.getDefault(DispatcherFrame.class).getScale());
+    public int getActualLength() {
+        return mSection.getActualLength();
     }
 
     public void reset() {
@@ -287,6 +283,11 @@ public class AllocatedSection {
         } else if (mSection.getOccupancy() == Section.UNOCCUPIED) {
             if (mEntered) {
                 mExited = true;
+                // set colour to still allocated.
+                // release will reset the colour to unoccupied.
+                if (InstanceManager.getDefault(DispatcherFrame.class).getExtraColorForAllocated()) {
+                    mSection.setAlternateColorFromActiveBlock(true);
+                }
             }
         }
         if (mActiveTrain.getAutoActiveTrain() != null) {

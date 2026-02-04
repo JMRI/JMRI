@@ -1,14 +1,18 @@
 package jmri.jmrix.openlcb;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.InstanceManager;
 import jmri.RailComManager;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.beans.PropertyVetoException;
+
+import jmri.util.junit.annotations.NotApplicable;
 
 /**
  *
@@ -17,7 +21,7 @@ import java.beans.PropertyVetoException;
  */
 public class OlcbReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
-    OlcbTestInterface ti;
+    private OlcbTestInterface ti;
 
     @Override
     protected String getNameToTest1() {
@@ -30,13 +34,15 @@ public class OlcbReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     }
 
     // For some reason this test hardcodes system name "1" and "2"
+    @Test
     @Override
     public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, IllegalAccessException {
         testRegisterDuplicateSystemName(l, l.makeSystemName(getNameToTest1()), l.makeSystemName(getNameToTest2()));
     }
 
-    // OpenLCB can not create a reporter just by number.
+    @Test
     @Override
+    @NotApplicable("OpenLCB can not create a reporter just by number.")
     public void testReporterProvideByNumber() {}
 
     @Test
@@ -54,13 +60,18 @@ public class OlcbReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Test
     public void testIncrement() {
         OlcbReporterManager om = (OlcbReporterManager) l;
-        Assert.assertEquals("MR06.40.0D.11.22.33.00.00", om.incrementSystemName("MR06.40.0D.11.22.32.00.00"));
-        Assert.assertEquals("MR06.40.0D.11.22.3A.00.00", om.incrementSystemName("MR06.40.0D.11.22.39.00.00"));
-        Assert.assertEquals("MR06.40.0D.11.22.40.00.00", om.incrementSystemName("MR06.40.0D.11.22.3F.00.00"));
-        Assert.assertEquals("MR06.40.0D.11.23.00.00.00", om.incrementSystemName("MR06.40.0D.11.22.FF.00.00"));
-        Assert.assertEquals("MR06.40.0D.12.00.00.00.00", om.incrementSystemName("MR06.40.0D.11.FF.FF.00.00"));
+        assertEquals("MR06.40.0D.11.22.33.00.00", om.incrementSystemName("MR06.40.0D.11.22.32.00.00"));
+        assertEquals("MR06.40.0D.11.22.3A.00.00", om.incrementSystemName("MR06.40.0D.11.22.39.00.00"));
+        assertEquals("MR06.40.0D.11.22.40.00.00", om.incrementSystemName("MR06.40.0D.11.22.3F.00.00"));
+        assertEquals("MR06.40.0D.11.23.00.00.00", om.incrementSystemName("MR06.40.0D.11.22.FF.00.00"));
+        assertEquals("MR06.40.0D.12.00.00.00.00", om.incrementSystemName("MR06.40.0D.11.FF.FF.00.00"));
         // There is no increment above the manufacturer ID range. Instead, the 24-bit field gets reset to all zeros.
-        Assert.assertEquals("MR06.40.FF.00.00.00.00.00", om.incrementSystemName("MR06.40.FF.FF.FF.FF.00.00"));
+        assertEquals("MR06.40.FF.00.00.00.00.00", om.incrementSystemName("MR06.40.FF.FF.FF.FF.00.00"));
+    }
+
+    @Override
+    public String getSystemName(String i) {
+        return "MR" + i;
     }
 
     @Override
@@ -72,11 +83,6 @@ public class OlcbReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         ti = new OlcbTestInterface(new OlcbTestInterface.CreateConfigurationManager());
         ti.waitForStartup();
         l = new OlcbReporterManager(ti.systemConnectionMemo);
-    }
-
-    @Override
-    public String getSystemName(String i) {
-        return "MR" + i;
     }
 
     @AfterEach

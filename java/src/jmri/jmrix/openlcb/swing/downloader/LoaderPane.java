@@ -1,6 +1,5 @@
 package jmri.jmrix.openlcb.swing.downloader;
 
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,11 +9,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import jmri.jmrit.MemoryContents;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.openlcb.swing.NodeSpecificFrame;
+import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WrapLayout;
 
 import org.openlcb.Connection;
@@ -26,6 +24,7 @@ import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.DatagramService;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.swing.NodeSelector;
+import org.openlcb.swing.MemorySpaceSelector;
 
 /**
  * Pane for downloading firmware files files to OpenLCB devices which support
@@ -45,7 +44,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     MimicNodeStore store;
     NodeSelector nodeSelector;
     JPanel selectorPane;
-    JTextField spaceField;
+    MemorySpaceSelector spaceField;
     JCheckBox lockNode;
     LoaderClient loaderClient;
     NodeID nid;
@@ -68,28 +67,28 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         this.iface = memo.get(OlcbInterface.class);
         
         // We can add to GUI here
-        loadButton.setText("Load");
-        loadButton.setToolTipText("Start Load Process");
+        loadButton.setText(Bundle.getMessage("ButtonLoad"));
+        loadButton.setToolTipText(Bundle.getMessage("ButtonLoadTt"));
         JPanel p;
 
         p = new JPanel();
         p.setLayout(new WrapLayout());
-        p.add(new JLabel("Target Node ID: "));
+        p.add(new JLabel(Bundle.getMessage("LabelTargetNode")));
         p.add(nodeSelector);
         selectorPane.add(p);
 
         p = new JPanel();
         p.setLayout(new WrapLayout());
-        p.add(new JLabel("Address Space: "));
+        p.add(new JLabel(Bundle.getMessage("LabelAddressSpace")));
 
-        spaceField = new JTextField("" + 0xEF);
+        spaceField = new MemorySpaceSelector(0xEF);
         p.add(spaceField);
         selectorPane.add(p);
-        spaceField.setToolTipText("The decimal number of the address space, e.g. 239");
+        spaceField.setToolTipText(Bundle.getMessage("LabelSpaceFieldTt"));
 
         p = new JPanel();
         p.setLayout(new WrapLayout());
-        lockNode = new JCheckBox("Lock Node");
+        lockNode = new JCheckBox(Bundle.getMessage("LabelLockNode"));
         p.add(lockNode);
         selectorPane.add(p);
 
@@ -123,7 +122,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Firmware Downloader");
+            return (memo.getUserName() + " " + Bundle.getMessage("TitleLoader"));
         }
         return getTitle(Bundle.getMessage("TitleLoader"));
     }
@@ -145,40 +144,13 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         super.doLoad();
         
         // if window referencing this node is open, close it
-        var frames = jmri.util.JmriJFrame.getFrames();
-        for (var frame : frames) {
-            if (frame instanceof NodeSpecificFrame) {
-                if ( ((NodeSpecificFrame)frame).getNodeID() == destNodeID() ) {
-                    // This window references the node and should be closed
-                    
-                    // Notify the user to handle any prompts before continuing.
-                    jmri.util.swing.JmriJOptionPane.showMessageDialog(this, 
-                        Bundle.getMessage("OpenWindowMessage")
-                    );
-                    
-                    // Depending on the state of the window, and how the user handles
-                    // a prompt to discard changes or cancel, this might be 
-                    // presented multiple times until the user finally
-                    // allows the window to close. See the message in the Bundle.properties
-                    // file for how we handle this.
-
-                    // Close this window - force onto the queue before a possible next modal dialog
-                    jmri.util.ThreadingUtil.runOnGUI(() -> {
-                        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-                    });
-                    
-                }
-            }
-        }
-
-        // de-cache CDI information so next window opening will reload
-        iface.dropConfigForNode(destNodeID());
+        // Then decache any CDI for the node
+        jmri.jmrix.openlcb.swing.DropCdiCache.drop(destNodeID(), memo.get(OlcbInterface.class));
 
         // start firmware load operation
         setOperationAborted(false);
-        abortButton.setEnabled(false);
-        abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
-        int ispace = Integer.parseInt(spaceField.getText());
+
+        int ispace = spaceField.getMemorySpace();
         long addr = 0;
         loaderClient.doLoad(nid, destNodeID(), ispace, addr, fdata, new LoaderStatusReporter() {
             @Override
@@ -223,7 +195,14 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
      * @return selected node id
      */
     NodeID destNodeID() {
-        return nodeSelector.getSelectedItem();
+        return nodeSelector.getSelectedNodeID();
+    }
+
+    /**
+     * Set NodeID in the GUI
+     */
+    void setDestNodeID(NodeID nodeID) {
+        nodeSelector.setSelectedNodeID(nodeID);
     }
 
     @Override
@@ -276,11 +255,32 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     public static class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
-            super("Openlcb Firmware Download",
+            super("LCC Firmware Download",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     LoaderAction.class.getName(),
                     jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
         }
+
+        /**
+         * Constructor that explicits sets the node to be upgraded
+         */
+        public Default(NodeID nodeID) {
+            super("LCC Firmware Download",
+                    new jmri.util.swing.sdi.JmriJFrameInterface(),
+                    LoaderPane.class.getName(),
+                    jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
+            this.nodeID = nodeID;
+        }
+
+        NodeID nodeID;
+        
+        @Override
+        public JmriPanel makePanel() {
+            var panel = (LoaderPane) super.makePanel();
+            panel.setDestNodeID(nodeID);
+            return panel;
+        }
+        
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoaderPane.class);

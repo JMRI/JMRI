@@ -525,34 +525,55 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             profiles.add(ProfileManager.getDefault().getAllProfiles().get(row));
         }
         for (Profile deletedProfile : profiles) {
-            int result = JmriJOptionPane.showOptionDialog(this,
-                    Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.dlgMessage", deletedProfile.getName()), // NOI18N
-                    Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.dlgTitle", deletedProfile.getName()), // NOI18N
-                    JmriJOptionPane.OK_CANCEL_OPTION,
-                    JmriJOptionPane.QUESTION_MESSAGE,
-                    null, // use default icon
-                    new String[]{
-                        Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.text"), // NOI18N
-                        Bundle.getMessage("AddProfileDialog.btnCancel.text") // NOI18N
-                    },
-                    JmriJOptionPane.CANCEL_OPTION
-            );
-            if (result == JmriJOptionPane.OK_OPTION) {
-                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                if (!FileUtil.delete(deletedProfile.getPath())) {
-                    log.warn("Unable to delete profile directory {}", deletedProfile.getPath());
+            if (!Profile.isProfile(deletedProfile.getPath())) {
+                int result = JmriJOptionPane.showOptionDialog(this,
+                        Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.dlgMessageNotAProfile", deletedProfile.getName(),deletedProfile.getPath()), // NOI18N
+                        Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.dlgTitle", deletedProfile.getName()), // NOI18N
+                        JmriJOptionPane.OK_CANCEL_OPTION,
+                        JmriJOptionPane.QUESTION_MESSAGE,
+                        null, // use default icon
+                        new String[]{
+                            Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.text"), // NOI18N
+                            Bundle.getMessage("AddProfileDialog.btnCancel.text") // NOI18N
+                        },
+                        JmriJOptionPane.CANCEL_OPTION
+                );
+                if (result == JmriJOptionPane.OK_OPTION) {
+                    ProfileManager.getDefault().removeProfile(deletedProfile);
+                    log.info("Removed profile \"{}\" left directory {}", deletedProfile.getName(), deletedProfile.getPath());
                     this.setCursor(Cursor.getDefaultCursor());
-                    JmriJOptionPane.showMessageDialog(this,
-                            Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage", deletedProfile.getPath()),
-                            Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage"),
-                            JmriJOptionPane.ERROR_MESSAGE);
-                    this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    profilesTbl.repaint();
                 }
-                ProfileManager.getDefault().removeProfile(deletedProfile);
-                log.info("Removed profile \"{}\" from {}", deletedProfile.getName(), deletedProfile.getPath());
-                this.setCursor(Cursor.getDefaultCursor());
-                profilesTbl.repaint();
+            } else {
+                int result = JmriJOptionPane.showOptionDialog(this,
+                        Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.dlgMessage", deletedProfile.getName(), deletedProfile.getPath(), "AAAAA" ), // NOI18N
+                        Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.dlgTitle", deletedProfile.getName()), // NOI18N
+                        JmriJOptionPane.OK_CANCEL_OPTION,
+                        JmriJOptionPane.QUESTION_MESSAGE,
+                        null, // use default icon
+                        new String[]{
+                            Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.text"), // NOI18N
+                            Bundle.getMessage("AddProfileDialog.btnCancel.text") // NOI18N
+                        },
+                        JmriJOptionPane.CANCEL_OPTION
+                );
+                if (result == JmriJOptionPane.OK_OPTION) {
+                    this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    if (!FileUtil.delete(deletedProfile.getPath())) {
+                        log.warn("Unable to delete profile directory {}", deletedProfile.getPath());
+                        this.setCursor(Cursor.getDefaultCursor());
+                        JmriJOptionPane.showMessageDialog(this,
+                                Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage", deletedProfile.getPath()),
+                                Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage"),
+                                JmriJOptionPane.ERROR_MESSAGE);
+                        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    }
+                    ProfileManager.getDefault().removeProfile(deletedProfile);
+                    log.info("Removed profile \"{}\" from {}", deletedProfile.getName(), deletedProfile.getPath());
+                }
             }
+            this.setCursor(Cursor.getDefaultCursor());
+            profilesTbl.repaint();
         }
     }//GEN-LAST:event_btnDeleteProfileActionPerformed
 
@@ -564,16 +585,25 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         // TODO: Use NetBeans OpenDialog if its availble
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
-                Profile p = new Profile(chooser.getSelectedFile());
-                ProfileManager.getDefault().addProfile(p);
-                int index = ProfileManager.getDefault().getAllProfiles().indexOf(p);
-                profilesTbl.setRowSelectionInterval(index, index);
+                if (!Profile.isProfile(chooser.getSelectedFile())) {
+                    log.warn("{} is not a profile directory", chooser.getSelectedFile());
+                    JmriJOptionPane.showMessageDialog(this,
+                            Bundle.getMessage("addExistingNotAProfile",chooser.getSelectedFile()),
+                            Bundle.getMessage("addExistingNotAProfile"),
+                            JmriJOptionPane.ERROR_MESSAGE);
+                    return;
+                } else {
+                    Profile p = new Profile(chooser.getSelectedFile());
+                    ProfileManager.getDefault().addProfile(p);
+                    int index = ProfileManager.getDefault().getAllProfiles().indexOf(p);
+                    profilesTbl.setRowSelectionInterval(index, index);
+                }
             } catch (IOException ex) {
-                log.warn("{} is not a profile directory", chooser.getSelectedFile());
-                JmriJOptionPane.showMessageDialog(this,
-                        Bundle.getMessage("ProfilePreferencesPanel.btnOpenExistingProfile.errorMessage", chooser.getSelectedFile().getPath()),
-                        Bundle.getMessage("ProfilePreferencesPanel.btnOpenExistingProfile.errorMessage"),
-                        JmriJOptionPane.ERROR_MESSAGE);
+                // new Profile can throw an exception, but not for directory is not a profile directory
+                // it just creates and invalid null profile
+                // which when subsequently deleted removes the entire directory tree.
+                log.warn("Unexpected error in new Profile({})", chooser.getSelectedFile(),ex);
+                return;
             }
         }
     }//GEN-LAST:event_btnOpenExistingProfileActionPerformed

@@ -1,6 +1,11 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.NamedBeanType;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import static jmri.configurexml.StoreAndCompare.checkFile;
 
 import java.io.*;
 import java.net.*;
@@ -10,7 +15,8 @@ import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 
 import jmri.*;
-import static jmri.configurexml.StoreAndCompare.checkFile;
+import jmri.configurexml.LoadAndStorePreferences;
+import jmri.configurexml.ShutdownPreferences;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
 import jmri.jmrit.logixng.expressions.ExpressionLight;
@@ -19,7 +25,7 @@ import jmri.jmrit.logixng.util.LineEnding;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.*;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
  * Test WebRequest
@@ -42,7 +48,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     private static boolean tryAccessJmriOrg() {
         try {
-            URL url = new URL(JMRI_ORG_URL);
+            URL url = new URI(JMRI_ORG_URL).toURL();
             HttpURLConnection con = (HttpsURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("User-Agent", WebRequest.DEFAULT_USER_AGENT);
@@ -53,10 +59,10 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         } catch (UnknownHostException | java.net.SocketException e) {
             // We couldn't access the web site
             log.warn("Unable to connect to {} {}",JMRI_ORG_URL,e.getMessage());
-            return false;
-        } catch (IOException e) {
-            throw new RuntimeException("Exception thrown", e);
+        } catch (IOException | URISyntaxException e) {
+            fail("Exception thrown", e);
         }
+        return false;
     }
 
     @Override
@@ -160,19 +166,19 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testThrowTurnouts() throws JmriException {
-        Assume.assumeTrue("We can access " + JMRI_ORG_URL, WebRequestTest.tryAccessJmriOrg());
+        Assumptions.assumeTrue( WebRequestTest.tryAccessJmriOrg(), "We can access " + JMRI_ORG_URL);
 
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
         Turnout miamiWest = InstanceManager.getDefault(TurnoutManager.class).getByUserName("MiamiWest");
-        Assert.assertNotNull(miamiWest);
+        assertNotNull(miamiWest);
         miamiWest.setState(Turnout.THROWN);
-        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
-        Assert.assertEquals("Turnout MiamiWest is thrown", _replyVariable.getValue());
+        assertEquals(200, (int)_responseCodeVariable.getValue());
+        assertEquals("Turnout MiamiWest is thrown", _replyVariable.getValue());
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
         JUnitAppender.assertWarnMessageStartsWith("Name: turnout, Value: MiamiWest");
-        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: IT3");
+        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: TorontoFirst");
         JUnitAppender.assertWarnMessageStartsWith("Global variables:");
         JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
         JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Turnout MiamiWest is thrown");
@@ -182,14 +188,14 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
         Turnout chicago32 = InstanceManager.getDefault(TurnoutManager.class).getByUserName("Chicago32");
-        Assert.assertNotNull(chicago32);
+        assertNotNull(chicago32);
         chicago32.setState(Turnout.THROWN);
-        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
-        Assert.assertEquals("Turnout Chicago32 is thrown", _replyVariable.getValue());
+        assertEquals(200, (int)_responseCodeVariable.getValue());
+        assertEquals("Turnout Chicago32 is thrown", _replyVariable.getValue());
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
         JUnitAppender.assertWarnMessageStartsWith("Name: turnout, Value: Chicago32");
-        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: IT3");
+        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: TorontoFirst");
         JUnitAppender.assertWarnMessageStartsWith("Global variables:");
         JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
         JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Turnout Chicago32 is thrown");
@@ -200,15 +206,15 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         _replyVariable.setValue(null);
 
         Turnout torontoFirst = InstanceManager.getDefault(TurnoutManager.class).getByUserName("TorontoFirst");
-        Assert.assertNotNull(torontoFirst);
+        assertNotNull(torontoFirst);
         torontoFirst.setState(Turnout.THROWN);
-        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
-        Assert.assertEquals("Turnout TorontoFirst is thrown", _replyVariable.getValue());
+        assertEquals(200, (int)_responseCodeVariable.getValue());
+        assertEquals("Turnout TorontoFirst is thrown", _replyVariable.getValue());
 
         // Suppress instead of assert these messages since they will not be there if the JMRI web server is down
         JUnitAppender.suppressWarnMessageStartsWith("Log local variables:");
         JUnitAppender.suppressWarnMessageStartsWith("Name: turnout, Value: TorontoFirst");
-        JUnitAppender.suppressWarnMessageStartsWith("Name: bean, Value: IT3");
+        JUnitAppender.suppressWarnMessageStartsWith("Name: bean, Value: TorontoFirst");
         JUnitAppender.suppressWarnMessageStartsWith("Global variables:");
         JUnitAppender.suppressWarnMessageStartsWith("Global Name: responseCode, value: 200");
         JUnitAppender.suppressWarnMessageStartsWith("Global Name: reply, value: Turnout TorontoFirst is thrown");
@@ -289,19 +295,19 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCookies() throws JmriException {
-        Assume.assumeTrue("We can access " + JMRI_ORG_URL, WebRequestTest.tryAccessJmriOrg());
+        Assumptions.assumeTrue( WebRequestTest.tryAccessJmriOrg(), "We can access " + JMRI_ORG_URL);
 
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
         _cookiesVariable.setValue(null);
         Sensor green = InstanceManager.getDefault(SensorManager.class).getByUserName("Green");
-        Assert.assertNotNull(green);
+        assertNotNull(green);
         green.setState(Sensor.ACTIVE);
-        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
-        Assert.assertEquals("Cookie Green is set. Cookies from client: ", _replyVariable.getValue());
+        assertEquals(200, (int)_responseCodeVariable.getValue());
+        assertEquals("Cookie Green is set. Cookies from client: ", _replyVariable.getValue());
         String cookies = _cookiesVariable.getValue().toString();
-        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
-        Assert.assertEquals("{Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
+        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d.\\w\\w\\w.\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
+        assertEquals("{Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
         JUnitAppender.assertWarnMessageStartsWith("Name: sensor, Value: Green");
@@ -315,13 +321,13 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
         Sensor yellow = InstanceManager.getDefault(SensorManager.class).getByUserName("Yellow");
-        Assert.assertNotNull(yellow);
+        assertNotNull(yellow);
         yellow.setState(Sensor.ACTIVE);
-        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
-        Assert.assertEquals("Cookie Yellow is set. Cookies from client: Green=GreenGreen!", _replyVariable.getValue());
+        assertEquals(200, (int)_responseCodeVariable.getValue());
+        assertEquals("Cookie Yellow is set. Cookies from client: Green=GreenGreen!", _replyVariable.getValue());
         cookies = _cookiesVariable.getValue().toString();
-        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
-        Assert.assertEquals("{Yellow=Yellow=YellowYellow%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
+        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d.\\w\\w\\w.\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
+        assertEquals("{Yellow=Yellow=YellowYellow%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
         JUnitAppender.assertWarnMessageStartsWith("Name: sensor, Value: Yellow");
@@ -335,13 +341,13 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
         Sensor blue = InstanceManager.getDefault(SensorManager.class).getByUserName("Blue");
-        Assert.assertNotNull(blue);
+        assertNotNull(blue);
         blue.setState(Sensor.ACTIVE);
-        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
-        Assert.assertEquals("Cookie Blue is set. Cookies from client: Yellow=YellowYellow!, Green=GreenGreen!", _replyVariable.getValue());
+        assertEquals(200, (int)_responseCodeVariable.getValue());
+        assertEquals("Cookie Blue is set. Cookies from client: Yellow=YellowYellow!, Green=GreenGreen!", _replyVariable.getValue());
         cookies = _cookiesVariable.getValue().toString();
-        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
-        Assert.assertEquals("{Yellow=Yellow=YellowYellow%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Blue=Blue=BlueBlue%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
+        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d.\\w\\w\\w.\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
+        assertEquals("{Yellow=Yellow=YellowYellow%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Blue=Blue=BlueBlue%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
         JUnitAppender.assertWarnMessageStartsWith("Name: sensor, Value: Blue");
@@ -415,15 +421,15 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testPostRequest() throws JmriException {
-        Assume.assumeTrue("We can access " + JMRI_ORG_URL, WebRequestTest.tryAccessJmriOrg());
+        Assumptions.assumeTrue( WebRequestTest.tryAccessJmriOrg(), "We can access " + JMRI_ORG_URL);
         _responseCodeVariable.setValue(null);
         _replyVariable.setValue(null);
 
         Light l = InstanceManager.getDefault(LightManager.class).getByUserName("TestPostRequestLight");
-        Assert.assertNotNull(l);
+        assertNotNull(l);
         l.setState(Light.ON);
-        Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
-        Assert.assertEquals("Logged in. First name: Green, last name: Tomato", _replyVariable.getValue());
+        assertEquals(200, (int)_responseCodeVariable.getValue());
+        assertEquals("Logged in. First name: Green, last name: Tomato", _replyVariable.getValue());
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
         JUnitAppender.assertWarnMessageStartsWith("Global variables:");
@@ -500,47 +506,42 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
     private void storeXmlFile() throws Exception {
 
         jmri.ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm == null) {
-            log.error("Unable to get default configure manager");
-        } else {
-            FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
-            File firstFile = new File(FileUtil.getUserFilesPath() + "temp/" + "WebRequest_temp.xml");
-            File secondFile = new File(FileUtil.getUserFilesPath() + "temp/" + "WebRequest.xml");
-            log.info("Temporary first file: {}", firstFile.getAbsoluteFile());
-            log.info("Temporary second file: {}", secondFile.getAbsoluteFile());
+        assertNotNull( cm, "Unable to get default configure manager");
+
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
+        File firstFile = new File(FileUtil.getUserFilesPath() + "temp/" + "WebRequest_temp.xml");
+        File secondFile = new File(FileUtil.getUserFilesPath() + "temp/" + "WebRequest.xml");
+        log.info("Temporary first file: {}", firstFile.getAbsoluteFile());
+        log.info("Temporary second file: {}", secondFile.getAbsoluteFile());
 //            System.out.format("Temporary first file: %s%n", firstFile.getAbsoluteFile());
 //            System.out.format("Temporary second file: %s%n", secondFile.getAbsoluteFile());
 
-            boolean results = cm.storeUser(firstFile);
-            log.debug(results ? "store was successful" : "store failed");
-            if (!results) {
-                log.error("Failed to store panel");
-                throw new RuntimeException("Failed to store panel");
-            }
+        assertTrue(cm.storeUser(firstFile), "Failed to store panel");
 
-            // Add the header comment to the xml file
-            addHeader(firstFile, secondFile);
+        // Add the header comment to the xml file
+        addHeader(firstFile, secondFile);
 
-            boolean dataHasChanged = true;
+        boolean dataHasChanged = true;
 
-            File fileInDocumentationFolder =
-                    new File(FileUtil.getProgramPath() + "help/en/html/tools/logixng/reference/WebRequestExample/" + "WebRequest.xml");
+        File fileInDocumentationFolder =
+                new File(FileUtil.getProgramPath() + "help/en/html/tools/logixng/reference/WebRequestExample/" + "WebRequest.xml");
 
-            try {
-                // Note: The comparision is made with the first xml file that doesn't have the header comment.
-                dataHasChanged = checkFile(fileInDocumentationFolder, firstFile);
-            } catch (FileNotFoundException e) {
-                // Ignore this. If this happens, just copy the new file to the documentation folder
-                System.out.format("File not found!!! %s%n", e.getMessage());
-            }
-
-            if (dataHasChanged) {
-                java.nio.file.Files.copy(secondFile.toPath(), fileInDocumentationFolder.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-//                System.out.format("File copied from %s to %s%n", secondFile, fileInDocumentationFolder);
-            }
-
-//            System.out.format("File compare %s with %s resulted in: %b%n", fileInDocumentationFolder, secondFile, dataHasChanged);
+        try {
+            // Ignore Timebase changes
+            InstanceManager.getDefault(ShutdownPreferences.class).setIgnoreTimebase(true);
+            // Note: The comparision is made with the first xml file that doesn't have the header comment.
+            dataHasChanged = checkFile(fileInDocumentationFolder, firstFile);
+        } catch (FileNotFoundException e) {
+            // Ignore this. If this happens, just copy the new file to the documentation folder
+            System.out.format("File not found!!! %s%n", e.getMessage());
         }
+
+        if (dataHasChanged) {
+            java.nio.file.Files.copy(secondFile.toPath(), fileInDocumentationFolder.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+//            System.out.format("File copied from %s to %s%n", secondFile, fileInDocumentationFolder);
+        }
+
+//        System.out.format("File compare %s with %s resulted in: %b%n", fileInDocumentationFolder, secondFile, dataHasChanged);
     }
 
 
@@ -568,8 +569,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
     }
 
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, ParserException, IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -580,7 +580,13 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initLogixNGManager();
         jmri.jmrit.logixng.NamedBeanType.reset();
 
-        _category = Category.ITEM;
+        // Exclude dynamic content in the tables and panels file
+        var loadAndStorePreferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
+        loadAndStorePreferences.setExcludeMemoryIMCURRENTTIME(true);
+        loadAndStorePreferences.setExcludeJmriVersion(true);
+        loadAndStorePreferences.setExcludeFileHistory(true);
+
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
@@ -592,12 +598,12 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         setupCookiesConditionalNG();
         setupPostRequestConditionalNG();
 
-        if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( _logixNG.setParentForAllChildren(new ArrayList<>()));
         _logixNG.activate();
         _logixNG.setEnabled(true);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
@@ -605,5 +611,5 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebRequestTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebRequestTest.class);
 }

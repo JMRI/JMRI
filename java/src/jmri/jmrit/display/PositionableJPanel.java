@@ -199,6 +199,15 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
         return _emptyHidden;
     }
 
+    @Override
+    public void setValueEditDisabled(boolean isDisabled) {
+    }
+
+    @Override
+    public boolean isValueEditDisabled() {
+        return false;
+    }
+
     public void setLevel(int l) {
         _displayLevel = l;
     }

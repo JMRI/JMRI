@@ -1,12 +1,17 @@
 package jmri.managers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import jmri.*;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrix.internal.InternalAnalogIOManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -39,9 +44,9 @@ public class ProxyAnalogIOManagerTest extends AbstractProxyManagerTestBase<Proxy
         AnalogIO t = newAnalogIO(getSystemName(getNumToTest1()), "mine");
         l.register(t);
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        assertNotNull( t, "real object returned ");
+        assertSame( t, l.getByUserName("mine"), "user name correct ");
+        assertSame( t, l.getBySystemName(getSystemName(getNumToTest1())), "system name correct ");
     }
 
     @Test
@@ -49,51 +54,52 @@ public class ProxyAnalogIOManagerTest extends AbstractProxyManagerTestBase<Proxy
         // test that you always get the same representation
         AnalogIO t1 = newAnalogIO(getSystemName(getNumToTest1()), "mine");
         l.register(t1);
-        Assert.assertTrue("t1 real object returned ", t1 != null);
-        Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
-        Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest1())));
+        assertNotNull( t1, "t1 real object returned ");
+        assertSame( t1, l.getByUserName("mine"), "same by user ");
+        assertSame( t1, l.getBySystemName(getSystemName(getNumToTest1())), "same by system ");
     }
 
     @Test
     public void testMisses() {
         // try to get nonexistant lights
-        Assert.assertTrue(null == l.getByUserName("foo"));
-        Assert.assertTrue(null == l.getBySystemName("bar"));
+        assertNull( l.getByUserName("foo"));
+        assertNull( l.getBySystemName("bar"));
     }
 
     @Test
     public void testRename() {
         // get light
         AnalogIO t1 = newAnalogIO(getSystemName(getNumToTest1()), "before");
-        Assert.assertNotNull("t1 real object ", t1);
+        assertNotNull( t1, "t1 real object ");
         l.register(t1);
         t1.setUserName("after");
         AnalogIO t2 = l.getByUserName("after");
-        Assert.assertEquals("same object", t1, t2);
-        Assert.assertEquals("no old object", null, l.getByUserName("before"));
+        assertEquals( t1, t2, "same object");
+        assertNull( l.getByUserName("before"), "no old object");
     }
 
     @Test
     public void testInstanceManagerIntegration() {
         JUnitUtil.resetInstanceManager();
-        Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class));
+        assertNotNull(InstanceManager.getDefault(AnalogIOManager.class));
 
-        Assert.assertTrue(InstanceManager.getDefault(AnalogIOManager.class) instanceof ProxyAnalogIOManager);
+        assertInstanceOf( ProxyAnalogIOManager.class,
+            InstanceManager.getDefault(AnalogIOManager.class));
 
-        Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class));
+        assertNotNull(InstanceManager.getDefault(AnalogIOManager.class));
         AnalogIO b = newAnalogIO("IV1", null);
         InstanceManager.getDefault(AnalogIOManager.class).register(b);
-        Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("IV1"));
+        assertNotNull(InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("IV1"));
 
         InternalAnalogIOManager m = new InternalAnalogIOManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setAnalogIOManager(m);
 
         b = newAnalogIO("IV2", null);
         InstanceManager.getDefault(AnalogIOManager.class).register(b);
-        Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("IV1"));
+        assertNotNull(InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("IV1"));
         b = newAnalogIO("IV3", null);
         InstanceManager.getDefault(AnalogIOManager.class).register(b);
-        Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("IV1"));
+        assertNotNull(InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("IV1"));
 
         m.dispose();
     }
@@ -106,22 +112,22 @@ public class ProxyAnalogIOManagerTest extends AbstractProxyManagerTestBase<Proxy
         Light light = new MyLight("JL1");
         InstanceManager.getDefault(LightManager.class).register(light);
         AnalogIO analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL1");
-        Assert.assertNull("light does not exists in AnalogIOManager", analogIO);
+        assertNull( analogIO, "light does not exists in AnalogIOManager");
 
         // Check that we can deregister light without problem
         InstanceManager.getDefault(LightManager.class).deregister(light);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL1");
-        Assert.assertNull("light does not exists in AnalogIOManager", analogIO);
+        assertNull( analogIO, "light does not exists in AnalogIOManager");
 
         Light variableLight = new MyVariableLight("JL2");
         InstanceManager.getDefault(LightManager.class).register(variableLight);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL2");
-        Assert.assertNotNull("variable light exists in AnalogIOManager", analogIO);
+        assertNotNull( analogIO, "variable light exists in AnalogIOManager");
 
         // Check that we can deregister light and that it get deregstered from AnalogIOManager as well
         InstanceManager.getDefault(LightManager.class).deregister(variableLight);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL2");
-        Assert.assertNull("light does not exists in AnalogIOManager", analogIO);
+        assertNull( analogIO, "light does not exists in AnalogIOManager");
     }
 
     @Test
@@ -132,22 +138,22 @@ public class ProxyAnalogIOManagerTest extends AbstractProxyManagerTestBase<Proxy
         Light light = new MyLight("JL1");
         InstanceManager.getDefault(LightManager.class).register(light);
         AnalogIO analogIO = InstanceManager.getDefault(AnalogIOManager.class).getByUserName("A light");
-        Assert.assertNull("light does not exists in AnalogIOManager", analogIO);
+        assertNull( analogIO, "light does not exists in AnalogIOManager");
 
         // Check that we can deregister light without problem
         InstanceManager.getDefault(LightManager.class).deregister(light);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getByUserName("A light");
-        Assert.assertNull("light does not exists in AnalogIOManager", analogIO);
+        assertNull( analogIO, "light does not exists in AnalogIOManager");
 
         Light variableLight = new MyVariableLight("JL2", "A variable light");
         InstanceManager.getDefault(LightManager.class).register(variableLight);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getByUserName("A variable light");
-        Assert.assertNotNull("variableLight exists in AnalogIOManager", analogIO);
+        assertNotNull( analogIO, "variableLight exists in AnalogIOManager");
 
         // Check that we can deregister variableLight and that it get deregstered from AnalogIOManager as well
         InstanceManager.getDefault(LightManager.class).deregister(variableLight);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getByUserName("A variable light");
-        Assert.assertNull("variableLight does not exists in AnalogIOManager", analogIO);
+        assertNull( analogIO, "variableLight does not exists in AnalogIOManager");
     }
 
     @Test
@@ -159,12 +165,12 @@ public class ProxyAnalogIOManagerTest extends AbstractProxyManagerTestBase<Proxy
         SomeDevice someDevice = new SomeDeviceBean("JL1");
         InstanceManager.getDefault(SomeDeviceManager.class).register(someDevice);
         AnalogIO analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL1");
-        Assert.assertNull("someDevice does not exists in AnalogIOManager", analogIO);
+        assertNull( analogIO, "someDevice does not exists in AnalogIOManager");
 
         // Check that we can deregister light without problem
         InstanceManager.getDefault(SomeDeviceManager.class).deregister(someDevice);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL1");
-        Assert.assertNull("someDevice does not exists in AnalogIOManager", analogIO);
+        assertNull( analogIO, "someDevice does not exists in AnalogIOManager");
 
         // Tell AnalogIOManager to register SomeDevice beans in the manager
         InstanceManager.getDefault(AnalogIOManager.class)
@@ -173,12 +179,12 @@ public class ProxyAnalogIOManagerTest extends AbstractProxyManagerTestBase<Proxy
         SomeDevice anotherSomeDevice = new SomeDeviceBean("JL2");
         InstanceManager.getDefault(SomeDeviceManager.class).register(anotherSomeDevice);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL2");
-        Assert.assertNotNull("anotherSomeDevice exists in AnalogIOManager", analogIO);
+        assertNotNull( analogIO, "anotherSomeDevice exists in AnalogIOManager");
 
         // Check that we can deregister anotherSomeDevice and that it get deregstered from AnalogIOManager as well
         InstanceManager.getDefault(SomeDeviceManager.class).deregister(anotherSomeDevice);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL2");
-        Assert.assertNull("anotherSomeDevice does not exists in AnalogIOManager", analogIO);
+        assertNull( analogIO, "anotherSomeDevice does not exists in AnalogIOManager");
     }
 
     @Test
@@ -222,12 +228,9 @@ public class ProxyAnalogIOManagerTest extends AbstractProxyManagerTestBase<Proxy
 
         JUnitUtil.initInternalLightManager();
         AnalogIOManager irman = InstanceManager.getDefault(AnalogIOManager.class);
-        if ( irman instanceof ProxyAnalogIOManager ) {
-            l = (ProxyAnalogIOManager) irman;
-        } else {
-            Assertions.fail("AnalogIOManager is not a ProxyAnalogIOManager");
-        }
-        
+        assertInstanceOf( ProxyAnalogIOManager.class, irman,
+            "AnalogIOManager is not a ProxyAnalogIOManager");
+        l = (ProxyAnalogIOManager) irman;
     }
 
     @AfterEach

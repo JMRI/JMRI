@@ -7,11 +7,10 @@ import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.util.table.ToggleButtonEditor;
 import jmri.util.table.ToggleButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -46,10 +45,7 @@ public class OBlockTablePanel extends JPanel {
 
     private final JTabbedPane oblockTabs;
     TableFrames _tf;
-    Box bottomBox;                  // panel at bottom for extra buttons etc
-    int bottomBoxIndex;             // index to insert extra stuff
-
-    private static final int bottomStrutWidth = 20;
+    private final JPanel bottomBox; // panel at bottom for extra buttons etc
 
 //    @SuppressWarnings("OverridableMethodCallInConstructor")
     public OBlockTablePanel(OBlockTableModel oblocks,
@@ -198,14 +194,10 @@ public class OBlockTablePanel extends JPanel {
         add(oblockTabs, BorderLayout.CENTER);
         log.debug("tabs complete");
 
-        bottomBox = Box.createHorizontalBox();
-        bottomBox.add(Box.createHorizontalGlue()); // stays at end of box
-        bottomBoxIndex = 0;
+        bottomBox = new JPanel();
+        bottomBox.setLayout(new jmri.util.swing.WrapLayout(jmri.util.swing.WrapLayout.LEFT,20,5));
 
         add(bottomBox, BorderLayout.SOUTH);
-
-        // add extras, if desired by subclass
-        extras();
 
         log.debug("bottomBox complete");
         // set preferred scrolling options
@@ -213,16 +205,6 @@ public class OBlockTablePanel extends JPanel {
 //        portalDataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 //        signalDataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 //        blockportalDataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-    }
-
-    /**
-     * Hook to allow sub-types to install more items in GUI
-     */
-    void extras() {
-    }
-
-    protected Box getBottomBox() {
-        return bottomBox;
     }
 
     public JMenuItem getPrintItem() { // copied from AudioTablePanel
@@ -241,16 +223,11 @@ public class OBlockTablePanel extends JPanel {
     }
 
     /**
-     * Add a component to the bottom box. Takes care of organising glue, struts
-     * etc
-     *
+     * Add a component to the bottom box.
      * @param comp {@link Component} to add
      */
     protected void addToBottomBox(Component comp) {
-        bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);
-        ++bottomBoxIndex;
-        bottomBox.add(comp, bottomBoxIndex);
-        ++bottomBoxIndex;
+        bottomBox.add(comp);
     }
 
     public void dispose() {
@@ -361,6 +338,6 @@ public class OBlockTablePanel extends JPanel {
 //        }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OBlockTablePanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OBlockTablePanel.class);
 
 }

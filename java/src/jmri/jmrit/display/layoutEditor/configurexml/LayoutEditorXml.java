@@ -115,6 +115,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         p.resetDirty();
         panel.setAttribute("openDispatcher", p.getOpenDispatcherOnLoad() ? "yes" : "no");
         panel.setAttribute("useDirectTurnoutControl", p.getDirectTurnoutControl() ? "yes" : "no");
+        if (p.isHighlightCursor()) {
+            panel.setAttribute("highlightCursor", "yes");
+        }
 
         // store layout track drawing options
         try {
@@ -590,7 +593,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (DataConversionException e) {
             log.warn("Could not parse color attributes!");
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
-            log.debug("missing backbround color attributes");
+            log.debug("missing background color attributes");
         }
 
         try {
@@ -600,6 +603,15 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
             log.debug("missing useDirectTurnoutControl attribute");
         }
+
+        try {
+            panel.setHighlightCursor(shared.getAttribute("highlightCursor").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert highlightCursor attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            log.debug("missing highlightCursor attribute");
+        }
+
 
         // Set editor's option flags, load content after
         // this so that individual item flags are set as saved
@@ -703,13 +715,14 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 boolean value = shared.getAttribute("openDispatcher").getBooleanValue();
                 panel.setOpenDispatcherOnLoad(value);
                 if (value) {
-                    DispatcherFrame df = InstanceManager.getDefault(DispatcherFrame.class);
-                    df.loadAtStartup();
+                    // Create the DispatcherFrame instance.
+                    // This is a trigger for LoadXmlConfigAction to call loadAtStartup.
+                    InstanceManager.getDefault(DispatcherFrame.class);
                 }
             } catch (DataConversionException e) {
                 log.warn("unable to convert openDispatcher attribute");
             } catch (NullPointerException e) {  // considered normal if the attribute is not present
-                log.debug("missing openDispatcher attribute");
+                log.debug("No openDispatcher attribute");
             }
         }
         return result;

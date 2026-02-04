@@ -1,12 +1,22 @@
 package jmri.jmrix.loconet.duplexgroup.swing;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import jmri.jmrix.loconet.LocoNetException;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.duplexgroup.DuplexGroupMessageType;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -27,63 +37,63 @@ public class LnDplxGrpInfoImplTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", dpxGrpInfoImpl);
-        Assert.assertEquals("Ctor zeroed number of UR92s", 0,
-                dpxGrpInfoImpl.getNumUr92s());
-        Assert.assertFalse("Ctor cleard 'waiting for IPL query replies' flag",
-                dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport());
-        Assert.assertEquals("Ctor has reset 'messagesHandled'", 0,
-                dpxGrpInfoImpl.getMessagesHandled());
+        assertNotNull( dpxGrpInfoImpl, "exists");
+        assertEquals( 0, dpxGrpInfoImpl.getNumUr92s(),
+            "Ctor zeroed number of UR92s");
+        assertFalse( dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport(),
+            "Ctor cleard 'waiting for IPL query replies' flag");
+        assertEquals( 0, dpxGrpInfoImpl.getMessagesHandled(),
+            "Ctor has reset 'messagesHandled'");
 
-        Assert.assertEquals("verify initialization of acceptedGroupName", "",
-                dpxGrpInfoImpl.getFetchedDuplexGroupName());
-        Assert.assertEquals("verify initialization of acceptedGroupChannel", "",
-                dpxGrpInfoImpl.getFetchedDuplexGroupChannel());
-        Assert.assertEquals("verify initialization of acceptedGroupPassword", "",
-                dpxGrpInfoImpl.getFetchedDuplexGroupPassword());
-        Assert.assertEquals("verify initialization of acceptedGroupId", "",
-                dpxGrpInfoImpl.getFetchedDuplexGroupId());
+        assertEquals( "", dpxGrpInfoImpl.getFetchedDuplexGroupName(),
+            "verify initialization of acceptedGroupName");
+        assertEquals( "", dpxGrpInfoImpl.getFetchedDuplexGroupChannel(),
+            "verify initialization of acceptedGroupChannel");
+        assertEquals( "", dpxGrpInfoImpl.getFetchedDuplexGroupPassword(),
+            "verify initialization of acceptedGroupPassword");
+        assertEquals( "", dpxGrpInfoImpl.getFetchedDuplexGroupId(),
+            "verify initialization of acceptedGroupId");
 
         lnis.notify(new LocoNetMessage(new int[] {0x81, 0x00}));
-        jmri.util.JUnitUtil.fasterWaitFor(()->{
+        JUnitUtil.fasterWaitFor(()->{
             return dpxGrpInfoImpl.getMessagesHandled() >= 1;},
                 "LocoNetListener is registered");
-        Assert.assertFalse("IPL Query timer is not running", dpxGrpInfoImpl.isIplQueryTimerRunning());
-        Assert.assertFalse("Duplex Group Info Query timer is not running", dpxGrpInfoImpl.isDuplexGroupQueryRunning());
+        assertFalse( dpxGrpInfoImpl.isIplQueryTimerRunning(), "IPL Query timer is not running");
+        assertFalse( dpxGrpInfoImpl.isDuplexGroupQueryRunning(), "Duplex Group Info Query timer is not running");
 
         dpxGrpInfoImpl.dispose();
 
         for (LocoNetListener listener : lnis.getListeners()) {
-            if (listener == dpxGrpInfoImpl) Assert.fail("dispose did not remove");
+            assertNotSame( listener, dpxGrpInfoImpl, "dispose did not remove listener");
         }
     }
 
     @Test
     public void testMiscellaneousStuff() {
-        Assert.assertFalse("limit Password to Numeric-only", LnDplxGrpInfoImpl.isPasswordLimitedToNumbers());
+        assertFalse( LnDplxGrpInfoImpl.isPasswordLimitedToNumbers(), "limit Password to Numeric-only");
 
     }
 
     @Test
     public void testValidateDuplexGroupName() {
-        Assert.assertFalse("Check Group name: empty string", LnDplxGrpInfoImpl.validateGroupName(""));
-        Assert.assertFalse("Check Group name: 1 character", LnDplxGrpInfoImpl.validateGroupName(" "));
-        Assert.assertFalse("Check Group name: only newline", LnDplxGrpInfoImpl.validateGroupName("\n"));
-        Assert.assertFalse("Check Group name: only linefeed", LnDplxGrpInfoImpl.validateGroupName("\r"));
-        Assert.assertFalse("Check Group name: 1 oddball character", LnDplxGrpInfoImpl.validateGroupName("\177"));
-        Assert.assertFalse("Check Group name: 2 characters", LnDplxGrpInfoImpl.validateGroupName("ab"));
-        Assert.assertFalse("Check Group name: 3 characters", LnDplxGrpInfoImpl.validateGroupName("abc"));
-        Assert.assertFalse("Check Group name: 4 characters", LnDplxGrpInfoImpl.validateGroupName("abcd"));
-        Assert.assertFalse("Check Group name: 5 characters", LnDplxGrpInfoImpl.validateGroupName("efghi"));
-        Assert.assertFalse("Check Group name: 6 characters", LnDplxGrpInfoImpl.validateGroupName("jklmno"));
-        Assert.assertFalse("Check Group name: 7 characters", LnDplxGrpInfoImpl.validateGroupName("pqrstuv"));
-        Assert.assertTrue ("Check Group name: 8 characters", LnDplxGrpInfoImpl.validateGroupName("ZYXWVUTS"));
-        Assert.assertFalse("Check Group name: 9 characters", LnDplxGrpInfoImpl.validateGroupName("123456789"));
-        Assert.assertFalse("Check Group name: 10 characters", LnDplxGrpInfoImpl.validateGroupName("          "));
-        Assert.assertTrue ("Check Group name: 8 spaces", LnDplxGrpInfoImpl.validateGroupName("        "));
-        Assert.assertTrue ("Check Group name: 8 nulls", LnDplxGrpInfoImpl.validateGroupName("\0\0\0\0\0\0\0\0"));
-        Assert.assertTrue("Check Group name: 8 newlines", LnDplxGrpInfoImpl.validateGroupName("\n\n\n\n\n\n\n\n"));
-        Assert.assertTrue("Check Group name: 8 characters - random", LnDplxGrpInfoImpl.validateGroupName("dEadb33F"));
+        assertFalse( LnDplxGrpInfoImpl.validateGroupName(""), "Check Group name: empty string");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupName(" "), "Check Group name: 1 character");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupName("\n"), "Check Group name: only newline");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupName("\r"), "Check Group name: only linefeed");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupName("\177"), "Check Group name: 1 oddball character");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupName("ab"), "Check Group name: 2 characters");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupName("abc"), "Check Group name: 3 characters");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupName("abcd"), "Check Group name: 4 characters");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupName("efghi"), "Check Group name: 5 characters");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupName("jklmno"), "Check Group name: 6 characters");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupName("pqrstuv"), "Check Group name: 7 characters");
+        assertTrue ( LnDplxGrpInfoImpl.validateGroupName("ZYXWVUTS"), "Check Group name: 8 characters");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupName("123456789"), "Check Group name: 9 characters");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupName("          "), "Check Group name: 10 characters");
+        assertTrue ( LnDplxGrpInfoImpl.validateGroupName("        "), "Check Group name: 8 spaces");
+        assertTrue ( LnDplxGrpInfoImpl.validateGroupName("\0\0\0\0\0\0\0\0"), "Check Group name: 8 nulls");
+        assertTrue( LnDplxGrpInfoImpl.validateGroupName("\n\n\n\n\n\n\n\n"), "Check Group name: 8 newlines");
+        assertTrue( LnDplxGrpInfoImpl.validateGroupName("dEadb33F"), "Check Group name: 8 characters - random");
     }
 
     @Test
@@ -96,18 +106,18 @@ public class LnDplxGrpInfoImplTest {
         chars[3] = ' ';
 
         String testString = "";
-        Assert.assertFalse("Check Group Password: zero characters", LnDplxGrpInfoImpl.validateGroupPassword(testString));
-        Assert.assertFalse("Check Group Password: A", LnDplxGrpInfoImpl.validateGroupPassword("A"));
-        Assert.assertFalse("Check Group Password: A0", LnDplxGrpInfoImpl.validateGroupPassword("A0"));
-        Assert.assertFalse("Check Group Password: A0C", LnDplxGrpInfoImpl.validateGroupPassword("A0C"));
-        Assert.assertTrue("Check Group Password: A0AA", LnDplxGrpInfoImpl.validateGroupPassword("A0AA"));
-        Assert.assertFalse("Check Group Password: a0BB", LnDplxGrpInfoImpl.validateGroupPassword("a0BB"));
-        Assert.assertFalse("Check Group Password: AbCB", LnDplxGrpInfoImpl.validateGroupPassword("AbCB"));
-        Assert.assertFalse("Check Group Password: A0cB", LnDplxGrpInfoImpl.validateGroupPassword("A0cB"));
-        Assert.assertFalse("Check Group Password: A09c", LnDplxGrpInfoImpl.validateGroupPassword("A09c"));
-        Assert.assertFalse("Check Group Password: 12345", LnDplxGrpInfoImpl.validateGroupPassword("12345"));
-        Assert.assertFalse("Check Group Password: 123456", LnDplxGrpInfoImpl.validateGroupPassword("123456"));
-        Assert.assertFalse("Check Group Password: 1234567", LnDplxGrpInfoImpl.validateGroupPassword("1234567"));
+        assertFalse( LnDplxGrpInfoImpl.validateGroupPassword(testString), "Check Group Password: zero characters");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupPassword("A"), "Check Group Password: A");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupPassword("A0"), "Check Group Password: A0");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupPassword("A0C"), "Check Group Password: A0C");
+        assertTrue( LnDplxGrpInfoImpl.validateGroupPassword("A0AA"), "Check Group Password: A0AA");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupPassword("a0BB"), "Check Group Password: a0BB");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupPassword("AbCB"), "Check Group Password: AbCB");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupPassword("A0cB"), "Check Group Password: A0cB");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupPassword("A09c"), "Check Group Password: A09c");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupPassword("12345"));
+        assertFalse( LnDplxGrpInfoImpl.validateGroupPassword("123456"), "Check Group Password: 123456");
+        assertFalse( LnDplxGrpInfoImpl.validateGroupPassword("1234567"), "Check Group Password: 1234567");
 
         for (int c1 = 0; c1 < 13; ++ c1) {
             for (int c2 = 0; c2 < 13; ++ c2) {
@@ -288,7 +298,8 @@ public class LnDplxGrpInfoImplTest {
                         chars[2] = char3;
                         chars[3] = char4;
                         testString = new String(chars);
-                        Assert.assertTrue("Check Group Password: "+testString, LnDplxGrpInfoImpl.validateGroupPassword(testString));
+                        assertTrue( LnDplxGrpInfoImpl.validateGroupPassword(testString),
+                            "Check Group Password: "+testString);
 
                     }
                 }
@@ -299,43 +310,44 @@ public class LnDplxGrpInfoImplTest {
     @Test
     public void testValidateChannelNumber() {
         for (int i = 0; i < 256; ++i) {
-            Assert.assertEquals("Channel Valid check for channel "+i,
-                    ((i >=11)&& (i <=26)),
-                    LnDplxGrpInfoImpl.validateGroupChannel(i));
+            assertEquals( ((i >=11)&& (i <=26)),
+                    LnDplxGrpInfoImpl.validateGroupChannel(i),
+                    "Channel Valid check for channel "+i);
         }
     }
+
     @Test
     public void testValidateGroupIDNumber() {
         for (int i = -1; i < 256; ++i) {
-            Assert.assertEquals("Channel Group ID check for ID "+i,
-                    ((i >=0)&& (i <=127)),
-                    LnDplxGrpInfoImpl.validateGroupID(i));
+            assertEquals( ((i >=0)&& (i <=127)),
+                    LnDplxGrpInfoImpl.validateGroupID(i),
+                    "Channel Group ID check for ID "+i);
         }
     }
 
     @Test
     public void checkCreateUr92GroupIdentityQueryPacket() {
         LocoNetMessage m = LnDplxGrpInfoImpl.createUr92GroupIdentityQueryPacket();
-        Assert.assertEquals("Group Id Query Message: opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Group Id Query Message: byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Group Id Query Message: byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Group Id Query Message: byte 3", 0x08, m.getElement(3));
-        Assert.assertEquals("Group Id Query Message: byte 4", 0x00, m.getElement(4));
-        Assert.assertEquals("Group Id Query Message: byte 5", 0x00, m.getElement(5));
-        Assert.assertEquals("Group Id Query Message: byte 6", 0x00, m.getElement(6));
-        Assert.assertEquals("Group Id Query Message: byte 7", 0x00, m.getElement(7));
-        Assert.assertEquals("Group Id Query Message: byte 8", 0x00, m.getElement(8));
-        Assert.assertEquals("Group Id Query Message: byte 9", 0x00, m.getElement(9));
-        Assert.assertEquals("Group Id Query Message: byte 10", 0x00, m.getElement(10));
-        Assert.assertEquals("Group Id Query Message: byte 11", 0x00, m.getElement(11));
-        Assert.assertEquals("Group Id Query Message: byte 12", 0x00, m.getElement(12));
-        Assert.assertEquals("Group Id Query Message: byte 13", 0x00, m.getElement(13));
-        Assert.assertEquals("Group Id Query Message: byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Group Id Query Message: byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Group Id Query Message: byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Group Id Query Message: byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Group Id Query Message: byte 18", 0x00, m.getElement(18));
-        Assert.assertEquals("Group Id Query Message: byte 19", 0x00, m.getElement(19));
+        assertEquals( 0xe5, m.getElement(0), "Group Id Query Message: opcode");
+        assertEquals( 0x14, m.getElement(1), "Group Id Query Message: byte 1");
+        assertEquals( 0x03, m.getElement(2), "Group Id Query Message: byte 2");
+        assertEquals( 0x08, m.getElement(3), "Group Id Query Message: byte 3");
+        assertEquals( 0x00, m.getElement(4), "Group Id Query Message: byte 4");
+        assertEquals( 0x00, m.getElement(5), "Group Id Query Message: byte 5");
+        assertEquals( 0x00, m.getElement(6), "Group Id Query Message: byte 6");
+        assertEquals( 0x00, m.getElement(7), "Group Id Query Message: byte 7");
+        assertEquals( 0x00, m.getElement(8), "Group Id Query Message: byte 8");
+        assertEquals( 0x00, m.getElement(9), "Group Id Query Message: byte 9");
+        assertEquals( 0x00, m.getElement(10), "Group Id Query Message: byte 10");
+        assertEquals( 0x00, m.getElement(11), "Group Id Query Message: byte 11");
+        assertEquals( 0x00, m.getElement(12), "Group Id Query Message: byte 12");
+        assertEquals( 0x00, m.getElement(13), "Group Id Query Message: byte 13");
+        assertEquals( 0x00, m.getElement(14), "Group Id Query Message: byte 14");
+        assertEquals( 0x00, m.getElement(15), "Group Id Query Message: byte 15");
+        assertEquals( 0x00, m.getElement(16), "Group Id Query Message: byte 16");
+        assertEquals( 0x00, m.getElement(17), "Group Id Query Message: byte 17");
+        assertEquals( 0x00, m.getElement(18), "Group Id Query Message: byte 18");
+        assertEquals( 0x00, m.getElement(19), "Group Id Query Message: byte 19");
     }
 
     @Test
@@ -344,326 +356,300 @@ public class LnDplxGrpInfoImplTest {
         for (int i = 0; i < 8; ++i) {
             cs[i] = '0';
         }
-        String testString = new String(cs);
-        LocoNetMessage m = new LocoNetMessage(20);
-        try {
-            m = LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testString);
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.fail("failed account exception thrown by createSetUr92GroupNamePacket()");
-        }
-        Assert.assertEquals("Set Group Name to "+testString+": opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 3", 0x00, m.getElement(3));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 4", 0x00, m.getElement(4));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 5", '0', m.getElement(5));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 6", '0', m.getElement(6));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 7", '0', m.getElement(7));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 8", '0', m.getElement(8));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 9", 0x00, m.getElement(9));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 10", '0', m.getElement(10));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 11", '0', m.getElement(11));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 12", '0', m.getElement(12));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 13", '0', m.getElement(13));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 18", 0x00, m.getElement(18));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 19", 0x00, m.getElement(19));
+        String testString;
+        String testStringA = new String(cs);
+        LocoNetMessage m = assertDoesNotThrow( () -> LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testStringA),
+            "failed account exception thrown by createSetUr92GroupNamePacket()");
 
-        testString = "DEADBeef";
-        try {
-            m = LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testString);
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.fail("failed account exception thrown by createSetUr92GroupNamePacket()");
-        }
-        Assert.assertEquals("Set Group Name to "+testString+": opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 3", 0x00, m.getElement(3));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 4", 0x00, m.getElement(4));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 5", 'D', m.getElement(5));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 6", 'E', m.getElement(6));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 7", 'A', m.getElement(7));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 8", 'D', m.getElement(8));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 9", 0x00, m.getElement(9));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 10", 'B', m.getElement(10));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 11", 'e', m.getElement(11));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 12", 'e', m.getElement(12));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 13", 'f', m.getElement(13));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 18", 0x00, m.getElement(18));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 19", 0x00, m.getElement(19));
+        assertEquals( 0xe5, m.getElement(0), "Set Group Name to "+testStringA+": opcode");
+        assertEquals( 0x14, m.getElement(1), "Set Group Name to "+testStringA+": byte 1");
+        assertEquals( 0x03, m.getElement(2), "Set Group Name to "+testStringA+": byte 2");
+        assertEquals( 0x00, m.getElement(3), "Set Group Name to "+testStringA+": byte 3");
+        assertEquals( 0x00, m.getElement(4), "Set Group Name to "+testStringA+": byte 4");
+        assertEquals(  '0', m.getElement(5), "Set Group Name to "+testStringA+": byte 5");
+        assertEquals(  '0', m.getElement(6), "Set Group Name to "+testStringA+": byte 6");
+        assertEquals(  '0', m.getElement(7), "Set Group Name to "+testStringA+": byte 7");
+        assertEquals(  '0', m.getElement(8), "Set Group Name to "+testStringA+": byte 8");
+        assertEquals( 0x00, m.getElement(9), "Set Group Name to "+testStringA+": byte 9");
+        assertEquals(  '0', m.getElement(10), "Set Group Name to "+testStringA+": byte 10");
+        assertEquals(  '0', m.getElement(11), "Set Group Name to "+testStringA+": byte 11");
+        assertEquals(  '0', m.getElement(12), "Set Group Name to "+testStringA+": byte 12");
+        assertEquals(  '0', m.getElement(13), "Set Group Name to "+testStringA+": byte 13");
+        assertEquals( 0x00, m.getElement(14), "Set Group Name to "+testStringA+": byte 14");
+        assertEquals( 0x00, m.getElement(15), "Set Group Name to "+testStringA+": byte 15");
+        assertEquals( 0x00, m.getElement(16), "Set Group Name to "+testStringA+": byte 16");
+        assertEquals( 0x00, m.getElement(17), "Set Group Name to "+testStringA+": byte 17");
+        assertEquals( 0x00, m.getElement(18), "Set Group Name to "+testStringA+": byte 18");
+        assertEquals( 0x00, m.getElement(19), "Set Group Name to "+testStringA+": byte 19");
 
-        testString = "EADBeef";
-        try {
-            m = LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testString);
-            Assert.fail("should have failed account short group name string()");
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-        }
+        String testStringB = "DEADBeef";
+        m = assertDoesNotThrow( () -> LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testStringB),
+            "failed account exception thrown by createSetUr92GroupNamePacket()");
 
-        testString = "DEADBeef2";
-        try {
-            m = LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testString);
-            Assert.fail("should have failed account long group name string()");
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-        }
-        testString = "";
-        try {
-            m = LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testString);
-            Assert.fail("should have failed account short group name string()");
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-        }
-        testString = "1";
-        try {
-            m = LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testString);
-            Assert.fail("should have failed account short group name string()");
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-        }
+        assertEquals( 0xe5, m.getElement(0), "Set Group Name to "+testStringB+": opcode");
+        assertEquals( 0x14, m.getElement(1), "Set Group Name to "+testStringB+": byte 1");
+        assertEquals( 0x03, m.getElement(2), "Set Group Name to "+testStringB+": byte 2");
+        assertEquals( 0x00, m.getElement(3), "Set Group Name to "+testStringB+": byte 3");
+        assertEquals( 0x00, m.getElement(4), "Set Group Name to "+testStringB+": byte 4");
+        assertEquals(  'D', m.getElement(5), "Set Group Name to "+testStringB+": byte 5");
+        assertEquals(  'E', m.getElement(6), "Set Group Name to "+testStringB+": byte 6");
+        assertEquals(  'A', m.getElement(7), "Set Group Name to "+testStringB+": byte 7");
+        assertEquals(  'D', m.getElement(8), "Set Group Name to "+testStringB+": byte 8");
+        assertEquals( 0x00, m.getElement(9), "Set Group Name to "+testStringB+": byte 9");
+        assertEquals(  'B', m.getElement(10), "Set Group Name to "+testStringB+": byte 10");
+        assertEquals(  'e', m.getElement(11), "Set Group Name to "+testStringB+": byte 11");
+        assertEquals(  'e', m.getElement(12), "Set Group Name to "+testStringB+": byte 12");
+        assertEquals(  'f', m.getElement(13), "Set Group Name to "+testStringB+": byte 13");
+        assertEquals( 0x00, m.getElement(14), "Set Group Name to "+testStringB+": byte 14");
+        assertEquals( 0x00, m.getElement(15), "Set Group Name to "+testStringB+": byte 15");
+        assertEquals( 0x00, m.getElement(16), "Set Group Name to "+testStringB+": byte 16");
+        assertEquals( 0x00, m.getElement(17), "Set Group Name to "+testStringB+": byte 17");
+        assertEquals( 0x00, m.getElement(18), "Set Group Name to "+testStringB+": byte 18");
+        assertEquals( 0x00, m.getElement(19), "Set Group Name to "+testStringB+": byte 19");
+
+
+        Exception ex = assertThrows( LocoNetException.class,
+            () -> LnDplxGrpInfoImpl.createSetUr92GroupNamePacket("EADBeef"),
+            "should have failed account short group name string()");
+        assertNotNull(ex);
+
+        ex = assertThrows( LocoNetException.class,
+            () -> LnDplxGrpInfoImpl.createSetUr92GroupNamePacket("DEADBeef2"),
+            "should have failed account long group name string()");
+        assertNotNull(ex);
+
+        ex = assertThrows( LocoNetException.class,
+            () -> LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(""),
+            "should have failed account short group name string()");
+        assertNotNull(ex);
+
+        ex = assertThrows( LocoNetException.class,
+            () -> LnDplxGrpInfoImpl.createSetUr92GroupNamePacket("1"),
+            "should have failed account short group name string()");
+        assertNotNull(ex);
 
         testString = "fiducial";
         cs = testString.toCharArray();
         cs[0] = 128;
-        testString = new String(cs);
-        try {
-            m = LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testString);
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.fail("failed account exception thrown by createSetUr92GroupNamePacket()");
-        }
-        Assert.assertEquals("Set Group Name to "+testString+": opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 3", 0x00, m.getElement(3));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 4", 0x01, m.getElement(4));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 5", 0x00, m.getElement(5));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 6", 'i', m.getElement(6));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 7", 'd', m.getElement(7));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 8", 'u', m.getElement(8));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 9", 0x00, m.getElement(9));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 10", 'c', m.getElement(10));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 11", 'i', m.getElement(11));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 12", 'a', m.getElement(12));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 13", 'l', m.getElement(13));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 18", 0x00, m.getElement(18));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 19", 0x00, m.getElement(19));
+        String testStringC = new String(cs);
+        m = assertDoesNotThrow( () -> LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testStringC),
+            "failed account exception thrown by createSetUr92GroupNamePacket()");
+
+        assertEquals( 0xe5, m.getElement(0), "Set Group Name to "+testStringC+": opcode");
+        assertEquals( 0x14, m.getElement(1), "Set Group Name to "+testStringC+": byte 1");
+        assertEquals( 0x03, m.getElement(2), "Set Group Name to "+testStringC+": byte 2");
+        assertEquals( 0x00, m.getElement(3), "Set Group Name to "+testStringC+": byte 3");
+        assertEquals( 0x01, m.getElement(4), "Set Group Name to "+testStringC+": byte 4");
+        assertEquals( 0x00, m.getElement(5), "Set Group Name to "+testStringC+": byte 5");
+        assertEquals(  'i', m.getElement(6), "Set Group Name to "+testStringC+": byte 6");
+        assertEquals(  'd', m.getElement(7), "Set Group Name to "+testStringC+": byte 7");
+        assertEquals(  'u', m.getElement(8), "Set Group Name to "+testStringC+": byte 8");
+        assertEquals( 0x00, m.getElement(9), "Set Group Name to "+testStringC+": byte 9");
+        assertEquals(  'c', m.getElement(10), "Set Group Name to "+testStringC+": byte 10");
+        assertEquals(  'i', m.getElement(11), "Set Group Name to "+testStringC+": byte 11");
+        assertEquals(  'a', m.getElement(12), "Set Group Name to "+testStringC+": byte 12");
+        assertEquals(  'l', m.getElement(13), "Set Group Name to "+testStringC+": byte 13");
+        assertEquals( 0x00, m.getElement(14), "Set Group Name to "+testStringC+": byte 14");
+        assertEquals( 0x00, m.getElement(15), "Set Group Name to "+testStringC+": byte 15");
+        assertEquals( 0x00, m.getElement(16), "Set Group Name to "+testStringC+": byte 16");
+        assertEquals( 0x00, m.getElement(17), "Set Group Name to "+testStringC+": byte 17");
+        assertEquals( 0x00, m.getElement(18), "Set Group Name to "+testStringC+": byte 18");
+        assertEquals( 0x00, m.getElement(19), "Set Group Name to "+testStringC+": byte 19");
 
         testString = "fiducial";
         cs = testString.toCharArray();
         cs[1] = 129;
-        testString = new String(cs);
-        try {
-            m = LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testString);
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.fail("failed account exception thrown by createSetUr92GroupNamePacket()");
-        }
-        Assert.assertEquals("Set Group Name to "+testString+": opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 3", 0x00, m.getElement(3));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 4", 0x02, m.getElement(4));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 5", 'f', m.getElement(5));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 6", 0x01, m.getElement(6));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 7", 'd', m.getElement(7));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 8", 'u', m.getElement(8));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 9", 0x00, m.getElement(9));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 10", 'c', m.getElement(10));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 11", 'i', m.getElement(11));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 12", 'a', m.getElement(12));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 13", 'l', m.getElement(13));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 18", 0x00, m.getElement(18));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 19", 0x00, m.getElement(19));
+        String testStringD = new String(cs);
+        m = assertDoesNotThrow( () -> LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testStringD),
+            "failed account exception thrown by createSetUr92GroupNamePacket()");
+        assertEquals( 0xe5, m.getElement(0), "Set Group Name to "+testStringD+": opcode");
+        assertEquals( 0x14, m.getElement(1), "Set Group Name to "+testStringD+": byte 1");
+        assertEquals( 0x03, m.getElement(2), "Set Group Name to "+testStringD+": byte 2");
+        assertEquals( 0x00, m.getElement(3), "Set Group Name to "+testStringD+": byte 3");
+        assertEquals( 0x02, m.getElement(4), "Set Group Name to "+testStringD+": byte 4");
+        assertEquals(  'f', m.getElement(5), "Set Group Name to "+testStringD+": byte 5");
+        assertEquals( 0x01, m.getElement(6), "Set Group Name to "+testStringD+": byte 6");
+        assertEquals(  'd', m.getElement(7), "Set Group Name to "+testStringD+": byte 7");
+        assertEquals(  'u', m.getElement(8), "Set Group Name to "+testStringD+": byte 8");
+        assertEquals( 0x00, m.getElement(9), "Set Group Name to "+testStringD+": byte 9");
+        assertEquals(  'c', m.getElement(10), "Set Group Name to "+testStringD+": byte 10");
+        assertEquals(  'i', m.getElement(11), "Set Group Name to "+testStringD+": byte 11");
+        assertEquals(  'a', m.getElement(12), "Set Group Name to "+testStringD+": byte 12");
+        assertEquals(  'l', m.getElement(13), "Set Group Name to "+testStringD+": byte 13");
+        assertEquals( 0x00, m.getElement(14), "Set Group Name to "+testStringD+": byte 14");
+        assertEquals( 0x00, m.getElement(15), "Set Group Name to "+testStringD+": byte 15");
+        assertEquals( 0x00, m.getElement(16), "Set Group Name to "+testStringD+": byte 16");
+        assertEquals( 0x00, m.getElement(17), "Set Group Name to "+testStringD+": byte 17");
+        assertEquals( 0x00, m.getElement(18), "Set Group Name to "+testStringD+": byte 18");
+        assertEquals( 0x00, m.getElement(19), "Set Group Name to "+testStringD+": byte 19");
 
         testString = "fiducial";
         cs = testString.toCharArray();
         cs[2] = 129;
-        testString = new String(cs);
-        try {
-            m = LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testString);
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.fail("failed account exception thrown by createSetUr92GroupNamePacket()");
-        }
-        Assert.assertEquals("Set Group Name to "+testString+": opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 3", 0x00, m.getElement(3));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 4", 0x04, m.getElement(4));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 5", 'f', m.getElement(5));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 6", 'i', m.getElement(6));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 7", 0x01, m.getElement(7));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 8", 'u', m.getElement(8));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 9", 0x00, m.getElement(9));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 10", 'c', m.getElement(10));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 11", 'i', m.getElement(11));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 12", 'a', m.getElement(12));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 13", 'l', m.getElement(13));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 18", 0x00, m.getElement(18));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 19", 0x00, m.getElement(19));
+        String testStringE = new String(cs);
+        m = assertDoesNotThrow( () -> LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testStringE),
+            "failed account exception thrown by createSetUr92GroupNamePacket()");
+
+        assertEquals( 0xe5, m.getElement(0), "Set Group Name to "+testStringE+": opcode");
+        assertEquals( 0x14, m.getElement(1), "Set Group Name to "+testStringE+": byte 1");
+        assertEquals( 0x03, m.getElement(2), "Set Group Name to "+testStringE+": byte 2");
+        assertEquals( 0x00, m.getElement(3), "Set Group Name to "+testStringE+": byte 3");
+        assertEquals( 0x04, m.getElement(4), "Set Group Name to "+testStringE+": byte 4");
+        assertEquals(  'f', m.getElement(5), "Set Group Name to "+testStringE+": byte 5");
+        assertEquals(  'i', m.getElement(6), "Set Group Name to "+testStringE+": byte 6");
+        assertEquals( 0x01, m.getElement(7), "Set Group Name to "+testStringE+": byte 7");
+        assertEquals(  'u', m.getElement(8), "Set Group Name to "+testStringE+": byte 8");
+        assertEquals( 0x00, m.getElement(9), "Set Group Name to "+testStringE+": byte 9");
+        assertEquals(  'c', m.getElement(10), "Set Group Name to "+testStringE+": byte 10");
+        assertEquals(  'i', m.getElement(11), "Set Group Name to "+testStringE+": byte 11");
+        assertEquals(  'a', m.getElement(12), "Set Group Name to "+testStringE+": byte 12");
+        assertEquals(  'l', m.getElement(13), "Set Group Name to "+testStringE+": byte 13");
+        assertEquals( 0x00, m.getElement(14), "Set Group Name to "+testStringE+": byte 14");
+        assertEquals( 0x00, m.getElement(15), "Set Group Name to "+testStringE+": byte 15");
+        assertEquals( 0x00, m.getElement(16), "Set Group Name to "+testStringE+": byte 16");
+        assertEquals( 0x00, m.getElement(17), "Set Group Name to "+testStringE+": byte 17");
+        assertEquals( 0x00, m.getElement(18), "Set Group Name to "+testStringE+": byte 18");
+        assertEquals( 0x00, m.getElement(19), "Set Group Name to "+testStringE+": byte 19");
 
         testString = "fiducial";
         cs = testString.toCharArray();
         cs[3] = 130;
-        testString = new String(cs);
-        try {
-            m = LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testString);
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.fail("failed account exception thrown by createSetUr92GroupNamePacket()");
-        }
-        Assert.assertEquals("Set Group Name to "+testString+": opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 3", 0x00, m.getElement(3));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 4", 0x08, m.getElement(4));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 5", 'f', m.getElement(5));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 6", 'i', m.getElement(6));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 7", 'd', m.getElement(7));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 8", 0x02, m.getElement(8));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 9", 0x00, m.getElement(9));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 10", 'c', m.getElement(10));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 11", 'i', m.getElement(11));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 12", 'a', m.getElement(12));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 13", 'l', m.getElement(13));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 18", 0x00, m.getElement(18));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 19", 0x00, m.getElement(19));
+        String testStringF = new String(cs);
+        m = assertDoesNotThrow( () -> LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testStringF),
+            "failed account exception thrown by createSetUr92GroupNamePacket()");
+
+        assertEquals( 0xe5, m.getElement(0), "Set Group Name to "+testStringF+": opcode");
+        assertEquals( 0x14, m.getElement(1), "Set Group Name to "+testStringF+": byte 1");
+        assertEquals( 0x03, m.getElement(2), "Set Group Name to "+testStringF+": byte 2");
+        assertEquals( 0x00, m.getElement(3), "Set Group Name to "+testStringF+": byte 3");
+        assertEquals( 0x08, m.getElement(4), "Set Group Name to "+testStringF+": byte 4");
+        assertEquals(  'f', m.getElement(5), "Set Group Name to "+testStringF+": byte 5");
+        assertEquals(  'i', m.getElement(6), "Set Group Name to "+testStringF+": byte 6");
+        assertEquals(  'd', m.getElement(7), "Set Group Name to "+testStringF+": byte 7");
+        assertEquals( 0x02, m.getElement(8), "Set Group Name to "+testStringF+": byte 8");
+        assertEquals( 0x00, m.getElement(9), "Set Group Name to "+testStringF+": byte 9");
+        assertEquals(  'c', m.getElement(10), "Set Group Name to "+testStringF+": byte 10");
+        assertEquals(  'i', m.getElement(11), "Set Group Name to "+testStringF+": byte 11");
+        assertEquals(  'a', m.getElement(12), "Set Group Name to "+testStringF+": byte 12");
+        assertEquals(  'l', m.getElement(13), "Set Group Name to "+testStringF+": byte 13");
+        assertEquals( 0x00, m.getElement(14), "Set Group Name to "+testStringF+": byte 14");
+        assertEquals( 0x00, m.getElement(15), "Set Group Name to "+testStringF+": byte 15");
+        assertEquals( 0x00, m.getElement(16), "Set Group Name to "+testStringF+": byte 16");
+        assertEquals( 0x00, m.getElement(17), "Set Group Name to "+testStringF+": byte 17");
+        assertEquals( 0x00, m.getElement(18), "Set Group Name to "+testStringF+": byte 18");
+        assertEquals( 0x00, m.getElement(19), "Set Group Name to "+testStringF+": byte 19");
 
         testString = "fiducial";
         cs = testString.toCharArray();
         cs[4] = 132;
-        testString = new String(cs);
-        try {
-            m = LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testString);
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.fail("failed account exception thrown by createSetUr92GroupNamePacket()");
-        }
-        Assert.assertEquals("Set Group Name to "+testString+": opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 3", 0x00, m.getElement(3));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 4", 0x00, m.getElement(4));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 5", 'f', m.getElement(5));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 6", 'i', m.getElement(6));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 7", 'd', m.getElement(7));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 8", 'u', m.getElement(8));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 9", 0x01, m.getElement(9));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 10", 0x04, m.getElement(10));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 11", 'i', m.getElement(11));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 12", 'a', m.getElement(12));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 13", 'l', m.getElement(13));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 18", 0x00, m.getElement(18));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 19", 0x00, m.getElement(19));
+        String testStringG = new String(cs);
+        m = assertDoesNotThrow( () -> LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testStringG),
+            "failed account exception thrown by createSetUr92GroupNamePacket()");
+
+        assertEquals( 0xe5, m.getElement(0), "Set Group Name to "+testStringG+": opcode");
+        assertEquals( 0x14, m.getElement(1), "Set Group Name to "+testStringG+": byte 1");
+        assertEquals( 0x03, m.getElement(2), "Set Group Name to "+testStringG+": byte 2");
+        assertEquals( 0x00, m.getElement(3), "Set Group Name to "+testStringG+": byte 3");
+        assertEquals( 0x00, m.getElement(4), "Set Group Name to "+testStringG+": byte 4");
+        assertEquals(  'f', m.getElement(5), "Set Group Name to "+testStringG+": byte 5");
+        assertEquals(  'i', m.getElement(6), "Set Group Name to "+testStringG+": byte 6");
+        assertEquals(  'd', m.getElement(7), "Set Group Name to "+testStringG+": byte 7");
+        assertEquals(  'u', m.getElement(8), "Set Group Name to "+testStringG+": byte 8");
+        assertEquals( 0x01, m.getElement(9), "Set Group Name to "+testStringG+": byte 9");
+        assertEquals( 0x04, m.getElement(10), "Set Group Name to "+testStringG+": byte 10");
+        assertEquals(  'i', m.getElement(11), "Set Group Name to "+testStringG+": byte 11");
+        assertEquals(  'a', m.getElement(12), "Set Group Name to "+testStringG+": byte 12");
+        assertEquals(  'l', m.getElement(13), "Set Group Name to "+testStringG+": byte 13");
+        assertEquals( 0x00, m.getElement(14), "Set Group Name to "+testStringG+": byte 14");
+        assertEquals( 0x00, m.getElement(15), "Set Group Name to "+testStringG+": byte 15");
+        assertEquals( 0x00, m.getElement(16), "Set Group Name to "+testStringG+": byte 16");
+        assertEquals( 0x00, m.getElement(17), "Set Group Name to "+testStringG+": byte 17");
+        assertEquals( 0x00, m.getElement(18), "Set Group Name to "+testStringG+": byte 18");
+        assertEquals( 0x00, m.getElement(19), "Set Group Name to "+testStringG+": byte 19");
 
         testString = "fiducial";
         cs = testString.toCharArray();
         cs[5] = 136;
-        testString = new String(cs);
-        try {
-            m = LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testString);
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.fail("failed account exception thrown by createSetUr92GroupNamePacket()");
-        }
-        Assert.assertEquals("Set Group Name to "+testString+": opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 3", 0x00, m.getElement(3));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 4", 0x00, m.getElement(4));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 5", 'f', m.getElement(5));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 6", 'i', m.getElement(6));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 7", 'd', m.getElement(7));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 8", 'u', m.getElement(8));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 9", 0x02, m.getElement(9));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 10", 'c', m.getElement(10));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 11", 0x08, m.getElement(11));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 12", 'a', m.getElement(12));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 13", 'l', m.getElement(13));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 18", 0x00, m.getElement(18));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 19", 0x00, m.getElement(19));
+        String testStringH = new String(cs);
+        m = assertDoesNotThrow( () -> LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testStringH),
+            "failed account exception thrown by createSetUr92GroupNamePacket()");
+
+        assertEquals( 0xe5, m.getElement(0), "Set Group Name to "+testStringH+": opcode");
+        assertEquals( 0x14, m.getElement(1), "Set Group Name to "+testStringH+": byte 1");
+        assertEquals( 0x03, m.getElement(2), "Set Group Name to "+testStringH+": byte 2");
+        assertEquals( 0x00, m.getElement(3), "Set Group Name to "+testStringH+": byte 3");
+        assertEquals( 0x00, m.getElement(4), "Set Group Name to "+testStringH+": byte 4");
+        assertEquals(  'f', m.getElement(5), "Set Group Name to "+testStringH+": byte 5");
+        assertEquals(  'i', m.getElement(6), "Set Group Name to "+testStringH+": byte 6");
+        assertEquals(  'd', m.getElement(7), "Set Group Name to "+testStringH+": byte 7");
+        assertEquals(  'u', m.getElement(8), "Set Group Name to "+testStringH+": byte 8");
+        assertEquals( 0x02, m.getElement(9), "Set Group Name to "+testStringH+": byte 9");
+        assertEquals(  'c', m.getElement(10), "Set Group Name to "+testStringH+": byte 10");
+        assertEquals( 0x08, m.getElement(11), "Set Group Name to "+testStringH+": byte 11");
+        assertEquals(  'a', m.getElement(12), "Set Group Name to "+testStringH+": byte 12");
+        assertEquals(  'l', m.getElement(13), "Set Group Name to "+testStringH+": byte 13");
+        assertEquals( 0x00, m.getElement(14), "Set Group Name to "+testStringH+": byte 14");
+        assertEquals( 0x00, m.getElement(15), "Set Group Name to "+testStringH+": byte 15");
+        assertEquals( 0x00, m.getElement(16), "Set Group Name to "+testStringH+": byte 16");
+        assertEquals( 0x00, m.getElement(17), "Set Group Name to "+testStringH+": byte 17");
+        assertEquals( 0x00, m.getElement(18), "Set Group Name to "+testStringH+": byte 18");
+        assertEquals( 0x00, m.getElement(19), "Set Group Name to "+testStringH+": byte 19");
 
         testString = "fiducial";
         cs = testString.toCharArray();
         cs[6] = 128+16;
-        testString = new String(cs);
-        try {
-            m = LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testString);
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.fail("failed account exception thrown by createSetUr92GroupNamePacket()");
-        }
-        Assert.assertEquals("Set Group Name to "+testString+": opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 3", 0x00, m.getElement(3));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 4", 0x00, m.getElement(4));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 5", 'f', m.getElement(5));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 6", 'i', m.getElement(6));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 7", 'd', m.getElement(7));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 8", 'u', m.getElement(8));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 9", 0x04, m.getElement(9));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 10", 'c', m.getElement(10));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 11", 'i', m.getElement(11));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 12", 0x10, m.getElement(12));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 13", 'l', m.getElement(13));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 18", 0x00, m.getElement(18));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 19", 0x00, m.getElement(19));
+        String testStringI = new String(cs);
+        m = assertDoesNotThrow( () -> LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testStringI),
+            "failed account exception thrown by createSetUr92GroupNamePacket()");
+
+        assertEquals( 0xe5, m.getElement(0), "Set Group Name to "+testStringI+": opcode");
+        assertEquals( 0x14, m.getElement(1), "Set Group Name to "+testStringI+": byte 1");
+        assertEquals( 0x03, m.getElement(2), "Set Group Name to "+testStringI+": byte 2");
+        assertEquals( 0x00, m.getElement(3), "Set Group Name to "+testStringI+": byte 3");
+        assertEquals( 0x00, m.getElement(4), "Set Group Name to "+testStringI+": byte 4");
+        assertEquals(  'f', m.getElement(5), "Set Group Name to "+testStringI+": byte 5");
+        assertEquals(  'i', m.getElement(6), "Set Group Name to "+testStringI+": byte 6");
+        assertEquals(  'd', m.getElement(7), "Set Group Name to "+testStringI+": byte 7");
+        assertEquals(  'u', m.getElement(8), "Set Group Name to "+testStringI+": byte 8");
+        assertEquals( 0x04, m.getElement(9), "Set Group Name to "+testStringI+": byte 9");
+        assertEquals(  'c', m.getElement(10), "Set Group Name to "+testStringI+": byte 10");
+        assertEquals(  'i', m.getElement(11), "Set Group Name to "+testStringI+": byte 11");
+        assertEquals( 0x10, m.getElement(12), "Set Group Name to "+testStringI+": byte 12");
+        assertEquals(  'l', m.getElement(13), "Set Group Name to "+testStringI+": byte 13");
+        assertEquals( 0x00, m.getElement(14), "Set Group Name to "+testStringI+": byte 14");
+        assertEquals( 0x00, m.getElement(15), "Set Group Name to "+testStringI+": byte 15");
+        assertEquals( 0x00, m.getElement(16), "Set Group Name to "+testStringI+": byte 16");
+        assertEquals( 0x00, m.getElement(17), "Set Group Name to "+testStringI+": byte 17");
+        assertEquals( 0x00, m.getElement(18), "Set Group Name to "+testStringI+": byte 18");
+        assertEquals( 0x00, m.getElement(19), "Set Group Name to "+testStringI+": byte 19");
 
         testString = "fiducial";
         cs = testString.toCharArray();
         cs[7] = 128+32;
-        testString = new String(cs);
-        try {
-            m = LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testString);
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.fail("failed account exception thrown by createSetUr92GroupNamePacket()");
-        }
-        Assert.assertEquals("Set Group Name to "+testString+": opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 3", 0x00, m.getElement(3));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 4", 0x00, m.getElement(4));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 5", 'f', m.getElement(5));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 6", 'i', m.getElement(6));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 7", 'd', m.getElement(7));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 8", 'u', m.getElement(8));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 9", 0x08, m.getElement(9));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 10", 'c', m.getElement(10));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 11", 'i', m.getElement(11));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 12", 'a', m.getElement(12));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 13", 0x20, m.getElement(13));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 18", 0x00, m.getElement(18));
-        Assert.assertEquals("Set Group Name to "+testString+": byte 19", 0x00, m.getElement(19));
+        String testStringJ = new String(cs);
+        m = assertDoesNotThrow( () -> LnDplxGrpInfoImpl.createSetUr92GroupNamePacket(testStringJ),
+            "failed account exception thrown by createSetUr92GroupNamePacket()");
+
+        assertEquals( 0xe5, m.getElement(0), "Set Group Name to "+testStringJ+": opcode");
+        assertEquals( 0x14, m.getElement(1), "Set Group Name to "+testStringJ+": byte 1");
+        assertEquals( 0x03, m.getElement(2), "Set Group Name to "+testStringJ+": byte 2");
+        assertEquals( 0x00, m.getElement(3), "Set Group Name to "+testStringJ+": byte 3");
+        assertEquals( 0x00, m.getElement(4), "Set Group Name to "+testStringJ+": byte 4");
+        assertEquals(  'f', m.getElement(5), "Set Group Name to "+testStringJ+": byte 5");
+        assertEquals(  'i', m.getElement(6), "Set Group Name to "+testStringJ+": byte 6");
+        assertEquals(  'd', m.getElement(7), "Set Group Name to "+testStringJ+": byte 7");
+        assertEquals(  'u', m.getElement(8), "Set Group Name to "+testStringJ+": byte 8");
+        assertEquals( 0x08, m.getElement(9), "Set Group Name to "+testStringJ+": byte 9");
+        assertEquals(  'c', m.getElement(10), "Set Group Name to "+testStringJ+": byte 10");
+        assertEquals(  'i', m.getElement(11), "Set Group Name to "+testStringJ+": byte 11");
+        assertEquals(  'a', m.getElement(12), "Set Group Name to "+testStringJ+": byte 12");
+        assertEquals( 0x20, m.getElement(13), "Set Group Name to "+testStringJ+": byte 13");
+        assertEquals( 0x00, m.getElement(14), "Set Group Name to "+testStringJ+": byte 14");
+        assertEquals( 0x00, m.getElement(15), "Set Group Name to "+testStringJ+": byte 15");
+        assertEquals( 0x00, m.getElement(16), "Set Group Name to "+testStringJ+": byte 16");
+        assertEquals( 0x00, m.getElement(17), "Set Group Name to "+testStringJ+": byte 17");
+        assertEquals( 0x00, m.getElement(18), "Set Group Name to "+testStringJ+": byte 18");
+        assertEquals( 0x00, m.getElement(19), "Set Group Name to "+testStringJ+": byte 19");
     }
 
     @Test
@@ -672,40 +658,39 @@ public class LnDplxGrpInfoImplTest {
         for (int ch = 0; ch < 256; ++ch) {
             try {
             m = LnDplxGrpInfoImpl.createSetUr92GroupChannelPacket(ch);
-            } catch (jmri.jmrix.loconet.LocoNetException E) {
+            } catch ( LocoNetException e) {
                 if ((ch >= 11) && (ch <= 26)) {
-                    Assert.fail("unexpected exception when creating packet to set channel "+ch);
+                    fail("unexpected exception when creating packet to set channel "+ch, e);
                 }
             }
             if ((ch >= 11) && (ch <= 26)) {
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  opcode", 0xe5, m.getElement(0));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 1", 0x14, m.getElement(1));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 2", 0x02, m.getElement(2));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 3", 0x00, m.getElement(3));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 4", 0x00, m.getElement(4));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 5", ch, m.getElement(5));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 6", 0x00, m.getElement(6));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 7", 0x00, m.getElement(7));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 8", 0x00, m.getElement(8));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 9", 0x00, m.getElement(9));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 10", 0x00, m.getElement(10));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 11", 0x00, m.getElement(11));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 12", 0x00, m.getElement(12));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 13", 0x00, m.getElement(13));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 14", 0x00, m.getElement(14));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 15", 0x00, m.getElement(15));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 16", 0x00, m.getElement(16));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 17", 0x00, m.getElement(17));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 18", 0x00, m.getElement(18));
-                Assert.assertEquals("Set Group Channel to "+ch+" Message  byte 19", 0x00, m.getElement(19));
+                assertEquals( 0xe5, m.getElement(0), "Set Group Channel to "+ch+" Message  opcode");
+                assertEquals( 0x14, m.getElement(1), "Set Group Channel to "+ch+" Message  byte 1");
+                assertEquals( 0x02, m.getElement(2), "Set Group Channel to "+ch+" Message  byte 2");
+                assertEquals( 0x00, m.getElement(3), "Set Group Channel to "+ch+" Message  byte 3");
+                assertEquals( 0x00, m.getElement(4), "Set Group Channel to "+ch+" Message  byte 4");
+                assertEquals(   ch, m.getElement(5), "Set Group Channel to "+ch+" Message  byte 5");
+                assertEquals( 0x00, m.getElement(6), "Set Group Channel to "+ch+" Message  byte 6");
+                assertEquals( 0x00, m.getElement(7), "Set Group Channel to "+ch+" Message  byte 7");
+                assertEquals( 0x00, m.getElement(8), "Set Group Channel to "+ch+" Message  byte 8");
+                assertEquals( 0x00, m.getElement(9), "Set Group Channel to "+ch+" Message  byte 9");
+                assertEquals( 0x00, m.getElement(10), "Set Group Channel to "+ch+" Message  byte 10");
+                assertEquals( 0x00, m.getElement(11), "Set Group Channel to "+ch+" Message  byte 11");
+                assertEquals( 0x00, m.getElement(12), "Set Group Channel to "+ch+" Message  byte 12");
+                assertEquals( 0x00, m.getElement(13), "Set Group Channel to "+ch+" Message  byte 13");
+                assertEquals( 0x00, m.getElement(14), "Set Group Channel to "+ch+" Message  byte 14");
+                assertEquals( 0x00, m.getElement(15), "Set Group Channel to "+ch+" Message  byte 15");
+                assertEquals( 0x00, m.getElement(16), "Set Group Channel to "+ch+" Message  byte 16");
+                assertEquals( 0x00, m.getElement(17), "Set Group Channel to "+ch+" Message  byte 17");
+                assertEquals( 0x00, m.getElement(18), "Set Group Channel to "+ch+" Message  byte 18");
+                assertEquals( 0x00, m.getElement(19), "Set Group Channel to "+ch+" Message  byte 19");
             }
         }
     }
 
     @Test
     public void testCreateSetUr92GroupPasswordPacket() {
-        LocoNetMessage m = new LocoNetMessage(20);
-        String testString;
+        LocoNetMessage m;
         char c0, c1, c2, c3;
         char[] conversion = new char[13];
         conversion[0] = '0';
@@ -749,32 +734,31 @@ public class LnDplxGrpInfoImplTest {
                         chars[1] = conversion2[d1];
                         chars[2] = conversion2[d2];
                         chars[3] = conversion2[d3];
-                        testString = new String(chars);
-                        try {
-                            m = LnDplxGrpInfoImpl.createSetUr92GroupPasswordPacket(testString);
-                        } catch (jmri.jmrix.loconet.LocoNetException E) {
-                            Assert.fail("unexpected exception when creating packet to set password to "+d0+"/"+d1+"/"+d2+"/"+d3);
-                        }
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  opcode", 0xe5, m.getElement(0));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 1", 0x14, m.getElement(1));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 2", 0x07, m.getElement(2));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 3", 0x00, m.getElement(3));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 4", 0x00, m.getElement(4));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 5", c0, m.getElement(5));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 6", c1, m.getElement(6));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 7", c2, m.getElement(7));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 8", c3, m.getElement(8));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 9", 0x00, m.getElement(9));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 10", 0x00, m.getElement(10));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 11", 0x00, m.getElement(11));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 12", 0x00, m.getElement(12));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 13", 0x00, m.getElement(13));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 14", 0x00, m.getElement(14));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 15", 0x00, m.getElement(15));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 16", 0x00, m.getElement(16));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 17", 0x00, m.getElement(17));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 18", 0x00, m.getElement(18));
-                        Assert.assertEquals("Set Group Password to "+testString+" Message  byte 19", 0x00, m.getElement(19));
+                        String testString = new String(chars);
+                        m = assertDoesNotThrow( () ->
+                            LnDplxGrpInfoImpl.createSetUr92GroupPasswordPacket(testString),
+                            "unexpected exception when creating packet to set password to "+d0+"/"+d1+"/"+d2+"/"+d3);
+
+                        assertEquals( 0xe5, m.getElement(0), "Set Group Password to "+testString+" Message  opcode");
+                        assertEquals( 0x14, m.getElement(1), "Set Group Password to "+testString+" Message  byte 1");
+                        assertEquals( 0x07, m.getElement(2), "Set Group Password to "+testString+" Message  byte 2");
+                        assertEquals( 0x00, m.getElement(3), "Set Group Password to "+testString+" Message  byte 3");
+                        assertEquals( 0x00, m.getElement(4), "Set Group Password to "+testString+" Message  byte 4");
+                        assertEquals(   c0, m.getElement(5), "Set Group Password to "+testString+" Message  byte 5");
+                        assertEquals(   c1, m.getElement(6), "Set Group Password to "+testString+" Message  byte 6");
+                        assertEquals(   c2, m.getElement(7), "Set Group Password to "+testString+" Message  byte 7");
+                        assertEquals(   c3, m.getElement(8), "Set Group Password to "+testString+" Message  byte 8");
+                        assertEquals( 0x00, m.getElement(9), "Set Group Password to "+testString+" Message  byte 9");
+                        assertEquals( 0x00, m.getElement(10), "Set Group Password to "+testString+" Message  byte 10");
+                        assertEquals( 0x00, m.getElement(11), "Set Group Password to "+testString+" Message  byte 11");
+                        assertEquals( 0x00, m.getElement(12), "Set Group Password to "+testString+" Message  byte 12");
+                        assertEquals( 0x00, m.getElement(13), "Set Group Password to "+testString+" Message  byte 13");
+                        assertEquals( 0x00, m.getElement(14), "Set Group Password to "+testString+" Message  byte 14");
+                        assertEquals( 0x00, m.getElement(15), "Set Group Password to "+testString+" Message  byte 15");
+                        assertEquals( 0x00, m.getElement(16), "Set Group Password to "+testString+" Message  byte 16");
+                        assertEquals( 0x00, m.getElement(17), "Set Group Password to "+testString+" Message  byte 17");
+                        assertEquals( 0x00, m.getElement(18), "Set Group Password to "+testString+" Message  byte 18");
+                        assertEquals( 0x00, m.getElement(19), "Set Group Password to "+testString+" Message  byte 19");
 
                     }
                 }
@@ -789,30 +773,30 @@ public class LnDplxGrpInfoImplTest {
             m.setElement(1, 9876);
             try {
                 m = LnDplxGrpInfoImpl.createSetUr92GroupIDPacket(Integer.toString(d0));
-            } catch (jmri.jmrix.loconet.LocoNetException E) {
-                Assert.assertTrue("expect exception only when range is outside of rante [0 to 127]", (d0 < 0)|| (d0 > 127));
+            } catch (jmri.jmrix.loconet.LocoNetException e) {
+                assertTrue( (d0 < 0)|| (d0 > 127), "expect exception only when range is outside of rante [0 to 127]");
             }
             if ((d0 >= 0) && (d0 < 128)) {
-                Assert.assertEquals("Set Group ID to "+d0+" Message  opcode", 0xe5, m.getElement(0));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 1", 0x14, m.getElement(1));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 2", 0x04, m.getElement(2));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 3", 0x00, m.getElement(3));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 4", 0x00, m.getElement(4));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 5", d0 & 0x7f, m.getElement(5));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 6", 0x00, m.getElement(6));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 7", 0x00, m.getElement(7));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 8", 0x00, m.getElement(8));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 9", 0x00, m.getElement(9));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 10", 0x00, m.getElement(10));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 11", 0x00, m.getElement(11));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 12", 0x00, m.getElement(12));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 13", 0x00, m.getElement(13));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 14", 0x00, m.getElement(14));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 15", 0x00, m.getElement(15));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 16", 0x00, m.getElement(16));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 17", 0x00, m.getElement(17));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 18", 0x00, m.getElement(18));
-                Assert.assertEquals("Set Group ID to "+d0+" Message  byte 19", 0x00, m.getElement(19));
+                assertEquals( 0xe5, m.getElement(0), "Set Group ID to "+d0+" Message  opcode");
+                assertEquals( 0x14, m.getElement(1), "Set Group ID to "+d0+" Message  byte 1");
+                assertEquals( 0x04, m.getElement(2), "Set Group ID to "+d0+" Message  byte 2");
+                assertEquals( 0x00, m.getElement(3), "Set Group ID to "+d0+" Message  byte 3");
+                assertEquals( 0x00, m.getElement(4), "Set Group ID to "+d0+" Message  byte 4");
+                assertEquals( d0 & 0x7f, m.getElement(5), "Set Group ID to "+d0+" Message  byte 5");
+                assertEquals( 0x00, m.getElement(6), "Set Group ID to "+d0+" Message  byte 6");
+                assertEquals( 0x00, m.getElement(7), "Set Group ID to "+d0+" Message  byte 7");
+                assertEquals( 0x00, m.getElement(8), "Set Group ID to "+d0+" Message  byte 8");
+                assertEquals( 0x00, m.getElement(9), "Set Group ID to "+d0+" Message  byte 9");
+                assertEquals( 0x00, m.getElement(10), "Set Group ID to "+d0+" Message  byte 10");
+                assertEquals( 0x00, m.getElement(11), "Set Group ID to "+d0+" Message  byte 11");
+                assertEquals( 0x00, m.getElement(12), "Set Group ID to "+d0+" Message  byte 12");
+                assertEquals( 0x00, m.getElement(13), "Set Group ID to "+d0+" Message  byte 13");
+                assertEquals( 0x00, m.getElement(14), "Set Group ID to "+d0+" Message  byte 14");
+                assertEquals( 0x00, m.getElement(15), "Set Group ID to "+d0+" Message  byte 15");
+                assertEquals( 0x00, m.getElement(16), "Set Group ID to "+d0+" Message  byte 16");
+                assertEquals( 0x00, m.getElement(17), "Set Group ID to "+d0+" Message  byte 17");
+                assertEquals( 0x00, m.getElement(18), "Set Group ID to "+d0+" Message  byte 18");
+                assertEquals( 0x00, m.getElement(19), "Set Group ID to "+d0+" Message  byte 19");
             }
         }
     }
@@ -842,28 +826,28 @@ public class LnDplxGrpInfoImplTest {
         m.setElement(19, 0);
         for (int d0 = 0; d0 < 256; ++d0) {
             m.setElement(0, d0);
-            Assert.assertEquals("checking isDuplexGroupMessage for opcode "+d0,
-                    (d0 == 0xe5), LnDplxGrpInfoImpl.isDuplexGroupMessage(m));
+            assertEquals( (d0 == 0xe5), LnDplxGrpInfoImpl.isDuplexGroupMessage(m),
+                "checking isDuplexGroupMessage for opcode "+d0);
         }
         m.setElement(0, 0xe5);
         for (int d1 = 0; d1 < 256; ++d1) {
             m.setElement(1, d1);
-            Assert.assertEquals("checking isDuplexGroupMessage for byte 1 "+d1,
-                    (d1 == 0x14), LnDplxGrpInfoImpl.isDuplexGroupMessage(m));
+            assertEquals( (d1 == 0x14), LnDplxGrpInfoImpl.isDuplexGroupMessage(m),
+                "checking isDuplexGroupMessage for byte 1 "+d1);
         }
         m.setElement(1, 0x14);
         for (int d2 = 0; d2 < 256; ++d2) {
             m.setElement(2, d2);
-            Assert.assertEquals("checking isDuplexGroupMessage for byte 2="+d2,
-                    (d2 == 2) || (d2 == 3) || (d2 == 4) || (d2 == 7),
-                    LnDplxGrpInfoImpl.isDuplexGroupMessage(m));
+            assertEquals( (d2 == 2) || (d2 == 3) || (d2 == 4) || (d2 == 7),
+                LnDplxGrpInfoImpl.isDuplexGroupMessage(m),
+                "checking isDuplexGroupMessage for byte 2="+d2);
         }
         m.setElement(2, 0x2);
         for (int d3 = 0; d3 < 256; ++d3) {
             m.setElement(3, d3);
-            Assert.assertEquals("checking isDuplexGroupMessage for byte 3 "+d3,
-                    (d3 == 0) || (d3 == 8) || (d3 == 0x10),
-                    LnDplxGrpInfoImpl.isDuplexGroupMessage(m));
+            assertEquals( (d3 == 0) || (d3 == 8) || (d3 == 0x10),
+                LnDplxGrpInfoImpl.isDuplexGroupMessage(m),
+                "checking isDuplexGroupMessage for byte 3 "+d3);
         }
         m.setElement(3, 0);
         for (int index = 4; index < 20; ++index) {
@@ -872,9 +856,9 @@ public class LnDplxGrpInfoImplTest {
                 int val = JUnitUtil.getRandom().nextInt(256);
                 m.setElement(index, val);
 
-                Assert.assertTrue("checking isDuplexGroupMessge for byte "+index+
-                        " as value "+val,
-                        LnDplxGrpInfoImpl.isDuplexGroupMessage(m));
+                assertTrue( LnDplxGrpInfoImpl.isDuplexGroupMessage(m),
+                    "checking isDuplexGroupMessge for byte " + index +
+                        " as value " + val);
             }
         }
     }
@@ -903,88 +887,79 @@ public class LnDplxGrpInfoImplTest {
         m.setElement(1, 0);
         DuplexGroupMessageType mt;
         mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
-        Assert.assertEquals("not a duplex message: 2 byte",
-                DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                mt);
+        assertEquals( DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
+            mt, "not a duplex message: 2 byte");
 
         m = new LocoNetMessage(19);
         m.setElement(0, 0xe5);
         m.setElement(1, 0x13);
         for (int i=2; i< 19;++i) { m.setElement(i, 0);}
         mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
-        Assert.assertEquals("not a duplex message: 19 byte",
-                DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                mt);
+        assertEquals( DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
+            mt, "not a duplex message: 19 byte");
 
         m = new LocoNetMessage(21);
         m.setElement(0, 0xe5);
         m.setElement(1, 0x15);
         for (int i=2; i< 21;++i) { m.setElement(i, 0);}
         mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
-        Assert.assertEquals("not a duplex message: 21 byte",
-                DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                mt);
+        assertEquals( DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
+            mt, "not a duplex message: 21 byte");
 
         m = new LocoNetMessage(20);
         m.setElement(0, 0xe5);
         m.setElement(1, 0x13);
         for (int i=2; i< 20;++i) { m.setElement(i, 0);}
         mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
-        Assert.assertEquals("not a duplex message: 20 byte with 19-byte length value",
-                DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                mt);
+        assertEquals( DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
+            mt, "not a duplex message: 20 byte with 19-byte length value");
 
         m.setElement(1, 0x16);
         for (int i=2; i< 20;++i) { m.setElement(i, 0);}
         mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
-        Assert.assertEquals("not a duplex message: 20 byte with 22-byte length value",
-                DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                mt);
+        assertEquals( DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
+            mt, "not a duplex message: 20 byte with 22-byte length value");
 
         m.setElement(1, 0x14);
         m.setElement(2, 0);
         for (int i=3; i< 20;++i) { m.setElement(i, 0);}
         mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
-        Assert.assertEquals("not a duplex message: byte 2="+m.getElement(2)+" not a Duplex value",
-                DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                mt);
+        assertEquals( DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
+            mt, "not a duplex message: byte 2="+m.getElement(2)+" not a Duplex value");
 
         m.setElement(2, 1);
         for (int i=3; i< 20;++i) { m.setElement(i, 0);}
         mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
-        Assert.assertEquals("not a duplex message: byte 2="+m.getElement(2)+" not a Duplex value",
-                DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                mt);
+        assertEquals( DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
+            mt, "not a duplex message: byte 2="+m.getElement(2)+" not a Duplex value");
 
         m.setElement(2, 5);
         for (int i=3; i< 20;++i) { m.setElement(i, 0);}
         mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
-        Assert.assertEquals("not a duplex message: byte 2="+m.getElement(2)+" not a Duplex value",
-                DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                mt);
+        assertEquals( DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
+            mt, "not a duplex message: byte 2="+m.getElement(2)+" not a Duplex value");
 
         m.setElement(2, 6);
         for (int i=3; i< 20;++i) { m.setElement(i, 0);}
         mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
-        Assert.assertEquals("not a duplex message: byte 2="+m.getElement(2)+" not a Duplex value",
-                DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                mt);
+        assertEquals( DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
+                mt, "not a duplex message: byte 2="+m.getElement(2)+" not a Duplex value");
 
         m.setElement(2, 8);
         for (int i=3; i< 20;++i) { m.setElement(i, 0);}
         mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
-        Assert.assertEquals("not a duplex message: byte 2="+m.getElement(2)+" not a Duplex value",
-                DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                mt);
+        assertEquals( DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
+            mt, "not a duplex message: byte 2="+m.getElement(2)+" not a Duplex value");
 
         m.setElement(2, 9);
         for (int i=4; i< 20;++i) { m.setElement(i, 0);}
         for (int i=0; i < 128; ++i) {
             m.setElement(3, i);
             mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
-            Assert.assertEquals("not a duplex message: byte 2="+m.getElement(2)+" not a Duplex value",
+            assertEquals(
                 DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                mt);
+                mt,
+                "not a duplex message: byte 2="+m.getElement(2)+" not a Duplex value");
         }
 
         m.setElement(2, 2);
@@ -993,24 +968,28 @@ public class LnDplxGrpInfoImplTest {
             mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
             switch (i) {
                 case 0:
-                    Assert.assertEquals("duplex channel message: byte 4="+m.getElement(4)+" implies a Duplex message",
+                    assertEquals(
                             DuplexGroupMessageType.DUPLEX_GROUP_CHANNEL_WRITE_MESSAGE,
-                            mt);
+                            mt,
+                            "duplex channel message: byte 4="+m.getElement(4)+" implies a Duplex message");
                     break;
                 case 8:
-                    Assert.assertEquals("duplex channel message: byte 4="+m.getElement(4)+" implies a Duplex message",
+                    assertEquals(
                             DuplexGroupMessageType.DUPLEX_GROUP_CHANNEL_QUERY_MESSAGE,
-                            mt);
+                            mt,
+                            "duplex channel message: byte 4="+m.getElement(4)+" implies a Duplex message");
                     break;
                 case 16:
-                    Assert.assertEquals("duplex channel message: byte 4="+m.getElement(2)+" implies a Duplex message",
+                    assertEquals(
                             DuplexGroupMessageType.DUPLEX_GROUP_CHANNEL_REPORT_MESSAGE,
-                            mt);
+                            mt,
+                            "duplex channel message: byte 4="+m.getElement(2)+" implies a Duplex message");
                     break;
                 default:
-                    Assert.assertEquals("not a duplex channel message: byte 4="+m.getElement(2)+" not a Duplex value",
+                    assertEquals(
                         DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                        mt);
+                        mt,
+                        "not a duplex channel message: byte 4="+m.getElement(2)+" not a Duplex value");
                     break;
             }
         }
@@ -1022,24 +1001,28 @@ public class LnDplxGrpInfoImplTest {
             mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
             switch (i) {
                 case 0:
-                    Assert.assertEquals("duplex name message: byte 4="+m.getElement(4)+" implies a Duplex message",
+                    assertEquals(
                             DuplexGroupMessageType.DUPLEX_GROUP_NAME_WRITE_MESSAGE,
-                            mt);
+                            mt,
+                            "duplex name message: byte 4="+m.getElement(4)+" implies a Duplex message");
                     break;
                 case 8:
-                    Assert.assertEquals("duplex name message: byte 4="+m.getElement(4)+" implies a Duplex message",
+                    assertEquals(
                             DuplexGroupMessageType.DUPLEX_GROUP_NAME_QUERY_MESSAGE,
-                            mt);
+                            mt,
+                            "duplex name message: byte 4="+m.getElement(4)+" implies a Duplex message");
                     break;
                 case 16:
-                    Assert.assertEquals("duplex name message: byte 4="+m.getElement(2)+" implies a Duplex message",
+                    assertEquals(
                             DuplexGroupMessageType.DUPLEX_GROUP_NAME_ETC_REPORT_MESSAGE,
-                            mt);
+                            mt,
+                            "duplex name message: byte 4="+m.getElement(2)+" implies a Duplex message");
                     break;
                 default:
-                    Assert.assertEquals("not a duplex name message: byte 4="+m.getElement(2)+" not a Duplex value",
+                    assertEquals(
                         DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                        mt);
+                        mt,
+                        "not a duplex name message: byte 4="+m.getElement(2)+" not a Duplex value");
                     break;
             }
         }
@@ -1051,24 +1034,20 @@ public class LnDplxGrpInfoImplTest {
             mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
             switch (i) {
                 case 0:
-                    Assert.assertEquals("duplex ID message: byte 4="+m.getElement(4)+" implies a Duplex message",
-                            DuplexGroupMessageType.DUPLEX_GROUP_ID_WRITE_MESSAGE,
-                            mt);
+                    assertEquals( DuplexGroupMessageType.DUPLEX_GROUP_ID_WRITE_MESSAGE, mt,
+                        "duplex ID message: byte 4="+m.getElement(4)+" implies a Duplex message");
                     break;
                 case 8:
-                    Assert.assertEquals("duplex ID message: byte 4="+m.getElement(4)+" implies a Duplex message",
-                            DuplexGroupMessageType.DUPLEX_GROUP_ID_QUERY_MESSAGE,
-                            mt);
+                    assertEquals( DuplexGroupMessageType.DUPLEX_GROUP_ID_QUERY_MESSAGE, mt,
+                        "duplex ID message: byte 4="+m.getElement(4)+" implies a Duplex message");
                     break;
                 case 16:
-                    Assert.assertEquals("duplex id message: byte 4="+m.getElement(2)+" implies a Duplex message",
-                            DuplexGroupMessageType.DUPLEX_GROUP_ID_REPORT_MESSAGE,
-                            mt);
+                    assertEquals( DuplexGroupMessageType.DUPLEX_GROUP_ID_REPORT_MESSAGE, mt,
+                        "duplex id message: byte 4="+m.getElement(2)+" implies a Duplex message");
                     break;
                 default:
-                    Assert.assertEquals("not a duplex id message: byte 4="+m.getElement(2)+" not a Duplex value",
-                        DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                        mt);
+                    assertEquals( DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE, mt,
+                        "not a duplex id message: byte 4="+m.getElement(2)+" not a Duplex value");
                     break;
             }
         }
@@ -1079,24 +1058,20 @@ public class LnDplxGrpInfoImplTest {
             mt = LnDplxGrpInfoImpl.getDuplexGroupIdentityMessageType(m);
             switch (i) {
                 case 0:
-                    Assert.assertEquals("duplex password message: byte 4="+m.getElement(4)+" implies a Duplex message",
-                            DuplexGroupMessageType.DUPLEX_GROUP_PASSWORD_WRITE_MESSAGE,
-                            mt);
+                    assertEquals( DuplexGroupMessageType.DUPLEX_GROUP_PASSWORD_WRITE_MESSAGE, mt,
+                        "duplex password message: byte 4="+m.getElement(4)+" implies a Duplex message");
                     break;
                 case 8:
-                    Assert.assertEquals("duplex password message: byte 4="+m.getElement(4)+" implies a Duplex message",
-                            DuplexGroupMessageType.DUPLEX_GROUP_PASSWORD_QUERY_MESSAGE,
-                            mt);
+                    assertEquals( DuplexGroupMessageType.DUPLEX_GROUP_PASSWORD_QUERY_MESSAGE, mt,
+                        "duplex password message: byte 4="+m.getElement(4)+" implies a Duplex message");
                     break;
                 case 16:
-                    Assert.assertEquals("duplex password message: byte 4="+m.getElement(2)+" implies a Duplex message",
-                            DuplexGroupMessageType.DUPLEX_GROUP_PASSWORD_REPORT_MESSAGE,
-                            mt);
+                    assertEquals( DuplexGroupMessageType.DUPLEX_GROUP_PASSWORD_REPORT_MESSAGE, mt,
+                        "duplex password message: byte 4="+m.getElement(2)+" implies a Duplex message");
                     break;
                 default:
-                    Assert.assertEquals("not a duplex password message: byte 4="+m.getElement(2)+" not a Duplex value",
-                        DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE,
-                        mt);
+                    assertEquals( DuplexGroupMessageType.NOT_A_DUPLEX_GROUP_MESSAGE, mt,
+                        "not a duplex password message: byte 4="+m.getElement(2)+" not a Duplex value");
                     break;
             }
         }
@@ -1127,19 +1102,21 @@ public class LnDplxGrpInfoImplTest {
         propChangeReportFlag = false;
         propChangeQueryFlag = false;
 
-        Assert.assertFalse("did not see property change flag yet", propChangeFlag);
-        Assert.assertFalse("did not see property change flag yet", propChangeReportFlag);
-        Assert.assertFalse("did not see property change flag yet", propChangeQueryFlag);
-        Assert.assertEquals("no prop change listener firings yet", 0, propChangeCount);
+        assertFalse( propChangeFlag, "did not see property change flag yet");
+        assertFalse( propChangeReportFlag, "did not see property change flag yet");
+        assertFalse( propChangeQueryFlag, "did not see property change flag yet");
+        assertEquals( 0, propChangeCount, "no prop change listener firings yet");
 
-        Assert.assertFalse("not yet waiting for Duplex Group Name, etc. Report", dpxGrpInfoImpl.isAwaitingDuplexGroupReportMessage());
+        assertFalse( dpxGrpInfoImpl.isAwaitingDuplexGroupReportMessage(),
+            "not yet waiting for Duplex Group Name, etc. Report");
         dpxGrpInfoImpl.queryDuplexGroupIdentity();
-        Assert.assertTrue("Now waiting for Duplex Group Name, etc. Report", dpxGrpInfoImpl.isAwaitingDuplexGroupReportMessage());
+        assertTrue( dpxGrpInfoImpl.isAwaitingDuplexGroupReportMessage(),
+            "Now waiting for Duplex Group Name, etc. Report");
 
 
 
-        Assert.assertTrue("did see initial property change Report flag", propChangeReportFlag);
-        Assert.assertEquals("Did see a bunch of invalidation prop changes", 9, propChangeCount);
+        assertTrue( propChangeReportFlag, "did see initial property change Report flag");
+        assertEquals( 9, propChangeCount, "Did see a bunch of invalidation prop changes");
 
         propChangeCount = 0;
         propChangeReportFlag = false;
@@ -1152,12 +1129,14 @@ public class LnDplxGrpInfoImplTest {
         String name = "\231\032\033\034\035\036\237\140";
         String pass="0200";
         LocoNetMessage m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket(name, pass, ch, id);
-        Assert.assertTrue("Now waiting (2) for Duplex Group Name, etc. Report", dpxGrpInfoImpl.isAwaitingDuplexGroupReportMessage());
+        assertTrue( dpxGrpInfoImpl.isAwaitingDuplexGroupReportMessage(),
+            "Now waiting (2) for Duplex Group Name, etc. Report");
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
         JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertFalse("No longer waiting for Duplex Group Name, etc. Report", dpxGrpInfoImpl.isAwaitingDuplexGroupReportMessage());
-        Assert.assertEquals("Expected 11 prop change events", 12, propChangeCount);
+        assertFalse( dpxGrpInfoImpl.isAwaitingDuplexGroupReportMessage(),
+            "No longer waiting for Duplex Group Name, etc. Report");
+        assertEquals( 12, propChangeCount, "Expected 11 prop change events");
 
         propChangeCount = 0;
         propChangeFlag = false;
@@ -1165,9 +1144,9 @@ public class LnDplxGrpInfoImplTest {
         propChangeReportFlag = false;
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
-        Assert.assertFalse("No longer (2) waiting for Duplex Group Name, etc. Report", dpxGrpInfoImpl.isAwaitingDuplexGroupReportMessage());
+        assertFalse( dpxGrpInfoImpl.isAwaitingDuplexGroupReportMessage(), "No longer (2) waiting for Duplex Group Name, etc. Report");
         JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertEquals("Expected exactly 2 prop change events, one count, one detail", 2, propChangeCount);
+        assertEquals( 2, propChangeCount, "Expected exactly 2 prop change events, one count, one detail");
 
         propChangeCount = 0;
         propChangeFlag = false;
@@ -1178,7 +1157,7 @@ public class LnDplxGrpInfoImplTest {
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
         JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertEquals("Expected exactly 3 prop change event", 3, propChangeCount);
+        assertEquals( 3, propChangeCount, "Expected exactly 3 prop change event");
 
         propChangeCount = 0;
         propChangeFlag = false;
@@ -1189,8 +1168,8 @@ public class LnDplxGrpInfoImplTest {
         m.setElement(15, m.getElement(15)^1);
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertEquals("Expected exactly 3 prop change event", 3, propChangeCount);
+        JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
+        assertEquals( 3, propChangeCount, "Expected exactly 3 prop change event");
 
         propChangeCount = 0;
         propChangeFlag = false;
@@ -1202,7 +1181,7 @@ public class LnDplxGrpInfoImplTest {
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
         JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertEquals("Expected exactly 3 prop change event", 3, propChangeCount);
+        assertEquals( 3, propChangeCount, "Expected exactly 3 prop change event");
 
         propChangeCount = 0;
         propChangeFlag = false;
@@ -1214,12 +1193,9 @@ public class LnDplxGrpInfoImplTest {
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
         JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertEquals("Expected exactly 3 prop change event", 3, propChangeCount);
+        assertEquals( 3, propChangeCount, "Expected exactly 3 prop change event");
 
-        try {
-            Thread.sleep(1300);
-        } catch (InterruptedException e) {
-        }
+        JUnitUtil.waitFor(1300);
 
         propChangeCount = 0;
         propChangeFlag = false;
@@ -1231,7 +1207,7 @@ public class LnDplxGrpInfoImplTest {
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
         JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertEquals("Expected exactly 3 prop change event", 3, propChangeCount);
+        assertEquals( 3, propChangeCount, "Expected exactly 3 prop change event");
 
         propChangeCount = 0;
         propChangeFlag = false;
@@ -1244,8 +1220,8 @@ public class LnDplxGrpInfoImplTest {
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
         JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
-        Assert.assertEquals("Expected exactly 3 prop change event", 3, propChangeCount);
-        Assert.assertFalse("Query Timer no longer running",dpxGrpInfoImpl.isIplQueryTimerRunning());
+        assertEquals( 3, propChangeCount, "Expected exactly 3 prop change event");
+        assertFalse( dpxGrpInfoImpl.isIplQueryTimerRunning(), "Query Timer no longer running");
 
         propChangeCount = 0;
         propChangeFlag = false;
@@ -1264,101 +1240,101 @@ public class LnDplxGrpInfoImplTest {
         String name = "AbcdeFgh", pass="ABC0";
         LocoNetMessage m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket(name, pass, ch, id);
 
-        Assert.assertEquals("Group Id Query Message: opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Group Id Query Message: byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Group Id Query Message: byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Group Id Query Message: byte 3", 0x10, m.getElement(3));
-        Assert.assertEquals("Group Id Query Message: byte 4", 0x00, m.getElement(4));
-        Assert.assertEquals("Group Id Query Message: byte 5", 0x41, m.getElement(5));
-        Assert.assertEquals("Group Id Query Message: byte 6", 0x62, m.getElement(6));
-        Assert.assertEquals("Group Id Query Message: byte 7", 0x63, m.getElement(7));
-        Assert.assertEquals("Group Id Query Message: byte 8", 0x64, m.getElement(8));
-        Assert.assertEquals("Group Id Query Message: byte 9", 0x00, m.getElement(9));
-        Assert.assertEquals("Group Id Query Message: byte 10", 0x65, m.getElement(10));
-        Assert.assertEquals("Group Id Query Message: byte 11", 0x46, m.getElement(11));
-        Assert.assertEquals("Group Id Query Message: byte 12", 0x67, m.getElement(12));
-        Assert.assertEquals("Group Id Query Message: byte 13", 0x68, m.getElement(13));
-        Assert.assertEquals("Group Id Query Message: byte 14", 0x03, m.getElement(14));
-        Assert.assertEquals("Group Id Query Message: byte 15", 0x2b, m.getElement(15));
-        Assert.assertEquals("Group Id Query Message: byte 16", 0x40, m.getElement(16));
-        Assert.assertEquals("Group Id Query Message: byte 17", 0x7, m.getElement(17));
-        Assert.assertEquals("Group Id Query Message: byte 18", 0x4, m.getElement(18));
-        Assert.assertEquals("Group Id Query Message: byte 19", 0x00, m.getElement(19));
+        assertEquals( 0xe5, m.getElement(0), "Group Id Query Message: opcode");
+        assertEquals( 0x14, m.getElement(1), "Group Id Query Message: byte 1");
+        assertEquals( 0x03, m.getElement(2), "Group Id Query Message: byte 2");
+        assertEquals( 0x10, m.getElement(3), "Group Id Query Message: byte 3");
+        assertEquals( 0x00, m.getElement(4), "Group Id Query Message: byte 4");
+        assertEquals( 0x41, m.getElement(5), "Group Id Query Message: byte 5");
+        assertEquals( 0x62, m.getElement(6), "Group Id Query Message: byte 6");
+        assertEquals( 0x63, m.getElement(7), "Group Id Query Message: byte 7");
+        assertEquals( 0x64, m.getElement(8), "Group Id Query Message: byte 8");
+        assertEquals( 0x00, m.getElement(9), "Group Id Query Message: byte 9");
+        assertEquals( 0x65, m.getElement(10), "Group Id Query Message: byte 10");
+        assertEquals( 0x46, m.getElement(11), "Group Id Query Message: byte 11");
+        assertEquals( 0x67, m.getElement(12), "Group Id Query Message: byte 12");
+        assertEquals( 0x68, m.getElement(13), "Group Id Query Message: byte 13");
+        assertEquals( 0x03, m.getElement(14), "Group Id Query Message: byte 14");
+        assertEquals( 0x2b, m.getElement(15), "Group Id Query Message: byte 15");
+        assertEquals( 0x40, m.getElement(16), "Group Id Query Message: byte 16");
+        assertEquals(  0x7, m.getElement(17), "Group Id Query Message: byte 17");
+        assertEquals(  0x4, m.getElement(18), "Group Id Query Message: byte 18");
+        assertEquals( 0x00, m.getElement(19), "Group Id Query Message: byte 19");
 
         ch = 0; id = 7;
         name = "\0\0\0\0\0\0\0\0"; pass="733B";
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket(name, pass, ch, id);
 
-        Assert.assertEquals("Group Id Query Message: opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Group Id Query Message: byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Group Id Query Message: byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Group Id Query Message: byte 3", 0x10, m.getElement(3));
-        Assert.assertEquals("Group Id Query Message: byte 4", 0x00, m.getElement(4));
-        Assert.assertEquals("Group Id Query Message: byte 5", 0x0, m.getElement(5));
-        Assert.assertEquals("Group Id Query Message: byte 6", 0x0, m.getElement(6));
-        Assert.assertEquals("Group Id Query Message: byte 7", 0x0, m.getElement(7));
-        Assert.assertEquals("Group Id Query Message: byte 8", 0x0, m.getElement(8));
-        Assert.assertEquals("Group Id Query Message: byte 9", 0x00, m.getElement(9));
-        Assert.assertEquals("Group Id Query Message: byte 10", 0x0, m.getElement(10));
-        Assert.assertEquals("Group Id Query Message: byte 11", 0x0, m.getElement(11));
-        Assert.assertEquals("Group Id Query Message: byte 12", 0x0, m.getElement(12));
-        Assert.assertEquals("Group Id Query Message: byte 13", 0x0, m.getElement(13));
-        Assert.assertEquals("Group Id Query Message: byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Group Id Query Message: byte 15", 0x73, m.getElement(15));
-        Assert.assertEquals("Group Id Query Message: byte 16", 0x3b, m.getElement(16));
-        Assert.assertEquals("Group Id Query Message: byte 17", 0x0, m.getElement(17));
-        Assert.assertEquals("Group Id Query Message: byte 18", 0x7, m.getElement(18));
-        Assert.assertEquals("Group Id Query Message: byte 19", 0x00, m.getElement(19));
+        assertEquals( 0xe5, m.getElement(0), "Group Id Query Message: opcode");
+        assertEquals( 0x14, m.getElement(1), "Group Id Query Message: byte 1");
+        assertEquals( 0x03, m.getElement(2), "Group Id Query Message: byte 2");
+        assertEquals( 0x10, m.getElement(3), "Group Id Query Message: byte 3");
+        assertEquals( 0x00, m.getElement(4), "Group Id Query Message: byte 4");
+        assertEquals(  0x0, m.getElement(5), "Group Id Query Message: byte 5");
+        assertEquals(  0x0, m.getElement(6), "Group Id Query Message: byte 6");
+        assertEquals(  0x0, m.getElement(7), "Group Id Query Message: byte 7");
+        assertEquals(  0x0, m.getElement(8), "Group Id Query Message: byte 8");
+        assertEquals( 0x00, m.getElement(9), "Group Id Query Message: byte 9");
+        assertEquals(  0x0, m.getElement(10), "Group Id Query Message: byte 10");
+        assertEquals(  0x0, m.getElement(11), "Group Id Query Message: byte 11");
+        assertEquals(  0x0, m.getElement(12), "Group Id Query Message: byte 12");
+        assertEquals(  0x0, m.getElement(13), "Group Id Query Message: byte 13");
+        assertEquals( 0x00, m.getElement(14), "Group Id Query Message: byte 14");
+        assertEquals( 0x73, m.getElement(15), "Group Id Query Message: byte 15");
+        assertEquals( 0x3b, m.getElement(16), "Group Id Query Message: byte 16");
+        assertEquals(  0x0, m.getElement(17), "Group Id Query Message: byte 17");
+        assertEquals(  0x7, m.getElement(18), "Group Id Query Message: byte 18");
+        assertEquals( 0x00, m.getElement(19), "Group Id Query Message: byte 19");
 
         ch = 129; id = 2;
         name = "\200\201\202\203\204\205\206\207"; pass="0001";
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket(name, pass, ch, id);
 
-        Assert.assertEquals("Group Id Query Message: opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Group Id Query Message: byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Group Id Query Message: byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Group Id Query Message: byte 3", 0x10, m.getElement(3));
-        Assert.assertEquals("Group Id Query Message: byte 4", 0x0f, m.getElement(4));
-        Assert.assertEquals("Group Id Query Message: byte 5", 0x00, m.getElement(5));
-        Assert.assertEquals("Group Id Query Message: byte 6", 0x01, m.getElement(6));
-        Assert.assertEquals("Group Id Query Message: byte 7", 0x02, m.getElement(7));
-        Assert.assertEquals("Group Id Query Message: byte 8", 0x03, m.getElement(8));
-        Assert.assertEquals("Group Id Query Message: byte 9", 0x0f, m.getElement(9));
-        Assert.assertEquals("Group Id Query Message: byte 10", 0x04, m.getElement(10));
-        Assert.assertEquals("Group Id Query Message: byte 11", 0x05, m.getElement(11));
-        Assert.assertEquals("Group Id Query Message: byte 12", 0x06, m.getElement(12));
-        Assert.assertEquals("Group Id Query Message: byte 13", 0x07, m.getElement(13));
-        Assert.assertEquals("Group Id Query Message: byte 14", 0x04, m.getElement(14));
-        Assert.assertEquals("Group Id Query Message: byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Group Id Query Message: byte 16", 0x01, m.getElement(16));
-        Assert.assertEquals("Group Id Query Message: byte 17", 0x1, m.getElement(17));
-        Assert.assertEquals("Group Id Query Message: byte 18", 0x2, m.getElement(18));
-        Assert.assertEquals("Group Id Query Message: byte 19", 0x00, m.getElement(19));
+        assertEquals( 0xe5, m.getElement(0), "Group Id Query Message: opcode");
+        assertEquals( 0x14, m.getElement(1), "Group Id Query Message: byte 1");
+        assertEquals( 0x03, m.getElement(2), "Group Id Query Message: byte 2");
+        assertEquals( 0x10, m.getElement(3), "Group Id Query Message: byte 3");
+        assertEquals( 0x0f, m.getElement(4), "Group Id Query Message: byte 4");
+        assertEquals( 0x00, m.getElement(5), "Group Id Query Message: byte 5");
+        assertEquals( 0x01, m.getElement(6), "Group Id Query Message: byte 6");
+        assertEquals( 0x02, m.getElement(7), "Group Id Query Message: byte 7");
+        assertEquals( 0x03, m.getElement(8), "Group Id Query Message: byte 8");
+        assertEquals( 0x0f, m.getElement(9), "Group Id Query Message: byte 9");
+        assertEquals( 0x04, m.getElement(10), "Group Id Query Message: byte 10");
+        assertEquals( 0x05, m.getElement(11), "Group Id Query Message: byte 11");
+        assertEquals( 0x06, m.getElement(12), "Group Id Query Message: byte 12");
+        assertEquals( 0x07, m.getElement(13), "Group Id Query Message: byte 13");
+        assertEquals( 0x04, m.getElement(14), "Group Id Query Message: byte 14");
+        assertEquals( 0x00, m.getElement(15), "Group Id Query Message: byte 15");
+        assertEquals( 0x01, m.getElement(16), "Group Id Query Message: byte 16");
+        assertEquals(  0x1, m.getElement(17), "Group Id Query Message: byte 17");
+        assertEquals(  0x2, m.getElement(18), "Group Id Query Message: byte 18");
+        assertEquals( 0x00, m.getElement(19), "Group Id Query Message: byte 19");
 
         ch = 4; id = 131;
         name = "\231\032\033\034\035\036\237\140"; pass="0200";
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket(name, pass, ch, id);
 
-        Assert.assertEquals("Group Id Query Message: opcode", 0xe5, m.getElement(0));
-        Assert.assertEquals("Group Id Query Message: byte 1", 0x14, m.getElement(1));
-        Assert.assertEquals("Group Id Query Message: byte 2", 0x03, m.getElement(2));
-        Assert.assertEquals("Group Id Query Message: byte 3", 0x10, m.getElement(3));
-        Assert.assertEquals("Group Id Query Message: byte 4", 0x01, m.getElement(4));
-        Assert.assertEquals("Group Id Query Message: byte 5", 0x19, m.getElement(5));
-        Assert.assertEquals("Group Id Query Message: byte 6", 0x1a, m.getElement(6));
-        Assert.assertEquals("Group Id Query Message: byte 7", 0x1b, m.getElement(7));
-        Assert.assertEquals("Group Id Query Message: byte 8", 0x1c, m.getElement(8));
-        Assert.assertEquals("Group Id Query Message: byte 9", 0x04, m.getElement(9));
-        Assert.assertEquals("Group Id Query Message: byte 10", 0x1d, m.getElement(10));
-        Assert.assertEquals("Group Id Query Message: byte 11", 0x1e, m.getElement(11));
-        Assert.assertEquals("Group Id Query Message: byte 12", 0x1f, m.getElement(12));
-        Assert.assertEquals("Group Id Query Message: byte 13", 0x60, m.getElement(13));
-        Assert.assertEquals("Group Id Query Message: byte 14", 0x08, m.getElement(14));
-        Assert.assertEquals("Group Id Query Message: byte 15", 0x02, m.getElement(15));
-        Assert.assertEquals("Group Id Query Message: byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Group Id Query Message: byte 17", 0x4, m.getElement(17));
-        Assert.assertEquals("Group Id Query Message: byte 18", 0x3, m.getElement(18));
-        Assert.assertEquals("Group Id Query Message: byte 19", 0x00, m.getElement(19));
+        assertEquals( 0xe5, m.getElement(0), "Group Id Query Message: opcode");
+        assertEquals( 0x14, m.getElement(1), "Group Id Query Message: byte 1");
+        assertEquals( 0x03, m.getElement(2), "Group Id Query Message: byte 2");
+        assertEquals( 0x10, m.getElement(3), "Group Id Query Message: byte 3");
+        assertEquals( 0x01, m.getElement(4), "Group Id Query Message: byte 4");
+        assertEquals( 0x19, m.getElement(5), "Group Id Query Message: byte 5");
+        assertEquals( 0x1a, m.getElement(6), "Group Id Query Message: byte 6");
+        assertEquals( 0x1b, m.getElement(7), "Group Id Query Message: byte 7");
+        assertEquals( 0x1c, m.getElement(8), "Group Id Query Message: byte 8");
+        assertEquals( 0x04, m.getElement(9), "Group Id Query Message: byte 9");
+        assertEquals( 0x1d, m.getElement(10), "Group Id Query Message: byte 10");
+        assertEquals( 0x1e, m.getElement(11), "Group Id Query Message: byte 11");
+        assertEquals( 0x1f, m.getElement(12), "Group Id Query Message: byte 12");
+        assertEquals( 0x60, m.getElement(13), "Group Id Query Message: byte 13");
+        assertEquals( 0x08, m.getElement(14), "Group Id Query Message: byte 14");
+        assertEquals( 0x02, m.getElement(15), "Group Id Query Message: byte 15");
+        assertEquals( 0x00, m.getElement(16), "Group Id Query Message: byte 16");
+        assertEquals(  0x4, m.getElement(17), "Group Id Query Message: byte 17");
+        assertEquals(  0x3, m.getElement(18), "Group Id Query Message: byte 18");
+        assertEquals( 0x00, m.getElement(19), "Group Id Query Message: byte 19");
 
     }
 
@@ -1366,137 +1342,137 @@ public class LnDplxGrpInfoImplTest {
     @Test
     public void testCreatePasswordMessage() {
         LocoNetMessage m = LnDplxGrpInfoImpl.createUr92GroupPasswordReportPacket("1234");
-        Assert.assertEquals("Opcode", 0xe5, m.getOpCode());
-        Assert.assertEquals("Byte 01", 0x14, m.getElement(1));
-        Assert.assertEquals("Byte 02", 0x07, m.getElement(2));
-        Assert.assertEquals("Byte 03", 0x10, m.getElement(3));
-        Assert.assertEquals("Byte 04", 0x00, m.getElement(4));
-        Assert.assertEquals("Byte 05", 0x31, m.getElement(5));
-        Assert.assertEquals("Byte 06", 0x32, m.getElement(6));
-        Assert.assertEquals("Byte 07", 0x33, m.getElement(7));
-        Assert.assertEquals("Byte 08", 0x34, m.getElement(8));
-        Assert.assertEquals("Byte 09", 0x00, m.getElement(9));
-        Assert.assertEquals("Byte 10", 0x00, m.getElement(10));
-        Assert.assertEquals("Byte 11", 0x00, m.getElement(11));
-        Assert.assertEquals("Byte 12", 0x00, m.getElement(12));
-        Assert.assertEquals("Byte 13", 0x00, m.getElement(13));
-        Assert.assertEquals("Byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Byte 18", 0x00, m.getElement(18));
+        assertEquals( 0xe5, m.getOpCode(), "Opcode");
+        assertEquals( 0x14, m.getElement(1), "Byte 01");
+        assertEquals( 0x07, m.getElement(2), "Byte 02");
+        assertEquals( 0x10, m.getElement(3), "Byte 03");
+        assertEquals( 0x00, m.getElement(4), "Byte 04");
+        assertEquals( 0x31, m.getElement(5), "Byte 05");
+        assertEquals( 0x32, m.getElement(6), "Byte 06");
+        assertEquals( 0x33, m.getElement(7), "Byte 07");
+        assertEquals( 0x34, m.getElement(8), "Byte 08");
+        assertEquals( 0x00, m.getElement(9), "Byte 09");
+        assertEquals( 0x00, m.getElement(10), "Byte 10");
+        assertEquals( 0x00, m.getElement(11), "Byte 11");
+        assertEquals( 0x00, m.getElement(12), "Byte 12");
+        assertEquals( 0x00, m.getElement(13), "Byte 13");
+        assertEquals( 0x00, m.getElement(14), "Byte 14");
+        assertEquals( 0x00, m.getElement(15), "Byte 15");
+        assertEquals( 0x00, m.getElement(16), "Byte 16");
+        assertEquals( 0x00, m.getElement(17), "Byte 17");
+        assertEquals( 0x00, m.getElement(18), "Byte 18");
 
         m = LnDplxGrpInfoImpl.createUr92GroupPasswordReportPacket("123A");
-        Assert.assertEquals("Opcode", 0xe5, m.getOpCode());
-        Assert.assertEquals("Byte 01", 0x14, m.getElement(1));
-        Assert.assertEquals("Byte 02", 0x07, m.getElement(2));
-        Assert.assertEquals("Byte 03", 0x10, m.getElement(3));
-        Assert.assertEquals("Byte 04", 0x00, m.getElement(4));
-        Assert.assertEquals("Byte 05", 0x31, m.getElement(5));
-        Assert.assertEquals("Byte 06", 0x32, m.getElement(6));
-        Assert.assertEquals("Byte 07", 0x33, m.getElement(7));
-        Assert.assertEquals("Byte 08", 0x41, m.getElement(8));
-        Assert.assertEquals("Byte 09", 0x00, m.getElement(9));
-        Assert.assertEquals("Byte 10", 0x00, m.getElement(10));
-        Assert.assertEquals("Byte 11", 0x00, m.getElement(11));
-        Assert.assertEquals("Byte 12", 0x00, m.getElement(12));
-        Assert.assertEquals("Byte 13", 0x00, m.getElement(13));
-        Assert.assertEquals("Byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Byte 18", 0x00, m.getElement(18));
+        assertEquals( 0xe5, m.getOpCode(), "Opcode");
+        assertEquals( 0x14, m.getElement(1), "Byte 01");
+        assertEquals( 0x07, m.getElement(2), "Byte 02");
+        assertEquals( 0x10, m.getElement(3), "Byte 03");
+        assertEquals( 0x00, m.getElement(4), "Byte 04");
+        assertEquals( 0x31, m.getElement(5), "Byte 05");
+        assertEquals( 0x32, m.getElement(6), "Byte 06");
+        assertEquals( 0x33, m.getElement(7), "Byte 07");
+        assertEquals( 0x41, m.getElement(8), "Byte 08");
+        assertEquals( 0x00, m.getElement(9), "Byte 09");
+        assertEquals( 0x00, m.getElement(10), "Byte 10");
+        assertEquals( 0x00, m.getElement(11), "Byte 11");
+        assertEquals( 0x00, m.getElement(12), "Byte 12");
+        assertEquals( 0x00, m.getElement(13), "Byte 13");
+        assertEquals( 0x00, m.getElement(14), "Byte 14");
+        assertEquals( 0x00, m.getElement(15), "Byte 15");
+        assertEquals( 0x00, m.getElement(16), "Byte 16");
+        assertEquals( 0x00, m.getElement(17), "Byte 17");
+        assertEquals( 0x00, m.getElement(18), "Byte 18");
 
         m = LnDplxGrpInfoImpl.createUr92GroupPasswordReportPacket("12C0");
-        Assert.assertEquals("Opcode", 0xe5, m.getOpCode());
-        Assert.assertEquals("Byte 01", 0x14, m.getElement(1));
-        Assert.assertEquals("Byte 02", 0x07, m.getElement(2));
-        Assert.assertEquals("Byte 03", 0x10, m.getElement(3));
-        Assert.assertEquals("Byte 04", 0x00, m.getElement(4));
-        Assert.assertEquals("Byte 05", 0x31, m.getElement(5));
-        Assert.assertEquals("Byte 06", 0x32, m.getElement(6));
-        Assert.assertEquals("Byte 07", 0x43, m.getElement(7));
-        Assert.assertEquals("Byte 08", 0x30, m.getElement(8));
-        Assert.assertEquals("Byte 09", 0x00, m.getElement(9));
-        Assert.assertEquals("Byte 10", 0x00, m.getElement(10));
-        Assert.assertEquals("Byte 11", 0x00, m.getElement(11));
-        Assert.assertEquals("Byte 12", 0x00, m.getElement(12));
-        Assert.assertEquals("Byte 13", 0x00, m.getElement(13));
-        Assert.assertEquals("Byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Byte 18", 0x00, m.getElement(18));
+        assertEquals( 0xe5, m.getOpCode(), "Opcode");
+        assertEquals( 0x14, m.getElement(1), "Byte 01");
+        assertEquals( 0x07, m.getElement(2), "Byte 02");
+        assertEquals( 0x10, m.getElement(3), "Byte 03");
+        assertEquals( 0x00, m.getElement(4), "Byte 04");
+        assertEquals( 0x31, m.getElement(5), "Byte 05");
+        assertEquals( 0x32, m.getElement(6), "Byte 06");
+        assertEquals( 0x43, m.getElement(7), "Byte 07");
+        assertEquals( 0x30, m.getElement(8), "Byte 08");
+        assertEquals( 0x00, m.getElement(9), "Byte 09");
+        assertEquals( 0x00, m.getElement(10), "Byte 10");
+        assertEquals( 0x00, m.getElement(11), "Byte 11");
+        assertEquals( 0x00, m.getElement(12), "Byte 12");
+        assertEquals( 0x00, m.getElement(13), "Byte 13");
+        assertEquals( 0x00, m.getElement(14), "Byte 14");
+        assertEquals( 0x00, m.getElement(15), "Byte 15");
+        assertEquals( 0x00, m.getElement(16), "Byte 16");
+        assertEquals( 0x00, m.getElement(17), "Byte 17");
+        assertEquals( 0x00, m.getElement(18), "Byte 18");
 
         m = LnDplxGrpInfoImpl.createUr92GroupPasswordReportPacket("9B00");
-        Assert.assertEquals("Opcode", 0xe5, m.getOpCode());
-        Assert.assertEquals("Byte 01", 0x14, m.getElement(1));
-        Assert.assertEquals("Byte 02", 0x07, m.getElement(2));
-        Assert.assertEquals("Byte 03", 0x10, m.getElement(3));
-        Assert.assertEquals("Byte 04", 0x00, m.getElement(4));
-        Assert.assertEquals("Byte 05", 0x39, m.getElement(5));
-        Assert.assertEquals("Byte 06", 0x42, m.getElement(6));
-        Assert.assertEquals("Byte 07", 0x30, m.getElement(7));
-        Assert.assertEquals("Byte 08", 0x30, m.getElement(8));
-        Assert.assertEquals("Byte 09", 0x00, m.getElement(9));
-        Assert.assertEquals("Byte 10", 0x00, m.getElement(10));
-        Assert.assertEquals("Byte 11", 0x00, m.getElement(11));
-        Assert.assertEquals("Byte 12", 0x00, m.getElement(12));
-        Assert.assertEquals("Byte 13", 0x00, m.getElement(13));
-        Assert.assertEquals("Byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Byte 18", 0x00, m.getElement(18));
+        assertEquals( 0xe5, m.getOpCode(), "Opcode");
+        assertEquals( 0x14, m.getElement(1), "Byte 01");
+        assertEquals( 0x07, m.getElement(2), "Byte 02");
+        assertEquals( 0x10, m.getElement(3), "Byte 03");
+        assertEquals( 0x00, m.getElement(4), "Byte 04");
+        assertEquals( 0x39, m.getElement(5), "Byte 05");
+        assertEquals( 0x42, m.getElement(6), "Byte 06");
+        assertEquals( 0x30, m.getElement(7), "Byte 07");
+        assertEquals( 0x30, m.getElement(8), "Byte 08");
+        assertEquals( 0x00, m.getElement(9), "Byte 09");
+        assertEquals( 0x00, m.getElement(10), "Byte 10");
+        assertEquals( 0x00, m.getElement(11), "Byte 11");
+        assertEquals( 0x00, m.getElement(12), "Byte 12");
+        assertEquals( 0x00, m.getElement(13), "Byte 13");
+        assertEquals( 0x00, m.getElement(14), "Byte 14");
+        assertEquals( 0x00, m.getElement(15), "Byte 15");
+        assertEquals( 0x00, m.getElement(16), "Byte 16");
+        assertEquals( 0x00, m.getElement(17), "Byte 17");
+        assertEquals( 0x00, m.getElement(18), "Byte 18");
 
         m = LnDplxGrpInfoImpl.createUr92GroupPasswordReportPacket("A999");
-        Assert.assertEquals("Opcode", 0xe5, m.getOpCode());
-        Assert.assertEquals("Byte 01", 0x14, m.getElement(1));
-        Assert.assertEquals("Byte 02", 0x07, m.getElement(2));
-        Assert.assertEquals("Byte 03", 0x10, m.getElement(3));
-        Assert.assertEquals("Byte 04", 0x00, m.getElement(4));
-        Assert.assertEquals("Byte 05", 0x41, m.getElement(5));
-        Assert.assertEquals("Byte 06", 0x39, m.getElement(6));
-        Assert.assertEquals("Byte 07", 0x39, m.getElement(7));
-        Assert.assertEquals("Byte 08", 0x39, m.getElement(8));
-        Assert.assertEquals("Byte 09", 0x00, m.getElement(9));
-        Assert.assertEquals("Byte 10", 0x00, m.getElement(10));
-        Assert.assertEquals("Byte 11", 0x00, m.getElement(11));
-        Assert.assertEquals("Byte 12", 0x00, m.getElement(12));
-        Assert.assertEquals("Byte 13", 0x00, m.getElement(13));
-        Assert.assertEquals("Byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Byte 18", 0x00, m.getElement(18));
+        assertEquals( 0xe5, m.getOpCode(), "Opcode");
+        assertEquals( 0x14, m.getElement(1), "Byte 01");
+        assertEquals( 0x07, m.getElement(2), "Byte 02");
+        assertEquals( 0x10, m.getElement(3), "Byte 03");
+        assertEquals( 0x00, m.getElement(4), "Byte 04");
+        assertEquals( 0x41, m.getElement(5), "Byte 05");
+        assertEquals( 0x39, m.getElement(6), "Byte 06");
+        assertEquals( 0x39, m.getElement(7), "Byte 07");
+        assertEquals( 0x39, m.getElement(8), "Byte 08");
+        assertEquals( 0x00, m.getElement(9), "Byte 09");
+        assertEquals( 0x00, m.getElement(10), "Byte 10");
+        assertEquals( 0x00, m.getElement(11), "Byte 11");
+        assertEquals( 0x00, m.getElement(12), "Byte 12");
+        assertEquals( 0x00, m.getElement(13), "Byte 13");
+        assertEquals( 0x00, m.getElement(14), "Byte 14");
+        assertEquals( 0x00, m.getElement(15), "Byte 15");
+        assertEquals( 0x00, m.getElement(16), "Byte 16");
+        assertEquals( 0x00, m.getElement(17), "Byte 17");
+        assertEquals( 0x00, m.getElement(18), "Byte 18");
 
         String password = "\250\200\150\100";
         m = LnDplxGrpInfoImpl.createUr92GroupPasswordReportPacket(password);
-        Assert.assertEquals("Opcode",  0xe5, m.getOpCode());
-        Assert.assertEquals("Byte 01", 0x14, m.getElement(1));
-        Assert.assertEquals("Byte 02", 0x07, m.getElement(2));
-        Assert.assertEquals("Byte 03", 0x10, m.getElement(3));
-        Assert.assertEquals("Byte 04", 0x0c, m.getElement(4));
-        Assert.assertEquals("Byte 05", 0x28, m.getElement(5));
-        Assert.assertEquals("Byte 06", 0x00, m.getElement(6));
-        Assert.assertEquals("Byte 07", 0x68, m.getElement(7));
-        Assert.assertEquals("Byte 08", 0x40, m.getElement(8));
-        Assert.assertEquals("Byte 09", 0x00, m.getElement(9));
-        Assert.assertEquals("Byte 10", 0x00, m.getElement(10));
-        Assert.assertEquals("Byte 11", 0x00, m.getElement(11));
-        Assert.assertEquals("Byte 12", 0x00, m.getElement(12));
-        Assert.assertEquals("Byte 13", 0x00, m.getElement(13));
-        Assert.assertEquals("Byte 14", 0x00, m.getElement(14));
-        Assert.assertEquals("Byte 15", 0x00, m.getElement(15));
-        Assert.assertEquals("Byte 16", 0x00, m.getElement(16));
-        Assert.assertEquals("Byte 17", 0x00, m.getElement(17));
-        Assert.assertEquals("Byte 18", 0x00, m.getElement(18));
+        assertEquals( 0xe5, m.getOpCode(), "Opcode");
+        assertEquals( 0x14, m.getElement(1), "Byte 01");
+        assertEquals( 0x07, m.getElement(2), "Byte 02");
+        assertEquals( 0x10, m.getElement(3), "Byte 03");
+        assertEquals( 0x0c, m.getElement(4), "Byte 04");
+        assertEquals( 0x28, m.getElement(5), "Byte 05");
+        assertEquals( 0x00, m.getElement(6), "Byte 06");
+        assertEquals( 0x68, m.getElement(7), "Byte 07");
+        assertEquals( 0x40, m.getElement(8), "Byte 08");
+        assertEquals( 0x00, m.getElement(9), "Byte 09");
+        assertEquals( 0x00, m.getElement(10), "Byte 10");
+        assertEquals( 0x00, m.getElement(11), "Byte 11");
+        assertEquals( 0x00, m.getElement(12), "Byte 12");
+        assertEquals( 0x00, m.getElement(13), "Byte 13");
+        assertEquals( 0x00, m.getElement(14), "Byte 14");
+        assertEquals( 0x00, m.getElement(15), "Byte 15");
+        assertEquals( 0x00, m.getElement(16), "Byte 16");
+        assertEquals( 0x00, m.getElement(17), "Byte 17");
+        assertEquals( 0x00, m.getElement(18), "Byte 18");
 
     }
 
     @ToDo("Fix test, JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 2;}); ")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "DB_DUPLICATE_SWITCH_CLAUSES",
-        justification = "keep seperate property changes")
+    // @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "DB_DUPLICATE_SWITCH_CLAUSES",
+    //    justification = "keep seperate property changes")
     @Test
     public void testCountAndQuery() {
     
@@ -1523,39 +1499,40 @@ public class LnDplxGrpInfoImplTest {
         propChangeCount = 0;
         propChangeReportFlag = false;
         propChangeQueryFlag = false;
-        Assert.assertEquals("propChangeCount is reset to 0", 0, propChangeCount);
+        assertEquals( 0, propChangeCount, "propChangeCount is reset to 0");
 
         lnis.outbound.removeAllElements();  // clear any possible previous loconet traffic
 
-        Assert.assertEquals("propChangeCount is reset to 0", 0, propChangeCount);
-        Assert.assertFalse("LDGII is not yet waiting for second UR92 Group report (1)", dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport());
+        assertEquals( 0, propChangeCount, "propChangeCount is reset to 0");
+        assertFalse( dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport(),
+            "LDGII is not yet waiting for second UR92 Group report (1)");
         lnis.outbound.removeAllElements();
-        Assert.assertEquals("propChangeCount is reset to 0", 0, propChangeCount);
-        Assert.assertEquals("Num UR92s is zero", 0, dpxGrpInfoImpl.getNumUr92s());
-        Assert.assertEquals("LNIS outbound queue is empty", 0, lnis.outbound.size());
-        Assert.assertEquals("propChangeCount is reset to 0", 0, propChangeCount);
+        assertEquals( 0, propChangeCount, "propChangeCount is reset to 0");
+        assertEquals( 0, dpxGrpInfoImpl.getNumUr92s(), "Num UR92s is zero");
+        assertEquals( 0, lnis.outbound.size(), "LNIS outbound queue is empty");
+        assertEquals( 0, propChangeCount, "propChangeCount is reset to 0");
         dpxGrpInfoImpl.countUr92sAndQueryDuplexIdentityInfo();
-        Assert.assertEquals("propChangeCount is now 21", 21, propChangeCount);
+        assertEquals( 21, propChangeCount, "propChangeCount is now 21");
         JUnitUtil.waitFor(()->{return !lnis.outbound.isEmpty();}, "UR92 IPL query not received");
 
-        Assert.assertEquals("propChangeCount is now 21", 21, propChangeCount);
-        Assert.assertEquals("LNIS outbound queue has one message", 1, lnis.outbound.size());
+        assertEquals( 21, propChangeCount, "propChangeCount is now 21");
+        assertEquals( 1, lnis.outbound.size(), "LNIS outbound queue has one message");
 
-        Assert.assertTrue("LDGII is not yet waiting for second UR92 Group report (2)", dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport());
+        assertTrue( dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport(), "LDGII is not yet waiting for second UR92 Group report (2)");
         lnis.sendTestMessage(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
         LocoNetMessage m2 = LnIPLImplementation.createIplUr92QueryPacket();
         LocoNetMessage m = lnis.outbound.firstElement();
-        Assert.assertEquals("LocoNet message has same number of bytes as UR92 IPL Query message",
-                m2.getNumDataElements(), m.getNumDataElements());
+        assertEquals( m2.getNumDataElements(), m.getNumDataElements(),
+            "LocoNet message has same number of bytes as UR92 IPL Query message");
 
         for (int i = 0; i < m2.getNumDataElements(); ++i) {
-            Assert.assertEquals("Received LocoNet message byte "+i+" equals corresponding UR92 IPL Query Message byte",
-                    m2.getElement(i), m.getElement(i));
+            assertEquals( m2.getElement(i), m.getElement(i),
+                "Received LocoNet message byte "+i+" equals corresponding UR92 IPL Query Message byte");
         }
         lnis.sendTestMessage(m2);
 
-        Assert.assertEquals("expect propChangeCount of 21", 21, propChangeCount);
+        assertEquals( 21, propChangeCount, "expect propChangeCount of 21");
         propChangeCount = 0;
 
         m = new LocoNetMessage(20);
@@ -1579,78 +1556,82 @@ public class LnDplxGrpInfoImplTest {
         m.setElement(17, 0);
         m.setElement(18, 0);
         m.setElement(19, 0);
-        Assert.assertEquals("expect propChangeCount of 0", 0, propChangeCount);
+        assertEquals( 0, propChangeCount, "expect propChangeCount of 0");
         lnis.sendLocoNetMessage(m);
-        Assert.assertEquals("Num UR92s is zero", 0, dpxGrpInfoImpl.getNumUr92s());
-        Assert.assertEquals("2 messages transmitted thus far", 2, lnis.outbound.size());
+        assertEquals( 0, dpxGrpInfoImpl.getNumUr92s(), "Num UR92s is zero");
+        assertEquals( 2, lnis.outbound.size(), "2 messages transmitted thus far");
 
-        Assert.assertEquals("expect propChangeCount of 0", 0, propChangeCount);
+        assertEquals( 0, propChangeCount, "expect propChangeCount of 0");
 
         dpxGrpInfoImpl.message(lnis.outbound.elementAt(1));  // return the LocoNet echo to the class
-        Assert.assertEquals("expect propChangeCount of 1", 1, propChangeCount);
-        jmri.util.JUnitUtil.waitFor(()->{return dpxGrpInfoImpl.getNumUr92s() > 0;}, "UR92 IPL reply not received");
-        Assert.assertEquals("got 1 UR92 IPL report", 1, dpxGrpInfoImpl.getNumUr92s());
+        assertEquals( 1, propChangeCount, "expect propChangeCount of 1");
+        JUnitUtil.waitFor(()->{return dpxGrpInfoImpl.getNumUr92s() > 0;}, "UR92 IPL reply not received");
+        assertEquals( 1, dpxGrpInfoImpl.getNumUr92s(), "got 1 UR92 IPL report");
 
-        Assert.assertFalse("LDGII is no longer waiting for second UR92 IPL report (3)", dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport());
+        assertFalse( dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport(),
+            "LDGII is no longer waiting for second UR92 IPL report (3)");
 
         JUnitUtil.waitFor(()->{return lnis.outbound.size() == 3;}, "UR92 group query not received?");
 
-        Assert.assertFalse("LDGII is no longer waiting for UR92 IPL replies (4)", dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport());
+        assertFalse( dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport(), "LDGII is no longer waiting for UR92 IPL replies (4)");
         JUnitUtil.waitFor(()->{return lnis.outbound.size() == 3;},"wait for lnis outbound 3");
-        Assert.assertEquals("message is Duplex Group Info Query - opcode", 0xe5, lnis.outbound.elementAt(2).getOpCode());
-        Assert.assertEquals("message is Duplex Group Info Query - b1", 0x14, lnis.outbound.elementAt(2).getElement(1));
-        Assert.assertEquals("message is Duplex Group Info Query - b2", 3, lnis.outbound.elementAt(2).getElement(2));
-        Assert.assertEquals("message is Duplex Group Info Query - b3", 8, lnis.outbound.elementAt(2).getElement(3));
+        assertEquals( 0xe5, lnis.outbound.elementAt(2).getOpCode(), "message is Duplex Group Info Query - opcode");
+        assertEquals( 0x14, lnis.outbound.elementAt(2).getElement(1), "message is Duplex Group Info Query - b1");
+        assertEquals( 3, lnis.outbound.elementAt(2).getElement(2), "message is Duplex Group Info Query - b2");
+        assertEquals( 8, lnis.outbound.elementAt(2).getElement(3), "message is Duplex Group Info Query - b3");
 
         dpxGrpInfoImpl.message(lnis.outbound.elementAt(2));  // echo the Duplex Group Info Query message
-        Assert.assertFalse("LDGII is no longer waiting for UR92 IPL replies (5)", dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport());
+        assertFalse( dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport(), "LDGII is no longer waiting for UR92 IPL replies (5)");
 
-        Assert.assertEquals("expect propChangeCount of 13", 13, propChangeCount);
+        assertEquals( 13, propChangeCount, "expect propChangeCount of 13");
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Digitrax", "1234", 12, 65);
         lnis.sendTestMessage(m);
 
-        Assert.assertEquals("expect propChangeCount of 24", 24, propChangeCount);
+        assertEquals( 24, propChangeCount, "expect propChangeCount of 24");
 
-        Assert.assertEquals("num outbound",3, lnis.outbound.size());
+        assertEquals( 3, lnis.outbound.size(), "num outbound");
 
-        Assert.assertEquals("got the UR92 reply info", 1,  dpxGrpInfoImpl.getNumUr92s() );
-
-        lnis.sendTestMessage(m);
-        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 2;}); // 2022 June - does not get to 2
-        Assert.assertEquals("expect propChangeCount of 27", 27, propChangeCount);
+        assertEquals( 1,  dpxGrpInfoImpl.getNumUr92s(), "got the UR92 reply info");
 
         lnis.sendTestMessage(m);
-        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 3;});
+        // JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 2;},
+        //    "2022 June - does not get to 2, was " + dpxGrpInfoImpl.getNumUr92s());
+
+        JUnitUtil.waitFor( () -> propChangeCount > 26, "wait for 27");
+        assertEquals( 27, propChangeCount, "expect propChangeCount of 27");
+
+        lnis.sendTestMessage(m);
+        // JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 3;}, "Does not get to 3");
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Dcgitrax", "1234", 12, 65);
         lnis.sendTestMessage(m);
-        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 4;});
-        Assert.assertEquals("expect propChangeCount of 32", 32, propChangeCount);
+        // JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 4;}, "Does not get to 4");
+        assertEquals( 32, propChangeCount, "expect propChangeCount of 32");
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Digitrax", "1034", 12, 65);
 
         lnis.sendTestMessage(m);
-        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 5;});
-        Assert.assertEquals("expect propChangeCount of 35", 35, propChangeCount);
+        // JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 5;}, "Does not get to 5");
+        assertEquals( 35, propChangeCount, "expect propChangeCount of 35");
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Digitrax", "1234", 13, 65);
 
         lnis.sendTestMessage(m);
-        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 6;});
-        Assert.assertEquals("expect propChangeCount of 38", 38, propChangeCount);
+        // JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 6;}, "Does not get  to 6");
+        assertEquals( 38, propChangeCount, "expect propChangeCount of 38");
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Digitrax", "1234", 12, 7);
 
         lnis.sendTestMessage(m);
-        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 7;});
-        Assert.assertEquals("expect propChangeCount of 41", 41, propChangeCount);
+        // JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 7;}, "Does not get to 7");
+        assertEquals( 41, propChangeCount, "expect propChangeCount of 41");
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Digitrax", "1234", 12, 65);
 
         lnis.sendTestMessage(m);
-        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 8;});
+        // JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 8;}, "Does not get to 8");
 
-        Assert.assertEquals("expect propChangeCount of 43", 43, propChangeCount);
+        assertEquals( 43, propChangeCount, "expect propChangeCount of 43");
 
         JUnitUtil.fasterWaitFor(()->{return (!dpxGrpInfoImpl.isDuplexGroupQueryRunning());},"dpxGrpInfoImpl not running");
 
@@ -1658,70 +1639,71 @@ public class LnDplxGrpInfoImplTest {
         propChangeReportFlag = false;
         propChangeQueryFlag = false;
 
-        Assert.assertEquals("propChangeCount is reset to 0", 0, propChangeCount);
+        assertEquals( 0, propChangeCount, "propChangeCount is reset to 0");
         dpxGrpInfoImpl.countUr92sAndQueryDuplexIdentityInfo();
-        Assert.assertEquals("propChangeCount is now 21", 21, propChangeCount);
+        assertEquals( 21, propChangeCount, "propChangeCount is now 21");
         dpxGrpInfoImpl.countUr92sAndQueryDuplexIdentityInfo();
-        Assert.assertEquals("propChangeCount is now 22", 22, propChangeCount);
-
+        assertEquals( 22, propChangeCount, "propChangeCount is now 22");
 
     }
 
     @Test
     public void testCreateDupGrpChReportMessage() {
         LocoNetMessage m;
-        for (int i = 0; i < 256; ++i) {
+        for (int ii = 0; ii < 256; ++ii) {
+            int i = ii;
             m = LnDplxGrpInfoImpl.createUr92GroupChannelReportPacket(i);
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Opcode is 0xe5", 0xe5, m.getOpCode());
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 1 is 0x14", 0x14, m.getElement(1));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 2 is 0x2", 0x2, m.getElement(2));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 3 is 0x10", 0x10, m.getElement(3));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 4 is "+ ((i > 127) ? 1 : 0),
-                    (i > 127) ? 1 : 0, m.getElement(4));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 5 is " + (i & 0x7f),
-                    i & 0x7F, m.getElement(5));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 6 is 0x0", 0x0, m.getElement(6));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 7 is 0x0", 0x0, m.getElement(7));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 8 is 0x0", 0x0, m.getElement(8));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 9 is 0x0", 0x0, m.getElement(9));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 10 is 0x0", 0x0, m.getElement(10));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 11 is 0x0", 0x0, m.getElement(11));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 12 is 0x0", 0x0, m.getElement(12));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 13 is 0x0", 0x0, m.getElement(13));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 14 is 0x0", 0x0, m.getElement(14));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 15 is 0x0", 0x0, m.getElement(15));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 16 is 0x0", 0x0, m.getElement(16));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 17 is 0x0", 0x0, m.getElement(17));
-            Assert.assertEquals("iteration "+i+"Group Channel Report Packet Byte 18 is 0x0", 0x0, m.getElement(18));
+            assertEquals( 0xe5, m.getOpCode(), () -> "iteration "+i+"Group Channel Report Packet Opcode is 0xe5");
+            assertEquals( 0x14, m.getElement(1), () -> "iteration "+i+"Group Channel Report Packet Byte 1 is 0x14");
+            assertEquals( 0x2, m.getElement(2), () -> "iteration "+i+"Group Channel Report Packet Byte 2 is 0x2");
+            assertEquals( 0x10, m.getElement(3), () -> "iteration "+i+"Group Channel Report Packet Byte 3 is 0x10");
+            assertEquals( (i > 127) ? 1 : 0, m.getElement(4),
+                () -> "iteration "+i+"Group Channel Report Packet Byte 4 is "+ ((i > 127) ? 1 : 0));
+            assertEquals( i & 0x7F, m.getElement(5),
+                () -> "iteration "+i+"Group Channel Report Packet Byte 5 is " + (i & 0x7f));
+            assertEquals( 0x0, m.getElement(6), () -> "iteration "+i+"Group Channel Report Packet Byte 6 is 0x0");
+            assertEquals( 0x0, m.getElement(7), () -> "iteration "+i+"Group Channel Report Packet Byte 7 is 0x0");
+            assertEquals( 0x0, m.getElement(8), () -> "iteration "+i+"Group Channel Report Packet Byte 8 is 0x0");
+            assertEquals( 0x0, m.getElement(9), () -> "iteration "+i+"Group Channel Report Packet Byte 9 is 0x0");
+            assertEquals( 0x0, m.getElement(10), () -> "iteration "+i+"Group Channel Report Packet Byte 10 is 0x0");
+            assertEquals( 0x0, m.getElement(11), () -> "iteration "+i+"Group Channel Report Packet Byte 11 is 0x0");
+            assertEquals( 0x0, m.getElement(12), () -> "iteration "+i+"Group Channel Report Packet Byte 12 is 0x0");
+            assertEquals( 0x0, m.getElement(13), () -> "iteration "+i+"Group Channel Report Packet Byte 13 is 0x0");
+            assertEquals( 0x0, m.getElement(14), () -> "iteration "+i+"Group Channel Report Packet Byte 14 is 0x0");
+            assertEquals( 0x0, m.getElement(15), () -> "iteration "+i+"Group Channel Report Packet Byte 15 is 0x0");
+            assertEquals( 0x0, m.getElement(16), () -> "iteration "+i+"Group Channel Report Packet Byte 16 is 0x0");
+            assertEquals( 0x0, m.getElement(17), () -> "iteration "+i+"Group Channel Report Packet Byte 17 is 0x0");
+            assertEquals( 0x0, m.getElement(18), () -> "iteration "+i+"Group Channel Report Packet Byte 18 is 0x0");
         }
     }
 
     @Test
     public void testCreateDupGrpIDReportMessage() {
         LocoNetMessage m;
-        for (int i = 0; i < 256; ++i) {
+        for (int ii = 0; ii < 256; ++ii) {
+            int i = ii;
             m = LnDplxGrpInfoImpl.createUr92GroupIdReportPacket(i);
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Opcode is 0xe5", 0xe5, m.getOpCode());
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 1 is 0x14", 0x14, m.getElement(1));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 2 is 0x4", 0x4, m.getElement(2));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 3 is 0x10", 0x10, m.getElement(3));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 4 is "+ ((i > 127) ? 1 : 0),
-                    (i > 127) ? 1 : 0, m.getElement(4));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 5 is " + (i & 0x7f),
-                    i & 0x7F, m.getElement(5));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 6 is 0x0", 0x0, m.getElement(6));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 7 is 0x0", 0x0, m.getElement(7));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 8 is 0x0", 0x0, m.getElement(8));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 9 is 0x0", 0x0, m.getElement(9));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 10 is 0x0", 0x0, m.getElement(10));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 11 is 0x0", 0x0, m.getElement(11));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 12 is 0x0", 0x0, m.getElement(12));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 13 is 0x0", 0x0, m.getElement(13));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 14 is 0x0", 0x0, m.getElement(14));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 15 is 0x0", 0x0, m.getElement(15));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 16 is 0x0", 0x0, m.getElement(16));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 17 is 0x0", 0x0, m.getElement(17));
-            Assert.assertEquals("iteration "+i+"Group ID Report Packet Byte 18 is 0x0", 0x0, m.getElement(18));
+            assertEquals( 0xe5, m.getOpCode(), () -> "iteration "+i+"Group ID Report Packet Opcode is 0xe5");
+            assertEquals( 0x14, m.getElement(1), () -> "iteration "+i+"Group ID Report Packet Byte 1 is 0x14");
+            assertEquals( 0x4, m.getElement(2), () -> "iteration "+i+"Group ID Report Packet Byte 2 is 0x4");
+            assertEquals( 0x10, m.getElement(3), () -> "iteration "+i+"Group ID Report Packet Byte 3 is 0x10");
+            assertEquals( (i > 127) ? 1 : 0, m.getElement(4),
+                () -> "iteration "+i+"Group ID Report Packet Byte 4 is "+ ((i > 127) ? 1 : 0));
+            assertEquals( i & 0x7F, m.getElement(5),
+                () -> "iteration "+i+"Group ID Report Packet Byte 5 is " + (i & 0x7f));
+            assertEquals( 0x0, m.getElement(6), () -> "iteration "+i+"Group ID Report Packet Byte 6 is 0x0");
+            assertEquals( 0x0, m.getElement(7), () -> "iteration "+i+"Group ID Report Packet Byte 7 is 0x0");
+            assertEquals( 0x0, m.getElement(8), () -> "iteration "+i+"Group ID Report Packet Byte 8 is 0x0");
+            assertEquals( 0x0, m.getElement(9), () -> "iteration "+i+"Group ID Report Packet Byte 9 is 0x0");
+            assertEquals( 0x0, m.getElement(10), () -> "iteration "+i+"Group ID Report Packet Byte 10 is 0x0");
+            assertEquals( 0x0, m.getElement(11), () -> "iteration "+i+"Group ID Report Packet Byte 11 is 0x0");
+            assertEquals( 0x0, m.getElement(12), () -> "iteration "+i+"Group ID Report Packet Byte 12 is 0x0");
+            assertEquals( 0x0, m.getElement(13), () -> "iteration "+i+"Group ID Report Packet Byte 13 is 0x0");
+            assertEquals( 0x0, m.getElement(14), () -> "iteration "+i+"Group ID Report Packet Byte 14 is 0x0");
+            assertEquals( 0x0, m.getElement(15), () -> "iteration "+i+"Group ID Report Packet Byte 15 is 0x0");
+            assertEquals( 0x0, m.getElement(16), () -> "iteration "+i+"Group ID Report Packet Byte 16 is 0x0");
+            assertEquals( 0x0, m.getElement(17), () -> "iteration "+i+"Group ID Report Packet Byte 17 is 0x0");
+            assertEquals( 0x0, m.getElement(18), () -> "iteration "+i+"Group ID Report Packet Byte 18 is 0x0");
         }
     }
 
@@ -1757,26 +1739,28 @@ public class LnDplxGrpInfoImplTest {
             m.setElement(14, (i>7)?1:0);
             m.setElement(15, (i & 7) << 4);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertEquals("Group Name etc Report "+m+"first char iteration "+i,testString, result);
+            assertEquals(testString, result,
+                "Group Name etc Report "+m+"first char iteration "+i);
 
             m.setElement(2, 3);
             m.setElement(3, 0);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertNull("Group Name etc Write first char iteration "+i, result);
+            assertNull( result, "Group Name etc Write first char iteration "+i);
 
             m.setElement(2, 7);
             m.setElement(3, 0);
             m.setElement(4, 0);
             m.setElement(5, i);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertEquals("Group Pw Write "+m+"first char iteration "+i,testString, result);
+            assertEquals(testString, result,
+                "Group Pw Write "+m+"first char iteration "+i);
 
             m.setElement(2, 7);
             m.setElement(3, 0x10);
             m.setElement(4, 0);
             m.setElement(5, i);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertEquals("Group Pw Report "+m+"first char iteration "+i,testString, result);
+            assertEquals( testString, result, "Group Pw Report "+m+"first char iteration "+i);
         }
 
         for (int i=0; i<13; ++i) {
@@ -1786,11 +1770,11 @@ public class LnDplxGrpInfoImplTest {
             m.setElement(14, 0);
             m.setElement(15, i);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertEquals("Group Name etc Report "+m+"second char iteration "+i,testString, result);
+            assertEquals( testString, result, "Group Name etc Report "+m+"second char iteration "+i);
 
             m.setElement(3, 0);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertNull("Group Name Write "+m+"second char iteration "+i,result);
+            assertNull( result, "Group Name Write "+m+"second char iteration "+i);
 
             m.setElement(2, 7);
             m.setElement(3, 0);
@@ -1798,12 +1782,13 @@ public class LnDplxGrpInfoImplTest {
             m.setElement(5, 0);
             m.setElement(6, i);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertEquals("Group Pw Write "+m+"second char iteration "+i,testString, result);
+            assertEquals( testString, result, "Group Pw Write "+m+"second char iteration "+i);
 
             m.setElement(2, 7);
             m.setElement(3, 0x10);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertEquals("Group Pw Report "+m+"second char iteration "+i,testString, result);
+            assertEquals( testString, result,
+                "Group Pw Report "+m+"second char iteration "+i);
         }
 
         for (int i=0; i<13; ++i) {
@@ -1814,11 +1799,12 @@ public class LnDplxGrpInfoImplTest {
             m.setElement(15, 0);
             m.setElement(16, (i & 7) << 4);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertEquals("Group Name etc Report "+m+"third char iteration "+i,testString, result);
+            assertEquals( testString, result,
+                "Group Name etc Report "+m+"third char iteration "+i);
 
             m.setElement(3, 0);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertNull("Group Name Write "+m+"third char iteration "+i,result);
+            assertNull( result, "Group Name Write "+m+"third char iteration "+i);
 
             m.setElement(2, 7);
             m.setElement(3, 0);
@@ -1827,12 +1813,12 @@ public class LnDplxGrpInfoImplTest {
             m.setElement(6, 0);
             m.setElement(7, i);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertEquals("Group Pw Write "+m+"third char iteration "+i,testString, result);
+            assertEquals( testString, result, "Group Pw Write "+m+"third char iteration "+i);
 
             m.setElement(2, 7);
             m.setElement(3, 0x10);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertEquals("Group Pw Report "+m+"third char iteration "+i,testString, result);
+            assertEquals( testString, result, "Group Pw Report "+m+"third char iteration "+i);
         }
 
         for (int i=0; i<13; ++i) {
@@ -1843,11 +1829,11 @@ public class LnDplxGrpInfoImplTest {
             m.setElement(15, 0);
             m.setElement(16, i);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertEquals("Group Name etc Report "+m+"fourth char iteration "+i,testString, result);
+            assertEquals( testString, result, "Group Name etc Report "+m+"fourth char iteration "+i);
 
             m.setElement(3, 0);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertNull("Group Name Write "+m+"fourth char iteration "+i,result);
+            assertNull( result, "Group Name Write "+m+"fourth char iteration "+i);
 
             m.setElement(2, 7);
             m.setElement(3, 0);
@@ -1857,19 +1843,19 @@ public class LnDplxGrpInfoImplTest {
             m.setElement(7, 0);
             m.setElement(8, i);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertEquals("Group Pw Write "+m+"fourth char iteration "+i,testString, result);
+            assertEquals( testString, result, "Group Pw Write "+m+"fourth char iteration "+i);
 
             m.setElement(2, 7);
             m.setElement(3, 0x10);
             result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-            Assert.assertEquals("Group Pw Report "+m+"fourth char iteration "+i,testString, result);
+            assertEquals( testString, result, "Group Pw Report "+m+"fourth char iteration "+i);
         }
 
         m = new LocoNetMessage(2);
         m.setOpCode(0x81);
         m.setElement(1, 0);
         result = LnDplxGrpInfoImpl.extractDuplexGroupPassword(m);
-        Assert.assertNull("Group Pw Report "+m, result);
+        assertNull( result, "Group Pw Report "+m);
     }
 
 
@@ -1888,43 +1874,43 @@ public class LnDplxGrpInfoImplTest {
             m.setElement(i, 0);
         }
 
-        for (int i = 0; i < 256; ++i) {
+        for (int ii = 0; ii < 256; ++ii) {
+            int i = ii;
             m.setElement(2, 2);
             m.setElement(4, (i>127) ? 1:0);
             m.setElement(5, i&0x7f);
 
             result = LnDplxGrpInfoImpl.extractDuplexGroupChannel(m);
-            Assert.assertEquals("iteration "+i+" extracted channel", i, result);
+            assertEquals( i, result, () -> "iteration "+i+" extracted channel");
 
             m.setElement(2, 3);
             m.setElement(14, (i>127) ? 4:0);
             m.setElement(17, (i&0x7f));
             result = LnDplxGrpInfoImpl.extractDuplexGroupChannel(m);
-            Assert.assertEquals("extracted channel should be invalid for name operation",
-                    i, result);
+            assertEquals( i, result, "extracted channel should be invalid for name operation");
         }
 
         int expectedResult = -1;
         m.setElement(2, 0);
         result = LnDplxGrpInfoImpl.extractDuplexGroupChannel(m);
-        Assert.assertEquals("extracted channel should be invalid for invalid operation",
-                expectedResult, result);
+        assertEquals( expectedResult, result,
+            "extracted channel should be invalid for invalid operation");
 
         m.setElement(2, 4);
         result = LnDplxGrpInfoImpl.extractDuplexGroupChannel(m);
-        Assert.assertEquals("etracted channel should be invalid for password operation",
-                expectedResult, result);
+        assertEquals( expectedResult, result,
+            "etracted channel should be invalid for password operation");
 
         m.setElement(2, 7);
         result = LnDplxGrpInfoImpl.extractDuplexGroupChannel(m);
-        Assert.assertEquals("etracted channel should be invalid for ID operation",
-                expectedResult, result);
+        assertEquals( expectedResult, result,
+            "etracted channel should be invalid for ID operation");
 
         m = new LocoNetMessage(2);
         m.setOpCode(0x82);
         m.setElement(1, 0);
-        Assert.assertEquals("interpret bad channel message", expectedResult,
-                LnDplxGrpInfoImpl.extractDuplexGroupChannel(m));
+        assertEquals( expectedResult, LnDplxGrpInfoImpl.extractDuplexGroupChannel(m),
+            "interpret bad channel message");
     }
 
     @Test
@@ -1941,195 +1927,179 @@ public class LnDplxGrpInfoImplTest {
             m.setElement(i, 0);
         }
 
-        for (int i = 0; i < 256; ++i) {
+        for (int ii = 0; ii < 256; ++ii) {
+            int i = ii;
             m.setElement(2, 0x4);
             m.setElement(3, 0);
             m.setElement(4, (i>127) ? 1:0);
             m.setElement(5, i&0x7f);
 
             result = LnDplxGrpInfoImpl.extractDuplexGroupID(m);
-            Assert.assertEquals("iteration "+i+" ID write operation", i, result);
+            assertEquals( i, result, () -> "iteration "+i+" ID write operation");
 
             m.setElement(3, 0x10);
             result = LnDplxGrpInfoImpl.extractDuplexGroupID(m);
-            Assert.assertEquals("iteration "+i+" ID report operation", i, result);
+            assertEquals( i, result, () -> "iteration "+i+" ID report operation");
 
             m.setElement(2, 3);
             m.setElement(3, 0x10);
             m.setElement(14, (i>127) ? 8:0);
             m.setElement(18, (i&0x7f));
             result = LnDplxGrpInfoImpl.extractDuplexGroupID(m);
-            Assert.assertEquals("iteration "+i+" ID from group name etc read operation",
-                    i, result);
+            assertEquals( i, result, () -> "iteration "+i+" ID from group name etc read operation");
 
             m.setElement(3, 0);
             result = LnDplxGrpInfoImpl.extractDuplexGroupID(m);
-            Assert.assertEquals("iteration "+i+" ID from group name etc write operation",
-                    exceptionalResult, result);
+            assertEquals( exceptionalResult, result,() ->  "iteration "+i+" ID from group name etc write operation");
         }
 
         m.setElement(2, 0);
         result = LnDplxGrpInfoImpl.extractDuplexGroupChannel(m);
-        Assert.assertEquals("extracted channel should be invalid for invalid operation",
-                exceptionalResult, result);
+        assertEquals( exceptionalResult, result, "extracted channel should be invalid for invalid operation");
 
         m.setElement(2, 4);
         result = LnDplxGrpInfoImpl.extractDuplexGroupChannel(m);
-        Assert.assertEquals("etracted channel should be invalid for password operation",
-                exceptionalResult, result);
+        assertEquals( exceptionalResult, result, "etracted channel should be invalid for password operation");
 
         m.setElement(2, 7);
         result = LnDplxGrpInfoImpl.extractDuplexGroupChannel(m);
-        Assert.assertEquals("etracted channel should be invalid for ID operation",
-                exceptionalResult, result);
+        assertEquals( exceptionalResult, result, "etracted channel should be invalid for ID operation");
 
         m = new LocoNetMessage(2);
         m.setOpCode(0x82);
         m.setElement(1, 0);
-        Assert.assertEquals("interpret bad channel message", exceptionalResult,
-                LnDplxGrpInfoImpl.extractDuplexGroupChannel(m));
+        assertEquals( exceptionalResult, LnDplxGrpInfoImpl.extractDuplexGroupChannel(m),
+            "interpret bad channel message");
 
     }
 
     @Test
     public void testExtractDuplexGroupName() {
-    LocoNetMessage m = new LocoNetMessage(0x14);
-    Assert.assertNull("expect null for empty message",LnDplxGrpInfoImpl.extractDuplexGroupName(m));
+        LocoNetMessage m = new LocoNetMessage(0x14);
+        assertNull( LnDplxGrpInfoImpl.extractDuplexGroupName(m), "expect null for empty message");
     }
 
     @Test
     public void testSetDuplexGroupName() {
 
-        try {
-            dpxGrpInfoImpl.setDuplexGroupName("");
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.assertTrue("got an exception as intended", true);
-        }
+        LocoNetException e = assertThrows( LocoNetException.class,
+            () -> dpxGrpInfoImpl.setDuplexGroupName(""),
+            "got an exception as intended");
+        assertNotNull(e);
 
         lnis.outbound.removeAllElements();
-        Assert.assertEquals("outbound queue is empty", 0, lnis.outbound.size());
-        try {
-            dpxGrpInfoImpl.setDuplexGroupName("deadBeeF");
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.fail("got an unexpected exception");
-        }
-        Assert.assertEquals("outbound queue is not empty", 1, lnis.outbound.size());
-        Assert.assertEquals("outbound queue opcode is correct", 0xe5, lnis.outbound.get(0).getOpCode());
-        Assert.assertEquals("outbound queue byte 1 is correct", 0x14, lnis.outbound.get(0).getElement(1));
-        Assert.assertEquals("outbound queue byte 2 is correct", 0x03, lnis.outbound.get(0).getElement(2));
-        Assert.assertEquals("outbound queue byte 3 is correct", 0x00, lnis.outbound.get(0).getElement(3));
-        Assert.assertEquals("outbound queue byte 4 is correct", 0x00, lnis.outbound.get(0).getElement(4));
-        Assert.assertEquals("outbound queue byte 5 is correct", 'd', lnis.outbound.get(0).getElement(5));
-        Assert.assertEquals("outbound queue byte 6 is correct", 'e', lnis.outbound.get(0).getElement(6));
-        Assert.assertEquals("outbound queue byte 7 is correct", 'a', lnis.outbound.get(0).getElement(7));
-        Assert.assertEquals("outbound queue byte 8 is correct", 'd', lnis.outbound.get(0).getElement(8));
-        Assert.assertEquals("outbound queue byte 9 is correct", 0x00, lnis.outbound.get(0).getElement(9));
-        Assert.assertEquals("outbound queue byte 10 is correct", 'B', lnis.outbound.get(0).getElement(10));
-        Assert.assertEquals("outbound queue byte 11 is correct", 'e', lnis.outbound.get(0).getElement(11));
-        Assert.assertEquals("outbound queue byte 12 is correct", 'e', lnis.outbound.get(0).getElement(12));
-        Assert.assertEquals("outbound queue byte 13 is correct", 'F', lnis.outbound.get(0).getElement(13));
+        assertEquals( 0, lnis.outbound.size(), "outbound queue is empty");
+        assertDoesNotThrow( () -> dpxGrpInfoImpl.setDuplexGroupName("deadBeeF"),
+            "got an unexpected exception");
+
+        assertEquals( 1, lnis.outbound.size(), "outbound queue is not empty");
+        assertEquals( 0xe5, lnis.outbound.get(0).getOpCode(), "outbound queue opcode is correct");
+        assertEquals( 0x14, lnis.outbound.get(0).getElement(1), "outbound queue byte 1 is correct");
+        assertEquals( 0x03, lnis.outbound.get(0).getElement(2), "outbound queue byte 2 is correct");
+        assertEquals( 0x00, lnis.outbound.get(0).getElement(3), "outbound queue byte 3 is correct");
+        assertEquals( 0x00, lnis.outbound.get(0).getElement(4), "outbound queue byte 4 is correct");
+        assertEquals( 'd', lnis.outbound.get(0).getElement(5), "outbound queue byte 5 is correct");
+        assertEquals( 'e', lnis.outbound.get(0).getElement(6), "outbound queue byte 6 is correct");
+        assertEquals( 'a', lnis.outbound.get(0).getElement(7), "outbound queue byte 7 is correct");
+        assertEquals( 'd', lnis.outbound.get(0).getElement(8), "outbound queue byte 8 is correct");
+        assertEquals( 0x00, lnis.outbound.get(0).getElement(9), "outbound queue byte 9 is correct");
+        assertEquals( 'B', lnis.outbound.get(0).getElement(10), "outbound queue byte 10 is correct");
+        assertEquals( 'e', lnis.outbound.get(0).getElement(11), "outbound queue byte 11 is correct");
+        assertEquals( 'e', lnis.outbound.get(0).getElement(12), "outbound queue byte 12 is correct");
+        assertEquals( 'F', lnis.outbound.get(0).getElement(13), "outbound queue byte 13 is correct");
 
     }
 
     @Test
     public void testSetDuplexGroupChannel() {
 
-        try {
-            dpxGrpInfoImpl.setDuplexGroupChannel(-1);
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.assertTrue("got an exception as intended", true);
-        }
+        LocoNetException e = assertThrows( LocoNetException.class,
+            () -> dpxGrpInfoImpl.setDuplexGroupChannel(-1),
+            "got an exception as intended");
+        assertNotNull(e);
 
         lnis.outbound.removeAllElements();
-        Assert.assertEquals("outbound queue is empty", 0, lnis.outbound.size());
-        try {
-            dpxGrpInfoImpl.setDuplexGroupChannel(13);
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.fail("got an unexpected exception");
-        }
-        Assert.assertEquals("outbound queue is not empty", 1, lnis.outbound.size());
-        Assert.assertEquals("outbound queue opcode is correct", 0xe5, lnis.outbound.get(0).getOpCode());
-        Assert.assertEquals("outbound queue byte 1 is correct", 0x14, lnis.outbound.get(0).getElement(1));
-        Assert.assertEquals("outbound queue byte 2 is correct", 0x02, lnis.outbound.get(0).getElement(2));
-        Assert.assertEquals("outbound queue byte 3 is correct", 0x00, lnis.outbound.get(0).getElement(3));
-        Assert.assertEquals("outbound queue byte 4 is correct", 0x00, lnis.outbound.get(0).getElement(4));
-        Assert.assertEquals("outbound queue byte 5 is correct", 13, lnis.outbound.get(0).getElement(5));
-        Assert.assertEquals("outbound queue byte 6 is correct", 0, lnis.outbound.get(0).getElement(6));
-        Assert.assertEquals("outbound queue byte 7 is correct", 0, lnis.outbound.get(0).getElement(7));
-        Assert.assertEquals("outbound queue byte 8 is correct", 0, lnis.outbound.get(0).getElement(8));
-        Assert.assertEquals("outbound queue byte 9 is correct", 0x00, lnis.outbound.get(0).getElement(9));
-        Assert.assertEquals("outbound queue byte 10 is correct", 0, lnis.outbound.get(0).getElement(10));
-        Assert.assertEquals("outbound queue byte 11 is correct", 0, lnis.outbound.get(0).getElement(11));
-        Assert.assertEquals("outbound queue byte 12 is correct", 0, lnis.outbound.get(0).getElement(12));
-        Assert.assertEquals("outbound queue byte 13 is correct", 0, lnis.outbound.get(0).getElement(13));
+        assertEquals( 0, lnis.outbound.size(), "outbound queue is empty");
+        assertDoesNotThrow( () -> dpxGrpInfoImpl.setDuplexGroupChannel(13),
+            "got an unexpected exception");
+
+        assertEquals( 1, lnis.outbound.size(), "outbound queue is not empty");
+        assertEquals( 0xe5, lnis.outbound.get(0).getOpCode(), "outbound queue opcode is correct");
+        assertEquals( 0x14, lnis.outbound.get(0).getElement(1), "outbound queue byte 1 is correct");
+        assertEquals( 0x02, lnis.outbound.get(0).getElement(2), "outbound queue byte 2 is correct");
+        assertEquals( 0x00, lnis.outbound.get(0).getElement(3), "outbound queue byte 3 is correct");
+        assertEquals( 0x00, lnis.outbound.get(0).getElement(4), "outbound queue byte 4 is correct");
+        assertEquals( 13, lnis.outbound.get(0).getElement(5), "outbound queue byte 5 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(6), "outbound queue byte 6 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(7), "outbound queue byte 7 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(8), "outbound queue byte 8 is correct");
+        assertEquals( 0x00, lnis.outbound.get(0).getElement(9), "outbound queue byte 9 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(10), "outbound queue byte 10 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(11), "outbound queue byte 11 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(12), "outbound queue byte 12 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(13), "outbound queue byte 13 is correct");
 
     }
 
     @Test
     public void testSetDuplexGroupID() {
 
-        try {
-            dpxGrpInfoImpl.setDuplexGroupId("999");
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.assertTrue("got an exception as intended", true);
-        }
+        LocoNetException e = assertThrows( LocoNetException.class,
+            () -> dpxGrpInfoImpl.setDuplexGroupId("999"),
+            "got an exception as intended");
+        assertNotNull(e);
 
         lnis.outbound.removeAllElements();
-        Assert.assertEquals("outbound queue is empty", 0, lnis.outbound.size());
-        try {
-            dpxGrpInfoImpl.setDuplexGroupId("7");
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.fail("got an unexpected exception");
-        }
-        Assert.assertEquals("outbound queue is not empty", 1, lnis.outbound.size());
-        Assert.assertEquals("outbound queue opcode is correct", 0xe5, lnis.outbound.get(0).getOpCode());
-        Assert.assertEquals("outbound queue byte 1 is correct", 0x14, lnis.outbound.get(0).getElement(1));
-        Assert.assertEquals("outbound queue byte 2 is correct", 0x04, lnis.outbound.get(0).getElement(2));
-        Assert.assertEquals("outbound queue byte 3 is correct", 0x00, lnis.outbound.get(0).getElement(3));
-        Assert.assertEquals("outbound queue byte 4 is correct", 0x00, lnis.outbound.get(0).getElement(4));
-        Assert.assertEquals("outbound queue byte 5 is correct", 7, lnis.outbound.get(0).getElement(5));
-        Assert.assertEquals("outbound queue byte 6 is correct", 0, lnis.outbound.get(0).getElement(6));
-        Assert.assertEquals("outbound queue byte 7 is correct", 0, lnis.outbound.get(0).getElement(7));
-        Assert.assertEquals("outbound queue byte 8 is correct", 0, lnis.outbound.get(0).getElement(8));
-        Assert.assertEquals("outbound queue byte 9 is correct", 0x00, lnis.outbound.get(0).getElement(9));
-        Assert.assertEquals("outbound queue byte 10 is correct", 0, lnis.outbound.get(0).getElement(10));
-        Assert.assertEquals("outbound queue byte 11 is correct", 0, lnis.outbound.get(0).getElement(11));
-        Assert.assertEquals("outbound queue byte 12 is correct", 0, lnis.outbound.get(0).getElement(12));
-        Assert.assertEquals("outbound queue byte 13 is correct", 0, lnis.outbound.get(0).getElement(13));
+        assertEquals( 0, lnis.outbound.size(), "outbound queue is empty");
+        assertDoesNotThrow( () -> dpxGrpInfoImpl.setDuplexGroupId("7"),
+            "got an unexpected exception");
+
+        assertEquals( 1, lnis.outbound.size(), "outbound queue is not empty");
+        assertEquals( 0xe5, lnis.outbound.get(0).getOpCode(), "outbound queue opcode is correct");
+        assertEquals( 0x14, lnis.outbound.get(0).getElement(1), "outbound queue byte 1 is correct");
+        assertEquals( 0x04, lnis.outbound.get(0).getElement(2), "outbound queue byte 2 is correct");
+        assertEquals( 0x00, lnis.outbound.get(0).getElement(3), "outbound queue byte 3 is correct");
+        assertEquals( 0x00, lnis.outbound.get(0).getElement(4), "outbound queue byte 4 is correct");
+        assertEquals( 7, lnis.outbound.get(0).getElement(5), "outbound queue byte 5 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(6), "outbound queue byte 6 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(7), "outbound queue byte 7 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(8), "outbound queue byte 8 is correct");
+        assertEquals( 0x00, lnis.outbound.get(0).getElement(9), "outbound queue byte 9 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(10), "outbound queue byte 10 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(11), "outbound queue byte 11 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(12), "outbound queue byte 12 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(13), "outbound queue byte 13 is correct");
 
     }
 
     @Test
     public void testSetDuplexGroupPassword() {
 
-        try {
-            dpxGrpInfoImpl.setDuplexGroupPassword("abcd");
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.assertTrue("got an exception as intended", true);
-        }
+        LocoNetException e = assertThrows( LocoNetException.class,
+            () -> dpxGrpInfoImpl.setDuplexGroupPassword("abcd"),
+            "got an exception as intended");
+        assertNotNull(e);
 
         lnis.outbound.removeAllElements();
-        Assert.assertEquals("outbound queue is empty", 0, lnis.outbound.size());
-        try {
-            dpxGrpInfoImpl.setDuplexGroupPassword("0123");
-        } catch (jmri.jmrix.loconet.LocoNetException e) {
-            Assert.fail("got an unexpected exception");
-        }
-        Assert.assertEquals("outbound queue is not empty", 1, lnis.outbound.size());
-        Assert.assertEquals("outbound queue opcode is correct", 0xe5, lnis.outbound.get(0).getOpCode());
-        Assert.assertEquals("outbound queue byte 1 is correct", 0x14, lnis.outbound.get(0).getElement(1));
-        Assert.assertEquals("outbound queue byte 2 is correct", 0x07, lnis.outbound.get(0).getElement(2));
-        Assert.assertEquals("outbound queue byte 3 is correct", 0x00, lnis.outbound.get(0).getElement(3));
-        Assert.assertEquals("outbound queue byte 4 is correct", 0x00, lnis.outbound.get(0).getElement(4));
-        Assert.assertEquals("outbound queue byte 5 is correct", '0', lnis.outbound.get(0).getElement(5));
-        Assert.assertEquals("outbound queue byte 6 is correct", '1', lnis.outbound.get(0).getElement(6));
-        Assert.assertEquals("outbound queue byte 7 is correct", '2', lnis.outbound.get(0).getElement(7));
-        Assert.assertEquals("outbound queue byte 8 is correct", '3', lnis.outbound.get(0).getElement(8));
-        Assert.assertEquals("outbound queue byte 9 is correct", 0x00, lnis.outbound.get(0).getElement(9));
-        Assert.assertEquals("outbound queue byte 10 is correct", 0, lnis.outbound.get(0).getElement(10));
-        Assert.assertEquals("outbound queue byte 11 is correct", 0, lnis.outbound.get(0).getElement(11));
-        Assert.assertEquals("outbound queue byte 12 is correct", 0, lnis.outbound.get(0).getElement(12));
-        Assert.assertEquals("outbound queue byte 13 is correct", 0, lnis.outbound.get(0).getElement(13));
+        assertEquals( 0, lnis.outbound.size(), "outbound queue is empty");
+        assertDoesNotThrow( () -> dpxGrpInfoImpl.setDuplexGroupPassword("0123"),
+            "got an unexpected exception");
+
+        assertEquals( 1, lnis.outbound.size(), "outbound queue is not empty");
+        assertEquals( 0xe5, lnis.outbound.get(0).getOpCode(), "outbound queue opcode is correct");
+        assertEquals( 0x14, lnis.outbound.get(0).getElement(1), "outbound queue byte 1 is correct");
+        assertEquals( 0x07, lnis.outbound.get(0).getElement(2), "outbound queue byte 2 is correct");
+        assertEquals( 0x00, lnis.outbound.get(0).getElement(3), "outbound queue byte 3 is correct");
+        assertEquals( 0x00, lnis.outbound.get(0).getElement(4), "outbound queue byte 4 is correct");
+        assertEquals( '0', lnis.outbound.get(0).getElement(5), "outbound queue byte 5 is correct");
+        assertEquals( '1', lnis.outbound.get(0).getElement(6), "outbound queue byte 6 is correct");
+        assertEquals( '2', lnis.outbound.get(0).getElement(7), "outbound queue byte 7 is correct");
+        assertEquals( '3', lnis.outbound.get(0).getElement(8), "outbound queue byte 8 is correct");
+        assertEquals( 0x00, lnis.outbound.get(0).getElement(9), "outbound queue byte 9 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(10), "outbound queue byte 10 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(11), "outbound queue byte 11 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(12), "outbound queue byte 12 is correct");
+        assertEquals( 0, lnis.outbound.get(0).getElement(13), "outbound queue byte 13 is correct");
 
     }
 

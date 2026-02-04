@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="Phil Grainger" version="1" lastUpdated="20241124"/>
+  <!--  Version 1 by Phil Grainger    -->
+  <!--  Gratefully assisted by Nigel Cliffe    -->
+  <!--  Limited SOLELY to the portions of an MX820E that I am currently using -->
+  <!--  Though I have also exposed the Zimo addressing scheme as well as NMRA -->
+  <decoder>
+    <family name="MX820 Accessory Decoders" mfg="Zimo" comment="Just for MX820E for now">
+      <model model="MX820E">
+        <versionCV lowVersionID="5" highVersionID="5"/>
+      </model>
+    </family>
+
+    <programming direct="yes" paged="yes" register="yes" ops="no"/>
+
+    <variables>
+
+    <variable CV="1" comment="Short address" item="Short Address" default="03">
+      <shortAddressVal/>
+      <label>Primary Address</label>
+    </variable>
+
+<!--                                                                        -->
+<!-- DO NOT CHANGE THE VALUE OF CV29                                        -->
+<!--                                                                        -->
+    <variable item="CV29" CV="29" readOnly="yes" default="136">
+      <decVal min="136" max="136" />
+      <label>CV29</label>
+    </variable>
+
+      <variable item="Power On Time (cv33=0)" CV="3" comment="Power On Time (cv33=0)" default="01">
+        <decVal min="0" max="255"/>
+        <label>Power On Time (cv33=0)</label>
+      </variable>
+
+      <variable item="Power On Time (cv33=1)" CV="4" comment="Power On Time (cv33=1)" default="01">
+        <decVal min="0" max="255"/>
+        <label>Power On Time (cv33=1)</label>
+      </variable>
+
+      <variable item="Power On Time (cv33=2)" CV="5" comment="Power On Time (cv33=2)" default="01">
+        <decVal min="0" max="255"/>
+        <label>Power On Time (cv33=2)</label>
+      </variable>
+
+      <variable item="Power On Time (cv33=3)" CV="6" comment="Power On Time (cv33=3)" default="01">
+        <decVal min="0" max="255"/>
+        <label>Power On Time (cv33=3)</label>
+      </variable>
+
+      <variable CV="7" readOnly="yes" item="Decoder Version" >
+        <decVal min="0" max="255"/>
+        <label>Decoder Version</label>
+      </variable>
+
+      <variable item="Manufacturer" CV="8" readOnly="yes" default="165">
+        <decVal min="0" max="255"/>
+        <label>Manufacturer</label>
+      </variable>
+
+      <variable item="Decoder ID" CV="250" readOnly="yes" default="165">
+        <decVal min="0" max="255"/>
+        <label>Decoder ID</label>
+      </variable>
+<!--                                                                        -->
+<!-- Zimo accessory address is 9 bits. Low 6 bts in cv1, high 3 bits in cv9 -->
+<!--                                                                        -->
+      <variable item="Zimo Address" CV="1,9" mask="XXVVVVVV XXXXXVVV" comment="Zimo Address">
+        <splitVal/>
+        <label>Zimo Address</label>
+      </variable>
+
+<!--                                                                        -->
+<!-- NMRA address adds 3 bits to the lower end of the Zimo accessory address -->
+<!-- the Zimo subaddress from cv33                                          -->
+<!--                                                                        -->
+      <variable item="NMRA Address" CV="33,1,9" mask="XXXXXXVV XXVVVVVV XXXXXVVV" comment="NMRA Address">
+        <splitVal offset="-3"/>
+        <label>Zimo Address</label>
+      </variable>
+
+<!--                                                                        -->
+<!-- Definitions for cvs 1, 9 and 33 MUST come AFTER the splitvals (above)   -->
+<!--                                                                        -->
+      <variable item="Low 6 bytes of Address" CV="1" mask="XXVVVVVV" comment="Decoder address (lower 6 bits)" default="1">
+        <decVal min="1" max="63"/>
+        <label>Low 6 bits of Address</label>
+      </variable>
+
+      <variable item="High 3 bits of Address" CV="9" mask="XXXXXVVV" comment="Decoder Address (higher 3 bits)" default="00">
+        <decVal min="0" max="3"/>
+        <label>High 3 bits of Address CV9</label>
+      </variable>
+
+      <variable item="Zimo Sub Address" CV="33" mask="XXXXXXVV" comment="Zimo Sub Address" default="0">
+        <decVal min="0" max="3"/>
+        <label>Zimo Sub Address CV33</label>
+      </variable>
+<!--                                                                        -->
+<!-- Definitions for cvs 1, 9 and 33 MUST come AFTER the splitvals (above)   -->
+<!--                                                                        -->
+
+      <variable item="Reverse Operation" CV="38" mask="XXXXXXXV" comment="Reverse Operation" default="0">
+        <enumVal>
+          <enumChoice choice="Normal"/>
+          <enumChoice choice="Reversed"/>
+        </enumVal>
+        <label>Reverse Operation CV38</label>
+      </variable>
+
+      <variable item="Program Lock/Unlock" CV="144" mask="XVXXXXXX" comment="Program Lock/Unlock" default="0">
+        <enumVal>
+          <enumChoice choice="Unlocked"/>
+          <enumChoice choice="Locked"/>
+        </enumVal>
+        <label>Program Lock/Unlock</label>
+      </variable>
+
+      <variable item="Software Update Lock/Unlock" CV="144" mask="VXXXXXXX" comment="Update Lock/Unlock" default="0">
+        <enumVal>
+          <enumChoice choice="Unlocked"/>
+          <enumChoice choice="Locked"/>
+        </enumVal>
+        <label>Software Lock+Unlock</label>
+      </variable>
+    </variables>
+  </decoder>
+
+
+<!--                                                                        -->
+<!-- Replace the degfault "Basic" pane with one for the MX820 addressing    -->
+<!--                                                                        -->
+  <pane>
+    <name>Basic</name>
+
+    <column>
+
+      <row>
+
+        <column>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>Addressing: enter NMRA address or Zimo addresses</text>
+          </label>
+
+          <separator/>
+
+          <label>
+            <text> </text>
+          </label>
+
+          <row>
+
+            <column>
+              <display item="NMRA Address" label="NMRA Address"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Zimo Address" label="Zimo Accessory Address"/>
+              <display item="Zimo Sub Address" label="Zimo Accessory Sub Address"/>
+              <label>
+                <text> </text>
+              </label>
+            </column>
+          </row>
+        </column>
+      </row>
+    </column>
+ </pane>
+<!--                                                                        -->
+<!--                                                                        -->
+<!-- and add an "MX820 Settings" pane for the MX820 settings we are interested in -->
+<!--                                                                        -->
+  <pane>
+    <name>MX820E Settings</name>
+        <column>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>Options</text>
+          </label>
+
+          <separator/>
+
+          <label>
+            <text> </text>
+          </label>
+
+          <row>
+
+            <column>
+              <display item="Reverse Operation" format="checkbox" label="Reverse Operation"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Program Lock/Unlock" format="checkbox" label="Program Lock"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Software Update Lock/Unlock" format="checkbox" label="Software Update Lock"/>
+            </column>
+
+          </row>
+
+        </column>
+
+        <column>
+
+          <row>
+
+            <column>
+              <label>
+                <text>Power On Time (in 1/10th seconds):</text>
+              </label>
+              <separator/>
+              <label>
+                <text> </text>
+              </label>
+
+              <group>
+                  <qualifier>
+                    <variableref>Zimo Sub Address</variableref>
+                    <relation>eq</relation>
+                    <value>0</value>
+                  </qualifier>
+
+                  <row>
+                    <display item="Power On Time (cv33=0)" label="For NMRA Address"/>
+                  </row>
+             </group>
+
+             <group>
+                  <qualifier>
+                    <variableref>Zimo Sub Address</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                  </qualifier>
+
+                   <row>
+                     <display item="Power On Time (cv33=1)" label="For NMRA Address" />
+                   </row>
+                </group>
+
+                <group>
+                  <qualifier>
+                    <variableref>Zimo Sub Address</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                  </qualifier>
+
+                    <row>
+                    <display item="Power On Time (cv33=2)" label="For NMRA Address" />
+                    </row>
+                </group>
+
+                <group>
+                  <qualifier>
+                    <variableref>Zimo Sub Address</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                  </qualifier>
+
+                    <row>
+                    <display item="Power On Time (cv33=3)" label="For NMRA Address" />
+                    </row>
+                </group>
+
+          <label>
+            <text> </text>
+          </label>
+
+              <row>
+                <display item="Power On Time (cv33=0)" label="For subaddress 0"/>
+              </row>
+
+              <row>
+                <display item="Power On Time (cv33=1)" label="For subaddress 1"/>
+              </row>
+
+              <row>
+                <display item="Power On Time (cv33=2)" label="For subaddress 2"/>
+              </row>
+
+              <row>
+                <display item="Power On Time (cv33=3)" label="For subaddress 3"/>
+              </row>
+            </column>
+
+      </row>
+    </column>
+  </pane>
+
+</decoder-config>

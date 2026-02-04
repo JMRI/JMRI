@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.zip.ZipEntry;
@@ -268,7 +269,7 @@ public class ReportPanel extends JPanel {
                 sendButton.setEnabled(true);
             }
 
-        } catch (IOException ex) {
+        } catch (IOException | URISyntaxException ex) {
             log.error("Error when attempting to send report", ex);
             sendButton.setEnabled(true);
         } catch (AddressException ex) {

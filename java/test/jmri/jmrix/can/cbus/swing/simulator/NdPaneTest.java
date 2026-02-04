@@ -8,9 +8,9 @@ import jmri.jmrix.can.cbus.simulator.moduletypes.MergCanpan;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.ThreadingUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.*;
 
@@ -19,6 +19,7 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author Steve Young Copyright (C) 2019
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class NdPaneTest  {
 
     @Test
@@ -27,50 +28,51 @@ public class NdPaneTest  {
         Assertions.assertNotNull(t, "exists");
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testChangeNode() {
         
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         TrafficControllerScaffold tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-    
+
         NdPane t = new NdPane(null, memo);
-    
+
         // check pane has loaded something
         JmriJFrame f = new JmriJFrame();
         f.add(t);
         f.setTitle("NdPaneTest 1");
-        f.pack();
-        f.setVisible(true);
-        
+
+        ThreadingUtil.runOnGUI( () -> {
+            f.pack();
+            f.setVisible(true);
+        });
+
         // Find new window by name
         JFrameOperator jfo = new JFrameOperator( "NdPaneTest 1" );
         Assertions.assertFalse(getFlimButtonEnabled(jfo),"Flim button disabled");
-        
+
         JComboBoxOperator jcbo = new JComboBoxOperator(jfo);
         jcbo.selectItem(2);
         Assertions.assertTrue(getFlimButtonEnabled(jfo),"Flim button enabled");
         JUnitAppender.assertWarnMessageStartsWith("No Simulator Running to register Node ");
-        
+
         Assertions.assertEquals(0, tcis.inbound.size(),"nothing yet sent by module");
         new JButtonOperator(jfo, "FLiM").doClick();
         JUnitUtil.waitFor(()->{ return(tcis.inbound.size()==1); }, "module sent node num request");
-        
+
         jcbo.selectItem(0);
         Assertions.assertFalse(getFlimButtonEnabled(jfo),"Flim button disabled");
         JUnitAppender.assertWarnMessageStartsWith("No Simulator Running to deregister Node ");
-        
+
         // Ask to close window
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
 
         tcis.terminateThreads();
         memo.dispose();
-        
+
     }
-    
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+
     @Test
     public void testExistingNode() {
         
@@ -81,8 +83,10 @@ public class NdPaneTest  {
         JmriJFrame f = new JmriJFrame();
         f.add(t);
         f.setTitle("NdPaneTest 2");
-        f.pack();
-        f.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            f.pack();
+            f.setVisible(true);
+        });
         
         // Find new window by name
         JFrameOperator jfo = new JFrameOperator( "NdPaneTest 2" );
@@ -93,7 +97,7 @@ public class NdPaneTest  {
         Assertions.assertTrue(getFlimButtonEnabled(jfo),"Flim button enabled");
         
         // Ask to close window
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
 
         nd.dispose();

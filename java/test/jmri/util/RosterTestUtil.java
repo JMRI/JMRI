@@ -80,6 +80,10 @@ public class RosterTestUtil {
         e3.setRoadName("UP");
         e3.ensureFilenameExists();
         e3.putAttribute("key b", "value b");
+        e3.setProductID("123");
+        e3.setDeveloperID("23");
+        e3.setManufacturerID("100");
+        e3.setProgrammingModes("A,B");
         cvTable = new CvTableModel(null, null);
         varTable = new VariableTableModel(null, new String[]{"Name", "Value"}, cvTable);
         loadDecoderFromLoco(e2, varTable);

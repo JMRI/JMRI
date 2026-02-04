@@ -1,10 +1,8 @@
 package jmri.jmrit.logixng.tools;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test ExpressionTimer
@@ -15,18 +13,18 @@ public class InvalidConditionalVariableExceptionTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull(new InvalidConditionalVariableException());
+        Assertions.assertNotNull(new InvalidConditionalVariableException());
     }
-    
+
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-    
+
 }

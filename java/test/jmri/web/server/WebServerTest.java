@@ -2,8 +2,11 @@ package jmri.web.server;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the jmri.web.server.WebServer class
@@ -15,32 +18,32 @@ public class WebServerTest {
     @Test
     public void testGetPort() {
         WebServer a = WebServer.getDefault();
-        Assert.assertEquals("Default Port", 12080, a.getPort());
+        assertEquals( 12080, a.getPort(), "Default Port");
     }
 
     @Test
     public void testPreferencesToURI() {
-        Assert.assertEquals("URI for Preferences directory", "/prefs/", WebServer.portablePathToURI("preference:"));
+        assertEquals( "/prefs/", WebServer.portablePathToURI("preference:"), "URI for Preferences directory");
     }
 
     @Test
     public void testProgramToURI() {
-        Assert.assertEquals("URI for Program directory", "/dist/", WebServer.portablePathToURI("program:"));
+        assertEquals( "/dist/", WebServer.portablePathToURI("program:"), "URI for Program directory");
     }
 
     @Test
     public void testProfileToURI() {
-        Assert.assertEquals("URI for Program directory", "/project/", WebServer.portablePathToURI("profile:"));
+        assertEquals( "/project/", WebServer.portablePathToURI("profile:"), "URI for Profile directory");
     }
 
     @Test
     public void testSettingsToURI() {
-        Assert.assertEquals("URI for Program directory", "/settings/", WebServer.portablePathToURI("settings:"));
+        assertEquals( "/settings/", WebServer.portablePathToURI("settings:"), "URI for Settings directory");
     }
 
     @Test
     public void testOtherToURI() {
-        Assert.assertNull("URI for Other directory", WebServer.portablePathToURI("roster:"));
+        assertNull( WebServer.portablePathToURI("roster:"), "URI for Other directory");
     }
 
     @Test
@@ -48,10 +51,10 @@ public class WebServerTest {
         WebServer a = new WebServer();
         a.start();
         JUnitUtil.waitFor(() -> a.isStarted(), "server failed to start in time");
-        Assert.assertTrue(a.isStarted());
+        assertTrue(a.isStarted());
         a.stop();
         JUnitUtil.waitFor(() -> a.isStopped(), "server failed to stop in time");
-        Assert.assertTrue(a.isStopped());
+        assertTrue(a.isStopped());
     }
 
     @BeforeEach
@@ -63,7 +66,7 @@ public class WebServerTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.resetZeroConfServiceManager();
+        assertTrue(JUnitUtil.resetZeroConfServiceManager());
         JUnitUtil.tearDown();
     }
 }

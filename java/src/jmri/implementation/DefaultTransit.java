@@ -572,6 +572,32 @@ public class DefaultTransit extends AbstractNamedBean implements Transit {
 
     }
 
+    private TransitType transitType = TransitType.USERDEFINED;
+
+    /**
+     * Set Transit Type.
+     * <ul>
+     * <li>USERDEFINED - Default Save all the information.
+     * <li>DYNAMICADHOC - Created on an as required basis, not to be saved.
+     * </ul>
+     * @param type constant of section type.
+     */
+    @Override
+    public void setTransitType(TransitType type) {
+        transitType = type;
+    }
+
+    /**
+     * Get Transit Type.
+     * Defaults to USERDEFINED.
+     * @return constant of transit type.
+     */
+    @Override
+    public TransitType getTransitType() {
+        return transitType;
+    }
+
+
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameTransit");

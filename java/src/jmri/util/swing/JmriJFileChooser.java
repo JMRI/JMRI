@@ -47,4 +47,15 @@ public class JmriJFileChooser extends JFileChooser {
             details.actionPerformed(null);
         }
     }
+
+    // set ModalityType.DOCUMENT_MODAL so does not clash with Always On Top windows.
+    @Override
+    protected javax.swing.JDialog createDialog(java.awt.Component parent) throws java.awt.HeadlessException {
+        javax.swing.JDialog dialog = super.createDialog(parent);
+        if ( parent != null ) {
+            dialog.setModalityType(java.awt.Dialog.ModalityType.DOCUMENT_MODAL);
+        }
+        return dialog;
+    }
+
 }

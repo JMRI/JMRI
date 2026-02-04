@@ -2,16 +2,12 @@ package jmri.jmrit.symbolicprog;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
+import java.util.Locale;
+
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
-import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to print the information in the CV table.
@@ -23,9 +19,10 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintCvAction extends AbstractAction {
 
-    final int TABLE_COLS = 3;
+    static final int TABLE_COLS = 3;
 
-    public PrintCvAction(String actionName, CvTableModel pModel, PaneProgFrame pParent, boolean preview, RosterEntry pRoster) {
+    public PrintCvAction(String actionName, CvTableModel pModel,
+            PaneProgFrame pParent, boolean preview, RosterEntry pRoster) {
         super(actionName);
         mModel = pModel;
         mFrame = pParent;
@@ -36,31 +33,19 @@ public class PrintCvAction extends AbstractAction {
     /**
      * Frame hosting the printing
      */
-    PaneProgFrame mFrame;
-    CvTableModel mModel;
-    RosterEntry mRoster;
+    private final PaneProgFrame mFrame;
+    private final CvTableModel mModel;
+    private final RosterEntry mRoster;
     /**
      * Variable to set whether this is to be printed or previewed
      */
-    boolean isPreview;
+    private final boolean isPreview;
 
     public void printInfoSection(HardcopyWriter w) {
-        ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
-        // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
-        w.write(icon.getImage(), new JLabel(icon));
+        // Write out the icon
+        w.writeDecoderProIcon();
         w.setFontStyle(Font.BOLD);
-        //Add a number of blank lines
-        int height = icon.getImage().getHeight(null);
-        int blanks = (height - w.getLineAscent()) / w.getLineHeight();
 
-        try {
-            for (int i = 0; i < blanks; i++) {
-                String s = "\n";
-                w.write(s, 0, s.length());
-            }
-        } catch (IOException e) {
-            log.warn("error during printing", e);
-        }
         mRoster.printEntry(w);
         w.setFontStyle(Font.PLAIN);
     }
@@ -69,7 +54,7 @@ public class PrintCvAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this
-        HardcopyWriter writer = null;
+        HardcopyWriter writer;
         try {
             writer = new HardcopyWriter(mFrame, mFrame.getRosterEntry().getId(), 10, .8, .5, .5, .5, isPreview);
 
@@ -80,7 +65,11 @@ public class PrintCvAction extends AbstractAction {
 
             //Initialize some variables to define the CV table size
             int cvCount = mModel.getRowCount();
-            int tableLeft = 1, tableRight = TABLE_COLS * 24 + 1, tableTopRow = 0, tableBottomRow = 0, tableHeight = cvCount / TABLE_COLS;
+            int tableLeft = 1;
+            int tableRight = TABLE_COLS * 24 + 1;
+            int tableTopRow;
+            int tableBottomRow;
+            int tableHeight = cvCount / TABLE_COLS;
             if (cvCount % TABLE_COLS > 0) {
                 tableHeight++;
             }
@@ -102,7 +91,7 @@ public class PrintCvAction extends AbstractAction {
             tableBottomRow = tableTopRow + tableHeight + 2;
 
             //Draw vertical lines for columns
-            for (int i = 1; i < 76; i = i + 24) {
+            for (int i = 1; i < 76; i += 24) {
                 writer.write(tableTopRow, i, tableBottomRow, i);
             }
 
@@ -112,7 +101,8 @@ public class PrintCvAction extends AbstractAction {
 
             writer.setFontStyle(1);  //set font to Bold
             // print a simple heading with I18N
-            s = String.format("%1$21s%1$24s%1$24s", Bundle.getMessage("Value")); // pad with spaces to column width, 3 x insert Value as var %1
+            // pad with spaces to column width, 3 x insert Value as var %1
+            s = String.format("%1$21s%1$24s%1$24s", Bundle.getMessage("Value"));
             writer.write(s, 0, s.length());
             s = "\n";
             writer.write(s, 0, s.length());
@@ -140,7 +130,7 @@ public class PrintCvAction extends AbstractAction {
                 //convert and pad numbers as needed
                 String numString = String.format("%12s", cv.number());
                 String valueString = Integer.toString(value);
-                String valueStringHex = Integer.toHexString(value).toUpperCase();
+                String valueStringHex = Integer.toHexString(value).toUpperCase(Locale.ENGLISH);
                 if (value < 16) {
                     valueStringHex = "0" + valueStringHex;
                 }
@@ -158,18 +148,19 @@ public class PrintCvAction extends AbstractAction {
 
             //sort the array in CV order (just the members with values)
             String temp;
-            boolean swap = false;
+            boolean swap;
             do {
                 swap = false;
                 for (int i = 0; i < mModel.getRowCount() - 1; i++) {
-                    if (cvSortOrderVal(cvStrings[i + 1].substring(0, 15).trim()) < cvSortOrderVal(cvStrings[i].substring(0, 15).trim())) {
+                    if (cvSortOrderVal(cvStrings[i + 1].substring(0, 15).trim())
+                            < cvSortOrderVal(cvStrings[i].substring(0, 15).trim())) {
                         temp = cvStrings[i + 1];
                         cvStrings[i + 1] = cvStrings[i];
                         cvStrings[i] = temp;
                         swap = true;
                     }
                 }
-            } while (swap == true);
+            } while (swap);
 
             //Print the array in three columns
             for (int i = 0; i < tableHeight; i++) {
@@ -202,7 +193,8 @@ public class PrintCvAction extends AbstractAction {
     public static long cvSortOrderVal(String cvName) {
         final int MAX_CVMNUM_SPACE = 1200;
 
-        String[] cvNumStrings = cvName.split("\\.");
+        // Split the string by any non-numeric character
+        String[] cvNumStrings = cvName.split("\\D+");
         long sortVal = 0;
         for (int i = 0; i < (cvNumStrings.length); i++) {
             sortVal = (sortVal * MAX_CVMNUM_SPACE) + Integer.parseInt(cvNumStrings[i]);
@@ -210,5 +202,6 @@ public class PrintCvAction extends AbstractAction {
         return sortVal;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintCvAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PrintCvAction.class);
+
 }

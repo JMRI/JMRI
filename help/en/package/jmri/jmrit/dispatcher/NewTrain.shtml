@@ -26,16 +26,18 @@
       <p>Transits are selected from the Transits defined in the Transit Table. Dispatcher will list
       all Transits that are not currently in Active Trains.</p>
 
-      <p>Trains may come from any one of three sources:</p>
+      <p>Trains, that is the Lead locomotive, may come from any one of three sources:</p>
 
       <ul>
         <li><strong>Trains from Roster</strong> - Dispatcher will list all trains in the JMRI
-        Roster that are not currently in Active Trains.</li>
+        Roster that are not currently in Active Trains. The default TrainName will the Roster Entry's
+        Title and maybe edited by the User.</li>
 
         <li>
           <strong>Trains from Trains</strong> - Dispatcher will list all trains available from
           <a href="../operations/Operations.shtml#Trains">Operations</a> that are not already in
-          any Dispatcher Active Trains.
+          any Dispatcher Active Trains. The TrainName and DCC address of the locomotive may be
+          edited by the User.
         </li>
 
         <li><strong>Trains from User Entry</strong> - Dispatcher will replace the train selection
@@ -43,7 +45,10 @@
         Train name and a loco Address.</li>
       </ul>
 
-      <p>Dispatcher's train source is set by selecting one of the above in the <strong><a href=
+      <p>A fourth option, <strong>Set Later</strong> is used when setting up and saving routing and
+      control information that will be saved for later use.</p>
+
+      <p>Dispatcher's train default source is set by selecting one of the above in the <strong><a href=
       "Options.shtml">Options</a></strong> window accessed from Dispatcher's
       <strong>Options</strong> menu.</p>
 
@@ -79,6 +84,8 @@
       selection and again save your new train information, before clicking the
       <strong>Create</strong> button.</p>
 
+      <p>Use <strong>Save As Defaults</strong> to have the form load as it is set now when creating a new train.</p>
+
       <p class="noted">If the transit assigned to a train info file is changed, such as adding or
       removing sections, the train info file will need to be updated.  This can done by loading and
       then saving the affected train info file.</p>
@@ -91,11 +98,19 @@
 
       <p>To create a new <strong>Active Train</strong>, use the following procedure:</p>
 
+      <p>A train name in the <strong>Train:</strong> field. Any short name that identifies the train may
+      be used, provided the name is not being used by another Active Train.<p>
+      The <strong>DCC Address</strong> must be a number in the range 1 - 9999.<br>
+          Note: If the train will not be run automatically, the dcc address need not be accurate.
+          This window is displayed if <strong>Trains from User Entry</strong> is selected as
+          Dispatcher's train source.</p>
+
       <ol>
         <li>
           <p>Click the <strong>New Train...</strong> button in the <strong><a href=
-          "Dispatcher.shtml">Dispatcher</a></strong> window to bring up the window shown below.</p>
-          <img src="images/NewTrainWindow.png" height="573" width="489" alt="new train window">
+          "Dispatcher.shtml">Dispatcher</a></strong> window, or the <strong>Create New Train</strong> menu item
+          from the dispatcher menu in a Layout Editor Panel, to bring up the window shown below.</p>
+          <img src="images/NewTrainWindow.png" alt="New train window">
         </li>
 
         <li>
@@ -104,63 +119,126 @@
         </li>
 
         <li>
-          <p>Select a Transit from the Transit selection box. The selected Transit specifies the
-          route the Active Train will follow while running on the layout. Transits are displayed
-          and new Transits are created using the <strong><a href=
-          "../beantable/TransitTable.shtml">Transit Table</a></strong> accessed from the
-          <strong>Tables</strong> submenu of the JMRI <strong>Tools</strong> menu. This Transit
-          selection box will allow selection of any Transit in the Transit Table that is not in use
-          by an Active Train.</p>
+          <p>If you are not using the default Trains From source, select the desired source.</p>
+          <p>For <strong>Roster</strong>, shown above, you need to select the Roster Entry, which
+          will become the default Train Name that can then be edited.</p>
+          <img src="images/TrainsFromRoster.png" alt="Trains from Roster, Train name, Roster selection combo, and DCC Address.">
+
+          <p>For <strong>Operations</strong> you need to select the Train, enter the train name and
+          edit or enter the DCC address.</p>
+          <img src="images/TrainsFromOps.png" alt="Trains from Ops, Ops Train selection combo, Train name and DCC Address.">
+
+          <p>For <strong>User Entry</strong> you need to enter the train name and DCC Address.</p>
+          <img src="images/TrainsFromUser.png" alt="Trains from User, Train name and DCC Address.">
+
+          <p>For <strong>Set Later</strong> you need to enter the train name.</p>
+          <img src="images/TrainsFromLater.png" alt="Trains from Later, Train name.">
         </li>
 
         <li>
-          <p>If the window shown above is displayed, select a train from the Train selection box.
-          This window is displayed if the <strong>Trains from Roster</strong> or the <strong>Trains
-          from Trains</strong> options are selected as Dispatcher's train source.</p>
+          <p>Select a Transit type.</p>
+          <img src="images/TransitType.png" alt="Transit type, predefined, ad hoc.">
 
-          <p>- OR -</p>
+          <dl>
+            <dt>Predefined</dt>
+            <dd>
+              <p><strong>Predefined</strong> transits are the standard transits built from predefined
+              Sections.  These support all of the features including transit section actions.</p>
+              <img src="images/DefinedTransit.png" alt="Predefined transit">
+
+              <ol>
+                <li>
+                  <p>Select a Transit from the Transit selection box. The selected Transit specifies
+                  the route the Active Train will follow while running on the layout. Transits are
+                  displayed and new Transits are created using the <strong><a href=
+                  "../beantable/TransitTable.shtml">Transit Table</a></strong> accessed from the
+                  <strong>Tables</strong> submenu of the JMRI <strong>Tools</strong> menu. This
+                  Transit selection box will allow selection of any Transit in the Transit Table
+                  that is not in use by an Active Train.</p>
+                </li>
+
+                <li>
+                  <p>If the starting location of the Active Train is a Block within the selected
+                  Transit, check the <strong>Train in selected Transit</strong> box. If the starting
+                  location of the Active Train is outside the selected Transit, (in a Block connected
+                  to a Block within the selected Transit) uncheck this box. Checking and unchecking
+                  this box results in different selections in the <strong>Starting Location of
+                  Train:</strong> select box.</p>
+                </li>
+
+                <li>
+                  <p>Select a <strong>Starting Location of Train:</strong> from the select box. This
+                  select box lists all Blocks consistent with the check box above and the selected
+                  Transit. To identify each Block uniquely, the Block identifier consists of the
+                  Block display name followed by the sequence number of a Section in the Transit
+                  definition. If the train is located in the Transit, this sequence number identifies
+                  the Section where the train is located. If the train is located in a connected
+                  Block, the sequence number identifies the Section that will be entered when the
+                  train enters the Transit. If the train spans two blocks, select the Block where
+                  the engine is located.</p>
+                </li>
+
+                <li>
+                  <p>Select a <strong>Destination Location of Train:</strong> from the select box.
+                  This select box lists all Blocks consistent with the selected Transit that can be
+                  reached from the selected starting location by travel in the direction of the
+                  Transit. The Block identifier in the select box consists of the Block display name.
+                  If a Section is in the Transit more than once, the sequence number of the destination
+                  Section is appended to the Block identifier to identify the destination Block uniquely.</p>
+                </li>
+              </ol>
+            </dd>
+
+            <dt>Ad Hoc<span class="since">since 5.11.2</span></dt>
+            <dd>
+              <p>An <strong>Ad Hoc</strong> transit is created dynamically between 2 blocks. These
+              are always run using "No Signals". Ad hoc transits are removed at train termination.
+              If they are not removed for any reason they will not be stored. Currently the route
+              must be clear from end to end and any flaws in the routing table will cause grief.
+              Avoid having the train stop in them.</p>
+              <img src="images/AdhocTransit.png" alt="Adhoc transit">
+
+              <ol>
+                <li>
+                  <p>The <strong>Starting Location of Train:</strong> contains a list of occupied
+                  blocks. Select one of the blocks to become the starting block.</p>
+                </li>
+
+                <li>
+                  <p>The <strong>Via</strong> list contains the neighbor blocks for the starting
+                  block. The direction of the transit depends on which neighbor is selected.</p>
+                </li>
+
+                <li>
+                  <p>The <strong>Destination Location of Train:</strong> list contains the potential
+                  destinations that can be reached based on the starting and via selections.  Pick
+                  one as the destination.</p>
+                </li>
+              </ol>
+
+              <p>The temporary transits and sections are added to the transit and sections tables
+              The user names start with <strong>#</strong>. It is possible to save the configuration
+              as a train info file.</p>
+            </dd>
+          </dl>
         </li>
 
         <li>
-          <p>If <a href="Options.shtml">Dispatcher Options</a> is set to <strong>Trains from User
-          Entry</strong>, the following pane is displayed.<br>
-          Enter a train name in the <strong>Train:</strong> field, and set a numeric address from 1
-          to 9999 as the <strong>DCC Address</strong>.</p>
-          <img src="images/NewTrainAltWindow.png" height="599" width="489" alt=
-          "New train alternate window">
-          <p>Any short name that identifies the train may be used, provided the name is not being
-          used by another Active Train. DCC addresses must be a number in the range 1 - 9999.<br>
-          Note: If the train will not be run automatically, the dcc address need not be accurate.
-          This window is displayed if <strong>Trains from User Entry</strong> is selected as
-          Dispatcher's train source.</p>
-        </li>
+          <a id="trainDetectionOptions"></a> Train Detection Options <span class="since">since 5.7.5</span>
+          <p> This settings effects the ability of auto trains to stop. See autotrains for details</p>
+          <ul>
+            <li><strong>Entire Train</strong> The entire train can be detected, no unoccupied blocks between head and
+            tail of the train. Sections and blocks within sections can be reused a soon as they become unoccupied.</li>
 
-        <li>
-          <p>If the starting location of the Active Train is a Block within the selected Transit,
-          check the <strong>Train in selected Transit</strong> box. If the starting location of the
-          Active Train is outside the selected Transit, (in a Block connected to a Block within the
-          selected Transit) uncheck this box. Checking and unchecking this box results in different
-          selections in the <strong>Starting Location of Train:</strong> select box.</p>
-        </li>
+            <li><strong>Head and Tail</strong> The head and tail are both detected but parts in between may not
+            be detected. Sections will only be reused after the tail has passed.
+            </li>
 
-        <li>
-          <p>Select a <strong>Starting Location of Train:</strong> from the select box. This select
-          box lists all Blocks consistent with the check box above and the selected Transit. To
-          identify each Block uniquely, the Block identifier consists of the Block display name
-          followed by the sequence number of a Section in the Transit definition. If the train is
-          located in the Transit, this sequence number identifies the Section where the train is
-          located. If the train is located in a connected Block, the sequence number identifies the
-          Section that will be entered when the train enters the Transit. If the train spans two
-          blocks, select the Block where the engine is located.</p>
-        </li>
-
-        <li>
-          <p>Select a <strong>Destination Location of Train:</strong> from the select box. This
-          select box lists all Blocks consistent with the selected Transit that can be reached from
-          the selected starting location by travel in the direction of the Transit. The Block
-          identifier in the select box consists of the Block display name. If a Section is in the
-          Transit more than once, the sequence number of the destination Section is appended to the
-          Block identifier to identify the destination Block uniquely.</p>
+            <li><a id="trainDetectionHeadOnly"></a><strong>Head Only</strong> Only the head of the train can be detected. The same as
+            <strong>Head and Tail</strong> with the addition that section or any part of the section may not be
+            reused if occupied.</li>
+          </ul>
+          <p>See also <strong><a href="#trainlength">Train Length</a></strong> for more AutoTrain stopping information.</p>
         </li>
 
         <li>
@@ -248,8 +326,7 @@
           engineer, skip the next few steps; go directly to the third to last item of these
           instructions. Requesting <strong>Run Train Automatically</strong> will extend this window
           (see below) to display options that are only related to automatic running of trains.</p>
-          <img src="images/NewTrainAutoWindow.png" height="777" width="577" alt=
-          "new train auto window">
+          <img src="images/NewTrainAutoWindow.png" alt="new train auto window">
           <p><strong>Note:</strong> Requirements for automatic running are not validated until
           creation of an Active Train is requested.<br>
           More information about automatic running of Active Trains may be found in the
@@ -258,26 +335,48 @@
         </li>
 
         <li>
-          <p>In the <strong>Loco Speed Correction:</strong> field, enter a percentage (10 - 150%)
-          to modify all train speed settings. If the locomotive runs <em>normally</em>, enter 100%.
-          If the locomotive runs slower than normal, enter a factor between 100 and 150%. If the
-          locomotive runs faster than normal, enter a factor less than 100%. This factor is
-          designed to allow the user to compensate for differences between locomotives. The entered
-          Correection factor multiplies all speed settings immediately before the speed is sent to
-          the locomotive.</p>
+          <p><strong><a href="#trainDetectionOptions">Train Detection</a> above</strong> effects train stopping. If <strong>Entire Train</strong> is selected, which
+          usually means that all cars in the train will have resistance wheels, trains can be stopped without using point sensors (Stopping Sensors in <strong><a href=
+          "../beantable/SectionAddEdit.shtml">Sections</a></strong>) or without using stopping by Speed Profile. If an automatically running
+          Active Train needs to stop in a Section, it will use a Stopping Sensor if one is present or the Speed Profile.
+          If neither is configured, and if <strong>Entire Train</strong> is selected and the train will fit in the Section (see
+          below), the train will stop when the previous Section becomes UNOCCUPIED. If <strong>Head and Tail</strong>,
+          <strong>Head Only</strong> is specified or if the train will not fit, the train is stopped when it enters the Section.</p>
         </li>
 
         <li>
-          <p>In the <strong>Default Maximum Speed:</strong> field, enter a number (10 - 100%) to
-          limit the maximum speed the Active Train will run. For example, entering 60% will limit
-          the maximum speed to 60% of the possible speed setting. Maximum Speed can be used to make
-          certain Active Trains, for example a local freight, to run slower than signals alone
-          would determine. The Maximum Speed entered here is the starting value for the Maximum
-          Speed. The Maximum Speed may be changed while running the train automatically by setting
-          up <strong><a href="../beantable/ViewSpecialActions.shtml">Actions</a></strong> in the
-          Transit. <strong>Actions</strong> that change the Maximum Speed can be used, for example,
-          to slow an automatically running Active Train when it passes through a town on the
-          layout.</p>
+          <p id="locospeedcorrection">In the <strong>Loco Speed Correction:</strong> field, enter a percentage (10 - 200%)
+          to modify all train speed settings. If the locomotive runs <em>normally</em>, enter 100%.
+          If the locomotive runs slower than normal, enter a factor between 100 and 200%. If the
+          locomotive runs faster than normal, enter a factor less than 100%. This factor is
+          designed to allow the user to compensate for differences between locomotives.
+          <br>The Correction factor is applied to all speed/throttle settings <strong>before</strong> they are adjusted for
+          the Minimum Throttle and Maximum Throttle.
+          <br>The default is 100.</p>
+        </li>
+
+        <li>
+          <p>In the <strong>Maximum Throttle:</strong> field, enter a number (10 - 100%) to
+          limit the maximum throttle for the Active Train. This does not scale the throttle setting across
+          the entire range, it only limits the maximum value. To scale the throttle setting though the entire
+          range use <strong><a href="#locospeedcorrection">Loco Speed Correction</a></strong>.
+          <br>The Maximum Throttle entered here is the starting value for the Maximum Throttle it can be adjusted during
+          a transit. see <strong><a href="../beantable/ViewSpecialActions.shtml">Actions</a></strong> in the
+          Transit. <strong>Actions</strong> This can be used, for example, to slow an automatically running Active Train
+          when it passes through a town on the layout.
+          <br>This must be at least 10 greater than the Minimum Throttle setting.
+          <br>If a Roster entry is used the default is the Maximum set there, else the Maximum is 100. </p>
+        </li>
+
+        <li>
+          <p>In the <strong>Minimum Throttle:</strong> field, enter a number (0 - 90%) to set
+          the Minimum Throttle setting to be used by the Active Train.
+          When starting from zero the first throttle setting applied will be at least this.
+          When stopping the train using Ramping or a Speed Profile the last step before Zero will at
+          least this value.
+          Use this to deal with locos that have settings below this value that though they may work they do not work reliably.
+          <br>This must be at least 10 less than the Maximum Throttle setting.
+          <br>The default is zero.</p>
         </li>
 
         <li>
@@ -288,7 +387,10 @@
           use depends upon the decoder in the locomotive and how the decoder is set up. Some
           decoders have features that can change speed gradually (this decoder option is named
           differently for different decoders). If the decoder is doing the desired job, select
-          RAMP_NONE. Otherwise select one of the ramp rates offered.</p>
+          RAMP_NONE. If the loco is speed profiled then you may select <strong>Speed Profile</strong>
+          which will cause speed changes to take place over the length of the section or block.<br>
+          Otherwise select one of the ramp rates offered.<br>
+          </p>
         </li>
 
         <li>
@@ -296,7 +398,7 @@
           "../roster/swing/speedprofile/SpeedProfileFrame.shtml">Speed Profile</a>, the speed will
           be set using the Warrant Preferences settings and the speed profile. So if the speed
           calls for "restricted", it looks that up in the Warrant Preferences, gets the required
-          speed & units and uses the Profile to set the Throttle percentage.
+          speed &amp; units and uses the Profile to set the Throttle percentage.
         </li>
 
         <li>
@@ -333,30 +435,20 @@
         </li>
 
         <li>
-          <p>Check <strong>All cars have resistance wheels</strong> if the entire train is
-          detectable by occupancy detectors of all Blocks in Sections in the Transit. There must be
-          no gaps in detection if this option is checked. This usually means that all cars in the
-          train will have resistance wheels. This is especially important for stopping Active
-          Trains without using point sensors (Stopping Sensors in <strong><a href=
-          "../beantable/SectionAddEdit.shtml">Sections</a></strong>). If an automatically running
-          Active Train needs to stop in a Section, it will use a Stopping Sensor if one is present.
-          If no Stopping Sensor is configured, and if the train will fit in the Section (see
-          below), and if this option is checked, the train will stop when the previous Section
-          becomes UNOCCUPIED. If this option is not checked, or if the train will not fit, the
-          train is stopped when it enters the Section.</p>
-        </li>
-
-        <li>
-          <p>Enter the maximum length the train can have while traversing the Transit in the
-          <strong>Maximum Train Length:</strong> field. The length should be entered in scale feet
-          or scale meters, depending upon the dimension selection in the <strong><a href=
-          "Options.shtml">Dispatcher Options</a></strong> accessed from Dispatcher's
-          <strong>Options</strong> menu. Entering a reasonable value for the maximum length of the
-          train is important for deciding if a train will fit in a Section when stopping the train
-          (see above). When NOT stopping by Speed Profile, if the length of the train does not fit
-          in a Block when stopping it is stopped immediately. Otherwise it is stopped as soon as
+          <p><a id="trainlength"></a><strong>Maximum Train Length</strong>. Enter the maximum length
+          the train can have while traversing the Transit. The length can be entered in Actual
+          (measured with a ruler on the layout), inches or centimeters, or, scale (measured in real life),
+          feet or meters.
+		  <br>The default scale units as set in the <strong><a href="Options.shtml">Dispatcher Options</a></strong>
+          accessed from Dispatcher's <strong>Options</strong> menu. The converse value is calculated
+          and displayed to the right. You do not have to update the value if the layout scale or the
+          base layout measurements are changed to or from metric.
+          <br>It is important to enter a reasonable value for the maximum length as it used during stopping
+          or releasing sections <strong><a href="#trainDetectionHeadOnly">HEADONLY</a></strong>. When stopping but NOT stopping by Speed Profile or Stopping Sensor, if the length
+          of the train does not fit in a Block it is stopped immediately. Eise it is stopped as soon as
           the preceding Block goes UNOCCUPIED. Remember this uses <em>debounce timings</em>, which
-          -if large- can result in the train overrunning the block if it only just fits.</p>
+          -if large- can result in the train over running the block if it only just fits.<br>
+          See also <strong><a href="#trainDetectionOptions">Train Detection</a></strong></p>
         </li>
 
         <li>

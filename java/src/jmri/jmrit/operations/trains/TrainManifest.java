@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
@@ -17,6 +19,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
  * Builds a train's manifest. User has the ability to modify the text of the
@@ -24,8 +27,7 @@ import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
  * arguments than the default message allowing the user to customize the message
  * to their liking.
  *
- * @author Daniel Boudreau Copyright (C) 2011, 2012, 2013, 2015
- *
+ * @author Daniel Boudreau Copyright (C) 2011, 2012, 2013, 2015, 2024
  */
 public class TrainManifest extends TrainCommon {
 
@@ -33,17 +35,18 @@ public class TrainManifest extends TrainCommon {
 
     String messageFormatText = ""; // the text being formated in case there's an exception
 
-    public TrainManifest(Train train) {
+    public TrainManifest(Train train) throws BuildFailedException {
         // create manifest file
         File file = InstanceManager.getDefault(TrainManagerXml.class).createTrainManifestFile(train.getName());
         PrintWriter fileOut;
 
         try {
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
+            fileOut = new PrintWriter(
+                    new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
                     true);
         } catch (IOException e) {
-            log.error("Can not open train manifest file: {}", file.getName());
-            return;
+            log.error("Can not open train manifest file: {}", e.getLocalizedMessage());
+            throw new BuildFailedException(e);
         }
 
         try {
@@ -55,36 +58,36 @@ public class TrainManifest extends TrainCommon {
             }
             newLine(fileOut); // empty line
             newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText.getStringManifestForTrain(),
-                    new Object[]{train.getName(), train.getDescription()}));
+                    new Object[]{train.getSplitName(), train.getDescription()}));
 
             String valid = MessageFormat.format(messageFormatText = TrainManifestText.getStringValid(),
                     new Object[]{getDate(true)});
 
+            String schName = "";
+
             if (Setup.isPrintTrainScheduleNameEnabled()) {
                 TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule();
                 if (sch != null) {
-                    valid = valid + " (" + sch.getName() + ")";
+                    schName = "(" + sch.getName() + ")";
                 }
             }
             if (Setup.isPrintValidEnabled()) {
-                newLine(fileOut, valid);
+                newLine(fileOut, valid + " " + schName);
+            } else {
+                newLine(fileOut, schName);
             }
-
             if (!train.getCommentWithColor().equals(Train.NONE)) {
                 newLine(fileOut, train.getCommentWithColor());
             }
-
-            List<Engine> engineList = engineManager.getByTrainBlockingList(train);
-
             if (Setup.isPrintRouteCommentsEnabled() && !train.getRoute().getComment().equals(Route.NONE)) {
                 newLine(fileOut, train.getRoute().getComment());
             }
 
+            List<Engine> engineList = engineManager.getByTrainBlockingList(train);
             List<Car> carList = carManager.getByTrainDestinationList(train);
             log.debug("Train has {} cars assigned to it", carList.size());
 
             boolean hadWork = false;
-            boolean noWork = false;
             String previousRouteLocationName = null;
             List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
 
@@ -102,45 +105,14 @@ public class TrainManifest extends TrainCommon {
                     if (hasWork) {
                         newLine(fileOut);
                         hadWork = true;
-                        noWork = false;
                         printHeader = true;
-                        String expectedArrivalTime = train.getExpectedArrivalTime(rl);
-                        String workAt = MessageFormat.format(messageFormatText = TrainManifestText
-                                .getStringScheduledWork(), new Object[]{routeLocationName, train.getName(),
-                                        train.getDescription(), rl.getLocation().getDivisionName()});
-                        if (!train.isShowArrivalAndDepartureTimesEnabled()) {
-                            newLine(fileOut, workAt);
-                        } else if (rl == train.getTrainDepartsRouteLocation()) {
-                            newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
-                                    .getStringWorkDepartureTime(),
-                                    new Object[]{routeLocationName,
-                                            train.getFormatedDepartureTime(), train.getName(),
-                                            train.getDescription(), rl.getLocation().getDivisionName()}));
-                        } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
-                            newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
-                                    .getStringWorkDepartureTime(),
-                                    new Object[]{routeLocationName,
-                                            rl.getFormatedDepartureTime(), train.getName(), train.getDescription(),
-                                            rl.getLocation().getDivisionName()}));
-                        } else if (Setup.isUseDepartureTimeEnabled() &&
-                                rl != train.getTrainTerminatesRouteLocation()) {
-                            newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
-                                    .getStringWorkDepartureTime(),
-                                    new Object[]{routeLocationName,
-                                            train.getExpectedDepartureTime(rl), train.getName(),
-                                            train.getDescription(), rl.getLocation().getDivisionName()}));
-                        } else if (!expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
-                            newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
-                                    .getStringWorkArrivalTime(),
-                                    new Object[]{routeLocationName, expectedArrivalTime,
-                                            train.getName(), train.getDescription(),
-                                            rl.getLocation().getDivisionName()}));
-                        } else {
-                            newLine(fileOut, workAt);
-                        }
+
+                        // add arrival message
+                        arrivalMessage(fileOut, train, rl);
+
                         // add route location comment
                         if (!rl.getComment().trim().equals(RouteLocation.NONE)) {
-                            newLine(fileOut, rl.getFormatedColorComment());
+                            newLine(fileOut, rl.getCommentWithColor());
                         }
 
                         // add location comment
@@ -165,9 +137,9 @@ public class TrainManifest extends TrainCommon {
                             train.getSecondLegOptions() == Train.HELPER_ENGINES) {
                         newLine(fileOut,
                                 MessageFormat.format(messageFormatText = TrainManifestText.getStringRemoveHelpers(),
-                                        new Object[] { rl.getSplitName(), train.getName(),
+                                        new Object[]{rl.getSplitName(), train.getSplitName(),
                                                 train.getDescription(), train.getSecondLegNumberEngines(),
-                                                train.getSecondLegEngineModel(), train.getSecondLegEngineRoad() }));
+                                                train.getSecondLegEngineModel(), train.getSecondLegEngineRoad()}));
                     }
                 }
                 if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
@@ -178,16 +150,18 @@ public class TrainManifest extends TrainCommon {
                             train.getThirdLegOptions() == Train.HELPER_ENGINES) {
                         newLine(fileOut,
                                 MessageFormat.format(messageFormatText = TrainManifestText.getStringRemoveHelpers(),
-                                        new Object[] { rl.getSplitName(), train.getName(),
+                                        new Object[]{rl.getSplitName(), train.getSplitName(),
                                                 train.getDescription(), train.getThirdLegNumberEngines(),
-                                                train.getThirdLegEngineModel(), train.getThirdLegEngineRoad() }));
+                                                train.getThirdLegEngineModel(), train.getThirdLegEngineRoad()}));
                     }
                 }
+
+                setPickupAndSetoutTimes(train, rl, new ArrayList<RollingStock>(carList));
 
                 if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
                     pickupEngines(fileOut, engineList, rl, IS_MANIFEST);
                     // if switcher show loco drop at end of list
-                    if (train.isLocalSwitcher()) {
+                    if (train.isLocalSwitcher() || Setup.isPrintLocoLastEnabled()) {
                         blockCarsByTrack(fileOut, train, carList, rl, printHeader, IS_MANIFEST);
                         dropEngines(fileOut, engineList, rl, IS_MANIFEST);
                     } else {
@@ -201,89 +175,28 @@ public class TrainManifest extends TrainCommon {
                     blockLocosTwoColumn(fileOut, engineList, rl, IS_MANIFEST);
                     blockCarsByTrackNameTwoColumn(fileOut, train, carList, rl, printHeader, IS_MANIFEST);
                 }
-
+                
+                setPickupAndSetoutTimes(train, rl, new ArrayList<RollingStock>(engineList));
+                
                 if (rl != train.getTrainTerminatesRouteLocation()) {
                     // Is the next location the same as the current?
                     RouteLocation rlNext = train.getRoute().getNextRouteLocation(rl);
                     if (routeLocationName.equals(rlNext.getSplitName())) {
                         continue;
                     }
-                    if (hadWork) {
-                        hadWork = false;
-                        if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
-                            printHorizontalLine(fileOut, IS_MANIFEST);
-                        }
-                        String trainDeparts = "";
-                        if (Setup.isPrintLoadsAndEmptiesEnabled()) {
-                            int emptyCars = train.getNumberEmptyCarsInTrain(rl);
-                            // Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet, 3000 tons
-                            trainDeparts = MessageFormat.format(messageFormatText = TrainManifestText
-                                    .getStringTrainDepartsLoads(), new Object[]{routeLocationName,
-                                            rl.getTrainDirectionString(), train.getNumberCarsInTrain(rl) - emptyCars, emptyCars,
-                                            train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
-                                            train.getTrainWeight(rl), train.getTrainTerminatesName(), train.getName()});
-                        } else {
-                            // Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
-                            trainDeparts = MessageFormat.format(messageFormatText = TrainManifestText
-                                    .getStringTrainDepartsCars(), new Object[]{routeLocationName,
-                                            rl.getTrainDirectionString(), train.getNumberCarsInTrain(rl), train.getTrainLength(rl),
-                                            Setup.getLengthUnit().toLowerCase(), train.getTrainWeight(rl),
-                                            train.getTrainTerminatesName(), train.getName()});
-                        }
-                        newLine(fileOut, trainDeparts);
-                    } else {
-                        // no work at this location
-                        if (!noWork) {
-                            newLine(fileOut);
-                        }
-                        noWork = true;
-                        String s = MessageFormat.format(messageFormatText = TrainManifestText
-                                .getStringNoScheduledWork(), new Object[]{routeLocationName, train.getName(),
-                                        train.getDescription(), rl.getLocation().getDivisionName()});
-                        // if a route comment, then only use location name and route comment, useful for passenger
-                        // trains
-                        if (!rl.getComment().equals(RouteLocation.NONE)) {
-                            s = routeLocationName;
-                            if (!rl.getComment().trim().isEmpty()) {
-                                s = MessageFormat.format(messageFormatText = TrainManifestText
-                                        .getStringNoScheduledWorkWithRouteComment(),
-                                        new Object[]{routeLocationName, rl.getFormatedColorComment(), train.getName(),
-                                                train.getDescription(), rl.getLocation().getDivisionName()});
-                            }
-                        }
-                        if (train.isShowArrivalAndDepartureTimesEnabled()) {
-                            if (rl == train.getTrainDepartsRouteLocation()) {
-                                s += MessageFormat.format(messageFormatText = TrainManifestText
-                                        .getStringDepartTime(), new Object[]{train.getFormatedDepartureTime()});
-                            } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
-                                s += MessageFormat.format(messageFormatText = TrainManifestText
-                                        .getStringDepartTime(), new Object[]{rl.getFormatedDepartureTime()});
-                            } else if (Setup.isUseDepartureTimeEnabled() &&
-                                    !rl.getComment().equals(RouteLocation.NONE)) {
-                                s += MessageFormat
-                                        .format(messageFormatText = TrainManifestText.getStringDepartTime(),
-                                                new Object[]{train.getExpectedDepartureTime(rl)});
-                            }
-                        }
-                        newLine(fileOut, s);
+                    departureMessage(fileOut, train, rl, hadWork);
+                    hadWork = false;
 
-                        // add location comment
-                        if (Setup.isPrintLocationCommentsEnabled() &&
-                                !rl.getLocation().getCommentWithColor().equals(Location.NONE)) {
-                            newLine(fileOut, rl.getLocation().getCommentWithColor());
-                        }
-                    }
                 } else {
                     // last location in the train's route, print train terminates message
                     if (!hadWork) {
                         newLine(fileOut);
-                    } else if (Setup.isPrintHeadersEnabled() ||
-                            !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
-                        printHorizontalLine(fileOut, IS_MANIFEST);
+                    } else {
+                        printHorizontalLine3(fileOut, IS_MANIFEST);
                     }
                     newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringTrainTerminates(),
-                            new Object[]{routeLocationName, train.getName(),
+                            new Object[]{routeLocationName, train.getSplitName(),
                                     train.getDescription(), rl.getLocation().getDivisionName()}));
                 }
             }
@@ -296,11 +209,82 @@ public class TrainManifest extends TrainCommon {
             newLine(fileOut, messageFormatText);
             log.error("Illegal argument", e);
         }
-
         fileOut.flush();
         fileOut.close();
-
         train.setModified(false);
+    }
+
+    private void arrivalMessage(PrintWriter fileOut, Train train, RouteLocation rl) {
+        newLine(fileOut, getTrainMessage(train, rl));
+    }
+
+    private void departureMessage(PrintWriter fileOut, Train train, RouteLocation rl, boolean hadWork) {
+        String routeLocationName = rl.getSplitName();
+        if (!hadWork) {
+            newLine(fileOut);
+            // No work at {0}
+            String s = MessageFormat.format(messageFormatText = TrainManifestText
+                    .getStringNoScheduledWork(),
+                    new Object[]{routeLocationName, train.getSplitName(),
+                            train.getDescription(), rl.getLocation().getDivisionName()});
+            // if a route comment, then only use location name and route comment, useful for passenger
+            // trains
+            if (!rl.getComment().equals(RouteLocation.NONE)) {
+                s = routeLocationName;
+                if (!rl.getComment().isBlank()) {
+                    s = MessageFormat.format(messageFormatText = TrainManifestText
+                            .getStringNoScheduledWorkWithRouteComment(),
+                            new Object[]{routeLocationName, rl.getCommentWithColor(),
+                                    train.getSplitName(), train.getDescription(),
+                                    rl.getLocation().getDivisionName()});
+                }
+            }
+            // append arrival or departure time if enabled
+            if (train.isShowArrivalAndDepartureTimesEnabled()) {
+                if (rl == train.getTrainDepartsRouteLocation()) {
+                    s += MessageFormat.format(messageFormatText = TrainManifestText
+                            .getStringDepartTime(), new Object[]{train.getFormatedDepartureTime()});
+                } else if (!rl.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
+                    s += MessageFormat.format(messageFormatText = TrainManifestText
+                            .getStringDepartTime(), new Object[]{train.getExpectedDepartureTime(rl)});
+                } else if (Setup.isUseDepartureTimeEnabled() &&
+                        !rl.getComment().equals(RouteLocation.NONE)) {
+                    s += MessageFormat
+                            .format(messageFormatText = TrainManifestText.getStringDepartTime(),
+                                    new Object[]{train.getExpectedDepartureTime(rl)});
+                }
+            }
+            newLine(fileOut, s);
+
+            // add location comment
+            if (Setup.isPrintLocationCommentsEnabled() &&
+                    !rl.getLocation().getCommentWithColor().equals(Location.NONE)) {
+                newLine(fileOut, rl.getLocation().getCommentWithColor());
+            }
+        } else {
+            printHorizontalLine3(fileOut, IS_MANIFEST);
+        }
+        if (Setup.isPrintLoadsAndEmptiesEnabled()) {
+            int emptyCars = train.getNumberEmptyCarsInTrain(rl);
+            // Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet, 3000 tons
+            newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
+                    .getStringTrainDepartsLoads(),
+                    new Object[]{routeLocationName,
+                            rl.getTrainDirectionString(), train.getNumberCarsInTrain(rl) - emptyCars,
+                            emptyCars,
+                            train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
+                            train.getTrainWeight(rl), train.getTrainTerminatesName(),
+                            train.getSplitName()}));
+        } else {
+            // Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
+            newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
+                    .getStringTrainDepartsCars(),
+                    new Object[]{routeLocationName,
+                            rl.getTrainDirectionString(), train.getNumberCarsInTrain(rl),
+                            train.getTrainLength(rl),
+                            Setup.getLengthUnit().toLowerCase(), train.getTrainWeight(rl),
+                            train.getTrainTerminatesName(), train.getSplitName()}));
+        }
     }
 
     private void printChange(PrintWriter fileOut, RouteLocation rl, Train train, int legOptions)
@@ -319,23 +303,23 @@ public class TrainManifest extends TrainCommon {
             }
             newLine(fileOut,
                     MessageFormat.format(messageFormatText = TrainManifestText.getStringAddHelpers(),
-                            new Object[] { rl.getSplitName(), train.getName(), train.getDescription(),
-                                    numberEngines, endLocationName, engineModel, engineRoad }));
+                            new Object[]{rl.getSplitName(), train.getSplitName(),
+                                    train.getDescription(), numberEngines, endLocationName, engineModel, engineRoad}));
         } else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
                 ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE ||
                         (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)) {
             newLine(fileOut, MessageFormat.format(
                     messageFormatText = TrainManifestText.getStringLocoAndCabooseChange(), new Object[]{
-                            rl.getSplitName(), train.getName(), train.getDescription(),
+                            rl.getSplitName(), train.getSplitName(), train.getDescription(),
                             rl.getLocation().getDivisionName()}));
         } else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
             newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText.getStringLocoChange(),
-                    new Object[]{rl.getSplitName(), train.getName(), train.getDescription(),
+                    new Object[]{rl.getSplitName(), train.getSplitName(), train.getDescription(),
                             rl.getLocation().getDivisionName()}));
         } else if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE ||
                 (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE) {
             newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText.getStringCabooseChange(),
-                    new Object[]{rl.getSplitName(), train.getName(), train.getDescription(),
+                    new Object[]{rl.getSplitName(), train.getSplitName(), train.getDescription(),
                             rl.getLocation().getDivisionName()}));
         }
     }
@@ -345,5 +329,4 @@ public class TrainManifest extends TrainCommon {
             newLine(file, string, IS_MANIFEST);
         }
     }
-
 }

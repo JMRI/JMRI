@@ -1,8 +1,12 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -19,59 +23,61 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
     public void testCreateNode() {
         // test the code to get an new XBee 
         XBeeNode node = (XBeeNode) ((XBeeTrafficController)tc).newNode();
-        Assert.assertNotNull("node create failed", node);
+        assertNotNull( node, "node create failed");
     }
 
     @Test
     @Override
     public void testGetIEEE802154Messge() {
-        Assert.assertNull("IEEE802154Message", ((XBeeTrafficController)tc).getIEEE802154Message(5));
+        assertNull( ((XBeeTrafficController)tc).getIEEE802154Message(5), "IEEE802154Message");
     }
 
     @Test
     @Override
     public void testGetPollReplyHandler() {
-        Assert.assertNull("pollReplyHandler", ((XBeeTrafficController)tc).pollReplyHandler());
+        assertNull( ((XBeeTrafficController)tc).pollReplyHandler(), "pollReplyHandler");
     }
 
     @Test
     public void testGetNewReply() {
-        Assert.assertNotNull("New Reply", ((XBeeTrafficController)tc).newReply());
-        Assert.assertTrue("New Reply class", ((XBeeTrafficController)tc).newReply() instanceof jmri.jmrix.ieee802154.xbee.XBeeReply );
+        assertNotNull( ((XBeeTrafficController)tc).newReply(), "New Reply");
+        assertInstanceOf( XBeeReply.class, ((XBeeTrafficController)tc).newReply(), "New Reply class");
     }
 
     @Test
     @Override
     public void checkPollMessageNoNodes() {
         // no nodes, should return null.
-        Assert.assertNull("pollMessage", ((XBeeTrafficController)tc).pollMessage());
+        assertNull( ((XBeeTrafficController)tc).pollMessage(), "pollMessage");
     }
 
     @Test
     @Override
     public void checkPollReplyHandler() {
         // always returns null.
-        Assert.assertNull("pollReplyHandler", ((XBeeTrafficController)tc).pollReplyHandler());
+        assertNull( ((XBeeTrafficController)tc).pollReplyHandler(), "pollReplyHandler");
     }
 
     @Test
     @Override
     public void checkEnterProgMode() {
         // No Programming Mode, returns null.
-        Assert.assertNull("enterProgMode", ((XBeeTrafficController)tc).enterProgMode());
+        assertNull( ((XBeeTrafficController)tc).enterProgMode(), "enterProgMode");
     }
 
     @Test
     @Override
     public void checkExitProgMode() {
         // No Programming Mode, returns null.
-        Assert.assertNull("enterNormalMode", ((XBeeTrafficController)tc).enterNormalMode());
+        assertNull( ((XBeeTrafficController)tc).enterNormalMode(), "enterNormalMode");
     }
 
 
     @Test
     public void registerNonXBeeNode(){
-        Assert.assertThrows(IllegalArgumentException.class, () -> ((XBeeTrafficController)tc).registerNode(new jmri.jmrix.ieee802154.serialdriver.SerialNode()));
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () ->
+            ((XBeeTrafficController)tc).registerNode(new jmri.jmrix.ieee802154.serialdriver.SerialNode()));
+        assertNotNull(ex);
     }
 
     @Test
@@ -88,7 +94,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
         node.setGlobalAddress(gad);
         ((XBeeTrafficController)tc).registerNode(node);
         XBeeNode n = (XBeeNode) ((XBeeTrafficController)tc).getNodeFromAddress("00 01");
-        Assert.assertNull("node found", n);
+        assertNull( n, "node found");
     }
 
     @Test
@@ -105,7 +111,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
         byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         node.setGlobalAddress(gad);
         XBeeNode n = (XBeeNode) ((XBeeTrafficController)tc).getNodeFromAddress(iad);
-        Assert.assertNotNull("node not found", n);
+        assertNotNull( n, "node not found");
     }
 
     @Test
@@ -121,7 +127,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
         byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         node.setGlobalAddress(gad);
         XBeeNode n = (XBeeNode) ((XBeeTrafficController)tc).getNodeFromAddress(uad);
-        Assert.assertNotNull("node not found", n);
+        assertNotNull( n, "node not found");
     }
 
    @Test
@@ -138,7 +144,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
         node.setGlobalAddress(gad);
         ((XBeeTrafficController)tc).registerNode(node);
         XBeeNode n = (XBeeNode) ((XBeeTrafficController)tc).getNodeFromAddress("6D 97");
-        Assert.assertNotNull("node not found", n);
+        assertNotNull( n, "node not found");
     }
 
     @Test
@@ -156,7 +162,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
         node.setGlobalAddress(gad);
         ((XBeeTrafficController)tc).registerNode(node);
         XBeeNode n = (XBeeNode) ((XBeeTrafficController)tc).getNodeFromAddress(gad);
-        Assert.assertNotNull("node not found", n);
+        assertNotNull( n, "node not found");
     }
 
     @Test
@@ -175,7 +181,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
         node.setGlobalAddress(gad);
         ((XBeeTrafficController)tc).registerNode(node);
         XBeeNode n = (XBeeNode) ((XBeeTrafficController)tc).getNodeFromAddress(iad);
-        Assert.assertNotNull("node not found", n);
+        assertNotNull( n, "node not found");
     }
 
     @Test
@@ -191,7 +197,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
         node.setGlobalAddress(gad);
         ((XBeeTrafficController)tc).registerNode(node);
         XBeeNode n = (XBeeNode) ((XBeeTrafficController)tc).getNodeFromAddress("00 13 A2 00 40 A0 4D 2D");
-        Assert.assertNotNull("node not found", n);
+        assertNotNull( n, "node not found");
     }
 
     @BeforeEach
@@ -205,8 +211,8 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
     @Override
     public void tearDown() {
         ((XBeeTrafficController)tc).terminate();
+        tc.terminateThreads();
         tc = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

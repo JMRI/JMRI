@@ -1,5 +1,6 @@
 package jmri;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 /**
@@ -67,6 +68,7 @@ public interface SectionManager extends Manager<Section> {
      *             followed by system names
      * @return the found section of null if no matching Section found
      */
+    @CheckForNull
     Section getSection(String name);
 
     /**

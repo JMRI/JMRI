@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2007, 2014, 2016 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="Peter Ulvestad" version="0" lastUpdated="20241008"/>
+  <!-- Created from Economy Series 6 -->
+  <!-- Version 0 - New Series 7 Economy Digitrax decoders -->
+  <version author="Peter Ulvestad" version="1" lastUpdated="20241019"/>
+  <!-- Version 1 - Added DH187, DH127 and DN167n18 models -->
+  <version author="Peter Ulvestad" version="2" lastUpdated="20241030"/>
+  <!-- Version 2 - Added missing CVs -->
+  <decoder>
+    <family name="Economy Series 7 with FX3, silent" mfg="Digitrax" lowVersionID="204" highVersionID="204" comment="">
+      <model model="DN147A0" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN147A1" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN147K0A" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN147K0B" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN147K0D" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN147K0E" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN147K1C" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN147K2" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN167K0A" numOuts="6" numFns="6" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN167K0B" numOuts="6" numFns="6" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN167K0D" numOuts="6" numFns="6" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN167K0E" numOuts="6" numFns="6" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN167n18" numOuts="6" numFns="6" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="Next18" comment="Next18">
+      </model>
+      <model model="DH127D" numOuts="2" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="9pin" comment="HO-Scale, wired">
+      </model>
+      <model model="DH127MT" numOuts="2" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="21MTC" comment="HO-Scale, with NMRA 21MTC interface">
+      </model>
+      <model model="DH127P" numOuts="2" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with Medium Plug on Long Harness">
+      </model>
+      <model model="DH127PS" numOuts="2" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with Medium Plug on Short Harness">
+      </model>
+      <model model="DH187A0" numOuts="6" numFns="8" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="DropIn" comment="HO-Scale, dropin Athearn, Kato and others">
+      </model>
+      <model model="DH187D" numOuts="6" numFns="8" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="9pin" comment="HO-Scale, wired">
+      </model>
+      <model model="DH187MT" numOuts="6" numFns="8" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="21MTC" comment="HO-Scale, with NMRA 21MTC interface">
+      </model>
+      <model model="DH187K0" numOuts="6" numFns="8" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="DropIn" comment="HO-Scale, dropin Kato">
+      </model>
+      <model model="DH187P" numOuts="6" numFns="6" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with Medium Plug on Long Harness">
+      </model>
+      <model model="DH187PS" numOuts="6" numFns="6" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with Medium Plug on Short Harness">
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_31.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/mfgVersionId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv21.22.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29NDOT.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/fxCVs.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv54.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv61Series6.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+      <factReset label="Reset All CVs except speed table" CV="8" default="9">
+        <label xml:lang="it">Reset delle CV salvo Tabella Velocit√† ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitrax.xml"/>
+</decoder-config>

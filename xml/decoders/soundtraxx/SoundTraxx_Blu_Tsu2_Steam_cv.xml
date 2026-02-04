@@ -637,7 +637,7 @@
         </enumVal>
         <label>Whistle Select</label>
     </variable>
-    <variable CV="120" mask="VVVVVVVV" item="Sound Option 6" default="28" include="2107,2108,2109,2110,2116,2124,2134,2138,2145" tooltip="Selects which Whistle to use">  <!--  Steam-2  -->
+    <variable CV="120" mask="VVVVVVVV" item="Sound Option 6" default="28" include="2107,2108,2109,2110,2116,2124,2134,2138,2145,2157" tooltip="Selects which Whistle to use">  <!--  Steam-2  -->
         <enumVal>
             <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceSteam2Whistle.xml"/>
         </enumVal>
@@ -658,7 +658,7 @@
         </enumVal>
         <label>Auxiliary Whistle Select</label>
     </variable>
-    <variable CV="121" mask="VVVVVVVV" item="Sound Option 7" default="0" include="2107,2108,2109,2110,2116,2124,2134,2138,2145" tooltip="Choose an alternate Whistle or a short blast of the primary Whistle">
+    <variable CV="121" mask="VVVVVVVV" item="Sound Option 7" default="0" include="2107,2108,2109,2110,2116,2124,2134,2138,2145,2157" tooltip="Choose an alternate Whistle or a short blast of the primary Whistle">
         <enumVal>
             <enumChoice>
                 <choice>Short Whistle</choice>
@@ -676,7 +676,7 @@
         </enumVal>
         <label>Auxiliary Whistle Select</label>
     </variable>
-    <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" default="29" include="2064,2065,2066,2067,2107,2108,2109,2110,2116,2124,2134,2138,2145" tooltip="Bell sound effect and ring-rate">
+    <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" default="29" include="2064,2065,2066,2067,2107,2108,2109,2110,2116,2124,2134,2138,2145,2157" tooltip="Bell sound effect and ring-rate">
         <enumVal>
             <enumChoice>
                 <choice>Heavy Brass: slow</choice>
@@ -1025,7 +1025,7 @@
         </enumVal>
         <label>Bell Select</label>
     </variable>
-    <variable CV="123" mask="XXXXVVVV" item="Sound Option 1" default="6" include="2064,2065,2066,2067,2107,2108,2109,2110,2116,2124,2134,2138,2145" tooltip="Select one of chuff sound effects">
+    <variable CV="123" mask="XXXXVVVV" item="Sound Option 1" default="6" include="2064,2065,2066,2067,2107,2108,2109,2110,2116,2124,2134,2138,2145,2157" tooltip="Select one of chuff sound effects">
         <enumVal>
             <enumChoice>
                 <choice>Light 1</choice>
@@ -1086,7 +1086,7 @@
         </enumVal>
         <label>Exhaust Select</label>
     </variable>
-    <variable CV="124" mask="XXXXVVVV" item="Sound Option 10" default="3" include="2064,2065,2066,2067,2107,2108,2109,2110,2116,2124,2134,2138,2145" tooltip="Select the air compressor sound effects">
+    <variable CV="124" mask="XXXXVVVV" item="Sound Option 10" default="3" include="2064,2065,2066,2067,2107,2108,2109,2110,2116,2124,2134,2138,2145,2157" tooltip="Select the air compressor sound effects">
         <enumVal>
             <enumChoice>
                 <choice>Single-phase 1</choice>
@@ -1159,7 +1159,7 @@
         </enumVal>
         <label>Air Compressor Select</label>
     </variable>
-    <variable CV="125" mask="XXXXXVVV" item="Sound Option 5" default="2" include="2064,2065,2066,2067,2107,2108,2109,2110,2116,2124,2134,2138,2145" tooltip="Select one of four dynamo sound effects">
+    <variable CV="125" mask="XXXXXVVV" item="Sound Option 5" default="2" include="2064,2065,2066,2067,2107,2108,2109,2110,2116,2124,2134,2138,2145,2157" tooltip="Select one of four dynamo sound effects">
         <enumVal>
             <enumChoice>
                 <choice>Dynamo 1</choice>

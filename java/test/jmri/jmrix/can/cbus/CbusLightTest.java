@@ -43,7 +43,7 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
     }    
 
     @Test
-    public void testNullEvent() throws Exception {
+    public void testNullEvent() {
         Exception ex = Assertions.assertThrows(NullPointerException.class, () -> {
             t = new CbusLight("ML",null,tcis);
         });
@@ -513,8 +513,8 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
     @Disabled("CbusLight doesn't extend AbstractVariableLight. Rewrite test? / Daniel Bergqvist (danielb987) June 17, 2020")
     @Test
     public void testIntensity() {
-        
-        Assert.assertTrue("light is VariableLight", t instanceof VariableLight);
+
+        Assertions.assertInstanceOf(VariableLight.class, t);
         Assert.assertTrue(0 == ((VariableLight)t).getCurrentIntensity());
         ((VariableLight)t).setTargetIntensity(1);
         Assert.assertTrue(1.0 == ((VariableLight)t).getCurrentIntensity());

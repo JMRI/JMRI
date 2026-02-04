@@ -3,14 +3,14 @@ package jmri.jmrix.openlcb;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
 import jmri.Turnout;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 import org.openlcb.EventID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.EventTable;
 import org.openlcb.implementations.VersionedValueListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import javax.annotation.Nonnull;
 import javax.annotation.CheckReturnValue;
 
@@ -37,11 +37,12 @@ import javax.annotation.CheckReturnValue;
 */
 
 
-public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
+public final class OlcbTurnout extends jmri.implementation.AbstractTurnout {
 
     OlcbAddress addrThrown;   // go to thrown state
     OlcbAddress addrClosed;   // go to closed state
-    final OlcbInterface iface;
+    private final OlcbInterface iface;
+    private final CanSystemConnectionMemo memo;
 
     VersionedValueListener<Boolean> turnoutListener;
     BitProducerConsumer pc;
@@ -56,9 +57,14 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
     private static final int validFeedbackTypes = MONITORING | ONESENSOR | TWOSENSOR | DIRECT;
     private static final int defaultFeedbackType = MONITORING;
 
-    protected OlcbTurnout(String prefix, String address, OlcbInterface iface) {
+    protected OlcbTurnout(String prefix, String address, CanSystemConnectionMemo memo) {
         super(prefix + "T" + address);
-        this.iface = iface;
+        this.memo = memo;
+        if (memo != null) { // greatly simplify testing
+            this.iface = memo.get(OlcbInterface.class);
+        } else {
+            this.iface = null;
+        }
         this._validFeedbackNames = validFeedbackNames;
         this._validFeedbackModes = validFeedbackModes;
         this._validFeedbackTypes = validFeedbackTypes;
@@ -71,8 +77,8 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      */
     private void init(String address) {
         // build local addresses
-        OlcbAddress a = new OlcbAddress(address);
-        OlcbAddress[] v = a.split();
+        OlcbAddress a = new OlcbAddress(address, memo);
+        OlcbAddress[] v = a.split(memo);
         if (v == null) {
             log.error("Did not find usable system name: {}", address);
             return;
@@ -146,6 +152,13 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
     public EventID getEventID(boolean isThrown) {
         if (isThrown) return addrThrown.toEventID();
         else return addrClosed.toEventID();
+    }
+    
+    @Override
+    @CheckReturnValue
+    @Nonnull
+    public String getRecommendedToolTip() {
+        return addrClosed.toDottedString()+";"+addrThrown.toDottedString();
     }
     
     /**
@@ -310,9 +323,9 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
     @CheckReturnValue
     @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
-        return OlcbAddress.compareSystemNameSuffix(suffix1, suffix2);
+        return OlcbAddress.compareSystemNameSuffix(suffix1, suffix2, memo);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbTurnout.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbTurnout.class);
 
 }

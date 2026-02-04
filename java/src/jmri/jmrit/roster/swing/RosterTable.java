@@ -31,6 +31,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.RowSorterEvent;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 
@@ -44,6 +45,7 @@ import jmri.util.swing.JmriPanel;
 import jmri.util.swing.JmriMouseAdapter;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
+import jmri.util.swing.MultiLineCellRenderer;
 import jmri.util.swing.XTableColumnModel;
 
 /**
@@ -54,11 +56,11 @@ import jmri.util.swing.XTableColumnModel;
  */
 public class RosterTable extends JmriPanel implements RosterEntrySelector, RosterGroupSelector {
 
-    RosterTableModel dataModel;
-    TableRowSorter<RosterTableModel> sorter;
-    JTable dataTable;
-    JScrollPane dataScroll;
-    XTableColumnModel columnModel = new XTableColumnModel();
+    private RosterTableModel dataModel;
+    private TableRowSorter<RosterTableModel> sorter;
+    private JTable dataTable;
+    private JScrollPane dataScroll;
+    private final XTableColumnModel columnModel = new XTableColumnModel();
     private RosterGroupSelector rosterGroupSource = null;
     protected transient ListSelectionListener tableSelectionListener;
     private RosterEntry[] selectedRosterEntries = null;
@@ -84,7 +86,19 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
                 sortedRosterEntries = null;
             }
         });
-        dataTable = new JTable(dataModel);
+        dataTable = new JTable(dataModel) {
+            // only use MultiLineRenderer in COMMENTS column
+            @Override
+            public TableCellRenderer getCellRenderer(int row, int column) {
+                var modelColumn = convertColumnIndexToModel(column);
+                if (modelColumn == RosterTableModel.COMMENT) {
+                    return new MultiLineCellRenderer();
+                }
+                return super.getCellRenderer(row, column);
+            }
+        };
+        dataModel.setAssociatedTable(dataTable);  // used for resizing
+        dataModel.setAssociatedSorter(sorter);
         dataTable.setRowSorter(sorter);
         dataScroll = new JScrollPane(dataTable);
         dataTable.setRowHeight(InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize() + 4);
@@ -103,15 +117,29 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         dataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         dataTable.setColumnModel(columnModel);
-        // dataModel.setColumnModel(columnModel);
         dataTable.createDefaultColumnsFromModel();
         dataTable.setAutoCreateColumnsFromModel(false);
 
         // format the last updated date time, last operated date time.
         dataTable.setDefaultRenderer(Date.class, new DateTimeCellRenderer());
 
+        // Start with two columns not visible
+        columnModel.setColumnVisible(columnModel.getColumnByModelIndex(RosterTableModel.DECODERMFGCOL), false);
+        columnModel.setColumnVisible(columnModel.getColumnByModelIndex(RosterTableModel.DECODERFAMILYCOL), false);
+
         TableColumn tc = columnModel.getColumnByModelIndex(RosterTableModel.PROTOCOL);
         columnModel.setColumnVisible(tc, false);
+
+        // if the total time operated column exists, set it to DurationRenderer
+        var columns = columnModel.getColumns();
+        while (columns.hasMoreElements()) {
+            TableColumn column = columns.nextElement();
+            if ( Bundle.getMessage(RosterEntry.ATTRIBUTE_OPERATING_DURATION)
+                .equals( column.getHeaderValue().toString())) {
+                column.setCellRenderer( new DurationRenderer() );
+                column.setCellEditor(new DurationCellEditor());
+            }
+        }
 
         // resize columns as requested
         resetColumnWidths();
@@ -141,12 +169,13 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             if (!e.getValueIsAdjusting()) {
                 selectedRosterEntries = null; // clear cached list of selections
                 if (dataTable.getSelectedRowCount() == 1) {
-                    re = Roster.getDefault().getEntryForId(dataModel.getValueAt(sorter.convertRowIndexToModel(dataTable.getSelectedRow()), RosterTableModel.IDCOL).toString());
+                    re = Roster.getDefault().getEntryForId(dataModel.getValueAt(sorter
+                        .convertRowIndexToModel(dataTable.getSelectedRow()), RosterTableModel.IDCOL).toString());
                 } else if (dataTable.getSelectedRowCount() > 1) {
                     re = null;
                 } // leave last selected item visible if no selection
             } else if (e.getFirstIndex() == -1) {
-                //A reorder of the table might of occurred therefore we are going to make sure that the selected item is still in view
+                // A reorder of the table may have occurred so ensure the selected item is still in view
                 moveTableViewToSelected();
             }
         };
@@ -215,7 +244,8 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         JPopupMenu popupMenu = new JPopupMenu();
         for (int i = 0; i < columnModel.getColumnCount(false); i++) {
             TableColumn tc = columnModel.getColumnByModelIndex(i);
-            JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(dataTable.getModel().getColumnName(i), columnModel.isColumnVisible(tc));
+            JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(dataTable.getModel()
+                .getColumnName(i), columnModel.isColumnVisible(tc));
             menuItem.addActionListener(new HeaderActionListener(tc));
             popupMenu.add(menuItem);
 
@@ -253,7 +283,8 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             int[] rows = dataTable.getSelectedRows();
             selectedRosterEntries = new RosterEntry[rows.length];
             for (int idx = 0; idx < rows.length; idx++) {
-                selectedRosterEntries[idx] = Roster.getDefault().getEntryForId(dataModel.getValueAt(sorter.convertRowIndexToModel(rows[idx]), RosterTableModel.IDCOL).toString());
+                selectedRosterEntries[idx] = Roster.getDefault().getEntryForId(
+                    dataModel.getValueAt(sorter.convertRowIndexToModel(rows[idx]), RosterTableModel.IDCOL).toString());
             }
         }
         return Arrays.copyOf(selectedRosterEntries, selectedRosterEntries.length);
@@ -265,7 +296,8 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         if (sortedRosterEntries == null) {
             sortedRosterEntries = new RosterEntry[sorter.getModelRowCount()];
             for (int idx = 0; idx < sorter.getModelRowCount(); idx++) {
-                sortedRosterEntries[idx] = Roster.getDefault().getEntryForId(dataModel.getValueAt(sorter.convertRowIndexToModel(idx), RosterTableModel.IDCOL).toString());
+                sortedRosterEntries[idx] = Roster.getDefault().getEntryForId(
+                    dataModel.getValueAt(sorter.convertRowIndexToModel(idx), RosterTableModel.IDCOL).toString());
             }
         }
         return Arrays.copyOf(sortedRosterEntries, sortedRosterEntries.length);
@@ -287,21 +319,32 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         return dataTable.getSelectionModel().getSelectionMode();
     }
 
-    public void setSelection(RosterEntry... selection) {
+    public boolean setSelection(RosterEntry... selection) {
         //Remove the listener as this change will re-activate it and we end up in a loop!
         dataTable.getSelectionModel().removeListSelectionListener(tableSelectionListener);
         dataTable.clearSelection();
+        boolean foundIt = false;
         if (selection != null) {
             for (RosterEntry entry : selection) {
                 re = entry;
                 int entries = dataTable.getRowCount();
                 for (int i = 0; i < entries; i++) {
-                    if (dataModel.getValueAt(sorter.convertRowIndexToModel(i), RosterTableModel.IDCOL).equals(re.getId())) {
+                                    
+                    // skip over entry being deleted from the group
+                    if (dataModel.getValueAt(sorter.convertRowIndexToModel(i), 
+                                                                RosterTableModel.IDCOL) == null) {
+                        continue;
+                    }
+
+                    if (dataModel.getValueAt(sorter.convertRowIndexToModel(i), 
+                                            RosterTableModel.IDCOL)
+                                    .equals(re.getId())) {
                         dataTable.addRowSelectionInterval(i, i);
+                        foundIt = true;
                     }
                 }
             }
-            if (selection.length > 1) {
+            if (selection.length > 1 || !foundIt) {
                 re = null;
             } else {
                 this.moveTableViewToSelected();
@@ -310,9 +353,10 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             re = null;
         }
         dataTable.getSelectionModel().addListSelectionListener(tableSelectionListener);
+        return foundIt;
     }
 
-    class HeaderActionListener implements ActionListener {
+    private class HeaderActionListener implements ActionListener {
 
         TableColumn tc;
 
@@ -331,7 +375,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         }
     }
 
-    class TableHeaderListener extends JmriMouseAdapter {
+    private class TableHeaderListener extends JmriMouseAdapter {
 
         @Override
         public void mousePressed(JmriMouseEvent e) {
@@ -386,6 +430,25 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         }
     }
 
+    private static class DurationRenderer extends DefaultTableCellRenderer {
+
+        @Override
+        public void setValue(Object value) {
+            try {
+                int duration = Integer.parseInt(value.toString());
+                if ( duration != 0 ) {
+                    super.setValue(jmri.util.DateUtil.userDurationFromSeconds(duration));
+                    super.setToolTipText(Bundle.getMessage("DurationViewTip"));
+                    return;
+                }
+            }
+            catch (NumberFormatException e) {
+                log.debug("could not format duration ( String integer of total seconds ) in {}", value, e);
+            }
+            super.setValue(null);
+        }
+    }
+
     private static class DateTimeCellRenderer extends DefaultTableCellRenderer {
         @Override
         protected void setValue(Object value) {
@@ -399,11 +462,11 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
 
     private class DateTimeCellEditor extends RosterCellEditor {
 
-        public DateTimeCellEditor() {
+        DateTimeCellEditor() {
             super();
         }
 
-        private final static String EDITOR_DATE_FORMAT =  "yyyy-MM-dd hh:mm";
+        private static final String EDITOR_DATE_FORMAT =  "yyyy-MM-dd HH:mm";
         private Date startDate = new Date();
 
         @Override
@@ -434,5 +497,22 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         }
 
     }
+
+    private class DurationCellEditor extends RosterCellEditor {
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int col) {
+            editorComponent.setToolTipText(Bundle.getMessage("DurationEditTip"));
+            return editorComponent;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return String.valueOf(super.getCellEditorValue());
+        }
+
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RosterTable.class);
 
 }

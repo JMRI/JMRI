@@ -1,10 +1,10 @@
 package jmri;
 
-import java.util.Hashtable;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 
@@ -39,6 +39,56 @@ public interface SignalMastLogic extends NamedBean {
      * dynamic creation of signalmast logic
      */
     int STORENONE = 4;
+
+    /**
+     * String constant for sensors.
+     */
+    String PROPERTY_SENSORS = "sensors";
+
+    /**
+     * String constant for turnouts.
+     */
+    String PROPERTY_TURNOUTS = "turnouts";
+
+    /**
+     * String constant for auto turnouts.
+     */
+    String PROPERTY_AUTO_TURNOUTS = "autoturnouts";
+
+    /**
+     * String constant for blocks.
+     */
+    String PROPERTY_BLOCKS = "blocks";
+
+    /**
+     * String constant for auto blocks.
+     */
+    String PROPERTY_AUTO_BLOCKS = "autoblocks";
+
+    /**
+     * String constant for masts.
+     */
+    String PROPERTY_MASTS = "masts";
+
+    /**
+     * String constant for auto masts.
+     */
+    String PROPERTY_AUTO_MASTS = "automasts";
+
+    /**
+     * String constant for updated source.
+     */
+    String PROPERTY_UPDATED_SOURCE = "updatedSource";
+
+    /**
+     * String constant for updated destination.
+     */
+    String PROPERTY_UPDATED_DESTINATION = "updatedDestination";
+
+    /**
+     * String constant for length.
+     */
+    String PROPERTY_LENGTH = "length";
 
     /**
      * Query if we are allowing the system to automatically generate a list of
@@ -702,7 +752,7 @@ public interface SignalMastLogic extends NamedBean {
      * @return the Layout Block
      */
     @CheckForNull
-    LayoutBlock getProtectingBlock(SignalMast destination);
+    LayoutBlock getProtectingBlock(@Nonnull SignalMast destination);
 
     /**
      * Set the auto turnouts based upon a given list of layout blocks for a

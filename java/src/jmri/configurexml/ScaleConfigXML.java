@@ -3,8 +3,10 @@ package jmri.configurexml;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -20,6 +22,15 @@ import org.jdom2.JDOMException;
  */
 public class ScaleConfigXML {
 
+    /**
+     * Prevent public Construction, class only supplies static methods.
+     */
+    private ScaleConfigXML(){}
+
+    /**
+     * Store the Scales to file.
+     * @return true on success, else false.
+     */
     public static boolean doStore() {
         ScaleXmlFile x = new ScaleXmlFile();
         File file = x.getStoreFile();
@@ -35,9 +46,9 @@ public class ScaleConfigXML {
                 org.jdom2.Namespace.getNamespace("xsi",
                         "http://www.w3.org/2001/XMLSchema-instance"));  // NOI18N
         Document doc = new Document(root);
-        Element values;
+        Element values = new Element("scales");
 
-        root.addContent(values = new Element("scales"));  // NOI18N
+        root.addContent(values);
         for (jmri.Scale scale : jmri.ScaleManager.getScales()) {
             Element e = new Element("scale");  // NOI18N
             e.addContent(new Element("scale_name").addContent(scale.getScaleName()));  // NOI18N
@@ -59,9 +70,18 @@ public class ScaleConfigXML {
         return true;
     }
 
+    /**
+     * Load the Scales from file.
+     * Checks userFilesPath then programPath for resources/scales/ScaleData.xml
+     * @return true on success, else false.
+     */
     public static boolean doLoad() {
         ScaleXmlFile x = new ScaleXmlFile();
         File file = x.getLoadFile();
+        if ( file == null ) {
+            log.error("Scale File {} not located", ScaleXmlFile.FILENAME);
+            return false;
+        }
 
         // Find root
         Element root;
@@ -77,13 +97,14 @@ public class ScaleConfigXML {
                 log.error("Unable to find a scale entry");  // NOI18N
                 return false;
             }
+            Element e;
             for (Element scale : scales.getChildren("scale")) {  // NOI18N
-                Element scale_name = scale.getChild("scale_name");  // NOI18N
-                String scaleName = (scale_name == null) ? "" : scale_name.getValue();
-                Element user_name = scale.getChild("user_name");  // NOI18N
-                String userName = (user_name == null) ? "" : user_name.getValue();
-                Element scale_ratio = scale.getChild("scale_ratio");  // NOI18N
-                double scaleRatio = (scale_ratio == null) ? 1.0 : Double.parseDouble(scale_ratio.getValue());
+                e = scale.getChild("scale_name");  // NOI18N
+                String scaleName = (e == null) ? "" : e.getValue();
+                e = scale.getChild("user_name");  // NOI18N
+                String userName = (e == null) ? "" : e.getValue();
+                e = scale.getChild("scale_ratio");  // NOI18N
+                double scaleRatio = (e == null) ? 1.0 : Double.parseDouble(e.getValue());
 
                 jmri.ScaleManager.addScale(scaleName, userName, scaleRatio);
             }
@@ -100,20 +121,19 @@ public class ScaleConfigXML {
     }
 
     private static class ScaleXmlFile extends XmlFile {
-        private static String prodPath = FileUtil.getProgramPath() + "resources/scales/";  // NOI18N
-        private static String userPath = FileUtil.getUserFilesPath() + "resources/scales/";  // NOI18N
-        private static String fileName = "ScaleData.xml";  // NOI18N
+        private static final String PROG_PATH = FileUtil.getProgramPath() + "resources/scales/";  // NOI18N
+        private static final String USER_PATH = FileUtil.getUserFilesPath() + "resources/scales/";  // NOI18N
+        private static final String FILENAME = "ScaleData.xml";  // NOI18N
 
-        public static String getStoreFileName() {
-            return userPath + fileName;
+        static String getStoreFileName() {
+            return USER_PATH + FILENAME;
         }
 
-        public File getStoreFile() {
-            File chkdir = new File(userPath);
-            if (!chkdir.exists()) {
-                if (!chkdir.mkdirs()) {
-                    return null;
-                }
+        @javax.annotation.CheckForNull
+        File getStoreFile() {
+            File chkdir = new File(USER_PATH);
+            if (!chkdir.exists() && !chkdir.mkdirs()) {
+                return null;
             }
             File file = findFile(getStoreFileName());
             if (file == null) {
@@ -130,14 +150,16 @@ public class ScaleConfigXML {
             return file;
         }
 
-        public File getLoadFile() {
-            File file = findFile(userPath + fileName);
+        @javax.annotation.CheckForNull
+        File getLoadFile() {
+            File file = findFile(USER_PATH + FILENAME);
             if (file == null) {
-                file = findFile(prodPath + fileName);
+                file = findFile(PROG_PATH + FILENAME);
             }
             return file;
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScaleConfigXML.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScaleConfigXML.class);
+
 }

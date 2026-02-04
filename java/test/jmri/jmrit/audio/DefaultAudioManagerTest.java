@@ -103,14 +103,14 @@ public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBa
         Assert.assertEquals("Verify that we get two buffers & one listener", expResult, result);
     }
     
-    // No manager-specific system name validation at present
     @Test
     @Override
+    @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
     
-    // No manager-specific system name validation at present
     @Test
     @Override
+    @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach

@@ -1,7 +1,5 @@
 package jmri.util.exceptionhandler;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.GraphicsEnvironment;
 
 import jmri.util.swing.ExceptionContext;
@@ -23,7 +21,12 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
     public void uncaughtException(Thread t, Throwable e) {
 
         // see http://docs.oracle.com/javase/7/docs/api/java/lang/ThreadDeath.html
-        if (e instanceof java.lang.ThreadDeath) {
+        // 
+        // The type ThreadDeath has been deprecated since version 20 and marked for removal
+        // and the warning cannot be suppressed in Java 21. But external libraries might
+        // throw the exception outside of JMRI control. So check the name of the exception
+        // instead of using "instanceof".
+        if ("java.lang.ThreadDeath".equals(e.getClass().getName())) {
             log.info("Thread has stopped: {}", t.getName());
             return;
         }
@@ -40,7 +43,6 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
         }
     }
 
-    @SuppressFBWarnings(value="DM_EXIT", justification="Errors should terminate the application")
     protected void systemExit(){
         System.exit(126);
     }

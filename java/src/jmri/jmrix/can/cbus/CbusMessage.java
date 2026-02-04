@@ -2,10 +2,7 @@ package jmri.jmrix.can.cbus;
 
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractMessage;
-import jmri.jmrix.can.CanFrame;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanMutableFrame;
-import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.*;
 
 
 /**
@@ -147,6 +144,7 @@ public class CbusMessage {
      *
      * @param am CanMessage or CanReply
      * @param id CAN ID
+     * @throws IllegalArgumentException when needed
      */
     public static void setId(AbstractMessage am, int id) throws IllegalArgumentException {
         if (am instanceof CanMutableFrame){
@@ -171,6 +169,7 @@ public class CbusMessage {
      *
      * @param am CanMessage or CanReply
      * @param pri Priority
+     * @throws IllegalArgumentException when needed
      */
     public static void setPri(AbstractMessage am, int pri) throws IllegalArgumentException {
         if (am instanceof CanMutableFrame){
@@ -242,6 +241,7 @@ public class CbusMessage {
      *
      * @param f CanReply or CanMessage
      * @return CAN ID of the outgoing message
+     * @throws IllegalArgumentException when needed
      */
     public static int getId(AbstractMessage f) throws IllegalArgumentException {
         if (f instanceof CanFrame){
@@ -262,6 +262,7 @@ public class CbusMessage {
      *
      * @param r CanReply or CanMessage
      * @return Priority of the outgoing message
+     * @throws IllegalArgumentException when needed
      */
     public static int getPri(AbstractMessage r) throws IllegalArgumentException {
         if (r instanceof CanFrame){
@@ -481,7 +482,12 @@ public class CbusMessage {
         m.setElement(1, (a / 256) & 0xFF);
         m.setElement(2, (a / 65536) & 0xFF);
         m.setElement(3, 0);
-        m.setElement(4, 0x0D);
+        //m.setElement(4, 0x0D);
+        m.setElement(4, CbusConstants.CBUS_BOOT_MODE_ACK
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_INC
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_ERASE
+                      | CbusConstants.CBUS_BOOT_MODE_WRT_UNLCK
+                    );
         m.setElement(5, CbusConstants.CBUS_BOOT_NOP);
         m.setElement(6, 0);
         m.setElement(7, 0);
@@ -502,7 +508,12 @@ public class CbusMessage {
         m.setElement(1, 0);
         m.setElement(2, 0);
         m.setElement(3, 0);
-        m.setElement(4, 0x0D);
+        //m.setElement(4, 0x0D);
+        m.setElement(4, CbusConstants.CBUS_BOOT_MODE_ACK
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_INC
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_ERASE
+                      | CbusConstants.CBUS_BOOT_MODE_WRT_UNLCK
+                    );
         m.setElement(5, CbusConstants.CBUS_BOOT_RESET);
         m.setElement(6, 0);
         m.setElement(7, 0);
@@ -525,7 +536,12 @@ public class CbusMessage {
         m.setElement(1, (a / 256) & 0xFF);
         m.setElement(2, (a / 65536) & 0xFF);
         m.setElement(3, 0);
-        m.setElement(4, 0x0D);
+        //m.setElement(4, 0x0D);
+        m.setElement(4, CbusConstants.CBUS_BOOT_MODE_ACK
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_INC
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_ERASE
+                      | CbusConstants.CBUS_BOOT_MODE_WRT_UNLCK
+                    );
         m.setElement(5, CbusConstants.CBUS_BOOT_INIT);
         m.setElement(6, 0);
         m.setElement(7, 0);
@@ -550,7 +566,12 @@ public class CbusMessage {
         m.setElement(1, 0);
         m.setElement(2, 0);
         m.setElement(3, 0);
-        m.setElement(4, 0x0D);
+        //m.setElement(4, 0x0D);
+        m.setElement(4, CbusConstants.CBUS_BOOT_MODE_ACK
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_INC
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_ERASE
+                      | CbusConstants.CBUS_BOOT_MODE_WRT_UNLCK
+                    );
         m.setElement(5, CbusConstants.CBUS_BOOT_CHECK);
         m.setElement(6, c & 0xff);
         m.setElement(7, (c >> 8) & 0xff);
@@ -571,7 +592,12 @@ public class CbusMessage {
         m.setElement(1, 0);
         m.setElement(2, 0);
         m.setElement(3, 0);
-        m.setElement(4, 0x0D);
+        //m.setElement(4, 0x0D);
+        m.setElement(4, CbusConstants.CBUS_BOOT_MODE_ACK
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_INC
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_ERASE
+                      | CbusConstants.CBUS_BOOT_MODE_WRT_UNLCK
+                    );
         m.setElement(5, CbusConstants.CBUS_BOOT_TEST);
         m.setElement(6, 0);
         m.setElement(7, 0);
@@ -592,7 +618,12 @@ public class CbusMessage {
         m.setElement(1, 0);
         m.setElement(2, 0);
         m.setElement(3, 0);
-        m.setElement(4, 0x0D);
+        //m.setElement(4, 0x0D);
+        m.setElement(4, CbusConstants.CBUS_BOOT_MODE_ACK
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_INC
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_ERASE
+                      | CbusConstants.CBUS_BOOT_MODE_WRT_UNLCK
+                    );
         m.setElement(5, CbusConstants.CBUS_BOOT_DEVID);
         m.setElement(6, 0);
         m.setElement(7, 0);
@@ -613,7 +644,12 @@ public class CbusMessage {
         m.setElement(1, 0);
         m.setElement(2, 0);
         m.setElement(3, 0);
-        m.setElement(4, 0x0D);
+        //m.setElement(4, 0x0D);
+        m.setElement(4, CbusConstants.CBUS_BOOT_MODE_ACK
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_INC
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_ERASE
+                      | CbusConstants.CBUS_BOOT_MODE_WRT_UNLCK
+                    );
         m.setElement(5, CbusConstants.CBUS_BOOT_BOOTID);
         m.setElement(6, 0);
         m.setElement(7, 0);
@@ -635,7 +671,12 @@ public class CbusMessage {
         m.setElement(1, 0);
         m.setElement(2, 0);
         m.setElement(3, 0);
-        m.setElement(4, 0x0D);
+        //m.setElement(4, 0x0D);
+        m.setElement(4, CbusConstants.CBUS_BOOT_MODE_ACK
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_INC
+                      | CbusConstants.CBUS_BOOT_MODE_AUTO_ERASE
+                      | CbusConstants.CBUS_BOOT_MODE_WRT_UNLCK
+                    );
         m.setElement(5, CbusConstants.CBUS_BOOT_ENABLES);
         m.setElement(6, enables & 0xFF);
         m.setElement(7, 0);

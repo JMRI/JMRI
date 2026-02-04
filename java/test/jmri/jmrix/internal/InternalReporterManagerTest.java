@@ -23,15 +23,17 @@ public class InternalReporterManagerTest extends jmri.managers.AbstractReporterM
         return "My Reporter 6";
     }
 
-    // No manager-specific system name validation at present
     @Test
     @Override
-    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    @Disabled("No manager-specific system name validation at present")
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {
+    }
 
-    // No manager-specific system name validation at present
     @Test
     @Override
-    public void testMakeSystemNameWithPrefixNotASystemName() {}
+    @Disabled("No manager-specific system name validation at present")
+    public void testMakeSystemNameWithPrefixNotASystemName() {
+    }
 
     @BeforeEach
     @Override

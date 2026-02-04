@@ -2,7 +2,6 @@ package jmri.util;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class JTreeWithPopupTest {
     public void testCTor() {
         DefaultMutableTreeNode node = new DefaultMutableTreeNode();
         JTreeWithPopup t = new JTreeWithPopup(node);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

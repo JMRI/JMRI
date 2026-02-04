@@ -119,16 +119,7 @@
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable item="Accel/Decel Trim" CV="50" mask="XXXXXXXV" comment="Governs how loco acts in DC track block">
-        <enumVal>
-          <enumChoice choice="Accel/Decel trim OFF">
-            <choice>Accel/Decel trim OFF</choice>
-            <choice xml:lang="de">Accel/Decel trim OFF</choice>
-          </enumChoice>
-          <enumChoice choice="Accel/Decel trim ON">
-            <choice>Accel/Decel trim ON</choice>
-            <choice xml:lang="de">Accel/Decel trim ON</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Accel/Decel Trim</label>
         <comment>Governs how loco acts in DC track block</comment>
         <label xml:lang="de">Accel/Decel Trim</label>
@@ -292,7 +283,7 @@
     <name>Lenz</name>
     <name xml:lang="de">Lenz</name>
     <column>
-      <display item="Accel/Decel Trim"/>
+      <display item="Accel/Decel Trim" format="checkbox"/>
       <label>
         <text> </text>
       </label>

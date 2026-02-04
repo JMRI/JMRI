@@ -47,17 +47,28 @@
 
       <h3>Command Station</h3>
 
-      <p>JMRI supports three NCE layout connections:</p>
+      <p>JMRI supports five NCE layout connections:</p>
 
       <ul>
-        <li>Power Pro (PowerHouse) via serial cable</li>
+        <li>Power Pro (PowerHouse) via 9 pin serial cable like the PH1 and CS02</li>
 
-        <li>Power Pro (PowerHouse) via network connection</li>
+        <li>Power Pro (PowerHouse) via network connection, but this requires additional hardware as a network to serial connection</li>
 
-        <li>NCE USB Interface via a USB cable</li>
+        <li>NCE USB Interface via a USB cable for the PowerCab, SB5 and Twin</li>
+        
+        <li>NCE Simulator, this allows for panel development while not connected to a layout.</li>
+        
+        <li>Power Pro (PowerHouse) via built in USB like the PH5 and CS03</li>
       </ul>
-      They are shown in the JMRI Preferences Connection pane as NCE, NCE via network, and NCE USB
-      Interface, respectively.
+      They are shown in the JMRI Preferences Connection pane as System Connection:
+      <ul style="list-style-type:none;">
+      	<li>Serial</li>
+      	<li>Network Interface</li>
+      	<li>NCE USB</li>
+      	<li>Simulator</li>
+      	<li>PH5 USB</li>
+      </ul>
+      
       <h2 id="limitations">Limitations</h2>
 
       <p>A very small number of early (pre-2002) NCE Power Pro (PowerHouse) command stations have
@@ -67,6 +78,9 @@
       normal 9-pin serial cable will not work! You'll need to make a custom cable that just
       connects the "send data", "receive data" and "ground" pins. See your NCE manual for
       details.</p>
+      
+      <p>If you use a NCE USB to talk to the PowerHouse series of command stations over the cab bus, it will only support the
+      throttle functions and not the rest of the command station features.</p>
 
       <h2 id="connecting">Connecting</h2>
 
@@ -421,6 +435,12 @@ limitation when connected to a Power Pro.</p> -->
         <dd>USB version 7.* and above, system with version 1.65 and above firmware, AIU
         supported.</dd>
       </dl>
+            
+      <h3 id="ph5">NCE PowerHouse with built in USB</h3>
+      
+      <p>This is the next generation of large layout command stations. The first is the PH5 and was released late in 2023.
+      Internally the command station is new and uses a completely different memory map from the older NCE serial systems.
+      The CS03 was released around May 2024 and is a functional replacement for the CS02.</p>
 
       <h2 id="troubleShoot">Troubleshooting</h2>
 

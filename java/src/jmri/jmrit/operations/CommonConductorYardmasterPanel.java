@@ -15,13 +15,19 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.*;
-import jmri.jmrit.operations.rollingstock.engines.*;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarSetFrame;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableFrame;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.rollingstock.engines.gui.EngineSetFrame;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -68,6 +74,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected JTextPane textTrainRouteCommentPane = new JTextPane();
     protected JTextPane textTrainRouteLocationCommentPane = new JTextPane();
     protected JTextPane textSwitchListCommentPane = new JTextPane();
+    protected JTextPane textTrainStatusPane = new JTextPane();
 
     // panels
     protected JPanel pRailRoadName = new JPanel();
@@ -168,7 +175,12 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         textSwitchListCommentPane.setBackground(null);
         textSwitchListCommentPane.setEditable(false);
         textSwitchListCommentPane.setMaximumSize(new Dimension(2000, 200));
-
+        
+        // Train status
+        textTrainStatusPane.setBorder(BorderFactory.createTitledBorder(""));
+        textTrainStatusPane.setBackground(null);
+        textTrainStatusPane.setEditable(false);
+        textTrainStatusPane.setMaximumSize(new Dimension(2000, 200));
 
         // row 12
         pLocos.setLayout(new BoxLayout(pLocos, BoxLayout.Y_AXIS));
@@ -480,7 +492,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     checkBox = checkBoxes.get("ep" + engine.getId());
                 } else {
                     checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
-                    setCheckBoxFont(checkBox);
+                    setCheckBoxFont(checkBox, Setup.getPickupEngineColor());
                     addCheckBoxAction(checkBox);
                     checkBoxes.put("ep" + engine.getId(), checkBox);
                 }
@@ -500,7 +512,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     checkBox = checkBoxes.get("es" + engine.getId());
                 } else {
                     checkBox = new JCheckBox(trainCommon.dropEngine(engine));
-                    setCheckBoxFont(checkBox);
+                    setCheckBoxFont(checkBox, Setup.getDropEngineColor());
                     addCheckBoxAction(checkBox);
                     checkBoxes.put("es" + engine.getId(), checkBox);
                 }
@@ -547,14 +559,23 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         List<Track> tracks = rl.getLocation().getTracksByNameList(null);
         List<RouteLocation> routeList = _train.getRoute().getBlockingOrder();
         List<Car> carList = carManager.getByTrainDestinationList(_train);
+        List<Car> carsDone = new ArrayList<>();
         for (Track track : tracks) {
             for (RouteLocation rld : routeList) {
                 for (Car car : carList) {
+                    if (carsDone.contains(car)) {
+                        continue;
+                    }
                     // note that a car in train doesn't have a track assignment
                     if (car.getTrack() == null) {
                         continue;
                     }
+                    // do local move later
                     if (car.isLocalMove() && rl == rld) {
+                        continue;
+                    }
+                    if (Setup.isSortByTrackNameEnabled() &&
+                            !car.getTrack().getSplitName().equals(track.getSplitName())) {
                         continue;
                     }
                     // determine if car is a pick up from the right track
@@ -594,16 +615,20 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                                 text = trainCommon.pickupCar(car, isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK);
                             }
                             JCheckBox checkBox = new JCheckBox(text);
-                            setCheckBoxFont(checkBox);
+                            setCheckBoxFont(checkBox, Setup.getPickupColor());
                             addCheckBoxAction(checkBox);
                             pPickups.add(checkBox);
                             checkBoxes.put("p" + car.getId(), checkBox);
                         }
+                        carsDone.add(car);
                     }
                 }
             }
             // set outs and local moves
             for (Car car : carList) {
+                if (carsDone.contains(car)) {
+                    continue;
+                }
                 if (car.getRouteDestination() != rl || car.getDestinationTrack() == null) {
                     continue;
                 }
@@ -638,7 +663,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                             text = trainCommon.dropCar(car, isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK);
                         }
                         JCheckBox checkBox = new JCheckBox(text);
-                        setCheckBoxFont(checkBox);
+                        setCheckBoxFont(checkBox, Setup.getDropColor());
                         addCheckBoxAction(checkBox);
                         pSetouts.add(checkBox);
                         checkBoxes.put("s" + car.getId(), checkBox);
@@ -646,7 +671,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     // local move?
                 } else if (car.getTrack() != null &&
                         car.getRouteLocation() == rl &&
-                        (!Setup.isSortByTrackNameEnabled() || car.getTrack().getName().equals(track.getName()))) {
+                        (!Setup.isSortByTrackNameEnabled() ||
+                                car.getTrack().getSplitName().equals(track.getSplitName()))) {
                     movePane.setVisible(true);
                     if (!rollingStock.contains(car)) {
                         rollingStock.add(car);
@@ -670,11 +696,12 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                             text = trainCommon.localMoveCar(car, isManifest);
                         }
                         JCheckBox checkBox = new JCheckBox(text);
-                        setCheckBoxFont(checkBox);
+                        setCheckBoxFont(checkBox, Setup.getLocalColor());
                         addCheckBoxAction(checkBox);
                         pMoves.add(checkBox);
                         checkBoxes.put("m" + car.getId(), checkBox);
                     }
+                    carsDone.add(car);
                 }
             }
             // if not sorting by track, we're done
@@ -712,10 +739,11 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         return pSet;
     }
 
-    protected void setCheckBoxFont(JCheckBox checkBox) {
+    protected void setCheckBoxFont(JCheckBox checkBox, Color color) {
         if (Setup.isTabEnabled()) {
             Font font = new Font(Setup.getFontName(), Font.PLAIN, checkBox.getFont().getSize());
             checkBox.setFont(font);
+            checkBox.setForeground(color);
         }
     }
 
@@ -734,44 +762,54 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         }
     }
 
-    // returns one of two possible departure strings for a train
+    // returns departure strings for a train
     protected String getStatus(RouteLocation rl, boolean isManifest) {
-        if (rl == _train.getTrainTerminatesRouteLocation()) {
-            return MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
-                    new Object[] { _train.getTrainTerminatesName() });
-        }
-        if (rl != _train.getCurrentRouteLocation() &&
-                _train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
-            return MessageFormat.format(TrainSwitchListText.getStringTrainDone(), new Object[] { _train.getName() });
-        }
-        if (!_train.isBuilt() || rl == null) {
-            return _train.getStatus();
-        }
-        if (Setup.isPrintLoadsAndEmptiesEnabled()) {
-            int emptyCars = _train.getNumberEmptyCarsInTrain(rl);
-            String text;
-            if (isManifest) {
-                text = TrainManifestText.getStringTrainDepartsLoads();
-            } else {
-                text = TrainSwitchListText.getStringTrainDepartsLoads();
+        String text = "";
+        try {
+            if (rl == _train.getTrainTerminatesRouteLocation()) {
+                return MessageFormat.format(text = TrainManifestText.getStringTrainTerminates(),
+                        new Object[]{_train.getTrainTerminatesName(),
+                                _train.getSplitName(), _train.getDescription(),
+                                rl.getLocation().getDivisionName()});
             }
-            return MessageFormat.format(text,
-                    new Object[] { rl.getSplitName(), rl.getTrainDirectionString(),
-                            _train.getNumberCarsInTrain(rl) - emptyCars, emptyCars, _train.getTrainLength(rl),
-                            Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
-                            _train.getTrainTerminatesName(), _train.getName() });
-        } else {
-            String text;
-            if (isManifest) {
-                text = TrainManifestText.getStringTrainDepartsCars();
-            } else {
-                text = TrainSwitchListText.getStringTrainDepartsCars();
+            if (rl != _train.getCurrentRouteLocation() &&
+                    _train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
+                return MessageFormat.format(text = TrainSwitchListText.getStringTrainDone(),
+                        new Object[]{_train.getSplitName(), _train.getDescription(),
+                                rl.getSplitName()});
             }
-            return MessageFormat.format(text,
-                    new Object[] { rl.getSplitName(), rl.getTrainDirectionString(),
-                            _train.getNumberCarsInTrain(rl), _train.getTrainLength(rl),
-                            Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
-                            _train.getTrainTerminatesName(), _train.getName() });
+            if (!_train.isBuilt() || rl == null) {
+                return _train.getStatus();
+            }
+            if (Setup.isPrintLoadsAndEmptiesEnabled()) {
+                int emptyCars = _train.getNumberEmptyCarsInTrain(rl);
+                if (isManifest) {
+                    text = TrainManifestText.getStringTrainDepartsLoads();
+                } else {
+                    text = TrainSwitchListText.getStringTrainDepartsLoads();
+                }
+                return MessageFormat.format(text,
+                        new Object[]{rl.getSplitName(), rl.getTrainDirectionString(),
+                                _train.getNumberCarsInTrain(rl) - emptyCars, emptyCars, _train.getTrainLength(rl),
+                                Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
+                                _train.getTrainTerminatesName(),
+                                _train.getSplitName()});
+            } else {
+                if (isManifest) {
+                    text = TrainManifestText.getStringTrainDepartsCars();
+                } else {
+                    text = TrainSwitchListText.getStringTrainDepartsCars();
+                }
+                return MessageFormat.format(text,
+                        new Object[]{rl.getSplitName(), rl.getTrainDirectionString(),
+                                _train.getNumberCarsInTrain(rl), _train.getTrainLength(rl),
+                                Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
+                                _train.getTrainTerminatesName(),
+                                _train.getSplitName()});
+            }
+        } catch (IllegalArgumentException e) {
+            log.error("Illegal argument", e);
+            return Bundle.getMessage("ErrorIllegalArgument", text, e.getLocalizedMessage());
         }
     }
 

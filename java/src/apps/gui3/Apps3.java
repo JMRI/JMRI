@@ -51,7 +51,7 @@ public abstract class Apps3 extends AppsBase {
         // Initialise system console
         // Put this here rather than in apps.AppsBase as this is only relevant
         // for GUI applications - non-gui apps will use STDOUT & STDERR
-        SystemConsole.create();
+        SystemConsole.getInstance();
 
         splash(true);
 
@@ -76,21 +76,33 @@ public abstract class Apps3 extends AppsBase {
         if (SystemType.isMacOSX()) {
             initMacOSXMenus();
         }
-        if (((!configOK) || (!configDeferredLoadOK)) && (!preferenceFileExists)) {
-            FirstTimeStartUpWizardAction prefsAction = new FirstTimeStartUpWizardAction("Start Up Wizard");
-            prefsAction.setApp(this);
-            prefsAction.actionPerformed(null);
+        if ( (((!configOK) || (!configDeferredLoadOK)) && (!preferenceFileExists)) || wizardLaunchCheck() ) {
+            launchFirstTimeStartupWizard();
             return;
         }
         createAndDisplayFrame();
     }
 
     /**
+     * To be overridden by applications that need to make
+     * additional checks as to whether the first time wizard
+     * should be launched.
+     * @return true to force the wizard to be launched
+     */
+    protected boolean wizardLaunchCheck() {
+        return false;
+    }
+    
+    public void launchFirstTimeStartupWizard() {
+        FirstTimeStartUpWizardAction prefsAction = new FirstTimeStartUpWizardAction("Start Up Wizard");
+        prefsAction.setApp(this);
+        prefsAction.actionPerformed(null);
+    }
+    
+    /**
      * For compatability with adding in buttons to the toolbar using the
      * existing createbuttonmodel
      */
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "only one application at a time")
     protected static void setButtonSpace() {
         _buttonSpace = new JPanel();
         _buttonSpace.setLayout(new FlowLayout(FlowLayout.LEFT));

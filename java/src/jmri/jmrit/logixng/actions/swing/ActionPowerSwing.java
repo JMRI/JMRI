@@ -61,7 +61,7 @@ public class ActionPowerSwing extends AbstractDigitalActionSwing {
         // Create a temporary action to test formula
         ActionPower action = new ActionPower("IQDA1", null);
         _selectEnumSwing.validate(action.getSelectEnum(), errorMessages);
-        return true;
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */

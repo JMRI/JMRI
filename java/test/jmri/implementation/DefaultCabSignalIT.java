@@ -146,6 +146,7 @@ public class DefaultCabSignalIT {
 
         // and close the editor window
         to.closeFrameWithConfirmations();
+        jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
     }
 
     private void moveBlock(String startingBlock,String endingBlock) {
@@ -167,7 +168,7 @@ public class DefaultCabSignalIT {
         Assert.assertEquals("next Block set",bm.getBlock(nextBlock),lcs.getNextBlock());
         Assert.assertEquals("Mast set",smm.getSignalMast(mastName),lcs.getNextMast());
         if(!mastName.isEmpty()) {
-           new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for signal to settle.
+           new org.netbeans.jemmy.QueueTool().waitEmpty(); // wait for signal to settle.
            // mast expected, so check the aspect.
            JUnitUtil.waitFor( () -> {
                return "Clear".equals(lcs.getNextMast().getAspect());
@@ -197,6 +198,7 @@ public class DefaultCabSignalIT {
         cs = null;
         InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 

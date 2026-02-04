@@ -290,7 +290,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @throws java.io.IOException from underlying operation
      */
     @SuppressWarnings("fallthrough")
-    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = {"SF_SWITCH_FALLTHROUGH","SF_DEAD_STORE_DUE_TO_SWITCH_FALLTHROUGH"})
     boolean doNextStep(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         switch (state) {
             case 0:

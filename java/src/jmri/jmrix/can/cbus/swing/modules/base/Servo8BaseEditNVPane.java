@@ -1,19 +1,21 @@
 package jmri.jmrix.can.cbus.swing.modules.base;
 
-import java.awt.*;
+import static jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel.NV_SELECT_COLUMN;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.TableModelEvent;
 
-import jmri.jmrix.can.cbus.node.CbusNode;
-import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
-import static jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel.NV_SELECT_COLUMN;
-import jmri.jmrix.can.cbus.swing.modules.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrix.can.cbus.node.CbusNode;
+import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
+import jmri.jmrix.can.cbus.swing.modules.*;
 
 /**
  * Node Variable edit frame for a basic 8 channel servo module.
@@ -370,6 +372,7 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
          * Callback for test buttons.
          * 
          * Writes output number to NV37, adding 128 for ON event
+         * @param e ActionEvent
          */
         protected void testActionListener(ActionEvent e) {
             int val;

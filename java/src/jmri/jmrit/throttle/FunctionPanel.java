@@ -7,6 +7,7 @@ import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.*;
 
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -16,11 +17,9 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.gui.GuiLafPreferencesManager;
-import jmri.util.swing.WrapLayout;
+import jmri.util.swing.OptionallyTabbedPanel;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A JInternalFrame that contains buttons for each decoder function.
@@ -28,6 +27,7 @@ import org.slf4j.LoggerFactory;
 public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener, AddressListener {
 
     private static final int DEFAULT_FUNCTION_BUTTONS = 24; // just enough to fill the initial pane
+    private static final int MAX_FUNCTION_BUTTONS_PER_TAB = 33; 
     private DccThrottle mThrottle;
 
     private JPanel mainPanel;
@@ -152,6 +152,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             int functionNumber = functionButton.getIdentity();
             String text = functionButton.getButtonLabel();
             boolean lockable = functionButton.getIsLockable();
+            boolean visible = functionButton.getDisplay();
             String imagePath = functionButton.getIconPath();
             String imageSelectedPath = functionButton.getSelectedIconPath();
             if (functionButton.isDirty()) {
@@ -179,6 +180,9 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     if( lockable != rosterEntry.getFunctionLockable(functionNumber)) {
                         rosterEntry.setFunctionLockable(functionNumber, lockable);
                     }
+                    if( visible != rosterEntry.getFunctionVisible(functionNumber)) {
+                        rosterEntry.setFunctionVisible(functionNumber, visible);
+                    }
                     if ( (!imagePath.isEmpty() && rosterEntry.getFunctionImage(functionNumber) == null )
                             || (rosterEntry.getFunctionImage(functionNumber) != null && imagePath.compareTo(rosterEntry.getFunctionImage(functionNumber)) != 0)) {
                         rosterEntry.setFunctionImage(functionNumber, imagePath);
@@ -198,8 +202,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * Place and initialize all the buttons.
      */
     private void initGUI() {
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
+        mainPanel = new OptionallyTabbedPanel(MAX_FUNCTION_BUTTONS_PER_TAB);
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         resetFnButtons();
         JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.getViewport().setOpaque(false); // container already gets this done (for play/edit mode)
@@ -208,10 +212,17 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         scrollPane.setViewportBorder( empyBorder );
         scrollPane.setBorder( empyBorder );
         scrollPane.setWheelScrollingEnabled(false); // already used by speed slider
+        scrollPane.getViewport().addChangeListener((e) -> viewPortSizeChanged(e));
+
         setContentPane(scrollPane);
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
+    private void viewPortSizeChanged(ChangeEvent e) {
+        // make sure function button area is laid out consistent with sizing
+        mainPanel.revalidate();
+    }
+    
     private void setUpDefaultLightFunctionButton() {
         try {
             functionButtons[0].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
@@ -247,7 +258,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             }
             if (re != null) {
                 if (re.getFunctionLabel(i) != null) {
-                    functionButtons[i].setDisplay(true);
+                    functionButtons[i].setDisplay(re.getFunctionVisible(i));
                     functionButtons[i].setButtonLabel(re.getFunctionLabel(i));
                     if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
                         functionButtons[i].setIconPath(re.getFunctionImage(i));
@@ -319,7 +330,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     }
                     String text = rosterEntry.getFunctionLabel(i);
                     if (text != null) {
-                        functionButtons[i].setDisplay(true);
+                        functionButtons[i].setDisplay(rosterEntry.getFunctionVisible(i));
                         functionButtons[i].setButtonLabel(text);
                         if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
                             functionButtons[i].setIconPath(rosterEntry.getFunctionImage(i));
@@ -558,5 +569,5 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FunctionPanel.class);
 }

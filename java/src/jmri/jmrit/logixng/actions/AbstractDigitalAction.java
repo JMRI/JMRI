@@ -5,7 +5,7 @@ import jmri.JmriException;
 import jmri.Manager;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.LogixNG_Category;
 import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.DigitalActionManager;
 
@@ -23,10 +23,10 @@ public abstract class AbstractDigitalAction extends AbstractBase
 
     public AbstractDigitalAction(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
-        this(sys, user, Category.ITEM);
+        this(sys, user, LogixNG_Category.ITEM);
     }
 
-    public AbstractDigitalAction(String sys, String user, Category category)
+    public AbstractDigitalAction(String sys, String user, LogixNG_Category category)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user, category);
 

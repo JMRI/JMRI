@@ -2,6 +2,7 @@ package jmri.jmrix.bachrus;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,9 +15,20 @@ public class SpeedoConsoleAction extends AbstractAction {
 
     SpeedoSystemConnectionMemo _memo = null;
 
-    public SpeedoConsoleAction(String s,SpeedoSystemConnectionMemo memo) {
+    public SpeedoConsoleAction(String s, SpeedoSystemConnectionMemo memo) {
         super(s);
         _memo = memo;
+    }
+    
+     public SpeedoConsoleAction() {
+        super(Bundle.getMessage("SpeedoConsole"));
+        try {
+            _memo = InstanceManager.getDefault(SpeedoSystemConnectionMemo.class);
+        }
+        catch (NullPointerException e) {
+            _memo = new SpeedoSystemConnectionMemo();
+            _memo.setSpeedoTrafficController(new SpeedoTrafficController(_memo));
+        }
     }
 
     @Override

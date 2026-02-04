@@ -1,10 +1,11 @@
 package jmri.jmrix.mqtt;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.Light;
 import jmri.implementation.AbstractLightTestBase;
 import jmri.util.*;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +16,7 @@ import org.junit.jupiter.api.*;
  */
 public class MqttLightTest extends AbstractLightTestBase {
 
-    MqttAdapterScaffold a = null;
+    private MqttAdapterScaffold a = null;
 
     @BeforeEach
     @Override
@@ -45,34 +46,35 @@ public class MqttLightTest extends AbstractLightTestBase {
         t.setCommandedState(Light.ON);
 
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==2; }, "publish triggered");
-        Assertions.assertEquals("track/light/2", a.getLastTopic(),"topic");
-        Assertions.assertEquals("ON", new String(a.getLastPayload()),"payload");
+        assertEquals("track/light/2", a.getLastTopic(),"topic");
+        assertEquals("ON", new String(a.getLastPayload()),"payload");
 
         t.setCommandedState(Light.OFF);
 
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==3; }, "publish triggered 2");
-        Assertions.assertEquals("track/light/2", a.getLastTopic(),"topic");
-        Assertions.assertEquals("OFF", new String(a.getLastPayload()),"payload");
+        assertEquals("track/light/2", a.getLastTopic(),"topic");
+        assertEquals("OFF", new String(a.getLastPayload()),"payload");
 
     }
 
     @Test
     public void testParserModes() {
         ((MqttLight)t).notifyMqttMessage("track/light/2/foo", "ON");
-        Assert.assertEquals("state", Light.ON, t.getKnownState());
+        assertEquals( Light.ON, t.getKnownState(), "state");
         ((MqttLight)t).notifyMqttMessage("track/light/2/foo", "OFF");
-        Assert.assertEquals("state", Light.OFF, t.getKnownState());
+        assertEquals( Light.OFF, t.getKnownState(), "state");
         ((MqttLight)t).notifyMqttMessage("track/light/2/foo", "UNKNOWN");
-        Assert.assertEquals("state", Light.UNKNOWN, t.getKnownState());
+        assertEquals( Light.UNKNOWN, t.getKnownState(), "state");
     }
 
     @Override
     public void checkOnMsgSent() {
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==2; }, "publish triggered");
-        Assertions.assertEquals("track/light/2", a.getLastTopic(),"topic");
-        Assertions.assertEquals("ON", new String(a.getLastPayload()),"payload");
+        assertEquals("track/light/2", a.getLastTopic(),"topic");
+        assertEquals("ON", new String(a.getLastPayload()),"payload");
     }
 
+    @Test
     @Override
     public void testCommandOff() {
         // Lights are initialized to OFF, so no order is sent. do this to force sening the off later.
@@ -83,7 +85,7 @@ public class MqttLightTest extends AbstractLightTestBase {
     @Override
     public void checkOffMsgSent() {
         JUnitUtil.waitFor( ()->{ return a.getPublishCount()==3; }, "publish on then off triggered");
-        Assertions.assertEquals("track/light/2", a.getLastTopic(),"topic");
-        Assertions.assertEquals("OFF", new String(a.getLastPayload()),"payload");
+        assertEquals("track/light/2", a.getLastTopic(),"topic");
+        assertEquals("OFF", new String(a.getLastPayload()),"payload");
     }
 }

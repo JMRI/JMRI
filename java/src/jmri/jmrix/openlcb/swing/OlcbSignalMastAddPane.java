@@ -6,9 +6,10 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.SystemConnectionMemo;
 import jmri.util.ConnectionNameFromSystemName;
 
-import jmri.jmrix.openlcb.*;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.openlcb.*;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -21,7 +22,6 @@ import javax.swing.border.TitledBorder;
 import javax.annotation.Nonnull;
 
 import org.openide.util.lookup.ServiceProvider;
-import org.openlcb.swing.EventIdTextField;
 
 /**
  * A pane for configuring OlcbSignalMast objects
@@ -33,6 +33,7 @@ import org.openlcb.swing.EventIdTextField;
 public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     public OlcbSignalMastAddPane() {
+        
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         litEventID.setText("00.00.00.00.00.00.00.00");
@@ -43,10 +44,8 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         // populate the OpenLCB connections list before creating GUI components.
         getOlcbConnections();
 
-        // If the connections list has less than 2 items, don't show a selector.
-        // This maintains backward compatibility with previous versions.
-        if (olcbConnections != null && olcbConnections.size() > 1) {
-            // Connection selector
+        if (olcbConnections != null) {
+            // Create and fill panel for the connection selector
             JPanel p = new JPanel();
             TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
             border.setTitle(Bundle.getMessage("OlcbConnection"));
@@ -54,7 +53,10 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             p.setLayout(new jmri.util.javaworld.GridLayout2(3, 1));
 
             p.add(connSelectionBox);
-            add(p);
+            if ( olcbConnections.size() > 1 ) {
+                // only show if more than one choice
+                add(p);
+            }
         }
 
         // lit/unlit controls
@@ -133,20 +135,23 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     final JCheckBox allowUnLit = new JCheckBox();
 
+    CanSystemConnectionMemo memo = InstanceManager.getDefault(CanSystemConnectionMemo.class);
+    // needs to be done at ctor time; static would be initialized too soon
+
     // This used to be called "disabledAspects", but that's misleading: it's actually a map of
     // ALL aspects' "disabled" checkboxes, regardless of their enabled/disabled state.
     LinkedHashMap<String, JCheckBox> allAspectsCheckBoxes = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
-    final LinkedHashMap<String, EventIdTextField> aspectEventIDs = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
+    final LinkedHashMap<String, NamedEventIdTextField> aspectEventIDs = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
     final JPanel allAspectsPanel = new JPanel();
-    final EventIdTextField litEventID = new EventIdTextField();
-    final EventIdTextField notLitEventID = new EventIdTextField();
-    final EventIdTextField heldEventID = new EventIdTextField();
-    final EventIdTextField notHeldEventID = new EventIdTextField();
+    final NamedEventIdTextField litEventID = new NamedEventIdTextField(memo);
+    final NamedEventIdTextField notLitEventID = new NamedEventIdTextField(memo);
+    final NamedEventIdTextField heldEventID = new NamedEventIdTextField(memo);
+    final NamedEventIdTextField notHeldEventID = new NamedEventIdTextField(memo);
 
     JComboBox<String> connSelectionBox = new JComboBox<String>();
 
     OlcbSignalMast currentMast = null;
-
+    
     // Support for multiple OpenLCB connections with different prefixes
     ArrayList<String> olcbConnections = null;
 
@@ -161,7 +166,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             String aspectName = aspectNames.nextElement();
             JCheckBox disabled = new JCheckBox(aspectName);
             allAspectsCheckBoxes.put(aspectName, disabled);
-            EventIdTextField eventID = new EventIdTextField();
+            NamedEventIdTextField eventID = new NamedEventIdTextField(memo);
             eventID.setText("00.00.00.00.00.00.00.00");
             aspectEventIDs.put(aspectName, eventID);
         }
@@ -258,7 +263,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
      */
     private void populateConnSelectionBox() {
         connSelectionBox.removeAllItems();
-        if (olcbConnections == null || olcbConnections.size() < 2) {
+        if (olcbConnections == null) {
             return;
         }
         for (String conn : olcbConnections) {
@@ -315,7 +320,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
          }
         for (String aspect : currentMast.getAllKnownAspects()) {
             if (aspectEventIDs.get(aspect) == null) {
-                EventIdTextField eventID = new EventIdTextField();
+                NamedEventIdTextField eventID = new NamedEventIdTextField(memo);
                 eventID.setText("00.00.00.00.00.00.00.00");
                 aspectEventIDs.put(aspect, eventID);
             }

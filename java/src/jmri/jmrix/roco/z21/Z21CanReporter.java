@@ -6,8 +6,6 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.RailCom;
 import jmri.RailComManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Z21CanReporter implements the Reporter Manager interface
@@ -91,13 +89,13 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
             }
             int value1 = (msg.getElement(10)&0xFF) + ((msg.getElement(11)&0xFF) << 8);
             int value2 = (msg.getElement(12)&0xFF) + ((msg.getElement(13)&0xFF) << 8);
-            RailCom tag = getRailComTagFromValue(msg,value1);
+            RailCom tag = getRailComTagFromValue(value1);
             if(tag != null ) {
                log.trace("add tag {}",tag);
                notify(tag);
                idTags.add(tag);
                // add the tag to the collection
-               tag = getRailComTagFromValue(msg,value2);
+               tag = getRailComTagFromValue(value2);
                if(tag != null ) {
                   log.trace("add tag {} ",tag);
                   notify(tag);
@@ -122,8 +120,8 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
      * private method to get and update a railcom tag based on the value
      * bytes from the message.
      */
-    private RailCom getRailComTagFromValue(Z21Reply msg,int value){
-       DccLocoAddress l = msg.getCanDetectorLocoAddress(value);
+    private RailCom getRailComTagFromValue(int value){
+       DccLocoAddress l = Z21MessageUtils.getCanDetectorLocoAddress(value);
        if (l != null ) { // 0 represents end of list or no railcom address.
           // get the first locomotive address from the message.
           log.debug("reporting tag for address 1 {}",l);
@@ -132,13 +130,13 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
           int direction = (0xC000&value);
           switch (direction) {
              case 0x8000:
-                tag.setOrientation(RailCom.ORIENTA);
+                tag.setOrientation(RailCom.Orientation.ORIENTA);
                 break;
              case 0xC000:
-                tag.setOrientation(RailCom.ORIENTB);
+                tag.setOrientation(RailCom.Orientation.ORIENTB);
                 break;
              default:
-                tag.setOrientation(0);
+                tag.setOrientation(RailCom.Orientation.UNKNOWN);
           }
           return tag;
        }
@@ -162,6 +160,6 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
         return idTags;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Z21CanReporter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21CanReporter.class);
 
 }

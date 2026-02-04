@@ -1,8 +1,9 @@
 package jmri.jmrix.ecos.utilities;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,10 +12,11 @@ import org.junit.jupiter.api.*;
  */
 public class GetEcosObjectNumberTest {
 
+    // no Ctor test, class only supplies static methods
+
     @Test
-    public void testCTor() {
-        GetEcosObjectNumber t = new GetEcosObjectNumber();
-        Assert.assertNotNull("exists",t);
+    public void testGetEcosObjectNumber() {
+        assertEquals( 123, GetEcosObjectNumber.getEcosObjectNumber("123", null, null));
     }
 
     @BeforeEach

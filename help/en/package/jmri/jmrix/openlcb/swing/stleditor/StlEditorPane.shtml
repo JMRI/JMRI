@@ -15,6 +15,15 @@
     <div id="mainContent" class="no-sidebar">
     <h1>OpenLCB: RR-CirKits Tower LCC+Q STL Editor</h1>
 
+      <ul class="snav">
+        <!-- TOC -->
+        <li><a href="#stl_editor">STL Editor</a></li>
+        <li><a href="#file_buttons">File Buttons</a></li>
+        <li><a href="#editor_buttons">Editor Buttons</a></li>
+        <li><a href="#menus">Menus</a></li>
+        <li><a href="#debugging">Debugging</a></li>
+      </ul>
+
       <p>The <strong>Tower LCC+Q</strong> node from RR-CirKits has the same I/O capabilities as the
       original Tower LCC. The logic Conditionals have been replaced by a subset of the PLC
       (programmable logic controller) language from Siemens.  The Siemens statement line language
@@ -23,7 +32,7 @@
       <p>Here is the logic to set the aspect for a single head mast.</p>
 
       <pre style="margin-left: 2em">
-CLR // Signal mast B
+CLR // Right B
 = Q0.0
 = Q0.1
 = Q0.2
@@ -35,9 +44,8 @@ JC E1
 A Y0.0
 = Q0.1
 JC E1
-SET
 = Q0.0
-E1: CLR // Signal mast C
+E1: CLR // Right C
 etc.
       </pre>
 
@@ -48,9 +56,10 @@ etc.
       <strong><em>changed</em></strong> output variables are sent to the LCC network.</p>
 
       <p>The <strong>STL Editor</strong> consists of a LCC node selector, five data tabs, a number
-      of toolbar buttons and a <strong>File</strong> menu. The basic mode is to select a LCC node
-      which loads the logic data.  The node selector only shows Tower LCC+Q nodes.  When changes
-      have been made, they can be stored using the <a href="#storeButton">Store button</a>.</p>
+      of toolbar buttons and <strong>File</strong> and <strong>View</strong> menus. The basic mode
+      is to select a LCC node which loads the logic data.  The node selector only shows Tower LCC+Q
+      nodes.  When changes have been made, they can be stored using the <a href="#storeButton">Store</a>
+      button.</p>
 
       <p>Offline work is supported by exporting and importing the content using a CSV file set. This
       is a set of five files stored in a selected directory in the user files location.  Each
@@ -81,10 +90,15 @@ etc.
         "images/cdi_loading.png" alt="stl cdi loading"></a>
       </div>
 
+
       <p>When the load finishes, the dialog will close.  If the node had been previously loaded,
       such as doing CDI configuration, the load is very fast and the dialog is not shown.</p>
 
-      <h3>STL Editor</h3>
+      <p>Parsing errors can occur during the CDI loading process.  See
+      <a href="#parsing_errors">Parse Errors</a> for details.</p>
+
+
+      <h3 id="stl_editor">STL Editor</h3>
       <p>The STL Editor provides an alternative method for editing the STL code.  It translates the
       code into a table that has 4 columns.  The <strong>Label</strong> column has the jump labels.
       These are one to four character words and a colon (:).  The <strong>Operator</strong>
@@ -93,6 +107,32 @@ etc.
       output, receiver, transmitter) tables. Other "names" include labels for jump operators, timer
       definitions, Mn.n memory variables, etc. The <strong>Comment</strong> column is for comments.
       Note:  Comments take up a lot of room.</p>
+
+      <div class="noted">
+
+        <p>The friendly names assigned to the IQYZ tables would normally be the JMRI user names.
+        There are some limitations.  The names in the IQ tables have to be unique.  This
+        also applies to the names in YZ tables. For example, a JMRI sensor button with the user name
+        "Turnout 1" (I table) is used to set a JMRI turnout also with the user name "Turnout 1" (Q
+        table). A possible solution is to use "T-Turnout 1" as the Q table name.  For signal mast
+        aspects in the Q table, using a colon between the mast name and the aspect works nicely.
+        For example, mastname:Clear.</p>
+
+        <p>Note: The friendly names are only used for documentation in the CDI and by the STL Editor
+        to map names to the IQYZ table entries. There is no direct relationship to the actual JMRI
+        table names.</p>
+
+        <p>There are few reserved names in STL.  One of them is the timer variable.  This is the
+        letter <strong>T</strong> followed by a number from 0 to 63.  Using this as a IQYZ name or
+        in a comment will cause issues.  For example, don't create a comment such as
+        "Set T1 closed".</p>
+
+      </div>
+
+      <p><span class="since">since 5.9.6</span>A friendly name from the IQYZ tables can be copied
+      using a <strong>shift-click</strong> on a table row.  Hold the shift key and then click on a
+      table row.  The name field in the logic table will be added/replaced.  Make sure the correct
+      logic row has been selected before doing the copy from a table row.</p>
 
       <div style="margin-left: 2em">
         <a href="images/editor_tab.png"><img src=
@@ -124,7 +164,7 @@ etc.
         "images/input_tab.png" alt="stl input tab"></a>
       </div>
 
-      <p>The event id format is validated for the IQYZ tables.</p>
+      <p>The event id format is validated for the IQYZ tables.  Note: Dialog removed as of JMRI 5.11.4</p>
 
       <div style="margin-left: 2em">
         <a href="images/event_format_error.png"><img src=
@@ -168,7 +208,7 @@ etc.
       <p>The actual receiver variable names consist of the row number and the speed number, such as
       <strong>Y0.7</strong>.  That is the "Clear" speed for the first circuit.  For the STL Editor,
       the <strong>Yn.n</strong> names are converted to the friendly name with a tilde and the speed
-      number, such as <em>Right-EB-Circuit~7</em>.</p>
+      number, such as <em>SM-Alpha-Beta-1:Circuit~7</em>.</p>
 
       <div style="margin-left: 2em">
         <a href="images/receivers_tab.png"><img src=
@@ -190,11 +230,65 @@ etc.
         "images/transmitters_tab.png" alt="stl transmitters tab"></a>
       </div>
 
-      <h3>Tool Bar Buttons</h3>
-
-      <h4>File Buttons</h4>
+      <h3>Event Names<span class="since">since 5.11.4</span></h3>
 
       <dl>
+        <dt>The True and False columns for the Input (I) and Output (Q) tables and the Event ID column
+        for the Receiver (Y) and Transmitter (Z) tables</dt>
+        <dd>
+          <p>When an event name is available, the name will displayed instead of the event id.</p>
+
+          <p>When updating an event column row, the event id or the event name can be used if one
+          is available.  If an event id is entered and it has an event name, the event name will be
+          displayed.  A dialog is displayed when an invalid event id or a bad event name is entered.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/invalid_table_event.png"><img src=
+            "images/invalid_table_event.png" alt="stl invalid table event"></a>
+          </div>
+
+          <p class="noted"> The STL Editor does not support assigning a name to an event.  Other
+          LCC tools provide this capability.</p>
+
+        <dt>Loading a CDI backup file</dt>
+        <dd>
+          <p>Older CDI backup files can have an event name instead of an event id.  The load process
+          will use the event name to find the current event id.  If the event name no longer exists
+          in the "name store", a temporary event id will be created.  The format of the event id
+          is <strong>00.00.00.00.00.AA.BB.CC</strong>.  AA will be hex value of the table type. These
+          are IQYZ.  The BB and CC hex values will the table group and items.  The I and Q tables have
+          16 (0-15) groups and 8 (0-7) items per group.  The Y and Z tables have 16 (0-15) rows and
+          a single item that is always zero.  A dialog will be displayed when a temporary event id
+          is created.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/invalid_load_event.png"><img src=
+            "images/invalid_load_event.png" alt="stl invalid load event"></a>
+          </div>
+
+        </dd>
+      </dl>
+
+
+      <h3>Tool Bar Buttons</h3>
+
+      <h4 id="file_buttons">File Buttons</h4>
+
+      <dl>
+        <dt>Load Backup</dt>
+        <dd>
+          <p>The <strong>Load Backup</strong> button extracts the STL data from a CDI backup file.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/load_backup.png"><img src=
+            "images/load_backup.png" alt="stl load backup"></a>
+          </div>
+
+          <p>Parsing errors can occur during the CDI backup loading process.  See
+          <a href="#parsing_errors">Parse Errors</a> for details.</p>
+
+        </dd>
+
         <dt>Import</dt>
         <dd>
           <p>Import a CSV file set from a directory in the user files location. If the current data
@@ -229,14 +323,23 @@ etc.
         <dd>
           <p>Reload the current data from the current node. If the current data has changed, a
           warning dialog will request confirmation to revert the data.</p>
+
+          <p>Parsing errors can occur during the refresh process.  See
+          <a href="#parsing_errors">Parse Errors</a> for details.</p>
+
         </dd>
 
         <dt id="storeButton">Store</dt>
         <dd>
           <p>Update the data on the current node.  The current editor table content is converted to
           the PLC format using an encoding process.  If the resulting PLC code is greater than 255
-          bytes, the encoding error dialog is shown (See the percent button).  Only changed data is
-          stored.  The store complete dialog will be displayed when done.</p>
+          bytes, the encoding error dialog is shown (See the percent button).</p>
+
+          <p><span class="since">since 5.9.1</span>The content will be store based on the
+          selected store mode in the <strong>View</strong> menu.  The default is
+          <strong>Store as readable lines</strong>.</p>
+
+          <p>Only changed data is stored.  The store completion dialog will be displayed when done.</p>
 
           <div style="margin-left: 2em">
             <a href="images/store_done.png"><img src=
@@ -286,36 +389,41 @@ etc.
         "images/revert_warning.png" alt="stl revert warning"></a>
       </div>
 
-      <h4>Editor Buttons</h4>
+      <h4 id="editor_buttons">Editor Buttons</h4>
 
       <dl>
         <dt>Add</dt>
-        <dd>Add a blank row to the end of the list.</dd>
+        <dd><p>Add a blank row to the end of the list.</p></dd>
 
         <dt>Insert</dt>
-        <dd>Add a blank row <strong>above</strong> the selected row.</dd>
+        <dd><p>Add a blank row <strong>above</strong> the selected row.</p></dd>
 
         <dt>Move Up</dt>
-        <dd>Move the selected row up.</dd>
+        <dd><p>Move the selected row up.</p></dd>
 
         <dt>Move Down</dt>
-        <dd>Move the selected row down.</dd>
+        <dd><p>Move the selected row down.</p></dd>
 
         <dt>Delete</dt>
-        <dd>Delete the selected row.</dd>
+        <dd><p>Delete the selected row.</p></dd>
 
         <dt>Percent</dt>
-        <dd>Do the PLC encode process and calculate the utilization.  If the resulting code is more
-        that 255 bytes, a dialog is displayed.  It shows the data that would be truncated during a
-        store.
+        <dd><p>Do the PLC encode process and calculate the utilization.  The calculation will be
+        based on the selected store mode in the <strong>View</strong> menu. If the resulting code is
+        more that 255 bytes, a dialog is displayed.  It shows the data that would be truncated
+        during a store.</p>
+
         <div style="margin-left: 2em">
           <a href="images/encode_overflow.png"><img src=
           "images/encode_overflow.png" alt="stl encode overflow"></a>
         </div>
+
+        <p>If the <strong>View &rArr; STL Preview</strong> menu item is enabled, the preview content
+        will be refreshed.</p>
         </dd>
       </dl>
 
-      <h3>File Menu</h3>
+      <h3 id="menus">File Menu</h3>
 
       <p>The File menu has menu items that are the same as the tool bar file buttons.</p>
 
@@ -324,14 +432,175 @@ etc.
         "images/file_menu.png" alt="stl file menu"></a>
       </div>
 
-      <p>The file menu also has a <strong>Load a CDI Backup file</strong> item.  This extracts the
-      STL data from a CDI backup file.</p>
+      <h3>View Menu<span class="since">since 5.9.7</span></h3>
+
+      <p>The <strong>View</strong> menu provides a choice of STL Editor layouts, an option to
+      preview the generated STL logic and three options for storing the STL in the
+      <strong>Tower LCC+Q</strong> node.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/load_backup.png"><img src=
-        "images/load_backup.png" alt="stl load backup"></a>
+        <a href="images/view_menu.png"><img src=
+        "images/view_menu.png" alt="stl view menu"></a>
       </div>
 
+      <dl>
+        <dt>Single Window</dt>
+        <dd>
+          <p>The <strong>STL Editor</strong> tab and the tabs for the <strong>IQYZ</strong> tables
+          are in the main STL Editor window.</p>
+        </dd>
+
+        <dt>Separate Tables Window</dt>
+        <dd>
+          <p>The <strong>IQYZ</strong> tabs are moved to a second window while the STL Editor tab
+          remains in the main STL Editor window. The tables window cannot be closed while the
+          <strong>Separate Tables Window</strong> option is selected.  The window is hidden when the
+          <strong>Single Window</strong> option is selected.</p>
+        </dd>
+
+        <dt>STL Preview</dt>
+        <dd>
+          <p>The preview option displays the generated STL logic for the current <strong>Group</strong>
+          in a separate window.  The window cannot be closed but will be hidden when the option is not
+          active.  The content is refreshed when the <strong>Percent</strong> button is pressed or a
+          different group is selected from the <strong>Group</strong> list.  After a <strong>Store</strong>,
+          it will contain the STL logic for the last group.</p>
+
+          <p>Preview examples are shown below.</p>
+        </dd>
+
+        <dt>Store as readable lines</dt>
+        <dd>
+          <p>The STL is stored as individual lines and spaces to make the output easier to read.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/readable_preview.png"><img class="image-border" src=
+            "images/readable_preview.png" alt="readable preview"></a>
+          </div>
+        </dd>
+
+        <dt>Store as compact lines</dt>
+        <dd>
+          <p>The STL is stored as individual lines without extra spaces.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/compact_preview.png"><img class="image-border" src=
+            "images/compact_preview.png" alt="compact preview"></a>
+          </div>
+        </dd>
+
+        <dt>Store compressed</dt>
+        <dd>
+          <p>The STL is stored with only the content.  There are natural line breaks after comments
+          and jump labels.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/compressed_preview.png"><img class="image-border" src=
+            "images/compressed_preview.png" alt="compressed preview"></a>
+          </div>
+        </dd>
+
+      </dl>
+
+      <h3 id="debugging">Debugging</h3>
+
+      <h4 id="parsing_errors">Parsing Errors</h4>
+
+      <p>When CDI content is being loaded into the STL Editor, the content is translated from a
+      series of characters into a logical structure consisting of labels, operators, variables and
+      comments.  If the translation fails, the <strong>Parsing Errors</strong> dialog will be
+      displayed.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/parse_error_dialog.png"><img src=
+        "images/parse_error_dialog.png" alt="stl parsing error"></a>
+      </div>
+
+      <p>The input line can have up to 255 characters.  The dialog displays a portion of the line.
+      20 characters are displayed starting at the indicated number.  The item causing the error is
+      in the middle.  Any "new line" characters are replaced by the tilde character.</p>
+
+      <p>The errors in the dialog are also sent to the JMRI system console.  Instead of using a
+      screen shot when requesting help, the text from the system console is easier to read.</p>
+
+      <pre>
+ERROR - No operator found at "6", partial text = " I0.0~JCN PT2~~= Q0."
+ERROR - No operator found at "26", partial text = "1 // Here PT1 routed"
+ERROR - No operator found at "64", partial text = "~JU PTDN~~PT2: SET~A"
+ERROR - No operator found at "85", partial text = " I0.1~JCN PT3~~= Q0."
+ERROR - No operator found at "105", partial text = "2 // Here PT2 routed"
+ERROR - No operator found at "143", partial text = "~JU PTDN~~PT3: SET /"
+ERROR - No operator found at "160", partial text = "T // Here PT3 routed"
+      </pre>
+
+      <h4>JMRI Debug Option</h4>
+
+      <p>JMRI debugging can be enabled using <em><strong>jmri.jmrix.openlcb.swing.stleditor</strong></em>.
+      This can be used to modify the default_lcf.xml file or using PanelPro <strong>Debug &rArr; Display
+      / Edit Log Categories</strong>.  When debugging is enabled, additional information is sent to
+      the JMRI system console.</p>
+
+      <dl>
+        <dt>Parsing Passes</dt>
+        <dd>
+          <p>When loading CDI data, the decoding logic processes the input line 7 times to create a
+          token map of the data.  This is then used to create the logical view of the data as labels,
+          operators, variables, and comments.</p>
+
+          <pre>
+DEBUG - Find label locations
+DEBUG - Find variables and operators
+DEBUG - Find operators without variables
+DEBUG - Find jump operators and destinations
+DEBUG - Find timer word locations and load operators
+DEBUG - Find timer variable locations and S operators
+DEBUG - Find comment locations
+          </pre>
+
+          <p>If a parsing error is not obvious, knowing which of the 7 passes was active when a
+          parsing error occurred can provide useful context information.  Here is an example.</p>
+
+          <pre>
+DEBUG - Find timer variable locations and S operators
+ERROR - No operator found at "6", partial text = " I0.0~JCN PT2~~= Q0."
+DEBUG - Find comment locations
+          </pre>
+        </dd>
+
+        <dt>Decode Line</dt>
+        <dd>
+          <p>The raw line is displayed.  This is followed by the list of tokens created from the
+          line.  Here is a short example.</p>
+
+          <pre>
+DEBUG -   Token = Type: Oper, Name: SET, Start: 0, End: 3
+DEBUG -   Token = Type: Oper, Name: AN, Start: 4, End: 6
+DEBUG -   Token = Type: Var, Name: I0.0, Start: 7, End: 11
+DEBUG -   Token = Type: Oper, Name: JCN, Start: 12, End: 15
+DEBUG -   Token = Type: Dest, Name: PT2, Start: 16, End: 19
+          </pre>
+        </dd>
+
+        <dt>Encode Line</dt>
+        <dd>
+          <p>The encoded line is displayed.  This will be sent to the Tower LCC+Q when
+          <strong>Store</strong> is selected.  This is the same as the <strong>STL Preview</strong>
+          window.  Here is an example using the <strong>Store compressed</strong> option:</p>
+
+          <pre>
+DEBUG - Encoded multiLine:
+ [java] ANI0.1//Clear locks if none occupied
+ [java] ANI0.2ANI0.3ANI0.4ANI0.5RQ3.0RQ3.1JC AB1
+ [java] CLROQ3.0//Is either lock active?
+ [java] OQ3.1JC AB1
+ [java] //Lock already in use
+ [java] ANQ3.0AI0.1SQ3.0//Lock AB
+ [java] JC AB1
+ [java] ANQ3.1AI0.5//Lock BA
+ [java] SQ3.1
+          </pre>
+        </dd>
+      </dl>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>

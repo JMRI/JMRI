@@ -1,14 +1,14 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
@@ -16,9 +16,6 @@ import jmri.jmrix.can.cbus.swing.CbusCommonSwing;
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.*;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  * Pane providing a CBUS node table.
@@ -32,8 +29,6 @@ public class CbusNodeTablePane extends JPanel {
 
     private CbusNodeTableDataModel nodeModel;
     protected JTable nodeTable;
-
-    private TableRowSorter<CbusNodeTableDataModel> sorter;
 
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm EEE d MMM");
 
@@ -72,7 +67,7 @@ public class CbusNodeTablePane extends JPanel {
         XTableColumnModel tcm = new XTableColumnModel();
         nodeTable.setColumnModel(tcm);
 
-        sorter = new TableRowSorter<>(nodeModel);
+        TableRowSorter<CbusNodeTableDataModel>sorter = new TableRowSorter<>(nodeModel);
         nodeTable.setRowSorter(sorter);
 
         // configure items for GUI
@@ -142,7 +137,7 @@ public class CbusNodeTablePane extends JPanel {
                 if(arg1 != null){
                     string = arg1.toString();
                     f.setText(string);
-                    f.setHorizontalAlignment(JTextField.CENTER);
+                    f.setHorizontalAlignment(SwingConstants.CENTER);
                     CbusCommonSwing.hideNumbersLessThan(0, string, f);
                     CbusCommonSwing.setCellFromDate(arg1,f,DATE_FORMAT);
                     CbusCommonSwing.setCellFromBackupEnum(arg1,f);
@@ -154,7 +149,23 @@ public class CbusNodeTablePane extends JPanel {
                 CbusCommonSwing.setCellBackground(isSelected, f, table,row);
                 CbusCommonSwing.setCellFocus(hasFocus, f, table);
 
+                checkDuplicateCanId(f, table, arg1, col);
+
                 return f;
+            }
+
+            private void checkDuplicateCanId(JTextField f, JTable table, Object val, int col) {
+
+                int modelCol = table.convertColumnIndexToModel(col);
+                if (( modelCol == CbusNodeTableDataModel.CANID_COLUMN ) && (val instanceof Integer )) {
+                    int numCanIds = nodeModel.getNumberNodesWithCanId((int)val);
+                    if ( numCanIds > 1 ) {
+                        f.setBackground(CbusCommonSwing.VERY_LIGHT_RED);
+                        f.setToolTipText(Bundle.getMessage("DuplicateCanIdTip"));
+                    } else {
+                        f.setToolTipText(null);
+                    }
+                }
             }
         };
     }
@@ -163,6 +174,6 @@ public class CbusNodeTablePane extends JPanel {
         nodeTable = null;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeTablePane.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeTablePane.class);
 
 }

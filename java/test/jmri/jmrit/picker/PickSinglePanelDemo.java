@@ -27,8 +27,8 @@ public class PickSinglePanelDemo implements ListSelectionListener {
         demo.start();
     }
 
-    PickListModel<Sensor> tableModel;
-    PickSinglePanel<Sensor> panel;
+    private PickListModel<Sensor> tableModel;
+    private PickSinglePanel<Sensor> panel;
 
     void start() {
         SensorManager m = InstanceManager.getDefault(SensorManager.class);
@@ -43,7 +43,7 @@ public class PickSinglePanelDemo implements ListSelectionListener {
         m.provideSensor("9");
 
         tableModel = PickListModel.sensorPickModelInstance();
-        panel = new PickSinglePanel<Sensor>(tableModel);
+        panel = new PickSinglePanel<>(tableModel);
 
         // add a listener
         panel.getTable().getSelectionModel().addListSelectionListener(this);
@@ -57,6 +57,9 @@ public class PickSinglePanelDemo implements ListSelectionListener {
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
+        if ( panel == null) {
+            return;
+        }
         System.out.println("  Selected: " + panel.getSelectedBeanHandle());
     }
 

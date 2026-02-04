@@ -102,7 +102,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     }
 
     @Override
-    public Category getCategory() {
+    public LogixNG_Category getCategory() {
         throw new UnsupportedOperationException("Not supported.");
     }
 
@@ -416,6 +416,12 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));
+        if (isInline()) {
+            writer.append(" ::: ").append(Bundle.getMessage("Inline"));
+        }
+        if (settings._printDisabled && !isEnabled()) {
+            writer.append(" ::: ").append(Bundle.getMessage("Disabled"));
+        }
         writer.println();
     }
 

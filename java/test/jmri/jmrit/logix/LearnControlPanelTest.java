@@ -1,27 +1,24 @@
 package jmri.jmrit.logix;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
  * @author Pete Cressman Copyright (C) 2020
  */
+@DisabledIfHeadless
 public class LearnControlPanelTest {
 
     @Test
-    public void testCTor() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testCTor() {
+
         WarrantFrame wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
         LearnThrottleFrame ltf = new LearnThrottleFrame(wf);
         LearnControlPanel t = new LearnControlPanel(ltf);
-        assertThat(t).withFailMessage("exists").isNotNull();
+        Assertions.assertNotNull( t, "exists");
         JUnitUtil.dispose(ltf);
         JUnitUtil.dispose(wf);
     }

@@ -52,6 +52,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
     // major buttons
     JButton selectButton = new JButton(Bundle.getMessage("SelectAll"));
+    JButton copyButton = new JButton(Bundle.getMessage("ButtonCopy"));
     JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
 
     JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));
@@ -117,6 +118,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         JPanel cp3 = new JPanel();
         cp3.setBorder(BorderFactory.createTitledBorder(""));
         cp3.add(clearButton);
+        cp3.add(copyButton);
         cp3.add(selectButton);
 
         JPanel cp4 = new JPanel();
@@ -139,6 +141,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         // tool tips
         selectButton.setToolTipText(Bundle.getMessage("SelectAllButtonTip"));
+        copyButton.setToolTipText(Bundle.getMessage("CopyButtonTip"));
         clearButton.setToolTipText(Bundle.getMessage("ClearAllButtonTip"));
         applyButton.setToolTipText(Bundle.getMessage("ApplyButtonTip"));
         buildButton.setToolTipText(Bundle.getMessage("BuildSelectedTip"));
@@ -170,6 +173,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         // setup buttons
         addButtonAction(clearButton);
+        addButtonAction(copyButton);
         addButtonAction(selectButton);
         addButtonAction(applyButton);
         addButtonAction(buildButton);
@@ -249,6 +253,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         if (ae.getSource() == selectButton) {
             updateCheckboxes(true);
         }
+        if (ae.getSource() == copyButton) {
+            copySchedule();
+        }
         if (ae.getSource() == applyButton) {
             applySchedule();
         }
@@ -263,7 +270,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
         if (ae.getSource() == runFileButton) {
             // Processes the CSV Manifest files using an external custom program.
-            if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).doesExcelFileExist()) {
                 log.warn("Manifest creator file not found!, directory path: {}, file name: {}",
                         InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryPathName(),
                         InstanceManager.getDefault(TrainCustomManifest.class).getFileName()); // NOI18N
@@ -369,6 +376,19 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             }
         }
     }
+    
+    private void copySchedule() {
+        TrainSchedule ts = trainScheduleManager.getScheduleById(getSelectedScheduleId());
+        if (ts != null) {
+            for (Train train : trainManager.getTrainsByIdList()) {
+                if (train.isBuildEnabled()) {
+                    ts.addTrainId(train.getId());
+                } else {
+                    ts.removeTrainId(train.getId());
+                }
+            }
+        }
+    }
 
     private String getSelectedScheduleId() {
         AbstractButton b;
@@ -385,6 +405,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
     private void enableButtons(boolean enable) {
         selectButton.setEnabled(enable);
+        copyButton.setEnabled(enable);
         clearButton.setEnabled(enable);
         applyButton.setEnabled(enable);
         buildButton.setEnabled(enable);
@@ -501,6 +522,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         if (Control.SHOW_PROPERTY)
             log.debug("Property change {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());
         if (e.getPropertyName().equals(TrainScheduleManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(TrainScheduleManager.SCHEDULE_ID_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(TrainSchedule.NAME_CHANGED_PROPERTY)) {
             updateControlPanel();
         }

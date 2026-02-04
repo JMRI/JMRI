@@ -26,13 +26,13 @@ public abstract class AbstractBase
 
     public AbstractBase(String sys) throws BadSystemNameException {
         super(sys);
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
     }
 
     public AbstractBase(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
     }
 
     public AbstractBase(String sys, Category category) throws BadSystemNameException {
@@ -198,6 +198,12 @@ public abstract class AbstractBase
         }
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));
+        if (settings._printDisabled && !isEnabled()) {
+            writer.append(" ::: ").append(Bundle.getMessage("Disabled"));
+        }
+        if (settings._printStartup && (this instanceof ConditionalNG) && (((ConditionalNG)this).isExecuteAtStartup())) {
+            writer.append(" ::: ").append(Bundle.getMessage("Startup"));
+        }
         writer.println();
     }
 

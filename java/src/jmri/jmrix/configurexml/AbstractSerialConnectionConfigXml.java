@@ -79,7 +79,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         boolean result = true;
         getInstance();
         log.info("Starting to connect for \"{}\"", adapter.getSystemConnectionMemo()!=null ? adapter.getSystemConnectionMemo().getUserName() : "(Unknown Connection)");
-        
+
         // configure port name
         String portName = perNode.getAttribute("port").getValue();
         adapter.setPort(portName);
@@ -124,6 +124,13 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     @Override
     public void load(Element element, Object o) {
         log.error("method with two args invoked");
+    }
+
+    @Override
+    protected void dispose() {
+        if (adapter != null) {
+            adapter.dispose();
+        }
     }
 
     // initialize logging

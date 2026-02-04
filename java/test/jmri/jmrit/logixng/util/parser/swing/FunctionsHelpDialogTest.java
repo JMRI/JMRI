@@ -2,10 +2,7 @@ package jmri.jmrit.logixng.util.parser.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test FunctionsHelpDialog
@@ -17,16 +14,15 @@ public class FunctionsHelpDialogTest {
     @Test
     public void testCtor() {
         FunctionsHelpDialog t = new FunctionsHelpDialog();
-        Assert.assertNotNull("not null", t);
+        Assertions.assertNotNull( t, "not null");
     }
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

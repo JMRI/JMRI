@@ -1,5 +1,9 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,11 +13,10 @@ import jmri.InstanceManager;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
+import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test the AccessoryOpsModeProgrammerFacade class.
@@ -22,10 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Heap 2017
  *
  */
-// @ToDo("transform to annotations requires e.g. http://alchemy.grimoire.ca/m2/sites/ca.grimoire/todo-annotations/")
-// @ToDo("test mode handling")
-// @ToDo("test packet contents in each mode")
-// @ToDo("test address handling")
+@ToDo("test mode handling, test packet contents in each mode, test address handling")
 public class AccessoryOpsModeProgrammerFacadeTest {
 
     @Test
@@ -36,30 +36,30 @@ public class AccessoryOpsModeProgrammerFacadeTest {
 
         Programmer p = new AccessoryOpsModeProgrammerFacade(dp, "", 0, dp);
 
-        Assert.assertTrue("CV limit read OK", p.getCanRead("1024"));
-        Assert.assertTrue("CV limit write OK", p.getCanWrite("1024"));
-        Assert.assertTrue("CV limit read fail", !p.getCanRead("1025"));
-        Assert.assertTrue("CV limit write fail", !p.getCanWrite("1025"));
+        assertTrue( p.getCanRead("1024"), "CV limit read OK");
+        assertTrue( p.getCanWrite("1024"), "CV limit write OK");
+        assertFalse( p.getCanRead("1025"), "CV limit read fail");
+        assertFalse( p.getCanWrite("1025"), "CV limit write fail");
     }
 
     @Test
     public void testWriteAddr123long1cv234val14delay200signal() throws jmri.ProgrammerException, InterruptedException {
-        testMethod();
+        assertMethod();
     }
 
     @Test
     public void testWriteAddr3long0cv12val0delay500accessory() throws jmri.ProgrammerException, InterruptedException {
-        testMethod();
+        assertMethod();
     }
 
     @Test
     public void testWriteAddr511long1cv1024val255delay0decoder() throws jmri.ProgrammerException, InterruptedException {
-        testMethod();
+        assertMethod();
     }
 
     // from here down is testing infrastructure
     // Perform tests with parameters parsed from the name of the calling method.
-    synchronized void testMethod() throws jmri.ProgrammerException, InterruptedException {
+    synchronized void assertMethod() throws jmri.ProgrammerException, InterruptedException {
         String methodName = "";
         int addr = 0;
         boolean isLong = false;
@@ -86,24 +86,23 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         ProgDebugger dp = new ProgDebugger(isLong, addr);
         // Create a facade over the base programmer and also a listener for the facade.
         Programmer p = new AccessoryOpsModeProgrammerFacade(dp, addrType, 0, dp);
-        ProgListener l = new ProgListener() {
-            @Override
-            public void programmingOpReply(int value, int status) {
-                log.debug("callback value={} status={}", value, status);
-                replied = true;
-                readValue = value;
-            }
+        ProgListener l = (int value1, int status) -> {
+            log.debug("callback value={} status={}", value1, status);
+            setReplied(true);
+            readValue = value1;
         };
 
         // Write to the facade programmer.
         p.writeCV(cv, value, l);
         waitReply();
 
+        Assertions.assertEquals(value, readValue);
+
         // Check that the write did not through to the base programmer.
-        Assert.assertTrue("target not directly written", !dp.hasBeenWritten(value));
-        Assert.assertTrue("index not written", !dp.hasBeenWritten(81));
+        assertFalse( dp.hasBeenWritten(value), "target not directly written");
+        assertFalse( dp.hasBeenWritten(81), "index not written");
         // Check that a packet was sent.
-        Assert.assertNotNull("packet sent", mockCS.lastPacket);
+        assertNotNull( mockCS.lastPacket, "packet sent");
     }
 
     // Extract test parameters from test name.
@@ -135,9 +134,13 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         return retString;
     }
 
-    MockCommandStation mockCS;
-    int readValue = -2;
-    boolean replied = false;
+    private MockCommandStation mockCS;
+    private int readValue = -2;
+    private boolean replied;
+
+    synchronized void setReplied( boolean newVal) {
+        replied = newVal;
+    }
 
     synchronized void waitReply() throws InterruptedException {
         while (!replied) {
@@ -147,18 +150,21 @@ public class AccessoryOpsModeProgrammerFacadeTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        InstanceManager.setDefault(CommandStation.class, mockCS = new MockCommandStation());
+    public void setUp() {
+        JUnitUtil.setUp();
+        mockCS = new MockCommandStation();
+        InstanceManager.setDefault(CommandStation.class, mockCS);
         mockCS.lastPacket = null;
+        setReplied(false);
+        readValue = -2;
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.tearDown();
+    public void tearDown() {
+        mockCS = null;
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AccessoryOpsModeProgrammerFacadeTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AccessoryOpsModeProgrammerFacadeTest.class);
 
 }

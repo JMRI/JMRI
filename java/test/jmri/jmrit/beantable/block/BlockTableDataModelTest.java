@@ -23,7 +23,7 @@ public class BlockTableDataModelTest extends AbstractBeanTableDataModelBase<Bloc
     
     @Override
     public int getModelColumnCount(){
-        return 15;
+        return 16;
     }
     
     @Test

@@ -1,9 +1,11 @@
 package jmri.jmrit.ussctc;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 
@@ -23,7 +25,7 @@ public class TurnoutLockTest {
 
         t.setCommandedState(Turnout.CLOSED);
 
-        Assert.assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
+        assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -35,7 +37,7 @@ public class TurnoutLockTest {
 
         t.setCommandedState(Turnout.THROWN);
 
-        Assert.assertTrue(! lock.isLockClear(Lock.turnoutLockLogger));
+        assertFalse(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -47,7 +49,7 @@ public class TurnoutLockTest {
 
         t.setCommandedState(Turnout.CLOSED);
 
-        Assert.assertTrue(! lock.isLockClear(Lock.turnoutLockLogger));
+        assertFalse(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -59,13 +61,13 @@ public class TurnoutLockTest {
 
         t.setCommandedState(Turnout.CLOSED);
 
-        Assert.assertTrue(! lock.isLockClear(Lock.turnoutLockLogger));
+        assertFalse(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
     }

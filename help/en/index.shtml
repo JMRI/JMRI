@@ -29,8 +29,8 @@
 
     <ol>
       <li><strong>Open help pages locally</strong>: The help pages will be loaded from your JMRI
-      install location. This means that the pages will be based on the installed JMRI version. This
-      is the default option.</li>
+      install location, in a limited text format. The pages will be based on the installed JMRI 
+      version. This is the default option.</li>
 
       <li>
         <strong>Open help pages online</strong>: The help page will be displayed by linking to
@@ -40,8 +40,10 @@
         connection is available.
       </li>
 
-      <li><strong>Open help pages using the web server in JMRI</strong>: This is a future
-      capability.</li>
+      <li><strong>Open help pages using the web server in JMRI</strong>: The help pages will be 
+      loaded from your JMRI install location, with full formatting, navigation bar and sidebars.
+      The pages will be based on the installed JMRI version. Requires that JMRI Web Server 
+      is running.</li>
     </ol>
 
     <h2>Further information</h2>

@@ -1,14 +1,14 @@
 package jmri.jmrit.display.controlPanelEditor;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -19,23 +19,17 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  */
 public class EditCircuitPathsTest {
 
-    OBlockManager blkMgr;
+    private OBlockManager blkMgr;
 
     @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new ControlPanelEditor("EditCircuitPathsTest");
-    }
-
-    @Test
+    @DisabledIfHeadless
     public void testBasicOps() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        Assumptions.assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
 
         ControlPanelEditor frame = new ControlPanelEditor("EditCircuitPathsTest");
         frame.makeCircuitMenu(true);
         CircuitBuilder cb = frame.getCircuitBuilder();
-        Assert.assertNotNull("exists", cb);
+        assertNotNull( cb, "exists");
         OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
 
         new Thread(() -> {
@@ -46,7 +40,7 @@ public class EditCircuitPathsTest {
         }).start();
 
         EditCircuitPaths pFrame = new EditCircuitPaths("Edit Circuit Paths", cb, ob1);
-        Assert.assertNotNull("exists", pFrame);
+        assertNotNull( pFrame, "exists");
 
         JUnitUtil.dispose(frame);
         JUnitUtil.dispose(pFrame);

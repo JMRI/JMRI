@@ -71,14 +71,22 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         e.setAttribute(Xml.DATE, "2015/05/15 15:15:15");
         e.setAttribute(Xml.SELECTED, Xml.FALSE);
         e.setAttribute(Xml.LAST_LOCATION_ID, "TESTLASTLOCATION");
+        e.setAttribute(Xml.LAST_TRACK_ID, "TESTLASTTRACK");
         e.setAttribute(Xml.TRAIN, "TESTTRAIN");
+        e.setAttribute(Xml.TRAIN_ID, "TESTTRAINID");
+        e.setAttribute(Xml.LAST_TRAIN_ID, "TESTLASTTRAINID");
         e.setAttribute(Xml.OWNER, "TESTOWNER");
         e.setAttribute(Xml.VALUE, "TESTVALUE");
         e.setAttribute(Xml.RFID, "12345");
         e.setAttribute(Xml.LOC_UNKNOWN, Xml.FALSE);
         e.setAttribute(Xml.OUT_OF_SERVICE, Xml.FALSE);
         e.setAttribute(Xml.BLOCKING, "5");
+        e.setAttribute(Xml.CLONE, Xml.FALSE);
         e.setAttribute(Xml.COMMENT, "Test Comment");
+        e.setAttribute(Xml.PICKUP_TIME, "TESTPICKUPTIME");
+        e.setAttribute(Xml.SETOUT_TIME, "TESTSETOUTTIME");
+        e.setAttribute(Xml.DIVISION_ID, "TESTDIVISIONID");
+        e.setAttribute("wait", "6");
 
         Assertions.assertDoesNotThrow( () ->  {
             Car rs1 = new Car(e);

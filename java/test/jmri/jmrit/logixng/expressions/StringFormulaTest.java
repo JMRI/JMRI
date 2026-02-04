@@ -1,5 +1,14 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -14,13 +23,10 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
- * Test And
+ * Test StringFormula
  *
  * @author Daniel Bergqvist 2018
  */
@@ -50,7 +56,8 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
 
     @Override
     public MaleSocket getConnectableChild() {
-        StringExpressionBean childExpression = new StringExpressionConstant("IQSE"+Integer.toString(beanID++), null);
+        StringExpressionBean childExpression = new StringExpressionConstant("IQSE"+Integer.toString(beanID), null);
+        beanID++;
         MaleSocket maleSocketChild =
                 InstanceManager.getDefault(StringExpressionManager.class).registerExpression(childExpression);
         return maleSocketChild;
@@ -84,7 +91,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
     }
 
     @Override
-    public NamedBean createNewBean(String systemName) throws Exception {
+    public NamedBean createNewBean(String systemName) {
         StringFormula a = new StringFormula(systemName, null);
 //        a.setFormula("R1");
         return a;
@@ -102,50 +109,47 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
     }
 
     @Test
-    public void testCtor() throws Exception {
+    public void testCtor() {
         StringFormula expression2;
 
         expression2 = new StringFormula("IQSE321", null);
 //        expression2.setFormula("R1");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
 //        Assert.assertEquals("String matches", "Formula: R1", expression2.getLongDescription());
 
         expression2 = new StringFormula("IQSE321", "My expression");
 //        expression2.setFormula("R1");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My expression", expression2.getUserName(), "Username matches");
 //        Assert.assertEquals("String matches", "Formula: R1", expression2.getLongDescription());
 
         expression2 = new StringFormula("IQSE321", null);
 //        expression2.setFormula("R1 and R2");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
 //        Assert.assertEquals("String matches", "Formula: R1 and R2", expression2.getLongDescription());
 
         expression2 = new StringFormula("IQSE321", "My expression");
 //        expression2.setFormula("R1 or R2");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My expression", expression2.getUserName(), "Username matches");
 //        Assert.assertEquals("String matches", "Formula: R1 or R2", expression2.getLongDescription());
 
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            new StringFormula("IQE55:12:XY11", null);
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class,
+            () -> {
+                var sf = new StringFormula("IQE55:12:XY11", null);
+                fail("Should have thrown on line above " + sf);
+            }, "Expected Illegal system name exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            new StringFormula("IQE55:12:XY11", "A name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows( IllegalArgumentException.class,
+            () -> {
+                var sf = new StringFormula("IQE55:12:XY11", "A name");
+                fail("Should have thrown on line above " + sf);
+            }, "Expected Illegal system name with uName exception thrown");
+        assertNotNull(ex);
+
     }
 
     // Test action when at least one child socket is not connected
@@ -170,18 +174,17 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         expressionSystemNames.add(new SocketData("Yes123", "IQSE3", managerName));
 
         StringFormula expression = new StringFormula("IQSE321", null, expressionSystemNames);
-        Assert.assertNotNull("exists", expression);
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        assertNotNull( expression, "exists");
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
 
         for (int i=0; i < 5; i++) {
             SocketData entry = expressionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry._socketName,
-                    entry._socketName, expression.getChild(i).getName());
-            Assert.assertEquals("expression female socket is of correct class",
-                    "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket",
-                    expression.getChild(i).getClass().getName());
-            Assert.assertFalse("expression female socket is not connected",
-                    expression.getChild(i).isConnected());
+            assertEquals( entry._socketName, expression.getChild(i).getName(),
+                    "expression female socket name is "+entry._socketName);
+            assertEquals( "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket",
+                    expression.getChild(i).getClass().getName(), "expression female socket is of correct class");
+            assertFalse( expression.getChild(i).isConnected(),
+                    "expression female socket is not connected");
         }
 
         // Setup action. This connects the child actions to this action
@@ -191,22 +194,22 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
 
         for (int i=0; i < 5; i++) {
             SocketData entry = expressionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry._socketName,
-                    entry._socketName, expression.getChild(i).getName());
+            assertEquals( entry._socketName, expression.getChild(i).getName(),
+                    "expression female socket name is "+entry._socketName);
 
             if (maleSockets.get(i) != null) {
-                Assert.assertTrue("expression female socket is connected",
-                        expression.getChild(i).isConnected());
+                assertTrue( expression.getChild(i).isConnected(),
+                        "expression female socket is connected");
 //                Assert.assertEquals("child is correct bean",
 //                        maleSockets.get(i),
 //                        expression.getChild(i).getConnectedSocket());
             } else {
-                Assert.assertFalse("expression female socket is not connected",
-                        expression.getChild(i).isConnected());
+                assertFalse( expression.getChild(i).isConnected(),
+                        "expression female socket is not connected");
             }
         }
 
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
     }
 
     @Test
@@ -229,18 +232,18 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         expressionSystemNames.add(new SocketData("Yes123", "IQSE3", managerName));
 
         StringFormula expression = new StringFormula("IQSE321", null, expressionSystemNames);
-        Assert.assertNotNull("exists", expression);
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        assertNotNull( expression, "exists");
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
 
         for (int i=0; i < 5; i++) {
             SocketData entry = expressionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry._socketName,
-                    entry._socketName, expression.getChild(i).getName());
-            Assert.assertEquals("expression female socket is of correct class",
-                    "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket",
-                    expression.getChild(i).getClass().getName());
-            Assert.assertFalse("expression female socket is not connected",
-                    expression.getChild(i).isConnected());
+            assertEquals( entry._socketName, expression.getChild(i).getName(),
+                    "expression female socket name is "+entry._socketName);
+            assertEquals( "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket",
+                    expression.getChild(i).getClass().getName(),
+                    "expression female socket is of correct class");
+            assertFalse( expression.getChild(i).isConnected(),
+                    "expression female socket is not connected");
         }
 
         // Setup action. This connects the child actions to this action
@@ -248,28 +251,28 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
 
         for (int i=0; i < 5; i++) {
             SocketData entry = expressionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry._socketName,
-                    entry._socketName, expression.getChild(i).getName());
+            assertEquals( entry._socketName, expression.getChild(i).getName(),
+                    "expression female socket name is "+entry._socketName);
 
             if (maleSockets.get(i) != null) {
-                Assert.assertTrue("expression female socket is connected",
-                        expression.getChild(i).isConnected());
+                assertTrue( expression.getChild(i).isConnected(),
+                        "expression female socket is connected");
 //                Assert.assertEquals("child is correct bean",
 //                        maleSockets.get(i),
 //                        expression.getChild(i).getConnectedSocket());
             } else {
-                Assert.assertFalse("expression female socket is not connected",
-                        expression.getChild(i).isConnected());
+                assertFalse( expression.getChild(i).isConnected(),
+                        "expression female socket is not connected");
             }
         }
 
         // Since all the sockets are connected, a new socket must have been created.
-        Assert.assertEquals("expression has 6 female sockets", 6, expression.getChildCount());
+        assertEquals( 6, expression.getChildCount(), "expression has 6 female sockets");
 
         // Try run setup() again. That should not cause any problems.
         expression.setup();
 
-        Assert.assertEquals("expression has 6 female sockets", 6, expression.getChildCount());
+        assertEquals( 6, expression.getChildCount(), "expression has 6 female sockets");
     }
 
     // Test calling setActionSystemNames() twice
@@ -284,18 +287,14 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
                 expression.getClass().getDeclaredMethod("setExpressionSystemNames", new Class<?>[]{List.class});
         method.setAccessible(true);
 
-        boolean hasThrown = false;
-        try {
-            method.invoke(expression, new Object[]{null});
-        } catch (InvocationTargetException e) {
-            if (e.getCause() instanceof RuntimeException) {
-                hasThrown = true;
-                Assert.assertEquals("Exception message is correct",
-                        "expression system names cannot be set more than once",
-                        e.getCause().getMessage());
-            }
-        }
-        Assert.assertTrue("Exception thrown", hasThrown);
+        InvocationTargetException e = assertThrows( InvocationTargetException.class,
+            () -> method.invoke(expression, new Object[]{null}),
+            "Throws InvocationTargetException");
+        RuntimeException ex = assertInstanceOf( RuntimeException.class, e.getCause(),
+                "Cause RuntimeException");
+        assertEquals( "expression system names cannot be set more than once",
+                        ex.getMessage(), "RuntimeException message is correct");
+
     }
 
     @Test
@@ -308,20 +307,20 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         });
 
         a.setChildCount(1);
-        Assert.assertEquals("numChilds are correct", 1, a.getChildCount());
+        assertEquals( 1, a.getChildCount(), "numChilds are correct");
 
         // Test increase num children
         ab.set(false);
         a.setChildCount(a.getChildCount()+1);
-        Assert.assertEquals("numChilds are correct", 2, a.getChildCount());
-        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+        assertEquals( 2, a.getChildCount(), "numChilds are correct");
+        assertTrue( ab.get(), "PropertyChangeEvent fired");
 
         // Test decrease num children
         ab.set(false);
-        Assert.assertTrue("We have least two children", a.getChildCount() > 1);
+        assertTrue( a.getChildCount() > 1, "We have least two children");
         a.setChildCount(1);
-        Assert.assertEquals("numChilds are correct", 1, a.getChildCount());
-        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+        assertEquals( 1, a.getChildCount(), "numChilds are correct");
+        assertTrue( ab.get(), "PropertyChangeEvent fired");
 
         // Test decrease num children when all children are connected
         ab.set(false);
@@ -331,16 +330,16 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         a.getChild(1).connect(getConnectableChild());
         a.getChild(2).disconnect();
         a.getChild(2).connect(getConnectableChild());
-        Assert.assertEquals("numChilds are correct", 4, a.getChildCount());
+        assertEquals( 4, a.getChildCount(), "numChilds are correct");
         a.setChildCount(2);
-        Assert.assertEquals("numChilds are correct", 2, a.getChildCount());
-        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+        assertEquals( 2, a.getChildCount(), "numChilds are correct");
+        assertTrue( ab.get(), "PropertyChangeEvent fired");
 
         // Test setChildCount to same number of children as before
         ab.set(false);
         a.setChildCount(2);
-        Assert.assertEquals("numChilds are correct", 2, a.getChildCount());
-        Assert.assertFalse("PropertyChangeEvent not fired", ab.get());
+        assertEquals( 2, a.getChildCount(), "numChilds are correct");
+        assertFalse( ab.get(), "PropertyChangeEvent not fired");
     }
 
     @Test
@@ -355,22 +354,22 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         a.getChild(1).setName("Xyz");
 
         a.setFormula("Xyz + Abc");
-        Assert.assertEquals("Formula is correct", "Xyz + Abc", a.getFormula());
+        assertEquals( "Xyz + Abc", a.getFormula(), "Formula is correct");
 
         a.setFormula("Abc - Xyz");
-        Assert.assertEquals("Formula is correct", "Abc - Xyz", a.getFormula());
+        assertEquals( "Abc - Xyz", a.getFormula(), "Formula is correct");
     }
 
     @Test
-    public void testGetChild() throws Exception {
+    public void testGetChild() throws SocketAlreadyConnectedException {
         StringFormula expression2 = new StringFormula("IQSE321", null);
 //        expression2.setFormula("R1");
 
         for (int i=0; i < 3; i++) {
-            Assert.assertTrue("getChildCount() returns "+i, i+1 == expression2.getChildCount());
+            assertEquals( i+1, expression2.getChildCount(), "getChildCount() returns "+i);
 
-            Assert.assertNotNull("getChild(0) returns a non null value",
-                    expression2.getChild(0));
+            assertNotNull( expression2.getChild(0),
+                    "getChild(0) returns a non null value");
 
             assertIndexOutOfBoundsException(expression2::getChild, i+1, i+1);
 
@@ -384,7 +383,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
+        assertEquals( LogixNG_Category.COMMON, _base.getCategory(), "Category matches");
     }
 
     // Test the methods connected(FemaleSocket) and getExpressionSystemName(int)
@@ -396,44 +395,45 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         MaleSocket maleSAMSocket =
                 InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpressionMemory);
 
-        Assert.assertEquals("Num children is correct", 1, expression.getChildCount());
+        assertEquals( 1, expression.getChildCount(), "Num children is correct");
 
         // Test connect and disconnect
         expression.getChild(0).connect(maleSAMSocket);
-        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
-        Assert.assertEquals("getExpressionSystemName(0) is correct", "IQSE122", expression.getExpressionSystemName(0));
-        Assert.assertNull("getExpressionSystemName(1) is null", expression.getExpressionSystemName(1));
+        assertEquals( 2, expression.getChildCount(), "Num children is correct");
+        assertEquals( "IQSE122", expression.getExpressionSystemName(0), "getExpressionSystemName(0) is correct");
+        assertNull( expression.getExpressionSystemName(1), "getExpressionSystemName(1) is null");
         expression.getChild(0).disconnect();
-        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
-        Assert.assertNull("getExpressionSystemName(0) is null", expression.getExpressionSystemName(0));
-        Assert.assertNull("getExpressionSystemName(1) is null", expression.getExpressionSystemName(1));
+        assertEquals( 2, expression.getChildCount(), "Num children is correct");
+        assertNull( expression.getExpressionSystemName(0), "getExpressionSystemName(0) is null");
+        assertNull( expression.getExpressionSystemName(1), "getExpressionSystemName(1) is null");
 
         expression.getChild(1).connect(maleSAMSocket);
-        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
-        Assert.assertNull("getExpressionSystemName(0) is null", expression.getExpressionSystemName(0));
-        Assert.assertEquals("getExpressionSystemName(1) is correct", "IQSE122", expression.getExpressionSystemName(1));
+        assertEquals( 2, expression.getChildCount(), "Num children is correct");
+        assertNull( expression.getExpressionSystemName(0), "getExpressionSystemName(0) is null");
+        assertEquals( "IQSE122", expression.getExpressionSystemName(1), "getExpressionSystemName(1) is correct");
         expression.getChild(0).disconnect();    // Test removing child with the wrong index.
-        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
-        Assert.assertNull("getExpressionSystemName(0) is null", expression.getExpressionSystemName(0));
-        Assert.assertEquals("getExpressionSystemName(1) is correct", "IQSE122", expression.getExpressionSystemName(1));
+        assertEquals( 2, expression.getChildCount(), "Num children is correct");
+        assertNull( expression.getExpressionSystemName(0), "getExpressionSystemName(0) is null");
+        assertEquals( "IQSE122", expression.getExpressionSystemName(1),
+                "getExpressionSystemName(1) is correct");
         expression.getChild(1).disconnect();
-        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
-        Assert.assertNull("getExpressionSystemName(0) is null", expression.getExpressionSystemName(0));
-        Assert.assertNull("getExpressionSystemName(1) is null", expression.getExpressionSystemName(1));
+        assertEquals( 2, expression.getChildCount(), "Num children is correct");
+        assertNull( expression.getExpressionSystemName(0), "getExpressionSystemName(0) is null");
+        assertNull( expression.getExpressionSystemName(1), "getExpressionSystemName(1) is null");
     }
 
     @Test
     public void testDescription() {
         StringFormula expression = new StringFormula("IQSE321", null);
-        Assert.assertEquals("strings matches", "String Formula", expression.getShortDescription());
-        Assert.assertEquals("strings matches", "String Formula: empty", expression.getLongDescription());
+        assertEquals( "String Formula", expression.getShortDescription(), "strings matches");
+        assertEquals( "String Formula: empty", expression.getLongDescription(), "strings matches");
     }
 
     @Test
     public void testEvaluateEmptyFormula() throws ParserException, JmriException {
         StringFormula expression = new StringFormula("IQSE321", null);
         expression.setFormula("");
-        Assert.assertEquals("Empty formula returns empty string", "", expression.evaluate());
+        assertEquals( "", expression.evaluate(), "Empty formula returns empty string");
     }
 /*
     private void testValidate(boolean expectedResult, String formula, List<StringExpressionBean> conditionalVariablesList) throws Exception {
@@ -681,9 +681,8 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
     }
 */
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() throws ParserException, SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
@@ -692,7 +691,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.COMMON;
+        _category = LogixNG_Category.COMMON;
         _isExternal = false;
 
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
@@ -729,12 +728,12 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(StringActionManager.class).registerAction(stringActionMemory);
         doStringAction.getChild(1).connect(socketAtomicBoolean);
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue(logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         // JUnitAppender.clearBacklog();    REMOVE THIS!!!
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

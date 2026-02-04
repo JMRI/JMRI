@@ -3,15 +3,20 @@ package jmri.jmrit.operations.trains.schedules;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.Optional;
+
 import javax.swing.JTable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.swing.JTablePersistenceManager;
 import jmri.util.swing.XTableColumnModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for edit of train schedules used by operations
@@ -85,6 +90,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 
     List<Train> sysList = null;
     JTable _table = null;
+    XTableColumnModel _tcm = null;
     TrainsScheduleTableFrame _frame = null;
 
     void initTable(JTable table, TrainsScheduleTableFrame frame) {
@@ -100,18 +106,18 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         if (_table == null) {
             return;
         }
-        
+
         // Save table column order
-        XTableColumnModel tcm = new XTableColumnModel();
-        _table.setColumnModel(tcm);
+        _tcm = new XTableColumnModel();
+        _table.setColumnModel(_tcm);
         _table.createDefaultColumnsFromModel();
-        
+
         // Install the button handlers
         _table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
         // set column preferred widths
         for (int i = 0; i < tableScheduleColumnWidths.length; i++) {
-            tcm.getColumn(i).setPreferredWidth(tableScheduleColumnWidths[i]);
+            _tcm.getColumn(i).setPreferredWidth(tableScheduleColumnWidths[i]);
         }
         _frame.loadTableDetails(_table);
     }
@@ -244,11 +250,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
             fireTableDataChanged();
         } else if (e.getPropertyName().equals(TrainScheduleManager.LISTLENGTH_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(TrainSchedule.NAME_CHANGED_PROPERTY)) {
-            // update property change
-            removePropertyChangeTrainSchedules();
-            addPropertyChangeTrainSchedules();
-            //fireTableStructureChanged();
-            initTable();
+            propertyChangeNameOrLength(e);
         } else if (e.getPropertyName().equals(TrainSchedule.SCHEDULE_CHANGED_PROPERTY)) {
             fireTableDataChanged();
         } else if (e.getSource().getClass().equals(Train.class)) {
@@ -261,6 +263,25 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
                 fireTableRowsUpdated(row, row);
             }
         }
+    }
+
+    private void propertyChangeNameOrLength(PropertyChangeEvent e) {
+        // update property change
+        removePropertyChangeTrainSchedules();
+        addPropertyChangeTrainSchedules();
+        // persistence manager wasn't notified that a column was deleted
+        if (e.getPropertyName().equals(TrainScheduleManager.LISTLENGTH_CHANGED_PROPERTY) &&
+                (Integer) e.getOldValue() > (Integer) e.getNewValue()) {
+            Optional<JTablePersistenceManager> manager =
+                    InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+            if (manager.isPresent()) {
+                // deletes column data from xml file
+                manager.get().clearState(_table);
+                // force the table to be saved
+                _tcm.getColumn(0).setPreferredWidth(_tcm.getColumn(0).getPreferredWidth() + 1);
+            }
+        }
+        initTable();
     }
 
     public TrainSchedule getSchedule(int col) {

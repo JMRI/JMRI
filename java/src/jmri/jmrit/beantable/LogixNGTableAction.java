@@ -186,9 +186,9 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     }
 
     @Override
-    protected String getBeanText(LogixNG e) {
+    protected String getBeanText(LogixNG e, Base.PrintTreeSettings printTreeSettings) {
         StringWriter writer = new StringWriter();
-        _curNamedBean.printTree(_printTreeSettings, new PrintWriter(writer), "    ", new MutableInt(0));
+        _curNamedBean.printTree(printTreeSettings, new PrintWriter(writer), "    ", new MutableInt(0));
         return writer.toString();
     }
 

@@ -1,8 +1,10 @@
 package jmri.jmrit.ussctc;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -24,7 +26,7 @@ public class TrafficRelayTest {
 
         TrafficRelay lock = new TrafficRelay(s, SignalHeadSection.CODE_LEFT);
 
-        Assert.assertTrue(!lock.isLockClear(Lock.turnoutLockLogger));
+        assertFalse(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -39,13 +41,13 @@ public class TrafficRelayTest {
 
         TrafficRelay lock = new TrafficRelay(s, SignalHeadSection.CODE_LEFT);
 
-        Assert.assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
+        assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initMemoryManager();
     }

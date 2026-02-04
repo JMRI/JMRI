@@ -3,6 +3,16 @@ package jmri.jmrix.roco.z21;
 import jmri.SpeedStepMode;
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetMessage;
+import jmri.jmrix.lenz.XPressNetMessageFormatter;
+import org.reflections.Reflections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Represents a single command or response on the XpressNet.
@@ -59,24 +69,30 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
     public Z21XNetMessage(String s) {
         super(s);
     }
+    private static final List<XPressNetMessageFormatter> formatterList = new ArrayList<>();
 
     @Override
     public String toMonitorString() {
-        switch(getElement(0)) {
-            case Z21Constants.LAN_X_SET_TURNOUT: {
-                int address = (getElement(1) << 8) + getElement(2) + 1;
-                int element = getElement(3);
-                boolean queue = (element & 0x20) == 0x20;
-                String active = ((element & 0x08) == 0x08)? "activate":"deactivate";
-                return Bundle.getMessage("Z21LAN_X_SET_TURNOUT", address, active, element & 0x01, queue);
+
+        if(formatterList.isEmpty()) {
+            try {
+                Reflections reflections = new Reflections("jmri.jmrix");
+                Set<Class<? extends XPressNetMessageFormatter>> f = reflections.getSubTypesOf(XPressNetMessageFormatter.class);
+                for (Class<?> c : f) {
+                    log.debug("Found formatter: {}", f.getClass().getName());
+                    Constructor<?> ctor = c.getConstructor();
+                    formatterList.add((XPressNetMessageFormatter) ctor.newInstance());
+                }
+            } catch (NoSuchMethodException | SecurityException | InstantiationException |
+                     IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                log.error("Error instantiating formatter", e);
             }
-            case Z21Constants.LAN_X_GET_TURNOUT_INFO: {
-                int address = (getElement(1) << 8) + getElement(2) + 1;
-                return Bundle.getMessage("Z21LAN_X_GET_TURNOUT_INFO", address);
-            }
-            default:
-                return super.toMonitorString();
         }
+
+        return formatterList.stream()
+                .filter(f -> f.handlesMessage(this))
+                .findFirst().map(f -> f.formatMessage(this))
+                .orElse(this.toString());
     }
 
     /**
@@ -230,5 +246,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
         msg.setBroadcastReply();
         return(msg);
     }
+
+    private static final Logger log = LoggerFactory.getLogger(Z21XNetMessage.class);
 
 }

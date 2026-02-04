@@ -47,7 +47,7 @@ public class ScriptEngineSelector {
         Engine engine = InstanceManager.getDefault(
                 InternalScriptEngineSelector.class).getEngineFromLanguage(languageName);
         if (engine != null) {
-            _selectedEngine = engine;
+            setSelectedEngine(engine);
         } else {
             log.warn("Cannot select engine for the language {}", languageName);
         }
@@ -112,6 +112,15 @@ public class ScriptEngineSelector {
         public boolean isJython() {
             return "python".equalsIgnoreCase(_languageName)
                     || "jython".equalsIgnoreCase(_languageName);
+        }
+
+        /**
+         * Is this engine for JavaScript/ECMAscript?
+         * @return true if JavaScript/ECMAscript, false otherwise
+         */
+        public boolean isJavaScript() {
+            return "javascript".equalsIgnoreCase(_languageName)
+                    || "ecmascript".equalsIgnoreCase(_languageName);
         }
 
         /** {@inheritDoc} */

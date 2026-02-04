@@ -122,10 +122,15 @@ public class PointDetails {
         DestinationPoints destPoint = null;
 
         for (Entry<DestinationPoints, Source> dp : destinations.entrySet()) {
+            // This point might be a destination in zero or more NX pairs.
+            // If the source point is active, then this is a single point route.
             destPoint = dp.getKey();
             if (destPoint.isEnabled() && dp.getValue().getPoint().getNXState() == EntryExitPairs.NXBUTTONSELECTED) {
+                // This destination point has an active source point
                 setButtonState(EntryExitPairs.NXBUTTONSELECTED);
+                // Call activeBean directly
                 destPoint.activeBean(false);
+                log.debug("[nxButtonStateChange] Single point route selected");
                 return;
             }
         }
@@ -138,6 +143,7 @@ public class PointDetails {
                     //Set a time out on the source sensor, so that if its state hasn't been changed, then we will clear it out.
                     if (en.getValue().isEnabled() && !en.getValue().getUniDirection()) {
                         if (en.getKey().getNXState() == EntryExitPairs.NXBUTTONSELECTED) {
+                            // Call activeBean via the Source object when bi-directional
                             sourceRoute.activeBean(en.getValue(), true);
                         }
                     }
@@ -153,6 +159,7 @@ public class PointDetails {
                     //Set a time out on the source sensor, so that if its state hasn't been changed, then we will clear it out.
                     if (en.getValue().isEnabled() && !en.getValue().getUniDirection()) {
                         if (en.getKey().getNXState() == EntryExitPairs.NXBUTTONSELECTED) {
+                            // Call activeBean via the Source object when bi-directional
                             sourceRoute.activeBean(en.getValue(), false);
                         }
                     }
@@ -171,6 +178,8 @@ public class PointDetails {
                 setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
             }
         }
+
+        log.debug("[nxButtonStateChange] Initial button or possible multiple point route");
         jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).setMultiPointRoute(this, panel);
     }
 
@@ -278,7 +287,7 @@ public class PointDetails {
                     setSensor((Sensor) refObj);
                 }
             } else if (refObj instanceof SignalHead) {
-                String signal = ((SignalHead) refObj).getDisplayName();
+                String signal = refObj.getDisplayName();
                 refLoc = pnl.getFinder().findPositionablePointByEastBoundSignal(signal);
                 if (refLoc == null) {
                     refLoc = pnl.getFinder().findPositionablePointByWestBoundSignal(signal);
@@ -324,11 +333,11 @@ public class PointDetails {
         }
 
         if (refObj instanceof SignalMast) {
-            return ((SignalMast) refObj).getDisplayName();
+            return refObj.getDisplayName();
         } else if (refObj instanceof Sensor) {
-            return ((Sensor) refObj).getDisplayName();
+            return refObj.getDisplayName();
         } else if (refObj instanceof SignalHead) {
-            return ((SignalHead) refObj).getDisplayName();
+            return refObj.getDisplayName();
         }
         return "no display name";  // NOI18N
     }
@@ -355,7 +364,7 @@ public class PointDetails {
                         Thread.sleep(60000);  //timeout after a minute waiting for the sml to set.
                     }
                 } catch (InterruptedException ex) {
-                    log.debug("Flash timer cancelled");  // NOI18N
+                    log.debug("[nxButtonTimeOut] Flash timer cancelled");  // NOI18N
                 }
                 setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
             }

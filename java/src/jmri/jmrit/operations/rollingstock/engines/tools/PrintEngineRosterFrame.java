@@ -15,9 +15,10 @@ import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.*;
+import jmri.jmrit.operations.rollingstock.engines.gui.EnginesTableFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -40,6 +41,8 @@ public class PrintEngineRosterFrame extends OperationsFrame {
 
     EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
+
+    JCheckBox printLocosWithLocation = new JCheckBox(Bundle.getMessage("PrintLocosWithLocation"));
 
     JComboBox<String> sortByComboBox = new JComboBox<>();
     JComboBox<String> manifestOrientationComboBox = new JComboBox<>();
@@ -73,6 +76,12 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         OperationsPanel.loadFontSizeComboBox(fontSizeComboBox);
         fontSizeComboBox.setSelectedItem(Control.reportFontSize);
 
+        JPanel pPanel = new JPanel();
+        pPanel.setLayout(new GridBagLayout());
+        JScrollPane panePanel = new JScrollPane(pPanel);
+        panePanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrintOptions")));
+        addItemLeft(pPanel, printLocosWithLocation, 0, 0);
+
         JPanel pButtons = new JPanel();
         pButtons.setLayout(new GridBagLayout());
         pButtons.add(okayButton);
@@ -83,6 +92,7 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         getContentPane().add(pSortBy);
         getContentPane().add(pOrientation);
         getContentPane().add(pFontSize);
+        getContentPane().add(panePanel);
         getContentPane().add(pButtons);
 
         if (_isPreview) {
@@ -92,21 +102,21 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         }
         loadSortByComboBox(sortByComboBox);
 
-        initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight250));
+        initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight300));
     }
 
     @Override
     public void initComponents() {
-        sortByComboBox.setSelectedItem(_etf.enginesModel.getSortByName());
+        sortByComboBox.setSelectedItem(_etf.enginesTableModel.getSortByName());
     }
 
     private void loadSortByComboBox(JComboBox<String> box) {
         box.removeAllItems();
         for (int i =
-                _etf.enginesModel.SORTBY_NUMBER; i <= _etf.enginesModel.SORTBY_COMMENT; i++) {
-            box.addItem(_etf.enginesModel.getSortByName(i));
+                _etf.enginesTableModel.SORTBY_NUMBER; i <= _etf.enginesTableModel.SORTBY_COMMENT; i++) {
+            box.addItem(_etf.enginesTableModel.getSortByName(i));
         }
-        box.setSelectedItem(_etf.enginesModel.getSortByName());
+        box.setSelectedItem(_etf.enginesTableModel.getSortByName());
     }
 
     @Override
@@ -116,31 +126,29 @@ public class PrintEngineRosterFrame extends OperationsFrame {
     }
 
     private void printEngines() {
-        boolean landscape = false;
+        boolean isLandscape = false;
         if (manifestOrientationComboBox.getSelectedItem() != null &&
                 manifestOrientationComboBox.getSelectedItem().equals(Setup.LANDSCAPE)) {
-            landscape = true;
+            isLandscape = true;
         }
 
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
 
         // obtain a HardcopyWriter to do this
         try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleEngineRoster"),
-                fontSize, .5, .5, .5, .5, _isPreview, "", landscape, true, null);) {
+                fontSize, .5, .5, .5, .5, _isPreview, "", isLandscape, true, null, null);) {
 
             numberCharPerLine = writer.getCharactersPerLine();
 
             // create header
-            writer.write(createHeader());
+            write(writer, createHeader());
 
             printRoster(writer);
 
-            // and force completion of the printing
-            writer.close();
         } catch (IOException we) {
-            log.error("Error printing ConsistRosterEntry", we);
+            log.error("Error printing ConsistRosterEntry: {}", we.getLocalizedMessage());
         } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
+            log.debug("Print canceled");
         }
     }
 
@@ -156,8 +164,8 @@ public class PrintEngineRosterFrame extends OperationsFrame {
                         InstanceManager.getDefault(EngineTypes.class).getMaxNameLength()) +
                 padAttribute(Bundle.getMessage("Len"), Control.max_len_string_length_name));
 
-        if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_TRAIN ||
-                sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_DESTINATION) {
+        if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_TRAIN ||
+                sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_DESTINATION) {
             header.append(padAttribute(Bundle.getMessage("Train"), Control.max_len_string_train_name / 2));
         } else {
             header.append(padAttribute(Bundle.getMessage("Consist"),
@@ -166,21 +174,21 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         header.append(padAttribute(Bundle.getMessage("Location"),
                 locationManager.getMaxLocationAndTrackNameLength() + 3));
         // one of eight user selections
-        if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_OWNER) {
+        if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_OWNER) {
             header.append(padAttribute(Bundle.getMessage("Owner"), Control.max_len_string_attibute));
-        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_MOVES) {
+        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_MOVES) {
             header.append(padAttribute(Bundle.getMessage("Moves"), 5));
-        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_VALUE) {
+        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_VALUE) {
             header.append(padAttribute(Setup.getValueLabel(), Control.max_len_string_attibute));
-        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_LAST) {
+        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_LAST) {
             header.append(padAttribute(Bundle.getMessage("LastMoved"), lastLength));
-        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_RFID) {
+        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_RFID) {
             header.append(padAttribute(Setup.getRfidLabel(), Control.max_len_string_attibute));
-        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_DCC_ADDRESS) {
+        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_DCC_ADDRESS) {
             header.append(padAttribute(Bundle.getMessage("DccAddress"), 5));
-        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_BUILT) {
+        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_BUILT) {
             header.append(padAttribute(Bundle.getMessage("Built"), Control.max_len_string_built_name));
-        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_DESTINATION) {
+        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_DESTINATION) {
             header.append(Bundle.getMessage("Destination"));
         } else {
             header.append(padAttribute(Bundle.getMessage("Comment"), engineManager.getMaxCommentLength()));
@@ -207,9 +215,11 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         String last = "";
         String comment = "";
 
-        List<Engine> engines = _etf.enginesModel.getEngineList(sortByComboBox.getSelectedIndex());
+        List<Engine> engines = _etf.enginesTableModel.getEngineList(sortByComboBox.getSelectedIndex());
         for (Engine engine : engines) {
-
+            if (printLocosWithLocation.isSelected() && engine.getLocation() == null) {
+                continue;
+            }
             String destination = "";
             // engine number, road, model, type, and length are always printed
             number = padAttribute(engine.getNumber(), Control.max_len_string_print_road_number);
@@ -222,8 +232,8 @@ public class PrintEngineRosterFrame extends OperationsFrame {
             length = padAttribute(engine.getLength(), Control.max_len_string_length_name);
 
             // show train or consist name
-            if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_TRAIN ||
-                    sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_DESTINATION) {
+            if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_TRAIN ||
+                    sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_DESTINATION) {
                 train = padAttribute(engine.getTrainName().trim(), Control.max_len_string_train_name / 2);
             } else {
                 consist = padAttribute(engine.getConsistName(),
@@ -231,23 +241,23 @@ public class PrintEngineRosterFrame extends OperationsFrame {
             }
 
             // show one of 8 options, comment is default
-            if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_OWNER) {
+            if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_OWNER) {
                 owner = padAttribute(engine.getOwnerName(), Control.max_len_string_attibute);
-            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_MOVES) {
+            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_MOVES) {
                 moves = padAttribute(Integer.toString(engine.getMoves()), 5);
             } else if (sortByComboBox
-                    .getSelectedIndex() == _etf.enginesModel.SORTBY_DCC_ADDRESS) {
+                    .getSelectedIndex() == _etf.enginesTableModel.SORTBY_DCC_ADDRESS) {
                 dccAddress = padAttribute(engine.getDccAddress(), 5);
-            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_LAST) {
-                last = padAttribute(engine.getLastDate(), lastLength);
-            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_VALUE) {
+            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_LAST) {
+                last = padAttribute(engine.getSortDate(), lastLength);
+            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_VALUE) {
                 value = padAttribute(engine.getValue(), Control.max_len_string_attibute);
-            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_RFID) {
+            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_RFID) {
                 rfid = padAttribute(engine.getRfid(), Control.max_len_string_attibute);
-            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_BUILT) {
+            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_BUILT) {
                 built = padAttribute(engine.getBuilt(), Control.max_len_string_built_name);
             } else if (sortByComboBox
-                    .getSelectedIndex() == _etf.enginesModel.SORTBY_DESTINATION) {
+                    .getSelectedIndex() == _etf.enginesTableModel.SORTBY_DESTINATION) {
                 if (engine.getDestination() != null) {
                     destination = padAttribute(
                             engine.getDestinationName() + " - " + engine.getDestinationTrackName(),
@@ -283,11 +293,15 @@ public class PrintEngineRosterFrame extends OperationsFrame {
                     last +
                     comment +
                     destination;
-            if (s.length() > numberCharPerLine) {
-                s = s.substring(0, numberCharPerLine);
-            }
-            writer.write(s + NEW_LINE);
+            write(writer, s);
         }
+    }
+
+    private void write(HardcopyWriter writer, String s) throws IOException {
+        if (s.length() > numberCharPerLine) {
+            s = s.substring(0, numberCharPerLine);
+        }
+        writer.write(s + NEW_LINE);
     }
 
     private String padAttribute(String attribute, int length) {

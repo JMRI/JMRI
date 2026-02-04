@@ -1,8 +1,6 @@
 package jmri.server.json;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import jmri.Audio;
 
@@ -271,6 +269,10 @@ public final class JSON {
      * {@value #LENGTH}
      */
     public static final String LENGTH = "length"; // NOI18N
+    /**
+     * {@value #WEIGHT}
+     */
+    public static final String WEIGHT = "weight"; // NOI18N
 
     /* JSON panel tokens */
     /**
@@ -327,16 +329,6 @@ public final class JSON {
      * {@value #WRITE}
      */
     public static final String WRITE = "write"; // NOI18N
-
-    /* JSON roster and car/engine (operations) tokens */
-    /**
-     * {@value #COLOR}
-     */
-    public static final String COLOR = "color"; // NOI18N
-    /**
-     * {@value #LOAD}
-     */
-    public static final String LOAD = "load"; // NOI18N
     /**
      * {@value #MODEL}
      */
@@ -460,41 +452,29 @@ public final class JSON {
      */
     public static final String ROUTE_ID = "routeId"; // NOI18N
     /**
-     * {@value #HAZARDOUS}
-     *
-     * @since 1.1
-     */
-    public static final String HAZARDOUS = "hazardous"; // NOI18N
-    /**
      * {@value #KERNEL}
      *
      * @since 1.1
      */
     public static final String KERNEL = "kernel"; // NOI18N
     /**
-     * {@value #FINAL_DESTINATION}
-     *
-     * @since 1.1
+     * {@value #LOCATIONS}
      */
-    public static final String FINAL_DESTINATION = "finalDestination"; // NOI18N
+    public static final String LOCATIONS = "locations"; // NOI18N
     /**
-     * {@value #REMOVE_COMMENT}
-     *
-     * @since 1.1
+     * {@value #LOCATION}
      */
-    public static final String REMOVE_COMMENT = "removeComment"; // NOI18N
+    public static final String LOCATION = "location"; // NOI18N
     /**
-     * {@value #ADD_COMMENT}
+     * {@value #TRACK}
      *
      * @since 1.1
      */
-    public static final String ADD_COMMENT = "addComment"; // NOI18N
+    public static final String TRACK = "track";
     /**
-     * {@value #IS_LOCAL}
-     *
-     * @since 1.1
+     * {@value #DESTINATION}
      */
-    public static final String IS_LOCAL = "isLocal";
+    public static final String DESTINATION = "destination"; // NOI18N
     /**
      * {@value #ADD_HELPERS}
      *
@@ -570,30 +550,6 @@ public final class JSON {
      * @since 1.1
      */
     public static final String EMPTIES = "empties";
-    /**
-     * {@value #RETURN_WHEN_EMPTY}
-     *
-     * @since 1.1
-     */
-    public static final String RETURN_WHEN_EMPTY = "returnWhenEmpty";
-    /**
-     * {@value #RETURN_WHEN_LOADED}
-     *
-     * @since 5.4.0
-     */
-    public static final String RETURN_WHEN_LOADED = "returnWhenLoaded";
-    /**
-     * {@value #DIVISION}
-     *
-     * @since 5.4.0
-     */
-    public static final String DIVISION = "division";
-    /**
-     * {@value #UTILITY}
-     *
-     * @since 1.1
-     */
-    public static final String UTILITY = "utility";
 
     /* JSON signalling tokens */
     /**

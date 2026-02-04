@@ -18,10 +18,11 @@ public class WrapLayout extends FlowLayout {
     }
 
     /**
-     * Constructs a new <code>FlowLayout</code> with the specified alignment and
-     * a default 5-unit horizontal and vertical gap. The value of the alignment
-     * argument must be one of <code>WrapLayout</code>, <code>WrapLayout</code>,
-     * or <code>WrapLayout</code>.
+     * Constructs a new <code>WrapLayout</code> with the specified alignment and
+     * a default 5-unit horizontal and vertical gap.
+     * The value of the alignment argument must be one of
+     * <code>FlowLayout.CENTER</code>, <code>FlowLayout.LEFT</code>, or
+     * <code>FlowLayout.RIGHT</code>.
      *
      * @param align the alignment value
      */
@@ -30,12 +31,12 @@ public class WrapLayout extends FlowLayout {
     }
 
     /**
-     * Creates a new flow layout manager with the indicated alignment and the
+     * Creates a new WrapLayout with the indicated alignment and the
      * indicated horizontal and vertical gaps.
      * <p>
      * The value of the alignment argument must be one of
-     * <code>WrapLayout</code>, <code>WrapLayout</code>, or
-     * <code>WrapLayout</code>.
+     * <code>FlowLayout.CENTER</code>, <code>FlowLayout.LEFT</code>, or
+     * <code>FlowLayout.RIGHT</code>.
      *
      * @param align the alignment value
      * @param hgap  the horizontal gap between components
@@ -154,7 +155,7 @@ public class WrapLayout extends FlowLayout {
         }
     }
 
-    /*
+    /**
      *  A new row has been completed. Use the dimensions of this row
      *  to update the preferred size for the container.
      *
@@ -171,4 +172,5 @@ public class WrapLayout extends FlowLayout {
 
         dim.height += rowHeight;
     }
+
 }

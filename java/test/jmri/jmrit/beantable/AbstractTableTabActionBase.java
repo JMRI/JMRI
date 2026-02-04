@@ -1,15 +1,14 @@
 package jmri.jmrit.beantable;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.junit.annotations.ToDo;
+
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JFrameOperator;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This is an abstract base class for testing bean table action objects derived
@@ -20,7 +19,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  */
 public abstract class AbstractTableTabActionBase {
 
-    protected AbstractTableTabAction a = null;
+    protected AbstractTableTabAction<? extends jmri.NamedBean> a = null;
     protected String helpTarget = "index"; // index is default value specified in AbstractTableTabAction.
 
     /**
@@ -29,20 +28,19 @@ public abstract class AbstractTableTabActionBase {
      */
     @Test
     public final void testDeferredCreation() {
-        assertThat(a.m).isNull();
-        assertThat(a.f).isNull();
-        assertThat(a.dataPanel).isNull();
-        assertThat(a.dataTabs).isNull();
+        assertNull(a.m);
+        assertNull(a.f);
+        assertNull(a.dataTabs);
     }
 
     @Test
     @Disabled("test causes an NPE while executing a.actionPerformed")
+    @jmri.util.junit.annotations.DisabledIfHeadless
     @ToDo("The underlying class under test inherits the actionPerformed method from AbstractTableAction, which expects a model to be set by createModel(), which doesn't happen for AbstractTableTabAction classes")
     public void testExecute() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
-        Assert.assertNotNull("failed to find frame", f);
+        assertNotNull( f, "failed to find frame");
         JUnitUtil.dispose(f);
     }
 
@@ -58,7 +56,7 @@ public abstract class AbstractTableTabActionBase {
      */
     @Test
     public void testGetPanel() {
-        Assert.assertNotNull("Default getPanel does not return null", a.getPanel());
+        assertNotNull( a.getPanel(), "Default getPanel does not return null");
     }
 
     /**
@@ -68,7 +66,7 @@ public abstract class AbstractTableTabActionBase {
      */
     @Test
     public void testGetClassDescription() {
-        Assert.assertEquals("Default class description", "Abstract Table Action", a.getClassDescription());
+        assertEquals( "Abstract Table Action", a.getClassDescription(), "Default class description");
     }
 
     /**
@@ -78,12 +76,12 @@ public abstract class AbstractTableTabActionBase {
      */
     @Test
     public void testIncludeAddButton() {
-        Assert.assertFalse("Default include add button", a.includeAddButton());
+        assertFalse( a.includeAddButton(), "Default include add button");
     }
 
     @Test
     public void testHelpTarget(){
-        Assert.assertEquals("help target",helpTarget,a.helpTarget());
+        assertEquals( helpTarget, a.helpTarget(), "help target");
     }
 
     /**

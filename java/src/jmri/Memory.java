@@ -34,6 +34,11 @@ package jmri;
 public interface Memory extends NamedBean {
 
     /**
+     * Constant for property changes when the value is changed.
+     */
+    String PROPERTY_VALUE = "value";
+
+    /**
      * Get the stored value. The type of this depends on what was stored...
      *
      * @return the stored value

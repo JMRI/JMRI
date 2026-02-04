@@ -40,6 +40,7 @@ import jmri.RouteManager;
 import jmri.SectionManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.StringIOManager;
 import jmri.ShutDownManager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
@@ -134,6 +135,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         bindings.put("reporters", InstanceManager.getNullableDefault(ReporterManager.class));
         bindings.put("idtags", InstanceManager.getNullableDefault(IdTagManager.class));
         bindings.put("memories", InstanceManager.getNullableDefault(MemoryManager.class));
+        bindings.put("stringios", InstanceManager.getNullableDefault(StringIOManager.class));
         bindings.put("powermanager", InstanceManager.getNullableDefault(PowerManager.class));
         bindings.put("addressedProgrammers", InstanceManager.getNullableDefault(AddressedProgrammerManager.class));
         bindings.put("globalProgrammers", InstanceManager.getNullableDefault(GlobalProgrammerManager.class));
@@ -282,6 +284,11 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws javax.script.ScriptException if there is an error in the script.
      */
     public Object eval(String script, ScriptEngine engine) throws ScriptException {
+
+        if (engine.getFactory().getEngineName().equals("Oracle Nashorn")) {
+            warnJavaScriptUsers();
+        }
+
         if (JYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
             this.jython.exec(script);
             return null;
@@ -387,6 +394,11 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     @CheckForNull
     private ScriptEngine getEngineOrEval(File file) throws ScriptException, IOException {
         ScriptEngine engine = this.getEngine(FilenameUtils.getExtension(file.getName()), EXTENSION);
+
+        if (engine.getFactory().getEngineName().equals("Oracle Nashorn")) {
+            warnJavaScriptUsers();
+        }
+
         if (JYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
             try (FileInputStream fi = new FileInputStream(file)) {
                 this.jython.execfile(fi);
@@ -426,6 +438,33 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         this.factories.keySet().stream().forEach(this::getEngine);
     }
 
+    /**
+     * This is a temporary method to warn users that the JavaScript/ECMAscript
+     * support may be going away soon.
+     */
+    private void warnJavaScriptUsers() {
+        if (! dontWarnJavaScript) {
+            log.warn("*** Scripting with JavaScript/ECMAscript is being deprecated ***");
+            log.warn("*** and may soon be removed.  If you are using this, please  ***");
+            log.warn("*** contact us on the jmriusers group for assistance.        ***");
+            
+            if (! java.awt.GraphicsEnvironment.isHeadless()) {
+                jmri.util.swing.JmriJOptionPane.showMessageDialog(null, 
+                    "<html>"+
+                    "Scripting with JavaScript/ECMAscript is being deprecated <br/>"+
+                    "and may soon be removed.  If you are using this, please<br/>"+
+                    "contact us on the jmriusers group for assistance.<br/>"+
+                    "</html>"
+                );
+            }
+        }
+        dontWarnJavaScript = true;
+    }
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
+            justification = "Public accessibility for script to override warning")
+    static public boolean dontWarnJavaScript = false;
+            // The jython/DontWarnJavaScript.py script will disable the warning
+    
     /**
      * Get the default {@link javax.script.ScriptContext} for all
      * {@link javax.script.ScriptEngine}s.

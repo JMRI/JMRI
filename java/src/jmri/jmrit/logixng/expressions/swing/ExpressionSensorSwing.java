@@ -128,6 +128,7 @@ public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     public void dispose() {
+        _selectNamedBeanSwing.dispose();
     }
 
 

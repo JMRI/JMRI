@@ -1,14 +1,19 @@
 package jmri.managers;
 
-import java.util.List;
+import java.util.*;
+
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.beans.PropertyChangeSupport;
+import jmri.implementation.PermissionProgrammer;
+import jmri.implementation.PermissionAddressedProgrammer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +48,8 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
     //     public static final ProgrammingMode OPSACCEXTBYTEMODE = new ProgrammingMode("OPSACCEXTBYTEMODE", 121);
     //     public static final ProgrammingMode OPSACCEXTBITMODE  = new ProgrammingMode("OPSACCEXTBITMODE", 122);
     private Programmer programmer;
+    Map<Programmer, PermissionProgrammer> permissionProgrammers = new HashMap<>();
+    Map<AddressedProgrammer, PermissionAddressedProgrammer> permissionAddressedProgrammers = new HashMap<>();
 
     /**
      * Constructor when no global programmer is available.
@@ -96,18 +103,69 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
     }
 
     @Override
-    public Programmer getGlobalProgrammer() {
+    public final Programmer getGlobalProgrammer() {
+        Programmer p = getConcreteGlobalProgrammer();
+        if (p != null) {
+            return permissionProgrammers.computeIfAbsent(p,
+                    v -> new PermissionProgrammer(v));
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gain access to the Global Mode Programmer without reservation.
+     *
+     * @return null only if there isn't a Global Mode Programmer available via
+     *         this Manager.
+     */
+    @CheckForNull
+    protected Programmer getConcreteGlobalProgrammer() {
         log.debug("return default service-mode programmer of type {}", (programmer != null ? programmer.getClass() : "(null)"));
         return programmer;
     }
 
     @Override
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public final AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+        AddressedProgrammer p = getConcreteAddressedProgrammer(pLongAddress, pAddress);
+        if (p != null) {
+            return permissionAddressedProgrammers.computeIfAbsent(p,
+                    v -> new PermissionAddressedProgrammer(v));
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gain access to a Addressed Mode Programmer without reservation.
+     *
+     * @param pLongAddress true if this is a long (14 bit) address, else false
+     * @param pAddress     specific decoder address to use
+     * @return null only if there isn't an Ops Mode Programmer in the system
+     */
+    @CheckForNull
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 
     @Override
-    public Programmer reserveGlobalProgrammer() {
+    public final Programmer reserveGlobalProgrammer() {
+        Programmer p = reserveConcreteGlobalProgrammer();
+        if (p != null) {
+            return permissionProgrammers.computeIfAbsent(p,
+                    v -> new PermissionProgrammer(v));
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gain access to the Global Mode Programmer, in the process reserving it
+     * for yourself.
+     *
+     * @return null if the existing Global Mode programmer is in use
+     */
+    protected Programmer reserveConcreteGlobalProgrammer() {
         return programmer;
     }
 
@@ -116,7 +174,26 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
     }
 
     @Override
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public final AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+        AddressedProgrammer p = reserveConcreteAddressedProgrammer(pLongAddress, pAddress);
+        if (p != null) {
+            return permissionAddressedProgrammers.computeIfAbsent(p,
+                    v -> new PermissionAddressedProgrammer(v));
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gain access to a (the) Addressed Mode Programmer, in the process
+     * reserving it for yourself.
+     *
+     * @param pLongAddress true if this is a long (14 bit) address, else false
+     * @param pAddress     Specific decoder address to use
+     * @return null if the address is in use by a reserved programmer
+     */
+    @CheckForNull
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 

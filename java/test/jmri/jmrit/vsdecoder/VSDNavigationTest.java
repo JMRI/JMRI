@@ -1,8 +1,9 @@
 package jmri.jmrit.vsdecoder;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,9 +17,9 @@ public class VSDNavigationTest {
     @Test
     public void testCTor() throws java.util.zip.ZipException, java.io.IOException {
         VSDecoder t = new VSDecoder("Test", "steam1min8","java/test/jmri/jmrit/vsdecoder/steam1min8.zip");
-        Assert.assertNotNull("exists", t);
+        assertNotNull( t, "exists");
         VSDNavigation n = new VSDNavigation(t);
-        Assert.assertNotNull("exists", n);
+        assertNotNull( n, "exists");
     }
 
     @BeforeEach

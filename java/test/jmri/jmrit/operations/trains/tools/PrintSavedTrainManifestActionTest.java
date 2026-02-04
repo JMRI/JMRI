@@ -1,10 +1,8 @@
 package jmri.jmrit.operations.trains.tools;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 
@@ -29,8 +27,8 @@ public class PrintSavedTrainManifestActionTest extends OperationsTestCase {
     }
 
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testPrintAction() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
@@ -65,7 +63,9 @@ public class PrintSavedTrainManifestActionTest extends OperationsTestCase {
         Assert.assertTrue(text.contains("manifestsBackups"));
         Assert.assertTrue(text.contains("STF"));
         fco.cancelSelection();
-        
+
+        jmri.util.JUnitUtil.waitFor(() -> !printAction.isAlive(), "wait for printAction to complete");
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }

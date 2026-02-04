@@ -35,12 +35,12 @@ public class TestConsistManager extends jmri.implementation.AbstractConsistManag
         }
         DccConsist consist = new DccConsist((DccLocoAddress) address, null) {
             @Override
-            protected void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
+            protected void addToAdvancedConsist(DccLocoAddress locoAddress, boolean directionNormal) {
                 addCalls += 1;
             }
 
             @Override
-            protected void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
+            protected void removeFromAdvancedConsist(DccLocoAddress locoAddress) {
                 removeCalls += 1;
             }
 

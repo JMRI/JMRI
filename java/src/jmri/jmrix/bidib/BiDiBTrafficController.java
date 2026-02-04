@@ -1,63 +1,36 @@
 package jmri.jmrix.bidib;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
-import java.util.HashMap;
-import java.util.TreeMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import jmri.CommandStation;
-import jmri.NmraPacket;
-import jmri.jmrix.PortAdapter;
 
-import org.bidib.jbidibc.messages.BidibLibrary;
-import org.bidib.jbidibc.messages.exception.ProtocolException;
-import org.bidib.jbidibc.messages.utils.ByteUtils;
-
-import org.bidib.jbidibc.core.BidibMessageProcessor;
-import org.bidib.jbidibc.core.BidibInterface;
-import org.bidib.jbidibc.messages.BidibPort;
-import org.bidib.jbidibc.messages.ConnectionListener;
-import org.bidib.jbidibc.core.DefaultMessageListener;
-import org.bidib.jbidibc.messages.Feature;
-import org.bidib.jbidibc.messages.LcConfig;
-import org.bidib.jbidibc.messages.LcConfigX;
-import org.bidib.jbidibc.core.MessageListener;
-import org.bidib.jbidibc.messages.base.RawMessageListener;
-import org.bidib.jbidibc.messages.Node;
-import org.bidib.jbidibc.core.NodeListener;
-import org.bidib.jbidibc.messages.ProtocolVersion;
-import org.bidib.jbidibc.messages.StringData;
-import org.bidib.jbidibc.messages.helpers.Context;
+import org.bidib.jbidibc.core.*;
+import org.bidib.jbidibc.core.node.*;
 import org.bidib.jbidibc.core.node.listener.TransferListener;
+import org.bidib.jbidibc.messages.*;
+import org.bidib.jbidibc.messages.base.RawMessageListener;
+import org.bidib.jbidibc.messages.enums.*;
 import org.bidib.jbidibc.messages.exception.PortNotFoundException;
-import org.bidib.jbidibc.core.node.BidibNode;
-import org.bidib.jbidibc.messages.message.BidibCommandMessage;
-import org.bidib.jbidibc.core.node.BidibNodeAccessor;
-import org.bidib.jbidibc.messages.utils.NodeUtils;
-import org.bidib.jbidibc.messages.enums.CommandStationState;
-import org.bidib.jbidibc.messages.enums.LcOutputType;
-import org.bidib.jbidibc.messages.enums.PortModelEnum;
-import org.bidib.jbidibc.messages.message.AccessoryGetMessage;
-import org.bidib.jbidibc.messages.message.BidibRequestFactory;
-import org.bidib.jbidibc.messages.message.CommandStationSetStateMessage;
-import org.bidib.jbidibc.messages.message.FeedbackGetRangeMessage;
-import org.bidib.jbidibc.core.node.CommandStationNode;
-import org.bidib.jbidibc.core.node.BoosterNode;
-import org.bidib.jbidibc.messages.BoosterStateData;
-import org.bidib.jbidibc.messages.enums.BoosterControl;
-import org.bidib.jbidibc.messages.enums.BoosterState;
-import org.bidib.jbidibc.messages.enums.CommandStationProgState;
-import org.bidib.jbidibc.messages.port.BytePortConfigValue;
-import org.bidib.jbidibc.messages.port.PortConfigValue;
-import org.bidib.jbidibc.messages.port.ReconfigPortConfigValue;
+import org.bidib.jbidibc.messages.exception.ProtocolException;
+import org.bidib.jbidibc.messages.helpers.Context;
+import org.bidib.jbidibc.messages.message.*;
+import org.bidib.jbidibc.messages.message.netbidib.NetBidibLinkData;
+import org.bidib.jbidibc.messages.port.*;
+import org.bidib.jbidibc.messages.utils.*;
+import org.bidib.jbidibc.netbidib.NetBidibContextKeys;
+import org.bidib.jbidibc.netbidib.client.pairingstates.PairingStateEnum;
 import org.bidib.jbidibc.simulation.comm.SimulationBidib;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.*;
+import jmri.implementation.AbstractShutDownTask;
+import jmri.jmrix.PortAdapter;
+import jmri.jmrix.bidib.netbidib.NetBiDiBPairingRequestDialog;
 
 /**
  * The BiDiB Traffic Controller provides the interface for JMRI to the BiDiB Library (jbidibc) - it
@@ -65,10 +38,10 @@ import org.slf4j.LoggerFactory;
  * Instead, it delegates BiDiB handling to a BiDiB controller instance (serial, simulation, etc.) using BiDiBInterface.
  * 
  * @author Bob Jacobsen Copyright (C) 2002
- * @author Eckart Meyer Copyright (C) 2019-2023
+ * @author Eckart Meyer Copyright (C) 2019-2025
  *
  */
- 
+
 @SuppressFBWarnings(value = "JLM_JSR166_UTILCONCURRENT_MONITORENTER")
 // This code uses several AtomicBoolean variables as synch objects.  In this use, 
 // they're synchronizing access to code blocks, not just synchronizing access
@@ -77,6 +50,10 @@ import org.slf4j.LoggerFactory;
 // be more complex and confusing than this approach.
 
 public class BiDiBTrafficController implements CommandStation {
+    
+    public static final String ASYNCCONNECTIONINIT = "jmri-async-init";
+    public static final String ISNETBIDIB = "jmri-is-netbidib";
+    public static final String USELOCALPING = "jmri-use-local-ping";
 
     private final BidibInterface bidib;
     private final Set<TransferListener> transferListeners = new LinkedHashSet<>();
@@ -85,20 +62,28 @@ public class BiDiBTrafficController implements CommandStation {
     private final AtomicBoolean stallLock = new AtomicBoolean();
     private java.util.TimerTask watchdogTimer = null;
     private final AtomicBoolean watchdogStatus = new AtomicBoolean();
-
+    private final CountDownLatch continueLock = new CountDownLatch(1); //wait for all initialisations are done
+    private NetBiDiBPairingRequestDialog pairingDialog = null;
+    private PairingResult curPairingResult = PairingResult.UNPAIRED;
+    private boolean isAsyncInit = false;
+    private boolean isNetBiDiB = false;
+    private boolean useLocalPing = true;
+    private boolean connectionIsReady = false;
     private final BiDiBNodeInitializer nodeInitializer;
+    private BiDiBPortController portController;
+    private final Set<ActionListener> connectionChangedListeners = new LinkedHashSet<>();
+//    private Long deviceUniqueId = null; //this is the unique Id of the device (root node)
     protected final TreeMap<Long, Node> nodes = new TreeMap<>(); //our node list - use TreeMap since it retains order if insertion (HashMap has arbitrary order)
 
     private Node cachedCommandStationNode = null;
     
-    //volatile protected boolean mIsProgMode = false;
     private final AtomicBoolean mIsProgMode = new AtomicBoolean();
     volatile protected CommandStationState mSavedMode;
     private Node currentGlobalProgrammerNode = null;
-    private final javax.swing.Timer progTimer = new javax.swing.Timer(3000, e -> progTimeout());
+    private final javax.swing.Timer progTimer = new javax.swing.Timer(200, e -> progTimeout());
+    private final javax.swing.Timer localPingTimer = new javax.swing.Timer(4000, e -> localPingTimeout());
+    private final javax.swing.Timer delayedCloseTimer;
 
-    private Thread shutdownHook = null; // retain shutdown hook for  possible removal.
-    
     private final Map<Long, String> debugStringBuffer = new HashMap<>();
 
     /**
@@ -110,6 +95,9 @@ public class BiDiBTrafficController implements CommandStation {
      */
     public BiDiBTrafficController(BidibInterface b) {
         bidib = b;
+        delayedCloseTimer = new javax.swing.Timer(1000, e -> bidib.close() );
+        delayedCloseTimer.setRepeats(false);
+
         log.debug("BiDiBTrafficController created");
         mSavedMode = CommandStationState.OFF;
         setWatchdogTimer(false); //preset not enabled
@@ -118,16 +106,7 @@ public class BiDiBTrafficController implements CommandStation {
         mIsProgMode.set(false);
         
         nodeInitializer = new BiDiBNodeInitializer(this, bidib, nodes);
-        
-        // Copied from AbstractMRTrafficController:
-        // We use a shutdown hook here to make sure the connection is left
-        // in a clean state prior to exiting.  This is required on systems
-        // which have a service mode to ensure we don't leave the system 
-        // in an unusable state (This code predates the ShutdownTask 
-        // mechanisim).  Once the shutdown hook executes, the connection
-        // must be considered closed.
-        shutdownHook = new Thread(new CleanupHook(this));
-        Runtime.getRuntime().addShutdownHook(shutdownHook);      
+                
     }
     
     /**
@@ -139,7 +118,14 @@ public class BiDiBTrafficController implements CommandStation {
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST",justification = "Cast safe by design")
     public Context connnectPort(PortAdapter p) {
         // init bidib
-        Context context = ((BiDiBPortController)p).getContext();
+        portController = (BiDiBPortController)p;
+        Context context = portController.getContext();
+        
+        // there is currently no difference between "use async init" and "this is a netBiDiB device"...
+        isAsyncInit = context.get(ASYNCCONNECTIONINIT, Boolean.class, false);
+        isNetBiDiB = context.get(ISNETBIDIB, Boolean.class, false);
+        useLocalPing = context.get(USELOCALPING, Boolean.class, true);
+        
         stallLock.set(false); //not stalled
         
         messageListeners.add(new DefaultMessageListener() {
@@ -217,6 +203,7 @@ public class BiDiBTrafficController implements CommandStation {
             
             @Override
             public void stall(byte[] address, int messageNum, boolean stall) {
+                log.trace("message listener stall! {} node: {}", stall, getNodeByAddr(address));
                 synchronized (stallLock) {
                     if (log.isDebugEnabled()) {
                         Node node = getNodeByAddr(address);
@@ -229,6 +216,14 @@ public class BiDiBTrafficController implements CommandStation {
                             stallLock.notifyAll(); //wake pending send if any
                         }
                     }
+                }
+            }
+            
+            @Override
+            public void localPong(byte[] address, int messageNum) {
+                if (log.isTraceEnabled()) {
+                    Node node = getNodeByAddr(address);
+                    log.trace("local pong - msg num: {}, node: {}, ", messageNum, node);
                 }
             }
             
@@ -324,26 +319,168 @@ public class BiDiBTrafficController implements CommandStation {
         });
         
         ConnectionListener connectionListener = new ConnectionListener() {
+            
+            /**
+             * The port was opened.
+             * In case of a netBiDiB connection pairing has not been verified and the
+             * server is not logged in. This will be notified later.
+             * 
+             * For all other connections the port is now usable and we init the
+             * connection just here.
+             * 
+             * @param port is the name of the port just opened.
+             */
             @Override
             public void opened(String port) {
-                // no implementation
-                log.trace("opened port {}", port);
+                log.debug("opened port {}", port);
+                if (!isAsyncInit) {
+                    connectionIsReady = true;
+                    nodeInitializer.connectionInit();
+                    continueLock.countDown();
+                }
+            }
+
+            /**
+             * The port was closed
+             * If the local ping feature was enabled (netBiDiB), it stopped now.
+             * 
+             * @param port is the name of the closed port
+             */
+            @Override
+            public void closed(String port) {
+                log.debug("closed port {}", port);
+                if (bidib.getRootNode() != null) {
+                    if (bidib.getRootNode().isLocalPingEnabled()) {
+                        log.debug("Stop local ping");
+                        bidib.getRootNode().stopLocalPingWorker();
+                    }
+                }
+                connectionIsReady = false;
+                nodeInitializer.connectionLost();
+                continueLock.countDown();
+                fireConnectionChanged("closed");
             }
 
             @Override
-            public void closed(String port) {
+            public void stall(boolean stall) {
                 // no implementation
-                log.trace("closed port {}", port);
+                log.info("connection stall! {}", stall);
             }
-
+            
             @Override
             public void status(String messageKey, Context context) {
                 // no implementation
                 log.trace("status - message key {}", messageKey);
             }
+
+            /**
+             * This is called if the pairing state machine is now either in "paired"
+             * or "unpaired" state.
+             * 
+             * If "paired" is signalled, there is nothing more to do since the
+             * connection will only be ready after server has logged in.
+             * 
+             * If pairing failed, timed out or the an existing pairing was removed
+             * on the remote side, we will clear all nodes and then close the connection.
+             * 
+             * @param pairingResult pairing result
+             */
+            @Override
+            public void pairingFinished(final PairingResult pairingResult, long uniqueId) {
+                log.debug("** pairingFinished - result: {}, uniqueId: {}", pairingResult,
+                        ByteUtils.convertUniqueIdToString(ByteUtils.convertLongToUniqueId(uniqueId)));
+                curPairingResult = pairingResult;
+                //deviceUniqueId = uniqueId;
+                if (!curPairingResult.equals(PairingResult.PAIRED)) {
+                    // The pairing timed out or was cancelled on the server side.
+                    // Cancelling is also possible while in normal operation.
+                    // Close the connection.
+                    log.warn("Unpaired!");
+                    connectionIsReady = false;
+                    nodeInitializer.connectionLost();
+                    if (continueLock.getCount() == 0  &&  bidib.isOpened()) {
+                        //bidib.close(); //close() from a listener causes an exception in jbibibc, so delay the close
+                        delayedCloseTimer.start();
+                    }
+                    continueLock.countDown();
+                }
+            }
+
+            /**
+             * Called if the connection was not paired before (either local or remote).
+             * Send a pairing request to the remote an display a dialog box to inform
+             * the user to acknoledge the pairing at the remote side. The result is notified
+             * to the pairingFinished() event. If the user presses the Cancel button or closes
+             * the window, the connection will be closed (in the mainline code after unlock).
+             */
+            @Override
+            public void actionRequired(String messageKey, final Context context) {
+                log.info("actionRequired - messageKey: {}, context: {}", messageKey, context);
+                if (messageKey.equals(NetBidibContextKeys.KEY_ACTION_PAIRING_STATE)) {
+                    if (context.get(NetBidibContextKeys.KEY_PAIRING_STATE) == PairingStateEnum.Unpaired) {
+                        log.debug("**** send pairing request ****");
+                        log.trace("context: {}", context);
+                        // Send a pairing request to the remote side and show a dialog so the user
+                        // will be informed.
+                        bidib.signalUserAction(NetBidibContextKeys.KEY_PAIRING_REQUEST, context);
+
+                        pairingDialog = new NetBiDiBPairingRequestDialog(context, portController, new ActionListener() {
+                            
+                            /**
+                             * called when the pairing dialog was closed by the user or if the user pressed the cancel-button.
+                             * In this case the init should fail.
+                             */
+                            @Override
+                            public void actionPerformed(ActionEvent ae) {
+                                log.debug("pairingDialog cancelled: {}", ae);
+                                curPairingResult = PairingResult.UNPAIRED; //just to be sure...
+                                continueLock.countDown();
+                            }
+                        });
+                        // Show the dialog.
+                        // show() will not wait for user interaction or timeout, but will return immediately
+                        pairingDialog.show();
+                    }
+                }       
+            }
+            
+            /**
+             * The remote side has logged in. The connection is now fully usable.
+             */
+            @Override
+            public void logonReceived(int localNodeAddr, long uniqueId) {
+                log.debug("+++++ logonReceived - localNodeAddr: {}, uniqueId: {}",
+                    localNodeAddr, ByteUtils.convertUniqueIdToString(ByteUtils.convertLongToUniqueId(uniqueId)));
+                connectionIsReady = true;
+                //deviceUniqueId = uniqueId;
+                if (bidib.getRootNode().getMasterNode().isDetached()) {
+                    bidib.getRootNode().getMasterNode().setDetached(false);
+                }
+                nodeInitializer.connectionInit();
+                continueLock.countDown();
+                startLocalPing();
+                fireConnectionChanged("logon");
+            }
+
+            /**
+             * The remote side has logged off. Either as an result of a detach from our side or directly
+             * from the remote side.
+             * The nodes of this connection will be removed, but the connection will be not be closed, so
+             * it can be re-established later by a logonReceived event.
+             */
+            @Override
+            public void logoffReceived(long uniqueId) {
+                log.debug("----- logoffReceived - uniqueId: {}",
+                        ByteUtils.convertUniqueIdToString(ByteUtils.convertLongToUniqueId(uniqueId)));
+                connectionIsReady = false;
+                //deviceUniqueId = uniqueId;
+                connectionLost();
+                continueLock.countDown();
+                fireConnectionChanged("logoff");
+            }
         };
         
-        String portName = ((BiDiBPortController)p).getRealPortName();
+        String portName = portController.getRealPortName();
         log.info("Open BiDiB connection on \"{}\"", portName);
 
         try {
@@ -355,38 +492,67 @@ public class BiDiBTrafficController implements CommandStation {
                 // if we get here, we assume that the adapter has already opened the port just for scanning the device
                 // and that NO listeners have been registered. So just add them now.
                 // If one day we start to really use the listeners we would have to check if this is o.k.
-                ((BiDiBPortController)p).registerAllListeners(connectionListener, nodeListeners, messageListeners, transferListeners);
+                portController.registerAllListeners(connectionListener, nodeListeners, messageListeners, transferListeners);
             }
+            
+            
+            log.debug("the connection is now opened: {}", bidib.isOpened());
+            
+            if (isAsyncInit) {
+                // for async connections (netBiDiB) we have to wait here until the connection is paired
+                // the server has logged in and the nodes have been initialized.
+                
+                // get the pairing timeout and then wait a bit longer to be sure...
+                final NetBidibLinkData clientLinkData =
+                    context.get(Context.NET_BIDIB_CLIENT_LINK_DATA, NetBidibLinkData.class, null);
+                long timeout = clientLinkData.getRequestedPairingTimeout();
 
-            log.debug("get relevant node data");
-            BidibNode rootNode = bidib.getRootNode();
-            int count = rootNode.getNodeCount();
-            log.debug("node count: {}", count);
-            byte[] nodeaddr = rootNode.getAddr();
-            log.debug("node addr length: {}", nodeaddr.length);
-            log.debug("node addr: {}", nodeaddr);
-            for (int i = 0; i < nodeaddr.length; i++) {
-                log.debug("  byte {}: {}", i, nodeaddr[i]);
+                boolean success = continueLock.await(timeout + 10, TimeUnit.SECONDS);
+                if (pairingDialog != null) {
+                    pairingDialog.dispose(); //just to be sure the dialog disappears...
+                    pairingDialog = null;
+                }
+                if (!success  ||  !curPairingResult.equals(PairingResult.PAIRED)) {
+                    // an unpaired connection will be closed.
+                    if (bidib.isOpened()) {
+                        if (!success) {
+                            log.warn("pairing or login timed out! Root node cannot be initialized - closing connection");
+                        }
+                        else {
+                            log.warn("pairing or login failed! Root node cannot be initialized - closing connection");
+                        }
+                        bidib.close();
+                    }
+                    return null;
+                }
             }
-//            int featureCount = rootNode.getFeatureCount();
-//            log.debug("feature count: {}", featureCount);
-//            log.debug("** Unique ID: {}", String.format("0x%X",rootNode.getUniqueId()));
+            else {
+                // even in non-async mode (all but netBiDiB) the node init is done in another thread
+                // so we wait here for the node init has been completed.
+                boolean success = continueLock.await(30, TimeUnit.SECONDS);
+                if (!success) {
+                    log.warn("node init timeout!");
+                }
+            }
             
-            for (int index = 1; index <= count; index++) {
-                Node node = rootNode.getNextNode(null); //TODO org.bidib.jbidibc.messages.logger.Logger
-                nodeInitializer.initNode(node);
-                long uid = node.getUniqueId() & 0x0000ffffffffffL; //mask the classid
-                nodes.put(uid, node);
+            if (!bidib.isOpened()  ||  !connectionIsReady) {
+                log.info("connection is not ready - not initialized.");
+                return null;
             }
-            rootNode.sysEnable();
-            log.info("--- node init finished ---");
             
-            Node csnode = getFirstCommandStationNode();
-            if (csnode != null) {
-                sendBiDiBMessage(new CommandStationSetStateMessage(CommandStationState.QUERY), csnode);
-                // TODO: Should we remove all Locos from command station? MSG_SET_DRIVE with loco 0 and bitfields = 0 (see BiDiB spec)
-                // TODO: use MSG_CS_ALLOCATE every second to disable direct control from local controllers like handhelds?
-            }
+            // The connection is ready now.
+            // The nodes have already been initialized here from the connectionListener events.
+            
+            log.info("registering shutdown task");
+            ShutDownTask shutDownTask = new AbstractShutDownTask("BiDiB Shutdown Task") {
+                @Override
+                public void run() {
+                    log.info("Shutdown Task - Terminate {}", getUserName());
+                    terminate();
+                    log.info("Shutdown task finished {}", getUserName());
+                }
+            };
+            InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
             
             return context;
 
@@ -400,6 +566,159 @@ public class BiDiBTrafficController implements CommandStation {
         return null;
     }
     
+//    public Long getUniqueId() {
+//        return deviceUniqueId;
+//    }
+        
+    /**
+     * Check if the connection is ready to communicate.
+     * For netBiDiB this is the case only if the pairing was successful and
+     * the server has logged in.
+     * For all other connections the connection is ready if it has been
+     * successfully opened.
+     * 
+     * @return true if the connection is ready
+     */
+    public boolean isConnectionReady() {
+        return connectionIsReady;
+    }
+    
+    /**
+     * Check of the connection is netBiDiB.
+     * 
+     * @return true if this connection is netBiDiB
+     */
+    public boolean isNetBiDiB() {
+        return isNetBiDiB;
+    }
+    
+    /**
+     * Set the connection to lost state.
+     * All nodes will be removed and the components will be invalidated
+     */
+    public void connectionLost() {
+        connectionIsReady = false;
+        nodeInitializer.connectionLost();
+    }
+    
+    // Methods used by BiDiB only
+
+    /**
+     * Check if the connection is detached i.e. it is opened, paired
+     * but the logon has been rejected.
+     * 
+     * @return true if detached
+     */
+    public boolean isDetached() {
+        if (bidib != null) {
+            try {
+                RootNode rootNode = bidib.getRootNode();
+                return rootNode.getMasterNode().isDetached();
+            }
+            catch (Exception e) {
+                log.trace("cannot determine detached flag: {}", e.toString());
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Set or remove the detached state.
+     * If logoff is requested (detach), a logon reject is sent to the device
+     * and all nodes will be notified that they are no more reachable (lost node).
+     * The connection remains active, but other clients may request a logon from
+     * the connected device.
+     * 
+     * If a logon is requested (attach), the connected device is asked for a new logon.
+     * When the logon is received, the nodes will be re-initialized by the traffic
+     * controller.
+     * 
+     * @param logon - true for logon (attach), false for logoff (detach)
+     */
+    public void setLogon(boolean logon) {
+        Long uid;
+        try {
+            // get the JMRI uid
+            final NetBidibLinkData providedClientLinkData =
+                portController.getContext().get(Context.NET_BIDIB_CLIENT_LINK_DATA, NetBidibLinkData.class, null);
+            uid = providedClientLinkData.getUniqueId() & 0xFFFFFFFFFFL;
+        }
+        catch (Exception e) {
+            log.error("cannot determine our own Unique ID: {}", e.toString());
+            return;
+        }
+        if (logon) {
+            bidib.attach(uid);
+            // after successful logon the node(s) will be newly initialized by the traffic controller
+        }
+        else {
+            // since there won't be any event fired upon a detached connection, we have to do it ourself
+            connectionLost();
+            bidib.detach(uid);
+            bidib.getRootNode().getMasterNode().setDetached(true);
+        }
+    }
+    
+    /**
+     * Add/Remove an ActionListener to be called when the connection has changed.
+     * 
+     * @param l - an Object implementing the ActionListener interface
+     */
+    public void addConnectionChangedListener(ActionListener l) {
+        synchronized (connectionChangedListeners) {
+            connectionChangedListeners.add(l);
+        }
+    }
+    
+    public void removeConnectionChangedListener(ActionListener l) {
+        synchronized (connectionChangedListeners) {
+            connectionChangedListeners.remove(l);
+        }
+    }
+    
+    private void fireConnectionChanged(String cmd) {
+
+        final Collection<ActionListener> safeListeners;
+        synchronized (connectionChangedListeners) {
+            safeListeners = CollectionUtils.newArrayList(connectionChangedListeners);
+        }
+        for (ActionListener l : safeListeners) {
+            l.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, cmd));
+        }
+    }
+
+    /**
+     * Start jbidibc built-in local ping as a watchdog of the connection.
+     * If there is no response from the device, the connection will be closed.
+     */
+    public void startLocalPing() {
+        if (useLocalPing) {
+            log.debug("Start the netBiDiB local ping worker on the rootNode.");
+            try {
+
+                if (bidib != null) {
+                    bidib.getRootNode().setLocalPingEnabled(true);
+
+                    bidib.getRootNode().startLocalPingWorker(true, localPingResult -> {
+                        if (localPingResult.equals(Boolean.FALSE)) {
+                            log.warn("The local pong was not received! Close connection");
+                            delayedCloseTimer.start();
+                        }
+                    });
+                }
+            }
+            catch (Exception ex) {
+                log.warn("Start the local ping worker failed.", ex);
+            }
+        }
+        else {
+            log.debug("local ping is disabled.");
+        }
+    }
+ 
+    // End Methods used by BiDiB only
+    
+
     Node debugSavedNode;
     public void TEST(boolean a) {///////////////////DEBUG
         log.debug("TEST {}", a);
@@ -1338,6 +1657,18 @@ public class BiDiBTrafficController implements CommandStation {
             }
         }
     }
+    
+// local ping (netBiDiB devices)
+
+    private void localPingTimeout() {
+        log.trace("send local ping");
+        if (connectionIsReady) {
+            sendBiDiBMessage(new LocalPingMessage(), getFirstCommandStationNode());
+        }
+        else {
+            localPingTimer.stop();
+        }
+    }
 
 
     /**
@@ -1445,7 +1776,7 @@ public class BiDiBTrafficController implements CommandStation {
 //    }
     
     
-// Shutdown hook - copied from AbstractMRTrafficController
+// Shutdown function
 
     protected void terminate () {
         log.debug("Cleanup starts {}", this);
@@ -1457,10 +1788,10 @@ public class BiDiBTrafficController implements CommandStation {
             checkProgMode(false, node); //possibly switch to normal mode
         }
         setWatchdogTimer(false); //stop watchdog
-        // sending SYS_DISABLE disables all spontaneous messages and thus informs the node that the host will probably disappear
+        // sending SYS_DISABLE disables all spontaneous messages and thus informs all nodes that the host will probably disappear
         try {
             log.info("sending sysDisable to {}", getRootNode());
-            bidib.getRootNode().sysDisable();
+            bidib.getRootNode().sysDisable(); //Throws ProtocolException
         }
         catch (ProtocolException e) {
             log.error("unable to disable node", e);
@@ -1469,25 +1800,25 @@ public class BiDiBTrafficController implements CommandStation {
         log.debug("Cleanup ends");
     }
     
-    /**
-     * Internal class to handle traffic controller cleanup. The primary task of
-     * this thread is to make sure the DCC system has exited service mode when
-     * the program exits.
-     */
-    static class CleanupHook implements Runnable {
-
-        BiDiBTrafficController tc;
-
-        CleanupHook(BiDiBTrafficController tc) {
-            this.tc = tc;
-        }
-
-        @Override
-        public void run() {
-            tc.terminate();
-        }
-    }
-
+//    /** NO LONGER USED
+//     * Internal class to handle traffic controller cleanup. The primary task of
+//     * this thread is to make sure the DCC system has exited service mode when
+//     * the program exits.
+//     */
+//    static class CleanupHook implements Runnable {
+//
+//        BiDiBTrafficController tc;
+//
+//        CleanupHook(BiDiBTrafficController tc) {
+//            this.tc = tc;
+//        }
+//
+//        @Override
+//        public void run() {
+//            tc.terminate();
+//        }
+//    }
+//
     
     private final static Logger log = LoggerFactory.getLogger(BiDiBTrafficController.class);
 

@@ -183,6 +183,19 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     }
 
     /**
+     * Add this window to the Windows Menu by adding it to the list of
+     * active JmriJFrames.
+     */
+    public void makePublicWindow() {
+        JmriJFrameManager m = getJmriJFrameManager();
+        synchronized (m) {
+            if (! m.contains(this)) {
+                m.add(this);
+            }
+        }
+    }
+
+    /**
       * Reset frame location and size to stored preference value
       */
     public void setFrameLocation() {
@@ -373,6 +386,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         boolean visible = isVisible();
 
         setVisible(false);
+        log.debug("super.dispose() called in undecorate()");
         super.dispose();
 
         setUndecorated(true);
@@ -496,7 +510,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      *
      * Final because it defines the content of a standard help menu, not to be messed with individually
      *
-     * @param ref    JHelp reference for the desired window-specific help page
+     * @param ref    JHelp reference for the desired window-specific help page; null means no page
      * @param direct true if the help main-menu item goes directly to the help system,
      *               such as when there are no items in the help menu
      */
@@ -795,33 +809,6 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         return null;
     }
 
-    /*
-     * addNotify removed - In linux the "setSize(dimension)" is honoured after the pack, increasing its size, overriding preferredSize
-     *                   - In windows the "setSize(dimension)" is ignored after the pack, so has no effect.
-     */
-    // handle resizing when first shown
-    // private boolean mShown = false;
-
-    // /** {@inheritDoc} */
-    /* @Override
-    public void addNotify() {
-        super.addNotify();
-        // log.debug("addNotify window ({})", getTitle());
-        if (mShown) {
-            return;
-        }
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-        mShown = true;
-    }
-*/
-
     /**
      * Set whether the frame Position is saved or not after it has been created.
      *
@@ -952,6 +939,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * The JmriJFrame implementation calls {@link #handleModified()}.
      */
     @Override
+    @OverridingMethodsMustInvokeSuper
     public void windowClosing(java.awt.event.WindowEvent e) {
         handleModified();
     }
@@ -1017,6 +1005,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     @OverridingMethodsMustInvokeSuper
     @Override
     public void dispose() {
+        log.debug("JmriJFrame dispose invoked on {}", getTitle());
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {
             if (reuseFrameSavedPosition) {
                 p.setWindowLocation(windowFrameRef, this.getLocation());
@@ -1037,6 +1026,17 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         synchronized (m) {
             m.remove(this);
         }
+        
+        // workaround for code that directly calls dispose()
+        // instead of dispatching a WINDOW_CLOSED event.  This
+        // causes the windowClosing method to not be called. This in turn is an
+        // issue because people have put code in the windowClosed method that
+        // should really be in windowClosing.
+        ThreadingUtil.runOnGUIDelayed(() -> {
+            removeWindowListener(this);
+            removeComponentListener(this);
+        }, 500);
+        
         super.dispose();
     }
 

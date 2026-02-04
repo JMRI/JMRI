@@ -123,7 +123,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h2 id="indirect_accessing">Indirect adressing of NamedBeans</h2>
+      <h2 id="indirect_accessing">Indirect addressing of NamedBeans</h2>
 
       <p>In some cases, it may be useful to use indirect addressing of NamedBeans.</p>
 
@@ -137,7 +137,7 @@
 
       <p>Using a Memory that has the name of the NamedBean</p>
 
-      <p>Lets say we have a Turnout action that should throw a particulat turnout. But we wnat to
+      <p>Lets say we have a Turnout action that should throw a particular turnout. But we want to
       be able to select which turnout to throw at a later time. We can solve that by storing the
       system name or user name in a Memory. We then tell the Turnout action to read the Memory and
       lookup the turnout on the fly.</p>
@@ -147,11 +147,41 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h2 id="indirect_enums">Indirect addressing of Enums</h2>
+
+      <p>Sometimes the <strong>Direct</strong> tab of an action or expression contains a drop-down
+      list.  These are normally created using a Java Enum. For indirect references, the actual enum
+      <strong>name</strong> is used instead of the displayed name.  The also applies to other
+      indirect references such as memories, local variables, formulas and tables.  Note: The
+      displayed name might be a translation.</p>
+
+      <p>When an enum is used, a <strong>Show valid values</strong> button is added to panel.  Note:
+      The button is not added to the table panel, but is available on the other indirect panels.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter7/show-valid-turnout.png">
+        <img src="images/chapter7/show-valid-turnout.png"
+        alt="Chapter 7 show valid turnout"></a>
+      </div>
+
+      <p>Clicking on the button will display a list of the enum values for the current object type.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter7/show-valid-values.png">
+        <img src="images/chapter7/show-valid-values.png"
+        alt="Chapter 7 show valid values"></a>
+      </div>
+
+      <p>This is a reference list.  It is not used to select values. That process will depend on the
+      type of indirect reference.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h3 id="ListenOnBeans">Listen on beans</h3>
 
       <p>There is one major drawback with this. Since LogixNG doesn't know in advance which
       NamedBeans (turnouts, sensors, etc.) will be accessed indirectly, it's not possible for
-      LogixNG to automaticly register listeners to the named beans that should trigger on change.
+      LogixNG to automatically register listeners to the named beans that should trigger on change.
       For example, a Turnout expression registers a listener on the turnout, if the name of the
       turnout is given, but if the Turnout expression is using indirect addressing of the turnout,
       it's not able to do that.</p>
@@ -189,7 +219,7 @@
       listen to automatically, so IT1, IT3 and IT4 will be listend to. But in order to listen on
       turnouts IT2 and IT5, the <strong>Listen on beans</strong> action needs to be used.</p>
 
-      <p>The <strong>Listen on beans</strong> action can be placed anythere in the ConditionalNG
+      <p>The <strong>Listen on beans</strong> action can be placed anywhere in the ConditionalNG
       tree, as long as it and its parents are enabled. If you disable this action, or any of its
       parent actions, the <strong>Listen on beans</strong> action will not listen on its named
       beans.</p>

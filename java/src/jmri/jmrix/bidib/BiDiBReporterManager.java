@@ -4,6 +4,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import jmri.Reporter;
+import jmri.InstanceManager;
+import jmri.RailComManager;
+
 import org.bidib.jbidibc.messages.BidibLibrary;
 
 import org.bidib.jbidibc.messages.Node;
@@ -16,13 +19,17 @@ import org.slf4j.LoggerFactory;
  * BiDiBReporterManager implements the ReporterManager for BiDiB
  *
  * @author Paul Bender Copyright (C) 2016
- * @author Eckart Meyer Copyright (C) 2019-2023
+ * @author Eckart Meyer Copyright (C) 2019-2025
  */
 public class BiDiBReporterManager extends jmri.managers.AbstractReporterManager {
 
     // ctor has to register for LocoNet events
     public BiDiBReporterManager(BiDiBSystemConnectionMemo memo) {
         super(memo);
+        // Instantiate RailCom IdTag Manager (i.e. RailComManager) to be sure
+        // that RailCom ID Tags will be loaded.
+        // However, we don't need it here.
+        InstanceManager.getDefault(RailComManager.class);
     }
 
     /**

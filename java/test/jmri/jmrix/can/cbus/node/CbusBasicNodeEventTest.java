@@ -5,8 +5,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -16,7 +14,7 @@ public class CbusBasicNodeEventTest {
 
     @Test
     public void testCTor() {
-        assertThat(new CbusBasicNodeEvent(memo,1,2,3,4)).isNotNull();
+        Assertions.assertNotNull(new CbusBasicNodeEvent(memo,1,2,3,4));
     }
 
     private CanSystemConnectionMemo memo = null;
@@ -24,9 +22,9 @@ public class CbusBasicNodeEventTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        
+
         memo = new CanSystemConnectionMemo();
-        
+
     }
 
     @AfterEach
@@ -34,7 +32,7 @@ public class CbusBasicNodeEventTest {
         Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
-        
+
         JUnitUtil.tearDown();
     }
 

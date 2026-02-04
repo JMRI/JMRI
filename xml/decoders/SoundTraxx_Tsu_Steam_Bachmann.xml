@@ -23,6 +23,7 @@
   <version author="Alain Le Marchand" version="8" lastUpdated="20140530"/>
   <version author="Alain Le Marchand" version="9" lastUpdated="20180103"/>
   <version author="Marc N Fournier" version="10" lastUpdated="20180318"/>
+  <version author="James Exler" version="11" lastUpdated="20240521"/>
   <!-- This file contains the OEM Bachmann Tsunami definitions for Bachmann steam locomotives	    -->
   <!-- Version 1  Made from SoundTraxx_TSU_2Med.xml file											-->
   <!-- Version 2  Added Reset option																-->
@@ -45,6 +46,7 @@
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
                 FX5 or FX6 are either physical or logical outputs (for TSU-750) used for "Rule 17 mode"         -->
+  <!-- version 11 Add HO 2 Truck Climax (2climax) to "excludes" in various variables where needed to match "includes" to eliminate duplicating entries in roster file. -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Steam Bachmann OEM" mfg="SoundTraxx (Throttle-Up)" lowVersionID="80" highVersionID="83">
@@ -728,7 +730,7 @@
         <label xml:lang="de">Startspannung</label>
         <comment>A value of 255 corresponds to full voltage available</comment>
       </variable>
-      <variable CV="3" item="Accel" default="0" exclude="o2442,oheisler" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
+      <variable CV="3" item="Accel" default="0" exclude="2climax,o2442,oheisler" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Acceleration Rate (0-255)</label>
         <label xml:lang="it">Accellerazione (0-255)</label>
@@ -742,7 +744,7 @@
         <label xml:lang="fr">Accelération (0-255)</label>
         <label xml:lang="de">Anfahrverzögerung (0-255)</label>
       </variable>
-      <variable CV="4" item="Decel" default="0" exclude="o2442,oheisler" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
+      <variable CV="4" item="Decel" default="0" exclude="2climax,o2442,oheisler" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Braking Rate (0-255)</label>
         <label xml:lang="it">Decellerazione (1-255)</label>
@@ -946,7 +948,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls Headlight</label>
       </variable>
-      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" exclude="o2442,oheisler" minOut="2" default="0">
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" exclude="2climax,o2442,oheisler" minOut="2" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls Backup Light</label>
       </variable>
@@ -982,7 +984,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output Short-Whistle</label>
       </variable>
-      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" exclude="o2442,oheisler" minOut="1" default="0">
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" exclude="2climax,o2442,oheisler" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls Headlight</label>	
       </variable>
@@ -1671,6 +1673,10 @@
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F7 controls output Coupler</label>
         </variable>
+		<variable item="F7 controls output 15(alt)" CV="45" mask="VXXXXXXX" exclude="2climax" default="0" minFn="11">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>F7 controls output Coupler</label>
+        </variable>
 		<variable item="F7 controls output 15(alt)" CV="45" mask="VXXXXXXX" include="2climax" default="1" minFn="11">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
           <label>F7 controls output Coupler</label>
@@ -1715,7 +1721,7 @@
         <label>Analog Whistle Control (0-255)</label>
       </variable>
       <!-- Lighting Configuration follows -->
-      <variable item="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" default="1" exclude="2884,o2442,oheisler" tooltip="Determines the effect generated from the headlight">
+      <variable item="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" default="1" exclude="2climax,2884,o2442,oheisler" tooltip="Determines the effect generated from the headlight">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUEffect.xml"/>
         <label>Headlight F0(f) Effect Selection</label>
       </variable>
@@ -1739,7 +1745,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17HL.xml"/>
         <label>Headlight F0(f) Rule 17 Mode</label>
       </variable>
-      <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" exclude="2884,o2442,oheisler" default="0" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" exclude="2climax,2884,o2442,oheisler" default="0" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Headlight F0(f) Light Type</label>
       </variable>
@@ -1775,7 +1781,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17RL.xml"/>
         <label>Backup Light F0(r) Rule 17 Mode</label>
       </variable>
-      <variable item="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" exclude="2884,o2442,oheisler" default="0" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" exclude="2climax,2884,o2442,oheisler" default="0" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
@@ -2422,7 +2428,7 @@
         <label>Engine Exhaust Control</label>
       </variable>
       <!-- Volume Controls follow -->
-      <variable CV="128" mask="VVVVVVVV" item="Sound Setting 11" default="192" exclude="2884,460,3climax,3shay,o040,o042,o460,f2climax" tooltip="Sets the overall volume of all sound channels">
+      <variable CV="128" mask="VVVVVVVV" item="Sound Setting 11" default="192" exclude="2climax,2884,460,3climax,3shay,o040,o042,o460,f2climax" tooltip="Sets the overall volume of all sound channels">
         <decVal/>
         <label>Master Volume Control</label>
       </variable>
@@ -2438,7 +2444,7 @@
         <decVal/>
         <label>Master Volume Control</label>
       </variable>
-      <variable CV="129" mask="VVVVVVVV" item="Sound Setting 13" default="225" tooltip="Sets the volume of the whistle">
+      <variable CV="129" mask="VVVVVVVV" item="Sound Setting 13" default="225" exclude="2climax" tooltip="Sets the volume of the whistle">
         <decVal/>
         <label>Whistle Volume</label>
       </variable>
@@ -2586,7 +2592,7 @@
         <decVal/>
         <label>Power Reverser Volume</label>
       </variable>
-      <variable CV="143" mask="VVVVVVVV" item="Sound Setting 27" default="0" exclude="2884,3climax,o040,o042,o2442,oheisler,f2climax" tooltip="Sets the volume of the pop valve releasing">
+      <variable CV="143" mask="VVVVVVVV" item="Sound Setting 27" default="0" exclude="2884,2climax,3climax,o040,o042,o2442,oheisler,f2climax" tooltip="Sets the volume of the pop valve releasing">
         <decVal/>
         <label>Pop Valve Volume</label>
       </variable>
@@ -2815,7 +2821,7 @@
         <decVal max="127"/>
         <label>Bell-On Set Point</label>
       </variable>
-      <variable item="Bell-Off Set Point" CV="194" mask="XVVVVVVV" default="24" exclude="440l,460,484,3climax,o040,o042,o2442,f2climax" tooltip="Specifies the throttle speed step where the automatic bell will turn off">
+      <variable item="Bell-Off Set Point" CV="194" mask="XVVVVVVV" default="24" exclude="440l,460,484,3climax,o040,o042,o2442,f2climax,2climax,oheisler" tooltip="Specifies the throttle speed step where the automatic bell will turn off">
         <decVal max="127"/>
         <label>Bell-Off Set Point</label>
       </variable>
@@ -2889,35 +2895,35 @@
       </variable>
       <!-- End of variables for file-specific panes -->
       <!-- Event Probability Controls follow -->
-      <variable item="Probability Fireman Shovels Coal" CV="201" mask="VVVVVVVV" default="64" include="2884,3climnax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the fireman will shovel some coal">
+      <variable item="Probability Fireman Shovels Coal" CV="201" mask="VVVVVVVV" default="64" include="2884,3climax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the fireman will shovel some coal">
         <decVal max="255"/>
         <label>Probability Fireman Shovels Coal</label>
       </variable>
-      <variable item="Probability Fireman Fills the Tender" CV="202" mask="VVVVVVVV" default="32" include="2884,3climnax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the fireman will fill the tender with water">
+      <variable item="Probability Fireman Fills the Tender" CV="202" mask="VVVVVVVV" default="32" include="2884,3climax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the fireman will fill the tender with water">
         <decVal max="255"/>
         <label>Probability Fireman Fills the Tender</label>
       </variable>
-      <variable item="Probability Fireman Turns His Wrench" CV="203" mask="VVVVVVVV" default="16" include="2884,3climnax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the fireman will use his wrench">
+       <variable item="Probability Fireman Turns His Wrench" CV="203" mask="VVVVVVVV" default="16" include="2884,3climax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the fireman will use his wrench">
         <decVal max="255"/>
         <label>Probability Fireman Turns His Wrench</label>
       </variable>
-      <variable item="Probability Fireman Uses His Grease Gun" CV="204" mask="VVVVVVVV" default="32" include="2884,3climnax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the fireman will use the grease gun">
+      <variable item="Probability Fireman Uses His Grease Gun" CV="204" mask="VVVVVVVV" default="32" include="2884,3climax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the fireman will use the grease gun">
         <decVal max="255"/>
         <label>Probability Fireman Uses His Grease Gun</label>
       </variable>
-      <variable item="Probability Fireman Uses His Oil Can" CV="205" mask="VVVVVVVV" default="64" include="2884,3climnax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the fireman will use the oil can">
+      <variable item="Probability Fireman Uses His Oil Can" CV="205" mask="VVVVVVVV" default="64" include="2884,3climax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the fireman will use the oil can">
         <decVal max="255"/>
         <label>Probability Fireman Uses His Oil Can</label>
       </variable>
-      <variable item="Probability Fireman Uses the Injector" CV="206" mask="VVVVVVVV" default="64" include="2884,3climnax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the fireman will use the water injector">
+      <variable item="Probability Fireman Uses the Injector" CV="206" mask="VVVVVVVV" default="64" include="2884,3climax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the fireman will use the water injector">
         <decVal max="255"/>
         <label>Probability Fireman Uses the Injector</label>
       </variable>
-      <variable item="Probability Fireman Uses the Blower" CV="207" mask="VVVVVVVV" default="64" include="2884,3climnax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the fireman will use the firebox blower">
+      <variable item="Probability Fireman Uses the Blower" CV="207" mask="VVVVVVVV" default="64" include="2884,3climax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the fireman will use the firebox blower">
         <decVal max="255"/>
         <label>Probability Fireman Uses the Blower</label>
       </variable>
-      <variable item="Probability Pop Valve Blows Off" CV="208" mask="VVVVVVVV" default="0" include="2884,3climnax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the safety valve will relieve">
+      <variable item="Probability Pop Valve Blows Off" CV="208" mask="VVVVVVVV" default="0" include="2884,3climax,o040,o042,02442,oheisler,f2climax" tooltip="Sets the probability that the safety valve will relieve">
         <decVal max="255"/>
         <label>Probability Pop Valve Blows Off</label>
       </variable>

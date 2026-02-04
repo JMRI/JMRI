@@ -2,7 +2,6 @@ package jmri.jmrix.powerline.cm11;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,10 +10,11 @@ import org.junit.jupiter.api.*;
  */
 public class ConstantsTest {
 
+    // no Ctor test, class only supplies static methods
+
     @Test
-    public void testCTor() {
-        Constants t = new Constants();
-        Assert.assertNotNull("exists",t);
+    public void testCm11Constants() {
+        Assertions.assertEquals( 0x55, Constants.READY_REQ);
     }
 
     @BeforeEach

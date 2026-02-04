@@ -2,6 +2,7 @@ package jmri.jmrit.logix;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
@@ -12,9 +13,11 @@ import java.io.File;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
+
 import org.netbeans.jemmy.operators.JFrameOperator;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Paul Bender Copyright (C) 2017
@@ -25,7 +28,7 @@ public class PortalManagerTest {
 
     @Test
     public void testCTor() {
-        assertThat(_portalMgr).withFailMessage("exists").isNotNull();
+        assertNotNull( _portalMgr, "exists");
     }
 
     @Test
@@ -43,12 +46,12 @@ public class PortalManagerTest {
         Portal pSouthWest = _portalMgr.createNewPortal("SouthWest");
         pSouthWest.setToBlock(bWest, false);
         pSouthWest.setFromBlock(bSouth, false);
-        assertThat(_portalMgr.getPortal("NorthWest")).withFailMessage("Portal").isEqualTo(pNorthWest);
-        assertThat(_portalMgr.getPortal("SouthWest").getFromBlock()).withFailMessage("Portal Block").isEqualTo(bSouth);
-        Assertions.assertNotNull(bSouth);
-        assertThat(bSouth.getPortalByName("SouthWest")).withFailMessage("Portal").isEqualTo(pSouthWest);
-        assertThat(_portalMgr.getPortal("NorthWest").getToBlockName()).withFailMessage("Portal Block").isEqualTo("West");
-        assertThat(_portalMgr.getPortal("NorthWest").getFromBlockName()).withFailMessage("Portal Block").isEqualTo("North");
+        assertEquals( pNorthWest, _portalMgr.getPortal("NorthWest"), "Portal");
+        assertEquals( bSouth, _portalMgr.getPortal("SouthWest").getFromBlock(), "Portal Block");
+        assertNotNull(bSouth);
+        assertEquals( pSouthWest, bSouth.getPortalByName("SouthWest"), "Portal");
+        assertEquals( "West", _portalMgr.getPortal("NorthWest").getToBlockName(), "Portal Block");
+        assertEquals( "North", _portalMgr.getPortal("NorthWest").getFromBlockName(), "Portal Block");
 
         Portal pNorthEast = _portalMgr.createNewPortal("NorthEast");
         pNorthEast.setToBlock(_OBlockMgr.getOBlock("OB2"), false);
@@ -58,15 +61,15 @@ public class PortalManagerTest {
         pSouthEast.setToBlock(east, false);
         pSouthEast.setFromBlock(_OBlockMgr.getOBlock("South"), false);
 
-        assertThat(_portalMgr.getPortal("SouthEast").getToBlock()).withFailMessage("Portal Block").isEqualTo(east);
-        assertThat(_portalMgr.getPortal("NorthWest").getToBlockName()).withFailMessage("Portal Block").isEqualTo("West");
-        assertThat(_portalMgr.getPortal("SouthWest").getFromBlock()).withFailMessage("Portal Block").isEqualTo(_OBlockMgr.getOBlock("South"));
+        assertEquals( east, _portalMgr.getPortal("SouthEast").getToBlock(), "Portal Block");
+        assertEquals( "West", _portalMgr.getPortal("NorthWest").getToBlockName(), "Portal Block");
+        assertEquals( _OBlockMgr.getOBlock("South"), _portalMgr.getPortal("SouthWest").getFromBlock(), "Portal Block");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @jmri.util.junit.annotations.DisabledIfHeadless
     @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
-    public void testChangeNames() throws Exception {
+    public void testChangeNames() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -75,28 +78,28 @@ public class PortalManagerTest {
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
-        assertThat(tableFrame).withFailMessage("tableFrame").isNotNull();
+        assertNotNull( tableFrame, "tableFrame");
 
         Warrant warrant = InstanceManager.getDefault(WarrantManager.class).getWarrant("WestToEast");
-        assertThat(warrant).withFailMessage("warrant").isNotNull();
+        assertNotNull( warrant, "warrant");
         BlockOrder order =  warrant.getBlockOrders().get(3);
         OBlock blockOB6 = order.getBlock();
         Portal portal = _portalMgr.getPortal("MidWestToMiddle");
         OPath path = order.getPath();
         // names as loaded
-        assertThat(blockOB6.getUserName()).withFailMessage("Block Name").isEqualTo("Middle");
-        assertThat(order.getEntryName()).withFailMessage("Entry Portal Name").isEqualTo("MidWestToMiddle");
-        assertThat(order.getPathName()).withFailMessage("Path Name").isEqualTo("MainMidShort");
-        assertThat(path.getName()).withFailMessage("Path Name from path").isEqualTo("MainMidShort");
+        assertEquals( "Middle", blockOB6.getUserName(), "Block Name");
+        assertEquals( "MidWestToMiddle", order.getEntryName(), "Entry Portal Name");
+        assertEquals( "MainMidShort", order.getPathName(), "MainMidShort");
+        assertEquals( "MainMidShort", path.getName(), "Path Name from path");
 
         // change names
         blockOB6.setUserName("AnotherBlock");
         portal.setName("AnotherPortal");
-        assertThat(blockOB6.getUserName()).withFailMessage("Block Name").isEqualTo("AnotherBlock");
-        assertThat(order.getEntryName()).withFailMessage("Entry Portal Name").isEqualTo("AnotherPortal");
+        assertEquals( "AnotherBlock", blockOB6.getUserName(), "Block Name");
+        assertEquals( "AnotherPortal", order.getEntryName(), "Entry Portal Name");
         path.setName("AnotherPath");
-        assertThat(order.getPathName()).withFailMessage("Path Name").isEqualTo("AnotherPath");
-        assertThat(path.getName()).withFailMessage("Path Name from path").isEqualTo("AnotherPath");
+        assertEquals( "AnotherPath", order.getPathName(), "Path Name");
+        assertEquals( "AnotherPath", path.getName(), "Path Name from path");
 
         // Run the warrant to prove name changes hold
         OBlockManager _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
@@ -104,7 +107,7 @@ public class PortalManagerTest {
         NXFrameTest.setAndConfirmSensorAction(sensor1, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB1"));
         // WarrantTable.runTrain() returns a string that is not null if the
         // warrant can't be started
-        assertThat(tableFrame.runTrain(warrant, Warrant.MODE_RUN)).withFailMessage("Warrant starts").isNull(); // start run
+        assertNull(tableFrame.runTrain(warrant, Warrant.MODE_RUN), "Warrant starts"); // start run
 
         JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
@@ -114,21 +117,40 @@ public class PortalManagerTest {
        // OBlock of route
         String[] route1 = {"OB1", "OB3", "OB5", "OB6", "OB7", "OB9", "OB11"};
         OBlock block = _OBlockMgr.getOBlock("OB11");
+        assertNotNull(block);
+
+        Sensor s = block.getSensor();
+        assertNotNull(s);
 
         // Run the train, then checks end location
-        assertThat(NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName()).withFailMessage("Fred made it to block OB11").isEqualTo(block.getSensor().getDisplayName());
+        assertEquals( s.getDisplayName(),
+            NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName(),
+            "Fred made it to block OB11");
 
         // passed test - cleanup.
+        warrant.dispose();
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
-        assert panel != null;
-        panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+        jfo.waitClosed();
+        assertNotNull(panel);
+
+        // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+        Boolean retVal = jmri.util.ThreadingUtil.runOnGUIwithReturn(() -> {
+            panel.dispose();
+            return true;
+        });
+        assertTrue(retVal);
+
+        JUnitUtil.waitThreadTerminated("WestToEast Killer");
+
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir File folder) {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
+        assertDoesNotThrow( () ->
+            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder)));
+
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();

@@ -1,9 +1,8 @@
 package jmri.jmrit.operations.automation;
 
 import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.beans.PropertyChangeListener;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -23,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *
  * @author Daniel Boudreau Copyright (C) 2016
  */
-public class Automation extends PropertyChangeSupport implements java.beans.PropertyChangeListener {
+public class Automation extends PropertyChangeSupport implements PropertyChangeListener {
 
     protected String _id = "";
     protected String _name = "";
@@ -206,14 +205,23 @@ public class Automation extends PropertyChangeSupport implements java.beans.Prop
         if (getSize() > 0) {
             setCurrentAutomationItem(getItemsBySequenceList().get(0));
             resetAutomationItems();
+            resetAutomationItemsActon();
         }
     }
 
     private void resetAutomationItems() {
         resetAutomationItems(getCurrentAutomationItem());
     }
+    
+    private void resetAutomationItemsActon() {
+        for (AutomationItem automationItem : getItemsBySequenceList()) {
+            if (automationItem.getAction() != null) {
+                automationItem.getAction().reset();
+            }
+        }
+    }
 
-    protected void resetAutomationItems(AutomationItem item) {
+    public void resetAutomationItems(AutomationItem item) {
         boolean found = false;
         for (AutomationItem automationItem : getItemsBySequenceList()) {
             if (!found && automationItem != item) {

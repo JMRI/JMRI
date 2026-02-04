@@ -14,15 +14,15 @@ import java.util.ListIterator;
 
 public class RampData {
 
-    private int _timeInterval;
-    private float _throttleInterval;
+    private final int _timeInterval;
+    private final float _throttleInterval;
     private ArrayList<Float> _settings;
     private boolean _upRamp;
-    private SpeedUtil _speedUtil;
-    private float _fromSpeed;
-    private float _toSpeed;
+    private final SpeedUtil _speedUtil;
+    private final float _fromSpeed;
+    private final float _toSpeed;
 
-    static float INCRE_RATE = 1.085f;  // multiplier to increase throttle increments
+    private static final float INCRE_RATE = 1.085f;  // multiplier to increase throttle increments
 
     RampData(SpeedUtil util, float throttleIncre, int timeIncre, float fromSet, float toSet) {
         _throttleInterval = throttleIncre; 
@@ -56,17 +56,17 @@ public class RampData {
             throttleIncre *= INCRE_RATE;
             low += throttleIncre;
         }
-        _settings.add(Float.valueOf(lowSetting));
+        _settings.add(lowSetting);
         lowSetting += throttleIncre;
         while (lowSetting < highSetting) {
-            _settings.add(Float.valueOf(lowSetting));
+            _settings.add(lowSetting);
             momentumTime = _speedUtil.getMomentumTime(lowSetting, lowSetting + throttleIncre*INCRE_RATE);
             if (momentumTime <= _timeInterval) {
                 throttleIncre *= INCRE_RATE;
             }  // if time of momentum change exceeds _throttleInterval, don't increase throttleIncre
             lowSetting += throttleIncre;
         }
-        _settings.add(Float.valueOf(highSetting));
+        _settings.add(highSetting);
     }
 
     protected float getRampLength() {
@@ -74,13 +74,13 @@ public class RampData {
         float nextSetting;
         float prevSetting;
         float momentumTime = 0;
-        float dist = 0;
+        float dist;
         if (_upRamp) {
             ListIterator<Float> iter = speedIterator(true);
             prevSetting = iter.next(); // first setting is current speed
             nextSetting = prevSetting;
             while (iter.hasNext()) {
-                nextSetting = iter.next().floatValue();
+                nextSetting = iter.next();
                 dist = _speedUtil.getDistanceOfSpeedChange(prevSetting, nextSetting, _timeInterval);
                 rampLength += dist;
                 momentumTime = _speedUtil.getMomentumTime(prevSetting, nextSetting);
@@ -91,7 +91,7 @@ public class RampData {
             prevSetting = iter.previous(); // first setting is current speed
             nextSetting = prevSetting;
             while (iter.hasPrevious()) {
-                nextSetting = iter.previous().floatValue();
+                nextSetting = iter.previous();
                 dist = _speedUtil.getDistanceOfSpeedChange(prevSetting, nextSetting, _timeInterval);
                 rampLength += dist;
                 momentumTime = _speedUtil.getMomentumTime(prevSetting, nextSetting);
@@ -118,7 +118,7 @@ public class RampData {
         if (_settings == null) {
             throw new IllegalArgumentException("Null array of throttle settings"); 
         }
-        return _settings.get(_settings.size() - 1).floatValue();
+        return _settings.get(_settings.size() - 1);
     }
 
     protected ListIterator<Float> speedIterator(boolean up) {

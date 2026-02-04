@@ -41,14 +41,14 @@ public class ConcentratorReporterManagerTest extends jmri.managers.AbstractRepor
     public void testReporterProvideByNumber() {
     }
 
-    // No test for manager-specific system name validation at present
     @Test
     @Override
+    @NotApplicable("No test for manager-specific system name validation at present")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
 
-    // No test for manager-specific system name validation at present
     @Test
     @Override
+    @NotApplicable("No test for manager-specific system name validation at present")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     ConcentratorTrafficController tc = null;

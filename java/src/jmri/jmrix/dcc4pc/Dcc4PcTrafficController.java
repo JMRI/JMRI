@@ -199,7 +199,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             portWarn(e);
         }
     }
-    purejavacomm.SerialPort port;
+    jmri.jmrix.purejavacomm.SerialPort port;
 
     @Override
     public void connectPort(jmri.jmrix.AbstractPortController p) {

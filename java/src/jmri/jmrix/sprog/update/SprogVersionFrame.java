@@ -36,9 +36,9 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
      * {@inheritDoc}
      */
     @Override
-    synchronized public void notifyVersion(SprogVersion v) {
+    public synchronized void notifyVersion(SprogVersion v) {
         log.debug("Version {} notified", v.toString());
-        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("SprogVersionDialogString", v.toString()),
+        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("SprogVersionDialogString", v.toString()),
                 Bundle.getMessage("SprogVersionTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
         setVisible(false);
         dispose();

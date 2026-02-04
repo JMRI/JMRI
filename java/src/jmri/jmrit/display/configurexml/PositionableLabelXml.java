@@ -86,7 +86,8 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         String fontName = util.getFont().getFontName();
         if (!fontName.equals(defaultFontName)) {
             element.setAttribute("fontFamily", "" + util.getFont().getFamily());
-            element.setAttribute("fontname", "" + fontName);
+            String storedfontname = simplifyFontname(fontName, util.getFontStyle());
+            element.setAttribute("fontname", "" + storedfontname);
         }
 
         element.setAttribute("size", "" + util.getFontSize());
@@ -182,6 +183,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         element.setAttribute("hidden", p.isHidden() ? "yes" : "no");
         if (p.isEmptyHidden()) {
             element.setAttribute("emptyHidden", "yes");
+        }
+        if (p.isValueEditDisabled()) {
+            element.setAttribute("valueEditDisabled", "yes");
         }
         element.setAttribute("positionable", p.isPositionable() ? "true" : "false");
         element.setAttribute("showtooltip", p.showToolTip() ? "true" : "false");
@@ -543,6 +547,15 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         }
 
         try {
+            boolean value = element.getAttribute("valueEditDisabled").getBooleanValue();
+            l.setValueEditDisabled(value);
+        } catch (DataConversionException e) {
+            log.warn("unable to convert positionable label valueEditDisabled attribute");
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
+        }
+
+        try {
             l.setPositionable(element.getAttribute("positionable").getBooleanValue());
         } catch (DataConversionException e) {
             log.warn("unable to convert positionable label positionable attribute");
@@ -593,6 +606,54 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         }
     }
 
+    /**
+     * Remove verbose and redundant information from fontname field
+     * unless that's been disabled in preferences
+     *
+     * @param fontname The system-specific font name with a possible trailing .plain, etc
+     * @param style  From the Font class static style values
+     * @return A font name without trailing modifiers
+     */
+    String simplifyFontname(String fontname, int style) {
+        var loadAndStorePreferences = InstanceManager.getDefault(jmri.configurexml.LoadAndStorePreferences.class);
+        if (! loadAndStorePreferences.isExcludeFontExtensions() ) { 
+            log.trace("Returning early from simplifyFontname with {}", fontname);
+            return fontname;
+        }
+
+        if (fontname.endsWith(".plain")) {
+            if (style == Font.PLAIN) {
+                return fontname.substring(0, fontname.length()-(".plain".length()));
+            } else {
+                log.warn("fontname {} is not consistent with style {}", fontname, style);
+                return fontname;
+            }
+        } else if (fontname.endsWith(".bold")) {
+            if (style == Font.BOLD) {
+                return fontname.substring(0, fontname.length()-(".bold".length()));
+            } else {
+                log.warn("fontname {} is not consistent with style {}", fontname, style);
+                return fontname;
+            }
+        } else if (fontname.endsWith(".italic")) {
+            if (style == Font.ITALIC) {
+                return fontname.substring(0, fontname.length()-(".italic".length()));
+            } else {
+                log.warn("fontname {} is not consistent with style {}", fontname, style);
+                return fontname;
+            }
+        } else if (fontname.endsWith(".bolditalic")) {
+            if (style == Font.BOLD+Font.ITALIC) {
+                return fontname.substring(0, fontname.length()-(".bolditalic".length()));
+            } else {
+                log.warn("fontname {} is not consistent with style {}", fontname, style);
+                return fontname;
+            }
+        } else {
+            return fontname;
+        }
+    }
+    
     public NamedIcon loadIcon(PositionableLabel l, String attrName, Element element,
             String name, Editor ed) {
         NamedIcon icon = getNamedIcon(attrName, element, name, ed);

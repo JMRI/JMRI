@@ -61,8 +61,8 @@
                     <xs:enumeration value="NotLit"/>
                     <xs:enumeration value="Held"/>
                     <xs:enumeration value="NotHeld"/>
-                    <xs:enumeration value="IsPermissiveSmlDisabled"/>
-                    <xs:enumeration value="IsPermissiveSmlNotDisabled"/>
+                    <xs:enumeration value="PermissiveSmlDisabled"/>
+                    <xs:enumeration value="PermissiveSmlNotDisabled"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

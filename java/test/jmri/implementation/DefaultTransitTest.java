@@ -3,7 +3,6 @@ package jmri.implementation;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for Transit class.
@@ -15,20 +14,19 @@ import org.junit.Assert;
 public class DefaultTransitTest {
 
    @Test
-   public void SysNameConstructorTest(){
-      Assert.assertNotNull("Constructor", new DefaultTransit("TT1"));
+   public void sysNameConstructorTest(){
+      Assertions.assertNotNull( new DefaultTransit("TT1"), "Constructor");
    }
 
    @Test
-   public void TwoNameStringConstructorTest(){
-      Assert.assertNotNull("Constructor", new DefaultTransit("TT1", "user name"));
+   public void twoNameStringConstructorTest(){
+      Assertions.assertNotNull( new DefaultTransit("TT1", "user name"), "Constructor");
    }
 
    @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
-
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
    }
 
    @AfterEach

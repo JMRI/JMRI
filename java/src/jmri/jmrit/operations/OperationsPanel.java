@@ -15,7 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.swing.JTablePersistenceManager;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.SplitButtonColorChooserPanel;
@@ -36,6 +37,40 @@ public class OperationsPanel extends JPanel {
 
     public void dispose() {
         // The default method does nothing.
+    }
+
+    /**
+     * Increases the width of the ComboBox to the maximum number of characters
+     * for a standard attribute. This prevents names from being truncated when
+     * displayed.
+     * 
+     * @param comboBox the box needing width adjustment
+     */
+    public static void padComboBox(JComboBox<?> comboBox) {
+        padComboBox(comboBox, Control.max_len_string_attibute + 1);
+    }
+
+    /**
+     * Increases the width of the ComboBox so the names don't get truncated when
+     * displayed. If there are names in the ComboxBox that exceed the character
+     * count, then the wider width is used.
+     * 
+     * @param comboBox the box needing width adjustment
+     * @param count    the minimum number of characters to display properly
+     */
+    public static void padComboBox(JComboBox<?> comboBox, int count) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < count; i++) {
+            sb.append("X"); // wider than average
+        }
+        JComboBox<String> pad = new JComboBox<>();
+        pad.addItem(sb.toString());
+        if (comboBox.getPreferredSize().getWidth() < pad.getPreferredSize().getWidth()) {
+            Dimension boxDim =
+                    new Dimension((int) pad.getPreferredSize().getWidth(),
+                            (int) comboBox.getPreferredSize().getHeight());
+            comboBox.setPreferredSize(boxDim);
+        }
     }
 
     protected void addItem(JComponent c, int x, int y) {
@@ -173,7 +208,7 @@ public class OperationsPanel extends JPanel {
      *
      * @param scrollPane the pane containing the textArea
      * @param textArea   the textArea to adjust
-     * @param size the preferred size
+     * @param size       the preferred size
      */
     protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea, Dimension size) {
         FontMetrics metrics = getFontMetrics(textArea.getFont());
@@ -197,7 +232,7 @@ public class OperationsPanel extends JPanel {
         loadTableDetails(table, getWindowFrameRef());
         persist(table);
     }
-    
+
     public static void loadTableDetails(JTable table, String name) {
         if (table.getRowSorter() == null) {
             TableRowSorter<? extends TableModel> sorter = new TableRowSorter<>(table.getModel());
@@ -225,21 +260,21 @@ public class OperationsPanel extends JPanel {
             manager.get().resetState(table);
         }
     }
-    
+
     public static void persist(JTable table) {
         Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
         if (manager.isPresent()) {
             manager.get().persist(table);
         }
     }
-    
+
     public static void cacheState(JTable table) {
         Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
         if (manager.isPresent()) {
             manager.get().cacheState(table);
         }
     }
-    
+
     public static void saveTableState() {
         Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
         if (manager.isPresent()) {
@@ -257,9 +292,10 @@ public class OperationsPanel extends JPanel {
         OperationsXml.save();
     }
 
-/*
- * Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
- */
+    /*
+     * Kludge fix for horizontal scrollbar encroaching buttons at bottom of a
+     * scrollable window.
+     */
     protected void addHorizontalScrollBarKludgeFix(JScrollPane pane, JPanel panel) {
         JPanel pad = new JPanel(); // kludge fix for horizontal scrollbar
         pad.add(new JLabel(" "));
@@ -278,10 +314,11 @@ public class OperationsPanel extends JPanel {
         }
         return null;
     }
+
     public static JPanel getColorChooserPanel(String text, JColorChooser chooser) {
         return getColorChooserPanel(Bundle.getMessage("TextColor"), TrainCommon.getTextColor(text), chooser);
     }
-    
+
     public static JPanel getColorChooserPanel(String title, Color color, JColorChooser chooser) {
         JPanel pTextColorPanel = new JPanel();
         pTextColorPanel.setBorder(BorderFactory.createTitledBorder(title));

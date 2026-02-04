@@ -22,6 +22,9 @@ import javax.annotation.Nonnull;
  */
 public class StringUtil {
 
+    // class only supplies static methods.
+    private StringUtil(){}
+
     public static final String HTML_CLOSE_TAG = "</html>";
     public static final String HTML_OPEN_TAG = "<html>";
     public static final String LINEBREAK = "\n";
@@ -36,7 +39,7 @@ public class StringUtil {
      * @return the state or -1 if none found
      */
     @CheckReturnValue
-    public static int getStateFromName(String name, int[] states, String[] names) {
+    public static int getStateFromName(String name, @Nonnull int[] states, @Nonnull String[] names) {
         for (int i = 0; i < states.length; i++) {
             if (name.equals(names[i])) {
                 return states[i];
@@ -56,8 +59,10 @@ public class StringUtil {
      * @param names  the state names
      * @return names matching the given state or an empty array
      */
+    @Nonnull
     @CheckReturnValue
-    public static String[] getNamesFromStateMasked(int state, int[] states, int[] masks, String[] names) {
+    public static String[] getNamesFromStateMasked(int state, @Nonnull int[] states,
+        @Nonnull int[] masks, @Nonnull String[] names) {
         // first pass to count, get refs
         int count = 0;
         String[] temp = new String[states.length];
@@ -92,6 +97,38 @@ public class StringUtil {
             }
         }
         return null;
+    }
+
+    /**
+     * Starting with two arrays, one of names, one of corresponding numeric
+     * state values, find the name string(s) that match a given state value.
+     * <p>State is considered to be bit-encoded, so that its bits are taken to
+     * represent multiple independent states.
+     * <p>e.g. for 3, [1, 2, 4], ["A","B","C"], the method would return ["A","B"]</p>
+     * <p>Values of 0 are only included if the state is 0, zero is NOT
+     * matched for all numbers.</p>
+     * @param state  the given state
+     * @param states the state values
+     * @param names  the state names
+     * @return names matching the given state or an empty array
+     */
+    @Nonnull
+    @CheckReturnValue
+    public static String[] getNamesFromState(int state, @Nonnull int[] states, @Nonnull String[] names) {
+        // first pass to count, get refs
+        int count = 0;
+        String[] temp = new String[states.length];
+
+        for (int i = 0; i < states.length; i++) {
+            if ( ( state == 0 && states[i] == 0) || ((state & states[i]) != 0)) {
+                temp[count] = names[i];
+                count++;
+            }
+        }
+        // second pass to create output array
+        String[] output = new String[count];
+        System.arraycopy(temp, 0, output, 0, count);
+        return output;
     }
 
     private static final char[] HEX_CHARS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
@@ -326,7 +363,7 @@ public class StringUtil {
         }
         return 0;
     }
-    
+
     /**
      * Create a hex byte[] of Unicode character values from a String containing full text (non hex) values.
      * <p>
@@ -352,7 +389,7 @@ public class StringUtil {
         }
         return b;
     }
-    
+
     /**
      * This is a case-independent lexagraphic sort. Identical entries are
      * retained, so the output length is the same as the input length.
@@ -396,7 +433,7 @@ public class StringUtil {
     @CheckReturnValue
     @CheckForNull
     public static String parenQuote(@CheckForNull String in) {
-        if (in == null || in.equals("")) {
+        if (in == null || in.isEmpty()) {
             return in;
         }
         StringBuilder result = new StringBuilder();
@@ -434,7 +471,7 @@ public class StringUtil {
     @CheckReturnValue
     @CheckForNull
     static String parenUnQuote(@CheckForNull String in) {
-        if (in == null || in.equals("")) {
+        if (in == null || in.isEmpty()) {
             return in;
         }
         StringBuilder result = new StringBuilder();
@@ -457,7 +494,7 @@ public class StringUtil {
     @Nonnull
     public static java.util.List<String> splitParens(@CheckForNull String in) {
         java.util.ArrayList<String> result = new java.util.ArrayList<>();
-        if (in == null || in.equals("")) {
+        if (in == null || in.isEmpty()) {
             return result;
         }
         int level = 0;
@@ -570,7 +607,7 @@ public class StringUtil {
      * @return trimmed string, left aligned by padding to the right
      */
     @CheckReturnValue
-    public static String padString (String value, int length) {
+    public static String padString (@Nonnull String value, int length) {
         if (length > 1) {
             return String.format("%-" + length + "s", value.substring(0, Math.min(value.length(), length - 1)));
         } else {

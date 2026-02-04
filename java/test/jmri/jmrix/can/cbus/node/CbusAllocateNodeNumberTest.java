@@ -9,10 +9,10 @@ import jmri.jmrix.can.cbus.simulator.moduletypes.MergCanpan;
 
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 import org.netbeans.jemmy.operators.*;
@@ -31,7 +31,7 @@ public class CbusAllocateNodeNumberTest {
 
         assertEquals(2, tcis.numListeners(),"2 listener " + tcis.getListeners());
 
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
         assertNotNull(t);
         assertEquals(3, tcis.numListeners(),"3 listeners " + tcis.getListeners());
 
@@ -41,10 +41,10 @@ public class CbusAllocateNodeNumberTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testDisplayDialogue() {
         memo.get(CbusPreferences.class).setAddNodes(false);
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
         assertNotNull(t);
 
         CbusNode node789 = nodeModel.provideNodeByNodeNum(789);
@@ -73,6 +73,7 @@ public class CbusAllocateNodeNumberTest {
             rs.setElement(5, 0x05); // param 5 -
             rs.setElement(6, 0x06); // param 6 -
             rs.setElement(7, 0x07); // param 7 -
+            assertNotNull(t);
             t.reply(rs);
 
             JLabelOperator labelOper2 = new JLabelOperator(jdo, CbusNodeConstants.getManu(1));
@@ -91,6 +92,7 @@ public class CbusAllocateNodeNumberTest {
             rsn.setElement(5, 76); // L
             rsn.setElement(6, 65); // A
             rsn.setElement(7, 80); // P
+            assertNotNull(t);
             t.reply(rsn);
 
             JLabelOperator labelOper3 = new JLabelOperator(jdo, "Manufacturer 1 CANCATFLAP");
@@ -104,12 +106,16 @@ public class CbusAllocateNodeNumberTest {
             jtfo.setText("123");
             JLabelOperator labelOper4 = new JLabelOperator(jdo, CbusNodeConstants.getReservedModule(123));
             assertNotNull(labelOper4);
-
+            // JUnitUtil.waitFor(1000);
 
             jtfo.setText("789");
             JLabelOperator labelOper5 = new JLabelOperator(jdo,
                 Bundle.getMessage("NdNumInUse",nodeModel.getNodeNumberName(789)));
             assertNotNull(labelOper5);
+            // JUnitUtil.waitFor(1000);
+
+            jtfo.setText("120");
+            // JUnitUtil.waitFor(1000);
 
             CanMessage rmes = new CanMessage(tcis.getCanid());
             rmes.setNumDataElements(1);
@@ -117,6 +123,7 @@ public class CbusAllocateNodeNumberTest {
             t.message(rmes); // ignored as dialogue already open
 
             jtfo.setText("65432");
+            // JUnitUtil.waitFor(1000);
 
             JemmyUtil.pressButton(jdo, "OK");
             jdo.waitClosed();
@@ -145,7 +152,18 @@ public class CbusAllocateNodeNumberTest {
         JUnitUtil.waitFor(()->{return !(dialog_thread.isAlive());}, "checkCbus Allocate Node Num Dialog finished");
 
         JUnitUtil.waitFor(()->{ return( tcis.outbound.size() >2); }, "Outbound did not increase: " + tcis.getTranslatedOutbound());
-        assertEquals("[5f8] 42 FF 98", tcis.outbound.elementAt(2).toString(),"3rd message not right " + tcis.getTranslatedOutbound());
+        assertEquals("[5f8] 42 FF 98", tcis.outbound.elementAt(2).toString(),"3rd message not right "
+                + tcis.getTranslatedOutbound());
+
+        // The Node sends a message back acknowledging the Name.
+        // If this message is not heard, presents user with JDialog / error in log.
+        r = new CanReply();
+        r.setHeader(tcis.getCanid());
+        r.setNumDataElements(3);
+        r.setElement(0, CbusConstants.CBUS_NNACK); // Node number acknowledge
+        r.setElement(1, 65432 >> 8);
+        r.setElement(2, 65432 & 0xff);
+        t.reply(r);
 
         t.dispose();
 
@@ -154,7 +172,7 @@ public class CbusAllocateNodeNumberTest {
     @Test
     public void testAddNodes() {
 
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
         memo.get(CbusPreferences.class).setAddNodes(true);
 
         CanReply rsna = new CanReply();
@@ -175,9 +193,9 @@ public class CbusAllocateNodeNumberTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testCanMessage() {
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
 
         CanMessage r = new CanMessage(tcis.getCanid());
         r.setNumDataElements(1);
@@ -200,9 +218,9 @@ public class CbusAllocateNodeNumberTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testAllocateTimeout() {
-        t = new CbusAllocateNodeNumber(memo,nodeModel);
+        CbusAllocateNodeNumber t = new CbusAllocateNodeNumber(memo,nodeModel);
 
         t.setTimeout(5); // default is reduced to speed up test
 
@@ -260,7 +278,6 @@ public class CbusAllocateNodeNumberTest {
 
     private CanSystemConnectionMemo memo;
     private CbusTrafficControllerScaffold tcis;
-    private CbusAllocateNodeNumber t;
     private CbusNodeTableDataModel nodeModel;
 
     @BeforeEach
@@ -280,7 +297,7 @@ public class CbusAllocateNodeNumberTest {
 
     @AfterEach
     public void tearDown() {
-        t = null;
+
         nodeModel.dispose();
         nodeModel = null;
         memo.dispose();

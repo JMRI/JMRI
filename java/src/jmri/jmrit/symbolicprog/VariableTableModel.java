@@ -246,7 +246,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * @param df  the source {@link DecoderFile} instance (needed for
      *            include/exclude processing at the sub-variable level)
      */
-    public void setRow(int row, Element e, DecoderFile df) {
+    public void setRow(int row, Element e, DecoderFile df) {    
         // get the values for the VariableValue ctor
         _df = df;
         String name = LocaleSelector.getAttribute(e, "label");  // Note the name variable is actually the label attribute
@@ -359,7 +359,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             v = processSplitEnumVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
 
         } else {
-            reportBogus();
+            reportBogus(e);
             return;
         }
 
@@ -1046,8 +1046,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
     }
 
-    void reportBogus() {
-        log.error("Did not find a valid variable type");
+    void reportBogus(Element elem) {
+        log.error("Did not find a valid type in {}", elem.getChildren());
+        for (Attribute a : elem.getAttributes()) log.error("   attribute: {}",a);
     }
 
     /**

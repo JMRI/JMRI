@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -11,10 +13,9 @@ import jmri.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
 import jmri.util.*;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test the swing classes for the LogixNG actions and expressions
@@ -23,7 +24,7 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
  */
 public class TestSwingClasses {
 
-    JDialog dialog;
+    private JDialog dialog;
 
     private Map<Category, List<Class<? extends Base>>> getAnalogActionClasses() {
         return InstanceManager.getDefault(AnalogActionManager.class).getActionClasses();
@@ -53,7 +54,7 @@ public class TestSwingClasses {
         return InstanceManager.getDefault(StringExpressionManager.class).getExpressionClasses();
     }
 
-    private void testClass(Class clazz) {
+    private void testClass(Class<? extends Base> clazz) {
         SwingConfiguratorInterface configureSwing;
         configureSwing = SwingTools.getSwingConfiguratorForClass(clazz);
         configureSwing.setJDialog(dialog);
@@ -65,20 +66,24 @@ public class TestSwingClasses {
         String systemName = configureSwing.getAutoSystemName();
         Base object = configureSwing.createNewObject(systemName, null);
 //        Base object = configureSwing.createNewObject(configureSwing.getAutoSystemName(), null);
-        while (object instanceof MaleSocket) object = ((MaleSocket)object).getObject();
+        while (object instanceof MaleSocket) {
+            object = ((MaleSocket)object).getObject();
+        }
         List<String> errorMessages = new ArrayList<>();
         configureSwing.setDefaultValues();
         boolean validationResult = configureSwing.validate(errorMessages);
-        if (!errorMessages.isEmpty()) {
-            log.error("--------------------------------------------");
-            log.error("Error messages is not empty for " + object.getShortDescription() + ", class: " + configureSwing.getClass().getName());
-            for (String s : errorMessages) log.error(s);
-            log.error("--------------------------------------------");
-//            try { Thread.sleep(10000); } catch (InterruptedException e) {}
-        }
-        Assert.assertTrue(validationResult);
+        String objectShort = object.getShortDescription();
+        assertTrue( errorMessages.isEmpty(), () -> {
+            String toReturn = "Error messages is not empty for " + objectShort + ", "
+                + "class: " + configureSwing.getClass().getName() + System.lineSeparator();
+            for (String s : errorMessages) {
+                toReturn += s + System.lineSeparator();
+            }
+            return toReturn;
+        });
+        assertTrue(validationResult);
         configureSwing.updateObject(object);
-        Assert.assertTrue(configureSwing.canClose());
+        assertTrue(configureSwing.canClose());
 //        try { Thread.sleep(500); } catch (InterruptedException e) {}
         testDialog.dispose();
     }
@@ -93,7 +98,7 @@ public class TestSwingClasses {
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testSwingClasses() {
 
         dialog = new JDialog();
@@ -107,7 +112,6 @@ public class TestSwingClasses {
         testClasses(getStringExpressionClasses());
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() throws IOException {
         JUnitUtil.setUp();
@@ -128,12 +132,16 @@ public class TestSwingClasses {
 
     @AfterEach
     public void tearDown() {
+        if ( dialog != null ) {
+            dialog.dispose();
+        }
+        dialog = null;
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TestSwingClasses.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TestSwingClasses.class);
 
 }

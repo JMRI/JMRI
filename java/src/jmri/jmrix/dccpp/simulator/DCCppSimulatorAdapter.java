@@ -25,6 +25,8 @@ import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.umd.cs.findbugs.annotations.*;
+
 /**
  * Provide access to a simulated DCC++ system.
  *
@@ -147,9 +149,15 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             keepAliveTimer = new java.util.TimerTask(){
                 @Override
                 public void run() {
-                    // If the timer times out, send a request for status
-                    DCCppSimulatorAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
-                    .sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
+                    // When the timer times out, send a heartbeat (status request on DCC++, max num slots request on DCC-EX
+                    DCCppTrafficController tc = DCCppSimulatorAdapter.this.getSystemConnectionMemo().getDCCppTrafficController();
+                    DCCppCommandStation cs = tc.getCommandStation();
+                    if (cs.isMaxNumSlotsMsgSupported()) {
+                        tc.sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSMaxNumSlotsMsg(), null);                        
+                    } else {
+                        tc.sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
+                    }
+                    
                 }
             };
         } else {
@@ -256,6 +264,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     // generateReply is the heart of the simulation.  It translates an
     // incoming DCCppMessage into an outgoing DCCppReply.
+    @SuppressFBWarnings( value="FS_BAD_DATE_FORMAT_FLAG_COMBO", justification = "both am/pm and 24hr flags present ok as only used for display output")
     private DCCppReply generateReply(DCCppMessage msg) {
         String s, r = null;
         Pattern p;
@@ -595,13 +604,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.TRACK_POWER_ON:
                 log.debug("TRACK_POWER_ON detected");
                 trackPowerState = true;
-                reply = DCCppReply.parseDCCppReply("p 1");
+                reply = DCCppReply.parseDCCppReply("p1");
                 break;
 
             case DCCppConstants.TRACK_POWER_OFF:
                 log.debug("TRACK_POWER_OFF detected");
                 trackPowerState = false;
-                reply = DCCppReply.parseDCCppReply("p 0");
+                reply = DCCppReply.parseDCCppReply("p0");
                 break;
 
             case DCCppConstants.READ_MAXNUMSLOTS:
@@ -619,6 +628,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 reply = DCCppReply.parseDCCppReply("= A MAIN");
                 writeReply(reply);
                 reply = DCCppReply.parseDCCppReply("= B PROG");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("= C MAIN");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("= D MAIN");
                 break;
 
             case DCCppConstants.LCD_TEXT_CMD:
@@ -642,6 +655,15 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 generateReadCSStatusReply(); // Handle this special.
                 break;
 
+            case DCCppConstants.THROTTLE_COMMANDS:
+                log.debug("THROTTLE_COMMANDS detected");
+                if (msg.isCurrentMaxesMessage()) {
+                    reply = DCCppReply.parseDCCppReply("jG 4998 4998 4998 4998");
+                } else if (msg.isCurrentValuesMessage()) {
+                    generateCurrentValuesReply(); // Handle this special.
+                }
+                break;
+                
             case DCCppConstants.FUNCTION_CMD:
             case DCCppConstants.FORGET_CAB_CMD:
             case DCCppConstants.ACCESSORY_CMD:
@@ -697,9 +719,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     /* 's'tatus message gets multiple reply messages */
     private void generateReadCSStatusReply() {
-        DCCppReply r = new DCCppReply("p " + (trackPowerState ? "1" : "0"));
+        DCCppReply r = new DCCppReply("p" + (trackPowerState ? "1" : "0"));
         writeReply(r);
-        r = DCCppReply.parseDCCppReply("iDCC-EX V-4.0.1 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
+        r = DCCppReply.parseDCCppReply("iDCC-EX V-5.0.4 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
         writeReply(r);
         generateTurnoutStatesReply();
     }
@@ -738,8 +760,19 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         writeReply(r);
         r = new DCCppReply("c VoltageMAIN " + voltageV + " V NoPrefix 0 18.0 0.1 16.0");
         writeReply(r);
-        rs = "a " + (trackPowerState ? Integer.toString((1997/currentmA)*100) : "0");
-        r = DCCppReply.parseDCCppReply(rs);
+    }
+
+    /* 'JI' Current Value List request message returns an array of Current Values */
+    private void generateCurrentValuesReply() {
+        int currentmA_0 = 1100 + ThreadLocalRandom.current().nextInt(64);
+        int currentmA_1 = 0500 + ThreadLocalRandom.current().nextInt(64);
+        int currentmA_2 = 1100 + ThreadLocalRandom.current().nextInt(64);
+        int currentmA_3 = 1100 + ThreadLocalRandom.current().nextInt(64);
+        String rs = "jI " + (trackPowerState ? Integer.toString(currentmA_0) : "0") + " " +
+                (trackPowerState ? Integer.toString(currentmA_1) : "0") + " " +
+                (trackPowerState ? Integer.toString(currentmA_2) : "0") + " " +
+                (trackPowerState ? Integer.toString(currentmA_3) : "0");
+        DCCppReply r = new DCCppReply(rs);
         writeReply(r);
     }
 

@@ -1,5 +1,9 @@
 package jmri.jmrit.display.logixng.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.beans.PropertyVetoException;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -16,12 +20,11 @@ import jmri.jmrit.logixng.actions.DigitalMany;
 import jmri.jmrit.logixng.expressions.And;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Creates a LogixNG with all actions and expressions to test store and load.
@@ -33,9 +36,9 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
  */
 public class StoreAndLoadTest {
 
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
-    public void testLogixNGs() throws PropertyVetoException, Exception {
+    @DisabledIfHeadless
+    public void testLogixNGs() throws PropertyVetoException, SocketAlreadyConnectedException, IOException, JmriException {
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         ConditionalNG_Manager conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
@@ -175,8 +178,8 @@ public class StoreAndLoadTest {
             FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
             File firstFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG_temp.xml");
             File secondFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG.xml");
-            log.info("Temporary first file: %s%n", firstFile.getAbsoluteFile());
-            log.info("Temporary second file: %s%n", secondFile.getAbsoluteFile());
+            log.info("Temporary first file: {}", firstFile.getAbsoluteFile());
+            log.info("Temporary second file: {}", secondFile.getAbsoluteFile());
 
             final String treeIndent = "   ";
             StringWriter stringWriter = new StringWriter();
@@ -186,10 +189,7 @@ public class StoreAndLoadTest {
 
             boolean results = cm.storeUser(firstFile);
             log.debug(results ? "store was successful" : "store failed");
-            if (!results) {
-                log.error("Failed to store panel");
-                throw new RuntimeException("Failed to store panel");
-            }
+            assertTrue( results, "Failed to store panel");
 
             // Add the header comment to the xml file
             addHeader(firstFile, secondFile);
@@ -219,10 +219,10 @@ public class StoreAndLoadTest {
                 digitalExpressionManager.deleteDigitalExpression(aDigitalExpression);
             }
 
-            Assert.assertEquals(0, logixNG_Manager.getNamedBeanSet().size());
-            Assert.assertEquals(0, conditionalNGManager.getNamedBeanSet().size());
-            Assert.assertEquals(0, digitalActionManager.getNamedBeanSet().size());
-            Assert.assertEquals(0, digitalExpressionManager.getNamedBeanSet().size());
+            assertEquals(0, logixNG_Manager.getNamedBeanSet().size());
+            assertEquals(0, conditionalNGManager.getNamedBeanSet().size());
+            assertEquals(0, digitalActionManager.getNamedBeanSet().size());
+            assertEquals(0, digitalExpressionManager.getNamedBeanSet().size());
 
             LogixNG_Thread.stopAllLogixNGThreads();
             LogixNG_Thread.assertLogixNGThreadNotRunning();
@@ -276,12 +276,10 @@ public class StoreAndLoadTest {
 */
 //                    log.error(conditionalNGManager.getBySystemName(originalTree).getChild(0).getConnectedSocket().getSystemName());
 
-                    Assert.fail("tree has changed");
-//                    throw new RuntimeException("tree has changed");
+                    fail("tree has changed");
                 }
             } else {
-                Assert.fail("Failed to load panel");
-//                throw new RuntimeException("Failed to load panel");
+                fail("Failed to load panel");
             }
         }
     }

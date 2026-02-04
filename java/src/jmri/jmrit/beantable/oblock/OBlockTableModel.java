@@ -151,7 +151,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
      */
     @Override
     protected String getMasterClassName() {
-        return getClassName();
+        return jmri.jmrit.beantable.OBlockTableAction.class.getName();
     }
 
     protected List<OBlock> getBeanList() {
@@ -365,7 +365,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     if (obj != null) {
                         return obj;
                     } else if ((b.getState() & OBlock.OCCUPIED) != 0) {
-                        return Bundle.getMessage("BlockUnknown");
+                        return Bundle.getMessage("UnknownValue");
                     } else {
                         return null;
                     }
@@ -920,8 +920,10 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     public void propertyChange(PropertyChangeEvent e) {
         super.propertyChange(e);
         String property = e.getPropertyName();
-        if (log.isDebugEnabled()) log.debug("PropertyChange = {}", property);
-        if (property.equals("length") || property.equals("UserName") || property.equals("state")) {
+        log.debug("PropertyChange = {}", property);
+
+        if ( OBlockManager.PROPERTY_LENGTH.equals(property) || OBlock.PROPERTY_USERNAME.equals(property)
+                || OBlock.PROPERTY_STATE.equals(property)) {
             ThreadingUtil.runOnGUIEventually(()-> {
                 _parent.updateOBlockTablesMenu();
                 fireTableDataChanged();
@@ -937,6 +939,6 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         return jmri.jmrit.beantable.OBlockTableAction.class.getName();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OBlockTableModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OBlockTableModel.class);
 
 }

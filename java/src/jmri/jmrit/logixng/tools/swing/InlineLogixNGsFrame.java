@@ -27,6 +27,7 @@ public class InlineLogixNGsFrame extends JmriJFrame {
      */
     public InlineLogixNGsFrame() {
         setTitle(Bundle.getMessage("TitleInlineLogixNGs"));
+        addHelpMenu("package.jmri.jmrit.logixng.InlineLogixNG", true);  // NOI18N
     }
 
     @Override

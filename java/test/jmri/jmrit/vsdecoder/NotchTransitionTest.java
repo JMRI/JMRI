@@ -1,8 +1,11 @@
 package jmri.jmrit.vsdecoder;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,30 +16,28 @@ import org.junit.jupiter.api.*;
 public class NotchTransitionTest {
 
     private NotchTransition uut = null;
-    private String filename = "java/test/jmri/jmrit/vsdecoder/test.wav";
+    private final static String FILENAME = "java/test/jmri/jmrit/vsdecoder/test.wav";
 
     @Test
     public void testCreateFull() {
-        Assert.assertEquals("sound name", "uname", uut.getName());
-        Assert.assertEquals("file name", filename, uut.getFileName());
-        Assert.assertEquals("system name", "sysname", uut.getSystemName());
-        Assert.assertEquals("user name", "uname", uut.getUserName());
-        Assert.assertTrue("initialized", uut.isInitialized());
-        Assert.assertFalse("is playing", uut.getSource().getState() == jmri.Audio.STATE_PLAYING);
+        assertEquals("uname", uut.getName(), "sound name");
+        assertEquals(FILENAME, uut.getFileName(), "file name");
+        assertEquals("sysname", uut.getSystemName(), "system name");
+        assertEquals("uname", uut.getUserName(), "user name");
+        assertTrue(uut.isInitialized(), "initialized");
+        assertNotEquals(jmri.Audio.STATE_PLAYING, uut.getSource().getState(), "is playing");
     }
 
     @Test
-    public void TestSetGet() {
+    public void testSetGet() {
         uut.setName("new name");
-        Assert.assertEquals("set name", "new name", uut.getName());
-        uut.setLooped(true);
-        Assert.assertTrue("set looped", uut.isLooped());
+        assertEquals("new name", uut.getName(), "set name");
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        uut = new NotchTransition(null, filename, "sysname", "uname"); // BOUND_MODE
+        uut = new NotchTransition(null, FILENAME, "sysname", "uname"); // BOUND_MODE
     }
 
     @AfterEach

@@ -1,5 +1,7 @@
 package jmri.jmrix.dccpp;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
@@ -14,6 +16,18 @@ import java.io.PipedOutputStream;
  * @author Mark Underwood Copyright (C) 2015
  */
 class DCCppPortControllerScaffold extends DCCppSimulatorPortController {
+
+    protected DCCppPortControllerScaffold() {
+        assertDoesNotThrow( () -> {
+            PipedInputStream tempPipe;
+            tempPipe = new PipedInputStream();
+            tostream = new DataInputStream(tempPipe);
+            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
+            tempPipe = new PipedInputStream();
+            istream = new DataInputStream(tempPipe);
+            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
+        });
+    }
 
     @Override
     public java.util.Vector<String> getPortNames() {
@@ -32,16 +46,6 @@ class DCCppPortControllerScaffold extends DCCppSimulatorPortController {
     @Override
     public String[] validBaudRates() {
         return new String[] {};
-    }
-
-    protected DCCppPortControllerScaffold() throws Exception {
-        PipedInputStream tempPipe;
-        tempPipe = new PipedInputStream();
-        tostream = new DataInputStream(tempPipe);
-        ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
-        tempPipe = new PipedInputStream();
-        istream = new DataInputStream(tempPipe);
-        tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
     }
 
     /**
