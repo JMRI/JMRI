@@ -375,7 +375,13 @@
         <strong>No</strong> to create a memory or block contents text box.  A second dialog will
         request the size of the text box.  The text box contents can be edited directly on the panel
         instead using a pop-up dialog.  This makes it possible to change memory and block values
-        when using a browser with the JMRI Web Server.</li>
+        when using a browser with the JMRI Web Server.  Limitations:
+          <ul>
+            <li>If the value is not a text string, such as a roster entry, changing the displayed
+                text will replace the item with the new text.</li>
+            <li>The panel zoom level must be at 1 (no zoom) to edit the text content.</li>
+          </ul>
+        </li>
       </ol>
 
       <p>A Track Segment is a piece of track connecting two connection points (<strong><span style=

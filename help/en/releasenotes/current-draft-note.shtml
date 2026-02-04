@@ -465,7 +465,13 @@
         <ul>
             <li>Provide an option to add a memory variable or a block contents field as an input text
             field instead of as a label.  This makes it possible to change memory or block values
-            when using the JMRI web server.</li>
+            when using the JMRI web server.  Limitations:
+              <ul>
+                <li>If the value is not a text string, such as a roster entry, changing the displayed
+                text will replace the item with the new text.</li>
+                <li>The panel zoom level must be at 1 to edit the text content.</li>
+              </ul>
+            </li>
             <li>Improved how clicks are handled so they'll
                 be less finicky.</li>
         </ul>
