@@ -26,7 +26,18 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>The RailCom support has been updated:
+                    <ul>
+                        <li>DDES messages are now being decoded into 
+                            RailCom tags, including the orientation, direction and
+                            motion values.
+                        <li>Receipt of a RailCom-format DDES message will now
+                            automatically create a reporter for the received device
+                            number if it doesn't already exist.
+                        <li>Related changes to the RailCom tag table have been made,
+                            see the Miscellaneous category below.
+                    </ul>
+                </li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -670,6 +681,10 @@
                 have been converted to Enum values.
                 This primarily affects developers and people who've written scripts for
                 processing RailCom information directly.
+                In particular, the orientation values ORIENTA and ORIENTB have
+                been changed to enum values EAST and WEST respectively.
+            <li>Additional columns have been added to the RailCom table to 
+                better show all the information that's gathered from a RailCom report.
             <li>The macOS launchers have been updated to allow more Java versions and to 
                 have more useful error messages.
         </ul>
