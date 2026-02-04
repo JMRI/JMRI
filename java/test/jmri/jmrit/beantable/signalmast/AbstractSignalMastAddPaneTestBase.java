@@ -3,7 +3,6 @@ package jmri.jmrit.beantable.signalmast;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Base-class of the 
@@ -25,8 +24,8 @@ abstract public class AbstractSignalMastAddPaneTestBase {
     public void testInfoMethods() {
         SignalMastAddPane testPane = getOTT();
         
-        Assert.assertNotNull(testPane.getPaneName());
-        Assert.assertFalse(testPane.getPaneName().isEmpty());
+        Assertions.assertNotNull(testPane.getPaneName());
+        Assertions.assertFalse(testPane.getPaneName().isEmpty());
     }
 
     @BeforeEach

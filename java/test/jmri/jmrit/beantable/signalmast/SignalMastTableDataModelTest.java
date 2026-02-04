@@ -5,8 +5,9 @@ import jmri.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
@@ -16,7 +17,7 @@ public class SignalMastTableDataModelTest extends jmri.jmrit.beantable.AbstractB
     
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t, "exists");
     }
     
     @Override
@@ -28,10 +29,10 @@ public class SignalMastTableDataModelTest extends jmri.jmrit.beantable.AbstractB
     protected SignalMast createBean(){
         
         Manager<SignalMast> mgr = InstanceManager.getDefault(jmri.SignalMastManager.class);
-        Assert.assertNotNull("Table Bean Manager exists",mgr);
+        assertNotNull(mgr, "Table Bean Manager exists");
 
         SignalMast b = ((ProvidingManager<SignalMast>) mgr).provide(mgr.getSystemNamePrefix()+"$vsm:basic:one-low($0001)");
-        Assertions.assertNotNull(b, "Bean created");
+        assertNotNull(b, "Bean created");
         return b;
     }
 
