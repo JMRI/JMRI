@@ -39,11 +39,11 @@ public class SignalMastTableDataModelTest extends jmri.jmrit.beantable.AbstractB
     @Test
     @Override
     public void testGetBaseColumnNames() {
-        assertEquals("Column0 - Bean toString",Bundle.getMessage("ColumnSystemName"), t.getColumnName(0));
-        assertEquals("Column1 - UserName",Bundle.getMessage("ColumnUserName"), t.getColumnName(1));
-        assertEquals("Column2 - Bean value",Bundle.getMessage("LabelAspectType"), t.getColumnName(2));
-        assertEquals("Column3 - User Comment",Bundle.getMessage("ColumnComment"), t.getColumnName(3));
-        assertEquals("Column4 - Delete button","", t.getColumnName(4));
+        assertEquals(Bundle.getMessage("ColumnSystemName"), t.getColumnName(0), "Column0 - Bean toString");
+        assertEquals(Bundle.getMessage("ColumnUserName"), t.getColumnName(1), "Column1 - UserName");
+        assertEquals(Bundle.getMessage("LabelAspectType"), t.getColumnName(2), "Column2 - Bean value");
+        assertEquals(Bundle.getMessage("ColumnComment"), t.getColumnName(3), "Column3 - User Comment");
+        assertEquals("", t.getColumnName(4), "Column4 - Delete button");
     }
 
     @BeforeEach
