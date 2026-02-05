@@ -161,6 +161,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         int dccTypeInt = m.getElement(4)&0xC0;
         LocoAddress.Protocol dccType;
         switch (dccTypeInt) {
+            default:
             case 0xC0:
                 dccType = LocoAddress.Protocol.DCC_LONG;
                 break;
@@ -170,9 +171,8 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
             case 0x40:
                 dccType = LocoAddress.Protocol.DCC_CONSIST;
                 break;
-            default:
-                log.warn("Unexpected address type {} in RailCom report", dccTypeInt);
-                dccType = LocoAddress.Protocol.DCC_LONG;
+            case 0x80:
+                dccType = LocoAddress.Protocol.DCC_EXTENDED_CONSIST;
         }
         var locoAddress = new DccLocoAddress(dccNumber, dccType);
         int speed = m.getElement(6);
@@ -216,6 +216,8 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         switch ((flags>>4)&0x03) {
             case 1:
                 motion = RailCom.Motion.STATIONARY;
+                log.debug("Setting speed to zero because known to be not moving");
+                speed = 0;
                 break;
             case 2:
                 motion = RailCom.Motion.MOVING;
