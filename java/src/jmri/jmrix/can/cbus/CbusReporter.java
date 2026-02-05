@@ -63,7 +63,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         super(memo.getSystemPrefix() + "R" + address);  // can't use prefix here, as still in construction
         _number = Integer.parseInt(  address);
         _memo = memo;
-        // At construction, don'tregister for messages; they're sent via the CbusReporterManager
+        // At construction, don't register for messages; they're sent via the CbusReporterManager
         // tc = memo.getTrafficController(); // can be removed when former constructor removed
         // addTc(memo.getTrafficController());
         log.debug("Added new reporter {}R{}", memo.getSystemPrefix(), address);

@@ -10,6 +10,7 @@
     </li>
     <li>The RailCom handling has been updated to current standards.  In particular, the enum
         representing the orientation has been changed from ORIENTA and ORIENTB to 
-        EAST and WEST respectively. This may affect any scripts you have that reference
-        the direction of a RailCom report (tag).
+        EAST and WEST respectively and some of the text strings have changed.
+        These may affect any scripts you have that reference
+        the direction of a RailCom report (tag) or parse the status messages. 
     </li>

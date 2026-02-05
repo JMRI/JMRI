@@ -27,7 +27,7 @@ import java.util.List;
  */
 public interface RailCom extends AddressedIdTag {
 
-    // The type of address reported in a RailCom message.
+    // The type of address reported in a RailCom message
     // is encoded using the LocoAddress.Protocol enum
 
     /**
@@ -49,8 +49,8 @@ public interface RailCom extends AddressedIdTag {
      */
     public enum Orientation {
         UNKNOWN(0x00),      // historical values should they be needed in scripts
-        EAST(0x10),         // was A
-        WEST(0x20);         // was B
+        EAST(0x10),         // was ORIENTA
+        WEST(0x20);         // was ORIENTB
         
         private final int type;
         Orientation(int type) {
