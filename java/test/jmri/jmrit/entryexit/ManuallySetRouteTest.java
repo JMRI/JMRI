@@ -6,7 +6,6 @@ import java.util.List;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -27,13 +26,13 @@ public class ManuallySetRouteTest {
         jmri.SignalMast sm = new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($1)");  // NOI18N
         ptd.setSignalMast(sm);
         ManuallySetRoute t = new ManuallySetRoute(ptd);
-        Assert.assertNotNull("exists",t);  // NOI18N
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @AfterEach
