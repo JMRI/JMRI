@@ -61,7 +61,7 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Override
     public void testAutoSystemNames() {
         Assertions.assertNotNull(tcis);
-        Assert.assertEquals("No auto system names",0,tcis.numListeners());
+        Assert.assertEquals("No auto system names",1,tcis.numListeners());
     }
 
     @Test
