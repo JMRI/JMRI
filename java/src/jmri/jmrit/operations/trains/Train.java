@@ -2422,6 +2422,29 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         return hp;
     }
+    
+    public int getNumberEngines(RouteLocation routeLocation) {
+        int numberEngines = 0;
+        Route route = getRoute();
+        if (route != null) {
+            for (RouteLocation rl : route.getLocationsBySequenceList()) {
+                for (Engine eng : InstanceManager.getDefault(EngineManager.class).getList(this)) {
+                    if (eng.getRouteLocation() == rl) {
+                        numberEngines++;
+                    }
+                    if (eng.getRouteDestination() == rl) {
+                        numberEngines--;
+                    }
+                }
+                if (rl == routeLocation) {
+                    break;
+                }
+            }
+        }
+        
+        
+        return numberEngines;
+    }
 
     /**
      * Gets the current caboose road and number if there's one assigned to the

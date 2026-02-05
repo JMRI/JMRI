@@ -2997,6 +2997,15 @@ public class TrainBuilderBase extends TrainCommon {
             addLine(ONE, BLANK_LINE);
         }
     }
+    
+    protected void finshBuildReport() {
+        // done building
+        if (_warnings > 0) {
+            addLine(ONE, Bundle.getMessage("buildWarningMsg", getTrain().getName(), _warnings));
+        }
+        addLine(FIVE,
+                Bundle.getMessage("buildTime", getTrain().getName(), new Date().getTime() - getStartTime().getTime()));
+    }
 
     /**
      * build has failed due to cars in staging not having destinations this
