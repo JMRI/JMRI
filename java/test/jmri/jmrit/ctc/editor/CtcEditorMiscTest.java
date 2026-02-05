@@ -1,15 +1,14 @@
 package jmri.jmrit.ctc.editor;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.profile.NullProfile;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.operators.*;
@@ -21,14 +20,14 @@ import org.netbeans.jemmy.operators.*;
  */
 public class CtcEditorMiscTest {
 
-    JFrameOperator _jfo = null;
+    private JFrameOperator _jfo = null;
 
     static final int DELAY = 0;
     static final boolean PAUSE = false;
 
     @Test
-    public void testEditor() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testEditor() throws JmriException {
 
         // Load the test panel and initialize Logix and advanced block routing
         java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Misc_Scenarios.xml");  // NOI18N
@@ -42,7 +41,7 @@ public class CtcEditorMiscTest {
         new CtcEditorAction().actionPerformed(null);
 
         _jfo = new JFrameOperator("CTC Editor");
-        Assert.assertNotNull(_jfo);
+        Assertions.assertNotNull(_jfo);
         if (!PAUSE) JUnitUtil.waitFor(2000);
 
         // ButtonXmlFiles -- No GUI object
