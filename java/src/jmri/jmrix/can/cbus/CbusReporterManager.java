@@ -221,6 +221,17 @@ public class CbusReporterManager extends AbstractReporterManager implements CanL
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void dispose() {
+        if (getMemo().getTrafficController() != null) { // not all tests provide a TrafficController
+            getMemo().getTrafficController().removeCanListener(this);
+        }
+        super.dispose();
+    }    
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusReporterManager.class);
 
 }

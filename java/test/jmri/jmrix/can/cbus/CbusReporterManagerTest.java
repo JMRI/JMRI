@@ -61,7 +61,7 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Override
     public void testAutoSystemNames() {
         Assertions.assertNotNull(tcis);
-        Assert.assertEquals("No auto system names",1,tcis.numListeners());
+        Assert.assertEquals("No auto system names",1    ,tcis.numListeners());
     }
 
     @Test
@@ -104,6 +104,9 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     
         CanSystemConnectionMemo otherMemo = new CanSystemConnectionMemo("M2");
         otherMemo.setUserName("CAN2");
+        var otherTcis = new TrafficControllerScaffold();
+        otherMemo.setTrafficController(otherTcis);
+
         CbusReporterManager ll = new CbusReporterManager(otherMemo);
         
         InstanceManager.setReporterManager(l);
@@ -122,6 +125,7 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         Assert.assertEquals("Still 2 properties found",2,proxy.getKnownBeanProperties().size());
         
         ll.dispose();
+        otherTcis.terminateThreads();
         otherMemo.dispose();
     }
     
