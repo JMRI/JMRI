@@ -14600,7 +14600,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon(), 0.1);
 
-        // create 5 locations with tracks, Route =
+        // create 5 locations with tracks
         // Acton-Boston-Chelmsford-Danvers-Essex
         Route route = JUnitOperationsUtil.createFiveLocationRoute();
         Location acton = route.getDepartsRouteLocation().getLocation();
@@ -14729,6 +14729,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         c2.setWeightTons("200"); // 200 tons loaded
         c2.setLoadName(cld.getDefaultLoadName());
 
+        // limit is 6 locomotives
+        Assert.assertEquals("limit", 6, Setup.getMaxNumberEngines());
+        
         new TrainBuilder().build(train1);
         Assert.assertEquals("Train should build", true, train1.isBuilt());
 
@@ -14739,17 +14742,18 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
 
         // confirm that the specified engines were assigned to the train
-        Assert.assertEquals("e5 assigned to train", danvers, e5.getDestination());
+        Assert.assertEquals("e5 assigned to train", null, e5.getDestination());
         Assert.assertEquals("e6 assigned to train", danvers, e6.getDestination());
         Assert.assertEquals("e7 assigned to train", danvers, e7.getDestination());
         Assert.assertEquals("e8 assigned to train", danvers, e8.getDestination());
 
         // confirm that the specified engines were assigned to the train
         Assert.assertEquals("e9 assigned to train", essex, e9.getDestination());
-        Assert.assertEquals("e10 assigned to train", essex, e10.getDestination());
+        // e10 would be the seventh loco
+        Assert.assertEquals("e10 assigned to train", null, e10.getDestination());
         Assert.assertEquals("e11 not assigned to train", null, e11.getDestination());
         Assert.assertEquals("e12 not assigned to train", null, e12.getDestination());
-
+        
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 

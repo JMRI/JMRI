@@ -430,15 +430,15 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Added new button and File-menu item to 
+            <li>Added new button and File-menu item to
                 print the roster table as it's currently displayed,
-                with the user's selected roster group, column setup and 
+                with the user's selected roster group, column setup and
                 sort order.</li>
             <li>The roster entry's comment field is now available
                 as a column in the main DecoderPro display.  Multi-line
                 comments will be displayed as multiple lines in a row
                 with extended height.  If you don't want to see this
-                column, right-click/ctrl-click in the column heading 
+                column, right-click/ctrl-click in the column heading
                 and deselect it.</li>
             <li>Decoder product ID determination has been added
                 for PIKO decoders.</li>
@@ -466,6 +466,15 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
+            <li>Provide an option to add a memory variable or a block contents field as an input text
+            field instead of as a label.  This makes it possible to change memory or block values
+            when using the JMRI web server.  Limitations:
+              <ul>
+                <li>If the value is not a text string, such as a roster entry, changing the displayed
+                text will replace the item with the new text.</li>
+                <li>The panel zoom level must be at 1 to edit the text content.</li>
+              </ul>
+            </li>
             <li>Improved how clicks are handled so they'll
                 be less finicky.</li>
         </ul>
@@ -503,6 +512,7 @@
         <a id="Operations" name="Operations"></a>
         <ul>
             <li>New tool that allows day to name mapping. Now your Manifest or switch list can show which day or date the train departs or arrives at a location.</li>
+            <li>New feature, the "Add Locomotives" in the "Train Build Options" allows you to select where the locomotives will terminate.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -664,7 +674,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Some constants in the 
+            <li>Some constants in the
                 <a href="https://www.jmri.org/JavaDoc/doc/jmri/RailCom.html">RailCom class</li>
                 have been converted to Enum values.
                 This primarily affects developers and people who've written scripts for

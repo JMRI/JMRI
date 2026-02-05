@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.trains.trainbuilder;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -68,7 +69,6 @@ public class TrainBuilder extends TrainBuilderCars {
 
     private void build() throws BuildFailedException {
         setStartTime(new Date());
-
         log.debug("Building train ({})", getTrain().getName());
 
         getTrain().setStatusCode(Train.CODE_BUILDING);
@@ -110,13 +110,7 @@ public class TrainBuilder extends TrainBuilderCars {
         checkEngineHP(); // determine if train has appropriate engine HP 
         checkNumnberOfEnginesNeededHPT(); // check train engine requirements
         showCarsNotRoutable(); // list cars that couldn't be routed
-
-        // done building
-        if (_warnings > 0) {
-            addLine(ONE, Bundle.getMessage("buildWarningMsg", getTrain().getName(), _warnings));
-        }
-        addLine(FIVE,
-                Bundle.getMessage("buildTime", getTrain().getName(), new Date().getTime() - getStartTime().getTime()));
+        finshBuildReport(); // number of warnings, build time
 
         getBuildReport().flush();
         getBuildReport().close();
@@ -497,7 +491,7 @@ public class TrainBuilder extends TrainBuilderCars {
         new TrainManifest(getTrain());
         try {
             new JsonManifest(getTrain()).build();
-        } catch (Exception ex) {
+        } catch (IOException | RuntimeException ex) {
             log.error("Unable to create JSON manifest: {}", ex.getLocalizedMessage());
             log.error("JSON manifest stack trace:", ex);
             throw new BuildFailedException(ex);

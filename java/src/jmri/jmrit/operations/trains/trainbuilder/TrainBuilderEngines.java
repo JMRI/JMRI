@@ -359,6 +359,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         // allow up to two engine and caboose swaps in the train's route
         RouteLocation engineTerminatesFirstLeg = getTrain().getTrainTerminatesRouteLocation();
         RouteLocation engineTerminatesSecondLeg = getTrain().getTrainTerminatesRouteLocation();
+        RouteLocation engineTerminatesThirdLeg = getTrain().getTrainTerminatesRouteLocation();
 
         // Adjust where the locos will terminate
         if ((getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
@@ -372,6 +373,15 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             if ((getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) != Train.CHANGE_ENGINES) {
                 engineTerminatesFirstLeg = getTrain().getThirdLegStartRouteLocation();
             }
+        }
+        // optionally set out added engines
+        if ((getTrain().getSecondLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES &&
+                getTrain().getSecondLegEndRouteLocation() != null) {
+            engineTerminatesSecondLeg = getTrain().getSecondLegEndRouteLocation();
+        }
+        if ((getTrain().getThirdLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES &&
+                getTrain().getThirdLegEndRouteLocation() != null) {
+            engineTerminatesThirdLeg = getTrain().getThirdLegEndRouteLocation();
         }
 
         if (getTrain().getLeadEngine() == null) {
@@ -481,11 +491,11 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             }
             if (getEngines(getTrain().getThirdLegNumberEngines(), getTrain().getThirdLegEngineModel(),
                     getTrain().getThirdLegEngineRoad(), getTrain().getThirdLegStartRouteLocation(),
-                    getTrain().getTrainTerminatesRouteLocation())) {
+                    engineTerminatesThirdLeg)) {
                 _thirdLeadEngine = _lastEngine;
             } else if (getConsist(getTrain().getThirdLegNumberEngines(), getTrain().getThirdLegEngineModel(),
                     getTrain().getThirdLegEngineRoad(), getTrain().getThirdLegStartRouteLocation(),
-                    getTrain().getTrainTerminatesRouteLocation())) {
+                    engineTerminatesThirdLeg)) {
                 _thirdLeadEngine = _lastEngine;
             } else {
                 throw new BuildFailedException(
@@ -564,14 +574,9 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         if (rlNeedHp == null) {
             return;
         }
-        int numberLocos = 0;
+        
         // determine how many locos have already been assigned to the train
-        List<Engine> engines = engineManager.getList(getTrain());
-        for (Engine rs : engines) {
-            if (rs.getRouteLocation() == rl) {
-                numberLocos++;
-            }
-        }
+        int numberLocos = getTrain().getNumberEngines(rl);
 
         addLine(ONE, BLANK_LINE);
         addLine(ONE, Bundle.getMessage("buildTrainReqExtraHp", extraHpNeeded, rlNeedHp.getName(),
@@ -580,12 +585,14 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         // determine engine model and road
         String model = getTrain().getEngineModel();
         String road = getTrain().getEngineRoad();
-        if ((getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                rl == getTrain().getSecondLegStartRouteLocation()) {
+        if (rl == getTrain().getSecondLegStartRouteLocation() &&
+                ((getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES ||
+                        (getTrain().getSecondLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES)) {
             model = getTrain().getSecondLegEngineModel();
             road = getTrain().getSecondLegEngineRoad();
-        } else if ((getTrain().getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                rl == getTrain().getThirdLegStartRouteLocation()) {
+        } else if (rl == getTrain().getThirdLegStartRouteLocation() &&
+                ((getTrain().getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES ||
+                        (getTrain().getThirdLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES)) {
             model = getTrain().getThirdLegEngineModel();
             road = getTrain().getThirdLegEngineRoad();
         }
@@ -598,7 +605,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             }
             numberLocos++;
             int currentHp = getTrain().getTrainHorsePower(rlNeedHp);
-            if (currentHp > hpAvailable + extraHpNeeded) {
+            if (currentHp >= hpAvailable + extraHpNeeded) {
                 break; // done
             }
             if (numberLocos < Setup.getMaxNumberEngines()) {
@@ -628,8 +635,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
     protected void checkEngineHP() throws BuildFailedException {
         if (Setup.getHorsePowerPerTon() != 0) {
             if (getTrain().getNumberEngines().equals(Train.AUTO_HPT)) {
-                checkEngineHP(getTrain().getLeadEngine(), getTrain().getEngineModel(), getTrain().getEngineRoad()); // 1st
-                // leg
+                checkEngineHP(getTrain().getLeadEngine(), getTrain().getEngineModel(), getTrain().getEngineRoad());
             }
             if ((getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
                     getTrain().getSecondLegNumberEngines().equals(Train.AUTO_HPT)) {
@@ -939,12 +945,18 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         return cloneEng; // return clone
     }
 
+    int _hpAvailable = 0;
+    int _extraHpNeeded = 0;
+    RouteLocation _rlNeedHp;
+    RouteLocation _rlStart;
+
     /**
      * Checks to see if additional engines are needed for the train based on the
      * train's calculated tonnage. Minimum speed for the train is fixed at 36
      * MPH. The formula HPT x 12 / % Grade = Speed, is used to determine the
      * horsepower needed. For example a 1% grade requires a minimum of 3 HPT.
-     * Ignored when departing staging
+     * Ignored when departing staging. When using helpers, no additional
+     * engines.
      *
      * @throws BuildFailedException if build failure
      */
@@ -956,11 +968,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         addLine(ONE, BLANK_LINE);
         addLine(ONE, Bundle.getMessage("buildDetermineNeeds", Setup.getHorsePowerPerTon()));
         Route route = getTrain().getRoute();
-        int hpAvailable = 0;
-        int extraHpNeeded = 0;
-        RouteLocation rlNeedHp = null;
-        RouteLocation rlStart = getTrain().getTrainDepartsRouteLocation();
-        RouteLocation rlEnd = getTrain().getTrainTerminatesRouteLocation();
+        _rlStart = getTrain().getTrainDepartsRouteLocation();
         boolean departingStaging = getTrain().isDepartingStaging();
         if (route != null) {
             boolean helper = false;
@@ -989,45 +997,92 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                         ((getTrain().getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
                                 rl == getTrain().getThirdLegStartRouteLocation())) {
                     log.debug("Loco change at ({})", rl.getName());
-                    addEnginesBasedHPT(hpAvailable, extraHpNeeded, rlNeedHp, rlStart, rl);
+                    addEnginesBasedHPT(_hpAvailable, _extraHpNeeded, _rlNeedHp, _rlStart, rl);
                     addLine(THREE, BLANK_LINE);
                     // reset for next leg of train's route
-                    rlStart = rl;
-                    rlNeedHp = null;
-                    extraHpNeeded = 0;
+                    _rlStart = rl;
+                    _rlNeedHp = null;
+                    _extraHpNeeded = 0;
+                    departingStaging = false;
+                }
+                // check for add engines in the train's route
+                if ((getTrain().getSecondLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES &&
+                        rl == getTrain().getSecondLegStartRouteLocation()) {
+                    RouteLocation rlEnd = getTrain().getSecondLegEndRouteLocation();
+                    addEnginesIfNeed(route, rl, rlEnd);
+                    departingStaging = false;
+                }
+                if ((getTrain().getThirdLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES &&
+                        rl == getTrain().getThirdLegStartRouteLocation()) {
+                    RouteLocation rlEnd = getTrain().getThirdLegEndRouteLocation();
+                    addEnginesIfNeed(route, rl, rlEnd);
                     departingStaging = false;
                 }
                 if (departingStaging) {
                     continue;
                 }
-                double weight = rl.getTrainWeight();
-                if (weight > 0) {
-                    double hptMinimum = Setup.getHorsePowerPerTon();
-                    double hptGrade = (Control.speedHpt * rl.getGrade() / 12);
-                    double hp = getTrain().getTrainHorsePower(rl);
-                    double hpt = hp / weight;
-                    if (hptGrade > hptMinimum) {
-                        hptMinimum = hptGrade;
-                    }
-                    if (hptMinimum > hpt) {
-                        int addHp = (int) (hptMinimum * weight - hp);
-                        if (addHp > extraHpNeeded) {
-                            hpAvailable = (int) hp;
-                            extraHpNeeded = addHp;
-                            rlNeedHp = rl;
-                        }
-                        addLine(SEVEN,
-                                Bundle.getMessage("buildAddLocosStatus", weight, hp, Control.speedHpt, rl.getGrade(),
-                                        hpt, hptMinimum, rl.getName(), rl.getId()));
-                        addLine(FIVE,
-                                Bundle.getMessage("buildTrainRequiresAddHp", addHp, rl.getName(), hptMinimum));
-                    }
+                determineMaxHpNeeded(rl);
+            }
+        }
+        addEnginesBasedHPT(_hpAvailable, _extraHpNeeded, _rlNeedHp, _rlStart,
+                getTrain().getTrainTerminatesRouteLocation());
+        addLine(SEVEN, Bundle.getMessage("buildDoneAssingEnginesTrain", getTrain().getName()));
+        addLine(THREE, BLANK_LINE);
+    }
+
+    private void addEnginesIfNeed(Route route, RouteLocation rl, RouteLocation rlEnd) throws BuildFailedException {
+        if (rlEnd == null) {
+            rlEnd = getTrain().getTrainTerminatesRouteLocation();
+        }
+        determineMaxHpNeeded(route, rl, rlEnd);
+        addEnginesBasedHPT(_hpAvailable, _extraHpNeeded, _rlNeedHp, rl, rlEnd);
+        // reset for next leg of train's route
+        _rlStart = rl;
+        _rlNeedHp = null;
+        _extraHpNeeded = 0;
+    }
+
+    private void determineMaxHpNeeded(Route route, RouteLocation rl, RouteLocation rlEnd) {
+        addLine(FIVE, BLANK_LINE);
+        addLine(FIVE, Bundle.getMessage("buildAddEnginesHPT", rl.getName(), rlEnd.getName()));
+        boolean foundStart = false;
+        for (RouteLocation rlx : route.getLocationsBySequenceList()) {
+            if (rlx == rl) {
+                foundStart = true;
+            }
+            if (foundStart) {
+                determineMaxHpNeeded(rlx);
+                if (rlx == rlEnd) {
+                    break;
                 }
             }
         }
-        addEnginesBasedHPT(hpAvailable, extraHpNeeded, rlNeedHp, rlStart, rlEnd);
-        addLine(SEVEN, Bundle.getMessage("buildDoneAssingEnginesTrain", getTrain().getName()));
-        addLine(THREE, BLANK_LINE);
+    }
+
+    private void determineMaxHpNeeded(RouteLocation rl) {
+        double weight = rl.getTrainWeight();
+        if (weight > 0) {
+            double hptMinimum = Setup.getHorsePowerPerTon();
+            double hptGrade = (Control.speedHpt * rl.getGrade() / 12);
+            double hp = getTrain().getTrainHorsePower(rl);
+            double hpt = hp / weight;
+            if (hptGrade > hptMinimum) {
+                hptMinimum = hptGrade;
+            }
+            if (hptMinimum > hpt) {
+                int addHp = (int) (hptMinimum * weight - hp);
+                if (addHp > _extraHpNeeded) {
+                    _hpAvailable = (int) hp;
+                    _extraHpNeeded = addHp;
+                    _rlNeedHp = rl;
+                }
+                addLine(SEVEN,
+                        Bundle.getMessage("buildAddLocosStatus", weight, hp, Control.speedHpt, rl.getGrade(),
+                                hpt, hptMinimum, rl.getName(), rl.getId()));
+                addLine(FIVE,
+                        Bundle.getMessage("buildTrainRequiresAddHp", addHp, rl.getName(), hptMinimum));
+            }
+        }
     }
 
     protected void removeEngineFromTrain(Engine engine) {
