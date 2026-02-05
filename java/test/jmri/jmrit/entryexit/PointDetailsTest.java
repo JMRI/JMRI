@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
  * @author Paul Bender Copyright (C) 2017
  * @author Dave Sand Copyright (C) 2018
  */
+@DisabledIfHeadless
 public class PointDetailsTest {
 
     private static EntryExitTestTools tools;
@@ -34,7 +35,6 @@ public class PointDetailsTest {
     private static SensorManager sm;
 
     @Test
-    @DisabledIfHeadless
     public void testCTor() {
         LayoutBlock f = lbm.getLayoutBlock("B-Alpha-East");  // NOI18N
         LayoutBlock p = lbm.getLayoutBlock("B-Alpha-Beta");  // NOI18N
@@ -45,7 +45,6 @@ public class PointDetailsTest {
     }
 
     @Test
-    @DisabledIfHeadless
     public void testGetters() {
         PointDetails pd = tools.getPoint(sm.getSensor("NX-AW"), panels.get("Alpha"), eep);  // NOI18N
         assertNotNull(pd, "fetch failed");
@@ -61,7 +60,6 @@ public class PointDetailsTest {
     }
 
     @Test
-    @DisabledIfHeadless
     public void testNxButton() {
         PointDetails pd = tools.getPoint(sm.getSensor("NX-AW-Main"), panels.get("Alpha"), eep);  // NOI18N
         assertNotNull(pd, "PointDetails fetch failed");
