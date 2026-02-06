@@ -176,7 +176,11 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
                 dccNumber = ((m.getElement(4)&0x3F)*100)+m.getElement(5);  // note multiplier
         }
         var locoAddress = new DccLocoAddress(dccNumber, dccType);
-        int speed = m.getElement(6);
+        int speed = m.getElement(6)&0x7F;
+        if ((m.getElement(6)&0x80) == 0) {
+            speed = -1;  // data unavailable
+        }
+        
         int flags = m.getElement(7);
         
         RailCom.Orientation orientation;

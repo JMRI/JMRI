@@ -159,9 +159,9 @@ public interface RailCom extends AddressedIdTag {
 
     /**
      * Method for a RailCom Reader to set the Actual speed reported back from a
-     * device
+     * device. -1 if the speed is unavailable or unknown.
      *
-     * @param actualSpeed the speed
+     * @param actualSpeed the speed.
      */
     void setActualSpeed(int actualSpeed);
 
