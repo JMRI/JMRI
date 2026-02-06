@@ -1,14 +1,13 @@
 package jmri.jmrit.blockboss;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.InstanceManager;
 import jmri.SignalHeadManager;
 import jmri.implementation.VirtualSignalHead;
 
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
@@ -17,6 +16,7 @@ import org.netbeans.jemmy.operators.*;
  * @author Paul Bender Copyright (C) 2017
  * @author Dave Sand Copyright (C) 2021
  */
+@DisabledIfHeadless
 public class BlockBossFrameTest {
 
     private BlockBossFrame frame;
@@ -24,8 +24,7 @@ public class BlockBossFrameTest {
 
     @Test
     public void testSingle() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> frame.setVisible(true));
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("Simple_Signal_Logic"));  // NOI18N
         new JComboBoxOperator(jfo, 0).selectItem(1);
         new JComboBoxOperator(jfo, 1).selectItem(1);
@@ -34,8 +33,7 @@ public class BlockBossFrameTest {
 
     @Test
     public void testTrailMain() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> frame.setVisible(true));
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("Simple_Signal_Logic"));  // NOI18N
         new JRadioButtonOperator(jfo, 1).doClick();
         new JComboBoxOperator(jfo, 0).selectItem(1);
@@ -45,8 +43,7 @@ public class BlockBossFrameTest {
 
     @Test
     public void testTrailDiv() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> frame.setVisible(true));
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("Simple_Signal_Logic"));  // NOI18N
         new JRadioButtonOperator(jfo, 2).doClick();
         new JComboBoxOperator(jfo, 0).selectItem(1);
@@ -56,8 +53,7 @@ public class BlockBossFrameTest {
 
     @Test
     public void testFacing() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> frame.setVisible(true));
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("Simple_Signal_Logic"));  // NOI18N
         new JRadioButtonOperator(jfo, 3).doClick();
         new JComboBoxOperator(jfo, 0).selectItem(1);
@@ -67,8 +63,7 @@ public class BlockBossFrameTest {
 
     @Test
     public void testDelete() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> frame.setVisible(true));
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("Simple_Signal_Logic"));  // NOI18N
         new JRadioButtonOperator(jfo, 0).doClick();
         new JComboBoxOperator(jfo, 0).selectItem(1);
@@ -85,17 +80,13 @@ public class BlockBossFrameTest {
         signalHeadManager = InstanceManager.getDefault(SignalHeadManager.class);
         signalHeadManager.register(new VirtualSignalHead("IH1","signal head 1"));
         InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1");
-        if (!GraphicsEnvironment.isHeadless()) {
-            frame = new BlockBossFrame();
-        }
+        frame = new BlockBossFrame();
     }
 
     @AfterEach
     public void tearDown() {
-        if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.dispose(frame);
-            frame = null;
-        }
+        JUnitUtil.dispose(frame);
+        frame = null;
         JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
     }

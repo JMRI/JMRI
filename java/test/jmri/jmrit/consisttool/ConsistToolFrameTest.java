@@ -1,9 +1,14 @@
 package jmri.jmrit.consisttool;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.awt.GraphicsEnvironment;
 
 import jmri.Consist;
 import jmri.ConsistManager;
@@ -16,10 +21,9 @@ import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.JemmyUtil;
 
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -28,19 +32,18 @@ import org.junit.jupiter.api.io.TempDir;
  *
  * @author Paul Bender Copyright (C) 2015,2016
  */
+@DisabledIfHeadless
 public class ConsistToolFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolFrame frame = new ConsistToolFrame();
-        Assert.assertNotNull("exists", frame);
+        assertNotNull(frame, "exists");
         JUnitUtil.dispose(frame);
     }
 
     @Test
     public void testCtorWithCSpossible() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // overwrite the default consist manager set in setUp for this test
         // so that we can check initialization with CSConsists possible.
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager() {
@@ -51,13 +54,12 @@ public class ConsistToolFrameTest {
         });
 
         ConsistToolFrame frame = new ConsistToolFrame();
-        Assert.assertNotNull("exists", frame);
+        assertNotNull(frame, "exists");
         JUnitUtil.dispose(frame);
     }
 
     @Test
     public void testAdd() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolFrame frame = new ConsistToolFrame();
         frame.setVisible(true);
         //Assert.assertTrue("Consists List empty",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
@@ -69,18 +71,20 @@ public class ConsistToolFrameTest {
         cs.pushAddButton();
         // check to see if a conist was added
         DccLocoAddress conAddr = new DccLocoAddress(1, false);
-        Assert.assertFalse("Consists has at least one entry", InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
-        Assert.assertTrue("Consists exists after add", InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr));
+        assertFalse(InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty(),
+            "Consists has at least one entry");
+        assertTrue(InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr),
+            "Consists exists after add");
         // delete the consist
         cs.pushDeleteWithDismiss();
-        Assert.assertFalse("Consists removed after delete", InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr));
+        assertFalse(InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr),
+            "Consists removed after delete");
         cs.requestClose();
         cs.getQueueTool().waitEmpty();  // pause for frame to close
     }
 
     @Test
     public void testReverseButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolFrame frame = new ConsistToolFrame();
         frame.setVisible(true);
         // get a ConsistToolScaffold
@@ -95,21 +99,21 @@ public class ConsistToolFrameTest {
         Consist c = InstanceManager.getDefault(ConsistManager.class).getConsist(conAddr);
         DccLocoAddress addr12 = new DccLocoAddress(12, false);
         DccLocoAddress addr13 = new DccLocoAddress(13, false);
-        Assert.assertEquals("12 position before reverse", jmri.Consist.POSITION_LEAD, c.getPosition(addr12));
-        Assert.assertNotEquals("13 position before reverse", jmri.Consist.POSITION_LEAD, c.getPosition(addr13));
+        assertEquals(Consist.POSITION_LEAD, c.getPosition(addr12), "12 position before reverse");
+        assertNotEquals(Consist.POSITION_LEAD, c.getPosition(addr13), "13 position before reverse");
         cs.pushReverseButton();
-        Assert.assertNotEquals("12 position after reverse", jmri.Consist.POSITION_LEAD, c.getPosition(addr12));
-        Assert.assertEquals("13 position after reverse", jmri.Consist.POSITION_LEAD, c.getPosition(addr13));
+        assertNotEquals(Consist.POSITION_LEAD, c.getPosition(addr12), "12 position after reverse");
+        assertEquals(Consist.POSITION_LEAD, c.getPosition(addr13), "13 position after reverse");
         // delete the consist
         cs.pushDeleteWithDismiss();
-        Assert.assertFalse("Consists removed after delete", InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr));
+        assertFalse(InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr),
+            "Consists removed after delete");
         cs.requestClose();
         cs.getQueueTool().waitEmpty();  // pause for frame to close
     }
 
     @Test
     public void testRestoreButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolFrame frame = new ConsistToolFrame();
         frame.setVisible(true);
         // get a ConsistToolScaffold
@@ -125,8 +129,9 @@ public class ConsistToolFrameTest {
         // referesh the consist
         cs.pushRestoreButton();
         // need to check that the consist was "written" again.
-        Assert.assertEquals("consist written twice", 2 * preRestoreCalls,
-                ((TestConsistManager) InstanceManager.getDefault(ConsistManager.class)).addCalls);
+        assertEquals(2 * preRestoreCalls,
+                ((TestConsistManager) InstanceManager.getDefault(ConsistManager.class)).addCalls,
+                "consist written twice");
 
         // delete the consist
         cs.pushDeleteWithDismiss();
@@ -136,7 +141,6 @@ public class ConsistToolFrameTest {
 
     @Test
     public void testThrottle() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolFrame frame = new ConsistToolFrame();
         frame.setVisible(true);
         // get a ConsistToolScaffold
@@ -149,12 +153,10 @@ public class ConsistToolFrameTest {
         // need to verify throttle is setup with two addresses.
 
         ThrottleOperator to = new ThrottleOperator("1(S)");
-        Assert.assertEquals("Throttle has right visible address",
-                new DccLocoAddress(12, false),
-                to.getAddressValue());
-        Assert.assertEquals("Throttle has right consist address",
-                new DccLocoAddress(1, false),
-                to.getConsistAddressValue());
+        assertEquals(new DccLocoAddress(12, false),
+                to.getAddressValue(), "Throttle has right visible address");
+        assertEquals(new DccLocoAddress(1, false),
+                to.getConsistAddressValue(), "Throttle has right consist address");
 
         to.pushReleaseButton();
         to.getQueueTool().waitEmpty();  // pause for Throttle to release
@@ -168,7 +170,6 @@ public class ConsistToolFrameTest {
 
     @Test
     public void testDeleteNoConsistAddress() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolFrame frame = new ConsistToolFrame();
         frame.setVisible(true);
         // get a ConsistToolScaffold
@@ -182,7 +183,6 @@ public class ConsistToolFrameTest {
 
     @Test
     public void testScanEmptyRoster() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolFrame frame = new ConsistToolFrame();
         frame.setVisible(true);
         // get a ConsistToolScaffold
@@ -191,12 +191,12 @@ public class ConsistToolFrameTest {
         cs.startRosterScan();
         cs.requestClose();
         cs.getQueueTool().waitEmpty();  // pause for frame to close
-        Assert.assertEquals("No New Consists after scan", numConsists, InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
+        assertEquals(numConsists, InstanceManager.getDefault(ConsistManager.class).getConsistList().size(),
+            "No New Consists after scan");
     }
 
     @Test
     public void testScanRosterNoConsists() throws IOException, FileNotFoundException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Roster r = jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()), "rosterTest.xml");
         InstanceManager.setDefault(Roster.class, r);
 
@@ -208,17 +208,18 @@ public class ConsistToolFrameTest {
         cs.startRosterScan();
         cs.requestClose();
         cs.getQueueTool().waitEmpty();  // pause for frame to close
-        Assert.assertEquals("No New Consists after scan", numConsists, InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
+        assertEquals(numConsists, InstanceManager.getDefault(ConsistManager.class).getConsistList().size(),
+            "No New Consists after scan");
     }
 
     @Test
     public void testScanRosterWithConsists() throws IOException, FileNotFoundException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Roster r = jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()), "rosterTest.xml");
         InstanceManager.setDefault(Roster.class, r);
 
         // set the consist address of one of the entries.
         RosterEntry entry = Roster.getDefault().getEntryForId("ATSF123");
+        assertNotNull(entry);
 
         CvTableModel cvTable = new CvTableModel(null, null);  // will hold CV objects
         VariableTableModel varTable = new VariableTableModel(null, new String[]{"Name", "Value"}, cvTable);
@@ -241,7 +242,8 @@ public class ConsistToolFrameTest {
         cs.startRosterScan();
         cs.requestClose();
         cs.getQueueTool().waitEmpty();  // pause for frame to close
-        Assert.assertEquals("1 New Consists after scan", numConsists + 1, InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
+        assertEquals(numConsists + 1, InstanceManager.getDefault(ConsistManager.class).getConsistList().size(),
+            "1 New Consists after scan");
     }
 
     @BeforeEach
