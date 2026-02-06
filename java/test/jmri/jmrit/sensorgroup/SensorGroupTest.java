@@ -2,7 +2,6 @@ package jmri.jmrit.sensorgroup;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,18 +15,17 @@ public class SensorGroupTest {
     @Test
     public void testCTor() {
         SensorGroup t = new SensorGroup("test");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
-
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSensorManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
