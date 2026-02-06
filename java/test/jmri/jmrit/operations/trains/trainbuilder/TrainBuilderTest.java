@@ -13472,6 +13472,157 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    /**
+     * The program allows up to two engine adds in a train's route.
+     */
+    @Test
+    public void testEngineAdd() {
+
+        et.addName("Diesel");
+
+        // create 5 locations with tracks
+        Location harvard = lmanager.newLocation("Harvard");
+        Track loc1trk1 = harvard.addTrack("Harvard Yard 1", Track.YARD);
+        loc1trk1.setLength(1000);
+        Track loc1trk2 = harvard.addTrack("Harvard Yard 2", Track.YARD);
+        loc1trk2.setLength(1000);
+
+        Location acton = lmanager.newLocation("Acton");
+        Track loc2trk1 = acton.addTrack("Acton Yard", Track.YARD);
+        loc2trk1.setLength(1000);
+
+        Location boston = lmanager.newLocation("Boston");
+        Track loc3trk1 = boston.addTrack("Boston Yard 1", Track.YARD);
+        loc3trk1.setLength(1000);
+        Track loc3trk2 = boston.addTrack("Boston Yard 2", Track.YARD);
+        loc3trk2.setLength(1000);
+
+        Location chelmsford = lmanager.newLocation("Chelmsford");
+        Track loc4trk1 = chelmsford.addTrack("Chelmsford Yard 1", Track.YARD);
+        loc4trk1.setLength(1000);
+        Track loc4trk2 = chelmsford.addTrack("Chelmsford Yard 2", Track.YARD);
+        loc4trk2.setLength(1000);
+
+        Location westford = lmanager.newLocation("Westford");
+        Track loc5trk1 = westford.addTrack("Westford Yard", Track.YARD);
+        loc5trk1.setLength(1000);
+
+        // create a 2 engine consist for departure
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
+
+        Engine e1 = emanager.newRS("UP", "1");
+        e1.setModel("GP30");
+        e1.setOwnerName("AT");
+        e1.setBuilt("1957");
+        e1.setConsist(con1);
+        e1.setMoves(5);
+
+        Engine e2 = emanager.newRS("SP", "2");
+        e2.setModel("GP30");
+        e2.setOwnerName("AT");
+        e2.setBuilt("1957");
+        e2.setConsist(con1);
+        e2.setMoves(5);
+
+        // single engines
+        Engine e3 = emanager.newRS("SP", "3");
+        e3.setModel("GP40");
+        e3.setBuilt("1957");
+
+        Engine e4 = emanager.newRS("UP", "40");
+        e4.setModel("GP40");
+        e4.setBuilt("1944");
+        e4.setMoves(20);
+
+        Engine e5 = emanager.newRS("SP", "50");
+        e5.setModel("GP40");
+        e5.setBuilt("1944");
+        e5.setMoves(20);
+
+        Engine e6 = emanager.newRS("UP", "600");
+        e6.setModel("GP40");
+        e6.setBuilt("1944");
+        e6.setMoves(2);
+
+        Engine e7 = emanager.newRS("SP", "700");
+        e7.setModel("GP40");
+        e7.setBuilt("1944");
+        e7.setMoves(2);
+
+        Engine e8 = emanager.newRS("SP", "800");
+        e8.setModel("GP40");
+        e8.setBuilt("1944");
+        e8.setMoves(20);
+
+        Engine e9 = emanager.newRS("SP", "900");
+        e9.setModel("GP30");
+        e9.setBuilt("1944");
+        e9.setMoves(2);
+
+        // Place engines
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(harvard, loc1trk1));
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(harvard, loc1trk1));
+
+        Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(acton, loc2trk1));
+        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(acton, loc2trk1));
+
+        Assert.assertEquals("Place e5", Track.OKAY, e5.setLocation(chelmsford, loc4trk1));
+        Assert.assertEquals("Place e6", Track.OKAY, e6.setLocation(chelmsford, loc4trk1));
+        Assert.assertEquals("Place e7", Track.OKAY, e7.setLocation(chelmsford, loc4trk1));
+        Assert.assertEquals("Place e8", Track.OKAY, e8.setLocation(chelmsford, loc4trk1));
+        Assert.assertEquals("Place e9", Track.OKAY, e9.setLocation(chelmsford, loc4trk1));
+
+        Route rte1 = rmanager.newRoute("Route Harvard-Acton-Boston-Chelmsford-Westford");
+        rte1.addLocation(harvard);
+        RouteLocation rlActon = rte1.addLocation(acton);
+        RouteLocation rlBoston = rte1.addLocation(boston);
+        RouteLocation rlChelmsford = rte1.addLocation(chelmsford);
+        rte1.addLocation(westford);
+
+        // Create train
+        Train train1 = tmanager.newTrain("TestEngineAdds");
+        train1.setRoute(rte1);
+        
+        // depart with 2 engines
+        train1.setBuildConsistEnabled(true);
+        train1.setNumberEngines("2");
+        train1.setEngineRoad("UP");
+
+        // Add 1 "UP" engine at Acton destination Boston
+        train1.setSecondLegOptions(Train.ADD_ENGINES);
+        train1.setSecondLegNumberEngines("1");
+        train1.setSecondLegStartRouteLocation(rlActon);
+        train1.setSecondLegEndRouteLocation(rlBoston);
+        train1.setSecondLegEngineRoad("UP");
+        train1.setSecondLegEngineModel("GP40");
+
+        // Add 3 "SP" engines at Chelmsford
+        // default destination is terminal
+        train1.setThirdLegOptions(Train.ADD_ENGINES);
+        train1.setThirdLegNumberEngines("3");
+        train1.setThirdLegStartRouteLocation(rlChelmsford);
+        train1.setThirdLegEngineRoad("SP");
+        train1.setThirdLegEngineModel("GP40");
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 assigned to train", westford, e1.getDestination());
+        Assert.assertEquals("e2 assigned to train", westford, e2.getDestination());
+
+        Assert.assertEquals("e3 not assigned to train due to road name", null, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", boston, e4.getDestination());
+
+        Assert.assertEquals("e5 assigned to train", westford, e5.getDestination());
+        Assert.assertEquals("e6 not assigned to train due to road name", null, e6.getDestination());
+        Assert.assertEquals("e7 assigned to train", westford, e7.getDestination());
+        Assert.assertEquals("e8 assigned to train", westford, e8.getDestination());
+        Assert.assertEquals("e9 not assigned to train due to model type", null, e9.getDestination());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
 
     /**
      * Program allows engines to be removed from the train.
@@ -14742,15 +14893,14 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
 
         // confirm that the specified engines were assigned to the train
-        Assert.assertEquals("e5 assigned to train", null, e5.getDestination());
+        Assert.assertEquals("e5 not assigned to train", null, e5.getDestination());
         Assert.assertEquals("e6 assigned to train", danvers, e6.getDestination());
         Assert.assertEquals("e7 assigned to train", danvers, e7.getDestination());
         Assert.assertEquals("e8 assigned to train", danvers, e8.getDestination());
 
         // confirm that the specified engines were assigned to the train
         Assert.assertEquals("e9 assigned to train", essex, e9.getDestination());
-        // e10 would be the seventh loco
-        Assert.assertEquals("e10 assigned to train", null, e10.getDestination());
+        Assert.assertEquals("e10 not assigned to train", null, e10.getDestination());
         Assert.assertEquals("e11 not assigned to train", null, e11.getDestination());
         Assert.assertEquals("e12 not assigned to train", null, e12.getDestination());
         
@@ -14933,6 +15083,171 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e11 not assigned to train", null, e11.getDestination());
         Assert.assertEquals("e12 not assigned to train", null, e12.getDestination());
 
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    /**
+     * Test the automatic assignment of engines to a train based on HP
+     * requirements. There can be two engine adds in a train's route
+     */
+    @Test
+    public void testAutoHptEngineAdds() {
+
+        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon(), 0.1);
+
+        // create 5 locations with tracks
+        // Acton-Boston-Chelmsford-Danvers-Essex
+        Route route = JUnitOperationsUtil.createFiveLocationRoute();
+        Location acton = route.getDepartsRouteLocation().getLocation();
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", Track.YARD);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonYard1 = boston.getTrackByName("Boston Yard 1", Track.YARD);
+
+        Location danvers = lmanager.getLocationByName("Danvers");
+        Track danversYard1 = danvers.getTrackByName("Danvers Yard 1", Track.YARD);
+
+        Location essex = route.getTerminatesRouteLocation().getLocation();
+
+        // create 4 new engine models with different HP ratings
+        Engine e1 = emanager.newRS("UP", "1");
+        e1.setModel("GP30-200");
+        e1.setTypeName("Diesel");
+        e1.setHp("200");
+        e1.setLength("50");
+        e1.setWeightTons("100");
+        e1.setMoves(6);
+
+        Engine e2 = emanager.newRS("SP", "2");
+        e2.setModel("GP30-400");
+        e2.setTypeName("Diesel");
+        e2.setHp("400");
+        e2.setLength("50");
+        e2.setWeightTons("110");
+        e2.setMoves(5);
+
+        Engine e3 = emanager.newRS("SP", "3");
+        e3.setModel("GP40-800");
+        e3.setTypeName("Diesel");
+        e3.setHp("800");
+        e3.setLength("50");
+        e3.setWeightTons("120");
+        e3.setMoves(10);
+
+        Engine e4 = emanager.newRS("UP", "4");
+        e4.setModel("GP40-1600");
+        e4.setTypeName("Diesel");
+        e4.setHp("1600");
+        e4.setLength("50");
+        e4.setWeightTons("130");
+        e4.setMoves(15);
+
+        // place the next 4 engines later in the route at Boston
+        Engine e5 = emanager.newRS("SP", "5");
+        e5.setModel("GP30-400");
+        e5.setMoves(10);
+
+        Engine e6 = emanager.newRS("UP", "6");
+        e6.setModel("GP30-400");
+        e6.setMoves(5);
+
+        Engine e7 = emanager.newRS("UP", "7");
+        e7.setModel("GP30-400");
+        e7.setMoves(2);
+
+        Engine e8 = emanager.newRS("SP", "8");
+        e8.setModel("GP30-400");
+        e8.setMoves(1);
+
+        // place the next 4 engines at Danvers
+        Engine e9 = emanager.newRS("UP", "9");
+        e9.setModel("GP30-200");
+        e9.setMoves(2);
+
+        Engine e10 = emanager.newRS("SP", "10");
+        e10.setModel("GP30-200");
+        e10.setMoves(5);
+
+        Engine e11 = emanager.newRS("SP", "11");
+        e11.setModel("GP30-200");
+        e11.setMoves(10);
+
+        Engine e12 = emanager.newRS("UP", "12");
+        e12.setModel("GP30-200");
+        e12.setMoves(15);
+
+        // Place engines
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(acton, actonYard1));
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(acton, actonYard1));
+        Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(acton, actonYard1));
+        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(acton, actonYard1));
+
+        Assert.assertEquals("Place e5", Track.OKAY, e5.setLocation(boston, bostonYard1));
+        Assert.assertEquals("Place e6", Track.OKAY, e6.setLocation(boston, bostonYard1));
+        Assert.assertEquals("Place e7", Track.OKAY, e7.setLocation(boston, bostonYard1));
+        Assert.assertEquals("Place e8", Track.OKAY, e8.setLocation(boston, bostonYard1));
+
+        Assert.assertEquals("Place e9", Track.OKAY, e9.setLocation(danvers, danversYard1));
+        Assert.assertEquals("Place e10", Track.OKAY, e10.setLocation(danvers, danversYard1));
+        Assert.assertEquals("Place e11", Track.OKAY, e11.setLocation(danvers, danversYard1));
+        Assert.assertEquals("Place e12", Track.OKAY, e12.setLocation(danvers, danversYard1));
+
+        // add grade to route
+        RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(2);
+        rlBoston.setGrade(1.0);
+
+        // Create train
+        Train train1 = tmanager.newTrain("TestAddHpt");
+        train1.setRoute(route);
+
+        // use auto HPT and build from individual engines
+        train1.setBuildConsistEnabled(true);
+        train1.setNumberEngines("2");
+
+        train1.setSecondLegOptions(Train.ADD_ENGINES);
+        train1.setSecondLegNumberEngines("0");
+        train1.setSecondLegStartRouteLocation(rlBoston);
+
+        // 3rd engine change at Danvers
+        RouteLocation rlDanvers = route.getRouteLocationBySequenceNumber(4);
+        train1.setThirdLegOptions(Train.ADD_ENGINES);
+        train1.setThirdLegNumberEngines("1");
+        train1.setThirdLegStartRouteLocation(rlDanvers);
+
+        // increase the train's departure weight
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", actonYard1, 0);
+        c1.setWeightTons("200"); // 200 tons loaded
+        c1.setLoadName(cld.getDefaultLoadName());
+
+        // increase the train's weight departing Boston
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", bostonYard1, 0);
+        c2.setWeightTons("200"); // 200 tons loaded
+        c2.setLoadName(cld.getDefaultLoadName());
+
+        // limit is 6 locomotives
+        Assert.assertEquals("limit", 6, Setup.getMaxNumberEngines());
+        
+        new TrainBuilder().build(train1);
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 assigned to train", essex, e1.getDestination());
+        Assert.assertEquals("e2 assigned to train", essex, e2.getDestination());
+        Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e5 assigned to train", essex, e5.getDestination());
+        Assert.assertEquals("e6 assigned to train", essex, e6.getDestination());
+        Assert.assertEquals("e7 assigned to train", essex, e7.getDestination());
+        Assert.assertEquals("e8 assigned to train", essex, e8.getDestination());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e9 assigned to train", essex, e9.getDestination());
+        Assert.assertEquals("e10 not assigned to train", null, e10.getDestination());
+        Assert.assertEquals("e11 not assigned to train", null, e11.getDestination());
+        Assert.assertEquals("e12 not assigned to train", null, e12.getDestination());
+        
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 

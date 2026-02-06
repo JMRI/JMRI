@@ -375,12 +375,14 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             }
         }
         // optionally set out added engines
-        if ((getTrain().getSecondLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES &&
-                getTrain().getSecondLegEndRouteLocation() != null) {
+        if (getTrain().getSecondLegEndRouteLocation() != null &&
+                ((getTrain().getSecondLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES ||
+                        (getTrain().getSecondLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES)) {
             engineTerminatesSecondLeg = getTrain().getSecondLegEndRouteLocation();
         }
-        if ((getTrain().getThirdLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES &&
-                getTrain().getThirdLegEndRouteLocation() != null) {
+        if (getTrain().getThirdLegEndRouteLocation() != null &&
+                ((getTrain().getThirdLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES ||
+                        (getTrain().getThirdLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES)) {
             engineTerminatesThirdLeg = getTrain().getThirdLegEndRouteLocation();
         }
 
@@ -445,7 +447,8 @@ public class TrainBuilderEngines extends TrainBuilderBase {
 
         // First engine change in route?
         if ((getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES ||
-                (getTrain().getSecondLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES) {
+                (getTrain().getSecondLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES ||
+                (getTrain().getSecondLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {
             addLine(THREE, BLANK_LINE);
             if ((getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
                 addLine(THREE,
@@ -476,7 +479,8 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         }
         // Second engine change in route?
         if ((getTrain().getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES ||
-                (getTrain().getThirdLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES) {
+                (getTrain().getThirdLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES ||
+                (getTrain().getThirdLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {
             addLine(THREE, BLANK_LINE);
             if ((getTrain().getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
                 addLine(THREE,
@@ -998,7 +1002,6 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                                 rl == getTrain().getThirdLegStartRouteLocation())) {
                     log.debug("Loco change at ({})", rl.getName());
                     addEnginesBasedHPT(_hpAvailable, _extraHpNeeded, _rlNeedHp, _rlStart, rl);
-                    addLine(THREE, BLANK_LINE);
                     // reset for next leg of train's route
                     _rlStart = rl;
                     _rlNeedHp = null;

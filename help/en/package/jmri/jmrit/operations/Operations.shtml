@@ -5903,9 +5903,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         without a caboose.</p>
 
       <p>You can also request helper locomotives for those long up hill battles that your train
-        might experience. The current code only adds a comment to the Manifest requesting helper
-        service starting at the location you select, and removes the helper service at the second
-        location specified by you.</p>
+        might experience. The program adds a comment to the Manifest requesting helper service
+        starting at the location you've selected, and removes the helper service at the second
+        location specified by you.  If you enter "0" as the number of helper locomotives, only
+        the comments are added to the Manifest.</p>
 
       <h4 id="TrainLoadOptions">Train Load Options</h4>
       You can decide which car loads the train will service. Select under the "Edit
