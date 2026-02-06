@@ -186,10 +186,10 @@ public class CbusReporterManager extends AbstractReporterManager implements CanL
         if ( m.extendedOrRtr() ) {
             return null;
         }
-        if ( m.getElement(0) != CbusConstants.CBUS_DDES) {
+        if ( m.getElement(0) != CbusConstants.CBUS_DDES && m.getElement(0) != CbusConstants.CBUS_ACDAT) {
             return null;
         }
-        // here an DDES (RFID or RailCom) message, extract device number & check for existing CBusReporter
+        // here an DDES (RFID or RailCom) or ACATmessage, extract device number & check for existing CBusReporter
         var device = (m.getElement(1) << 8) + m.getElement(2);
         var systemName = ""+device;
 
@@ -197,7 +197,7 @@ public class CbusReporterManager extends AbstractReporterManager implements CanL
            
         // is this the right algorithm?
         int least_significant_nibble = m.getElement(3) & 0x0F;
-        if ( least_significant_nibble == 0x01 ) {
+        if ( least_significant_nibble == 0x01 && m.getElement(0) == CbusConstants.CBUS_DDES) {
             // is a RailCom Reporter, set that as mode
             reporter.setProperty(CBUS_REPORTER_DESCRIPTOR_KEY,CBUS_REPORTER_TYPE_DDES_DESCRIBING);
         }
