@@ -173,6 +173,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
                 break;
             case 0x80:
                 dccType = LocoAddress.Protocol.DCC_EXTENDED_CONSIST;
+                dccNumber = ((m.getElement(4)&0x3F)*100)+m.getElement(5);  // note multiplier
         }
         var locoAddress = new DccLocoAddress(dccNumber, dccType);
         int speed = m.getElement(6);
