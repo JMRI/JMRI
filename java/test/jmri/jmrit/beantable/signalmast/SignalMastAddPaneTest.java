@@ -1,11 +1,17 @@
 package jmri.jmrit.beantable.signalmast;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import jmri.util.JUnitUtil;
 
 import java.util.*;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests the overall operation of {@link SignalMastAddPane} services.
@@ -20,10 +26,10 @@ public class SignalMastAddPaneTest {
     @Test
     public void testLoad() {
         // group these in a single test, as the services can only be loaded once.
-        Assert.assertNotNull(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesCollection());
-        Assert.assertNotNull(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap());
-        Assert.assertFalse(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap().isEmpty()); // found at least one service
-        Assert.assertEquals(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap().size(), SignalMastAddPane.SignalMastAddPaneProvider.getInstancesCollection().size()); // same size
+        assertNotNull(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesCollection());
+        assertNotNull(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap());
+        assertFalse(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap().isEmpty()); // found at least one service
+        assertEquals(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap().size(), SignalMastAddPane.SignalMastAddPaneProvider.getInstancesCollection().size()); // same size
         
         // check map is in sorted order; also check lookup works
         Map<String, SignalMastAddPane.SignalMastAddPaneProvider> map = SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap();
@@ -32,39 +38,38 @@ public class SignalMastAddPaneTest {
         
         for ( Map.Entry<String,?> entry : map.entrySet() ) {
             String name = entry.getKey();
-            Assert.assertTrue(name.compareTo(last) > 0);  // no identical ones
-            Assert.assertTrue(collection.contains(map.get(name)));
+            assertTrue(name.compareTo(last) > 0);  // no identical ones
+            assertTrue(collection.contains(map.get(name)));
             last = name;
         }
 
         // check collection in in sorted order
         last = "";
         for (SignalMastAddPane.SignalMastAddPaneProvider pane : collection) {
-            Assert.assertTrue(pane.getPaneName().compareTo(last) > 0);  // no identical ones
+            assertTrue(pane.getPaneName().compareTo(last) > 0);  // no identical ones
             last = pane.getPaneName();
         }
-        
+
         // partial check that results are unmodifiable
-        try {
+        UnsupportedOperationException e = assertThrows(UnsupportedOperationException.class, () -> {
             SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap().put("Foo", null);
-            Assert.fail("Should have thrown");
-        } catch (java.lang.UnsupportedOperationException e) {
-            // this is a pass
-        }
-        try {
+            fail("Should have thrown");
+        });
+        assertNotNull(e);
+
+        e = assertThrows(UnsupportedOperationException.class, () -> {
             SignalMastAddPane.SignalMastAddPaneProvider.getInstancesCollection().add(null);
-            Assert.fail("Should have thrown");
-        } catch (java.lang.UnsupportedOperationException e) {
-            // this is a pass
-        }
-        
+            fail("Should have thrown");
+        });
+        assertNotNull(e);
+
         // check all the classes
         for (SignalMastAddPane.SignalMastAddPaneProvider pane : collection) {
         
-                Assert.assertFalse( pane.getPaneName().isBlank());
+                assertFalse( pane.getPaneName().isBlank());
 
-               if (pane.isAvailable()) {
-                   Assert.assertFalse(pane.getPaneName().isBlank());
+                if (pane.isAvailable()) {
+                    assertFalse(pane.getPaneName().isBlank());
                 }
         }
 
