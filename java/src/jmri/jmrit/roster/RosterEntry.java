@@ -102,6 +102,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String SOUND_LABEL = "soundlabel"; // NOI18N
     public static final String ATTRIBUTE_OPERATING_DURATION = "OperatingDuration"; // NOI18N
     public static final String ATTRIBUTE_LAST_OPERATED = "LastOperated"; // NOI18N
+    public static final String LOCO_DATA_ENABLED = "locoDataEnabled"; // NOI18N
      // ---- Physics (locomotive-level) metadata (not tied to decoder CVs) ----
      public static final String PHYSICS_TRACTION_TYPE      = "physicsTractionType";     // STEAM or DIESEL_ELECTRIC
      public static final String PHYSICS_WEIGHT_KG          = "physicsWeightKg";         // float kg
@@ -135,6 +136,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _manufacturerID = "";
     protected String _productID = "";
     protected String _programmingModes = "";
+    protected boolean _locoDataEnabled = false;
+
      // Physics fields (stored in metric units; defaults of 0 mean "no extra limit")
      protected TractionType _physicsTractionType = TractionType.DIESEL_ELECTRIC;
      protected float _physicsWeightKg = 0.0f;
@@ -144,7 +147,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
       // Mechanical transmission flag (4-speed epicyclic DMU behaviour)
       protected boolean _physicsMechanicalTransmission = false;
-    
+
       public void setPhysicsMechanicalTransmission(boolean value) {
           boolean old = _physicsMechanicalTransmission;
           _physicsMechanicalTransmission = value;
@@ -246,6 +249,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         _URL = pEntry._URL;
         _maxSpeedPCT = pEntry._maxSpeedPCT;
         _isShuntingOn = pEntry._isShuntingOn;
+        _locoDataEnabled = pEntry._locoDataEnabled;
 
         if (pEntry.functionLabels != null) {
             pEntry.functionLabels.forEach((key, value) -> {
@@ -327,7 +331,16 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public String getPathName() {
         return Roster.getDefault().getRosterFilesLocation() + _fileName;
     }
-    
+
+    public void setLocoDataEnabled(boolean enabled) {
+        boolean old = this._locoDataEnabled;
+        _locoDataEnabled = enabled;
+        this.firePropertyChange(RosterEntry.LOCO_DATA_ENABLED, old, this._locoDataEnabled);
+    }
+
+    public boolean isLocoDataEnabled() {
+        return _locoDataEnabled;
+    }
 
      // Traction type
      public void setPhysicsTractionType(TractionType t) {
@@ -336,7 +349,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
          firePropertyChange(PHYSICS_TRACTION_TYPE, old, _physicsTractionType);
      }
      public TractionType getPhysicsTractionType() { return _physicsTractionType; }
-    
+
      // Weight (kg)
      public void setPhysicsWeightKg(float kg) {
          float old = _physicsWeightKg;
@@ -344,7 +357,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
          firePropertyChange(PHYSICS_WEIGHT_KG, old, _physicsWeightKg);
      }
      public float getPhysicsWeightKg() { return _physicsWeightKg; }
-    
+
      // Power (kW)
      public void setPhysicsPowerKw(float kw) {
          float old = _physicsPowerKw;
@@ -352,7 +365,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
          firePropertyChange(PHYSICS_POWER_KW, old, _physicsPowerKw);
      }
      public float getPhysicsPowerKw() { return _physicsPowerKw; }
-    
+
      // Tractive effort (kN)
      public void setPhysicsTractiveEffortKn(float kn) {
          float old = _physicsTractiveEffortKn;
@@ -360,7 +373,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
          firePropertyChange(PHYSICS_TRACTIVE_EFFORT_KN, old, _physicsTractiveEffortKn);
      }
      public float getPhysicsTractiveEffortKn() { return _physicsTractiveEffortKn; }
-    
+
      // Max speed (km/h)
      public void setPhysicsMaxSpeedKmh(float kmh) {
          float old = _physicsMaxSpeedKmh;
@@ -368,7 +381,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
          firePropertyChange(PHYSICS_MAX_SPEED_KMH, old, _physicsMaxSpeedKmh);
      }
      public float getPhysicsMaxSpeedKmh() { return _physicsMaxSpeedKmh; }
-    
+
      // Helper: parse traction type from text safely
      private void setPhysicsTractionTypeFromString(String s) {
          if (s == null) { setPhysicsTractionType(TractionType.DIESEL_ELECTRIC); return; }
@@ -864,7 +877,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         if ((a = e.getAttribute(RosterEntry.SHUNTING_FUNCTION)) != null) {
             _isShuntingOn = a.getValue();
         }
-        
+        if ((a = e.getAttribute(LOCO_DATA_ENABLED)) != null) {
+            setLocoDataEnabled("true".equalsIgnoreCase(a.getValue()));
+        }
+
          // Physics (optional)
          if ((a = e.getAttribute(PHYSICS_TRACTION_TYPE)) != null) {
              setPhysicsTractionTypeFromString(a.getValue());
@@ -884,7 +900,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
          if ((a = e.getAttribute(PHYSICS_MAX_SPEED_KMH)) != null) {
              try { setPhysicsMaxSpeedKmh(Float.parseFloat(a.getValue())); } catch (NumberFormatException ignore) {}
          }
-              
+
         if ((a = e.getAttribute(RosterEntry.MAX_SPEED)) != null) {
             try {
                 _maxSpeedPCT = Integer.parseInt(a.getValue());
@@ -1405,13 +1421,17 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 (this.getIconPath() != null) ? FileUtil.getPortableFilename(this.getIconPath()) : "");
         e.setAttribute("URL", getURL());
         e.setAttribute(RosterEntry.SHUNTING_FUNCTION, getShuntingFunction());
-         // Physics (stored in metric units)
-         e.setAttribute(PHYSICS_TRACTION_TYPE, getPhysicsTractionType().name());
-         e.setAttribute(PHYSICS_WEIGHT_KG, Float.toString(getPhysicsWeightKg()));
-         e.setAttribute(PHYSICS_POWER_KW, Float.toString(getPhysicsPowerKw()));
-         e.setAttribute(PHYSICS_TRACTIVE_EFFORT_KN, Float.toString(getPhysicsTractiveEffortKn()));
-         e.setAttribute(PHYSICS_MAX_SPEED_KMH, Float.toString(getPhysicsMaxSpeedKmh()));
-         e.setAttribute(PHYSICS_MECH_TRANSMISSION, Boolean.toString(isPhysicsMechanicalTransmission()));
+        e.setAttribute(RosterEntry.LOCO_DATA_ENABLED, Boolean.toString(isLocoDataEnabled()));
+        if (isLocoDataEnabled()) {
+            // Physics (stored in metric units)
+            e.setAttribute(PHYSICS_TRACTION_TYPE, getPhysicsTractionType().name());
+            e.setAttribute(PHYSICS_WEIGHT_KG, Float.toString(getPhysicsWeightKg()));
+            e.setAttribute(PHYSICS_POWER_KW, Float.toString(getPhysicsPowerKw()));
+            e.setAttribute(PHYSICS_TRACTIVE_EFFORT_KN, Float.toString(getPhysicsTractiveEffortKn()));
+            e.setAttribute(PHYSICS_MAX_SPEED_KMH, Float.toString(getPhysicsMaxSpeedKmh()));
+            e.setAttribute(PHYSICS_MECH_TRANSMISSION, Boolean.toString(isPhysicsMechanicalTransmission()));
+        }
+
         if (_dateUpdated.isEmpty()) {
             // set date updated to now if never set previously
             this.changeDateUpdated();
