@@ -232,6 +232,23 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
                 break;
         }
         
+        RailCom.QoS qos;
+        switch ((flags>>6)&0x03) {
+            case 1:
+                qos = RailCom.QoS.POOR;
+                break;
+            case 2:
+                qos = RailCom.QoS.GOOD;
+                break;
+            case 0:
+                qos = RailCom.QoS.UNKNOWN;
+                break;
+            default:
+                log.warn("Unexpected QoS code 3");
+                qos = RailCom.QoS.UNKNOWN;
+                break;
+        }
+        
         log.info("Found {} {}", dccType, dccNumber);
         
         var idTag = railComManager.provideIdTag(""+dccNumber);
@@ -242,6 +259,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         tag.setOrientation(orientation);
         tag.setDirection(direction);
         tag.setMotion(motion);
+        tag.setQoS(qos);
 
         notify(tag);
         startTimeout(tag);

@@ -88,6 +88,16 @@ public interface RailCom extends AddressedIdTag {
     }
     
     /**
+     * An enum representing the DCC track signal quality  reported in
+     * in a RailCom message.
+     */
+    public enum QoS {
+        GOOD,
+        POOR,
+        UNKNOWN
+    }
+
+    /**
      * Set the orientation reported back from a
      * device
      *
@@ -131,6 +141,21 @@ public interface RailCom extends AddressedIdTag {
      * @return current motion state
      */
     Motion getMotion();
+
+    /**
+     * Set the Quality of Service state reported back from a
+     * device
+     *
+     * @param type the QoS state to set
+     */
+    void setQoS(QoS type);
+
+    /**
+     * Gets the Quality of Service state of the Rail Com device on the track
+     *
+     * @return current QoS state
+     */
+    QoS getQoS();
 
     /**
      * Method for a RailCom Reader to set the Actual speed reported back from a

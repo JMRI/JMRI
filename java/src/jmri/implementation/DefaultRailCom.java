@@ -96,6 +96,18 @@ public class DefaultRailCom extends DefaultIdTag implements RailCom {
     }
 
     @Override
+    public void setQoS(QoS type) {
+        setProperty("qos", type);
+    }
+
+    @Override
+    public QoS getQoS() {
+        var t = (QoS)getProperty("qos");
+        if (t == null) return QoS.UNKNOWN;
+        return t;
+    }
+
+    @Override
     public void setActualSpeed(int type) {
         setProperty("actualspeed", type);
     }

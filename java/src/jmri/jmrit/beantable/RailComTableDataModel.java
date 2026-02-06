@@ -39,7 +39,8 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
     public static final int ORIENTATIONCOL = DCCADDRESSCOL + 1;
     public static final int DIRECTIONCOL = ORIENTATIONCOL + 1;
     public static final int MOTIONCOL = DIRECTIONCOL + 1;
-    public static final int LOADCOL = MOTIONCOL + 1;
+    public static final int QOSCOL = MOTIONCOL + 1;
+    public static final int LOADCOL = QOSCOL + 1;
     public static final int TEMPCOL = LOADCOL + 1;
     public static final int FUELCOL = TEMPCOL + 1;
     public static final int WATERCOL = FUELCOL + 1;
@@ -129,6 +130,8 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
                 return Bundle.getMessage("ColumnDirection");
             case MOTIONCOL:
                 return Bundle.getMessage("ColumnMotion");
+            case QOSCOL:
+                return Bundle.getMessage("ColumnQoS");
             case LOADCOL:
                 return Bundle.getMessage("ColumnLoad");
             case TEMPCOL:
@@ -200,6 +203,8 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
                 return t.getDirection();
             case MOTIONCOL:
                 return t.getMotion();
+            case QOSCOL:
+                return t.getQoS();
             case LOADCOL:
                 return (t.getActualLoad()!=-1 ? t.getActualLoad() : null);
             case TEMPCOL:
