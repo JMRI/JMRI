@@ -7,9 +7,6 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Stands in for the can.TrafficController class
  *
@@ -84,6 +81,18 @@ public class TrafficControllerScaffold extends TrafficController {
         inbound.addElement(r);
     }
 
+    public void sendToListeners(CanReply r) {
+        for ( AbstractMRListener listener : cmdListeners ) {
+            ((CanListener) listener).reply(r);
+        }
+    }
+
+    public void sendToListeners(CanMessage m) {
+        for ( AbstractMRListener listener : cmdListeners ) {
+            ((CanListener) listener).message(m);
+        }
+    }
+
     /*
      * Check number of listeners, used for testing dispose()
      */
@@ -99,6 +108,6 @@ public class TrafficControllerScaffold extends TrafficController {
         return cmdListeners;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrafficControllerScaffold.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrafficControllerScaffold.class);
 
 }
