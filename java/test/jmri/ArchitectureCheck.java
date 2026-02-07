@@ -1,7 +1,5 @@
 package jmri;
 
-import org.junit.jupiter.api.*;
-
 import com.tngtech.archunit.junit.*;
 import com.tngtech.archunit.lang.*;
 import com.tngtech.archunit.library.freeze.*;
