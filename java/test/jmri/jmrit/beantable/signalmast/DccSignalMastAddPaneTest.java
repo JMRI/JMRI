@@ -1,5 +1,10 @@
 package jmri.jmrit.beantable.signalmast;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
@@ -7,7 +12,6 @@ import jmri.util.*;
 import java.util.*;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * @author Bob Jacobsen Copyright 2018
@@ -26,28 +30,28 @@ public class DccSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase 
         while (aspects.hasMoreElements()) {
             s1.setOutputForAppearance(aspects.nextElement(), 0);
         }
-        Assert.assertEquals("DCC Address should be 77",77, s1.getDccSignalMastAddress());
+        assertEquals(77, s1.getDccSignalMastAddress(), "DCC Address should be 77");
 
         // PacketSendCount default is 3
-        Assert.assertEquals("Default should be 3",3, s1.getDccSignalMastPacketSendCount());
+        assertEquals(3, s1.getDccSignalMastPacketSendCount(), "Default should be 3");
         s1.setDccSignalMastPacketSendCount(1);
-        Assert.assertEquals("Should have updated to 1",1, s1.getDccSignalMastPacketSendCount());
+        assertEquals(1, s1.getDccSignalMastPacketSendCount(), "Should have updated to 1");
 
         MatrixSignalMast m1 = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
 
         DccSignalMastAddPane vp = new DccSignalMastAddPane();
-        
-        Assert.assertTrue(vp.canHandleMast(s1));
-        Assert.assertFalse(vp.canHandleMast(m1));
-        
+
+        assertTrue(vp.canHandleMast(s1));
+        assertFalse(vp.canHandleMast(m1));
+
         vp.setMast(null);
         SignalSystem aar1946system = InstanceManager.getDefault(SignalSystemManager.class).getSystem("AAR-1946");
-        Assertions.assertNotNull(aar1946system);
+        assertNotNull(aar1946system);
         vp.setAspectNames(s1.getAppearanceMap(), aar1946system );
         vp.setMast(s1);
 
         SignalSystem basic = InstanceManager.getDefault(SignalSystemManager.class).getSystem("basic");
-        Assertions.assertNotNull(basic);
+        assertNotNull(basic);
         vp.setAspectNames(m1.getAppearanceMap(), basic );
         vp.setMast(m1);
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");

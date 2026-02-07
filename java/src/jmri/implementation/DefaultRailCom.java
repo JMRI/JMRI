@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import jmri.JmriException;
+import jmri.LocoAddress;
 import jmri.RailCom;
 
 /**
@@ -49,14 +50,60 @@ public class DefaultRailCom extends DefaultIdTag implements RailCom {
     }
 
     @Override
+    public void setDccAddress(LocoAddress address) {
+        setProperty("dccaddress", address);
+    }
+
+    @Override
+    public LocoAddress getDccAddress() {
+        return (LocoAddress) getProperty("dccaddress");
+    }
+
+    @Override
     public void setOrientation(Orientation type) {
         setProperty("orientation", type);
     }
 
     @Override
-    public RailCom.Orientation getOrientation() {
+    public Orientation getOrientation() {
         var t = (Orientation)getProperty("orientation");
-        if (t == null) return RailCom.Orientation.UNKNOWN;
+        if (t == null) return Orientation.UNKNOWN;
+        return t;
+    }
+
+    @Override
+    public void setMotion(Motion type) {
+        setProperty("motion", type);
+    }
+
+    @Override
+    public Motion getMotion() {
+        var t = (Motion)getProperty("motion");
+        if (t == null) return Motion.UNKNOWN;
+        return t;
+    }
+
+    @Override
+    public void setDirection(Direction type) {
+        setProperty("direction", type);
+    }
+
+    @Override
+    public Direction getDirection() {
+        var t = (Direction)getProperty("direction");
+        if (t == null) return Direction.UNKNOWN;
+        return t;
+    }
+
+    @Override
+    public void setQoS(QoS type) {
+        setProperty("qos", type);
+    }
+
+    @Override
+    public QoS getQoS() {
+        var t = (QoS)getProperty("qos");
+        if (t == null) return QoS.UNKNOWN;
         return t;
     }
 
@@ -202,28 +249,31 @@ public class DefaultRailCom extends DefaultIdTag implements RailCom {
     @Override
     public String toReportString() {
         StringBuilder sb = new StringBuilder(200);
+        sb.append("Address ").append(getLocoAddress()).append(" ");
+
+        if ((getLocation() != -1)) {
+            sb.append("Location : ").append(getLocation()).append(" ");
+        }
+
+
         switch (getOrientation()) {
-            case ORIENTA:
-                sb.append("Orientation A ");
+            case EAST:
+                sb.append("East ");
                 break;
-            case ORIENTB:
-                sb.append( "Orientation B ");
+            case WEST:
+                sb.append( "West ");
                 break;
             case UNKNOWN:
             default:
                 sb.append( "Unknown Orientation ");
                 break;
         }
-        sb.append("Address ").append(getLocoAddress()).append(" ");
 
         if (getWaterLevel() != -1) {
             sb.append("Water ").append(getWaterLevel()).append(" ");
         }
         if (getFuelLevel() != -1) {
             sb.append("Fuel ").append(getFuelLevel()).append(" ");
-        }
-        if ((getLocation() != -1)) {
-            sb.append("Location : ").append(getLocation()).append(" ");
         }
         if ((getRoutingNo() != -1)) {
             sb.append("Routing No : ").append(getRoutingNo()).append(" ");

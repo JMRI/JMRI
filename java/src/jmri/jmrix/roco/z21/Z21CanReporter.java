@@ -130,10 +130,10 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
           int direction = (0xC000&value);
           switch (direction) {
              case 0x8000:
-                tag.setOrientation(RailCom.Orientation.ORIENTA);
+                tag.setOrientation(RailCom.Orientation.EAST);
                 break;
              case 0xC000:
-                tag.setOrientation(RailCom.Orientation.ORIENTB);
+                tag.setOrientation(RailCom.Orientation.WEST);
                 break;
              default:
                 tag.setOrientation(RailCom.Orientation.UNKNOWN);
