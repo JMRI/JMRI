@@ -17,6 +17,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.TrackerTableAction;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.jmrit.throttle.ThrottleControler;
 import jmri.util.swing.JmriMouseEvent;
 
 import org.slf4j.Logger;
@@ -104,7 +105,7 @@ public class LocoIcon extends PositionableLabel {
         return false;
     }
 
-    jmri.jmrit.throttle.ThrottleFrame tf = null;
+    ThrottleControler tf = null;
 
     /**
      * Pop-up only if right click and not dragged
@@ -115,8 +116,8 @@ public class LocoIcon extends PositionableLabel {
             popup.add(new AbstractAction("Throttle") {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
-                    tf.getAddressPanel().setRosterEntry(_entry);
+                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
+                    tf.setRosterEntry(_entry);
                     tf.toFront();
                 }
             });

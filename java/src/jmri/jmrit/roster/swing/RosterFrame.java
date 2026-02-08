@@ -49,14 +49,12 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.jmrit.roster.swing.Bundle;
 import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
-import jmri.jmrit.throttle.LargePowerManagerButton;
-import jmri.jmrit.throttle.ThrottleFrame;
-import jmri.jmrit.throttle.ThrottleFrameManager;
-import jmri.jmrit.throttle.ThrottleWindow;
+import jmri.jmrit.throttle.*;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
@@ -278,9 +276,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             if (!checkIfEntrySelected()) {
                 return;
             }
-            ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+            ThrottleControler tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
             tf.toFront();
-            tf.getAddressPanel().setRosterEntry(re);
+            tf.setRosterEntry(re);
         });
         return panel;
     }
@@ -1294,18 +1292,17 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         popupMenu.add(menuItem);
         menuItem = new JMenuItem(Bundle.getMessage("Throttle"));
         menuItem.addActionListener((ActionEvent e1) -> {
-            ThrottleWindow tw = null;
+            ThrottleControlersContainer tw = null;
             for (RosterEntry re : rtable.getSelectedRosterEntries()) {
-                ThrottleFrame tf;
+                ThrottleControler tf;
                 if (tw == null) {
-                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
-                    tw = tf.getThrottleWindow();
+                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
+                    tw = tf.getThrottleControlersContainer();
                 } else {
-                    tf = tw.addThrottleFrame();
+                    tf = (ThrottleFrame) tw.newThrottleControler();
                 }
                 tf.toFront();
-                tf.getAddressPanel().getRosterEntrySelector().setSelectedRosterGroup(getSelectedRosterGroup());
-                tf.getAddressPanel().setRosterEntry(re);
+                tf.setRosterEntry(re);
             }
         });
         popupMenu.add(menuItem);

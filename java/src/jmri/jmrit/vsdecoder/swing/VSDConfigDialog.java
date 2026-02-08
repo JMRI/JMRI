@@ -25,6 +25,7 @@ import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
+import jmri.jmrit.throttle.ThrottleControler;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
 import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.jmrit.vsdecoder.VSDManagerEvent;
@@ -533,10 +534,9 @@ public class VSDConfigDialog extends JDialog {
                     vsd_launch_throttle.equals("yes") &&
                     InstanceManager.throttleManagerInstance().getThrottleUsageCount(rosterEntry) == 0) {
                 // Launch a JMRI Throttle (if setup by the Roster media attribut and a throttle not already exists).
-                jmri.jmrit.throttle.ThrottleFrame tf =
-                        InstanceManager.getDefault(jmri.jmrit.throttle.ThrottleFrameManager.class).createThrottleFrame();
+                ThrottleControler tf = InstanceManager.getDefault(jmri.jmrit.throttle.ThrottleFrameManager.class).createThrottleControler();
                 tf.toFront();
-                tf.getAddressPanel().setRosterEntry(Roster.getDefault().entryFromTitle(rosterEntry.getId()));
+                tf.setRosterEntry(Roster.getDefault().entryFromTitle(rosterEntry.getId()));
             }
         }
 

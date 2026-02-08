@@ -420,7 +420,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.error("Error while creating Jynstrument {}", path);
             return;
         }
-        ThrottleFrame.setTransparent(it);
+        TransparencyUtils.setTransparent(it);
         it.setVisible(true);
         _jynstrumentSpace.setVisible(true);
         _jynstrumentSpace.add(it);

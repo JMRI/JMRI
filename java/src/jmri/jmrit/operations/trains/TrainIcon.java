@@ -15,6 +15,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.gui.TrainConductorAction;
 import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
+import jmri.jmrit.throttle.ThrottleControler;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
@@ -99,18 +100,18 @@ public class TrainIcon extends LocoIcon {
         return _consistNumber;
     }
 
-    jmri.jmrit.throttle.ThrottleFrame _tf = null;
+    ThrottleControler _tf = null;
 
     private void createThrottle() {
-        _tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+        _tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
         if (getConsistNumber() > 0) {
-            _tf.getAddressPanel().setAddress(getConsistNumber(), false); // use consist address
+            _tf.setAddress(getConsistNumber(), false); // use consist address
             if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("SendFunctionCommands"), Bundle
                     .getMessage("ConsistThrottle"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
-                _tf.getAddressPanel().setRosterEntry(_entry); // use lead loco address
+                _tf.setRosterEntry(_entry); // use lead loco address
             }
         } else {
-            _tf.getAddressPanel().setRosterEntry(_entry);
+            _tf.setRosterEntry(_entry);
         }
         _tf.toFront();
     }

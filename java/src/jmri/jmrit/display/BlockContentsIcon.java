@@ -14,7 +14,8 @@ import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.throttle.ThrottleFrame;
+import jmri.jmrit.display.Bundle;
+import jmri.jmrit.throttle.ThrottleControler;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
@@ -187,9 +188,9 @@ public class BlockContentsIcon extends MemoryIcon {
                     popup.add(new AbstractAction("Open Throttle") {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+                            ThrottleControler tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
                             tf.toFront();
-                            tf.getAddressPanel().setAddress(at.getAutoActiveTrain().getDccAddress().getNumber(),
+                            tf.setAddress(at.getAutoActiveTrain().getDccAddress().getNumber(),
                                     at.getAutoActiveTrain().getDccAddress().isLongAddress());
                         }
                     });
@@ -197,9 +198,9 @@ public class BlockContentsIcon extends MemoryIcon {
                     popup.add(new AbstractAction("Open Throttle") {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+                            ThrottleControler tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
                             tf.toFront();
-                            tf.getAddressPanel().setAddress(at.getAutoActiveTrain().getDccAddress().getNumber(),
+                            tf.setAddress(at.getAutoActiveTrain().getDccAddress().getNumber(),
                                     at.getAutoActiveTrain().getDccAddress().isLongAddress());
                         }
                     });
@@ -236,9 +237,9 @@ public class BlockContentsIcon extends MemoryIcon {
             popup.add(new AbstractAction("Open Throttle") {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+                    ThrottleControler tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
                     tf.toFront();
-                    tf.getAddressPanel().setRosterEntry(re);
+                    tf.setRosterEntry(re);
                 }
             });
             // if dispatcher exists we can create a new train.

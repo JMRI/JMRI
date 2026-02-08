@@ -21,9 +21,10 @@ import jmri.NamedBeanHandle;
 import jmri.Reportable;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.Bundle;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
-import jmri.jmrit.throttle.ThrottleFrame;
+import jmri.jmrit.throttle.ThrottleControler;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.JmriJOptionPane;
@@ -237,9 +238,9 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+                    ThrottleControler tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
                     tf.toFront();
-                    tf.getAddressPanel().setRosterEntry(re);
+                    tf.setRosterEntry(re);
                 }
             });
             //don't like the idea of refering specifically to the layout block manager for this, but it has to be done if we are to allow the panel editor to also assign trains to block, when used with a layouteditor

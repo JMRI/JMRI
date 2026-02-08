@@ -27,6 +27,7 @@ import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.URIDrop;
+import jmri.util.swing.TransparencyUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,7 +101,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
             log.error("Error while creating Jynstrument {}", path);
             return;
         }
-        jmri.jmrit.throttle.ThrottleFrame.setTransparent(it);
+        TransparencyUtils.setTransparent(it);
         it.setVisible(true);
         _jynstrumentSpace.setVisible(true);
         _jynstrumentSpace.add(it);
