@@ -1,8 +1,7 @@
 package jmri.jmrit.entryexit;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
 
@@ -10,15 +9,14 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@DisabledIfHeadless
 public class AddEntryExitPairFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            frame = new AddEntryExitPairFrame();
-        }
+        frame = new AddEntryExitPairFrame();
     }
 
     @AfterEach

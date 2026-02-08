@@ -106,8 +106,8 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
 
     int state = Sensor.UNKNOWN;
     
-    static final int REPRESENTS_RAILCOM_ORIENTA = 0x10;
-    static final int REPRESENTS_RAILCOM_ORIENTB = 0x20;
+    static final int REPRESENTS_RAILCOM_EAST = 0x10;
+    static final int REPRESENTS_RAILCOM_WEST = 0x20;
         
     public void setRailComState(int ori) {
         if (state == ori) {
@@ -132,10 +132,10 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
             cvNumber = -1;
             cvValues = new Hashtable<>();
             setReport(null);
-        } else if (ori == REPRESENTS_RAILCOM_ORIENTA || ori == REPRESENTS_RAILCOM_ORIENTB) {
+        } else if (ori == REPRESENTS_RAILCOM_EAST || ori == REPRESENTS_RAILCOM_WEST) {
             if (super.getCurrentReport() != null && super.getCurrentReport() instanceof RailCom) {
-                var orientation = RailCom.Orientation.ORIENTA;
-                if (ori == REPRESENTS_RAILCOM_ORIENTB) orientation = RailCom.Orientation.ORIENTB;
+                var orientation = RailCom.Orientation.EAST;
+                if (ori == REPRESENTS_RAILCOM_WEST) orientation = RailCom.Orientation.WEST;
                 
                 ((RailCom) super.getCurrentReport()).setOrientation(orientation);
             }
@@ -151,7 +151,7 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
         if (super.getCurrentReport() != null && super.getCurrentReport() instanceof RailCom) {
             return ((RailCom) super.getCurrentReport()).getTagID();
         }
-        if ((getRailComState() < REPRESENTS_RAILCOM_ORIENTA) || (rcPacket[0] == null) || rcPacket[0].getPacket() == null) {
+        if ((getRailComState() < REPRESENTS_RAILCOM_EAST) || (rcPacket[0] == null) || rcPacket[0].getPacket() == null) {
             return "";
         }
         return "";

@@ -5,9 +5,6 @@ import java.util.Date;
 
 import jmri.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
@@ -38,7 +35,12 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
     public static final int WHENCOL = WHERECOL + 1;
     public static final int CLEARCOL = WHENCOL + 1;
     public static final int SPEEDCOL = CLEARCOL + 1;
-    public static final int LOADCOL = SPEEDCOL + 1;
+    public static final int DCCADDRESSCOL = SPEEDCOL + 1;
+    public static final int ORIENTATIONCOL = DCCADDRESSCOL + 1;
+    public static final int DIRECTIONCOL = ORIENTATIONCOL + 1;
+    public static final int MOTIONCOL = DIRECTIONCOL + 1;
+    public static final int QOSCOL = MOTIONCOL + 1;
+    public static final int LOADCOL = QOSCOL + 1;
     public static final int TEMPCOL = LOADCOL + 1;
     public static final int FUELCOL = TEMPCOL + 1;
     public static final int WATERCOL = FUELCOL + 1;
@@ -120,6 +122,16 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
                 return Bundle.getMessage("ColumnIdWhen");
             case SPEEDCOL:
                 return Bundle.getMessage("ColumnSpeed");
+            case DCCADDRESSCOL:
+                return Bundle.getMessage("ColumnDccAddress");
+            case ORIENTATIONCOL:
+                return Bundle.getMessage("ColumnOrientation");
+            case DIRECTIONCOL:
+                return Bundle.getMessage("ColumnDirection");
+            case MOTIONCOL:
+                return Bundle.getMessage("ColumnMotion");
+            case QOSCOL:
+                return Bundle.getMessage("ColumnQoS");
             case LOADCOL:
                 return Bundle.getMessage("ColumnLoad");
             case TEMPCOL:
@@ -183,6 +195,16 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
                 return Bundle.getMessage("ButtonClear");
             case SPEEDCOL:
                 return (t.getActualSpeed()!=-1 ? t.getActualSpeed() : null);
+            case DCCADDRESSCOL:
+                return t.getDccAddress();
+            case ORIENTATIONCOL:
+                return t.getOrientation();
+            case DIRECTIONCOL:
+                return t.getDirection();
+            case MOTIONCOL:
+                return t.getMotion();
+            case QOSCOL:
+                return t.getQoS();
             case LOADCOL:
                 return (t.getActualLoad()!=-1 ? t.getActualLoad() : null);
             case TEMPCOL:
@@ -245,6 +267,6 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
         return "ID Tag";
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RailComTableDataModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RailComTableDataModel.class);
 
 }

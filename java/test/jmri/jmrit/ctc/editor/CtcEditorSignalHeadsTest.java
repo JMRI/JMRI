@@ -1,5 +1,9 @@
 package jmri.jmrit.ctc.editor;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -7,10 +11,10 @@ import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.profile.NullProfile;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.EventTool;
@@ -30,7 +34,7 @@ public class CtcEditorSignalHeadsTest {
     static final boolean PAUSE = false;
 
     @Test
-    public void testEditor() throws Exception {
+    public void testEditor() throws JmriException {
 
         // Load the test panel and initialize Logix and advanced block routing
         java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Heads-SSL.xml");  // NOI18N
@@ -43,7 +47,7 @@ public class CtcEditorSignalHeadsTest {
         new CtcEditorAction().actionPerformed(null);
 
         _jfo = new JFrameOperator("CTC Editor");
-        Assert.assertNotNull(_jfo);
+        assertNotNull(_jfo);
         if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Perform the tests
@@ -67,13 +71,13 @@ public class CtcEditorSignalHeadsTest {
 
         // MenuFix
         JMenuItem fixMenuItem = (JMenuItem) jpm.getComponent(0);
-        Assert.assertTrue(fixMenuItem.getText().equals(Bundle.getMessage("MenuFix")));  // NOI18N
+        assertEquals(Bundle.getMessage("MenuFix"), fixMenuItem.getText());
         new JMenuItemOperator(fixMenuItem).doClick();
         if (DELAY > 0) {
             new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmFix = new JFrameOperator(Bundle.getMessage("TitleDlgFix"));  // NOI18N
-        Assert.assertNotNull(frmFix);
+        assertNotNull(frmFix);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmFix, Bundle.getMessage("ButtonProceed")).doClick();
 
@@ -85,61 +89,61 @@ public class CtcEditorSignalHeadsTest {
 
         // MenuDebugging
         JMenuItem debugMenuItem = (JMenuItem) jpm.getComponent(0);
-        Assert.assertTrue(debugMenuItem.getText().equals(Bundle.getMessage("MenuDebugging")));  // NOI18N
+        assertEquals(Bundle.getMessage("MenuDebugging"), debugMenuItem.getText());
         new JMenuItemOperator(debugMenuItem).doClick();
         if (DELAY > 0) {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmDebug = new JFrameOperator(Bundle.getMessage("TitleDlgDeb"));  // NOI18N
-        Assert.assertNotNull(frmDebug);
+        assertNotNull(frmDebug);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmDebug, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // MenuDefaults
         JMenuItem defaultMenuItem = (JMenuItem) jpm.getComponent(1);
-        Assert.assertTrue(defaultMenuItem.getText().equals(Bundle.getMessage("MenuDefaults")));  // NOI18N
+        assertEquals(Bundle.getMessage("MenuDefaults"), defaultMenuItem.getText());
         new JMenuItemOperator(defaultMenuItem).doClick();
         if (DELAY > 0) {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmDefaults = new JFrameOperator(Bundle.getMessage("TitleDlgDef"));  // NOI18N
-        Assert.assertNotNull(frmDefaults);
+        assertNotNull(frmDefaults);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmDefaults, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // MenuFleeting
         JMenuItem fleetMenuItem = (JMenuItem) jpm.getComponent(2);
-        Assert.assertTrue(fleetMenuItem.getText().equals(Bundle.getMessage("MenuFleeting")));  // NOI18N
+        assertEquals(Bundle.getMessage("MenuFleeting"), fleetMenuItem.getText());
         new JMenuItemOperator(fleetMenuItem).doClick();
         if (DELAY > 0) {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmFleeting = new JFrameOperator(Bundle.getMessage("TitleDlgFleet"));  // NOI18N
-        Assert.assertNotNull(frmFleeting);
+        assertNotNull(frmFleeting);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmFleeting, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // MenuPatterns
         JMenuItem patternMenuItem = (JMenuItem) jpm.getComponent(3);
-        Assert.assertTrue(patternMenuItem.getText().equals(Bundle.getMessage("MenuPatterns")));  // NOI18N
+        assertEquals(Bundle.getMessage("MenuPatterns"), patternMenuItem.getText());
         new JMenuItemOperator(patternMenuItem).doClick();
         if (DELAY > 0) {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmPatterns = new JFrameOperator(Bundle.getMessage("TItleDlgPat"));  // NOI18N
-        Assert.assertNotNull(frmPatterns);
+        assertNotNull(frmPatterns);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmPatterns, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // MenuDesign
         JMenuItem designMenuItem = (JMenuItem) jpm.getComponent(4);
-        Assert.assertTrue(designMenuItem.getText().equals(Bundle.getMessage("MenuDesign")));  // NOI18N
+        assertEquals(Bundle.getMessage("MenuDesign"), designMenuItem.getText());
         new JMenuItemOperator(designMenuItem).doClick();
         if (DELAY > 0) {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmGUI = new JFrameOperator(Bundle.getMessage("TitleDlgGUI"));  // NOI18N
-        Assert.assertNotNull(frmGUI);
+        assertNotNull(frmGUI);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmGUI, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -149,13 +153,13 @@ public class CtcEditorSignalHeadsTest {
 
         // MenuAbout
         JMenuItem aboutMenuItem = (JMenuItem) jpm.getComponent(0);
-        Assert.assertTrue(aboutMenuItem.getText().equals(Bundle.getMessage("MenuAbout")));  // NOI18N
+        assertEquals(Bundle.getMessage("MenuAbout"), aboutMenuItem.getText());
         if (DELAY > 0) {
             new EventTool().waitNoEvent(DELAY);
         }
         new JMenuItemOperator(aboutMenuItem).doClick();
         JFrameOperator frmAbout = new JFrameOperator("About");  // NOI18N
-        Assert.assertNotNull(frmAbout);
+        assertNotNull(frmAbout);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmAbout, Bundle.getMessage("ButtonOK")).doClick();
     }
@@ -170,7 +174,7 @@ public class CtcEditorSignalHeadsTest {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmAdd = new JFrameOperator("Add new Switch and Signal etc. #'s");  // NOI18N
-        Assert.assertNotNull(frmAdd);
+        assertNotNull(frmAdd);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmAdd, Bundle.getMessage("ButtonSaveClose")).doClick();
         if (PAUSE) JUnitUtil.waitFor(2000);
@@ -210,7 +214,7 @@ public class CtcEditorSignalHeadsTest {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmChange = new JFrameOperator("Modify Switch and Signal etc. #'s");  // NOI18N
-        Assert.assertNotNull(frmChange);
+        assertNotNull(frmChange);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmChange, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -230,7 +234,7 @@ public class CtcEditorSignalHeadsTest {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmCB = new JFrameOperator(Bundle.getMessage("TitleDlgCB"));  // NOI18N
-        Assert.assertNotNull(frmCB);
+        assertNotNull(frmCB);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmCB, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -242,7 +246,7 @@ public class CtcEditorSignalHeadsTest {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmSIDI = new JFrameOperator(Bundle.getMessage("TitleSIDI"));  // NOI18N
-        Assert.assertNotNull(frmSIDI);
+        assertNotNull(frmSIDI);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmSIDI, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -254,7 +258,7 @@ public class CtcEditorSignalHeadsTest {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmSIDL = new JFrameOperator(Bundle.getMessage("TitleDlgSIDL"));  // NOI18N
-        Assert.assertNotNull(frmSIDL);
+        assertNotNull(frmSIDL);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmSIDL, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -266,7 +270,7 @@ public class CtcEditorSignalHeadsTest {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmSWDI = new JFrameOperator(Bundle.getMessage("TitleSWDI"));  // NOI18N
-        Assert.assertNotNull(frmSWDI);
+        assertNotNull(frmSWDI);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmSWDI, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -278,7 +282,7 @@ public class CtcEditorSignalHeadsTest {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmSWDL = new JFrameOperator(Bundle.getMessage("TitleDlgSWDL"));  // NOI18N
-        Assert.assertNotNull(frmSWDL);
+        assertNotNull(frmSWDL);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmSWDL, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -290,7 +294,7 @@ public class CtcEditorSignalHeadsTest {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmCO = new JFrameOperator(Bundle.getMessage("TitleDlgCO"));  // NOI18N
-        Assert.assertNotNull(frmCO);
+        assertNotNull(frmCO);
         if (PAUSE) JUnitUtil.waitFor(2000);
         doCallOnRules(frmCO);
         new JButtonOperator(frmCO, Bundle.getMessage("ButtonSaveClose")).doClick();
@@ -303,7 +307,7 @@ public class CtcEditorSignalHeadsTest {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmTUL = new JFrameOperator(Bundle.getMessage("TitleDlgTUL"));  // NOI18N
-        Assert.assertNotNull(frmTUL);
+        assertNotNull(frmTUL);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmTUL, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -315,7 +319,7 @@ public class CtcEditorSignalHeadsTest {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmIL = new JFrameOperator(Bundle.getMessage("TitleDlgIL"));  // NOI18N
-        Assert.assertNotNull(frmIL);
+        assertNotNull(frmIL);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmIL, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -330,7 +334,7 @@ public class CtcEditorSignalHeadsTest {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmTRL = new JFrameOperator(Bundle.getMessage("TitleDlgTRL"));  // NOI18N
-        Assert.assertNotNull(frmTRL);
+        assertNotNull(frmTRL);
         if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Open the right rules frame and do the detail checks
@@ -340,7 +344,7 @@ public class CtcEditorSignalHeadsTest {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmRules = new JFrameOperator("Edit Right traffic locking rules");  // NOI18N
-        Assert.assertNotNull(frmRules);
+        assertNotNull(frmRules);
         doTrlRules(frmRules);
         if (PAUSE) JUnitUtil.waitFor(2000);
 
@@ -355,7 +359,7 @@ public class CtcEditorSignalHeadsTest {
             new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmRulesLeft = new JFrameOperator("Edit Left traffic locking rules");  // NOI18N
-        Assert.assertNotNull(frmRulesLeft);
+        assertNotNull(frmRulesLeft);
         if (PAUSE) JUnitUtil.waitFor(2000);
         frmRulesLeft.requestClose();
         frmRulesLeft.waitClosed();
@@ -520,9 +524,9 @@ public class CtcEditorSignalHeadsTest {
     @Test
     public void testMakePanel() {
 
-        Exception ex = Assertions.assertThrows(IllegalArgumentException.class, () ->
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () ->
             new CtcEditorAction().makePanel());
-        Assertions.assertNotNull(ex);
+        assertNotNull(ex);
     }
 
     @BeforeEach

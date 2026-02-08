@@ -2175,8 +2175,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       is day:hour:minute for arrival and departure times. For example "1:10:50" means the train
       would arrive or depart the next day at 10:50 in the morning. The Edit Day to Name Mapping tool
       allows you to replace the day with any text you want. For example you could replace the "1" in
-      day with "Monday", or a date like "January 23, 2026". Now the Manifest would show the departure
-      time as Monday 10:50 or January 23, 2026 10:50 respectively.
+      day with "Monday", or a date like "January 23, 2026" by entering the text in "Day 1". Now the
+      Manifest would show the departure time as Monday 10:50 or January 23, 2026 10:50 respectively.
+
+      <p>The button "Load Days of the Week" will automatically load the days of the week
+        starting with Sunday. You can also manually enter a different day of the week to start with
+        in "Day 0".</p>
+
+      <p>The button "Load Dates" will automatically load the current date in "Day 0", and load
+        the other fields with the following days dates. You can also manually enter a different date
+        to start with in "Day 0". In addition to the month day, year format "January 23, 2026", you
+        can enter month day "January 23", and month/day/year "01/23/2026".</p>
 
       <h3 id="BuildReportDetails">Build Report Options</h3>
       From the "Operations&rArr;Settings&rArr;Tools" or "Operations&rArr;Trains&rArr;Tools" menu
@@ -5079,7 +5088,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>
-        The "Routes" window shows for every route created the id, name, comment, the shortest train
+        The "Routes" window shows for every route created the id, route name, route comment, train's
+        departure direction, the departure time if there's one in the route, the shortest train
         length between any two locations, the longest train length between any two locations, and
         status of the route. If there's a problem with the route, the status will be reported as
         "Error". If the route hasn't been assigned to a train, the status for the route is reported
@@ -5104,11 +5114,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         select the location the train will depart by selecting the location in the menu box located
         at the left bottom side of the window. Press "Add Location". You should now see the train's
         departure location in the table along with the train's departure direction, the requested
-        number of car moves, whether car set outs or pick ups are allowed, the train's travel time,
-        the maximum train length departing the location, and the track grade between this location
-        and the next location in the train's route. The X and Y values are where to place the <a
-          href="#PanelOptionsTrainIcons">train icon</a> on a panel. The <a href="#EditRoute">Edit
-          Route</a> below provides additional details about a location in a route.
+        number of car moves, whether car pick ups, set outs or local moves are allowed, the
+        departure day and time, the train's travel time, the maximum train length departing the
+        location, and the track grade between this location and the next location in the train's
+        route. The X and Y values are where to place the <a href="#PanelOptionsTrainIcons">train
+          icon</a> on a panel. The <a href="#EditRoute">Edit Route</a> below provides additional details
+        about a location in a route.
       </p>
 
       <p>
@@ -5876,10 +5887,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Locomotives" if you want to add locomotives to your train. Select "Remove Locomotives" if
         you want to remove locomotives from your train. Select the location and number of
         locomotives you want added or removed, and optionally the model and road. The program will
-        add locomotives at the location selected. When using the "Remove Locomotives" option, the
-        program will assign additional locomotives at the start of the train's route and drop them
-        off at the selected location. The "Remove Locomotives" option isn't available when the train
-        departs staging.</p>
+        add locomotives at the location selected, and remove them at the terminal unless a remove
+        engines location is selected. When using the "Remove Locomotives" option, the program will
+        assign additional locomotives at the start of the train's route and drop them off at the
+        selected location. The "Remove Locomotives" option isn't available when the train departs
+        staging.</p>
 
       <p>OperationsPro&trade; also gives you three options with regards to the train's caboose.
         The first option, "Remove caboose", will set out the caboose if one was assigned to the
@@ -5891,9 +5903,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         without a caboose.</p>
 
       <p>You can also request helper locomotives for those long up hill battles that your train
-        might experience. The current code only adds a comment to the Manifest requesting helper
-        service starting at the location you select, and removes the helper service at the second
-        location specified by you.</p>
+        might experience. The program adds a comment to the Manifest requesting helper service
+        starting at the location you've selected, and removes the helper service at the second
+        location specified by you.  If you enter "0" as the number of helper locomotives, only
+        the comments are added to the Manifest.</p>
 
       <h4 id="TrainLoadOptions">Train Load Options</h4>
       You can decide which car loads the train will service. Select under the "Edit

@@ -27,33 +27,19 @@ import java.util.List;
  */
 public interface RailCom extends AddressedIdTag {
 
+    // The type of address reported in a RailCom message
+    // is encoded using the LocoAddress.Protocol enum
+
     /**
-     * An enum representing the type of address reported
-     * in a RailCom message.
+     * Set the numeric DCC address reported back
      */
-    public enum AddressType {
-        /**
-         * Represemts that we do not know the address type of the
-         * decoder. This is the initial state of a newly created object before.
-         */
-        NO_ADDRESS,
-        
-        /**
-         * Represents that the address type reported back is Short.
-         */
-        SHORT_ADDRESS,
-        
-        /**
-         * Represents that the address type reported back is Long.
-         */
-        LONG_ADDRESS,
-        
-        /**
-         * Represents that the address type reported back is part of a
-         * Consist.
-         */
-        CONSIST_ADDRESS
-    }
+    void setDccAddress(LocoAddress address);
+    
+    /**
+     * Get the DCC address 
+     * @return the number part (not mode) of the reported DCC address or -1
+     */
+    LocoAddress getDccAddress();
 
     /**
      * An enum representing the decoder orientation reported
@@ -63,8 +49,8 @@ public interface RailCom extends AddressedIdTag {
      */
     public enum Orientation {
         UNKNOWN(0x00),      // historical values should they be needed in scripts
-        ORIENTA(0x10),
-        ORIENTB(0x20);
+        EAST(0x10),         // was ORIENTA
+        WEST(0x20);         // was ORIENTB
         
         private final int type;
         Orientation(int type) {
@@ -82,7 +68,37 @@ public interface RailCom extends AddressedIdTag {
     }
 
     /**
-     * Method for a RailCom Reader to set the orientation reported back from a
+     * An enum representing the decoder direction of motion
+     * reported in a RailCom message.
+     */
+    public enum Direction {
+        FORWARD,
+        BACKWARD,
+        UNKNOWN
+    }
+    
+    /**
+     * An enum representing whether the decoder reports moving
+     * in a RailCom message.
+     */
+    public enum Motion {
+        MOVING,
+        STATIONARY,
+        UNKNOWN
+    }
+    
+    /**
+     * An enum representing the DCC track signal quality  reported in
+     * in a RailCom message.
+     */
+    public enum QoS {
+        GOOD,
+        POOR,
+        UNKNOWN
+    }
+
+    /**
+     * Set the orientation reported back from a
      * device
      *
      * @param type the orientation to set
@@ -97,10 +113,55 @@ public interface RailCom extends AddressedIdTag {
     Orientation getOrientation();
 
     /**
-     * Method for a RailCom Reader to set the Actual speed reported back from a
+     * Set the direction of motion reported back from a
      * device
      *
-     * @param actualSpeed the speed
+     * @param type the direction to set
+     */
+    void setDirection(Direction type);
+
+    /**
+     * Gets the direction of motion of the Rail Com device on the track
+     *
+     * @return current direction
+     */
+    Direction getDirection();
+
+    /**
+     * Set the motion state reported back from a
+     * device
+     *
+     * @param type the motion state to set
+     */
+    void setMotion(Motion type);
+
+    /**
+     * Gets the motion  state of the Rail Com device on the track
+     *
+     * @return current motion state
+     */
+    Motion getMotion();
+
+    /**
+     * Set the Quality of Service state reported back from a
+     * device
+     *
+     * @param type the QoS state to set
+     */
+    void setQoS(QoS type);
+
+    /**
+     * Gets the Quality of Service state of the Rail Com device on the track
+     *
+     * @return current QoS state
+     */
+    QoS getQoS();
+
+    /**
+     * Method for a RailCom Reader to set the Actual speed reported back from a
+     * device. -1 if the speed is unavailable or unknown.
+     *
+     * @param actualSpeed the speed.
      */
     void setActualSpeed(int actualSpeed);
 
@@ -151,19 +212,19 @@ public interface RailCom extends AddressedIdTag {
     void setFuelLevel(int fuelLevel);
 
     /**
+     * Gets the remaining fuel level as a % Fuel level CV879 (RP.9.3.2)
+     *
+     * @return -1 if not set.
+     */
+    int getFuelLevel();
+
+    /**
      * Method for a RailCom Reader to set the water level reported back from a
      * device.
      *
      * @param waterLevel the water level
      */
     void setWaterLevel(int waterLevel);
-
-    /**
-     * Gets the remaining fuel level as a % Fuel level CV879 (RP.9.3.2)
-     *
-     * @return -1 if not set.
-     */
-    int getFuelLevel();
 
     /**
      * Gets the remaining fuel level as a % Water level CV878 (RP.9.3.2)

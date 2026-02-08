@@ -1,6 +1,8 @@
 package jmri.jmrit.logixng.configurexml;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.beans.PropertyVetoException;
 import java.io.*;
@@ -30,7 +32,7 @@ public class StoreAndLoadTest {
 
     @Test
     @DisabledIfHeadless
-    public void testLogixNGs() throws PropertyVetoException, Exception {
+    public void testLogixNGs() throws PropertyVetoException, IOException, JmriException {
 
         // Add new LogixNG actions and expressions to jmri.jmrit.logixng.CreateLogixNGTreeScaffold
         createLogixNGTreeScaffold.createLogixNGTree();
@@ -39,10 +41,8 @@ public class StoreAndLoadTest {
 
         // Store panels
         jmri.ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm == null) {
-            log.error("Unable to get default configure manager");
-            return;
-        }
+        assertNotNull(cm, "Unable to get default configure manager");
+
         PrintTreeSettings printTreeSettings = new PrintTreeSettings();
         printTreeSettings._printDisplayName = true;
 
@@ -64,12 +64,7 @@ public class StoreAndLoadTest {
         final String originalTree = stringWriter.toString();
 
         boolean results = cm.storeUser(firstFile);
-        log.debug(results ? "store was successful" : "store failed");
-        if (!results) {
-            log.error("Failed to store panel");
-            fail("Failed to store panel", new Exception());
-            // throw new RuntimeException("Failed to store panel");
-        }
+        assertTrue(results, "Failed to store panel");
 
         // Add the header comment to the xml file
         addHeader(firstFile, secondFile);
@@ -98,11 +93,7 @@ public class StoreAndLoadTest {
         //**********************************
 
         results = cm.load(secondFile);
-        log.debug(results ? "load was successful" : "store failed");
-        if ( !results) {
-            Assertions.fail("Failed to load panel");
-            // throw new RuntimeException("Failed to load panel");
-        }
+        assertTrue(results, "Failed to load panel");
 
         JUnitAppender.assertErrorMessage("systemName is already registered: IH1");
         JUnitAppender.assertErrorMessage("systemName is already registered: IH2");
@@ -117,8 +108,8 @@ public class StoreAndLoadTest {
             assertWarningsFromActivate(type);
         }
 
-        stringWriter = new StringWriter();
-        printWriter = new PrintWriter(stringWriter);
+        StringWriter stringWriter2 = new StringWriter();
+        printWriter = new PrintWriter(stringWriter2);
         logixNG_Manager.printTree(
                 printTreeSettings,
                 Locale.ENGLISH,
@@ -126,36 +117,40 @@ public class StoreAndLoadTest {
                 treeIndent,
                 new MutableInt(0));
 
-        String newTree = stringWriter.toString();
-        if (!originalTree.equals(newTree)) {
-            log.error("--------------------------------------------");
-            log.error("Old tree:");
-            log.error("XXX"+originalTree+"XXX");
-            log.error("--------------------------------------------");
-            log.error("New tree:");
-            log.error("XXX"+stringWriter.toString()+"XXX");
-            log.error("--------------------------------------------");
-
-            // log.error(conditionalNGManager.getBySystemName(originalTree).getChild(0).getConnectedSocket().getSystemName());
-
-            String[] originalTreeLines = originalTree.split(System.lineSeparator());
-            String[] newTreeLines = newTree.split(System.lineSeparator());
-            int line=0;
-            for (; line < Math.min(originalTreeLines.length, newTreeLines.length); line++) {
-                if (!originalTreeLines[line].equals(newTreeLines[line])) {
-                    log.error("Tree differs on line {}:", line+1);
-                    log.error("Orig: {}", originalTreeLines[line]);
-                    log.error(" New: {}", newTreeLines[line]);
-                    break;
-                }
-            }
-            Assertions.fail("The tree has changed. The tree differs on line "+Integer.toString(line+1));
-            // throw new RuntimeException("tree has changed");
-        }
+        String newTree = stringWriter2.toString();
+        assertEquals( originalTree, newTree, () ->
+            getCompareTreeFailText(originalTree, newTree));
 
 
         // for (LoggingEvent evt : JUnitAppender.getBacklog()) {
         // System.out.format("Log: %s, %s%n", evt.getLevel(), evt.getMessage());
+    }
+
+    public static String getCompareTreeFailText( final String originalTree, final String newTree) {
+        StringBuilder toReturn = new StringBuilder();
+        toReturn.append(System.lineSeparator()).append("--------------------------------------------")
+        .append(System.lineSeparator()).append("Old tree:")
+        .append(System.lineSeparator()).append("XXX").append(originalTree).append("XXX")
+        .append(System.lineSeparator()).append("--------------------------------------------")
+        .append(System.lineSeparator()).append("New tree:")
+        .append(System.lineSeparator()).append("XXX").append(newTree).append("XXX")
+        .append(System.lineSeparator()).append("--------------------------------------------");
+
+        // log.error(conditionalNGManager.getBySystemName(originalTree).getChild(0).getConnectedSocket().getSystemName());
+
+        String[] originalTreeLines = originalTree.split(System.lineSeparator());
+        String[] newTreeLines = newTree.split(System.lineSeparator());
+        int line=0;
+        for (; line < Math.min(originalTreeLines.length, newTreeLines.length); line++) {
+            if (!originalTreeLines[line].equals(newTreeLines[line])) {
+                toReturn.append(System.lineSeparator()).append("Tree differs on line ").append(line+1).append(":")
+                    .append(System.lineSeparator()).append("Orig: ").append(originalTreeLines[line])
+                    .append(System.lineSeparator()).append(" New: ").append(newTreeLines[line]);
+                break;
+            }
+        }
+        toReturn.append("The tree has changed. The tree differs on line ").append(Integer.toString(line+1));
+        return toReturn.toString();
     }
 
     private void assertWarningsFromActivate( SymbolTable.InitialValueType type ){
@@ -230,6 +225,6 @@ public class StoreAndLoadTest {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StoreAndLoadTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StoreAndLoadTest.class);
 
 }

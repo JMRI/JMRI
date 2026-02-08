@@ -692,7 +692,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
                 add1Engine.isSelected() ||
                 remove1Engine.isSelected() ||
                 modify1Caboose.isSelected());
-        engine1DropOption.setVisible(helper1Service.isSelected());
+        engine1DropOption.setVisible(helper1Service.isSelected() || add1Engine.isSelected());
         if (change1Engine.isSelected()) {
             engine1Option.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("EngineChange")));
         } else if (add1Engine.isSelected()) {
@@ -768,7 +768,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
                 add2Engine.isSelected() ||
                 remove2Engine.isSelected() ||
                 modify2Caboose.isSelected());
-        engine2DropOption.setVisible(helper2Service.isSelected());
+        engine2DropOption.setVisible(helper2Service.isSelected() || add2Engine.isSelected());
         if (change2Engine.isSelected()) {
             engine2Option.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("EngineChange")));
         } else if (add2Engine.isSelected()) {

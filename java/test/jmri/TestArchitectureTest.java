@@ -6,6 +6,8 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 
+import org.netbeans.jemmy.QueueTool;
+
 import com.tngtech.archunit.base.DescribedPredicate;
 import com.tngtech.archunit.core.domain.JavaClass;
 import com.tngtech.archunit.core.domain.JavaMethod;
@@ -14,6 +16,7 @@ import com.tngtech.archunit.lang.*;
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
 import com.tngtech.archunit.junit.*;
 
+import static com.tngtech.archunit.lang.conditions.ArchConditions.callMethod;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.*;
 
 /**
@@ -236,6 +239,13 @@ public class TestArchitectureTest {
             .because("Please use JUnit Assertions rather than the Java 'assert' keyword");
 
     @ArchTest
+    public static final ArchRule noQueueToolTimedWaitEmpty = noClasses()
+        .that().doNotHaveFullyQualifiedName("jmri.jmrit.operations.OperationsTestCase") // used in non-CI tearDown testing
+        .should( callMethod(QueueTool.class, "waitEmpty", long.class))
+        .because("Due to timers or cursor flashes, the queue may never become empty for a duration. "
+            + "Please call new QueueTool().waitEmpty() without a timeout, or use JUnitUtil.waitFor(xx)");
+
+    @ArchTest
     public static final ArchRule tests_should_use_JUnitUtil = classes()
             .that().areNotInterfaces()
             .and().doNotHaveModifier(JavaModifier.ABSTRACT ) // exclude abstract classes
@@ -283,6 +293,7 @@ public class TestArchitectureTest {
     private static boolean isJUnitTestClass(JavaClass c) {
         return c.getMethods().stream().anyMatch(m ->
             m.isAnnotatedWith( Test.class)
+            || m.isAnnotatedWith(ArchTest.class)
             || m.isAnnotatedWith( ParameterizedTest.class));
     }
 

@@ -1,29 +1,29 @@
 package jmri.jmrit.ctc.configurexml;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.ctc.CTCFiles;
 import jmri.profile.NullProfile;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
-/*
-* Test the external file import process
-* @author  Dave Sand   Copyright (C) 2020
-*/
+/**
+ * Test the external file import process
+ * @author  Dave Sand   Copyright (C) 2020
+ */
 public class ImportExternalDataTest {
 
     @Test
-    public void testExternalDataImport() throws Exception    {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testExternalDataImport() throws JmriException {
 
         // Load the test panel and initialize Logix and advanced block routing
         java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/setup/CTC_Test_Import.xml");  // NOI18N

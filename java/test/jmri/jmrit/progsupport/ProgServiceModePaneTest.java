@@ -1,7 +1,5 @@
  package jmri.jmrit.progsupport;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 
@@ -9,10 +7,9 @@ import jmri.*;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Tests for the ProgServiceModePane
@@ -22,8 +19,8 @@ import org.junit.Assume;
 public class ProgServiceModePaneTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCreateHorizontalNone() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create and show
         JmriJFrame f = new JmriJFrame("Horizontal None");
         f.getContentPane().add(
@@ -35,12 +32,13 @@ public class ProgServiceModePaneTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testCreateHorizontalDIRECTBYTEMODE() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // add dummy DCC
         InstanceManager.store(new DefaultProgrammerManager(
                 (new ProgrammerScaffold(ProgrammingMode.DIRECTBYTEMODE))), AddressedProgrammerManager.class);
-        Assert.assertNotNull("programer manager available", InstanceManager.getDefault(jmri.AddressedProgrammerManager.class));
+        Assertions.assertNotNull(InstanceManager.getDefault(jmri.AddressedProgrammerManager.class),
+            "programer manager available");
         // create and show
         JmriJFrame f = new JmriJFrame("Horizontal DIRECTBYTEMODE");
         f.getContentPane().add(
@@ -52,8 +50,8 @@ public class ProgServiceModePaneTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testCreateVerticalNone() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create and show
         JmriJFrame f = new JmriJFrame("Vertical None");
         f.getContentPane().add(

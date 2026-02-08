@@ -1,18 +1,19 @@
 package jmri.jmrit.ctc;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SignalMastManager;
+import jmri.*;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -25,8 +26,8 @@ public class CtcRunWithSignalMastsTest {
     static final boolean PAUSE = false;
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testAction() throws Exception {
+    @DisabledIfHeadless
+    public void testAction() throws JmriException {
 
         // Load the test panel and initialize Logix and advanced block routing
         ThreadingUtil.runOnGUIWithJmriException(() -> {
@@ -55,10 +56,10 @@ public class CtcRunWithSignalMastsTest {
         sm.provideSensor("IS2:CB").setKnownState(Sensor.ACTIVE);
 
         JUnitUtil.waitFor(()->{return sm.provideSensor("IS2:RDGK").getKnownState() == Sensor.ACTIVE;},"1/2 signal right indicator not active");
-        Assert.assertTrue(sm.provideSensor("IS2:RDGK").getKnownState() == Sensor.ACTIVE);
+        assertEquals(Sensor.ACTIVE, sm.provideSensor("IS2:RDGK").getKnownState());
         var mastALA = smm.getSignalMast("SM-Alpha-Left-A");
-        Assertions.assertNotNull(mastALA);
-        Assert.assertFalse(mastALA.getHeld());
+        assertNotNull(mastALA);
+        assertFalse(mastALA.getHeld());
 
         if (PAUSE) JUnitUtil.waitFor(2000);
 
@@ -66,7 +67,7 @@ public class CtcRunWithSignalMastsTest {
         sm.provideSensor("IS3:LEVER").setKnownState(Sensor.INACTIVE);
         sm.provideSensor("IS4:CB").setKnownState(Sensor.ACTIVE);
         JUnitUtil.waitFor(()->{return sm.provideSensor("IS3:SWRI").getKnownState() == Sensor.ACTIVE;},"3/4 turnout thrown indicator not active");
-        Assert.assertTrue(sm.provideSensor("IS3:SWRI").getKnownState() == Sensor.ACTIVE);
+        assertEquals(Sensor.ACTIVE, sm.provideSensor("IS3:SWRI").getKnownState());
 
         if (PAUSE) JUnitUtil.waitFor(2000);
 
@@ -81,18 +82,18 @@ public class CtcRunWithSignalMastsTest {
         if (PAUSE) JUnitUtil.waitFor(2000);
 
         JUnitUtil.waitFor(()->{return sm.provideSensor("IS4:LDGK").getKnownState() == Sensor.ACTIVE;},"3/4 signal left indicator not active");
-        Assert.assertTrue(sm.provideSensor("IS4:LDGK").getKnownState() == Sensor.ACTIVE);
+        assertEquals(Sensor.ACTIVE, sm.provideSensor("IS4:LDGK").getKnownState());
         var mastARA = smm.getSignalMast("SM-Alpha-Right-A");
-        Assertions.assertNotNull(mastARA);
-        Assert.assertFalse(mastARA.getHeld());
+        assertNotNull(mastARA);
+        assertFalse(mastARA.getHeld());
 
         if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Simulate left to right train
         sm.provideSensor("S-Alpha-Left").setKnownState(Sensor.ACTIVE);
         JUnitUtil.waitFor(()->{return sm.provideSensor("IS2:NGK").getKnownState() == Sensor.ACTIVE;},"1/2 signal normal indicator not active");
-        Assert.assertTrue(sm.provideSensor("IS2:NGK").getKnownState() == Sensor.ACTIVE);
-        Assert.assertTrue(mastALA.getHeld());
+        assertEquals(Sensor.ACTIVE, sm.provideSensor("IS2:NGK").getKnownState());
+        assertTrue(mastALA.getHeld());
 
         // Cancel left to right call on
         sm.provideSensor("IS4:CB").setKnownState(Sensor.INACTIVE);

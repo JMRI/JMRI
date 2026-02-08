@@ -2,7 +2,6 @@ package jmri.jmrit.progsupport;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class ProgModePaneTest {
     @Test
     public void testCTor() {
         ProgModePane t = new ProgModePane(javax.swing.BoxLayout.X_AXIS);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

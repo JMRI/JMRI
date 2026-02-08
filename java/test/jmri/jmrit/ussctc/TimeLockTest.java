@@ -1,11 +1,13 @@
 package jmri.jmrit.ussctc;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.*;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -21,7 +23,7 @@ public class TimeLockTest {
 
         TimeLock lock = new TimeLock(list);
 
-        Assert.assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
+        assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -36,7 +38,7 @@ public class TimeLockTest {
 
         TimeLock lock = new TimeLock(list);
 
-        Assert.assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
+        assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -51,7 +53,7 @@ public class TimeLockTest {
 
         TimeLock lock = new TimeLock(list);
 
-        Assert.assertTrue( ! lock.isLockClear(Lock.turnoutLockLogger));
+        assertFalse(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -63,7 +65,7 @@ public class TimeLockTest {
 
         TimeLock lock = new TimeLock(new SignalHeadSection[]{s});
 
-        Assert.assertTrue( ! lock.isLockClear(Lock.turnoutLockLogger));
+        assertFalse(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -75,7 +77,7 @@ public class TimeLockTest {
 
         TimeLock lock = new TimeLock(s);
 
-        Assert.assertTrue( ! lock.isLockClear(Lock.turnoutLockLogger));
+        assertFalse(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -96,7 +98,7 @@ public class TimeLockTest {
 
         TimeLock lock = new TimeLock(list);
 
-        Assert.assertTrue( ! lock.isLockClear(Lock.turnoutLockLogger));
+        assertFalse(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -112,7 +114,7 @@ public class TimeLockTest {
         BeanSetting b = new BeanSetting(t, Turnout.CLOSED);
         TimeLock lock = new TimeLock(new SignalHeadSection[]{s}, new BeanSetting[]{b});
 
-        Assert.assertTrue( ! lock.isLockClear(Lock.turnoutLockLogger));
+        assertFalse(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -128,14 +130,14 @@ public class TimeLockTest {
         BeanSetting b = new BeanSetting(t, Turnout.THROWN);
         TimeLock lock = new TimeLock(new SignalHeadSection[]{s}, new BeanSetting[]{b});
 
-        Assert.assertTrue( lock.isLockClear(Lock.turnoutLockLogger));
+        assertTrue( lock.isLockClear(Lock.turnoutLockLogger));
     }
 
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         // new Lock(); // to create statics
     }

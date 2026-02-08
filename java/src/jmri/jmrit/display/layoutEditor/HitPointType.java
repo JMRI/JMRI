@@ -127,7 +127,8 @@ public enum HitPointType {
     TURNTABLE_RAY_61,   //     111     /
     TURNTABLE_RAY_62,   //     112    /
     TURNTABLE_RAY_63,   //     113
-    BLOCKCONTENTSICON;
+    BLOCKCONTENTSICON,
+    LAYOUT_POS_JPNL;
 
     /**
      * @param hitType the hit point type
@@ -156,6 +157,7 @@ public enum HitPointType {
             case TURNTABLE_CENTER:
             case LAYOUT_POS_LABEL:
             case LAYOUT_POS_JCOMP:
+            case LAYOUT_POS_JPNL:
             case MULTI_SENSOR:
             case MARKER:
             case TRACK_CIRCLE_CENTRE:
@@ -204,6 +206,7 @@ public enum HitPointType {
             case TURNTABLE_CENTER:
             case LAYOUT_POS_LABEL:
             case LAYOUT_POS_JCOMP:
+            case LAYOUT_POS_JPNL:
             case MULTI_SENSOR:
             case MARKER:
             case TRACK_CIRCLE_CENTRE:
@@ -256,6 +259,7 @@ public enum HitPointType {
             case TURNTABLE_CENTER:
                 return true;
             case LAYOUT_POS_JCOMP:
+            case LAYOUT_POS_JPNL:
             case LAYOUT_POS_LABEL:
             case LEVEL_XING_A:
             case LEVEL_XING_B:
