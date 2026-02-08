@@ -6,6 +6,7 @@ import java.awt.JobAttributes.SidesType;
 import java.awt.event.ActionEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
@@ -30,6 +31,7 @@ public class HardcopyWriter extends Writer {
 
     // instance variables
     protected PrintJob job;
+    protected Graphics printJobGraphics;
     protected Graphics page;
     protected String jobname;
     protected String line;
@@ -44,6 +46,7 @@ public class HardcopyWriter extends Writer {
     protected FontMetrics headermetrics;
     protected int x0, y0;
     protected int height, width;
+    protected int width_including_right_margin;
     protected int headery;
     protected float charwidth;
     protected int lineheight;
@@ -141,20 +144,29 @@ public class HardcopyWriter extends Writer {
             if (jobAttributes.getDefaultSelection().equals(DefaultSelectionType.RANGE)) {
                 prFirst = jobAttributes.getPageRanges()[0][0];
             }
+        } else {
+            if (pageAttributes.getOrientationRequested().equals(PageAttributes.OrientationRequestedType.LANDSCAPE)) {
+                pagesizePoints = new Dimension(pagesizePoints.height, pagesizePoints.width);
+                pagesizePixels = new Dimension(pagesizePixels.height, pagesizePixels.width);
+            }
         }
 
         x0 = (int) (leftmargin * 72);
         y0 = (int) (topmargin * 72);
         width = pagesizePoints.width - (int) ((leftmargin + rightmargin) * 72);
         height = pagesizePoints.height - (int) ((topmargin + bottommargin) * 72);
+        width_including_right_margin = pagesizePoints.width - (int) (leftmargin * 72);
+
+        // Create a graphics context that we can use to get font metrics
+        Graphics g = getGraphics();
 
         // get body font and font size
         font = new Font(fontName, fontStyle, fontsize);
         metrics = frame.getFontMetrics(font);
         lineheight = metrics.getHeight();
         lineascent = metrics.getAscent();
-        Rectangle2D bounds = metrics.getStringBounds("mmmmmmmmmm", frame.getGraphics());
-        charwidth = (float) (bounds.getWidth() / 10);
+        Rectangle2D bounds = metrics.getStringBounds("m".repeat(100), g);
+        charwidth = (float) (bounds.getWidth() / 100.0);
 
         // compute lines and columns within margins
         chars_per_line = (int) (width / charwidth);
@@ -188,6 +200,31 @@ public class HardcopyWriter extends Writer {
             previewFrame.setSize(pagesizePixels.width + 48, pagesizePixels.height + 100);
             previewFrame.setVisible(true);
         }
+    }
+
+    /**
+     * Get a graphics context for the current page (or the print job graphics
+     * context if available) Make sure that this is setup with the appropriate
+     * scale factor for the current page.
+     * 
+     * @return the graphics context
+     */
+    private Graphics getGraphics() {
+        Graphics g = null;
+        if (job != null) {
+            if (printJobGraphics == null) {
+                printJobGraphics = job.getGraphics();
+            }
+            g = printJobGraphics;
+        } else {
+            Image img = new BufferedImage(pagesizePixels.width, pagesizePixels.height, BufferedImage.TYPE_INT_RGB);
+            g = img.getGraphics();
+        }
+        if (g == null) {
+            throw new RuntimeException("Could not get graphics context");
+        }
+        setupGraphics(g);
+        return g;
     }
 
     /**
@@ -324,7 +361,7 @@ public class HardcopyWriter extends Writer {
                     continue;
                 }
                 // if no more characters will fit on the line, start new line
-                if (charoffset >= width) {
+                if (charoffset >= width_including_right_margin) {
                     newline();
                     // also start a new page if needed
                     if (page == null) {
@@ -472,8 +509,11 @@ public class HardcopyWriter extends Writer {
                 metrics = frame.getFontMetrics(font);
                 lineheight = metrics.getHeight();
                 lineascent = metrics.getAscent();
-                Rectangle2D bounds = metrics.getStringBounds("mmmmmmmmmm", frame.getGraphics());
-                charwidth = (float) (bounds.getWidth() / 10);
+
+                Graphics g = getGraphics();
+
+                Rectangle2D bounds = metrics.getStringBounds("m".repeat(100), g);
+                charwidth = (float) (bounds.getWidth() / 100.0);
 
                 // compute lines and columns within margins
                 chars_per_line = (int) (width / charwidth);
@@ -567,7 +607,12 @@ public class HardcopyWriter extends Writer {
         if (page == null) {
             if (!isPreview) {
                 if (pagenum >= prFirst) {
-                    page = job.getGraphics();
+                    if (printJobGraphics == null) {
+                        page = job.getGraphics();
+                    } else {
+                        page = printJobGraphics;
+                        printJobGraphics = null;
+                    }
                 } else {
                     // The job.getGraphics() method will return null if the number of pages requested is greater than
                     // the number the user selected. Since the code checks for a null page in many places, we need to
@@ -575,36 +620,17 @@ public class HardcopyWriter extends Writer {
                     JFrame f = new JFrame();
                     f.pack();
                     page = f.createImage(pagesizePixels.width, pagesizePixels.height).getGraphics();
-                    Graphics2D g2d = (Graphics2D) page;
-                    double scale = Toolkit.getDefaultToolkit().getScreenResolution() / 72.0;
-                    g2d.scale(scale, scale);
+                    if (page instanceof Graphics2D) {
+                        Graphics2D g2d = (Graphics2D) page;
+                        double scale = Toolkit.getDefaultToolkit().getScreenResolution() / 72.0;
+                        g2d.scale(scale, scale);
+                    }
                 }
             } else { // Preview
                 previewImage = previewPanel.createImage(pagesizePixels.width, pagesizePixels.height);
                 page = previewImage.getGraphics();
-                Graphics2D g2d = (Graphics2D) page;
-                double scale = Toolkit.getDefaultToolkit().getScreenResolution() / 72.0;
-                g2d.scale(scale, scale);
 
-                // Enable Antialiasing (Smooths the edges)
-                g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
-                // Enable Fractional Metrics (Improves character spacing)
-                g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
-                        RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-
-                // High Quality Rendering
-                g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
-                        RenderingHints.VALUE_RENDER_QUALITY);
-
-                // Set Interpolation for the Image (The most important for images)
-                g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                        RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-
-                // Enable Antialiasing (Smooths the edges)
-                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                        RenderingHints.VALUE_ANTIALIAS_ON);
+                setupGraphics(page);
 
                 page.setColor(Color.white);
                 page.fillRect(0, 0, previewImage.getWidth(previewPanel), previewImage.getHeight(previewPanel));
@@ -615,7 +641,7 @@ public class HardcopyWriter extends Writer {
             page.setFont(headerfont);
             page.drawString(jobname, x0, headery);
 
-            FontRenderContext frc = ((Graphics2D) page).getFontRenderContext();
+            FontRenderContext frc = page.getFontMetrics().getFontRenderContext();
 
             String s = "- " + pagenum + " -"; // print page number centered
             Rectangle2D bounds = headerfont.getStringBounds(s, frc);
@@ -631,6 +657,41 @@ public class HardcopyWriter extends Writer {
         // set basic font
         if (page != null) {
             page.setFont(font);
+        }
+    }
+
+    /**
+     * Setup the graphics context for preview. We want the subpixel positioning
+     * for text. This is not used for the actual printing (partly because the
+     * Print graphics context is not a Graphics2D object).
+     * 
+     * @param g the graphics context to setup
+     */
+    private void setupGraphics(Graphics g) {
+        if (g instanceof Graphics2D) {
+            Graphics2D g2d = (Graphics2D) g;
+            double scale = Toolkit.getDefaultToolkit().getScreenResolution() / 72.0;
+            g2d.scale(scale, scale);
+
+            // Enable Antialiasing (Smooths the edges)
+            g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+            // Enable Fractional Metrics (Improves character spacing)
+            g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
+                    RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+
+            // High Quality Rendering
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+                    RenderingHints.VALUE_RENDER_QUALITY);
+
+            // Set Interpolation for the Image (The most important for images)
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                    RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+
+            // Enable Antialiasing (Smooths the edges)
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
         }
     }
 
@@ -847,5 +908,5 @@ public class HardcopyWriter extends Writer {
         }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HardcopyWriter.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HardcopyWriter.class);
 }
