@@ -31,6 +31,7 @@ public class HardcopyWriter extends Writer {
 
     // instance variables
     protected PrintJob job;
+    protected Graphics printJobGraphics;
     protected Graphics page;
     protected String jobname;
     protected String line;
@@ -157,9 +158,7 @@ public class HardcopyWriter extends Writer {
         width_including_right_margin = pagesizePoints.width - (int) (leftmargin * 72);
 
         // Create a graphics context that we can use to get font metrics
-        Image img = new BufferedImage(pagesizePixels.width, pagesizePixels.height, BufferedImage.TYPE_INT_RGB);
-        Graphics g = img.getGraphics();
-        setupGraphics(g);
+        Graphics g = getGraphics();
 
         // get body font and font size
         font = new Font(fontName, fontStyle, fontsize);
@@ -201,6 +200,31 @@ public class HardcopyWriter extends Writer {
             previewFrame.setSize(pagesizePixels.width + 48, pagesizePixels.height + 100);
             previewFrame.setVisible(true);
         }
+    }
+
+    /**
+     * Get a graphics context for the current page (or the print job graphics
+     * context if available) Make sure that this is setup with the appropriate
+     * scale factor for the current page.
+     * 
+     * @return the graphics context
+     */
+    private Graphics getGraphics() {
+        Graphics g = null;
+        if (job != null) {
+            if (printJobGraphics == null) {
+                printJobGraphics = job.getGraphics();
+            }
+            g = printJobGraphics;
+        } else {
+            Image img = new BufferedImage(pagesizePixels.width, pagesizePixels.height, BufferedImage.TYPE_INT_RGB);
+            g = img.getGraphics();
+        }
+        if (g == null) {
+            throw new RuntimeException("Could not get graphics context");
+        }
+        setupGraphics(g);
+        return g;
     }
 
     /**
@@ -486,9 +510,7 @@ public class HardcopyWriter extends Writer {
                 lineheight = metrics.getHeight();
                 lineascent = metrics.getAscent();
 
-                Image img = new BufferedImage(pagesizePixels.width, pagesizePixels.height, BufferedImage.TYPE_INT_RGB);
-                Graphics g = img.getGraphics();
-                setupGraphics(g);
+                Graphics g = getGraphics();
 
                 Rectangle2D bounds = metrics.getStringBounds("m".repeat(100), g);
                 charwidth = (float) (bounds.getWidth() / 100.0);
@@ -585,7 +607,12 @@ public class HardcopyWriter extends Writer {
         if (page == null) {
             if (!isPreview) {
                 if (pagenum >= prFirst) {
-                    page = job.getGraphics();
+                    if (printJobGraphics == null) {
+                        page = job.getGraphics();
+                    } else {
+                        page = printJobGraphics;
+                        printJobGraphics = null;
+                    }
                 } else {
                     // The job.getGraphics() method will return null if the number of pages requested is greater than
                     // the number the user selected. Since the code checks for a null page in many places, we need to
@@ -633,6 +660,13 @@ public class HardcopyWriter extends Writer {
         }
     }
 
+    /**
+     * Setup the graphics context for preview. We want the subpixel positioning
+     * for text. This is not used for the actual printing (partly because the
+     * Print graphics context is not a Graphics2D object).
+     * 
+     * @param g the graphics context to setup
+     */
     private void setupGraphics(Graphics g) {
         if (g instanceof Graphics2D) {
             Graphics2D g2d = (Graphics2D) g;
