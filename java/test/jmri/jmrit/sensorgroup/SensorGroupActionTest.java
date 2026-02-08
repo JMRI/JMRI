@@ -1,14 +1,14 @@
 package jmri.jmrit.sensorgroup;
 
-import jmri.util.JUnitUtil;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.junit.Assume;
-
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.swing.JFrame;
+
+import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
+import org.junit.jupiter.api.*;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -22,21 +22,21 @@ public class SensorGroupActionTest {
     @Test
     public void testCTor() {
         SensorGroupAction t = new SensorGroupAction();
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t, "exists");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testActionCreateAndFire() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SensorGroupAction a = new SensorGroupAction("Sensor Group");
         a.actionPerformed(null);
         // wait for frame with "Sensor Group" in title, case insensitive
         // first boolean is false for exact to allow substring to match
         // second boolean is false to all case insensitive match
         JFrame frame = JFrameOperator.waitJFrame("Sensor Group", false, false);
-        Assert.assertNotNull(frame);
+        assertNotNull(frame);
         // verify the action provided the expected frame class
-        Assert.assertEquals(SensorGroupFrame.class.getName(), frame.getClass().getName());
+        assertEquals(SensorGroupFrame.class.getName(), frame.getClass().getName());
         JUnitUtil.dispose(frame);
     }
 

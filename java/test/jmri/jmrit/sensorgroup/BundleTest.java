@@ -1,18 +1,18 @@
-package jmri.jmrit.progsupport;
+package jmri.jmrit.sensorgroup;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Locale;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 /**
- * Tests for the Bundle class
- *
+ * Test Bundle
+ * 
  * @author Bob Jacobsen Copyright (C) 2012
  */
-public class BundleTest  {
+public class BundleTest {
 
     @Test
     public void testGoodKeysMessage() {
