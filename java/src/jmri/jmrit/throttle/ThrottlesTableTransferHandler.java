@@ -51,9 +51,14 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
 
    @Override
    public boolean importData(TransferHandler.TransferSupport info) {
-      JTable target = (JTable) info.getComponent();
-      JTable.DropLocation dl = (JTable.DropLocation) info.getDropLocation();
-       // dl.getRow(); dl.getColumn() ;      
+       if (! (info.getComponent() instanceof JTable)) {
+           return false;
+       }
+       JTable target = (JTable) info.getComponent();
+       if (! (info.getDropLocation() instanceof JTable.DropLocation)) {
+           return false;
+       }       
+       JTable.DropLocation dl = (JTable.DropLocation) info.getDropLocation();
        target.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
        if (info.isDataFlavorSupported(throttleControlObjectFlavor)) {
            try {
