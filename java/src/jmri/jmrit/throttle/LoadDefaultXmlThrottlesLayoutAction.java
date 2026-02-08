@@ -67,7 +67,7 @@ public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
             log.error("No default throttle layout, creating an empty throttle window");
         }
         // need to create a new one
-        ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+        ThrottleControler tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
         tf.toFront();
     }
 

@@ -132,7 +132,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             // speed
             if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
                 JLayeredPane layerPane = new JLayeredPane();
-                int cmpWidth = jtable.getWidth()/4 ;
+                int cmpWidth = jtable.getWidth()/jtable.getColumnCount()/4 ;
                 layerPane.setPreferredSize(new Dimension(cmpWidth, LINE_HEIGHT - 8));
                 // speed
                 JProgressBar speedBar = new javax.swing.JProgressBar();

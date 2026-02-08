@@ -19,94 +19,55 @@ import org.slf4j.LoggerFactory;
  */
 
 public class ThrottlesTableModel extends AbstractTableModel implements java.beans.PropertyChangeListener, ConsistListListener{
-
-    private final List<ThrottleFrame> throttleFrames = new LinkedList<>();
+    
+    // The JMRI Swing throttles manager
+    private final ThrottleControlersContainersManager throttleFrameManager = InstanceManager.getDefault(ThrottleFrameManager.class);
 
     @Override
     public int getRowCount() {
-        return throttleFrames.size();
+        int max = 0;
+        Iterator<ThrottleControlersContainer> twi = throttleFrameManager.iterator();
+        while (twi.hasNext()) {
+            max = Math.max(max, twi.next().getNbThrottlesControlers());
+        }
+        return max;
     }
 
     @Override
     public int getColumnCount() {
-        return 1;
+        return throttleFrameManager.getNbThrottleControlersContainers();        
     }
 
     @Override
-    public Object getValueAt(int i, int i1) {
-        return throttleFrames.get(i);
-    }
-
-    public Iterator<ThrottleFrame> iterator() {
-        return throttleFrames.iterator();
+    public ThrottleControler getValueAt(int row_tf, int col_tw) {
+        ThrottleControlersContainer tw = throttleFrameManager.getThrottleControlersContainerAt(col_tw);
+        if (tw == null) {
+            return null;
+        }
+        //log.debug("{} selected", tw.getThrottleFrameAt(row_tf).getTitle());
+        return tw.getThrottleControlerAt(row_tf);
     }
     
-    public void moveValueAt(int from, int to) {
-        log.debug("Move value at "+from+" to "+to);
-        ThrottleFrame tfToMove = throttleFrames.get(from);
-        if (to >= throttleFrames.size()) {
-            to = throttleFrames.size()-1;
-        }
-        ThrottleFrame tfmoveTo = throttleFrames.get(to);
-        tfToMove.getThrottleWindow().removeThrottleFrame(tfToMove);
-        tfmoveTo.getThrottleWindow().addThrottleFrame(tfToMove);
-        tfToMove.setThrottleWindow(tfmoveTo.getThrottleWindow());
-        // update throttle list table
-        removeThrottleFrame(tfToMove);
-        addThrottleFrame(tfToMove.getThrottleWindow(),tfToMove);
-        fireTableDataChanged();
+    public void moveThrottleControler(ThrottleControler tf, int row_tf, int col_tw ) {
+        tf.getThrottleControlersContainer().removeThrottleControler(tf);
+        tf.setThrottleControlersContainer(throttleFrameManager.getThrottleControlersContainerAt(col_tw));
+        throttleFrameManager.getThrottleControlersContainerAt(col_tw).addThrottleControlerAt(tf, row_tf);        
+        fireTableStructureChanged();
     }
-
-    public void addThrottleFrame(ThrottleWindow tw, ThrottleFrame ntf) {
-        int loc = -1;
-        int idx = 0;
-        // insert it after the last one from its containing throttle window
-        for (ThrottleFrame tf: throttleFrames) {
-            if ( tf.getThrottleWindow() == tw) {
-                loc = idx;
-            }
-            idx++;
-        }
-        if (loc != -1) {
-            throttleFrames.add(loc+1, ntf);
-        } else {
-            throttleFrames.add(ntf);
-        }        
-        fireTableDataChanged();
-    }
-
-    /**
-     * Get the number of usages of a particular Loco Address.
-     * @param la the Loco Address, can be null.
-     * @return 0 if no usages, else number of AddressPanel usages.
-     */
-    public int getNumberOfEntriesFor(@CheckForNull DccLocoAddress la) {
-        if (la == null) { 
-            return 0; 
-        }
-        int ret = 0;
-        for (ThrottleFrame tf: throttleFrames) {
-            AddressPanel ap = tf.getAddressPanel();
-            if ( ap.getThrottle() != null && 
-                ( la.equals( ap.getCurrentAddress()) || la.equals(ap.getConsistAddress()) ) ) {
-                ret++; // in use, increment count.
-            }
-        }
-        return ret;
-    }
-
-    public void removeThrottleFrame(ThrottleFrame tf) {
-        throttleFrames.remove(tf);
-        fireTableDataChanged();
+    
+    public ThrottleControlersContainer getThrottleControlersContainerAt( int col_tw) {
+        return throttleFrameManager.getThrottleControlersContainerAt(col_tw);
     }
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if ((e.getPropertyName().equals(Throttle.SPEEDSETTING)) ||
                 (e.getPropertyName().equals(Throttle.SPEEDSTEPS)) ||
-                (e.getPropertyName().equals(Throttle.ISFORWARD)) ||
-                (e.getPropertyName().equals("ThrottleFrame"))) {
+                (e.getPropertyName().equals(Throttle.ISFORWARD))) {
             fireTableDataChanged();
+        }
+        if (e.getPropertyName().equals("ThrottleFrame")) {
+            fireTableStructureChanged();
         }
     }
 

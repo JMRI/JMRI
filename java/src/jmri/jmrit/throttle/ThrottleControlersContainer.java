@@ -1,0 +1,68 @@
+package jmri.jmrit.throttle;
+
+import javax.annotation.CheckForNull;
+
+import jmri.DccLocoAddress;
+import jmri.jmrit.roster.RosterEntry;
+
+/**
+ * 
+ * An interface for containers of throttle controlers
+ *  (ThrottleWindow for Swing throttles for instance)
+ * 
+ * @author Lionel Jeanson 2025
+ */
+public interface ThrottleControlersContainer {
+
+    /**
+     * Return the number of thottle controlS containerS (ThrottleWindows forinstance)
+     *
+     * @return the number of active thottle controls containers.
+     */    
+    int getNbThrottlesControlers();
+    
+    /**
+     * Created a new throttle controler
+     *
+     * @return the newly created throttle controler
+     */    
+    ThrottleControler newThrottleControler();
+    
+    /**
+     * Adds an existing throttle controler to that container list at position n
+     *
+     * @param tf the throttle controler to add
+     * @param n position that it will inserted at
+     */
+    void addThrottleControlerAt(ThrottleControler tf, int n);
+    
+    /**
+     * Remove a throttle controler from that container
+     *
+     * @param tf the throttle controler to add
+     */
+    void removeThrottleControler(ThrottleControler tf);
+    
+    /**
+     * Get the throttle controler at position n
+     *
+     * @param n position
+     * @return the throttle controler
+     */
+    ThrottleControler getThrottleControlerAt(int n);
+    
+    /**
+     * Force speed setting of all throttles managed by that controlers container
+     *
+     * @param speed speed setting
+     */    
+    void setSpeedAll(float speed);
+
+    /**
+     * Get the number of usages of a particular Loco Address.
+     * @param la the Loco Address, can be null.
+     * @return 0 if no usages, else number of AddressPanel usages.
+     */    
+    public int getNumberOfEntriesFor(DccLocoAddress la);
+
+}

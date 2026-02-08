@@ -13,6 +13,8 @@ import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
 
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A panel to display a list of active JMRI throttles
@@ -47,14 +49,18 @@ public class ThrottlesListPanel extends JPanel {
         throttleFrames.setTableHeader(null);
         throttleFrames.setDragEnabled(true);
         throttleFrames.setDropMode(DropMode.INSERT_ROWS);
-        throttleFrames.setTransferHandler(new ThrottlesTableRowTransferHandler(throttleFrames)); 
+        throttleFrames.setTransferHandler(new ThrottlesTableTransferHandler(throttleFrames)); 
         throttleFrames.setDefaultRenderer(Object.class, new ThrottlesTableCellRenderer());
         throttleFrames.addMouseListener(JmriMouseListener.adapt(new JmriMouseListener() {
             @Override
-            public void mouseClicked(JmriMouseEvent e) {
-                int row = throttleFrames.rowAtPoint(e.getPoint());
-                throttleFrames.getSelectionModel().setSelectionInterval(row, row);
-                ((ThrottleFrame) throttleFramesLM.getValueAt(row, 0)).toFront();
+            public void mouseClicked(JmriMouseEvent e) {                
+                int ntw = throttleFrames.columnAtPoint(e.getPoint());
+                int ntf = throttleFrames.rowAtPoint(e.getPoint());
+                log.debug("Click in table at row {} (frame) / col {} (window)", ntf, ntw);
+                ThrottleFrame tf = ((ThrottleFrame) throttleFramesLM.getValueAt(ntf, ntw));
+                if (tf != null) {
+                    tf.toFront();
+                }
             }
 
             @Override
@@ -85,7 +91,7 @@ public class ThrottlesListPanel extends JPanel {
         jbNew.setVerticalTextPosition(SwingConstants.BOTTOM);
         jbNew.setHorizontalTextPosition(SwingConstants.CENTER);
         jbNew.addActionListener((ActionEvent e) -> {
-            ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+            ThrottleControler tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
             tf.toFront();
         });
         throttleToolBar.add(jbNew);
@@ -125,4 +131,6 @@ public class ThrottlesListPanel extends JPanel {
     void applyPreferences() {
         repaint();
     }
+    
+    private final static Logger log = LoggerFactory.getLogger(ThrottlesListPanel.class);    
 }
