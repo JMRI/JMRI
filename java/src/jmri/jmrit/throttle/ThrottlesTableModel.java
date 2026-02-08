@@ -2,13 +2,10 @@ package jmri.jmrit.throttle;
 
 import java.util.*;
 
-import javax.annotation.CheckForNull;
 import javax.swing.table.AbstractTableModel;
 
 import jmri.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A TableModel to display active Throttles in a summary table
@@ -75,7 +72,5 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
     public void notifyConsistListChanged() {
         fireTableDataChanged();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(ThrottlesTableModel.class);
 
 }

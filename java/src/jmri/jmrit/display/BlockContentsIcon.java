@@ -14,7 +14,6 @@ import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.Bundle;
 import jmri.jmrit.throttle.ThrottleControler;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.swing.JmriJOptionPane;

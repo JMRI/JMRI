@@ -21,7 +21,6 @@ import jmri.NamedBeanHandle;
 import jmri.Reportable;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.Bundle;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.throttle.ThrottleControler;

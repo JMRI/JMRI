@@ -71,9 +71,6 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
            try {
                ArrayList<RosterEntry> REs = RosterEntrySelection.getRosterEntries(info.getTransferable());
                ThrottleControlersContainer tw = ((ThrottlesTableModel) table.getModel()).getThrottleControlersContainerAt(dl.getColumn());
-               if (tw == null) {
-                   
-               }
                for (RosterEntry re : REs) {
                    ThrottleControler tf = tw.newThrottleControler();
                    tf.toFront();

@@ -1,9 +1,7 @@
 package jmri.jmrit.throttle;
 
-import javax.annotation.CheckForNull;
 
 import jmri.DccLocoAddress;
-import jmri.jmrit.roster.RosterEntry;
 
 /**
  * 

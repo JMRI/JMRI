@@ -1,6 +1,5 @@
 package jmri.jmrit.throttle;
 
-import java.util.Iterator;
 
 import javax.annotation.CheckForNull;
 

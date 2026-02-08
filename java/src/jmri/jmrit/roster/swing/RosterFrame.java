@@ -49,7 +49,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
-import jmri.jmrit.roster.swing.Bundle;
 import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
@@ -1299,7 +1298,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
                     tw = tf.getThrottleControlersContainer();
                 } else {
-                    tf = (ThrottleFrame) tw.newThrottleControler();
+                    tf = tw.newThrottleControler();
                 }
                 tf.toFront();
                 tf.setRosterEntry(re);

@@ -738,6 +738,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersCont
         throttlesLayout.show(throttlesPanel, txt);
         setCurrentThrottleFrame(tf);
         updateGUI();
+        pcs.firePropertyChange("ThrottleFrame", otf, tf);
         return getCurrentThrottleFrame();
     }
 
