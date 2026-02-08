@@ -15,6 +15,7 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.*;
 import java.util.*;
+
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
@@ -24,7 +25,6 @@ import jmri.jmrit.jython.*;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.LogixNGPreferences;
 import jmri.jmrit.revhistory.FileHistory;
-import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrix.*;
 import jmri.profile.*;
 import jmri.script.JmriScriptEngineManager;
