@@ -2,7 +2,6 @@ package jmri.jmrit.roster;
 
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
-import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.File;
@@ -15,6 +14,7 @@ import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
@@ -288,7 +288,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                     functionVisibles.put(key, value);
                 }
             });
-        }
+        }        
     }
 
     /**
@@ -1033,7 +1033,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 }
                 if ((this.getFunctionLabel(num) == null) || (source.equalsIgnoreCase("model"))) {
                     this.setFunctionLabel(num, val);
-                    this.setFunctionLockable(num, "true".equals(lock));
+                    this.setFunctionLockable(num, "true".equals(lock));                    
                     if (visible != null){
                         this.setFunctionVisible(num, "true".equals(visible));
                     }
@@ -1249,7 +1249,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         }
         return ((functionLockables.get(fn) != null) ? functionLockables.get(fn) : true);
     }
-
+    
     /**
      * Define whether a specific function button is visible.
      *
@@ -1265,7 +1265,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         functionVisibles.put(fn, visible);
         this.firePropertyChange(RosterEntry.FUNCTION_LOCKABLE + fn, old, visible);
     }
-
+    
     /**
      * Return the UI visibility of a specific function button. Defaults to true.
      *
@@ -1661,19 +1661,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Function to get the size of an image in points when shrunk
-     * to fit a given size.
-     *
-     * @param img the image to get the size of
-     * @param size the size to shrink the image to (in points)
-     * @return the size of the image in points
-     */
-    public static Dimension getImageSize(Image img, Dimension size) {
-        double scale = Math.min((double) size.width / img.getWidth(null), (double) size.height / img.getHeight(null));
-        return new Dimension((int) (img.getWidth(null) * scale), (int) (img.getHeight(null) * scale));
-    }
-
-    /**
      * Ultra-compact list view of roster entries. Shows text from fields as
      * initially visible in the Roster frame table.
      * <p>
@@ -1749,30 +1736,48 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     public void printEntry(HardcopyWriter w) {
+        printEntry(w, w.getIsPreview() ? 1.5f : 3.0f);
+    }
+
+    public void printEntry(HardcopyWriter w, float overSample) {
         if (getIconPath() != null) {
             ImageIcon icon = new ImageIcon(getIconPath());
             // We use an ImageIcon because it's guaranteed to have been loaded when ctor is complete.
             // We set the imagesize to 150x150 pixels times the overSample. The
             // resulting image on the page will be scaled back down to 150pt x 150pt
 
-            Image img = icon.getImage();
-            Dimension shape = new Dimension(150, 150);   // in points
-            Dimension actualShape = getImageSize(img, shape);
+            int imagesize = Math.round(150 * overSample);
 
-            blanks = (actualShape.height - w.getLineAscent()) / w.getLineHeight();
+            Image img = icon.getImage();
+            int width = img.getWidth(null);
+            int height = img.getHeight(null);
+            double widthratio = (double) width / imagesize;
+            double heightratio = (double) height / imagesize;
+            double ratio = Math.max(widthratio, heightratio);
+            Image newImg = img;
+            if (ratio > 1) {
+                width = (int) (width / ratio);
+                height = (int) (height / ratio);
+                newImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+            } else {
+                // The image isn't big enough to start with
+                // We don't want to scale it down by the original overSample value
+                // So we adjust the oversample so that it just fits.
+                overSample = Math.max(overSample * (float) ratio, 1f);
+            }
+
+            blanks = ((int) Math.ceil(height / overSample) - w.getLineAscent()) / w.getLineHeight();
 
             if (blanks + w.getCurrentLineNumber() > w.getLinesPerPage()) {
                 w.pageBreak();
             }
-
-            Dimension d = w.writeSpecificSize(img, shape);
+            ImageIcon newIcon = new ImageIcon(newImg);
+            w.writeWithScale(newIcon.getImage(), overSample, new JLabel(newIcon));
             // Work out the number of line approx that the image takes up.
             // We might need to pad some areas of the roster out, so that things
             // look correct and text doesn't overflow into the image.
             textSpaceWithIcon
-                    = (int) (w.getCharactersPerLine() - (d.width / w.getCharWidth()) - indentWidth - 1);
-            // Update blanks to be the number of lines the image takes up.
-            blanks = (d.height - w.getLineAscent()) / w.getLineHeight();
+                    = w.getCharactersPerLine() - ((int)Math.ceil(width / overSample) / w.getCharWidth()) - indentWidth - 1;
         }
         printEntryDetails(w);
     }
