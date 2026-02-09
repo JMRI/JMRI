@@ -274,7 +274,6 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
                 break;
             case 0x80:
                 int decUpper = (b4 << 1) | ((b5>>7)&0x01); // BCD upper value
-                System.err.println("decUpper "+decUpper);
                 dccNumber = decUpper*100 + b5;
                 dccType = LocoAddress.Protocol.DCC_EXTENDED_CONSIST;
                 
