@@ -31,6 +31,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.RowSorterEvent;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
@@ -46,6 +47,7 @@ import jmri.util.swing.JmriMouseAdapter;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.MultiLineCellRenderer;
+import jmri.util.swing.MultiLineCellEditor;
 import jmri.util.swing.XTableColumnModel;
 
 /**
@@ -87,14 +89,22 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             }
         });
         dataTable = new JTable(dataModel) {
-            // only use MultiLineRenderer in COMMENTS column
+            // only use MultiLineRenderer and MultiLineCellEditor in COMMENTS and auxiliary columns
             @Override
             public TableCellRenderer getCellRenderer(int row, int column) {
                 var modelColumn = convertColumnIndexToModel(column);
-                if (modelColumn == RosterTableModel.COMMENT) {
+                if (modelColumn == RosterTableModel.COMMENT || modelColumn >= RosterTableModel.NUMCOL) {
                     return new MultiLineCellRenderer();
                 }
                 return super.getCellRenderer(row, column);
+            }
+            @Override
+            public TableCellEditor getCellEditor(int row, int column) {
+                var modelColumn = convertColumnIndexToModel(column);
+                if (modelColumn == RosterTableModel.COMMENT || modelColumn >= RosterTableModel.NUMCOL) {
+                    return new MultiLineCellEditor();
+                }
+                return super.getCellEditor(row, column);
             }
         };
         dataModel.setAssociatedTable(dataTable);  // used for resizing
