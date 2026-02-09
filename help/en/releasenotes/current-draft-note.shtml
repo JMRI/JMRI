@@ -458,7 +458,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Stop train immediately if it has no occupied section.</li>
         </ul>
 
     <h3>Dispatcher System</h3>

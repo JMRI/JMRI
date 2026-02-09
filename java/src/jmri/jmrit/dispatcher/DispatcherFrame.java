@@ -531,6 +531,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private boolean _AutoTurnouts = false;
     private boolean _TrustKnownTurnouts = false;
     private boolean _UseOccupiedTrackSpeed = false;
+    private boolean _StrictTrainTracking = false;
     private boolean _useTurnoutConnectionDelay = false;
     private boolean _ShortActiveTrainNames = false;
     private boolean _ShortNameInBlock = true;
@@ -3046,6 +3047,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         _UseOccupiedTrackSpeed = set;
     }
 
+    protected boolean getUseStrictTrainTracking() {
+        return _StrictTrainTracking;
+    }
+
+    protected void setUseStrictTrainTracking(boolean set) {
+        _StrictTrainTracking = set;
+    }
+
     protected boolean getUseTurnoutConnectionDelay() {
         return _useTurnoutConnectionDelay;
     }
@@ -3263,7 +3272,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         public static final int CURRENTSIGNAL_COLUMN = 14;
         public static final int CURRENTSIGNAL_COLUMN_U = 15;
         public static final int DCC_ADDRESS = 16;
-        public static final int MAX_COLUMN = 16;
+        public static final int ISHELDCHECKBOX_COLUMN = 17;
+        public static final int CURRENTBLOCK_COLUMN = 18;
+        public static final int NEXTBLOCK_COLUMN = 19;
+        public static final int MAX_COLUMN = 19;
+
         public ActiveTrainsTableModel() {
             super();
         }
@@ -3283,6 +3296,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return JButton.class;
                 case RESTARTCHECKBOX_COLUMN:
                 case ISAUTO_COLUMN:
+                case ISHELDCHECKBOX_COLUMN:
                     return Boolean.class;
                 default:
                     return String.class;
@@ -3305,6 +3319,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case ALLOCATEBUTTON_COLUMN:
                 case TERMINATEBUTTON_COLUMN:
                 case RESTARTCHECKBOX_COLUMN:
+                case ISHELDCHECKBOX_COLUMN:
                     return (true);
                 default:
                     return (false);
@@ -3348,6 +3363,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return(Bundle.getMessage("CurrentSignalColumnTitle"));
                 case DCC_ADDRESS:
                     return(Bundle.getMessage("DccColumnTitleColumnTitle"));
+                case ISHELDCHECKBOX_COLUMN:
+                    return(Bundle.getMessage("IsHeldColumnTitle"));
+                case CURRENTBLOCK_COLUMN:
+                    return(Bundle.getMessage("CurrentBlockTitle"));
+                case NEXTBLOCK_COLUMN:
+                    return(Bundle.getMessage("NextBlockTitle"));
+
                 default:
                     return "";
             }
@@ -3369,9 +3391,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return new JTextField(11).getPreferredSize().width;
                 case ALLOCATED_COLUMN:
                 case ALLOCATED_COLUMN_U:
-                    return new JTextField(17).getPreferredSize().width;
                 case NEXTSECTION_COLUMN:
                 case NEXTSECTION_COLUMN_U:
+                case CURRENTBLOCK_COLUMN:
+                case NEXTBLOCK_COLUMN:
                     return new JTextField(17).getPreferredSize().width;
                 case ALLOCATEBUTTON_COLUMN:
                 case TERMINATEBUTTON_COLUMN:
@@ -3380,6 +3403,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case CURRENTSIGNAL_COLUMN:
                 case CURRENTSIGNAL_COLUMN_U:
                 case DCC_ADDRESS:
+                case ISHELDCHECKBOX_COLUMN:
                     return new JTextField(5).getPreferredSize().width;
                 default:
                     // fall through
@@ -3462,6 +3486,21 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     } else {
                         return("NA");
                     }
+                case ISHELDCHECKBOX_COLUMN:
+                    return at.holdAllocation();
+                case CURRENTBLOCK_COLUMN:
+                    if (at.getAutoRun() && at.getAutoActiveTrain().getCurrentBlock() != null) {
+                        return(at.getAutoActiveTrain().getCurrentBlock().getDisplayName());
+                    } else {
+                        return("NA");
+                    }
+                case NEXTBLOCK_COLUMN:
+                    if (at.getAutoRun() && at.getAutoActiveTrain().getNextBlock() != null) {
+                        return(at.getAutoActiveTrain().getNextBlock().getDisplayName());
+                    } else {
+                        return("NA");
+                    }
+
                 default:
                     return (" ");
             }
@@ -3493,6 +3532,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                             return;
                         }
                     }
+                }
+            }
+            if (col == ISHELDCHECKBOX_COLUMN) {
+                ActiveTrain at = null;
+                at = activeTrainsList.get(row);
+                if (activeTrainsList.get(row) != null) {
+                    if (!at.holdAllocation()) {
+                        at.holdAllocation(true);
+                        return;
+                    }
+                    at.holdAllocation(false);
                 }
             }
         }

@@ -173,6 +173,12 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                             dispatcher.setUseOccupiedTrackSpeed(true);
                         }
                     }
+                    if (options.getAttribute("usestricttraintracking") != null) {
+                        dispatcher.setUseOccupiedTrackSpeed(false);
+                        if (options.getAttribute("usestricttraintracking").getValue().equals("yes")) {
+                            dispatcher.setUseStrictTrainTracking(true);
+                        }
+                    }
                     if (options.getAttribute("minthrottleinterval") != null) {
                         String s = (options.getAttribute("minthrottleinterval")).getValue();
                         dispatcher.setMinThrottleInterval(Integer.parseInt(s));
@@ -313,6 +319,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         options.setAttribute("trustknownturnouts", "" + (dispatcher.getTrustKnownTurnouts() ? "yes" : "no"));
         options.setAttribute("useturnoutconnectiondelay", "" + (dispatcher.getUseTurnoutConnectionDelay() ? "yes" : "no"));
         options.setAttribute("useoccupiedtrackspeed", "" + (dispatcher.getUseOccupiedTrackSpeed() ? "yes" : "no"));
+        options.setAttribute("setStrictTrainTracking", "" + (dispatcher.getUseStrictTrainTracking() ? "yes" : "no"));
         options.setAttribute("minthrottleinterval", "" + (dispatcher.getMinThrottleInterval()));
         options.setAttribute("fullramptime", "" + (dispatcher.getFullRampTime()));
         options.setAttribute("hasoccupancydetection", "" + (dispatcher.getHasOccupancyDetection() ? "yes" : "no"));

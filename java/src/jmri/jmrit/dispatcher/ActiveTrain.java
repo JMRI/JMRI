@@ -195,6 +195,16 @@ public class ActiveTrain implements PropertyChangeProvider {
     public static final String PROPERTY_SIGNAL = "signal";
 
     /**
+     * String property constant for signal.
+     */
+    public static final String PROOERTY_CURRENT_BLOCK = "currentblock";
+
+    /**
+     * String property constant for signal.
+     */
+    public static final String PROPERT_NEXT_BLOCK = "nextblock";
+
+    /**
      * String property constant for section allocated.
      */
     public static final String PROPERTY_SECTION_ALLOCATED = "sectionallocated";
@@ -374,6 +384,14 @@ public class ActiveTrain implements PropertyChangeProvider {
 
     public void setControlingSignal(Object oldSignal, Object newSignal) {
         firePropertyChange(PROPERTY_SIGNAL, oldSignal, newSignal);
+    }
+
+    public void setNextBlock(Object oldSignal, Object newSignal) {
+        firePropertyChange(PROPERT_NEXT_BLOCK, oldSignal, newSignal);
+    }
+
+    public void setCurrentBlock(Object oldSignal, Object newSignal) {
+        firePropertyChange(PROOERTY_CURRENT_BLOCK, oldSignal, newSignal);
     }
 
     public String getStatusText() {

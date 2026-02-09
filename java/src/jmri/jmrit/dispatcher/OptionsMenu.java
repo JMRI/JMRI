@@ -137,6 +137,7 @@ public class OptionsMenu extends JMenu {
     JCheckBox useTurnoutConnectionDelayCheckBox = new JCheckBox(Bundle.getMessage("useTurnoutConnectionDelay"));
     JComboBox<String> stoppingSpeedBox = new JComboBox<>();
     JCheckBox useOccupiedTrackSpeedCheckBox = new JCheckBox(Bundle.getMessage("useOccupiedTrackSpeed"));
+    JCheckBox useStrictTrainTrackingBox = new JCheckBox(Bundle.getMessage("useStrictTrackChecking"));
 
     String[] signalTypes = {Bundle.getMessage("SignalType1"), Bundle.getMessage("SignalType2"), Bundle.getMessage("SignalType3")};
 
@@ -225,6 +226,11 @@ public class OptionsMenu extends JMenu {
             p16b.add(useOccupiedTrackSpeedCheckBox);
             useOccupiedTrackSpeedCheckBox.setToolTipText(Bundle.getMessage("useOccupiedTrackSpeedHint"));
             optionsPane.add(p16b);
+            JPanel p16c = new JPanel();
+            p16c.setLayout(new FlowLayout());
+            p16c.add(useStrictTrainTrackingBox);
+            useStrictTrainTrackingBox.setToolTipText(Bundle.getMessage("useStrictTrackCheckingHint"));
+            optionsPane.add(p16c);
             JPanel p6 = new JPanel();
             p6.setLayout(new FlowLayout());
             p6.add(shortNameCheckBox);
@@ -400,6 +406,7 @@ public class OptionsMenu extends JMenu {
         autoTurnoutsItem.setSelected(autoTurnoutsCheckBox.isSelected());
         dispatcher.setTrustKnownTurnouts(trustKnownTurnoutsCheckBox.isSelected());
         dispatcher.setUseOccupiedTrackSpeed(useOccupiedTrackSpeedCheckBox.isSelected());
+        dispatcher.setUseStrictTrainTracking(useStrictTrainTrackingBox.isSelected());
         dispatcher.setUseTurnoutConnectionDelay(useTurnoutConnectionDelayCheckBox.isSelected());
         dispatcher.setSignalType(signalTypeBox.getSelectedIndex());
         if (autoTurnoutsCheckBox.isSelected() && ((layoutEditorList.size() == 0)

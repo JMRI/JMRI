@@ -1452,7 +1452,11 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @Nonnull Block facingBlock,
             @CheckForNull Block protectedBlock,
             @CheckForNull LayoutEditor panel) {
+        try {
         log.debug("calling getFacingMast on block '{}'", facingBlock.getDisplayName());
+        } catch (Exception ex) {
+            log.error("Ops");
+        }
         return (SignalMast) getFacingBean(facingBlock, protectedBlock, panel, SignalMast.class);
     }
 
