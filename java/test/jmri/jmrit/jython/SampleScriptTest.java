@@ -48,14 +48,18 @@ public class SampleScriptTest {
             }
         });
 
+        // non-null array
         File[] files = (new File("jython/test")).listFiles((File a, String b) -> {
                                 for (var ext : allExtensions) {
-                                    if (b.endsWith(ext)) return true;
+                                    if (b.endsWith(ext)) {
+                                        return true;
+                                    }
                                 }
                                 return false;
                              });
+        Assertions.assertTrue(files.length>0);
         Arrays.sort(files);  // process in known (alphanumeric) order
-        return files != null ? Arrays.stream(files) : Stream.empty();
+        return Arrays.stream(files);
     }
 
     @ParameterizedTest
@@ -176,7 +180,7 @@ public class SampleScriptTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.clearTurnoutThreads();
         JUnitUtil.clearRouteThreads();
         JUnitUtil.clearBlockBossLogicThreads();
