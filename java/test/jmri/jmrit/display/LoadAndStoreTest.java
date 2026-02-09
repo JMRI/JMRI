@@ -1,5 +1,7 @@
 package jmri.jmrit.display;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import java.io.File;
 import java.util.stream.Stream;
 
@@ -29,8 +31,9 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
-    public void loadAndStoreTest(File file, boolean pass) throws Exception {
-        super.loadLoadStoreFileCheck(file);
+    public void loadAndStoreTest(File file, boolean pass) {
+        assertDoesNotThrow( () ->
+            super.loadLoadStoreFileCheck(file));
     }
 
     public LoadAndStoreTest() {
