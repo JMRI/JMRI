@@ -74,7 +74,6 @@ public class MultiLineCellEditor  extends AbstractCellEditor implements TableCel
                 var model = table.getModel();
                 if (model instanceof ResizableRowDataModel) {
                 
-                    System.err.println("repaint as "+textArea.getText().split("\n").length);
                     ((ResizableRowDataModel)model).resizeRowToText(row, textArea.getText().split("\n").length);
                     
                     table.revalidate();
