@@ -272,14 +272,14 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x807F type");
         assertEquals(address.getNumber(), 127,"0x807F address");
 
-        m.setElement(4, 0x80); // extended consist 227
-        m.setElement(5, 0xE3);
+        m.setElement(4, 0x81); // extended consist 227
+        m.setElement(5, 0x1B);
         address = r4.parseAddress(m);
         assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x80E3 type");
         assertEquals(address.getNumber(), 227,"0x80E3 address");
 
         m.setElement(4, 0xB1); // extended consist 9876
-        m.setElement(5, 0xC3);
+        m.setElement(5, 0x4C);
         address = r4.parseAddress(m);
         assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0xB1C3 type");
         assertEquals(address.getNumber(), 9876,"0xB1C3 address");
