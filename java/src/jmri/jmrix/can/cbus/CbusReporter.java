@@ -117,7 +117,8 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         if ( m.getOpCode() != CbusConstants.CBUS_DDES && m.getOpCode() != CbusConstants.CBUS_ACDAT) {
             return;
         }
-        if ((m.getElement(1) << 8) + m.getElement(2) == _number) { // correct reporter number, for us
+
+        if (((m.getElement(1) << 8) + m.getElement(2)) == _number) { // correct reporter number, for us
             if (m.getOpCode() == CbusConstants.CBUS_DDES && !getCbusReporterType().equals(CbusReporterManager.CBUS_REPORTER_TYPE_CLASSIC)  ) {
                 ddesReport(m);
             } else {
@@ -154,28 +155,12 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         startTimeout(tag);
     }
 
-    // DCC address correction 0-10239 range
+
+
     private void canRcomReport(CanReply m) {
 
-        int dccNumber = ((m.getElement(4)&0x3F)<<8)+m.getElement(5);  // excludes high "type" bits
-        int dccTypeInt = m.getElement(4)&0xC0;
-        LocoAddress.Protocol dccType;
-        switch (dccTypeInt) {
-            default:
-            case 0xC0:
-                dccType = LocoAddress.Protocol.DCC_LONG;
-                break;
-            case 0x00:
-                dccType = LocoAddress.Protocol.DCC_SHORT;
-                break;
-            case 0x40:
-                dccType = LocoAddress.Protocol.DCC_CONSIST;
-                break;
-            case 0x80:
-                dccType = LocoAddress.Protocol.DCC_EXTENDED_CONSIST;
-                dccNumber = ((m.getElement(4)&0x3F)*100)+m.getElement(5);  // note multiplier
-        }
-        var locoAddress = new DccLocoAddress(dccNumber, dccType);
+        var locoAddress = parseAddress(m);
+        
         int speed = m.getElement(6)&0x7F;
         if ((m.getElement(6)&0x80) == 0) {
             speed = -1;  // data unavailable
@@ -253,9 +238,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
                 break;
         }
         
-        log.info("Found {} {}", dccType, dccNumber);
-        
-        var idTag = railComManager.provideIdTag(""+dccNumber);
+        var idTag = railComManager.provideIdTag(""+locoAddress.getNumber());
         var tag = (RailCom)idTag;
         
         tag.setDccAddress(locoAddress);
@@ -269,6 +252,36 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         startTimeout(tag);
     }
 
+    DccLocoAddress parseAddress(CanReply m) {  // package access for testing
+        int dccTypeInt = m.getElement(4)&0xC0;
+        int dccNumber;
+        int b4 = m.getElement(4) & 0x3F;  // excludes high "type" bits
+        int b5 = m.getElement(5);
+        LocoAddress.Protocol dccType;
+        switch (dccTypeInt) {
+            default:
+            case 0xC0:
+                dccNumber = (b4<<8) | b5;
+                dccType = LocoAddress.Protocol.DCC_LONG;
+                break;
+            case 0x00:
+                dccNumber = b5;
+                dccType = LocoAddress.Protocol.DCC_SHORT;
+                break;
+            case 0x40:
+                dccNumber = b5&0x7F;  // remove direction bit
+                dccType = LocoAddress.Protocol.DCC_CONSIST;
+                break;
+            case 0x80:
+                int decUpper = (b4 << 1) | ((b5>>7)&0x01); // BCD upper value
+                System.err.println("decUpper "+decUpper);
+                dccNumber = decUpper*100 + b5;
+                dccType = LocoAddress.Protocol.DCC_EXTENDED_CONSIST;
+                
+        }
+        return new DccLocoAddress(dccNumber, dccType);
+    }
+    
     private String toClassicTag(int b1, int b2, int b3, int b4, int b5) {
         return String.format("%02X", b1) + String.format("%02X", b2) + String.format("%02X", b3)
             + String.format("%02X", b4) + String.format("%02X", b5);
