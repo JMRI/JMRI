@@ -99,6 +99,7 @@ public final class ActionThrottle extends AbstractDigitalAction
         return LogixNG_Category.ITEM;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("WA_NOT_IN_LOOP")
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
