@@ -72,6 +72,8 @@ public final class ActionThrottle extends AbstractDigitalAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionThrottle copy = new ActionThrottle(sysName, userName);
         copy.setComment(getComment());
+        copy.setStopLocoWhenSwitchingLoco(_stopLocoWhenSwitchingLoco);
+        copy.setWaitForThrottle(_waitForThrottle);
         copy.setMemo(_memo);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
