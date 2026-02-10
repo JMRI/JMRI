@@ -338,6 +338,9 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     
     @Override
     public void resizeRowToText(int modelRow, int heightInLines) {
+        if (associatedSorter == null || associatedTable == null ) {
+            return; // because not initialized, can't act - useful for tests
+        }
         var viewRow = associatedSorter.convertRowIndexToView(modelRow);
         int height = heightInLines * (InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize() + 4); // same line height as in RosterTable
         if (height != associatedTable.getRowHeight(viewRow)) {
