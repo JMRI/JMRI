@@ -69,6 +69,8 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
     private RosterEntry[] sortedRosterEntries = null;
     private RosterEntry re = null;
 
+    private static final String ATTRIBUTE_OPERATING_DURATION = Bundle.getMessage(RosterEntry.ATTRIBUTE_OPERATING_DURATION); //avoid lots of lookups
+    
     public RosterTable() {
         this(false);
     }
@@ -93,6 +95,9 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             @Override
             public TableCellRenderer getCellRenderer(int row, int column) {
                 var modelColumn = convertColumnIndexToModel(column);
+                if (dataModel.getColumnName(modelColumn).equals(ATTRIBUTE_OPERATING_DURATION)) {
+                    return super.getCellRenderer(row, column);
+                }
                 if (modelColumn == RosterTableModel.COMMENT || modelColumn >= RosterTableModel.NUMCOL) {
                     return new MultiLineCellRenderer();
                 }
@@ -101,6 +106,9 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             @Override
             public TableCellEditor getCellEditor(int row, int column) {
                 var modelColumn = convertColumnIndexToModel(column);
+                if (dataModel.getColumnName(modelColumn).equals(ATTRIBUTE_OPERATING_DURATION)) {
+                    return super.getCellEditor(row, column);
+                }
                 if (modelColumn == RosterTableModel.COMMENT || modelColumn >= RosterTableModel.NUMCOL) {
                     return new MultiLineCellEditor();
                 }
@@ -140,7 +148,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         TableColumn tc = columnModel.getColumnByModelIndex(RosterTableModel.PROTOCOL);
         columnModel.setColumnVisible(tc, false);
 
-        // if the total time operated column exists, set it to DurationRenderer
+        // if the total time operated column exists, set it to DurationRenderer - see also JTable construction above
         var columns = columnModel.getColumns();
         while (columns.hasMoreElements()) {
             TableColumn column = columns.nextElement();
