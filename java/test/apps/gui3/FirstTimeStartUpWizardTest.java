@@ -118,6 +118,8 @@ public class FirstTimeStartUpWizardTest {
         Assertions.assertNotEquals(0, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize(),
             "Font size should not be 0");
 
+        JUnitUtil.waitThreadTerminated("Start-Up Wizard Connect");
+
     }
 
     @Test
