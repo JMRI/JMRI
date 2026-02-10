@@ -4,13 +4,15 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
-import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
-import jmri.util.davidflanagan.HardcopyWriter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
+import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
  * Print or Print Preview Action for CBUS Event Table
@@ -91,7 +93,7 @@ public class CbusEventTablePrintAction extends AbstractAction {
 
         w.setFontStyle(Font.BOLD);
         printColumns(w, columnStrings, columnWidth);
-        w.setFontStyle(0);
+        w.setFontStyle(Font.PLAIN);
         w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
                 w.getCharactersPerLine());
 
