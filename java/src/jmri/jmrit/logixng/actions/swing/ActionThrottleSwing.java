@@ -22,6 +22,7 @@ public class ActionThrottleSwing extends AbstractDigitalActionSwing {
 
     private JComboBox<Connection> _connection;
     private JCheckBox _stopLocoWhenSwitchingLoco;
+    private JCheckBox _waitForThrottle;
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -55,13 +56,17 @@ public class ActionThrottleSwing extends AbstractDigitalActionSwing {
         connectionPanel.add(_connection);
         panel.add(connectionPanel);
 
-        _stopLocoWhenSwitchingLoco = new JCheckBox(Bundle.getMessage("ActionThrottleSwing_StopLocoWhenSwitchingLoco"));
+            _stopLocoWhenSwitchingLoco = new JCheckBox(Bundle.getMessage("ActionThrottleSwing_StopLocoWhenSwitchingLoco"));
+        _waitForThrottle = new JCheckBox(Bundle.getMessage("ActionThrottleSwing_WaitForThrottle"));
         if (action != null) {
             _stopLocoWhenSwitchingLoco.setSelected(action.isStopLocoWhenSwitchingLoco());
+            _waitForThrottle.setSelected(action.isWaitForThrottle());
         } else {
             _stopLocoWhenSwitchingLoco.setSelected(true);
+            _waitForThrottle.setSelected(false);
         }
         panel.add(_stopLocoWhenSwitchingLoco);
+        panel.add(_waitForThrottle);
     }
 
     /** {@inheritDoc} */
@@ -90,6 +95,7 @@ public class ActionThrottleSwing extends AbstractDigitalActionSwing {
 
         action.setMemo(_connection.getItemAt(_connection.getSelectedIndex())._memo);
         action.setStopLocoWhenSwitchingLoco(_stopLocoWhenSwitchingLoco.isSelected());
+        action.setWaitForThrottle(_waitForThrottle.isSelected());
     }
 
     /** {@inheritDoc} */
