@@ -1,12 +1,9 @@
 package jmri.jmrit.progsupport;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -15,10 +12,10 @@ import org.junit.Assume;
 public class ProgDeferredServiceModePaneTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ProgDeferredServiceModePane t = new ProgDeferredServiceModePane();
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
         jmri.util.JUnitAppender.assertErrorMessage("This is missing code to listen to the programmer and update the mode display");
         t.dispose();
     }

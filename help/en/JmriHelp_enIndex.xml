@@ -593,6 +593,8 @@
 
  <indexitem text="QSI - Hardware, Connection, Tools " target="html.hardware.qsi.index"/>
 
+ <indexitem text="RailCom " target="package.jmri.jmrit.beantable.RailComTable"/>
+
  <indexitem text="RailDriver Throttle " target="html.hardware.raildriver.index"/>
 
  <indexitem text="Raspberry Pi - Hardware, Connection, Tools " target="html.hardware.pi.index"/>

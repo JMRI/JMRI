@@ -1,13 +1,10 @@
 package jmri.jmrit.entryexit;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -16,18 +13,18 @@ import org.junit.Assume;
 public class AddEntryExitPairActionTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
         AddEntryExitPairAction t = new AddEntryExitPairAction("Test Action",e);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
         JUnitUtil.dispose(e);
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @AfterEach

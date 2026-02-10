@@ -1,8 +1,8 @@
 package jmri.jmrit.jython;
 
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,10 +11,15 @@ import org.junit.jupiter.api.*;
  */
 public class JynstrumentFactoryTest {
 
+    // no Constructor test, tested class only supplies static methods
+
     @Test
-    public void testCTor() {
-        JynstrumentFactory t = new JynstrumentFactory();
-        Assert.assertNotNull("exists",t);
+    public void testJynstrumentFactoryInvalid() {
+        Jynstrument t = JynstrumentFactory.createInstrument("", null);
+        Assertions.assertNull(t);
+        JUnitAppender.assertErrorMessageStartsWith("File name too short");
+        JUnitAppender.assertErrorMessage("Path is null");
+        JUnitAppender.assertErrorMessageStartsWith("Invalid Jynstrument,");
     }
 
     @BeforeEach

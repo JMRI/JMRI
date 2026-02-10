@@ -15,8 +15,61 @@
 
       <p>JMRI "Reporters" can feedback RailCom data from a layout into JMRI.</p>
 
-      <p>For more information on Reporters and their use, see the <a href=
-      "../../../../html/tools/Reporters.shtml">main Reporter Help page</a>.</p>
+      <p>For more information on Reporters and their use, see the 
+      <a href="../../../../html/tools/Reporters.shtml">main Reporter Help page</a>.</p>
+      
+      <p>For more information on IdTags and their use, see the
+      <a href="../../../../html/tools/IdTags.shtml">main IdTags Help page</a>.</p>
+      
+      <h2>Some stuff about RailCom itself</h2>
+      
+      <h2>Column Contents</h2>
+      <dl>
+      <dt>Address</dt>
+        <dd>A simplified DCC address associated with this report. 
+            This is also used as the Tag ID in the enclosing IdTag
+            and as part of that IdTags system name.
+            This  is just the numerical DCC address, without distinguishing
+            between short, long and consist addresses.
+        </dd>
+      <dt>Where Seen</dt>
+        <dd>The name of the Reporter which has most-recent seen this RailCom report.
+        </dd>
+      <dt>When Seen</dt>
+        <dd>The time that this value was recorded by the detector.
+        </dd>
+      <dt>Clear</dt>
+        <dd>Clears the Where Seen and When Seen columns, effectively removing this
+            tag from the current status of the model railroad.
+        </dd>
+      <dt>Speed</dt>
+        <dd>If available,  the most recent speed reported back from
+            the decoder.  Note that the units of this are configured in 
+            the decoder.  They could be miles-per-hour or kilometers-per-hour.
+        </dd>
+      <dt>DCC Address</dt>
+        <dd>The full DCC address of the RailCom report.  This can be 
+            any valid DCC address type including the short, long, consist and 
+            extended consist forms.
+        </dd>
+      <dt>Orientation</dt>
+        <dd>Whether the front of the device is facing EAST or WEST.
+            These two directions are defined by the polarity of the
+            wiring from the track to the relevant RailCom Detector.
+        </dd>
+      <dt>Direction</dt>
+        <dd>Whether the device is moving FORWARD, BACKWARD or UNKNOWN.
+        </dd>
+      <dt>Motion</dt>
+        <dd>Whether the motion state of the device is 
+            MOVING,  STATIONARY or UNKNOWN.
+        </dd>
+      <dt>QoS</dt>
+        <dd>Quality of Service.  One of GOOD, POOR and UNKNOWN.
+        </dd>
+      
+      </dl>
+      
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
