@@ -104,6 +104,7 @@ public final class ActionThrottle extends AbstractDigitalAction
     public void execute() throws JmriException {
 
         final Object lock = new Object();
+        Reference<Boolean> throttleAquired = new Reference<>(false);
 
         int currentLocoAddress = -1;
         int newLocoAddress = -1;
@@ -144,6 +145,7 @@ public final class ActionThrottle extends AbstractDigitalAction
                         _throttle = t;
                         if (_waitForThrottle) {
                             synchronized(lock) {
+                                throttleAquired.set(true);
                                 lock.notifyAll();
                             }
                         } else {
@@ -173,7 +175,9 @@ public final class ActionThrottle extends AbstractDigitalAction
                 if (_waitForThrottle) {
                     synchronized(lock) {
                         try {
-                            lock.wait();
+                            if (! throttleAquired.get()) {
+                                lock.wait();
+                            }
                         } catch (InterruptedException e) {
                             log.warn("Action Throttle was interrupted during wait for throttle to be aquired");
                         }
