@@ -172,6 +172,11 @@
       drop-menu, and then place a tick alongside all locomotives requires in that group. Repeat for
       any other groups, and when finished close the window with the close-box in the upper
       right-hand corner.</p>
+      
+      <p>You can also add locomotives to groups one at a time using the 
+      "Add Roster Entry to Group..." entry in the "Settings" menu. 
+      Or you can right-press or ctrl-press on a selected line in the 
+      table to get a pop-up menu that contains an "Add to Group..." item.
 
       <h2 id="menubar">Menu Bar</h2>
 
