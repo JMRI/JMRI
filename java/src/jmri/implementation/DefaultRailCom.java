@@ -56,7 +56,13 @@ public class DefaultRailCom extends DefaultIdTag implements RailCom {
 
     @Override
     public LocoAddress getDccAddress() {
-        return (LocoAddress) getProperty("dccaddress");
+        var address =  (LocoAddress) getProperty("dccaddress");
+        // check for unfilled value; if so, parse and return from system name
+        // which does not separate the various types of address.
+        if (address == null) {
+            return getLocoAddress();
+        }
+        return address;
     }
 
     @Override
@@ -251,11 +257,6 @@ public class DefaultRailCom extends DefaultIdTag implements RailCom {
         StringBuilder sb = new StringBuilder(200);
         sb.append("Address ").append(getLocoAddress()).append(" ");
 
-        if ((getLocation() != -1)) {
-            sb.append("Location : ").append(getLocation()).append(" ");
-        }
-
-
         switch (getOrientation()) {
             case EAST:
                 sb.append("East ");
@@ -274,6 +275,9 @@ public class DefaultRailCom extends DefaultIdTag implements RailCom {
         }
         if (getFuelLevel() != -1) {
             sb.append("Fuel ").append(getFuelLevel()).append(" ");
+        }
+        if ((getLocation() != -1)) {
+            sb.append("Location : ").append(getLocation()).append(" ");
         }
         if ((getRoutingNo() != -1)) {
             sb.append("Routing No : ").append(getRoutingNo()).append(" ");

@@ -7,6 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.Vector;
+
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,9 +15,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+
+import jmri.InstanceManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.EditableResizableImagePanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.MultiLineCellRenderer;
+import jmri.util.swing.MultiLineCellEditor;
+import jmri.util.swing.ResizableRowDataModel;
 
 /**
  * A media pane for roster configuration tool. It contains:<ul>
@@ -78,7 +85,26 @@ public class RosterMediaPane extends JPanel {
         _URLlabel.setText(Bundle.getMessage("MediaRosterURLLabel"));
 
         rosterAttributesModel = new RosterAttributesTableModel(r); //t, columnNames);
-        JTable jtAttributes = new JTable();
+        JTable jtAttributes = new JTable(){
+            // MultiLineRenderer and MultiLineCellEditor for value column
+            @Override
+            public TableCellRenderer getCellRenderer(int row, int column) {
+                // no remapping of model vs view columns
+                if (column == 1) {
+                    return new MultiLineCellRenderer();
+                }
+                return super.getCellRenderer(row, column);
+            }
+            @Override
+            public TableCellEditor getCellEditor(int row, int column) {
+                // no remapping of model vs view columns
+                if (column == 1) {
+                    return new MultiLineCellEditor();
+                }
+                return super.getCellEditor(row, column);
+            }
+        };
+        rosterAttributesModel.associatedTable = jtAttributes;
         jtAttributes.setModel(rosterAttributesModel);
         JScrollPane jsp = new JScrollPane(jtAttributes);
         jtAttributes.setFillsViewportHeight(true);
@@ -174,11 +200,12 @@ public class RosterMediaPane extends JPanel {
         }
     }
 
-    private static class RosterAttributesTableModel extends AbstractTableModel {
+    private static class RosterAttributesTableModel extends AbstractTableModel implements ResizableRowDataModel {
 
         Vector<KeyValueModel> attributes;
         String[] titles;
         boolean wasModified;
+        JTable associatedTable;
 
         private static class KeyValueModel {
 
@@ -252,10 +279,21 @@ public class RosterMediaPane extends JPanel {
                     return attributes.get(row).key;
                 }
                 if (col == 1) {
-                    return attributes.get(row).value;
+                    String content = attributes.get(row).value;
+                    int lines = content.split("\n").length;
+                    resizeRowToText(row, lines);
+                    return content;
                 }
             }
             return "...";
+        }
+
+        @Override
+        public void resizeRowToText(int modelRow, int heightInLines) {
+            int height = heightInLines * (InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize() + 4); // same line height as in RosterTable
+            if (height != associatedTable.getRowHeight(modelRow)) {
+                associatedTable.setRowHeight(modelRow, height);
+            }
         }
 
         @Override
@@ -308,5 +346,5 @@ public class RosterMediaPane extends JPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RosterMediaPane.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RosterMediaPane.class);
 }
