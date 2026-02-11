@@ -481,6 +481,19 @@ public class Mx1Packetizer extends Mx1TrafficController {
             justification = "while loop controls access")
     class XmtHandler implements Runnable {
 
+        /**
+         * CTor
+         * 
+         * Init heartbeat
+         */
+        public XmtHandler() {
+            // Initialize heartbeat messgae
+            heartBeat = new Mx1Message(4, BINARY);
+            heartBeat.setElement(1, 0x10); // Short Primary message by PC
+            heartBeat.setElement(2, 11); // CommandStation IO state query
+            heartBeat.setElement(3, 0); // Must be zero
+        }
+
         @Override
         public void run() {
             while (true) {   // loop permanently
@@ -520,7 +533,11 @@ public class Mx1Packetizer extends Mx1TrafficController {
                     log.debug("start wait");
                     try {
                         synchronized (this) {
-                            wait();
+                            // Send heartbeat if idle for 2 seconds
+                            wait(2000);
+                            if (xmtPackets.size() == 0)
+                                log.debug("send heartbeat");
+                                sendMx1Message(heartBeat, null);
                         }
                     } catch (java.lang.InterruptedException ei) {
                         Thread.currentThread().interrupt(); // retain if needed later
@@ -529,6 +546,8 @@ public class Mx1Packetizer extends Mx1TrafficController {
                 }
             }
         }
+
+        private Mx1Message heartBeat; // Store heartBeat 
     }
 
     /**
