@@ -2,7 +2,6 @@ package jmri.jmrit.roster;
 
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
-import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.File;
@@ -15,6 +14,7 @@ import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
@@ -102,6 +102,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String SOUND_LABEL = "soundlabel"; // NOI18N
     public static final String ATTRIBUTE_OPERATING_DURATION = "OperatingDuration"; // NOI18N
     public static final String ATTRIBUTE_LAST_OPERATED = "LastOperated"; // NOI18N
+    public static final String LOCO_DATA_ENABLED = "locoDataEnabled"; // NOI18N
      // ---- Physics (locomotive-level) metadata (not tied to decoder CVs) ----
      public static final String PHYSICS_TRACTION_TYPE      = "physicsTractionType";     // STEAM or DIESEL_ELECTRIC
      public static final String PHYSICS_WEIGHT_KG          = "physicsWeightKg";         // float kg
@@ -135,6 +136,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _manufacturerID = "";
     protected String _productID = "";
     protected String _programmingModes = "";
+    protected boolean _locoDataEnabled = false;
+
      // Physics fields (stored in metric units; defaults of 0 mean "no extra limit")
      protected TractionType _physicsTractionType = TractionType.DIESEL_ELECTRIC;
      protected float _physicsWeightKg = 0.0f;
@@ -144,7 +147,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
       // Mechanical transmission flag (4-speed epicyclic DMU behaviour)
       protected boolean _physicsMechanicalTransmission = false;
-    
+
       public void setPhysicsMechanicalTransmission(boolean value) {
           boolean old = _physicsMechanicalTransmission;
           _physicsMechanicalTransmission = value;
@@ -246,6 +249,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         _URL = pEntry._URL;
         _maxSpeedPCT = pEntry._maxSpeedPCT;
         _isShuntingOn = pEntry._isShuntingOn;
+        _locoDataEnabled = pEntry._locoDataEnabled;
 
         if (pEntry.functionLabels != null) {
             pEntry.functionLabels.forEach((key, value) -> {
@@ -288,7 +292,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                     functionVisibles.put(key, value);
                 }
             });
-        }
+        }        
     }
 
     /**
@@ -327,7 +331,16 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public String getPathName() {
         return Roster.getDefault().getRosterFilesLocation() + _fileName;
     }
-    
+
+    public void setLocoDataEnabled(boolean enabled) {
+        boolean old = this._locoDataEnabled;
+        _locoDataEnabled = enabled;
+        this.firePropertyChange(RosterEntry.LOCO_DATA_ENABLED, old, this._locoDataEnabled);
+    }
+
+    public boolean isLocoDataEnabled() {
+        return _locoDataEnabled;
+    }
 
      // Traction type
      public void setPhysicsTractionType(TractionType t) {
@@ -336,7 +349,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
          firePropertyChange(PHYSICS_TRACTION_TYPE, old, _physicsTractionType);
      }
      public TractionType getPhysicsTractionType() { return _physicsTractionType; }
-    
+
      // Weight (kg)
      public void setPhysicsWeightKg(float kg) {
          float old = _physicsWeightKg;
@@ -344,7 +357,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
          firePropertyChange(PHYSICS_WEIGHT_KG, old, _physicsWeightKg);
      }
      public float getPhysicsWeightKg() { return _physicsWeightKg; }
-    
+
      // Power (kW)
      public void setPhysicsPowerKw(float kw) {
          float old = _physicsPowerKw;
@@ -352,7 +365,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
          firePropertyChange(PHYSICS_POWER_KW, old, _physicsPowerKw);
      }
      public float getPhysicsPowerKw() { return _physicsPowerKw; }
-    
+
      // Tractive effort (kN)
      public void setPhysicsTractiveEffortKn(float kn) {
          float old = _physicsTractiveEffortKn;
@@ -360,7 +373,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
          firePropertyChange(PHYSICS_TRACTIVE_EFFORT_KN, old, _physicsTractiveEffortKn);
      }
      public float getPhysicsTractiveEffortKn() { return _physicsTractiveEffortKn; }
-    
+
      // Max speed (km/h)
      public void setPhysicsMaxSpeedKmh(float kmh) {
          float old = _physicsMaxSpeedKmh;
@@ -368,7 +381,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
          firePropertyChange(PHYSICS_MAX_SPEED_KMH, old, _physicsMaxSpeedKmh);
      }
      public float getPhysicsMaxSpeedKmh() { return _physicsMaxSpeedKmh; }
-    
+
      // Helper: parse traction type from text safely
      private void setPhysicsTractionTypeFromString(String s) {
          if (s == null) { setPhysicsTractionType(TractionType.DIESEL_ELECTRIC); return; }
@@ -864,7 +877,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         if ((a = e.getAttribute(RosterEntry.SHUNTING_FUNCTION)) != null) {
             _isShuntingOn = a.getValue();
         }
-        
+        if ((a = e.getAttribute(LOCO_DATA_ENABLED)) != null) {
+            setLocoDataEnabled("true".equalsIgnoreCase(a.getValue()));
+        }
+
          // Physics (optional)
          if ((a = e.getAttribute(PHYSICS_TRACTION_TYPE)) != null) {
              setPhysicsTractionTypeFromString(a.getValue());
@@ -884,7 +900,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
          if ((a = e.getAttribute(PHYSICS_MAX_SPEED_KMH)) != null) {
              try { setPhysicsMaxSpeedKmh(Float.parseFloat(a.getValue())); } catch (NumberFormatException ignore) {}
          }
-              
+
         if ((a = e.getAttribute(RosterEntry.MAX_SPEED)) != null) {
             try {
                 _maxSpeedPCT = Integer.parseInt(a.getValue());
@@ -1033,7 +1049,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 }
                 if ((this.getFunctionLabel(num) == null) || (source.equalsIgnoreCase("model"))) {
                     this.setFunctionLabel(num, val);
-                    this.setFunctionLockable(num, "true".equals(lock));
+                    this.setFunctionLockable(num, "true".equals(lock));                    
                     if (visible != null){
                         this.setFunctionVisible(num, "true".equals(visible));
                     }
@@ -1249,7 +1265,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         }
         return ((functionLockables.get(fn) != null) ? functionLockables.get(fn) : true);
     }
-
+    
     /**
      * Define whether a specific function button is visible.
      *
@@ -1265,7 +1281,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         functionVisibles.put(fn, visible);
         this.firePropertyChange(RosterEntry.FUNCTION_LOCKABLE + fn, old, visible);
     }
-
+    
     /**
      * Return the UI visibility of a specific function button. Defaults to true.
      *
@@ -1405,13 +1421,17 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 (this.getIconPath() != null) ? FileUtil.getPortableFilename(this.getIconPath()) : "");
         e.setAttribute("URL", getURL());
         e.setAttribute(RosterEntry.SHUNTING_FUNCTION, getShuntingFunction());
-         // Physics (stored in metric units)
-         e.setAttribute(PHYSICS_TRACTION_TYPE, getPhysicsTractionType().name());
-         e.setAttribute(PHYSICS_WEIGHT_KG, Float.toString(getPhysicsWeightKg()));
-         e.setAttribute(PHYSICS_POWER_KW, Float.toString(getPhysicsPowerKw()));
-         e.setAttribute(PHYSICS_TRACTIVE_EFFORT_KN, Float.toString(getPhysicsTractiveEffortKn()));
-         e.setAttribute(PHYSICS_MAX_SPEED_KMH, Float.toString(getPhysicsMaxSpeedKmh()));
-         e.setAttribute(PHYSICS_MECH_TRANSMISSION, Boolean.toString(isPhysicsMechanicalTransmission()));
+        e.setAttribute(RosterEntry.LOCO_DATA_ENABLED, Boolean.toString(isLocoDataEnabled()));
+        if (isLocoDataEnabled()) {
+            // Physics (stored in metric units)
+            e.setAttribute(PHYSICS_TRACTION_TYPE, getPhysicsTractionType().name());
+            e.setAttribute(PHYSICS_WEIGHT_KG, Float.toString(getPhysicsWeightKg()));
+            e.setAttribute(PHYSICS_POWER_KW, Float.toString(getPhysicsPowerKw()));
+            e.setAttribute(PHYSICS_TRACTIVE_EFFORT_KN, Float.toString(getPhysicsTractiveEffortKn()));
+            e.setAttribute(PHYSICS_MAX_SPEED_KMH, Float.toString(getPhysicsMaxSpeedKmh()));
+            e.setAttribute(PHYSICS_MECH_TRANSMISSION, Boolean.toString(isPhysicsMechanicalTransmission()));
+        }
+
         if (_dateUpdated.isEmpty()) {
             // set date updated to now if never set previously
             this.changeDateUpdated();
@@ -1661,19 +1681,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Function to get the size of an image in points when shrunk
-     * to fit a given size.
-     *
-     * @param img the image to get the size of
-     * @param size the size to shrink the image to (in points)
-     * @return the size of the image in points
-     */
-    public static Dimension getImageSize(Image img, Dimension size) {
-        double scale = Math.min((double) size.width / img.getWidth(null), (double) size.height / img.getHeight(null));
-        return new Dimension((int) (img.getWidth(null) * scale), (int) (img.getHeight(null) * scale));
-    }
-
-    /**
      * Ultra-compact list view of roster entries. Shows text from fields as
      * initially visible in the Roster frame table.
      * <p>
@@ -1749,30 +1756,48 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     public void printEntry(HardcopyWriter w) {
+        printEntry(w, w.getIsPreview() ? 1.5f : 3.0f);
+    }
+
+    public void printEntry(HardcopyWriter w, float overSample) {
         if (getIconPath() != null) {
             ImageIcon icon = new ImageIcon(getIconPath());
             // We use an ImageIcon because it's guaranteed to have been loaded when ctor is complete.
             // We set the imagesize to 150x150 pixels times the overSample. The
             // resulting image on the page will be scaled back down to 150pt x 150pt
 
-            Image img = icon.getImage();
-            Dimension shape = new Dimension(150, 150);   // in points
-            Dimension actualShape = getImageSize(img, shape);
+            int imagesize = Math.round(150 * overSample);
 
-            blanks = (actualShape.height - w.getLineAscent()) / w.getLineHeight();
+            Image img = icon.getImage();
+            int width = img.getWidth(null);
+            int height = img.getHeight(null);
+            double widthratio = (double) width / imagesize;
+            double heightratio = (double) height / imagesize;
+            double ratio = Math.max(widthratio, heightratio);
+            Image newImg = img;
+            if (ratio > 1) {
+                width = (int) (width / ratio);
+                height = (int) (height / ratio);
+                newImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+            } else {
+                // The image isn't big enough to start with
+                // We don't want to scale it down by the original overSample value
+                // So we adjust the oversample so that it just fits.
+                overSample = Math.max(overSample * (float) ratio, 1f);
+            }
+
+            blanks = ((int) Math.ceil(height / overSample) - w.getLineAscent()) / w.getLineHeight();
 
             if (blanks + w.getCurrentLineNumber() > w.getLinesPerPage()) {
                 w.pageBreak();
             }
-
-            Dimension d = w.writeSpecificSize(img, shape);
+            ImageIcon newIcon = new ImageIcon(newImg);
+            w.writeWithScale(newIcon.getImage(), overSample, new JLabel(newIcon));
             // Work out the number of line approx that the image takes up.
             // We might need to pad some areas of the roster out, so that things
             // look correct and text doesn't overflow into the image.
             textSpaceWithIcon
-                    = (int) (w.getCharactersPerLine() - (d.width / w.getCharWidth()) - indentWidth - 1);
-            // Update blanks to be the number of lines the image takes up.
-            blanks = (d.height - w.getLineAscent()) / w.getLineHeight();
+                    = w.getCharactersPerLine() - ((int)Math.ceil(width / overSample) / w.getCharWidth()) - indentWidth - 1;
         }
         printEntryDetails(w);
     }

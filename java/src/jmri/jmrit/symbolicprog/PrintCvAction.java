@@ -2,11 +2,15 @@ package jmri.jmrit.symbolicprog;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.Locale;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
+import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -42,10 +46,22 @@ public class PrintCvAction extends AbstractAction {
     private final boolean isPreview;
 
     public void printInfoSection(HardcopyWriter w) {
-        // Write out the icon
-        w.writeDecoderProIcon();
+        ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
+        // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
+        w.write(icon.getImage(), new JLabel(icon));
         w.setFontStyle(Font.BOLD);
+        //Add a number of blank lines
+        int height = icon.getImage().getHeight(null);
+        int blanks = (height - w.getLineAscent()) / w.getLineHeight();
 
+        try {
+            for (int i = 0; i < blanks; i++) {
+                String s = "\n";
+                w.write(s, 0, s.length());
+            }
+        } catch (IOException e) {
+            log.warn("error during printing", e);
+        }
         mRoster.printEntry(w);
         w.setFontStyle(Font.PLAIN);
     }

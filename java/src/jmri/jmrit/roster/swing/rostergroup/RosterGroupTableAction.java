@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -71,23 +70,22 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
              */
             @Override
             void extras() {
-                final JComboBox<String> selectCombo = new RosterGroupComboBox();
-                //selectCombo.insertItemAt("", 0);
-                //selectCombo.setSelectedIndex(-1);
+                final var selectAddCombo = new RosterGroupComboBox();
+                selectAddCombo.setAllEntriesEnabled(false);  // don't show "All Entries" group
                 JPanel p25 = new JPanel();
                 p25.add(new JLabel(Bundle.getMessage("SelectRosterGroup")));
-                p25.add(selectCombo);
-                selectCombo.addActionListener(new ActionListener() {
+                p25.add(selectAddCombo);
+                selectAddCombo.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         try {
-                            comboSelected(e, selectCombo.getSelectedItem().toString());
+                            comboAddSelected(e, selectAddCombo.getSelectedItem());
                         } catch (Exception ex) {
                             log.debug("Null pointer exception");
                         }
                     }
                 });
-                selectCombo.setVisible(true);
+                selectAddCombo.setVisible(true);
                 AbstractAction createGroupAction = new CreateRosterGroupAction(Bundle.getMessage("MenuGroupCreate"), p25);
                 var newButton = new JButton(createGroupAction);
                 p25.add(newButton);
@@ -118,8 +116,8 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
         return "package.jmri.jmrit.roster.swing.RosterGroupTable"; // NOI18N
     }
 
-    void comboSelected(ActionEvent e, String group) {
-        m.setGroup(Roster.ROSTER_GROUP_PREFIX + group);
+    void comboAddSelected(ActionEvent e, String group) {
+        m.setAddGroup(Roster.ROSTER_GROUP_PREFIX + group);
         m.fireTableDataChanged();
 
     }

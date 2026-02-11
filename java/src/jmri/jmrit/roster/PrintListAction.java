@@ -5,9 +5,12 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.roster.swing.RosterFrame;
+import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
@@ -74,8 +77,22 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
         }
         try ( HardcopyWriter writer = new HardcopyWriter(mFrame, title, 10, .5, .5, .5, .5, isPreview); ) {
 
-            // add the icon
-            writer.writeDecoderProIcon();
+            // add the image
+            ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
+            // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
+            writer.write(icon.getImage(), new JLabel(icon));
+            // add a number of blank lines, so that the roster entry starts below the decoderpro logo
+            int height = icon.getImage().getHeight(null);
+            int blanks = (height - writer.getLineAscent()) / writer.getLineHeight();
+
+            try {
+                for (int i = 0; i < blanks; i++) {
+                    String s = "\n";
+                    writer.write(s, 0, s.length());
+                }
+            } catch (IOException ex) {
+                log.warn("error during printing", ex);
+            }
 
             // Loop through the Roster, printing a 1 line list entry as needed
             List<RosterEntry> l;
