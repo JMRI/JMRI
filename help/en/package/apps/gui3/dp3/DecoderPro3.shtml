@@ -73,6 +73,67 @@
       If a locomotive is correctly identified, it will be highlighted in the Roster Table, and its
       details will appear in the lower Decoder Information Area.</p>
 
+      <h3>Using the Roster Table</h3>
+      
+      The Roster Table shows one row for each locomotive in your roster.
+      There are several things you can do with the table entries:
+      <h4>Change some fields of the entry</h4>
+        You can directly edit the contents of some of the fields, 
+        such as the Owner, Road Number, Manufacturer, Model and Comment.
+        Click in a field to show an edit cursor, then type your changes.
+        Hit the Return or Enter key to save your changes.
+        <p>
+        The comment field and the user-added fields can accept multi-line
+        text.  To create a new line, type ctrl-Return or alt-Return.
+        As usual, you hit Return or Enter with no modifiers when you're done editing.
+        <p>
+        <b>Note:</b> As of February 2026, the cell height doesn't expand to show
+        the new lines you've typed with ctrl-Return or alt-Return until
+        you've saved your changes by hitting Enter or Return.
+        Unfortunately, you have to type your changes in blind and 
+        then hit Enter/Return to see them, and correct them as needed.
+        We're working on a fix for this.
+      
+      <h4>Sort by Values and Rearrange Columns</h4>
+        To sort by the contents of a column, click the heading at the top of the 
+        column.  Click again to sort in the opposite order.
+        <p>
+        You can change the size of a column by pressing-and-dragging the line
+        between the column headings.  You can move columns around by pressing-and-dragging
+        in the center center of the heading.
+        <p>
+        To hide or show columns, right-press or ctrl-press on a column heading.
+        This will show you a contextual menu where you can check the boxes by the columns
+        you want to see, and uncheck the columns you don't want to see.
+        
+      <h4>Add New Columns for  User Data</h4>
+        You can add additional columns if there's some other 
+        information you'd like to keep  track of.  For example, 
+        you might want to keep track of the driver layout (0-4-0, 2-6-2, etc)
+        for a steam locomotive.  To create a new column:
+        <ul>
+            <li>Select the first locomotive you'd like to 
+                add a value to.
+            <li>Click "Labels & Media", then open the "Roster Media" tab
+            <li>In the bottom part of that tab,  there's a 
+                two column table.  The last of the entries in the right
+                column will be "...".  
+            <li>Click on that cell and type the name of your new column. 
+                Hit the Return or Enter key.
+            <li>Click on the cell to the right of that and enter a value
+                for this locomotive in this new column you're adding.
+                Hit the Return or Enter key.
+            <li>Click "Save" at the bottom.
+            <li>Quit and restart DecoderPro
+            <li>Your new column should show in the Roster Table.  You may
+                have to drag the content to the right to see it, or
+                ctrl-click/right-click on one of the column headers to 
+                set it to visible.
+        </ul>
+        Once you've created the new column, you can edit the contents
+        directly in the Roster Table, or by going back to the 
+        "Roster Media" tab.
+
       <h3>Programming an existing Locomotive</h3>
 
       <p>Once a locomotive has been selected, either by manually finding it within the Roster

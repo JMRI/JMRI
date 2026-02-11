@@ -1560,6 +1560,11 @@
             </li>
              
             <li>
+                <a href="package/jmri/jmrit/beantable/RailComTable.shtml">RailCom </a>
+                <ul></ul>
+            </li>
+             
+            <li>
                 <a href="html/hardware/raildriver/index.shtml">RailDriver Throttle </a>
                 <ul></ul>
             </li>
