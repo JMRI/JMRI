@@ -5,9 +5,8 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.Locale;
 
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.swing.*;
+
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.util.FileUtil;
@@ -115,7 +114,7 @@ public class PrintCvAction extends AbstractAction {
             writer.write(tableTopRow + 2, tableLeft, tableTopRow + 2, tableRight);
             writer.write(tableBottomRow, tableLeft, tableBottomRow, tableRight);
 
-            writer.setFontStyle(1);  //set font to Bold
+            writer.setFontStyle(Font.BOLD);  //set font to Bold
             // print a simple heading with I18N
             // pad with spaces to column width, 3 x insert Value as var %1
             s = String.format("%1$21s%1$24s%1$24s", Bundle.getMessage("Value"));
@@ -125,7 +124,7 @@ public class PrintCvAction extends AbstractAction {
             // NOI18N
             s = "            CV  Dec Hex             CV  Dec Hex             CV  Dec Hex\n";
             writer.write(s, 0, s.length());
-            writer.setFontStyle(0); //set font back to Normal
+            writer.setFontStyle(Font.PLAIN); //set font back to Normal
 
             /* Create array to hold CV/Value strings to allow reformatting and sorting.
              * Same size as the table drawn above (4 columns*tableHeight; heading rows

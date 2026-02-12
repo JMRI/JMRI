@@ -586,7 +586,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
         w.setFontStyle(Font.BOLD);
         printColumns(w, columnStrings, columnSize);
-        w.setFontStyle(0);
+        w.setFontStyle(Font.PLAIN);
         w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
                 (columnSize + 1) * this.getColumnCount());
 

@@ -5,14 +5,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for running CMRI assignment list.
@@ -489,7 +492,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
             }
             //w.setFontStyle(Font.BOLD);
             printColumns(w, columnStrings, columnSize);
-            w.setFontStyle(0);
+            w.setFontStyle(Font.PLAIN);
             // draw horizontal line
             w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
                     tableLineWidth);

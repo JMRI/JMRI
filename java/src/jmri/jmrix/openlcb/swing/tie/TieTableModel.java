@@ -3,10 +3,13 @@ package jmri.jmrix.openlcb.swing.tie;
 import java.awt.Font;
 import java.io.IOException;
 import java.util.ResourceBundle;
+
 import javax.swing.table.AbstractTableModel;
-import jmri.util.davidflanagan.HardcopyWriter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
  * Table Model for access to tie info
@@ -100,7 +103,7 @@ public class TieTableModel extends AbstractTableModel {
         }
         w.setFontStyle(Font.BOLD);
         printColumns(w, columnStrings, columnSize);
-        w.setFontStyle(0);
+        w.setFontStyle(Font.PLAIN);
         // draw horizontal line
         w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
                 tableLineWidth);
