@@ -145,6 +145,11 @@ which checks the dates of the control files to make sure they've been updated wh
 - commons logging to sl4fj bridge
 - replaces dependency of batik-transcoder
 
+##### log4j-over-slf4j-2.0.17.jar
+- log4jv1 to slf4j bridge
+- Used by CATS
+
+
 
 ##### openlcb.jar
  - 0.8.6 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.6/openlcb-0.8.6.jar
