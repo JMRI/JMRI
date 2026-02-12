@@ -455,6 +455,14 @@
                 and deselect it.</li>
             <li>If you have added additional columns to the Roster Table,
                 these can now have multi-line comments.
+            <li>To make adding locomotives to roster groups more convenient,
+                there are several new ways to do it:
+                <ul>
+                    <li>There's a new item in the main Settings menu
+                    <li>Once you have selected a row in the roster table,
+                        right-push or ctrl-push to get a popup menu 
+                        which contains a new "Add to Group..." item.
+                </ul>
             <li>Decoder product ID determination has been added
                 for PIKO decoders.</li>
         </ul>
