@@ -132,9 +132,7 @@ public class Mx1OpsModeProgrammer extends Mx1Programmer implements AddressedProg
      */
     @Override
     public boolean getCanRead() {
-        if (tc.getAdapterMemo().getConnectionType() == Mx1SystemConnectionMemo.KLUG)
-            return true;
-        else return false;
+        return tc.getAdapterMemo().getConnectionType() == Mx1SystemConnectionMemo.KLUG;
     }
 
     /** 

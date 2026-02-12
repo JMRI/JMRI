@@ -535,9 +535,10 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         synchronized (this) {
                             // Send heartbeat if idle for 2 seconds
                             wait(2000);
-                            if (xmtPackets.size() == 0)
+                            if (xmtPackets.size() == 0){
                                 log.debug("send heartbeat");
                                 sendMx1Message(heartBeat, null);
+                            }
                         }
                     } catch (java.lang.InterruptedException ei) {
                         Thread.currentThread().interrupt(); // retain if needed later
