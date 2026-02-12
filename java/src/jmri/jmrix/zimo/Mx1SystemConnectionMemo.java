@@ -65,8 +65,18 @@ public class Mx1SystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         return st;
     }
 
+    /**
+     * TrafficController setter
+     * 
+     * Updates the AdapterMemo of the TC to this (but doesn't overwrite)
+     * 
+     * @param st TrafficController to use
+     */
     public void setMx1TrafficController(Mx1TrafficController st) {
         this.st = st;
+
+        // Update AdapterMemo in TrafficController to this (don't overwrite existing)
+        if (st.adaptermemo == null) st.adaptermemo = this; 
     }
     private Mx1TrafficController st;
 
