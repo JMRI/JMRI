@@ -92,7 +92,7 @@ public class Mx1OpsModeProgrammer extends Mx1Programmer implements AddressedProg
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("writeCV {} listens {}", CV, p);
+            log.debug("readCV {} listens {}", CV, p);
         }
         useProgrammer(p);
         _progRead = false;
