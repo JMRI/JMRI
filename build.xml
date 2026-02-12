@@ -146,13 +146,18 @@
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
-        <pathelement location="${libdir}/jsoup-1.15.3.jar"/>
+        
         <pathelement location="${libdir}/jython-standalone-2.7.4.jar"/>
-        <pathelement location="${libdir}/slf4j-api-2.0.7.jar"/><!-- sl4fj API -->
-        <pathelement location="${libdir}/jul-to-slf4j-2.0.7.jar"/><!-- java.util.logging to sl4fj -->
-        <pathelement location="${libdir}/log4j-slf4j2-impl-2.20.0.jar"/><!-- sl4fj to log4j2 -->
-        <pathelement location="${libdir}/log4j-api-2.20.0.jar"/><!-- log4j2 API -->
-        <pathelement location="${libdir}/log4j-core-2.20.0.jar"/><!-- log4j2 Core -->
+
+        <!-- Logging -->
+        <pathelement location="${libdir}/slf4j-api-2.0.17.jar"/><!-- sl4fj API -->
+        <pathelement location="${libdir}/jul-to-slf4j-2.0.17.jar"/><!-- java.util.logging to sl4fj -->
+        <pathelement location="${libdir}/jcl-over-slf4j-2.0.17.jar"/><!-- java commons logging jcl to sl4fj -->
+        <pathelement location="${libdir}/log4j-over-slf4j-2.0.17.jar"/><!-- log4jv1 to sl4fj ( CATS ) -->
+        <pathelement location="${libdir}/log4j-slf4j2-impl-2.25.3.jar"/><!-- sl4fj to log4j2 -->
+        <pathelement location="${libdir}/log4j-api-2.25.3.jar"/><!-- log4j2 API -->
+        <pathelement location="${libdir}/log4j-core-2.25.3.jar"/><!-- log4j2 Core -->
+
         <pathelement location="${libdir}/javax.servlet-api-3.1.0.jar"/>
         <pathelement location="${libdir}/vecmath-1.5.2.jar"/>
         <pathelement location="${libdir}/mailapi.jar"/>
@@ -161,7 +166,6 @@
         <pathelement location="${libdir}/jna-platform-5.13.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
         <pathelement location="${libdir}/commons-net-3.9.0.jar"/>
-        <pathelement location="${libdir}/commons-logging-1.2.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
         <pathelement location="${libdir}/jackson-core-2.13.4.jar"/>
@@ -281,6 +285,7 @@
     <!-- jars that are needed at build and/or test time -->
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
+        <pathelement location="${libdir}/jsoup-1.15.3.jar"/> <!-- used in jmri.util.GenerateSearchIndexTest -->
         <pathelement location="${libdir}/junit-jupiter-5.13.4.jar"/>
         <pathelement location="${libdir}/junit-platform-console-standalone-1.13.4.jar"/>
         <pathelement location="${libdir}/junit-platform-commons-1.13.4.jar"/>

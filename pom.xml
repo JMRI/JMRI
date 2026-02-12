@@ -20,8 +20,8 @@
         <jetty.version>9.4.28.v20200408</jetty.version>
         <!-- this is a custom version, see lib/README.md -->
         <jemmy.version>RELEASE125</jemmy.version>
-        <slf4j.version>2.0.7</slf4j.version>
-        <log4j.version>2.20.0</log4j.version>
+        <slf4j.version>2.0.17</slf4j.version>
+        <log4j.version>2.25.3</log4j.version>
         <jackson-core.version>2.13.4</jackson-core.version>
         <jackson-databind.version>2.13.4.2</jackson-databind.version>
         <jackson-annotations.version>2.13.4</jackson-annotations.version>
@@ -1305,6 +1305,16 @@
             <version>${slf4j.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId> <!-- Commons Logging to SLF4J Bridge -->
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId> <!-- Log4Jv1 to SLF4J Bridge ( CATS ) -->
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>${log4j.version}</version>
@@ -1437,9 +1447,11 @@
         </dependency>
         <dependency>
             <!-- jsoup HTML parser library @ https://jsoup.org/ -->
+            <!-- used in jmri.util.GenerateSearchIndexTest -->
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.15.3</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
@@ -1676,11 +1688,6 @@
             <version>1.1.0</version>
         </dependency>
         <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
             <groupId>com.github.sarxos</groupId>
             <artifactId>webcam-capture</artifactId>
             <version>0.3.12</version>
@@ -1698,6 +1705,10 @@
                 <exclusion>
                     <groupId>xml-apis</groupId>
                     <artifactId>xml-apis</artifactId>
+                </exclusion>
+                <exclusion> <!-- Use jcl-over-slf4j JCL > SLF4J Bridge instead -->
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
