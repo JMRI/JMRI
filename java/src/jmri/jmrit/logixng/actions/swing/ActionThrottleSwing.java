@@ -58,6 +58,9 @@ public class ActionThrottleSwing extends AbstractDigitalActionSwing {
 
             _stopLocoWhenSwitchingLoco = new JCheckBox(Bundle.getMessage("ActionThrottleSwing_StopLocoWhenSwitchingLoco"));
         _waitForThrottle = new JCheckBox(Bundle.getMessage("ActionThrottleSwing_WaitForThrottle"));
+        _waitForThrottle.addActionListener((e) -> {
+            setEnabledStopLocoWhenSwitchingLoco();
+        });
         if (action != null) {
             _stopLocoWhenSwitchingLoco.setSelected(action.isStopLocoWhenSwitchingLoco());
             _waitForThrottle.setSelected(action.isWaitForThrottle());
@@ -65,8 +68,16 @@ public class ActionThrottleSwing extends AbstractDigitalActionSwing {
             _stopLocoWhenSwitchingLoco.setSelected(true);
             _waitForThrottle.setSelected(false);
         }
+        setEnabledStopLocoWhenSwitchingLoco();
         panel.add(_stopLocoWhenSwitchingLoco);
         panel.add(_waitForThrottle);
+    }
+
+    private void setEnabledStopLocoWhenSwitchingLoco() {
+        _stopLocoWhenSwitchingLoco.setEnabled(!_waitForThrottle.isSelected());
+        if (_waitForThrottle.isSelected()) {
+            _stopLocoWhenSwitchingLoco.setSelected(false);
+        }
     }
 
     /** {@inheritDoc} */

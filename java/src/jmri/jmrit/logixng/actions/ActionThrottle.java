@@ -345,12 +345,23 @@ public final class ActionThrottle extends AbstractDigitalAction
         String waitForThrottleStr = _waitForThrottle
                 ? Bundle.getMessage("ActionThrottle_WaitForThrottle")
                 : Bundle.getMessage("ActionThrottle_DontWaitForThrottle");
+
         if (_memo != null) {
-            return Bundle.getMessage(locale, "ActionThrottle_LongConnection",
-                    _memo.getUserName(), waitForThrottleStr, stopLocoWhenSwitchingLocoStr);
+            if (_waitForThrottle) {
+                return Bundle.getMessage(locale, "ActionThrottle_LongConnection1",
+                        _memo.getUserName(), waitForThrottleStr);
+            } else {
+                return Bundle.getMessage(locale, "ActionThrottle_LongConnection2",
+                        _memo.getUserName(), waitForThrottleStr, stopLocoWhenSwitchingLocoStr);
+            }
         } else {
-            return Bundle.getMessage(locale, "ActionThrottle_Long",
-                    waitForThrottleStr, stopLocoWhenSwitchingLocoStr);
+            if (_waitForThrottle) {
+                return Bundle.getMessage(locale, "ActionThrottle_Long1",
+                        waitForThrottleStr);
+            } else {
+                return Bundle.getMessage(locale, "ActionThrottle_Long2",
+                        waitForThrottleStr, stopLocoWhenSwitchingLocoStr);
+            }
         }
     }
 
