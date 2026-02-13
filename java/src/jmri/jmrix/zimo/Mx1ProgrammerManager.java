@@ -27,16 +27,14 @@ public class Mx1ProgrammerManager extends DefaultProgrammerManager {
     }
 
     /**
-     * Works with command station to provide Ops Mode, so say it works
-     *
-     * @return true
+     * {@inheritDoc}
      */
     @Override
     public boolean isAddressedModePossible() {
-        if (_memo.getConnectionType() == Mx1SystemConnectionMemo.MXULF)
+        if (_memo.getConnectionType() == Mx1SystemConnectionMemo.MXULF || _memo.getConnectionType() == Mx1SystemConnectionMemo.KLUG)
         {
 
-            // currently only supporting MXULF. In theory I think any Zimo
+            // currently only supporting MXULF and KLUG. In theory I think any Zimo
             // system that supports the binary protocol would work but I am
             // unable to test said systems.
             return true;
@@ -52,12 +50,15 @@ public class Mx1ProgrammerManager extends DefaultProgrammerManager {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        if (_memo.getConnectionType() == Mx1SystemConnectionMemo.MXULF)
+        if (_memo.getConnectionType() == Mx1SystemConnectionMemo.MXULF || _memo.getConnectionType() == Mx1SystemConnectionMemo.KLUG)
         {
 
-            // currently only supporting MXULF. In theory I think any Zimo
+            // currently only supporting MXULF and KLUG. In theory I think any Zimo
             // system that supports the binary protocol would work but I am
             // unable to test said systems.
             return new Mx1OpsModeProgrammer(pAddress, pLongAddress, _memo.getMx1TrafficController());
