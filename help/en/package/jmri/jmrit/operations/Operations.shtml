@@ -1192,24 +1192,24 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <h3 id="BuildOptions">Build Options</h3>
-      There are three build train options, normal, aggressive and on time. Note that once you've
+      There are three build train options, Normal, Aggressive and On Time. Note that once you've
       built a train, the build option can not be changed until all trains are terminated or reset.
 
       <h4>Normal</h4>
 
       <p>
-        It is recommended that you select normal when you first begin using OperationsPro&trade;.
+        It is recommended that you select Normal when you first begin using OperationsPro&trade;.
         Normal builds guarantee that when a car is delivered (set out) by a train that there will be
         track space available for the car. Normal mode will not fill every track to capacity which
-        is more prototypical. However, normal mode won't swap a set of cars, cars are picked up or
+        is more prototypical. However, Normal mode won't swap a set of cars, cars are picked up or
         set out based on the available track space. Normal mode prevents track overloading. In
-        aggressive mode you can "accidentally" create track overloading by the order you build and
+        Aggressive mode you can "accidentally" create track overloading by the order you build and
         run your trains or by using the <a href="#TrainReset">Train Reset</a> function.
       </p>
 
       <h4>Aggressive</h4>
 
-      <p>Aggressive builds makes the car's track space available as soon as a car is scheduled
+      <p>Aggressive mode makes the car's track space available as soon as a car is scheduled
         for a pick up. Therefore there can be instances where a train was to pick up a car to vacate
         the track, but a "later" train arrives early with a set out to that track and the car hasn't
         been picked up. However, more often than not the same train will perform the pick up and set
@@ -1219,10 +1219,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         available spurs. The smaller the spur, yard, or interchange the more likely that the program
         will assign cars to that track.</p>
 
-      <p>One serious consideration when using aggressive mode is that you can cause your tracks
+      <p>One serious consideration when using Aggressive mode is that you can cause your tracks
         to be overloaded by selectively resetting your trains or building them and running them in a
         different order. Here's a simple example showing how it's possible to overload a track using
-        the aggressive mode. Say you have two trains that will service the same track. The track has
+        the Aggressive mode. Say you have two trains that will service the same track. The track has
         several cars on it, you build the first train and the Manifest shows to pull all of the cars
         from the track. You now build a second train, the program finds that the track will be
         vacated by the first train, so it schedules new cars to be spotted on to track by the second
@@ -1233,25 +1233,25 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         the second train before the first, the second train would try and deliver cars to the track
         that still has cars sitting on it.</p>
 
-      <p>To avoid overloading in aggressive mode, you also need to build, run, and terminate
+      <p>To avoid overloading in Aggressive mode, you also need to build, run, and terminate
         your trains in the same order. And do not use the train reset after you've built or
         terminated other trains! However, if you need to reset a train, you should also reset all of
         the trains built after the train that you want to reset, or live with possible track
         overloading. And never reset a train built before a train that you've already terminated.
         Normal mode will never overload a track, so you might consider using this mode if you find
         yourself having to reset trains or you want to build and run your trains in any order. The
-        recommendation is not to use train reset in aggressive mode once you've built or terminated
+        recommendation is not to use train reset in Aggressive mode once you've built or terminated
         additional trains. And if you do reset a train, there isn't a guarantee that building the
         train again will pull the same cars, each train build can be different depending on the car
         movements created by the other trains.</p>
 
       <h4>On Time</h4>
 
-      On time is an experimental mode of operations that was introduced in January of 2026. On Time
-      mode is an extension of aggressive mode. On time mode requires the use of a real or fast clock
-      to dictate train movement. To use on time, your trains must run on schedule. They should
+      On Time is an experimental mode of operations that was introduced in January of 2026. On Time
+      mode is an extension of Aggressive mode. On Time mode requires the use of a real or fast clock
+      to dictate train movement. To use On Time, your trains must run on schedule. They should
       depart at the correct departure time, and they should complete their work reasonably close to
-      the times provided on the train Manifests. When running OperationsPro in on time mode, tracks
+      the times provided on the train Manifests. When running OperationsPro in On Time mode, tracks
       that have
       <a href="#InterchangeQuickService">Quick Service</a> enabled can be reused multiple times
       based on when cars are set out and picked up. Cars and engines can travel on multiple trains
@@ -1273,7 +1273,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>
         See <a href="#ModifyLocationsByQuickService">Modify Locations and Tracks by Quick
           Service</a> to modify your tracks for quick service. Only tracks enabled for quick service are
-        reused based on train timing when using the on time mode. Note that train turns servicing
+        reused based on train timing when using the On Time mode. Note that train turns servicing
         locations on both the outbound and inbound legs, will in most cases pull the cars delivered
         on the outbound leg on the return leg. Use interchange tracks and <a href="#Schedules">spurs/schedules</a>
         with wait times to hold cars, or <a href="#RestrictingTrackToCertainTrains">restrict the
@@ -1284,12 +1284,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         copied route for the later train.
       </p>
 
-      <p>One restriction when using on time mode, is that trains must be built and terminated in
+      <p>One restriction when using On Time mode, is that trains must be built and terminated in
         chronological order. If you need to reset your trains, reset the last built trains first, or
         use the reset all trains button.</p>
 
       <p>
-        When selecting on time mode, a new column named "Done" in the <a href="#Trains">Trains</a>
+        When selecting On Time mode, a new column named "Done" in the <a href="#Trains">Trains</a>
         window will appear. The "Done" column shows when a built train will complete its work. This
         is useful when determining if a future train will have access to the the train's rolling
         stock. Once a train departs using the <a href="#Trains">Move</a> button, the "Done" column
@@ -1298,13 +1298,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>
-        To help troubleshoot timing problems with your cars using the on time mode, it is
+        To help troubleshoot timing problems with your cars using the On Time mode, it is
         recommended that you show the "Last Train" on your Manifests and switch lists for car pick
         ups. This way if a car isn't found, you'll at least know which train was supposed to drop
         off the car. You should also enable train, car and engine <a href="#LoggingOptions">logging</a>,
         and <a href="#SaveTrainManifests">Save Train Manifests, Build Reports, and Switch Lists</a>.
         Also recommended is that you use <a href="#AutoBackup">Auto Backup</a>. This will allow the
-        developers to reproduce any problems you encounter while using the new on time mode of
+        developers to reproduce any problems you encounter while using the new On Time mode of
         operations.
       </p>
 
