@@ -287,7 +287,10 @@
 
         <h4>MD Electronics</h4>
              <ul>
-                <li>The <strong>80101 Turnout Drive</strong> decoder is added.</li>
+                <li>The <strong>80101 Turnout Drive</strong> decoder is
+                    added. Support for accessory OPS mode programming is
+                    currently missing but service mode programming &amp;
+                    <strong>Reset all</strong> is included.</li>
              </ul>
 
         <h4>MGP</h4>
