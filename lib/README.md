@@ -80,7 +80,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - from https://github.com/rhwood/jinputvalidator
 - javadoc at https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0
 
-##### assertJ: assertj-core-3.12.0.jar, assertj-swing-3.9.2.jar, assertj-swing-junit-3.9.2.jar
+##### assertJ: assertj-core-3.27.7.jar
 - testing only
 
 ##### commons-compress-1.18.jar

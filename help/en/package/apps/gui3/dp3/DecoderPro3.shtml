@@ -167,11 +167,21 @@
       <p>To create your first Roster Group, use the "Create Roster Group" command on the "Settings"
       menu. When you have created a Roster Group, a new drop-list is added to the Tool Bar in
       DecoderPro. Having created a group, it is initially empty. The next step is to add
-      locomotives to the group. This is done with the "Roster Group Table Association" command on
-      the "Settings" menu. With the "Roster Group Table" window, select the Roster Group in the
+      locomotives to the group.  You can drag and drop a selected (highlighted line)
+      locomotive from the table and drop it on the group you want to include it in.
+      
+      <p>If you want to add a number of locomotives to a group.
+      the "Roster Group Table Association" command on
+      the "Settings" menu is a convenient tool. 
+      With the "Roster Group Table" window, select the Roster Group in the
       drop-menu, and then place a tick alongside all locomotives requires in that group. Repeat for
       any other groups, and when finished close the window with the close-box in the upper
       right-hand corner.</p>
+      
+      <p>You can also add locomotives to groups one at a time using the 
+      "Add Roster Entry to Group..." entry in the "Settings" menu. 
+      Or you can right-press or ctrl-press on a selected line in the 
+      table to get a pop-up menu that contains an "Add to Group..." item.
 
       <h2 id="menubar">Menu Bar</h2>
 

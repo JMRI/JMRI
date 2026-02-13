@@ -1,24 +1,20 @@
 package jmri.jmrix.loconet.soundloader;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Font;
 import java.io.IOException;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.loconet.spjfile.SpjFile;
 import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Digitrax SPJ files.
@@ -391,7 +387,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
         w.setFontStyle(Font.BOLD);
         printColumns(w, columnStrings, columnSize);
-        w.setFontStyle(0);
+        w.setFontStyle(Font.PLAIN);
         w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
                 (columnSize + 1) * this.getColumnCount());
 

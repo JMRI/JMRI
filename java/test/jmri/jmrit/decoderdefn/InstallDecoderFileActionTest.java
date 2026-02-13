@@ -3,7 +3,6 @@ package jmri.jmrit.decoderdefn;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class InstallDecoderFileActionTest {
     @Test
     public void testCTor() {
         InstallDecoderFileAction t = new InstallDecoderFileAction("Test");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
