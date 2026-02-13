@@ -240,32 +240,70 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_on")
 
         elif sensor_changed == sensors.getSensor("setStoppingDistanceSensor"):
-
-            #optionbox
-            title = "Stopping distances?"
-            msg = "Modify all stopping distances?"
-            opt1 = "All"
-            opt2 = "From one station to another"
-            s = self.od.customQuestionMessage2str(msg,title,opt1,opt2)
-            if self.od.CLOSED_OPTION == True: #check of optionbox was closed prematurely
-                #stopping_sensor_choice = "setNoStoppingSensors"
-                self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
-                return
-            elif s == opt1:
-                #stopping_sensor_choice = "setAllStoppingSensors"
-                self.modify_all_stopping_distances()
-                self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
-            else:    #opt2
-                stopping_sensor_choice = "setIndividualStoppingSensors"
-                msg = "Specify the transit whose stopping distance we will change\n\n" + \
-                      "Press transit start station button\nthen the transit end station button\n" + \
-                      "to select the transit in order to\nset stopping length"
-                self.od.displayMessage(msg)
-                if self.od.CLOSED_OPTION == True:
+            return_value = False
+            while(return_value == False):
+                stopping_distance_list = DispatchMaster().get_stopping_positions()
+                stopping_distance_list_desc = DispatchMaster().get_stopping_positions_desc()
+                message = "<html>"
+                message += "overall stopping distance before stop point = " + str(int(self.get_overall_stopping_distance())) + " cm<br>"
+                message += "<br>"
+                message += "All stopping distances reduced by " + str(int(self.get_overall_stopping_distance())) + " cm unless indicated below:<br>"
+                message += "</html>"
+                #optionbox
+                title = "Stopping distances?"
+                opt1 = "Change all stopping distances"
+                opt4 = "Change above selected stopping distance"
+                opt2 = "Set new stopping distance for particular transit"
+                opt3 = "Cancel"
+                if stopping_distance_list == []:
+                    options = [opt1, opt2, opt3]
+                else:
+                    options = [opt1, opt2, opt4, opt3]
+                [list_value, s, index] = self.od.ListOptions(stopping_distance_list_desc, title, options, message = message, preferred_size = "default")
+                if self.od.CLOSED_OPTION == True or s == opt3: #check of optionbox was closed prematurely
                     #stopping_sensor_choice = "setNoStoppingSensors"
                     self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
-                else:
-                    self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_on")
+                    return_value = True
+                elif s == opt1:
+                    #stopping_sensor_choice = "setAllStoppingSensors"
+                    self.modify_all_stopping_distances()
+                    self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+                elif s == opt2:
+                    #opt2
+                    stopping_sensor_choice = "setIndividualStoppingSensors"
+                    msg = "Specify the transit whose stopping distance we will change\n\n" + \
+                          "Press transit start station button\nthen the transit end station button\n" + \
+                          "to select the transit in order to\nset stopping length"
+                    self.od.displayMessage(msg)
+                    if self.od.CLOSED_OPTION == True:
+                        #stopping_sensor_choice = "setNoStoppingSensors"
+                        self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+                        return_value = True
+                    else:
+                        if sensors.getSensor("stoppingDistanceSet") == None:
+                            self.od.displayMessage("need to regenerate. virtual sensor required for this option is not created")
+                            return_value = True
+                        else:
+                            sensors.getSensor("stoppingDistanceSet").setKnownState(INACTIVE)
+                            self.waitForSensorSet("stoppingDistanceSet")    # wait till we complete the action using the station buttons and the sensor is set to active again
+                            self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_on")
+                elif s == opt4:
+                    # print stopping_distance_list
+                    found_edge_str = stopping_distance_list[index][0]
+                    first_station, last_station = found_edge_str.strip("()").split(":")
+                    first_station = first_station.strip()
+                    last_station = last_station.strip()
+                    # print "first_station", first_station, "last_station", last_station
+                    for e in g.g_express.edgeSet():
+                        from_station_name = g.g_stopping.getEdgeSource(e)
+                        to_station_name = g.g_stopping.getEdgeTarget(e)
+                        # print "from_station_name", from_station_name, "to_station_name", to_station_name
+                        if from_station_name == first_station and to_station_name == last_station:
+                            found_edge = e
+                            break
+                    # print "found_edge", found_edge
+                    DispatchMaster().set_stopping_length_fraction(found_edge)
+            return
 
         elif sensor_changed == sensors.getSensor("setStationWaitTimeSensor"):
 
@@ -356,7 +394,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             if self.od.CLOSED_OPTION == True: #check of optionbox was closed prematurely
                 self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
                 return
-            [my_list,s] = ss
+            [my_list,s, index] = ss
             if s == opt1:
                 if my_list != "no stop sensors set up":
                     while(1):
@@ -376,7 +414,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                         if list_items == [] :
                             list_items = ["no stop sensors set up"]
                         if self.logLevel > 1: print "list_items", list_items
-                        [my_list, option]  = self.od.ListOptions(list_items, title, options)
+                        [my_list, option, index]  = self.od.ListOptions(list_items, title, options)
                         if self.od.CLOSED_OPTION == True or option == "Cancel": #check of optionbox was closed prematurely
                             self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
                             return
@@ -413,7 +451,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             if list_items == []:
                 list_items = [null_text]
             options = [opt1, opt2, opt3]
-            [list_item, option] = self.od.ListOptions(list_items, title, options)
+            [list_item, option, index] = self.od.ListOptions(list_items, title, options)
             if self.od.CLOSED_OPTION == True: #check of optionbox was closed prematurely
                 self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
                 return
@@ -443,8 +481,14 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 msg = "error in checking buttons"
             OptionDialog().displayMessage(msg)
 
-        #self.sensor_active_setuproute_or_rundispatch_or_stoppinglength_old = None
-        #self.button_sensors_to_watch = self.route_run_sensor + self.button_sensors + self.setuproute_or_rundispatch_or_setstoppinglength_sensors
+    def waitForSensorSet(self, sensor_name):
+
+        stopping_distance_sensor = sensors.getSensor(sensor_name)
+        stopping_distance_sensor.setKnownState(INACTIVE)
+        btn = [stopping_distance_sensor]
+        btn_to_watch = java.util.Arrays.asList(btn)
+        # print "waiting for button" + sensor_name + " which is now " , stopping_distance_sensor.getKnownState()
+        self.waitSensorState(btn_to_watch, ACTIVE)
 
     def get_forward_stop_sensors(self):
         forward_stop_sensors = \
@@ -507,7 +551,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         opt2 = "Delete Selected Entry"
         opt3 = "Cancel"
         options = [opt1, opt2, opt3]
-        [list_item, option] = self.od.ListOptions(list_items, title, options)
+        [list_item, option, index] = self.od.ListOptions(list_items, title, options)
         if self.od.CLOSED_OPTION == True: #check of optionbox was closed prematurely
             self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
             return
@@ -662,16 +706,18 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.od.CLOSED_OPTION == True:
             return #if one has cancelled
         #s is used in a little bit
-        previous_overall_stopping_distance = self.get_overall_stopping_distance()
-        new_stopping_position = self.set_overall_stopping_distance(previous_overall_stopping_distance)
-        if new_stopping_position == None:
-            return  # if one has cancelled
+        # previous_overall_stopping_distance = self.get_overall_stopping_distance()
+        # print "previous_overall_stopping_distance", previous_overall_stopping_distance
+        # new_stopping_position = self.set_overall_stopping_distance(previous_overall_stopping_distance)
+        # print "new_stopping_position", new_stopping_position
+        # if new_stopping_position == None:
+        #     return  # if one has cancelled
         if s == opt1:
             # Increase/decrease all existing stopping distances
             previous_overall_stopping_distance = self.get_overall_stopping_distance()
             # print "previous_overall_stopping_distance", previous_overall_stopping_distance
-            self.set_overall_stopping_distance(previous_overall_stopping_distance)
-
+            new_stopping_position = self.get_new_stopping_position(previous_overall_stopping_distance)
+            self.set_overall_stopping_distance(new_stopping_position)
             title = "Stopping train before end of section"
             msg = "all stop distances reduced by " + str(new_stopping_position) + " in addition to individual stop distances"
             self.od.displayMessage(msg,title)
@@ -686,7 +732,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             try:
                 os.remove(file_path)
                 # print(file_path + " has been deleted. The individual stopping distances have been zeroed")
-            except FileNotFoundError:
+            except OSError:
                 print(file_path + " not found, cannot delete the individual stopping distances")
             except PermissionError:
                 print("Permission denied to delete"  + file_path)
@@ -696,8 +742,8 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             # set the overall stopping distance to the set value
             previous_overall_stopping_distance = self.get_overall_stopping_distance()
             # print "previous_overall_stopping_distance", previous_overall_stopping_distance
-            self.set_overall_stopping_distance(previous_overall_stopping_distance)
-
+            new_stopping_position = self.get_new_stopping_position(previous_overall_stopping_distance)
+            self.set_overall_stopping_distance(new_stopping_position)
             title = "Stopping train before end of section"
             msg = "all stop distances reduced by " + str(new_stopping_position) + " individual stop distances deleted"
             self.od.displayMessage(msg,title)
@@ -712,11 +758,8 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
     def get_overall_stopping_distance(self):
         folder = "stopping_positions"
         filename = "overall_stopping_offset.txt"
-        # print "A8"
         file_path = DispatchMaster().directory(folder) + filename
-        # print "a9"
         overall_stopping_distance = self.read_float(file_path) # use a tuple cos we are set up for that
-        # print "overall_stopping_distance", overall_stopping_distance
 
         return overall_stopping_distance
 
@@ -1009,16 +1052,26 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         list_items = RouteManager.getRoutesByNameList()
         while s == opt1:
             title = "choose route"
-            [l,s] = self.od.ListOptions(list_items,title,[opt2,opt1])
+            [l,s, index] = self.od.ListOptions(list_items,title,[opt2,opt1])
+            print "5"
             if self.od.CLOSED_OPTION == True:
                 return
             if s == opt1:
                 # xx = [str(station_block_name) for station_block_name in g.station_block_list \
                 #       if blocks.getBlock(station_block_name).getValue()==engine]
                 if opt1 == opt1a:
+                    # print "6 ", engine, engine
+                    # print "7 g.station_block_list", g.station_block_list
+                    # for station_block_name in g.station_block_list:
+                    #     engine = blocks.getBlock(station_block_name).getValue()
+                    #     print "engine", engine
                     station_where_engine_is = [str(station_block_name) for station_block_name in g.station_block_list \
-                                               if blocks.getBlock(station_block_name).getValue()==engine][0]
+                                               if blocks.getBlock(station_block_name).getValue()==engine]
+                    # print "station_where_engine_is", station_where_engine_is
+                    station_where_engine_is = station_where_engine_is[0]
+                    # print "8 ", "station_where_engine_is", station_where_engine_is
                     list_items = [l1 for l1 in list_items if str(l1.getName()).startswith(str(station_where_engine_is))]
+                    # print "list_items", list_items
                     s = opt1 = opt1b
                 else:
                     list_items = RouteManager.getRoutesByNameList()
@@ -1054,7 +1107,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             no_repetitions = 0
 
         if dont_run_route == False:
-            if self.logLevel > 0: print "station_from",    station_from, "station_to",station_to, "repeat",repeat
+            if self.logLevel > -1: print "station_from",    station_from, "station_to",station_to, "repeat",repeat
             run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, engine)
             run_train.setName("running_route_" + routeName)
             instanceList.append(run_train)

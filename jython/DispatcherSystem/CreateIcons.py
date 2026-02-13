@@ -671,7 +671,8 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         sensor = sensors.provideSensor('IS:DSCT:' + str(0))
         sensor.setUserName("DummyControlSensor")
         sensor = sensors.provideSensor('IS:DSCTA:' + str(0))
-        sensor.setUserName("Jdialog_closed")
+        sensor.setUserName("Jdialog_closed")       # used when setting nonmodal dialogs closed
+        sensor.setUserName("stoppingDistanceSet")  # used when setting stopping distances
 
         # Create the stop sensors
         index = 0
@@ -745,11 +746,13 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
         self.index = 0
         self.blockPoints.clear()
+        blocks_with_track_segments = set()
 
         # reassign the blockpoints to the nearest track segment to mid if one exists
         for tsv in panel.getTrackSegmentViews():
 
             blk = tsv.getBlockName()
+
 
             pt1 = panel.getCoords(tsv.getConnect1(), tsv.getType1())
             pt2 = panel.getCoords(tsv.getConnect2(), tsv.getType2())
@@ -765,6 +768,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 else:                                   # North south place icon under circle
                     x_reqd = int((float(x1)+float(x2))/2.0)-20  #  to centralise
                     y_reqd = int((float(y1)+float(y2))/2.0)+15  #  to put under circle
+                blocks_with_track_segments.add(blk)
             else:
                 x_reqd = int((float(x1)+float(x2))/2.0)  # to put to right of circle
                 y_reqd = int((float(y1)+float(y2))/2.0)
@@ -773,6 +777,8 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             if blk in self.blockPoints1:
                 pt_mid =  self.blockPoints1[blk]
                 self.updateCoords1(blk, pt_to_try, pt_mid)
+
+
 
         # Handle turntables
         for turntableView in panel.getLayoutTurntableViews():
@@ -785,6 +791,20 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                     # For a turntable, the icon position is calculated relative to its own center
                     [x_reqd, y_reqd] = self.get_icon_position(turntable, turntableView)
                     pt_to_try = Point2D.Double(x_reqd, y_reqd)
+                    self.updateCoords1(blk, pt_to_try, pt_mid)
+
+        # Handle turnouts
+        for turnoutView in panel.getLayoutTurnoutViews():
+            turnout = turnoutView.getTurnout()
+            layoutBlock = turnoutView.getLayoutBlock()
+            if layoutBlock is not None:
+                blk = layoutBlock.getUserName()
+                if blk in blocks_with_track_segments:
+                    continue
+                if blk in self.blockPoints1:
+                    pt_mid = self.blockPoints1[blk]
+                    coords = turnoutView.getCoordsCenter()
+                    pt_to_try = Point2D.Double(coords.getX(), coords.getY())
                     self.updateCoords1(blk, pt_to_try, pt_mid)
 
     def get_icon_position(self, turntable, turntableView):
