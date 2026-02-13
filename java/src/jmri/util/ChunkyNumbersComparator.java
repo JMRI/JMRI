@@ -23,7 +23,8 @@ public class ChunkyNumbersComparator implements Comparator<String> {
             return s1.compareTo(s2);
         }
         
-       for (int index = 1; index < 6; index = index + 2) {
+        // note increment by 2, because of two cases inside the loop
+        for (int index = 1; index < 6; index = index + 2) {
         
             // check first alpha group
             String g1 = m1.group(index);
@@ -31,7 +32,7 @@ public class ChunkyNumbersComparator implements Comparator<String> {
             int len1 = g1.length();
             int len2 = g2.length();
             
-            // at least one letter group
+            // Is there at least one letter group?
             if (len1 > 0 || len2 > 0) {
                 int result = g1.compareTo(g2);
                 if (result !=0) {
@@ -46,7 +47,7 @@ public class ChunkyNumbersComparator implements Comparator<String> {
             boolean g1e = g1.isEmpty();
             boolean g2e = g2.isEmpty();
             if (g1e && g2e) {
-                // no match, so done
+                // no match, so done (can't be another letter group, would have been picked up above)
                 return 0;
             }
             if (g1e) {
@@ -56,11 +57,12 @@ public class ChunkyNumbersComparator implements Comparator<String> {
                 return +1;
             }
             
-            Integer v1;
-            Integer v2;
+            // Here an number group in each input, parse as numbers and compare
+            Long v1;
+            Long v2;
             try {
-                v1 = Integer.parseInt(g1);
-                v2 = Integer.parseInt(g2);
+                v1 = Long.valueOf(g1);
+                v2 = Long.valueOf(g2);
             } catch (NumberFormatException e1) {
                 log.warn("Comparison should not have reached here with {} {}", g1, g2);
                 return s1.compareTo(s2);

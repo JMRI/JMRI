@@ -5,9 +5,9 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Tests for the jmri.util.AlphanumComparator class.
+ * Tests for the jmri.util.ChunkyNumbersComparator class.
  *
- * @author Paul Bender Copyright 2016
+ * @author Bob Jacobsen copyright 2026
  */
 public class ChunkyNumbersComparatorTest {
 
@@ -22,6 +22,22 @@ public class ChunkyNumbersComparatorTest {
         assertEquals( -1, ac.compare("ATSF 123", "ATSF 456"), "ATSF 123 < ATSF 456");
         assertEquals( -1, ac.compare("ATSF 45",  "ATSF 456"), "ATSF 45  < ATSF 456");
         assertEquals( -1, ac.compare("ATSF 54",  "ATSF 456"), "ATSF 54  < ATSF 456");
+
+        assertEquals( +2, ac.compare("CN 123",   "ATSF 123"), "CN 123   > ATSF 123");
+        assertEquals( +1, ac.compare("ATSF 456", "ATSF 123"), "ATSF 456 > ATSF 123");
+        assertEquals( +1, ac.compare("ATSF 456", "ATSF 45"),  "ATSF 456 > ATSF 45");
+        assertEquals( +1, ac.compare("ATSF 456", "ATSF 54"),  "ATSF 456 > ATSF 54");
+
+        assertEquals(  0, ac.compare("A 1 B 2 ATSF 123", "A 1 B 2 ATSF 123"), "A 1 B 2 ATSF 123 = A 1 B 2 ATSF 123");
+        assertEquals( -2, ac.compare("A 1 B 2 ATSF 123", "A 1 B 2 CN 123"),   "A 1 B 2 ATSF 123 < A 1 B 2 CN 123");
+        assertEquals( -1, ac.compare("A 1 B 2 ATSF 123", "A 1 B 2 ATSF 456"), "A 1 B 2 ATSF 123 < A 1 B 2 ATSF 456");
+        assertEquals( -1, ac.compare("A 1 B 2 ATSF 45",  "A 1 B 2 ATSF 456"), "A 1 B 2 ATSF 45  < A 1 B 2 ATSF 456");
+        assertEquals( -1, ac.compare("A 1 B 2 ATSF 54",  "A 1 B 2 ATSF 456"), "A 1 B 2 ATSF 54  < A 1 B 2 ATSF 456");
+        assertEquals( +2, ac.compare("A 1 B 2 CN 123",   "A 1 B 2 ATSF 123"), "A 1 B 2 CN 123   > A 1 B 2 ATSF 123");
+        assertEquals( +1, ac.compare("A 1 B 2 ATSF 456", "A 1 B 2 ATSF 123"), "A 1 B 2 ATSF 456 > A 1 B 2 ATSF 123");
+        assertEquals( +1, ac.compare("A 1 B 2 ATSF 456", "A 1 B 2 ATSF 45"),  "A 1 B 2 ATSF 456 > A 1 B 2 ATSF 45");
+        assertEquals( +1, ac.compare("A 1 B 2 ATSF 456", "A 1 B 2 ATSF 54"),  "A 1 B 2 ATSF 456 > A 1 B 2 ATSF 54");
+
     }
 
     
