@@ -19,7 +19,7 @@ public class RosterEntryToGroupActionTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("TestRosterToGroupWindow");
-        RosterEntryToGroupAction t = new RosterEntryToGroupAction("test roster entry to group",jf);
+        RosterEntryToGroupAction t = new RosterEntryToGroupAction("test roster entry to group",(java.awt.Component)jf);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(jf);
     }

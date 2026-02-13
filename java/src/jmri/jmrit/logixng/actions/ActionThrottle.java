@@ -5,6 +5,7 @@ import java.util.Map;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.util.ThreadingUtil;
 
 /**
  * Runs an engine.
@@ -43,6 +44,7 @@ public final class ActionThrottle extends AbstractDigitalAction
     private final FemaleAnalogExpressionSocket _locoFunctionSocket;
     private final FemaleDigitalExpressionSocket _locoFunctionOnOffSocket;
     private boolean _stopLocoWhenSwitchingLoco = true;
+    private boolean _waitForThrottle = false;
 
 
     public ActionThrottle(String sys, String user) {
@@ -70,6 +72,8 @@ public final class ActionThrottle extends AbstractDigitalAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionThrottle copy = new ActionThrottle(sysName, userName);
         copy.setComment(getComment());
+        copy.setStopLocoWhenSwitchingLoco(_stopLocoWhenSwitchingLoco);
+        copy.setWaitForThrottle(_waitForThrottle);
         copy.setMemo(_memo);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
@@ -97,9 +101,13 @@ public final class ActionThrottle extends AbstractDigitalAction
         return LogixNG_Category.ITEM;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("WA_NOT_IN_LOOP")
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
+
+        final Object lock = new Object();
+        Reference<Boolean> throttleAquired = new Reference<>(false);
 
         int currentLocoAddress = -1;
         int newLocoAddress = -1;
@@ -127,7 +135,8 @@ public final class ActionThrottle extends AbstractDigitalAction
                     _throttle.setSpeedSetting(0);
                 }
                 // Release the loco
-                _throttleManager.releaseThrottle(_throttle, _throttleListener);
+                ThreadingUtil.runOnGUI(() -> {
+                    _throttleManager.releaseThrottle(_throttle, _throttleListener); });
                 _throttle = null;
             }
 
@@ -137,7 +146,14 @@ public final class ActionThrottle extends AbstractDigitalAction
                     @Override
                     public void notifyThrottleFound(DccThrottle t) {
                         _throttle = t;
-                        executeConditionalNG();
+                        if (_waitForThrottle) {
+                            synchronized(lock) {
+                                throttleAquired.set(true);
+                                lock.notifyAll();
+                            }
+                        } else {
+                            executeConditionalNG();
+                        }
                     }
 
                     @Override
@@ -151,10 +167,24 @@ public final class ActionThrottle extends AbstractDigitalAction
                     }
                 };
 
-                boolean result = _throttleManager.requestThrottle(newLocoAddress, _throttleListener);
+                final int locoAddr = newLocoAddress;
+                boolean result = ThreadingUtil.runOnGUIwithReturn(
+                        () -> { return _throttleManager.requestThrottle(locoAddr, _throttleListener); });
 
                 if (!result) {
                     log.warn("loco {} cannot be aquired", newLocoAddress);
+                }
+
+                if (_waitForThrottle) {
+                    synchronized(lock) {
+                        try {
+                            if (! throttleAquired.get()) {
+                                lock.wait();
+                            }
+                        } catch (InterruptedException e) {
+                            log.warn("Action Throttle was interrupted during wait for throttle to be aquired");
+                        }
+                    }
                 }
             }
 
@@ -204,6 +234,12 @@ public final class ActionThrottle extends AbstractDigitalAction
                     throttle.setFunction(func, funcState);
                 }
             });
+
+            if (_waitForThrottle) {
+                ThreadingUtil.runOnGUI(() -> {
+                    _throttleManager.releaseThrottle(_throttle, _throttleListener); });
+                _throttle = null;
+            }
         }
     }
 
@@ -265,7 +301,8 @@ public final class ActionThrottle extends AbstractDigitalAction
                 // Stop the loco
                 _throttle.setSpeedSetting(0);
                 // Release the loco
-                _throttleManager.releaseThrottle(_throttle, _throttleListener);
+                ThreadingUtil.runOnGUI(() -> {
+                    _throttleManager.releaseThrottle(_throttle, _throttleListener); });
             }
             _locoAddressSocketSystemName = null;
             executeConditionalNG();
@@ -302,11 +339,29 @@ public final class ActionThrottle extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
+        String stopLocoWhenSwitchingLocoStr = _stopLocoWhenSwitchingLoco
+                ? Bundle.getMessage("ActionThrottle_StopLocoWhenSwitchingLoco")
+                : Bundle.getMessage("ActionThrottle_DontStopLocoWhenSwitchingLoco");
+        String waitForThrottleStr = _waitForThrottle
+                ? Bundle.getMessage("ActionThrottle_WaitForThrottle")
+                : Bundle.getMessage("ActionThrottle_DontWaitForThrottle");
+
         if (_memo != null) {
-            return Bundle.getMessage(locale, "ActionThrottle_LongConnection",
-                    _memo.getUserName());
+            if (_waitForThrottle) {
+                return Bundle.getMessage(locale, "ActionThrottle_LongConnection1",
+                        _memo.getUserName(), waitForThrottleStr);
+            } else {
+                return Bundle.getMessage(locale, "ActionThrottle_LongConnection2",
+                        _memo.getUserName(), waitForThrottleStr, stopLocoWhenSwitchingLocoStr);
+            }
         } else {
-            return Bundle.getMessage(locale, "ActionThrottle_Long");
+            if (_waitForThrottle) {
+                return Bundle.getMessage(locale, "ActionThrottle_Long1",
+                        waitForThrottleStr);
+            } else {
+                return Bundle.getMessage(locale, "ActionThrottle_Long2",
+                        waitForThrottleStr, stopLocoWhenSwitchingLocoStr);
+            }
         }
     }
 
@@ -497,6 +552,14 @@ public final class ActionThrottle extends AbstractDigitalAction
         _stopLocoWhenSwitchingLoco = value;
     }
 
+    public boolean isWaitForThrottle() {
+        return _waitForThrottle;
+    }
+
+    public void setWaitForThrottle(boolean value) {
+        _waitForThrottle = value;
+    }
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
@@ -513,7 +576,8 @@ public final class ActionThrottle extends AbstractDigitalAction
     @Override
     public void disposeMe() {
         if (_throttle != null) {
-            _throttleManager.releaseThrottle(_throttle, _throttleListener);
+            ThreadingUtil.runOnGUI(() -> {
+                _throttleManager.releaseThrottle(_throttle, _throttleListener); });
         }
     }
 

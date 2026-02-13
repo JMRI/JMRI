@@ -4,10 +4,11 @@ import jmri.jmrix.AbstractMonPaneTestBase;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.assertj.swing.edt.GuiActionRunner;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.openlcb.can.AliasMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,11 +23,11 @@ public class MonitorPaneTest extends AbstractMonPaneTestBase {
     private TrafficControllerScaffold tcs = null;
     private CanSystemConnectionMemo memo = null;
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     @Test
     @Override
     public void testConcreteCtor() {
-        Throwable thrown = catchThrowable(() -> GuiActionRunner.execute(() -> ((MonitorPane)pane).initComponents(memo)));
+        Throwable thrown = catchThrowable(() -> ThreadingUtil.runOnGUI(() -> ((MonitorPane)pane).initComponents(memo)));
         assertThat(thrown).isNull();
     }
 
@@ -60,7 +61,7 @@ public class MonitorPaneTest extends AbstractMonPaneTestBase {
         memo = null;
         tcs.terminateThreads();
         tcs = null;
-        jmri.util.JUnitUtil.resetWindows(false, false);
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
 
     }

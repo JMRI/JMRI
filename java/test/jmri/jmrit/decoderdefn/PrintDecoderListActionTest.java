@@ -1,13 +1,10 @@
 package jmri.jmrit.decoderdefn;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -16,11 +13,11 @@ import org.junit.Assume;
 public class PrintDecoderListActionTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame frame = new JmriJFrame("print decoder defn list test");
         PrintDecoderListAction t = new PrintDecoderListAction("test",frame,true);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
         JUnitUtil.dispose(frame);
     }
 

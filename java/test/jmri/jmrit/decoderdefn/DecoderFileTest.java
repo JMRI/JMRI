@@ -1,11 +1,17 @@
 package jmri.jmrit.decoderdefn;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import javax.swing.JLabel;
 
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
 
 import org.jdom2.DocType;
 import org.jdom2.Document;
@@ -19,15 +25,15 @@ import org.junit.jupiter.api.*;
  */
 public class DecoderFileTest {
 
-    ProgDebugger p = new ProgDebugger();
+    private ProgDebugger p = new ProgDebugger();
 
     @Test
     public void testSingleVersionNumber() {
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
                 "family", "filename", 16, 3, null);
         d.setOneVersion(18);
-        Assertions.assertTrue(d.isVersion(18), "single 18 OK");
-        Assertions.assertFalse(d.isVersion(19), "single 19 not OK");
+        assertTrue(d.isVersion(18), "single 18 OK");
+        assertFalse(d.isVersion(19), "single 19 not OK");
     }
 
     @Test
@@ -35,44 +41,44 @@ public class DecoderFileTest {
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "24", "25",
                 "family", "filename", 16, 3, null);
         d.setVersionRange(18, 22);
-        Assertions.assertFalse(d.isVersion(17), "single 17 not OK");
-        Assertions.assertTrue(d.isVersion(18), "single 18 OK");
-        Assertions.assertTrue(d.isVersion(19), "single 19 OK");
-        Assertions.assertTrue(d.isVersion(20), "single 20 OK");
-        Assertions.assertTrue(d.isVersion(21), "single 21 OK");
-        Assertions.assertTrue(d.isVersion(22), "single 22 OK");
-        Assertions.assertFalse(d.isVersion(23), "single 23 not OK");
+        assertFalse(d.isVersion(17), "single 17 not OK");
+        assertTrue(d.isVersion(18), "single 18 OK");
+        assertTrue(d.isVersion(19), "single 19 OK");
+        assertTrue(d.isVersion(20), "single 20 OK");
+        assertTrue(d.isVersion(21), "single 21 OK");
+        assertTrue(d.isVersion(22), "single 22 OK");
+        assertFalse(d.isVersion(23), "single 23 not OK");
     }
 
     @Test
     public void testCtorRange() {
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "18", "22",
                 "family", "filename", 16, 3, null);
-        Assertions.assertFalse(d.isVersion(17), "single 17 not OK");
-        Assertions.assertTrue(d.isVersion(18), "single 18 OK");
-        Assertions.assertTrue(d.isVersion(19), "single 19 OK");
-        Assertions.assertTrue(d.isVersion(20), "single 20 OK");
-        Assertions.assertTrue(d.isVersion(21), "single 21 OK");
-        Assertions.assertTrue(d.isVersion(22), "single 22 OK");
-        Assertions.assertFalse(d.isVersion(23), "single 23 not OK");
+        assertFalse(d.isVersion(17), "single 17 not OK");
+        assertTrue(d.isVersion(18), "single 18 OK");
+        assertTrue(d.isVersion(19), "single 19 OK");
+        assertTrue(d.isVersion(20), "single 20 OK");
+        assertTrue(d.isVersion(21), "single 21 OK");
+        assertTrue(d.isVersion(22), "single 22 OK");
+        assertFalse(d.isVersion(23), "single 23 not OK");
     }
 
     @Test
     public void testCtorLow() {
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "18", null,
                 "family", "filename", 16, 3, null);
-        Assertions.assertFalse(d.isVersion(17), "single 17 not OK");
-        Assertions.assertTrue(d.isVersion(18), "single 18 OK");
-        Assertions.assertFalse(d.isVersion(19), "single 19 not OK");
+        assertFalse(d.isVersion(17), "single 17 not OK");
+        assertTrue(d.isVersion(18), "single 18 OK");
+        assertFalse(d.isVersion(19), "single 19 not OK");
     }
 
     @Test
     public void testCtorHigh() {
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", null, "18",
                 "family", "filename", 16, 3, null);
-        Assertions.assertFalse(d.isVersion(17), "single 17 not OK");
-        Assertions.assertTrue(d.isVersion(18), "single 18 OK");
-        Assertions.assertFalse(d.isVersion(19), "single 19 not OK");
+        assertFalse(d.isVersion(17), "single 17 not OK");
+        assertTrue(d.isVersion(18), "single 18 OK");
+        assertFalse(d.isVersion(19), "single 19 not OK");
     }
 
     @Test
@@ -80,25 +86,25 @@ public class DecoderFileTest {
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
                 "family", "filename", 16, 3, null);
         d.setOneVersion(18);
-        Assertions.assertTrue(d.isVersion(18), "single 18 OK");
-        Assertions.assertFalse(d.isVersion(19), "single 19 not OK");
+        assertTrue(d.isVersion(18), "single 18 OK");
+        assertFalse(d.isVersion(19), "single 19 not OK");
         d.setOneVersion(19);
-        Assertions.assertTrue(d.isVersion(19), "single 19 OK");
-        Assertions.assertFalse(d.isVersion(21), "single 21 not OK");
+        assertTrue(d.isVersion(19), "single 19 OK");
+        assertFalse(d.isVersion(21), "single 21 not OK");
         d.setOneVersion(21);
-        Assertions.assertTrue(d.isVersion(21), "single 21 OK");
+        assertTrue(d.isVersion(21), "single 21 OK");
     }
 
     @Test
     public void testMfgName() {
         setupDecoder();
-        Assertions.assertEquals("Digitrax", DecoderFile.getMfgName(decoder), "mfg name ");
+        assertEquals("Digitrax", DecoderFile.getMfgName(decoder), "mfg name ");
     }
 
     @Test
     public void testModes() {
         setupDecoder();
-        Assertions.assertEquals("AMODE", DecoderFile.getProgrammingModes(decoder), "programming mode ");
+        assertEquals("AMODE", DecoderFile.getProgrammingModes(decoder), "programming mode ");
     }
 
     @Test
@@ -114,9 +120,9 @@ public class DecoderFileTest {
                 "family", "filename", 16, 16, null);
 
         d.loadVariableModel(decoder, variableModel);
-        Assertions.assertEquals(3, variableModel.getRowCount(), "read rows ");
-        Assertions.assertEquals("Address", variableModel.getLabel(0), "first row name ");
-        Assertions.assertEquals("Normal direction of motion", variableModel.getLabel(2), "third row name ");
+        assertEquals(3, variableModel.getRowCount(), "read rows ");
+        assertEquals("Address", variableModel.getLabel(0), "first row name ");
+        assertEquals("Normal direction of motion", variableModel.getLabel(2), "third row name ");
     }
 
     @Test
@@ -124,29 +130,29 @@ public class DecoderFileTest {
         Element e;
         // test some examples
         e = new Element("Test");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "1", "model", "family", "", ""), "1 in null");
+        assertTrue(DecoderFile.isIncluded(e, "1", "model", "family", "", ""), "1 in null");
 
         (e = new Element("Test")).setAttribute("include", "1,2");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "1", "model", "family", "", ""), "1 in 1,2");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "2", "model", "family", "", ""), "2 in 1,2");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "3", "model", "family", "", ""), "3 in 1,2");
+        assertTrue(DecoderFile.isIncluded(e, "1", "model", "family", "", ""), "1 in 1,2");
+        assertTrue(DecoderFile.isIncluded(e, "2", "model", "family", "", ""), "2 in 1,2");
+        assertFalse(DecoderFile.isIncluded(e, "3", "model", "family", "", ""), "3 in 1,2");
 
         (e = new Element("Test")).setAttribute("include", "105,205");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 in 105,205");
+        assertTrue(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 in 105,205");
 
         (e = new Element("Test")).setAttribute("include", "205,105");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 in 205,105");
+        assertTrue(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 in 205,105");
 
         (e = new Element("Test")).setAttribute("include", "1050,205");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 not in 1050,205");
+        assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 not in 1050,205");
 
         (e = new Element("Test")).setAttribute("include", "50,1050");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 not in 50,1050");
+        assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 not in 50,1050");
 
         (e = new Element("Test")).setAttribute("include", "827004,827008,827104,827108,827106,828043,828045,828047");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "827004", "model", "family", "", ""), "827004");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "827005", "model", "family", "", ""), "Not 827005");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "827108", "model", "family", "", ""), "827108");
+        assertTrue(DecoderFile.isIncluded(e, "827004", "model", "family", "", ""), "827004");
+        assertFalse(DecoderFile.isIncluded(e, "827005", "model", "family", "", ""), "Not 827005");
+        assertTrue(DecoderFile.isIncluded(e, "827108", "model", "family", "", ""), "827108");
     }
 
     @Test
@@ -155,36 +161,36 @@ public class DecoderFileTest {
 
         // with nothing in element
         e = new Element("Test");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "1", "model", "family", "1,2", ""), "1 in 1,2");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "2", "model", "family", "1,2", ""), "2 in 1,2");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "3", "model", "family", "1,2", ""), "3 in 1,2");
+        assertTrue(DecoderFile.isIncluded(e, "1", "model", "family", "1,2", ""), "1 in 1,2");
+        assertTrue(DecoderFile.isIncluded(e, "2", "model", "family", "1,2", ""), "2 in 1,2");
+        assertFalse(DecoderFile.isIncluded(e, "3", "model", "family", "1,2", ""), "3 in 1,2");
 
         // with irrelevant element
         (e = new Element("Test")).setAttribute("include", "4,5");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "1", "model", "family", "1,2", ""), "1 in 1,2");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "2", "model", "family", "1,2", ""), "2 in 1,2");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "3", "model", "family", "1,2", ""), "3 in 1,2");
+        assertTrue(DecoderFile.isIncluded(e, "1", "model", "family", "1,2", ""), "1 in 1,2");
+        assertTrue(DecoderFile.isIncluded(e, "2", "model", "family", "1,2", ""), "2 in 1,2");
+        assertFalse(DecoderFile.isIncluded(e, "3", "model", "family", "1,2", ""), "3 in 1,2");
 
         (e = new Element("Test")).setAttribute("include", "105,205");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 in 105,205");
+        assertTrue(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 in 105,205");
 
         e = new Element("Test");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "105", "model", "family", "205,105", ""), "105 in 205,105");
+        assertTrue(DecoderFile.isIncluded(e, "105", "model", "family", "205,105", ""), "105 in 205,105");
         (e = new Element("Test")).setAttribute("include", "1205,1105");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "105", "model", "family", "205,105", ""), "105 in 205,105");
+        assertTrue(DecoderFile.isIncluded(e, "105", "model", "family", "205,105", ""), "105 in 205,105");
 
         e = new Element("Test");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "1050,205", ""), "105 not in 1050,205");
+        assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "1050,205", ""), "105 not in 1050,205");
         (e = new Element("Test")).setAttribute("include", "222,333");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "1050,205", ""), "105 not in 1050,205");
+        assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "1050,205", ""), "105 not in 1050,205");
 
         e = new Element("Test");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "50,1050", ""), "105 not in 50,1050");
+        assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "50,1050", ""), "105 not in 50,1050");
 
         e = new Element("Test");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "827004", "model", "family", "827004,827008,827104,827108,827106,828043,828045,828047", ""), "827004");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "827005", "model", "family", "827004,827008,827104,827108,827106,828043,828045,828047", ""), "Not 827005");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "827108", "model", "family", "827004,827008,827104,827108,827106,828043,828045,828047", ""), "827108");
+        assertTrue(DecoderFile.isIncluded(e, "827004", "model", "family", "827004,827008,827104,827108,827106,828043,828045,828047", ""), "827004");
+        assertFalse(DecoderFile.isIncluded(e, "827005", "model", "family", "827004,827008,827104,827108,827106,828043,828045,828047", ""), "Not 827005");
+        assertTrue(DecoderFile.isIncluded(e, "827108", "model", "family", "827004,827008,827104,827108,827106,828043,828045,828047", ""), "827108");
     }
 
     @Test
@@ -193,15 +199,15 @@ public class DecoderFileTest {
 
         // with nothing in element
         e = new Element("Test");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "1", "model", "family", "model", ""), "1 in model");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "2", "model", "family", "1,2,model", ""), "2 in 1,2,model");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "3", "model", "family", "1,2", ""), "3 in 1,2");
+        assertTrue(DecoderFile.isIncluded(e, "1", "model", "family", "model", ""), "1 in model");
+        assertTrue(DecoderFile.isIncluded(e, "2", "model", "family", "1,2,model", ""), "2 in 1,2,model");
+        assertFalse(DecoderFile.isIncluded(e, "3", "model", "family", "1,2", ""), "3 in 1,2");
 
         // with irrelevant element
         (e = new Element("Test")).setAttribute("include", "4,5");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "1", "model", "family", "model", ""), "1 in model");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "2", "model", "family", "1,2,model", ""), "2 in 1,2,model");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "3", "model", "family", "1,2", ""), "3 in 1,2");
+        assertTrue(DecoderFile.isIncluded(e, "1", "model", "family", "model", ""), "1 in model");
+        assertTrue(DecoderFile.isIncluded(e, "2", "model", "family", "1,2,model", ""), "2 in 1,2,model");
+        assertFalse(DecoderFile.isIncluded(e, "3", "model", "family", "1,2", ""), "3 in 1,2");
     }
 
     @Test
@@ -209,29 +215,29 @@ public class DecoderFileTest {
         Element e;
         // test some examples
         e = new Element("Test");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "1", "model", "family", "", ""), "1 in null");
+        assertTrue(DecoderFile.isIncluded(e, "1", "model", "family", "", ""), "1 in null");
 
         (e = new Element("Test")).setAttribute("exclude", "1,2");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "1", "model", "family", "", ""), "1 in 1,2");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "2", "model", "family", "", ""), "2 in 1,2");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "3", "model", "family", "", ""), "3 in 1,2");
+        assertFalse(DecoderFile.isIncluded(e, "1", "model", "family", "", ""), "1 in 1,2");
+        assertFalse(DecoderFile.isIncluded(e, "2", "model", "family", "", ""), "2 in 1,2");
+        assertTrue(DecoderFile.isIncluded(e, "3", "model", "family", "", ""), "3 in 1,2");
 
         (e = new Element("Test")).setAttribute("exclude", "105,205");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 in 105,205");
+        assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 in 105,205");
 
         (e = new Element("Test")).setAttribute("exclude", "205,105");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 in 205,105");
+        assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 in 205,105");
 
         (e = new Element("Test")).setAttribute("exclude", "1050,205");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 not in 1050,205");
+        assertTrue(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 not in 1050,205");
 
         (e = new Element("Test")).setAttribute("exclude", "50,1050");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 not in 50,1050");
+        assertTrue(DecoderFile.isIncluded(e, "105", "model", "family", "", ""), "105 not in 50,1050");
 
         (e = new Element("Test")).setAttribute("exclude", "827004,827008,827104,827108,827106,828043,828045,828047");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "827004", "model", "family", "", ""), "827004");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "827005", "model", "family", "", ""), "Not 827005");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "827108", "model", "family", "", ""), "827108");
+        assertFalse(DecoderFile.isIncluded(e, "827004", "model", "family", "", ""), "827004");
+        assertTrue(DecoderFile.isIncluded(e, "827005", "model", "family", "", ""), "Not 827005");
+        assertFalse(DecoderFile.isIncluded(e, "827108", "model", "family", "", ""), "827108");
     }
 
     @Test
@@ -239,19 +245,19 @@ public class DecoderFileTest {
         Element e;
 
         e = new Element("Test");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "1", "model", "family", "", "model"), "1 in model");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "2", "model", "family", "", "1,2,model"), "2 in 1,2,model");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "3", "model", "family", "", "1,2,model"), "3 in 1,2,model");
+        assertFalse(DecoderFile.isIncluded(e, "1", "model", "family", "", "model"), "1 in model");
+        assertFalse(DecoderFile.isIncluded(e, "2", "model", "family", "", "1,2,model"), "2 in 1,2,model");
+        assertFalse(DecoderFile.isIncluded(e, "3", "model", "family", "", "1,2,model"), "3 in 1,2,model");
 
         (e = new Element("Test")).setAttribute("exclude", "4,5");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "1", "model", "family", "", "1,2"), "1 in 1,2");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "2", "model", "family", "", "1,2"), "2 in 1,2");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "3", "model", "family", "", "1,2"), "3 in 1,2");
+        assertFalse(DecoderFile.isIncluded(e, "1", "model", "family", "", "1,2"), "1 in 1,2");
+        assertFalse(DecoderFile.isIncluded(e, "2", "model", "family", "", "1,2"), "2 in 1,2");
+        assertTrue(DecoderFile.isIncluded(e, "3", "model", "family", "", "1,2"), "3 in 1,2");
 
         e = new Element("Test");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "", "105,205"), "105 in 105,205");
+        assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "", "105,205"), "105 in 105,205");
         (e = new Element("Test")).setAttribute("exclude", "305,405");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "", "105,205"), "105 in 105,205");
+        assertFalse(DecoderFile.isIncluded(e, "105", "model", "family", "", "105,205"), "105 in 105,205");
     }
 
     @Test
@@ -259,14 +265,14 @@ public class DecoderFileTest {
         Element e;
 
         e = new Element("Test");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "1", "model", "family", "", "1,2"), "1 in model");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "2", "model", "family", "", "1,2"), "2 in 1,2,model");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "3", "model", "family", "", "1,2"), "3 in 1,2");
+        assertFalse(DecoderFile.isIncluded(e, "1", "model", "family", "", "1,2"), "1 in model");
+        assertFalse(DecoderFile.isIncluded(e, "2", "model", "family", "", "1,2"), "2 in 1,2,model");
+        assertTrue(DecoderFile.isIncluded(e, "3", "model", "family", "", "1,2"), "3 in 1,2");
 
         (e = new Element("Test")).setAttribute("exclude", "4,5");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "1", "model", "family", "", "1,2"), "1 in model");
-        Assertions.assertFalse(DecoderFile.isIncluded(e, "2", "model", "family", "", "1,2"), "2 in 1,2,model");
-        Assertions.assertTrue(DecoderFile.isIncluded(e, "3", "model", "family", "", "1,2"), "3 in 1,2");
+        assertFalse(DecoderFile.isIncluded(e, "1", "model", "family", "", "1,2"), "1 in model");
+        assertFalse(DecoderFile.isIncluded(e, "2", "model", "family", "", "1,2"), "2 in 1,2,model");
+        assertTrue(DecoderFile.isIncluded(e, "3", "model", "family", "", "1,2"), "3 in 1,2");
     }
 
     @Test
@@ -282,7 +288,7 @@ public class DecoderFileTest {
                 "family", "filename", 16, 3, null);
 
         d.loadVariableModel(decoder, variableModel);
-        Assertions.assertEquals(2, variableModel.getRowCount(), "read rows ");
+        assertEquals(2, variableModel.getRowCount(), "read rows ");
     }
 
     @Test
@@ -300,17 +306,18 @@ public class DecoderFileTest {
                 "AMODE");
 
         d.loadVariableModel(decoder, variableModel);
-        Assertions.assertEquals(2, variableModel.getRowCount(), "read rows ");
+        assertEquals(2, variableModel.getRowCount(), "read rows ");
     }
 
-    // static variables for the test XML structures
-    Element root = null;
-    public Element decoder = null;
-    public Element model = null;
-    public Element mode = null;
-    Document doc = null;
+    // variables for the test XML structures
+    private Element root = null;
+    public Element decoder = null; // used in jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest
+    public Element model = null; // used in jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest
+    private Element mode = null;
+    private Document doc = null;
 
-    // provide a test document in the above static variables
+    // provide a test document in the above variables
+    @ToDo("Break out into separate class for use by this test and jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest")
     public void setupDecoder() {
         // create a JDOM tree with just some elements
         root = new Element("decoder-config");
@@ -376,6 +383,8 @@ public class DecoderFileTest {
                         )
                 )
         ); // end of adding contents
+        assertNotNull(model);
+        assertNotNull(mode);
     }
 
     @BeforeEach
