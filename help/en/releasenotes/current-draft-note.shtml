@@ -448,9 +448,21 @@
             <li>The roster entry's comment field is now available
                 as a column in the main DecoderPro display.  Multi-line
                 comments will be displayed as multiple lines in a row
-                with extended height.  If you don't want to see this
+                with extended height.  Type ctrl-return or 
+                alt-return to put a newline in the field.
+                <p>If you don't want to see this
                 column, right-click/ctrl-click in the column heading
                 and deselect it.</li>
+            <li>If you have added additional columns to the Roster Table,
+                these can now have multi-line comments.
+            <li>To make adding locomotives to roster groups more convenient,
+                there are several new ways to do it:
+                <ul>
+                    <li>There's a new item in the main Settings menu
+                    <li>Once you have selected a row in the roster table,
+                        right-push or ctrl-push to get a popup menu 
+                        which contains a new "Add to Group..." item.
+                </ul>
             <li>Decoder product ID determination has been added
                 for PIKO decoders.</li>
         </ul>
@@ -510,7 +522,10 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>The action <strong>Throttle</strong> has been improved. It
+              has the option to wait for a throttle to be aquired and
+              then release it immediately after doing its action. This
+              is useful if you want to dispatch the throttle.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -556,7 +571,6 @@
         <a id="Roster" name="Roster"></a>
         <ul>
             <li>Added: physics parameters for physics based acceleration.</li>
-            <li>Improved the locomotive image resolution in printed rosters.</li>
         </ul>
 
     <h3>Routes</h3>

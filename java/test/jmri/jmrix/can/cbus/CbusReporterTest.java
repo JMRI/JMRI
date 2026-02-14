@@ -1,14 +1,20 @@
 package jmri.jmrix.can.cbus;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.IdTag;
+import jmri.Reporter;
+import jmri.ReporterManager;
+import jmri.Sensor;
 import jmri.jmrix.can.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -25,11 +31,11 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
     public void testRespondToClassicRfidCanReply(){
 
         // a new tag provided by Reporter4 then moves to Reporter 5
-        CbusReporter r4 = new CbusReporter("4",memo);
-        CbusReporter r5 = new CbusReporter("5",memo);
+        Reporter r4 = memo.get(ReporterManager.class).provideReporter("4");
+        Reporter r5 = memo.get(ReporterManager.class).provideReporter("5");
 
-        Assert.assertNotEquals("messages should be different",
-   r.describeState(IdTag.UNSEEN), r.describeState(IdTag.SEEN));
+        assertNotEquals(r.describeState(IdTag.UNSEEN), r.describeState(IdTag.SEEN),
+            "messages should be different");
 
         CanReply m = new CanReply(tcis.getCanid());
         m.setNumDataElements(8);
@@ -41,25 +47,23 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         m.setElement(5, 0x31); // tag3
         m.setElement(6, 0x30); // tag4
         m.setElement(7, 0xAB); // tag5
-        r4.reply(m);
-        r5.reply(m);
+        tcis.sendToListeners(m);
 
         // tag unseen = 2
         // tag seen = 3
 
-        Assert.assertEquals("r4 state set",r4.describeState(IdTag.SEEN),r4.describeState(r4.getState()));
-        Assert.assertNotNull("r4 report set",r4.getCurrentReport());
-        Assert.assertEquals("r5 state unset",r5.describeState(IdTag.UNKNOWN),r5.describeState(r5.getState()));
-        Assert.assertEquals("r5 report unset",null,r5.getCurrentReport());
+        assertEquals(r4.describeState(IdTag.SEEN),r4.describeState(r4.getState()), "r4 state set");
+        assertNotNull(r4.getCurrentReport(), "r4 report set");
+        assertEquals(r5.describeState(IdTag.UNKNOWN),r5.describeState(r5.getState()), "r5 state unset");
+        assertNull(r5.getCurrentReport(), "r5 report unset");
 
         m.setElement(2, 0x05); // ev lo
-        r4.reply(m);
-        r5.reply(m);
+        tcis.sendToListeners(m);
 
-        Assert.assertEquals("r5 tag seen",r5.describeState(IdTag.SEEN),r5.describeState(r5.getState()));
-        Assert.assertNotNull("r5 report set",r5.getCurrentReport());
-        Assert.assertEquals("r4 tag gone",r4.describeState(IdTag.UNSEEN),r4.describeState(r4.getState()));
-        Assert.assertEquals("r4 report unset",null,r4.getCurrentReport());
+        assertEquals(r5.describeState(IdTag.SEEN),r5.describeState(r5.getState()), "r5 tag seen");
+        assertNotNull(r5.getCurrentReport(), "r5 report set");
+        assertEquals(r4.describeState(IdTag.UNSEEN),r4.describeState(r4.getState()), "r4 tag gone");
+        assertNull(r4.getCurrentReport(), "r4 report unset");
 
         CanReply m2 = new CanReply(tcis.getCanid());
         m2.setNumDataElements(8);
@@ -72,35 +76,34 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         m2.setElement(6, 0x30); // tag4
         m2.setElement(7, 0xAB); // tag5
 
-        r4.reply(m2);
-        r5.reply(m2);
+        tcis.sendToListeners(m2);
 
-        Assert.assertEquals("r4 state set CBUS_ACDAT",r4.describeState(IdTag.SEEN),r4.describeState(r4.getState()));
-        Assert.assertNotNull("r4 report set CBUS_ACDAT",r4.getCurrentReport());
-        Assert.assertEquals("r5 state unset CBUS_ACDAT",r5.describeState(IdTag.UNSEEN),r5.describeState(r5.getState()));
-        Assert.assertEquals("r5 report unset CBUS_ACDAT",null,r5.getCurrentReport());
+        assertEquals(r4.describeState(IdTag.SEEN),r4.describeState(r4.getState()), "r4 state set CBUS_ACDAT");
+        assertNotNull(r4.getCurrentReport(), "r4 report set CBUS_ACDAT");
+        assertEquals(r5.describeState(IdTag.UNSEEN),r5.describeState(r5.getState()), "r5 state unset CBUS_ACDAT");
+        assertNull(r5.getCurrentReport(), "r5 report unset CBUS_ACDAT");
 
         m2.setElement(2, 0x05); // ev lo
 
         m2.setExtended(true);
-        r5.reply(m2);
-        Assert.assertEquals("r5 state unset extended",r5.describeState(IdTag.UNSEEN),r5.describeState(r5.getState()));
+        tcis.sendToListeners(m2);
+        assertEquals(r5.describeState(IdTag.UNSEEN),r5.describeState(r5.getState()), "r5 state unset extended");
 
         m2.setExtended(false);
         m2.setRtr(true);
-        r5.reply(m2);
-        Assert.assertEquals("r5 state unset rtr",r5.describeState(IdTag.UNSEEN),r5.describeState(r5.getState()));
+        tcis.sendToListeners(m2);
+        assertEquals(r5.describeState(IdTag.UNSEEN),r5.describeState(r5.getState()), "r5 state unset rtr");
 
         m2.setRtr(false);
         m2.setElement(0, 0x05); // random OPC not related to reporters
-        r5.reply(m2);
-        Assert.assertEquals("r5 state unset random opc",r5.describeState(IdTag.UNSEEN),r5.describeState(r5.getState()));
+        tcis.sendToListeners(m2);
+        assertEquals(r5.describeState(IdTag.UNSEEN),r5.describeState(r5.getState()), "r5 state unset random opc");
 
         m2.setElement(0, CbusConstants.CBUS_DDES); // put it back
-        r5.reply(m2);
-        Assert.assertEquals("r5 state set ok after incorrect msgs",r5.describeState(IdTag.SEEN),r5.describeState(r5.getState()));
+        tcis.sendToListeners(m2);
+        assertEquals(r5.describeState(IdTag.SEEN),r5.describeState(r5.getState()), "r5 state set ok after incorrect msgs");
 
-        Assert.assertEquals("r4 state unseen",r4.describeState(IdTag.UNSEEN),r4.describeState(r4.getState()));
+        assertEquals(r4.describeState(IdTag.UNSEEN),r4.describeState(r4.getState()), "r4 state unseen");
 
         CanMessage m3 = new CanMessage(tcis.getCanid());
         m3.setNumDataElements(8);
@@ -113,9 +116,9 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         m3.setElement(6, 0x30); // tag4
         m3.setElement(7, 0xAB); // tag5
 
-        r4.message(m3);
+        tcis.sendToListeners(m3);
 
-        Assert.assertEquals("r4 seen after CBUS_ACDAT outgoing message",IdTag.SEEN,r4.getState());
+        assertEquals(IdTag.SEEN,r4.getState(), "r4 seen after CBUS_ACDAT outgoing message");
 
         r4.dispose();
         r5.dispose();
@@ -123,26 +126,28 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
 
     @Test
     public void testGetCbusReporterType(){
-        Assert.assertEquals("Classic RfID default type",CbusReporterManager.CBUS_DEFAULT_REPORTER_TYPE,((CbusReporter)r).getCbusReporterType());
+        assertEquals(CbusReporterManager.CBUS_DEFAULT_REPORTER_TYPE,((CbusReporter)r).getCbusReporterType(),
+            "Classic RfID default type");
 
         r.setProperty(CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY, CbusReporterManager.CBUS_REPORTER_TYPES[1]);
-        Assert.assertEquals("type changed",CbusReporterManager.CBUS_REPORTER_TYPES[1],((CbusReporter)r).getCbusReporterType());
+        assertEquals(CbusReporterManager.CBUS_REPORTER_TYPES[1],((CbusReporter)r).getCbusReporterType(),
+            "type changed");
     }
 
     @Test
     public void testMaintainSensorDefaultSetGet(){
-        Assert.assertFalse("maintain sensor default",((CbusReporter)r).getMaintainSensor());
+        assertFalse(((CbusReporter)r).getMaintainSensor(), "maintain sensor default");
         r.setProperty(CbusReporterManager.CBUS_MAINTAIN_SENSOR_DESCRIPTOR_KEY, true);
-        Assert.assertTrue("sensor maintained flag set true",((CbusReporter)r).getMaintainSensor());
+        assertTrue(((CbusReporter)r).getMaintainSensor(), "sensor maintained flag set true");
     }
 
     @Test
     public void testRespondToDdesRc522CanReply(){
 
         // a new tag provided by Reporter4 then moves to Reporter 5
-        CbusReporter r4 = new CbusReporter("4",memo);
+        Reporter r4 = memo.get(ReporterManager.class).provideReporter("4");
         r4.setProperty(CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY, CbusReporterManager.CBUS_REPORTER_TYPES[1]);
-        CbusReporter r5 = new CbusReporter("65534",memo);
+        Reporter r5 = memo.get(ReporterManager.class).provideReporter("65534");
         r5.setProperty(CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY, CbusReporterManager.CBUS_REPORTER_TYPES[1]);
 
         CanReply m = new CanReply(tcis.getCanid());
@@ -155,47 +160,135 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         m.setElement(5, 0x01); // tag ID lo
         m.setElement(6, 0xff); // ddes3
         m.setElement(7, 0xAB); // ddes4
-        r4.reply(m);
-        r5.reply(m);
+        tcis.sendToListeners(m);
 
-        Assert.assertEquals("r4 state set",r4.describeState(IdTag.SEEN),r4.describeState(r4.getState()));
-        Assert.assertNotNull("r4 report set",r4.getCurrentReport());
-        Assert.assertEquals("r5 state unset",r5.describeState(IdTag.UNKNOWN),r5.describeState(r5.getState()));
-        Assert.assertNull("r5 report unset",r5.getCurrentReport());
+        assertEquals(r4.describeState(IdTag.SEEN),r4.describeState(r4.getState()), "r4 state set");
+        assertNotNull(r4.getCurrentReport(), "r4 report set");
+        assertEquals(r5.describeState(IdTag.UNKNOWN),r5.describeState(r5.getState()), "r5 state unset");
+        assertNull(r5.getCurrentReport(), "r5 report unset");
 
         IdTag tag = jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getByTagID("1");
-        Assert.assertNotNull("tag created",tag);
+        assertNotNull(tag, "tag created");
 
         m.setElement(1, 0xff); // ev hi
         m.setElement(2, 0xfe); // ev lo
-        r4.reply(m);
-        r5.reply(m);
+        tcis.sendToListeners(m);
 
-        Assert.assertEquals("r5 tag seen",r5.describeState(IdTag.SEEN),r5.describeState(r5.getState()));
-        Assert.assertNotNull("r5 report set",r5.getCurrentReport());
-        Assert.assertEquals("r4 tag gone",r4.describeState(IdTag.UNSEEN),r4.describeState(r4.getState()));
-        Assert.assertNull("r4 report unset",r4.getCurrentReport());
+        assertEquals(r5.describeState(IdTag.SEEN),r5.describeState(r5.getState()), "r5 tag seen");
+        assertNotNull(r5.getCurrentReport(), "r5 report set");
+        assertEquals(r4.describeState(IdTag.UNSEEN),r4.describeState(r4.getState()), "r4 tag gone");
+        assertNull(r4.getCurrentReport(), "r4 report unset");
 
-        r5.reply(m); // same tag
-        Assert.assertEquals("r5 tag seen",r5.describeState(IdTag.SEEN),r5.describeState(r5.getState()));
-        Assert.assertNotNull("r5 report set",r5.getCurrentReport());
+        tcis.sendToListeners(m);
+        assertEquals(r5.describeState(IdTag.SEEN),r5.describeState(r5.getState()), "r5 tag seen");
+        assertNotNull(r5.getCurrentReport(), "r5 report set");
 
 
         m.setElement(4, 0xff); // tag ID hi
         m.setElement(5, 0xff); // tag ID lo
-        r5.reply(m); // same tag
-        Assert.assertEquals("r5 tag seen",r5.describeState(IdTag.SEEN),r5.describeState(r5.getState()));
-        Assert.assertNotNull("r5 report set",r5.getCurrentReport());
+        tcis.sendToListeners(m);
+        assertEquals(r5.describeState(IdTag.SEEN),r5.describeState(r5.getState()), "r5 tag seen");
+        assertNotNull(r5.getCurrentReport(), "r5 report set");
 
         tag = jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getByTagID("65535");
-        Assert.assertNotNull("tag 65535 created",tag);
-        Assert.assertEquals("r5 tag seen 65535",tag,r5.getCurrentReport());
-        Assert.assertEquals("r5 tag seen 65535",r5,tag.getWhereLastSeen());
+        assertNotNull(tag, "tag 65535 created");
+        assertEquals(tag,r5.getCurrentReport(), "r5 tag seen 65535");
+        assertEquals(r5,tag.getWhereLastSeen(), "r5 tag seen 65535");
 
 
         r4.dispose();
         r5.dispose();
 
+    }
+
+    @Test
+    public void testRespondToDdesRailComCanReply(){
+
+        // a new tag provided by Reporter4 then moves to Reporter 5
+        CbusReporter r4 = new CbusReporter("4",memo);
+        r4.setProperty(CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY, CbusReporterManager.CBUS_REPORTER_TYPE_DDES_DESCRIBING);
+ 
+        CanReply m = new CanReply(tcis.getCanid());
+        
+        m.setNumDataElements(8);
+        m.setElement(0, CbusConstants.CBUS_DDES);
+        m.setElement(1, 0x00); // dd hi
+        m.setElement(2, 0x04); // dd lo
+        m.setElement(3, 0x01); // railcom
+
+        m.setElement(6, 0x99); // ddes3
+        m.setElement(7, 0x15); // ddes4
+
+        jmri.DccLocoAddress address;
+        
+        m.setElement(4, 0x00); // short address 1
+        m.setElement(5, 0x01);
+        address = r4.parseAddress(m); 
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_SHORT, "0x0001 type");
+        assertEquals(address.getNumber(), 1, "0x0001 number");
+
+
+        m.setElement(4, 0xC0); // Long address 1
+        m.setElement(5, 0x01);
+        address = r4.parseAddress(m);
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_LONG,"0xC001 type");
+        assertEquals(address.getNumber(), 1, "0xC001 number");
+
+        m.setElement(4, 0xE6); // Long address 9876
+        m.setElement(5, 0x94);
+        address = r4.parseAddress(m);
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_LONG,"0xE694 type");
+        assertEquals(address.getNumber(), 9876, "0xE694 number");
+
+
+        m.setElement(4, 0x40); // short consist 1
+        m.setElement(5, 0x01);
+        address = r4.parseAddress(m);
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_CONSIST,"0x4001 type");
+        assertEquals(address.getNumber(), 1,"0x4001 address");
+
+
+        m.setElement(4, 0x80); // extended consist 1
+        m.setElement(5, 0x01);
+        address = r4.parseAddress(m);
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x8001 type");
+        assertEquals(address.getNumber(), 1,"0x8001 address");
+
+        m.setElement(4, 0x80); // extended consist 17
+        m.setElement(5, 0x11);
+        address = r4.parseAddress(m);
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x8011 type");
+        assertEquals(address.getNumber(), 17,"0x8011 address");
+
+        m.setElement(4, 0x80); // extended consist 99
+        m.setElement(5, 0x63);
+        address = r4.parseAddress(m);
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x8063 type");
+        assertEquals(address.getNumber(), 99,"0x8063 address");
+
+        m.setElement(4, 0x80); // extended consist 127
+        m.setElement(5, 0x7F);
+        address = r4.parseAddress(m);
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x807F type");
+        assertEquals(address.getNumber(), 127,"0x807F address");
+
+        m.setElement(4, 0x81); // extended consist 227
+        m.setElement(5, 0x1B);
+        address = r4.parseAddress(m);
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x80E3 type");
+        assertEquals(address.getNumber(), 227,"0x80E3 address");
+
+        m.setElement(4, 0x81); // extended consist 363
+        m.setElement(5, 0xBF);
+        address = r4.parseAddress(m);
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x881BF type");
+        assertEquals(address.getNumber(), 363,"0x881BF address");
+
+        m.setElement(4, 0xB1); // extended consist 9876
+        m.setElement(5, 0x4C);
+        address = r4.parseAddress(m);
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x881BF type");
+        assertEquals(address.getNumber(), 9876,"0x881BF address");
     }
 
 
@@ -206,12 +299,12 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
 
         r.setProperty(CbusReporterManager.CBUS_MAINTAIN_SENSOR_DESCRIPTOR_KEY, true);
 
-        Assertions.assertNotNull(memo);
+        assertNotNull(memo);
         jmri.SensorManager sm = memo.get(jmri.SensorManager.class);
-        jmri.Sensor followerSensor = sm.getBySystemName(sm.createSystemName("+1",sm.getSystemPrefix()));
-        Assert.assertNull("No sensor at start",followerSensor);
+        Sensor followerSensor = sm.getBySystemName(sm.createSystemName("+1",sm.getSystemPrefix()));
+        assertNull(followerSensor, "No sensor at start");
 
-        CbusReporterManager rm = (CbusReporterManager) memo.get(jmri.ReporterManager.class);
+        CbusReporterManager rm = (CbusReporterManager) memo.get(ReporterManager.class);
         rm.setTimeout(30); // ms for testing
 
 
@@ -226,19 +319,19 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         m.setElement(6, 0x30); // tag4
         m.setElement(7, 0xAB); // tag5
         ((CbusReporter)r).reply(m);
-        r2.reply(m);
+        tcis.sendToListeners(m);
 
         followerSensor = sm.getBySystemName(sm.createSystemName("+1",sm.getSystemPrefix()));
-        Assert.assertNotNull("Sensor created by reporter",followerSensor);
-        Assert.assertEquals("sensor active", jmri.Sensor.ACTIVE, followerSensor.getState());
+        assertNotNull(followerSensor, "Sensor created by reporter");
+        assertEquals(Sensor.ACTIVE, followerSensor.getState(), "sensor active");
 
         m.setElement(2, 0x02); // ev lo
-        ((CbusReporter)r).reply(m);
+        tcis.sendToListeners(m);
         r2.reply(m);
 
         final int status = followerSensor.getState();
         JUnitUtil.waitFor(() -> {
-            return (status==jmri.Sensor.INACTIVE);
+            return (status==Sensor.INACTIVE);
         }, "sensor triggered to inactive when spot report complete");
 
     }
@@ -258,7 +351,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
 
         memo.setProtocol(ConfigurationManager.MERGCBUS);
         memo.configureManagers();
-        r = new CbusReporter("1", memo);
+        r = memo.get(ReporterManager.class).provide("1");
     }
 
     @AfterEach
@@ -268,7 +361,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         if (r!=null) {
             r.dispose();
         }
-        Assertions.assertNotNull(memo);
+        assertNotNull(memo);
         memo.dispose();
         memo = null;
         tcis.terminateThreads();
@@ -279,6 +372,6 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusReporterTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusReporterTest.class);
 
 }

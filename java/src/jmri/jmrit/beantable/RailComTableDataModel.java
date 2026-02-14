@@ -196,15 +196,15 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
             case SPEEDCOL:
                 return (t.getActualSpeed()!=-1 ? t.getActualSpeed() : null);
             case DCCADDRESSCOL:
-                return t.getDccAddress();
+                return t.getDccAddress().toString();
             case ORIENTATIONCOL:
-                return t.getOrientation();
+                return t.getOrientation().toString();
             case DIRECTIONCOL:
-                return t.getDirection();
+                return t.getDirection().toString();
             case MOTIONCOL:
-                return t.getMotion();
+                return t.getMotion().toString();
             case QOSCOL:
-                return t.getQoS();
+                return t.getQoS().toString();
             case LOADCOL:
                 return (t.getActualLoad()!=-1 ? t.getActualLoad() : null);
             case TEMPCOL:

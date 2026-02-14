@@ -360,9 +360,8 @@
         <pathelement location="${libdir}/spring-core-5.1.14.RELEASE.jar"/>
         <pathelement location="${libdir}/spring-web-5.1.14.RELEASE.jar"/>
         <!-- Assertj -->
-        <pathelement location="${libdir}/assertj-core-3.12.0.jar"/>
-        <pathelement location="${libdir}/assertj-swing-3.9.2.jar"/>
-        <pathelement location="${libdir}/assertj-swing-junit-3.9.2.jar"/>
+        <pathelement location="${libdir}/assertj-core-3.27.7.jar"/>
+
     </path>
 
     <!-- path to run tests -->
@@ -616,7 +615,6 @@
         <!-- Copy top level resources to include in jar file -->
         <copy todir="${target}/resources/">
             <fileset dir="${resourcedir}" includes="*.gif"/>
-            <fileset dir="${resourcedir}" includes="decoderpro*"/>
         </copy>
         <copy todir="${target}">
             <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png,**/*.json">
@@ -919,7 +917,6 @@
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
-            <arg value="--include-engine=junit-vintage"/>
             <arg line="-n ${test.includes}"/>
             <arg line="--reports-dir '${testreport}'" />
             <arg value="--fail-if-no-tests" />
@@ -960,7 +957,6 @@
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
-            <arg value="--include-engine=junit-vintage"/>
             <arg line="-n ${test.includes}"/>
             <arg line="--reports-dir ${testreport}" />
             <arg value="--fail-if-no-tests" />
@@ -1665,7 +1661,6 @@
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
-            <arg value="--include-engine=junit-vintage"/>
             <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
             <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
@@ -1738,7 +1733,7 @@
         <mkdir dir="${testreport}"/>
         <junitlauncher haltOnFailure="false">
             <classpath refid="test.class.path"/>
-            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter,junit-vintage" >
+            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter" >
                 <fileset refid="junitfileset"/>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -1815,7 +1810,6 @@
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
-            <arg value="--include-engine=junit-vintage"/>
             <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
             <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
@@ -1833,7 +1827,7 @@
 
         <junitlauncher haltOnFailure="false">
             <classpath refid="test.class.path"/>
-            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter,junit-vintage" >
+            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter" >
                 <fileset dir="${testtarget}">
                     <include name="**/RunCucumberIT.class" />
                 </fileset>

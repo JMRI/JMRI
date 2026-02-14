@@ -2,11 +2,14 @@ package jmri.jmrit.symbolicprog;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.Locale;
 
-import javax.swing.AbstractAction;
+import javax.swing.*;
+
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
+import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -42,10 +45,22 @@ public class PrintCvAction extends AbstractAction {
     private final boolean isPreview;
 
     public void printInfoSection(HardcopyWriter w) {
-        // Write out the icon
-        w.writeDecoderProIcon();
+        ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
+        // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
+        w.write(icon.getImage(), new JLabel(icon));
         w.setFontStyle(Font.BOLD);
+        //Add a number of blank lines
+        int height = icon.getImage().getHeight(null);
+        int blanks = (height - w.getLineAscent()) / w.getLineHeight();
 
+        try {
+            for (int i = 0; i < blanks; i++) {
+                String s = "\n";
+                w.write(s, 0, s.length());
+            }
+        } catch (IOException e) {
+            log.warn("error during printing", e);
+        }
         mRoster.printEntry(w);
         w.setFontStyle(Font.PLAIN);
     }
@@ -99,7 +114,7 @@ public class PrintCvAction extends AbstractAction {
             writer.write(tableTopRow + 2, tableLeft, tableTopRow + 2, tableRight);
             writer.write(tableBottomRow, tableLeft, tableBottomRow, tableRight);
 
-            writer.setFontStyle(1);  //set font to Bold
+            writer.setFontStyle(Font.BOLD);  //set font to Bold
             // print a simple heading with I18N
             // pad with spaces to column width, 3 x insert Value as var %1
             s = String.format("%1$21s%1$24s%1$24s", Bundle.getMessage("Value"));
@@ -109,7 +124,7 @@ public class PrintCvAction extends AbstractAction {
             // NOI18N
             s = "            CV  Dec Hex             CV  Dec Hex             CV  Dec Hex\n";
             writer.write(s, 0, s.length());
-            writer.setFontStyle(0); //set font back to Normal
+            writer.setFontStyle(Font.PLAIN); //set font back to Normal
 
             /* Create array to hold CV/Value strings to allow reformatting and sorting.
              * Same size as the table drawn above (4 columns*tableHeight; heading rows

@@ -22,6 +22,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.util.swing.ResizableRowDataModel;
 import jmri.util.gui.GuiLafPreferencesManager;
 
 /**
@@ -36,7 +37,7 @@ import jmri.util.gui.GuiLafPreferencesManager;
  * @author Bob Jacobsen Copyright (C) 2009, 2010
  * @since 2.7.5
  */
-public class RosterTableModel extends DefaultTableModel implements PropertyChangeListener {
+public class RosterTableModel extends DefaultTableModel implements PropertyChangeListener, ResizableRowDataModel {
 
     public static final int IDCOL       = 0;
     static final int ADDRESSCOL         = 1;
@@ -306,18 +307,47 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 return re.getProtocolAsString();
             case COMMENT:
                 // have to set height for extra lines
-                var viewRow = associatedSorter.convertRowIndexToView(row);
-                String[] sections = re.getComment().split("\n");
-                int lines = sections.length;
-                int height = lines * (InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize() + 4); // same line height as in RosterTable
-                associatedTable.setRowHeight(viewRow, height);
+                resizeRowToText(row, findMaxLines(row, re));
                 return re.getComment();
             default:
                 break;
         }
+        resizeRowToText(row, findMaxLines(row, re));
         return getValueAtAttribute(re, col);
     }
 
+    int findMaxLines(int row, RosterEntry re) {
+        int lines = countLinesIn(re.getComment());
+
+        String[] auxAttributeNames = getModelAttributeKeyColumnNames();
+        for (String attributeKey : auxAttributeNames) {
+            String value = re.getAttribute(attributeKey);
+            if (value != null) {
+                int count = countLinesIn(value);
+                lines = Math.max(lines, count);
+            }
+        }
+        return lines;
+    }
+    
+    int countLinesIn(String text) {
+        String[] sections = text.split("\n");
+        int lines = sections.length;
+        return lines;
+    }
+    
+    @Override
+    public void resizeRowToText(int modelRow, int heightInLines) {
+        if (associatedSorter == null || associatedTable == null ) {
+            return; // because not initialized, can't act - useful for tests
+        }
+        var viewRow = associatedSorter.convertRowIndexToView(modelRow);
+        int height = heightInLines * (InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize() + 4); // same line height as in RosterTable
+        if (height != associatedTable.getRowHeight(viewRow)) {
+            associatedTable.setRowHeight(viewRow, height);
+        }
+    }
+    
     private Object getValueAtAttribute(RosterEntry re, int col){
         String attributeKey = getAttributeKey(col);
         String value = re.getAttribute(attributeKey); // NOI18N
@@ -442,7 +472,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 }
             }
             attributeKeys = result.toArray(String[]::new);
-            }
+        }
         return attributeKeys;
     }
 

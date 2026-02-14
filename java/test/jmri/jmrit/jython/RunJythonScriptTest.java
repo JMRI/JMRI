@@ -1,12 +1,11 @@
 package jmri.jmrit.jython;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -15,17 +14,17 @@ import org.junit.Assume;
 public class RunJythonScriptTest {
 
     @Test
+    @DisabledIfHeadless
     public void testStringCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         RunJythonScript t = new RunJythonScript("Test");
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t, "exists");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         RunJythonScript t = new RunJythonScript("Test",new jmri.util.JmriJFrame(false,false));
-        Assert.assertNotNull("exists",t);
+        assertNotNull(t, "exists");
     }
 
     @BeforeEach

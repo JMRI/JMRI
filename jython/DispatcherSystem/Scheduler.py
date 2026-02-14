@@ -177,25 +177,26 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                     station_list.sort()
                 # print "station_list", station_list
 
-                # get station_group list
-                platform_list = []
-                station_group_list = []
-                station_group_list.append("All Stations")
-                station_group_location_list = []
-                PlatformPanel = MyTableModel7()
-                for location_name in station_list:
-                    LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
-                    location = LocationManager.getLocationByName(location_name)
-                    platform = PlatformPanel.get_location_platform(location)
-                    station_group = PlatformPanel.get_location_station_group(location)
-                    if station_group.strip() is not None and station_group.strip() is not "":
-                        if station_group.strip() not in station_group_list:
-                            station_group_list.append(station_group.strip())
-                            # print "type station_group", type(station_group.strip())
-                        station_group_location_list.append([station_group.strip(), location_name])
-                    station_group_location_list.append(["All Stations", location_name])
                 repeat = True
                 while repeat:
+                    # get station_group list
+                    platform_list = []
+                    station_group_list = []
+                    station_group_list.append("All Stations")
+                    station_group_location_list = []
+                    PlatformPanel = MyTableModel7()
+                    for location_name in station_list:
+                        LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
+                        location = LocationManager.getLocationByName(location_name)
+                        platform = PlatformPanel.get_location_platform(location)
+                        station_group = PlatformPanel.get_location_station_group(location)
+                        if station_group.strip() is not None and station_group.strip() is not "":
+                            if station_group.strip() not in station_group_list:
+                                station_group_list.append(station_group.strip())
+                                # print "type station_group", type(station_group.strip())
+                            station_group_location_list.append([station_group.strip(), location_name])
+                        station_group_location_list.append(["All Stations", location_name])
+
                     if self.logLevel > 0: print "station list", station_list
                     msg = "timetables can be shown locally on this computer or\n" + \
                           "on remote computers/tablets communicating by mqtt\n\n" + \
@@ -241,7 +242,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                             list_items_no_trains = self.get_scheduled_routes("no_train")
                             list_items_with_trains = self.get_scheduled_routes("with_train")
                             if select_from_stations:
-                                title = "select station(s) for timetable"
+                                title = "select station(s) for timetable - only stations on scheduled routes are shown"
                                 options = ["Cancel", "Select from Station Groups", "Show Timetable"]
                                 result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
                             else:
@@ -301,7 +302,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                                 list_items_no_trains = self.get_scheduled_routes("no_train")
                                 list_items_with_trains = self.get_scheduled_routes("with_train")
                                 if select_from_stations:
-                                    title = "select station(s) for timetable"
+                                    title = "select station(s) for timetable - only stations on scheduled routes are shown"
                                     options = ["Cancel", "Select from Station Groups", "Generate Timetable"]
                                     result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
                                 else:
@@ -1974,14 +1975,23 @@ class TimeListener(java.beans.PropertyChangeListener):
         for train in train_list:
             comment = train.getComment()
             repeat_command = self.find_between(comment, "[repeat-", "-repeat]")
-            if self.logLevel > 0: print "repeat_command", repeat_command
+            if self.logLevel > -1: print "train", train, "repeat_command", repeat_command
             max = int(minutes)
             min = (int(minutes) - 1)
             mid = int(train.getDepartTimeMinutes())
 
             if repeat_command == "Once":
-                if self.prev_time < int(train.getDepartTimeMinutes()) <= self.curr_time and \
-                        "skip" not in train.getDescription():   # if skip in description of scheduled Train do not run the train
+                if max == 0:
+                    min += 1; mid += 1; max += 1
+                print "hour", hour, "minutes", minutes, "mid", mid, "min", min, "max", max, "train.getDepartTimeMinutes()", train.getDepartTimeMinutes()
+                min1 = hour - 1
+                mid1 = int(train.getDepartureTimeHour())
+                max1 = hour
+                if max1 == 0:      # ensure mid lies between min amd max (ensure we don't have 1 < 0 <= 0)
+                    min1 += 1; mid1 += 1; max1 += 1
+                print "min1", min1, "mid1", mid1, "max1", max1, "(min1) <  (mid1) <= (max1)", (min1) <  (mid1) <= (max1)
+                if (min % 60 < (mid % 60) <= max % 60) and \
+                        ((min1) <  (mid1) <= (max1)):
                     if train not in trains_to_be_scheduled:
                         trains_to_be_scheduled.append(train)
                         scheduled[train] = False
@@ -2031,11 +2041,6 @@ class TimeListener(java.beans.PropertyChangeListener):
                         scheduled[train] = False
             if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
 
-        # for train in trains_to_start:
-        #     # print "x"
-        #     if train not in trains_to_be_scheduled:
-        #         trains_to_be_scheduled.append(train)
-        #     scheduled[train] = False
         if self.logLevel > 0: print "Time listener: trains_to_be_scheduled", trains_to_be_scheduled
         if self.logLevel > 0: print "scheduled", scheduled
         if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
@@ -2607,11 +2612,12 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                             print "failed to move train - no train in block - have waited for scheduling margin"
                             transit_name = move_train.transit_name
                             print "__________________________End____" + train_to_move + "__transit: " + transit_name
-                        # success = self.check_train_in_block_allow_manual_repositioning(train_to_move, self.station_from_name)
-                        # if success:
-                        #     move_train = MoveTrain(station_from, station_to, self.train_name, self.graph, route = self.route)
-                        #     move_train.move_between_stations(station_from, station_to, self.train_name, self.graph)
-                    # move_train = None
+                    else:
+                        success = self.check_train_in_block_allow_manual_repositioning(train_to_move, self.station_from_name)
+                        if success:
+                            move_train = MoveTrain(station_from, station_to, self.train_name, self.graph, route = self.route)
+                            move_train.move_between_stations(station_from, station_to, self.train_name, self.graph)
+                        move_train = None
 
                     # train has moved, if we are in departure_time_setting mode, store the journey time
                     if self.logLevel > 0: print "about to store departure times"
@@ -2873,7 +2879,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
         if self.logLevel > 0: print "z", time, minutes
 
-        [time_hours, time_mins] = time.split(":")
+        [day, time_hours, time_mins] = time.split(":")
 
         if self.logLevel > 0: print "add minutes to time"
 

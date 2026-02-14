@@ -196,7 +196,7 @@ public class DefaultRailComTest {
         r.setActualTemperature(6);
         r.setActualLoad(7);
         r.setActualSpeed(8);
-        assertEquals( "Address 1234(L) Location : 4 West Water 2 Fuel 3 Routing No : 5 Temperature : 6 Load : 7 Speed : 8 "
+        assertEquals( "Address 1234(L) West Water 2 Fuel 3 Location : 4 Routing No : 5 Temperature : 6 Load : 7 Speed : 8 "
             , r.toReportString(), "Report String WEST");
 
     }
