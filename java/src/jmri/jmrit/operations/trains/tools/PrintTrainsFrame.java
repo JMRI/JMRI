@@ -179,24 +179,25 @@ public class PrintTrainsFrame extends OperationsFrame {
         int maxLineLength = writer.getCharactersPerLine() - 1;
         int maxTrainNameLength = InstanceManager.getDefault(TrainManager.class).getMaxTrainNameLength();
         int maxLocationNameLength = InstanceManager.getDefault(LocationManager.class).getMaxLocationNameLength();
-        String s = Bundle.getMessage("Time") +
-                "  " +
+        // print header, time = dd:hh:mm
+        String s = truncate(Bundle.getMessage("Time"), 8) +
                 truncate(Bundle.getMessage("Name"), maxTrainNameLength) +
                 truncate(Bundle.getMessage("Description")) +
                 truncate(Bundle.getMessage("Route")) +
                 truncate(Bundle.getMessage("Departs"), maxLocationNameLength) +
                 truncate(Bundle.getMessage("Terminates"), maxLocationNameLength);
         writer.write(truncate(s, maxLineLength) + NEW_LINE);
+        
         for (Train train : trains) {
             if (train.isBuildEnabled() || trainsTableFrame.showAllBox.isSelected()) {
+                String time = truncate(train.getDepartureTime(), 8);
                 String name = truncate(train.getName(), maxTrainNameLength);
                 String desc = truncate(train.getDescription());
                 String route = truncate(train.getTrainRouteName());
                 String departs = truncate(train.getTrainDepartsName(), maxLocationNameLength);
                 String terminates = truncate(train.getTrainTerminatesName(), maxLocationNameLength);
 
-                s = train.getDepartureTime() +
-                        " " +
+                s = time +
                         name +
                         desc +
                         route +
