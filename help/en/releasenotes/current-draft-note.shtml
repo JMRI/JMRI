@@ -468,6 +468,10 @@
                 </ul>
             <li>Decoder product ID determination has been added
                 for PIKO decoders.</li>
+            <li>The sort order on the Roster ID column of the Roster Table
+                has been improved so that e.g. "MILW 103B"  will be sorted
+                in a rational order.
+                For example, "ATSF 54" comes before "ATSF 456" since 54 is less than 456.
         </ul>
 
    <h3>Dispatcher</h3>
