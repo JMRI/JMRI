@@ -2936,6 +2936,34 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         lt.addRay(90.0);
         lt.addRay(180.0);
         lt.addRay(270.0);
+
+        if (leToolBarPanel != null) {
+            lt.setMainline(leToolBarPanel.mainlineTrack.isSelected());
+            // check on layout block
+            String newName = leToolBarPanel.blockIDComboBox.getSelectedItemDisplayName();
+            if (newName == null) {
+                newName = "";
+            }
+            LayoutBlock b = provideLayoutBlock(newName);
+
+            if (b != null) {
+                lt.setLayoutBlock(b);
+
+                // check on occupancy sensor
+                String sensorName = leToolBarPanel.blockSensorComboBox.getSelectedItemDisplayName();
+                if (sensorName == null) {
+                    sensorName = "";
+                }
+
+                if (!sensorName.isEmpty()) {
+                    if (!validateSensor(sensorName, b, this)) {
+                        b.setOccupancySensorName("");
+                    } else {
+                        leToolBarPanel.blockSensorComboBox.setSelectedItem(b.getOccupancySensor());
+                    }
+                }
+            }
+        }
         setDirty();
 
     }     /**
@@ -2952,6 +2980,34 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // Initialise with a couple of tracks
         lt.addSlotPair();
         lt.addSlotPair();
+
+        if (leToolBarPanel != null) {
+            lt.setMainline(leToolBarPanel.mainlineTrack.isSelected());
+            // check on layout block
+            String newName = leToolBarPanel.blockIDComboBox.getSelectedItemDisplayName();
+            if (newName == null) {
+                newName = "";
+            }
+            LayoutBlock b = provideLayoutBlock(newName);
+
+            if (b != null) {
+                lt.setLayoutBlock(b);
+
+                // check on occupancy sensor
+                String sensorName = leToolBarPanel.blockSensorComboBox.getSelectedItemDisplayName();
+                if (sensorName == null) {
+                    sensorName = "";
+                }
+
+                if (!sensorName.isEmpty()) {
+                    if (!validateSensor(sensorName, b, this)) {
+                        b.setOccupancySensorName("");
+                    } else {
+                        leToolBarPanel.blockSensorComboBox.setSelectedItem(b.getOccupancySensor());
+                    }
+                }
+            }
+        }
         setDirty();
     }
 
@@ -3846,6 +3902,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 } else if (leToolBarPanel.signalMastButton.isSelected()) {
                     addSignalMast();
+                } else if (leToolBarPanel.turntableButton.isSelected()) {
+                    addTurntable(currentPoint);
+                } else if (leToolBarPanel.traverserButton.isSelected()) {
+                    addTraverser(currentPoint);
                 } else {
                     log.warn("No item selected in panel edit mode");
                 }
