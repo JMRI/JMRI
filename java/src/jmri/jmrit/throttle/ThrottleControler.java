@@ -22,7 +22,7 @@ public interface ThrottleControler {
     /**
      * Set that throttle control container
      *
-     * @param tw
+     * @param tw the throttle control container to set
      */
     void setThrottleControlersContainer(ThrottleControlersContainer tw);        
     
