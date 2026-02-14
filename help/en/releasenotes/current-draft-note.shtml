@@ -26,18 +26,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>The RailCom support has been updated:
-                    <ul>
-                        <li>DDES messages are now being decoded into 
-                            RailCom tags, including the orientation, direction and
-                            motion values.
-                        <li>Receipt of a RailCom-format DDES message will now
-                            automatically create a reporter for the received device
-                            number if it doesn't already exist.
-                        <li>Related changes to the RailCom tag table have been made,
-                            see the Miscellaneous category below.
-                    </ul>
-                </li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -287,10 +276,7 @@
 
         <h4>MD Electronics</h4>
              <ul>
-                <li>The <strong>80101 Turnout Drive</strong> decoder is
-                    added. Support for accessory OPS mode programming is
-                    currently missing but service mode programming &amp;
-                    <strong>Reset all</strong> is included.</li>
+                <li></li>
              </ul>
 
         <h4>MGP</h4>
@@ -421,8 +407,7 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>Improved how clicks are handled so they'll
-                be less finicky.</li>
+            <li></li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -444,41 +429,13 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Added new button and File-menu item to
-                print the roster table as it's currently displayed,
-                with the user's selected roster group, column setup and
-                sort order.</li>
-            <li>The roster entry's comment field is now available
-                as a column in the main DecoderPro display.  Multi-line
-                comments will be displayed as multiple lines in a row
-                with extended height.  Type ctrl-return or 
-                alt-return to put a newline in the field.
-                <p>If you don't want to see this
-                column, right-click/ctrl-click in the column heading
-                and deselect it.</li>
-            <li>If you have added additional columns to the Roster Table,
-                these can now have multi-line comments.
-            <li>To make adding locomotives to roster groups more convenient,
-                there are several new ways to do it:
-                <ul>
-                    <li>There's a new item in the main Settings menu
-                    <li>Once you have selected a row in the roster table,
-                        right-push or ctrl-push to get a popup menu 
-                        which contains a new "Add to Group..." item.
-                </ul>
-            <li>Decoder product ID determination has been added
-                for PIKO decoders.</li>
-            <li>The sort order on the Roster ID column of the Roster Table
-                has been improved so that e.g. "MILW 103B"  will be sorted
-                in a rational order.
-                For example, "ATSF 54" comes before "ATSF 456" since 54 is less than 456.
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Added: physics-based acceleration</li>
-			 <li>Added: Distance based stopping (including overriding stop sensors and slowing to minimum speed within the set distance and stopping by stop sensor)</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -496,17 +453,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Provide an option to add a memory variable or a block contents field as an input text
-            field instead of as a label.  This makes it possible to change memory or block values
-            when using the JMRI web server.  Limitations:
-              <ul>
-                <li>If the value is not a text string, such as a roster entry, changing the displayed
-                text will replace the item with the new text.</li>
-                <li>The panel zoom level must be at 1 to edit the text content.</li>
-              </ul>
-            </li>
-            <li>Improved how clicks are handled so they'll
-                be less finicky.</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -529,10 +476,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The action <strong>Throttle</strong> has been improved. It
-              has the option to wait for a throttle to be aquired and
-              then release it immediately after doing its action. This
-              is useful if you want to dispatch the throttle.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -544,16 +488,13 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New tool that allows day to name mapping. Now your Manifest or switch list can show which day or date the train departs or arrives at a location.</li>
-            <li>New feature, the "Add Locomotives" in the "Train Build Options" allows you to select where the locomotives will terminate.</li>
-            <li>Helper improvement, you can now specify how many helper locomotives to assign to a train.  Works like the "Add locomotives" feature, except HPT is disabled.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>Improved how clicks are handled so they'll
-                be less finicky.</li>
+            <li></li>
         </ul>
 
     <h3>Permissions</h3>
@@ -577,7 +518,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Added: physics parameters for physics based acceleration.</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -599,7 +540,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>Added a color-discriminated alternate icon set to the basic-enhanced definition</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -707,16 +648,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Some constants in the
-                <a href="https://www.jmri.org/JavaDoc/doc/jmri/RailCom.html">RailCom class</li>
-                have been converted to Enum values.
-                This primarily affects developers and people who've written scripts for
-                processing RailCom information directly.
-                In particular, the orientation values ORIENTA and ORIENTB have
-                been changed to enum values EAST and WEST respectively.
-            <li>Additional columns have been added to the RailCom table to 
-                better show all the information that's gathered from a RailCom report.
-            <li>The macOS launchers have been updated to allow more Java versions and to 
-                have more useful error messages.
+            <li></li>
         </ul>
 

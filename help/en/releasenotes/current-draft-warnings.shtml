@@ -1,16 +1,6 @@
 
     <!-- contains new warnings for the release under development -->
     <li>
-        The way mouse clicks are handled has been updated.
-        Although this has been tested with mice and trackpads, 
-        it's possible that this will cause problems with other hardware, 
-        e.g. touch panels.  If you do encounter new problems with clicking
-        on panels, please contact us on the 
-        <a href="https://groups.io/g/jmriusers">JMRI users list</a>.
     </li>
-    <li>The RailCom handling has been updated to current standards.  In particular, the enum
-        representing the orientation has been changed from ORIENTA and ORIENTB to 
-        EAST and WEST respectively and some of the text strings have changed.
-        These may affect any scripts you have that reference
-        the direction of a RailCom report (tag) or parse the status messages. 
+    <li>
     </li>
