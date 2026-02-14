@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: M&auml;rklin CAN Codec Library Implementation</title>
+  <meta name="author" content="JMRI Community">
+  <meta name="keywords" content="JMRI Marklin MCAN CAN codec protocol implementation">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>M&auml;rklin CAN Codec Library Implementation</h1>
+
+      <p>This page describes the JMRI M&auml;rklin CAN (MCAN) codec library implementation.
+      Please also read the <a href=
+      "https://www.jmri.org/JavaDoc/doc/jmri/jmrix/marklin/package-summary.html">Javadocs for the
+      jmrix.marklin package</a>.</p>
+
+      <h2>Overview</h2>
+
+      <p>The <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrix/marklin/MarklinCanCodec.html">MarklinCanCodec</a>
+      class encodes and decodes M&auml;rklin CAN (MCAN) frames for the adapter, monitor, throttle,
+      turnout and standalone bridge.</p>
+
+      <h2>Why a separate library?</h2>
+
+      <p>Frame encoding and decoding are centralized in <code>MarklinCanCodec</code> so the adapter
+      and standalone tools use the same frame format. The codec is tested independently of Swing
+      and <code>TrafficController</code>.</p>
+
+      <h2>MarklinCanCodec API</h2>
+
+      <p>The API consists of a decoded-message value, a message builder and utility methods.</p>
+
+      <h3>1. DecodedMessage Class</h3>
+
+      <p>An immutable data structure representing a fully decoded MCAN message:</p>
+
+      <pre>
+MarklinCanCodec.DecodedMessage decoded = MarklinCanCodec.decode(rawMessage);
+
+// Access decoded fields with type-safe methods
+int priority = decoded.getPriority();
+int command = decoded.getCommand();
+boolean isResponse = decoded.isResponse();
+long address = decoded.getAddress();
+int speed = (decoded.getDataByte(0) &lt;&lt; 8) + decoded.getDataByte(1);
+      </pre>
+
+      <h3>2. MessageBuilder Class</h3>
+
+      <p>A fluent API for constructing encoded messages:</p>
+
+      <pre>
+int[] encoded = MarklinCanCodec.builder()
+    .setCommand(MarklinConstants.LOCOSPEED)
+    .setAddress(0xC003)
+    .setData((speed &gt;&gt; 8) &amp; 0xff, speed &amp; 0xff)
+    .setDataLength(2)
+    .build();
+      </pre>
+
+      <h3>3. Utility Methods</h3>
+
+      <p>Protocol analysis helpers for common operations:</p>
+
+      <pre>
+String priorityDesc = MarklinCanCodec.getPriorityDescription(priority);
+String protocol = MarklinCanCodec.getProtocolFromAddress(address);
+long baseAddr = MarklinCanCodec.getBaseAddress(address);
+      </pre>
+
+      <h2>MCAN Protocol Structure</h2>
+
+      <p>The codec handles the 13-byte MCAN message format per the CS2 CAN Protocol 2.0 specification:</p>
+
+      <table>
+        <tr>
+          <th>Bytes</th>
+          <th>Field</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>Priority + Command[14:7]</td>
+          <td>Priority (bits 7-4), Command high bits (bits 3-0)</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Command[6:0] + Response</td>
+          <td>Command low bits (bits 7-1), Response flag (bit 0)</td>
+        </tr>
+        <tr>
+          <td>2-3</td>
+          <td>Hash</td>
+          <td>16-bit hash/identifier</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>DLC</td>
+          <td>Data Length Code (0-8 data bytes only, per CAN 2.0B)</td>
+        </tr>
+        <tr>
+          <td>5-8</td>
+          <td>Address</td>
+          <td>32-bit CAN address (big-endian)</td>
+        </tr>
+        <tr>
+          <td>9-12</td>
+          <td>Data</td>
+          <td>0-4 data bytes</td>
+        </tr>
+      </table>
+
+      <h3>Priority Levels</h3>
+
+      <ul>
+        <li><strong>Priority 1 (0x00)</strong>: Stop/Go/Short messages</li>
+        <li><strong>Priority 2 (0x01)</strong>: Feedback</li>
+        <li><strong>Priority 3 (0x02)</strong>: Engine Stop</li>
+        <li><strong>Priority 4 (0x03)</strong>: Engine/Accessory Commands</li>
+      </ul>
+
+      <h3>Command Categories</h3>
+
+      <table>
+        <tr>
+          <th>Range</th>
+          <th>Category</th>
+          <th>Example Commands</th>
+        </tr>
+        <tr>
+          <td>0x00</td>
+          <td>System</td>
+          <td>Stop (0x00), Go (0x01), Halt (0x02)</td>
+        </tr>
+        <tr>
+          <td>0x01-0x0A</td>
+          <td>Management</td>
+          <td>Speed (0x04), Direction (0x05), Function (0x06)</td>
+        </tr>
+        <tr>
+          <td>0x0B-0x0D</td>
+          <td>Accessory</td>
+          <td>Turnout control</td>
+        </tr>
+        <tr>
+          <td>0x18-0x1C</td>
+          <td>Software</td>
+          <td>PING (0x18), CAN BOOT (0x1B)</td>
+        </tr>
+        <tr>
+          <td>0x20-0x22</td>
+          <td>GUI</td>
+          <td>GUI commands</td>
+        </tr>
+        <tr>
+          <td>0x10-0x12</td>
+          <td>Feedback</td>
+          <td>S88 events (0x11)</td>
+        </tr>
+        <tr>
+          <td>0x30-0xFF</td>
+          <td>Automation</td>
+          <td>Automation commands</td>
+        </tr>
+      </table>
+
+      <h3>Improved Readability</h3>
+
+      <p>Compare the old vs. new approach:</p>
+
+      <pre>
+// OLD: Direct array access with magic indices
+int speed = m.getElement(9);
+speed = (speed &lt;&lt; 8) + m.getElement(10);
+
+// NEW: Named methods with clear intent
+int speed = (decoded.getDataByte(0) &lt;&lt; 8) + decoded.getDataByte(1);
+      </pre>
+
+      <h2>Usage Examples</h2>
+
+      <h3>Decoding Messages (MarklinMon, MarklinThrottle, MarklinTurnout)</h3>
+
+      <pre>
+@Override
+public void reply(MarklinReply m) {
+    // Decode using convenience method
+    MarklinCanCodec.DecodedMessage decoded = MarklinCanCodec.decode(m);
+
+    // Work with structured data
+    if (decoded.getCommand() == MarklinConstants.LOCOSPEED) {
+        int speed = (decoded.getDataByte(0) &lt;&lt; 8) + decoded.getDataByte(1);
+        processSpeed(speed);
+    }
+}
+      </pre>
+
+      <h3>Encoding Messages (MarklinMessage)</h3>
+
+      <pre>
+public static MarklinMessage setLocoSpeed(int addr, int speed) {
+    int[] encoded = MarklinCanCodec.builder()
+        .setCommand(MarklinConstants.LOCOSPEED)
+        .setAddress(addr)
+        .setData((speed &gt;&gt; 8) &amp; 0xff, speed &amp; 0xff)
+        .setDataLength(2)
+        .build();
+    return new MarklinMessage(encoded);
+}
+      </pre>
+
+      <h3>Display Logic (MarklinMon)</h3>
+
+      <pre>
+private static void appendCommand(MarklinCanCodec.DecodedMessage decoded, StringBuilder sb) {
+    sb.append(" Command: ");
+    if (decoded.getCommand() == MarklinConstants.LOCOSPEED) {
+        int speed = (decoded.getDataByte(0) &lt;&lt; 8) + decoded.getDataByte(1);
+        sb.append("Change of speed ").append(speed);
+    }
+    // ...
+}
+      </pre>
+
+      <h2>Related Classes</h2>
+
+      <p>The codec library is the foundation for several higher-level classes that handle protocol
+      formatting, device identification and device management.</p>
+
+      <h3>MarklinMessageFormatter</h3>
+
+      <p>Formats decoded MCAN messages for display and logging. Used by both JMRI's
+      <code>MarklinMon</code> monitor pane and the standalone MCAN TCP Bridge monitor mode.</p>
+
+      <pre>
+// Format a decoded message with device identification
+String text = MarklinMessageFormatter.format(decoded, rawData, null, true);
+
+// Format directly from raw bytes (standalone, no i18n)
+String text = MarklinMessageFormatter.formatRaw(rawData, null, true);
+      </pre>
+
+      <p>Output example:</p>
+      <pre>
+[MS2:0x00112233] Priority 4: Engine/Accessory Command Command: Change of speed 512 Request to Loco Address 3 0x5, 0x9, 0x47, 0x11, 0x2, 0x0, 0x0, 0x0, 0x3, 0x2, 0x0, 0x0, 0x0
+      </pre>
+
+      <p>An optional <code>I18nProvider</code> interface allows JMRI to supply localized strings while
+      the same class works without JMRI runtime in the bridge.</p>
+
+      <h3>MarklinDeviceIdentifier</h3>
+
+      <p>Identifies M&auml;rklin CAN devices from protocol messages. Supports passive identification
+      from PING responses (command 0x18) and partial fingerprinting from hash bytes in ordinary traffic.</p>
+
+      <pre>
+// From a PING response (DLC=8): returns full DeviceInfo with UID, type, SW version
+MarklinDeviceIdentifier.DeviceInfo info = MarklinDeviceIdentifier.fromPingResponse(decoded);
+
+// From any message hash: returns DeviceInfo with hash only
+MarklinDeviceIdentifier.DeviceInfo info = MarklinDeviceIdentifier.fromHash(decoded);
+
+// Compact string for logging: "[MS2:0x00112233]" or "[Hash:0xABCD]"
+String label = MarklinDeviceIdentifier.formatCompact(info);
+      </pre>
+
+      <p>Known device type codes (from CS2 CAN Protocol 2.0):</p>
+      <table>
+        <tr><th>Type Code</th><th>Device</th></tr>
+        <tr><td>0x0000</td><td>GFP (Gleis Format Processor) 60213/60214</td></tr>
+        <tr><td>0x0010</td><td>Gleisbox 60112/60113</td></tr>
+        <tr><td>0x0020</td><td>Connect 6021 (60128)</td></tr>
+        <tr><td>0x0030</td><td>MS2 (60653)</td></tr>
+        <tr><td>0x0050</td><td>CS3</td></tr>
+        <tr><td>0x1300</td><td>CC-Schnitte CAN/USB interface</td></tr>
+        <tr><td>0xFFE0</td><td>Wireless devices</td></tr>
+        <tr><td>0xFFFF</td><td>CS2-GUI (Master)</td></tr>
+      </table>
+
+      <h3>McanDevice and McanDeviceState</h3>
+
+      <p><code>McanDevice</code> is a JMRI <code>NamedBean</code> representing one device on the
+      MCAN bus. It tracks the device identity, software version, hardware version, first-seen
+      and last-seen timestamps and a lifecycle state.</p>
+
+      <p>Lifecycle states (<code>McanDeviceState</code>):</p>
+      <table>
+        <tr><th>State</th><th>Meaning</th></tr>
+        <tr><td>DISCOVERED</td><td>Ping reply received; identity established</td></tr>
+        <tr><td>INITIALIZING</td><td>Follow-up parameter reads in progress</td></tr>
+        <tr><td>ONLINE</td><td>Fully initialized and actively responding</td></tr>
+        <tr><td>STALE</td><td>No response within configured threshold</td></tr>
+        <tr><td>OFFLINE</td><td>Explicitly disconnected or lost</td></tr>
+      </table>
+
+      <p>Property change events are dispatched on the Swing EDT for thread safety.</p>
+
+      <h3>McanDeviceIdentity</h3>
+
+      <p>Immutable identity for an MCAN device. Has two concrete subtypes:</p>
+      <ul>
+        <li><code>McanDeviceIdentity.Native</code> - identified by 32-bit UID and 16-bit device type
+            (e.g. CS2, MS2, Gleisbox). System name fragment: <code>uid-00112233</code>.</li>
+        <li><code>McanDeviceIdentity.CdB</code> - identified by CAN class and module ID
+            (CAN-digital-bahn modules). System name fragment: <code>cdb-22-03</code>.</li>
+      </ul>
+
+      <pre>
+McanDeviceIdentity.Native nat = McanDeviceIdentity.forNative(0x00112233L, 0x0030);
+// nat.getSystemName("M") == "M:dev:uid-00112233"
+
+McanDeviceIdentity.CdB cdb = McanDeviceIdentity.forCdB(0x22, 3);
+// cdb.getSystemName("M") == "M:dev:cdb-22-03"
+      </pre>
+
+      <h3>McanDeviceManager</h3>
+
+      <p><code>McanDeviceManager</code> is a JMRI <code>AbstractManager</code> that discovers and
+      tracks all MCAN devices seen on the bus. It listens to both native MCAN messages (via
+      <code>MarklinListener</code>) and CdB configuration frames (via <code>CdBConfigListener</code>).</p>
+
+      <pre>
+// Discover native Marklin devices (CS2, MS2, Gleisbox, CC-Schnitte)
+manager.discoverMarklinDevices();
+
+// Discover all known CdB device classes
+manager.discoverAllCdBDevices();
+
+// Discover one specific CdB class
+manager.discoverCdBDevice(CdBMessage.CdBDeviceClass.WEICHEN_CHEF_MAGNET);
+      </pre>
+
+      <h3>CdBMessage</h3>
+
+      <p>Factory for CAN-digital-bahn (CdB) configuration frames. Builds raw 13-byte frames
+      using <code>MarklinCanCodec.builder()</code> without requiring a JMRI runtime.</p>
+
+      <pre>
+// Broadcast ping to all CdB devices
+int[] frame = CdBMessage.createPing(hash);
+
+// Class-specific zero-DLC discovery ping
+int[] frame = CdBMessage.createClassPing(CdBMessage.CdBDeviceClass.GLEIS_REPORTER);
+
+// Read a parameter from a specific module
+int[] frame = CdBMessage.createReadParam(0x22, 3, paramIndex, hash);
+
+// Write a parameter
+int[] frame = CdBMessage.createWriteParam(0x22, 3, paramIndex, value, hash);
+      </pre>
+
+      <p>Supported CdB device classes:</p>
+      <table>
+        <tr><th>Class ID</th><th>Device</th></tr>
+        <tr><td>0x0B</td><td>StromSniffer</td></tr>
+        <tr><td>0x0D</td><td>GleisReporter</td></tr>
+        <tr><td>0x21</td><td>ReporterChef 002</td></tr>
+        <tr><td>0x22</td><td>WeichenChef Magnet M 012 / deLuxe 007</td></tr>
+        <tr><td>0x23</td><td>WeichenChef AC 002</td></tr>
+        <tr><td>0x26</td><td>WeichenChef Basic 002</td></tr>
+        <tr><td>0x27</td><td>WeichenChef Kombi</td></tr>
+      </table>
+
+      <h2>References</h2>
+
+      <ul>
+        <li><a href="https://www.maerklin.de/fileadmin/media/produkte/CS2_can-protokoll_1-0.pdf">CS2 CAN Protocol 1.0</a></li>
+        <li><a href="https://streaming.maerklin.de/public-media/cs2/cs2CAN-Protokoll-2_0.pdf">CS2 CAN Protocol 2.0</a></li>
+      </ul>
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+  </div>
+  <script src="/js/help.js"></script>
+</body>
+</html>

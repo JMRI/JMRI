@@ -2,6 +2,8 @@ package jmri.jmrix.marklin;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
+import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
+import jmri.jmrix.marklin.mcan.cs2.Cs2AccessoryCommands;
 
 /**
  * Implement a Turnout via Marklin communications.
@@ -12,13 +14,15 @@ import jmri.implementation.AbstractTurnout;
  * <p>
  * The system name encodes protocol and address:
  * <ul>
- *   <li>{@code MTDCC45}  — DCC accessory address 45, wire = {@code DCCACCSTART + 44}</li>
- *   <li>{@code MTMM123}  — MM/MM2 accessory address 123, wire = {@code MM1ACCSTART + 122}</li>
- *   <li>{@code MTCAN200} — raw CAN wire address 200, used verbatim</li>
- *   <li>{@code MT45}     — legacy unprefixed, treated as DCC</li>
+ *   <li>{@code MTDCC45}: DCC accessory address 45, wire = {@code DCCACCSTART + 44}</li>
+ *   <li>{@code MTMM123}: MM/MM2 accessory address 123, wire = {@code MM1ACCSTART + 122}</li>
+ *   <li>{@code MTCAN200}: raw CAN wire address 200, used verbatim</li>
+ *   <li>{@code MT45}: legacy unprefixed, treated as DCC</li>
  * </ul>
  * <p>
  * Based on work by Bob Jacobsen
+ * <p>
+ * Now leverages the mcan sub-package for message decoding.
  *
  * @author Kevin Dickerson Copyright (C) 2012
  * @author Ralf Lang
@@ -105,14 +109,21 @@ public class MarklinTurnout extends AbstractTurnout implements MarklinListener {
 
     @Override
     public void reply(MarklinReply m) {
-        if (m.getPriority() == MarklinConstants.PRIO_1
-                && m.getCommand() >= MarklinConstants.ACCCOMMANDSTART
-                && m.getCommand() <= MarklinConstants.ACCCOMMANDEND
-                && m.getAddress() == getCANAddress()) {
-            switch (m.getElement(9)) {
-                case 0x00: setKnownStateFromCS(Turnout.THROWN);  break;
-                case 0x01: setKnownStateFromCS(Turnout.CLOSED); break;
-                default: log.warn("Unknown state command {}", m.getElement(9));
+        Cs2ClassifiedFrame frame = MarklinCanBridge.parse(m);
+        if (!(frame instanceof Cs2AccessoryCommands.AccessoryReplyFrame)) {
+            return;
+        }
+        Cs2AccessoryCommands.AccessoryReplyFrame reply = (Cs2AccessoryCommands.AccessoryReplyFrame) frame;
+        if (reply.address() == getCANAddress()) {
+            switch (reply.aspect()) {
+                case 0x00:
+                    setKnownStateFromCS(Turnout.THROWN);
+                    break;
+                case 0x01:
+                    setKnownStateFromCS(Turnout.CLOSED);
+                    break;
+                default:
+                    log.warn("Unknown state command {}", reply.aspect());
             }
         }
     }
@@ -168,7 +179,6 @@ public class MarklinTurnout extends AbstractTurnout implements MarklinListener {
         super.dispose();
     }
 
-    static final int METERINTERVAL = 100; // ms between on and off pulse
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MarklinTurnout.class);
 }

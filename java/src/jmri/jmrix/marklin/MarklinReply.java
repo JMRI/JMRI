@@ -125,14 +125,15 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
      * @param address the 32-bit integer representing the full address
      */
     public void setAddress(long address) {
-        setElement(MarklinConstants.CANADDRESSBYTE1, (byte) ((address >> 24) & 0xFF)); // hi
-        setElement(MarklinConstants.CANADDRESSBYTE2, (byte) ((address >> 16) & 0xFF));
-        setElement(MarklinConstants.CANADDRESSBYTE3, (byte) ((address >> 8) & 0xFF));
-        setElement(MarklinConstants.CANADDRESSBYTE4, (byte) (address & 0xFF)); // lo
+        // Set 32-bit address field (big-endian)
+        setElement(MarklinConstants.CANADDRESSBYTE1, (int) ((address >> 24) & 0xFF)); // hi
+        setElement(MarklinConstants.CANADDRESSBYTE2, (int) ((address >> 16) & 0xFF));
+        setElement(MarklinConstants.CANADDRESSBYTE3, (int) ((address >> 8) & 0xFF));
+        setElement(MarklinConstants.CANADDRESSBYTE4, (int) (address & 0xFF)); // lo
     }
 
     public int getPriority() {
-        return (getElement(0) >> 4);
+        return (getElement(0) >> 4) & 0x0F;
     }
 
     /**
@@ -140,9 +141,10 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
      * @return command, e.g. MarklinConstants.CMDHALTSYS
      */
     public int getCommand() {
-        int result = getElement(0) << 7;
-        result = result + getElement(1) >> 1;
-        return result;
+        // Extract 11-bit command field:
+        // Byte 0 bits 3-0 contain command bits 10-7
+        // Byte 1 bits 7-1 contain command bits 6-0
+        return ((getElement(0) & 0x0F) << 7) | ((getElement(1) >> 1) & 0x7F);
     }
 
     /**
@@ -150,13 +152,11 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
      * @param command new value.
      */
     public void setCommand(int command) {
-        // Update only the relevant bits in element0 (upper 7 bits)
-        int element0 = (getElement(0) & ~0x7F) | ((command >> 7) & 0x7F);
-
-        // Update only the relevant bits in element1 (lower 7 bits, shifted left)
-        int element1 = (getElement(1) & ~0xFE) | ((command & 0x7F) << 1);
-
-        // Set the updated elements
+        // Set 11-bit command field while preserving priority and response flag:
+        // Byte 0: preserve bits 7-4 (priority), set bits 3-0 (command bits 10-7)
+        int element0 = (getElement(0) & 0xF0) | ((command >> 7) & 0x0F);
+        // Byte 1: preserve bit 0 (response flag), set bits 7-1 (command bits 6-0)
+        int element1 = (getElement(1) & 0x01) | ((command & 0x7F) << 1);
         setElement(0, element0);
         setElement(1, element1);
     }
@@ -165,6 +165,15 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         int[] arr = new int[2];
         arr[0] = getElement(2);
         arr[1] = getElement(3);
+        return arr;
+    }
+
+    /** Returns the raw 13-byte frame as an int array for mcan parsing. */
+    public int[] toIntArray() {
+        int[] arr = new int[13];
+        for (int i = 0; i < 13; i++) {
+            arr[i] = getElement(i);
+        }
         return arr;
     }
 }

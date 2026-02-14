@@ -135,6 +135,9 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("apps.JavaVersionCheckWindow").and()
                                 .doNotHaveFullyQualifiedName("apps.gui3.paned.QuitAction").and()
                                 .doNotHaveFullyQualifiedName("apps.jmrit.decoderdefn.DecoderIndexBuilder").and()
+                                .doNotHaveFullyQualifiedName("apps.McanTcpBridge").and() // standalone CLI app
+                                .doNotHaveFullyQualifiedName("apps.MarklinPoke").and() // standalone CLI app
+                                .doNotHaveFullyQualifiedName("apps.MarklinPokeRunner").and() // standalone CLI app
                                 .doNotHaveFullyQualifiedName("jmri.util.FileUtilSupport").and() // used in log4j init
                                 .doNotHaveFullyQualifiedName("jmri.util.GetArgumentList").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetClassPath").and()
