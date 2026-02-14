@@ -637,7 +637,7 @@ public class LayoutTraverserView extends LayoutTrackView {
 						}
 					}
 				}
-                
+
                 LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
                 float width = isMain ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
                 //g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));

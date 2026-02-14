@@ -325,6 +325,28 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                             transit_instruction = "change"
                             break
 
+        # check if current block is a traverser
+        for panel in jmri.util.JmriJFrame.getFrameList():
+            if isinstance(panel, jmri.jmrit.display.layoutEditor.LayoutEditor):
+                for traverser in panel.getLayoutTraversers():
+                    if traverser.getLayoutBlock() is not None:
+                        if (traverser.getLayoutBlock().getBlock() == current_block) and (current_block != next_block):
+                            # Found the traverser object
+                            entry_slot_index = -1
+                            exit_slot_index = -1
+                            slot_list = traverser.getSlotList()
+                            for i in range(len(slot_list)):
+                                slot = slot_list[i]
+                                ts = slot.getConnect()
+                                if ts is not None and ts.getLayoutBlock() is not None:
+                                    connected_block = ts.getLayoutBlock().getBlock()
+                                    if connected_block == previous_block: entry_slot_index = i
+                                    if connected_block == next_block: exit_slot_index = i
+                            if entry_slot_index != -1 and exit_slot_index != -1 and ((entry_slot_index % 2) == (exit_slot_index % 2)):
+                                if self.logLevel > 0: print strindex + "current_block is a traverser and slots are on the same side, so changing direction"
+                                transit_instruction = "change"
+                            break # Found the traverser, no need to check others
+
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
         current_layout_block = LayoutBlockManager.getLayoutBlock(current_block)
 
