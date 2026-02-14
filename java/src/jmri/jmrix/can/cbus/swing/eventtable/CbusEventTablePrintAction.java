@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,10 +49,10 @@ public class CbusEventTablePrintAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
 
         jmri.util.ThreadingUtil.runOnGUIEventually( () -> {
-            HardcopyWriter writer;
+            OriginalHardcopyWriter writer;
             try {
-                writer = new HardcopyWriter(new Frame(), _title, 10, .8, .5, .5, .5, _preview);
-            } catch (HardcopyWriter.PrintCanceledException ex) {
+                writer = new OriginalHardcopyWriter(new Frame(), _title, 10, .8, .5, .5, .5, _preview);
+            } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
                 // log.debug("Preview cancelled");
                 return;
             }
@@ -73,7 +73,7 @@ public class CbusEventTablePrintAction extends AbstractAction {
      *
      * @param w the writer to print to
      */
-    private void printTable(HardcopyWriter w ) {
+    private void printTable(OriginalHardcopyWriter w ) {
 
         // [AC] variable column sizes
 
@@ -100,7 +100,7 @@ public class CbusEventTablePrintAction extends AbstractAction {
 
     }
 
-    private void colWidthLoop(String[] columnStrings, int[] columnWidth, HardcopyWriter w){
+    private void colWidthLoop(String[] columnStrings, int[] columnWidth, OriginalHardcopyWriter w){
         int columnTotal = 0;
         for (int i = 0; i < whichPrintColumns.length; i++) {
             // Put each column header in the array
@@ -118,7 +118,7 @@ public class CbusEventTablePrintAction extends AbstractAction {
         }
     }
 
-    private void getEachRow(HardcopyWriter w, String[] columnStrings, int[] columnWidth){
+    private void getEachRow(OriginalHardcopyWriter w, String[] columnStrings, int[] columnWidth){
 
         // now print each row of data
         // create a base string the width of the column
@@ -142,7 +142,7 @@ public class CbusEventTablePrintAction extends AbstractAction {
     }
 
     // [AC] modified to take an array of column widths
-    private void printColumns(HardcopyWriter w, String columnStrings[], int columnWidth[]) {
+    private void printColumns(OriginalHardcopyWriter w, String columnStrings[], int columnWidth[]) {
         String columnString = "";
         StringBuilder lineString = new StringBuilder();
         String spaces;

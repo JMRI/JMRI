@@ -27,7 +27,7 @@ import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.OutputBits;
 import jmri.jmrix.maple.SerialAddress;
 import jmri.jmrix.maple.SerialNode;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -302,10 +302,10 @@ public class ListFrame extends jmri.util.JmriJFrame {
                     + Bundle.getMessage("NodeBoxLabel") + " " + selNodeID;
         }
         // initialize a printer writer
-        HardcopyWriter writer = null;
+        OriginalHardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(curFrame, head, 10, .8, .5, .5, .5, false);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
+            writer = new OriginalHardcopyWriter(curFrame, head, 10, .8, .5, .5, .5, false);
+        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
             //log.debug("Print cancelled");
             return;
         }
@@ -436,10 +436,10 @@ public class ListFrame extends jmri.util.JmriJFrame {
          * <p>
          * Adapted from routines in BeanTableDataModel.java by
          * Bob Jacobsen and Dennis Miller
-         * @param w the HardcopyWriter instance.
+         * @param w the OriginalHardcopyWriter instance.
          * @param colWidth column width array.
          */
-        public void printTable(HardcopyWriter w, int colWidth[]) {
+        public void printTable(OriginalHardcopyWriter w, int colWidth[]) {
             // determine the column sizes - proportionately sized, with space between for lines
             int[] columnSize = new int[4];
             int charPerLine = w.getCharactersPerLine();
@@ -497,7 +497,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
+        protected void printColumns(OriginalHardcopyWriter w, String columnStrings[], int columnSize[]) {
             String columnString = "";
             StringBuilder lineString = new StringBuilder("");
             StringBuilder[] spaces = new StringBuilder[4];

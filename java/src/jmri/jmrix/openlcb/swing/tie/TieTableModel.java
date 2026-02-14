@@ -4,7 +4,7 @@ import java.awt.Font;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import javax.swing.table.AbstractTableModel;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,7 +73,7 @@ public class TieTableModel extends AbstractTableModel {
      * @param w hard copy writer connection
      * @param colWidth array of column widths
      */
-    public void printTable(HardcopyWriter w, int[] colWidth) {
+    public void printTable(OriginalHardcopyWriter w, int[] colWidth) {
         // determine the column sizes - proportionately sized, with space between for lines
         int[] columnSize = new int[4];
         int charPerLine = w.getCharactersPerLine();
@@ -131,7 +131,7 @@ public class TieTableModel extends AbstractTableModel {
         w.close();
     }
 
-    protected void printColumns(HardcopyWriter w, String[] columnStrings, int[] columnSize) {
+    protected void printColumns(OriginalHardcopyWriter w, String[] columnStrings, int[] columnSize) {
         StringBuilder columnString = new StringBuilder();
         StringBuilder lineString = new StringBuilder();
         String[] spaces = new String[4];

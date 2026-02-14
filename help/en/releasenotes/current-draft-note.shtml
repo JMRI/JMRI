@@ -556,6 +556,7 @@
         <a id="Roster" name="Roster"></a>
         <ul>
             <li>Added: physics parameters for physics based acceleration.</li>
+            <li>Improved the locomotive image resolution in printed rosters.</li>
         </ul>
 
     <h3>Routes</h3>

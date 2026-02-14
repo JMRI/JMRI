@@ -8,23 +8,21 @@ import jmri.util.junit.annotations.DisabledIfHeadless;
 import org.junit.jupiter.api.*;
 
 /**
- * HardcopyWriterTest.java
+ * OriginalHardcopyWriterTest.java Test for the OriginalHardcopyWriter class
  *
- * Test for the HardcopyWriter class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class HardcopyWriterTest {
+public class OriginalHardcopyWriterTest {
 
     @Test
     @DisabledIfHeadless
-    public void testCtor(){
+    public void testCtor() {
         JFrame frame = new JFrame();
         try {
-            HardcopyWriter hcw = new HardcopyWriter(frame,"test",10,10,10,10,10,true);
-            Assertions.assertNotNull( hcw, "HardcopyWriter constructor");
+            OriginalHardcopyWriter hcw = new OriginalHardcopyWriter(frame, "test", 10, 10, 10, 10, 10, true);
+            Assertions.assertNotNull(hcw, "OriginalHardcopyWriter constructor");
             hcw.dispose();
-        } catch (HardcopyWriter.PrintCanceledException pce) {
+        } catch (OriginalHardcopyWriter.PrintCanceledException pce) {
             // this isn't an error for this test.
         }
     }
@@ -41,4 +39,3 @@ public class HardcopyWriterTest {
     }
 
 }
-

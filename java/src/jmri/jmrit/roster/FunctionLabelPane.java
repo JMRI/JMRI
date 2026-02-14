@@ -351,24 +351,23 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             String heading2 = Bundle.getMessage("ColumnHeadingDescription");
             String s;
             int interval = spaces.length() - heading1.length();
-            w.setFontStyle(Font.BOLD);
+            w.setFont(null, Font.BOLD, null);
             // write the section name and dividing line
             s = Bundle.getMessage("HeadingFunctionLabels");
             w.write(s, 0, s.length());
             w.writeBorders();
             //Draw horizontal dividing line for each Pane section
-            w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
-                    w.getCharactersPerLine() + 1);
+            w.writeLine(w.getCurrentVPos(), 0, w.getCurrentVPos(), w.getPrintablePagesizePoints().width);
             s = "\n";
             w.write(s, 0, s.length());
 
-            w.setFontStyle(Font.BOLD + Font.ITALIC);
+            w.setFont(null, Font.BOLD + Font.ITALIC, null);
             s = "   " + heading1 + spaces.substring(0, interval) + "   " + heading2;
             w.write(s, 0, s.length());
             w.writeBorders();
             s = "\n";
             w.write(s, 0, s.length());
-            w.setFontStyle(Font.PLAIN);
+            w.setFont(null, Font.PLAIN, null);
 
             // index over variables
             for (int i = 0; i <= maxfunction; i++) {
