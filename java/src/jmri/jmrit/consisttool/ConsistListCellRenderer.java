@@ -47,7 +47,10 @@ public class ConsistListCellRenderer extends JLabel implements ListCellRenderer<
     }
     
     public static ImageIcon getConsistIcon(LocoAddress consistAddress, RosterIconFactory iconFact ) {
-        int iconHeight =  (iconFact!=null?iconFact.getIconFactoryHeight():IMAGE_HEIGHT);
+        if (iconFact == null) {
+            iconFact = InstanceManager.getDefault(RosterIconFactory.class);
+        }
+        int iconHeight =  iconFact.getIconFactoryHeight();
         BufferedImage bi = new BufferedImage( 1, iconHeight, BufferedImage.TYPE_INT_ARGB);            
         Consist consist =  InstanceManager.getDefault(jmri.ConsistManager.class).getConsist(consistAddress);
         Font f = new Font("Monospaced", Font.PLAIN, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize());

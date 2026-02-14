@@ -21,8 +21,10 @@ import org.slf4j.LoggerFactory;
  * @author lionel
  */
 public class ThrottlesTableTransferHandler extends TransferHandler {
-
-   private final DataFlavor throttleControlObjectFlavor = new ActivationDataFlavor(ThrottleControler.class, "application/x-jmri-throttleControler", "Throttle controler");
+   
+   private final DataFlavor throttleControlObjectFlavor = new ActivationDataFlavor(ThrottleFrame.class, "application/x-jmri-throttleControler", "JMRI Throttle Controler");
+   // shoud use ActivationDataFlavor(ThrottleControler.class, "application/x-jmri-throttleControler", "JMRI Throttle Controler");
+   // but not working interface vs implementation thing?
    private JTable           table             = null;
 
     public ThrottlesTableTransferHandler(JTable throttleControlers) {
@@ -37,7 +39,7 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
    }
 
    @Override
-   public boolean canImport(TransferHandler.TransferSupport info) {
+   public boolean canImport(TransferHandler.TransferSupport info) {       
       boolean b = info.getComponent() == table && info.isDrop() && ( 
               info.isDataFlavorSupported(throttleControlObjectFlavor) || info.isDataFlavorSupported(RosterEntrySelection.rosterEntryFlavor));
       table.setCursor(b ? DragSource.DefaultMoveDrop : DragSource.DefaultMoveNoDrop);
@@ -57,8 +59,7 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
            target.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
            if (info.isDataFlavorSupported(throttleControlObjectFlavor)) {
                try {
-
-                   ThrottleControler tf = (ThrottleFrame) info.getTransferable().getTransferData(throttleControlObjectFlavor);
+                   ThrottleControler tf = (ThrottleControler) info.getTransferable().getTransferData(throttleControlObjectFlavor);
                    if (tf != null) {
                        ((ThrottlesTableModel) table.getModel()).moveThrottleControler(tf, dl.getRow(), dl.getColumn());
                        return true;

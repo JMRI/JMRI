@@ -1,20 +1,16 @@
 package jmri.jmrit.throttle;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableCellRenderer;
 
-import jmri.Consist;
-import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Throttle;
 import jmri.jmrit.consisttool.ConsistListCellRenderer;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.util.FileUtil;
-import jmri.util.gui.GuiLafPreferencesManager;
 
 /**
  * A TableCellRender to graphicaly display an active throttles in a summary table

@@ -1,5 +1,7 @@
 package jmri.jmrit.throttle;
 
+import java.io.Serializable;
+
 import jmri.DccLocoAddress;
 import jmri.jmrit.roster.RosterEntry;
 
@@ -10,7 +12,7 @@ import jmri.jmrit.roster.RosterEntry;
  * 
  * @author Lionel Jeanson 2025
  */
-public interface ThrottleControler {
+public interface ThrottleControler extends Serializable {
     
     /**
      * Return that throttle control container
