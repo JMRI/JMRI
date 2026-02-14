@@ -347,9 +347,10 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         #     TransitManager.deleteTransit(transit)
 
     def remove_values(self, train_name):
-        for block in blocks.getNamedBeanSet():
-            if block.getValue() == train_name:
-                block.setValue(None)
+        if train_name != None and train_name != "" :
+            for block in blocks.getNamedBeanSet():
+                if block.getValue() == train_name:
+                    block.setValue(None)
 
     def remove_train_values(self):
         for block in blocks.getNamedBeanSet():
@@ -479,11 +480,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         global trains_dispatched
         if "trains_dispatched" not in globals():
             trains_dispatched = []
-        #initialise all block_value variables
-        # for block in blocks.getNamedBeanSet():
-        #     LayoutBlockManagerdispa=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
-        #     if LayoutBlockManager.getLayoutBlock(block) != None:
-        #         block.setValue(None)
+        self.od = OptionDialog()
 
     def init(self):
         if self.logLevel > 0: print 'Create DispatchMaster Thread'
@@ -510,7 +507,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "finished DispatchMaster setup"
 
         #DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        self.od = OptionDialog()
+
         self.rbm = ResetButtonMaster()
         return True
 
@@ -879,7 +876,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                         opt1 = "select another action file"
                     opt2 = "finished adding action files"
                     options = [opt1, opt2]
-                    [python_file, option] = OptionDialog().ListOptions(python_files, title, options)
+                    [python_file, option, index] = OptionDialog().ListOptions(python_files, title, options)
                     if option == opt1:
                         selected_actions.append(python_file)
                         self.add_python_file_to_route(python_file, route, LocationManager)
@@ -1019,37 +1016,55 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.button_sensors_to_watch.remove(sensor_changed)
             sensor_changed.setKnownState(INACTIVE)
 
-        #go to this bit when complete == True
+        self.set_stopping_length_fraction(found_edge)
 
+    def set_stopping_length_fraction(self,found_edge):
+
+        #go to this bit when complete == True
+        print "found_edge", found_edge
         # get length of last section of transit
         filename_fwd = self.get_filename(found_edge, "fwd")
         trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
         last_section = self.last_section_of_transit(trainInfo_fwd)
         length_of_last_section = float(self.length_of_last_section(last_section))/10.0 # length in cm
-
+        overall_stopping_distance = ResetButtonMaster().get_overall_stopping_distance()
+        overall_stopping_distance_str = str(int(overall_stopping_distance))
         [e, previous_stopping_position] = self.get_stopping_position(found_edge)
         # print "V", [e, previous_stopping_position]
         # print "type", type(previous_stopping_position)
-        default_value = round(float(previous_stopping_position),1)
-        # print "default_value", default_value
+        default_value = round(float(previous_stopping_position),1) + round(float(overall_stopping_distance),1)
+        print "default_value", default_value
         # stopping_fraction = self.get_stopping_fraction(stopping_position, length_of_last_section)
         title = "Stop train before end of section"
         msg = "Transit name: " + str(filename_fwd) + \
               ".\n" + \
               "\nLength of last section: " + str(round(length_of_last_section, 1)) + " cm " + \
               "   (" + str(round(length_of_last_section/2.54, 1)) + " inches)" + \
-              "\nPrevious stopping position: " + str(round(float(previous_stopping_position),1)) + " cm " + \
-              "   (" + str(round(float(previous_stopping_position)/2.54, 1)) + " inches )" + \
+              "\nPrevious stopping position: " + str(round(float(default_value),1)) + " cm " + \
+              "   (" + str(round(float(default_value)/2.54, 1)) + " inches )" + \
               "\nbefore the calculated stopping position" + \
-              "\n\nEnter new stopping position in cm:"
-        new_stopping_position = self.od.input(msg, title, default_value)
-        if new_stopping_position == None: return
+              "\nthis includes an overall_stopping_distance of " + overall_stopping_distance_str + "cm" + \
+              "\n\nEnter new total stopping position in cm:"
+        while True:
+            new_total_stopping_position = self.od.input(msg, title, default_value)
+            try:
+                value = float(new_total_stopping_position)
+                break   # success
+            except ValueError:
+                JOptionPane.showMessageDialog(
+                    None,
+                    "Please enter a valid number.",
+                    "Invalid Input",
+                    JOptionPane.ERROR_MESSAGE
+                )
 
-        # new_stopping_fraction = 1.0-(float(new_stopping_position)/float(length_of_last_section))
+        new_stopping_position = float(new_total_stopping_position) - overall_stopping_distance
+
+        if new_stopping_position == None: return
 
         # save the new stopping length position
         self.save_stopping_position(found_edge, new_stopping_position)
-
+        sensors.getSensor("stoppingDistanceSet").setKnownState(ACTIVE)  # allow the waiting process to continue
         return True
 
     def get_default_stopping_position(self):
@@ -1092,15 +1107,6 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         # print "my_list5", my_list
         return my_list
 
-    # def get_stopping_position(self, edge_ref, default_stopping_position, default_stopping_fraction):
-    #     filename = "stopping_positions"
-    #     my_list = self.read_list(filename)
-    #     for edge, stopping_position, stopping_fraction in my_list:
-    #         if edge == edge_ref:
-    #             return [edge_ref, stopping_position, stopping_fraction]
-    #     #if stopping position is not saved return None
-    #     return [edge_ref, default_stopping_position, default_stopping_fraction]
-
     def get_stopping_position(self, edge_ref,):
         folder = "stopping_positions"
         filename = "stopping_positions.txt"
@@ -1118,6 +1124,33 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         # print "x2"
         #if stopping position is not saved return 0
         return [edge_ref, 0]
+
+    def get_stopping_positions(self):
+
+        folder = "stopping_positions"
+        filename = "stopping_positions.txt"
+
+        stopping_position_list = self.read_list(folder, filename)
+
+        if stopping_position_list == ["",""]:
+            return []
+        else:
+            return stopping_position_list
+
+    def get_stopping_positions_desc(self):
+
+        overall_stopping_distance = ResetButtonMaster().get_overall_stopping_distance()
+
+        folder = "stopping_positions"
+        filename = "stopping_positions.txt"
+
+        stopping_position_list = self.read_list(folder, filename)
+
+        if stopping_position_list == ["",""]:
+            return []
+        else:
+            stopping_position_list = ["direction: " + str(edge) +  ": extra " + str(stop_pos) + " cm total: " + str(int(stop_pos) + int(overall_stopping_distance)) + " cm" for edge, stop_pos in stopping_position_list ]
+            return stopping_position_list
 
     def directory(self, folder):
         path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + folder
@@ -1404,7 +1437,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         title = "Select next Station"
 
         opt1 = "Select next station"
-        opt2 = "Cancel station wait time modification"
+        opt2 = "Cancel station direction modification"
 
         s = self.od.customQuestionMessage2str(msg,title,opt1,opt2)
         if self.od.CLOSED_OPTION == True:

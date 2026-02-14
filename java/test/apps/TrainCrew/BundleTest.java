@@ -1,6 +1,9 @@
 package apps.TrainCrew;
 
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -10,24 +13,26 @@ import org.junit.jupiter.api.*;
  */
 public class BundleTest  {
 
-    @Test public void testGoodKeysMessage() {
-        Assert.assertEquals("File", Bundle.getMessage("MenuFile"));
-        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
+    @Test
+    public void testGoodKeysMessage() {
+        assertEquals("File", Bundle.getMessage("MenuFile"));
+        assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
     @Test
     public void testBadKeyMessage() {
-        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
+        assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
     }
 
-    @Test public void testGoodKeysMessageArg() {
-        Assert.assertEquals("File", Bundle.getMessage("MenuFile", new Object[]{}));
-        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
+    @Test
+    public void testGoodKeysMessageArg() {
+        assertEquals("File", Bundle.getMessage("MenuFile", new Object[]{}));
+        assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
     }
 
     @Test
     public void testBadKeyMessageArg() {
-        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
+        assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
     }
 
 }

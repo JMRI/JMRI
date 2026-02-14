@@ -114,6 +114,11 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
                     .addContent("no"));
         }
 
+        if (p.isWaitForThrottle()) {
+            element.addContent(new Element("waitForThrottle")
+                    .addContent("yes"));
+        }
+
         return element;
     }
 
@@ -184,6 +189,11 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         Element stopLocoWhenSwitchingLoco = shared.getChild("stopLocoWhenSwitchingLoco");
         if (stopLocoWhenSwitchingLoco != null) {
             h.setStopLocoWhenSwitchingLoco("yes".equals(stopLocoWhenSwitchingLoco.getTextTrim()));
+        }
+
+        Element waitForThrottle = shared.getChild("waitForThrottle");
+        if (waitForThrottle != null) {
+            h.setWaitForThrottle("yes".equals(waitForThrottle.getTextTrim()));
         }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);

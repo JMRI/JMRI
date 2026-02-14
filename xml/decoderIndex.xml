@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.15.2plus+jake+20260121T1101Z+R5455e894050 on Wed Jan 21 06:02:15 EST 2026-->
-  <decoderIndex version="699">
+  <!--Written by JMRI version 5.15.3plus+jake+20260214T1345Z+R6499ef8baa2 on Sat Feb 14 08:45:44 EST 2026-->
+  <decoderIndex version="701">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -14135,6 +14135,9 @@
           <functionlabel num="84" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="85" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
+      </family>
+      <family name="Turnout Drives" mfg="MD Electronics" file="MDE_80101.xml">
+        <model model="80101 Turnout Drive" lowVersionID="120" highVersionID="120" />
       </family>
       <family name="mXion" mfg="MD Electronics" file="MDE_HDD.xml">
         <model model="HDD" lowVersionID="10" highVersionID="10" />

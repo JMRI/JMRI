@@ -36,7 +36,7 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
     @Test
     public void testPacketReceived() {
         // Entry.
-        ti.sendMessage(":X195B4123N0102030405060100;");
+        ti.sendMessage(":X195B4123N010203040506C100;");
         ti.flush();
         Assert.assertEquals("Report mismatch","RD256",r.getCurrentReport().toString());
         RailCom report = (RailCom) r.getCurrentReport();

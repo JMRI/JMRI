@@ -1,59 +1,25 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
-import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import javax.swing.JWindow;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
-import javax.swing.SwingConstants;
+import java.util.List;
+
+import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.symbolicprog.AbstractValue;
-import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.CvValue;
-import jmri.jmrit.symbolicprog.DccAddressPanel;
-import jmri.jmrit.symbolicprog.FnMapPanel;
-import jmri.jmrit.symbolicprog.FnMapPanelESU;
-import jmri.jmrit.symbolicprog.PrintCvAction;
-import jmri.jmrit.symbolicprog.Qualifier;
-import jmri.jmrit.symbolicprog.QualifierAdder;
-import jmri.jmrit.symbolicprog.SymbolicProgBundle;
-import jmri.jmrit.symbolicprog.ValueEditor;
-import jmri.jmrit.symbolicprog.CvValueRenderer;
-import jmri.jmrit.symbolicprog.VariableTableModel;
-import jmri.jmrit.symbolicprog.VariableValue;
-import jmri.util.CvUtil;
-import jmri.util.StringUtil;
-import jmri.util.ThreadingUtil;
-import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.util.jdom.LocaleSelector;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
+
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.*;
+import jmri.util.*;
+import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.jdom.LocaleSelector;
 
 /**
  * Provide the individual panes for the TabbedPaneProgrammer.

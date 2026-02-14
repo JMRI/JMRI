@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb;
 
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.RailCom;
@@ -37,17 +38,18 @@ public final class OlcbReporter extends AbstractIdTagReporter {
     /// Mask for the bits which are the actual report.
     private static final long REPORTER_EVENT_MASK = REPORTER_LSB - 1;
 
-    /// When this bit is set, the report is an exit report.
-    private static final long EXIT_BIT = (1L << 14);
-    /// When this bit is set, the orientation of the locomotive is reverse, when clear it is normal.
-    private static final long ORIENTATION_BIT = (1L << 15);
+    // the four cases for the MS bits in the report
+    private static final int REPORTER_UNOCCUPIED_EXIT = 0;
+    private static final int REPORTER_OCCUPIED_FORWARD_ENTRY = 0x1;
+    private static final int REPORTER_OCCUPIED_BACKWARD_ENTRY = 0x2;
+    private static final int REPORTER_OCCUPIED_UNKNOWN_ENTRY = 0x3;
 
     /// Mask for the address bits of the reporter.
     private static final long ADDRESS_MASK = (1L << 14) - 1;
     /// The high bits of the address report for a DCC short address.
-    private static final int HIBITS_SHORTADDRESS = 0x28;
+    private static final int HIBITS_SHORTADDRESS = 0x38;
     /// The high bits of the address report for a DCC consist address.
-    private static final int HIBITS_CONSIST = 0x29;
+    private static final int HIBITS_CONSIST = 0x39;
 
     private OlcbAddress baseAddress;    // event ID for zero report
     private EventID baseEventID;
@@ -202,26 +204,49 @@ public final class OlcbReporter extends AbstractIdTagReporter {
     private void handleReport(long reportBits, boolean isEntry) {
         // The extra notify with null is necessary to clear past notifications even if we have a new report.
         notify(null);
-        if (!isEntry || ((reportBits & EXIT_BIT) != 0)) {
-            return;
+        if (!isEntry) {
+            return; // having cleared the reporter
         }
+        DccLocoAddress.Protocol protocol;
         long addressBits = reportBits & ADDRESS_MASK;
         int address = 0;
         int hiBits = (int) ((addressBits >> 8) & 0x3f);
-        int direction = (int) (reportBits & ORIENTATION_BIT);
         if (addressBits < 0x2800) {
             address = (int) addressBits;
+            protocol = DccLocoAddress.Protocol.DCC_LONG;
         } else if (hiBits == HIBITS_SHORTADDRESS) {
             address = (int) (addressBits & 0xff);
+            protocol = DccLocoAddress.Protocol.DCC_SHORT;
         } else if (hiBits == HIBITS_CONSIST) {
             address = (int) (addressBits & 0x7f);
-        }
-        RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
-        if (direction != 0) {
-            tag.setOrientation(RailCom.Orientation.WEST);
+            protocol = DccLocoAddress.Protocol.DCC_CONSIST;
         } else {
-            tag.setOrientation(RailCom.Orientation.EAST);
+            log.warn("Unexpected address field formatting, treating as DCC_LONG: {}", Long.toHexString(reportBits));
+            protocol = DccLocoAddress.Protocol.DCC_LONG;
         }
+        
+        RailCom.Direction direction;
+        
+        switch ( (int)(reportBits >> 14) & 0x3) {
+            case REPORTER_UNOCCUPIED_EXIT:
+                direction = RailCom.Direction.UNKNOWN;
+                break;
+            case REPORTER_OCCUPIED_FORWARD_ENTRY:
+                direction = RailCom.Direction.FORWARD;
+                break;
+            case REPORTER_OCCUPIED_BACKWARD_ENTRY:
+                direction = RailCom.Direction.BACKWARD;
+                break;
+            default:        // needed to keep static checker happy
+            case REPORTER_OCCUPIED_UNKNOWN_ENTRY:
+                direction = RailCom.Direction.UNKNOWN;
+                break;
+        }
+        
+        RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
+        tag.setOrientation(RailCom.Orientation.UNKNOWN);
+        tag.setDirection(direction);
+        tag.setDccAddress(new DccLocoAddress(address, protocol));
         notify(tag);
     }
     private class Receiver extends org.openlcb.MessageDecoder {
@@ -232,7 +257,8 @@ public final class OlcbReporter extends AbstractIdTagReporter {
                 // Not for us.
                 return;
             }
-            handleReport(id & REPORTER_EVENT_MASK, true);
+            boolean entry = ((id >>14) & 0x3) != REPORTER_UNOCCUPIED_EXIT;
+            handleReport(id & REPORTER_EVENT_MASK, entry);
         }
 
         @Override

@@ -1142,6 +1142,14 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             for (Element fn : l) {
                 String key = fn.getChild("key").getText();
                 String value = fn.getChild("value").getText();
+                
+                // Special case:  If a No Name or All Entries
+                // group has been accidentally created, suppress that
+                if (key.equals(Roster.ROSTER_GROUP_PREFIX+"No Group") 
+                    || key.equals(Roster.ROSTER_GROUP_PREFIX+"All Entries")) {
+                        continue;
+                    }
+                    
                 this.putAttribute(key, value);
             }
         }

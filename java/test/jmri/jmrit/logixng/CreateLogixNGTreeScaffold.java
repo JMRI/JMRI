@@ -2300,6 +2300,7 @@ public class CreateLogixNGTreeScaffold {
         actionThrottle.setComment("A comment");
         actionThrottle.setMemo(_locoNetMemo);
         actionThrottle.setStopLocoWhenSwitchingLoco(true);
+        actionThrottle.setWaitForThrottle(false);
         maleSocket = digitalActionManager.registerAction(actionThrottle);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -2307,6 +2308,7 @@ public class CreateLogixNGTreeScaffold {
         actionThrottle.setComment("A comment");
         actionThrottle.setMemo(null);
         actionThrottle.setStopLocoWhenSwitchingLoco(false);
+        actionThrottle.setWaitForThrottle(true);
         maleSocket = digitalActionManager.registerAction(actionThrottle);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
