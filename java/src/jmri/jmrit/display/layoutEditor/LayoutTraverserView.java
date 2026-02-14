@@ -637,15 +637,13 @@ public class LayoutTraverserView extends LayoutTrackView {
 						}
 					}
 				}
-
-                if (isMain == slotIsMain) { // Draw only if mainline/sideline status matches the current pass
-                    LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
-                    float width = isMain ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
-                    //g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-                    Point2D edgePoint = getSlotEdgePointOrdered(i);
-                    Point2D anchorPoint = getSlotCoordsOrdered(i);
-                    g2.draw(new Line2D.Double(edgePoint, anchorPoint));
-                }
+                
+                LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
+                float width = isMain ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
+                //g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+                Point2D edgePoint = getSlotEdgePointOrdered(i);
+                Point2D anchorPoint = getSlotCoordsOrdered(i);
+                g2.draw(new Line2D.Double(edgePoint, anchorPoint));
 
                 // Restore color if changed
                 if (slotColor != null) {
