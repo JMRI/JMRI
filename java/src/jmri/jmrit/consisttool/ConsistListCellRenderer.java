@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class ConsistListCellRenderer extends JLabel implements ListCellRenderer<Object> {
-    private final static int IMAGE_HEIGHT = 19;
     
     @Override
     public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {        
