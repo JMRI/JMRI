@@ -251,7 +251,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
      * Force emmergency stop of all managed throttles windows
      *
      */   
-    public void eStopAll() {
+    public void eStopAllContainers() {
         throttleWindows.forEach(tw -> {
             tw.eStopAll();
         });
