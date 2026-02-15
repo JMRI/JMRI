@@ -663,7 +663,7 @@ public class HardcopyWriter extends Writer {
      */
     public void setFont(String name, Integer style, Integer size) {
         synchronized (this.lock) {
-\           if (style == null) {
+            if (style == null) {
                 style = useFontStyle;
             }
             if (size == null) {
