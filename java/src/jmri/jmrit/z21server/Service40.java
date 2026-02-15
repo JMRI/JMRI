@@ -293,7 +293,7 @@ public class Service40 {
  */
     private static byte[] handleHeader80() {
         log.info("{} Stop all locos", moduleIdent);        
-        InstanceManager.getDefault(ThrottleFrameManager.class).eStopAllControls();
+        InstanceManager.getDefault(ThrottleFrameManager.class).emmergencyStopAll();
         // send LAN_X_BC_STOPPED packet
         byte[] stoppedPacket =  new byte[7];
         stoppedPacket[0] = (byte) 0x07;
