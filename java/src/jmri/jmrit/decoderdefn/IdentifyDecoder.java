@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  *         {@link #setOptionalCv(boolean flag) setOptionalCv()} and
  *         {@link #isOptionalCv() isOptionalCv()} as documented below.)</li>
  *      </ul>
- * <li>PIKO: (mfgID = 168) write {@literal 0=>CV31}, write {@literal 255=>CV32},
+ * <li>PIKO: (mfgID = 162) write {@literal 0=>CV31}, write {@literal 255=>CV32},
  * then read CV315, CV316, CV317 and do a decimal concatenation
  * <li>QSI: (mfgID == 113) write {@literal 254=>CV49}, write {@literal 4=>CV50},
  *  then CV56 is high byte, write {@literal 5=>CV50}, then CV56 is low byte of
@@ -112,7 +112,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         ESU(151),
         HARMAN(98),
         HORNBY(48),
-        PIKO(168),
+        PIKO(162),
         QSI(113),
         SOUNDTRAXX(141),
         TCS(153),
