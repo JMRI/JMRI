@@ -511,9 +511,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         deleteList = []     # Prevent concurrent modification
         icons = panel.getBlockContentsLabelList()
         for icon in icons:
-            blk = icon.getBlock()
-            if blk is not None:
-                deleteList.append(icon)
+            deleteList.append(icon)
 
         for item in deleteList:
             panel.removeFromContents(item)

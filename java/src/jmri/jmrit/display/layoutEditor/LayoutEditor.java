@@ -7336,16 +7336,16 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             signalList.add((SignalHeadIcon) l);
         } else if (l instanceof SignalMastIcon) {
             signalMastList.add((SignalMastIcon) l);
+        } else if (l instanceof BlockContentsIcon) {
+            blockContentsLabelList.add((BlockContentsIcon) l);
         } else if (l instanceof MemoryIcon) {
             memoryLabelList.add((MemoryIcon) l);
+        } else if (l instanceof BlockContentsInputIcon) {
+            blockContentsInputList.add((BlockContentsInputIcon) l);
         } else if (l instanceof MemoryInputIcon) {
             memoryInputList.add((MemoryInputIcon) l);
         } else if (l instanceof GlobalVariableIcon) {
             globalVariableLabelList.add((GlobalVariableIcon) l);
-        } else if (l instanceof BlockContentsIcon) {
-            blockContentsLabelList.add((BlockContentsIcon) l);
-        } else if (l instanceof BlockContentsInputIcon) {
-            blockContentsInputList.add((BlockContentsInputIcon) l);
         } else if (l instanceof AnalogClock2Display) {
             clocks.add((AnalogClock2Display) l);
         } else if (l instanceof MultiSensorIcon) {
