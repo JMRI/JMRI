@@ -308,6 +308,28 @@ public class HardcopyWriter extends Writer {
             }
             previewFrame.dispose();
         });
+
+        // We want to add the paper size / orientation
+        if (pagesizePixels.width > pagesizePixels.height) {
+            JLabel orientationLabel = new JLabel(Bundle.getMessage("Landscape"));
+            orientationLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
+            previewToolBar.add(orientationLabel);
+        } else {
+            JLabel orientationLabel = new JLabel(Bundle.getMessage("Portrait"));
+            orientationLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
+            previewToolBar.add(orientationLabel);
+        }
+        String paperSizeName = PaperUtils.getNameFromPoints(pagesizePoints.width, pagesizePoints.height);
+        if (paperSizeName != null) {
+            try {
+                paperSizeName = Bundle.getMessage(paperSizeName);
+            } catch (MissingResourceException e) {
+                log.debug("Paper size name {} not found", paperSizeName);
+            }
+            JLabel paperSizeLabel = new JLabel(paperSizeName);
+            paperSizeLabel.setBorder(new EmptyBorder(0, 5, 0, 10));
+            previewToolBar.add(paperSizeLabel);
+        }
     }
 
     /**
@@ -437,25 +459,29 @@ public class HardcopyWriter extends Writer {
      * enough for the output.
      * 
      * @param columns Array of Column objects
-     * @throws ColumnException if a Column is not contained within the page
-     *                         width
      */
-    public void setColumns(Column[] columns) throws ColumnException {
+    public void setColumns(Column[] columns) {
         for (int i = 0; i < columns.length; i++) {
+            if (columns[i].maxWidth) {
+                if (i + 1 < columns.length) {
+                    columns[i].width = columns[i + 1].position - columns[i].position;
+                } else {
+                    columns[i].width = width - columns[i].position;
+                }
+            }
             if (columns[i].getPosition() + columns[i].getWidth() > width) {
-                throw new ColumnException("Column off edge of page");
+                throw new IllegalArgumentException("Column off edge of page");
             }
         }
         this.columns = columns;
     }
 
     /**
-     * Function to set Columns based on a Collection<Column> object
+     * Function to set Columns based on a {@code Collection<Column>} object
      * 
      * @param columns Collection of Column objects
-     * @throws ColumnException if a tab stop is off the edge of the page
      */
-    public void setColumns(Collection<Column> columns) throws ColumnException {
+    public void setColumns(Collection<Column> columns) {
         setColumns(columns.toArray(new Column[0]));
     }
 
@@ -533,35 +559,55 @@ public class HardcopyWriter extends Writer {
 
             // First, we need to find where to split the string. 
             // Do this with a binary search to be efficient. We should take spaces into account. ISSUE
+            // We want to get the longest possible string that will fit in the column.
             int splitPos = 0;
             int low = 0;
             int high = line.length();
             while (low < high) {
                 int mid = (low + high) / 2;
                 if (metrics.getStringBounds(line.substring(0, mid), page).getWidth() < columnWidth) {
+                    // We know that the first mid characters will fit in the column.
                     low = mid + 1;
                 } else {
+                    // We know that the first mid characters will not fit in the column.
                     high = mid;
                 }
             }
-            splitPos = low;
+            splitPos = low - 1;
 
+            if (column.isWrap()) {
+                // We have to back up to a space to avoid splitting a word.
+                while (splitPos > 0 && !Character.isSpaceChar(line.charAt(splitPos))) {
+                    splitPos--;
+                }
+                if (splitPos == 0) {
+                    // We couldn't find a space to split on, so we have to split on a non-space.
+                    splitPos = low - 1;
+                }
+            }
+
+            if (splitPos < 0) {
+                splitPos = 0;   // Even if it won't fit, we have to output something.   
+            }
             // Now we can split the string and wrap it to the next line.
             String firstLine = line.substring(0, splitPos);
-            String secondLine = line.substring(splitPos);
+            stringStartPos = column.getStartPos(metrics.getStringBounds(firstLine, page).getWidth());
 
             // We can now output the first line.
             page.drawString(firstLine, x0 + stringStartPos, y0 + v_pos + lineascent);
 
-            // We can now output the second line.
-            v_pos += lineheight;
-            line = secondLine;
-            int saveColumnIndex = columnIndex;
-            flush_column();
-            // This has already advanced the column index, so we back it up
-            columnIndex = saveColumnIndex;
-            max_v_pos = Math.max(max_v_pos, v_pos);
-            v_pos -= lineheight;
+            if (column.isWrap()) {
+                String secondLine = line.substring(splitPos);
+                // We can now output the second line.
+                v_pos += lineheight;
+                line = secondLine;
+                int saveColumnIndex = columnIndex;
+                flush_column();
+                // This has already advanced the column index, so we back it up
+                columnIndex = saveColumnIndex;
+                max_v_pos = Math.max(max_v_pos, v_pos);
+                v_pos -= lineheight;
+            }
         } else {
             page.drawString(line, x0 + stringStartPos, y0 + v_pos + lineascent);
         }
@@ -1156,23 +1202,75 @@ public class HardcopyWriter extends Writer {
         }
     }
 
-    public enum Align {
-        LEFT,
-        CENTER,
-        RIGHT
+public enum Align {
+    LEFT(1),
+    CENTER(2),
+    RIGHT(3),
+    LEFT_WRAP(9, LEFT),
+    CENTER_WRAP(10, CENTER),
+    RIGHT_WRAP(11, RIGHT);
+
+    // It is OK that value is not used.
+    private final int value;
+    private final Align base;
+
+    // Constructor for base values
+    Align(int value) {
+        this(value, null);
     }
 
+    // Constructor for wrapped values
+    Align(int value, Align base) {
+        this.value = value;
+        this.base = base;
+    }
+
+    public Align getBase() {
+        return (base == null) ? this : base;
+    }
+
+    public boolean isWrap() {
+        return base != null;
+    }
+}
     public static class Column {
         int position;
         int width;
+        boolean maxWidth = false;
         Align alignment;
 
+        /**
+         * Create a Column with specified position, width and alignment
+         * 
+         * @param position  The position of the column in points
+         * @param width     The width of the column in points
+         * @param alignment The alignment of the column
+         */
         public Column(int position, int width, Align alignment) {
             this.position = position;
             this.width = width;
             this.alignment = alignment;
         }
 
+        /**
+         * Create a Column with specified position and alignment.
+         * The width will be calculated up to the next column.
+         * 
+         * @param position  The position of the column in points
+         * @param alignment The alignment of the column
+         */
+        public Column(int position, Align alignment) {
+            this.position = position;
+            this.maxWidth = true;
+            this.alignment = alignment;
+        }
+
+        /**
+         * Create a Column with specified position and width with LEFT alignment
+         * 
+         * @param position  The position of the column in points
+         * @param width     The width of the column in points
+         */
         public Column(int position, int width) {
             this(position, width, Align.LEFT);
         }
@@ -1182,7 +1280,7 @@ public class HardcopyWriter extends Writer {
         }
 
         public int getStartPos(double strlen) {
-            switch (alignment) {
+            switch (alignment.getBase()) {
                 case LEFT:
                     return position;
                 case CENTER:
@@ -1200,6 +1298,42 @@ public class HardcopyWriter extends Writer {
 
         public Align getAlignment() {
             return alignment;
+        }
+
+        public boolean isWrap() {
+            return alignment.isWrap();
+        }
+
+        @Override
+        public String toString() {
+            return "Column{" + "position=" + position + ", width=" + width + ", alignment=" + alignment + "}";
+        }
+
+        /**
+         * Stretch the columns to fit the specified width. The columns are assumed to
+         * be sorted by position. The input widths are treated as ratios. There is a gap
+         * between the columns.
+         * 
+         * @param columns The columns to stretch
+         * @param width   The width to stretch to in points
+         * @param gap     The gap between the columns in points
+         * @return The stretched columns
+         */
+        public static ArrayList<Column> stretchColumns(Collection<Column> columns, int width, int gap) {
+            ArrayList<Column> newColumns = new ArrayList<>();
+            double totalWidth = 0;
+            for (Column column : columns) {
+                totalWidth += column.getWidth();
+            }
+            double currentPosition = 0;
+            double scale = (width - (columns.size() - 1) * gap) / totalWidth;
+            for (Column column : columns) {
+                newColumns.add(new Column((int) currentPosition, 
+                                          (int) (column.getWidth() * scale), 
+                                          column.getAlignment()));
+                currentPosition += column.getWidth() * scale + gap;
+            }
+            return newColumns;
         }
     }
 

@@ -143,6 +143,17 @@ public class PaperUtils {
         }
     }
 
+    public static String getNameFromPoints(float widthPts, float heightPts) {
+        // MediaSize uses millimeters, so convert points to mm (1 pt = 0.352778 mm)
+        float widthMm = widthPts * 0.352778f;
+        float heightMm = heightPts * 0.352778f;
+        
+        // Find the matching media name
+        MediaSizeName match = MediaSize.findMedia(widthMm, heightMm, MediaSize.MM);
+        
+        return (match != null) ? match.toString() : null;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(PaperUtils.class);
 
 }

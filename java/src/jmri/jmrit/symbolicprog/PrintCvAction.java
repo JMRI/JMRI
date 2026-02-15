@@ -67,7 +67,7 @@ public class PrintCvAction extends AbstractAction {
 
             //Initialize some variables to define the CV table size
             int cvCount = mModel.getRowCount();
-            int tableLeft = 0;
+            int tableLeft = 1;
             int tableRight = TABLE_COLS * 24 + 1;   // ISSUE: this is wrong
             int tableTopPos;
             int tableBottomPos;

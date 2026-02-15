@@ -83,7 +83,11 @@ public class HardcopyWriterTest {
 
         // Write out the image to /tmp/test.png
         // We *know* this is a BufferedImage, so we can cast it.
-        ImageIO.write((BufferedImage) image, "png", new File("/tmp/jmri_testPrintSomething.png"));
+        try {
+            ImageIO.write((BufferedImage) image, "png", new File("/tmp/jmri_testPrintSomething.png"));
+        } catch (Exception e) {
+            log.warn("Failed to save test image");
+        }
 
         // In my case case the image is 850 x 1100 pixels (at 100 ppi)
 
@@ -139,4 +143,5 @@ public class HardcopyWriterTest {
         JUnitUtil.tearDown();
     }
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HardcopyWriterTest.class);
 }

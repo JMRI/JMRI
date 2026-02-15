@@ -3,6 +3,7 @@ package jmri.jmrit.roster;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import jmri.beans.BeanUtil;
@@ -76,7 +77,7 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
                     " " +
                     Bundle.getMessage("TitleEntries", rosterGroup);
         }
-        try (HardcopyWriter writer = new HardcopyWriter(mFrame, title, null, null, 10,
+        try (HardcopyWriter writer = new HardcopyWriter(mFrame, title, "SansSerif", null, 9,
                 .5 * 72, .5 * 72, .5 * 72, .5 * 72, isPreview, null, null, null, null, null);) {
 
             // add the icon
@@ -94,27 +95,46 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
 
             // print table column headers, match column order + widths with RosterEntry#PrintEntryLine
             // fields copied from RosterTableModel#getColumnName(int)
+            List<HardcopyWriter.Column> columns = new ArrayList<>();
+            columns.add(new HardcopyWriter.Column(0, 15, HardcopyWriter.Align.LEFT));
+            columns.add(new HardcopyWriter.Column(0, 5, HardcopyWriter.Align.RIGHT));  // DCC Address
+            columns.add(new HardcopyWriter.Column(0, 7, HardcopyWriter.Align.LEFT));
+            columns.add(new HardcopyWriter.Column(0, 6, HardcopyWriter.Align.LEFT));
+            columns.add(new HardcopyWriter.Column(0, 6, HardcopyWriter.Align.LEFT));
+            columns.add(new HardcopyWriter.Column(0, 10, HardcopyWriter.Align.LEFT));
+            columns.add(new HardcopyWriter.Column(0, 10, HardcopyWriter.Align.LEFT));
+            columns.add(new HardcopyWriter.Column(0, 12, HardcopyWriter.Align.LEFT));
+            columns.add(new HardcopyWriter.Column(0, 6, HardcopyWriter.Align.LEFT));
+            columns.add(new HardcopyWriter.Column(0, 10, HardcopyWriter.Align.LEFT));
+
+            columns = HardcopyWriter.Column.stretchColumns(columns, 
+                                                           (int) writer.getPrintablePagesizePoints().getWidth(), 
+                                                           writer.getFontSize() / 2);
+
+            log.info("Columns: {}", columns);
+                                                           
+            writer.setColumns(columns);                                            
             String headerText = "";
             // IDCOL (= Filename)
-            headerText += StringUtil.padString(Bundle.getMessage("FieldID"), 15);
+            headerText += Bundle.getMessage("FieldID") + "\t";
             // ADDRESSCOL:
-            headerText += StringUtil.padString(Bundle.getMessage("FieldDCCAddress"), 6);
+            headerText += Bundle.getMessage("FieldDCCAddress") + "\t";
             // ROADNAMECOL:
-            headerText += StringUtil.padString(Bundle.getMessage("FieldRoadName"), 6);
+            headerText += Bundle.getMessage("FieldRoadName") + "\t";
             // ROADNUMBERCOL:
-            headerText += StringUtil.padString(Bundle.getMessage("FieldRoadNumber"), 6);
+            headerText += Bundle.getMessage("FieldRoadNumber") + "\t";
             // MFGCOL:
-            headerText += StringUtil.padString(Bundle.getMessage("FieldManufacturer"), 6);
+            headerText += Bundle.getMessage("FieldManufacturer") + "\t";
             // MODELCOL:
-            headerText += StringUtil.padString(Bundle.getMessage("FieldModel"), 10);
+            headerText += Bundle.getMessage("FieldModel") + "\t";
             // DECODERCOL:
-            headerText += StringUtil.padString(Bundle.getMessage("FieldDecoderModel"), 10);
+            headerText += Bundle.getMessage("FieldDecoderModel") + "\t";
             // PROTOCOL:
-            headerText += StringUtil.padString(Bundle.getMessage("FieldProtocol"), 12);
+            headerText += Bundle.getMessage("FieldProtocol") + "\t";
             // OWNERCOL:
-            headerText += StringUtil.padString(Bundle.getMessage("FieldOwner"), 6);
+            headerText += Bundle.getMessage("FieldOwner") + "\t";
             // DATEUPDATECOL:
-            headerText += StringUtil.padString(Bundle.getMessage("FieldDateUpdated"), 10);
+            headerText += Bundle.getMessage("FieldDateUpdated") + "\t";
 
             try {
                 // start a new line

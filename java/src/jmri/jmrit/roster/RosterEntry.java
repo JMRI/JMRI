@@ -1724,46 +1724,35 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             // start each entry on a new line
             w.write(newLine, 0, 1);
 
-            int colWidth = 15;
             // roster entry ID (not the filname)
             if (_id != null) {
-                thisText = String.format("%-" + colWidth + "s", _id.substring(0, Math.min(_id.length(), colWidth))); // %- = left align
+                thisText = _id + "\t"; // %- = left align
                 log.debug("thisText = |{}|, length = {}", thisText, thisText.length());
             } else {
-                thisText = String.format("%-" + colWidth + "s", "<null>");
+                thisText = "<null>\t";
             }
             thisLine += thisText;
-            colWidth = 6;
             // _dccAddress
-            thisLine += StringUtil.padString(_dccAddress, colWidth);
-            colWidth = 6;
+            thisLine += _dccAddress + "\t";
             // _roadName
-            thisLine += StringUtil.padString(_roadName, colWidth);
-            colWidth = 6;
+            thisLine += _roadName + "\t";
             // _roadNumber
-            thisLine += StringUtil.padString(_roadNumber, colWidth);
-            colWidth = 6;
+            thisLine += _roadNumber + "\t";
             // _mfg
-            thisLine += StringUtil.padString(_mfg, colWidth);
-            colWidth = 10;
+            thisLine += _mfg + "\t";
             // _model
-            thisLine += StringUtil.padString(_model, colWidth);
-            colWidth = 10;
+            thisLine += _model + "\t";
             // _decoderModel
-            thisLine += StringUtil.padString(_decoderModel, colWidth);
-            colWidth = 12;
+            thisLine += _decoderModel + "\t";
             // _protocol (type)
-            thisLine += StringUtil.padString(_protocol.toString(), colWidth);
-            colWidth = 6;
+            thisLine += _protocol.toString() + "\t";
             // _owner
-            thisLine += StringUtil.padString(_owner, colWidth);
-            colWidth = 10;
+            thisLine += _owner + "\t";
 
             // dateModified (type)
             if (dateModified != null) {
                 DateFormat.getDateTimeInstance().format(dateModified);
-                thisText = String.format("%-" + colWidth + "s",
-                        dateModified.toString().substring(0, Math.min(dateModified.toString().length(), colWidth)));
+                thisText = dateModified + "\t";
                 thisLine += thisText;
             }
             // don't include comment and decoder family
