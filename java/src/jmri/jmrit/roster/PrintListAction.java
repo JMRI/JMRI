@@ -1,7 +1,9 @@
 package jmri.jmrit.roster;
 
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,23 +97,52 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
             // print table column headers, match column order + widths with RosterEntry#PrintEntryLine
             // fields copied from RosterTableModel#getColumnName(int)
             List<HardcopyWriter.Column> columns = new ArrayList<>();
-            columns.add(new HardcopyWriter.Column(0, 15, HardcopyWriter.Align.LEFT));
+            columns.add(new HardcopyWriter.Column(0, 15, HardcopyWriter.Align.LEFT));  // ID
             columns.add(new HardcopyWriter.Column(0, 5, HardcopyWriter.Align.RIGHT));  // DCC Address
-            columns.add(new HardcopyWriter.Column(0, 7, HardcopyWriter.Align.LEFT));
-            columns.add(new HardcopyWriter.Column(0, 6, HardcopyWriter.Align.LEFT));
-            columns.add(new HardcopyWriter.Column(0, 6, HardcopyWriter.Align.LEFT));
-            columns.add(new HardcopyWriter.Column(0, 10, HardcopyWriter.Align.LEFT));
-            columns.add(new HardcopyWriter.Column(0, 10, HardcopyWriter.Align.LEFT));
-            columns.add(new HardcopyWriter.Column(0, 12, HardcopyWriter.Align.LEFT));
-            columns.add(new HardcopyWriter.Column(0, 6, HardcopyWriter.Align.LEFT));
-            columns.add(new HardcopyWriter.Column(0, 10, HardcopyWriter.Align.LEFT));
+            columns.add(new HardcopyWriter.Column(0, 7, HardcopyWriter.Align.LEFT));   // Road name
+            columns.add(new HardcopyWriter.Column(0, 6, HardcopyWriter.Align.LEFT));   // Road number
+            columns.add(new HardcopyWriter.Column(0, 6, HardcopyWriter.Align.LEFT));   // Manufacturer
+            columns.add(new HardcopyWriter.Column(0, 10, HardcopyWriter.Align.LEFT));  // Model
+            columns.add(new HardcopyWriter.Column(0, 10, HardcopyWriter.Align.LEFT));  // Decoder model
+            columns.add(new HardcopyWriter.Column(0, 12, HardcopyWriter.Align.LEFT));  // Protocol
+            columns.add(new HardcopyWriter.Column(0, 6, HardcopyWriter.Align.LEFT));   // Owner
+            columns.add(new HardcopyWriter.Column(0, 10, HardcopyWriter.Align.LEFT));  // Date updated
 
             columns = HardcopyWriter.Column.stretchColumns(columns, 
                                                            (int) writer.getPrintablePagesizePoints().getWidth(), 
                                                            writer.getFontSize() / 2);
 
+            // If the paper is very wide, we may need to reduce the width of some columns
+            // so to make the other columns a bit larger
+            List<String> dccAddress = new ArrayList<>();
+            List<String> protocols = new ArrayList<>();
+            for (RosterEntry re : l) {
+                dccAddress.add(re.getDccAddress());
+                protocols.add(re.getProtocol().toString());
+            }
+
+            Rectangle2D dccAddressBounds = writer.measure(dccAddress);
+            Rectangle2D protocolsBounds = writer.measure(protocols);
+
+            boolean changed = false;
+
+            if (Math.ceil(dccAddressBounds.getWidth()) < columns.get(1).getWidth()) {
+                columns.get(1).setWidth((int) Math.ceil(dccAddressBounds.getWidth()));
+                changed = true;
+            }
+            if (Math.ceil(protocolsBounds.getWidth()) < columns.get(7).getWidth()) {
+                columns.get(7).setWidth((int) Math.ceil(protocolsBounds.getWidth()));
+                changed = true;
+            }
+
+            if (changed) {
+                columns = HardcopyWriter.Column.stretchColumns(columns, 
+                                                               (int) writer.getPrintablePagesizePoints().getWidth(), 
+                                                               writer.getFontSize() / 2);
+            }
+
             log.info("Columns: {}", columns);
-                                                           
+
             writer.setColumns(columns);                                            
             String headerText = "";
             // IDCOL (= Filename)
@@ -133,17 +164,24 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
             // OWNERCOL:
             headerText += Bundle.getMessage("FieldOwner") + "\t";
             // DATEUPDATECOL:
-            headerText += Bundle.getMessage("FieldDateUpdated") + "\t";
+            headerText += Bundle.getMessage("FieldDateUpdated") + "\n";
 
-            try {
-                // start a new line
-                writer.write("\n", 0, 1);
-                writer.write(headerText);
-            } catch (IOException ex) {
-                log.warn("error during printing", ex);
-            }
+            int currentPageNumber = -1;
 
             for (RosterEntry re : l) {
+                if (currentPageNumber != writer.getPageNum()) {
+                    currentPageNumber = writer.getPageNum();
+                    try {
+                        // start a new line
+                        writer.write("\n", 0, 1);
+                        writer.setFont(null, Font.BOLD, null);
+                        writer.write(headerText);
+                        writer.setFont(null, Font.PLAIN, null);
+                        writer.leaveVerticalSpace(writer.getLineHeight()/2);
+                    } catch (IOException ex) {
+                        log.warn("error during printing", ex);
+                    }
+                }
                 if (rosterGroup != null) {
                     if (re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)) != null &&
                             re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)).equals("yes")) {

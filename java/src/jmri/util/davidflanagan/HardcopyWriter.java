@@ -162,8 +162,16 @@ public class HardcopyWriter extends Writer {
         // ISSUE: Ought this to be dependent on printer capabilities?
         pageAttributes.setColor(PageAttributes.ColorType.COLOR);
 
-        pagesizePixels = getPagesizePixels(pagesize);
-        pagesizePoints = getPagesizePoints(pagesize);
+        if (pagesize == null) {
+            pagesizePixels = getPagesizePixels();
+            pagesizePoints = getPagesizePoints();
+        } else {
+            pixelScale = 1;
+            pagesizePoints = pagesize;
+            // Assume 100 DPI scale factor. This is used for testing only. If !isPreview, then things
+            // are set according to the printer's capabilities.
+            pagesizePixels = new Dimension(pagesizePoints.width * 100 / 72, pagesizePoints.height * 100 / 72);
+        }
 
         // skip printer selection if preview
         if (!isPreview) {
@@ -428,13 +436,9 @@ public class HardcopyWriter extends Writer {
      * class to get the default paper size (based on locale and/or printer
      * settings).
      * 
-     * @param forcePagesizePoints If non null, then use this as the pagesie *
      * @return The page size in points
      */
-    private Dimension getPagesizePoints(Dimension forcePagesizePoints) {
-        if (forcePagesizePoints != null) {
-            return forcePagesizePoints;
-        }
+    private Dimension getPagesizePoints() {
         return PaperUtils.getPaperSizeDimension();
     }
 
@@ -452,12 +456,11 @@ public class HardcopyWriter extends Writer {
      * pagesize in pixels (and not points). If this is not a preview, it still
      * returns the page size for the display.
      *
-     * @param forcePagesizePoints If non null, then use this as the pagesie
      * @return The page size in pixels
      */
-    private Dimension getPagesizePixels(Dimension forcePagesizePoints) {
+    private Dimension getPagesizePixels() {
         int dpi = getScreenResolution();
-        Dimension pagesizePoints = getPagesizePoints(forcePagesizePoints);
+        Dimension pagesizePoints = getPagesizePoints();
         return new Dimension(pagesizePoints.width * dpi / 72, pagesizePoints.height * dpi / 72);
     }
 
@@ -507,6 +510,7 @@ public class HardcopyWriter extends Writer {
     public void write(char[] buffer, int index, int len) {
         synchronized (this.lock) {
             // loop through all characters passed to us
+            // ISSUE: Do we really want to clear this here?
             line = "";
             for (int i = index; i < index + len; i++) {
                 // if we haven't begun a new page, do that now
@@ -843,6 +847,16 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
+     * This leaves the required amount of vertical space. If not, a page break is inserted.
+     * 
+     * @param points The amount of vertical space to leave in points.
+     */
+    public void leaveVerticalSpace(int points) {
+        v_pos += points;
+        ensureVerticalSpace(0);
+    }
+
+    /**
      * Internal method begins a new line method modified by Dennis Miller to add
      * preview capability
      */
@@ -934,6 +948,17 @@ public class HardcopyWriter extends Writer {
      */
     public Vector<Image> getPageImages() {
         return pageImages;
+    }
+
+    /**
+     * Gets the current page num -- this can be used to determine when 
+     * a page break has happened. The page number may be increased whenever
+     * a newline is printed.
+     * 
+     * @return the current page number
+     */
+    public int getPageNum() {
+        return pagenum;
     }
 
     /**
@@ -1211,34 +1236,45 @@ public class HardcopyWriter extends Writer {
         }
     }
 
-public enum Align {
-    LEFT,
-    CENTER,
-    RIGHT,
-    LEFT_WRAP(LEFT),
-    CENTER_WRAP(CENTER),
-    RIGHT_WRAP(RIGHT);
+    public enum Align {
+        LEFT,
+        CENTER,
+        RIGHT,
+        LEFT_WRAP(LEFT),
+        CENTER_WRAP(CENTER),
+        RIGHT_WRAP(RIGHT);
 
-    private final Align base;
+        private final Align base;
 
-    // Constructor for base values
-    Align() {
-        this.base = null;
+        // Constructor for base values
+        Align() {
+            this.base = null;
+        }
+
+        // Constructor for wrapped values
+        Align(Align base) {
+            this.base = base;
+        }
+
+        /** 
+         * Gets the base alignment of the column
+         * 
+         * @return The base alignment of the column
+         */
+        public Align getBase() {
+            return (base == null) ? this : base;
+        }
+
+        /**
+         * Gets whether the alignment is a wrap alignment
+         * 
+         * @return true if the alignment is a wrap alignment
+         */
+        public boolean isWrap() {
+            return base != null;
+        }
     }
 
-    // Constructor for wrapped values
-    Align(Align base) {
-        this.base = base;
-    }
-
-    public Align getBase() {
-        return (base == null) ? this : base;
-    }
-
-    public boolean isWrap() {
-        return base != null;
-    }
-}
     public static class Column {
         int position;
         int width;
@@ -1281,10 +1317,31 @@ public enum Align {
             this(position, width, Align.LEFT);
         }
 
+        /**
+         * Sets the width of the column in points
+         * 
+         * @param width The new width of the column in points
+         */
+        public void setWidth(int width) {
+            this.width = width;
+        }
+
+        /**
+         * Gets the width of the column in points
+         * 
+         * @return The width of the column in points
+         */
         public int getWidth() {
             return width;
         }
 
+        /**
+         * Gets the starting position of text of length strlen (in points)
+         * 
+         * @param strlen The length of the text in points
+         * 
+         * @return The starting position of the text in points
+         */
         public int getStartPos(double strlen) {
             switch (alignment.getBase()) {
                 case LEFT:
@@ -1298,14 +1355,29 @@ public enum Align {
             }
         }
 
+        /**
+         * Gets the starting position of the column in points
+         * 
+         * @return The starting position of the column in points
+         */
         public int getPosition() {
             return position;
         }
 
+        /**
+         * Gets the alignment of the column
+         * 
+         * @return The alignment of the column
+         */
         public Align getAlignment() {
             return alignment;
         }
 
+        /**
+         * Gets whether the column is a wrap column
+         * 
+         * @return true if the column is a wrap column
+         */
         public boolean isWrap() {
             return alignment.isWrap();
         }

@@ -1720,9 +1720,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             String thisText;
             String thisLine = "";
 
-            // start each entry on a new line
-            w.write(newLine, 0, 1);
-
             // roster entry ID (not the filname)
             if (_id != null) {
                 thisText = _id + "\t"; // %- = left align
@@ -1756,9 +1753,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             }
             // don't include comment and decoder family
 
+            thisLine += "\n";
+
             w.write(thisLine);
-            // extra whitespace line after each entry would miss goal of a compact listing
-            // w.write(newLine, 0, 1);
         } catch (IOException e) {
             log.error("Error printing RosterEntry: ", e);
         }

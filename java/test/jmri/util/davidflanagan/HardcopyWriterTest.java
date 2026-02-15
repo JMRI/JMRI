@@ -2,6 +2,7 @@ package jmri.util.davidflanagan;
 
 import javax.swing.JFrame;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -38,7 +39,7 @@ public class HardcopyWriterTest {
         HardcopyWriter hcw = null;
         try {
             hcw = new HardcopyWriter(frame, "test", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72, true, null,
-                    null, null, null, null);
+                    null, null, null, new Dimension((int) (8.5 * 72), (int) (11.0 * 72)));
             Assertions.assertNotNull(hcw, "OriginalHardcopyWriter constructor");
         } catch (HardcopyWriter.PrintCanceledException pce) {
             // this isn't an error for this test.
@@ -88,8 +89,6 @@ public class HardcopyWriterTest {
         } catch (Exception e) {
             log.warn("Failed to save test image");
         }
-
-        // In my case case the image is 850 x 1100 pixels (at 100 ppi)
 
         Assertions.assertEquals(850, image.getWidth(null), "image width");
         Assertions.assertEquals(1100, image.getHeight(null), "image height");
