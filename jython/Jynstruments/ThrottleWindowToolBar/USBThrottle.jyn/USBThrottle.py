@@ -429,7 +429,7 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         self.addressPanel = self.getContext().getCurrentThrottleFrame().getAddressPanel()
         self.throttle = self.addressPanel.getThrottle() # the throttle
         self.roster = self.addressPanel.getRosterEntry() # roster entry if any
-	self.speedTimerTask = SpeedTimerTask() #Speed increase thread
+        self.speedTimerTask = SpeedTimerTask() #Speed increase thread
         self.speedTimerTask.setThrottle( self.throttle )
         self.speedTimer = Timer()
         self.speedTimer.schedule(self.speedTimerTask, 0, valueSpeedTimerRepeat)
