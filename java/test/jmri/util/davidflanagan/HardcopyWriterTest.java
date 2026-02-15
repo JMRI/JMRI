@@ -47,7 +47,7 @@ public class HardcopyWriterTest {
         }
         int width = hcw.getPrintablePagesizePoints().width;
 
-        for (String fontName : new String[]{"Monospaced", "SansSerif", "Serif", "Courier New"}) {
+        for (String fontName : new String[]{"Monospaced", "SansSerif", "Serif", "Dialog"}) {
             hcw.setFont(fontName, Font.PLAIN, 10);
 
             // Make three columns that are 1/3 of the page width.
