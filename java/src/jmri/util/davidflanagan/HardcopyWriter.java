@@ -56,8 +56,8 @@ public class HardcopyWriter extends Writer {
     protected int lineheight;
     protected int lineascent;
     protected int chars_per_line;
-    protected int v_pos = 0;   // The offset of the current line from the top margin.
-    protected int max_v_pos = 0;   // The maximum offset of the current line from the top margin.
+    protected int v_pos = 0; // The offset of the current line from the top margin.
+    protected int max_v_pos = 0; // The maximum offset of the current line from the top margin.
     protected int pagenum = 0;
     protected int[][] prPages = {{1, Integer.MAX_VALUE}};
     protected Color color = Color.black;
@@ -77,7 +77,7 @@ public class HardcopyWriter extends Writer {
     protected JButton closeButton;
     protected JLabel pageCount = new JLabel();
 
-    protected Column[] columns;
+    protected Column[] columns = {new Column(0, Integer.MAX_VALUE)};
     protected int columnIndex = 0;
 
     protected double pixelScale = 1;
@@ -175,7 +175,8 @@ public class HardcopyWriter extends Writer {
             pagesizePoints =
                     new Dimension((72 * pagesizePixels.width) / printerDpi, (72 * pagesizePixels.height) / printerDpi);
 
-            log.info("Printing: page size = {} pts, {} px, printer dpi = {}", pagesizePoints, pagesizePixels, printerDpi);
+            log.info("Printing: page size = {} pts, {} px, printer dpi = {}", pagesizePoints, pagesizePixels,
+                    printerDpi);
             // determine if user selected a range of pages to print out, note that page becomes null if range
             // selected is less than the total number of pages, that's the reason for the page null checks
             if (jobAttributes.getDefaultSelection().equals(DefaultSelectionType.RANGE)) {
@@ -248,7 +249,8 @@ public class HardcopyWriter extends Writer {
             // use a scroll pane to handle print images bigger than the window
             previewFrame.getContentPane().add(new JScrollPane(previewPanel), BorderLayout.CENTER);
 
-            previewFrame.setSize((int) (pagesizePixels.width / pixelScale) + 48, (int) (pagesizePixels.height / pixelScale) + 100);
+            previewFrame.setSize((int) (pagesizePixels.width / pixelScale) + 48,
+                    (int) (pagesizePixels.height / pixelScale) + 100);
             previewFrame.setVisible(true);
         }
     }
@@ -395,7 +397,7 @@ public class HardcopyWriter extends Writer {
      * class to get the default paper size (based on locale and/or printer
      * settings).
      * 
-     * @param forcePagesizePoints If non null, then use this as the pagesie     *
+     * @param forcePagesizePoints If non null, then use this as the pagesie *
      * @return The page size in points
      */
     private Dimension getPagesizePoints(Dimension forcePagesizePoints) {
@@ -429,12 +431,14 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Function to set the columns for future text output. Output starts in first first
-     * column, and advances to the next column on a tab characterThis can cause output to overlap if
-     * the column is not wide enough for the output.
+     * Function to set the columns for future text output. Output starts in
+     * first first column, and advances to the next column on a tab
+     * characterThis can cause output to overlap if the column is not wide
+     * enough for the output.
      * 
      * @param columns Array of Column objects
-     * @throws ColumnException if a tab stop is off the edge of the page
+     * @throws ColumnException if a Column is not contained within the page
+     *                         width
      */
     public void setColumns(Column[] columns) throws ColumnException {
         for (int i = 0; i < columns.length; i++) {
@@ -492,12 +496,13 @@ public class HardcopyWriter extends Writer {
                 }
 
                 if (buffer[i] == '\f') {
+                    flush_column();
                     pageBreak();
                 }
 
                 if (buffer[i] == '\t') {
                     // Compute where the line should go and output it
-                    flushcolumnline();
+                    flush_column();
                     continue;
                 }
 
@@ -508,25 +513,20 @@ public class HardcopyWriter extends Writer {
 
                 line += buffer[i];
             }
-            if (page != null && inPageRange(pagenum)) {
-                flushcolumnline();
+            if (page != null && inPageRange(pagenum) && line.length() > 0) {
+                // If we have pending text, flush it now
+                flush_column();
             }
         }
     }
 
-    private void flushcolumnline() {
-        Column column;
-
-        if (columnIndex == 0) {
-            column = new Column(0, width,Align.LEFT);
-        } else {
-            column = columns[columnIndex - 1];
-        }
+    private void flush_column() {
+        Column column = columns[columnIndex];
 
         Rectangle2D bounds = metrics.getStringBounds(line, page);
 
         int stringStartPos = column.getStartPos(bounds.getWidth());
-        int columnWidth = column.getWidth();
+        int columnWidth = Math.min(column.getWidth(), width - stringStartPos);
 
         if (bounds.getWidth() > columnWidth) {
             // This text does not fit. This means that we need to split it and wrap it to the next line.
@@ -556,14 +556,17 @@ public class HardcopyWriter extends Writer {
             // We can now output the second line.
             v_pos += lineheight;
             line = secondLine;
-            flushcolumnline();
+            int saveColumnIndex = columnIndex;
+            flush_column();
+            // This has already advanced the column index, so we back it up
+            columnIndex = saveColumnIndex;
             max_v_pos = Math.max(max_v_pos, v_pos);
-            v_pos -= lineheight;   // ISSUE: we need to figure out how to jump down on a newline character
+            v_pos -= lineheight;
         } else {
             page.drawString(line, x0 + stringStartPos, y0 + v_pos + lineascent);
         }
 
-        if (columns != null && columnIndex < columns.length) {
+        if (columnIndex < columns.length - 1) {
             columnIndex++;
         }
 
@@ -797,7 +800,7 @@ public class HardcopyWriter extends Writer {
      */
     protected void newline() {
         if (page != null && inPageRange(pagenum)) {
-            flushcolumnline();
+            flush_column();
         }
         line = "";
         columnIndex = 0;
@@ -877,6 +880,15 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
+     * Gets all the pages as Images.
+     * 
+     * @return the current page as a BufferedImage
+     */
+    public Vector<Image> getPageImages() {
+        return pageImages;
+    }
+
+    /**
      * Setup the graphics context for preview. We want the subpixel positioning
      * for text. This is not used for the actual printing (partly because the
      * Print graphics context is not necessarily a Graphics2D object).
@@ -930,8 +942,8 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Write the decoder pro icon to the output. Method added by P Gladstone.
-     * This actually uses the high resolution image. It also advances the
-     * v_pos appropriately (unless no_advance is True)
+     * This actually uses the high resolution image. It also advances the v_pos
+     * appropriately (unless no_advance is True)
      * <p>
      * The image is positioned on the right side of the paper, at the current
      * height.
@@ -953,8 +965,8 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Write the decoder pro icon to the output. Method added by P Gladstone.
-     * This actually uses the high resolution image. It also advances the
-     * v_pos appropriately.
+     * This actually uses the high resolution image. It also advances the v_pos
+     * appropriately.
      * <p>
      * The image is positioned on the right side of the paper, at the current
      * height.
@@ -975,8 +987,8 @@ public class HardcopyWriter extends Writer {
      * height. The image aspect ratio is maintained.
      *
      * @param c            the image to print
-     * @param requiredSize the dimensions (in points) to scale the image to. The image will
-     *                     fit inside the bounding box.
+     * @param requiredSize the dimensions (in points) to scale the image to. The
+     *                     image will fit inside the bounding box.
      * @return the dimensions of the image in points
      */
     public Dimension writeSpecificSize(Image c, Dimension requiredSize) {
@@ -989,16 +1001,18 @@ public class HardcopyWriter extends Writer {
         float heightScale = (float) requiredSize.height / c.getHeight(null);
         float scale = Math.min(widthScale, heightScale);
 
-        log.info("writeSpecificSize: requiredSize={}, scale={}, widthScale={}, heightScale={}", requiredSize, scale, widthScale, heightScale);
+        log.info("writeSpecificSize: requiredSize={}, scale={}, widthScale={}, heightScale={}", requiredSize, scale,
+                widthScale, heightScale);
 
         Dimension d = new Dimension(Math.round(c.getWidth(null) * scale), Math.round(c.getHeight(null) * scale));
 
         if (isPreview) {
             float pixelsPerPoint = getScreenResolution() / 72.0f;
             log.info("writeSpecificSize: pixelsPerPoint={}", pixelsPerPoint);
-            log.info("Calling getScaledInstance: target shape = {}x{}", (int) (requiredSize.width * pixelsPerPoint), (int) (requiredSize.height * pixelsPerPoint));
-            c = ImageUtils.getScaledInstance(c, (int) (requiredSize.width * pixelsPerPoint), 
-                                             (int) (requiredSize.height * pixelsPerPoint));
+            log.info("Calling getScaledInstance: target shape = {}x{}", (int) (requiredSize.width * pixelsPerPoint),
+                    (int) (requiredSize.height * pixelsPerPoint));
+            c = ImageUtils.getScaledInstance(c, (int) (requiredSize.width * pixelsPerPoint),
+                    (int) (requiredSize.height * pixelsPerPoint));
             d = new Dimension((int) (c.getWidth(null) / pixelsPerPoint), (int) (c.getHeight(null) / pixelsPerPoint));
         }
 
@@ -1006,7 +1020,8 @@ public class HardcopyWriter extends Writer {
         int y = y0 + v_pos + lineascent;
 
         if (page != null && inPageRange(pagenum)) {
-            log.info("About to draw image with dimensions {}x{} at size {}x{}", c.getWidth(null), c.getHeight(null), d.width, d.height);
+            log.info("About to draw image with dimensions {}x{} at size {}x{}", c.getWidth(null), c.getHeight(null),
+                    d.width, d.height);
             page.drawImage(c, x, y,
                     d.width, d.height,
                     null);
@@ -1056,15 +1071,15 @@ public class HardcopyWriter extends Writer {
      * This was not in the original class, but was added afterwards by Dennis
      * Miller.
      * <p>
-     * hStart and hEnd represent the horizontal point positions. The
-     * lines actually start in the middle of the character position (to the left) to make it
-     * easy to draw vertical lines and space them between printed characters.
+     * hStart and hEnd represent the horizontal point positions. The lines
+     * actually start in the middle of the character position (to the left) to
+     * make it easy to draw vertical lines and space them between printed
+     * characters.
      * <p>
-     * vStart and vEnd represent the vertical point positions.
-     * Horizontal lines are drawn underneath the row (line) number. They are
-     * offset so they appear evenly spaced, although they don't take into
-     * account any space needed for descenders, so they look best with all caps
-     * text
+     * vStart and vEnd represent the vertical point positions. Horizontal lines
+     * are drawn underneath the row (line) number. They are offset so they
+     * appear evenly spaced, although they don't take into account any space
+     * needed for descenders, so they look best with all caps text
      *
      * @param vStart vertical starting position
      * @param hStart horizontal starting position
@@ -1086,21 +1101,10 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Get the current linenumber.
-     * <p>
-     * This was not in the original class, but was added afterwards by Dennis
-     * Miller.
-     *
-     * @return the line number within the page
-     */
-    private int getCurrentLineNumber() {
-        return v_pos / lineheight;
-    }
-
-    /**
      * Get the current vertical position on the page
      * 
-     * @return the current vertical position of the base of the current line on the page (in points)
+     * @return the current vertical position of the base of the current line on
+     *         the page (in points)
      */
     public int getCurrentVPos() {
         return v_pos;
@@ -1122,8 +1126,8 @@ public class HardcopyWriter extends Writer {
     /**
      * Increase line spacing by a percentage
      * <p>
-     * This method should be invoked immediately after a new HardcopyWriter
-     * is created.
+     * This method should be invoked immediately after a new HardcopyWriter is
+     * created.
      * <p>
      * This method was added to improve appearance when printing tables
      * <p>
@@ -1176,20 +1180,24 @@ public class HardcopyWriter extends Writer {
             this.alignment = alignment;
         }
 
+        public Column(int position, int width) {
+            this(position, width, Align.LEFT);
+        }
+
         public int getWidth() {
             return width;
         }
 
-        public int getStartPos(double width) {
+        public int getStartPos(double strlen) {
             switch (alignment) {
                 case LEFT:
                     return position;
                 case CENTER:
-                    return (int) (position - width / 2);
+                    return (int) (position + width / 2 - strlen / 2);
                 case RIGHT:
-                    return (int) (position - width);
+                    return (int) (position + width - strlen);
                 default:
-                    throw new UnsupportedOperationException("Unimplemented method 'getStartPos'");
+                    throw new IllegalArgumentException("Unknown alignment: " + alignment);
             }
         }
 

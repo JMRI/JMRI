@@ -63,7 +63,7 @@ public class PrintCvAction extends AbstractAction {
             // print the decoder info section, etc
             printInfoSection(writer);
             String s = "\n\n";
-            writer.write(s, 0, s.length());
+            writer.write(s);
 
             //Initialize some variables to define the CV table size
             int cvCount = mModel.getRowCount();
@@ -89,32 +89,41 @@ public class PrintCvAction extends AbstractAction {
              * should be enough, although more can be added by increasing the
              * tableHeight value
              */
+
+            /* 
+             * ISSUE: this is wrong as it doesn't take into account what happens when the table is printed on multiple pages. 
+             * The table is drawn as if it were on a single page, but it may not be. In particular the vertical lines only
+             * appear on the first page, and *maybe* we ought to put the column headings on the subsequent pages too.
+            */
             //Set the top row and draw top line to start the table of CVs
             tableTopPos = writer.getCurrentVPos();
-            writer.writeLine(tableTopPos, tableLeft, tableTopPos, tableRight);
 
             //set the bottom of the table
             tableBottomPos = tableTopPos + tableHeightPoints + 2;
 
+            float useCharWidth = writer.getCharWidth();
+
+            writer.writeLine(tableTopPos, (int) (tableLeft * useCharWidth), tableTopPos, (int) (tableRight * useCharWidth));
+
             //Draw vertical lines for columns
             for (int i = 1; i < 76; i += 24) {
-                writer.writeLine(tableTopPos, i, tableBottomPos, i);    // ISSUE: this is wrong
+                writer.writeLine(tableTopPos, (int) (i * useCharWidth), tableBottomPos, (int) (i * useCharWidth));    // ISSUE: this is wrong
             }
 
             //Draw remaining horozontal lines
-            writer.writeLine(tableTopPos + 2, tableLeft, tableTopPos + 2, tableRight);
-            writer.writeLine(tableBottomPos, tableLeft, tableBottomPos, tableRight);
+            writer.writeLine(tableTopPos + 2 * writer.getLineHeight(), (int) (tableLeft * useCharWidth), tableTopPos + 2 * writer.getLineHeight(), (int) (tableRight * useCharWidth));
+            writer.writeLine(tableBottomPos, (int) (tableLeft * useCharWidth), tableBottomPos, (int) (tableRight * useCharWidth));
 
             writer.setFont(null, Font.BOLD, null); //set font to Bold
             // print a simple heading with I18N
             // pad with spaces to column width, 3 x insert Value as var %1
             s = String.format("%1$21s%1$24s%1$24s", Bundle.getMessage("Value"));
-            writer.write(s, 0, s.length());
+            writer.write(s);
             s = "\n";
-            writer.write(s, 0, s.length());
+            writer.write(s);
             // NOI18N
             s = "            CV  Dec Hex             CV  Dec Hex             CV  Dec Hex\n";
-            writer.write(s, 0, s.length());
+            writer.write(s);
             writer.setFont(null, Font.PLAIN, null); //set font back to Normal
 
             /*
@@ -172,12 +181,12 @@ public class PrintCvAction extends AbstractAction {
             //Print the array in three columns
             for (int i = 0; i < tableHeightRows; i++) {
                 s = cvStrings[i] + cvStrings[i + tableHeightRows] + cvStrings[i + tableHeightRows * 2] + "\n";
-                writer.write(s, 0, s.length());
+                writer.write(s);
             }
             //write an extra character to work around the
             //last character truncation bug with HardcopyWriter
-            s = " \n";
-            writer.write(s, 0, s.length());
+            //s = " \n";
+            //writer.write(s, 0, s.length());
         } catch (java.io.IOException ex1) {
             log.error("IO exception while printing");
             return;
