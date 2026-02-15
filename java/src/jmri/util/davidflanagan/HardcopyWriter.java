@@ -85,8 +85,6 @@ public class HardcopyWriter extends Writer {
     // save state between invocations of write()
     private boolean last_char_was_return = false;
 
-    // A static variable to hold prefs between print jobs
-    // private static Properties printprops = new Properties();
     // Job and Page attributes
     JobAttributes jobAttributes = new JobAttributes();
     PageAttributes pageAttributes = new PageAttributes();
@@ -100,22 +98,31 @@ public class HardcopyWriter extends Writer {
     /**
      * Constructor for HardcopyWriter
      * 
-     * @param frame The AWT Frame
-     * @param jobname The name to print in the title of the page
-     * @param fontName The name of the font to use (if null, default is used)
-     * @param fontStyle The style of the font to use (if null, default is used)
-     * @param fontsize The size of the font to use (if null, default is used)
-     * @param leftmargin The left margin in points
-     * @param rightmargin The right margin in points
-     * @param topmargin The top margin in points
-     * @param bottommargin The bottom margin in points
-     * @param isPreview Whether to preview the print job
-     * @param printerName The name of the printer to use (if null, default is used)
-     * @param isLandscape Whether to print in landscape mode (if null, default is used)
-     * @param isPrintHeader Whether to print the header (if null, default is used)
-     * @param sidesType The type of duplexing to use (if null, default is used)
-     * @param pagesize The size of the page to use (if null, default is used)
-     * @throws HardcopyWriter.PrintCanceledException If the print job gets cancelled.
+     * @param frame         The AWT Frame
+     * @param jobname       The name to print in the title of the page
+     * @param fontName      The name of the font to use (if null, default is
+     *                      used)
+     * @param fontStyle     The style of the font to use (if null, default is
+     *                      used)
+     * @param fontsize      The size of the font to use (if null, default is
+     *                      used)
+     * @param leftmargin    The left margin in points
+     * @param rightmargin   The right margin in points
+     * @param topmargin     The top margin in points
+     * @param bottommargin  The bottom margin in points
+     * @param isPreview     Whether to preview the print job
+     * @param printerName   The name of the printer to use (if null, default is
+     *                      used)
+     * @param isLandscape   Whether to print in landscape mode (if null, default
+     *                      is used)
+     * @param isPrintHeader Whether to print the header (if null, default is
+     *                      used)
+     * @param sidesType     The type of duplexing to use (if null, default is
+     *                      used)
+     * @param pagesize      The size of the page to use (if null, default is
+     *                      used)
+     * @throws HardcopyWriter.PrintCanceledException If the print job gets
+     *                                               cancelled.
      */
     public HardcopyWriter(Frame frame, String jobname, String fontName, Integer fontStyle, Integer fontsize,
             double leftmargin, double rightmargin,
@@ -163,6 +170,8 @@ public class HardcopyWriter extends Writer {
             Toolkit toolkit = frame.getToolkit();
 
             PaperUtils.syncPageAttributesToPrinter(pageAttributes);
+
+            jobAttributes.setDialog(JobAttributes.DialogType.NATIVE);
 
             job = toolkit.getPrintJob(frame, jobname, jobAttributes, pageAttributes);
 
@@ -1203,25 +1212,22 @@ public class HardcopyWriter extends Writer {
     }
 
 public enum Align {
-    LEFT(1),
-    CENTER(2),
-    RIGHT(3),
-    LEFT_WRAP(9, LEFT),
-    CENTER_WRAP(10, CENTER),
-    RIGHT_WRAP(11, RIGHT);
+    LEFT,
+    CENTER,
+    RIGHT,
+    LEFT_WRAP(LEFT),
+    CENTER_WRAP(CENTER),
+    RIGHT_WRAP(RIGHT);
 
-    // It is OK that value is not used.
-    private final int value;
     private final Align base;
 
     // Constructor for base values
-    Align(int value) {
-        this(value, null);
+    Align() {
+        this.base = null;
     }
 
     // Constructor for wrapped values
-    Align(int value, Align base) {
-        this.value = value;
+    Align(Align base) {
         this.base = base;
     }
 

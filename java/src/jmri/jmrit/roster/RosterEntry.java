@@ -25,7 +25,6 @@ import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.FileUtil;
-import jmri.util.StringUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
 import jmri.util.swing.JmriJOptionPane;
