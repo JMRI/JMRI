@@ -152,13 +152,13 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
     def notifyAddressReleased(self, address):
         self.panelThrottle = None
 
-    def notifyConsistAddressChosen(self, address, isLong):
+    def notifyConsistAddressChosen(self, address):
         self.notifyAddressChosen(address)
 
     def notifyConsistAddressThrottleFound(self, throttle):
         self.notifyAddressThrottleFound(throttle)
 
-    def notifyConsistAddressReleased(self, address, isLong):
+    def notifyConsistAddressReleased(self, address):
         self.notifyAddressReleased(address)
     
 
