@@ -91,7 +91,7 @@ public class ThrottlesListPanel extends JPanel {
         jbNew.setVerticalTextPosition(SwingConstants.BOTTOM);
         jbNew.setHorizontalTextPosition(SwingConstants.CENTER);
         jbNew.addActionListener((ActionEvent e) -> {
-            ThrottleControler tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
+            ThrottleControlerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
             tf.toFront();
         });
         throttleToolBar.add(jbNew);

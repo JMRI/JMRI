@@ -52,7 +52,7 @@ import org.jdom2.JDOMException;
  * @author Glen Oberhauser
  * @author Andrew Berridge Copyright 2010
  */
-public class ThrottleFrame extends JDesktopPane implements ComponentListener, AddressListener, ThrottleControler {
+public class ThrottleFrame extends JDesktopPane implements ComponentListener, AddressListener, ThrottleControlerUI {
 
     private DccThrottle throttle;
     private final ThrottleManager throttleManager;
@@ -116,7 +116,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     }
     
     @Override
-    public void setThrottleControlersContainer(ThrottleControlersContainer tw) {
+    public void setThrottleControlersContainer(ThrottleControlersUIContainer tw) {
         throttleWindow = (ThrottleWindow) tw;
     }
 
@@ -550,10 +550,10 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     }
     
     @Override
-    public void setSpeed(float speed) {
+    public void eStop() {
         DccThrottle throt = getAddressPanel().getThrottle();
         if (throt != null) {
-            throt.setSpeedSetting(speed);
+            throt.setSpeedSetting(-1);
         }
     }
     

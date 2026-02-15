@@ -5,12 +5,12 @@ import jmri.DccLocoAddress;
 
 /**
  * 
- * An interface for containers of throttle controlers
+ * An interface for containers of throttle controlers user interface
  *  (ThrottleWindow for Swing throttles for instance)
  * 
- * @author Lionel Jeanson 2025
+ * @author Lionel Jeanson 2026
  */
-public interface ThrottleControlersContainer {
+public interface ThrottleControlersUIContainer {
 
     /**
      * Return the number of thottle controlS containerS (ThrottleWindows forinstance)
@@ -24,7 +24,7 @@ public interface ThrottleControlersContainer {
      *
      * @return the newly created throttle controler
      */    
-    ThrottleControler newThrottleControler();
+    ThrottleControlerUI newThrottleControler();
     
     /**
      * Adds an existing throttle controler to that container list at position n
@@ -32,14 +32,14 @@ public interface ThrottleControlersContainer {
      * @param tf the throttle controler to add
      * @param n position that it will inserted at
      */
-    void addThrottleControlerAt(ThrottleControler tf, int n);
+    void addThrottleControlerAt(ThrottleControlerUI tf, int n);
     
     /**
      * Remove a throttle controler from that container
      *
      * @param tf the throttle controler to add
      */
-    void removeThrottleControler(ThrottleControler tf);
+    void removeThrottleControler(ThrottleControlerUI tf);
     
     /**
      * Get the throttle controler at position n
@@ -47,14 +47,13 @@ public interface ThrottleControlersContainer {
      * @param n position
      * @return the throttle controler
      */
-    ThrottleControler getThrottleControlerAt(int n);
+    ThrottleControlerUI getThrottleControlerAt(int n);
     
     /**
-     * Force speed setting of all throttles managed by that controlers container
+     * Force estop all throttles managed by that controlers container
      *
-     * @param speed speed setting
      */    
-    void setSpeedAll(float speed);
+    void eStopAll();
 
     /**
      * Get the number of usages of a particular Loco Address.

@@ -15,10 +15,10 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.gui.TrainConductorAction;
 import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
-import jmri.jmrit.throttle.ThrottleControler;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
+import jmri.jmrit.throttle.ThrottleControlerUI;
 
 /**
  * An icon that displays the position of a train icon on a panel.
@@ -100,7 +100,7 @@ public class TrainIcon extends LocoIcon {
         return _consistNumber;
     }
 
-    ThrottleControler _tf = null;
+    ThrottleControlerUI _tf = null;
 
     private void createThrottle() {
         _tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();

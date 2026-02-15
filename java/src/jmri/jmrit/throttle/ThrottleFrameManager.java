@@ -17,12 +17,12 @@ import org.jdom2.Element;
  *
  * @author Glen Oberhauser
  */
-public class ThrottleFrameManager implements InstanceManagerAutoDefault, ThrottleControlersContainersManager {
+public class ThrottleFrameManager implements InstanceManagerAutoDefault, ThrottleControlersUIContainersManager {
 
     private int activeFrame;
     private int frameCounterID = 0; // to generate unique names for each card    
 
-    private ArrayList<ThrottleControlersContainer> throttleWindows; // synchronized access
+    private ArrayList<ThrottleControlersUIContainer> throttleWindows; // synchronized access
 
     private ThrottlesPreferencesWindow throttlePreferencesFrame;
     private JmriJFrame throttlesListFrame;
@@ -88,7 +88,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
     }
     
     @Override
-    public ThrottleControler createThrottleControler() {
+    public ThrottleControlerUI createThrottleControler() {
         return createThrottleFrame();
     }
 
@@ -121,7 +121,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
     }
 
     public synchronized void requestAllThrottleWindowsDestroyed() {
-        for (ThrottleControlersContainer frame : throttleWindows) {
+        for (ThrottleControlersUIContainer frame : throttleWindows) {
             destroyThrottleWindow((ThrottleWindow)frame);
         }
         throttleWindows = new ArrayList<>(0);
@@ -145,7 +145,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
     }
 
     @Override
-    public Iterator<ThrottleControlersContainer> iterator() {
+    public Iterator<ThrottleControlersUIContainer> iterator() {
         return throttleWindows.iterator();
     }
        
@@ -160,7 +160,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
     }
     
     @Override
-    public synchronized ThrottleControlersContainer getThrottleControlersContainerAt(int n) {
+    public synchronized ThrottleControlersUIContainer getThrottleControlersContainerAt(int n) {
         if (! (n < throttleWindows.size())) {
             return null;
         }
@@ -248,12 +248,12 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
     }
 
     /**
-     * Force speed setting of all managed throttles windows
+     * Force emmergency stop of all managed throttles windows
      *
      */   
-    public void setSpeedAll(float speed) {
+    public void eStopAll() {
         throttleWindows.forEach(tw -> {
-            tw.setSpeedAll(speed);
+            tw.eStopAll();
         });
     }
     
@@ -268,7 +268,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
             return 0; 
         }
         int ret = 0;
-        for (ThrottleControlersContainer tw : throttleWindows) {        
+        for (ThrottleControlersUIContainer tw : throttleWindows) {        
             ret += tw.getNumberOfEntriesFor(la);
         }
         return ret;

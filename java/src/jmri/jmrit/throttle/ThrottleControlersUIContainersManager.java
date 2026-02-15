@@ -7,12 +7,12 @@ import jmri.DccLocoAddress;
 
 /**
  * 
- * An interface for managers of containers of throttle controlers
+ * An interface for managers of containers of throttle controlers user interface
  *  (ThrottleFrameManager for Swing throttles for instance)
  * 
- * @author Lionel Jeanson 2025
+ * @author Lionel Jeanson 2026
  */
-public interface ThrottleControlersContainersManager extends Iterable<ThrottleControlersContainer> {
+public interface ThrottleControlersUIContainersManager extends Iterable<ThrottleControlersUIContainer> {
         
     /**
      * Return the number of active thottle controler containers for that throttle contrainer manager
@@ -26,7 +26,7 @@ public interface ThrottleControlersContainersManager extends Iterable<ThrottleCo
      *
      * @return The newly created throttle controler
      */                    
-    ThrottleControler createThrottleControler();
+    ThrottleControlerUI createThrottleControler();
     
     /**
      * Return the thottle controler container at nth position in the list
@@ -34,7 +34,7 @@ public interface ThrottleControlersContainersManager extends Iterable<ThrottleCo
      * @param n position of the throttle controler container
      * @return a thottle controler container
      */    
-    ThrottleControlersContainer getThrottleControlersContainerAt(int n);
+    ThrottleControlersUIContainer getThrottleControlersContainerAt(int n);
 
 
     /**

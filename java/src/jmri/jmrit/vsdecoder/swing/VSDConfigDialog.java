@@ -25,13 +25,13 @@ import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
-import jmri.jmrit.throttle.ThrottleControler;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
 import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.jmrit.vsdecoder.VSDManagerEvent;
 import jmri.jmrit.vsdecoder.VSDManagerListener;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.util.swing.JmriJOptionPane;
+import jmri.jmrit.throttle.ThrottleControlerUI;
 
 /**
  * Configuration dialog for setting up a new VSDecoder
@@ -534,7 +534,7 @@ public class VSDConfigDialog extends JDialog {
                     vsd_launch_throttle.equals("yes") &&
                     InstanceManager.throttleManagerInstance().getThrottleUsageCount(rosterEntry) == 0) {
                 // Launch a JMRI Throttle (if setup by the Roster media attribut and a throttle not already exists).
-                ThrottleControler tf = InstanceManager.getDefault(jmri.jmrit.throttle.ThrottleFrameManager.class).createThrottleControler();
+                ThrottleControlerUI tf = InstanceManager.getDefault(jmri.jmrit.throttle.ThrottleFrameManager.class).createThrottleControler();
                 tf.toFront();
                 tf.setRosterEntry(Roster.getDefault().entryFromTitle(rosterEntry.getId()));
             }

@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 // Should be named ThrottleFrame, but ThrottleFrame already exit, hence ThrottleWindow
-public class ThrottleWindow extends JmriJFrame implements ThrottleControlersContainer {
+public class ThrottleWindow extends JmriJFrame implements ThrottleControlersUIContainer {
 
     private final jmri.jmrix.ConnectionConfig connectionConfig;
     private final ThrottleManager throttleManager;
@@ -332,7 +332,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersCont
      * @return the nth thottle frame of that throttle window
      */
     @Override
-    public ThrottleControler getThrottleControlerAt(int n) {
+    public ThrottleControlerUI getThrottleControlerAt(int n) {
         if (! (n < throttleFrames.size())) {
             return null;
         }
@@ -360,10 +360,10 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersCont
     }
        
     @Override
-    public void setSpeedAll(float speed) {
+    public void eStopAll() {
         if (!throttleFrames.isEmpty()) {
             for (ThrottleFrame tf: throttleFrames) {
-                tf.setSpeed(speed);
+                tf.eStop();
             }
         }
     }
@@ -628,7 +628,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersCont
     }
 
     @Override
-    public void removeThrottleControler(ThrottleControler tf) {       
+    public void removeThrottleControler(ThrottleControlerUI tf) {       
         if (getCurrentThrottleFrame() == tf) {
             log.debug("Closing last created");
         }
@@ -710,7 +710,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersCont
     }
 
     @Override
-    public void addThrottleControlerAt(ThrottleControler tp, int idx) {
+    public void addThrottleControlerAt(ThrottleControlerUI tp, int idx) {
         ThrottleFrame otf = getCurrentThrottleFrame();        
         String txt = "ThrottleFrame-" + throttleFrameManager.generateUniqueFrameID();
         ((ThrottleFrame)tp).setTitle(txt);
@@ -726,7 +726,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersCont
     }
 
     @Override
-    public ThrottleControler newThrottleControler() {
+    public ThrottleControlerUI newThrottleControler() {
         ThrottleFrame otf = getCurrentThrottleFrame();
         ThrottleFrame tf = new ThrottleFrame(this, throttleManager);
         throttleFrames.add(tf);

@@ -34,7 +34,7 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
    @Override
    protected Transferable createTransferable(JComponent c) {
       assert (c == table);
-      ThrottleControler tf = ((ThrottlesTableModel)table.getModel()).getValueAt(table.getSelectedRow(), table.getSelectedColumn());      
+      ThrottleControlerUI tf = ((ThrottlesTableModel)table.getModel()).getValueAt(table.getSelectedRow(), table.getSelectedColumn());      
       return new DataHandler(tf, throttleControlObjectFlavor.getMimeType());
    }
 
@@ -59,7 +59,7 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
            target.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
            if (info.isDataFlavorSupported(throttleControlObjectFlavor)) {
                try {
-                   ThrottleControler tf = (ThrottleControler) info.getTransferable().getTransferData(throttleControlObjectFlavor);
+                   ThrottleControlerUI tf = (ThrottleControlerUI) info.getTransferable().getTransferData(throttleControlObjectFlavor);
                    if (tf != null) {
                        ((ThrottlesTableModel) table.getModel()).moveThrottleControler(tf, dl.getRow(), dl.getColumn());
                        return true;
@@ -71,9 +71,9 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
            if (info.isDataFlavorSupported(RosterEntrySelection.rosterEntryFlavor)) {
                try {
                    ArrayList<RosterEntry> REs = RosterEntrySelection.getRosterEntries(info.getTransferable());
-                   ThrottleControlersContainer tw = ((ThrottlesTableModel) table.getModel()).getThrottleControlersContainerAt(dl.getColumn());
+                   ThrottleControlersUIContainer tw = ((ThrottlesTableModel) table.getModel()).getThrottleControlersContainerAt(dl.getColumn());
                    for (RosterEntry re : REs) {
-                       ThrottleControler tf = tw.newThrottleControler();
+                       ThrottleControlerUI tf = tw.newThrottleControler();
                        tf.toFront();
                        tf.setRosterEntry(re);
                    }
