@@ -458,7 +458,17 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+<<<<<<< HEAD
              <li>Stop train immediately if it has no occupied section.</li>
+=======
+             <li>Added: physics-based acceleration</li>
+			 <li>Added: Distance based stopping (including overriding stop sensors and slowing to minimum speed within the set distance and stopping by stop sensor)</li>
+             <li>Stop train immediately if it: has no occupied section; current block goes unoccupied; block goes occupied ahead.</li>
+			 <li>Add current and previous blocks to display.</li>
+			 <li>Add IsHeld to display</li>
+			 <li>Check train state before resuming.</li>
+			 <li>Checks can be disabled in options.</li>
+>>>>>>> e611185bed0 (Remove junk, spaces, fix release note.)
         </ul>
 
     <h3>Dispatcher System</h3>

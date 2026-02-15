@@ -218,9 +218,6 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     public void setSavedStatus(int status) {
-        if (status == ActiveTrain.STOPPED) {
-            log.info("AAAA");
-        }
         _savedStatus = status;
     }
 
@@ -642,7 +639,7 @@ public class AutoActiveTrain implements ThrottleListener {
         _autoEngineer.setTargetSpeed(_savedSpeed);
         _autoEngineer.setIsForward(_savedForward);
     }
-    
+
     protected boolean getSavedDirection() {
         return _savedForward;
     }
@@ -917,7 +914,7 @@ public class AutoActiveTrain implements ThrottleListener {
     protected AllocatedSection getCurrentAllocatedSection() {
         return _currentAllocatedSection;
     }
-    
+
     protected Block getCurrentBlock() {
         return _currentBlock;
     }
@@ -974,7 +971,7 @@ public class AutoActiveTrain implements ThrottleListener {
                for (int ixB = sec.getNumBlocks() -1; ixB >= 0; ixB--) {
                    if ( sec.getBlockBySequenceNumber(ixB) == _nextBlock) {
                        foundSearchFromBlock = true;
-                   } else if ( foundSearchFromBlock 
+                   } else if ( foundSearchFromBlock
                            && sec.getBlockBySequenceNumber(ixB) != null
                            && sec.getBlockBySequenceNumber(ixB).getState() ==  Block.OCCUPIED) {
                        return sec.getBlockBySequenceNumber(ixB);

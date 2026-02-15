@@ -582,7 +582,6 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                                 JmriJOptionPane.INFORMATION_MESSAGE
                             );
                         return;
-                       
                     }
                     Block b = autoActiveTrain.isBlockAhead();
                     if (b != null) {
@@ -597,14 +596,14 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                         return;
                     }
 
-                    boolean tmpIsForward = true; 
+                    boolean tmpIsForward = true;
                     if ( autoActiveTrain.getRunInReverse() !=  at.isTransitReversed()) {
                         tmpIsForward = false;
                     }
                     Object[] options = {Bundle.getMessage("AutoTrainsFrameUseImpliedDirection",getDirString(tmpIsForward)),
                             Bundle.getMessage("AutoTrainsFrameRestoreSaved",autoActiveTrain.getSavedDirection()),
                             Bundle.getMessage("AutoTrainsFrameUseCurrent",getDirString(autoActiveTrain.getForward())) };
-                    if ( tmpIsForward != autoActiveTrain.getSavedDirection() || 
+                    if ( tmpIsForward != autoActiveTrain.getSavedDirection() ||
                             tmpIsForward != autoActiveTrain.getForward()) {
                         int retval = JmriJOptionPane.showOptionDialog(this,
                                 Bundle.getMessage("AutoTrainsFrameWhichDirectionToUse"),
