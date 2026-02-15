@@ -916,14 +916,56 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         slotOffset = traverser.getSlotOffset()
         numberOfSlots = traverser.getNumberSlots()
         if self.logLevel > 0: print "numberOfSlots", numberOfSlots
-        # deckWidth = traverser.getDeckWidth()
+        deckWidth = traverser.getDeckWidth()
+        # deck_height = ((deckWidth/4.0) + (slotOffset * numberOfSlots))/4.0
+        deck_height = traverser.getDeckLength()
+        # offset = -1.5 * deckWidth/4.0
+        offset = 0.0
 
-        if traverser.getOrientation() == traverser.HORIZONTAL:
-            x_reqd = int(traverser_center.getX())
-            y_reqd = int(traverser_center.getY()) + (numberOfSlots)/4.0 * slotOffset + 10
+        # Check if all RHS (even index) slots are disabled
+        rhs_disabled = True
+        slots = traverser.getSlotList()
+        for i in range(len(slots)):
+            if i % 2 == 0: # Even index = RHS
+                if not slots[i].isDisabled():
+                    rhs_disabled = False
+                    break
+
+        # Check if all LHS (odd index) slots are disabled
+        lhs_disabled = True
+        for i in range(len(slots)):
+            if i % 2 != 0: # Odd index = LHS
+                if not slots[i].isDisabled():
+                    lhs_disabled = False
+                    break
+        print "rhs_disabled", rhs_disabled, "lhs_disabled", lhs_disabled
+        if lhs_disabled:
+            if traverser.getOrientation() == traverser.HORIZONTAL:
+                print "E"
+                x_reqd = int(traverser_center.getX() -  deckWidth/2.0 - 70.0 )
+                y_reqd = int(traverser_center.getY())
+            else:
+                print "F"
+                x_reqd = int(traverser_center.getX() - 25.0)
+                y_reqd = int(traverser_center.getY() - deckWidth/2.0 - 25.0)
+        elif lhs_disabled:
+            if traverser.getOrientation() == traverser.HORIZONTAL:
+                print "A"
+                x_reqd = int(traverser_center.getX() + deckWidth/2.0 + 20.0)
+                y_reqd = int(traverser_center.getY())
+            else:
+                print "B"
+                x_reqd = int(traverser_center.getX() - 25.0)
+                y_reqd = int(traverser_center.getY() + deckWidth/2.0 + 15.0)
         else:
-            x_reqd = int(traverser_center.getX()) + numberOfSlots/4.0 * slotOffset + 20
-            y_reqd = int(traverser_center.getY())
+            if traverser.getOrientation() == traverser.HORIZONTAL:
+                print "C"
+                x_reqd = int(traverser_center.getX()) - 25
+                y_reqd = int(traverser_center.getY()) + deck_height/2.0 + offset
+            else:
+                print "D"
+                x_reqd = int(traverser_center.getX()) + deck_height/2.0 + 20.0
+                y_reqd = int(traverser_center.getY())
         if self.logLevel > 0: print "finished calculating icon position"
         return [x_reqd, y_reqd]
 
@@ -1014,10 +1056,10 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     def addStopIcons(self, panel):
         for blockName in self.list_of_stopping_points:
             if blockName in self.blockPoints.keys():
+
                 # print "addStopIcons blockName", blockName
                 x = self.blockPoints[blockName].getX()
                 y = self.blockPoints[blockName].getY()
-
                 mtSensor = sensors.getSensor('MoveTo' + blockName.replace(" ","_") + '_stored')
                 if mtSensor is not None:
                     self.addMarkerIcon(panel, mtSensor, blockName, x, y)

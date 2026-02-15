@@ -112,6 +112,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         geometryPanel.add(new JLabel(Bundle.getMessage("Width")));
         geometryPanel.add(deckWidthTextField);
         geometryPanel.add(new JLabel(Bundle.getMessage("Orientation")));
+        orientationComboBox.removeAllItems();
         orientationComboBox.addItem(Bundle.getMessage("Horizontal"));
         orientationComboBox.addItem(Bundle.getMessage("Vertical"));
         geometryPanel.add(orientationComboBox);
@@ -179,6 +180,9 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         } else {
             editLayoutTraverserMainlineComboBox.setSelectedIndex(1);
         }
+        for (ActionListener al : editLayoutTraverserMainlineComboBox.getActionListeners()) {
+            editLayoutTraverserMainlineComboBox.removeActionListener(al);
+        }
         editLayoutTraverserMainlineComboBox.addActionListener((java.awt.event.ActionEvent e) -> {
             if (layoutTraverser != null) {
                 layoutTraverser.setMainline(editLayoutTraverserMainlineComboBox.getSelectedIndex() == 0);
@@ -188,6 +192,9 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         // Add listeners
         editLayoutTraverserAddSlotButton.addActionListener(this::addTrackPairPressed);
         editLayoutTraverserSegmentEditBlockButton.addActionListener(this::editLayoutTraverserEditBlockPressed);
+        for (FocusListener fl : slotOffsetTextField.getFocusListeners()) {
+            slotOffsetTextField.removeFocusListener(fl);
+        }
         slotOffsetTextField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -204,6 +211,9 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
                 }
             }
         });
+        for (ActionListener al : orientationComboBox.getActionListeners()) {
+            orientationComboBox.removeActionListener(al);
+        }
         orientationComboBox.addActionListener(e -> {
             layoutTraverser.setOrientation(orientationComboBox.getSelectedIndex());
             updateSlotPanel();
