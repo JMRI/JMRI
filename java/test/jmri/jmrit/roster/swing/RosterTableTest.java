@@ -1,9 +1,7 @@
 package jmri.jmrit.roster.swing;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.text.JTextComponent;
 
 import jmri.InstanceManager;
 import jmri.jmrit.roster.*;
