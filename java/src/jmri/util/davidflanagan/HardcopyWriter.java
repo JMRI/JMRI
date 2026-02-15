@@ -351,7 +351,7 @@ public class HardcopyWriter extends Writer {
      * returns a Rectangle2D.
      * 
      * @param s The string to be measured (no tabs allowed)
-     * @return The Rectangle2D object
+     * @return The Rectangle2D object in points
      */
 
     public Rectangle2D measure(String s) {
@@ -365,7 +365,7 @@ public class HardcopyWriter extends Writer {
      * passed (when printed on top of each other)
      * 
      * @param stringList A collection of Strings
-     * @return The Rectangle2D object
+     * @return The Rectangle2D object in points
      */
 
     public Rectangle2D measure(Collection<String> stringList) {
@@ -663,27 +663,20 @@ public class HardcopyWriter extends Writer {
      */
     public void setFont(String name, Integer style, Integer size) {
         synchronized (this.lock) {
-            // try to set a new font, but restore current one if it fails
-            Font current = font;
-            try {
-                if (style == null) {
-                    style = useFontStyle;
-                }
-                if (size == null) {
-                    size = useFontSize;
-                }
-                if (name == null) {
-                    name = useFontName;
-                }
-                font = new Font(name, style, size);
-                log.info("new Font = {}, size = {}", font, font.getSize());
-                useFontName = name;
-                useFontStyle = style;
-                useFontSize = size;
-
-            } catch (Exception e) {
-                font = current;
+\           if (style == null) {
+                style = useFontStyle;
             }
+            if (size == null) {
+                size = useFontSize;
+            }
+            if (name == null) {
+                name = useFontName;
+            }
+            font = new Font(name, style, size);
+            log.info("new Font = {}, size = {}", font, font.getSize());
+            useFontName = name;
+            useFontStyle = style;
+            useFontSize = size;
             // if a page is pending, set the new font, else newpage() will
             if (page != null) {
                 page.setFont(font);
