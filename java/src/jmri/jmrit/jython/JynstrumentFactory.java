@@ -64,7 +64,7 @@ public class JynstrumentFactory {
             jyns.init();  // GO!
         } catch (Exception e) {
             // catch, log, and continue, we don't want to break the ongoing workflow
-            log.error("Error starting Jynstrument: {}",e);
+            log.error("Error starting Jynstrument.",e);
             return null;
         }        
         return jyns;
