@@ -53,7 +53,7 @@ public interface ThrottleControlersUIContainer {
      * Force estop all throttles managed by that controlers container
      *
      */    
-    void eStopAll();
+    void emmergencyStopAll();
 
     /**
      * Get the number of usages of a particular Loco Address.

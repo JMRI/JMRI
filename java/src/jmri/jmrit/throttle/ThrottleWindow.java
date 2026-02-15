@@ -360,7 +360,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersUICo
     }
        
     @Override
-    public void eStopAll() {
+    public void emmergencyStopAll() {
         if (!throttleFrames.isEmpty()) {
             for (ThrottleFrame tf: throttleFrames) {
                 tf.eStop();
