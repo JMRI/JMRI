@@ -15,10 +15,19 @@ public class MultiLineCellEditor  extends AbstractCellEditor implements TableCel
         
     public MultiLineCellEditor() {
         textArea = new JTextArea();
-        textArea.setLineWrap(true);
+        
+        // match these to jmri.util.swing.MultiLineCellRenderer
+        textArea.setLineWrap(false);
         textArea.setWrapStyleWord(true);
         textArea.setOpaque(true);
+        customize();
     }
+
+    /**
+     * Allow the creator of one of these objects to customize its
+     * appearance, tooltips, etc
+     */
+    protected void customize() {}
 
     JTextArea textArea;
     
