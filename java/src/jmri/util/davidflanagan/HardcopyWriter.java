@@ -81,6 +81,7 @@ public class HardcopyWriter extends Writer {
     protected int columnIndex = 0;
 
     protected double pixelScale = 1;
+    protected Integer screenResolution;
 
     // save state between invocations of write()
     private boolean last_char_was_return = false;
@@ -162,6 +163,10 @@ public class HardcopyWriter extends Writer {
         // ISSUE: Ought this to be dependent on printer capabilities?
         pageAttributes.setColor(PageAttributes.ColorType.COLOR);
 
+        // Get the screen resolution and cache it. This also allows us to override
+        // the default resolution for testing purposes.
+        getScreenResolution();
+
         if (pagesize == null) {
             pagesizePixels = getPagesizePixels();
             pagesizePoints = getPagesizePoints();
@@ -170,7 +175,8 @@ public class HardcopyWriter extends Writer {
             pagesizePoints = pagesize;
             // Assume 100 DPI scale factor. This is used for testing only. If !isPreview, then things
             // are set according to the printer's capabilities.
-            pagesizePixels = new Dimension(pagesizePoints.width * 100 / 72, pagesizePoints.height * 100 / 72);
+            screenResolution = 100;
+            pagesizePixels = new Dimension(pagesizePoints.width * screenResolution / 72, pagesizePoints.height * screenResolution / 72);
         }
 
         // skip printer selection if preview
@@ -332,6 +338,8 @@ public class HardcopyWriter extends Writer {
         String paperSizeName = PaperUtils.getNameFromPoints(pagesizePoints.width, pagesizePoints.height);
         if (paperSizeName != null) {
             try {
+                // This converts the paper size name to the appropriate locale
+                // but we don't actually know all the possible paper size names.
                 paperSizeName = Bundle.getMessage(paperSizeName);
             } catch (MissingResourceException e) {
                 log.debug("Paper size name {} not found", paperSizeName);
@@ -441,7 +449,10 @@ public class HardcopyWriter extends Writer {
      * @return The screen resolution in pixels per inch.
      */
     private int getScreenResolution() {
-        return (int) (Toolkit.getDefaultToolkit().getScreenResolution() * pixelScale);
+        if (screenResolution == null) {
+            screenResolution = (int) (Toolkit.getDefaultToolkit().getScreenResolution() * pixelScale);
+        }
+        return screenResolution;
     }
 
     /**
