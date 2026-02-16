@@ -777,7 +777,7 @@ public class IdentifyDecoderTest {
         assertTrue(i.isRunning(), "running after 1 ");
 
         // simulate CV read complete on CV8, start 7
-        i.programmingOpReply(168, 0);
+        i.programmingOpReply(162, 0);
         assertEquals(7, cvRead, "step 2 reads CV ");
         assertTrue(i.isRunning(), "running after 2 ");
 
@@ -811,7 +811,7 @@ public class IdentifyDecoderTest {
         // simulate CV read complete on CV317, start end
         i.programmingOpReply(37, 0);
 
-        assertEquals(168, i.mfgID.value, "found mfg ID ");
+        assertEquals(162, i.mfgID.value, "found mfg ID ");
         assertEquals(6, i.modelID, "found model ID ");
         assertEquals(54637, i.productID, "found product ID ");
     }

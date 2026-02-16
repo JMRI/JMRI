@@ -429,9 +429,14 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-             <li>If multiple roster entries are selected, contextual menu allows opening a throttle window with a controler for each selected roster entries.</li>
-             <li>Drag'n drop of roster entries to the throttle list window is now allowed and will create new throttle control in the targetted window.</li>
-             <li></li>
+            <li>If multiple roster entries are selected, contextual menu allows opening a throttle window with a controler for each selected roster entries.</li>
+            <li>Drag'n drop of roster entries to the throttle list window is now allowed and will create new throttle control in the targetted window.</li>
+            <li>Added a new (optional) 
+                <a href="https://www.jmri.org/help/en/package/jmri/jmrit/permission/PermissionManager.shtml">Permission</a>
+                to control whether the user can
+                edit columns that have been added to the Roster Table.
+                This can be used to e.g. only allow certain people at a club
+                to mark a locomotive entry as having been inspected.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -490,7 +495,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Improvements to the print Manifest and no page breaks option.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -520,7 +525,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>The Import Complete Roster action now shows a progress bar.</li>
         </ul>
 
     <h3>Routes</h3>
