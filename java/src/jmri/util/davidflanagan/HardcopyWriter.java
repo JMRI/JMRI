@@ -37,7 +37,7 @@ public class HardcopyWriter extends Writer {
     protected Graphics printJobGraphics;
     protected Graphics page;
     protected String jobname;
-    protected String line;
+    protected String line = "";
     protected int useFontSize = 7;
     protected String time;
     protected Dimension pagesizePixels;
@@ -445,7 +445,8 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Get the screen resolution in pixels per inch.
+     * Get the screen resolution in pixels per inch. It caches this so that a single
+     * value is used for the entire run of the preview/print.
      * 
      * @return The screen resolution in pixels per inch.
      */
@@ -472,8 +473,12 @@ public class HardcopyWriter extends Writer {
     /**
      * Function to set the columns for future text output. Output starts in
      * first first column, and advances to the next column on a tab
-     * characterThis can cause output to overlap if the column is not wide
-     * enough for the output.
+     * character. This either causes truncation of the text or wrapping to the
+     * next line depending on the column alignment type.
+     * <p>
+     * If no columns are set, then the default is one column, left aligned with the full 
+     * width of the page
+     * </p>
      * 
      * @param columns Array of Column objects
      */
@@ -490,11 +495,18 @@ public class HardcopyWriter extends Writer {
                 throw new IllegalArgumentException("Column off edge of page");
             }
         }
+        if (columns.length == 0) {
+            columns = new Column[] { new Column(0, width, Align.LEFT) };
+        }
         this.columns = columns;
     }
 
     /**
      * Function to set Columns based on a {@code Collection<Column>} object
+     * <p>
+     * If no columns are set, then the default is one column, left aligned with the full 
+     * width of the page
+     * </p>
      * 
      * @param columns Collection of Column objects
      */
@@ -504,8 +516,8 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Send text to Writer output. Note that the text will be aligned to the
-     * left hand margin. If the string would go into the right margin then it
-     * will be broken into multiple lines. (ISSUE?)
+     * current column (by default, this is one column, left aligned with the full 
+     * width of the page)
      *
      * @param buffer block of text characters
      * @param index  position to start printing
@@ -515,8 +527,7 @@ public class HardcopyWriter extends Writer {
     public void write(char[] buffer, int index, int len) {
         synchronized (this.lock) {
             // loop through all characters passed to us
-            // ISSUE: Do we really want to clear this here?
-            line = "";
+
             for (int i = index; i < index + len; i++) {
                 // if we haven't begun a new page, do that now
                 if (page == null) {
@@ -564,6 +575,10 @@ public class HardcopyWriter extends Writer {
         }
     }
 
+    /**
+     * Flush the current line to the current column. This may be called recursively if
+     * the line is too long for the current column and wrapping is enabled. 
+     */
     private void flush_column() {
         Column column = columns[columnIndex];
 
@@ -576,7 +591,7 @@ public class HardcopyWriter extends Writer {
             // This text does not fit. This means that we need to split it and wrap it to the next line.
 
             // First, we need to find where to split the string. 
-            // Do this with a binary search to be efficient. We should take spaces into account. ISSUE
+            // Do this with a binary search to be efficient. We take spaces into account.
             // We want to get the longest possible string that will fit in the column.
             int splitPos = 0;
             int low = 0;
@@ -591,6 +606,7 @@ public class HardcopyWriter extends Writer {
                     high = mid;
                 }
             }
+            // low is the first character that causes the string not to fit
             splitPos = low - 1;
 
             if (column.isWrap()) {
@@ -604,8 +620,8 @@ public class HardcopyWriter extends Writer {
                 }
             }
 
-            if (splitPos < 0) {
-                splitPos = 0; // Even if it won't fit, we have to output something.   
+            if (splitPos < 1) {
+                splitPos = 1; // Even if it won't fit, we have to output something.   
             }
             // Now we can split the string and wrap it to the next line.
             String firstLine = line.substring(0, splitPos);
@@ -615,6 +631,10 @@ public class HardcopyWriter extends Writer {
             page.drawString(firstLine, x0 + stringStartPos, y0 + v_pos + lineascent);
 
             if (column.isWrap()) {
+                // Skip any spaces at the split position
+                while (splitPos < line.length() - 1 && Character.isSpaceChar(line.charAt(splitPos))) {
+                    splitPos++;
+                }
                 String secondLine = line.substring(splitPos);
                 // We can now output the second line.
                 v_pos += lineheight;
@@ -641,6 +661,8 @@ public class HardcopyWriter extends Writer {
      * Write a given String with the desired color.
      * <p>
      * Reset the text color back to the default after the string is written.
+     * This method is really only good for changing the color of a complete 
+     * line (or column). 
      *
      * @param c the color desired for this String
      * @param s the String
@@ -715,11 +737,10 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Set the font to be used for the next write operation.
+     * Set the font to be used for the next write operation. This really
+     * only is good for the next line (or column) of output. Use with caution.
      * <p>
      * If any of the parameters are null, the current value will be used.
-     * <p>
-     * If the font cannot be set, the current font will be restored.
      * 
      * @param name  the name of the font
      * @param style the style of the font
@@ -749,6 +770,12 @@ public class HardcopyWriter extends Writer {
         }
     }
 
+    /**
+     * Check if the given page number is in the range of pages to be printed.
+     * 
+     * @param pagenum the page number to check
+     * @return true if the page number is in the range, false otherwise
+     */
     private boolean inPageRange(int pagenum) {
         for (int[] range : prPages) {
             if (pagenum >= range[0] && pagenum <= range[1]) {
@@ -758,6 +785,11 @@ public class HardcopyWriter extends Writer {
         return false;
     }
 
+    /**
+     * Refresh the font metrics after changing things like font, size, etc.
+     * 
+     * @param g the graphics context
+     */
     private void refreshMetrics(Graphics g) {
         metrics = frame.getFontMetrics(font);
         lineheight = metrics.getHeight();
@@ -782,14 +814,30 @@ public class HardcopyWriter extends Writer {
         isMonospacedFont = (widthI == widthW && widthW == widthM && widthM == widthDot);
     }
 
+    /**
+     * Get the height of a line of text. This is the amount that the vertical position
+     * will advance for each line.
+     * 
+     * @return the height of a line of text
+     */
     public int getLineHeight() {
         return this.lineheight;
     }
 
+    /**
+     * Get the size of the font.
+     * 
+     * @return the size of the font
+     */
     public int getFontSize() {
         return this.useFontSize;
     }
 
+    /**
+     * Get the width of a character. This is only valid for monospaced fonts.
+     * 
+     * @return the width of a character, or null if the font is not monospaced
+     */
     public Float getCharWidth() {
         if (!isMonospaced()) {
             return null;
@@ -797,6 +845,11 @@ public class HardcopyWriter extends Writer {
         return this.charwidth;
     }
 
+    /**
+     * Get the ascent of the font. This is the distance from the baseline to the top of the font.
+     * 
+     * @return the ascent of the font
+     */
     public int getLineAscent() {
         return this.lineascent;
     }
@@ -829,7 +882,7 @@ public class HardcopyWriter extends Writer {
     /**
      * Return the number of columns of characters that fit on a page.
      *
-     * @return the number of characters in a line
+     * @return the number of characters in a line or null if the font is not monospaced
      */
     public Integer getCharactersPerLine() {
         if (!isMonospaced()) {
@@ -851,8 +904,8 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * This leaves the required amount of vertical space. If not, a page break
-     * is inserted.
+     * This leaves the required amount of vertical space. If not enough space is
+     * available, a page break is inserted.
      * 
      * @param points The amount of vertical space to leave in points.
      */
@@ -1142,12 +1195,13 @@ public class HardcopyWriter extends Writer {
      * hStart and hEnd represent the horizontal point positions. The lines
      * actually start in the middle of the character position (to the left) to
      * make it easy to draw vertical lines and space them between printed
-     * characters.
+     * characters. This is (unfortunately) bad for getting something on the right margin.
      * <p>
      * vStart and vEnd represent the vertical point positions. Horizontal lines
-     * are drawn underneath the row (line) number. They are offset so they
+     * are drawn underneath below the vStart position. They are offset so they
      * appear evenly spaced, although they don't take into account any space
-     * needed for descenders, so they look best with all caps text
+     * needed for descenders, so they look best with all caps text. If vStart is 
+     * set to the current vPos, then the line is under the current row of text.
      *
      * @param vStart vertical starting position
      * @param hStart horizontal starting position
@@ -1231,6 +1285,9 @@ public class HardcopyWriter extends Writer {
         }
     }
 
+    /**
+     * Enum to represent the alignment of text in a column.
+     */
     public enum Align {
         LEFT,
         CENTER,
@@ -1270,6 +1327,10 @@ public class HardcopyWriter extends Writer {
         }
     }
 
+    /**
+     * Class to represent a column in the output. This has a start position, width and alignment.
+     * This allows left, center or right alignment, with or without wrapping.
+     */
     public static class Column {
         int position;
         int width;
