@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.tools;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.Arrays;
 
 import jmri.*;
@@ -11,17 +13,17 @@ import jmri.implementation.VirtualSignalHead;
  * This class creates a Logix, test that it works, imports it to LogixNG,
  * deletes the original Logix and then test that the new LogixNG works.
  * <P>
- This test tests expression signalMast
+ * This test tests expression signalMast
  * 
  * @author Daniel Bergqvist (C) 2020
  */
 public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestBase {
 
-    SignalHead signalHead;
-    SignalMast signalMast;
-    ConditionalVariable cv;
+    private SignalHead signalHead;
+    private SignalMast signalMast;
+    private ConditionalVariable cv;
     
-    protected enum SignalMastEnum {
+    private enum SignalMastEnum {
         EqualsClear(Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS, "Approach Medium", "Medium Clear", "Clear"),
         EqualsApproachMedium(Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS, "Clear", "Medium Clear", "Approach Medium"),
         EqualsMediumClear(Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS, "Clear", "Approach Medium", "Medium Clear"),
@@ -54,7 +56,7 @@ public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestB
     }
     
     @Override
-    protected Enum<SignalMastEnum>[] getEnums() {
+    protected Enum<?>[] getEnums() {
         return SignalMastEnum.values();
     }
     
@@ -90,7 +92,7 @@ public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestB
                     case Succeed2:
                     case Succeed3:
                     case Succeed4: signalMast.setAspect(me.successAspect); break;
-                    default: throw new RuntimeException("Unknown enum: "+e.name());
+                    default: fail("Unknown enum: "+e.name());
                 }
                 break;
                 
@@ -104,7 +106,7 @@ public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestB
                     case Succeed2:
                     case Succeed3:
                     case Succeed4: signalMast.setLit(true); break;
-                    default: throw new RuntimeException("Unknown enum: "+e.name());
+                    default: fail("Unknown enum: "+e.name());
                 }
                 break;
                 
@@ -118,12 +120,12 @@ public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestB
                     case Succeed2:
                     case Succeed3:
                     case Succeed4: signalMast.setHeld(true); break;
-                    default: throw new RuntimeException("Unknown enum: "+e.name());
+                    default: fail("Unknown enum: "+e.name());
                 }
                 break;
             
             default:
-                throw new RuntimeException("Unknown enum: "+e.name());
+                fail("Unknown enum: "+e.name());
         }
     }
     
@@ -144,10 +146,6 @@ public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestB
     
     
     private static class MySignalHead extends VirtualSignalHead {
-        
-        MySignalHead(String sys, String user) {
-            super(sys, user);
-        }
 
         MySignalHead(String sys) {
             super(sys);

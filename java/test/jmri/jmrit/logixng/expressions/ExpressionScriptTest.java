@@ -1,5 +1,14 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+
 import java.util.ArrayList;
 
 import jmri.jmrit.logixng.actions.*;
@@ -8,9 +17,12 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.script.ScriptEngineSelector;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ActionSimpleScript
@@ -85,35 +97,31 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
 
         expression2 = new ExpressionScript("IQDE321", null);
         expression2.setScript(SCRIPT_TEXT);
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Evaluate script: Single line command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
+        assertEquals( "Evaluate script: Single line command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )",
+            expression2.getLongDescription(), "String matches");
 
         expression2 = new ExpressionScript("IQDE321", "My expression");
         expression2.setScript(SCRIPT_TEXT);
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
-        Assert.assertEquals("String matches", "Evaluate script: Single line command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My expression", expression2.getUserName(), "Username matches");
+        assertEquals( "Evaluate script: Single line command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )",
+            expression2.getLongDescription(), "String matches");
 
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            ExpressionScript escipt = new ExpressionScript("IQA55:12:XY11", null);
-            Assert.fail("escript created: " + escipt.toString() );
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class,
+            () -> {
+                ExpressionScript escipt = new ExpressionScript("IQA55:12:XY11", "A name");
+                fail("escript created: " + escipt.toString() );
+            }, "Expected Illegal system name exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            ExpressionScript escipt = new ExpressionScript("IQA55:12:XY11", "A name");
-            Assert.fail("escript created: " + escipt.toString() );
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows( IllegalArgumentException.class,
+            () -> {
+                ExpressionScript escipt = new ExpressionScript("IQA55:12:XY11", null);
+                fail("escript created: " + escipt.toString() );
+            }, "Expected Illegal system name exception thrown");
+        assertNotNull(ex);
     }
 
     @Test
@@ -123,46 +131,42 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
 
         // Test without script
         expressionScript.setScript(null);
-        Assert.assertTrue("getChildCount() returns 0", 0 == expressionScript.getChildCount());
+        assertEquals( 0, expressionScript.getChildCount(), "getChildCount() returns 0");
 
-        boolean hasThrown = false;
-        try {
-            expressionScript.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class,
+            () -> expressionScript.getChild(0));
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
 
         // Test with script
         expressionScript.setScript(SCRIPT_TEXT);
-        Assert.assertTrue("getChildCount() returns 0", 0 == expressionScript.getChildCount());
+        assertEquals( 0, expressionScript.getChildCount(), "getChildCount() returns 0");
     }
 
     @Test
     public void testDescription() {
-        Assert.assertEquals("Script", expressionScript.getShortDescription());
-        Assert.assertEquals("Evaluate script: Single line command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )", expressionScript.getLongDescription());
+        assertEquals("Script", expressionScript.getShortDescription());
+        assertEquals("Evaluate script: Single line command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )",
+            expressionScript.getLongDescription());
     }
 
     @Test
-    public void testExpression_SingleJythonCommand() throws Exception {
+    public void testExpression_SingleJythonCommand() throws JmriException {
         // Test expression
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light.setCommandedState(Light.OFF);
 
         // The action is not yet executed so the light should be off
-        Assert.assertTrue("light is off", light.getState() == Light.OFF);
+        assertTrue( light.getState() == Light.OFF, "light is off");
         // Set the sensor to inactive so we get a property change when we activate the sensor later
         sensor.setState(Sensor.INACTIVE);
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action should not have been executed yet so the light should be off
-        Assert.assertTrue("light is off", light.getState() == Light.OFF);
+        assertTrue( light.getState() == Light.OFF, "light is off");
         // Set the sensor to execute the conditionalNG
         sensor.setState(Sensor.ACTIVE);
         // The action should now be executed so the light should be on
-        Assert.assertTrue("light is on", light.getState() == Light.ON);
+        assertTrue( light.getState() == Light.ON, "light is on");
 
 
         // Test action when triggered because the script is listening on the sensor IS2
@@ -173,22 +177,22 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         logixNG.unregisterListeners();
 
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertEquals("light is off",Light.OFF,light.getState());
+        assertEquals( Light.OFF, light.getState(), "light is off");
         // Activate the sensor. This should not execute the conditional.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        Assert.assertEquals("light is off",Light.OFF,light.getState());
+        assertEquals( Light.OFF, light.getState(), "light is off");
         // Inactivate the sensor. This should not execute the conditional.
         sensor2.setCommandedState(Sensor.INACTIVE);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertEquals("light is off",Light.OFF,light.getState());
+        assertEquals( Light.OFF, light.getState(), "light is off");
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // Activate the sensor. This should execute the conditional.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertEquals("light is on",Light.ON,light.getState());
+        assertEquals( Light.ON, light.getState(), "light is on");
 
         // Unregister listeners
         expressionScript.unregisterListeners();
@@ -198,39 +202,44 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         // Activate the sensor. This not should execute the conditional since listerners are not registered.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // Listerners are not registered so the atomic boolean should be false
-        Assert.assertEquals("light is off",Light.OFF,light.getState());
+        assertEquals( Light.OFF, light.getState(), "light is off");
 
         // Test evaluate() without script.
         expressionScript.setScript("");
-        Assert.assertFalse(expressionScript.evaluate());
+        assertFalse(expressionScript.evaluate());
     }
 
     @Test
-    public void testExpression_SingleEcmaCommand() throws Exception {
+    @SuppressWarnings("null") // engine false positive, should be fixed in JUnit6
+    public void testExpression_SingleEcmaCommand() throws JmriException {
         expressionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
         expressionScript.setScript(ECMA_SCRIPT);
 
         // Java 17 doesn't have ECMA_SCRIPT
+        JUnitAppender.suppressWarnMessage("Cannot select engine for the language ECMAScript");
         ScriptEngineSelector.Engine engine = expressionScript.getScriptEngineSelector().getSelectedEngine();
-        Assume.assumeNotNull(engine);
-        Assume.assumeTrue(engine.getLanguageName().equals(ScriptEngineSelector.ECMA_SCRIPT));
+        
+        assumeTrue( engine != null, "Engine not null");
+        assertNotNull(engine);
+        assumeTrue( ScriptEngineSelector.ECMA_SCRIPT.equals(engine.getLanguageName()),
+            () -> "Engine Language Name was \"" + engine.getLanguageName() + "\" not \"" + ScriptEngineSelector.ECMA_SCRIPT+"\"");
 
         // Test expression
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light.setCommandedState(Light.OFF);
 
         // The action is not yet executed so the light should be off
-        Assert.assertTrue("light is off", light.getState() == Light.OFF);
+        assertTrue( light.getState() == Light.OFF, "light is off");
         // Set the sensor to inactive so we get a property change when we activate the sensor later
         sensor.setState(Sensor.INACTIVE);
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action should not have been executed yet so the light should be off
-        Assert.assertTrue("light is off", light.getState() == Light.OFF);
+        assertTrue( light.getState() == Light.OFF, "light is off");
         // Set the sensor to execute the conditionalNG
         sensor.setState(Sensor.ACTIVE);
         // The action should now be executed so the light should be on
-        Assert.assertTrue("light is on", light.getState() == Light.ON);
+        assertTrue( light.getState() == Light.ON, "light is on");
 
 
         // Test action when triggered because the script is listening on the sensor IS2
@@ -241,22 +250,22 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         logixNG.unregisterListeners();
 
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertEquals("light is off",Light.OFF,light.getState());
+        assertEquals( Light.OFF, light.getState(), "light is off");
         // Activate the sensor. This should not execute the conditional.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        Assert.assertEquals("light is off",Light.OFF,light.getState());
+        assertEquals( Light.OFF, light.getState(), "light is off");
         // Inactivate the sensor. This should not execute the conditional.
         sensor2.setCommandedState(Sensor.INACTIVE);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertEquals("light is off",Light.OFF,light.getState());
+        assertEquals( Light.OFF, light.getState(), "light is off");
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // Activate the sensor. This should execute the conditional.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertEquals("light is on",Light.ON,light.getState());
+        assertEquals( Light.ON, light.getState(), "light is on");
 
         // Unregister listeners
         expressionScript.unregisterListeners();
@@ -266,15 +275,15 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         // Activate the sensor. This not should execute the conditional since listerners are not registered.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // Listerners are not registered so the atomic boolean should be false
-        Assert.assertEquals("light is off",Light.OFF,light.getState());
+        assertEquals( Light.OFF, light.getState(), "light is off");
 
         // Test evaluate() without script.
         expressionScript.setScript("");
-        Assert.assertFalse(expressionScript.evaluate());
+        assertFalse(expressionScript.evaluate());
     }
 
     @Test
-    public void testExpression_RunScript() throws Exception {
+    public void testExpression_RunScript() throws JmriException {
         expressionScript.setOperationType(ExpressionScript.OperationType.RunScript);
         expressionScript.setScript("java/test/jmri/jmrit/logixng/expressions/ExpressionScriptTest.py");
 
@@ -285,17 +294,17 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         // Set the sensor to inactive so we get a property change when we activate the sensor later
         sensor.setState(Sensor.INACTIVE);
         // The action is not yet executed so the light should be off
-        Assert.assertTrue("light is off", light.getState() == Light.OFF);
+        assertTrue( light.getState() == Light.OFF, "light is off");
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // Set the sensor to execute the conditionalNG
         sensor.setState(Sensor.ACTIVE);
         // The action should now be executed so the light should be on
-        Assert.assertTrue("light is on", light.getState() == Light.ON);
+        assertTrue( light.getState() == Light.ON, "light is on");
     }
 
     @Test
-    public void testAction_GetAndSetLocalVariables() throws Exception {
+    public void testAction_GetAndSetLocalVariables() throws JmriException {
 
         ((MaleSocket)ifThenElse.getParent()).addLocalVariable("in", SymbolTable.InitialValueType.Integer, "10");
         var globalVariable = InstanceManager.getDefault(GlobalVariableManager.class).createGlobalVariable("out");
@@ -308,8 +317,9 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.execute();
 
         // The expression should now be evaluated so the global variable should have the correct value
-        Assert.assertEquals("global variable has the correct value", 150,
-                ((java.math.BigInteger)globalVariable.getValue()).longValue());
+        assertEquals( 150,
+                ((java.math.BigInteger)globalVariable.getValue()).longValue(),
+            "global variable has the correct value");
     }
 
     @Test
@@ -319,15 +329,14 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
 
         // Test setScript() when listeners are registered
         expressionScript.setScript(SCRIPT_TEXT);
-        Assert.assertNotNull("Script is not null", expressionScript.getScript());
+        assertNotNull( expressionScript.getScript(), "Script is not null");
 
         // Test bad script
         expressionScript.setScript("This is a bad script");
-        Assert.assertEquals("This is a bad script", expressionScript.getScript());
+        assertEquals( expressionScript.getScript(), "This is a bad script");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, JmriException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -372,19 +381,19 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         // Set sensor to active to ensure the script returns true
         sensor.setState(Sensor.ACTIVE);
         // Ensure the sensor is active
-        Assert.assertTrue( InstanceManager.getDefault(SensorManager.class).provideSensor("IS1").getState() == Sensor.ACTIVE );
+        assertTrue( InstanceManager.getDefault(SensorManager.class).provideSensor("IS1").getState() == Sensor.ACTIVE );
         // Ensure the script returns true
-        Assert.assertTrue(expressionScript.evaluate());
+        assertTrue(expressionScript.evaluate());
 
         _base = expressionScript;
         _baseMaleSocket = socketExpressionScript;
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

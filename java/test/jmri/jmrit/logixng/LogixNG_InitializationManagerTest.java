@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -12,10 +15,7 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test LogixNG_InitializationManager
@@ -24,7 +24,7 @@ import org.junit.Test;
  */
 public class LogixNG_InitializationManagerTest {
 
-    List<AtomicBoolean> abList = new ArrayList<>();
+    private final List<AtomicBoolean> abList = new ArrayList<>();
 
     private AtomicBoolean getAB() {
         AtomicBoolean ab = new AtomicBoolean();
@@ -72,13 +72,13 @@ public class LogixNG_InitializationManagerTest {
         initManager.add(l8);
 
         // No LogixNG has been executed yet.
-        Assert.assertEquals("Strings are equal", "", stringWriter.toString());
+        assertEquals( "", stringWriter.toString(), "Strings are equal");
 
         InstanceManager.getDefault(LogixNG_Manager.class)
                 .activateAllLogixNGs(true, true);
 
         boolean result = JUnitUtil.waitFor(() -> {return checkAB();});
-        Assert.assertTrue(result);
+        assertTrue(result);
 
         String expectedResult =
                 // These are registered in the init manager
@@ -88,11 +88,10 @@ public class LogixNG_InitializationManagerTest {
                 "LogixNG 2: end" + System.lineSeparator() +
                 "LogixNG 8: start" + System.lineSeparator() +
                 "LogixNG 8: end";
-        Assert.assertTrue(stringWriter.toString().startsWith(expectedResult));
+        assertTrue(stringWriter.toString().startsWith(expectedResult));
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -103,7 +102,7 @@ public class LogixNG_InitializationManagerTest {
         JUnitUtil.initLogixNGManager(false);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
@@ -135,11 +134,7 @@ public class LogixNG_InitializationManagerTest {
         public void execute() {
 //            System.out.format("%s: start\n", getUserName());
             _printWriter.format("%s: start%n", getUserName());
-            try {
-                Thread.sleep(_delay);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace(_printWriter);
-            }
+            JUnitUtil.waitFor( (int)_delay);
 //            System.out.format("%s: end\n", getUserName());
             _printWriter.format("%s: end%n", getUserName());
             _printWriter.flush();

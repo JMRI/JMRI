@@ -8,6 +8,7 @@ import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
@@ -21,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author  Pete Cressman 2015
  */
 @Timeout(120)
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@DisabledIfHeadless
 @DisabledIfSystemProperty(named ="jmri.skipLinkedWarrantTest", matches ="true")
 public class LinkedWarrantTest {
 
@@ -44,7 +45,7 @@ public class LinkedWarrantTest {
         assertNotNull(sensor1,"Senor IS12 not found");
         NXFrameTest.setAndConfirmSensorAction(sensor1, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB12"));
 
-        WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
+        WarrantTableFrame tableFrame = ThreadingUtil.runOnGUIwithReturn( () -> WarrantTableFrame.getDefault());
         assertNotNull(tableFrame,"tableFrame");
 
         Warrant warrant = _warrantMgr.getWarrant("LoopDeLoop");
@@ -108,8 +109,11 @@ public class LinkedWarrantTest {
 
         JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
-            return m.equals(Bundle.getMessage("warrantComplete", warrant.getTrainName(), warrant.getDisplayName(), block.getDisplayName()));
-        }, "LoopDeLoop finished third leg");
+            // Train "Loopy" ends warrant "LoopDeLoop". Now occupying block "LoopConnector".
+            String msg = Bundle.getMessage("warrantComplete", warrant.getTrainName(),
+                warrant.getDisplayName(), block.getDisplayName());
+            return m.equals(msg);
+        }, () -> "LoopDeLoop finished third leg: " + tableFrame.getStatus());
 
         warrant.dispose();
 
@@ -443,10 +447,12 @@ public class LinkedWarrantTest {
             return true;
         });
         assertTrue(retVal);
-        
+
+        w.dispose();
+        ww.dispose();
         www.dispose();
         JUnitUtil.waitFor( () -> w.getState() == -1, "tinker warrant terminated");
-        
+
     }
 
     @BeforeEach

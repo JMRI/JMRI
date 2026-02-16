@@ -1,5 +1,10 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -7,7 +12,6 @@ import jmri.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for the DefaultRailCom class
@@ -19,50 +23,50 @@ public class DefaultRailComTest {
     @Test
     public void testCreateRailCom() {
         RailCom r = new DefaultRailCom("ID1234");
-        Assert.assertNotNull("RailCom not null", r);
+        assertNotNull( r, "RailCom not null");
     }
 
     @Test
     public void testGetRailComUserName() {
         RailCom r = new DefaultRailCom("ID1234", "Test Tag");
-        Assert.assertEquals("RailCom user name is 'Test Tag'", "Test Tag", r.getUserName());
+        assertEquals( "Test Tag", r.getUserName(), "RailCom user name is 'Test Tag'");
     }
 
     @Test
     public void testGetRailComTagID() {
         RailCom r = new DefaultRailCom("ID1234");
-        Assert.assertEquals("RailCom TagID is 1234", "1234", r.getTagID());
+        assertEquals( "1234", r.getTagID(), "RailCom TagID is 1234");
     }
 
     @Test
     public void testRailComGetLocoAddress() {
         RailCom r = new DefaultRailCom("ID1234");
-        Assert.assertEquals("Loco Address ", new jmri.DccLocoAddress(1234,true), r.getLocoAddress());
+        assertEquals( new jmri.DccLocoAddress(1234,true), r.getLocoAddress(), "Loco Address");
     }
 
     @Test
     public void testRailComToString() {
         RailCom r = new DefaultRailCom("ID1234");
-        Assert.assertEquals("RailCom toString ", "ID1234", r.toString());
+        assertEquals( "ID1234", r.toString(), "RailCom toString ");
     }
 
     @Test
     public void testRailComToReportString() {
         DefaultRailCom r = new DefaultRailCom("ID1234");
-        Assert.assertEquals("RailCom toReportString ", "Unknown Orientation Address 1234(L) ", r.toReportString());
+        assertEquals( "Address 1234(L) Unknown Orientation ", r.toReportString(), "RailCom toReportString");
     }
 
     @Test
     public void testNotYetSeen() {
         RailCom r = new DefaultRailCom("ID0413276BC1");
-        Assert.assertNull("At creation, Reporter where seen is null", r.getWhereLastSeen());
-        Assert.assertNull("At creation, Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("At creation, RailCom status is UNSEEN", RailCom.UNSEEN, r.getState());
+        assertNull( r.getWhereLastSeen(), "At creation, Reporter where seen is null");
+        assertNull( r.getWhenLastSeen(), "At creation, Date when seen is null");
+        assertEquals( RailCom.UNSEEN, r.getState(), "At creation, RailCom status is UNSEEN");
 
         r.setWhereLastSeen(null);
-        Assert.assertNull("After setWhereLastSeen(null), Reporter where seen is null", r.getWhereLastSeen());
-        Assert.assertNull("After setWhereLastSeen(null), Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("After setWhereLastSeen(null), RailCom status is UNSEEN", RailCom.UNSEEN, r.getState());
+        assertNull( r.getWhereLastSeen(), "After setWhereLastSeen(null), Reporter where seen is null");
+        assertNull( r.getWhenLastSeen(), "After setWhereLastSeen(null), Date when seen is null");
+        assertEquals( RailCom.UNSEEN, r.getState(), "After setWhereLastSeen(null), RailCom status is UNSEEN");
     }
 
     @Test
@@ -87,103 +91,103 @@ public class DefaultRailComTest {
         JUnitUtil.waitFor(5);
         Date timeAfter = Calendar.getInstance().getTime();
 
-        Assert.assertEquals("Where last seen is 'IR1'", rep, r.getWhereLastSeen());
+        assertEquals( rep, r.getWhereLastSeen(), "Where last seen is 'IR1'");
         
         Date date = r.getWhenLastSeen();
-        Assert.assertNotNull("When last seen is not null", date);
-        Assert.assertEquals("Status is SEEN", RailCom.SEEN, r.getState());
-        Assert.assertTrue("Time when last seen is later than 'timeBefore'", date.after(timeBefore));
-        Assert.assertTrue("Time when last seen is earlier than 'timeAfter'", date.before(timeAfter));
+        assertNotNull( date, "When last seen is not null");
+        assertEquals( RailCom.SEEN, r.getState(), "Status is SEEN");
+        assertTrue( date.after(timeBefore), "Time when last seen is later than 'timeBefore'");
+        assertTrue( date.before(timeAfter), "Time when last seen is earlier than 'timeAfter'");
 
         r.setWhereLastSeen(null);
-        Assert.assertTrue("Time when last seen is later than 'timeBefore'", date.after(timeBefore));
-        Assert.assertTrue("Time when last seen is earlier than 'timeAfter'", date.before(timeAfter));
-        Assert.assertEquals("After setWhereLastSeen(null), RailCom status is UNSEEN", RailCom.UNSEEN, r.getState());
+        assertTrue( date.after(timeBefore), "Time when last seen is later than 'timeBefore'");
+        assertTrue( date.before(timeAfter), "Time when last seen is earlier than 'timeAfter'");
+        assertEquals( RailCom.UNSEEN, r.getState(), "After setWhereLastSeen(null), RailCom status is UNSEEN");
 
     }
     
     @Test
     public void testGetSetOrientation(){
         RailCom r = new DefaultRailCom("ID0415556BC1");
-        Assert.assertEquals("getorientation is UNKNOWN at start", Sensor.UNKNOWN , r.getOrientation());
-        r.setOrientation(RailCom.ORIENTA);
-        Assert.assertEquals("getorientation is RailCom.ORIENTA", RailCom.ORIENTA , r.getOrientation());
+        assertEquals( RailCom.Orientation.UNKNOWN , r.getOrientation(), "getorientation is UNKNOWN at start");
+        r.setOrientation(RailCom.Orientation.EAST);
+        assertEquals( RailCom.Orientation.EAST , r.getOrientation(), "getorientation is RailCom.EAST");
     }
 
     @Test
     public void testGetSetActualSpeed(){
         RailCom r = new DefaultRailCom("ID0415556BC2");
-        Assert.assertEquals("ActualSpeed is UNKNOWN at start", -1 , r.getActualSpeed());
+        assertEquals( -1 , r.getActualSpeed(), "ActualSpeed is UNKNOWN at start");
         r.setActualSpeed(44);
-        Assert.assertEquals("ActualSpeed is 44", 44 , r.getActualSpeed());
+        assertEquals( 44 , r.getActualSpeed(), "ActualSpeed is 44");
     }
 
     @Test
     public void testGetSetActualLoad(){
         RailCom r = new DefaultRailCom("ID0415556BC3");
-        Assert.assertEquals("ActualLoad is UNKNOWN at start", -1 , r.getActualLoad());
+        assertEquals( -1 , r.getActualLoad(), "ActualLoad is UNKNOWN at start");
         r.setActualLoad(3);
-        Assert.assertEquals("ActualLoad is 3", 3 , r.getActualLoad());
+        assertEquals( 3 , r.getActualLoad(), "ActualLoad is 3");
     }
 
     @Test
     public void testGetSetActualTemperature(){
         RailCom r = new DefaultRailCom("ID0415556BC4");
-        Assert.assertEquals("ActualTemperature is UNKNOWN at start", -1 , r.getActualTemperature());
+        assertEquals( -1 , r.getActualTemperature(), "ActualTemperature is UNKNOWN at start");
         r.setActualTemperature(4);
-        Assert.assertEquals("ActualTemperature is 4", 4 , r.getActualTemperature());
+        assertEquals( 4 , r.getActualTemperature(), "ActualTemperature is 4");
     }
 
     @Test
     public void testGetSetWaterLevel(){
         RailCom r = new DefaultRailCom("ID0415556BC5");
-        Assert.assertEquals("WaterLevel is UNKNOWN at start", -1 , r.getWaterLevel());
+        assertEquals( -1 , r.getWaterLevel(), "WaterLevel is UNKNOWN at start");
         r.setWaterLevel(5);
-        Assert.assertEquals("WaterLevel is 5", 5 , r.getWaterLevel());
+        assertEquals( 5 , r.getWaterLevel(), "WaterLevel is 5");
     }
 
     @Test
     public void testGetSetFuelLevel(){
         RailCom r = new DefaultRailCom("ID0415556BC6");
-        Assert.assertEquals("FuelLevel is UNKNOWN at start", -1 , r.getFuelLevel());
+        assertEquals( -1 , r.getFuelLevel(), "FuelLevel is UNKNOWN at start");
         r.setFuelLevel(6);
-        Assert.assertEquals("FuelLevel is 6", 6 , r.getFuelLevel());
+        assertEquals( 6 , r.getFuelLevel(), "FuelLevel is 6");
     }
 
     @Test
     public void testGetSetLocation(){
         RailCom r = new DefaultRailCom("ID0415556BC7");
-        Assert.assertEquals("Location is UNKNOWN at start", -1 , r.getLocation());
+        assertEquals( -1 , r.getLocation(), "Location is UNKNOWN at start");
         r.setLocation(7);
-        Assert.assertEquals("Location is 7", 7 , r.getLocation());
+        assertEquals( 7 , r.getLocation(), "Location is 7");
     }
 
     @Test
     public void testGetSetRoutingNo(){
         RailCom r = new DefaultRailCom("ID0415556BD1");
-        Assert.assertEquals("RoutingNo is UNKNOWN at start", -1 , r.getRoutingNo());
+        assertEquals( -1 , r.getRoutingNo(), "RoutingNo is UNKNOWN at start");
         r.setRoutingNo(8);
-        Assert.assertEquals("RoutingNo is 8", 8 , r.getRoutingNo());
+        assertEquals( 8 , r.getRoutingNo(), "RoutingNo is 8");
     }
 
     @Test
     public void testGetSetExpectedCv(){
         RailCom r = new DefaultRailCom("ID0415556BD2");
-        Assert.assertEquals("ExpectedCv is UNKNOWN at start", -1 , r.getExpectedCv());
+        assertEquals( -1 , r.getExpectedCv(), "ExpectedCv is UNKNOWN at start");
         r.setExpectedCv(9);
-        Assert.assertEquals("ExpectedCv is 9", 9 , r.getExpectedCv());
+        assertEquals( 9 , r.getExpectedCv(), "ExpectedCv is 9");
     }
 
     @Test
     public void testToReportString(){
         DefaultRailCom r = new DefaultRailCom("ID1234");
-        Assert.assertEquals("Basic Report String", "Unknown Orientation Address 1234(L) " , r.toReportString());
+        assertEquals( "Address 1234(L) Unknown Orientation " , r.toReportString(), "Basic Report String");
 
-        r.setOrientation(RailCom.ORIENTA);
-        Assert.assertEquals("Report String ORIENTA", "Orientation A Address 1234(L) " , r.toReportString());
+        r.setOrientation(RailCom.Orientation.EAST);
+        assertEquals( "Address 1234(L) East " , r.toReportString(), "Report String EAST");
 
-        r.setOrientation(RailCom.ORIENTB);
-        Assert.assertEquals("Report String ORIENTB", "Orientation B Address 1234(L) " , r.toReportString());
+        r.setOrientation(RailCom.Orientation.WEST);
+        assertEquals( "Address 1234(L) West " , r.toReportString(), "Report String WEST");
 
         r.setWaterLevel(2);
         r.setFuelLevel(3);
@@ -192,14 +196,13 @@ public class DefaultRailComTest {
         r.setActualTemperature(6);
         r.setActualLoad(7);
         r.setActualSpeed(8);
-        Assert.assertEquals("Report String ORIENTB", 
-            "Orientation B Address 1234(L) Water 2 Fuel 3 Location : 4 Routing No : 5 Temperature : 6 Load : 7 Speed : 8 "
-            , r.toReportString());
+        assertEquals( "Address 1234(L) West Water 2 Fuel 3 Location : 4 Routing No : 5 Temperature : 6 Load : 7 Speed : 8 "
+            , r.toReportString(), "Report String WEST");
 
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
@@ -208,8 +211,8 @@ public class DefaultRailComTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
-        JUnitUtil.clearShutDownManager(); // would be better to check and clean up specifics in tests
+    public void tearDown() {
+        InstanceManager.getDefault( IdTagManager.class).dispose();
         JUnitUtil.tearDown();
     }
 

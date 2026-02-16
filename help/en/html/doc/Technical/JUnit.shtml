@@ -220,7 +220,9 @@ suite.<br>
       <dl>
         <dt>jmri.skipschematests</dt>
 
-        <dd>If true, JUnit tests will skip checking the schema of all the test XML files.</dd>
+        <dd>If true, JUnit tests will skip checking the schema of XML files
+            including decoder definitions, signal system definitions, and
+            some test panel files.</dd>
 
         <dt>jmri.skipjythontests</dt>
 
@@ -234,8 +236,8 @@ suite.<br>
 
         <dt>jmri.util.JUnitUtil.checkSetUpTearDownSequence</dt>
 
-        <dd>If true, check for whether JUnitUtil.setUp() and JUnitUtil.teardown() follow each other
-        int the proper sequence. Print a message if not. (This slows execution a bit due to the
+        <dd>If true, check for whether JUnitUtil.setUp() and JUnitUtil.tearDown() follow each other
+        in the proper sequence. Print a message if not. (This slows execution a bit due to the
         time needed to keep history for the message)</dd>
 
         <dt>jmri.util.JUnitUtil.checkSequenceDumpsStack</dt>
@@ -243,6 +245,11 @@ suite.<br>
         <dd>If true, makes jmri.util.JUnitUtil.checkSetUpTearDownSequence more verbose by also
         including the current stack trace along with the traces of the most recent setUp and
         tearDown calls.</dd>
+
+        <dt>jmri.util.JUnitUtil.checkSequenceFailsTest</dt>
+
+        <dd>If true, makes jmri.util.JUnitUtil.checkSetUpTearDownSequence more strict by also
+        failing the current test if the setUp/tearDown sequence isn't followed.</dd>
 
         <dt>jmri.util.JUnitUtil.checkRemnantThreads</dt>
 
@@ -456,13 +463,13 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
 
     /**
      * Tests for the Foo Class
-     * @author  Your Name   Copyright (C) 2022
+     * @author  Your Name   Copyright (C) 2026
      */
     public class FooTest {
 
         @Test
         public void testCtor() {
-            Assertions.AssertNotNull( new foo(), "Foo Constructor Return");
+            Assertions.assertNotNull( new foo(), "Foo Constructor Return");
         }
 
         @BeforeEach
@@ -554,11 +561,11 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
 
           <pre style="font-family: monospace;">
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 </pre>
@@ -915,14 +922,20 @@ error.
       Assert</a> class tools.
 
       <h2 id="testSwingCode">Testing Swing Code</h2>
-      AWT and Swing code runs on a separate thread from JUnit tests. Once a Swing or AWT object has
-      been displayed (via <code>show()</code> or <code>setVisible(true)</code>), it cannot be
-      reliably accessed from the JUnit thread. Even using the listener delay technique described
-      above isn't reliable.
-      <p>For the simplest possible test, displaying a window for manual interaction, it's OK to
-      create and invoke a Swing object from a JUnit test. Just don't try to interact with it once
-      it's been displayed!</p>
-
+      AWT and Swing code runs on a separate thread from JUnit tests. The Java documentation
+      has always said that it is only safe to create and manipulate Swing objects from the Swing/AWT thread, 
+      with only minor exceptions.  
+      
+      <p>The lore for early Java versions was that it was
+      OK to create and manipulate a Swing object off the Swing/AWT thread, e.g. on the 
+      JUnit thread, <u>until</u> the enclosing frame was displayed via 
+      <code>show()</code> or <code>setVisible(true)</code>.  Starting with Java
+      23, this lore is explicitly <u>not</u> true.  As that will someday (not today) be
+      a supported version for JMRI, as you write new tests please move your Swing
+      object manipulations to the Swing/AWT thread. The most straight-forward
+      way to do that is to use the 
+      <a href="Threads.shtml">ThreadingUtil class</a>.
+ 
       <p>Because we run tests in "headless" mode during the <a href=
       "ContinuousIntegration.shtml">continuous integration builds</a>, it's important that test methods
       or classes needing access to the screen are annotated with:</p>

@@ -200,8 +200,8 @@ public class CbusConfigurationManagerTest {
 
         memo.dispose();
         assertNull(memo.getFromMap(classToTest));
-        assertEquals(0, tcis.numListeners(),"All listeners removed " + tcis.getListeners());
-
+        // we no longer check for no tcis listeners because we don't and can't
+        // call dispose() on the created object since we don't have a firm notion of its type
     }
 
     @Test

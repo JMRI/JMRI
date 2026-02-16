@@ -1,5 +1,15 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
@@ -13,10 +23,9 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ExpressionSection
@@ -81,79 +90,68 @@ public class ExpressionSectionTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testCtor() throws JmriException {
         ExpressionSection expression2;
-        Assert.assertNotNull("section is not null", section1);
+        assertNotNull( section1, "section is not null");
         section1.setState(Section.FREE);
 
         expression2 = new ExpressionSection("IQDE321", null);
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Section \"''\" is Free", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
+        assertEquals( "Section \"''\" is Free", expression2.getLongDescription(), "String matches");
 
         expression2 = new ExpressionSection("IQDE321", "My Section");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My Section", expression2.getUserName());
-        Assert.assertEquals("String matches", "Section \"''\" is Free", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My Section", expression2.getUserName(), "Username matches");
+        assertEquals( "Section \"''\" is Free", expression2.getLongDescription(), "String matches");
 
         expression2 = new ExpressionSection("IQDE321", null);
         expression2.getSelectNamedBean().setNamedBean(section1);
-        Assert.assertTrue("section is correct", section1 == expression2.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Section \"section1\" is Free", expression2.getLongDescription());
+        assertSame( section1, expression2.getSelectNamedBean().getNamedBean().getBean(), "section is correct");
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
+        assertEquals( "Section \"section1\" is Free", expression2.getLongDescription(), "String matches");
 
         Section t = InstanceManager.getDefault(SectionManager.class).createNewSection("section2");
         expression2 = new ExpressionSection("IQDE321", "My section");
         expression2.getSelectNamedBean().setNamedBean(t);
-        Assert.assertTrue("section is correct", t == expression2.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My section", expression2.getUserName());
-        Assert.assertEquals("String matches", "Section \"section2\" is Free", expression2.getLongDescription());
+        assertSame( t, expression2.getSelectNamedBean().getNamedBean().getBean(), "section is correct");
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My section", expression2.getUserName(), "Username matches");
+        assertEquals( "Section \"section2\" is Free", expression2.getLongDescription(), "String matches");
 
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            new ExpressionSection("IQE55:12:XY11", null);
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () -> {
+            var es = new ExpressionSection("IQE55:12:XY11", null);
+            fail("Not thrown, created " + es);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            new ExpressionSection("IQE55:12:XY11", "A name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows( IllegalArgumentException.class, () -> {
+            var es = new ExpressionSection("IQE55:12:XY11", "A name");
+            fail("Not thrown, created " + es);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == expressionSection.getChildCount());
+        assertEquals( 0, expressionSection.getChildCount(), "getChildCount() returns 0");
 
-        boolean hasThrown = false;
-        try {
-            expressionSection.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class, () ->
+            expressionSection.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
     @Test
     public void testSectionState() {
-        Assert.assertEquals("String matches", "Free", ExpressionSection.SectionState.Free.toString());
-        Assert.assertEquals("String matches", "Forward", ExpressionSection.SectionState.Forward.toString());
+        assertEquals( "Free", ExpressionSection.SectionState.Free.toString(), "String matches");
+        assertEquals( "Forward", ExpressionSection.SectionState.Forward.toString(), "String matches");
 
-        Assert.assertEquals("ID matches", Section.FREE, ExpressionSection.SectionState.Free.getID());
-        Assert.assertEquals("ID matches", Section.FORWARD, ExpressionSection.SectionState.Forward.getID());
+        assertEquals( Section.FREE, ExpressionSection.SectionState.Free.getID(), "ID matches");
+        assertEquals( Section.FORWARD, ExpressionSection.SectionState.Forward.getID(), "ID matches");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", LogixNG_Category.ITEM == _base.getCategory());
+        assertSame( LogixNG_Category.ITEM, _base.getCategory(), "Category matches");
     }
 
     @Test
@@ -162,16 +160,16 @@ public class ExpressionSectionTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
 
         expressionSection.getSelectNamedBean().removeNamedBean();
-        Assert.assertEquals("Section", expressionSection.getShortDescription());
-        Assert.assertEquals("Section \"''\" is Free", expressionSection.getLongDescription());
+        assertEquals("Section", expressionSection.getShortDescription());
+        assertEquals("Section \"''\" is Free", expressionSection.getLongDescription());
         expressionSection.getSelectNamedBean().setNamedBean(section1);
         expressionSection.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionSection.getSelectEnum().setEnum(ExpressionSection.SectionState.Free);
-        Assert.assertEquals("Section \"section1\" is Free", expressionSection.getLongDescription());
+        assertEquals("Section \"section1\" is Free", expressionSection.getLongDescription());
         expressionSection.set_Is_IsNot(Is_IsNot_Enum.IsNot);
-        Assert.assertEquals("Section \"section1\" is not Free", expressionSection.getLongDescription());
+        assertEquals("Section \"section1\" is not Free", expressionSection.getLongDescription());
         expressionSection.getSelectEnum().setEnum(ExpressionSection.SectionState.Forward);
-        Assert.assertEquals("Section \"section1\" is not Forward", expressionSection.getLongDescription());
+        assertEquals("Section \"section1\" is not Forward", expressionSection.getLongDescription());
     }
 
     @Test
@@ -191,32 +189,32 @@ public class ExpressionSectionTest extends AbstractDigitalExpressionTestBase {
         section1.setState(Section.FREE);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
 
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
 
         // Change the section twice to trigger the "then" state
         section1.setState(Section.FORWARD);
         section1.setState(Section.FREE);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        assertTrue( atomicBoolean.get(), "atomicBoolean is true");
 
         // Clear the atomic boolean.
         atomicBoolean.set(false);
         // Change the section to trigger the "else" state.
         section1.setState(Section.FORWARD);
         // The action should now be executed so the atomic boolean should still be false since the action is the else.
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
 
         // Test IS_NOT
         expressionSection.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         // Create two events to trigger on change to the "then" state.
         section1.setState(Section.FREE);
         section1.setState(Section.FORWARD);
-        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        assertTrue( atomicBoolean.get(), "atomicBoolean is true");
     }
 
     @Test
@@ -224,53 +222,44 @@ public class ExpressionSectionTest extends AbstractDigitalExpressionTestBase {
         expressionSection.unregisterListeners();
 
         Section otherSection = InstanceManager.getDefault(SectionManager.class).createNewSection("sectionX");
-        Assert.assertNotEquals("Sections are different", otherSection, expressionSection.getSelectNamedBean().getNamedBean().getBean());
+        assertNotEquals( otherSection, expressionSection.getSelectNamedBean().getNamedBean().getBean(), "Sections are different");
         expressionSection.getSelectNamedBean().setNamedBean(otherSection);
-        Assert.assertEquals("Sections are equal", otherSection, expressionSection.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( otherSection, expressionSection.getSelectNamedBean().getNamedBean().getBean(), "Sections are equal");
 
         NamedBeanHandle<Section> otherSectionHandle =
                 InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(otherSection.getDisplayName(), otherSection);
         expressionSection.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull("Section is null", expressionSection.getSelectNamedBean().getNamedBean());
+        assertNull( expressionSection.getSelectNamedBean().getNamedBean(), "Section is null");
         expressionSection.getSelectNamedBean().setNamedBean(otherSectionHandle);
-        Assert.assertEquals("Sections are equal", otherSection, expressionSection.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertEquals("SectionHandles are equal", otherSectionHandle, expressionSection.getSelectNamedBean().getNamedBean());
+        assertEquals( otherSection, expressionSection.getSelectNamedBean().getNamedBean().getBean(), "Sections are equal");
+        assertEquals( otherSectionHandle, expressionSection.getSelectNamedBean().getNamedBean(), "SectionHandles are equal");
     }
 
     @Test
     public void testSetSectionException() {
-        Assert.assertNotNull("Section is not null", section1);
-        Assert.assertNotNull("Section is not null", expressionSection.getSelectNamedBean().getNamedBean());
+        assertNotNull( section1, "Section is not null");
+        assertNotNull( expressionSection.getSelectNamedBean().getNamedBean(), "Section is not null");
         expressionSection.registerListeners();
-        boolean thrown = false;
-        try {
-            expressionSection.getSelectNamedBean().setNamedBean("A section");
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        RuntimeException exc = assertThrows( RuntimeException.class, () ->
+            expressionSection.getSelectNamedBean().setNamedBean("A section"),
+                "Expected exception thrown");
+        assertNotNull(exc);
         JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
-        thrown = false;
-        try {
+        exc = assertThrows( RuntimeException.class, () -> {
             Section section99 = InstanceManager.getDefault(SectionManager.class).createNewSection("section99");
             NamedBeanHandle<Section> sectionHandle99 =
                     InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(section99.getDisplayName(), section99);
             expressionSection.getSelectNamedBean().setNamedBean(sectionHandle99);
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        }, "Expected exception thrown");
+        assertNotNull(exc);
         JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
-        thrown = false;
-        try {
-            expressionSection.getSelectNamedBean().removeNamedBean();
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        exc = assertThrows( RuntimeException.class, () ->
+            expressionSection.getSelectNamedBean().removeNamedBean(),
+                "Expected exception thrown");
+        assertNotNull(exc);
         JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
     }
 
@@ -288,46 +277,42 @@ public class ExpressionSectionTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
 
         // Get the expressionSection and set the section
-        Assert.assertNotNull("Section is not null", section1);
+        assertNotNull( section1, "Section is not null");
         expressionSection.getSelectNamedBean().setNamedBean(section1);
 
         // Get some other section for later use
         Section otherSection = InstanceManager.getDefault(SectionManager.class).createNewSection("sectionQ");
-        Assert.assertNotNull("Section is not null", otherSection);
-        Assert.assertNotEquals("Section is not equal", section1, otherSection);
+        assertNotNull( otherSection, "Section is not null");
+        assertNotEquals( section1, otherSection, "Section is not equal");
 
         // Test vetoableChange() for some other propery
         expressionSection.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Section matches", section1, expressionSection.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( section1, expressionSection.getSelectNamedBean().getNamedBean().getBean(), "Section matches");
 
         // Test vetoableChange() for a string
         expressionSection.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Section matches", section1, expressionSection.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( section1, expressionSection.getSelectNamedBean().getNamedBean().getBean(), "Section matches");
         expressionSection.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Section matches", section1, expressionSection.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( section1, expressionSection.getSelectNamedBean().getNamedBean().getBean(), "Section matches");
 
         // Test vetoableChange() for another section
         expressionSection.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherSection, null));
-        Assert.assertEquals("Section matches", section1, expressionSection.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( section1, expressionSection.getSelectNamedBean().getNamedBean().getBean(), "Section matches");
         expressionSection.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherSection, null));
-        Assert.assertEquals("Section matches", section1, expressionSection.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( section1, expressionSection.getSelectNamedBean().getNamedBean().getBean(), "Section matches");
 
         // Test vetoableChange() for its own section
-        boolean thrown = false;
-        try {
-            expressionSection.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", section1, null));
-        } catch (PropertyVetoException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        PropertyVetoException exc = assertThrows( PropertyVetoException.class, () ->
+            expressionSection.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", section1, null)),
+                "Expected exception thrown");
+        assertNotNull(exc);
 
-        Assert.assertEquals("Section matches", section1, expressionSection.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( section1, expressionSection.getSelectNamedBean().getNamedBean().getBean(), "Section matches");
         expressionSection.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", section1, null));
-        Assert.assertNull("Section is null", expressionSection.getSelectNamedBean().getNamedBean());
+        assertNull( expressionSection.getSelectNamedBean().getNamedBean(), "Section is null");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -368,12 +353,12 @@ public class ExpressionSectionTest extends AbstractDigitalExpressionTestBase {
         section1 = InstanceManager.getDefault(SectionManager.class).createNewSection("section1");
         expressionSection.getSelectNamedBean().setNamedBean(section1);
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

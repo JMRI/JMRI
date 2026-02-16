@@ -84,6 +84,9 @@
         earlier. They can't be changed. The Date Modified value is updated automatically when you
         save the entry to the roster. After the first time you do that, the filename entry will
         appear.</li>
+
+        <li><a href="../../../../../html/apps/DecoderPro/Roster.shtml#loco_data">Locomotive Data</a>
+        is an advanced feature.<span class="since">since 5.15.4</span></li>
       </ul>
 
       <p>The Save button stores the current decoder information to your Roster folder. The default
@@ -123,12 +126,12 @@
       Manufacture. JMRI uses these to identify the decoder.</p>
 
       <h3 id="Function">Function Labels Tab</h3>
-      
+
       For more on the Function Labels tab, please see
       <a href="https://www.jmri.org/help/en/manual/DecoderPro3/Adv_FunctionLabel.shtml">this page</a> on the web.
 
       <h3 id="Media">Roster Media Tab</h3>
-      
+
       For more on the Roster Media tab, please see
       <a href="https://www.jmri.org/help/en/html/tools/throttle/RostersMediaPane.shtml">this page</a> on the web.
 

@@ -2,27 +2,28 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: DecoderPro 3</title>
+  <title>JMRI: DecoderPro</title>
   <meta name="author" content="Nigel Cliffe">
-  <meta name="keywords" content="JMRI help DecoderPro 3"><!--#include virtual="/help/en/parts/Style.shtml" -->
+  <meta name="keywords" content="JMRI help DecoderPro">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-      <h1>Introduction to DecoderPro 3</h1>
+      <h1>Introduction to DecoderPro</h1>
 
       <p><strong>THIS HELP FILE IS WORK IN PROGRESS</strong>. Please help JMRI by contributing to
       improve this help file !</p>
 
-      <p>DecoderPro 3 presents a list of your locomotives (the Roster) and provides access to tools
+      <p>DecoderPro presents a list of your locomotives (the Roster) and provides access to tools
       for programming decoder configuration variables (CV's). Some stationary decoders can also be
       added to this database.</p>
 
-      <h2>Description of DecoderPro 3 Window</h2>
+      <h2>Description of DecoderPro Window</h2>
 
-      <p>The DecoderPro 3 Window is divided into five main sections from top to bottom.</p>
+      <p>The DecoderPro Window is divided into five main sections from top to bottom.</p>
       <img src="../../images/Dp3Roster.png" width="509" height="265" alt="Roster Window">
       <ol>
         <li>
@@ -43,17 +44,17 @@
         posted here.</li>
       </ol>
 
-      <h2>Main Tasks with DecoderPro 3</h2>
+      <h2>Main Tasks with DecoderPro</h2>
 
-      <p>DecoderPro 3 is designed for the management of DCC decoders fitted to locomotives. The
-      locomotives known to DecoderPro 3 are displayed in the Roster Table. The anticipated main
+      <p>DecoderPro is designed for the management of DCC decoders fitted to locomotives. The
+      locomotives known to DecoderPro are displayed in the Roster Table. The anticipated main
       tasks are: creating a new locomotive and changing the settings in an existing locomotive
       (programming).</p>
 
       <h3>New Locomotive</h3>
 
       <p>To add a new locomotive (or first locomotive, or stationary decoder), click on the
-      "New Loco" button on the Tool Bar.<br>
+      "New Entry" button on the Tool Bar.<br>
       This will open a "Create New Loco" window, where the decoder can be either identified or
       selected from the list. To create the locomotive, having selected (or identified) a decoder,
       select the Programmer format (Basic or Comprehensive) and click "Open Programmer". A
@@ -63,14 +64,75 @@
       tab), and set other values. On closing the Programming window, if prompted, save the results
       into the Roster.</p>
 
-      <h3>Identify Existing Locomotive</h3>
+      <h3>Identifying An Existing Locomotive Entry</h3>
 
-      <p>If a locomotive is placed on the Programming Track, the "Identify" button will read
+      <p>If a locomotive is placed on the Programming Track, the "Find in Roster" button will read
       details from the decoder and try to match it to an entry in the Roster Table. Some decoders
       only work with a limited range of programming modes, and it may be necessary to change the
       programming mode with the "Programming Mode" drop down list.<br>
       If a locomotive is correctly identified, it will be highlighted in the Roster Table, and its
       details will appear in the lower Decoder Information Area.</p>
+
+      <h3>Using the Roster Table</h3>
+      
+      The Roster Table shows one row for each locomotive in your roster.
+      There are several things you can do with the table entries:
+      <h4>Change some fields of the entry</h4>
+        You can directly edit the contents of some of the fields, 
+        such as the Owner, Road Number, Manufacturer, Model and Comment.
+        Click in a field to show an edit cursor, then type your changes.
+        Hit the Return or Enter key to save your changes.
+        <p>
+        The comment field and the user-added fields can accept multi-line
+        text.  To create a new line, type ctrl-Return or alt-Return.
+        As usual, you hit Return or Enter with no modifiers when you're done editing.
+        <p>
+        <b>Note:</b> As of February 2026, the cell height doesn't expand to show
+        the new lines you've typed with ctrl-Return or alt-Return until
+        you've saved your changes by hitting Enter or Return.
+        Unfortunately, you have to type your changes in blind and 
+        then hit Enter/Return to see them, and correct them as needed.
+        We're working on a fix for this.
+      
+      <h4>Sort by Values and Rearrange Columns</h4>
+        To sort by the contents of a column, click the heading at the top of the 
+        column.  Click again to sort in the opposite order.
+        <p>
+        You can change the size of a column by pressing-and-dragging the line
+        between the column headings.  You can move columns around by pressing-and-dragging
+        in the center center of the heading.
+        <p>
+        To hide or show columns, right-press or ctrl-press on a column heading.
+        This will show you a contextual menu where you can check the boxes by the columns
+        you want to see, and uncheck the columns you don't want to see.
+        
+      <h4>Add New Columns for  User Data</h4>
+        You can add additional columns if there's some other 
+        information you'd like to keep  track of.  For example, 
+        you might want to keep track of the driver layout (0-4-0, 2-6-2, etc)
+        for a steam locomotive.  To create a new column:
+        <ul>
+            <li>Select the first locomotive you'd like to 
+                add a value to.
+            <li>Click "Labels & Media", then open the "Roster Media" tab
+            <li>In the bottom part of that tab,  there's a 
+                two column table.  The last of the entries in the right
+                column will be "...".  
+            <li>Click on that cell and type the name of your new column. 
+                Hit the Return or Enter key.
+            <li>Click on the cell to the right of that and enter a value
+                for this locomotive in this new column you're adding.
+                Hit the Return or Enter key.
+            <li>Click "Save" at the bottom.
+            <li>Quit and restart DecoderPro
+            <li>Your new column should show in the Roster Table.  You may
+                have to drag the content to the right to see it, or
+                ctrl-click/right-click on one of the column headers to 
+                set it to visible.
+        </ul>
+        Once you've created the new column, you can edit the contents
+        directly in the Roster Table, or by going back to the 
+        "Roster Media" tab.
 
       <h3>Programming an existing Locomotive</h3>
 
@@ -99,17 +161,27 @@
       <p>Roster Groups are a means of filtering your entries in the Roster. For example, you might
       have "diesel locos", "steam locos", but also "Burlington Locos" and "Canadian Pacific Locos".
       Thus a single locomotive in the Roster could be a member of several groups. Roster Groups are
-      used to filter the Roster View in DecoderPro 3, and select the locomotives offered in an
+      used to filter the Roster View in DecoderPro, and select the locomotives offered in an
       on-screen Throttle.</p>
 
       <p>To create your first Roster Group, use the "Create Roster Group" command on the "Settings"
       menu. When you have created a Roster Group, a new drop-list is added to the Tool Bar in
-      DecoderPro 3. Having created a group, it is initially empty. The next step is to add
-      locomotives to the group. This is done with the "Roster Group Table Association" command on
-      the "Settings" menu. With the "Roster Group Table" window, select the Roster Group in the
+      DecoderPro. Having created a group, it is initially empty. The next step is to add
+      locomotives to the group.  You can drag and drop a selected (highlighted line)
+      locomotive from the table and drop it on the group you want to include it in.
+      
+      <p>If you want to add a number of locomotives to a group.
+      the "Roster Group Table Association" command on
+      the "Settings" menu is a convenient tool. 
+      With the "Roster Group Table" window, select the Roster Group in the
       drop-menu, and then place a tick alongside all locomotives requires in that group. Repeat for
       any other groups, and when finished close the window with the close-box in the upper
       right-hand corner.</p>
+      
+      <p>You can also add locomotives to groups one at a time using the 
+      "Add Roster Entry to Group..." entry in the "Settings" menu. 
+      Or you can right-press or ctrl-press on a selected line in the 
+      table to get a pop-up menu that contains an "Add to Group..." item.
 
       <h2 id="menubar">Menu Bar</h2>
 
@@ -150,6 +222,8 @@
 
         <li>------------------</li>
 
+        <li>Print Displayed Roster Table</li>
+        
         <li>Print Roster -&gt;
           <ul>
             <li>Selected entry</li>
@@ -182,11 +256,11 @@
 
         <li>-----------</li>
 
-        <li>New Loco...</li>
+        <li>New Entry...</li>
 
-        <li>Duplicate Loco</li>
+        <li>Duplicate Entry</li>
 
-        <li>Delete Loco</li>
+        <li>Delete Entry</li>
 
         <li>-----------</li>
 
@@ -282,7 +356,7 @@
       <h3>Command Station Specific menu</h3>
 
       <p>A menu will appear for the command station connected to JMRI. The command station is set
-      in the Preferences. The content of this menu will be specific to your command station.</p>
+      in the Preferences. The content of this menu will be specific to your command station type.</p>
 
       <h3>Window menu</h3>
 
@@ -291,6 +365,10 @@
       <h3>Help menu</h3>
 
       <p>Window Help opens this page.</p>
+      
+      The tool bar is initially at the top of the DecoderPro window.
+      By grabbing the left end  with your mouse, you can move it to 
+      other places on the screen as desired.
 
       <h2 id="toolbar">Tool Bar</h2>
 
@@ -298,13 +376,17 @@
 
       <p>Opens this page.</p>
 
-      <h3>New Loco button</h3>
+      <h3>New Entry button</h3>
 
       <p>Opens Service Mode Programmer Decoder selection Screen.</p>
 
-      <h3>Identify button</h3>
+      <h3>Find in Roster button</h3>
 
       <p>Attempts to identify the loco on the Programming track.</p>
+
+      <h3>Print Table button</h3>
+
+      <p>Prints the current contents of the roster table.</p>
 
       <h3>Programming mode drop down</h3>
 

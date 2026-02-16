@@ -1,13 +1,11 @@
 package jmri.jmrit.logixng.implementation.swing;
 
-import java.io.IOException;
-
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
- * Test LogixNGPreferences
+ * Test DefaultMaleAnalogExpressionSocketSwing
  *
  * @author Daniel Bergqvist 2020
  */
@@ -16,12 +14,11 @@ public class DefaultMaleAnalogExpressionSocketSwingTest {
     @Test
     public void testCtor() {
         DefaultMaleAnalogExpressionSocketSwing obj = new DefaultMaleAnalogExpressionSocketSwing();
-        Assert.assertNotNull(obj);
+        Assertions.assertNotNull(obj);
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() throws IOException {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
@@ -30,7 +27,7 @@ public class DefaultMaleAnalogExpressionSocketSwingTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

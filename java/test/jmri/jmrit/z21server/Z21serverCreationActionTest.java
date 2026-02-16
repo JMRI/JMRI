@@ -2,7 +2,6 @@ package jmri.jmrit.z21server;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class Z21serverCreationActionTest {
     @Test
     public void testCTor() {
         Z21serverCreationAction t = new Z21serverCreationAction();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.tools;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 
 import jmri.*;
@@ -8,10 +10,9 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test import of Logix to LogixNG.
@@ -66,11 +67,7 @@ public abstract class ImportActionTestBase {
 
 
     public void assertBoolean(String message, boolean expectSuccess, boolean result) {
-        if (expectSuccess) {
-            Assert.assertTrue(message, result);
-        } else {
-            Assert.assertFalse(message, result);
-        }
+        assertEquals( expectSuccess, result, message);
     }
 
     // This method is used by some tests that tests delayed actions
@@ -237,8 +234,7 @@ public abstract class ImportActionTestBase {
         check.runTest("LogixNG is removed", false);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -281,7 +277,7 @@ public abstract class ImportActionTestBase {
         conditional.setAction(actions);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         // JUnitAppender.clearBacklog();    REMOVE THIS!!!
 

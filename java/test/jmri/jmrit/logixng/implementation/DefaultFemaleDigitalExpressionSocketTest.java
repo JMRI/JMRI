@@ -15,8 +15,6 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 /**
@@ -145,8 +143,6 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
             "maps are equal");
     }
 
-    // The minimal setup for log4J
-    @Before
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -178,7 +174,6 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         }, "E1");
     }
 
-    @After
     @AfterEach
     public void tearDown() {
 //        JUnitAppender.clearBacklog();   // REMOVE THIS!!!

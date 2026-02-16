@@ -1,9 +1,10 @@
 package jmri.jmrix.lenz;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -30,7 +31,8 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Override
     public void checkStatusRequestMsgSent() {
-        Assert.assertEquals("Sensor Status Request Sent", "42 05 80 C7", xnis.outbound.elementAt(0).toString());
+        assertEquals( "42 05 80 C7", xnis.outbound.elementAt(0).toString(),
+            "Sensor Status Request Sent");
     }
 
     // XNetSensor test for incoming status message
@@ -39,7 +41,7 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
         XNetReply m;
 
         // Verify this was created in UNKNOWN state
-        Assert.assertEquals(t.getKnownState(), Sensor.UNKNOWN);
+        assertEquals(Sensor.UNKNOWN, t.getKnownState() );
 
         // notify the Sensor that somebody else changed it...
         m = new XNetReply();
@@ -51,7 +53,7 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
         m.setElement(3, 0x05);     // The XOR of everything above
         ((XNetSensor) t).message(m);
         jmri.util.JUnitUtil.waitFor(() -> t.getState() == t.getRawState(), "raw state = state");
-        Assert.assertEquals("Known state after activate ", jmri.Sensor.ACTIVE, t.getKnownState());
+        assertEquals( Sensor.ACTIVE, t.getKnownState(), "Known state after activate ");
 
         m = new XNetReply();
         m.setElement(0, 0x42);     // Opcode for feedback response
@@ -62,17 +64,17 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
         m.setElement(3, 0x07);     // The XOR of everything above
         ((XNetSensor) t).message(m);
 
-        Assert.assertEquals("Known state after inactivate ", jmri.Sensor.INACTIVE, t.getKnownState());
+        assertEquals( Sensor.INACTIVE, t.getKnownState(), "Known state after inactivate ");
 
     }
 
     // XNetSensor test for setting state
     @Test
     public void testXNetSensorSetState() throws jmri.JmriException {
-        t.setKnownState(jmri.Sensor.ACTIVE);
-        Assert.assertEquals(t.getKnownState(), Sensor.ACTIVE);
+        t.setKnownState( Sensor.ACTIVE);
+        assertEquals( Sensor.ACTIVE, t.getKnownState());
         t.setKnownState(jmri.Sensor.INACTIVE);
-        Assert.assertEquals(t.getKnownState(), Sensor.INACTIVE);
+        assertEquals( Sensor.INACTIVE, t.getKnownState());
     }
 
     // XNetSensor test for outgoing status request
@@ -83,18 +85,20 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
         s.requestUpdateFromLayout();
         // check that the correct message was sent
-        Assert.assertEquals("Sensor Status Request Sent", "42 40 80 82", xnis2.outbound.elementAt(0).toString());
+        assertEquals( "42 40 80 82", xnis2.outbound.elementAt(0).toString(),
+            "Sensor Status Request Sent");
 
+        xnis2.terminateThreads();
     }
 
     @Override
     @Test
     public void testDispose() throws jmri.JmriException {
-        t.setState(jmri.Sensor.ACTIVE); // in case registration with TrafficController is deferred to after first use
-        Assert.assertEquals("controller listeners ", 1, numListeners());
+        t.setState( Sensor.ACTIVE); // in case registration with TrafficController is deferred to after first use
+        assertEquals( 1, numListeners(), "controller listeners ");
         t.dispose();
         // XPressNet leaves one listener after the dispose, should it?
-        Assert.assertEquals("controller listeners remaining", 1, numListeners());
+        assertEquals( 1, numListeners(), "controller listeners remaining");
     }
 
     @Override
@@ -109,8 +113,8 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @AfterEach
     public void tearDown() {
         t.dispose();
+        xnis.terminateThreads();
         xnis = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

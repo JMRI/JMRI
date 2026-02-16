@@ -6,16 +6,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-import org.junit.Assert;
+import jmri.*;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
 
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SignalMastManager;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
@@ -43,7 +41,7 @@ public class LoadAtStartUpTest {
     }
 
     @Test
-    public void testShowAndClose() throws Exception {
+    public void testShowAndClose() throws JmriConfigureXmlException, JmriException {
         // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
@@ -189,7 +187,8 @@ public class LoadAtStartUpTest {
 
         JUnitUtil.waitFor(2200);
         // check for next train note dcc name is original transit name has changed
-        Assert.assertEquals("Next Train Load","1000 / SouthPlatFormReturnToSouthCC", d.getActiveTrainsList().get(0).getActiveTrainName());
+        assertEquals( "1000 / SouthPlatFormReturnToSouthCC",
+            d.getActiveTrainsList().get(0).getActiveTrainName(), "Next Train Load");
         JUnitUtil.waitFor(2000);
         // its a new train.
         at = d.getActiveTrainsList().get(0);
@@ -231,6 +230,10 @@ public class LoadAtStartUpTest {
         aw.waitClosed();
         dw.requestClose();
         dw.waitClosed();
+
+        JFrameOperator le = new JFrameOperator("Test Layout");
+        JUnitUtil.dispose(le.getWindow());
+        le.waitClosed();
 
         // cleanup window
         JUnitUtil.dispose(d);
@@ -281,7 +284,7 @@ public class LoadAtStartUpTest {
 
 
     @BeforeEach
-    public void setUp(@TempDir File tempDir) throws Exception  {
+    public void setUp(@TempDir File tempDir) throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
         JUnitUtil.initTimeProviderManager();
@@ -292,41 +295,38 @@ public class LoadAtStartUpTest {
         // set up users files in temp tst area
         outBaseTrainInfo = new File(FileUtil.getUserFilesPath(), "dispatcher/traininfo");
         outBaseSignal = new File(FileUtil.getUserFilesPath(), "signal");
-        try {
-            FileUtil.createDirectory(outBaseTrainInfo);
-            {
-                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "TestTrainCW.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "TestTrainCW.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
-            }
-            {
-                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "TestTrainCW_Return.xml").toPath();
-                outPathTrainInfo3 = new File(outBaseTrainInfo, "TestTrainCW_Return.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo3, StandardCopyOption.REPLACE_EXISTING);
-            }
-            {
-                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "TestTrain.xml").toPath();
-                outPathTrainInfo2 = new File(outBaseTrainInfo, "TestTrain.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo2, StandardCopyOption.REPLACE_EXISTING);
-            }
-            FileUtil.createDirectory(outBaseSignal);
-            {
-                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/signal"),
-                        "WarrantPreferences.xml").toPath();
-                outPathWarrentPreferences = new File(outBaseSignal, "WarrantPreferences.xml").toPath();
-                Files.copy(inPath, outPathWarrentPreferences, StandardCopyOption.REPLACE_EXISTING);
-            }
-        } catch (IOException e) {
-            throw e;
+
+        FileUtil.createDirectory(outBaseTrainInfo);
+        {
+            Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "TestTrainCW.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "TestTrainCW.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+        }
+        {
+            Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "TestTrainCW_Return.xml").toPath();
+            outPathTrainInfo3 = new File(outBaseTrainInfo, "TestTrainCW_Return.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo3, StandardCopyOption.REPLACE_EXISTING);
+        }
+        {
+            Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "TestTrain.xml").toPath();
+            outPathTrainInfo2 = new File(outBaseTrainInfo, "TestTrain.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo2, StandardCopyOption.REPLACE_EXISTING);
+        }
+        FileUtil.createDirectory(outBaseSignal);
+        {
+            Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/signal"),
+                    "WarrantPreferences.xml").toPath();
+            outPathWarrentPreferences = new File(outBaseSignal, "WarrantPreferences.xml").toPath();
+            Files.copy(inPath, outPathWarrentPreferences, StandardCopyOption.REPLACE_EXISTING);
         }
 
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
 
         JUnitUtil.resetInstanceManager();
         JUnitUtil.clearShutDownManager();

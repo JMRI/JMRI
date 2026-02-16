@@ -27,8 +27,8 @@ import org.junit.jupiter.api.*;
     justification = "passing known null variables for clarity in constructors")
 public class SplitVariableValueTest extends AbstractVariableValueTestBase {
 
-    final String lowCV = "12";
-    final String highCV = "18";
+    static final String LOW_CV = "12";
+    static final String HIGH_CV = "18";
 
     // Local tests version of makeVar with settable parameters and cvList support.
     SplitVariableValue makeVar(String label, String comment, String cvName,
@@ -70,12 +70,12 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
             String cvNum, String mask, int minVal, int maxVal,
             HashMap<String, CvValue> v, JLabel status, String item) {
         // make sure next CV exists
-        CvValue cvNext = new CvValue(highCV, p);
+        CvValue cvNext = new CvValue(HIGH_CV, p);
         cvNext.setValue(0);
-        v.put(highCV, cvNext);
+        v.put(HIGH_CV, cvNext);
         return new SplitVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
                 cvNum, "XXXXVVVV", minVal, maxVal, v, status, item,
-                highCV, 1, 0, "VVVVVVVV", null, null, null, null);
+                HIGH_CV, 1, 0, "VVVVVVVV", null, null, null, null);
     }
 
     @Override
@@ -167,16 +167,16 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     @Test
     public void testSplitAddressFromCV1() {
         HashMap<String, CvValue> v = createCvMap();
-        CvValue cv1 = new CvValue(lowCV, p);
-        CvValue cv2 = new CvValue(highCV, p);
+        CvValue cv1 = new CvValue(LOW_CV, p);
+        CvValue cv2 = new CvValue(HIGH_CV, p);
         cv1.setValue(2);
         cv2.setValue(3);
-        v.put(lowCV, cv1);
-        v.put(highCV, cv2);
+        v.put(LOW_CV, cv1);
+        v.put(HIGH_CV, cv2);
         // create a variable pointed at CVs
-        SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
+        SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, LOW_CV,
                 "VVVVVVVV", 0, 255, v, null, null,
-                highCV, 1, 0, "VVVVVVVV", null, null, null, null);
+                HIGH_CV, 1, 0, "VVVVVVVV", null, null, null, null);
         FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
 
         var.focusGained(focusEvent);
@@ -197,16 +197,16 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     @Test
     public void testSplitAddressFromCV2() {
         HashMap<String, CvValue> v = createCvMap();
-        CvValue cv1 = new CvValue(lowCV, p);
-        CvValue cv2 = new CvValue(highCV, p);
+        CvValue cv1 = new CvValue(LOW_CV, p);
+        CvValue cv2 = new CvValue(HIGH_CV, p);
         cv1.setValue(0xFF);
         cv2.setValue(0xFF);
-        v.put(lowCV, cv1);
-        v.put(highCV, cv2);
+        v.put(LOW_CV, cv1);
+        v.put(HIGH_CV, cv2);
         // create a variable pointed at CVs
-        SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
+        SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, LOW_CV,
                 "XXXXVVVV", 0, 255, v, null, null,
-                highCV, 1, 0, "VVVVVVVV", null, null, null, null);
+                HIGH_CV, 1, 0, "VVVVVVVV", null, null, null, null);
         FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
 
         var.focusGained(focusEvent);
@@ -227,16 +227,16 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     @Test
     public void testSplitAddressFromCV3() {
         HashMap<String, CvValue> v = createCvMap();
-        CvValue cv1 = new CvValue(lowCV, p);
-        CvValue cv2 = new CvValue(highCV, p);
+        CvValue cv1 = new CvValue(LOW_CV, p);
+        CvValue cv2 = new CvValue(HIGH_CV, p);
         cv1.setValue(0xFF);
         cv2.setValue(0xFF);
-        v.put(lowCV, cv1);
-        v.put(highCV, cv2);
+        v.put(LOW_CV, cv1);
+        v.put(HIGH_CV, cv2);
         // create a variable pointed at CVs
-        SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
+        SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, LOW_CV,
                 "VVVVVVVV", 0, 255, v, null, null,
-                highCV, 1, 0, "XXVVVVXX", null, null, null, null);
+                HIGH_CV, 1, 0, "XXVVVVXX", null, null, null, null);
         FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
 
         var.focusGained(focusEvent);
@@ -257,16 +257,16 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     @Test
     public void testSplitAddressFromCV4() {
         HashMap<String, CvValue> v = createCvMap();
-        CvValue cv1 = new CvValue(lowCV, p);
-        CvValue cv2 = new CvValue(highCV, p);
+        CvValue cv1 = new CvValue(LOW_CV, p);
+        CvValue cv2 = new CvValue(HIGH_CV, p);
         cv1.setValue(0xFF);
         cv2.setValue(0xFF);
-        v.put(lowCV, cv1);
-        v.put(highCV, cv2);
+        v.put(LOW_CV, cv1);
+        v.put(HIGH_CV, cv2);
         // create a variable pointed at CVs
-        SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
+        SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, LOW_CV,
                 "XVVVVVVX", 0, 255, v, null, null,
-                highCV, 1, 0, "XVVVVVXX", null, null, null, null);
+                HIGH_CV, 1, 0, "XVVVVVXX", null, null, null, null);
         FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
 
         var.focusGained(focusEvent);
@@ -292,14 +292,14 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         log.debug("testSplitAddressRead starts");
 
         HashMap<String, CvValue> v = createCvMap();
-        CvValue cv1 = new CvValue(lowCV, p);
-        CvValue cv2 = new CvValue(highCV, p);
-        v.put(lowCV, cv1);
-        v.put(highCV, cv2);
+        CvValue cv1 = new CvValue(LOW_CV, p);
+        CvValue cv2 = new CvValue(HIGH_CV, p);
+        v.put(LOW_CV, cv1);
+        v.put(HIGH_CV, cv2);
 
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false,
-                lowCV, "XXVVVVVV", 0, 255, v, null, null,
-                highCV, 1, 0, "VVVVVVVV", null, null, null, null);
+                LOW_CV, "XXVVVVVV", 0, 255, v, null, null,
+                HIGH_CV, 1, 0, "VVVVVVVV", null, null, null, null);
         // register a listener for parameter changes
         java.beans.PropertyChangeListener listen = e -> {
             evtList.add(e);
@@ -341,14 +341,14 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     public void testSplitAddressWrite1() {
 
         HashMap<String, CvValue> v = createCvMap();
-        CvValue cv1 = new CvValue(lowCV, p);
-        CvValue cv2 = new CvValue(highCV, p);
-        v.put(lowCV, cv1);
-        v.put(highCV, cv2);
+        CvValue cv1 = new CvValue(LOW_CV, p);
+        CvValue cv2 = new CvValue(HIGH_CV, p);
+        v.put(LOW_CV, cv1);
+        v.put(HIGH_CV, cv2);
 
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false,
-                lowCV, "XXVVVVVV", 0, 255, v, null, null,
-                highCV, 1, 0, "VVVVVVVV", null, null, null, null);
+                LOW_CV, "XXVVVVVV", 0, 255, v, null, null,
+                HIGH_CV, 1, 0, "VVVVVVVV", null, null, null, null);
         FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
 
         var.focusGained(focusEvent);

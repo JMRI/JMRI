@@ -24,7 +24,8 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Creates a LogixNG with all actions and expressions to test store and load.
@@ -43,7 +44,7 @@ public class StoreAndLoadTest {
 
     @DisabledIfHeadless
     @Test
-    public void testLogixNGs() throws PropertyVetoException, Exception {
+    public void testLogixNGs() throws PropertyVetoException, SocketAlreadyConnectedException, IOException, JmriException {
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         ConditionalNG_Manager conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
@@ -158,122 +159,100 @@ public class StoreAndLoadTest {
 
         // Store panels
         jmri.ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm == null) {
-            log.error("Unable to get default configure manager");
-        } else {
-            FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
-            File firstFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG_temp.xml");
-            File secondFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG.xml");
-            log.info("Temporary first file: {}", firstFile.getAbsoluteFile());
-            log.info("Temporary second file: {}", secondFile.getAbsoluteFile());
+        assertNotNull( cm, "Unable to get default configure manager");
 
-            final String treeIndent = "   ";
-            StringWriter stringWriter = new StringWriter();
-            PrintWriter printWriter = new PrintWriter(stringWriter);
-            logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent, new MutableInt(0));
-            final String originalTree = stringWriter.toString();
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
+        File firstFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG_temp.xml");
+        File secondFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG.xml");
+        log.info("Temporary first file: {}", firstFile.getAbsoluteFile());
+        log.info("Temporary second file: {}", secondFile.getAbsoluteFile());
 
-            boolean results = cm.storeUser(firstFile);
-            log.debug(results ? "store was successful" : "store failed");
-            if (!results) {
-                log.error("Failed to store panel");
-                // throw new RuntimeException("Failed to store panel");
-                fail("Failed to store panel", new Exception());
-            }
+        final String treeIndent = "   ";
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent, new MutableInt(0));
+        final String originalTree = stringWriter.toString();
 
-            // Add the header comment to the xml file
-            addHeader(firstFile, secondFile);
+        assertTrue( cm.storeUser(firstFile),
+            "Failed to store panel.");
+
+        // Add the header comment to the xml file
+        addHeader(firstFile, secondFile);
 
 
-            //**********************************
-            // Delete all the LogixNGs, ConditionalNGs, and so on before reading the file.
-            //**********************************
+        //**********************************
+        // Delete all the LogixNGs, ConditionalNGs, and so on before reading the file.
+        //**********************************
 
-            java.util.Set<LogixNG> logixNG_Set = new java.util.HashSet<>(logixNG_Manager.getNamedBeanSet());
-            for (LogixNG aLogixNG : logixNG_Set) {
-                logixNG_Manager.deleteLogixNG(aLogixNG);
-            }
-
-            java.util.Set<ConditionalNG> conditionalNGSet = new java.util.HashSet<>(conditionalNGManager.getNamedBeanSet());
-            for (ConditionalNG aConditionalNG : conditionalNGSet) {
-                conditionalNGManager.deleteConditionalNG(aConditionalNG);
-            }
-
-            java.util.Set<MaleDigitalActionSocket> digitalActionSet = new java.util.HashSet<>(digitalActionManager.getNamedBeanSet());
-            for (MaleDigitalActionSocket aDigitalActionSocket : digitalActionSet) {
-                digitalActionManager.deleteDigitalAction(aDigitalActionSocket);
-            }
-
-            java.util.Set<MaleDigitalExpressionSocket> digitalExpressionSet = new java.util.HashSet<>(digitalExpressionManager.getNamedBeanSet());
-            for (MaleDigitalExpressionSocket aDigitalExpression : digitalExpressionSet) {
-                digitalExpressionManager.deleteDigitalExpression(aDigitalExpression);
-            }
-
-            assertEquals(0, logixNG_Manager.getNamedBeanSet().size());
-            assertEquals(0, conditionalNGManager.getNamedBeanSet().size());
-            assertEquals(0, digitalActionManager.getNamedBeanSet().size());
-            assertEquals(0, digitalExpressionManager.getNamedBeanSet().size());
-
-            LogixNG_Thread.stopAllLogixNGThreads();
-            LogixNG_Thread.assertLogixNGThreadNotRunning();
-
-
-            //**********************************
-            // Try to load file
-            //**********************************
-
-            java.util.Set<ConditionalNG> conditionalNG_Set =
-                    new java.util.HashSet<>(conditionalNGManager.getNamedBeanSet());
-            for (ConditionalNG aConditionalNG : conditionalNG_Set) {
-                conditionalNGManager.deleteConditionalNG(aConditionalNG);
-            }
-            java.util.SortedSet<MaleDigitalActionSocket> set3 = digitalActionManager.getNamedBeanSet();
-            List<MaleSocket> l = new ArrayList<>(set3);
-            for (MaleSocket x3 : l) {
-                digitalActionManager.deleteBean((MaleDigitalActionSocket)x3, "DoDelete");
-            }
-            java.util.SortedSet<MaleDigitalExpressionSocket> set4 = digitalExpressionManager.getNamedBeanSet();
-            l = new ArrayList<>(set4);
-            for (MaleSocket x4 : l) {
-                digitalExpressionManager.deleteBean((MaleDigitalExpressionSocket)x4, "DoDelete");
-            }
-
-            results = cm.load(secondFile);
-            log.debug(results ? "load was successful" : "store failed");
-            if (results) {
-                logixNG_Manager.setupAllLogixNGs();
-
-                stringWriter = new StringWriter();
-                printWriter = new PrintWriter(stringWriter);
-                logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent, new MutableInt(0));
-
-                if (!originalTree.equals(stringWriter.toString())) {
-                    log.error("--------------------------------------------");
-                    log.error("Old tree:");
-                    log.error("XXX"+originalTree+"XXX");
-                    log.error("--------------------------------------------");
-                    log.error("New tree:");
-                    log.error("XXX"+stringWriter.toString()+"XXX");
-                    log.error("--------------------------------------------");
-/*
-                    System.out.println("--------------------------------------------");
-                    System.out.println("Old tree:");
-                    System.out.println("XXX"+originalTree+"XXX");
-                    System.out.println("--------------------------------------------");
-                    System.out.println("New tree:");
-                    System.out.println("XXX"+stringWriter.toString()+"XXX");
-                    System.out.println("--------------------------------------------");
-*/
-//                    log.error(conditionalNGManager.getBySystemName(originalTree).getChild(0).getConnectedSocket().getSystemName());
-
-                    fail("tree has changed");
-//                    throw new RuntimeException("tree has changed");
-                }
-            } else {
-                fail("Failed to load panel");
-//                throw new RuntimeException("Failed to load panel");
-            }
+        java.util.Set<LogixNG> logixNG_Set = new java.util.HashSet<>(logixNG_Manager.getNamedBeanSet());
+        for (LogixNG aLogixNG : logixNG_Set) {
+            logixNG_Manager.deleteLogixNG(aLogixNG);
         }
+
+        java.util.Set<ConditionalNG> conditionalNGSet = new java.util.HashSet<>(conditionalNGManager.getNamedBeanSet());
+        for (ConditionalNG aConditionalNG : conditionalNGSet) {
+            conditionalNGManager.deleteConditionalNG(aConditionalNG);
+        }
+
+        java.util.Set<MaleDigitalActionSocket> digitalActionSet = new java.util.HashSet<>(digitalActionManager.getNamedBeanSet());
+        for (MaleDigitalActionSocket aDigitalActionSocket : digitalActionSet) {
+            digitalActionManager.deleteDigitalAction(aDigitalActionSocket);
+        }
+
+        java.util.Set<MaleDigitalExpressionSocket> digitalExpressionSet = new java.util.HashSet<>(digitalExpressionManager.getNamedBeanSet());
+        for (MaleDigitalExpressionSocket aDigitalExpression : digitalExpressionSet) {
+            digitalExpressionManager.deleteDigitalExpression(aDigitalExpression);
+        }
+
+        assertEquals(0, logixNG_Manager.getNamedBeanSet().size());
+        assertEquals(0, conditionalNGManager.getNamedBeanSet().size());
+        assertEquals(0, digitalActionManager.getNamedBeanSet().size());
+        assertEquals(0, digitalExpressionManager.getNamedBeanSet().size());
+
+        LogixNG_Thread.stopAllLogixNGThreads();
+        LogixNG_Thread.assertLogixNGThreadNotRunning();
+
+
+        //**********************************
+        // Try to load file
+        //**********************************
+
+        java.util.Set<ConditionalNG> conditionalNG_Set =
+                new java.util.HashSet<>(conditionalNGManager.getNamedBeanSet());
+        for (ConditionalNG aConditionalNG : conditionalNG_Set) {
+            conditionalNGManager.deleteConditionalNG(aConditionalNG);
+        }
+        java.util.SortedSet<MaleDigitalActionSocket> set3 = digitalActionManager.getNamedBeanSet();
+        List<MaleSocket> l = new ArrayList<>(set3);
+        for (MaleSocket x3 : l) {
+            digitalActionManager.deleteBean((MaleDigitalActionSocket)x3, "DoDelete");
+        }
+        java.util.SortedSet<MaleDigitalExpressionSocket> set4 = digitalExpressionManager.getNamedBeanSet();
+        l = new ArrayList<>(set4);
+        for (MaleSocket x4 : l) {
+            digitalExpressionManager.deleteBean((MaleDigitalExpressionSocket)x4, "DoDelete");
+        }
+
+        assertTrue( cm.load(secondFile), "store failed, Failed to load panel" );
+
+        logixNG_Manager.setupAllLogixNGs();
+
+        StringWriter stringWriter2 = new StringWriter();
+        printWriter = new PrintWriter(stringWriter2);
+        logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent, new MutableInt(0));
+
+        assertEquals( originalTree, stringWriter2.toString(), () ->
+            System.lineSeparator() + "--------------------------------------------"
+            + System.lineSeparator() + "Old tree:"
+            + System.lineSeparator() + "XXX"+originalTree+"XXX"
+            + System.lineSeparator() + "--------------------------------------------"
+            + System.lineSeparator() + System.lineSeparator()
+            + System.lineSeparator() + "--------------------------------------------"
+            + System.lineSeparator() + "New tree:"
+            + System.lineSeparator() + "XXX"+stringWriter2.toString()+"XXX"
+            + System.lineSeparator() + "--------------------------------------------");
+
+            //  + conditionalNGManager.getBySystemName(originalTree).getChild(0).getConnectedSocket().getSystemName());
     }
 
 
@@ -360,6 +339,6 @@ public class StoreAndLoadTest {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StoreAndLoadTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StoreAndLoadTest.class);
 
 }

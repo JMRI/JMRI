@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.13.6plus+jake+20251128T1141Z+Ra61355e9b23 on Fri Nov 28 06:41:51 EST 2025-->
-  <decoderIndex version="689">
+  <!--Written by JMRI version 5.15.3plus+jake+20260214T1345Z+R6499ef8baa2 on Sat Feb 14 08:45:44 EST 2026-->
+  <decoderIndex version="701">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -12360,29 +12360,29 @@
         </outputs>
         <model model="TMCC 1 Acela" maxFnNum="68" numOuts="1" />
         <functionlabels>
-          <functionlabel num="0" lockable="false" visible="true"> Toggles Lights  </functionlabel>
+          <functionlabel num="0" lockable="false" visible="true">    Toggles Lights    </functionlabel>
           <functionlabel num="1" lockable="false" visible="true"> Bell  </functionlabel>
           <functionlabel num="2" lockable="false" visible="true"> Horn  </functionlabel>
           <functionlabel num="3" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="4" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="5" lockable="false" visible="true"> Volume Up </functionlabel>
-          <functionlabel num="6" lockable="false" visible="true">  StatnDepart/Attendant  </functionlabel>
-          <functionlabel num="7" lockable="false" visible="true">  RPM Up   </functionlabel>
-          <functionlabel num="8" lockable="false" visible="true">Volume Down</functionlabel>
-          <functionlabel num="9" lockable="false" visible="true"> CrewTalk/TowerCom-Slow  </functionlabel>
-          <functionlabel num="10" lockable="false" visible="true">   Cycle Pant/RPM Down   </functionlabel>
-          <functionlabel num="11" lockable="false" visible="true">Crew/Tower/Clear/Odd Off </functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
+          <functionlabel num="6" lockable="false" visible="true">Station Depart/Attendant</functionlabel>
+          <functionlabel num="7" lockable="false" visible="true">        RPM Up        </functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num="9" lockable="false" visible="true">CrewTalk/TowerCom-Slow</functionlabel>
+          <functionlabel num="10" lockable="false" visible="true"> Cycle Pant/RPM Down  </functionlabel>
+          <functionlabel num="11" lockable="false" visible="true">Crew/Tower/Clear/Odd Off</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="13" lockable="false" visible="true">   Odd On   </functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">   Reset    </functionlabel>
-          <functionlabel num="15" lockable="false" visible="true">    Aux1    </functionlabel>
+          <functionlabel num="13" lockable="false" visible="true">        Odd On        </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">         Aux1         </functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost    </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake    </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true"> Momentum-L </functionlabel>
-          <functionlabel num="20" lockable="false" visible="true"> Momentum-M </functionlabel>
-          <functionlabel num="21" lockable="false" visible="true"> Momentum-H </functionlabel>
-          <functionlabel num="22" lockable="false" visible="true">    Set     </functionlabel>
+          <functionlabel num="17" lockable="false" visible="true"> Boost </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true"> Brake </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
+          <functionlabel num="22" lockable="false" visible="false">         Set          </functionlabel>
           <functionlabel num="23" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="24" lockable="false" visible="true">    RRSpeed  5mph     </functionlabel>
           <functionlabel num="25" lockable="false" visible="true">    RRSpeed 20mph     </functionlabel>
@@ -12392,18 +12392,18 @@
           <functionlabel num="29" lockable="false" visible="true">    RRSpeed  FULL     </functionlabel>
           <functionlabel num="30" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="31" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="32" lockable="false" visible="true">Open Doors  - L</functionlabel>
-          <functionlabel num="33" lockable="false" visible="true">Close Doors - L</functionlabel>
-          <functionlabel num="34" lockable="false" visible="true">Open Doors  - R</functionlabel>
-          <functionlabel num="35" lockable="false" visible="true">Close Doors - R</functionlabel>
-          <functionlabel num="36" lockable="false" visible="true">  Pant (Auto)  </functionlabel>
-          <functionlabel num="37" lockable="false" visible="true">  Pant (Down)  </functionlabel>
-          <functionlabel num="38" lockable="false" visible="true"> Pant (Manual) </functionlabel>
+          <functionlabel num="32" lockable="false" visible="true">   Open Doors  - L    </functionlabel>
+          <functionlabel num="33" lockable="false" visible="true">   Close Doors - L    </functionlabel>
+          <functionlabel num="34" lockable="false" visible="true">   Open Doors  - R    </functionlabel>
+          <functionlabel num="35" lockable="false" visible="true">   Close Doors - R    </functionlabel>
+          <functionlabel num="36" lockable="false" visible="true">     Pant (Auto)      </functionlabel>
+          <functionlabel num="37" lockable="false" visible="true">     Pant (Down)      </functionlabel>
+          <functionlabel num="38" lockable="false" visible="true">    Pant (Manual)     </functionlabel>
           <functionlabel num="39" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="40" lockable="false" visible="true"> CabLt Off </functionlabel>
-          <functionlabel num="41" lockable="false" visible="true"> CabLt On  </functionlabel>
-          <functionlabel num="42" lockable="false" visible="true"> IntLt Off </functionlabel>
-          <functionlabel num="43" lockable="false" visible="true"> IntLt On  </functionlabel>
+          <functionlabel num="40" lockable="false" visible="true">      CabLt Off       </functionlabel>
+          <functionlabel num="41" lockable="false" visible="true">       CabLt On       </functionlabel>
+          <functionlabel num="42" lockable="false" visible="true">      IntLt Off       </functionlabel>
+          <functionlabel num="43" lockable="false" visible="true">       IntLt On       </functionlabel>
           <functionlabel num="44" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="45" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="46" lockable="false" visible="false">Unassigned</functionlabel>
@@ -12444,7 +12444,7 @@
         <functionlabels>
           <functionlabel num="0" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="1" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="2" lockable="false" visible="true">   Whistle    </functionlabel>
+          <functionlabel num="2" lockable="false" visible="true">       Whistle        </functionlabel>
           <functionlabel num="3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num="4" lockable="false" visible="true">Rear-X </functionlabel>
           <functionlabel num="5" lockable="false" visible="false">Unassigned</functionlabel>
@@ -12453,7 +12453,7 @@
           <functionlabel num="8" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="9" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="10" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="11" lockable="false" visible="true">Crew Dialog On</functionlabel>
+          <functionlabel num="11" lockable="false" visible="true">    Crew Dialog On    </functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="14" lockable="false" visible="false">Unassigned</functionlabel>
@@ -12493,18 +12493,18 @@
           <functionlabel num="48" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="49" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="50" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="51" lockable="false" visible="true">Boom Down</functionlabel>
-          <functionlabel num="52" lockable="false" visible="true"> Boom Up </functionlabel>
-          <functionlabel num="53" lockable="false" visible="true"> LgHook Down  </functionlabel>
-          <functionlabel num="54" lockable="false" visible="true">  LgHook Up   </functionlabel>
-          <functionlabel num="55" lockable="false" visible="true"> SmHook Down  </functionlabel>
-          <functionlabel num="56" lockable="false" visible="true">  SmHook Up   </functionlabel>
+          <functionlabel num="51" lockable="false" visible="true">      Boom Down       </functionlabel>
+          <functionlabel num="52" lockable="false" visible="true">       Boom Up        </functionlabel>
+          <functionlabel num="53" lockable="false" visible="true">     LgHook Down      </functionlabel>
+          <functionlabel num="54" lockable="false" visible="true">      LgHook Up       </functionlabel>
+          <functionlabel num="55" lockable="false" visible="true">     SmHook Down      </functionlabel>
+          <functionlabel num="56" lockable="false" visible="true">      SmHook Up       </functionlabel>
           <functionlabel num="57" lockable="false" visible="true">   FWorkLts On/Off    </functionlabel>
           <functionlabel num="58" lockable="false" visible="true">   RWorkLts On/Off    </functionlabel>
           <functionlabel num="59" lockable="false" visible="true">  Launch OutRiggers   </functionlabel>
-          <functionlabel num="60" lockable="false" visible="true"> Crew Dia Off </functionlabel>
-          <functionlabel num="61" lockable="false" visible="true">Sound Off</functionlabel>
-          <functionlabel num="62" lockable="false" visible="true">Sound On </functionlabel>
+          <functionlabel num="60" lockable="false" visible="true">     Crew Dia Off     </functionlabel>
+          <functionlabel num="61" lockable="false" visible="true">      Sound Off       </functionlabel>
+          <functionlabel num="62" lockable="false" visible="true">       Sound On       </functionlabel>
           <functionlabel num="63" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="64" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="65" lockable="false" visible="false">Unassigned</functionlabel>
@@ -12525,20 +12525,20 @@
         <model model="TMCC 1 Boxcar" maxFnNum="68" numOuts="1" />
         <functionlabels>
           <functionlabel num="0" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="1" lockable="false" visible="true"> No Sound  </functionlabel>
+          <functionlabel num="1" lockable="false" visible="true">       No Sound       </functionlabel>
           <functionlabel num="2" lockable="false" visible="true">Deep Metallic Air Release</functionlabel>
           <functionlabel num="3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num="4" lockable="false" visible="true">Rear-X </functionlabel>
-          <functionlabel num="5" lockable="false" visible="true"> Volume Up </functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
           <functionlabel num="6" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="7" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="8" lockable="false" visible="true">Volume Down</functionlabel>
-          <functionlabel num="9" lockable="false" visible="true"> Shutdown While Stopped  </functionlabel>
-          <functionlabel num="10" lockable="false" visible="true"> Unloading </functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num="9" lockable="false" visible="true">Shutdown While Stopped</functionlabel>
+          <functionlabel num="10" lockable="false" visible="true">      Unloading       </functionlabel>
           <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">   Reset   </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
           <functionlabel num="15" lockable="false" visible="true">High Metallic Air Release</functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="17" lockable="false" visible="false">Unassigned</functionlabel>
@@ -12571,8 +12571,8 @@
           <functionlabel num="44" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="45" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="46" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="47" lockable="false" visible="true">Loading Scenarios</functionlabel>
-          <functionlabel num="48" lockable="false" visible="true"> FlatWheel Sound </functionlabel>
+          <functionlabel num="47" lockable="false" visible="true">  Loading Scenarios   </functionlabel>
+          <functionlabel num="48" lockable="false" visible="true">   FlatWheel Sound    </functionlabel>
           <functionlabel num="49" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="50" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="51" lockable="false" visible="false">Unassigned</functionlabel>
@@ -12611,16 +12611,16 @@
           <functionlabel num="2" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num="4" lockable="false" visible="true">Rear-X </functionlabel>
-          <functionlabel num="5" lockable="false" visible="true"> Volume Up </functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
           <functionlabel num="6" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="7" lockable="false" visible="true">RPM RampUp </functionlabel>
-          <functionlabel num="8" lockable="false" visible="true">Volume Down</functionlabel>
+          <functionlabel num="7" lockable="false" visible="true">      RPM RampUp      </functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
           <functionlabel num="9" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="10" lockable="false" visible="true">  RPM RampDown  </functionlabel>
+          <functionlabel num="10" lockable="false" visible="true">     RPM RampDown     </functionlabel>
           <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">Reset w/Shutdown</functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">   Reset w/Shutdown   </functionlabel>
           <functionlabel num="15" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="17" lockable="false" visible="false">Unassigned</functionlabel>
@@ -12650,9 +12650,9 @@
           <functionlabel num="41" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="42" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="43" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="44" lockable="false" visible="true"> Breakdown  </functionlabel>
-          <functionlabel num="45" lockable="false" visible="true"> MadeYard   </functionlabel>
-          <functionlabel num="46" lockable="false" visible="true">  Repairs   </functionlabel>
+          <functionlabel num="44" lockable="false" visible="true">      Breakdown       </functionlabel>
+          <functionlabel num="45" lockable="false" visible="true">       MadeYard       </functionlabel>
+          <functionlabel num="46" lockable="false" visible="true">       Repairs        </functionlabel>
           <functionlabel num="47" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="48" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="49" lockable="false" visible="false">Unassigned</functionlabel>
@@ -12688,30 +12688,30 @@
         </outputs>
         <model model="TMCC 1 Diesel" maxFnNum="68" numOuts="1" />
         <functionlabels>
-          <functionlabel num="0" lockable="false" visible="true">    Headlight    </functionlabel>
+          <functionlabel num="0" lockable="false" visible="true">      Headlight       </functionlabel>
           <functionlabel num="1" lockable="false" visible="true"> Bell  </functionlabel>
           <functionlabel num="2" lockable="false" visible="true"> Horn  </functionlabel>
           <functionlabel num="3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num="4" lockable="false" visible="true">Rear-X </functionlabel>
-          <functionlabel num="5" lockable="false" visible="true"> Sound Up  </functionlabel>
-          <functionlabel num="6" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
+          <functionlabel num="6" lockable="false" visible="true">      Crew Talk       </functionlabel>
           <functionlabel num="7" lockable="false" visible="true">RPM Increase w/Startup</functionlabel>
-          <functionlabel num="8" lockable="false" visible="true">Sound Down </functionlabel>
-          <functionlabel num="9" lockable="false" visible="true">Shutdown Sequence</functionlabel>
-          <functionlabel num="10" lockable="false" visible="true">  RPM Decrease   </functionlabel>
-          <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="12" lockable="false" visible="true">Mars Lt Off</functionlabel>
-          <functionlabel num="13" lockable="false" visible="true">Mars Lt On </functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">   Reset   </functionlabel>
-          <functionlabel num="15" lockable="false" visible="false">   Aux1    </functionlabel>
-          <functionlabel num="16" lockable="false" visible="true">  Letoff   </functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost   </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake   </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true">Momentum-L </functionlabel>
-          <functionlabel num="20" lockable="false" visible="true">Momentum-M </functionlabel>
-          <functionlabel num="21" lockable="false" visible="true">Momentum-H </functionlabel>
-          <functionlabel num="22" lockable="false" visible="true">    Set    </functionlabel>
-          <functionlabel num="23" lockable="false" visible="true">  Horn 2   </functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num="9" lockable="false" visible="true">  Shutdown Sequence   </functionlabel>
+          <functionlabel num="10" lockable="false" visible="true">     RPM Decrease     </functionlabel>
+          <functionlabel num="11" lockable="false" visible="true">      Tower Com       </functionlabel>
+          <functionlabel num="12" lockable="false" visible="true">     Mars Lt Off      </functionlabel>
+          <functionlabel num="13" lockable="false" visible="true">      Mars Lt On      </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">         Aux1         </functionlabel>
+          <functionlabel num="16" lockable="false" visible="true">     Brake Letoff     </functionlabel>
+          <functionlabel num="17" lockable="false" visible="true"> Boost </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true"> Brake </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
+          <functionlabel num="22" lockable="false" visible="false">         Set          </functionlabel>
+          <functionlabel num="23" lockable="false" visible="true">        Horn 2        </functionlabel>
           <functionlabel num="24" lockable="false" visible="true">    RRSpeed  5mph     </functionlabel>
           <functionlabel num="25" lockable="false" visible="true">    RRSpeed 20mph     </functionlabel>
           <functionlabel num="26" lockable="false" visible="true">    RRSpeed 35mph     </functionlabel>
@@ -12771,20 +12771,20 @@
         <model model="TMCC 1 Dining Car" maxFnNum="68" numOuts="1" />
         <functionlabels>
           <functionlabel num="0" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="1" lockable="false" visible="true">  No Sound   </functionlabel>
+          <functionlabel num="1" lockable="false" visible="true">       No Sound       </functionlabel>
           <functionlabel num="2" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="3" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="4" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="5" lockable="false" visible="true">  Volume Up  </functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
           <functionlabel num="6" lockable="false" visible="true">Cond Depart + 5 Scenarios</functionlabel>
-          <functionlabel num="7" lockable="false" visible="true">Sound Restart</functionlabel>
-          <functionlabel num="8" lockable="false" visible="true"> Volume Down </functionlabel>
-          <functionlabel num="9" lockable="false" visible="true"> Shutdown While Stopped  </functionlabel>
+          <functionlabel num="7" lockable="false" visible="true">    Sound Restart     </functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num="9" lockable="false" visible="true">Shutdown While Stopped</functionlabel>
           <functionlabel num="10" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="11" lockable="false" visible="true"> Station PA - Departure  </functionlabel>
+          <functionlabel num="11" lockable="false" visible="true">Station PA - Departure</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">    Reset    </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
           <functionlabel num="15" lockable="false" visible="true">High Metallic Air Release</functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="17" lockable="false" visible="false">Unassigned</functionlabel>
@@ -12819,8 +12819,8 @@
           <functionlabel num="46" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="47" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="48" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="49" lockable="false" visible="true">  Station PA - Arrival   </functionlabel>
-          <functionlabel num="50" lockable="false" visible="true">   Conductor - Arrival   </functionlabel>
+          <functionlabel num="49" lockable="false" visible="true"> Station PA - Arrival </functionlabel>
+          <functionlabel num="50" lockable="false" visible="true"> Conductor - Arrival  </functionlabel>
           <functionlabel num="51" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="52" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="53" lockable="false" visible="false">Unassigned</functionlabel>
@@ -12853,20 +12853,20 @@
         <model model="TMCC 1 LiveStock Car" maxFnNum="68" numOuts="1" />
         <functionlabels>
           <functionlabel num="0" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="1" lockable="false" visible="true">   No Sound    </functionlabel>
-          <functionlabel num="2" lockable="false" visible="true">  Mooing Cow   </functionlabel>
+          <functionlabel num="1" lockable="false" visible="true">       No Sound       </functionlabel>
+          <functionlabel num="2" lockable="false" visible="true">      Mooing Cow      </functionlabel>
           <functionlabel num="3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num="4" lockable="false" visible="true">Rear-X </functionlabel>
-          <functionlabel num="5" lockable="false" visible="true">   Volume Up   </functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
           <functionlabel num="6" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="7" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="8" lockable="false" visible="true">  Volume Down  </functionlabel>
-          <functionlabel num="9" lockable="false" visible="true"> Shutdown While Stopped  </functionlabel>
-          <functionlabel num="10" lockable="false" visible="true">   Unloading   </functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num="9" lockable="false" visible="true">Shutdown While Stopped</functionlabel>
+          <functionlabel num="10" lockable="false" visible="true">      Unloading       </functionlabel>
           <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">     Reset     </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
           <functionlabel num="15" lockable="false" visible="true">High Metallic Air Release</functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="17" lockable="false" visible="false">Unassigned</functionlabel>
@@ -12899,8 +12899,8 @@
           <functionlabel num="44" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="45" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="46" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="47" lockable="false" visible="true">Loading Scenarios</functionlabel>
-          <functionlabel num="48" lockable="false" visible="true"> FlatWheel Sound </functionlabel>
+          <functionlabel num="47" lockable="false" visible="true">  Loading Scenarios   </functionlabel>
+          <functionlabel num="48" lockable="false" visible="true">   FlatWheel Sound    </functionlabel>
           <functionlabel num="49" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="50" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="51" lockable="false" visible="false">Unassigned</functionlabel>
@@ -12935,20 +12935,20 @@
         <model model="TMCC 1 Passenger Car" maxFnNum="68" numOuts="1" />
         <functionlabels>
           <functionlabel num="0" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="1" lockable="false" visible="true">  No Sound   </functionlabel>
+          <functionlabel num="1" lockable="false" visible="true">       No Sound       </functionlabel>
           <functionlabel num="2" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num="4" lockable="false" visible="true">Rear-X </functionlabel>
-          <functionlabel num="5" lockable="false" visible="true">  Volume Up  </functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
           <functionlabel num="6" lockable="false" visible="true">Cond Depart + 5 Scenarios</functionlabel>
-          <functionlabel num="7" lockable="false" visible="true">Sound Restart</functionlabel>
-          <functionlabel num="8" lockable="false" visible="true"> Volume Down </functionlabel>
-          <functionlabel num="9" lockable="false" visible="true">  Shutdown While Stopped  </functionlabel>
+          <functionlabel num="7" lockable="false" visible="true">    Sound Restart     </functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num="9" lockable="false" visible="true">Shutdown While Stopped</functionlabel>
           <functionlabel num="10" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="11" lockable="false" visible="true"> Station PA - Departure  </functionlabel>
+          <functionlabel num="11" lockable="false" visible="true">Station PA - Departure</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">    Reset    </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
           <functionlabel num="15" lockable="false" visible="true">High Metallic Air Release</functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="17" lockable="false" visible="false">Unassigned</functionlabel>
@@ -12983,8 +12983,8 @@
           <functionlabel num="46" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="47" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="48" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="49" lockable="false" visible="true">Station PA - Arrival</functionlabel>
-          <functionlabel num="50" lockable="false" visible="true">Conductor - Arrival </functionlabel>
+          <functionlabel num="49" lockable="false" visible="true"> Station PA - Arrival </functionlabel>
+          <functionlabel num="50" lockable="false" visible="true"> Conductor - Arrival  </functionlabel>
           <functionlabel num="51" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="52" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="53" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13016,29 +13016,29 @@
         </outputs>
         <model model="TMCC 1 Steam" maxFnNum="68" numOuts="1" />
         <functionlabels>
-          <functionlabel num="0" lockable="false" visible="true">    Headlight    </functionlabel>
+          <functionlabel num="0" lockable="false" visible="true">      Headlight       </functionlabel>
           <functionlabel num="1" lockable="false" visible="true"> Bell  </functionlabel>
           <functionlabel num="2" lockable="false" visible="true">Whistle</functionlabel>
           <functionlabel num="3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num="4" lockable="false" visible="true">Rear-X </functionlabel>
-          <functionlabel num="5" lockable="false" visible="true"> Volume Up </functionlabel>
-          <functionlabel num="6" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="7" lockable="false" visible="true"> Steam Blowoff w/StartUp </functionlabel>
-          <functionlabel num="8" lockable="false" visible="true">Volume Down</functionlabel>
-          <functionlabel num="9" lockable="false" visible="true">    Shutdown Sequence    </functionlabel>
-          <functionlabel num="10" lockable="false" visible="true">      Steam Letoff       </functionlabel>
-          <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="12" lockable="false" visible="true">    Smoke/Firebox Off    </functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
+          <functionlabel num="6" lockable="false" visible="true">      Crew Talk       </functionlabel>
+          <functionlabel num="7" lockable="false" visible="true">Steam Blowoff w/StartUp</functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num="9" lockable="false" visible="true">  Shutdown Sequence   </functionlabel>
+          <functionlabel num="10" lockable="false" visible="true">    Steam Release     </functionlabel>
+          <functionlabel num="11" lockable="false" visible="true">      Tower Com       </functionlabel>
+          <functionlabel num="12" lockable="false" visible="true">  Smoke/Firebox Off   </functionlabel>
           <functionlabel num="13" lockable="false" visible="true">Smoke/Firebox/Smoke Boost</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">   Reset    </functionlabel>
-          <functionlabel num="15" lockable="false" visible="false">    Aux1    </functionlabel>
-          <functionlabel num="16" lockable="false" visible="true">Steam Letoff</functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost    </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake    </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true"> Momentum-L </functionlabel>
-          <functionlabel num="20" lockable="false" visible="true"> Momentum-M </functionlabel>
-          <functionlabel num="21" lockable="false" visible="true"> Momentum-H </functionlabel>
-          <functionlabel num="22" lockable="false" visible="true">    Set     </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">         Aux1         </functionlabel>
+          <functionlabel num="16" lockable="false" visible="true">     Brake Letoff     </functionlabel>
+          <functionlabel num="17" lockable="false" visible="true"> Boost </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true"> Brake </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
+          <functionlabel num="22" lockable="false" visible="false">         Set          </functionlabel>
           <functionlabel num="23" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="24" lockable="false" visible="true">    RRSpeed  5mph     </functionlabel>
           <functionlabel num="25" lockable="false" visible="true">    RRSpeed 20mph     </functionlabel>
@@ -13098,29 +13098,29 @@
         </outputs>
         <model model="TMCC 1 Subway" maxFnNum="68" numOuts="1" />
         <functionlabels>
-          <functionlabel num="0" lockable="false" visible="true"> Toggles Lights  </functionlabel>
-          <functionlabel num="1" lockable="false" visible="true">   Bell    </functionlabel>
-          <functionlabel num="2" lockable="false" visible="true">   Horn    </functionlabel>
+          <functionlabel num="0" lockable="false" visible="true">    Toggles Lights    </functionlabel>
+          <functionlabel num="1" lockable="false" visible="true"> Bell  </functionlabel>
+          <functionlabel num="2" lockable="false" visible="true"> Horn  </functionlabel>
           <functionlabel num="3" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="4" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="5" lockable="false" visible="true"> Volume Up </functionlabel>
-          <functionlabel num="6" lockable="false" visible="true"> Station Announce  </functionlabel>
-          <functionlabel num="7" lockable="false" visible="true"> Start Railsounds  </functionlabel>
-          <functionlabel num="8" lockable="false" visible="true">Volume Down</functionlabel>
-          <functionlabel num="9" lockable="false" visible="true">Shutdown Railsounds</functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
+          <functionlabel num="6" lockable="false" visible="true">   Station Announce   </functionlabel>
+          <functionlabel num="7" lockable="false" visible="true">   Start Railsounds   </functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num="9" lockable="false" visible="true"> Shutdown Railsounds  </functionlabel>
           <functionlabel num="10" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="11" lockable="false" visible="true">  Buzzer   </functionlabel>
-          <functionlabel num="12" lockable="false" visible="true"> Interior Lts Off  </functionlabel>
-          <functionlabel num="13" lockable="false" visible="true">  Interior Lts On  </functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">   Reset   </functionlabel>
-          <functionlabel num="15" lockable="false" visible="true">   Aux1    </functionlabel>
+          <functionlabel num="11" lockable="false" visible="true">        Buzzer        </functionlabel>
+          <functionlabel num="12" lockable="false" visible="true">   Interior Lts Off   </functionlabel>
+          <functionlabel num="13" lockable="false" visible="true">   Interior Lts On    </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">         Aux1         </functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost   </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake   </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true">Momentum-L </functionlabel>
-          <functionlabel num="20" lockable="false" visible="true">Momentum-M </functionlabel>
-          <functionlabel num="21" lockable="false" visible="true">Momentum-H </functionlabel>
-          <functionlabel num="22" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="17" lockable="false" visible="true"> Boost </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true"> Brake </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
+          <functionlabel num="22" lockable="false" visible="false">         Set         </functionlabel>
           <functionlabel num="23" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="24" lockable="false" visible="true">    RRSpeed  5mph     </functionlabel>
           <functionlabel num="25" lockable="false" visible="true">    RRSpeed 20mph     </functionlabel>
@@ -13130,10 +13130,10 @@
           <functionlabel num="29" lockable="false" visible="true">    RRSpeed  FULL     </functionlabel>
           <functionlabel num="30" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="31" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="32" lockable="false" visible="true">Open Doors  - L</functionlabel>
-          <functionlabel num="33" lockable="false" visible="true">Close Doors - L</functionlabel>
-          <functionlabel num="34" lockable="false" visible="true">Open Doors  - R</functionlabel>
-          <functionlabel num="35" lockable="false" visible="true">Close Doors - R</functionlabel>
+          <functionlabel num="32" lockable="false" visible="true">    Open Doors - L    </functionlabel>
+          <functionlabel num="33" lockable="false" visible="true">   Close Doors - L    </functionlabel>
+          <functionlabel num="34" lockable="false" visible="true">    Open Doors - R    </functionlabel>
+          <functionlabel num="35" lockable="false" visible="true">   Close Doors - R    </functionlabel>
           <functionlabel num="36" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="37" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="38" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13181,8 +13181,8 @@
         <model model="TMCC 1 TR_LegacyPowerMaster" maxFnNum="68" numOuts="1" />
         <functionlabels>
           <functionlabel num="0" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="1" lockable="false" visible="true"> Bell  </functionlabel>
-          <functionlabel num="2" lockable="false" visible="true">  Horn/Whistle   </functionlabel>
+          <functionlabel num="1" lockable="false" visible="true">         Bell         </functionlabel>
+          <functionlabel num="2" lockable="false" visible="true">     Horn/Whistle     </functionlabel>
           <functionlabel num="3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num="4" lockable="false" visible="true">Rear-X </functionlabel>
           <functionlabel num="5" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13194,15 +13194,15 @@
           <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true"> Power Off </functionlabel>
-          <functionlabel num="15" lockable="false" visible="false">   Aux1    </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">      Power Off       </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">         Aux1         </functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost   </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake   </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true">Momentum-L </functionlabel>
-          <functionlabel num="20" lockable="false" visible="true">Momentum-M </functionlabel>
-          <functionlabel num="21" lockable="false" visible="true">Momentum-H </functionlabel>
-          <functionlabel num="22" lockable="false" visible="true">    Set    </functionlabel>
+          <functionlabel num="17" lockable="false" visible="true"> Boost </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true"> Brake </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
+          <functionlabel num="22" lockable="false" visible="false">         Set          </functionlabel>
           <functionlabel num="23" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="24" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="25" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13263,8 +13263,8 @@
         <model model="TMCC 1 TR_PowerMaster" maxFnNum="68" numOuts="1" />
         <functionlabels>
           <functionlabel num="0" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="1" lockable="false" visible="true"> Bell  </functionlabel>
-          <functionlabel num="2" lockable="false" visible="true">  Horn/Whistle   </functionlabel>
+          <functionlabel num="1" lockable="false" visible="true">         Bell         </functionlabel>
+          <functionlabel num="2" lockable="false" visible="true">     Horn/Whistle     </functionlabel>
           <functionlabel num="3" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="4" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="5" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13276,15 +13276,15 @@
           <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true"> Power Off </functionlabel>
-          <functionlabel num="15" lockable="false" visible="false">   Aux1    </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">      Power Off       </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">         Aux1         </functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost   </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake   </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true">Momentum-L </functionlabel>
-          <functionlabel num="20" lockable="false" visible="true">Momentum-M </functionlabel>
-          <functionlabel num="21" lockable="false" visible="true">Momentum-H </functionlabel>
-          <functionlabel num="22" lockable="false" visible="true">    Set    </functionlabel>
+          <functionlabel num="17" lockable="false" visible="true"> Boost </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true"> Brake </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
+          <functionlabel num="22" lockable="false" visible="false">         Set          </functionlabel>
           <functionlabel num="23" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="24" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="25" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13355,29 +13355,29 @@
         </outputs>
         <model model="TMCC 2 Legacy Acela" maxFnNum="85" numOuts="1" />
         <functionlabels>
-          <functionlabel num="0" lockable="false" visible="true"> Toggles Lights  </functionlabel>
+          <functionlabel num="0" lockable="false" visible="true">    Toggles Lights    </functionlabel>
           <functionlabel num="1" lockable="false" visible="true"> Bell  </functionlabel>
           <functionlabel num="2" lockable="false" visible="true"> Horn  </functionlabel>
           <functionlabel num="3" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="4" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="5" lockable="false" visible="true"> Volume Up </functionlabel>
-          <functionlabel num="6" lockable="false" visible="true">  StatnDepart/Attendant  </functionlabel>
-          <functionlabel num="7" lockable="false" visible="true">  RPM Up   </functionlabel>
-          <functionlabel num="8" lockable="false" visible="true">Volume Down</functionlabel>
-          <functionlabel num="9" lockable="false" visible="true"> CrewTalk/TowerCom-Slow  </functionlabel>
-          <functionlabel num="10" lockable="false" visible="true">   Cycle Pant/RPM Down   </functionlabel>
-          <functionlabel num="11" lockable="false" visible="true">Crew/Tower/Clear/Odd Off </functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
+          <functionlabel num="6" lockable="false" visible="true">Station Depart/Attendant</functionlabel>
+          <functionlabel num="7" lockable="false" visible="true">        RPM Up        </functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num="9" lockable="false" visible="true">CrewTalk/TowerCom-Slow</functionlabel>
+          <functionlabel num="10" lockable="false" visible="true"> Cycle Pant/RPM Down  </functionlabel>
+          <functionlabel num="11" lockable="false" visible="true">Crew/Tower/Clear/Odd Off</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="13" lockable="false" visible="true">   Odd On   </functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">   Reset    </functionlabel>
-          <functionlabel num="15" lockable="false" visible="true">    Aux1    </functionlabel>
+          <functionlabel num="13" lockable="false" visible="true">        Odd On        </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">         Aux1         </functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost    </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake    </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true"> Momentum-L </functionlabel>
-          <functionlabel num="20" lockable="false" visible="true"> Momentum-M </functionlabel>
-          <functionlabel num="21" lockable="false" visible="true"> Momentum-H </functionlabel>
-          <functionlabel num="22" lockable="false" visible="true">    Set     </functionlabel>
+          <functionlabel num="17" lockable="false" visible="true"> Boost </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true"> Brake </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
+          <functionlabel num="22" lockable="false" visible="false">         Set          </functionlabel>
           <functionlabel num="23" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="24" lockable="false" visible="true">    RRSpeed  5mph     </functionlabel>
           <functionlabel num="25" lockable="false" visible="true">    RRSpeed 20mph     </functionlabel>
@@ -13401,9 +13401,9 @@
           <functionlabel num="43" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="44" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="45" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="46" lockable="false" visible="true"> Cab Lt On </functionlabel>
-          <functionlabel num="47" lockable="false" visible="true">Cab Lt Off </functionlabel>
-          <functionlabel num="48" lockable="false" visible="true">Cab Lt Auto</functionlabel>
+          <functionlabel num="46" lockable="false" visible="true">       CabLt On       </functionlabel>
+          <functionlabel num="47" lockable="false" visible="true">      CabLt Off       </functionlabel>
+          <functionlabel num="48" lockable="false" visible="true">     Cab Lt Auto      </functionlabel>
           <functionlabel num="49" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="50" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="51" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13412,19 +13412,19 @@
           <functionlabel num="54" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="55" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="56" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="57" lockable="false" visible="true"> Car Cabin Lt On </functionlabel>
-          <functionlabel num="58" lockable="false" visible="true"> Car Cabin Lt Off</functionlabel>
-          <functionlabel num="59" lockable="false" visible="true">Car Cabin Lt Auto</functionlabel>
-          <functionlabel num="60" lockable="false" visible="true">Open Doors  - L</functionlabel>
-          <functionlabel num="61" lockable="false" visible="true">  Report Speed - Moving  </functionlabel>
+          <functionlabel num="57" lockable="false" visible="true">   Car Cabin Lt On    </functionlabel>
+          <functionlabel num="58" lockable="false" visible="true">   Car Cabin Lt Off   </functionlabel>
+          <functionlabel num="59" lockable="false" visible="true">  Car Cabin Lt Auto   </functionlabel>
+          <functionlabel num="60" lockable="false" visible="true">    Open Doors - L    </functionlabel>
+          <functionlabel num="61" lockable="false" visible="true">Report Speed - Moving </functionlabel>
           <functionlabel num="62" lockable="false" visible="true">Shtdn/Stop; Emergncy/Move</functionlabel>
-          <functionlabel num="63" lockable="false" visible="true">Close Doors - L</functionlabel>
-          <functionlabel num="64" lockable="false" visible="true">Open Doors -  R</functionlabel>
-          <functionlabel num="65" lockable="false" visible="true">Close Doors - R</functionlabel>
-          <functionlabel num="66" lockable="false" visible="true">   Pant Up/F   </functionlabel>
-          <functionlabel num="67" lockable="false" visible="true">  Pant Down/F  </functionlabel>
-          <functionlabel num="68" lockable="false" visible="true">   Pant Up/R   </functionlabel>
-          <functionlabel num="69" lockable="false" visible="true">  Pant Down/R  </functionlabel>
+          <functionlabel num="63" lockable="false" visible="true">   Close Doors - L    </functionlabel>
+          <functionlabel num="64" lockable="false" visible="true">    Open Doors - R    </functionlabel>
+          <functionlabel num="65" lockable="false" visible="true">   Close Doors - R    </functionlabel>
+          <functionlabel num="66" lockable="false" visible="true">      Pant Up/F       </functionlabel>
+          <functionlabel num="67" lockable="false" visible="true">     Pant Down/F      </functionlabel>
+          <functionlabel num="68" lockable="false" visible="true">      Pant Up/R       </functionlabel>
+          <functionlabel num="69" lockable="false" visible="true">     Pant Down/R      </functionlabel>
           <functionlabel num="70" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="71" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="72" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13437,10 +13437,10 @@
           <functionlabel num="79" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="80" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="81" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="82" lockable="false" visible="true"> Smoke Sys Off </functionlabel>
-          <functionlabel num="83" lockable="false" visible="true"> Smoke Sys Low </functionlabel>
-          <functionlabel num="84" lockable="false" visible="true"> Smoke Sys Med </functionlabel>
-          <functionlabel num="85" lockable="false" visible="true">Smoke Sys High </functionlabel>
+          <functionlabel num="82" lockable="false" visible="true">    Smoke Sys Off     </functionlabel>
+          <functionlabel num="83" lockable="false" visible="true">    Smoke Sys Low     </functionlabel>
+          <functionlabel num="84" lockable="false" visible="true">    Smoke Sys Med     </functionlabel>
+          <functionlabel num="85" lockable="false" visible="true">    Smoke Sys High    </functionlabel>
         </functionlabels>
       </family>
       <family name="TMCC 2 Legacy" mfg="Lionel" file="Lionel-TMCC2-Legacy-Boxcar.xml">
@@ -13455,20 +13455,20 @@
         <model model="TMCC 2 Legacy Boxcar" maxFnNum="85" numOuts="1" />
         <functionlabels>
           <functionlabel num="0" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="1" lockable="false" visible="true"> No Sound  </functionlabel>
+          <functionlabel num="1" lockable="false" visible="true">       No Sound       </functionlabel>
           <functionlabel num="2" lockable="false" visible="true">Deep Metallic Air Release</functionlabel>
           <functionlabel num="3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num="4" lockable="false" visible="true">Rear-X </functionlabel>
-          <functionlabel num="5" lockable="false" visible="true"> Volume Up </functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
           <functionlabel num="6" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="7" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="8" lockable="false" visible="true">Volume Down</functionlabel>
-          <functionlabel num="9" lockable="false" visible="true"> Shutdown While Stopped  </functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num="9" lockable="false" visible="true">Shutdown While Stopped</functionlabel>
           <functionlabel num="10" lockable="false" visible="true"> Unloading </functionlabel>
           <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">   Reset   </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
           <functionlabel num="15" lockable="false" visible="true">High Metallic Air Release</functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="17" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13553,63 +13553,63 @@
         </outputs>
         <model model="TMCC 2 Legacy Diesel" maxFnNum="85" numOuts="1" />
         <functionlabels>
-          <functionlabel num="0" lockable="false" visible="true">    Headlight    </functionlabel>
+          <functionlabel num="0" lockable="false" visible="true">      Headlight       </functionlabel>
           <functionlabel num="1" lockable="false" visible="true"> Bell  </functionlabel>
           <functionlabel num="2" lockable="false" visible="true"> Horn  </functionlabel>
           <functionlabel num="3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num="4" lockable="false" visible="true">Rear-X </functionlabel>
-          <functionlabel num="5" lockable="false" visible="true"> Sound Up  </functionlabel>
-          <functionlabel num="6" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
+          <functionlabel num="6" lockable="false" visible="true">      Crew Talk       </functionlabel>
           <functionlabel num="7" lockable="false" visible="true">RPM Increase w/Startup</functionlabel>
-          <functionlabel num="8" lockable="false" visible="true">Sound Down </functionlabel>
-          <functionlabel num="9" lockable="false" visible="true">Shutdown Sequence</functionlabel>
-          <functionlabel num="10" lockable="false" visible="true">  RPM Decrease   </functionlabel>
-          <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num="9" lockable="false" visible="true">  Shutdown Sequence   </functionlabel>
+          <functionlabel num="10" lockable="false" visible="true">     RPM Decrease     </functionlabel>
+          <functionlabel num="11" lockable="false" visible="true">      Tower Com       </functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">   Reset   </functionlabel>
-          <functionlabel num="15" lockable="false" visible="false">   Aux1    </functionlabel>
-          <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost   </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake   </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true">Momentum-L </functionlabel>
-          <functionlabel num="20" lockable="false" visible="true">Momentum-M </functionlabel>
-          <functionlabel num="21" lockable="false" visible="true">Momentum-H </functionlabel>
-          <functionlabel num="22" lockable="false" visible="true">    Set    </functionlabel>
-          <functionlabel num="23" lockable="false" visible="true">  Horn 2   </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">         Aux1         </functionlabel>
+          <functionlabel num="16" lockable="false" visible="false">     Brake Letoff     </functionlabel>
+          <functionlabel num="17" lockable="false" visible="true"> Boost </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true"> Brake </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
+          <functionlabel num="22" lockable="false" visible="false">         Set          </functionlabel>
+          <functionlabel num="23" lockable="false" visible="true">        Horn 2        </functionlabel>
           <functionlabel num="24" lockable="false" visible="true">    RRSpeed  5mph     </functionlabel>
           <functionlabel num="25" lockable="false" visible="true">    RRSpeed 20mph     </functionlabel>
           <functionlabel num="26" lockable="false" visible="true">    RRSpeed 35mph     </functionlabel>
           <functionlabel num="27" lockable="false" visible="true">    RRSpeed 50mph     </functionlabel>
           <functionlabel num="28" lockable="false" visible="true">    RRSpeed 70mph     </functionlabel>
           <functionlabel num="29" lockable="false" visible="true">    RRSpeed  FULL     </functionlabel>
-          <functionlabel num="30" lockable="false" visible="true">   Mars Lt On    </functionlabel>
-          <functionlabel num="31" lockable="false" visible="true">   Mars Lt Off   </functionlabel>
-          <functionlabel num="32" lockable="false" visible="true">  Ground Lt On   </functionlabel>
-          <functionlabel num="33" lockable="false" visible="true">  Ground Lt Off  </functionlabel>
-          <functionlabel num="34" lockable="false" visible="true"> Ground Lt Auto  </functionlabel>
+          <functionlabel num="30" lockable="false" visible="true">      Mars Lt On      </functionlabel>
+          <functionlabel num="31" lockable="false" visible="true">     Mars Lt Off      </functionlabel>
+          <functionlabel num="32" lockable="false" visible="true">     Ground Lt On     </functionlabel>
+          <functionlabel num="33" lockable="false" visible="true">    Ground Lt Off     </functionlabel>
+          <functionlabel num="34" lockable="false" visible="true">    Ground Lt Auto    </functionlabel>
           <functionlabel num="35" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="36" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="37" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="38" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="39" lockable="false" visible="true"> Rule17 On </functionlabel>
-          <functionlabel num="40" lockable="false" visible="true">Rule17 Off </functionlabel>
-          <functionlabel num="41" lockable="false" visible="true">Rule17 Auto</functionlabel>
+          <functionlabel num="39" lockable="false" visible="true">      Rule17 On       </functionlabel>
+          <functionlabel num="40" lockable="false" visible="true">      Rule17 Off      </functionlabel>
+          <functionlabel num="41" lockable="false" visible="true">     Rule17 Auto      </functionlabel>
           <functionlabel num="42" lockable="false" visible="true">     Ditch Lt On      </functionlabel>
           <functionlabel num="43" lockable="false" visible="true">Ditch Lt On; Off w/Horn</functionlabel>
           <functionlabel num="44" lockable="false" visible="true">Ditch Lt Off; On w/Horn</functionlabel>
           <functionlabel num="45" lockable="false" visible="true">     Ditch Lt Off     </functionlabel>
-          <functionlabel num="46" lockable="false" visible="true"> Cab Lt On </functionlabel>
-          <functionlabel num="47" lockable="false" visible="true">Cab Lt Off </functionlabel>
-          <functionlabel num="48" lockable="false" visible="true">Cab Lt Auto</functionlabel>
-          <functionlabel num="49" lockable="false" visible="true">Loco Marker On </functionlabel>
-          <functionlabel num="50" lockable="false" visible="true">Loco Marker Off</functionlabel>
-          <functionlabel num="51" lockable="false" visible="true"> Hazard Lt On  </functionlabel>
-          <functionlabel num="52" lockable="false" visible="true"> Hazard Lt Off </functionlabel>
-          <functionlabel num="53" lockable="false" visible="true">Hazard Lt Auto </functionlabel>
+          <functionlabel num="46" lockable="false" visible="true">      Cab Lt On       </functionlabel>
+          <functionlabel num="47" lockable="false" visible="true">      Cab Lt Off      </functionlabel>
+          <functionlabel num="48" lockable="false" visible="true">     Cab Lt Auto      </functionlabel>
+          <functionlabel num="49" lockable="false" visible="true">    Loco Marker On    </functionlabel>
+          <functionlabel num="50" lockable="false" visible="true">   Loco Marker Off    </functionlabel>
+          <functionlabel num="51" lockable="false" visible="true">     Hazard Lt On     </functionlabel>
+          <functionlabel num="52" lockable="false" visible="true">    Hazard Lt Off     </functionlabel>
+          <functionlabel num="53" lockable="false" visible="true">    Hazard Lt Auto    </functionlabel>
           <functionlabel num="54" lockable="false" visible="true">Strobe Lt On - SingleFlash</functionlabel>
           <functionlabel num="55" lockable="false" visible="true">Strobe Lt On - DoubleFlash</functionlabel>
-          <functionlabel num="56" lockable="false" visible="true">     Strobe Lt Off     </functionlabel>
+          <functionlabel num="56" lockable="false" visible="true">    Strobe Lt Off     </functionlabel>
           <functionlabel num="57" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="58" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="59" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13653,20 +13653,20 @@
         <model model="TMCC 2 Legacy LiveStock Car" maxFnNum="85" numOuts="1" />
         <functionlabels>
           <functionlabel num="0" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="1" lockable="false" visible="true">   No Sound    </functionlabel>
-          <functionlabel num="2" lockable="false" visible="true">  Mooing Cow   </functionlabel>
+          <functionlabel num="1" lockable="false" visible="true">       No Sound       </functionlabel>
+          <functionlabel num="2" lockable="false" visible="true">      Mooing Cow      </functionlabel>
           <functionlabel num="3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num="4" lockable="false" visible="true">Rear-X </functionlabel>
-          <functionlabel num="5" lockable="false" visible="true">   Volume Up   </functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
           <functionlabel num="6" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="7" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="8" lockable="false" visible="true">  Volume Down  </functionlabel>
-          <functionlabel num="9" lockable="false" visible="true"> Shutdown While Stopped  </functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num="9" lockable="false" visible="true">Shutdown While Stopped</functionlabel>
           <functionlabel num="10" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">     Reset     </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
           <functionlabel num="15" lockable="false" visible="true">High Metallic Air Release</functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="17" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13720,18 +13720,18 @@
           <functionlabel num="65" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="66" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="67" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="68" lockable="false" visible="true"> Frt/Stk Option1 On  </functionlabel>
-          <functionlabel num="69" lockable="false" visible="true"> Frt/Stk Option1 Off </functionlabel>
-          <functionlabel num="70" lockable="false" visible="true"> Frt/Stk Option2 On  </functionlabel>
-          <functionlabel num="71" lockable="false" visible="true"> Frt/Stk Option2 Off </functionlabel>
-          <functionlabel num="72" lockable="false" visible="true">    Frt/Stk Load     </functionlabel>
-          <functionlabel num="73" lockable="false" visible="true">   Frt/Stk Unload    </functionlabel>
-          <functionlabel num="74" lockable="false" visible="true">  Frt/Stk FRED On    </functionlabel>
-          <functionlabel num="75" lockable="false" visible="true">  Frt/Stk FRED Off   </functionlabel>
-          <functionlabel num="76" lockable="false" visible="true">Frt/Stk FlatWheel On </functionlabel>
-          <functionlabel num="77" lockable="false" visible="true">Frt/Stk FlatWheel Off</functionlabel>
-          <functionlabel num="78" lockable="false" visible="true">   Frt/Stk Game On   </functionlabel>
-          <functionlabel num="79" lockable="false" visible="true">  Frt/Stk Game Off   </functionlabel>
+          <functionlabel num="68" lockable="false" visible="true">  Frt/Stk Option1 On  </functionlabel>
+          <functionlabel num="69" lockable="false" visible="true"> Frt/Stk Option1 Off  </functionlabel>
+          <functionlabel num="70" lockable="false" visible="true">  Frt/Stk Option2 On  </functionlabel>
+          <functionlabel num="71" lockable="false" visible="true"> Frt/Stk Option2 Off  </functionlabel>
+          <functionlabel num="72" lockable="false" visible="true">     Frt/Stk Load     </functionlabel>
+          <functionlabel num="73" lockable="false" visible="true">    Frt/Stk Unload    </functionlabel>
+          <functionlabel num="74" lockable="false" visible="true">   Frt/Stk FRED On    </functionlabel>
+          <functionlabel num="75" lockable="false" visible="true">   Frt/Stk FRED Off   </functionlabel>
+          <functionlabel num="76" lockable="false" visible="true"> Frt/Stk FlatWheel On </functionlabel>
+          <functionlabel num="77" lockable="false" visible="true">Frt/Stk FlatWheel Off </functionlabel>
+          <functionlabel num="78" lockable="false" visible="true">   Frt/Stk Game On    </functionlabel>
+          <functionlabel num="79" lockable="false" visible="true">   Frt/Stk Game Off   </functionlabel>
           <functionlabel num="80" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="81" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="82" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13751,60 +13751,60 @@
         </outputs>
         <model model="TMCC 2 Legacy Steam" maxFnNum="85" numOuts="1" />
         <functionlabels>
-          <functionlabel num="0" lockable="false" visible="true">    Headlight    </functionlabel>
+          <functionlabel num="0" lockable="false" visible="true">      Headlight       </functionlabel>
           <functionlabel num="1" lockable="false" visible="true"> Bell  </functionlabel>
           <functionlabel num="2" lockable="false" visible="true">Whistle</functionlabel>
           <functionlabel num="3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num="4" lockable="false" visible="true">Rear-X </functionlabel>
-          <functionlabel num="5" lockable="false" visible="true"> Volume Up </functionlabel>
-          <functionlabel num="6" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="7" lockable="false" visible="true"> Steam Blowoff w/StartUp </functionlabel>
-          <functionlabel num="8" lockable="false" visible="true">Volume Down</functionlabel>
-          <functionlabel num="9" lockable="false" visible="true">    Shutdown Sequence    </functionlabel>
-          <functionlabel num="10" lockable="false" visible="true">      Steam Letoff       </functionlabel>
-          <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="12" lockable="false" visible="true">    Smoke/Firebox Off    </functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
+          <functionlabel num="6" lockable="false" visible="true">      Crew Talk       </functionlabel>
+          <functionlabel num="7" lockable="false" visible="true">Steam Blowoff w/StartUp</functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num="9" lockable="false" visible="true">  Shutdown Sequence   </functionlabel>
+          <functionlabel num="10" lockable="false" visible="true">    Steam Release     </functionlabel>
+          <functionlabel num="11" lockable="false" visible="true">      Tower Com       </functionlabel>
+          <functionlabel num="12" lockable="false" visible="true">  Smoke/Firebox Off   </functionlabel>
           <functionlabel num="13" lockable="false" visible="true">Smoke/Firebox/Smoke Boost</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">   Reset    </functionlabel>
-          <functionlabel num="15" lockable="false" visible="false">    Aux1    </functionlabel>
-          <functionlabel num="16" lockable="false" visible="true">Steam Letoff</functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost    </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake    </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true"> Momentum-L </functionlabel>
-          <functionlabel num="20" lockable="false" visible="true"> Momentum-M </functionlabel>
-          <functionlabel num="21" lockable="false" visible="true"> Momentum-H </functionlabel>
-          <functionlabel num="22" lockable="false" visible="true">    Set     </functionlabel>
-          <functionlabel num="23" lockable="false" visible="false">  Horn 2   </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">         Aux1         </functionlabel>
+          <functionlabel num="16" lockable="false" visible="true">     Brake Letoff     </functionlabel>
+          <functionlabel num="17" lockable="false" visible="true"> Boost </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true"> Brake </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
+          <functionlabel num="22" lockable="false" visible="false">         Set          </functionlabel>
+          <functionlabel num="23" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="24" lockable="false" visible="true">    RRSpeed  5mph     </functionlabel>
           <functionlabel num="25" lockable="false" visible="true">    RRSpeed 20mph     </functionlabel>
           <functionlabel num="26" lockable="false" visible="true">    RRSpeed 35mph     </functionlabel>
           <functionlabel num="27" lockable="false" visible="true">    RRSpeed 50mph     </functionlabel>
           <functionlabel num="28" lockable="false" visible="true">    RRSpeed 70mph     </functionlabel>
           <functionlabel num="29" lockable="false" visible="true">    RRSpeed  FULL     </functionlabel>
-          <functionlabel num="30" lockable="false" visible="true">   Mars Lt On    </functionlabel>
-          <functionlabel num="31" lockable="false" visible="true">   Mars Lt Off   </functionlabel>
-          <functionlabel num="32" lockable="false" visible="true">  Ground Lt On   </functionlabel>
-          <functionlabel num="33" lockable="false" visible="true">  Ground Lt Off  </functionlabel>
-          <functionlabel num="34" lockable="false" visible="true"> Ground Lt Auto  </functionlabel>
-          <functionlabel num="35" lockable="false" visible="true"> Doghouse Lt On  </functionlabel>
-          <functionlabel num="36" lockable="false" visible="true"> Doghouse Lt Off </functionlabel>
-          <functionlabel num="37" lockable="false" visible="true">Tender Marker On </functionlabel>
-          <functionlabel num="38" lockable="false" visible="true">Tender Marker Off</functionlabel>
-          <functionlabel num="39" lockable="false" visible="true"> Rule17 On </functionlabel>
-          <functionlabel num="40" lockable="false" visible="true">Rule17 Off </functionlabel>
-          <functionlabel num="41" lockable="false" visible="true">Rule17 Auto</functionlabel>
+          <functionlabel num="30" lockable="false" visible="true">      Mars Lt On      </functionlabel>
+          <functionlabel num="31" lockable="false" visible="true">     Mars Lt Off      </functionlabel>
+          <functionlabel num="32" lockable="false" visible="true">     Ground Lt On     </functionlabel>
+          <functionlabel num="33" lockable="false" visible="true">    Ground Lt Off     </functionlabel>
+          <functionlabel num="34" lockable="false" visible="true">    Ground Lt Auto    </functionlabel>
+          <functionlabel num="35" lockable="false" visible="true">    Doghouse Lt On    </functionlabel>
+          <functionlabel num="36" lockable="false" visible="true">   Doghouse Lt Off    </functionlabel>
+          <functionlabel num="37" lockable="false" visible="true">   Tender Marker On   </functionlabel>
+          <functionlabel num="38" lockable="false" visible="true">  Tender Marker Off   </functionlabel>
+          <functionlabel num="39" lockable="false" visible="true">      Rule17 On       </functionlabel>
+          <functionlabel num="40" lockable="false" visible="true">      Rule17 Off      </functionlabel>
+          <functionlabel num="41" lockable="false" visible="true">     Rule17 Auto      </functionlabel>
           <functionlabel num="42" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="43" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="44" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="45" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="46" lockable="false" visible="true"> Cab Lt On </functionlabel>
-          <functionlabel num="47" lockable="false" visible="true">Cab Lt Off </functionlabel>
-          <functionlabel num="48" lockable="false" visible="true">Cab Lt Auto</functionlabel>
-          <functionlabel num="49" lockable="false" visible="true">Loco Marker On </functionlabel>
-          <functionlabel num="50" lockable="false" visible="true">Loco Marker Off</functionlabel>
-          <functionlabel num="51" lockable="false" visible="true"> Hazard Lt On  </functionlabel>
-          <functionlabel num="52" lockable="false" visible="true"> Hazard Lt Off </functionlabel>
-          <functionlabel num="53" lockable="false" visible="true">Hazard Lt Auto </functionlabel>
+          <functionlabel num="46" lockable="false" visible="true">      Cab Lt On       </functionlabel>
+          <functionlabel num="47" lockable="false" visible="true">      Cab Lt Off      </functionlabel>
+          <functionlabel num="48" lockable="false" visible="true">     Cab Lt Auto      </functionlabel>
+          <functionlabel num="49" lockable="false" visible="true">    Loco Marker On    </functionlabel>
+          <functionlabel num="50" lockable="false" visible="true">   Loco Marker Off    </functionlabel>
+          <functionlabel num="51" lockable="false" visible="true">     Hazard Lt On     </functionlabel>
+          <functionlabel num="52" lockable="false" visible="true">    Hazard Lt Off     </functionlabel>
+          <functionlabel num="53" lockable="false" visible="true">    Hazard Lt Auto    </functionlabel>
           <functionlabel num="54" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="55" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="56" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13850,29 +13850,29 @@
         </outputs>
         <model model="TMCC 2 Legacy Subway" maxFnNum="85" numOuts="1" />
         <functionlabels>
-          <functionlabel num="0" lockable="false" visible="true"> Toggles Lights  </functionlabel>
-          <functionlabel num="1" lockable="false" visible="true">   Bell    </functionlabel>
-          <functionlabel num="2" lockable="false" visible="true">   Horn    </functionlabel>
+          <functionlabel num="0" lockable="false" visible="true">    Toggles Lights    </functionlabel>
+          <functionlabel num="1" lockable="false" visible="true"> Bell  </functionlabel>
+          <functionlabel num="2" lockable="false" visible="true"> Horn  </functionlabel>
           <functionlabel num="3" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="4" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="5" lockable="false" visible="true"> Volume Up </functionlabel>
-          <functionlabel num="6" lockable="false" visible="true"> Station Announce  </functionlabel>
-          <functionlabel num="7" lockable="false" visible="true"> Start Railsounds  </functionlabel>
-          <functionlabel num="8" lockable="false" visible="true">Volume Down</functionlabel>
-          <functionlabel num="9" lockable="false" visible="true">Shutdown Railsounds</functionlabel>
+          <functionlabel num="5" lockable="false" visible="true">      Volume Up       </functionlabel>
+          <functionlabel num="6" lockable="false" visible="true">   Station Announce   </functionlabel>
+          <functionlabel num="7" lockable="false" visible="true">   Start Railsounds   </functionlabel>
+          <functionlabel num="8" lockable="false" visible="true">     Volume Down      </functionlabel>
+          <functionlabel num="9" lockable="false" visible="true"> Shutdown Railsounds  </functionlabel>
           <functionlabel num="10" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="11" lockable="false" visible="true">  Buzzer   </functionlabel>
-          <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">   Reset   </functionlabel>
-          <functionlabel num="15" lockable="false" visible="true">   Aux1    </functionlabel>
+          <functionlabel num="11" lockable="false" visible="true">        Buzzer        </functionlabel>
+          <functionlabel num="12" lockable="false" visible="true">   Interior Lts Off   </functionlabel>
+          <functionlabel num="13" lockable="false" visible="true">   Interior Lts On    </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">        Reset         </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">         Aux1         </functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost   </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake   </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true">Momentum-L </functionlabel>
-          <functionlabel num="20" lockable="false" visible="true">Momentum-M </functionlabel>
-          <functionlabel num="21" lockable="false" visible="true">Momentum-H </functionlabel>
-          <functionlabel num="22" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="17" lockable="false" visible="true"> Boost </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true"> Brake </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
+          <functionlabel num="22" lockable="false" visible="false">         Set          </functionlabel>
           <functionlabel num="23" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="24" lockable="false" visible="true">    RRSpeed  5mph     </functionlabel>
           <functionlabel num="25" lockable="false" visible="true">    RRSpeed 20mph     </functionlabel>
@@ -13896,9 +13896,9 @@
           <functionlabel num="43" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="44" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="45" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="46" lockable="false" visible="true"> Cab Lt On </functionlabel>
-          <functionlabel num="47" lockable="false" visible="true">Cab Lt Off </functionlabel>
-          <functionlabel num="48" lockable="false" visible="true">Cab Lt Auto</functionlabel>
+          <functionlabel num="46" lockable="false" visible="true">       CabLt On       </functionlabel>
+          <functionlabel num="47" lockable="false" visible="true">      CabLt Off       </functionlabel>
+          <functionlabel num="48" lockable="false" visible="true">     Cab Lt Auto      </functionlabel>
           <functionlabel num="49" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="50" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="51" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13907,15 +13907,15 @@
           <functionlabel num="54" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="55" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="56" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="57" lockable="false" visible="true"> Car Cabin Lt On </functionlabel>
-          <functionlabel num="58" lockable="false" visible="true"> Car Cabin Lt Off</functionlabel>
-          <functionlabel num="59" lockable="false" visible="true">Car Cabin Lt Auto</functionlabel>
-          <functionlabel num="60" lockable="false" visible="true">Open Doors  - L</functionlabel>
+          <functionlabel num="57" lockable="false" visible="true">   Car Cabin Lt On    </functionlabel>
+          <functionlabel num="58" lockable="false" visible="true">   Car Cabin Lt Off   </functionlabel>
+          <functionlabel num="59" lockable="false" visible="true">  Car Cabin Lt Auto   </functionlabel>
+          <functionlabel num="60" lockable="false" visible="true">    Open Doors - L    </functionlabel>
           <functionlabel num="61" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="62" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="63" lockable="false" visible="true">Close Doors - L</functionlabel>
-          <functionlabel num="64" lockable="false" visible="true">Open Doors  - R</functionlabel>
-          <functionlabel num="65" lockable="false" visible="true">Close Doors - R</functionlabel>
+          <functionlabel num="63" lockable="false" visible="true">   Close Doors - L    </functionlabel>
+          <functionlabel num="64" lockable="false" visible="true">    Open Doors - R    </functionlabel>
+          <functionlabel num="65" lockable="false" visible="true">   Close Doors - R    </functionlabel>
           <functionlabel num="66" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="67" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="68" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13950,8 +13950,8 @@
         <model model="TMCC 2 Legacy TR_LegacyPowerMaster" maxFnNum="85" numOuts="1" />
         <functionlabels>
           <functionlabel num="0" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="1" lockable="false" visible="true"> Bell  </functionlabel>
-          <functionlabel num="2" lockable="false" visible="true">  Horn/Whistle   </functionlabel>
+          <functionlabel num="1" lockable="false" visible="true">         Bell         </functionlabel>
+          <functionlabel num="2" lockable="false" visible="true">     Horn/Whistle     </functionlabel>
           <functionlabel num="3" lockable="false" visible="true">Front-X</functionlabel>
           <functionlabel num="4" lockable="false" visible="true">Rear-X </functionlabel>
           <functionlabel num="5" lockable="false" visible="false">Unassigned</functionlabel>
@@ -13963,15 +13963,15 @@
           <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true"> Power Off </functionlabel>
-          <functionlabel num="15" lockable="false" visible="false">   Aux1    </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">      Power Off       </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">         Aux1         </functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost   </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake   </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true">Momentum-L </functionlabel>
-          <functionlabel num="20" lockable="false" visible="true">Momentum-M </functionlabel>
-          <functionlabel num="21" lockable="false" visible="true">Momentum-H </functionlabel>
-          <functionlabel num="22" lockable="false" visible="true">    Set    </functionlabel>
+          <functionlabel num="17" lockable="false" visible="true"> Boost </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true"> Brake </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
+          <functionlabel num="22" lockable="false" visible="false">         Set          </functionlabel>
           <functionlabel num="23" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="24" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="25" lockable="false" visible="false">Unassigned</functionlabel>
@@ -14049,8 +14049,8 @@
         <model model="TMCC 2 Legacy TR_PowerMaster" maxFnNum="85" numOuts="1" />
         <functionlabels>
           <functionlabel num="0" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="1" lockable="false" visible="true"> Bell  </functionlabel>
-          <functionlabel num="2" lockable="false" visible="true">  Horn/Whistle   </functionlabel>
+          <functionlabel num="1" lockable="false" visible="true">         Bell         </functionlabel>
+          <functionlabel num="2" lockable="false" visible="true">     Horn/Whistle     </functionlabel>
           <functionlabel num="3" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="4" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="5" lockable="false" visible="false">Unassigned</functionlabel>
@@ -14062,15 +14062,15 @@
           <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true"> Power Off </functionlabel>
-          <functionlabel num="15" lockable="false" visible="false">   Aux1    </functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">      Power Off       </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">         Aux1         </functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost   </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake   </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true">Momentum-L </functionlabel>
-          <functionlabel num="20" lockable="false" visible="true">Momentum-M </functionlabel>
-          <functionlabel num="21" lockable="false" visible="true">Momentum-H </functionlabel>
-          <functionlabel num="22" lockable="false" visible="true">    Set    </functionlabel>
+          <functionlabel num="17" lockable="false" visible="true"> Boost </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true"> Brake </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">      Momentum-L      </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">      Momentum-M      </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">      Momentum-H      </functionlabel>
+          <functionlabel num="22" lockable="false" visible="false">         Set          </functionlabel>
           <functionlabel num="23" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="24" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="25" lockable="false" visible="false">Unassigned</functionlabel>
@@ -14135,6 +14135,9 @@
           <functionlabel num="84" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="85" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
+      </family>
+      <family name="Turnout Drives" mfg="MD Electronics" file="MDE_80101.xml">
+        <model model="80101 Turnout Drive" lowVersionID="120" highVersionID="120" />
       </family>
       <family name="mXion" mfg="MD Electronics" file="MDE_HDD.xml">
         <model model="HDD" lowVersionID="10" highVersionID="10" />
@@ -17249,6 +17252,71 @@
           </soundlabels>
         </model>
       </family>
+      <family name="PIKO SmartDecoder XP5.1 (version 1.17+)" mfg="PIKO" lowVersionID="17" highVersionID="20" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound_noSUSI_v1.17.xml">
+        <model model="PIKO46505-18 XP5.1 V1.17 no LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein ohne LC (FW 1.17.0+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46540-18 BR55-TT V1.17" numOuts="4" numFns="68" productID="PIKO46540-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.17.0+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO56505-22 XP5.1 V1.17 no LC (SUSI)" numOuts="9" numFns="68" productID="PIKO56505-22" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX22 ohne LC (FW 1.17.0+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
+        </model>
+        <model model="PIKO56508-16 XP5.1 V1.17 no LC (SUSI)" numOuts="6" numFns="68" productID="PIKO56508-16" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX16 ohne LC (FW 1.17.0+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+        </model>
+        <model model="PIKO36505-G XP5.1 V1.17 no LC (SUSI)" numOuts="14" numFns="68" productID="PIKO36505-G" comment="Piko SmartDecoder XP5.1 Sound G allgemein ohne LC (FW 1.17.0+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
+          <output name="10" label=". A8 ." />
+          <output name="11" label=". A9 ." />
+          <output name="12" label=". A10." />
+          <output name="13" label=". A11." />
+          <output name="14" label=". A12." />
+        </model>
+        <model model="PIKO36537-G BR80-G V1.17" numOuts="14" numFns="68" productID="PIKO36537-G" comment="Piko SmartDecoder XP5.1 Sound BR 80 G ohne LC (FW 1.17.0+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
+          <output name="10" label=". A8 ." />
+          <output name="11" label=". A9 ." />
+          <output name="12" label=". A10." />
+          <output name="13" label=". A11." />
+          <output name="14" label=". A12." />
+        </model>
+      </family>
       <family name="PIKO SmartDecoder XP5.1 (version 1.5+)" mfg="PIKO" lowVersionID="3" highVersionID="5" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound_noSUSI_v1.5.xml">
         <model model="PIKO46505-18 XP5.1 V1.5 no LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein (FW 1.5.0)" replacementModel="PIKO46505-18 XP5.1 V1.8 no LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
@@ -17283,19 +17351,19 @@
         </model>
       </family>
       <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="16" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound_noSUSI_v1.8.xml">
-        <model model="PIKO46505-18 XP5.1 V1.8 no LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound allgemein ohne LC (FW 1.8.0 - 1.16.0)">
+        <model model="PIKO46505-18 XP5.1 V1.8 no LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein ohne LC (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46540-18 BR55-TT V1.8" numOuts="4" numFns="68" productID="PIKO46540-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.8.0 - 1.16.0)">
+        <model model="PIKO46540-18 BR55-TT V1.8" numOuts="4" numFns="68" productID="PIKO46540-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO56505-22 XP5.1 V1.8 no LC (SUSI)" numOuts="9" numFns="68" productID="PIKO56505-22" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX22 ohne LC (FW 1.8.0 - 1.16.0)">
+        <model model="PIKO56505-22 XP5.1 V1.8 no LC (SUSI)" numOuts="9" numFns="68" productID="PIKO56505-22" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX22 ohne LC (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -17306,7 +17374,7 @@
           <output name="8" label=". A6 ." />
           <output name="9" label=". A7 ." />
         </model>
-        <model model="PIKO56508-16 XP5.1 V1.8 no LC (SUSI)" numOuts="6" numFns="68" productID="PIKO56508-16" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX16 ohne LC (FW 1.8.0 - 1.16.0)">
+        <model model="PIKO56508-16 XP5.1 V1.8 no LC (SUSI)" numOuts="6" numFns="68" productID="PIKO56508-16" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX16 ohne LC (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -17535,6 +17603,9 @@
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_SCOM_TC.xml">
         <model model="ARD-SCOM-TC" lowVersionID="10" highVersionID="19" productID="16843266" numOuts="16" />
         <model model="ARD-SCOM-TC-2" lowVersionID="20" highVersionID="29" productID="16843266" numOuts="16" />
+      </family>
+      <family name="dccdoma.cz" mfg="Public-domain and DIY" modes="OPSACCEXTBYTEMODE" file="Public_Domain_dccdoma_UNI16ARD_16SV.xml">
+        <model model="UNI16ARD-16SV" lowVersionID="04" highVersionID="19" productID="16843014" numOuts="16" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_8VYH.xml">
         <model model="UNI16ARD-8VYH" lowVersionID="00" highVersionID="39" productID="16843009" numOuts="16" />
@@ -26270,6 +26341,16 @@
           <output name="9" label="X9" />
           <output name="10" label="X10" />
           <output name="11" label="X11" />
+        </model>
+      </family>
+      <family name="Multiprotocol Decoder" mfg="Tams Elektronik GmbH" lowVersionID="23" highVersionID="23" file="TAMS_LD-W-32_2.xml">
+        <model model="LD-W-32.2" numOuts="6" numFns="14">
+          <output name="1" label="X1" />
+          <output name="2" label="X2" />
+          <output name="3" label="X3" />
+          <output name="4" label="Acceleration Delay" />
+          <output name="5" label="Shunting gear" />
+          <output name="6" label="Shunting light" />
         </model>
       </family>
       <family name="Lokdecoder Serie 30 plus" mfg="Tams Elektronik GmbH" file="TAMS_LD_30.xml">

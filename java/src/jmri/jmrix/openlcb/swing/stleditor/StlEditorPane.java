@@ -180,7 +180,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private static String SYNTAX_MESSAGE = "Syntax Messages.Syntax Messages.Message 1";
 
     // Regex Patterns
-    private static Pattern PARSE_VARIABLE = Pattern.compile("[IQYZM](\\d+)\\.(\\d+)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PARSE_VARIABLE = Pattern.compile("[IQYZM] ?(\\d+)\\.(\\d+)", Pattern.CASE_INSENSITIVE);  // A space between the letter and n.n is valid
     private static Pattern PARSE_NOVAROPER = Pattern.compile("(A\\(|AN\\(|O\\(|ON\\(|X\\(|XN\\(|\\)|NOT|SET|CLR|SAVE)", Pattern.CASE_INSENSITIVE);
     private static Pattern PARSE_LABEL = Pattern.compile("([a-zA-Z]\\w{0,3}:)");
     private static Pattern PARSE_JUMP = Pattern.compile("(JNBI|JCN|JCB|JNB|JBI|JU|JC)", Pattern.CASE_INSENSITIVE);
@@ -924,13 +924,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
      * @param group The CDI group.
      */
     private void createTokenMap(GroupRow group) {
+        _messages.clear();
+        _tokenMap = new TreeMap<>();
         var line = group.getMultiLine();
         if (line.length() == 0) {
             return;
         }
-
-        _messages.clear();
-        _tokenMap = new TreeMap<>();
 
         // Find label locations
         log.debug("Find label locations");
@@ -1020,6 +1019,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         // Find comment locations
         log.debug("Find comment locations");
+
+        // Add a newline to capture a comment at the end of the input line.
+        line = line + "\n";
+
         var matchComment1 = PARSE_COMMENT1.matcher(line);
         while (matchComment1.find()) {
             var comment = matchComment1.group(1).trim();

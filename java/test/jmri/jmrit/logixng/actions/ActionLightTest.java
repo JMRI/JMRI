@@ -1,5 +1,14 @@
 package jmri.jmrit.logixng.actions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
@@ -10,10 +19,9 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ActionLight
@@ -30,22 +38,18 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testLightState() {
-        Assert.assertEquals("String matches", "Off", ActionLight.LightState.Off.toString());
-        Assert.assertEquals("String matches", "On", ActionLight.LightState.On.toString());
-        Assert.assertEquals("String matches", "Toggle", ActionLight.LightState.Toggle.toString());
+        assertEquals( "Off", ActionLight.LightState.Off.toString(), "String matches");
+        assertEquals( "On", ActionLight.LightState.On.toString(), "String matches");
+        assertEquals( "Toggle", ActionLight.LightState.Toggle.toString(), "String matches");
 
-        Assert.assertTrue("objects are equal", ActionLight.LightState.Off == ActionLight.LightState.get(Light.OFF));
-        Assert.assertTrue("objects are equal", ActionLight.LightState.On == ActionLight.LightState.get(Light.ON));
-        Assert.assertTrue("objects are equal", ActionLight.LightState.Toggle == ActionLight.LightState.get(-1));
+        assertSame( ActionLight.LightState.Off, ActionLight.LightState.get(Light.OFF), "objects are equal");
+        assertSame( ActionLight.LightState.On, ActionLight.LightState.get(Light.ON), "objects are equal");
+        assertSame( ActionLight.LightState.Toggle, ActionLight.LightState.get(-1), "objects are equal");
 
-        boolean hasThrown = false;
-        try {
-            ActionLight.LightState.get(100);    // The number 100 is a state that ActionLight.LightState isn't aware of
-        } catch (IllegalArgumentException ex) {
-            hasThrown = true;
-            Assert.assertTrue("Error message is correct", "invalid light state".equals(ex.getMessage()));
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () ->
+            ActionLight.LightState.get(100),    // The number 100 is a state that ActionLight.LightState isn't aware of
+                "Exception is thrown");
+        assertEquals( "invalid light state", ex.getMessage(), "Error message is correct");
     }
 
     @Override
@@ -89,54 +93,48 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCtor() {
-        Assert.assertTrue("object exists", _base != null);
+        assertNotNull( _base, "object exists");
 
         ActionLight action2;
-        Assert.assertNotNull("light is not null", light);
+        assertNotNull( light, "light is not null");
         light.setState(Light.ON);
 
         action2 = new ActionLight("IQDA321", null);
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Set light '' to state On", action2.getLongDescription());
+        assertNotNull( action2, "object exists");
+        assertNull( action2.getUserName(), "Username matches");
+        assertEquals( "Set light '' to state On", action2.getLongDescription(), "String matches");
 
         action2 = new ActionLight("IQDA321", "My light");
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertEquals("Username matches", "My light", action2.getUserName());
-        Assert.assertEquals("String matches", "Set light '' to state On", action2.getLongDescription());
+        assertNotNull( action2, "object exists");
+        assertEquals( "My light", action2.getUserName(), "Username matches");
+        assertEquals( "Set light '' to state On", action2.getLongDescription(), "String matches");
 
         action2 = new ActionLight("IQDA321", null);
         action2.getSelectNamedBean().setNamedBean(light);
-        Assert.assertTrue("light is correct", light == action2.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Set light IL1 to state On", action2.getLongDescription());
+        assertSame( light, action2.getSelectNamedBean().getNamedBean().getBean(), "light is correct");
+        assertNotNull( action2, "object exists");
+        assertNull( action2.getUserName(), "Username matches");
+        assertEquals( "Set light IL1 to state On", action2.getLongDescription(), "String matches");
 
         Light l = InstanceManager.getDefault(LightManager.class).provide("IL1");
         action2 = new ActionLight("IQDA321", "My light");
         action2.getSelectNamedBean().setNamedBean(l);
-        Assert.assertTrue("light is correct", l == action2.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertEquals("Username matches", "My light", action2.getUserName());
-        Assert.assertEquals("String matches", "Set light IL1 to state On", action2.getLongDescription());
+        assertSame( l, action2.getSelectNamedBean().getNamedBean().getBean(), "light is correct");
+        assertNotNull( action2, "object exists");
+        assertEquals( "My light", action2.getUserName(), "Username matches");
+        assertEquals( "Set light IL1 to state On", action2.getLongDescription(), "String matches");
 
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            new ActionLight("IQA55:12:XY11", null);
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () -> {
+            var t = new ActionLight("IQA55:12:XY11", null);
+            fail("Should have thrown, created " + t);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            new ActionLight("IQA55:12:XY11", "A name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows( IllegalArgumentException.class, () -> {
+            var t = new ActionLight("IQA55:12:XY11", "A name");
+            fail("Should have thrown, created " + t);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
 
         // Test setup(). This method doesn't do anything, but execute it for coverage.
         _base.setup();
@@ -144,16 +142,11 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == actionLight.getChildCount());
+        assertEquals( 0, actionLight.getChildCount(), "getChildCount() returns 0");
 
-        boolean hasThrown = false;
-        try {
-            actionLight.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class, () ->
+            actionLight.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
     @Test
@@ -166,26 +159,28 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         light14.setUserName("Some user name");
 
         actionLight.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull("light handle is null", actionLight.getSelectNamedBean().getNamedBean());
+        assertNull( actionLight.getSelectNamedBean().getNamedBean(), "light handle is null");
 
         actionLight.getSelectNamedBean().setNamedBean(light11);
-        Assert.assertTrue("light is correct", light11 == actionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertSame( light11, actionLight.getSelectNamedBean().getNamedBean().getBean(), "light is correct");
 
         actionLight.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull("light handle is null", actionLight.getSelectNamedBean().getNamedBean());
+        assertNull( actionLight.getSelectNamedBean().getNamedBean(), "light handle is null");
 
         actionLight.getSelectNamedBean().setNamedBean(lightHandle12);
-        Assert.assertTrue("light handle is correct", lightHandle12 == actionLight.getSelectNamedBean().getNamedBean());
+        assertSame( lightHandle12, actionLight.getSelectNamedBean().getNamedBean(), "light handle is correct");
 
         actionLight.getSelectNamedBean().setNamedBean("A non existent light");
-        Assert.assertNull("light handle is null", actionLight.getSelectNamedBean().getNamedBean());
+        assertNull( actionLight.getSelectNamedBean().getNamedBean(), "light handle is null");
         JUnitAppender.assertErrorMessage("Light \"A non existent light\" is not found");
 
         actionLight.getSelectNamedBean().setNamedBean(light13.getSystemName());
-        Assert.assertTrue("light is correct", light13 == actionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertSame( light13, actionLight.getSelectNamedBean().getNamedBean().getBean(), "light is correct");
 
-        actionLight.getSelectNamedBean().setNamedBean(light14.getUserName());
-        Assert.assertTrue("light is correct", light14 == actionLight.getSelectNamedBean().getNamedBean().getBean());
+        String l14UserName = light14.getUserName();
+        assertNotNull(l14UserName);
+        actionLight.getSelectNamedBean().setNamedBean(l14UserName);
+        assertSame( light14, actionLight.getSelectNamedBean().getNamedBean().getBean(), "light is correct");
     }
 
     @Test
@@ -194,32 +189,32 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         // Set the light
         light.setCommandedState(Light.OFF);
         // The light should be off
-        Assert.assertTrue("light is off",light.getCommandedState() == Light.OFF);
+        assertEquals( Light.OFF, light.getCommandedState(), "light is off");
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the light should be on
-        Assert.assertTrue("light is on",light.getCommandedState() == Light.ON);
+        assertEquals( Light.ON, light.getCommandedState(), "light is on");
 
         // Test to set light to off
         actionLight.getSelectEnum().setEnum(ActionLight.LightState.Off);
         // Execute the conditional
         conditionalNG.execute();
-        // The action should now be executed so the light should be on
-        Assert.assertTrue("light is on",light.getCommandedState() == Light.OFF);
+        // The action should now be executed so the light should be off
+        assertEquals( Light.OFF, light.getCommandedState(), "light is off");
 
         // Test to set light to toggle
         actionLight.getSelectEnum().setEnum(ActionLight.LightState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the light should be on
-        Assert.assertTrue("light is on",light.getCommandedState() == Light.ON);
+        assertEquals( Light.ON, light.getCommandedState(), "light is on");
 
         // Test to set light to toggle
         actionLight.getSelectEnum().setEnum(ActionLight.LightState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
-        // The action should now be executed so the light should be on
-        Assert.assertTrue("light is on",light.getCommandedState() == Light.OFF);
+        // The action should now be executed so the light should be off
+        assertEquals( Light.OFF, light.getCommandedState(), "light is off");
     }
 
     @Test
@@ -228,7 +223,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         Memory m1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         m1.setValue("IL102");
 
-        Assert.assertTrue(conditionalNG.isActive());
+        assertTrue(conditionalNG.isActive());
         Light t1 = InstanceManager.getDefault(LightManager.class).provide("IL101");
         Light t2 = InstanceManager.getDefault(LightManager.class).provide("IL102");
         Light t3 = InstanceManager.getDefault(LightManager.class).provide("IL103");
@@ -254,11 +249,11 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.ON, t1.getCommandedState());
-        Assert.assertEquals(Light.OFF, t2.getCommandedState());
-        Assert.assertEquals(Light.OFF, t3.getCommandedState());
-        Assert.assertEquals(Light.OFF, t4.getCommandedState());
-        Assert.assertEquals(Light.OFF, t5.getCommandedState());
+        assertEquals(Light.ON, t1.getCommandedState());
+        assertEquals(Light.OFF, t2.getCommandedState());
+        assertEquals(Light.OFF, t3.getCommandedState());
+        assertEquals(Light.OFF, t4.getCommandedState());
+        assertEquals(Light.OFF, t5.getCommandedState());
 
         // Test reference by memory addressing
         actionLight.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
@@ -270,11 +265,11 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.OFF, t1.getCommandedState());
-        Assert.assertEquals(Light.ON, t2.getCommandedState());
-        Assert.assertEquals(Light.OFF, t3.getCommandedState());
-        Assert.assertEquals(Light.OFF, t4.getCommandedState());
-        Assert.assertEquals(Light.OFF, t5.getCommandedState());
+        assertEquals(Light.OFF, t1.getCommandedState());
+        assertEquals(Light.ON, t2.getCommandedState());
+        assertEquals(Light.OFF, t3.getCommandedState());
+        assertEquals(Light.OFF, t4.getCommandedState());
+        assertEquals(Light.OFF, t5.getCommandedState());
 
         // Test reference by local variable addressing
         actionLight.getSelectNamedBean().setReference("{refLight}");    // Points to "IL103"
@@ -287,11 +282,11 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.OFF, t1.getCommandedState());
-        Assert.assertEquals(Light.OFF, t2.getCommandedState());
-        Assert.assertEquals(Light.ON, t3.getCommandedState());
-        Assert.assertEquals(Light.OFF, t4.getCommandedState());
-        Assert.assertEquals(Light.OFF, t5.getCommandedState());
+        assertEquals(Light.OFF, t1.getCommandedState());
+        assertEquals(Light.OFF, t2.getCommandedState());
+        assertEquals(Light.ON, t3.getCommandedState());
+        assertEquals(Light.OFF, t4.getCommandedState());
+        assertEquals(Light.OFF, t5.getCommandedState());
 
         // Test local variable addressing
         actionLight.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
@@ -303,11 +298,11 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.OFF, t1.getCommandedState());
-        Assert.assertEquals(Light.OFF, t2.getCommandedState());
-        Assert.assertEquals(Light.OFF, t3.getCommandedState());
-        Assert.assertEquals(Light.ON, t4.getCommandedState());
-        Assert.assertEquals(Light.OFF, t5.getCommandedState());
+        assertEquals(Light.OFF, t1.getCommandedState());
+        assertEquals(Light.OFF, t2.getCommandedState());
+        assertEquals(Light.OFF, t3.getCommandedState());
+        assertEquals(Light.ON, t4.getCommandedState());
+        assertEquals(Light.OFF, t5.getCommandedState());
 
         // Test formula addressing
         actionLight.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
@@ -319,11 +314,11 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.OFF, t1.getCommandedState());
-        Assert.assertEquals(Light.OFF, t2.getCommandedState());
-        Assert.assertEquals(Light.OFF, t3.getCommandedState());
-        Assert.assertEquals(Light.OFF, t4.getCommandedState());
-        Assert.assertEquals(Light.ON, t5.getCommandedState());
+        assertEquals(Light.OFF, t1.getCommandedState());
+        assertEquals(Light.OFF, t2.getCommandedState());
+        assertEquals(Light.OFF, t3.getCommandedState());
+        assertEquals(Light.OFF, t4.getCommandedState());
+        assertEquals(Light.ON, t5.getCommandedState());
     }
 
     @Test
@@ -332,7 +327,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         Memory m1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         m1.setValue("IL102");
 
-        Assert.assertTrue(conditionalNG.isActive());
+        assertTrue(conditionalNG.isActive());
 
 
         // Test direct addressing
@@ -343,14 +338,14 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.OFF, light.getCommandedState());
+        assertEquals(Light.OFF, light.getCommandedState());
         // Test On
         light.setState(Light.OFF);
         actionLight.getSelectEnum().setEnum(ActionLight.LightState.On);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.ON, light.getCommandedState());
+        assertEquals(Light.ON, light.getCommandedState());
 
 
         // Test reference by memory addressing
@@ -362,14 +357,14 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.OFF, light.getCommandedState());
+        assertEquals(Light.OFF, light.getCommandedState());
         // Test On
         m1.setValue("On");
         light.setState(Light.OFF);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.ON, light.getCommandedState());
+        assertEquals(Light.ON, light.getCommandedState());
 
 
         // Test reference by local variable addressing
@@ -382,7 +377,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.OFF, light.getCommandedState());
+        assertEquals(Light.OFF, light.getCommandedState());
         // Test On
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "On");
@@ -390,7 +385,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.ON, light.getCommandedState());
+        assertEquals(Light.ON, light.getCommandedState());
 
 
         // Test local variable addressing
@@ -403,7 +398,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.OFF, light.getCommandedState());
+        assertEquals(Light.OFF, light.getCommandedState());
         // Test On
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "On");
@@ -411,7 +406,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.ON, light.getCommandedState());
+        assertEquals(Light.ON, light.getCommandedState());
 
 
         // Test formula addressing
@@ -425,7 +420,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.OFF, light.getCommandedState());
+        assertEquals(Light.OFF, light.getCommandedState());
         // Test On
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "O");
@@ -434,78 +429,69 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct light should be thrown
-        Assert.assertEquals(Light.ON, light.getCommandedState());
+        assertEquals(Light.ON, light.getCommandedState());
     }
 
     @Test
     public void testVetoableChange() throws PropertyVetoException {
-        Assert.assertNotNull("Light is not null", light);
+        assertNotNull( light, "Light is not null");
 
         // Get some other light for later use
         Light otherLight = InstanceManager.getDefault(LightManager.class).provide("IM99");
-        Assert.assertNotNull("Light is not null", otherLight);
-        Assert.assertNotEquals("Light is not equal", light, otherLight);
+        assertNotNull( otherLight, "Light is not null");
+        assertNotEquals( light, otherLight, "Light is not equal");
 
         // Test vetoableChange() for some other propery
         actionLight.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Light matches", light, actionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( light, actionLight.getSelectNamedBean().getNamedBean().getBean(), "Light matches");
 
         // Test vetoableChange() for a string
         actionLight.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Light matches", light, actionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( light, actionLight.getSelectNamedBean().getNamedBean().getBean(), "Light matches");
         actionLight.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Light matches", light, actionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( light, actionLight.getSelectNamedBean().getNamedBean().getBean(), "Light matches");
 
         // Test vetoableChange() for another light
         actionLight.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherLight, null));
-        Assert.assertEquals("Light matches", light, actionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( light, actionLight.getSelectNamedBean().getNamedBean().getBean(), "Light matches");
         actionLight.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherLight, null));
-        Assert.assertEquals("Light matches", light, actionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( light, actionLight.getSelectNamedBean().getNamedBean().getBean(), "Light matches");
 
         // Test vetoableChange() for its own light
-        boolean thrown = false;
-        try {
-            actionLight.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", light, null));
-        } catch (PropertyVetoException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        PropertyVetoException ex = assertThrows( PropertyVetoException.class, () ->
+            actionLight.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", light, null)),
+                "Expected exception thrown");
+        assertNotNull(ex);
 
-        Assert.assertEquals("Light matches", light, actionLight.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( light, actionLight.getSelectNamedBean().getNamedBean().getBean(), "Light matches");
         actionLight.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", light, null));
-        Assert.assertNull("Light is null", actionLight.getSelectNamedBean().getNamedBean());
+        assertNull( actionLight.getSelectNamedBean().getNamedBean(), "Light is null");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", LogixNG_Category.ITEM == _base.getCategory());
+        assertEquals( LogixNG_Category.ITEM, _base.getCategory(), "Category matches");
     }
 
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Light", _base.getShortDescription());
+        assertEquals( "Light", _base.getShortDescription(), "String matches");
     }
 
     @Test
     public void testLongDescription() {
-        Assert.assertEquals("String matches", "Set light IL1 to state On", _base.getLongDescription());
+        assertEquals( "Set light IL1 to state On", _base.getLongDescription(), "String matches");
     }
 
     @Test
     public void testChild() {
-        Assert.assertTrue("Num children is zero", 0 == _base.getChildCount());
-        boolean hasThrown = false;
-        try {
-            _base.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertTrue("Error message is correct", "Not supported.".equals(ex.getMessage()));
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        assertEquals( 0, _base.getChildCount(), "Num children is zero");
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class, () ->
+            _base.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -536,12 +522,12 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         _base = actionLight;
         _baseMaleSocket = socket;
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

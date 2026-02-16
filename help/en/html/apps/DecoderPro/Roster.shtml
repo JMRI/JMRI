@@ -103,6 +103,7 @@
             <li>DCC Address<br>
               display only, editable on the Basic tab</li>
             <li>Throttle Speed Limit</li>
+            <li><a href="#loco_data">Locomotive Data</a><span class="since">since 5.15.4</span></li>
             <li>Comment<br>
               Use this field for whatever you want.</li>
             <li>Decoder Family</li>
@@ -243,6 +244,76 @@
         </dd>
 
       </dl>
+
+      <h3 id="loco_data"><span class="since">since 5.15.4</span>Locomotive Data</h3>
+
+      <p>The <strong>Locomotive Data</strong> pane is used to maintain non-decoder information that
+      is related to the current roster entry. This tab will only be shown when the
+      <strong>Locomotive Data</strong> checkbox is enabled.</p>
+
+      <p>The initial set of locomotive data consists of a set of physical characteristics that affect
+      locomotive acceleration and deceleration.  The first application that makes use of this data
+      is <strong>Dispatcher</strong>.</p>
+
+      <h5>Locomotive Physics Data</h5>
+
+
+      <img src="images/physics_data.png"
+           alt="Locomotive physics data">
+
+      <dl>
+        <dt>Traction type</dt>
+        <dd>
+          <p>Whether the locomotive/railcar/unit is powered by steam; or diesel or electric.
+          This affects physics performance as steam locomotives behave differently (being constant
+          force machines).</p>
+        </dd>
+
+        <dt>Transmission</dt>
+        <dd>
+          <p>If <strong>Mechanical transmission</strong> is selected, the vehicle will pause its
+          acceleration at certain points for the driver to change gears.</p>
+        </dd>
+
+        <dt>Locomotive weight</dt>
+        <dd>
+          <p>Enter a value and select the unit of measure: <strong>Metric tonnes (t)</strong> |
+          <strong>Long tons (UK)</strong> | <strong>Short tons (US)</strong>.</p>
+        </dd>
+
+        <dt>Continuous power</dt>
+        <dd>
+          <p>Enter a value and select the unit of measure: <strong>kW</strong> | <strong>HP</strong>.</p>
+        </dd>
+
+        <dt>Tractive effort</dt>
+        <dd>
+          <p>This is the starting tractive effort. Enter a value and select the unit of measure:
+          <strong>kN</strong> | <strong>lbf</strong>.</p>
+        </dd>
+
+        <dt>Maximum speed</dt>
+        <dd>
+          <p>Enter a value and select the unit of measure: <strong>km/h</strong> | <strong>MPH</strong>.</p>
+        </dd>
+
+        <dt>Calibrate speed</dt>
+        <dd>
+          <p>The physic values are only used when a
+          <a href="../../../package/jmri/jmrit/roster/swing/speedprofile/SpeedProfileFrame.shtml">Speed Profile</a>
+          is also being used.  The <strong>Speed profile&hellip;</strong> button provides a shortcut
+          to the speed profiling tool.</p>
+        </dd>
+      </dl>
+
+      <p>Use the <strong>Save to Roster</strong> button to save the changes to the values.</p>
+
+      <p>The <strong>Roster custom attributes</strong> feature is used to store the
+      <strong><em>unit of measure</em></strong>
+      selections. Custom attributes automatically add a column to the roster table. Right click on
+      the table header row to <strong>show/hide</strong> columns.  <strong>Note:</strong>  Custom
+      attributes are accessed using the <strong>Labels &amp; Media&hellip;</strong> button.  Then
+      select the <strong>Roster Media</strong> tab.</p>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>

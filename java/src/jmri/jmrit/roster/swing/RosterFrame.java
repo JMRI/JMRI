@@ -593,6 +593,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         firePropertyChange("groupspane", "setEnabled", enable);
         firePropertyChange("grouptable", "setEnabled", enable);
         firePropertyChange("deletegroup", "setEnabled", enable);
+        firePropertyChange("addgroup", "setEnabled", enable);
     }
 
     protected void exportLoco() {
@@ -877,6 +878,29 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /**
+     * Print the displayed table, as displayed.
+     *
+     */
+    protected void printCurrentTable() {
+        try {
+            var cal = java.util.Calendar.getInstance();
+            var sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String time = sdf.format(cal.getTime());
+
+            var selectedRosterGroup = getSelectedRosterGroup();
+            String g = (selectedRosterGroup != null) ? selectedRosterGroup : "All Entries";
+            String group = String.format("%-20s",g);  // pad to right to fixed length
+
+            rtable.getTable().print(javax.swing.JTable.PrintMode.FIT_WIDTH,
+                            null,  // no header
+                            new java.text.MessageFormat(group+" - {0} -   "+time)  // spaces for heuristic formatting, don't change
+                            );
+        } catch (java.awt.print.PrinterException ep) {
+            log.error("While printing",ep);
+        }    
+    }
+    
+    /**
      * Match the first argument in the array against a locally-known method.
      *
      * @param args Array of arguments, we take with element 0
@@ -887,6 +911,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         switch (args[0]) {
             case "identifyloco":
                 startIdentifyLoco();
+                break;
+            case "printcurrenttable":
+                    printCurrentTable();
                 break;
             case "printloco":
                 if (checkIfEntrySelected()) {
@@ -1187,7 +1214,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             rtable.moveTableViewToSelected();
         } else {
             log.warn("Read address {}, but no such loco in roster", dccAddress); //"No roster entry found; changed to promote the number to the front, June 2022,  Bill Chown"
-            JmriJOptionPane.showMessageDialog(this, dccAddress + " was read from the decoder\nbut has not been found in the Roster", dccAddress + " No roster entry found", JmriJOptionPane.INFORMATION_MESSAGE);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("NotFoundError", dccAddress), Bundle.getMessage("NotFoundErrorTitle", dccAddress), JmriJOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -1303,6 +1330,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         menuItem.addActionListener((ActionEvent e1) -> deleteLoco());
         popupMenu.add(menuItem);
         menuItem.setEnabled(this.getSelectedRosterEntries().length > 0);
+
+        menuItem = new JMenuItem(new jmri.jmrit.roster.swing.RosterEntryToGroupAction(Bundle.getMessage("AddToGroup"), re));
+        if (re == null) {
+            menuItem.setEnabled(false);
+        }
+        popupMenu.add(menuItem);
 
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }

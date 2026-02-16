@@ -157,7 +157,7 @@ public class LoadAndStoreAllSignalSystemsTest {
         return getFiles(new File("xml/signals"), true, true);
     }
 
-    private static boolean checkFile(File inFile1, File inFile2) throws Exception {
+    private static boolean checkFile(File inFile1, File inFile2) throws IOException {
 
         try ( // compare files, except for certain special lines
             BufferedReader fileStream1 = new BufferedReader( new InputStreamReader(
@@ -303,7 +303,8 @@ public class LoadAndStoreAllSignalSystemsTest {
                 while ((next1 = fileStream1.readLine()) != null) {
                     lineNumber1++;
                     if (!next1.isBlank()) {
-                        log.warn("The file "+inFile1.getPath()+" has extra content: {}", next1.strip());
+                        log.warn("The file {} has extra content: {}",
+                            inFile1.getPath(), next1.strip());
                     }
                 }
             }
@@ -312,7 +313,8 @@ public class LoadAndStoreAllSignalSystemsTest {
                 while ((next2 = fileStream2.readLine()) != null) {
                     lineNumber2++;
                     if (!next2.isBlank()) {
-                        log.warn("The file "+inFile2.getPath()+" has extra content: {}", next2.strip());
+                        log.warn("The file {} has extra content: {}",
+                            inFile2.getPath(), next2.strip());
                     }
                 }
             }
@@ -331,7 +333,7 @@ public class LoadAndStoreAllSignalSystemsTest {
         return true;
     }
 
-    private void loadAndStoreFileCheck(File file) throws Exception {
+    private void loadAndStoreFileCheck(File file) throws IOException {
 
         log.debug("Start check file {}", file.getCanonicalPath());
 
@@ -369,7 +371,7 @@ public class LoadAndStoreAllSignalSystemsTest {
 
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
-    public void loadAndStoreTest(File file, boolean pass) throws Exception {
+    public void loadAndStoreTest(File file, boolean pass) throws IOException {
         String parentFile = file.getParent();
         Assertions.assertNotNull(parentFile);
         if (!parentFile.equals("xml/signals") && !parentFile.equals("xml\\signals")) {

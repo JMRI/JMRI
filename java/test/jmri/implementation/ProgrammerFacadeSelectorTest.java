@@ -1,9 +1,11 @@
 package jmri.implementation;
 
+import jmri.*;
 import jmri.util.JUnitUtil;
 
+import org.jdom2.Element;
+
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -11,10 +13,17 @@ import org.junit.Assert;
  */
 public class ProgrammerFacadeSelectorTest {
 
+    // no Ctor test, tested class only supplies static methods
+
     @Test
-    public void testCTor() {
-        ProgrammerFacadeSelector t = new ProgrammerFacadeSelector();
-        Assert.assertNotNull("exists",t);
+    public void testLoadFacadeElements() {
+
+        Element element = new Element("IncorrectElement");
+        ProgrammerScaffold progScaff = new ProgrammerScaffold(ProgrammingMode.DIRECTMODE);
+
+        Programmer t = ProgrammerFacadeSelector.loadFacadeElements(element, progScaff, false, null);
+        Assertions.assertEquals( progScaff, t);
+
     }
 
     @BeforeEach

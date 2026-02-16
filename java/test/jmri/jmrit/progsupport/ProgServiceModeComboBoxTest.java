@@ -2,7 +2,6 @@ package jmri.jmrit.progsupport;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class ProgServiceModeComboBoxTest {
     @Test
     public void testCTor() {
         ProgServiceModeComboBox t = new ProgServiceModeComboBox();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

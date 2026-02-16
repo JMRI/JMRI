@@ -1,11 +1,13 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for the DccSignalMast implementation
@@ -19,9 +21,9 @@ public class DccSignalMastTest {
     public void testCtor1() {
         DccSignalMast s = new DccSignalMast("IF$dsm:AAR-1946:PL-1-high-abs(1)");
 
-        Assert.assertEquals("system name", "IF$dsm:AAR-1946:PL-1-high-abs(1)", s.getSystemName());
-        Assert.assertEquals("Send count", 0, sentPacketCount);
-        Assert.assertFalse("Use address offset", s.useAddressOffSet());
+        assertEquals( "IF$dsm:AAR-1946:PL-1-high-abs(1)", s.getSystemName(), "system name");
+        assertEquals( 0, sentPacketCount, "Send count");
+        assertFalse( s.useAddressOffSet(), "Use address offset");
     }
 
     @Test
@@ -31,19 +33,19 @@ public class DccSignalMastTest {
 
         s.setAspect("Stop");
 
-        Assert.assertEquals("Send count", 1, sentPacketCount);
-        Assert.assertEquals("Packet length", 4, lastSentPacket.length);
-        Assert.assertEquals("Packet byte 0", 0x80, lastSentPacket[0] & 0xFF);
-        Assert.assertEquals("Packet byte 1", 0x71, lastSentPacket[1] & 0xFF);
-        Assert.assertEquals("Packet byte 2", 0x1F, lastSentPacket[2] & 0xFF);
-        Assert.assertEquals("Packet byte 3", 0xEE, lastSentPacket[3] & 0xFF);
+        assertEquals( 1, sentPacketCount, "Send count");
+        assertEquals( 4, lastSentPacket.length, "Packet length");
+        assertEquals( 0x80, lastSentPacket[0] & 0xFF, "Packet byte 0");
+        assertEquals( 0x71, lastSentPacket[1] & 0xFF, "Packet byte 1");
+        assertEquals( 0x1F, lastSentPacket[2] & 0xFF, "Packet byte 2");
+        assertEquals( 0xEE, lastSentPacket[3] & 0xFF, "Packet byte 3");
 
     }
 
     // from here down is testing infrastructure
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
 
@@ -69,11 +71,12 @@ public class DccSignalMastTest {
         lastSentPacket = null;
         sentPacketCount = 0;
     }
-    byte[] lastSentPacket;
-    int sentPacketCount;
+
+    private byte[] lastSentPacket;
+    private int sentPacketCount;
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

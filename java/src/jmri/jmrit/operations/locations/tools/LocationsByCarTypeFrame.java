@@ -69,9 +69,6 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 
     public void initComponents(String carType) {
 
-        // load managers
-        locationManager = InstanceManager.getDefault(LocationManager.class);
-
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 

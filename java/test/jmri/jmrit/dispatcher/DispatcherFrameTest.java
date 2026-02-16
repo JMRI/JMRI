@@ -1,14 +1,18 @@
 package jmri.jmrit.dispatcher;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 import jmri.InstanceManager;
 import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -21,9 +25,10 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 public class DispatcherFrameTest {
 
     @Test
-    public void testShowAndClose() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+    @DisabledIfHeadless
+    public void testShowAndClose() {
+        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"),
+            "Ignoring intermittent test");
 
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
 
@@ -39,13 +44,15 @@ public class DispatcherFrameTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testParametersRead() {
         // The Dispatcher functionality is tightly coupled to the Dispatcher
         // Frame.  As a result, we can currently only test seting the
         // options file by creating a DispatcherFrame object.  A future
         // enhancement shold probably break this coupling.
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
+        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"),
+            "Ignoring intermittent test");
 
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
 
@@ -63,27 +70,27 @@ public class DispatcherFrameTest {
         d.setNameInAllocatedBlock(false);
         d.setScale(jmri.ScaleManager.getScale("HO"));
         // test all options
-        Assert.assertNull("LayoutEditor", d.getLayoutEditor());
-        Assert.assertFalse("UseConnectivity", d.getUseConnectivity());
-        Assert.assertEquals(TrainsFrom.TRAINSFROMROSTER, d.getTrainsFrom());
-        Assert.assertFalse("AutoAllocate", d.getAutoAllocate());
-        Assert.assertFalse("AutoTurnouts", d.getAutoTurnouts());
-        Assert.assertFalse("HasOccupancyDetection", d.getHasOccupancyDetection());
-        Assert.assertFalse("UseScaleMeters", d.getUseScaleMeters());
-        Assert.assertFalse("ShortActiveTrainNames", d.getShortActiveTrainNames());
-        Assert.assertTrue("ShortNameInBlock", d.getShortNameInBlock());
-        Assert.assertFalse("ExtraColorForAllocated", d.getExtraColorForAllocated());
-        Assert.assertFalse("NameInAllocatedBlock", d.getNameInAllocatedBlock());
-        Assert.assertEquals("Scale", jmri.ScaleManager.getScale("HO"), d.getScale());
+        assertNull( d.getLayoutEditor(), "LayoutEditor");
+        assertFalse( d.getUseConnectivity(), "UseConnectivity");
+        assertEquals(TrainsFrom.TRAINSFROMROSTER, d.getTrainsFrom());
+        assertFalse( d.getAutoAllocate(), "AutoAllocate");
+        assertFalse( d.getAutoTurnouts(), "AutoTurnouts");
+        assertFalse( d.getHasOccupancyDetection(), "HasOccupancyDetection");
+        assertFalse( d.getUseScaleMeters(), "UseScaleMeters");
+        assertFalse( d.getShortActiveTrainNames(), "ShortActiveTrainNames");
+        assertTrue( d.getShortNameInBlock(), "ShortNameInBlock");
+        assertFalse( d.getExtraColorForAllocated(), "ExtraColorForAllocated");
+        assertFalse( d.getNameInAllocatedBlock(), "NameInAllocatedBlock");
+        assertEquals( jmri.ScaleManager.getScale("HO"), d.getScale(), "Scale");
         // check changing some options
         d.setAutoTurnouts(true);
-        Assert.assertTrue("New AutoTurnouts", d.getAutoTurnouts());
+        assertTrue( d.getAutoTurnouts(), "New AutoTurnouts");
         d.setHasOccupancyDetection(true);
-        Assert.assertTrue("New HasOccupancyDetection", d.getHasOccupancyDetection());
+        assertTrue( d.getHasOccupancyDetection(), "New HasOccupancyDetection");
         d.setShortNameInBlock(false);
-        Assert.assertFalse("New ShortNameInBlock", d.getShortNameInBlock());
+        assertFalse( d.getShortNameInBlock(), "New ShortNameInBlock");
         d.setScale(jmri.ScaleManager.getScale("N"));
-        Assert.assertEquals("New Scale", jmri.ScaleManager.getScale("N"), d.getScale());
+        assertEquals( jmri.ScaleManager.getScale("N"), d.getScale(), "New Scale");
 
         // Find the window by name and close it.
         (new org.netbeans.jemmy.operators.JFrameOperator(Bundle.getMessage("TitleDispatcher"))).requestClose();
@@ -91,9 +98,10 @@ public class DispatcherFrameTest {
     }
 
     @Test
-    public void testAddTrainButton() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+    @DisabledIfHeadless
+    public void testAddTrainButton() {
+        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"),
+            "Ignoring intermittent test");
 
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
 
@@ -117,9 +125,10 @@ public class DispatcherFrameTest {
     }
 
     @Test
-    public void testAllocateExtraSectionButton() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+    @DisabledIfHeadless
+    public void testAllocateExtraSectionButton() {
+        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"),
+            "Ignoring intermittent test");
 
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
 
@@ -143,9 +152,10 @@ public class DispatcherFrameTest {
     }
 
     @Test
-    public void testCancelRestartButton() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+    @DisabledIfHeadless
+    public void testCancelRestartButton() {
+        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"),
+            "Ignoring intermittent test");
 
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
 
@@ -169,7 +179,7 @@ public class DispatcherFrameTest {
 
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initTimeProviderManager();
@@ -178,7 +188,7 @@ public class DispatcherFrameTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }

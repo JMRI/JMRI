@@ -1,9 +1,7 @@
 package jmri.jmrix.cmri.serial.nodeconfigmanager;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -653,7 +651,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             }
             //          w.setFontStyle(Font.BOLD);
             printColumns(w, columnStrings, columnSize);
-            w.setFontStyle(0);
+            w.setFontStyle(Font.PLAIN);
 
             // draw horizontal line
             w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(), tableLineWidth);

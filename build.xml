@@ -15,7 +15,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<project name="JMRI" default="debug" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
+<project name="JMRI" default="debug" basedir="." xmlns:jacoco="antlib:org.jacoco.ant" xmlns:if="ant:if">
 
     <!-- basedir="." means all paths are relative to the top level -->
     <!-- directory in the project.  We expect that lib et al will  -->
@@ -25,7 +25,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2025"/>
+    <property name="jmri.copyright.year" value="1997-2026"/>
 
     <property environment="env"/>
 
@@ -146,13 +146,18 @@
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
-        <pathelement location="${libdir}/jsoup-1.15.3.jar"/>
+        
         <pathelement location="${libdir}/jython-standalone-2.7.4.jar"/>
-        <pathelement location="${libdir}/slf4j-api-2.0.7.jar"/><!-- sl4fj API -->
-        <pathelement location="${libdir}/jul-to-slf4j-2.0.7.jar"/><!-- java.util.logging to sl4fj -->
-        <pathelement location="${libdir}/log4j-slf4j2-impl-2.20.0.jar"/><!-- sl4fj to log4j2 -->
-        <pathelement location="${libdir}/log4j-api-2.20.0.jar"/><!-- log4j2 API -->
-        <pathelement location="${libdir}/log4j-core-2.20.0.jar"/><!-- log4j2 Core -->
+
+        <!-- Logging -->
+        <pathelement location="${libdir}/slf4j-api-2.0.17.jar"/><!-- sl4fj API -->
+        <pathelement location="${libdir}/jul-to-slf4j-2.0.17.jar"/><!-- java.util.logging to sl4fj -->
+        <pathelement location="${libdir}/jcl-over-slf4j-2.0.17.jar"/><!-- java commons logging jcl to sl4fj -->
+        <pathelement location="${libdir}/log4j-over-slf4j-2.0.17.jar"/><!-- log4jv1 to sl4fj ( CATS ) -->
+        <pathelement location="${libdir}/log4j-slf4j2-impl-2.25.3.jar"/><!-- sl4fj to log4j2 -->
+        <pathelement location="${libdir}/log4j-api-2.25.3.jar"/><!-- log4j2 API -->
+        <pathelement location="${libdir}/log4j-core-2.25.3.jar"/><!-- log4j2 Core -->
+
         <pathelement location="${libdir}/javax.servlet-api-3.1.0.jar"/>
         <pathelement location="${libdir}/vecmath-1.5.2.jar"/>
         <pathelement location="${libdir}/mailapi.jar"/>
@@ -161,7 +166,6 @@
         <pathelement location="${libdir}/jna-platform-5.13.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
         <pathelement location="${libdir}/commons-net-3.9.0.jar"/>
-        <pathelement location="${libdir}/commons-logging-1.2.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
         <pathelement location="${libdir}/jackson-core-2.13.4.jar"/>
@@ -281,6 +285,7 @@
     <!-- jars that are needed at build and/or test time -->
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
+        <pathelement location="${libdir}/jsoup-1.15.3.jar"/> <!-- used in jmri.util.GenerateSearchIndexTest -->
         <pathelement location="${libdir}/junit-jupiter-5.13.4.jar"/>
         <pathelement location="${libdir}/junit-platform-console-standalone-1.13.4.jar"/>
         <pathelement location="${libdir}/junit-platform-commons-1.13.4.jar"/>
@@ -360,9 +365,8 @@
         <pathelement location="${libdir}/spring-core-5.1.14.RELEASE.jar"/>
         <pathelement location="${libdir}/spring-web-5.1.14.RELEASE.jar"/>
         <!-- Assertj -->
-        <pathelement location="${libdir}/assertj-core-3.12.0.jar"/>
-        <pathelement location="${libdir}/assertj-swing-3.9.2.jar"/>
-        <pathelement location="${libdir}/assertj-swing-junit-3.9.2.jar"/>
+        <pathelement location="${libdir}/assertj-core-3.27.7.jar"/>
+
     </path>
 
     <!-- path to run tests -->
@@ -740,7 +744,22 @@
         <attribute name="javac.target" default="${target}"/>
         <attribute name="javac.deprecation" default="${deprecation}"/>
         <attribute name="javac.classpath" default="compile.class.path"/>
+        <attribute name="is.test" default=""/>
         <sequential>
+        
+            <!-- Set property only if it's a test build AND metadata is missing -->
+            <!-- Test build - JUnitAppender uses a Log4J Plugin, saves unused argument warning in non-test builds -->
+            <!-- metadata missing - Graalvm does not trigger for incremental builds, saves unused argument warning -->
+            <local name="needs.log4j.args"/>
+            <condition property="needs.log4j.args">
+                <and>
+                    <not><equals arg1="@{is.test}" arg2=""/></not>
+                    <not>
+                        <available file="@{javac.target}/META-INF/native-image/log4j-generated/org.jmri/jmri" type="dir"/>
+                    </not>
+                </and>
+            </condition>
+
             <mkdir dir="@{javac.target}"/> <!-- ensure destdir exists -->
             <javac compiler="modern"
                    includes="@{javac.includes}"
@@ -751,6 +770,10 @@
                    deprecation="@{javac.deprecation}"
                    debug="${java.debugging}">
                 <classpath refid="@{javac.classpath}"/>
+
+                <compilerarg value="-Alog4j.graalvm.groupId=org.jmri" if:set="needs.log4j.args"/>
+                <compilerarg value="-Alog4j.graalvm.artifactId=jmri" if:set="needs.log4j.args"/>
+
                 <compilerarg value="--release"/><compilerarg value="${jre_version}"/><!-- intentionally on one line, as these two go together-->
                 <compilerarg value="-proc:full"/>
                 <compilerarg value="-XDignore.symbol.file"/> <!-- suppresses sun.misc warnings on Java 9 -->
@@ -795,6 +818,7 @@
                 javac.target="${testtarget}"
                 javac.classpath="test.class.path"
                 javac.deprecation="off"
+                is.test="true"
             />
         <!-- Copy resources into ${testtarget} so they coexist with identical
              resources in ${target} (this is important for the Java ServiceLoader -->
@@ -814,6 +838,7 @@
                 javac.target="${target}"
                 javac.classpath="test.class.path"
                 javac.deprecation="off"
+                is.test="true"
             />
         <!-- Copy resources into ${testtarget} so they coexist with identical
              resources in ${target} (this is important for the Java ServiceLoader -->
@@ -832,6 +857,7 @@
                 javac.source="${graalsource}"
                 javac.target="${graaltarget}"
                 javac.deprecation="on"
+                is.test="true"
             />
     </target>
 
@@ -918,7 +944,6 @@
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
-            <arg value="--include-engine=junit-vintage"/>
             <arg line="-n ${test.includes}"/>
             <arg line="--reports-dir '${testreport}'" />
             <arg value="--fail-if-no-tests" />
@@ -959,7 +984,6 @@
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
-            <arg value="--include-engine=junit-vintage"/>
             <arg line="-n ${test.includes}"/>
             <arg line="--reports-dir ${testreport}" />
             <arg value="--fail-if-no-tests" />
@@ -1664,7 +1688,6 @@
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
-            <arg value="--include-engine=junit-vintage"/>
             <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
             <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
@@ -1737,7 +1760,7 @@
         <mkdir dir="${testreport}"/>
         <junitlauncher haltOnFailure="false">
             <classpath refid="test.class.path"/>
-            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter,junit-vintage" >
+            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter" >
                 <fileset refid="junitfileset"/>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -1814,7 +1837,6 @@
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
-            <arg value="--include-engine=junit-vintage"/>
             <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
             <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
@@ -1832,7 +1854,7 @@
 
         <junitlauncher haltOnFailure="false">
             <classpath refid="test.class.path"/>
-            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter,junit-vintage" >
+            <testclasses haltonfailure="false" failureProperty="test.failed" outputDir="${testreport}" includeEngines="junit-jupiter" >
                 <fileset dir="${testtarget}">
                     <include name="**/RunCucumberIT.class" />
                 </fileset>
@@ -2682,6 +2704,9 @@
         <copy todir="${dist.macosx}/JMRI/">
             <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
+        <copy todir="${dist.macosx}/JMRI/">
+            <fileset file="${dist.scripts}/JmriFaceless.command"/>
+        </copy>
         <mkdir dir="${dist.macosx}/JMRI/lib"/>
         <copy todir="${dist.macosx}/JMRI/lib" flatten="true">
             <path>
@@ -2702,6 +2727,9 @@
                 <include name="SoundPro.app/Contents/MacOS/StartJMRI"/>
                 <include name="LccPro.app/Contents/MacOS/StartJMRI"/>
             </fileset>
+        </chmod>
+        <chmod perm="ugo+rx">
+            <fileset file="${dist.macosx}/JMRI/JmriFaceless.command"/>
         </chmod>
         <mkdir dir="${dist.release}"/>
         <exec executable="${scriptdir}/diskimage.sh"
@@ -2875,6 +2903,7 @@
         <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
         <create-macosx-application-directory script.name="LccPro"        script.class="apps.gui3.lccpro.LccPro"/>
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
+        <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless" dest="${dist.scripts}/JmriFaceless.command"/>
     </target>
 
 

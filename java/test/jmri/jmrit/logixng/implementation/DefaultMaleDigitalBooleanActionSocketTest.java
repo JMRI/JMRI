@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.Locale;
@@ -15,13 +17,17 @@ import jmri.jmrit.logixng.actions.DigitalBooleanLogixAction;
 
 import jmri.jmrit.logixng.implementation.DefaultMaleDigitalBooleanActionSocket.DigitalBooleanActionDebugConfig;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test ExpressionTimer
@@ -39,7 +45,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
     @Test
     public void testCtor() {
         DigitalBooleanActionBean action = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.Either);
-        Assert.assertNotNull("exists", new DefaultMaleDigitalBooleanActionSocket(manager, action));
+        assertNotNull( new DefaultMaleDigitalBooleanActionSocket(manager, action), "exists");
     }
 
     @Test
@@ -50,7 +56,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         action.setParent(conditionalNG);
 
         DefaultMaleDigitalBooleanActionSocket socket = new DefaultMaleDigitalBooleanActionSocket(manager, action);
-        Assert.assertNotNull("exists", socket);
+        assertNotNull( socket, "exists");
 
         socket.setParent(conditionalNG);
         socket.setEnabled(true);
@@ -59,11 +65,11 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         action.je = null;
         action.re = null;
         socket.execute(false);
-        Assert.assertFalse(action._value);
+        assertFalse(action._value);
         socket.execute(true);
-        Assert.assertTrue(action._value);
+        assertTrue(action._value);
         socket.execute(false);
-        Assert.assertFalse(action._value);
+        assertFalse(action._value);
 
         action.je = new JmriException("Test JmriException");
         action.re = null;
@@ -100,24 +106,24 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         config._dontExecute = true;
         action._value = false;
         socket.execute(true);
-        Assert.assertFalse(action._value);
+        assertFalse(action._value);
         action._value = false;
         socket.execute(false);
-        Assert.assertFalse(action._value);
+        assertFalse(action._value);
         config._dontExecute = false;
         action._value = false;
         socket.execute(true);
-        Assert.assertTrue(action._value);
+        assertTrue(action._value);
         action._value = false;
         socket.execute(false);
-        Assert.assertFalse(action._value);
+        assertFalse(action._value);
     }
 
     @Test
     public void testVetoableChange() {
         MyDigitalBooleanAction action = new MyDigitalBooleanAction("IQDB321");
         DefaultMaleDigitalBooleanActionSocket socket = new DefaultMaleDigitalBooleanActionSocket(manager, action);
-        Assert.assertNotNull("exists", socket);
+        assertNotNull( socket, "exists");
 
         PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
 
@@ -144,17 +150,16 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         MyDigitalBooleanAction action2 = new MyDigitalBooleanAction("IQDB01");
         DefaultMaleDigitalBooleanActionSocket socket2 = new DefaultMaleDigitalBooleanActionSocket(manager, action2);
 
-        Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                -1, socket1.compareSystemNameSuffix("01", "1", socket2));
-        Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                0, socket1.compareSystemNameSuffix("1", "1", socket2));
-        Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                0, socket1.compareSystemNameSuffix("01", "01", socket2));
-        Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                +1, socket1.compareSystemNameSuffix("1", "01", socket2));
+        assertEquals( -1, socket1.compareSystemNameSuffix("01", "1", socket2),
+            "compareSystemNameSuffix returns correct value");
+        assertEquals( 0, socket1.compareSystemNameSuffix("1", "1", socket2),
+            "compareSystemNameSuffix returns correct value");
+        assertEquals( 0, socket1.compareSystemNameSuffix("01", "01", socket2),
+            "compareSystemNameSuffix returns correct value");
+        assertEquals( +1, socket1.compareSystemNameSuffix("1", "01", socket2),
+            "compareSystemNameSuffix returns correct value");
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     @Override
     public void setUp() {
@@ -167,21 +172,21 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         JUnitUtil.initLogixNGManager();
 
         DigitalBooleanActionBean actionA = new DigitalBooleanLogixAction("IQDB321", null, DigitalBooleanLogixAction.When.Either);
-        Assert.assertNotNull("exists", actionA);
+        assertNotNull( actionA, "exists");
         DigitalBooleanActionBean actionB = new MyDigitalBooleanAction("IQDB322");
-        Assert.assertNotNull("exists", actionA);
+        assertNotNull( actionB, "exists");
 
         manager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
 
         maleSocketA =
                 InstanceManager.getDefault(DigitalBooleanActionManager.class)
                         .registerAction(actionA);
-        Assert.assertNotNull("exists", maleSocketA);
+        assertNotNull( maleSocketA, "exists");
 
         maleSocketB =
                 InstanceManager.getDefault(DigitalBooleanActionManager.class)
                         .registerAction(actionB);
-        Assert.assertNotNull("exists", maleSocketB);
+        assertNotNull( maleSocketB, "exists");
     }
 
     @AfterEach
@@ -197,7 +202,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
      * This action is different from MyStringAction and is used to test the
      * male socket.
      */
-    private class MyDigitalBooleanAction extends AbstractDigitalBooleanAction {
+    private static class MyDigitalBooleanAction extends AbstractDigitalBooleanAction {
 
         JmriException je = null;
         RuntimeException re = null;
@@ -254,15 +259,23 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         }
 
         @Override
+        @SuppressFBWarnings( value = "THROWS_METHOD_THROWS_RUNTIMEEXCEPTION",
+            justification="testing exception types")
         public void execute(boolean value) throws JmriException {
-            if (je != null) throw je;
-            if (re != null) throw re;
+            if (je != null) {
+                throw je;
+            }
+            if (re != null) {
+                throw re;
+            }
            _value = value;
         }
 
         @Override
         public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-            if (_vetoChange) throw new java.beans.PropertyVetoException("Veto change", evt);
+            if (_vetoChange) {
+                throw new java.beans.PropertyVetoException("Veto change", evt);
+            }
         }
 
         @Override

@@ -1,9 +1,12 @@
 package jmri.jmrix.dccpp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import jmri.InstanceManager;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * DCCppInitializationManagerTest.java
@@ -21,31 +24,32 @@ public class DCCppInitializationManagerTest {
         // infrastructure objects
         DCCppInterfaceScaffold t = new DCCppInterfaceScaffold(new DCCppCommandStation());
         DCCppListenerScaffold l = new DCCppListenerScaffold();
-        Assertions.assertNull(l.rcvdMsg);
-        Assertions.assertNull(l.rcvdRply);
-        Assertions.assertNull(l.timeOutMsg);
-        Assertions.assertEquals(0, l.rcvCount);
+        assertNull(l.rcvdMsg);
+        assertNull(l.rcvdRply);
+        assertNull(l.timeOutMsg);
+        assertEquals(0, l.rcvCount);
 
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(t);
         InstanceManager.setMeterManager(new jmri.managers.AbstractMeterManager(memo));
 
         DCCppInitializationManager m = new DCCppInitializationManager(memo);
-        Assert.assertNotNull("exists", t);
-        Assert.assertNotNull("exists", l);
-        Assert.assertNotNull("exists", m);
-        Assert.assertNotNull("exists", memo);
+        assertNotNull( t, "exists");
+        assertNotNull( l, "exists");
+        assertNotNull( m, "exists");
+        assertNotNull( memo, "exists");
         //jmri.util.JUnitAppender.assertWarnMessage("Command Station disconnected, or powered down");
+
+        t.terminateThreads();
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
 
     }

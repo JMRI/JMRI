@@ -1,20 +1,19 @@
 package jmri.jmrit.logix;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
  * @author Pete Cressman Copyright (C) 2020
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@DisabledIfHeadless
 public class LearnControlPanelTest {
 
     @Test
-    public void testCTor() throws Exception {
+    public void testCTor() {
 
         WarrantFrame wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
         LearnThrottleFrame ltf = new LearnThrottleFrame(wf);

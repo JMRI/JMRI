@@ -1,32 +1,31 @@
 package jmri.jmrit.logixng.actions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
-import jmri.DccThrottle;
-import jmri.InstanceManager;
-import jmri.LocoAddress;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.ThrottleListener;
-import jmri.ThrottleManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.AnalogExpressionConstant;
 import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ActionThrottle
@@ -35,9 +34,9 @@ import org.junit.Test;
  */
 public class ActionThrottleTest extends AbstractDigitalActionTestBase {
 
-    LogixNG logixNG;
-    ConditionalNG conditionalNG;
-    ActionThrottle actionThrottle;
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private ActionThrottle actionThrottle;
 
     @Override
     public ConditionalNG getConditionalNG() {
@@ -60,7 +59,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Throttle ::: Use default%n" +
+                "Throttle. Don't wait for throttle. Stop loco when switching loco ::: Use default%n" +
                 "   ?~ Address%n" +
                 "      Socket not connected%n" +
                 "   ?~ Speed%n" +
@@ -79,7 +78,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Throttle ::: Use default%n" +
+                "         Throttle. Don't wait for throttle. Stop loco when switching loco ::: Use default%n" +
                 "            ?~ Address%n" +
                 "               Socket not connected%n" +
                 "            ?~ Speed%n" +
@@ -107,39 +106,35 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         ActionThrottle action2;
 
         action2 = new ActionThrottle("IQDA321", null);
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Throttle", action2.getLongDescription());
+        assertNotNull( action2, "object exists");
+        assertNull( action2.getUserName(), "Username matches");
+        assertEquals( "Throttle. Don't wait for throttle. Stop loco when switching loco", action2.getLongDescription(), "String matches");
 
         action2 = new ActionThrottle("IQDA321", "My throttle");
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertEquals("Username matches", "My throttle", action2.getUserName());
-        Assert.assertEquals("String matches", "Throttle", action2.getLongDescription());
+        assertNotNull( action2, "object exists");
+        assertEquals( "My throttle", action2.getUserName(), "Username matches");
+        assertEquals( "Throttle. Don't wait for throttle. Stop loco when switching loco", action2.getLongDescription(), "String matches");
 
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            new ActionThrottle("IQA55:12:XY11", null);
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class,
+            () -> {
+                ActionThrottle at = new ActionThrottle("IQA55:12:XY11", null);
+                fail( "Action Thtottle created: " + at.toString());
+            }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            new ActionThrottle("IQA55:12:XY11", "A name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows( IllegalArgumentException.class,
+            () -> {
+                ActionThrottle at = new ActionThrottle("IQA55:12:XY11", "A name");
+                fail( "Action Thtottle created: " + at.toString());
+            }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
     }
 
     @Test
     public void testCtorAndSetup1() {
         ActionThrottle expression = new ActionThrottle("IQDA321", null);
-        Assert.assertNotNull("exists", expression);
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        assertNotNull( expression, "exists");
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
         expression.getChild(0).setName("XYZ123");
         expression.setLocoAddressSocketSystemName("IQAE52");
         expression.getChild(1).setName("ZH12");
@@ -147,75 +142,81 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         expression.getChild(2).setName("Bj23");
         expression.setLocoDirectionSocketSystemName("IQDE594");
 
-        Assert.assertEquals("expression female socket name is XYZ123",
-                "XYZ123", expression.getChild(0).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "XYZ123", expression.getChild(0).getName(),
+            "expression female socket name is XYZ123");
+        assertEquals(
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
-                expression.getChild(0).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(0).isConnected());
+                expression.getChild(0).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(0).isConnected(),
+            "expression female socket is not connected");
 
-        Assert.assertEquals("expression female socket name is ZH12",
-                "ZH12", expression.getChild(1).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "ZH12", expression.getChild(1).getName(),
+            "expression female socket name is ZH12");
+        assertEquals(
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
-                expression.getChild(1).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(1).isConnected());
+                expression.getChild(1).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(1).isConnected(),
+            "expression female socket is not connected");
 
-        Assert.assertEquals("expression female socket name is Bj23",
-                "Bj23", expression.getChild(2).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "Bj23", expression.getChild(2).getName(),
+            "expression female socket name is Bj23");
+        assertEquals(
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket",
-                expression.getChild(2).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(2).isConnected());
+                expression.getChild(2).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(2).isConnected(),
+                "expression female socket is not connected");
 
         // Setup action. This connects the child actions to this action
         expression.setup();
 
-        jmri.util.JUnitAppender.assertMessage("cannot load analog expression IQAE52");
-        jmri.util.JUnitAppender.assertMessage("cannot load analog expression IQAE554");
-        jmri.util.JUnitAppender.assertMessage("cannot load digital expression IQDE594");
+        JUnitAppender.assertMessage("cannot load analog expression IQAE52");
+        JUnitAppender.assertMessage("cannot load analog expression IQAE554");
+        JUnitAppender.assertMessage("cannot load digital expression IQDE594");
 
-        Assert.assertEquals("expression female socket name is XYZ123",
-                "XYZ123", expression.getChild(0).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "XYZ123", expression.getChild(0).getName(),
+            "expression female socket name is XYZ123");
+        assertEquals(
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
-                expression.getChild(0).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(0).isConnected());
+                expression.getChild(0).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(0).isConnected(),
+            "expression female socket is not connected");
 
-        Assert.assertEquals("expression female socket name is ZH12",
-                "ZH12", expression.getChild(1).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "ZH12", expression.getChild(1).getName(),
+            "expression female socket name is ZH12");
+        assertEquals(
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
-                expression.getChild(1).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(1).isConnected());
+                expression.getChild(1).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(1).isConnected(),
+                "expression female socket is not connected");
 
-        Assert.assertEquals("expression female socket name is Bj23",
-                "Bj23", expression.getChild(2).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "Bj23", expression.getChild(2).getName(),
+            "expression female socket name is Bj23");
+        assertEquals(
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket",
-                expression.getChild(2).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(2).isConnected());
+                expression.getChild(2).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(2).isConnected(),
+                "expression female socket is not connected");
 
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
     }
 
     @Test
     public void testCtorAndSetup2() {
         ActionThrottle expression = new ActionThrottle("IQDA321", null);
-        Assert.assertNotNull("exists", expression);
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        assertNotNull( expression, "exists");
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
         expression.getChild(0).setName("XYZ123");
         expression.setLocoAddressSocketSystemName(null);
         expression.getChild(1).setName("ZH12");
@@ -223,64 +224,70 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         expression.getChild(2).setName("Bj23");
         expression.setLocoDirectionSocketSystemName(null);
 
-        Assert.assertEquals("expression female socket name is XYZ123",
-                "XYZ123", expression.getChild(0).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "XYZ123", expression.getChild(0).getName(),
+            "expression female socket name is XYZ123");
+        assertEquals(
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
-                expression.getChild(0).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(0).isConnected());
+                expression.getChild(0).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(0).isConnected(),
+                "expression female socket is not connected");
 
-        Assert.assertEquals("expression female socket name is ZH12",
-                "ZH12", expression.getChild(1).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "ZH12", expression.getChild(1).getName(),
+                "expression female socket name is ZH12");
+        assertEquals(
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
-                expression.getChild(1).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(1).isConnected());
+                expression.getChild(1).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(1).isConnected(),
+                "expression female socket is not connected");
 
-        Assert.assertEquals("expression female socket name is Bj23",
-                "Bj23", expression.getChild(2).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "Bj23", expression.getChild(2).getName(),
+                "expression female socket name is Bj23");
+        assertEquals(
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket",
-                expression.getChild(2).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(2).isConnected());
+                expression.getChild(2).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(2).isConnected(),
+                "expression female socket is not connected");
 
         // Setup action. This connects the child actions to this action
         expression.setup();
 
-        Assert.assertEquals("expression female socket name is XYZ123",
-                "XYZ123", expression.getChild(0).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "XYZ123", expression.getChild(0).getName(),
+                "expression female socket name is XYZ123");
+        assertEquals(
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
-                expression.getChild(0).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(0).isConnected());
+                expression.getChild(0).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(0).isConnected(),
+                "expression female socket is not connected");
 
-        Assert.assertEquals("expression female socket name is ZH12",
-                "ZH12", expression.getChild(1).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "ZH12", expression.getChild(1).getName(),
+            "expression female socket name is ZH12");
+        assertEquals(
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
-                expression.getChild(1).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(1).isConnected());
+                expression.getChild(1).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(1).isConnected(),
+                "expression female socket is not connected");
 
-        Assert.assertEquals("expression female socket name is Bj23",
-                "Bj23", expression.getChild(2).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "Bj23", expression.getChild(2).getName(),
+                "expression female socket name is Bj23");
+        assertEquals(
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket",
-                expression.getChild(2).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(2).isConnected());
+                expression.getChild(2).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(2).isConnected(),
+                "expression female socket is not connected");
 
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
     }
 
     @Test
@@ -293,8 +300,8 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         m2.registerExpression(new ExpressionMemory("IQDE594", null));
 
         ActionThrottle expression = new ActionThrottle("IQDA321", null);
-        Assert.assertNotNull("exists", expression);
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        assertNotNull( expression, "exists");
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
         expression.getChild(0).setName("XYZ123");
         expression.setLocoAddressSocketSystemName("IQAE52");
         expression.getChild(1).setName("ZH12");
@@ -302,102 +309,102 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         expression.getChild(2).setName("Bj23");
         expression.setLocoDirectionSocketSystemName("IQDE594");
 
-        Assert.assertEquals("expression female socket name is XYZ123",
-                "XYZ123", expression.getChild(0).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "XYZ123", expression.getChild(0).getName(),
+                "expression female socket name is XYZ123");
+        assertEquals(
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
-                expression.getChild(0).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(0).isConnected());
+                expression.getChild(0).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(0).isConnected(),
+                "expression female socket is not connected");
 
-        Assert.assertEquals("expression female socket name is ZH12",
-                "ZH12", expression.getChild(1).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "ZH12", expression.getChild(1).getName(),
+                "expression female socket name is ZH12");
+        assertEquals(
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
-                expression.getChild(1).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(1).isConnected());
+                expression.getChild(1).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(1).isConnected(),
+                "expression female socket is not connected");
 
-        Assert.assertEquals("expression female socket name is Bj23",
-                "Bj23", expression.getChild(2).getName());
-        Assert.assertEquals("expression female socket is of correct class",
+        assertEquals( "Bj23", expression.getChild(2).getName(),
+                "expression female socket name is Bj23");
+        assertEquals(
  //               "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
                 "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket",
-                expression.getChild(2).getClass().getName());
-        Assert.assertFalse("expression female socket is not connected",
-                expression.getChild(2).isConnected());
+                expression.getChild(2).getClass().getName(),
+                "expression female socket is of correct class");
+        assertFalse( expression.getChild(2).isConnected(),
+                "expression female socket is not connected");
 
         // Setup action. This connects the child actions to this action
         expression.setup();
 
-        Assert.assertTrue("expression female socket is connected",
-                expression.getChild(0).isConnected());
-//        Assert.assertEquals("child is correct bean",
+        assertTrue( expression.getChild(0).isConnected(),
+                "expression female socket is connected");
+//        assertEquals(
 //                childSocket0,
-//                expression.getChild(0).getConnectedSocket());
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+//                expression.getChild(0).getConnectedSocket(), "child is correct bean");
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
 
-        Assert.assertTrue("expression female socket is connected",
-                expression.getChild(1).isConnected());
+        assertTrue( expression.getChild(1).isConnected(),
+                "expression female socket is connected");
 //        Assert.assertEquals("child is correct bean",
 //                childSocket1,
 //                expression.getChild(1).getConnectedSocket());
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
 
-        Assert.assertTrue("expression female socket is connected",
-                expression.getChild(2).isConnected());
+        assertTrue( expression.getChild(2).isConnected(),
+                "expression female socket is connected");
 //        Assert.assertEquals("child is correct bean",
 //                childSocket2,
 //                expression.getChild(2).getConnectedSocket());
 
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
 
         // Try run setup() again. That should not cause any problems.
         expression.setup();
 
-        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        assertEquals( 5, expression.getChildCount(), "expression has 5 female sockets");
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 3", 5 == actionThrottle.getChildCount());
+        assertEquals( 5, actionThrottle.getChildCount(), "getChildCount() returns 5");
 
-        Assert.assertNotNull("getChild(0) returns a non null value",
-                actionThrottle.getChild(0));
-        Assert.assertNotNull("getChild(1) returns a non null value",
-                actionThrottle.getChild(1));
-        Assert.assertNotNull("getChild(2) returns a non null value",
-                actionThrottle.getChild(2));
-        Assert.assertNotNull("getChild(3) returns a non null value",
-                actionThrottle.getChild(3));
-        Assert.assertNotNull("getChild(4) returns a non null value",
-                actionThrottle.getChild(4));
+        assertNotNull( actionThrottle.getChild(0),
+                "getChild(0) returns a non null value");
+        assertNotNull( actionThrottle.getChild(1),
+                "getChild(1) returns a non null value");
+        assertNotNull( actionThrottle.getChild(2),
+                "getChild(2) returns a non null value");
+        assertNotNull( actionThrottle.getChild(3),
+                "getChild(3) returns a non null value");
+        assertNotNull( actionThrottle.getChild(4),
+                "getChild(4) returns a non null value");
 
-        boolean hasThrown = false;
-        try {
-            actionThrottle.getChild(5);
-        } catch (IllegalArgumentException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "index has invalid value: 5", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class,
+            () -> actionThrottle.getChild(5),
+            "Exception is thrown");
+        assertEquals( "index has invalid value: 5", ex.getMessage(),
+            "Error message is correct");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", LogixNG_Category.ITEM == _base.getCategory());
+        assertEquals( LogixNG_Category.ITEM, _base.getCategory(), "Category matches");
     }
 
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Throttle", _base.getShortDescription());
+        assertEquals( "Throttle", _base.getShortDescription(), "String matches");
     }
 
     @Test
     public void testLongDescription() {
-        Assert.assertEquals("String matches", "Throttle", _base.getLongDescription());
+        assertEquals( "Throttle. Don't wait for throttle. Stop loco when switching loco", _base.getLongDescription(), "String matches");
     }
 
     @Test
@@ -409,48 +416,44 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalExpressionManager.class)
                         .registerExpression(new ExpressionSensor("IQDE1", null));
 
-        Assert.assertEquals("Num children is correct", 5, _base.getChildCount());
+        assertEquals( 5, _base.getChildCount(), "Num children is correct");
 
         // Socket LOCO_ADDRESS_SOCKET is loco address
-        Assert.assertTrue("Child LOCO_ADDRESS_SOCKET supports analog male socket",
-                _base.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).isCompatible(analogExpressionMaleSocket));
+        assertTrue( _base.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).isCompatible(analogExpressionMaleSocket),
+                "Child LOCO_ADDRESS_SOCKET supports analog male socket");
 
         // Socket LOCO_SPEED_SOCKET is loco speed
-        Assert.assertTrue("Child LOCO_SPEED_SOCKET supports analog male socket",
-                _base.getChild(ActionThrottle.LOCO_SPEED_SOCKET).isCompatible(analogExpressionMaleSocket));
+        assertTrue( _base.getChild(ActionThrottle.LOCO_SPEED_SOCKET).isCompatible(analogExpressionMaleSocket),
+                "Child LOCO_SPEED_SOCKET supports analog male socket");
 
         // Socket LOCO_DIRECTION_SOCKET is loco direction
-        Assert.assertTrue("Child LOCO_DIRECTION_SOCKET supports digital male socket",
-                _base.getChild(ActionThrottle.LOCO_DIRECTION_SOCKET).isCompatible(digitalExpressionMaleSocket));
+        assertTrue( _base.getChild(ActionThrottle.LOCO_DIRECTION_SOCKET).isCompatible(digitalExpressionMaleSocket),
+                "Child LOCO_DIRECTION_SOCKET supports digital male socket");
 
         // Socket LOCO_DIRECTION_SOCKET is loco direction
-        Assert.assertTrue("Child LOCO_FUNCTION_SOCKET supports analog male socket",
-                _base.getChild(ActionThrottle.LOCO_FUNCTION_SOCKET).isCompatible(analogExpressionMaleSocket));
+        assertTrue( _base.getChild(ActionThrottle.LOCO_FUNCTION_SOCKET).isCompatible(analogExpressionMaleSocket),
+                "Child LOCO_FUNCTION_SOCKET supports analog male socket");
 
         // Socket LOCO_DIRECTION_SOCKET is loco direction
-        Assert.assertTrue("Child LOCO_FUNCTION_STATE_SOCKET supports digital male socket",
-                _base.getChild(ActionThrottle.LOCO_FUNCTION_ONOFF_SOCKET).isCompatible(digitalExpressionMaleSocket));
+        assertTrue( _base.getChild(ActionThrottle.LOCO_FUNCTION_ONOFF_SOCKET).isCompatible(digitalExpressionMaleSocket),
+                "Child LOCO_FUNCTION_STATE_SOCKET supports digital male socket");
 
-        boolean hasThrown = false;
-        try {
-            _base.getChild(5);
-        } catch (IllegalArgumentException ex) {
-            hasThrown = true;
-            Assert.assertTrue("Error message is correct", "index has invalid value: 5".equals(ex.getMessage()));
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class,
+            () -> _base.getChild(5),
+            "Exception is thrown");
+        assertEquals( "index has invalid value: 5", ex.getMessage(), "Error message is correct");
     }
 
-    @Ignore
+    @Disabled("This method fails too often")
     @ToDo("This method fails too often")
     @Test
-    public void testExecute() throws Exception {
+    public void testExecute() throws SocketAlreadyConnectedException, JmriException {
         ThrottleManager tm = InstanceManager.getDefault(ThrottleManager.class);
 
         int locoAddress = 1234;
         int locoAddress2 = 1235;
-        Assert.assertEquals("Throttle is used 0 times", 0, tm.getThrottleUsageCount(locoAddress));
-        Assert.assertEquals("Throttle is used 0 times", 0, tm.getThrottleUsageCount(locoAddress2));
+        assertEquals( 0, tm.getThrottleUsageCount(locoAddress), "Throttle is used 0 times");
+        assertEquals( 0, tm.getThrottleUsageCount(locoAddress2), "Throttle is used 0 times");
 
         logixNG.setEnabled(false);
         ConditionalNG conditionalNG_2 = InstanceManager.getDefault(ConditionalNG_Manager.class)
@@ -462,12 +465,12 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         conditionalNG_2.getChild(0).connect(maleSocket2);
 
         logixNG.setEnabled(true);
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue(logixNG.setParentForAllChildren(new ArrayList<>()));
 
         // Test execute when no children are connected
         actionThrottle2.execute();
 
-        Assert.assertNotNull("getConditionalNG() returns not null", actionThrottle2.getConditionalNG());
+        assertNotNull( actionThrottle2.getConditionalNG(), "getConditionalNG() returns not null");
 
         conditionalNG.unregisterListeners();
 
@@ -476,12 +479,9 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         MyThrottleListener myThrottleListener = new MyThrottleListener(myThrottleRef);
 
         boolean result = tm.requestThrottle(locoAddress, myThrottleListener);
+        assertTrue( result, () -> "loco " + locoAddress + " cannot be aquired");
 
-        if (!result) {
-            log.error("loco {} cannot be aquired", locoAddress);
-        }
-
-        Assert.assertNotNull("has throttle", myThrottleRef.get());
+        assertNotNull( myThrottleRef.get(), "has throttle");
 
         Memory locoAddressMemory = InstanceManager.getDefault(MemoryManager.class).provide("Loco address memory");
         locoAddressMemory.setValue(locoAddress);
@@ -508,7 +508,8 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
 
         // Test execute when loco address socket is connected
         actionThrottle2.execute();
-        Assert.assertEquals("loco speed is correct", 0.0, myThrottleRef.get().getSpeedSetting(), 0.0001);
+        assertEquals( 0.0, myThrottleRef.get().getSpeedSetting(), 0.0001,
+                "loco speed is correct");
 
         // Set loco address of actionThrottle2
         conditionalNG_2.unregisterListeners();
@@ -516,7 +517,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(AnalogExpressionManager.class)
                         .registerExpression(locoSpeedExpression);
         actionThrottle2.getChild(ActionThrottle.LOCO_SPEED_SOCKET).connect(locoSpeedSocket);
-        Assert.assertTrue("loco direction is correct", myThrottleRef.get().getIsForward());
+        assertTrue( myThrottleRef.get().getIsForward(), "loco direction is correct");
         conditionalNG_2.registerListeners();
 
         // Test execute when loco speed socket is connected
@@ -537,15 +538,15 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         locoSpeedMemory.setValue(0.5);
         // Test execute when loco speed is changed
         actionThrottle2.execute();
-        Assert.assertEquals("loco speed is correct", 0.5, myThrottleRef.get().getSpeedSetting(), 0.0001);
-        Assert.assertTrue("loco direction is correct", myThrottleRef.get().getIsForward());
+        assertEquals( 0.5, myThrottleRef.get().getSpeedSetting(), 0.0001, "loco speed is correct");
+        assertTrue( myThrottleRef.get().getIsForward(), "loco direction is correct");
 
         // Set a different direction
         locoDirectionSensor.setState(Sensor.INACTIVE);
         // Test execute when loco direction is changed
         actionThrottle2.execute();
-        Assert.assertEquals("loco speed is correct", 0.5, myThrottleRef.get().getSpeedSetting(), 0.0001);
-        Assert.assertFalse("loco direction is correct", myThrottleRef.get().getIsForward());
+        assertEquals( 0.5, myThrottleRef.get().getSpeedSetting(), 0.0001, "loco speed is correct");
+        assertFalse( myThrottleRef.get().getIsForward(), "loco direction is correct");
 
         // Test execute when loco address is changed
         actionThrottle2.execute();
@@ -557,13 +558,11 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         AtomicReference<DccThrottle> myThrottleRef2 = new AtomicReference<>();
         MyThrottleListener myThrottleListener2 = new MyThrottleListener(myThrottleRef2);
         result = tm.requestThrottle(locoAddress2, myThrottleListener2);
-        if (!result) {
-            log.error("loco {} cannot be aquired", locoAddress);
-        }
-        Assert.assertNotNull("has throttle", myThrottleRef2.get());
+        assertTrue( result, () -> "loco " + locoAddress + " cannot be aquired");
+        assertNotNull( myThrottleRef2.get(), "has throttle");
         myThrottleRef2.get().setSpeedSetting(1);
-        Assert.assertEquals("loco speed is correct", 0.5, myThrottleRef.get().getSpeedSetting(), 0.0001);
-        Assert.assertEquals("loco speed is correct", 1.0, myThrottleRef2.get().getSpeedSetting(), 0.0001);
+        assertEquals( 0.5, myThrottleRef.get().getSpeedSetting(), 0.0001, "loco speed is correct");
+        assertEquals( 1.0, myThrottleRef2.get().getSpeedSetting(), 0.0001, "loco speed is correct");
 
         // Change loco address
         locoAddressMemory.setValue(locoAddress2);
@@ -571,8 +570,8 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         // Execute the action
         actionThrottle2.execute();
 
-        Assert.assertEquals("loco speed is correct", 0.0, myThrottleRef.get().getSpeedSetting(), 0.0001);
-        Assert.assertEquals("loco speed is correct", 0.5, myThrottleRef2.get().getSpeedSetting(), 0.0001);
+        assertEquals( 0.0, myThrottleRef.get().getSpeedSetting(), 0.0001, "loco speed is correct");
+        assertEquals( 0.5, myThrottleRef2.get().getSpeedSetting(), 0.0001, "loco speed is correct");
 
         // Test execute when loco address socket is disconnected
         conditionalNG_2.unregisterListeners();
@@ -591,7 +590,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     }
 
     @Test
-    public void testDisposeMe() throws Exception {
+    public void testDisposeMe() throws SocketAlreadyConnectedException, JmriException {
         ThrottleManager tm = InstanceManager.getDefault(ThrottleManager.class);
 
         logixNG.setEnabled(false);
@@ -603,7 +602,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionThrottle2);
         conditionalNG_2.getChild(0).connect(maleSocket2);
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
 
         int locoAddress = 1234;
         AtomicReference<DccThrottle> myThrottleRef = new AtomicReference<>();
@@ -611,12 +610,9 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         MyThrottleListener myThrottleListener = new MyThrottleListener(myThrottleRef);
 
         boolean result = tm.requestThrottle(locoAddress, myThrottleListener);
+        assertTrue( result, () -> "loco " + locoAddress + " cannot be aquired");
 
-        if (!result) {
-            log.error("loco {} cannot be aquired", locoAddress);
-        }
-
-        Assert.assertNotNull("has throttle", myThrottleRef.get());
+        assertNotNull( myThrottleRef.get(), "has throttle");
 
         Memory locoAddressMemory = InstanceManager.getDefault(MemoryManager.class).provide("Loco address memory");
         locoAddressMemory.setValue(locoAddress);
@@ -639,25 +635,25 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                         .registerExpression(locoAddressExpression);
         actionThrottle2.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).connect(locoAddressSocket);
 
-        Assert.assertEquals("Throttle is used 1 times", 1, tm.getThrottleUsageCount(locoAddress));
+        assertEquals( 1, tm.getThrottleUsageCount(locoAddress), "Throttle is used 1 times");
 
         // Test execute when loco address socket is connected
         conditionalNG_2.execute();
-        Assert.assertEquals("loco speed is correct", 0.0, myThrottleRef.get().getSpeedSetting(), 0.0001);
+        assertEquals( 0.0, myThrottleRef.get().getSpeedSetting(), 0.0001, "loco speed is correct");
 
-        Assert.assertEquals("Throttle is used 2 times", 2, tm.getThrottleUsageCount(locoAddress));
+        assertEquals( 2, tm.getThrottleUsageCount(locoAddress), "Throttle is used 2 times");
 
         // Test disposeMe(). ActionThrottle has a throttle now which must be released.
         actionThrottle2.disposeMe();
 
-        Assert.assertEquals("Throttle is used 1 times", 1, tm.getThrottleUsageCount(locoAddress));
+        assertEquals( 1, tm.getThrottleUsageCount(locoAddress), "Throttle is used 1 times");
     }
 
     @Test
     public void testConnectedDisconnected() throws SocketAlreadyConnectedException {
         _baseMaleSocket.setEnabled(false);
 
-        Assert.assertEquals("Num children is correct", 5, _base.getChildCount());
+        assertEquals( 5, _base.getChildCount(), "Num children is correct");
 
         MaleSocket analogExpressionMaleSocket =
                 InstanceManager.getDefault(AnalogExpressionManager.class)
@@ -667,58 +663,50 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                         .registerExpression(new ExpressionSensor("IQDE1", null));
 
         actionThrottle.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).disconnect();
-        Assert.assertNull("socket name is null", actionThrottle.getLocoAddressSocketSystemName());
+        assertNull( actionThrottle.getLocoAddressSocketSystemName(), "socket name is null");
         actionThrottle.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).connect(analogExpressionMaleSocket);
-        Assert.assertEquals("socket name is correct", "IQAE1", actionThrottle.getLocoAddressSocketSystemName());
+        assertEquals( "IQAE1", actionThrottle.getLocoAddressSocketSystemName(), "socket name is correct");
         actionThrottle.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).disconnect();
-        Assert.assertNull("socket name is null", actionThrottle.getLocoAddressSocketSystemName());
+        assertNull( actionThrottle.getLocoAddressSocketSystemName(), "socket name is null");
 
         actionThrottle.getChild(ActionThrottle.LOCO_SPEED_SOCKET).disconnect();
-        Assert.assertNull("socket name is null", actionThrottle.getLocoAddressSocketSystemName());
+        assertNull( actionThrottle.getLocoAddressSocketSystemName(), "socket name is null");
         actionThrottle.getChild(ActionThrottle.LOCO_SPEED_SOCKET).connect(analogExpressionMaleSocket);
-        Assert.assertEquals("socket name is correct", "IQAE1", actionThrottle.getLocoSpeedSocketSystemName());
+        assertEquals( "IQAE1", actionThrottle.getLocoSpeedSocketSystemName(), "socket name is correct");
         actionThrottle.getChild(ActionThrottle.LOCO_SPEED_SOCKET).disconnect();
-        Assert.assertNull("socket name is null", actionThrottle.getLocoAddressSocketSystemName());
+        assertNull( actionThrottle.getLocoAddressSocketSystemName(), "socket name is null");
 
         actionThrottle.getChild(ActionThrottle.LOCO_DIRECTION_SOCKET).disconnect();
-        Assert.assertNull("socket name is null", actionThrottle.getLocoAddressSocketSystemName());
+        assertNull( actionThrottle.getLocoAddressSocketSystemName(), "socket name is null");
         actionThrottle.getChild(ActionThrottle.LOCO_DIRECTION_SOCKET).connect(digitalExpressionMaleSocket);
-        Assert.assertEquals("socket name is correct", "IQDE1", actionThrottle.getLocoDirectionSocketSystemName());
+        assertEquals( "IQDE1", actionThrottle.getLocoDirectionSocketSystemName(), "socket name is correct");
         actionThrottle.getChild(ActionThrottle.LOCO_DIRECTION_SOCKET).disconnect();
-        Assert.assertNull("socket name is null", actionThrottle.getLocoAddressSocketSystemName());
+        assertNull( actionThrottle.getLocoAddressSocketSystemName(), "socket name is null");
 
         FemaleSocket badFemaleSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
                 .createFemaleSocket(actionThrottle, actionThrottle, "E1");
 
-        boolean hasThrown = false;
-        try {
-            actionThrottle.connected(badFemaleSocket);
-        } catch (IllegalArgumentException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "unkown socket", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class,
+            () -> actionThrottle.connected(badFemaleSocket),
+            "Exception is thrown");
+        assertEquals( "unkown socket", ex.getMessage(), "Error message is correct");
 
-        hasThrown = false;
-        try {
-            actionThrottle.disconnected(badFemaleSocket);
-        } catch (IllegalArgumentException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "unkown socket", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        ex = assertThrows( IllegalArgumentException.class,
+            () -> actionThrottle.disconnected(badFemaleSocket),
+            "Exception is thrown");
+        assertEquals( "unkown socket", ex.getMessage(), "Error message is correct");
+
     }
 
     @Test
     public void testToString() {
         ActionThrottle a1 = new ActionThrottle("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Throttle", a1.getShortDescription());
+        assertEquals( "Throttle", a1.getShortDescription(), "strings are equal");
         ActionThrottle a2 = new ActionThrottle("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Throttle", a2.getLongDescription());
+        assertEquals( "Throttle. Don't wait for throttle. Stop loco when switching loco", a2.getLongDescription(), "strings are equal");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -745,12 +733,12 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         _base = actionThrottle;
         _baseMaleSocket = maleSocket;
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
@@ -759,11 +747,11 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
 
 
 
-    private class MyThrottleListener implements ThrottleListener {
+    private static class MyThrottleListener implements ThrottleListener {
 
         private final AtomicReference<DccThrottle> _myThrottleRef;
 
-        public MyThrottleListener(AtomicReference<DccThrottle> myThrottleRef) {
+        MyThrottleListener(AtomicReference<DccThrottle> myThrottleRef) {
             _myThrottleRef = myThrottleRef;
         }
 
@@ -774,15 +762,15 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
 
         @Override
         public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-            log.error("loco {} cannot be aquired", address.getNumber());
+            fail("loco " + address.getNumber() + " cannot be aquired " + reason);
         }
 
         @Override
         public void notifyDecisionRequired(LocoAddress address, ThrottleListener.DecisionType question) {
-            log.error("Loco {} cannot be aquired. Decision required.", address.getNumber());
+            fail("loco " + address.getNumber() + " cannot be aquired. Decision required. " + question);
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionThrottleTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionThrottleTest.class);
 
 }

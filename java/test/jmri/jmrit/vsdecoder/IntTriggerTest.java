@@ -1,9 +1,15 @@
 package jmri.jmrit.vsdecoder;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.beans.PropertyChangeEvent;
 
 import org.jdom2.Element;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -23,48 +29,47 @@ public class IntTriggerTest {
     @Test
     public void testCreateSimple() {
         IntTrigger uut = new IntTrigger("unitUnderTest");
-        Assert.assertEquals("trigger name", "unitUnderTest", uut.getName());
-        Assert.assertEquals("event name", "", uut.getEventName());
-        Assert.assertNull("target", uut.getTarget());
-        Assert.assertEquals("target action", Trigger.TargetAction.NOTHING,
-                uut.getTargetAction());
-        Assert.assertEquals("trigger type", Trigger.TriggerType.INT,
-                uut.getTriggerType());
-        Assert.assertEquals("match value", 0, uut.getMatchValue());
+        assertEquals("unitUnderTest", uut.getName(), "trigger name");
+        assertEquals("", uut.getEventName(), "event name");
+        assertNull(uut.getTarget(), "target");
+        assertEquals(Trigger.TargetAction.NOTHING,
+                uut.getTargetAction(), "target action");
+        assertEquals(Trigger.TriggerType.INT,
+                uut.getTriggerType(), "trigger type");
+        assertEquals(0, uut.getMatchValue(), "match value");
     }
 
     @Test
     public void testCreateFull() {
         IntTrigger uut = new IntTrigger("unitUnderTest", 2, Trigger.CompareType.EQ);
-        Assert.assertEquals("trigger name", "unitUnderTest", uut.getName());
-        Assert.assertEquals("event name", "", uut.getEventName());
-        Assert.assertNull("target", uut.getTarget());
-        Assert.assertEquals("target action", Trigger.TargetAction.NOTHING,
-                uut.getTargetAction());
-        Assert.assertEquals("trigger type", Trigger.TriggerType.INT,
-                uut.getTriggerType());
-        Assert.assertEquals("match value", 2, uut.getMatchValue());
+        assertEquals("unitUnderTest", uut.getName(), "trigger name");
+        assertEquals("", uut.getEventName(), "event name");
+        assertNull(uut.getTarget(), "target");
+        assertEquals(Trigger.TargetAction.NOTHING,
+                uut.getTargetAction(), "target action");
+        assertEquals(Trigger.TriggerType.INT,
+                uut.getTriggerType(), "trigger type");
+        assertEquals(2, uut.getMatchValue(), "match value");
     }
 
     @Test
-    public void TestSetGet() {
+    public void testSetGet() {
         VSDSound target;
         IntTrigger uut = new IntTrigger("unitUnderTest", 3, Trigger.CompareType.EQ);
         uut.setName("new name");
-        Assert.assertEquals("set name", "new name", uut.getName());
+        assertEquals("new name", uut.getName(), "set name");
         uut.setEventName("event name");
-        Assert.assertEquals("set event name", "event name", uut.getEventName());
+        assertEquals("event name", uut.getEventName(), "set event name");
         target = new ConfigurableSound("target");
         uut.setTarget(target);
-        Assert.assertSame("set target", target, uut.getTarget());
+        assertSame(target, uut.getTarget(), "set target");
         uut.setTargetName("target name");
-        Assert.assertEquals("set target name", "target name", uut.getTargetName());
+        assertEquals("target name", uut.getTargetName(), "set target name");
         uut.setTargetAction(Trigger.TargetAction.PLAY);
-        Assert.assertEquals("set target action", Trigger.TargetAction.PLAY,
-                uut.getTargetAction());
+        assertEquals(Trigger.TargetAction.PLAY,
+                uut.getTargetAction(), "set target action");
         uut.setTriggerType(Trigger.TriggerType.INT);
-        Assert.assertEquals("set trigger type", Trigger.TriggerType.INT,
-                uut.getTriggerType());
+        assertEquals(Trigger.TriggerType.INT, uut.getTriggerType(), "set trigger type");
         TriggerListener tl = new TriggerListener() {
             @Override
             public void takeAction() {
@@ -79,9 +84,9 @@ public class IntTriggerTest {
             }
         };
         uut.setCallback(tl);
-        Assert.assertSame("set callback", tl, uut.getCallback());
+        assertSame(tl, uut.getCallback(), "set callback");
         uut.setMatchValue(3);
-        Assert.assertEquals("match value", 3, uut.getMatchValue());
+        assertEquals(3, uut.getMatchValue(), "match value");
     }
 
     @Test
@@ -92,17 +97,17 @@ public class IntTriggerTest {
         uut.setCallback(new TriggerListener() {
             @Override
             public void takeAction() {
-                Assert.assertTrue("callback called", true);
+                assertTrue(true, "callback called");
             }
 
             @Override
             public void takeAction(int i) {
-                Assert.fail("wrong callback called");
+                fail("wrong callback called");
             }
 
             @Override
             public void takeAction(float f) {
-                Assert.fail("wrong callback called");
+                fail("wrong callback called");
             }
         });
         uut.setCompareType(Trigger.CompareType.GT);
@@ -145,13 +150,13 @@ public class IntTriggerTest {
         IntTrigger uut = new IntTrigger("unitUnderTest", 3, Trigger.CompareType.EQ);
         Element e = buildTestXML();
         uut.setXml(e);
-        Assert.assertEquals("xml name", "test_trigger", uut.getName());
-        Assert.assertEquals("xml type", Trigger.TriggerType.INT, uut.getTriggerType());
-        Assert.assertEquals("xml event name", "test_event", uut.getEventName());
-        Assert.assertEquals("xml target name", "test_target", uut.getTargetName());
-        Assert.assertEquals("xml compare type", Trigger.CompareType.GT, uut.getCompareType());
-        Assert.assertEquals("xml match value", 2, uut.getMatchValue());
-        Assert.assertEquals("xml action", Trigger.TargetAction.PLAY, uut.getTargetAction());
+        assertEquals("test_trigger", uut.getName(), "xml name");
+        assertEquals(Trigger.TriggerType.INT, uut.getTriggerType(), "xml type");
+        assertEquals("test_event", uut.getEventName(), "xml event name");
+        assertEquals("test_target", uut.getTargetName(), "xml target name");
+        assertEquals(Trigger.CompareType.GT, uut.getCompareType(), "xml compare type");
+        assertEquals(2, uut.getMatchValue(), "xml match value");
+        assertEquals(Trigger.TargetAction.PLAY, uut.getTargetAction(), "xml action");
     }
 
     @BeforeEach

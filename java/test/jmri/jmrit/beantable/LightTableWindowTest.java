@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -11,10 +12,10 @@ import jmri.LightManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
+
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
@@ -30,8 +31,8 @@ import org.netbeans.jemmy.util.NameComponentChooser;
 public class LightTableWindowTest {
 
     @Test
-    public void testShowAndClose() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @DisabledIfHeadless
+    public void testShowAndClose() {
 
         // ask for the window to open
         LightTableAction a = new LightTableAction();
@@ -46,11 +47,11 @@ public class LightTableWindowTest {
 
         // Find Add Light pane by name
         JmriJFrame fa = JmriJFrame.getFrame(Bundle.getMessage("TitleAddLight"));
-        Assert.assertNotNull("Add window found", fa);
+        assertNotNull( fa, "Add window found");
 
         // Find hardware address field
         JTextField hwAddressField = JTextFieldOperator.findJTextField(fa, new NameComponentChooser("hwAddressTextField"));
-        Assert.assertNotNull("hwAddressTextField", hwAddressField);
+        assertNotNull( hwAddressField, "hwAddressTextField");
 
         // set to "1"
         new JTextFieldOperator(hwAddressField).typeText("1");
@@ -58,15 +59,16 @@ public class LightTableWindowTest {
         createButton.setEnabled(true); // skip validation
 
         new QueueTool().waitEmpty();
-        Assert.assertEquals("name content", "1", hwAddressField.getText());
+        assertEquals( "1", hwAddressField.getText(), "name content");
 
         // Find system combobox
         JComboBox<?> prefixBox = JComboBoxOperator.findJComboBox(fa, new NameComponentChooser("prefixBox"));
-        Assert.assertNotNull(prefixBox);
+        assertNotNull(prefixBox);
         // set to "Internal"
         prefixBox.setSelectedItem("Internal");
         LightManager internal = InstanceManager.getDefault(InternalSystemConnectionMemo.class).getLightManager();
-        Assert.assertEquals("Selected system item", internal, prefixBox.getSelectedItem()); // this connection type is always available
+        assertEquals( internal, prefixBox.getSelectedItem(),
+            "Selected system item"); // this connection type is always available
 
         // Find and click the Add Create button to add turnout
         JUnitUtil.pressButton(fa, Bundle.getMessage("ButtonCreate"));
@@ -80,21 +82,21 @@ public class LightTableWindowTest {
         new QueueTool().waitEmpty();
 
         // check that light was created
-        Assert.assertNotNull(jmri.InstanceManager.lightManagerInstance().getLight("IL1"));
+        assertNotNull(jmri.InstanceManager.lightManagerInstance().getLight("IL1"));
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.util.JUnitUtil.initTimeProviderManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initTimeProviderManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }

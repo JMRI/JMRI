@@ -118,7 +118,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         var updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
         updateButton.addActionListener(this::sendRequestEvents); 
-        updateButton.setToolTipText("Query the network and load results into the table");
+        updateButton.setToolTipText(Bundle.getMessage("ButtonUpdateTt"));
         buttonPanel.add(updateButton);
         
         matchGroupName = new JComboBox<>();
@@ -135,30 +135,36 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         showRequiresLabel.addActionListener((ActionEvent e) -> {
             filter();
         });
-        showRequiresLabel.setToolTipText("When checked, only events that you've given names will be shown");
+        showRequiresLabel.setToolTipText(Bundle.getMessage("BoxShowRequiresLabelTt"));
+        showRequiresLabel.setOpaque(false); // make transparent
         buttonPanel.add(showRequiresLabel);
 
         showRequiresMatch = new JCheckBox(Bundle.getMessage("BoxShowRequiresMatch"));
         showRequiresMatch.addActionListener((ActionEvent e) -> {
             filter();
         });
-        showRequiresMatch.setToolTipText("When checked, only events with both producers and consumers will be shown.");
+        showRequiresMatch.setToolTipText(Bundle.getMessage("BoxShowRequiresMatchTt"));
+        showRequiresMatch.setOpaque(false); // make transparent
         buttonPanel.add(showRequiresMatch);
 
         popcorn = new JCheckBox(Bundle.getMessage("BoxPopcorn"));
         popcorn.addActionListener((ActionEvent e) -> {
             popcornButtonChanged();
         });
+        popcorn.setToolTipText(Bundle.getMessage("BoxPopcornTt"));
+        popcorn.setOpaque(false); // make transparent
         buttonPanel.add(popcorn);
 
         JPanel findpanel = new JPanel(); // keep button and text together
-        findpanel.setToolTipText("This finds matches in the Event ID column");
+        findpanel.setOpaque(false); // make transparent
+        findpanel.setToolTipText(Bundle.getMessage("FindPanelFindEventTt"));
         buttonPanel.add(findpanel);
         
-        JLabel find = new JLabel("Find Event: ");
+        JLabel find = new JLabel(Bundle.getMessage("FindPanelFindEvent"));
         findpanel.add(find);
 
         findID = new EventIdTextField();
+        findID.setToolTipText(Bundle.getMessage("FindPanelFindEventFieldTt"));
         findID.addActionListener(this::findRequested);
         findID.addKeyListener(new KeyListener() {
             @Override
@@ -177,21 +183,22 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
         });
         findpanel.add(findID);
-        JButton addButton = new JButton("Add");
+        JButton addButton = new JButton(Bundle.getMessage("FindPanelButtonAdd"));
         addButton.addActionListener(this::addRequested);
-        addButton.setToolTipText("This adds the EventID to the left into the table.  Use when you don't find an event ID you want to name.");        
+        addButton.setToolTipText(Bundle.getMessage("FindPanelButtonAddTt"));        
         findpanel.add(addButton);
 
         findpanel = new JPanel();  // keep button and text together
-        findpanel.setToolTipText("This finds matches in the event name, producer node name, consumer node name and also-known-as columns");
+        findpanel.setOpaque(false); // make transparent
+        findpanel.setToolTipText(Bundle.getMessage("FindPanelFindNameTt"));
         buttonPanel.add(findpanel);
 
-        JLabel findText = new JLabel("Find Name: ");
+        JLabel findText = new JLabel(Bundle.getMessage("FindPanelFindName"));
         findpanel.add(findText);
 
         findTextID = new JTextField(16);
         findTextID.addActionListener(this::findTextRequested);
-        findTextID.setToolTipText("This finds matches in the event name, producer node name, consumer node name and also-known-as columns");
+        findTextID.setToolTipText(Bundle.getMessage("FindPanelFindNameTt"));
         findTextID.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
@@ -210,14 +217,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         });
         findpanel.add(findTextID);        
 
-        JButton sensorButton = new JButton("Names from Sensors");
+        JButton sensorButton = new JButton(Bundle.getMessage("FindPanelButtonSensor"));
         sensorButton.addActionListener(this::sensorRequested);
-        sensorButton.setToolTipText("This fills empty cells in the event name column from JMRI Sensor names");
+        sensorButton.setToolTipText(Bundle.getMessage("FindPanelButtonSensorTt"));
         buttonPanel.add(sensorButton);
         
-        JButton turnoutButton = new JButton("Names from Turnouts");
+        JButton turnoutButton = new JButton(Bundle.getMessage("FindPanelButtonTurnout"));
         turnoutButton.addActionListener(this::turnoutRequested);
-        turnoutButton.setToolTipText("This fills empty cells in the event name column from JMRI Turnout names");
+        turnoutButton.setToolTipText(Bundle.getMessage("FindPanelButtonTurnoutTt"));
         buttonPanel.add(turnoutButton);
 
         buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
@@ -234,7 +241,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     // load updateMatchGroup combobox with current contents
     protected void updateMatchGroupName() {
         matchGroupName.removeAllItems();
-        matchGroupName.addItem("(All Groups)");
+        matchGroupName.addItem(Bundle.getMessage("FrameAllGroups"));
         
         var list = groupStore.getGroupNames();
         for (String group : list) {
@@ -263,10 +270,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     public java.util.List<JMenu> getMenus() {
         // create a file menu
         var retval = new ArrayList<JMenu>();
-        var fileMenu = new JMenu("File");
+        var fileMenu = new JMenu(Bundle.getMessage("PaneMenuFile"));
         fileMenu.setMnemonic(KeyEvent.VK_F);
         
-        var csvWriteItem = new JMenuItem("Save to CSV...", KeyEvent.VK_S);
+        var csvWriteItem = new JMenuItem(Bundle.getMessage("PaneSaveToCsv"), KeyEvent.VK_S);
         KeyStroke ctrlSKeyStroke = KeyStroke.getKeyStroke("control S");
         if (jmri.util.SystemType.isMacOSX()) {
             ctrlSKeyStroke = KeyStroke.getKeyStroke("meta S");
@@ -275,7 +282,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         csvWriteItem.addActionListener(this::writeToCsvFile);
         fileMenu.add(csvWriteItem);
         
-        var csvReadItem = new JMenuItem("Read from CSV...", KeyEvent.VK_O);
+        var csvReadItem = new JMenuItem(Bundle.getMessage("PaneReadFromCsv"), KeyEvent.VK_O);
         KeyStroke ctrlOKeyStroke = KeyStroke.getKeyStroke("control O");
         if (jmri.util.SystemType.isMacOSX()) {
             ctrlOKeyStroke = KeyStroke.getKeyStroke("meta O");
@@ -296,7 +303,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Event Table");
+            return (memo.getUserName() + " " + Bundle.getMessage("TitleEventTable"));
         }
         return getTitle(Bundle.getMessage("TitleEventTable"));
     }
@@ -470,7 +477,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         if (fileChooser == null) {
             fileChooser = new jmri.util.swing.JmriJFileChooser();
         }
-        fileChooser.setDialogTitle("Save CSV file");
+        fileChooser.setDialogTitle(Bundle.getMessage("PaneSaveCsvFile"));
         fileChooser.rescanCurrentDirectory();
         fileChooser.setSelectedFile(new File("eventtable.csv"));
 
@@ -484,7 +491,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
             try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
                 str.printRecord("Event ID", "Event Name", "Producer Node", "Producer Node Name",
-                                "Consumer Node", "Consumer Node Name", "Paths");
+                                "Consumer Node", "Consumer Node Name", "Paths");                
                 for (int i = 0; i < model.getRowCount(); i++) {
 
                     str.print(model.getValueAt(i, EventTableDataModel.COL_EVENTID));
@@ -517,7 +524,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         if (fileChooser == null) {
             fileChooser = new jmri.util.swing.JmriJFileChooser();
         }
-        fileChooser.setDialogTitle("Open CSV file");
+        fileChooser.setDialogTitle(Bundle.getMessage("PaneOpenCsvFile"));
         fileChooser.rescanCurrentDirectory();
 
         int retVal = fileChooser.showOpenDialog(this);
@@ -748,7 +755,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         lineIncrement = -1;  // reload on next request, hoping for a viewed row
                     }
                     return new String(result);
-                default: return "Illegal row "+row+" "+col;
+                default: return "Illegal column at "+row+" "+col;
             }
         }
 
@@ -774,13 +781,13 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         @Override
         public String getColumnName(int col) {
             switch (col) {
-                case COL_EVENTID:       return "Event ID";
-                case COL_EVENTNAME:     return "Event Name";
-                case COL_PRODUCER_NODE: return "Producer Node";
-                case COL_PRODUCER_NAME: return "Producer Node Name";
-                case COL_CONSUMER_NODE: return "Consumer Node";
-                case COL_CONSUMER_NAME: return "Consumer Node Name";
-                case COL_CONTEXT_INFO:  return "Also Known As";
+                case COL_EVENTID:       return Bundle.getMessage("TableColEventId");
+                case COL_EVENTNAME:     return Bundle.getMessage("TableColEventName");
+                case COL_PRODUCER_NODE: return Bundle.getMessage("TableColProducerNode");
+                case COL_PRODUCER_NAME: return Bundle.getMessage("TableColProducerName");
+                case COL_CONSUMER_NODE: return Bundle.getMessage("TableColConsumerNode");
+                case COL_CONSUMER_NAME: return Bundle.getMessage("TableColConsumerName");
+                case COL_CONTEXT_INFO:  return Bundle.getMessage("TableColContextInfo");
                 default: return "ERROR "+col;
             }
         }

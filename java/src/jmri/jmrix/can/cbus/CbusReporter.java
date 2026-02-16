@@ -7,9 +7,6 @@ import jmri.implementation.AbstractRailComReporter;
 import jmri.jmrix.can.*;
 import jmri.util.ThreadingUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Extend jmri.AbstractRailComReporter for CBUS controls.
  * <hr>
@@ -35,8 +32,9 @@ import org.slf4j.LoggerFactory;
 public class CbusReporter extends AbstractRailComReporter implements CanListener {
 
     private final int _number;
-    private final TrafficController tc; // can be removed when former constructor removed
     private final CanSystemConnectionMemo _memo;
+
+    static private final RailComManager railComManager = InstanceManager.getDefault(RailComManager.class);
 
     /**
      * Should all CbusReporters clear themselves after a timeout?
@@ -65,9 +63,9 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         super(memo.getSystemPrefix() + "R" + address);  // can't use prefix here, as still in construction
         _number = Integer.parseInt(  address);
         _memo = memo;
-        // At construction, register for messages
-        tc = memo.getTrafficController(); // can be removed when former constructor removed
-        addTc(memo.getTrafficController());
+        // At construction, don't register for messages; they're sent via the CbusReporterManager
+        // tc = memo.getTrafficController(); // can be removed when former constructor removed
+        // addTc(memo.getTrafficController());
         log.debug("Added new reporter {}R{}", memo.getSystemPrefix(), address);
     }
 
@@ -119,7 +117,8 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         if ( m.getOpCode() != CbusConstants.CBUS_DDES && m.getOpCode() != CbusConstants.CBUS_ACDAT) {
             return;
         }
-        if ((m.getElement(1) << 8) + m.getElement(2) == _number) { // correct reporter number
+
+        if (((m.getElement(1) << 8) + m.getElement(2)) == _number) { // correct reporter number, for us
             if (m.getOpCode() == CbusConstants.CBUS_DDES && !getCbusReporterType().equals(CbusReporterManager.CBUS_REPORTER_TYPE_CLASSIC)  ) {
                 ddesReport(m);
             } else {
@@ -130,7 +129,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
 
     private void ddesReport(CanReply m) {
         int least_significant_bit = m.getElement(3) & 1;
-        if ( least_significant_bit ==0 ) {
+        if ( least_significant_bit == 0 ) {
             canRc522Report(m);
         } else {
             canRcomReport(m);
@@ -156,13 +155,132 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         startTimeout(tag);
     }
 
-    // DCC address correction 0-10239 range
+
+
     private void canRcomReport(CanReply m) {
-        int railcom_id = (m.getElement(3)>>4);
-        log.warn("CANRCOM support still in development.");
-        log.info("{} detected RailCom ID {}",this,railcom_id);
+
+        var locoAddress = parseAddress(m);
+        
+        int speed = m.getElement(6)&0x7F;
+        if ((m.getElement(6)&0x80) == 0) {
+            speed = -1;  // data unavailable
+        }
+        
+        int flags = m.getElement(7);
+        
+        RailCom.Orientation orientation;
+        switch (flags&0x03) {
+            case 2:
+                orientation = RailCom.Orientation.EAST;
+                break;
+            case 1:
+                orientation = RailCom.Orientation.WEST;
+                break;
+            case 0:
+                orientation = RailCom.Orientation.UNKNOWN;
+                break;
+            default:
+                log.warn("Unexpected orientation code 3");
+                orientation = RailCom.Orientation.UNKNOWN;
+                break;
+        }
+        
+        RailCom.Direction direction;
+        switch ((flags>>2)&0x03) {
+            case 1:
+                direction = RailCom.Direction.FORWARD;
+                break;
+            case 2:
+                direction = RailCom.Direction.BACKWARD;
+                break;
+            case 0:
+                direction = RailCom.Direction.UNKNOWN;
+                break;
+            default:
+                log.warn("Unexpected direction code 3");
+                direction = RailCom.Direction.UNKNOWN;
+                break;
+        }
+        
+        RailCom.Motion motion;
+        switch ((flags>>4)&0x03) {
+            case 1:
+                motion = RailCom.Motion.STATIONARY;
+                log.debug("Setting speed to zero because known to be not moving");
+                speed = 0;
+                break;
+            case 2:
+                motion = RailCom.Motion.MOVING;
+                break;
+            case 0:
+                motion = RailCom.Motion.UNKNOWN;
+                break;
+            default:
+                log.warn("Unexpected motion code 3");
+                motion = RailCom.Motion.UNKNOWN;
+                break;
+        }
+        
+        RailCom.QoS qos;
+        switch ((flags>>6)&0x03) {
+            case 1:
+                qos = RailCom.QoS.POOR;
+                break;
+            case 2:
+                qos = RailCom.QoS.GOOD;
+                break;
+            case 0:
+                qos = RailCom.QoS.UNKNOWN;
+                break;
+            default:
+                log.warn("Unexpected QoS code 3");
+                qos = RailCom.QoS.UNKNOWN;
+                break;
+        }
+        
+        var idTag = railComManager.provideIdTag(""+locoAddress.getNumber());
+        var tag = (RailCom)idTag;
+        
+        tag.setDccAddress(locoAddress);
+        tag.setActualSpeed(speed);
+        tag.setOrientation(orientation);
+        tag.setDirection(direction);
+        tag.setMotion(motion);
+        tag.setQoS(qos);
+
+        notify(tag);
+        startTimeout(tag);
     }
 
+    DccLocoAddress parseAddress(CanReply m) {  // package access for testing
+        int dccTypeInt = m.getElement(4)&0xC0;
+        int dccNumber;
+        int b4 = m.getElement(4) & 0x3F;  // excludes high "type" bits
+        int b5 = m.getElement(5);
+        LocoAddress.Protocol dccType;
+        switch (dccTypeInt) {
+            default:
+            case 0xC0:
+                dccNumber = (b4<<8) | b5;
+                dccType = LocoAddress.Protocol.DCC_LONG;
+                break;
+            case 0x00:
+                dccNumber = b5;
+                dccType = LocoAddress.Protocol.DCC_SHORT;
+                break;
+            case 0x40:
+                dccNumber = b5&0x7F;  // remove direction bit
+                dccType = LocoAddress.Protocol.DCC_CONSIST;
+                break;
+            case 0x80:
+                int decUpper = (b4 << 1) | ((b5>>7)&0x01); // BCD upper value
+                dccNumber = decUpper*100 + (b5&0x7F);
+                dccType = LocoAddress.Protocol.DCC_EXTENDED_CONSIST;
+                
+        }
+        return new DccLocoAddress(dccNumber, dccType);
+    }
+    
     private String toClassicTag(int b1, int b2, int b3, int b4, int b5) {
         return String.format("%02X", b1) + String.format("%02X", b2) + String.format("%02X", b3)
             + String.format("%02X", b4) + String.format("%02X", b5);
@@ -212,9 +330,8 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
     @Override
     public void dispose() {
         disposed = true;
-        tc.removeCanListener(this);
         super.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CbusReporter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusReporter.class);
 }

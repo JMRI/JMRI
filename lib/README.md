@@ -80,7 +80,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - from https://github.com/rhwood/jinputvalidator
 - javadoc at https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0
 
-##### assertJ: assertj-core-3.12.0.jar, assertj-swing-3.9.2.jar, assertj-swing-junit-3.9.2.jar
+##### assertJ: assertj-core-3.27.7.jar
 - testing only
 
 ##### commons-compress-1.18.jar
@@ -91,9 +91,6 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 3.7
 - provides org.apache.commons.lang3
 - from https://commons.apache.org/proper/commons-lang/
-
-##### commons-logging-1.2.jar
-- version 1.2
 
 ##### commons-net-3.9.0.jar
 - version 3.9.0
@@ -127,25 +124,36 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 2.03
 - from <http://java.sun.com/javase/technologies/desktop/javahelp/>
 
-##### log4j-api-2.20.0.jar, log4j-core-2.20.0.jar
-- version 2.20.0
-- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api/2.20.0
-- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.20.0
+##### log4j-api-2.25.3.jar, log4j-core-2.25.3.jar
+- version 2.25.3
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api/2.25.3
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.25.3
 
-##### log4j-slf4j2-impl.jar
-- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl/2.20.0
+##### log4j-slf4j2-impl-2.25.3.jar
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl/2.25.3
 - slf4j bridge to log4j2
 
-##### slf4j-api-2.0.7.jar
+##### slf4j-api-2.0.17.jar
 - slf4j API
 - from https://mvnrepository.com/artifact/org.slf4j/slf4j-api
 
-##### jul-to-slf4j-2.0.7.jar
+##### jul-to-slf4j-2.0.17.jar
 - java.util.logging to slf4j
-- from https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j/2.0.7
+- from https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j/2.0.17
+
+##### jcl-over-slf4j-2.0.17.jar
+- commons logging to sl4fj bridge
+- replaces dependency of batik-transcoder
+
+##### log4j-over-slf4j-2.0.17.jar
+- log4jv1 to slf4j bridge
+- Used by CATS
+
+
 
 ##### openlcb.jar
  - 0.8.6 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.6/openlcb-0.8.6.jar
+ - with PR 298 pre-release https://github.com/openlcb/OpenLCB_Java/pull/298
  
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -390,7 +398,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 ##### jsoup-1.15.3.jar
 - version 1.15.3
-- used to rebuild Help metadata
+- used to test rebuild Help metadata
+- see jmri.util.GenerateSearchIndexTest
 
 ##### objenesis-3.3.jar
 - version 3.4

@@ -1,5 +1,12 @@
 package jmri.jmrit.logixng;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.beans.*;
 import java.io.PrintWriter;
 import java.util.*;
@@ -12,10 +19,12 @@ import jmri.*;
 import jmri.Manager.NameValidity;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+
 import org.slf4j.Logger;
 
 /**
@@ -45,7 +54,9 @@ public abstract class FemaleSocketTestBase {
         SortedSet<String> set = new TreeSet<>();
 
         // If the category doesn't exist in one of the sets, 'classes' is null.
-        if (classes == null) return set;
+        if (classes == null) {
+            return set;
+        }
 
         for (Class<? extends Base> clazz : classes) {
             set.add(clazz.getName());
@@ -147,89 +158,61 @@ public abstract class FemaleSocketTestBase {
 
     @Test
     public void testBadSocketName() {
-        boolean hasThrown = false;
-        try {
-            getFemaleSocket("----");
-        } catch (IllegalArgumentException e) {
-            hasThrown = true;
-        }
-        Assert.assertTrue("exception thrown", hasThrown);
+        IllegalArgumentException e = assertThrows( IllegalArgumentException.class, () ->
+            getFemaleSocket("----"), "exception thrown");
+        assertNotNull(e);
     }
 
     abstract protected boolean hasSocketBeenSetup();
 
     @Test
     public void testSetup() throws SocketAlreadyConnectedException {
-        Assert.assertFalse("not connected", _femaleSocket.isConnected());
+        assertFalse( _femaleSocket.isConnected(), "not connected");
 
         // Check that we can call setup() even if the socket is not connected.
         _femaleSocket.setup();
 
         _femaleSocket.connect(maleSocket);
-        Assert.assertTrue("is connected", _femaleSocket.isConnected());
-        Assert.assertFalse("not setup", hasSocketBeenSetup());
+        assertTrue( _femaleSocket.isConnected(), "is connected");
+        assertFalse( hasSocketBeenSetup(), "not setup");
         _femaleSocket.setup();
-        Assert.assertTrue("is setup", hasSocketBeenSetup());
+        assertTrue( hasSocketBeenSetup(), "is setup");
     }
 
     @Test
     public void testConnectIncompatibleSocket() {
         MaleSocket incompatibleSocket = new IncompatibleMaleSocket();
-        Assert.assertFalse("socket not compatible", _femaleSocket.isCompatible(incompatibleSocket));
+        assertFalse( _femaleSocket.isCompatible(incompatibleSocket), "socket not compatible");
 
         // Test connect incompatible male socket
-        errorFlag.set(false);
-        try {
-            _femaleSocket.connect(incompatibleSocket);
-        } catch (IllegalArgumentException ex) {
-            errorFlag.set(true);
-        } catch (SocketAlreadyConnectedException ex) {
-            // We shouldn't be here.
-            Assert.fail("socket is already connected");
-        }
-
-        Assert.assertTrue("socket is not compatible", errorFlag.get());
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () ->
+            _femaleSocket.connect(incompatibleSocket), "socket is not compatible");
+        assertNotNull(ex);
 
         // Test connect null
-        errorFlag.set(false);
-        try {
-            _femaleSocket.connect(null);
-        } catch (NullPointerException ex) {
-            errorFlag.set(true);
-        } catch (SocketAlreadyConnectedException ex) {
-            // We shouldn't be here.
-            Assert.fail("socket is already connected");
-        }
+        NullPointerException npe = assertThrows( NullPointerException.class, () ->
+            _femaleSocket.connect(null), "cannot connect socket that is null");
+        assertNotNull(npe);
 
-        Assert.assertTrue("cannot connect socket that is null", errorFlag.get());
     }
 
     @Test
-    public void testConnect() {
+    public void testConnect() throws SocketAlreadyConnectedException {
 
         // Test connect male socket
         flag.set(false);
-        errorFlag.set(false);
-        try {
-            _femaleSocket.connect(maleSocket);
-        } catch (SocketAlreadyConnectedException ex) {
-            errorFlag.set(true);
-        }
 
-        Assert.assertTrue("Socket is connected", flag.get());
-        Assert.assertFalse("No error", errorFlag.get());
+        _femaleSocket.connect(maleSocket);
+
+        assertTrue( flag.get(), "Socket is connected");
 
         // Test connect male socket when already connected
         flag.set(false);
-        errorFlag.set(false);
-        try {
-            _femaleSocket.connect(otherMaleSocket);
-        } catch (SocketAlreadyConnectedException ex) {
-            errorFlag.set(true);
-        }
+        SocketAlreadyConnectedException ex = assertThrows( SocketAlreadyConnectedException.class, () ->
+            _femaleSocket.connect(otherMaleSocket), "Socket already connected error");
+        assertNotNull(ex);
 
-        Assert.assertFalse("Socket was not connected again", flag.get());
-        Assert.assertTrue("Socket already connected error", errorFlag.get());
+        assertFalse( flag.get(), "Socket was not connected again");
     }
 
     @Test
@@ -244,175 +227,152 @@ public abstract class FemaleSocketTestBase {
         flag.set(false);
         _femaleSocket.disconnect();
 
-        Assert.assertTrue("Socket is disconnected", flag.get());
+        assertTrue( flag.get(), "Socket is disconnected");
 
         // Test connect male socket
         flag.set(false);
         errorFlag.set(false);
         _femaleSocket.disconnect();
 
-        Assert.assertFalse("Socket is not disconnected again", flag.get());
+        assertFalse( flag.get(), "Socket is not disconnected again");
     }
 
     @Test
     public void testSetParentForAllChildren() throws SocketAlreadyConnectedException {
-        Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
-        if (! _femaleSocket.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
-        Assert.assertNull("malesocket.getParent() is null", maleSocket.getParent());
+        assertFalse( _femaleSocket.isConnected(), "femaleSocket is not connected");
+        assertTrue( _femaleSocket.setParentForAllChildren(new ArrayList<>()));
+        assertNull( maleSocket.getParent(), "malesocket.getParent() is null");
         _femaleSocket.connect(maleSocket);
-        if (! _femaleSocket.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
-        Assert.assertEquals("malesocket.getParent() is femaleSocket", _femaleSocket, maleSocket.getParent());
+        assertTrue( _femaleSocket.setParentForAllChildren(new ArrayList<>()));
+        assertEquals( _femaleSocket, maleSocket.getParent(), "malesocket.getParent() is femaleSocket");
     }
 
     @Test
     public void testValidateName() {
         // Valid names
-        Assert.assertTrue(_femaleSocket.validateName("Abc"));
-        Assert.assertTrue(_femaleSocket.validateName("abc"));
-        Assert.assertTrue(_femaleSocket.validateName("Abc123"));
-        Assert.assertTrue(_femaleSocket.validateName("A123bc"));
-        Assert.assertTrue(_femaleSocket.validateName("Abc___"));
-        Assert.assertTrue(_femaleSocket.validateName("Abc___fsdffs"));
-        Assert.assertTrue(_femaleSocket.validateName("Abc3123__2341fsdf"));
+        assertTrue(_femaleSocket.validateName("Abc"));
+        assertTrue(_femaleSocket.validateName("abc"));
+        assertTrue(_femaleSocket.validateName("Abc123"));
+        assertTrue(_femaleSocket.validateName("A123bc"));
+        assertTrue(_femaleSocket.validateName("Abc___"));
+        assertTrue(_femaleSocket.validateName("Abc___fsdffs"));
+        assertTrue(_femaleSocket.validateName("Abc3123__2341fsdf"));
 
         // Invalid names
-        Assert.assertFalse(_femaleSocket.validateName("12Abc"));  // Starts with a digit
-        Assert.assertFalse(_femaleSocket.validateName("_Abc"));   // Starts with an underscore
-        Assert.assertFalse(_femaleSocket.validateName(" Abc"));   // Starts with a non letter
-        Assert.assertFalse(_femaleSocket.validateName("A bc"));   // Has a character that's not letter, digit or underscore
-        Assert.assertFalse(_femaleSocket.validateName("A{bc"));   // Has a character that's not letter, digit or underscore
-        Assert.assertFalse(_femaleSocket.validateName("A+bc"));   // Has a character that's not letter, digit or underscore
+        assertFalse(_femaleSocket.validateName("12Abc"));  // Starts with a digit
+        assertFalse(_femaleSocket.validateName("_Abc"));   // Starts with an underscore
+        assertFalse(_femaleSocket.validateName(" Abc"));   // Starts with a non letter
+        assertFalse(_femaleSocket.validateName("A bc"));   // Has a character that's not letter, digit or underscore
+        assertFalse(_femaleSocket.validateName("A{bc"));   // Has a character that's not letter, digit or underscore
+        assertFalse(_femaleSocket.validateName("A+bc"));   // Has a character that's not letter, digit or underscore
     }
 
     private boolean setName_verifyException(String newName, String expectedExceptionMessage) {
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
-        try {
-            _femaleSocket.setName(newName);
-        } catch (IllegalArgumentException ex) {
-            hasThrown.set(true);
-            Assert.assertTrue("Error message is correct", ex.getMessage().equals(expectedExceptionMessage));
-        }
-        return hasThrown.get();
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () ->
+            _femaleSocket.setName(newName));
+        assertEquals( expectedExceptionMessage, ex.getMessage(), "Error message is correct");
+        return true;
     }
 
     @Test
     public void testSetName() {
         // Both letters and digits is OK
         _femaleSocket.setName("X12");
-        Assert.assertTrue("name matches", "X12".equals(_femaleSocket.getName()));
+        assertEquals( "X12", _femaleSocket.getName(), "name matches");
 
         // Only letters is OK
         _femaleSocket.setName("Xyz");
-        Assert.assertTrue("name matches", "Xyz".equals(_femaleSocket.getName()));
+        assertEquals( "Xyz", _femaleSocket.getName(), "name matches");
 
         // Both letters and digits in random order is OK as long as the first
         // character is a letter
         _femaleSocket.setName("X1b2c3Y");
-        Assert.assertTrue("name matches", "X1b2c3Y".equals(_femaleSocket.getName()));
+        assertEquals( "X1b2c3Y", _femaleSocket.getName(), "name matches");
 
         // Underscore is also a valid letter
         _femaleSocket.setName("X1b2___c3Y");
-        Assert.assertTrue("name matches", "X1b2___c3Y".equals(_femaleSocket.getName()));
+        assertEquals( "X1b2___c3Y", _femaleSocket.getName(), "name matches");
 
         // The name must start with a letter, not a digit
-        Assert.assertTrue("exception is thrown", setName_verifyException("123", "the name is not valid: 123"));
+        assertTrue( setName_verifyException("123", "the name is not valid: 123"));
 
         // The name must not contain any spaces
-        Assert.assertTrue("exception is thrown", setName_verifyException(" A123", "the name is not valid:  A123"));
-        Assert.assertTrue("exception is thrown", setName_verifyException("A1 23", "the name is not valid: A1 23"));
-        Assert.assertTrue("exception is thrown", setName_verifyException("A123 ", "the name is not valid: A123 "));
+        assertTrue( setName_verifyException(" A123", "the name is not valid:  A123"), "exception is thrown");
+        assertTrue( setName_verifyException("A1 23", "the name is not valid: A1 23"), "exception is thrown");
+        assertTrue( setName_verifyException("A123 ", "the name is not valid: A123 "), "exception is thrown");
 
         // The name must not contain any character that's not a letter nor a digit
-        Assert.assertTrue("exception is thrown", setName_verifyException("A12!3", "the name is not valid: A12!3"));
-        Assert.assertTrue("exception is thrown", setName_verifyException("A+123", "the name is not valid: A+123"));
-        Assert.assertTrue("exception is thrown", setName_verifyException("=A123", "the name is not valid: =A123"));
-        Assert.assertTrue("exception is thrown", setName_verifyException("A12*3", "the name is not valid: A12*3"));
-        Assert.assertTrue("exception is thrown", setName_verifyException("A123/", "the name is not valid: A123/"));
-        Assert.assertTrue("exception is thrown", setName_verifyException("A12(3", "the name is not valid: A12(3"));
-        Assert.assertTrue("exception is thrown", setName_verifyException("A12)3", "the name is not valid: A12)3"));
-        Assert.assertTrue("exception is thrown", setName_verifyException("A12[3", "the name is not valid: A12[3"));
-        Assert.assertTrue("exception is thrown", setName_verifyException("A12]3", "the name is not valid: A12]3"));
-        Assert.assertTrue("exception is thrown", setName_verifyException("A12{3", "the name is not valid: A12{3"));
-        Assert.assertTrue("exception is thrown", setName_verifyException("A12}3", "the name is not valid: A12}3"));
+        assertTrue( setName_verifyException("A12!3", "the name is not valid: A12!3"), "exception is thrown");
+        assertTrue( setName_verifyException("A+123", "the name is not valid: A+123"), "exception is thrown");
+        assertTrue( setName_verifyException("=A123", "the name is not valid: =A123"), "exception is thrown");
+        assertTrue( setName_verifyException("A12*3", "the name is not valid: A12*3"), "exception is thrown");
+        assertTrue( setName_verifyException("A123/", "the name is not valid: A123/"), "exception is thrown");
+        assertTrue( setName_verifyException("A12(3", "the name is not valid: A12(3"), "exception is thrown");
+        assertTrue( setName_verifyException("A12)3", "the name is not valid: A12)3"), "exception is thrown");
+        assertTrue( setName_verifyException("A12[3", "the name is not valid: A12[3"), "exception is thrown");
+        assertTrue( setName_verifyException("A12]3", "the name is not valid: A12]3"), "exception is thrown");
+        assertTrue( setName_verifyException("A12{3", "the name is not valid: A12{3"), "exception is thrown");
+        assertTrue( setName_verifyException("A12}3", "the name is not valid: A12}3"), "exception is thrown");
     }
 
     @Test
     public void testDisposeWithoutChild() {
         _femaleSocket.dispose();
-        Assert.assertFalse("socket not connected", _femaleSocket.isConnected());
+        assertFalse( _femaleSocket.isConnected(), "socket not connected");
     }
 
     @Test
     public void testDisposeWithChild() throws SocketAlreadyConnectedException {
-        Assert.assertFalse("socket not connected", _femaleSocket.isConnected());
+        assertFalse( _femaleSocket.isConnected(), "socket not connected");
         _femaleSocket.connect(maleSocket);
-        Assert.assertTrue("socket is connected", _femaleSocket.isConnected());
+        assertTrue( _femaleSocket.isConnected(), "socket is connected");
         _femaleSocket.dispose();
-        Assert.assertFalse("socket not connected", _femaleSocket.isConnected());
+        assertFalse( _femaleSocket.isConnected(), "socket not connected");
     }
 
     @Test
     public void testMethodsThatAreNotSupported() {
-        errorFlag.set(false);
-        try {
-            _femaleSocket.printTree((PrintWriter)null, "", new MutableInt(0));
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class, () ->
+            _femaleSocket.printTree((PrintWriter)null, "", new MutableInt(0)),
+                "method not supported");
+        assertNotNull(ex);
 
-        errorFlag.set(false);
-        try {
-            _femaleSocket.printTree((Locale)null, (PrintWriter)null, "", new MutableInt(0));
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
+        ex = assertThrows( UnsupportedOperationException.class, () ->
+            _femaleSocket.printTree((Locale)null, (PrintWriter)null, "", new MutableInt(0)),
+                "method not supported");
+        assertNotNull(ex);
 
-        errorFlag.set(false);
-        try {
-            _femaleSocket.getCategory();
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
+        ex = assertThrows( UnsupportedOperationException.class, () ->
+            _femaleSocket.getCategory(),
+                "method not supported");
+        assertNotNull(ex);
 
-        errorFlag.set(false);
-        try {
-            _femaleSocket.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
+        ex = assertThrows( UnsupportedOperationException.class, () ->
+            _femaleSocket.getChild(0),
+                "method not supported");
+        assertNotNull(ex);
 
-        errorFlag.set(false);
-        try {
-            _femaleSocket.getChildCount();
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
+        ex = assertThrows( UnsupportedOperationException.class, () ->
+            _femaleSocket.getChildCount(),
+                "method not supported");
+        assertNotNull(ex);
 
-        errorFlag.set(false);
-        try {
-            _femaleSocket.getUserName();
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
+        ex = assertThrows( UnsupportedOperationException.class, () ->
+            _femaleSocket.getUserName(),
+                "method not supported");
+        assertNotNull(ex);
 
-        errorFlag.set(false);
-        try {
-            _femaleSocket.setUserName("aaa");
-        } catch (UnsupportedOperationException ex) {
-            errorFlag.set(true);
-        }
-        Assert.assertTrue("method not supported", errorFlag.get());
+        ex = assertThrows( UnsupportedOperationException.class, () ->
+            _femaleSocket.setUserName("aaa"),
+                "method not supported");
+        assertNotNull(ex);
+
     }
 
     @Test
+    @DisabledIfHeadless
     public void testCategory() {
-        org.junit.Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+
         JDialog dialog = new JDialog();
 
         // Test that the classes method getCategory() returns the same value as
@@ -427,7 +387,8 @@ public abstract class FemaleSocketTestBase {
                 iface.setJDialog(dialog);
                 iface.getConfigPanel(new JPanel());
                 Base obj = iface.createNewObject(iface.getAutoSystemName(), null);
-                Assert.assertEquals("category is correct for "+((MaleSocket)obj).getObject().getClass().getName(), entry.getKey(), obj.getCategory());
+                assertEquals( entry.getKey(), obj.getCategory(),
+                    "category is correct for "+((MaleSocket)obj).getObject().getClass().getName());
 //                Assert.assertEquals("category is correct for "+obj.getShortDescription(), entry.getKey(), obj.getCategory());
             }
         }
@@ -442,19 +403,19 @@ public abstract class FemaleSocketTestBase {
             for (Class<? extends Base> clazz : entry.getValue()) {
                 // The class SwingToolsTest does not have a swing configurator
                 SwingConfiguratorInterface iface = SwingTools.getSwingConfiguratorForClass(clazz);
-                Assert.assertEquals("example system name is correct for "+clazz,
-                        NameValidity.VALID,
-                        getManager().validSystemNameFormat(iface.getExampleSystemName()));
-                Assert.assertEquals("auto system name is correct for "+clazz,
-                        NameValidity.VALID,
-                        getManager().validSystemNameFormat(iface.getAutoSystemName()));
+                assertEquals( NameValidity.VALID,
+                        getManager().validSystemNameFormat(iface.getExampleSystemName()),
+                        "example system name is correct for "+clazz);
+                assertEquals( NameValidity.VALID,
+                        getManager().validSystemNameFormat(iface.getAutoSystemName()),
+                        "auto system name is correct for "+clazz);
             }
         }
     }
 
 
 
-    private class IncompatibleMaleSocket implements MaleSocket {
+    private static class IncompatibleMaleSocket implements MaleSocket {
 
         @Override
         public void setEnabled(boolean enable) {

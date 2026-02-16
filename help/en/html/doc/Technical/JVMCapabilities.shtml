@@ -353,6 +353,14 @@
 
         <tr>
           <td>
+            Java 17 is the technical baseline for the JUnit 6 testing framework.
+          </td>
+          <td>17</td>
+          <td>17</td>
+        </tr>
+
+        <tr>
+          <td>
             The sun.misc package is replaced by jdk.internal.misc, access
             to which requires the use of the module system.
             (JMRI only uses sun.misc.Signal, which is not yet
@@ -933,9 +941,7 @@
         </tbody>
       </table>
 
-      <a id="jdk17">
-      <a id="compatibilty">
-      <h2>Running JMRI 5 on Java 17 or later</h2>
+      <h2>Running JMRI 5 on Java 21 or later</h2>
       There are some issues when using JMRI
       on Java versions later than the required Java 11.
       Specifically, for JMRI 5 these include:
@@ -954,12 +960,12 @@
             Rhino doesn't yet provide full access to the JMRI Java classes.
         <li>The Java module system will in certain circumstances emit a large
             number of "access violation" messages to the log.  These are just advisory
-            with Java 17, but will become mandatory failures in some
+            with Java 21, but will become mandatory failures in some
             version after Java 21.
         <li>(Developers only) Deprecations that are marked for removal
             generate un-suppressible compilation messages in Java 21.
             These will need to be cleaned up before the references
-            are removed in some version after Java 21.
+            are removed in some Java version after Java 21.
       </ol>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->

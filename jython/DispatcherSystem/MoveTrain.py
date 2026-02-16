@@ -131,7 +131,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print strindex + "train_name", train_name, "trains", trains
             if self.logLevel > 0: print strindex + "************Not Moving Train************"
             return
-        if self.logLevel > 1: print strindex + "train" , train
+        if self.logLevel > 1: print strindex + "train" , train, "train_name", train_name
         penultimate_block_name = train["penultimate_block_name"]
         if self.logLevel > 1: print strindex + "penultimate_block_name" , penultimate_block_name
         previous_edge = train["edge"]
@@ -221,7 +221,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 # move_between_stations
                 if self.logLevel > 0: print strindex + "previous transit_direction ", transit_direction
                 if self.logLevel > 0: print strindex + "setting direction iterno", iter
-                [train["direction"], transit_instruction] = self.set_direction(previous_block, current_block, next_block, transit_direction, self.index)    # get the new train_direction_from
+                [train["direction"], transit_instruction] = self.set_direction(train, previous_block, current_block, next_block, transit_direction, self.index)    # get the new train_direction_from
                 transit_direction = train["direction"]
                 # need to store if we change direction in case we have to redo the command
                 if transit_direction != previous_direction_from:
@@ -297,8 +297,8 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print strindex + "removed from trains_dispatched", str(trains_dispatched)
         if self.logLevel > 0: print strindex + "&&&&&&&&&&&&&&&&& end move_between_stations &&&&&&&&&&&&&&&&&", self.index
 
-    def set_direction(self, previous_block, current_block, next_block, previous_direction_from, index = 0):
-        global train
+    def set_direction(self, train, previous_block, current_block, next_block, previous_direction_from, index = 0):
+        # global train
         strindex = str(index) + " " * 10   #make debugging easier to understand by indenting
         if self.logLevel > 2: print "set_direction1: previous_direction_from", previous_direction_from
 
@@ -501,8 +501,6 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             return True
         else:
             return False
-
-
 
     def wait_till_train_stops_dispatching(self, train_name, index = 0):
         strindex = str(index) + " " * 10   #make debugging easier to understand by indenting
@@ -795,7 +793,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         self.trainInfo.setStopBySpeedProfileAdjust(stopbyspeedprofileadjust)
 
         # setMinReliableOperatingSpeed
-        percentage = 0.0
+        percentage = 10.0
         self.trainInfo.setMinReliableOperatingSpeed(percentage/100)
 
         # set wait for block to be clear before running transit
@@ -1149,10 +1147,9 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         opt4 = "modify existing trains"
         #opt4 = "reset trains"
         action = self.od.customQuestionMessage4str(msg, title, opt1, opt2, opt3, opt4)
-        #msg = "choose"
-        #actions = ["setup 1 train","setup several trains", "check/swap train direction", "reset trains"]
-        #action = self.od.List(msg, actions)
-        if action == "1 train":
+        if self.od.CLOSED_OPTION == True: #check of optionbox was closed prematurely
+            pass
+        elif action == "1 train":
             # print "trains_allocated", trains_allocated
             # msg = "choose"
             # actions = ["setup 1 train","setup 2+ trains"]
@@ -1319,15 +1316,14 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def set_length(self, new_train_name):
 
-        # jim = "{:.2f}".format( num )
-        # print "jim", jim
+        if new_train_name is None: return
 
         title = "Set the length of the engine/train"
         # msg = str(fred)
         request = "Change"
         while request == "Change":
             [engine,current_length] = self.get_train_length(new_train_name)
-
+            if current_length == None: return
             # print "current_length3", current_length
             # current_length is an integer, and is set to a default of 10 scale metres
             gauge = WarrantPreferences.getDefault().getLayoutScale()
@@ -1586,6 +1582,8 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             train["train_name"] = train_name
         else:
             #train_name = self.get_train_name()
+            train = trains[train_name]
+            train["train_name"] = train_name
             self.set_train_in_block(station_block_name, train_name)
 
         # 2) set the last traversed edge to the edge going into the siding
@@ -1629,8 +1627,8 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 
 
         # 4) add to allocated train list
-        if str(train_name) not in trains_allocated:
-            trains_allocated.append(str(train_name))
+        # if str(train_name) not in trains_allocated:
+        #     trains_allocated.append(str(train_name))
 
         [engine,current_length] = self.get_train_length(train_name)  #get the engine name
         engine.setLength(str(train_length))    # save the length provided in the parameter
@@ -2303,7 +2301,7 @@ class createandshowGUI(TableModelListener):
                 train_direction = "reverse"
             else:
                 train_direction = "forward"
-            if self.logLevel > 3: print "train_direction", train_direction
+            if self.logLevel > 3: print "train_name", train_name,"train_direction", train_direction
 
             if train_name != "" and train_name != None and block_name != "" and block_name != None:
                 if train_name not in trains_allocated:

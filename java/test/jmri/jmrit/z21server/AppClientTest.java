@@ -5,7 +5,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -24,7 +23,7 @@ public class AppClientTest {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
-        Assert.assertNotNull("exists", s );
+        Assertions.assertNotNull( s, "exists" );
     }
 
     @BeforeEach

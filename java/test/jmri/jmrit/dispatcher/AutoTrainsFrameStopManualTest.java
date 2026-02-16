@@ -10,15 +10,16 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalMastManager;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.dispatcher.TaskAllocateRelease.TaskAction;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
@@ -37,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * At the end it "reverses" back to beginning, so its in forward gear, going reverse thru the transit.
  *
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@DisabledIfHeadless
 public class AutoTrainsFrameStopManualTest {
 
     // Only one aat at a time
@@ -48,8 +49,8 @@ public class AutoTrainsFrameStopManualTest {
     @Test
     public void testTaskAllocateRelease() {
         TaskAllocateRelease t = new TaskAllocateRelease(TaskAction.SCAN_REQUESTS);
-        Assert.assertNotNull(t);
-        Assert.assertEquals(TaskAction.SCAN_REQUESTS, t.getAction());
+        Assertions.assertNotNull(t);
+        Assertions.assertEquals(TaskAction.SCAN_REQUESTS, t.getAction());
     }
 
     private static void increaseWaitForStep() {
@@ -58,7 +59,7 @@ public class AutoTrainsFrameStopManualTest {
 
     @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
     @Test
-    public void testToManual() throws Exception {
+    public void testToManual() throws JmriConfigureXmlException {
          jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
         // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
@@ -105,7 +106,7 @@ public class AutoTrainsFrameStopManualTest {
         },"Allocated sections should be 2");
 
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("South To West").getAspect().equals("Approach");
+            return "Approach".equals(smm.provideSignalMast("South To West").getAspect());
         }, "Signal South To West now Approach");
         // test train runs in reverse, then fwd
         assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
@@ -204,7 +205,7 @@ public class AutoTrainsFrameStopManualTest {
         // Now move train into next section. It will immediately reverse
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Occ West Block"), Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> {
-            return smm.provideSignalMast("South To West").getAspect().equals("Stop");
+            return "Stop".equals(smm.provideSignalMast("South To West").getAspect());
         }, "Signal South To West now Stop");
 
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("Occ South Block"), Sensor.INACTIVE);
@@ -337,30 +338,28 @@ public class AutoTrainsFrameStopManualTest {
     private static Path outPathWarrentPreferences = null;
 
     @BeforeAll
-    public static void doOnce() throws Exception {
+    public static void doOnce() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetFileUtilSupport();
         // set up users files in temp tst area
         outBaseTrainInfo = new File(FileUtil.getUserFilesPath(), "dispatcher/traininfo");
         outBaseSignal = new File(FileUtil.getUserFilesPath(), "signal");
-        try {
-            FileUtil.createDirectory(outBaseTrainInfo);
-            {
-                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
-                        "SMLStopManualAuto.xml").toPath();
-                outPathTrainInfo1 = new File(outBaseTrainInfo, "SMLStopManualAuto.xml").toPath();
-                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
-            }
-            FileUtil.createDirectory(outBaseSignal);
-            {
-                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/signal"),
-                        "WarrantPreferences.xml").toPath();
-                outPathWarrentPreferences = new File(outBaseSignal, "WarrantPreferences.xml").toPath();
-                Files.copy(inPath, outPathWarrentPreferences, StandardCopyOption.REPLACE_EXISTING);
-            }
-        } catch (IOException e) {
-            throw e;
+
+        FileUtil.createDirectory(outBaseTrainInfo);
+        {
+            Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                    "SMLStopManualAuto.xml").toPath();
+            outPathTrainInfo1 = new File(outBaseTrainInfo, "SMLStopManualAuto.xml").toPath();
+            Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
         }
+        FileUtil.createDirectory(outBaseSignal);
+        {
+            Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/signal"),
+                    "WarrantPreferences.xml").toPath();
+            outPathWarrentPreferences = new File(outBaseSignal, "WarrantPreferences.xml").toPath();
+            Files.copy(inPath, outPathWarrentPreferences, StandardCopyOption.REPLACE_EXISTING);
+        }
+
     }
 
     @AfterAll
@@ -378,7 +377,7 @@ public class AutoTrainsFrameStopManualTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetFileUtilSupport();
         JUnitUtil.resetProfileManager();
@@ -392,7 +391,7 @@ public class AutoTrainsFrameStopManualTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.resetFileUtilSupport();

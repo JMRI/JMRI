@@ -1,5 +1,14 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
@@ -16,10 +25,9 @@ import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test LastResultOfDigitalExpression
@@ -92,63 +100,54 @@ public class LastResultOfDigitalExpressionTest extends AbstractDigitalExpression
     @Test
     public void testCtor() throws JmriException {
         LastResultOfDigitalExpression expression2;
-        Assert.assertNotNull("light is not null", light);
+        assertNotNull( light, "light is not null");
         light.setState(Light.ON);
         expressionLightSocket.evaluate();
 
         expression2 = new LastResultOfDigitalExpression("IQDE321", null);
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Last result of digital expression \"''\"", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
+        assertEquals( "Last result of digital expression \"''\"", expression2.getLongDescription(),
+                "String matches");
 
         expression2 = new LastResultOfDigitalExpression("IQDE321", "My expr");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My expr", expression2.getUserName());
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My expr", expression2.getUserName(), "Username matches");
         expression2.getSelectNamedBean().setNamedBean(expressionLightSocket);
-        Assert.assertEquals("String matches", "Last result of digital expression \"My other expression\"", expression2.getLongDescription());
+        assertEquals( "Last result of digital expression \"My other expression\"",
+                expression2.getLongDescription(), "String matches");
 
         expression2 = new LastResultOfDigitalExpression("IQDE321", null);
         expression2.getSelectNamedBean().setNamedBean(expressionLightSocket);
-        Assert.assertEquals(expressionLightSocket, expression2.getSelectNamedBean().getNamedBean().getBean());
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
+        assertEquals(expressionLightSocket, expression2.getSelectNamedBean().getNamedBean().getBean());
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
 
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            new LastResultOfDigitalExpression("IQE55:12:XY11", null);
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () -> {
+            var t = new LastResultOfDigitalExpression("IQE55:12:XY11", null);
+            fail("Should have thrown, created " + t);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            new LastResultOfDigitalExpression("IQE55:12:XY11", "A name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows( IllegalArgumentException.class, () -> {
+            var t = new LastResultOfDigitalExpression("IQE55:12:XY11", "A name");
+            fail("Should have thrown, created " + t);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == lastResultOfDigitalExpression.getChildCount());
+        assertEquals( 0, lastResultOfDigitalExpression.getChildCount(), "getChildCount() returns 0");
 
-        boolean hasThrown = false;
-        try {
-            lastResultOfDigitalExpression.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class, () ->
+            lastResultOfDigitalExpression.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertEquals("Category matches", LogixNG_Category.OTHER, _base.getCategory());
+        assertEquals( LogixNG_Category.OTHER, _base.getCategory(), "Category matches");
     }
 
     @Test
@@ -157,10 +156,10 @@ public class LastResultOfDigitalExpressionTest extends AbstractDigitalExpression
         conditionalNG.setEnabled(false);
 
         lastResultOfDigitalExpression.getSelectNamedBean().removeNamedBean();
-        Assert.assertEquals("Last result of digital expression", lastResultOfDigitalExpression.getShortDescription());
-        Assert.assertEquals("Last result of digital expression \"''\"", lastResultOfDigitalExpression.getLongDescription());
+        assertEquals("Last result of digital expression", lastResultOfDigitalExpression.getShortDescription());
+        assertEquals("Last result of digital expression \"''\"", lastResultOfDigitalExpression.getLongDescription());
         lastResultOfDigitalExpression.getSelectNamedBean().setNamedBean(expressionLightSocket);
-        Assert.assertEquals("Last result of digital expression \"My other expression\"", lastResultOfDigitalExpression.getLongDescription());
+        assertEquals("Last result of digital expression \"My other expression\"", lastResultOfDigitalExpression.getLongDescription());
     }
 
     @Test
@@ -168,15 +167,15 @@ public class LastResultOfDigitalExpressionTest extends AbstractDigitalExpression
         // Turn light off
         light.setCommandedState(Light.OFF);
         expressionLightSocket.evaluate();
-        Assert.assertFalse(lastResultOfDigitalExpression.evaluate());
+        assertFalse(lastResultOfDigitalExpression.evaluate());
         // Turn the light on
         light.setCommandedState(Light.ON);
         expressionLightSocket.evaluate();
-        Assert.assertTrue(lastResultOfDigitalExpression.evaluate());
+        assertTrue(lastResultOfDigitalExpression.evaluate());
         // Turn the light off
         light.setCommandedState(Light.OFF);
         expressionLightSocket.evaluate();
-        Assert.assertFalse(lastResultOfDigitalExpression.evaluate());
+        assertFalse(lastResultOfDigitalExpression.evaluate());
     }
 
     @Test
@@ -184,14 +183,17 @@ public class LastResultOfDigitalExpressionTest extends AbstractDigitalExpression
         lastResultOfDigitalExpression.unregisterListeners();
 
         Light otherLight = InstanceManager.getDefault(LightManager.class).provide("IL99");
-        Assert.assertNotEquals("Lights are different", otherLight, lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean().getBean());
+        assertNotEquals( otherLight, lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean().getBean(),
+                "Lights are different");
         lastResultOfDigitalExpression.getSelectNamedBean().setNamedBean(expressionLightSocket);
-        Assert.assertEquals("Expressions are equal", expressionLightSocket, lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( expressionLightSocket, lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean().getBean(),
+                "Expressions are equal");
 
         lastResultOfDigitalExpression.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull("Expression is null", lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean());
+        assertNull( lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean(), "Expression is null");
         lastResultOfDigitalExpression.getSelectNamedBean().setNamedBean(expressionLightSocket);
-        Assert.assertEquals("Expressions are equal", expressionLightSocket, lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals( expressionLightSocket, lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean().getBean(),
+                "Expressions are equal");
     }
 
     @Test
@@ -200,13 +202,14 @@ public class LastResultOfDigitalExpressionTest extends AbstractDigitalExpression
         conditionalNG.setEnabled(false);
 
         lastResultOfDigitalExpression.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull("light handle is null", lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean());
+        assertNull( lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean(),
+                "light handle is null");
 
         lastResultOfDigitalExpression.getSelectNamedBean().setNamedBean(expressionLightSocket);
-        Assert.assertEquals(expressionLightSocket, lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals(expressionLightSocket, lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean().getBean());
 
         lastResultOfDigitalExpression.getSelectNamedBean().removeNamedBean();
-        Assert.assertNull(lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean());
+        assertNull(lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean());
     }
 
     @Test
@@ -222,10 +225,10 @@ public class LastResultOfDigitalExpressionTest extends AbstractDigitalExpression
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
 
-        Assert.assertNotNull(expressionLightSocket);
+        assertNotNull(expressionLightSocket);
 
-        Assert.assertNotNull(expressionOtherLightSocket);
-        Assert.assertNotEquals(expressionLightSocket, expressionOtherLightSocket);
+        assertNotNull(expressionOtherLightSocket);
+        assertNotEquals(expressionLightSocket, expressionOtherLightSocket);
 
         // Test vetoableChange() for some other propery
         lastResultOfDigitalExpression.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
@@ -239,21 +242,18 @@ public class LastResultOfDigitalExpressionTest extends AbstractDigitalExpression
         lastResultOfDigitalExpression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", expressionOtherLightSocket, null));
 
         // Test vetoableChange() for its own light
-        boolean thrown = false;
-        try {
-            lastResultOfDigitalExpression.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", expressionLightSocket, null));
-        } catch (PropertyVetoException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        PropertyVetoException ex = assertThrows( PropertyVetoException.class, () ->
+            lastResultOfDigitalExpression.getSelectNamedBean().vetoableChange(
+                new PropertyChangeEvent(this, "CanDelete", expressionLightSocket, null)),
+                "Expected exception thrown");
+        assertNotNull(ex);
 
-        Assert.assertEquals(expressionLightSocket, lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean().getBean());
+        assertEquals(expressionLightSocket, lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean().getBean());
         lastResultOfDigitalExpression.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", expressionLightSocket, null));
-        Assert.assertNull(lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean());
+        assertNull(lastResultOfDigitalExpression.getSelectNamedBean().getNamedBean());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, JmriException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -314,12 +314,12 @@ public class LastResultOfDigitalExpressionTest extends AbstractDigitalExpression
         light.setCommandedState(Light.ON);
         expressionLightSocket.evaluate();
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

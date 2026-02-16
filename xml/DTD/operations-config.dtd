@@ -18,7 +18,7 @@
  | manifestLogo | buildOptions | buildReport | owner | iconColor | options 
  | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
  | missingCarFormat | tab | manifest | columnFormat | manifestFormat | vsd | reporters | switchList
- | switchListPickupCarFormat | switchListDropCarFormat | switchListLocalFormat 
+ | switchListPickupCarFormat | switchListDropCarFormat | switchListLocalFormat | dayNameMapping
  | pageOrientation | CATS | router | logger | manifestFileOptions | comments | display | headerLines)*>
  
 <!ELEMENT railRoad EMPTY>
@@ -56,6 +56,8 @@
 <!ELEMENT router EMPTY>
 <!ELEMENT logger EMPTY>
 <!ELEMENT CATS EMPTY>
+<!ELEMENT dayNameMapping (map)*>
+<!ELEMENT map (name | day)*>
 <!ELEMENT comments EMPTY>
 <!ELEMENT display EMPTY>
 <!ELEMENT headerLines EMPTY>
@@ -142,6 +144,8 @@
 
 <!ATTLIST buildOptions aggressive					(true | false ) "false">
 <!ATTLIST buildOptions numberPasses					CDATA #IMPLIED>
+<!ATTLIST buildOptions onTime						(true | false ) "false">
+<!ATTLIST buildOptions dwellTime					CDATA #IMPLIED>
 <!ATTLIST buildOptions allowLocalInterchange		(true | false ) "false">
 <!ATTLIST buildOptions allowLocalSpur				(true | false ) "false">
 <!-- next 1 for backward compatibility -->
@@ -234,6 +238,10 @@
 <!ATTLIST CATS exactLocationName		CDATA #IMPLIED> 
 
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
+
+<!ATTLIST dayNameMapping map		CDATA #IMPLIED>
+<!ATTLIST map day					CDATA #IMPLIED>
+<!ATTLIST map name					CDATA #IMPLIED>
 
 <!ATTLIST display showTrackMoves		(true | false ) "false">
 <!ATTLIST display showClones			(true | false ) "true">
@@ -389,7 +397,7 @@
 <!ATTLIST switchListTrack text			CDATA #IMPLIED>
 <!ATTLIST holdCar text					CDATA #IMPLIED>
 
-<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions | printOptions | speedHpt | display)*>
+<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions | printOptions | speedHpt | display | days)*>
 
 <!ELEMENT backwardCompatibility EMPTY>
 <!ATTLIST backwardCompatibility saveUsingPre_2013_Format	(true | false ) "false">
@@ -437,3 +445,6 @@
 
 <!ELEMENT speedHpt EMPTY>
 <!ATTLIST speedHpt MPH CDATA #IMPLIED>
+
+<!ELEMENT days EMPTY>
+<!ATTLIST days length CDATA #IMPLIED>

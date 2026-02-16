@@ -20,8 +20,6 @@ import jmri.jmrit.logixng.util.parser.*;
 import jmri.script.ScriptEngineSelector;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
 /**
@@ -203,7 +201,6 @@ public class JythonDefinedFunctionsTest extends AbstractDigitalActionTestBase {
         super.testMaleSocketIsActive();
     }
 
-    @Before
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, ParserException, ScriptException, JmriException {
         JUnitUtil.setUp();
@@ -254,7 +251,6 @@ public class JythonDefinedFunctionsTest extends AbstractDigitalActionTestBase {
         _logixNG.setEnabled(false);
     }
 
-    @After
     @AfterEach
     public void tearDown() {
         _logixNG.setEnabled(false);

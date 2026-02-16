@@ -407,6 +407,10 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
     public List<T> getByRfidList() {
         return getByList(getByIdList(), BY_RFID);
     }
+    
+    public List<T> getByPickupList() {
+        return getByList(getByDestinationList(), BY_PICKUP);
+    }
 
     /**
      * Get a list of all rolling stock sorted last date used
@@ -417,18 +421,14 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
         return getByList(getByIdList(), BY_LAST);
     }
     
+    public List<T> getByLastDateReversedList() {
+        List<T> out = getByLastDateList();
+        Collections.reverse(out);
+        return out;
+    } 
+    
     public List<T> getByCommentList() {
         return getByList(getByIdList(), BY_COMMENT);
-    }
-
-    /**
-     * Sort a specific list of rolling stock last date used
-     *
-     * @param inList list of rolling stock to sort.
-     * @return list of RollingStock ordered by last date
-     */
-    public List<T> getByLastDateList(List<T> inList) {
-        return getByList(inList, BY_LAST);
     }
 
     protected List<T> getByList(List<T> sortIn, int attribute) {
@@ -453,7 +453,8 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
     protected static final int BY_VALUE = 11;
     protected static final int BY_LAST = 12;
     protected static final int BY_BLOCKING = 13;
-    protected static final int BY_COMMENT = 14;
+    private static final int BY_PICKUP = 14;
+    protected static final int BY_COMMENT = 15;
 
     protected java.util.Comparator<T> getComparator(int attribute) {
         switch (attribute) {
@@ -488,6 +489,8 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
                 return (r1, r2) -> (r1.getLastMoveDate().compareTo(r2.getLastMoveDate()));
             case BY_BLOCKING:
                 return (r1, r2) -> (r1.getBlocking() - r2.getBlocking());
+            case BY_PICKUP:
+                return (r1, r2) -> (r1.getPickupTime().compareToIgnoreCase(r2.getPickupTime()));
             case BY_COMMENT:
                 return (r1, r2) -> (r1.getComment().compareToIgnoreCase(r2.getComment()));
             default:
@@ -616,6 +619,103 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
             out.add(rs);
         });
         return out;
+    }
+    
+    /**
+     * Returns the rolling stock's last clone if there's one.
+     * 
+     * @param rs The rolling stock searching for a clone
+     * @return Returns the rolling stock's last clone, null if there isn't a
+     *         clone.
+     */
+    public T getClone(RollingStock rs) {
+        List<T> list = getByLastDateReversedList();
+        // clone with the highest creation number will be first in this list
+        for (T clone : list) {
+            if (clone.isClone() &&
+                    clone.getDestinationTrack() == rs.getTrack() &&
+                    clone.getRoadName().equals(rs.getRoadName()) &&
+                    clone.getNumber().split(RollingStock.CLONE_REGEX)[0].equals(rs.getNumber())) {
+                return clone;
+            }
+        }
+        return null; // no clone for this rolling stock
+    }
+
+    int cloneCreationOrder = 0;
+
+    /**
+     * Returns the highest clone creation order given to a clone.
+     * 
+     * @return 1 if the first clone created, otherwise the highest found plus
+     *         one. Automatically increments.
+     */
+    private int getCloneCreationOrder() {
+        if (cloneCreationOrder == 0) {
+            for (RollingStock rs : getList()) {
+                if (rs.isClone()) {
+                    String[] number = rs.getNumber().split(RollingStock.CLONE_REGEX);
+                    int creationOrder = Integer.parseInt(number[1]);
+                    if (creationOrder > cloneCreationOrder) {
+                        cloneCreationOrder = creationOrder;
+                    }
+                }
+            }
+        }
+        return ++cloneCreationOrder;
+    }
+    
+    /**
+     * Creates a clone of rolling stock and places it at the rolling stocks location and track.
+     * @param rs the rolling stock requesting a clone
+     * @return the clone of the rolling stock
+     */
+    protected T createClone(RollingStock rs) {
+        int cloneCreationOrder = getCloneCreationOrder();
+        return createClone(rs, cloneCreationOrder);
+    }
+    
+    protected T createClone(RollingStock rs, int cloneCreationOrder) {
+        @SuppressWarnings("unchecked")
+        T clone = (T) rs.copy();
+        clone.setNumber(rs.getNumber() + RollingStock.CLONE + padNumber(cloneCreationOrder));
+        clone.setClone(true);
+        clone.setMoves(rs.getMoves());
+        // register car before setting location so the car gets logged
+        register(clone);
+        clone.setLocation(rs.getLocation(), rs.getTrack(), RollingStock.FORCE);
+        rs.setCloneOrder(cloneCreationOrder); // for reset
+        return clone;
+    }
+    
+    /**
+     * Moves the rolling stock to the clone's destination track
+     * @param rs rolling stock to be moved
+     * @param track the destination track for the clone
+     * @param train the train that will transport the clone
+     * @param startTime when the rolling stock was moved
+     * @param clone the clone being transported by the train
+     */
+    protected void finshCreateClone(RollingStock rs, Track track, Train train, Date startTime, RollingStock clone) {
+        rs.setMoves(rs.getMoves() + 1); // bump count
+        rs.setLocation(track.getLocation(), track, RollingStock.FORCE);
+        rs.setLastTrain(train);
+        rs.setLastLocationId(clone.getLocationId());
+        rs.setLastTrackId(clone.getTrackId());
+        rs.setLastRouteId(train.getRoute().getId());
+        // this rs was moved during the build process
+        rs.setLastDate(startTime);
+        rs.setDestination(null, null);
+    }
+
+    /**
+     * Pads the number to 4 digits for sorting purposes
+     * 
+     * @param n the number needed leading zeros
+     * @return String "number" with leading zeros if necessary
+     */
+    protected String padNumber(int n) {
+        return String.format("%04d", n);
     }
 
     @Override

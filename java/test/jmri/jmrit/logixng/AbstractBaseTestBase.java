@@ -1,5 +1,15 @@
 package jmri.jmrit.logixng;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.beans.PropertyChangeEvent;
 import java.io.StringWriter;
 import java.io.PrintWriter;
@@ -15,8 +25,7 @@ import jmri.jmrit.logixng.implementation.AbstractBase;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test AbstractAnalogExpression
@@ -25,7 +34,7 @@ import org.junit.Test;
  */
 public abstract class AbstractBaseTestBase {
 
-    public final String TREE_INDENT = "   ";
+    final static String TREE_INDENT = "   ";
     protected Base _base;
     protected MaleSocket _baseMaleSocket;
     protected LogixNG_Category _category;
@@ -74,33 +83,30 @@ public abstract class AbstractBaseTestBase {
 
     @Test
     public void testGetConditionalNG() {
-        if (getConditionalNG() == null) {
-            log.warn("Method getConditionalNG() returns null for class {}", this.getClass().getName());
-            log.error("Method getConditionalNG() returns null for class {}", this.getClass().getName());
-        }
-        Assert.assertTrue("ConditionalNG is equal", getConditionalNG() == _base.getConditionalNG());
+        assertNotNull( getConditionalNG(),
+            () -> "Method getConditionalNG() returns null for class "+ this.getClass().getName());
+        assertSame( getConditionalNG(), _base.getConditionalNG(), "ConditionalNG is equal");
 
         _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
-        Assert.assertNull("ConditionalNG is null", _base.getConditionalNG());
+        assertNull( _base.getConditionalNG(), "ConditionalNG is null");
     }
 
     @Test
     public void testGetLogixNG() {
-        if (getLogixNG() == null) {
-            log.warn("Method getLogixNG() returns null for class {}", this.getClass().getName());
-        }
-        Assert.assertTrue("LogixNG is equal", getLogixNG() == _base.getLogixNG());
+        assertNotNull( getLogixNG(),
+            () -> "Method getLogixNG() returns null for class "+ this.getClass().getName());
+        assertSame( getLogixNG(), _base.getLogixNG(), "LogixNG is equal");
 
         _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
-        Assert.assertNull("LogixNG is null", _base.getLogixNG());
+        assertNull( _base.getLogixNG(), "LogixNG is null");
     }
 
     @Test
     public void testMaleSocketGetConditionalNG() {
-        Assert.assertTrue("conditionalNG is equal",
-                _base.getConditionalNG() == _baseMaleSocket.getConditionalNG());
+        assertSame( _base.getConditionalNG(), _baseMaleSocket.getConditionalNG(),
+            "conditionalNG is equal");
 //        _base.getConditionalNG().setEnabled(false);
 //        _base.setParent(null);
 //        Assert.assertTrue("conditionalNG is equal",
@@ -109,8 +115,8 @@ public abstract class AbstractBaseTestBase {
 
     @Test
     public void testMaleSocketGetLogixNG() {
-        Assert.assertTrue("logixNG is equal",
-                _base.getLogixNG() == _baseMaleSocket.getLogixNG());
+        assertSame( _base.getLogixNG(), _baseMaleSocket.getLogixNG(),
+            "logixNG is equal");
 //        _base.getConditionalNG().setEnabled(false);
 //        _base.setParent(null);
 //        Assert.assertTrue("logixNG is equal",
@@ -119,125 +125,56 @@ public abstract class AbstractBaseTestBase {
 
     @Test
     public void testMaleSocketGetRoot() {
-        Assert.assertTrue("root is equal", _base.getRoot() == _baseMaleSocket.getRoot());
+        assertSame( _base.getRoot(), _baseMaleSocket.getRoot(), "root is equal");
         _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
-        Assert.assertTrue("root is equal", _base.getRoot() == _baseMaleSocket.getRoot());
+        assertSame( _base.getRoot(), _baseMaleSocket.getRoot(), "root is equal");
     }
 
     @Test
     public void testGetParent() {
-        Assert.assertTrue("Object of _baseMaleSocket is _base", _base == getLastMaleSocket(_baseMaleSocket).getObject());
-        Assert.assertTrue("Parent of _base is _baseMaleSocket", _base.getParent() == getLastMaleSocket(_baseMaleSocket));
+        assertSame( _base, getLastMaleSocket(_baseMaleSocket).getObject(), "Object of _baseMaleSocket is _base");
+        assertSame( _base.getParent(), getLastMaleSocket(_baseMaleSocket), "Parent of _base is _baseMaleSocket");
     }
 
     @Test
     public void testFemaleSocketSystemName() {
         for (int i=0; i < _base.getChildCount(); i++) {
-            Assert.assertEquals(_base.getSystemName(), _base.getChild(i).getSystemName());
+            assertEquals(_base.getSystemName(), _base.getChild(i).getSystemName());
         }
     }
 
-    /*.*
-     * Set parent to null for all children to item, and their children.
-     *./
-    private void clearParent(Base item) {
-        for (int i=0; i < item.getChildCount(); i++) {
-            FemaleSocket femaleSocket = item.getChild(i);
-            femaleSocket.setParent(null);
-
-            if (femaleSocket.isConnected()) {
-                clearParent(femaleSocket.getConnectedSocket());
-            }
-        }
-    }
-
-    /*.*
-     * Check that parent is correct for all children to item, and their children.
-     *./
-    private void checkParent(Base item) {
-        for (int i=0; i < item.getChildCount(); i++) {
-            FemaleSocket femaleSocket = item.getChild(i);
-            if (item != femaleSocket.getParent()) {
-                log.error("item: {}, {} - parent: {}, {}", item, item.getClass().getName(), femaleSocket.getParent(), femaleSocket.getParent().getClass().getName());
-            }
-            Assert.assertTrue("parent is correct", item == femaleSocket.getParent());
-
-            if (femaleSocket.isConnected()) {
-                MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
-
-                if (femaleSocket != connectedSocket.getParent()) {
-                    log.error("femaleSocket: {}, {} - parent: {}, {} - child: {}, {}", femaleSocket, femaleSocket.getClass().getName(), connectedSocket.getParent(), connectedSocket.getParent().getClass().getName(), connectedSocket, connectedSocket.getClass().getName());
-                }
-                Assert.assertTrue("parent is correct", femaleSocket == connectedSocket.getParent());
-                checkParent(connectedSocket);
-            }
-        }
-    }
-
-    /*.*
-     * Test that the method setParentForAllChildren() works when there are
-     * connected children.
-     *./
-    @Test
-    public void testSetParentForAllChildren_WithConnectedChildren() {
-        _base.getConditionalNG().setEnabled(false);
-        clearParent(_base);     // Parent can't be set to null for AbstractFemaleSocket
-        _base.setParentForAllChildren();
-        checkParent(_base);
-    }
-
-    /*.*
-     * Test that the method setParentForAllChildren() works when there are
-     * no connected children.
-     *./
-    @Test
-    public void testSetParentForAllChildren_WithoutConnectedChildren() {
-        _base.getConditionalNG().setEnabled(false);
-        clearParent(_base);     // Parent can't be set to null for AbstractFemaleSocket
-        for (int i=0; i < _base.getChildCount(); i++) {
-            FemaleSocket femaleSocket = _base.getChild(i);
-            femaleSocket.disconnect();
-        }
-        _base.setParentForAllChildren();
-        checkParent(_base);
-    }
-*/
     /**
      * Returns the expected result of _base.printTree(writer, TREE_INDENT)
      * @return the expected printed tree
      */
     public abstract String getExpectedPrintedTree();
 
-//    @Ignore
     @Test
     public void testGetPrintTree() {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT, new MutableInt(0));
-        Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
+        assertEquals( getExpectedPrintedTree(), stringWriter.toString(), "Tree is equal");
     }
 
-//    @Ignore
     @Test
     public void testMaleSocketGetPrintTree() {
         /// Test that the male socket of the item prints the same tree
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT, new MutableInt(0));
-        Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
+        assertEquals( getExpectedPrintedTree(), stringWriter.toString(), "Tree is equal");
     }
 
-//    @Ignore
     @Test
     public void testGetPrintTreeWithStandardLocale() {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _baseMaleSocket.printTree(printWriter, TREE_INDENT, new MutableInt(0));
-        Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
+        assertEquals( getExpectedPrintedTree(), stringWriter.toString(), "Tree is equal");
     }
 
-//    @Ignore
     @Test
     public void testMaleSocketGetPrintTreeWithStandardLocale() {
         Locale oldLocale = Locale.getDefault();
@@ -245,7 +182,7 @@ public abstract class AbstractBaseTestBase {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _baseMaleSocket.printTree(printWriter, TREE_INDENT, new MutableInt(0));
-        Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
+        assertEquals( getExpectedPrintedTree(), stringWriter.toString(), "Tree is equal");
         Locale.setDefault(oldLocale);
     }
 
@@ -255,13 +192,12 @@ public abstract class AbstractBaseTestBase {
      */
     public abstract String getExpectedPrintedTreeFromRoot();
 
-//    @Ignore
     @Test
     public void testGetPrintTreeFromRoot() {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _base.getRoot().printTree(Locale.ENGLISH, printWriter, TREE_INDENT, new MutableInt(0));
-        Assert.assertEquals("Tree is equal", getExpectedPrintedTreeFromRoot(), stringWriter.toString());
+        assertEquals( getExpectedPrintedTreeFromRoot(), stringWriter.toString(), "Tree is equal");
     }
 
     @Test
@@ -283,25 +219,15 @@ public abstract class AbstractBaseTestBase {
         stringWriter = new StringWriter();
         printWriter = new PrintWriter(stringWriter);
 
-        Assert.assertTrue(copy != null);
+        assertNotNull(copy );
 
         copy.printTree(Locale.ENGLISH, printWriter, TREE_INDENT, new MutableInt(0));
         String copyTree = stringWriter.toString();
 
-        if (! originalTree.equals(copyTree)) {
-            System.out.format("---------------------%n%nOriginal tree:%n%s%n---------------------%n%nCopy tree:%n%s%n---------------------%n%n", originalTree, copyTree);
-        }
-
-        // REMOVE LATER!!!!!!!!
-        // REMOVE LATER!!!!!!!!
-        // REMOVE LATER!!!!!!!!
-//        Assume.assumeTrue(originalTree.equals(copyTree));
-        // REMOVE LATER!!!!!!!!
-        // REMOVE LATER!!!!!!!!
-        // REMOVE LATER!!!!!!!!
-
-        Assert.assertEquals("Tree is equal", originalTree, copyTree);
-
+        assertEquals( originalTree, copyTree,
+            () -> "Tree should be equal --------------------" +
+                String.format("-%n%nOriginal tree:%n%s%n---------------------%n%nCopy tree:%n%s%n---------------------%n%n",
+                    originalTree, copyTree)    );
 
         // Test that we can give the copied items new system names and user names
 
@@ -335,60 +261,55 @@ public abstract class AbstractBaseTestBase {
         });
 
         for (int i=0; i < originalList.size(); i++) {
-            Assert.assertEquals(copyList.get(i).getSystemName(),
+            assertEquals(copyList.get(i).getSystemName(),
                     systemNames.get(originalList.get(i).getSystemName()));
 
-            Assert.assertEquals(copyList.get(i).getUserName(),
+            assertEquals(copyList.get(i).getUserName(),
                     userNames.get(originalList.get(i).getSystemName()));
 
-            Assert.assertEquals(copyList.get(i).getComment(),
+            assertEquals(copyList.get(i).getComment(),
                     comments.get(originalList.get(i).getSystemName()));
         }
     }
 
     @Test
     public void testIsActive() {
-        Assert.assertEquals(_base.getParent(), getLastMaleSocket(_baseMaleSocket));
+        assertEquals(_base.getParent(), getLastMaleSocket(_baseMaleSocket));
 
-        Assert.assertTrue("_base is active", _base.isActive());
+        assertTrue( _base.isActive(), "_base is active");
         _baseMaleSocket.setEnabled(false);
-        Assert.assertFalse("_base is not active", _base.isActive());
+        assertFalse( _base.isActive(), "_base is not active");
         _baseMaleSocket.setEnabled(true);
-        Assert.assertTrue("_base is active", _base.isActive());
+        assertTrue( _base.isActive(), "_base is active");
 
-        Assert.assertTrue(_base.isActive());
+        assertTrue(_base.isActive());
         ConditionalNG conditionalNG = _base.getConditionalNG();
-        if (conditionalNG != null) {
-            conditionalNG.setEnabled(false);
-            Assert.assertFalse("_base is not active", _base.isActive());
-            conditionalNG.setEnabled(true);
-        } else {
-            log.error("_base has no ConditionalNG as ancestor");
-        }
+        assertNotNull( conditionalNG, "_base has no ConditionalNG as ancestor");
+        conditionalNG.setEnabled(false);
+        assertFalse( _base.isActive(), "_base is not active");
+        conditionalNG.setEnabled(true);
 
-        Assert.assertTrue("_base is active", _base.isActive());
+
+        assertTrue( _base.isActive(), "_base is active");
         LogixNG logixNG = _base.getLogixNG();
-        if (logixNG != null) {
-            logixNG.setEnabled(false);
-            Assert.assertFalse("_base is not active", _base.isActive());
-            logixNG.setEnabled(true);
-            Assert.assertTrue("_base is active", _base.isActive());
-        } else {
-            log.error("_base has no LogixNG as ancestor");
-        }
+        assertNotNull( logixNG, "_base has no LogixNG as ancestor");
+        logixNG.setEnabled(false);
+        assertFalse( _base.isActive(), "_base is not active");
+        logixNG.setEnabled(true);
+        assertTrue( _base.isActive(), "_base is active");
 
-        Assert.assertTrue("_base is active", _base.isActive());
+        assertTrue( _base.isActive(), "_base is active");
         _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
-        Assert.assertTrue("_base is active", _base.isActive());
+        assertTrue( _base.isActive(), "_base is active");
     }
 
     @Test
     public void testMaleSocketIsActive() {
         _baseMaleSocket.setEnabled(false);
-        Assert.assertFalse("_baseMaleSocket is not active", _baseMaleSocket.isActive());
+        assertFalse( _baseMaleSocket.isActive(), "_baseMaleSocket is not active");
         _baseMaleSocket.setEnabled(true);
-        Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
+        assertTrue( _baseMaleSocket.isActive(), "_baseMaleSocket is active");
 
         Base parent = _baseMaleSocket.getParent();
         while ((parent != null) && !(parent instanceof MaleSocket)) {
@@ -396,58 +317,52 @@ public abstract class AbstractBaseTestBase {
         }
         if (parent != null) {
             ((MaleSocket)parent).setEnabled(false);
-            Assert.assertFalse("_baseMaleSocket is not active", _baseMaleSocket.isActive());
+            assertFalse( _baseMaleSocket.isActive(), "_baseMaleSocket is not active");
             ((MaleSocket)parent).setEnabled(true);
         }
 
-        Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
+        assertTrue( _baseMaleSocket.isActive(), "_baseMaleSocket is active");
         ConditionalNG conditionalNG = _baseMaleSocket.getConditionalNG();
-        if (conditionalNG != null) {
-            conditionalNG.setEnabled(false);
-            Assert.assertFalse("_baseMaleSocket is not active", _baseMaleSocket.isActive());
-            conditionalNG.setEnabled(true);
-        } else {
-            log.error("_base has no ConditionalNG as ancestor");
-        }
+        assertNotNull( conditionalNG, "_base has no ConditionalNG as ancestor");
+        conditionalNG.setEnabled(false);
+        assertFalse( _baseMaleSocket.isActive(), "_baseMaleSocket is not active");
+        conditionalNG.setEnabled(true);
 
-        Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
+        assertTrue( _baseMaleSocket.isActive(), "_baseMaleSocket is active");
         LogixNG logixNG = _baseMaleSocket.getLogixNG();
-        if (logixNG != null) {
-            logixNG.setEnabled(false);
-            Assert.assertFalse("_baseMaleSocket is not active", _baseMaleSocket.isActive());
-            logixNG.setEnabled(true);
-            Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
-        } else {
-            log.error("_base has no LogixNG as ancestor");
-        }
+        assertNotNull( logixNG, "_base has no LogixNG as ancestor");
+        logixNG.setEnabled(false);
+        assertFalse( _baseMaleSocket.isActive(), "_baseMaleSocket is not active");
+        logixNG.setEnabled(true);
+        assertTrue( _baseMaleSocket.isActive(), "_baseMaleSocket is active");
 
-        Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
+        assertTrue( _baseMaleSocket.isActive(), "_baseMaleSocket is active");
         _base.getConditionalNG().setEnabled(false);
         _baseMaleSocket.setParent(null);
-        Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
+        assertTrue( _baseMaleSocket.isActive(), "_baseMaleSocket is active");
     }
 
     @Test
     public void testConstants() {
-        Assert.assertTrue("String matches", "ChildCount".equals(Base.PROPERTY_CHILD_COUNT));
-        Assert.assertTrue("String matches", "SocketConnected".equals(Base.PROPERTY_SOCKET_CONNECTED));
-        Assert.assertEquals("integer matches", 0x02, Base.SOCKET_CONNECTED);
-        Assert.assertEquals("integer matches", 0x04, Base.SOCKET_DISCONNECTED);
+        assertTrue( "ChildCount".equals(Base.PROPERTY_CHILD_COUNT), "String matches");
+        assertTrue( "SocketConnected".equals(Base.PROPERTY_SOCKET_CONNECTED), "String matches 2");
+        assertEquals( 0x02, Base.SOCKET_CONNECTED, "integer matches");
+        assertEquals( 0x04, Base.SOCKET_DISCONNECTED, "integer matches 2");
     }
 
     @Test
     public void testNames() {
-        Assert.assertNotNull("system name not null", _base.getSystemName());
-        Assert.assertFalse("system name is not empty string", _base.getSystemName().isEmpty());
+        assertNotNull( _base.getSystemName(), "system name not null");
+        assertFalse( _base.getSystemName().isEmpty(), "system name is not empty string");
 
         _base.setUserName("One user name");
-        Assert.assertTrue("User name matches", "One user name".equals(_base.getUserName()));
+        assertTrue( "One user name".equals(_base.getUserName()), "User name matches");
         _base.setUserName("Another user name");
-        Assert.assertTrue("User name matches", "Another user name".equals(_base.getUserName()));
+        assertTrue( "Another user name".equals(_base.getUserName()), "User name matches");
         _base.setUserName(null);
-        Assert.assertNull("User name matches", _base.getUserName());
+        assertNull( _base.getUserName(), "User name matches");
         _base.setUserName("One user name");
-        Assert.assertTrue("User name matches", "One user name".equals(_base.getUserName()));
+        assertTrue( "One user name".equals(_base.getUserName()), "User name matches");
     }
 
     @Test
@@ -455,17 +370,17 @@ public abstract class AbstractBaseTestBase {
         _base.getConditionalNG().setEnabled(false);
         MyBase a = new MyBase();
         _base.setParent(null);
-        Assert.assertNull("Parent matches", _base.getParent());
+        assertNull( _base.getParent(), "Parent matches");
         _base.setParent(a);
-        Assert.assertTrue("Parent matches", a == _base.getParent());
+        assertSame( a, _base.getParent(), "Parent matches");
         _base.setParent(null);
-        Assert.assertNull("Parent matches", _base.getParent());
+        assertNull( _base.getParent(), "Parent matches");
     }
 
     @Test
     public void testIsEnabled() {
         MyBase a = new MyBase();
-        Assert.assertTrue("isEnabled() returns true by default", a.isEnabled());
+        assertTrue( a.isEnabled(), "isEnabled() returns true by default");
     }
 
     @Test
@@ -480,30 +395,29 @@ public abstract class AbstractBaseTestBase {
         // is to ensure that all the other tests behave as they should.
         // If a test want to test with runOnGUIDelayed true, that test can
         // set runOnGUIDelayed to true.
-        Assert.assertFalse("runOnGUIDelayed is false",
-                _base.getConditionalNG().getRunDelayed());
+        assertFalse( _base.getConditionalNG().getRunDelayed(),
+            "runOnGUIDelayed is false");
     }
 
     @Test
     public void testChildAndChildCount() {
-        Assert.assertEquals("childCount is equal", _base.getChildCount(), _baseMaleSocket.getChildCount());
+        assertEquals( _base.getChildCount(), _baseMaleSocket.getChildCount(), "childCount is equal");
         for (int i=0; i < _base.getChildCount(); i++) {
-            Assert.assertTrue("child is equal", _base.getChild(i) == _baseMaleSocket.getChild(i));
+            assertSame( _base.getChild(i), _baseMaleSocket.getChild(i), "child is equal");
         }
     }
 
     @Test
     public void testBeanType() {
-        Assert.assertEquals("getbeanType() is equal",
-                ((NamedBean)_base).getBeanType(),
-                ((NamedBean)_baseMaleSocket).getBeanType());
+        assertEquals( ((NamedBean)_base).getBeanType(),
+            ((NamedBean)_baseMaleSocket).getBeanType(), "getbeanType() is equal");
     }
 
     @Test
     public void testDescribeState() {
-        Assert.assertEquals("description matches",
-                "Unknown",
-                ((NamedBean)_baseMaleSocket).describeState(NamedBean.UNKNOWN));
+        assertEquals( "Unknown",
+                ((NamedBean)_baseMaleSocket).describeState(NamedBean.UNKNOWN),
+                "description matches");
     }
 
     @Test
@@ -521,462 +435,19 @@ public abstract class AbstractBaseTestBase {
         _baseMaleSocket.setEnabled(false);
 
         // Some item doesn't support adding new sockets.
-        // Return if the item under test doesn't.
-        if (!addNewSocket()) return;
+        // End here if the item under test doesn't.
+        org.junit.Assume.assumeTrue( "Item doesn't support adding new sockets", addNewSocket());
 
-        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
-        Assert.assertEquals(Base.PROPERTY_CHILD_COUNT, ar.get().getPropertyName());
-        Assert.assertTrue(ar.get().getNewValue() instanceof List);
+        assertTrue( ab.get(), "PropertyChangeEvent fired");
+        assertEquals(Base.PROPERTY_CHILD_COUNT, ar.get().getPropertyName());
+        assertInstanceOf( List.class, ar.get().getNewValue());
         List<?> list = (List<?>)ar.get().getNewValue();
         for (Object o : list) {
-            Assert.assertTrue(o instanceof FemaleSocket);
-        }
-    }
-/*
-    @Test
-    public void testRemoveChild() {
-        AtomicBoolean ab = new AtomicBoolean(false);
-
-        _base.addPropertyChangeListener((PropertyChangeEvent evt) -> {
-            ab.set(true);
-        });
-
-        for (int i=_base.getChildCount()-1; i > 0; i--) {
-            ab.set(true);
-            boolean hasThrown = false;
-
-            try {
-                _base.removeChild(i);
-            } catch (UnsupportedOperationException e) {
-                hasThrown = true;
-                Assert.assertEquals("Correct error message",
-                        "Child "+Integer.toString(i)+" cannot be removed",
-                        e.getMessage());
-            }
-
-            if (_base.canRemoveChild(i)) {
-                Assert.assertTrue("PropertyChange is fired", ab.get());
-            } else {
-                Assert.assertTrue("Exception is thrown", hasThrown);
-            }
-        }
-    }
-/*
-    private void connect(FemaleSocket femaleSocket, MaleSocket maleSocket) throws SocketAlreadyConnectedException {
-        if (femaleSocket.isConnected()) femaleSocket.disconnect();
-        femaleSocket.connect(maleSocket);
-    }
-
-    private PropertyChangeListener getPropertyChangeListener(String name, AtomicBoolean flag, Object expectedNewValue) {
-        return (PropertyChangeEvent evt) -> {
-            if (name.equals(evt.getPropertyName())) {
-                Assert.assertTrue("socket is correct", expectedNewValue == evt.getNewValue());
-                flag.set(true);
-            }
-        };
-    }
-
-    private void assertListeners(
-            PropertyChangeListener lc,
-            PropertyChangeListener ld,
-            boolean expectManagerListener,
-            boolean expectConnectedListener,
-            boolean expectDisconnectedListener) {
-
-        boolean hasManagerListener = false;
-        boolean hasConnectedListener = false;
-        boolean hasDisconnectedListener = false;
-        for (PropertyChangeListener l : ((NamedBean)_baseMaleSocket).getPropertyChangeListeners()) {
-            if (l instanceof jmri.Manager) hasManagerListener = true;
-            else if (l == lc) hasConnectedListener = true;
-            else if (l == ld) hasDisconnectedListener = true;
-            else Assert.fail("getPropertyChangeListeners() returns unknown listener: " + l.toString());
-        }
-        if (expectManagerListener) {
-            Assert.assertTrue("getPropertyChangeListeners() has manager listener", hasManagerListener);
-        } else {
-            Assert.assertFalse("getPropertyChangeListeners() has not manager listener", hasManagerListener);
-        }
-        if (expectConnectedListener) {
-            Assert.assertTrue("getPropertyChangeListeners() has connected listener", hasConnectedListener);
-        } else {
-            Assert.assertFalse("getPropertyChangeListeners() has not connected listener", hasConnectedListener);
-        }
-        if (expectDisconnectedListener) {
-            Assert.assertTrue("getPropertyChangeListeners() has disconnected listener", hasDisconnectedListener);
-        } else {
-            Assert.assertFalse("getPropertyChangeListeners() has not disconnected listener", hasDisconnectedListener);
+            assertInstanceOf( FemaleSocket.class, o);
         }
     }
 
-    // This method is needet to test property change methods which only listen
-    // to a particular property, since these property change listeners uses a
-    // proxy listener.
-    private void assertListeners(
-            String propertyName,
-            FemaleSocket child,
-            AtomicBoolean flag,
-            boolean expectedResult) {
-
-        // Check that we have the expected listener
-        PropertyChangeListener[] listeners =
-                ((NamedBean)_baseMaleSocket).getPropertyChangeListeners(propertyName);
-
-        if (expectedResult) {
-            Assert.assertEquals("num property change listeners matches",
-                    1, listeners.length);
-        } else {
-            Assert.assertEquals("num property change listeners matches",
-                    0, listeners.length);
-            return;
-        }
-
-        // If here, we expect success.
-
-        // We call propertyChange to check that it's the correct listener we have
-        flag.set(false);
-        listeners[0].propertyChange(new PropertyChangeEvent(this, propertyName, null, child));
-        Assert.assertTrue("flag is set", flag.get());
-        Assert.assertTrue("getPropertyChangeListeners("+propertyName+") has listener", flag.get());
-    }
-
-
-
-/*
-    Note: PROPERTY_SOCKET_CONNECTED and PROPERTY_SOCKET_DISCONNECTED has been
-    moved to FemaleSocket.
-
-
-    // Test these methods:
-    // * addPropertyChangeListener(PropertyChangeListener l)
-    // * removePropertyChangeListener(PropertyChangeListener l)
-    // * getNumPropertyChangeListeners()
-    // * getPropertyChangeListeners()
-    @Test
-    public void testPropertyChangeListener1() throws SocketAlreadyConnectedException {
-        // We need at least one child to do this test.
-        // Some item doesn't have children.
-        // Return if the item under test doesn't.
-        if (_base.getChildCount() == 0) return;
-
-        _baseMaleSocket.setEnabled(false);
-
-        MaleSocket maleSocket = getConnectableChild();
-
-        FemaleSocket child = _base.getChild(0);
-
-        AtomicBoolean flagConnected = new AtomicBoolean();
-        PropertyChangeListener lc =
-                getPropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, flagConnected, child);
-
-        AtomicBoolean flagDisconnected = new AtomicBoolean();
-        PropertyChangeListener ld =
-                getPropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, flagDisconnected, child);
-
-        // Note that AbstractManager.register() register itself as a
-        // PropertyChangeListener. Therefore we have one listener before
-        // adding our own listeners.
-        Assert.assertEquals("num property change listeners matches",
-                1, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
-        // Check that we have the expected listeners
-        assertListeners(lc, ld, true, false, false);
-
-        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(lc);
-        Assert.assertEquals("num property change listeners matches",
-                2, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
-        // Check that we have the expected listeners
-        assertListeners(lc, ld, true, true, false);
-
-        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(ld);
-        Assert.assertEquals("num property change listeners matches",
-                3, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
-        // Check that we have the expected listeners
-        assertListeners(lc, ld, true, true, true);
-
-        Assert.assertNull("listener ref is null", ((NamedBean)_baseMaleSocket).getListenerRef(lc));
-
-        // Connect shall do a firePropertyChange which will set the flag
-        flagConnected.set(false);
-        connect(child, maleSocket);
-        Assert.assertTrue("flag is set", flagConnected.get());
-
-        // Disconnect shall do a firePropertyChange which will set the flag
-        flagDisconnected.set(false);
-        _base.getChild(0).disconnect();
-        Assert.assertTrue("flag is set", flagDisconnected.get());
-
-        // Try to remove the listeners
-
-        // Check that we have the expected listeners
-        assertListeners(lc, ld, true, true, true);
-        ((NamedBean)_baseMaleSocket).removePropertyChangeListener(lc);
-
-        // Check that we have the expected listeners
-        assertListeners(lc, ld, true, false, true);
-        ((NamedBean)_baseMaleSocket).removePropertyChangeListener(ld);
-
-        // Check that we have the expected listeners
-        assertListeners(lc, ld, true, false, false);
-    }
-
-    // Test these methods:
-    // * addPropertyChangeListener(String propertyName, PropertyChangeListener l)
-    // * removePropertyChangeListener(String propertyName, PropertyChangeListener l)
-    // * getNumPropertyChangeListeners()
-    @Test
-    public void testPropertyChangeListener2() throws SocketAlreadyConnectedException {
-        // We need at least one child to do this test.
-        // Some item doesn't have children.
-        // Return if the item under test doesn't.
-        if (_base.getChildCount() == 0) return;
-
-        _baseMaleSocket.setEnabled(false);
-
-        MaleSocket maleSocket = getConnectableChild();
-
-        FemaleSocket child = _base.getChild(0);
-
-        AtomicBoolean flagConnected = new AtomicBoolean();
-        PropertyChangeListener lc =
-                getPropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, flagConnected, child);
-
-        AtomicBoolean flagDisconnected = new AtomicBoolean();
-        PropertyChangeListener ld =
-                getPropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, flagDisconnected, child);
-
-        // Note that AbstractManager.register() register itself as a
-        // PropertyChangeListener. Therefore we have one listener before
-        // adding our own listeners.
-        Assert.assertEquals("num property change listeners matches",
-                1, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
-        // Check that we have the expected listeners
-        assertListeners(lc, ld, true, false, false);
-
-        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, lc);
-        Assert.assertEquals("num property change listeners matches",
-                2, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
-
-        // Check that we have the expected listener
-        PropertyChangeListener[] listeners = ((NamedBean)_baseMaleSocket).getPropertyChangeListeners(Base.PROPERTY_SOCKET_CONNECTED);
-        Assert.assertEquals("num property change listeners matches",
-                1, listeners.length);
-
-        // We call propertyChange to check that it's the correct listener we have
-        flagConnected.set(false);
-        listeners[0].propertyChange(new PropertyChangeEvent(this, Base.PROPERTY_SOCKET_CONNECTED, null, child));
-        Assert.assertTrue("flag is set", flagConnected.get());
-
-        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, ld);
-        Assert.assertEquals("num property change listeners matches",
-                3, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
-
-        // Check that we have the expected listener
-        listeners = ((NamedBean)_baseMaleSocket).getPropertyChangeListeners(Base.PROPERTY_SOCKET_DISCONNECTED);
-        Assert.assertEquals("num property change listeners matches",
-                1, listeners.length);
-
-        // We call propertyChange to check that it's the correct listener we have
-        flagDisconnected.set(false);
-        listeners[0].propertyChange(new PropertyChangeEvent(this, Base.PROPERTY_SOCKET_DISCONNECTED, null, child));
-        Assert.assertTrue("flag is set", flagConnected.get());
-
-        Assert.assertNull("listener ref is null", ((NamedBean)_baseMaleSocket).getListenerRef(lc));
-
-        // Connect shall do a firePropertyChange which will set the flag
-        flagConnected.set(false);
-        connect(child, maleSocket);
-        Assert.assertTrue("flag is set", flagConnected.get());
-
-        // Disconnect shall do a firePropertyChange which will set the flag
-        flagDisconnected.set(false);
-        _base.getChild(0).disconnect();
-        Assert.assertTrue("flag is set", flagDisconnected.get());
-
-        // Try to remove the listeners
-
-        // Check that we have the expected listeners
-        assertListeners(Base.PROPERTY_SOCKET_CONNECTED, child, flagConnected, true);
-        assertListeners(Base.PROPERTY_SOCKET_DISCONNECTED, child, flagDisconnected, true);
-
-        // This should be ignored since the name doesn't match the listener
-        ((NamedBean)_baseMaleSocket).removePropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, lc);
-
-        // Check that we have the expected listeners
-        assertListeners(Base.PROPERTY_SOCKET_CONNECTED, child, flagConnected, true);
-        assertListeners(Base.PROPERTY_SOCKET_DISCONNECTED, child, flagDisconnected, true);
-
-        // This should work
-        ((NamedBean)_baseMaleSocket).removePropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, lc);
-
-        // Check that we have the expected listeners
-        assertListeners(Base.PROPERTY_SOCKET_CONNECTED, child, flagConnected, false);
-        assertListeners(Base.PROPERTY_SOCKET_DISCONNECTED, child, flagDisconnected, true);
-
-        // This should be ignored since the name doesn't match the listener
-        ((NamedBean)_baseMaleSocket).removePropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, ld);
-
-        // Check that we have the expected listeners
-        assertListeners(Base.PROPERTY_SOCKET_CONNECTED, child, flagConnected, false);
-        assertListeners(Base.PROPERTY_SOCKET_DISCONNECTED, child, flagDisconnected, true);
-
-        // This should work
-        ((NamedBean)_baseMaleSocket).removePropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, ld);
-
-        // Check that we have the expected listeners
-        assertListeners(Base.PROPERTY_SOCKET_CONNECTED, child, flagConnected, false);
-        assertListeners(Base.PROPERTY_SOCKET_DISCONNECTED, child, flagDisconnected, false);
-    }
-
-    // Test these methods:
-    // * addPropertyChangeListener(PropertyChangeListener l, String name, String listenerRef)
-    // * removePropertyChangeListener(PropertyChangeListener l, String name, String listenerRef)
-    // * getNumPropertyChangeListeners()
-    // * getPropertyChangeListeners()
-    @Test
-    public void testPropertyChangeListener3() throws SocketAlreadyConnectedException {
-        // We need at least one child to do this test.
-        // Some item doesn't have children.
-        // Return if the item under test doesn't.
-        if (_base.getChildCount() == 0) return;
-
-        _baseMaleSocket.setEnabled(false);
-
-        MaleSocket maleSocket = getConnectableChild();
-
-        FemaleSocket child = _base.getChild(0);
-
-        AtomicBoolean flagConnected = new AtomicBoolean();
-        PropertyChangeListener lc =
-                getPropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, flagConnected, child);
-
-        AtomicBoolean flagDisconnected = new AtomicBoolean();
-        PropertyChangeListener ld =
-                getPropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, flagDisconnected, child);
-
-        // Note that AbstractManager.register() register itself as a
-        // PropertyChangeListener. Therefore we have one listener before
-        // adding our own listeners.
-        Assert.assertEquals("num property change listeners matches",
-                1, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
-        // Check that we have the expected listeners
-        assertListeners(lc, ld, true, false, false);
-
-        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(lc, _baseMaleSocket.getSystemName(), "Connected listener");
-        Assert.assertEquals("num property change listeners matches",
-                2, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
-        // Check that we have the expected listeners
-        assertListeners(lc, ld, true, true, false);
-
-        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(ld, _baseMaleSocket.getSystemName(), "Disconnected listener");
-        Assert.assertEquals("num property change listeners matches",
-                3, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
-        // Check that we have the expected listeners
-        assertListeners(lc, ld, true, true, true);
-
-        Assert.assertEquals("listener ref is correct", "Connected listener", ((NamedBean)_baseMaleSocket).getListenerRef(lc));
-        Assert.assertEquals("listener ref is correct", "Disconnected listener", ((NamedBean)_baseMaleSocket).getListenerRef(ld));
-
-        // Connect shall do a firePropertyChange which will set the flag
-        flagConnected.set(false);
-        connect(child, maleSocket);
-        Assert.assertTrue("flag is set", flagConnected.get());
-
-        // Disconnect shall do a firePropertyChange which will set the flag
-        flagDisconnected.set(false);
-        _base.getChild(0).disconnect();
-        Assert.assertTrue("flag is set", flagDisconnected.get());
-    }
-
-    // Test these methods:
-    // * addPropertyChangeListener(String propertyName, PropertyChangeListener l, String name, String listenerRef)
-    // * removePropertyChangeListener(String propertyName, PropertyChangeListener l)
-    // * getNumPropertyChangeListeners()
-    @Test
-    public void testPropertyChangeListener4() throws SocketAlreadyConnectedException {
-        // We need at least one child to do this test.
-        // Some item doesn't have children.
-        // Return if the item under test doesn't.
-        if (_base.getChildCount() == 0) return;
-
-        _baseMaleSocket.setEnabled(false);
-
-        MaleSocket maleSocket = getConnectableChild();
-
-        FemaleSocket child = _base.getChild(0);
-
-        AtomicBoolean flagConnected = new AtomicBoolean();
-        PropertyChangeListener lc =
-                getPropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, flagConnected, child);
-
-        AtomicBoolean flagDisconnected = new AtomicBoolean();
-        PropertyChangeListener ld =
-                getPropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, flagDisconnected, child);
-
-        // Note that AbstractManager.register() register itself as a
-        // PropertyChangeListener. Therefore we have one listener before
-        // adding our own listeners.
-        Assert.assertEquals("num property change listeners matches",
-                1, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
-        // Check that we have the expected listeners
-        assertListeners(lc, ld, true, false, false);
-
-        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, lc, _baseMaleSocket.getSystemName(), "Connected listener");
-        Assert.assertEquals("num property change listeners matches",
-                2, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
-        // Check that we have the expected listeners
-//        assertListeners(lc, ld, true, true, false);
-
-        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, ld, _baseMaleSocket.getSystemName(), "Disconnected listener");
-        Assert.assertEquals("num property change listeners matches",
-                3, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
-        // Check that we have the expected listeners
-//        assertListeners(lc, ld, true, true, true);
-
-        Assert.assertEquals("listener ref is correct", "Connected listener", ((NamedBean)_baseMaleSocket).getListenerRef(lc));
-        Assert.assertEquals("listener ref is correct", "Disconnected listener", ((NamedBean)_baseMaleSocket).getListenerRef(ld));
-
-        // Connect shall do a firePropertyChange which will set the flag
-        flagConnected.set(false);
-        connect(child, maleSocket);
-        Assert.assertTrue("flag is set", flagConnected.get());
-
-        // Disconnect shall do a firePropertyChange which will set the flag
-        flagDisconnected.set(false);
-        _base.getChild(0).disconnect();
-        Assert.assertTrue("flag is set", flagDisconnected.get());
-    }
-
-    @Test
-    public void testPropertyChangeListeners5() {
-
-        PropertyChangeListener listener1 = (PropertyChangeEvent evt) -> {};
-        PropertyChangeListener listener2 = (PropertyChangeEvent evt) -> {};
-
-        _baseMaleSocket.addPropertyChangeListener(listener1, "BeanA", "A name");
-        _baseMaleSocket.addPropertyChangeListener(listener2, "BeanB", "Another name");
-        Assert.assertEquals("A name", _baseMaleSocket.getListenerRef(listener1));
-        List<String> listenerRefs = _baseMaleSocket.getListenerRefs();
-
-        // The order of the listener refs may differ between runs so sort the list
-        Collections.sort(listenerRefs);
-
-        String listString = listenerRefs.stream().map(Object::toString)
-                        .collect(Collectors.joining(", "));
-
-        Assert.assertEquals("A name, Another name", listString);
-
-        _baseMaleSocket.updateListenerRef(listener1, "New name");
-        Assert.assertEquals("New name", _baseMaleSocket.getListenerRef(listener1));
-
-        Assert.assertEquals(listener1,
-                _baseMaleSocket.getPropertyChangeListenersByReference("BeanA")[0]);
-
-        Assert.assertEquals(listener2,
-                _baseMaleSocket.getPropertyChangeListenersByReference("BeanB")[0]);
-    }
-*/
-
-    private class MyBase extends AbstractBase {
+    private static class MyBase extends AbstractBase {
 
         private MyBase() {
             super("IQ1");
@@ -1089,21 +560,18 @@ public abstract class AbstractBaseTestBase {
      * @param arraySize the size of the array
      */
     public void assertIndexOutOfBoundsException(RunnableWithIndex r, int index, int arraySize) {
-        boolean hasThrown = false;
-        try {
-            r.run(index);
-        } catch (IndexOutOfBoundsException ex) {
-            hasThrown = true;
-            String msg1 = String.format("Index: %d, Size: %d", index, arraySize);
-            String msg2 = String.format("Index %d out of bounds for length %d", index, arraySize);
-            if (!msg1.equals(ex.getMessage()) && !msg2.equals(ex.getMessage())) {
-                Assert.fail("Wrong error message: " + ex.getMessage());
-            }
+        IndexOutOfBoundsException ex = assertThrows( IndexOutOfBoundsException.class,
+            () -> r.run(index), "Exception is thrown");
+
+        String msg1 = String.format("Index: %d, Size: %d", index, arraySize);
+        String msg2 = String.format("Index %d out of bounds for length %d", index, arraySize);
+        if (!msg1.equals(ex.getMessage()) && !msg2.equals(ex.getMessage())) {
+            fail("Wrong error message: " + ex.getMessage());
         }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBaseTestBase.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBaseTestBase.class);
 
 }

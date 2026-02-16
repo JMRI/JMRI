@@ -82,8 +82,11 @@ import org.netbeans.jemmy.operators.*;
  * <p>
  * Note that memory managers and some others are completely internal, and will
  * be reset when you reset the instance manager.
+ * <p>
+ * Messages originating in this class are printed via System.err instead of
+ * being logged because this class doesn't assume logging has been initialized.
  *
- * @author Bob Jacobsen Copyright 2009, 2015
+ * @author Bob Jacobsen Copyright 2009, 2015, 2026
  * @since 2.5.3
  */
 public class JUnitUtil {
@@ -112,7 +115,7 @@ public class JUnitUtil {
      * during setUp().
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "MS_CANNOT_BE_FINAL",
-        justification = "value reset dueing setUp() ")
+        justification = "value reset during setUp() ")
     static public int WAITFOR_DELAY_STEP = DEFAULT_WAITFOR_DELAY_STEP;
 
     /**
@@ -132,7 +135,7 @@ public class JUnitUtil {
      * This value is always reset to {@value #DEFAULT_WAITFOR_MAX_DELAY} during setUp().
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "MS_CANNOT_BE_FINAL",
-        justification = "value reset dueing setUp() ")
+        justification = "value reset during setUp() ")
     static public int WAITFOR_MAX_DELAY = DEFAULT_WAITFOR_MAX_DELAY;
 
     /**
@@ -158,6 +161,14 @@ public class JUnitUtil {
      * Set from the jmri.util.JUnitUtil.checkSequenceDumpsStack environment variable.
      */
     static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
+
+    /**
+     * If true, will cause the checkSetUpTearDownSequence check to 
+     * fail the test in addition to logging.
+     * <p>
+     * Set from the jmri.util.JUnitUtil.checkSequenceFailsTest environment variable.
+     */
+    static boolean checkSequenceFailsTest =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceFailsTest"); // false unless set true
 
     /**
      * Announce any threads left behind after a test calls {@link #tearDown}
@@ -281,6 +292,9 @@ public class JUnitUtil {
                         for (StackTraceElement e : lastTearDownStackTrace) System.err.println("    at " + e);
                         System.err.println("----------------------");
                     }
+                    if (checkSequenceFailsTest) {
+                        Assertions.fail("setUp and tearDown did not match");
+                    }
                 }
 
                 didTearDown = false;
@@ -390,7 +404,7 @@ public class JUnitUtil {
         // Stop all LogixNG threads
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
 
-        // check that no LogixNG threads is still running
+        // check that no LogixNG threads are still running
         jmri.jmrit.logixng.util.LogixNG_Thread.assertLogixNGThreadNotRunning();
 
         // checking time?
@@ -475,7 +489,7 @@ public class JUnitUtil {
      *
      * @param condition condition being waited for
      * @param name      name of condition being waited for; will appear in
-     *                  Assert.fail if condition not true fast enough
+     *                  Assertions.fail if condition not true fast enough
      */
     public static void waitFor( @Nonnull ReleaseUntil condition, @Nonnull String name) {
         waitFor( condition, () -> name);
@@ -616,7 +630,7 @@ public class JUnitUtil {
      *
      * @param condition condition being waited for
      * @param name      name of condition being waited for; will appear in
-     *                  Assert.fail if condition not true fast enough
+     *                  Assertions.fail if condition not true fast enough
      */
     @SuppressFBWarnings("REC_CATCH_EXCEPTION")
     static public void fasterWaitFor(ReleaseUntil condition, String name) {
@@ -1183,30 +1197,32 @@ public class JUnitUtil {
     }
 
     /**
-     * Errors if the {@link jmri.ShutDownManager} was not left empty. Normally
-     * run as part of the default end-of-test code. Considered an error so that
-     * CI will flag these and tests will be improved.
+     * Fails test if the {@link jmri.ShutDownManager} was not left empty.
+     * Normally run as part of the default end-of-test code.
+     * Considered a failure so that the individual test can be identified.
      *
      * @see #clearShutDownManager()
      */
     public static void checkShutDownManager() {
-        if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
+        if (!  InstanceManager.containsDefault(ShutDownManager.class)) {
+            return; // not present, stop (don't create)
+        }
 
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
 
         List<Callable<Boolean>> callables = sm.getCallables();
         while (!callables.isEmpty()) {
             Callable<Boolean> callable = callables.get(0);
-            log.error("Test {} left registered shutdown callable of type {}", getTestClassName(), callable.getClass(),
-                        LoggingUtil.shortenStacktrace(new Exception("traceback")));
+            fail("Test " + getTestClassName() + " left registered shutdown callable of type "
+                + callable.getClass());
             sm.deregister(callable);
             callables = sm.getCallables(); // avoid ConcurrentModificationException
         }
         List<Runnable> runnables = sm.getRunnables();
         while (!runnables.isEmpty()) {
             Runnable runnable = runnables.get(0);
-            log.error("Test {} left registered shutdown runnable of type {}", getTestClassName(), runnable.getClass(),
-                        LoggingUtil.shortenStacktrace(new Exception("traceback")));
+            fail("Test " + getTestClassName() + " left registered shutdown runnable of type "
+                + runnable.getClass());
             sm.deregister(runnable);
             runnables = sm.getRunnables(); // avoid ConcurrentModificationException
         }
@@ -1218,7 +1234,7 @@ public class JUnitUtil {
             f.setAccessible(true);
             f.set(sm, false);
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            log.error("Failed to reset DefaultShutDownManager shuttingDown field", x);
+            fail("Failed to reset DefaultShutDownManager shuttingDown field", x);
         }
 
     }

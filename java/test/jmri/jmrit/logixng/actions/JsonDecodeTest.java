@@ -1,5 +1,10 @@
 package jmri.jmrit.logixng.actions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 
 import jmri.*;
@@ -8,10 +13,9 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test JsonDecode
@@ -118,36 +122,32 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
     @Test
     public void testCtor() {
         JsonDecode t = new JsonDecode("IQDA321", null);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
         t = new JsonDecode("IQDA321", null);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == _jsonDecode.getChildCount());
+        assertEquals( 0, _jsonDecode.getChildCount(), "getChildCount() returns 0");
 
-        boolean hasThrown = false;
-        try {
-            _jsonDecode.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class, () ->
+            _jsonDecode.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", LogixNG_Category.OTHER == _base.getCategory());
+        assertSame( LogixNG_Category.OTHER, _base.getCategory(), "Category matches");
     }
 
     @Test
     public void testDescription() {
         JsonDecode a1 = new JsonDecode("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Decode JSON", a1.getShortDescription());
+        assertEquals( "Decode JSON", a1.getShortDescription(), "strings are equal");
         JsonDecode a2 = new JsonDecode("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Decode JSON in variable null to variable null", a2.getLongDescription());
+        assertEquals( "Decode JSON in variable null to variable null",
+                a2.getLongDescription(), "strings are equal");
     }
 
     @Test
@@ -157,14 +157,14 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
         // Execute the LogixNG
         _logixNG.setEnabled(true);
 
-        Assert.assertEquals("com.fasterxml.jackson.databind.node.ObjectNode",
+        assertEquals("com.fasterxml.jackson.databind.node.ObjectNode",
                 _memoryResult.getValue().getClass().getName());
-        Assert.assertEquals("{\"id\":\"tk\",\"config\":{\"signature\":\"TK\",\"name\":\"Träkvista\",\"destinations\":2,\"destination\":{\"A\":{\"tracks\":1,\"type\":\"single\",\"single\":{\"id\":\"blo\",\"tracks\":1,\"exit\":\"B\",\"track\":\"left\",\"distance\":1,\"list\":[\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\"],\"signature\":\"BLO\",\"name\":\"Bilbo\",\"signalin\":\"22\",\"signalout\":\"U1\",\"blockout\":\"sa1\"}}},\"B\":[\"Something\"],\"C\":[1,2,3]}}",
+        assertEquals("{\"id\":\"tk\",\"config\":{\"signature\":\"TK\",\"name\":\"Träkvista\",\"destinations\":2,\"destination\":{\"A\":{\"tracks\":1,\"type\":\"single\",\"single\":{\"id\":\"blo\",\"tracks\":1,\"exit\":\"B\",\"track\":\"left\",\"distance\":1,\"list\":[\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\"],\"signature\":\"BLO\",\"name\":\"Bilbo\",\"signalin\":\"22\",\"signalout\":\"U1\",\"blockout\":\"sa1\"}}},\"B\":[\"Something\"],\"C\":[1,2,3]}}",
                 _memoryResult.getValue().toString());
 
-        Assert.assertEquals("java.lang.String",
+        assertEquals("java.lang.String",
                _memoryResult2.getValue().getClass().getName());
-        Assert.assertEquals("d",
+        assertEquals("d",
                 _memoryResult2.getValue().toString());
     }
 
@@ -182,8 +182,7 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
         super.testMaleSocketIsActive();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, ParserException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -242,7 +241,7 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
         _logixNG.setEnabled(false);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         _logixNG.setEnabled(false);
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

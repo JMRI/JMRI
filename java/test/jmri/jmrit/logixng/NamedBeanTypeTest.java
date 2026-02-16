@@ -1,13 +1,19 @@
 package jmri.jmrit.logixng;
 
-import java.beans.PropertyVetoException;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
  * Test NamedBeanType.
@@ -21,8 +27,12 @@ public class NamedBeanTypeTest {
         Map<Integer, Class<?>> classMap = new HashMap<>();
         Class<?>[] interfaces = managerClass.getInterfaces();
         for (Class<?> c : interfaces) {
-            if (Manager.class.equals(c)) continue;
-            if (ProvidingManager.class.equals(c)) continue;
+            if (Manager.class.equals(c)) {
+                continue;
+            }
+            if (ProvidingManager.class.equals(c)) {
+                continue;
+            }
 //            System.out.format("%s, %d%n", c.getName(), c.getInterfaces().length);
             if (Manager.class.isAssignableFrom(c)) {
                 classMap.put(c.getInterfaces().length, c);
@@ -74,30 +84,29 @@ public class NamedBeanTypeTest {
                 namedBeanName = InstanceManager.getDefault(GlobalVariableManager.class).getAutoSystemName();
             }
             namedBean = createBean.createBean(namedBeanName, namedBeanUserName);
-            Assert.assertNotNull("Manager: "+rootManagerClass.getName(), namedBean);
+            assertNotNull( namedBean, "Manager: "+rootManagerClass.getName());
 
-            try {
-                Assert.assertNotNull(namedBeanType.getManager().getBySystemName(namedBeanName));
-                Assert.assertNotNull(namedBeanType.getManager().getByUserName(namedBeanUserName));
-                Assert.assertNotNull(instanceManagerManager.getBySystemName(namedBeanName));
-                Assert.assertNotNull(instanceManagerManager.getByUserName(namedBeanUserName));
+
+            assertNotNull(namedBeanType.getManager().getBySystemName(namedBeanName));
+            assertNotNull(namedBeanType.getManager().getByUserName(namedBeanUserName));
+            assertNotNull(instanceManagerManager.getBySystemName(namedBeanName));
+            assertNotNull(instanceManagerManager.getByUserName(namedBeanUserName));
 
 //                deleteBean.deleteBean(namedBean, "CanDelete");
 
-                Assert.assertNotNull(namedBeanType.getManager().getBySystemName(namedBeanName));
-                Assert.assertNotNull(namedBeanType.getManager().getByUserName(namedBeanUserName));
-                Assert.assertNotNull(instanceManagerManager.getBySystemName(namedBeanName));
-                Assert.assertNotNull(instanceManagerManager.getByUserName(namedBeanUserName));
+            assertNotNull(namedBeanType.getManager().getBySystemName(namedBeanName));
+            assertNotNull(namedBeanType.getManager().getByUserName(namedBeanUserName));
+            assertNotNull(instanceManagerManager.getBySystemName(namedBeanName));
+            assertNotNull(instanceManagerManager.getByUserName(namedBeanUserName));
 
-                deleteBean.deleteBean(namedBean, "DoDelete");
+            assertDoesNotThrow( () -> deleteBean.deleteBean(namedBean, "DoDelete"),
+                "No exception expected: " + namedBeanType.getManager().getClass().getName());
 
-                Assert.assertNull(namedBeanType.getManager().getBySystemName(namedBeanName));
-                Assert.assertNull(namedBeanType.getManager().getByUserName(namedBeanUserName));
-                Assert.assertNull(instanceManagerManager.getBySystemName(namedBeanName));
-                Assert.assertNull(instanceManagerManager.getByUserName(namedBeanUserName));
-            } catch (PropertyVetoException e) {
-                Assert.fail("No exception expected: "+e.toString()+", "+namedBeanType.getManager().getClass().getName());
-            }
+            assertNull(namedBeanType.getManager().getBySystemName(namedBeanName));
+            assertNull(namedBeanType.getManager().getByUserName(namedBeanUserName));
+            assertNull(instanceManagerManager.getBySystemName(namedBeanName));
+            assertNull(instanceManagerManager.getByUserName(namedBeanUserName));
+
         }
 
 
@@ -108,7 +117,7 @@ public class NamedBeanTypeTest {
     public void testNamedBeanType() {
         Map<NamedBeanType, Class<?>> rootManagerClassMap = new HashMap<>();
 
-        Map<NamedBeanType, Manager<? extends NamedBean>> map = new HashMap<>();
+        // Map<NamedBeanType, Manager<? extends NamedBean>> map = new HashMap<>();
 
         Map<NamedBeanType, Manager<? extends NamedBean>> instanceManagerManagerMap = new HashMap<>();
 
@@ -117,10 +126,10 @@ public class NamedBeanTypeTest {
         setUp();
         setUp();
         for (NamedBeanType namedBeanType : NamedBeanType.values()) {
-            map.put(namedBeanType, namedBeanType.getManager());
+            // map.put(namedBeanType, namedBeanType.getManager());
 
             Class<?> rootManagerClass = getRootManagerClass(namedBeanType.getManager());
-            Assert.assertNotNull(rootManagerClass);
+            assertNotNull(rootManagerClass);
 
             rootManagerClassMap.put(namedBeanType, rootManagerClass);
 
@@ -130,12 +139,12 @@ public class NamedBeanTypeTest {
 //                    rootManagerClass.getName());
 
             Object instanceManagerManagerObj = InstanceManager.getDefault(rootManagerClass);
-            Assert.assertNotNull(instanceManagerManagerObj);
-            Assert.assertTrue(instanceManagerManagerObj instanceof Manager);
-            Manager<? extends NamedBean> instanceManagerManager = (Manager<? extends NamedBean>) instanceManagerManagerObj;
+            assertNotNull(instanceManagerManagerObj);
+            Manager<? extends NamedBean> instanceManagerManager =
+                assertInstanceOf( Manager.class, instanceManagerManagerObj);
             instanceManagerManagerMap.put(namedBeanType, instanceManagerManager);
 
-            Assert.assertEquals(instanceManagerManager, namedBeanType.getManager());
+            assertEquals(instanceManagerManager, namedBeanType.getManager());
 
             testNamedBeanType(namedBeanType, rootManagerClass);
         }
@@ -149,14 +158,13 @@ public class NamedBeanTypeTest {
             Manager<? extends NamedBean> instanceManagerManager =
                     instanceManagerManagerMap.get(namedBeanType);
 
-            Assert.assertNotEquals(instanceManagerManager, namedBeanType.getManager());
+            assertNotEquals(instanceManagerManager, namedBeanType.getManager());
 
             testNamedBeanType(namedBeanType, rootManagerClassMap.get(namedBeanType));
         }
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -168,7 +176,7 @@ public class NamedBeanTypeTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

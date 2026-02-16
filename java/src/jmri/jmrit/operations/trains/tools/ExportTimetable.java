@@ -268,7 +268,7 @@ public class ExportTimetable extends XmlFile {
                 if ((rl != train.getTrainDepartsRouteLocation() && rl.getLocation() != null && !rl.getLocation().isStaging())) {
                     if (train.isBuilt()) {
                         duration = train.getWorkTimeAtLocation(rl) + rl.getWait();
-                        if (!rl.getDepartureTime().isEmpty() && !train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
+                        if (!rl.getDepartureTimeHourMinutes().isEmpty() && !train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
                             duration = 60 * Integer.parseInt(rl.getDepartureTimeHour())
                                     + Integer.parseInt(rl.getDepartureTimeMinute()) - train.getExpectedTravelTimeInMinutes(rl);
                         }

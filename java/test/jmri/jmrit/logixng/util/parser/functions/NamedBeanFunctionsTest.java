@@ -1,9 +1,13 @@
 package jmri.jmrit.logixng.util.parser.functions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -12,7 +16,6 @@ import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -39,10 +42,10 @@ public class NamedBeanFunctionsTest {
     }
 
     @Test
-    public void testGetLogixNGTableFunction() throws Exception {
+    public void testGetLogixNGTableFunction() throws JmriException {
         Function getLogixNGTableFunction = InstanceManager.getDefault(FunctionManager.class).get("getLogixNGTable");
-        Assert.assertEquals("strings matches", "getLogixNGTable", getLogixNGTableFunction.getName());
-        Assert.assertNotNull("Function has description", getLogixNGTableFunction.getDescription());
+        assertEquals( "getLogixNGTable", getLogixNGTableFunction.getName(), "strings matches");
+        assertNotNull( getLogixNGTableFunction.getDescription(), "Function has description");
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
@@ -50,126 +53,123 @@ public class NamedBeanFunctionsTest {
         InstanceManager.getDefault(NamedTableManager.class).register(table);
 
         Object myTable = getLogixNGTableFunction.calculate(symbolTable, getParameterList(exprLogixNGTableIQT1));
-        Assert.assertNotNull(myTable);
-        Assert.assertEquals("jmri.jmrit.logixng.implementation.DefaultInternalNamedTable", myTable.getClass().getName());
-        Assert.assertEquals("IQT1", ((NamedBean)myTable).getSystemName());
-        Assert.assertEquals("My table", ((NamedBean)myTable).getUserName());
+        assertNotNull(myTable);
+        assertEquals("jmri.jmrit.logixng.implementation.DefaultInternalNamedTable", myTable.getClass().getName());
+        assertEquals("IQT1", ((NamedBean)myTable).getSystemName());
+        assertEquals("My table", ((NamedBean)myTable).getUserName());
 
         myTable = getLogixNGTableFunction.calculate(symbolTable, getParameterList(exprLogixNGTableMyTable));
-        Assert.assertNotNull(myTable);
-        Assert.assertEquals("jmri.jmrit.logixng.implementation.DefaultInternalNamedTable", myTable.getClass().getName());
-        Assert.assertEquals("IQT1", ((NamedBean)myTable).getSystemName());
-        Assert.assertEquals("My table", ((NamedBean)myTable).getUserName());
+        assertNotNull(myTable);
+        assertEquals("jmri.jmrit.logixng.implementation.DefaultInternalNamedTable", myTable.getClass().getName());
+        assertEquals("IQT1", ((NamedBean)myTable).getSystemName());
+        assertEquals("My table", ((NamedBean)myTable).getUserName());
     }
 
     @Test
-    public void testGetSetMemoryFunction() throws Exception {
+    public void testGetSetMemoryFunction() throws JmriException {
         Function readMemoryFunction = InstanceManager.getDefault(FunctionManager.class).get("readMemory");
-        Assert.assertEquals("strings matches", "readMemory", readMemoryFunction.getName());
-        Assert.assertNotNull("Function has description", readMemoryFunction.getDescription());
+        assertEquals( "readMemory", readMemoryFunction.getName(), "strings matches");
+        assertNotNull( readMemoryFunction.getDescription(), "Function has description");
 
         Function writeMemoryFunction = InstanceManager.getDefault(FunctionManager.class).get("writeMemory");
-        Assert.assertEquals("strings matches", "writeMemory", writeMemoryFunction.getName());
-        Assert.assertNotNull("Function has description", writeMemoryFunction.getDescription());
+        assertEquals( "writeMemory", writeMemoryFunction.getName(), "strings matches");
+        assertNotNull( writeMemoryFunction.getDescription(), "Function has description");
 
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        hasThrown.set(false);
-        try {
-            readMemoryFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class, () ->
+            readMemoryFunction.calculate(symbolTable, getParameterList()),
+                "exception is thrown");
+        assertNotNull(e);
 
-        Assert.assertEquals("Memory has correct value", null,
-                readMemoryFunction.calculate(symbolTable, getParameterList(exprMemoryIM1)));
+        assertNull( readMemoryFunction.calculate(symbolTable, getParameterList(exprMemoryIM1)),
+                "Memory has correct value");
 
-        Assert.assertEquals("Memory has correct value", null,
-                readMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)));
+        assertNull( readMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)),
+                "Memory has correct value");
 
         MyMemory memory = new MyMemory();
         InstanceManager.getDefault(MemoryManager.class).register(memory);
 
         memory._lastValue = null;
         memory._value = "Green";
-        Assert.assertEquals("Memory has correct value", "Green",
-                readMemoryFunction.calculate(symbolTable, getParameterList(exprMemoryIM1)));
-        Assert.assertNull("Memory is not set", memory._lastValue);
+        assertEquals( "Green",
+                readMemoryFunction.calculate(symbolTable, getParameterList(exprMemoryIM1)),
+                "Memory has correct value");
+        assertNull( memory._lastValue, "Memory is not set");
 
         memory._value = "Green";
-        Assert.assertEquals("Memory has correct value", "Green",
-                readMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)));
-        Assert.assertNull("Memory is not set", memory._lastValue);
+        assertEquals( "Green",
+                readMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)),
+                "Memory has correct value");
+        assertNull( memory._lastValue, "Memory is not set");
 
         memory._value = "Red";
-        Assert.assertEquals("Memory has correct value", "Red",
-                readMemoryFunction.calculate(symbolTable, getParameterList(exprMemoryIM1)));
-        Assert.assertNull("Memory is not set", memory._lastValue);
+        assertEquals( "Red",
+                readMemoryFunction.calculate(symbolTable, getParameterList(exprMemoryIM1)),
+                "Memory has correct value");
+        assertNull( memory._lastValue, "Memory is not set");
 
         memory._value = "Red";
-        Assert.assertEquals("Memory has correct value", "Red",
-                readMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)));
-        Assert.assertNull("Memory is not set", memory._lastValue);
+        assertEquals( "Red",
+                readMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)),
+                "Memory has correct value");
+        assertNull( memory._lastValue, "Memory is not set");
 
         memory._lastValue = null;
         memory._value = null;
-        Assert.assertEquals("Memory has correct value",
-                "Green",
+        assertEquals( "Green",
                 writeMemoryFunction.calculate(symbolTable,
-                        getParameterList(exprMemoryIM1, exprGreen)));
-        Assert.assertEquals("Memory is set", "Green", memory._lastValue);
+                        getParameterList(exprMemoryIM1, exprGreen)),
+                "Memory has correct value");
+        assertEquals( "Green", memory._lastValue, "Memory is set");
 
         memory._lastValue = null;
         memory._value = null;
-        Assert.assertEquals("Memory has correct value",
-                "Green",
+        assertEquals( "Green",
                 writeMemoryFunction.calculate(symbolTable,
-                        getParameterList(exprMyMemory1, exprGreen)));
-        Assert.assertEquals("Memory is set", "Green", memory._lastValue);
+                        getParameterList(exprMyMemory1, exprGreen)),
+                "Memory has correct value");
+        assertEquals( "Green", memory._lastValue, "Memory is set");
 
         memory._lastValue = null;
         memory._value = null;
-        Assert.assertEquals("Memory has correct value",
-                "Red",
+        assertEquals( "Red",
                 writeMemoryFunction.calculate(symbolTable,
-                        getParameterList(exprMemoryIM1, exprRed)));
-        Assert.assertEquals("Memory is set", "Red", memory._lastValue);
+                        getParameterList(exprMemoryIM1, exprRed)),
+                "Memory has correct value");
+        assertEquals( "Red", memory._lastValue, "Memory is set");
 
         memory._lastValue = null;
         memory._value = null;
-        Assert.assertEquals("Memory has correct value",
-                "Red",
+        assertEquals( "Red",
                 writeMemoryFunction.calculate(symbolTable,
-                        getParameterList(exprMyMemory1, exprRed)));
-        Assert.assertEquals("Memory is set", "Red", memory._lastValue);
+                        getParameterList(exprMyMemory1, exprRed)),
+                "Memory has correct value");
+        assertEquals( "Red", memory._lastValue, "Memory is set");
     }
 
     @Test
-    public void testEvaluateMemoryFunction() throws Exception {
+    public void testEvaluateMemoryFunction() throws JmriException {
         Function evaluateMemoryFunction = InstanceManager.getDefault(FunctionManager.class).get("evaluateMemory");
-        Assert.assertEquals("strings matches", "evaluateMemory", evaluateMemoryFunction.getName());
-        Assert.assertNotNull("Function has description", evaluateMemoryFunction.getDescription());
+        assertEquals( "evaluateMemory", evaluateMemoryFunction.getName(), "strings matches");
+        assertNotNull( evaluateMemoryFunction.getDescription(), "Function has description");
 
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        hasThrown.set(false);
-        try {
-            evaluateMemoryFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class, () ->
+            evaluateMemoryFunction.calculate(symbolTable, getParameterList()),
+                "exception is thrown");
+        assertNotNull(e);
 
-        Assert.assertEquals("Memory has correct value", null,
-                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMemoryIM1)));
+        assertNull( evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMemoryIM1)),
+                "Memory has correct value");
 
-        Assert.assertEquals("Memory has correct value", null,
-                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)));
+        assertNull(
+                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)),
+                "Memory has correct value");
 
         MyMemory memory = new MyMemory();
         InstanceManager.getDefault(MemoryManager.class).register(memory);
@@ -180,53 +180,55 @@ public class NamedBeanFunctionsTest {
 
         memory._lastValue = null;
         memory._value = "Green";
-        Assert.assertEquals("Memory has correct value", "Green",
-                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMemoryIM1)));
-        Assert.assertNull("Memory is not set", memory._lastValue);
+        assertEquals( "Green",
+                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMemoryIM1)),
+                "Memory has correct value");
+        assertNull( memory._lastValue, "Memory is not set");
 
         memory._value = "Green";
-        Assert.assertEquals("Memory has correct value", "Green",
-                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)));
-        Assert.assertNull("Memory is not set", memory._lastValue);
+        assertEquals( "Green",
+                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)),
+                "Memory has correct value");
+        assertNull( memory._lastValue, "Memory is not set");
 
         memory._value = "Red";
-        Assert.assertEquals("Memory has correct value", "Red",
-                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMemoryIM1)));
-        Assert.assertNull("Memory is not set", memory._lastValue);
+        assertEquals( "Red",
+                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMemoryIM1)),
+                "Memory has correct value");
+        assertNull( memory._lastValue, "Memory is not set");
 
         memory._value = "Red";
-        Assert.assertEquals("Memory has correct value", "Red",
-                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)));
-        Assert.assertNull("Memory is not set", memory._lastValue);
+        assertEquals( "Red",
+                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)),
+                "Memory has correct value");
+        assertNull( memory._lastValue, "Memory is not set");
 
         memory._value = "{IM2}";
-        Assert.assertEquals("Memory has correct value", "Other memory value",
-                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)));
-        Assert.assertNull("Memory is not set", memory._lastValue);
+        assertEquals( "Other memory value",
+                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)),
+                "Memory has correct value");
+        assertNull( memory._lastValue, "Memory is not set");
 
         memory._value = "{My other memory}";
-        Assert.assertEquals("Memory has correct value", "Other memory value",
-                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)));
-        Assert.assertNull("Memory is not set", memory._lastValue);
+        assertEquals( "Other memory value",
+                evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)),
+                "Memory has correct value");
+        assertNull( memory._lastValue, "Memory is not set");
     }
 
     @Test
-    public void testEvaluateReferenceFunction() throws Exception {
+    public void testEvaluateReferenceFunction() throws JmriException {
         Function evaluateReferenceFunction = InstanceManager.getDefault(FunctionManager.class).get("evaluateReference");
-        Assert.assertEquals("strings matches", "evaluateReference", evaluateReferenceFunction.getName());
-        Assert.assertNotNull("Function has description", evaluateReferenceFunction.getDescription());
+        assertEquals( "evaluateReference", evaluateReferenceFunction.getName(), "strings matches");
+        assertNotNull( evaluateReferenceFunction.getDescription(), "Function has description");
 
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
-        hasThrown.set(false);
-        try {
-            evaluateReferenceFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class, () ->
+            evaluateReferenceFunction.calculate(symbolTable, getParameterList()),
+                "exception is thrown");
+        assertNotNull(e);
 
         MyMemory memory = new MyMemory();
         InstanceManager.getDefault(MemoryManager.class).register(memory);
@@ -236,32 +238,36 @@ public class NamedBeanFunctionsTest {
         otherMemory._value = "Other memory value";
         InstanceManager.getDefault(MemoryManager.class).register(otherMemory);
 
-        Assert.assertEquals("Reference has correct value", "Some value",
-                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)));
+        assertEquals( "Some value",
+                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)),
+                "Reference has correct value");
 
         memory._lastValue = null;
         memory._value = "Green";
-        Assert.assertEquals("Reference has correct value", "Green",
-                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)));
-        Assert.assertNull("Memory is not set", memory._lastValue);
+        assertEquals( "Green",
+                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)),
+                "Reference has correct value");
+        assertNull( memory._lastValue, "Memory is not set");
 
         memory._value = "Green";
-        Assert.assertEquals("Reference has correct value", "Green",
-                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)));
-        Assert.assertNull("Memory is not set", memory._lastValue);
+        assertEquals( "Green",
+                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)),
+                "Reference has correct value");
+        assertNull( memory._lastValue, "Memory is not set");
 
         memory._value = "Red";
-        Assert.assertEquals("Reference has correct value", "Red",
-                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)));
-        Assert.assertNull("Memory is not set", memory._lastValue);
+        assertEquals( "Red",
+                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)),
+                "Reference has correct value");
+        assertNull( memory._lastValue, "Memory is not set");
 
         memory._value = "Red";
-        Assert.assertEquals("Reference has correct value", "Red",
-                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)));
-        Assert.assertNull("Memory is not set", memory._lastValue);
+        assertEquals( "Red",
+                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)),
+                "Reference has correct value");
+        assertNull( memory._lastValue, "Memory is not set");
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

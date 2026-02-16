@@ -83,6 +83,10 @@ public class DccLocoAddress implements LocoAddress {
                 return "" + number + "(S)";
             case DCC_LONG:
                 return "" + number + "(L)";
+            case DCC_CONSIST:
+                return "" + number + "(C)";
+            case DCC_EXTENDED_CONSIST:
+                return "" + number + "(E)";
             case SELECTRIX:
                 return "" + number + "(SX)";
             case MOTOROLA:

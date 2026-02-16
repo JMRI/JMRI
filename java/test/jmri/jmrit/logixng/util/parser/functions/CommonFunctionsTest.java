@@ -1,9 +1,13 @@
 package jmri.jmrit.logixng.util.parser.functions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
@@ -11,10 +15,9 @@ import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ParsedExpression
@@ -31,30 +34,28 @@ public class CommonFunctionsTest {
     }
 
     @Test
-    public void testLengthFunction() throws Exception {
+    public void testLengthFunction() throws JmriException {
         Function lengthFunction = InstanceManager.getDefault(FunctionManager.class).get("length");
-        Assert.assertEquals("strings matches", "length", lengthFunction.getName());
+        assertEquals( "length", lengthFunction.getName(), "strings matches");
 
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
         // Test unsupported token type
-        hasThrown.set(false);
-        try {
-            lengthFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class, () ->
+            lengthFunction.calculate(symbolTable, getParameterList()),
+                    "exception is thrown");
+        assertNotNull(e);
 
-        Assert.assertEquals("Values are equal", 8,
+        assertEquals( 8,
                 (int)lengthFunction.calculate(symbolTable, getParameterList(
-                        new ExpressionNodeString(new Token(TokenType.NONE, "A string", 0)))));
+                        new ExpressionNodeString(new Token(TokenType.NONE, "A string", 0)))),
+                "Values are equal");
 
-        Assert.assertEquals("Strings are equal", 4,
+        assertEquals( 4,
                 (int)lengthFunction.calculate(symbolTable, getParameterList(new ExpressionNodeConstantScaffold(
-                                new String[]{"Red", "Green", "Blue", "Yellow"}))));
+                                new String[]{"Red", "Green", "Blue", "Yellow"}))),
+                "Strings are equal");
 
         List<String> list = new ArrayList<>();
         list.add("A");
@@ -64,8 +65,9 @@ public class CommonFunctionsTest {
         list.add("EE");
         list.add("H");
         list.add("III");
-        Assert.assertEquals("Strings are equal", 7,
-                (int)lengthFunction.calculate(symbolTable, getParameterList(new ExpressionNodeConstantScaffold(list))));
+        assertEquals( 7,
+                (int)lengthFunction.calculate(symbolTable, getParameterList(new ExpressionNodeConstantScaffold(list))),
+                "Strings are equal");
 
         Set<String> set = new HashSet<>();
         set.add("A");
@@ -78,24 +80,25 @@ public class CommonFunctionsTest {
         set.add("Jjjj");
         set.add("H");
         set.add("III");
-        Assert.assertEquals("Strings are equal", 10,
-                (int)lengthFunction.calculate(symbolTable, getParameterList(new ExpressionNodeConstantScaffold(set))));
+        assertEquals( 10,
+                (int)lengthFunction.calculate(symbolTable, getParameterList(new ExpressionNodeConstantScaffold(set))),
+                "Strings are equal");
 
         Map<String, Integer> map = new HashMap<>();
         map.put("Hello",72);
         map.put("Something", 33);
-        Assert.assertEquals("Strings are equal", 2,
-                (int)lengthFunction.calculate(symbolTable, getParameterList(new ExpressionNodeConstantScaffold(map))));
+        assertEquals( 2,
+                (int)lengthFunction.calculate(symbolTable, getParameterList(new ExpressionNodeConstantScaffold(map))),
+                "Strings are equal");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initTimeProviderManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

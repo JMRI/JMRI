@@ -481,6 +481,16 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
+     * Return a boolean indicating if this is a preview or not
+     *
+     * @return the value of isPreview
+     */
+
+    public boolean getIsPreview() {
+        return isPreview;
+    }
+
+    /**
      * Return the number of columns of characters that fit on a page.
      *
      * @return the number of characters in a line
@@ -584,19 +594,7 @@ public class HardcopyWriter extends Writer {
      * @param i ignored, but maintained for API compatibility
      */
     public void write(Image c, Component i) {
-        // if we haven't begun a new page, do that now
-        if (page == null) {
-            newpage();
-        }
-
-        // D Miller: Scale the icon slightly smaller to make page layout easier and
-        // position one character to left of right margin
-        int x = x0 + width - (c.getWidth(null) * 2 / 3 + charwidth);
-        int y = y0 + (linenum * lineheight) + lineascent;
-
-        if (page != null && pagenum >= prFirst) {
-            page.drawImage(c, x, y, c.getWidth(null) * 2 / 3, c.getHeight(null) * 2 / 3, null);
-        }
+        writeWithScale(c, 3 / 2f, i);
     }
 
     /**
@@ -612,16 +610,35 @@ public class HardcopyWriter extends Writer {
      * @param i ignored but maintained for API compatibility
      */
     public void writeNoScale(Image c, Component i) {
+        writeWithScale(c, 1, i);
+    }
+
+    /**
+     * Write a graphic to the printout.
+     * <p>
+     * This was not in the original class, but was added afterwards by Kevin
+     * Dickerson. it is a copy of the write, but without the scaling.
+     * <p>
+     * The image is positioned on the right side of the paper, at the current
+     * height.
+     *
+     * @param c the image to print
+     * @param overSample the amount to scale the image by
+     * @param i ignored but maintained for API compatibility
+     */
+    public void writeWithScale(Image c, float overSample, Component i) {
         // if we haven't begun a new page, do that now
         if (page == null) {
             newpage();
         }
 
-        int x = x0 + width - (c.getWidth(null) + charwidth);
+        int x = x0 + width - (Math.round(   c.getWidth(null) / overSample) + charwidth);
         int y = y0 + (linenum * lineheight) + lineascent;
 
         if (page != null && pagenum >= prFirst) {
-            page.drawImage(c, x, y, c.getWidth(null), c.getHeight(null), null);
+            page.drawImage(c, x, y,
+                           Math.round(c.getWidth(null) / overSample), Math.round(c.getHeight(null) / overSample),
+                           null);
         }
     }
 

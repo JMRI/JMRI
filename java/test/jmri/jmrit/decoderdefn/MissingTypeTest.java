@@ -2,7 +2,7 @@ package jmri.jmrit.decoderdefn;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.Iterator;
 
 import jmri.jmrit.XmlFile;
@@ -11,8 +11,8 @@ import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.filter.ElementFilter;
+
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Checks for missing content in a <variable> element
@@ -32,13 +32,13 @@ public class MissingTypeTest {
                 failed = check(file) || failed;
             }
         }
-        log.debug("checked total of{}", models.size());
+        log.debug("checked total of{}", files.length);
         if (failed) {
-            Assert.fail("test failed, see System.err");
+            Assertions.fail("test failed, see System.err");
         }
     }
 
-    ArrayList<String> models = new ArrayList<>();
+    // private final ArrayList<String> models = new ArrayList<>();
 
     boolean check(File file) throws JDOMException, IOException {
         Element root = readFile(file);
@@ -67,7 +67,9 @@ public class MissingTypeTest {
                 failed = true;
                 log.error("Test failed in file: {}", file);
                 log.error("  Element's remaining children {}", e.getChildren());
-                for (Attribute a: e.getAttributes()) log.error("     Attr {}", a);
+                for (Attribute a: e.getAttributes()) {
+                    log.error("     Attr {}", a);
+                }
             }            
         }
         return failed;

@@ -28,22 +28,23 @@ public class ZeroConfServiceTest {
     private static final String HTTP = "_http._tcp.local.";
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initZeroConfServiceManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         assertTrue(JUnitUtil.resetZeroConfServiceManager());
         
         // wait for dns threads to end
         Thread.getAllStackTraces().keySet().forEach((t) -> 
             {
                 String name = t.getName();
-                if (! name.equals("dns.close in ZerConfServiceManager#stopAll")) return; // skip
-                
+                if (! name.equals("dns.close in ZerConfServiceManager#stopAll")) {
+                    return; // skip
+                }
                 try {
                     t.join(5000); // wait up to 35 seconds for that thread to end; 
                 } catch (InterruptedException e) {

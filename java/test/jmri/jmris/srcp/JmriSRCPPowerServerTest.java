@@ -1,6 +1,7 @@
 package jmri.jmris.srcp;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.util.JUnitUtil;
 
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.beans.PropertyChangeEvent;
+import java.io.IOException;
 import java.io.OutputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +29,7 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
 
     // test parsing an ON status message.
     @Test
-    public void testParseOnStatus() throws Exception {
+    public void testParseOnStatus() throws JmriException, IOException {
         ps.parseStatus("1234 SET 0 POWER ON\n");
         Mockito.verify(powerManager).setPower(PowerManager.ON);
         Mockito.when(powerManager.getPower()).thenReturn(PowerManager.ON);
@@ -37,7 +39,7 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
 
     // test parsing an OFF status message.
     @Test
-    public void testParseOffStatus() throws Exception {
+    public void testParseOffStatus() throws JmriException, IOException {
         ps.parseStatus("1234 SET 0 POWER OFF\n");
         Mockito.verify(powerManager).setPower(PowerManager.OFF);
         Mockito.when(powerManager.getPower()).thenReturn(PowerManager.OFF);

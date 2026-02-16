@@ -23,7 +23,7 @@ public class MultiJfcUnitTest {
 
     @Test
     @jmri.util.junit.annotations.DisabledIfHeadless
-    public void testShow() throws Exception {
+    public void testShow() {
 
         // show the window
         JFrame f1 = new MultiPaneWindow("test",

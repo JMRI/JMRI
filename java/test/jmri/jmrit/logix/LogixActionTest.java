@@ -1,13 +1,13 @@
 package jmri.jmrit.logix;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Memory;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
@@ -22,7 +22,7 @@ public class LogixActionTest {
 
     @Test
     @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
-    public void testLogixAction() throws Exception {
+    public void testLogixAction() throws JmriException {
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
 
@@ -144,7 +144,7 @@ public class LogixActionTest {
         Sensor is15 = InstanceManager.sensorManagerInstance().getSensor("IS15");
         assertThat(is15).withFailMessage("is15 null").isNotNull();
         is15.setState(Sensor.ACTIVE); // indirect action
-        Assert.assertFalse("warrant EastToWestOnSiding deallocated", w.isAllocated());
+        Assertions.assertFalse( w.isAllocated(), "warrant EastToWestOnSiding deallocated");
         // change memory value
         im6.setValue("WestToEastOnMain");
         is14.setState(Sensor.INACTIVE); // toggle

@@ -174,7 +174,11 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
-    public void setGroup(String grp) {
+    /**
+     * Set the group that can be added-to, e.g.
+     * the one displayed as check boxes to the right
+     */
+    public void setAddGroup(String grp) {
         group = grp;
     }
 

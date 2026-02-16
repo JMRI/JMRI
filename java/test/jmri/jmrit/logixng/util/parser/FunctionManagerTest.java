@@ -1,17 +1,20 @@
 package jmri.jmrit.logixng.util.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
- * Test Bundle
+ * Test FunctionManager
  *
  * @author Daniel Bergqvist 2019
  */
@@ -22,24 +25,23 @@ public class FunctionManagerTest {
         FunctionManager fm = InstanceManager.getDefault(FunctionManager.class);
 
         for (Map.Entry<String, Function> entry : fm.getFunctions().entrySet()) {
-            Assert.assertEquals(entry.getKey(), entry.getValue().getName());
-            Assert.assertNotNull(entry.getValue().getName());
-            Assert.assertNotEquals("", entry.getValue().getName());
-            Assert.assertNotNull(entry.getValue().getModule());
-            Assert.assertNotEquals("", entry.getValue().getModule());
-            Assert.assertNotNull(entry.getValue().getDescription());
-            Assert.assertNotEquals("", entry.getValue().getDescription());
+            assertEquals(entry.getKey(), entry.getValue().getName());
+            assertNotNull(entry.getValue().getName());
+            assertNotEquals("", entry.getValue().getName());
+            assertNotNull(entry.getValue().getModule());
+            assertNotEquals("", entry.getValue().getModule());
+            assertNotNull(entry.getValue().getDescription());
+            assertNotEquals("", entry.getValue().getDescription());
         }
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initTimeProviderManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

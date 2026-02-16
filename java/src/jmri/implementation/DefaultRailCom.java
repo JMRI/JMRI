@@ -5,9 +5,8 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import jmri.JmriException;
-import jmri.Sensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.LocoAddress;
+import jmri.RailCom;
 
 /**
  * Concrete implementation of the {@link jmri.RailCom} interface.
@@ -23,9 +22,10 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Kevin Dickerson Copyright (C) 2012
+ 8 @author Bob Jacobsen    (C) 2026
  * @since 2.99.3
  */
-public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
+public class DefaultRailCom extends DefaultIdTag implements RailCom {
 
     private int currentState = 0x00;
 
@@ -50,14 +50,67 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
     }
 
     @Override
-    public void setOrientation(int type) {
+    public void setDccAddress(LocoAddress address) {
+        setProperty("dccaddress", address);
+    }
+
+    @Override
+    public LocoAddress getDccAddress() {
+        var address =  (LocoAddress) getProperty("dccaddress");
+        // check for unfilled value; if so, parse and return from system name
+        // which does not separate the various types of address.
+        if (address == null) {
+            return getLocoAddress();
+        }
+        return address;
+    }
+
+    @Override
+    public void setOrientation(Orientation type) {
         setProperty("orientation", type);
     }
 
     @Override
-    public int getOrientation() {
-        Integer t = (Integer)getProperty("orientation");
-        return ( t != null ? t : Sensor.UNKNOWN );
+    public Orientation getOrientation() {
+        var t = (Orientation)getProperty("orientation");
+        if (t == null) return Orientation.UNKNOWN;
+        return t;
+    }
+
+    @Override
+    public void setMotion(Motion type) {
+        setProperty("motion", type);
+    }
+
+    @Override
+    public Motion getMotion() {
+        var t = (Motion)getProperty("motion");
+        if (t == null) return Motion.UNKNOWN;
+        return t;
+    }
+
+    @Override
+    public void setDirection(Direction type) {
+        setProperty("direction", type);
+    }
+
+    @Override
+    public Direction getDirection() {
+        var t = (Direction)getProperty("direction");
+        if (t == null) return Direction.UNKNOWN;
+        return t;
+    }
+
+    @Override
+    public void setQoS(QoS type) {
+        setProperty("qos", type);
+    }
+
+    @Override
+    public QoS getQoS() {
+        var t = (QoS)getProperty("qos");
+        if (t == null) return QoS.UNKNOWN;
+        return t;
     }
 
     @Override
@@ -202,19 +255,20 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
     @Override
     public String toReportString() {
         StringBuilder sb = new StringBuilder(200);
+        sb.append("Address ").append(getLocoAddress()).append(" ");
+
         switch (getOrientation()) {
-            case ORIENTA:
-                sb.append("Orientation A ");
+            case EAST:
+                sb.append("East ");
                 break;
-            case ORIENTB:
-                sb.append( "Orientation B ");
+            case WEST:
+                sb.append( "West ");
                 break;
             case UNKNOWN:
             default:
                 sb.append( "Unknown Orientation ");
                 break;
         }
-        sb.append("Address ").append(getLocoAddress()).append(" ");
 
         if (getWaterLevel() != -1) {
             sb.append("Water ").append(getWaterLevel()).append(" ");
@@ -240,5 +294,5 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         return sb.toString();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultRailCom.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultRailCom.class);
 }

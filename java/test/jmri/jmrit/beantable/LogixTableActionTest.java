@@ -1,6 +1,9 @@
 package jmri.jmrit.beantable;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.swing.JFrame;
 
@@ -8,10 +11,10 @@ import jmri.InstanceManager;
 import jmri.Logix;
 
 import jmri.util.*;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+import jmri.util.junit.annotations.ToDo;
 import jmri.util.swing.JemmyUtil;
 
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -29,13 +32,13 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("LogixTableActionTest Constructor Return", new LogixTableAction());  // NOI18N
+        assertNotNull( new LogixTableAction(), "LogixTableActionTest Constructor Return");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testStringCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LogixTableActionTest Constructor Return", new LogixTableAction("test"));  // NOI18N
+        assertNotNull( new LogixTableAction("test"), "LogixTableActionTest Constructor Return");
     }
 
     @Override
@@ -46,7 +49,8 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
     @Override
     @Test
     public void testGetClassDescription() {
-        Assert.assertEquals("Logix Table Action class description", Bundle.getMessage("TitleLogixTable"), a.getClassDescription());  // NOI18N
+        assertEquals( Bundle.getMessage("TitleLogixTable"), a.getClassDescription(),
+                "Logix Table Action class description");
     }
 
     /**
@@ -57,80 +61,85 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
     @Override
     @Test
     public void testIncludeAddButton() {
-        Assert.assertTrue("Default include add button", a.includeAddButton());  // NOI18N
+        assertTrue( a.includeAddButton(), "Default include add button");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testLogixBrowser() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         LogixTableAction lgxTable = (LogixTableAction) a;
 
         lgxTable.browserPressed("IX101");  // NOI18N
 
         JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("BrowserTitle"), true, true);  // NOI18N
-        Assert.assertNotNull(frame);
+        assertNotNull(frame);
         JUnitUtil.dispose(frame);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testWhereUsed() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         LogixTableAction lgxTable = (LogixTableAction) a;
 
         lgxTable.makeWhereUsedWindow();
 
         JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("DisplayWhereUsed"), true, true);  // NOI18N
-        Assert.assertNotNull(frame);
+        assertNotNull(frame);
         JUnitUtil.dispose(frame);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testListEditor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         LogixTableAction lgxTable = (LogixTableAction) a;
 
         lgxTable.editPressed("IX101");  // NOI18N
         JFrameOperator frame = new JFrameOperator(Bundle.getMessage("TitleEditLogix"));  // NOI18N
-        Assert.assertNotNull(frame);
+        assertNotNull(frame);
         new JButtonOperator(frame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
     }
 
     @Test
+    @DisabledIfHeadless
     public void testTreeEditor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                 setProperty("jmri.jmrit.beantable.LogixTableAction", "Edit Mode", "TREEEDIT");  // NOI18N
         a.actionPerformed(null);
         LogixTableAction lgxTable = (LogixTableAction) a;
         JFrameOperator lgxFrame = new JFrameOperator(Bundle.getMessage("TitleLogixTable"));  // NOI18N
-        Assert.assertNotNull(lgxFrame);
+        assertNotNull(lgxFrame);
 
         lgxTable.editPressed("IX104");  // NOI18N
         JFrameOperator cdlFrame = new JFrameOperator(Bundle.getMessage("TitleEditLogix"));  // NOI18N
-        Assert.assertNotNull(cdlFrame);
+        assertNotNull(cdlFrame);
         new JButtonOperator(cdlFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
         lgxFrame.dispose();
     }
 
     @Test
+    @DisabledIfHeadless
     public void testAddLogixAutoName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         LogixTableAction lgxTable = (LogixTableAction) a;
 
         lgxTable.actionPerformed(null); // show table
         JFrame lgxFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixTable"), true, true);  // NOI18N
-        Assert.assertNotNull("Found Logix Frame", lgxFrame);  // NOI18N
+        assertNotNull( lgxFrame, "Found Logix Frame");
 
         lgxTable.addPressed(null);
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogix"));  // NOI18N
-        Assert.assertNotNull("Found Add Logix Frame", addFrame);  // NOI18N
+        assertNotNull( addFrame, "Found Add Logix Frame");
 
         new JCheckBoxOperator(addFrame, 0).clickMouse();
         new JTextFieldOperator(addFrame, 1).setText("Logix 999");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
 
         Logix chk999 = jmri.InstanceManager.getDefault(jmri.LogixManager.class).getLogix("Logix 999");  // NOI18N
-        Assert.assertNotNull("Verify IX999 Added", chk999);  // NOI18N
+        assertNotNull( chk999, "Verify IX999 Added");
 
         // Add creates an edit frame; find and dispose
         JFrame editFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleEditLogix"), true, true);  // NOI18N
@@ -140,25 +149,25 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testAddLogix() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LogixTableAction lgxTable = (LogixTableAction) a;
 
         lgxTable.actionPerformed(null); // show table
         JFrame lgxFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixTable"), true, true);  // NOI18N
-        Assert.assertNotNull("Found Logix Frame", lgxFrame);  // NOI18N
+        assertNotNull( lgxFrame, "Found Logix Frame");
 
         lgxTable.addPressed(null);
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogix"));  // NOI18N
-        Assert.assertNotNull("Found Add Logix Frame", addFrame);  // NOI18N
+        assertNotNull( addFrame, "Found Add Logix Frame");
 
         new JTextFieldOperator(addFrame, 0).setText("105");  // NOI18N
         new JTextFieldOperator(addFrame, 1).setText("Logix 105");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
 
         Logix chk105 = jmri.InstanceManager.getDefault(jmri.LogixManager.class).getLogix("Logix 105");  // NOI18N
-        Assert.assertNotNull("Verify IX105 Added", chk105);  // NOI18N
+        assertNotNull( chk105, "Verify IX105 Added");
 
         // Add creates an edit frame; find and dispose
         JFrame editFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleEditLogix"), true, true);  // NOI18N
@@ -168,27 +177,27 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testDeleteLogix() throws InterruptedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LogixTableAction lgxTable = (LogixTableAction) a;
 
         lgxTable.actionPerformed(null); // show table
         JFrame lgxFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixTable"), true, true);  // NOI18N
-        Assert.assertNotNull("Found Logix Frame", lgxFrame);  // NOI18N
+        assertNotNull( lgxFrame, "Found Logix Frame");
 
         // Delete IX102, respond No
         Thread t1 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"));  // NOI18N
         lgxTable.deletePressed("IX102");  // NOI18N
         t1.join();
         Logix chk102 = jmri.InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName("IX102");  // NOI18N
-        Assert.assertNotNull("Verify IX102 Not Deleted", chk102);  // NOI18N
+        assertNotNull( chk102, "Verify IX102 Not Deleted");
 
         // Delete IX103, respond Yes
         Thread t2 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
         lgxTable.deletePressed("IX103");  // NOI18N
         t2.join();
         Logix chk103 = jmri.InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName("IX103");  // NOI18N
-        Assert.assertNull("Verify IX103 Is Deleted", chk103);  // NOI18N
+        assertNull( chk103, "Verify IX103 Is Deleted");
 
         JUnitUtil.dispose(lgxFrame);
     }
@@ -201,14 +210,14 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
     @Test
     @Disabled("Logix create frame does not have a hardware address")
     @Override
-    // TODO: Re-write parent class test to use the right name
+    @ToDo("Re-write parent class test to use the right name")
     public void testAddThroughDialog() {
     }
 
     @Test
     @Disabled("Logix create frame does not have a hardware address")
     @Override
-    // TODO: Re-write parent class test to use the right name, or add without dialog
+    @ToDo("Re-write parent class test to use the right name, or add without dialog")
     public void testEditButton() {
     }
 
@@ -216,9 +225,9 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
 
         InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX101", "Logix 101");
         InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX102", "Logix 102");

@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng.tools;
 
+import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import jmri.*;
 import jmri.jmrit.logix.OBlock;
 
@@ -9,16 +12,16 @@ import jmri.jmrit.logix.OBlock;
  * This class creates a Logix, test that it works, imports it to LogixNG,
  * deletes the original Logix and then test that the new LogixNG works.
  * <P>
- This test tests expression oblock
+ * This test tests expression oblock
  * 
  * @author Daniel Bergqvist (C) 2020
  */
 public class ImportExpressionOBlockTest extends ImportExpressionComplexTestBase {
 
-    OBlock oblock;
-    ConditionalVariable cv;
-    
-    protected enum OBlockEnum {
+    private OBlock oblock = null;
+    private ConditionalVariable cv = null;
+
+    private enum OBlockEnum {
         EqualsUnoccupied(OBlock.OBlockStatus.TrackError, OBlock.OBlockStatus.Occupied, OBlock.OBlockStatus.Unoccupied),
         EqualsOccupied(OBlock.OBlockStatus.TrackError, OBlock.OBlockStatus.Unoccupied, OBlock.OBlockStatus.Occupied),
         EqualsAllocated(OBlock.OBlockStatus.TrackError, OBlock.OBlockStatus.Occupied, OBlock.OBlockStatus.Allocated),
@@ -26,11 +29,11 @@ public class ImportExpressionOBlockTest extends ImportExpressionComplexTestBase 
         EqualsOutOfService(OBlock.OBlockStatus.TrackError, OBlock.OBlockStatus.Occupied, OBlock.OBlockStatus.OutOfService),
         EqualsDark(OBlock.OBlockStatus.TrackError, OBlock.OBlockStatus.Occupied, OBlock.OBlockStatus.Dark),
         EqualsTrackError(OBlock.OBlockStatus.Dark, OBlock.OBlockStatus.Occupied, OBlock.OBlockStatus.TrackError);
-        
-        private final OBlock.OBlockStatus initOBlockStatus;
-        private final OBlock.OBlockStatus failOBlockStatus;
-        private final OBlock.OBlockStatus successOBlockStatus;
-        
+
+        final OBlock.OBlockStatus initOBlockStatus;
+        final OBlock.OBlockStatus failOBlockStatus;
+        final OBlock.OBlockStatus successOBlockStatus;
+
         private OBlockEnum(OBlock.OBlockStatus initOBlockStatus, OBlock.OBlockStatus failOBlockStatus, OBlock.OBlockStatus successOBlockStatus) {
             this.initOBlockStatus = initOBlockStatus;
             this.failOBlockStatus = failOBlockStatus;
@@ -39,17 +42,19 @@ public class ImportExpressionOBlockTest extends ImportExpressionComplexTestBase 
     }
     
     @Override
-    protected Enum<OBlockEnum>[] getEnums() {
+    protected Enum<?>[] getEnums() {
         return OBlockEnum.values();
     }
-    
+
     @Override
     public void setNamedBeanState(Enum<?> e, Setup setup) throws JmriException {
         OBlockEnum me = OBlockEnum.valueOf(e.name());
-        
+
+        Assertions.assertNotNull(oblock);
+        Assertions.assertNotNull(cv);
         cv.setType(Conditional.Type.BLOCK_STATUS_EQUALS);
         cv.setDataString(me.successOBlockStatus.getName());
-        
+
         switch (me) {
             case EqualsUnoccupied:
             case EqualsOccupied:
@@ -67,15 +72,15 @@ public class ImportExpressionOBlockTest extends ImportExpressionComplexTestBase 
                     case Succeed2:
                     case Succeed3:
                     case Succeed4: oblock.setState(me.successOBlockStatus.getStatus()); break;
-                    default: throw new RuntimeException("Unknown enum: "+e.name());
+                    default: fail("Unknown enum: "+e.name());
                 }
                 break;
                 
             default:
-                throw new RuntimeException("Unknown enum: "+e.name());
+                fail("Unknown enum: "+e.name());
         }
     }
-    
+
     @Override
     public ConditionalVariable newConditionalVariable() {
         oblock = new OBlock("OB99");
@@ -84,5 +89,5 @@ public class ImportExpressionOBlockTest extends ImportExpressionComplexTestBase 
         cv.setName("OB99");
         return cv;
     }
-    
+
 }

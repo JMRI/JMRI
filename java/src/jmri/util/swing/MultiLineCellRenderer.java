@@ -9,6 +9,8 @@ import javax.swing.UIManager;
 
 /**
  * Renderer to display multiple lines in a JTable cell
+ *
+ * @see jmri.util.swing.MultiLineCellEditor
  */
 public class MultiLineCellRenderer extends JTextArea implements TableCellRenderer {
 

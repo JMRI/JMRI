@@ -5,20 +5,23 @@ import java.awt.Color;
 import jmri.jmrit.display.*;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.ThrowableAssert.catchThrowable;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 /**
  *
  * @author Pete Cressman Copyright (C) 2018
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@DisabledIfHeadless
 public class ColorDialogTest {
 
     private ControlPanelEditor _cpe;
@@ -31,11 +34,13 @@ public class ColorDialogTest {
 
         DialogRunner dr = new DialogRunner(ColorDialog.ONLY, "PanelColor", Color.RED, "ButtonDone");
         dr.start();
-        new ColorDialog(_cpe, _cpe.getTargetPanel(), ColorDialog.ONLY, null);
+        ColorDialog cd = new ColorDialog(_cpe, _cpe.getTargetPanel(), ColorDialog.ONLY, null);
+        assertNotNull(cd);
         Throwable thrown = catchThrowable(()-> dr.join());
         assertThat(thrown).isNull();
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
+        JUnitUtil.waitFor(50);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();  // allow some time for button push
 
         assertThat(_cpe.getTargetPanel().getBackground()).withFailMessage("panel color is red").isEqualTo(Color.RED);
     }
@@ -47,11 +52,13 @@ public class ColorDialogTest {
 
         DialogRunner dr = new DialogRunner(ColorDialog.ONLY, "PanelColor", Color.RED, "ButtonCancel");
         dr.start();
-        new ColorDialog(_cpe, _cpe.getTargetPanel(), ColorDialog.ONLY, null);
+        ColorDialog cd = new ColorDialog(_cpe, _cpe.getTargetPanel(), ColorDialog.ONLY, null);
+        assertNotNull(cd);
         Throwable thrown = catchThrowable(()-> dr.join());
         assertThat(thrown).isNull();
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
+        JUnitUtil.waitFor(50);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();  // allow some time for button push
 
         assertThat(_cpe.getTargetPanel().getBackground()).withFailMessage("panel color is green").isEqualTo(Color.GREEN);
     }
@@ -60,11 +67,13 @@ public class ColorDialogTest {
     public void testCTor3() {
         DialogRunner dr = new DialogRunner(ColorDialog.BORDER, "SetBorderSizeColor", Color.BLUE, "ButtonDone");
         dr.start();
-        new ColorDialog(_cpe, _pos, ColorDialog.BORDER, null);
+        ColorDialog cd = new ColorDialog(_cpe, _pos, ColorDialog.BORDER, null);
+        assertNotNull(cd);
         Throwable thrown = catchThrowable(()-> dr.join());
         assertThat(thrown).isNull();
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
+        JUnitUtil.waitFor(50);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();  // allow some time for button push
 
         assertThat(_pos.getPopupUtility().getBorderColor()).withFailMessage("border color is blue").isEqualTo(Color.BLUE);
     }
@@ -76,11 +85,13 @@ public class ColorDialogTest {
 
         DialogRunner dr = new DialogRunner(ColorDialog.MARGIN, "SetMarginSizeColor", Color.RED, "ButtonCancel");
         dr.start();
-        new ColorDialog(_cpe, _pos, ColorDialog.MARGIN, null);
+        ColorDialog cd = new ColorDialog(_cpe, _pos, ColorDialog.MARGIN, null);
+        assertNotNull(cd);
         Throwable thrown = catchThrowable(()-> dr.join());
         assertThat(thrown).isNull();
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
+        JUnitUtil.waitFor(50);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();  // allow some time for button push
 
         assertThat(_pos.getPopupUtility().getBackground()).withFailMessage("margin color is green").isEqualTo(Color.GREEN);
     }
@@ -89,11 +100,13 @@ public class ColorDialogTest {
     public void testColorDialogCTor5() {
         DialogRunner dr = new DialogRunner(ColorDialog.FONT, "SetFontSizeColor", Color.RED, "ButtonDone");
         dr.start();
-        new ColorDialog(_cpe, _pos, ColorDialog.FONT, null);
+        ColorDialog cd = new ColorDialog(_cpe, _pos, ColorDialog.FONT, null);
+        assertNotNull(cd);
         Throwable thrown = catchThrowable(()-> dr.join());
         assertThat(thrown).isNull();
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
+        JUnitUtil.waitFor(50);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();  // allow some time for button push
 
         assertThat(_pos.getPopupUtility().getForeground()).withFailMessage("font color is red").isEqualTo(Color.RED);
     }
@@ -102,11 +115,13 @@ public class ColorDialogTest {
     public void testCTor6() {
         DialogRunner dr = new DialogRunner(ColorDialog.TEXT, "SetTextSizeColor", Color.BLUE, "ButtonDone");
         dr.start();
-        new ColorDialog(_cpe, _pos, ColorDialog.TEXT, null);
+        ColorDialog cd = new ColorDialog(_cpe, _pos, ColorDialog.TEXT, null);
+        assertNotNull(cd);
         Throwable thrown = catchThrowable(()-> dr.join());
         assertThat(thrown).isNull();
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
+        JUnitUtil.waitFor(50);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();  // allow some time for button push
 
         assertThat(_pos.getPopupUtility().getForeground()).withFailMessage("font color is red").isEqualTo(Color.BLUE);
     }
@@ -117,7 +132,7 @@ public class ColorDialogTest {
         _cpe.putItem(_pos);
     }
 
-    class DialogRunner extends Thread {
+    private class DialogRunner extends Thread {
         // constructor for jdo will wait until the dialog is visible
         String _dialogTitle;
         String _buttonTitle;
@@ -159,7 +174,7 @@ public class ColorDialogTest {
                     c = Color.BLACK;
             }
             assertThat(c).withFailMessage(_dialogTitle + " set color").isEqualTo(_color);
-            jbo.pushNoBlock();
+            jbo.push(); // and execute action before completing
         }
 
     }

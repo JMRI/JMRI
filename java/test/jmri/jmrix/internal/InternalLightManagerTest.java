@@ -1,9 +1,12 @@
 package jmri.jmrix.internal;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -29,15 +32,15 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
         Light tl = lm.newLight("IL21", "my name");
 
-        Assert.assertNotNull( tl);
+        assertNotNull( tl);
 
         // make sure loaded into tables
 
-        Assert.assertNotNull( lm.getBySystemName("IL21"));
-        Assert.assertNotNull( lm.getByUserName("my name"));
+        assertNotNull( lm.getBySystemName("IL21"));
+        assertNotNull( lm.getByUserName("my name"));
 
-        Assert.assertTrue( tl == lm.getBySystemName("IL21") );
-        Assert.assertTrue( tl == lm.getByUserName("my name") );
+        assertSame( tl, lm.getBySystemName("IL21") );
+        assertSame( tl, lm.getByUserName("my name") );
 
     }
 
@@ -45,8 +48,9 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     public void testIsVariableLight() {
         // ask for a Light, and check type
         LightManager lm = InstanceManager.lightManagerInstance();
+        assertInstanceOf( VariableLight.class,
+            lm.newLight("IL21", "my name"));
 
-        Assert.assertTrue(lm.newLight("IL21", "my name") instanceof VariableLight);
     }
 
     @Test
@@ -71,6 +75,8 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
     @AfterEach
     public void tearDown() {
+        l.dispose();
+        l = null;
         JUnitUtil.tearDown();
     }
 

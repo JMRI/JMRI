@@ -52,6 +52,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
     // major buttons
     JButton selectButton = new JButton(Bundle.getMessage("SelectAll"));
+    JButton copyButton = new JButton(Bundle.getMessage("ButtonCopy"));
     JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
 
     JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));
@@ -117,6 +118,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         JPanel cp3 = new JPanel();
         cp3.setBorder(BorderFactory.createTitledBorder(""));
         cp3.add(clearButton);
+        cp3.add(copyButton);
         cp3.add(selectButton);
 
         JPanel cp4 = new JPanel();
@@ -139,6 +141,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         // tool tips
         selectButton.setToolTipText(Bundle.getMessage("SelectAllButtonTip"));
+        copyButton.setToolTipText(Bundle.getMessage("CopyButtonTip"));
         clearButton.setToolTipText(Bundle.getMessage("ClearAllButtonTip"));
         applyButton.setToolTipText(Bundle.getMessage("ApplyButtonTip"));
         buildButton.setToolTipText(Bundle.getMessage("BuildSelectedTip"));
@@ -170,6 +173,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         // setup buttons
         addButtonAction(clearButton);
+        addButtonAction(copyButton);
         addButtonAction(selectButton);
         addButtonAction(applyButton);
         addButtonAction(buildButton);
@@ -248,6 +252,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
         if (ae.getSource() == selectButton) {
             updateCheckboxes(true);
+        }
+        if (ae.getSource() == copyButton) {
+            copySchedule();
         }
         if (ae.getSource() == applyButton) {
             applySchedule();
@@ -369,6 +376,19 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             }
         }
     }
+    
+    private void copySchedule() {
+        TrainSchedule ts = trainScheduleManager.getScheduleById(getSelectedScheduleId());
+        if (ts != null) {
+            for (Train train : trainManager.getTrainsByIdList()) {
+                if (train.isBuildEnabled()) {
+                    ts.addTrainId(train.getId());
+                } else {
+                    ts.removeTrainId(train.getId());
+                }
+            }
+        }
+    }
 
     private String getSelectedScheduleId() {
         AbstractButton b;
@@ -385,6 +405,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
     private void enableButtons(boolean enable) {
         selectButton.setEnabled(enable);
+        copyButton.setEnabled(enable);
         clearButton.setEnabled(enable);
         applyButton.setEnabled(enable);
         buildButton.setEnabled(enable);

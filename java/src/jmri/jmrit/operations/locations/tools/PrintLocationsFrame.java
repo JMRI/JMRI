@@ -703,7 +703,7 @@ public class PrintLocationsFrame extends OperationsFrame {
                         track.getName() +
                         getDirection(location.getTrainDirections() & track.getTrainDirections());
                 writer.write(s);
-                isAlternate(track);
+                printIsAlternate(track);
                 writer.write(getTrackCarTypes(track));
                 writer.write(getTrackEngineTypes(track));
                 writer.write(getTrackRoads(track));
@@ -717,6 +717,7 @@ public class PrintLocationsFrame extends OperationsFrame {
                 writer.write(getSpurInfo(track));
                 writer.write(getSchedule(track));
                 writer.write(getStagingInfo(track));
+                printIsQuickService(track);
                 writer.write(NEW_LINE);
             } catch (IOException we) {
                 log.error("Error printing PrintLocationAction: {}", we.getLocalizedMessage());
@@ -1101,9 +1102,15 @@ public class PrintLocationsFrame extends OperationsFrame {
         return buf.toString();
     }
 
-    private void isAlternate(Track track) throws IOException {
+    private void printIsAlternate(Track track) throws IOException {
         if (track.isAlternate()) {
             writer.write(TAB + TAB + Bundle.getMessage("AlternateTrack") + NEW_LINE);
+        }
+    }
+    
+    private void printIsQuickService(Track track) throws IOException {
+        if (track.isQuickServiceEnabled()) {
+            writer.write(TAB + TAB + Bundle.getMessage("QuickService") + NEW_LINE);
         }
     }
 

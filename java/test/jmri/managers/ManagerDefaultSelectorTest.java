@@ -103,7 +103,8 @@ public class ManagerDefaultSelectorTest {
         JUnitUtil.waitFor(() -> {
             return 2 == loconet.getPropertyChangeListeners().length; // 1 in ManagerDefaultSelector + 1 in AbstractTurnoutManager
         }, "Registration Complete");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(20);
+        JUnitUtil.waitFor(20);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         InitializationException ex = mds.configure(profile);
         if (ex != null) {
@@ -153,7 +154,8 @@ public class ManagerDefaultSelectorTest {
         JUnitUtil.waitFor(() -> {
             return 2 == loconet.getPropertyChangeListeners().length; // 1 in ManagerDefaultSelector + 1 in AbstractTurnoutManager
         }, "Registration Complete");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(20);
+        JUnitUtil.waitFor(20);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         // get existing Internal connection
         InternalSystemConnectionMemo internal = InstanceManager.getDefault(InternalSystemConnectionMemo.class); // self registering
@@ -162,7 +164,8 @@ public class ManagerDefaultSelectorTest {
         JUnitUtil.waitFor(() -> {
             return 0 < internal.getPropertyChangeListeners().length;
         }, "Registration Complete");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(20);
+        JUnitUtil.waitFor(20);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         InitializationException ex = mds.configure(profile);
         if (ex != null) {
@@ -217,7 +220,8 @@ public class ManagerDefaultSelectorTest {
         JUnitUtil.waitFor(() -> {
             return 2 == loconet.getPropertyChangeListeners().length; // 1 in ManagerDefaultSelector + 1 in AbstractTurnoutManager
         }, "Registration Complete");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(20);
+        JUnitUtil.waitFor(20);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         // add another LocoNet connection
         LocoNetSystemConnectionMemo loconet2 = getLocoNetTestConnection();
@@ -226,7 +230,8 @@ public class ManagerDefaultSelectorTest {
         JUnitUtil.waitFor(() -> {
             return 2 == loconet2.getPropertyChangeListeners().length; // 1 in ManagerDefaultSelector + 1 in AbstractTurnoutManager
         }, "Registration Complete");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(20);
+        JUnitUtil.waitFor(20);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         InitializationException ex = mds.configure(profile);
         if (ex != null) {

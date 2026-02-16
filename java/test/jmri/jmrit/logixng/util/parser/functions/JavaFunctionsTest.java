@@ -1,9 +1,13 @@
 package jmri.jmrit.logixng.util.parser.functions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
@@ -11,10 +15,9 @@ import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ParsedExpression
@@ -31,44 +34,38 @@ public class JavaFunctionsTest {
     }
 
     @Test
-    public void testNewFunction() throws Exception {
+    public void testNewFunction() throws JmriException {
         Function newFunction = InstanceManager.getDefault(FunctionManager.class).get("new");
-        Assert.assertEquals("strings matches", "new", newFunction.getName());
+        assertEquals( "new", newFunction.getName(), "strings matches");
 
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
 
         // Test unsupported token type
-        hasThrown.set(false);
-        try {
-            newFunction.calculate(symbolTable, getParameterList());
-        } catch (WrongNumberOfParametersException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class, () ->
+            newFunction.calculate(symbolTable, getParameterList()), "exception is thrown");
+        assertNotNull(e);
 
         Object obj = newFunction.calculate(symbolTable, getParameterList(
                 new ExpressionNodeString(new Token(TokenType.NONE, "jmri.jmrit.logixng.util.parser.functions.ExpressionNodeConstantScaffold", 0)),
                 new ExpressionNodeString(new Token(TokenType.NONE, "Parameter", 0))
                 ));
-        Assert.assertNotNull(obj);
-        Assert.assertEquals("jmri.jmrit.logixng.util.parser.functions.ExpressionNodeConstantScaffold", obj.getClass().getName());
+        assertNotNull(obj);
+        assertEquals("jmri.jmrit.logixng.util.parser.functions.ExpressionNodeConstantScaffold", obj.getClass().getName());
 
         obj = newFunction.calculate(symbolTable, getParameterList(
                 new ExpressionNodeString(new Token(TokenType.NONE, "java.lang.StringBuilder", 0))));
-        Assert.assertNotNull(obj);
-        Assert.assertEquals("java.lang.StringBuilder", obj.getClass().getName());
+        assertNotNull(obj);
+        assertEquals("java.lang.StringBuilder", obj.getClass().getName());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initTimeProviderManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

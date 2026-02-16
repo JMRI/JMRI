@@ -1,5 +1,7 @@
 package jmri.jmris;
 
+import java.io.IOException;
+
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -23,7 +25,7 @@ abstract public class AbstractSensorServerTestBase {
 
     // test sending an error message.
     @Test 
-    public void testSendErrorStatus() throws java.io.IOException {
+    public void testSendErrorStatus() throws IOException {
         ss.sendErrorStatus("IT1");
         checkErrorStatusSent();
     }
@@ -37,7 +39,7 @@ abstract public class AbstractSensorServerTestBase {
 
     // test sending an ACTIVE status message.
     @Test 
-    public void testCheckSendActiveStatus() throws java.io.IOException{
+    public void testCheckSendActiveStatus() throws IOException{
         ss.initSensor("IS1");
         ss.sendStatus("IS1",Sensor.ACTIVE);
         checkSensorActiveSent();
@@ -45,7 +47,7 @@ abstract public class AbstractSensorServerTestBase {
 
     // test sending an INACTIVE status message.
     @Test
-    public void testCheckSendInActiveStatus() throws java.io.IOException {
+    public void testCheckSendInActiveStatus() throws IOException {
         ss.initSensor("IS1");
         ss.sendStatus("IS1",Sensor.INACTIVE);
         checkSensorInActiveSent();
@@ -53,7 +55,7 @@ abstract public class AbstractSensorServerTestBase {
 
     // test sending an UNKNOWN status message.
     @Test
-    public void testCheckSendUnkownStatus() throws java.io.IOException {
+    public void testCheckSendUnkownStatus() throws IOException {
         ss.initSensor("IS1");
         ss.sendStatus("IS1",Sensor.UNKNOWN);
         checkSensorUnknownSent();
@@ -61,7 +63,7 @@ abstract public class AbstractSensorServerTestBase {
 
     // test the property change sequence for an ACTIVE property change.
     @Test
-    public void testPropertyChangeOnStatus() throws Exception {
+    public void testPropertyChangeOnStatus() {
         Assertions.assertDoesNotThrow( () -> {
             ss.initSensor("IS1");
             InstanceManager.getDefault(SensorManager.class).provideSensor("IS1").setState(Sensor.ACTIVE);
@@ -71,7 +73,7 @@ abstract public class AbstractSensorServerTestBase {
 
     // test the property change sequence for an INACTIVE property change.
     @Test
-    public void testPropertyChangeOffStatus() throws Exception {
+    public void testPropertyChangeOffStatus() {
         Assertions.assertDoesNotThrow( () -> {
             ss.initSensor("IS1");
             InstanceManager.getDefault(SensorManager.class)

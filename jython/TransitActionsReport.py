@@ -2,11 +2,39 @@
 #
 # The output will be in the "Script Output" window, or the JMRI system console if the window is not open.
 #
-# Author:  Dave Sand copyright (c) 2025
+# The script starts by requesting which transit to use.  If the default empty row is selected,
+# the actions for all of the transits is printed.
+#
+# Author:  Dave Sand copyright (c) 2026
 
 import java
 import jmri
+from javax.swing import JComboBox, JOptionPane
 
+# Select a transit for a single actions report.
+# The first entry is empty which results in a report of all of the transits and their actions, if any.
+def selectTransit():
+    cboEntries = JComboBox()
+    cboEntries.setMaximumRowCount(20)
+    transit = None
+
+    tList = []
+    for item in transitList:
+        tList.append(item.getDisplayName())
+    tList.sort()
+
+    cboEntries.addItem('')
+    for entry in tList:
+        cboEntries.addItem(entry)
+
+    titleLine = 'Select a transit'
+    ret = JOptionPane.showConfirmDialog(None, cboEntries, titleLine, JOptionPane.PLAIN_MESSAGE)
+    if ret >= 0:
+        transit = cboEntries.getSelectedItem()
+
+    return transit
+
+# Format a "when" action line.
 def getWhen(action):
     code = action.getWhenCode()
     delay = action.getDataWhen()
@@ -31,9 +59,11 @@ def getWhen(action):
         return 'When train starts moving' if delay == 0 else '"{}" mSec after train starts moving'.format(delay)
 
     elif code == jmri.TransitSectionAction.SENSORACTIVE:
+        data = sensors.getSensor(data).getDisplayName()
         return 'When Sensor "{}" becomes ACTIVE'.format(data) if delay == 0 else '"{}" mSec after Sensor "{}" becomes ACTIVE'.format(delay, data)
 
     elif code == jmri.TransitSectionAction.SENSORINACTIVE:
+        data = sensors.getSensor(data).getDisplayName()
         return 'When Sensor "{}" becomes INACTIVE'.format(data) if delay == 0 else '"{}" mSec after Sensor "{}" becomes INACTIVE'.format(delay, data)
 
     elif code == jmri.TransitSectionAction.PRESTARTDELAY:
@@ -45,6 +75,7 @@ def getWhen(action):
     else:
         return code
 
+# Format a "what" action line.
 def getWhat(action):
     code = action.getWhatCode()
     data1 = action.getDataWhat1()
@@ -85,15 +116,29 @@ def getWhat(action):
         return 'Set decoder function "{}" to "{}"'.format(data1, text)
 
     elif code == jmri.TransitSectionAction.SETSENSORACTIVE:
+        text = sensors.getSensor(text).getDisplayName()
         return 'Set Sensor "{}" to ACTIVE'.format(text)
 
     elif code == jmri.TransitSectionAction.SETSENSORINACTIVE:
+        text = sensors.getSensor(text).getDisplayName()
         return 'Set Sensor "{}" to INACTIVE'.format(text)
 
     elif code == jmri.TransitSectionAction.HOLDSIGNAL:
+        head = signals.getSignalHead(text)
+        mast = masts.getSignalMast(text)
+        if head:
+            text = head.getDisplayName()
+        elif mast:
+            text = mast.getDisplayName()
         return 'Hold Signal "{}"'.format(text)
 
     elif code == jmri.TransitSectionAction.RELEASESIGNAL:
+        head = signals.getSignalHead(text)
+        mast = masts.getSignalMast(text)
+        if head:
+            text = head.getDisplayName()
+        elif mast:
+            text = mast.getDisplayName()
         return 'Release Signal "{}"'.format(text)
 
     elif code == jmri.TransitSectionAction.ESTOP:
@@ -124,8 +169,8 @@ def getWhat(action):
     else:
         return code
 
-
-for transit in transits.getNamedBeanSet():
+# Create an actions report for one transit.
+def printTransitReport(transit):
     transitName = transit.getDisplayName()
     print '---- transit = {}'.format(transitName)
 
@@ -142,3 +187,15 @@ for transit in transits.getNamedBeanSet():
 
             print '    when :: {}'.format(when)
             print '    what :: {}\n'.format(what)
+
+## Main ##
+transitList = transits.getNamedBeanSet()
+selectedTransitName = selectTransit()
+
+if selectedTransitName:
+    transit = transits.getTransit(selectedTransitName)
+    printTransitReport(transit)
+else:
+    for transit in transitList:
+        printTransitReport(transit)
+

@@ -69,6 +69,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     JButton runFileButton = new JButton(Bundle.getMessage("RunFile"));
     JButton switchListsButton = new JButton(Bundle.getMessage("SwitchLists"));
     JButton terminateButton = new JButton(Bundle.getMessage("Terminate"));
+    JButton resetButton = new JButton(Bundle.getMessage("Reset"));
     JButton saveButton = new JButton(Bundle.getMessage("SaveBuilds"));
 
     // check boxes
@@ -140,8 +141,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         addButton.setToolTipText(Bundle.getMessage("AddTrainTip"));
         buildButton.setToolTipText(Bundle.getMessage("BuildSelectedTip"));
         switchListsButton.setToolTipText(Bundle.getMessage("PreviewPrintSwitchListsTip"));
-
         terminateButton.setToolTipText(Bundle.getMessage("TerminateSelectedTip"));
+        resetButton.setToolTipText(Bundle.getMessage("ResetTrainsTip"));
         saveButton.setToolTipText(Bundle.getMessage("SaveBuildsTip"));
         openFileButton.setToolTipText(Bundle.getMessage("OpenFileButtonTip"));
         runFileButton.setToolTipText(Bundle.getMessage("RunFileButtonTip"));
@@ -174,6 +175,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         select.add(runFileButton);
         select.add(switchListsButton);
         select.add(terminateButton);
+        select.add(resetButton);
 
         JPanel save = new JPanel();
         save.setBorder(BorderFactory.createTitledBorder(""));
@@ -204,6 +206,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         addButtonAction(runFileButton);
         addButtonAction(switchListsButton);
         addButtonAction(terminateButton);
+        addButtonAction(resetButton);
         addButtonAction(saveButton);
 
         ButtonGroup showGroup = new ButtonGroup();
@@ -295,6 +298,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         // listen for location switch list changes
         addPropertyChangeLocations();
 
+        // now load train icons on panels
+        trainManager.loadTrainIcons();
+
         // auto save
         AutoSave.start();
     }
@@ -356,6 +362,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
         if (ae.getSource() == terminateButton) {
             trainManager.terminateSelectedTrains(getSortByList());
+        }
+        if (ae.getSource() == resetButton) {
+            trainManager.resetTrains();
         }
         if (ae.getSource() == saveButton) {
             storeValues();

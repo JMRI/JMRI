@@ -42,6 +42,7 @@ public class YardEditFrame extends TrackEditFrame {
         // finish
         dropPanel.setVisible(false); // don't show drop and pick up panel
         pickupPanel.setVisible(false);
+        panelQuickService.setVisible(true);
         pack();
         setVisible(true);
     }

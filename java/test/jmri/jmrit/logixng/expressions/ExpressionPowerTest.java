@@ -1,5 +1,14 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -22,10 +31,9 @@ import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test ExpressionPower
@@ -93,70 +101,59 @@ public class ExpressionPowerTest extends AbstractDigitalExpressionTestBase {
         powerManager.setPower(PowerManager.ON);
 
         expression2 = new ExpressionPower("IQDE321", null);
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Power is On. Ignore unknown state", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertNull( expression2.getUserName(), "Username matches");
+        assertEquals( "Power is On. Ignore unknown state", expression2.getLongDescription(), "String matches");
 
         expression2 = new ExpressionPower("IQDE321", "My power");
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertEquals("Username matches", "My power", expression2.getUserName());
-        Assert.assertEquals("String matches", "Power is On. Ignore unknown state", expression2.getLongDescription());
+        assertNotNull( expression2, "object exists");
+        assertEquals( "My power", expression2.getUserName(), "Username matches");
+        assertEquals( "Power is On. Ignore unknown state", expression2.getLongDescription(), "String matches");
 
-        boolean thrown = false;
-        try {
-            // Illegal system name
-            new ExpressionPower("IQE55:12:XY11", null);
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        IllegalArgumentException ex = assertThrows( IllegalArgumentException.class, () -> {
+            var t = new ExpressionPower("IQE55:12:XY11", null);
+            fail("Should have thrown, created " + t);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
 
-        thrown = false;
-        try {
-            // Illegal system name
-            new ExpressionPower("IQE55:12:XY11", "A name");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        ex = assertThrows( IllegalArgumentException.class, () -> {
+            var t = new ExpressionPower("IQE55:12:XY11", "A name");
+            fail("Should have thrown, created " + t);
+        }, "Illegal system name Expected exception thrown");
+        assertNotNull(ex);
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == expressionPower.getChildCount());
+        assertEquals( 0, expressionPower.getChildCount(), "getChildCount() returns 0");
 
-        boolean hasThrown = false;
-        try {
-            expressionPower.getChild(0);
-        } catch (UnsupportedOperationException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        UnsupportedOperationException ex = assertThrows( UnsupportedOperationException.class, () ->
+            expressionPower.getChild(0), "Exception is thrown");
+        assertEquals( "Not supported.", ex.getMessage(), "Error message is correct");
     }
 
     @Test
     public void testPowerState() {
-        Assert.assertEquals("String matches", "Off", ExpressionPower.PowerState.Off.toString());
-        Assert.assertEquals("String matches", "On", ExpressionPower.PowerState.On.toString());
-        Assert.assertEquals("String matches", "Idle", ExpressionPower.PowerState.Idle.toString());
-        Assert.assertEquals("String matches", "On or Off", ExpressionPower.PowerState.OnOrOff.toString());
+        assertEquals( "Off", ExpressionPower.PowerState.Off.toString(), "String matches");
+        assertEquals( "On", ExpressionPower.PowerState.On.toString(), "String matches");
+        assertEquals( "Idle", ExpressionPower.PowerState.Idle.toString(), "String matches");
+        assertEquals( "On or Off", ExpressionPower.PowerState.OnOrOff.toString(), "String matches");
 
-        Assert.assertTrue("objects are equal", ExpressionPower.PowerState.Off == ExpressionPower.PowerState.get(PowerManager.OFF));
-        Assert.assertTrue("objects are equal", ExpressionPower.PowerState.On == ExpressionPower.PowerState.get(PowerManager.ON));
-        Assert.assertTrue("objects are equal", ExpressionPower.PowerState.Idle == ExpressionPower.PowerState.get(PowerManager.IDLE));
-        Assert.assertTrue("objects are equal", ExpressionPower.PowerState.Unknown == ExpressionPower.PowerState.get(PowerManager.UNKNOWN));
+        assertSame( ExpressionPower.PowerState.Off, ExpressionPower.PowerState.get(PowerManager.OFF), "objects are equal");
+        assertSame( ExpressionPower.PowerState.On, ExpressionPower.PowerState.get(PowerManager.ON), "objects are equal");
+        assertSame( ExpressionPower.PowerState.Idle, ExpressionPower.PowerState.get(PowerManager.IDLE), "objects are equal");
+        assertSame( ExpressionPower.PowerState.Unknown, ExpressionPower.PowerState.get(PowerManager.UNKNOWN), "objects are equal");
 //        Assert.assertTrue("objects are equal", ExpressionPower.PowerState.OnOrOff == ExpressionPower.PowerState.get(-1));
 
-        Assert.assertEquals("ID matches", PowerManager.ON, ExpressionPower.PowerState.On.getID());
-        Assert.assertEquals("ID matches", PowerManager.OFF, ExpressionPower.PowerState.Off.getID());
-        Assert.assertEquals("ID matches", PowerManager.IDLE, ExpressionPower.PowerState.Idle.getID());
-        Assert.assertEquals("ID matches", -1, ExpressionPower.PowerState.OnOrOff.getID());
+        assertEquals( PowerManager.ON, ExpressionPower.PowerState.On.getID(), "ID matches");
+        assertEquals( PowerManager.OFF, ExpressionPower.PowerState.Off.getID(), "ID matches");
+        assertEquals( PowerManager.IDLE, ExpressionPower.PowerState.Idle.getID(), "ID matches");
+        assertEquals( -1, ExpressionPower.PowerState.OnOrOff.getID(), "ID matches");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", LogixNG_Category.ITEM == _base.getCategory());
+        assertSame( LogixNG_Category.ITEM, _base.getCategory(), "Category matches");
     }
 
     @Test
@@ -164,15 +161,15 @@ public class ExpressionPowerTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
 
-        Assert.assertTrue("Power".equals(expressionPower.getShortDescription()));
-        Assert.assertTrue("Power is On. Ignore unknown state".equals(expressionPower.getLongDescription()));
+        assertEquals( "Power", expressionPower.getShortDescription());
+        assertEquals( "Power is On. Ignore unknown state", expressionPower.getLongDescription());
         expressionPower.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionPower.setBeanState(ExpressionPower.PowerState.Off);
-        Assert.assertTrue("Power is Off. Ignore unknown state".equals(expressionPower.getLongDescription()));
+        assertEquals("Power is Off. Ignore unknown state", expressionPower.getLongDescription());
         expressionPower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
-        Assert.assertTrue("Power is not Off. Ignore unknown state".equals(expressionPower.getLongDescription()));
+        assertEquals( "Power is not Off. Ignore unknown state", expressionPower.getLongDescription());
         expressionPower.setBeanState(ExpressionPower.PowerState.OnOrOff);
-        Assert.assertTrue("Power is not On or Off. Ignore unknown state".equals(expressionPower.getLongDescription()));
+        assertEquals( "Power is not On or Off. Ignore unknown state", expressionPower.getLongDescription());
     }
 
     @Test
@@ -184,98 +181,97 @@ public class ExpressionPowerTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG
         conditionalNG.setEnabled(false);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
         // Turn the power on. This should not execute the conditional.
         powerManager.setPower(PowerManager.ON);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
         // Close the switch. This should not execute the conditional.
         powerManager.setPower(PowerManager.OFF);
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
         // Turn the power on. This should execute the conditional.
         powerManager.setPower(PowerManager.ON);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        assertTrue( atomicBoolean.get(), "atomicBoolean is true");
         // Clear the atomic boolean.
         atomicBoolean.set(false);
         // Turn the power off. This should not execute the conditional.
         powerManager.setPower(PowerManager.OFF);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
 
         // Test IS_NOT
         expressionPower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         // Turn the power on. This should not execute the conditional.
         powerManager.setPower(PowerManager.ON);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        assertFalse( atomicBoolean.get(), "atomicBoolean is false");
         // Turn the power off. This should not execute the conditional.
         powerManager.setPower(PowerManager.OFF);
         // The action should now be executed so the atomic boolean should be true
-        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        assertTrue( atomicBoolean.get(), "atomicBoolean is true");
     }
 
     @Test
     public void testExpression2() throws SocketAlreadyConnectedException, JmriException {
         expressionPower.setBeanState(ExpressionPower.PowerState.Off);
         powerManager.setPower(PowerManager.OFF);
-        Assert.assertTrue(expressionPower.evaluate());
+        assertTrue(expressionPower.evaluate());
         powerManager.setPower(PowerManager.ON);
-        Assert.assertFalse(expressionPower.evaluate());
+        assertFalse(expressionPower.evaluate());
         powerManager.setPower(PowerManager.IDLE);
-        Assert.assertFalse(expressionPower.evaluate());
+        assertFalse(expressionPower.evaluate());
         powerManager.setPower(PowerManager.UNKNOWN);
-        Assert.assertFalse(expressionPower.evaluate());
+        assertFalse(expressionPower.evaluate());
 
         expressionPower.setBeanState(ExpressionPower.PowerState.On);
         powerManager.setPower(PowerManager.OFF);
-        Assert.assertFalse(expressionPower.evaluate());
+        assertFalse(expressionPower.evaluate());
         powerManager.setPower(PowerManager.ON);
-        Assert.assertTrue(expressionPower.evaluate());
+        assertTrue(expressionPower.evaluate());
         powerManager.setPower(PowerManager.IDLE);
-        Assert.assertFalse(expressionPower.evaluate());
+        assertFalse(expressionPower.evaluate());
         powerManager.setPower(PowerManager.UNKNOWN);
-        Assert.assertFalse(expressionPower.evaluate());
+        assertFalse(expressionPower.evaluate());
 
         expressionPower.setBeanState(ExpressionPower.PowerState.Idle);
         powerManager.setPower(PowerManager.OFF);
-        Assert.assertFalse(expressionPower.evaluate());
+        assertFalse(expressionPower.evaluate());
         powerManager.setPower(PowerManager.ON);
-        Assert.assertFalse(expressionPower.evaluate());
+        assertFalse(expressionPower.evaluate());
         powerManager.setPower(PowerManager.IDLE);
-        Assert.assertTrue(expressionPower.evaluate());
+        assertTrue(expressionPower.evaluate());
         powerManager.setPower(PowerManager.UNKNOWN);
-        Assert.assertFalse(expressionPower.evaluate());
+        assertFalse(expressionPower.evaluate());
 
         expressionPower.setBeanState(ExpressionPower.PowerState.OnOrOff);
         expressionPower.set_Is_IsNot(Is_IsNot_Enum.Is);
         powerManager.setPower(PowerManager.OFF);
-        Assert.assertTrue(expressionPower.evaluate());
+        assertTrue(expressionPower.evaluate());
         powerManager.setPower(PowerManager.ON);
-        Assert.assertTrue(expressionPower.evaluate());
+        assertTrue(expressionPower.evaluate());
         powerManager.setPower(PowerManager.IDLE);
-        Assert.assertFalse(expressionPower.evaluate());
+        assertFalse(expressionPower.evaluate());
         powerManager.setPower(PowerManager.UNKNOWN);
-        Assert.assertFalse(expressionPower.evaluate());
+        assertFalse(expressionPower.evaluate());
 
         expressionPower.setBeanState(ExpressionPower.PowerState.OnOrOff);
         expressionPower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         powerManager.setPower(PowerManager.OFF);
-        Assert.assertFalse(expressionPower.evaluate());
+        assertFalse(expressionPower.evaluate());
         powerManager.setPower(PowerManager.ON);
-        Assert.assertFalse(expressionPower.evaluate());
+        assertFalse(expressionPower.evaluate());
         powerManager.setPower(PowerManager.IDLE);
-        Assert.assertTrue(expressionPower.evaluate());
+        assertTrue(expressionPower.evaluate());
         powerManager.setPower(PowerManager.UNKNOWN);
-        Assert.assertTrue(expressionPower.evaluate());
+        assertTrue(expressionPower.evaluate());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, JmriException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -316,12 +312,12 @@ public class ExpressionPowerTest extends AbstractDigitalExpressionTestBase {
         powerManager = InstanceManager.getDefault(PowerManager.class);
         powerManager.setPower(PowerManager.ON);
 
-        if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
         logixNG.activate();
         logixNG.setEnabled(true);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

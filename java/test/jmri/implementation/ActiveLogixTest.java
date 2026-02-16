@@ -1,13 +1,15 @@
 package jmri.implementation;
 
-import jmri.*;
-import jmri.util.JUnitUtil;
-import jmri.util.ThreadingUtil;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.junit.Assert;
+import jmri.*;
+import jmri.configurexml.JmriConfigureXmlException;
+import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -23,21 +25,6 @@ import org.junit.jupiter.api.*;
  */
 public class ActiveLogixTest {
 
-    @BeforeAll
-    public static void setUp() throws Exception {
-        JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.initTimeProviderManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalSensorManager();
-
-        // load and activate sample file
-        java.io.File f = new java.io.File("java/test/jmri/implementation/configurexml/load/ActiveLogixTestDefinitions.xml");
-        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {};
-        cm.load(f);
-        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
-    }
-
     private void setSensor(Sensor s, int state) {
         try {
             s.setState(state);
@@ -48,9 +35,9 @@ public class ActiveLogixTest {
     @Test
     public void testTurnoutDrivesSensor() {
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout("IT101");
-        Assert.assertNotNull(turnout);
+        assertNotNull(turnout);
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor("IS101");
-        Assert.assertNotNull(sensor);
+        assertNotNull(sensor);
 
         ThreadingUtil.runOnLayout(()->{turnout.setCommandedState(Turnout.THROWN);});
         JUnitUtil.waitFor(()->{return sensor.getState()==Sensor.ACTIVE;},"sensor ACTIVE");
@@ -66,19 +53,19 @@ public class ActiveLogixTest {
     @Test
     public void testSensorLogicDrivesTurnout() {
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout("IT201");
-        Assert.assertNotNull(turnout);
+        assertNotNull(turnout);
         Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).getSensor("IS201");
-        Assert.assertNotNull(sensor1);
+        assertNotNull(sensor1);
         Sensor sensor2 = InstanceManager.getDefault(SensorManager.class).getSensor("IS202");
-        Assert.assertNotNull(sensor2);
+        assertNotNull(sensor2);
         Sensor sensor3 = InstanceManager.getDefault(SensorManager.class).getSensor("IS203");
-        Assert.assertNotNull(sensor3);
+        assertNotNull(sensor3);
         Sensor sensor4 = InstanceManager.getDefault(SensorManager.class).getSensor("IS204");
-        Assert.assertNotNull(sensor4);
+        assertNotNull(sensor4);
         Sensor sensor5 = InstanceManager.getDefault(SensorManager.class).getSensor("IS205");
-        Assert.assertNotNull(sensor5);
+        assertNotNull(sensor5);
         Sensor sensor6 = InstanceManager.getDefault(SensorManager.class).getSensor("IS206");
-        Assert.assertNotNull(sensor6);
+        assertNotNull(sensor6);
 
         // start all inactive
         ThreadingUtil.runOnLayout(()->{setSensor(sensor1, Sensor.INACTIVE);});
@@ -102,13 +89,13 @@ public class ActiveLogixTest {
     @Test
     public void testCheckFastClock() throws TimebaseRateException {
         Turnout turnout1 = InstanceManager.getDefault(TurnoutManager.class).getTurnout("IT301");
-        Assert.assertNotNull(turnout1);
+        assertNotNull(turnout1);
         Turnout turnout2 = InstanceManager.getDefault(TurnoutManager.class).getTurnout("IT302");
-        Assert.assertNotNull(turnout2);
+        assertNotNull(turnout2);
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor("IS301");
-        Assert.assertNotNull(sensor);
+        assertNotNull(sensor);
         Timebase timebase = InstanceManager.getDefault(Timebase.class);
-        Assert.assertNotNull(timebase);
+        assertNotNull(timebase);
         timebase.setRun(false);
         Calendar cal = new GregorianCalendar();
         cal.set(2018, 1, 12, 2, 00, 00); // 02:00:00
@@ -134,13 +121,13 @@ public class ActiveLogixTest {
     @Test
     public void testMemoryAccess() {
         Memory memory1 = InstanceManager.getDefault(MemoryManager.class).getMemory("IM401");
-        Assert.assertNotNull(memory1);
+        assertNotNull(memory1);
         Memory memory2 = InstanceManager.getDefault(MemoryManager.class).getMemory("IM402");
-        Assert.assertNotNull(memory1);
+        assertNotNull(memory2);
         Memory memory3 = InstanceManager.getDefault(MemoryManager.class).getMemory("IM403");
-        Assert.assertNotNull(memory3);
+        assertNotNull(memory3);
         Memory memory4 = InstanceManager.getDefault(MemoryManager.class).getMemory("IM404");
-        Assert.assertNotNull(memory4);
+        assertNotNull(memory4);
 
         // test the IM401 to IM402 conditional
         ThreadingUtil.runOnLayout(()->{memory2.setValue("bbb");});
@@ -169,9 +156,9 @@ public class ActiveLogixTest {
     @Test
     public void testLightDrivesLight() {
         Light light1 = InstanceManager.getDefault(LightManager.class).getLight("IL501");
-        Assert.assertNotNull(light1);
+        assertNotNull(light1);
         Light light2 = InstanceManager.getDefault(LightManager.class).getLight("IL502");
-        Assert.assertNotNull(light2);
+        assertNotNull(light2);
 
         ThreadingUtil.runOnLayout(()->{light1.setState(Light.ON);});
         JUnitUtil.waitFor(()->{return light2.getState()==Light.OFF;},"light Off");
@@ -184,8 +171,23 @@ public class ActiveLogixTest {
 
     }
 
+    @BeforeAll
+    public static void setUp() throws JmriConfigureXmlException {
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+
+        // load and activate sample file
+        java.io.File f = new java.io.File("java/test/jmri/implementation/configurexml/load/ActiveLogixTestDefinitions.xml");
+        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {};
+        cm.load(f);
+        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
+    }
+
     @AfterAll
-    public static void tearDown() throws Exception {
+    public static void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

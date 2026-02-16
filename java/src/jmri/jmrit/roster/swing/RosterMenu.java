@@ -19,6 +19,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides a context-specific menu for handling the Roster.
  *
+ * For DecoderPro's menus, see the
+ * xml/config/parts/jmri/jmrit/roster/swing/RosterFrameMenu.xml file.
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008
  * @author Dennis Miller Copyright (C) 2005
  * @see jmri.jmrit.roster.RosterEntry

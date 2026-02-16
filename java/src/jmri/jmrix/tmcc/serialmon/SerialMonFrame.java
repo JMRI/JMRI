@@ -173,7 +173,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 case 14:
                                     
                                 case 15:
-                                    
+                                    return "TMCC2 - Consist ID out of Range (Consist ID must be between 1-15)";                                    
                                 case 16:
                                     return "TMCC2 - Engine " + A + " - Clear Train (Consist) Assignment";
                                 case 17:
@@ -515,7 +515,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 14:
                                 
                             case 15:
-                                
+                                return "TMCC1 - Consist ID out of Range (Consist ID must be between 1-15)";
                             case 16:
                                 return "TMCC1 - Engine " + A + " - Clear Train (Consist) Assignment";
                             case 17:

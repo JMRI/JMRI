@@ -327,7 +327,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 return cl.getLoadType();
             }
         }
-        return "error"; // NOI18N
+        return Bundle.getMessage("ErrorTitle"); // NOI18N
     }
 
     /**
@@ -372,7 +372,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 }
             }
         }
-        return "error"; // NOI18N
+        return Bundle.getMessage("ErrorTitle"); // NOI18N
     }
 
     public void setHazardous(String type, String name, boolean isHazardous) {
@@ -666,7 +666,11 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 for (Element eCarLoad : eCarLoads) {
                     if ((a = eCarLoad.getAttribute(Xml.NAME)) != null) {
                         String name = a.getValue();
-                        addName(type, name);
+                        if (name.trim().equals(TrainCommon.HYPHEN)) {
+                            log.error("Illegal load name ({}) for type ({})", name, type);
+                        } else {
+                            addName(type, name);
+                        }
                         if ((a = eCarLoad.getAttribute(Xml.PRIORITY)) != null) {
                             setPriority(type, name, a.getValue());
                         }

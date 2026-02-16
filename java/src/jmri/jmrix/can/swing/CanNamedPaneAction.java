@@ -59,7 +59,10 @@ public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction
 
         try {
             ((CanPanelInterface) p).initComponents(memo);
-            return p;
+            if (java.awt.GraphicsEnvironment.isHeadless()) {
+                // don't want this to be handled via Swing
+                return null;
+            }
         } catch (Exception ex) {
             log.warn("could not init pane class: {}", paneClass, ex);
         }

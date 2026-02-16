@@ -1,10 +1,8 @@
 package jmri.jmrit.logixng.implementation.swing;
 
-import java.io.IOException;
-
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
  * Test ErrorHandlingDialog
@@ -16,12 +14,11 @@ public class ErrorHandlingDialogTest {
     @Test
     public void testCtor() {
         ErrorHandlingDialog obj = new ErrorHandlingDialog();
-        Assert.assertNotNull(obj);
+        Assertions.assertNotNull(obj);
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() throws IOException {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
@@ -30,7 +27,7 @@ public class ErrorHandlingDialogTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();

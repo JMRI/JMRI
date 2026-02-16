@@ -1,6 +1,10 @@
 package jmri.jmrit.sound;
 
-import org.junit.Assert;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,11 +24,9 @@ public class WavBufferTest {
             data[i] = (byte) idata[i];
         }
 
-        try {
-            new WavBuffer(data);
-        } catch (Exception ex) {
-            Assert.fail("Unexpected exception thrown");
-        }
+        WavBuffer t = new WavBuffer(data);
+        assertNotNull(t);
+
     }
 
     @Test
@@ -36,9 +38,9 @@ public class WavBufferTest {
 
         WavBuffer w = new WavBuffer(data);
 
-        Assert.assertTrue("sample rate", 11025.0 == w.getSampleRate());
-        Assert.assertEquals("sample size", 8, w.getSampleSizeInBits());
-        Assert.assertEquals("channels   ", 1, w.getChannels());
+        assertEquals( 11025.0, w.getSampleRate(), "sample rate");
+        assertEquals( 8, w.getSampleSizeInBits(), "sample size");
+        assertEquals( 1, w.getChannels(), "channels");
     }
 
     @Test
@@ -50,14 +52,14 @@ public class WavBufferTest {
 
         WavBuffer w = new WavBuffer(data);
 
-        Assert.assertEquals("data header offset   ", 48, w.findHeader(0x64, 0x61, 0x74, 0x61));
-        Assert.assertEquals("data start offset    ", 56, w.getDataStart());
-        Assert.assertEquals("data size            ", 32, w.getDataSize());
-        Assert.assertEquals("data end offset      ", 56 + 32 - 1, w.getDataEnd());
+        assertEquals( 48, w.findHeader(0x64, 0x61, 0x74, 0x61), "data header offset");
+        assertEquals( 56, w.getDataStart(), "data start offset");
+        assertEquals( 32, w.getDataSize(), "data size");
+        assertEquals( 56 + 32 - 1, w.getDataEnd(), "data end offset");
 
     }
 
-    int[] idata = new int[]{
+    private final int[] idata = new int[]{
         0x52, 0x49, 0x46, 0x46, 0xC4, 0x00, 0x00, 0x00, 0x57, 0x41, 0x56, 0x45, 0x66, 0x6d, 0x74, 0x20,
         0x10, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x11, 0x2b, 0x00, 0x00, 0x11, 0x2b, 0x00, 0x00,
         0x01, 0x00, 0x08, 0x00, 0x66, 0x61, 0x63, 0x74, 0x04, 0x00, 0x00, 0x00, 0xc0, 0x24, 0x00, 0x00,
@@ -72,6 +74,17 @@ public class WavBufferTest {
         0x31, 0x30, 0x20, 0x70, 0x61, 0x73, 0x73, 0x69, 0x6e, 0x67, 0x20, 0x63, 0x61, 0x70, 0x74, 0x75,
         0x72, 0x65, 0x00, 0x00
     };
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
     //private final static Logger log = LoggerFactory.getLogger(WavBufferTest.class);
 
 }

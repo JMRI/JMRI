@@ -1,6 +1,5 @@
 package jmri.jmrix.openlcb.swing.monitor;
 
-import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.can.CanListener;
@@ -8,7 +7,7 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanPanelInterface;
-import jmri.jmrix.openlcb.OlcbConstants;
+import jmri.jmrix.openlcb.OlcbEventNameStore;
 
 import org.openlcb.AddressedMessage;
 import org.openlcb.EventID;
@@ -36,24 +35,22 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     public MonitorPane() {
         super();
         pm = InstanceManager.getDefault(UserPreferencesManager.class);
-        tagManager = InstanceManager.getDefault(IdTagManager.class);
     }
 
     CanSystemConnectionMemo memo;
     AliasMap aliasMap;
     MessageBuilder messageBuilder;
     OlcbInterface olcbInterface;
-
-    IdTagManager tagManager;
+    OlcbEventNameStore nameStore;
 
     /** show source node name on a separate line when available */
     final JCheckBox nodeNameCheckBox = new JCheckBox();
 
     /** Show the first EventID in the message on a separate line */
-    final JCheckBox eventCheckBox = new JCheckBox();
+    final JCheckBox eventNameCheckBox = new JCheckBox();
 
     /** Show all EventIDs in the message each on a separate line */
-    final JCheckBox eventAllCheckBox = new JCheckBox();
+    final JCheckBox eventUsesCheckBox = new JCheckBox();
 
     /* Preferences setup */
     final String nodeNameCheck = this.getClass().getName() + ".NodeName";
@@ -73,6 +70,8 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         this.memo = memo;
 
         memo.getTrafficController().addCanConsoleListener(this);
+        
+        nameStore = memo.get(OlcbEventNameStore.class);
 
         aliasMap = memo.get(org.openlcb.can.AliasMap.class);
         messageBuilder = new MessageBuilder(aliasMap);
@@ -110,8 +109,8 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         }
 
         pm.setSimplePreferenceState(nodeNameCheck, nodeNameCheckBox.isSelected());
-        pm.setSimplePreferenceState(eventCheck, eventCheckBox.isSelected());
-        pm.setSimplePreferenceState(eventAllCheck, eventAllCheckBox.isSelected());
+        pm.setSimplePreferenceState(eventCheck, eventNameCheckBox.isSelected());
+        pm.setSimplePreferenceState(eventAllCheck, eventUsesCheckBox.isSelected());
 
         super.dispose();
     }
@@ -126,15 +125,15 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         nodeNameCheckBox.setSelected(pm.getSimplePreferenceState(nodeNameCheck));
         p.add(nodeNameCheckBox);
 
-        eventCheckBox.setText(Bundle.getMessage("CheckBoxShowEvent"));
-        eventCheckBox.setVisible(true);
-        eventCheckBox.setSelected(pm.getSimplePreferenceState(eventCheck));
-        p.add(eventCheckBox);
+        eventNameCheckBox.setText(Bundle.getMessage("CheckBoxShowEventName"));
+        eventNameCheckBox.setVisible(true);
+        eventNameCheckBox.setSelected(pm.getSimplePreferenceState(eventCheck));
+        p.add(eventNameCheckBox);
 
-        eventAllCheckBox.setText(Bundle.getMessage("CheckBoxShowEventAll"));
-        eventAllCheckBox.setVisible(true);
-        eventAllCheckBox.setSelected(pm.getSimplePreferenceState(eventAllCheck));
-        p.add(eventAllCheckBox);
+        eventUsesCheckBox.setText(Bundle.getMessage("CheckBoxShowEventUses"));
+        eventUsesCheckBox.setVisible(true);
+        eventUsesCheckBox.setSelected(pm.getSimplePreferenceState(eventAllCheck));
+        p.add(eventUsesCheckBox);
 
         parent.add(p);
         super.addCustomControlPanes(parent);
@@ -247,6 +246,8 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                             formatted = prefix + ": Events with Payload unknown";
                             break;
                     }
+                } else if (((header & 0x0F000000) == 0x0F000000) && (content.length > 0)) {
+                    formatted = prefix + ": Stream Frame " + raw;
                 } else {
                     formatted = prefix + ": Unknown message " + raw;
                 }
@@ -290,42 +291,37 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                         }
                     }
                 }
-                if ((eventCheckBox.isSelected() || eventAllCheckBox.isSelected()) && olcbInterface != null 
+                if ((eventNameCheckBox.isSelected() || eventUsesCheckBox.isSelected()) && olcbInterface != null 
                         && msg instanceof EventMessage) {
                     EventID ev = ((EventMessage) msg).getEventID();
-                    log.debug("event message with event {}", ev);
+                    log.trace("event message with event {}", ev);
 
-                    // this could be converted to EventTablePane.isEventNameTagPresent
-                    // but that would duplicate the retrieval of the bean and user name
-                    var tag = tagManager.getIdTag(OlcbConstants.tagPrefix+ev.toShortString());
-                    String tagname = null;
-                    if (tag != null
-                            && (tagname = tag.getUserName()) != null) {
-                        if (! tagname.isEmpty()) {
-                            sb.append("\n   Name: ");
-                            sb.append(tagname);
+                    if (eventNameCheckBox.isSelected()) {
+                        if (nameStore.hasEventName(ev)) {   
+                            sb.append("    Name: ");        // append to PCER line
+                            sb.append(nameStore.getEventName(ev));
+                        }
+                        
+                        // check for time message
+                        if ((content[0] == 1) && (content[1] == 1) && (content[2] == 0) && (content[3] == 0) && (content[4] == 1)) {
+                            sb.append("    ");  // spaces for formatting like Name: above
+                            sb.append(formatTimeMessage(content));
                         }
                     }
 
-                    // check for time message
-                    if ((content[0] == 1) && (content[1] == 1) && (content[2] == 0) && (content[3] == 0) && (content[4] == 1)) {
-                        sb.append("\n    ");
-                        sb.append(formatTimeMessage(content));
-                    }
+                    if (eventUsesCheckBox.isSelected()) {
+                        EventTable.EventTableEntry[] descr =
+                                olcbInterface.getEventTable().getEventInfo(ev).getAllEntries();
+                        if (descr.length > 0) {
+                            sb.append("\n   Uses: ");
+                            sb.append(descr[0].getDescription());
 
-                    EventTable.EventTableEntry[] descr =
-                            olcbInterface.getEventTable().getEventInfo(ev).getAllEntries();
-                    if (descr.length > 0) {
-                        sb.append("\n   Uses: ");
-                        sb.append(descr[0].getDescription());
-
-                        if (eventAllCheckBox.isSelected()) {
                             for (int i = 1; i < descr.length; i++) {  // entry 0 done above, so skipped here
                                 sb.append("\n         ");
                                 sb.append(descr[i].getDescription());
                             }
                         }
-                    }                        
+                    }                    
                 }
                 formatted = sb.toString();
             }
@@ -546,13 +542,17 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     @Override
     public synchronized void message(CanMessage l) {  // receive a message and log it
         log.debug("Message: {}", l);
-        format("S", l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
+        if ("H".equals(l.getSourceLetter())) {
+            log.debug("Suppressing message with source==H to avoid double counting");
+            return;
+        }
+        format(l.getSourceLetter(), l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
     }
 
     @Override
     public synchronized void reply(CanReply l) {  // receive a reply and log it
         log.debug("Reply: {}", l);
-        format("R", l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
+        format(l.getSourceLetter(), l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
     }
 
     private final static Logger log = LoggerFactory.getLogger(MonitorPane.class);
