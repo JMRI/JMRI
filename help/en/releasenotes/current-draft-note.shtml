@@ -518,7 +518,9 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Update "Export Complete Roster" process so that
+                upon "Import Complete Roster" the images will
+                properly display without the need to rebuild the roster.</li>
         </ul>
 
     <h3>Routes</h3>
