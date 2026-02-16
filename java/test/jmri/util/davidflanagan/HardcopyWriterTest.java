@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import jmri.util.junit.annotations.DisabledIfHeadless;
@@ -134,6 +136,48 @@ public class HardcopyWriterTest {
                 "totalPixelValue should match the sum of areas");
 
         hcw.dispose();
+    }
+
+    @Test
+    public void testStretch() {
+        List<HardcopyWriter.Column> columns = new ArrayList<>();
+        columns.add(new HardcopyWriter.Column(0, 1));
+        columns.add(new HardcopyWriter.Column(0, 2));
+        columns.add(new HardcopyWriter.Column(0, 3));
+        columns.add(new HardcopyWriter.Column(0, 4));
+
+        int gap = 2;
+        columns = HardcopyWriter.Column.stretchColumns(columns, 500, gap);
+
+        int totalWidth = 0;
+        int lastColEnd = -gap;
+        for (HardcopyWriter.Column column : columns) {
+            Assertions.assertEquals(lastColEnd + gap, column.position, "column position");
+            totalWidth += column.width;
+            lastColEnd = column.width + column.position;
+        }
+
+        totalWidth += (columns.size() - 1) * gap;
+        Assertions.assertEquals(500, totalWidth, "total width");
+        Assertions.assertEquals(500, lastColEnd, "lastColEnd");
+
+        columns.get(1).setWidth(50);
+        columns = HardcopyWriter.Column.stretchColumns(columns, 500, gap);
+
+        totalWidth = 0;
+        lastColEnd = -gap;
+        for (HardcopyWriter.Column column : columns) {
+            Assertions.assertEquals(lastColEnd + gap, column.position, "column position");
+            totalWidth += column.width;
+            lastColEnd = column.width + column.position;
+        }
+
+        totalWidth += (columns.size() - 1) * gap;
+        Assertions.assertEquals(500, totalWidth, "total width");
+        Assertions.assertEquals(500, lastColEnd, "lastColEnd");
+
+        Assertions.assertTrue(50 <= columns.get(1).getWidth(), "column width");
+        Assertions.assertTrue(60 >= columns.get(1).getWidth(), "column width");
     }
 
     // A utility method that takes a BufferedImage and Bounds and returns the

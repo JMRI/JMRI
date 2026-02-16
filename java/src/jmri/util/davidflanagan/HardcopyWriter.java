@@ -176,7 +176,8 @@ public class HardcopyWriter extends Writer {
             // Assume 100 DPI scale factor. This is used for testing only. If !isPreview, then things
             // are set according to the printer's capabilities.
             screenResolution = 100;
-            pagesizePixels = new Dimension(pagesizePoints.width * screenResolution / 72, pagesizePoints.height * screenResolution / 72);
+            pagesizePixels = new Dimension(pagesizePoints.width * screenResolution / 72,
+                    pagesizePoints.height * screenResolution / 72);
         }
 
         // skip printer selection if preview
@@ -604,7 +605,7 @@ public class HardcopyWriter extends Writer {
             }
 
             if (splitPos < 0) {
-                splitPos = 0;   // Even if it won't fit, we have to output something.   
+                splitPos = 0; // Even if it won't fit, we have to output something.   
             }
             // Now we can split the string and wrap it to the next line.
             String firstLine = line.substring(0, splitPos);
@@ -850,7 +851,8 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * This leaves the required amount of vertical space. If not, a page break is inserted.
+     * This leaves the required amount of vertical space. If not, a page break
+     * is inserted.
      * 
      * @param points The amount of vertical space to leave in points.
      */
@@ -952,9 +954,9 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Gets the current page num -- this can be used to determine when 
-     * a page break has happened. The page number may be increased whenever
-     * a newline is printed.
+     * Gets the current page num -- this can be used to determine when a page
+     * break has happened. The page number may be increased whenever a newline
+     * is printed.
      * 
      * @return the current page number
      */
@@ -1249,7 +1251,7 @@ public class HardcopyWriter extends Writer {
             this.base = base;
         }
 
-        /** 
+        /**
          * Gets the base alignment of the column
          * 
          * @return The base alignment of the column
@@ -1288,8 +1290,8 @@ public class HardcopyWriter extends Writer {
         }
 
         /**
-         * Create a Column with specified position and alignment.
-         * The width will be calculated up to the next column.
+         * Create a Column with specified position and alignment. The width will
+         * be calculated up to the next column.
          * 
          * @param position  The position of the column in points
          * @param alignment The alignment of the column
@@ -1303,8 +1305,8 @@ public class HardcopyWriter extends Writer {
         /**
          * Create a Column with specified position and width with LEFT alignment
          * 
-         * @param position  The position of the column in points
-         * @param width     The width of the column in points
+         * @param position The position of the column in points
+         * @param width    The width of the column in points
          */
         public Column(int position, int width) {
             this(position, width, Align.LEFT);
@@ -1332,7 +1334,6 @@ public class HardcopyWriter extends Writer {
          * Gets the starting position of text of length strlen (in points)
          * 
          * @param strlen The length of the text in points
-         * 
          * @return The starting position of the text in points
          */
         public int getStartPos(double strlen) {
@@ -1381,9 +1382,9 @@ public class HardcopyWriter extends Writer {
         }
 
         /**
-         * Stretch the columns to fit the specified width. The columns are assumed to
-         * be sorted by position. The input widths are treated as ratios. There is a gap
-         * between the columns.
+         * Stretch the columns to fit the specified width. The columns are
+         * assumed to be sorted by position. The input widths are treated as
+         * ratios. There is a gap between the columns.
          * 
          * @param columns The columns to stretch
          * @param width   The width to stretch to in points
@@ -1396,14 +1397,29 @@ public class HardcopyWriter extends Writer {
             for (Column column : columns) {
                 totalWidth += column.getWidth();
             }
-            double currentPosition = 0;
+
             double scale = (width - (columns.size() - 1) * gap) / totalWidth;
+            // Two passes -- the first to compute the starting column numbers
+            // the second to compute the widths
+            int accumulatedGap = 0;
+            int accumulatedWidth = 0;
             for (Column column : columns) {
-                newColumns.add(new Column((int) currentPosition, 
-                                          (int) (column.getWidth() * scale), 
-                                          column.getAlignment()));
-                currentPosition += column.getWidth() * scale + gap;
+                newColumns.add(new Column((int) Math.round(accumulatedWidth * scale) + accumulatedGap, 0,
+                        column.getAlignment()));
+                accumulatedWidth += column.getWidth();
+                accumulatedGap += gap;
             }
+
+            // Now set the widths
+            for (int i = 0; i < newColumns.size(); i++) {
+                Column column = newColumns.get(i);
+                if (i == newColumns.size() - 1) {
+                    column.setWidth(width - column.getPosition());
+                } else {
+                    column.setWidth(newColumns.get(i + 1).getPosition() - column.getPosition() - gap);
+                }
+            }
+
             return newColumns;
         }
     }
