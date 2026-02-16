@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb;
 
+import jmri.CollectingReporter;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -18,6 +19,9 @@ import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.ProducerIdentifiedMessage;
 import org.openlcb.implementations.EventTable;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -29,7 +33,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
  * @author Balazs Racz Copyright (C) 2023
  * @since 5.3.5
  */
-public final class OlcbReporter extends AbstractIdTagReporter {
+public final class OlcbReporter extends AbstractIdTagReporter implements CollectingReporter {
 
     /// How many bits does a reporter event range contain.
     private static final int REPORTER_BIT_COUNT = 16;
@@ -60,6 +64,8 @@ public final class OlcbReporter extends AbstractIdTagReporter {
 
     EventTable.EventTableEntryHolder baseEventTableEntryHolder = null;
 
+    Collection<Object> collection = new HashSet<>();
+    
     public OlcbReporter(String prefix, String address, CanSystemConnectionMemo memo) {
         super(prefix + "R" + address);
         this.memo = memo;
@@ -166,6 +172,15 @@ public final class OlcbReporter extends AbstractIdTagReporter {
     }
 
     /**
+     *  {@inheritDoc}
+     */
+    @Override
+    @CheckReturnValue
+    public Collection<Object> getCollection() {
+        return collection;
+    }
+    
+    /**
      * {@inheritDoc}
      *
      * Sorts by decoded EventID(s)
@@ -204,9 +219,6 @@ public final class OlcbReporter extends AbstractIdTagReporter {
     private void handleReport(long reportBits, boolean isEntry) {
         // The extra notify with null is necessary to clear past notifications even if we have a new report.
         notify(null);
-        if (!isEntry) {
-            return; // having cleared the reporter
-        }
         DccLocoAddress.Protocol protocol;
         long addressBits = reportBits & ADDRESS_MASK;
         int address = 0;
@@ -227,7 +239,9 @@ public final class OlcbReporter extends AbstractIdTagReporter {
         
         RailCom.Direction direction;
         
-        switch ( (int)(reportBits >> 14) & 0x3) {
+        int directionBits = (int)(reportBits >> 14) & 0x3;
+        
+        switch ( directionBits ) {
             case REPORTER_UNOCCUPIED_EXIT:
                 direction = RailCom.Direction.UNKNOWN;
                 break;
@@ -242,8 +256,15 @@ public final class OlcbReporter extends AbstractIdTagReporter {
                 direction = RailCom.Direction.UNKNOWN;
                 break;
         }
-        
+
         RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
+
+        if (!isEntry || directionBits == REPORTER_UNOCCUPIED_EXIT) {
+            collection.remove(tag);
+            return; // having cleared the reporter earlier
+        }
+        
+        collection.add(tag);
         tag.setOrientation(RailCom.Orientation.UNKNOWN);
         tag.setDirection(direction);
         tag.setDccAddress(new DccLocoAddress(address, protocol));
