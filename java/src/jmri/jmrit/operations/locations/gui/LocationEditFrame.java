@@ -126,7 +126,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JTextField locationNameTextField = new JTextField(Control.max_len_string_location_name);
 
     // text area
-    JTextArea commentTextArea = new JTextArea(2, 60);
+    JTextArea commentTextArea = new JTextArea(4, 60);
     JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     JColorChooser commentColorChooser = new JColorChooser();

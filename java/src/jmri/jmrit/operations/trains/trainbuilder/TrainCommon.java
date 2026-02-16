@@ -2408,7 +2408,11 @@ public class TrainCommon {
         if (string.contains(TEXT_COLOR_START)) {
             String c = string.substring(string.indexOf(TEXT_COLOR_START) + TEXT_COLOR_START.length());
             c = c.substring(0, c.indexOf("\""));
-            color = ColorUtil.stringToColor(c);
+            try {
+                color = ColorUtil.stringToColor(c);
+            } catch (IllegalArgumentException e) {
+                log.error("Exception when getting text color: {}", string, e);
+            }
         }
         return color;
     }

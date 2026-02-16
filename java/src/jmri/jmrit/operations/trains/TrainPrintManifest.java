@@ -104,13 +104,14 @@ public class TrainPrintManifest extends TrainCommon {
     }
 
     private static void print(HardcopyWriter writer, List<String> lines, boolean lastBlock) throws IOException {
+        int lineSize = getNumberOfLines(lines);
         if (Setup.isPrintNoPageBreaksEnabled() &&
                 writer.getCurrentLineNumber() != 0 &&
-                writer.getLinesPerPage() - writer.getCurrentLineNumber() < lines.size()) {
+                writer.getLinesPerPage() - writer.getCurrentLineNumber() < lineSize) {
             writer.pageBreak();
         }
         // check for exact page break
-        if (writer.getLinesPerPage() - writer.getCurrentLineNumber() + 1 == lines.size()) {
+        if (writer.getLinesPerPage() - writer.getCurrentLineNumber() + 1 == lineSize) {
             // eliminate blank line after page break
             String s = lines.get(lines.size() - 1);
             if (s.isBlank()) {
@@ -118,7 +119,7 @@ public class TrainPrintManifest extends TrainCommon {
             }
         }
         // use line feed for all lines?
-        if (lastBlock && writer.getLinesPerPage() - writer.getCurrentLineNumber() < lines.size()) {
+        if (lastBlock && writer.getLinesPerPage() - writer.getCurrentLineNumber() < lineSize) {
             lastBlock = false; // yes
         }
 
@@ -175,6 +176,23 @@ public class TrainPrintManifest extends TrainCommon {
             }
         }
         lines.clear();
+    }
+
+    /*
+     * When determining the number of lines to print, we need to ignore any
+     * horizontal lines.
+     */
+    private static int getNumberOfLines(List<String> lines) {
+        int numberLines = lines.size();
+        for (String line : lines) {
+            for (char c : line.toCharArray()) {
+                if (c == HORIZONTAL_LINE_CHAR) {
+                    numberLines--;
+                    break;
+                }
+            }
+        }
+        return numberLines;
     }
 
     /*
