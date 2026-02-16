@@ -22,24 +22,26 @@ public class DccLocoAddress implements LocoAddress {
         } else {
             protocol = LocoAddress.Protocol.DCC_SHORT;
         }
+        this.isConsist = false;
     }
 
     public DccLocoAddress(int number, LocoAddress.Protocol protocol) {
         this.number = number;
         this.protocol = protocol;
+        this.isConsist = false;
     }
 
     public DccLocoAddress(int number, LocoAddress.Protocol protocol, boolean isConsist) {
-        this(number, protocol);
+        this.number = number;
+        this.protocol = protocol;
         this.isConsist = isConsist;
     }
 
     public DccLocoAddress(DccLocoAddress l) {
         this.number = l.number;
         this.protocol = l.protocol;
+        this.isConsist = false;
     }
-
-    boolean isConsist = false;
     
     public boolean isConsistAddress () {
         return isConsist;
@@ -129,4 +131,6 @@ public class DccLocoAddress implements LocoAddress {
     }
     final protected long number;
     final protected LocoAddress.Protocol protocol;
+    final boolean isConsist;
+
 }
