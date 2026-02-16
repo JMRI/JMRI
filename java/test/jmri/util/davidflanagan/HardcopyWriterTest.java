@@ -106,6 +106,29 @@ public class HardcopyWriterTest {
         int col2PixelValue = totalPixelValue((BufferedImage) image, new Rectangle(291, 50, 190, 400));
         int col3PixelValue = totalPixelValue((BufferedImage) image, new Rectangle(538, 50, 275, 400));
 
+        if (totalPixelValue != headerPixelValue + col1PixelValue + col2PixelValue + col3PixelValue) {
+            // This is a bit of a hack, but it's the best we can do.
+            // Split the page up into  blocks and then print all a '*' for each block (if it
+            // has a non-zero pixel value)
+            // The size must divide the image size evenly.
+            int ySize = 10;
+            int xSize = 5;
+            for (int y = 0; y < image.getHeight(null); y += ySize) {
+                String row = String.format("%04d:", y);
+                for (int x = 0; x < image.getWidth(null); x += xSize) {
+                    if ((x % 100) == 0) {
+                        row += "|";
+                    }
+                    if (totalPixelValue((BufferedImage) image, new Rectangle(x, y, xSize, ySize)) > 0) {
+                        row += "*";
+                    } else {
+                        row += " ";
+                    }
+                }
+                System.out.println(row);
+            }
+        }
+
         Assertions.assertEquals(totalPixelValue,
                 headerPixelValue + col1PixelValue + col2PixelValue + col3PixelValue,
                 "totalPixelValue should match the sum of areas");
