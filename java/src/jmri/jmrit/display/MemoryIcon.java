@@ -27,7 +27,7 @@ import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
-import jmri.jmrit.throttle.ThrottleControlerUI;
+import jmri.jmrit.throttle.ThrottleControllerUI;
 
 /**
  * An icon to display a status of a Memory.
@@ -237,7 +237,7 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ThrottleControlerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
+                    ThrottleControllerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleController();
                     tf.toFront();
                     tf.setRosterEntry(re);
                 }

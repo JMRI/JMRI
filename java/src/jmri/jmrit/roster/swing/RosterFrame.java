@@ -275,7 +275,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             if (!checkIfEntrySelected()) {
                 return;
             }
-            ThrottleControlerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
+            ThrottleControllerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleController();
             tf.toFront();
             tf.setRosterEntry(re);
         });
@@ -1292,14 +1292,14 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         popupMenu.add(menuItem);
         menuItem = new JMenuItem(Bundle.getMessage("Throttle"));
         menuItem.addActionListener((ActionEvent e1) -> {
-            ThrottleControlersUIContainer tw = null;
+            ThrottleControllersUIContainer tw = null;
             for (RosterEntry re : rtable.getSelectedRosterEntries()) {
-                ThrottleControlerUI tf;
+                ThrottleControllerUI tf;
                 if (tw == null) {
-                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
-                    tw = tf.getThrottleControlersContainer();
+                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleController();
+                    tw = tf.getThrottleControllersContainer();
                 } else {
-                    tf = tw.newThrottleControler();
+                    tf = tw.newThrottleController();
                 }
                 tf.toFront();
                 tf.setRosterEntry(re);

@@ -17,7 +17,7 @@ import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrix.nce.*;
 import jmri.util.swing.JmriJOptionPane;
-import jmri.jmrit.throttle.ThrottleControlerUI;
+import jmri.jmrit.throttle.ThrottleControllerUI;
 
 /**
  * Pane for user edit of NCE Consists
@@ -460,7 +460,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 return;
             }
             consistNum = validConsist(consistTextField.getText());
-            ThrottleControlerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
+            ThrottleControllerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleController();
             tf.setAddress(consistNum, false); // use consist address
             if (JmriJOptionPane.showConfirmDialog(null,
                     Bundle.getMessage("DIALOG_Funct2Lead"), Bundle.getMessage("DIALOG_NceThrottle"),

@@ -18,42 +18,42 @@ import jmri.*;
 public class ThrottlesTableModel extends AbstractTableModel implements java.beans.PropertyChangeListener, ConsistListListener{
     
     // The JMRI Swing throttles manager
-    private final ThrottleControlersUIContainersManager throttleFrameManager = InstanceManager.getDefault(ThrottleFrameManager.class);
+    private final ThrottleControllersUIContainersManager throttleFrameManager = InstanceManager.getDefault(ThrottleFrameManager.class);
 
     @Override
     public int getRowCount() {
         int max = 0;
-        Iterator<ThrottleControlersUIContainer> twi = throttleFrameManager.iterator();
+        Iterator<ThrottleControllersUIContainer> twi = throttleFrameManager.iterator();
         while (twi.hasNext()) {
-            max = Math.max(max, twi.next().getNbThrottlesControlers());
+            max = Math.max(max, twi.next().getNbThrottlesControllers());
         }
         return max;
     }
 
     @Override
     public int getColumnCount() {
-        return throttleFrameManager.getNbThrottleControlersContainers();        
+        return throttleFrameManager.getNbThrottleControllersContainers();        
     }
 
     @Override
-    public ThrottleControlerUI getValueAt(int row_tf, int col_tw) {
-        ThrottleControlersUIContainer tw = throttleFrameManager.getThrottleControlersContainerAt(col_tw);
+    public ThrottleControllerUI getValueAt(int row_tf, int col_tw) {
+        ThrottleControllersUIContainer tw = throttleFrameManager.getThrottleControllersContainerAt(col_tw);
         if (tw == null) {
             return null;
         }
         //log.debug("{} selected", tw.getThrottleFrameAt(row_tf).getTitle());
-        return tw.getThrottleControlerAt(row_tf);
+        return tw.getThrottleControllerAt(row_tf);
     }
     
-    public void moveThrottleControler(ThrottleControlerUI tf, int row_tf, int col_tw ) {
-        tf.getThrottleControlersContainer().removeThrottleControler(tf);
-        tf.setThrottleControlersContainer(throttleFrameManager.getThrottleControlersContainerAt(col_tw));
-        throttleFrameManager.getThrottleControlersContainerAt(col_tw).addThrottleControlerAt(tf, row_tf);        
+    public void moveThrottleController(ThrottleControllerUI tf, int row_tf, int col_tw ) {
+        tf.getThrottleControllersContainer().removeThrottleController(tf);
+        tf.setThrottleControllersContainer(throttleFrameManager.getThrottleControllersContainerAt(col_tw));
+        throttleFrameManager.getThrottleControllersContainerAt(col_tw).addThrottleControllerAt(tf, row_tf);        
         fireTableStructureChanged();
     }
     
-    public ThrottleControlersUIContainer getThrottleControlersContainerAt( int col_tw) {
-        return throttleFrameManager.getThrottleControlersContainerAt(col_tw);
+    public ThrottleControllersUIContainer getThrottleControllersContainerAt( int col_tw) {
+        return throttleFrameManager.getThrottleControllersContainerAt(col_tw);
     }
 
     @Override

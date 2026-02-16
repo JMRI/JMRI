@@ -87,7 +87,7 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
             children.add(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getXml());
 
             // throttle windows
-            for (Iterator<ThrottleControlersUIContainer> i = InstanceManager.getDefault(ThrottleFrameManager.class).iterator(); i.hasNext();) {
+            for (Iterator<ThrottleControllersUIContainer> i = InstanceManager.getDefault(ThrottleFrameManager.class).iterator(); i.hasNext();) {
                 ThrottleWindow tw = (ThrottleWindow) i.next();
                 Element throttleElement = tw.getXml();
                 children.add(throttleElement);

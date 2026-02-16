@@ -22,7 +22,7 @@ import jmri.util.swing.JmriMouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrit.throttle.ThrottleControlerUI;
+import jmri.jmrit.throttle.ThrottleControllerUI;
 
 /**
  * An icon that displays the position of a loco on a panel.<p>
@@ -106,7 +106,7 @@ public class LocoIcon extends PositionableLabel {
         return false;
     }
 
-    ThrottleControlerUI tf = null;
+    ThrottleControllerUI tf = null;
 
     /**
      * Pop-up only if right click and not dragged
@@ -117,7 +117,7 @@ public class LocoIcon extends PositionableLabel {
             popup.add(new AbstractAction("Throttle") {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
+                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleController();
                     tf.setRosterEntry(_entry);
                     tf.toFront();
                 }

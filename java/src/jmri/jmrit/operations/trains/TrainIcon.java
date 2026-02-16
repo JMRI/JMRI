@@ -18,7 +18,7 @@ import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
-import jmri.jmrit.throttle.ThrottleControlerUI;
+import jmri.jmrit.throttle.ThrottleControllerUI;
 
 /**
  * An icon that displays the position of a train icon on a panel.
@@ -100,10 +100,10 @@ public class TrainIcon extends LocoIcon {
         return _consistNumber;
     }
 
-    ThrottleControlerUI _tf = null;
+    ThrottleControllerUI _tf = null;
 
     private void createThrottle() {
-        _tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleControler();
+        _tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleController();
         if (getConsistNumber() > 0) {
             _tf.setAddress(getConsistNumber(), false); // use consist address
             if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("SendFunctionCommands"), Bundle

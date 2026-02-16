@@ -17,12 +17,12 @@ import org.jdom2.Element;
  *
  * @author Glen Oberhauser
  */
-public class ThrottleFrameManager implements InstanceManagerAutoDefault, ThrottleControlersUIContainersManager {
+public class ThrottleFrameManager implements InstanceManagerAutoDefault, ThrottleControllersUIContainersManager {
 
     private int activeFrame;
     private int frameCounterID = 0; // to generate unique names for each card    
 
-    private ArrayList<ThrottleControlersUIContainer> throttleWindows; // synchronized access
+    private ArrayList<ThrottleControllersUIContainer> throttleWindows; // synchronized access
 
     private ThrottlesPreferencesWindow throttlePreferencesFrame;
     private JmriJFrame throttlesListFrame;
@@ -88,7 +88,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
     }
     
     @Override
-    public ThrottleControlerUI createThrottleControler() {
+    public ThrottleControllerUI createThrottleController() {
         return createThrottleFrame();
     }
 
@@ -121,7 +121,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
     }
 
     public synchronized void requestAllThrottleWindowsDestroyed() {
-        for (ThrottleControlersUIContainer frame : throttleWindows) {
+        for (ThrottleControllersUIContainer frame : throttleWindows) {
             destroyThrottleWindow((ThrottleWindow)frame);
         }
         throttleWindows = new ArrayList<>(0);
@@ -145,7 +145,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
     }
 
     @Override
-    public Iterator<ThrottleControlersUIContainer> iterator() {
+    public Iterator<ThrottleControllersUIContainer> iterator() {
         return throttleWindows.iterator();
     }
        
@@ -155,12 +155,12 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
      * @return the number of active thottle window.
      */
     @Override
-    public synchronized int getNbThrottleControlersContainers() {
+    public synchronized int getNbThrottleControllersContainers() {
         return throttleWindows.size();
     }
     
     @Override
-    public synchronized ThrottleControlersUIContainer getThrottleControlersContainerAt(int n) {
+    public synchronized ThrottleControllersUIContainer getThrottleControllersContainerAt(int n) {
         if (! (n < throttleWindows.size())) {
             return null;
         }
@@ -251,9 +251,9 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
      * Force emmergency stop of all managed throttles windows
      *
      */   
-    public void emmergencyStopAll() {
+    public void emergencyStopAll() {
         throttleWindows.forEach(tw -> {
-            tw.emmergencyStopAll();
+            tw.emergencyStopAll();
         });
     }
     
@@ -268,7 +268,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
             return 0; 
         }
         int ret = 0;
-        for (ThrottleControlersUIContainer tw : throttleWindows) {        
+        for (ThrottleControllersUIContainer tw : throttleWindows) {        
             ret += tw.getNumberOfEntriesFor(la);
         }
         return ret;

@@ -22,19 +22,19 @@ import org.slf4j.LoggerFactory;
  */
 public class ThrottlesTableTransferHandler extends TransferHandler {
    
-   private final DataFlavor throttleControlObjectFlavor = new ActivationDataFlavor(ThrottleFrame.class, "application/x-jmri-throttleControler", "JMRI Throttle Controler");
-   // shoud use ActivationDataFlavor(ThrottleControler.class, "application/x-jmri-throttleControler", "JMRI Throttle Controler");
+   private final DataFlavor throttleControlObjectFlavor = new ActivationDataFlavor(ThrottleFrame.class, "application/x-jmri-throttleController", "JMRI Throttle Controller");
+   // shoud use ActivationDataFlavor(ThrottleController.class, "application/x-jmri-throttleController", "JMRI Throttle Controller");
    // but not working interface vs implementation thing?
    private JTable           table             = null;
 
-    public ThrottlesTableTransferHandler(JTable throttleControlers) {
-        this.table = throttleControlers;
+    public ThrottlesTableTransferHandler(JTable throttleControllers) {
+        this.table = throttleControllers;
     }
 
    @Override
    protected Transferable createTransferable(JComponent c) {
       assert (c == table);
-      ThrottleControlerUI tf = ((ThrottlesTableModel)table.getModel()).getValueAt(table.getSelectedRow(), table.getSelectedColumn());      
+      ThrottleControllerUI tf = ((ThrottlesTableModel)table.getModel()).getValueAt(table.getSelectedRow(), table.getSelectedColumn());      
       return new DataHandler(tf, throttleControlObjectFlavor.getMimeType());
    }
 
@@ -59,9 +59,9 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
            target.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
            if (info.isDataFlavorSupported(throttleControlObjectFlavor)) {
                try {
-                   ThrottleControlerUI tf = (ThrottleControlerUI) info.getTransferable().getTransferData(throttleControlObjectFlavor);
+                   ThrottleControllerUI tf = (ThrottleControllerUI) info.getTransferable().getTransferData(throttleControlObjectFlavor);
                    if (tf != null) {
-                       ((ThrottlesTableModel) table.getModel()).moveThrottleControler(tf, dl.getRow(), dl.getColumn());
+                       ((ThrottlesTableModel) table.getModel()).moveThrottleController(tf, dl.getRow(), dl.getColumn());
                        return true;
                    }
                } catch (UnsupportedFlavorException | IOException e) {
@@ -71,9 +71,9 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
            if (info.isDataFlavorSupported(RosterEntrySelection.rosterEntryFlavor)) {
                try {
                    ArrayList<RosterEntry> REs = RosterEntrySelection.getRosterEntries(info.getTransferable());
-                   ThrottleControlersUIContainer tw = ((ThrottlesTableModel) table.getModel()).getThrottleControlersContainerAt(dl.getColumn());
+                   ThrottleControllersUIContainer tw = ((ThrottlesTableModel) table.getModel()).getThrottleControllersContainerAt(dl.getColumn());
                    for (RosterEntry re : REs) {
-                       ThrottleControlerUI tf = tw.newThrottleControler();
+                       ThrottleControllerUI tf = tw.newThrottleController();
                        tf.toFront();
                        tf.setRosterEntry(re);
                    }

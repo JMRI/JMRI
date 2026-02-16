@@ -19,7 +19,7 @@ public class StopAllButton extends JButton {
         setVerticalTextPosition(JButton.BOTTOM);
         setHorizontalTextPosition(JButton.CENTER);
         addActionListener((ActionEvent e) -> {
-            InstanceManager.getDefault(ThrottleFrameManager.class).emmergencyStopAll();
+            InstanceManager.getDefault(ThrottleFrameManager.class).emergencyStopAll();
         });
     }
 }

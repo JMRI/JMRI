@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 // Should be named ThrottleFrame, but ThrottleFrame already exit, hence ThrottleWindow
-public class ThrottleWindow extends JmriJFrame implements ThrottleControlersUIContainer {
+public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIContainer {
 
     private final jmri.jmrix.ConnectionConfig connectionConfig;
     private final ThrottleManager throttleManager;
@@ -230,7 +230,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersUICo
         jbNew.setToolTipText(Bundle.getMessage("ThrottleToolBarNewToolTip"));
         jbNew.setVerticalTextPosition(JButton.BOTTOM);
         jbNew.setHorizontalTextPosition(JButton.CENTER);
-        jbNew.addActionListener(e -> newThrottleControler());
+        jbNew.addActionListener(e -> newThrottleController());
         throttleToolBar.add(jbNew);
 
         jbClose = new JButton();
@@ -321,7 +321,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersUICo
      * @return the number of active thottle frames.
      */
     @Override
-    public  int getNbThrottlesControlers() {
+    public  int getNbThrottlesControllers() {
         return throttleFrames.size() ;
     }
         
@@ -332,7 +332,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersUICo
      * @return the nth thottle frame of that throttle window
      */
     @Override
-    public ThrottleControlerUI getThrottleControlerAt(int n) {
+    public ThrottleControllerUI getThrottleControllerAt(int n) {
         if (! (n < throttleFrames.size())) {
             return null;
         }
@@ -360,7 +360,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersUICo
     }
        
     @Override
-    public void emmergencyStopAll() {
+    public void emergencyStopAll() {
         if (!throttleFrames.isEmpty()) {
             for (ThrottleFrame tf: throttleFrames) {
                 tf.eStop();
@@ -628,7 +628,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersUICo
     }
 
     @Override
-    public void removeThrottleControler(ThrottleControlerUI tf) {       
+    public void removeThrottleController(ThrottleControllerUI tf) {       
         if (getCurrentThrottleFrame() == tf) {
             log.debug("Closing last created");
         }
@@ -705,12 +705,12 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersUICo
 
     public void removeAndDisposeCurentThrottleFrame() {
         ThrottleFrame tf = getCurrentThrottleFrame();
-        removeThrottleControler(getCurrentThrottleFrame());
+        removeThrottleController(getCurrentThrottleFrame());
         tf.dispose();
     }
 
     @Override
-    public void addThrottleControlerAt(ThrottleControlerUI tp, int idx) {
+    public void addThrottleControllerAt(ThrottleControllerUI tp, int idx) {
         ThrottleFrame otf = getCurrentThrottleFrame();        
         String txt = "ThrottleFrame-" + throttleFrameManager.generateUniqueFrameID();
         ((ThrottleFrame)tp).setTitle(txt);
@@ -726,7 +726,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersUICo
     }
 
     @Override
-    public ThrottleControlerUI newThrottleControler() {
+    public ThrottleControllerUI newThrottleController() {
         ThrottleFrame otf = getCurrentThrottleFrame();
         ThrottleFrame tf = new ThrottleFrame(this, throttleManager);
         throttleFrames.add(tf);
@@ -852,7 +852,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControlersUICo
                 if (i == 0) {
                     tf = getCurrentThrottleFrame();
                 } else {
-                    tf = (ThrottleFrame) newThrottleControler();
+                    tf = (ThrottleFrame) newThrottleController();
                 }
                 tf.setXml(tfes.get(i));
                 tf.setEditMode(isEditMode);

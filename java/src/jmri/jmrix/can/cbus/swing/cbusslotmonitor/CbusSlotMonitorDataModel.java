@@ -285,7 +285,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 tc.sendCanMessage(msg, null);
                 break;
             case LAUNCH_THROTTLE:
-                var tf = InstanceManager.getDefault(jmri.jmrit.throttle.ThrottleFrameManager.class).createThrottleControler();
+                var tf = InstanceManager.getDefault(jmri.jmrit.throttle.ThrottleFrameManager.class).createThrottleController();
                 tf.toFront();
                 tf.setAddress(_mainArray.get(row).getLocoAddr() );
                 break;
