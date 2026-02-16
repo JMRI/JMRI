@@ -295,7 +295,7 @@ public class DefaultRailCom extends DefaultIdTag implements RailCom {
         if ((getActualSpeed() != -1)) {
             sb.append("Speed : ").append(getActualSpeed()).append(" ");
         }
-        return sb.toString().trim();
+        return sb.toString();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultRailCom.class);
