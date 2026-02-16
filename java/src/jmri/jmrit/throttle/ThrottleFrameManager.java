@@ -248,7 +248,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
     }
 
     /**
-     * Force emmergency stop of all managed throttles windows
+     * Force emergency stop of all managed throttles windows
      *
      */   
     public void emergencyStopAll() {

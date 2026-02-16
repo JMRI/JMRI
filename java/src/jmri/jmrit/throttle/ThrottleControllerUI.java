@@ -50,7 +50,7 @@ public interface ThrottleControllerUI {
     void setAddress(DccLocoAddress la);
     
     /**
-     * Emmergency stop that throttle
+     * Emergency stop that throttle
      *
      */        
     void eStop();
