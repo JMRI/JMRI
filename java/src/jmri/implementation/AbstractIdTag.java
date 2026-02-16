@@ -101,15 +101,5 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, 
     @Nonnull
     public String getBeanType() {
         return Bundle.getMessage("BeanNameReporter");
-    }
-
-    /**
-     * Compare for equality based on System Name
-     */
-    @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof IdTag)) return false;
-        var otag = (IdTag) other;
-        return getSystemName() == otag.getSystemName();
-    }
+    }    
 }
