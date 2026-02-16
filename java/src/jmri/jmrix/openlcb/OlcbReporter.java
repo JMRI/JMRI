@@ -2,6 +2,7 @@ package jmri.jmrix.openlcb;
 
 import jmri.CollectingReporter;
 import jmri.DccLocoAddress;
+import jmri.IdTag;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.RailCom;
@@ -64,7 +65,7 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
 
     EventTable.EventTableEntryHolder baseEventTableEntryHolder = null;
 
-    Collection<Object> collection = new HashSet<>();
+    Collection<Object> entrySet = new HashSet<>();
     
     public OlcbReporter(String prefix, String address, CanSystemConnectionMemo memo) {
         super(prefix + "R" + address);
@@ -177,7 +178,7 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
     @Override
     @CheckReturnValue
     public Collection<Object> getCollection() {
-        return collection;
+        return entrySet;
     }
     
     /**
@@ -217,6 +218,9 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
      * @param isEntry true for entry, false for exit
      */
     private void handleReport(long reportBits, boolean isEntry) {
+        // Remove any tags held here if they've been moved to another reporter
+        entrySet.stream().filter(id -> ((IdTag)id).getWhereLastSeen()!=this).forEach(entrySet::remove);
+
         // The extra notify with null is necessary to clear past notifications even if we have a new report.
         notify(null);
         DccLocoAddress.Protocol protocol;
@@ -260,11 +264,11 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
         RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
 
         if (!isEntry || directionBits == REPORTER_UNOCCUPIED_EXIT) {
-            collection.remove(tag);
+            entrySet.remove(tag);
             return; // having cleared the reporter earlier
         }
         
-        collection.add(tag);
+        entrySet.add(tag);
         tag.setOrientation(RailCom.Orientation.UNKNOWN);
         tag.setDirection(direction);
         tag.setDccAddress(new DccLocoAddress(address, protocol));
