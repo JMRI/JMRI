@@ -75,8 +75,8 @@ public abstract class Jynstrument extends JPanel {
         }
         try {
             quit();
-        } catch (Exception e) {
-            // ctach any error in order to avoid breaking JMRI exit flow
+        } catch (RuntimeException e) {
+            // catch any error in order to avoid breaking JMRI exit flow
             log.error("While quiting Jynstrument.",e);
         }
         setPopUpMenu(null);
