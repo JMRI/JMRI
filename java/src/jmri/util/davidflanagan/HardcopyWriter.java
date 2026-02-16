@@ -192,8 +192,6 @@ public class HardcopyWriter extends Writer {
             pagesizePoints =
                     new Dimension((72 * pagesizePixels.width) / printerDpi, (72 * pagesizePixels.height) / printerDpi);
 
-            log.info("Printing: page size = {} pts, {} px, printer dpi = {}", pagesizePoints, pagesizePixels,
-                    printerDpi);
             // determine if user selected a range of pages to print out, note that page becomes null if range
             // selected is less than the total number of pages, that's the reason for the page null checks
             if (jobAttributes.getDefaultSelection().equals(DefaultSelectionType.RANGE)) {
@@ -205,8 +203,6 @@ public class HardcopyWriter extends Writer {
                 pagesizePixels = new Dimension(pagesizePixels.height, pagesizePixels.width);
             }
         }
-
-        log.info("Setup for preview/print. Pagesize = {} pts, {} px", pagesizePoints, pagesizePixels);
 
         x0 = (int) leftmargin;
         y0 = (int) topmargin;
@@ -230,7 +226,6 @@ public class HardcopyWriter extends Writer {
 
         // get body font and font size
         font = new Font(useFontName, useFontStyle, useFontSize);
-        log.info("Font = {}, rqsize = {}, pixelScale = {}", font, useFontSize, pixelScale);
         metrics = frame.getFontMetrics(font);
         lineheight = metrics.getHeight();
         lineascent = metrics.getAscent();
@@ -243,7 +238,6 @@ public class HardcopyWriter extends Writer {
 
         // header font info
         headerfont = new Font("SansSerif", Font.ITALIC, useFontSize);
-        log.info("Header font = {}, size = {}", headerfont, headerfont.getSize());
         headermetrics = frame.getFontMetrics(headerfont);
         headery = y0 - (int) (0.125 * 72) - headermetrics.getHeight() + headermetrics.getAscent();
 
@@ -283,7 +277,6 @@ public class HardcopyWriter extends Writer {
         Graphics g = null;
         if (job != null) {
             if (printJobGraphics == null) {
-                log.info("Getting printer graphics context for page {}", pagenum);
                 printJobGraphics = job.getGraphics();
             }
             g = printJobGraphics;
@@ -732,7 +725,6 @@ public class HardcopyWriter extends Writer {
                 name = useFontName;
             }
             font = new Font(name, style, size);
-            log.info("new Font = {}, size = {}", font, font.getSize());
             useFontName = name;
             useFontStyle = style;
             useFontSize = size;
@@ -887,11 +879,9 @@ public class HardcopyWriter extends Writer {
                 if (inPageRange(pagenum)) {
                     if (printJobGraphics == null) {
                         page = job.getGraphics();
-                        log.info("newpage: Getting printer graphics context for page {}", pagenum);
                     } else {
                         page = printJobGraphics;
                         printJobGraphics = null;
-                        log.info("newpage: Using cached printer graphics context for page {}", pagenum);
                     }
                 } else {
                     // The job.getGraphics() method will return null if the number of pages requested is greater than
@@ -1074,16 +1064,10 @@ public class HardcopyWriter extends Writer {
         float heightScale = (float) requiredSize.height / c.getHeight(null);
         float scale = Math.min(widthScale, heightScale);
 
-        log.info("writeSpecificSize: requiredSize={}, scale={}, widthScale={}, heightScale={}", requiredSize, scale,
-                widthScale, heightScale);
-
         Dimension d = new Dimension(Math.round(c.getWidth(null) * scale), Math.round(c.getHeight(null) * scale));
 
         if (isPreview) {
             float pixelsPerPoint = getScreenResolution() / 72.0f;
-            log.info("writeSpecificSize: pixelsPerPoint={}", pixelsPerPoint);
-            log.info("Calling getScaledInstance: target shape = {}x{}", (int) (requiredSize.width * pixelsPerPoint),
-                    (int) (requiredSize.height * pixelsPerPoint));
             c = ImageUtils.getScaledInstance(c, (int) (requiredSize.width * pixelsPerPoint),
                     (int) (requiredSize.height * pixelsPerPoint));
             d = new Dimension((int) (c.getWidth(null) / pixelsPerPoint), (int) (c.getHeight(null) / pixelsPerPoint));
@@ -1093,8 +1077,6 @@ public class HardcopyWriter extends Writer {
         int y = y0 + v_pos + lineascent;
 
         if (page != null && inPageRange(pagenum)) {
-            log.info("About to draw image with dimensions {}x{} at size {}x{}", c.getWidth(null), c.getHeight(null),
-                    d.width, d.height);
             page.drawImage(c, x, y,
                     d.width, d.height,
                     null);
