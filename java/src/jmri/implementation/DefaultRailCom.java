@@ -257,6 +257,10 @@ public class DefaultRailCom extends DefaultIdTag implements RailCom {
         StringBuilder sb = new StringBuilder(200);
         sb.append("Address ").append(getLocoAddress()).append(" ");
 
+        if (getLocoAddress().isConsistAddress()) {
+            sb.append("Consist ");
+        }
+        
         switch (getOrientation()) {
             case EAST:
                 sb.append("East ");
@@ -291,7 +295,7 @@ public class DefaultRailCom extends DefaultIdTag implements RailCom {
         if ((getActualSpeed() != -1)) {
             sb.append("Speed : ").append(getActualSpeed()).append(" ");
         }
-        return sb.toString();
+        return sb.toString().trim();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultRailCom.class);

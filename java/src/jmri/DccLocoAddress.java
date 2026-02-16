@@ -29,11 +29,22 @@ public class DccLocoAddress implements LocoAddress {
         this.protocol = protocol;
     }
 
+    public DccLocoAddress(int number, LocoAddress.Protocol protocol, boolean isConsist) {
+        this(number, protocol);
+        this.isConsist = isConsist;
+    }
+
     public DccLocoAddress(DccLocoAddress l) {
         this.number = l.number;
         this.protocol = l.protocol;
     }
 
+    boolean isConsist = false;
+    
+    public boolean isConsistAddress () {
+        return isConsist;
+    }
+    
     @Override
     public boolean equals(Object a) {
         if (a != null && a.getClass().equals(this.getClass())) {
@@ -83,10 +94,6 @@ public class DccLocoAddress implements LocoAddress {
                 return "" + number + "(S)";
             case DCC_LONG:
                 return "" + number + "(L)";
-            case DCC_CONSIST:
-                return "" + number + "(C)";
-            case DCC_EXTENDED_CONSIST:
-                return "" + number + "(E)";
             case SELECTRIX:
                 return "" + number + "(SX)";
             case MOTOROLA:
