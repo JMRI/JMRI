@@ -523,7 +523,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>The Import Complete Roster action now shows a progress bar.</li>
         </ul>
 
     <h3>Routes</h3>
