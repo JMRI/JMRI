@@ -511,7 +511,9 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         deleteList = []     # Prevent concurrent modification
         icons = panel.getBlockContentsLabelList()
         for icon in icons:
-            deleteList.append(icon)
+            blk = icon.getBlock()
+            if blk is not None:
+                deleteList.append(icon)
 
         for item in deleteList:
             panel.removeFromContents(item)
@@ -936,32 +938,25 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 if not slots[i].isDisabled():
                     lhs_disabled = False
                     break
-        print "rhs_disabled", rhs_disabled, "lhs_disabled", lhs_disabled
-        if lhs_disabled:
+        if rhs_disabled:
             if traverser.getOrientation() == traverser.HORIZONTAL:
-                print "E"
                 x_reqd = int(traverser_center.getX() -  deckWidth/2.0 - 70.0 )
                 y_reqd = int(traverser_center.getY())
             else:
-                print "F"
                 x_reqd = int(traverser_center.getX() - 25.0)
                 y_reqd = int(traverser_center.getY() - deckWidth/2.0 - 25.0)
         elif lhs_disabled:
             if traverser.getOrientation() == traverser.HORIZONTAL:
-                print "A"
                 x_reqd = int(traverser_center.getX() + deckWidth/2.0 + 20.0)
                 y_reqd = int(traverser_center.getY())
             else:
-                print "B"
                 x_reqd = int(traverser_center.getX() - 25.0)
                 y_reqd = int(traverser_center.getY() + deckWidth/2.0 + 15.0)
         else:
             if traverser.getOrientation() == traverser.HORIZONTAL:
-                print "C"
                 x_reqd = int(traverser_center.getX()) - 25
                 y_reqd = int(traverser_center.getY()) + deck_height/2.0 + offset
             else:
-                print "D"
                 x_reqd = int(traverser_center.getX()) + deck_height/2.0 + 20.0
                 y_reqd = int(traverser_center.getY())
         if self.logLevel > 0: print "finished calculating icon position"
@@ -988,7 +983,6 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         self.blockPoints1.clear()
         for tsv in panel.getTrackSegmentViews():
             blk = tsv.getBlockName()
-            #print "blk", blk
             pt1 = panel.getCoords(tsv.getConnect1(), tsv.getType1())
             pt2 = panel.getCoords(tsv.getConnect2(), tsv.getType2())
 
@@ -1097,7 +1091,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             sensor = sensors.getSensor('IS:DSCT:' + str(control[0]))
             if sensor is not None:
                 x = 20 + control[3]
-                y = (control[0]  * 20) + 0 + control[4]
+                y = (control[0] * 20) + 0 + control[4]
                 self.addMediumIcon(panel, sensor, x, y)
 
                 x += 20

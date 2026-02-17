@@ -2666,15 +2666,11 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return;
         }
         firstRoutingChange = System.nanoTime();
-        log.info("A");
 
         //cycle through all LayoutBlocks, completing initialization of the layout block routing
         java.util.Enumeration<LayoutBlock> en = _tsys.elements();
 
-        log.info("en {}", en);
-
         while (en.hasMoreElements()) {
-            log.info ("B");
             en.nextElement().initializeLayoutBlockRouting();
         }
     }
