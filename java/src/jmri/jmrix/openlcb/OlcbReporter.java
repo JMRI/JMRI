@@ -296,7 +296,7 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
         RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
 
         if (!isEntry || directionBits == REPORTER_UNOCCUPIED_EXIT) {
-            log.trace("{} removes tag", this,  tag);
+            log.trace("{} removes tag {}", this,  tag);
             entrySet.remove(tag);
             return; // having cleared the reporter earlier
         }

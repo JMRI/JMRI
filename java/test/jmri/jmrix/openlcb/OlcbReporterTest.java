@@ -105,7 +105,7 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
         
     }
 
-    //@Test
+    @Test
     public void testAccumulationAfterRecevice0S() {
         // 256 enters
         ti.sendMessage(":X195B4123N010203040506C100;");
