@@ -523,6 +523,9 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
+            <li>Update "Export Complete Roster" process so that
+                upon "Import Complete Roster" the images will
+                properly display without the need to rebuild the roster.</li>
             <li>The Import Complete Roster action now shows a progress bar.</li>
         </ul>
 
