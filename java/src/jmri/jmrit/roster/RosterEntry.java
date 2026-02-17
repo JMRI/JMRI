@@ -1145,8 +1145,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 
                 // Special case:  If a No Name or All Entries
                 // group has been accidentally created, suppress that
-                if (key.equals(Roster.ROSTER_GROUP_PREFIX+"No Group") 
-                    || key.equals(Roster.ROSTER_GROUP_PREFIX+"All Entries")) {
+                if (key.equals(Roster.ROSTER_GROUP_PREFIX+Roster.NOGROUP) 
+                    || key.equals(Roster.ROSTER_GROUP_PREFIX+Roster.ALLENTRIES)) {
                         continue;
                     }
                     
