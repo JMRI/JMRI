@@ -10,9 +10,6 @@ public class Z21CANBoosterStatusFormatter implements Z21MessageFormatter {
         return m instanceof Z21Reply && ((Z21Reply)m).getOpCode() == 0x00CA;
     }
 
-    private void log(String s, Message m) {
-    }
-
     @Override
     public String formatMessage(Message m) {
         if(!handlesMessage(m)){
