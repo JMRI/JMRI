@@ -523,7 +523,6 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Added: physics parameters for physics based acceleration.</li>
             <li>Improved the locomotive image resolution in printed rosters.</li>
             <li>Update "Export Complete Roster" process so that
                 upon "Import Complete Roster" the images will
