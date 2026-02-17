@@ -80,6 +80,64 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
         ti.assertNoSentMessages();
     }
 
+    @Test
+    public void testAccumulationAfterMoveToAnother() {
+        // 256 enters
+        ti.sendMessage(":X195B4123N010203040506C100;");
+        ti.flush();
+        Assert.assertEquals("Report mismatch","RD256",r.getCurrentReport().toString());
+        RailCom report = (RailCom) r.getCurrentReport();
+        Assert.assertNotNull("Object type mismatch", report);
+        Assert.assertEquals("Loco address mismatch",256, report.getLocoAddress().getNumber());
+
+        Assert.assertEquals("expect 1 in reporter", 1, ((OlcbReporter)r).getCollection().size());
+
+        System.err.println("before 256 leaves");
+        // create another reporter and send 256 to it
+        var rman = ti.configurationManager.getReporterManager();
+        var r2 = rman.provideReporter("01.02.03.04.05.07.00.00");
+        ((OlcbReporter) r2).finishLoad();
+
+        ti.sendMessage(":X195B4123N010203040507C100;");
+        ti.flush();
+
+        Assert.assertEquals("expect 0 in reporter", 0, ((OlcbReporter)r).getCollection().size());
+        
+    }
+
+    //@Test
+    public void testAccumulationAfterRecevice0S() {
+        // 256 enters
+        ti.sendMessage(":X195B4123N010203040506C100;");
+        ti.flush();
+        Assert.assertEquals("Report mismatch","RD256",r.getCurrentReport().toString());
+        RailCom report = (RailCom) r.getCurrentReport();
+        Assert.assertNotNull("Object type mismatch", report);
+        Assert.assertEquals("Loco address mismatch",256, report.getLocoAddress().getNumber());
+
+        Assert.assertEquals("expect 1 in reporter", 1, ((OlcbReporter)r).getCollection().size());
+
+        // 257 enters
+        ti.sendMessage(":X195B4123N010203040506C101;");
+        ti.flush();
+        Assert.assertEquals("Report mismatch","RD257",r.getCurrentReport().toString());
+        report = (RailCom) r.getCurrentReport();
+        Assert.assertNotNull("Object type mismatch", report);
+        Assert.assertEquals("Loco address mismatch",257, report.getLocoAddress().getNumber());
+
+        Assert.assertEquals("expect 2 in reporter", 2, ((OlcbReporter)r).getCollection().size());
+
+        // 0x3800 unknown enters
+        ti.sendMessage(":X195B4123N010203040506F800;");
+        ti.flush();
+        RailCom report2 = (RailCom) r.getCurrentReport();
+        Assert.assertNull("Expected no report", report2);
+        
+        Assert.assertEquals("expect 0 in reporter", 0, ((OlcbReporter)r).getCollection().size());
+        
+    }
+
+
     @Override
     @BeforeEach
     public void setUp() {
@@ -89,7 +147,8 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
         // prepare an interface
         ti = new OlcbTestInterface(new OlcbTestInterface.CreateConfigurationManager());
         ti.waitForStartup();
-        r = new OlcbReporter("M", "1.2.3.4.5.6.00.00", ti.systemConnectionMemo);
+        var rman = ti.configurationManager.getReporterManager();
+        r = rman.provideReporter("01.02.03.04.05.06.00.00");
         ((OlcbReporter) r).finishLoad();
     }
 

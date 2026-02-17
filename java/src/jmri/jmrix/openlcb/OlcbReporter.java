@@ -22,6 +22,7 @@ import org.openlcb.implementations.EventTable;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -65,7 +66,7 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
 
     EventTable.EventTableEntryHolder baseEventTableEntryHolder = null;
 
-    Collection<Object> entrySet = new HashSet<>();
+    Set<Object> entrySet = new HashSet<>();
     
     public OlcbReporter(String prefix, String address, CanSystemConnectionMemo memo) {
         super(prefix + "R" + address);
@@ -212,17 +213,37 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
     }
     int lastLoco = -1;
 
+    @Override
+    public void notify(IdTag tag) {
+        log.trace("notified {} with tag {}", this, tag);
+        if (tag == null ) {
+        
+            if (log.isTraceEnabled()) {
+                for (var id : entrySet) {
+                    log.trace("  tag {} where seen {}", id, ((IdTag)id).getWhereLastSeen());
+                }
+            }
+        
+            var copySet = new HashSet<Object>(entrySet); // to avoid concurrent modification
+            copySet.stream().filter(id -> ((IdTag)id).getWhereLastSeen()!=this).forEach(entrySet::remove);
+        }
+        super.notify(tag);
+    }
+    
     /**
      * Callback from the message decoder when a relevant event message arrives.
      * @param reportBits The bottom 14 bits of the event report. (THe top bits are already checked against our base event number)
      * @param isEntry true for entry, false for exit
      */
     private void handleReport(long reportBits, boolean isEntry) {
+        log.trace("handleReport {} with isEntry {}", this, isEntry);
         // Remove any tags held here if they've been moved to another reporter
-        entrySet.stream().filter(id -> ((IdTag)id).getWhereLastSeen()!=this).forEach(entrySet::remove);
+        var copySet = new HashSet<Object>(entrySet); // to avoid concurrent modification
+        copySet.stream().filter(id -> ((IdTag)id).getWhereLastSeen()!=this).forEach(entrySet::remove);
 
         // The extra notify with null is necessary to clear past notifications even if we have a new report.
         notify(null);
+        
         DccLocoAddress.Protocol protocol;
         long addressBits = reportBits & ADDRESS_MASK;
         int address = 0;
@@ -261,9 +282,21 @@ public final class OlcbReporter extends AbstractIdTagReporter implements Collect
                 break;
         }
 
+        // address 0x3800 is a special case:  Arrival means reporter is unoccupied, departure is ignored
+        if (addressBits == 0x3800) {
+            if (directionBits == REPORTER_UNOCCUPIED_EXIT) {
+                return;
+            } else {
+                log.trace("{} clearing collection", this);
+                entrySet.clear();
+                return; // having cleared the reporter earlier
+            }
+        }
+
         RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
 
         if (!isEntry || directionBits == REPORTER_UNOCCUPIED_EXIT) {
+            log.trace("{} removes tag", this,  tag);
             entrySet.remove(tag);
             return; // having cleared the reporter earlier
         }
