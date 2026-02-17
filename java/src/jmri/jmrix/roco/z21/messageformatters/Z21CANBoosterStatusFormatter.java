@@ -1,13 +1,16 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
 import jmri.jmrix.Message;
-import jmri.jmrix.MessageFormatter;
+import jmri.jmrix.roco.z21.Z21MessageFormatter;
 import jmri.jmrix.roco.z21.Z21Reply;
 
-public class Z21CANBoosterStatusFormatter implements MessageFormatter {
+public class Z21CANBoosterStatusFormatter implements Z21MessageFormatter {
     @Override
     public boolean handlesMessage(Message m) {
         return m instanceof Z21Reply && ((Z21Reply)m).getOpCode() == 0x00CA;
+    }
+
+    private void log(String s, Message m) {
     }
 
     @Override

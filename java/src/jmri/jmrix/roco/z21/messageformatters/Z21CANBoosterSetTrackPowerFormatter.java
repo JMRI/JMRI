@@ -1,8 +1,8 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
 import jmri.jmrix.Message;
-import jmri.jmrix.MessageFormatter;
 import jmri.jmrix.roco.z21.Z21Message;
+import jmri.jmrix.roco.z21.Z21MessageFormatter;
 
 /**
  * MessageFormatter for Z21 CAN Booster Set Track Power messages.
@@ -11,7 +11,7 @@ import jmri.jmrix.roco.z21.Z21Message;
  *
  * @author Paul Bender Copyright (C) 2026
  */
-public class Z21CANBoosterSetTrackPowerFormatter implements MessageFormatter {
+public class Z21CANBoosterSetTrackPowerFormatter implements Z21MessageFormatter {
     @Override
     public boolean handlesMessage(Message m) {
         return m instanceof Z21Message && ((Z21Message)m).getOpCode() == 0x00CB;

@@ -1,14 +1,14 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
 import jmri.jmrix.Message;
-import jmri.jmrix.MessageFormatter;
+import jmri.jmrix.roco.z21.Z21MessageFormatter;
 import jmri.jmrix.roco.z21.Z21Reply;
 
 /**
  * Formats Z21 CAN Description Reply messages for display in the monitor and log.
  * @author Paul Bender Copyright (C) 2026
  */
-public class Z21CANDescriptionReplyFormatter implements MessageFormatter {
+public class Z21CANDescriptionReplyFormatter implements Z21MessageFormatter {
     @Override
     public boolean handlesMessage(Message m) {
         return m instanceof Z21Reply && ((Z21Reply)m).getOpCode() == 0x00C8;

@@ -1,14 +1,14 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
 import jmri.jmrix.Message;
-import jmri.jmrix.MessageFormatter;
 import jmri.jmrix.roco.z21.Z21Message;
+import jmri.jmrix.roco.z21.Z21MessageFormatter;
 
 /**
  * Formatter for Z21 CAN Set Description Requests
  * @author Paul Bender Copyright (C) 2026
  */
-public class Z21CANSetDescriptionRequestFormatter implements MessageFormatter {
+public class Z21CANSetDescriptionRequestFormatter implements Z21MessageFormatter {
     @Override
     public boolean handlesMessage(Message m) {
         return m instanceof Z21Message && ((Z21Message)m).getOpCode() == 0x00C9;
