@@ -208,21 +208,26 @@ public final class OlcbReporter extends AbstractIdTagReporter {
             return; // having cleared the reporter
         }
         DccLocoAddress.Protocol protocol;
+        boolean isConsist;
         long addressBits = reportBits & ADDRESS_MASK;
         int address = 0;
         int hiBits = (int) ((addressBits >> 8) & 0x3f);
         if (addressBits < 0x2800) {
             address = (int) addressBits;
             protocol = DccLocoAddress.Protocol.DCC_LONG;
+            isConsist = false;
         } else if (hiBits == HIBITS_SHORTADDRESS) {
             address = (int) (addressBits & 0xff);
             protocol = DccLocoAddress.Protocol.DCC_SHORT;
+            isConsist = false;
         } else if (hiBits == HIBITS_CONSIST) {
             address = (int) (addressBits & 0x7f);
-            protocol = DccLocoAddress.Protocol.DCC_CONSIST;
+            protocol = DccLocoAddress.Protocol.DCC_SHORT;
+            isConsist = true;
         } else {
             log.warn("Unexpected address field formatting, treating as DCC_LONG: {}", Long.toHexString(reportBits));
             protocol = DccLocoAddress.Protocol.DCC_LONG;
+            isConsist = false;
         }
         
         RailCom.Direction direction;
@@ -246,7 +251,7 @@ public final class OlcbReporter extends AbstractIdTagReporter {
         RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
         tag.setOrientation(RailCom.Orientation.UNKNOWN);
         tag.setDirection(direction);
-        tag.setDccAddress(new DccLocoAddress(address, protocol));
+        tag.setDccAddress(new DccLocoAddress(address, protocol, isConsist));
         notify(tag);
     }
     private class Receiver extends org.openlcb.MessageDecoder {
