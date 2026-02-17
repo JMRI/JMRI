@@ -21,7 +21,7 @@ public class Z21CANBoosterStatusReplyFormatterTest extends AbstractMessageFormat
         Assertions.assertEquals("Z21 CAN Booster Status for abcd output 1:" +
                 "\n\tactive status flags:" +
                 "\n\t\tBrake generator active" +
-                "\n\t\tTrack is disabled by user" +
+                System.lineSeparator() + "\t\tTrack is disabled by user" +
                 "\n\tvoltage 0mV\n\tcurrent 0mA", formatter.formatMessage(reply));
     }
 
