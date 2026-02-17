@@ -1,7 +1,7 @@
 package jmri.jmrit.roster.swing;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import jmri.InstanceManager;
 import jmri.jmrit.roster.*;
@@ -117,12 +117,12 @@ public class RosterTableTest {
 
         int durationCol = 11;
 
-        JLabel c = (JLabel) to.prepareRenderer(to.getCellRenderer(0, durationCol), 0, durationCol);
+        var c = (DefaultTableCellRenderer) to.prepareRenderer(to.getCellRenderer(0, durationCol), 0, durationCol);
         assertEquals(Bundle.getMessage("DurationViewTip"), c.getToolTipText());
         assertEquals("00:00:01", c.getText());
 
         to.setValueAt("123456", 0, durationCol);
-        c = (JLabel) to.prepareRenderer(to.getCellRenderer(0, durationCol), 0, durationCol);
+        c = (DefaultTableCellRenderer) to.prepareRenderer(to.getCellRenderer(0, durationCol), 0, durationCol);
         assertEquals("1 10:17:36", c.getText());
 
         JUnitUtil.dispose(jfo.getWindow());
