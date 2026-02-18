@@ -129,11 +129,11 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
             log.info("  xcen=" + x + ", ycen=" + y);
             if (element.getAttribute("slotoffset") != null) {
                 slotOffset = element.getAttribute("slotoffset").getDoubleValue();
-                log.info("  slotOffset=" + slotOffset);
+                log.info("  slotOffset=" , slotOffset);
             }
             if (element.getAttribute("orientation") != null) {
                 orientation = element.getAttribute("orientation").getIntValue();
-                log.info("  orientation=" + orientation);
+                log.info("  orientation=" , orientation);
             }
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layouttraverser attributes", e);
@@ -152,7 +152,7 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
         Attribute a = element.getAttribute("mainline");
         if (a != null) {
             lt.setMainline("yes".equalsIgnoreCase(a.getValue()));
-            log.info("  mainline=" + lt.isMainline());
+            log.info("  mainline=" , lt.isMainline());
         }
         a = element.getAttribute("deckwidth");
         if (a != null) {
@@ -167,35 +167,35 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
         a = element.getAttribute("blockname");
         if (a != null) {
             lt.tLayoutBlockName = a.getValue();
-            log.info("  blockname=" + lt.tLayoutBlockName);
+            log.info("  blockname=" , lt.tLayoutBlockName);
         }
 
         a = element.getAttribute("turnoutControlled");
         if (a != null) {
             lt.setTurnoutControlled("yes".equalsIgnoreCase(a.getValue()));
-            log.info("  turnoutControlled=" + lt.isTurnoutControlled());
+            log.info("  turnoutControlled=" , lt.isTurnoutControlled());
         }
 
         a = element.getAttribute("dispatcherManaged");
         if (a != null) {
             lt.setDispatcherManaged("yes".equalsIgnoreCase(a.getValue()));
-            log.info("  dispatcherManaged=" + lt.isDispatcherManaged());
+            log.info("  dispatcherManaged=" , lt.isDispatcherManaged());
             if (lt.isDispatcherManaged()) {
                 a = element.getAttribute("exitmast");
                 if (a != null) {
                     lt.tExitSignalMastName = a.getValue();
-                    log.info("  exitmast=" + lt.tExitSignalMastName);
+                    log.info("  exitmast=" , lt.tExitSignalMastName);
                 }
                 a = element.getAttribute("buffermast");
                 if (a != null) {
                     lt.tBufferSignalMastName = a.getValue();
-                    log.info("  buffermast=" + lt.tBufferSignalMastName);
+                    log.info("  buffermast=" , lt.tBufferSignalMastName);
                 }
                 a = element.getAttribute("signalIconPlacement");
                 if (a != null) {
                     try {
                         lt.setSignalIconPlacement(a.getIntValue());
-                        log.info("  signalIconPlacement=" + lt.getSignalIconPlacement());
+                        log.info("  signalIconPlacement=" , lt.getSignalIconPlacement());
                     } catch (DataConversionException e) {
                         log.error("failed to convert signalIconPlacement attribute");
                     }
@@ -229,13 +229,13 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
                 a = value.getAttribute("approachmast");
                 if (a != null) {
                     lt.getSlotList().get(lt.getNumberSlots() - 1).approachMastName = a.getValue();
-                    log.info("      approachmast=" + a.getValue());
+                    log.info("      approachmast=" , a.getValue());
                 }
 
                 a = value.getAttribute("turnout");
                 if (lt.isTurnoutControlled() && a != null) {
                     String turnoutName = a.getValue();
-                    log.info("      turnout=" + turnoutName);
+                    log.info("      turnout=" , turnoutName);
                     Attribute stateAttr = value.getAttribute("turnoutstate");
                     int turnoutState = Turnout.CLOSED;
                     if (stateAttr != null && "thrown".equalsIgnoreCase(stateAttr.getValue())) {
@@ -243,17 +243,17 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
                     }
                     lt.setSlotTurnout(index, turnoutName, turnoutState);
                     if (stateAttr != null) {
-                        log.info("      turnoutstate=" + stateAttr.getValue());
+                        log.info("      turnoutstate=" , stateAttr.getValue());
                     }
                 }
 
                 a = value.getAttribute("disabled");
                 lt.setSlotDisabled(index, (a != null) && "yes".equalsIgnoreCase(a.getValue()));
-                if (a != null) log.info("      disabled=" + a.getValue());
+                if (a != null) log.info("      disabled=" , a.getValue());
 
                 a = value.getAttribute("disableWhenOccupied");
                 lt.setSlotDisabledWhenOccupied(index, (a != null) && "yes".equalsIgnoreCase(a.getValue()));
-                if (a != null) log.info("      disableWhenOccupied=" + a.getValue());
+                if (a != null) log.info("      disableWhenOccupied=" , a.getValue());
             }
         }
 

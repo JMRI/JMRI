@@ -198,7 +198,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             public void focusLost(FocusEvent e) {
                 try {
                     double offset = Double.parseDouble(slotOffsetTextField.getText());
-                    if (layoutTraverser.getSlotOffset() != offset) {
+                    if (!jmri.util.MathUtil.equals(layoutTraverser.getSlotOffset(), offset)) {
                         layoutTraverser.setSlotOffset(offset);
                         updateSlotPanel();
                         layoutEditor.redrawPanel();
@@ -439,7 +439,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         layoutTraverser.setOrientation(orientationComboBox.getSelectedIndex());
         try {
             double width = Double.parseDouble(deckWidthTextField.getText());
-            if (layoutTraverser.getDeckWidth() != width) {
+            if (!jmri.util.MathUtil.equals(layoutTraverser.getDeckWidth(), width)) {
                 layoutTraverser.setDeckWidth(width);
                 editLayoutTraverserNeedsRedraw = true;
             }

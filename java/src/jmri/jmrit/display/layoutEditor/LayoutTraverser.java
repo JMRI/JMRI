@@ -81,7 +81,7 @@ public class LayoutTraverser extends LayoutTrack {
     //
     public double getSlotOffset() { return slotOffset; }
     public void setSlotOffset(double offset) {
-        if (this.slotOffset != offset) {
+        if (!jmri.util.MathUtil.equals(this.slotOffset, offset)) {
             this.slotOffset = offset;
             renumberSlots();
         }
@@ -91,7 +91,7 @@ public class LayoutTraverser extends LayoutTrack {
     private void setDeckLength(double l) { deckLength = l; }
     public double getDeckWidth() { return deckWidth; }
     public void setDeckWidth(double w) {
-        if (deckWidth != w) {
+        if (!jmri.util.MathUtil.equals(deckWidth, w)) {
             deckWidth = w;
             recalculateDimensions();
             models.redrawPanel();

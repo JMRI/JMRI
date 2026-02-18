@@ -5325,11 +5325,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         case LEVEL_XING_CENTER:
                         case SLIP_LEFT:
                         case SLIP_RIGHT:
-                        case TURNTABLE_CENTER: {
-                            getLayoutTrackView((LayoutTrack) selectedObject).setCoordsCenter(currentPoint);
-                            isDragging = true;
-                            break;
-                        }
+                        case TURNTABLE_CENTER:
                         case TRAVERSER_CENTER: {
                             getLayoutTrackView((LayoutTrack) selectedObject).setCoordsCenter(currentPoint);
                             isDragging = true;

@@ -359,8 +359,6 @@ public class LayoutTraverserView extends LayoutTrackView {
             setOrientation(1 - getOrientation()); // Toggle between HORIZONTAL and VERTICAL
         } else if (angleDEG == -90 || angleDEG == 270) {
             setOrientation(1 - getOrientation()); // Toggle between HORIZONTAL and VERTICAL
-        } else if (angleDEG == 180 || angleDEG == -180) {
-            // No change in orientation, but might need to flip offsets if that becomes a feature
         }
     }
 
