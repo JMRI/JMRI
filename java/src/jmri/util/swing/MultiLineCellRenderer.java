@@ -15,11 +15,21 @@ import javax.swing.UIManager;
 public class MultiLineCellRenderer extends JTextArea implements TableCellRenderer {
 
     public MultiLineCellRenderer() {
-        setLineWrap(true);
+    
+        // match these to jmri.util.swing.MultiLineCellEditor
+        setLineWrap(false);
         setWrapStyleWord(true);
         setOpaque(true);
+        customize();
     }
 
+    /**
+     * Allow the creator of one of these objects to customize its
+     * appearance, tooltips, etc
+     */
+    protected void customize() {}
+    
+    
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
         boolean isSelected, boolean hasFocus, int row, int column) {

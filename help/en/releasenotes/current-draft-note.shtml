@@ -174,9 +174,9 @@
                 <li></li>
             </ul>
 
-        <h4>Zimo MXULF</h4>
+        <h4>Zimo</h4>
             <ul>
-                <li></li>
+                <li>Added additional,  faster speeds to the KLUG connection.</li>
             </ul>
 
         <h4>ZTC</h4>
@@ -429,7 +429,12 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Added a new (optional) 
+                <a href="https://www.jmri.org/help/en/package/jmri/jmrit/permission/PermissionManager.shtml">Permission</a>
+                to control whether the user can
+                edit columns that have been added to the Roster Table.
+                This can be used to e.g. only allow certain people at a club
+                to mark a locomotive entry as having been inspected.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -518,7 +523,11 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Improved the locomotive image resolution in printed rosters.</li>
+            <li>Update "Export Complete Roster" process so that
+                upon "Import Complete Roster" the images will
+                properly display without the need to rebuild the roster.</li>
+            <li>The Import Complete Roster action now shows a progress bar.</li>
         </ul>
 
     <h3>Routes</h3>

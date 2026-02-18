@@ -2,14 +2,12 @@ package jmri.jmrit.symbolicprog;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.util.Locale;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
 
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
-import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -45,24 +43,12 @@ public class PrintCvAction extends AbstractAction {
     private final boolean isPreview;
 
     public void printInfoSection(HardcopyWriter w) {
-        ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
-        // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
-        w.write(icon.getImage(), new JLabel(icon));
-        w.setFontStyle(Font.BOLD);
-        //Add a number of blank lines
-        int height = icon.getImage().getHeight(null);
-        int blanks = (height - w.getLineAscent()) / w.getLineHeight();
+        // Write out the icon
+        w.writeDecoderProIcon();
+        w.setFont(null, Font.BOLD, null);
 
-        try {
-            for (int i = 0; i < blanks; i++) {
-                String s = "\n";
-                w.write(s, 0, s.length());
-            }
-        } catch (IOException e) {
-            log.warn("error during printing", e);
-        }
         mRoster.printEntry(w);
-        w.setFontStyle(Font.PLAIN);
+        w.setFont(null, Font.PLAIN, null);
     }
 
     @Override
@@ -71,66 +57,81 @@ public class PrintCvAction extends AbstractAction {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer;
         try {
-            writer = new HardcopyWriter(mFrame, mFrame.getRosterEntry().getId(), 10, .8, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(mFrame, mFrame.getRosterEntry().getId(), null, null, 10,
+                    .8 * 72, .5 * 72, .5 * 72, .5 * 72, isPreview, null, null, null, null, null);
 
             // print the decoder info section, etc
             printInfoSection(writer);
             String s = "\n\n";
-            writer.write(s, 0, s.length());
+            writer.write(s);
 
             //Initialize some variables to define the CV table size
             int cvCount = mModel.getRowCount();
             int tableLeft = 1;
-            int tableRight = TABLE_COLS * 24 + 1;
-            int tableTopRow;
-            int tableBottomRow;
-            int tableHeight = cvCount / TABLE_COLS;
+            int tableRight = TABLE_COLS * 24 + 1;   // ISSUE: this is wrong
+            int tableTopPos;
+            int tableBottomPos;
+            int tableHeightPoints = (cvCount / TABLE_COLS) * writer.getLineHeight();  
             if (cvCount % TABLE_COLS > 0) {
-                tableHeight++;
+                tableHeightPoints += writer.getLineHeight();
             }
 
-            /*Start drawing the table of CVs. Set up the table with 4 columns of CV/Value
-             pairs and Draw the table borders and lines.  Each column width is
-             16 characters, including the starting vertical line, but not the
-             ending one.  Therefore the total table width is 64+1 characters
-             The colummn headings take 2 lines
-             4 columns of 20 gives 80 CVs possible. NMRA specs only define about 70 CVs
-             including all the optional ones plus some Manufacturer ones.  80 should be
-             enough, although more can be added by increasing the tableHeight value
+            int tableHeightRows = tableHeightPoints / writer.getLineHeight();
+
+            /*
+             * Start drawing the table of CVs. Set up the table with 4 columns
+             * of CV/Value pairs and Draw the table borders and lines. Each
+             * column width is 16 characters, including the starting vertical
+             * line, but not the ending one. Therefore the total table width is
+             * 64+1 characters The colummn headings take 2 lines 4 columns of 20
+             * gives 80 CVs possible. NMRA specs only define about 70 CVs
+             * including all the optional ones plus some Manufacturer ones. 80
+             * should be enough, although more can be added by increasing the
+             * tableHeight value
              */
+
+            /* 
+             * ISSUE: this is wrong as it doesn't take into account what happens when the table is printed on multiple pages. 
+             * The table is drawn as if it were on a single page, but it may not be. In particular the vertical lines only
+             * appear on the first page, and *maybe* we ought to put the column headings on the subsequent pages too.
+            */
             //Set the top row and draw top line to start the table of CVs
-            tableTopRow = writer.getCurrentLineNumber();
-            writer.write(tableTopRow, tableLeft, tableTopRow, tableRight);
+            tableTopPos = writer.getCurrentVPos();
 
             //set the bottom of the table
-            tableBottomRow = tableTopRow + tableHeight + 2;
+            tableBottomPos = tableTopPos + tableHeightPoints + 2;
+
+            float useCharWidth = writer.getCharWidth();
+
+            writer.writeLine(tableTopPos, (int) (tableLeft * useCharWidth), tableTopPos, (int) (tableRight * useCharWidth));
 
             //Draw vertical lines for columns
             for (int i = 1; i < 76; i += 24) {
-                writer.write(tableTopRow, i, tableBottomRow, i);
+                writer.writeLine(tableTopPos, (int) (i * useCharWidth), tableBottomPos, (int) (i * useCharWidth));    // ISSUE: this is wrong
             }
 
             //Draw remaining horozontal lines
-            writer.write(tableTopRow + 2, tableLeft, tableTopRow + 2, tableRight);
-            writer.write(tableBottomRow, tableLeft, tableBottomRow, tableRight);
+            writer.writeLine(tableTopPos + 2 * writer.getLineHeight(), (int) (tableLeft * useCharWidth), tableTopPos + 2 * writer.getLineHeight(), (int) (tableRight * useCharWidth));
+            writer.writeLine(tableBottomPos, (int) (tableLeft * useCharWidth), tableBottomPos, (int) (tableRight * useCharWidth));
 
-            writer.setFontStyle(Font.BOLD);  //set font to Bold
+            writer.setFont(null, Font.BOLD, null); //set font to Bold
             // print a simple heading with I18N
             // pad with spaces to column width, 3 x insert Value as var %1
             s = String.format("%1$21s%1$24s%1$24s", Bundle.getMessage("Value"));
-            writer.write(s, 0, s.length());
+            writer.write(s);
             s = "\n";
-            writer.write(s, 0, s.length());
+            writer.write(s);
             // NOI18N
             s = "            CV  Dec Hex             CV  Dec Hex             CV  Dec Hex\n";
-            writer.write(s, 0, s.length());
-            writer.setFontStyle(Font.PLAIN); //set font back to Normal
+            writer.write(s);
+            writer.setFont(null, Font.PLAIN, null); //set font back to Normal
 
-            /* Create array to hold CV/Value strings to allow reformatting and sorting.
-             * Same size as the table drawn above (4 columns*tableHeight; heading rows
-             * not included
+            /*
+             * Create array to hold CV/Value strings to allow reformatting and
+             * sorting. Same size as the table drawn above (4
+             * columns*tableHeight; heading rows not included
              */
-            String[] cvStrings = new String[TABLE_COLS * tableHeight];
+            String[] cvStrings = new String[TABLE_COLS * tableHeightRows];
 
             //blank the array
             for (int i = 0; i < cvStrings.length; i++) {
@@ -167,8 +168,8 @@ public class PrintCvAction extends AbstractAction {
             do {
                 swap = false;
                 for (int i = 0; i < mModel.getRowCount() - 1; i++) {
-                    if (cvSortOrderVal(cvStrings[i + 1].substring(0, 15).trim())
-                            < cvSortOrderVal(cvStrings[i].substring(0, 15).trim())) {
+                    if (cvSortOrderVal(cvStrings[i + 1].substring(0, 15).trim()) < cvSortOrderVal(
+                            cvStrings[i].substring(0, 15).trim())) {
                         temp = cvStrings[i + 1];
                         cvStrings[i + 1] = cvStrings[i];
                         cvStrings[i] = temp;
@@ -178,14 +179,14 @@ public class PrintCvAction extends AbstractAction {
             } while (swap);
 
             //Print the array in three columns
-            for (int i = 0; i < tableHeight; i++) {
-                s = cvStrings[i] + cvStrings[i + tableHeight] + cvStrings[i + tableHeight * 2] + "\n";
-                writer.write(s, 0, s.length());
+            for (int i = 0; i < tableHeightRows; i++) {
+                s = cvStrings[i] + cvStrings[i + tableHeightRows] + cvStrings[i + tableHeightRows * 2] + "\n";
+                writer.write(s);
             }
             //write an extra character to work around the
             //last character truncation bug with HardcopyWriter
-            s = " \n";
-            writer.write(s, 0, s.length());
+            //s = " \n";
+            //writer.write(s, 0, s.length());
         } catch (java.io.IOException ex1) {
             log.error("IO exception while printing");
             return;
@@ -202,6 +203,7 @@ public class PrintCvAction extends AbstractAction {
      * <p>
      * The value itself is not meaningful, but is used in comparisons when
      * sorting.
+     * 
      * @param cvName cv name string to parse.
      * @return the sort order value.
      */
