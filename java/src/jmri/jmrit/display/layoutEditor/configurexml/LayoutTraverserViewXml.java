@@ -118,7 +118,7 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
 
         // get center point
         String name = element.getAttribute("ident").getValue();
-        log.info("Loading layouttraverser: {} " , name);
+        log.debug("Loading layouttraverser: {} " , name);
         double x = 0.0;
         double y = 0.0;
         double slotOffset = 25.0;
@@ -126,14 +126,14 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
         try {
             x = element.getAttribute("xcen").getFloatValue();
             y = element.getAttribute("ycen").getFloatValue();
-            log.info("  xcen={} ycen={}", x, y);
+            log.debug("  xcen={} ycen={}", x, y);
             if (element.getAttribute("slotoffset") != null) {
                 slotOffset = element.getAttribute("slotoffset").getDoubleValue();
-                log.info("  slotOffset={}", slotOffset);
+                log.debug("  slotOffset={}", slotOffset);
             }
             if (element.getAttribute("orientation") != null) {
                 orientation = element.getAttribute("orientation").getIntValue();
-                log.info("  orientation={}", orientation);
+                log.debug("  orientation={}", orientation);
             }
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layouttraverser attributes", e);
@@ -152,13 +152,13 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
         Attribute a = element.getAttribute("mainline");
         if (a != null) {
             lt.setMainline("yes".equalsIgnoreCase(a.getValue()));
-            log.info("  mainline={}", lt.isMainline());
+            log.debug("  mainline={}", lt.isMainline());
         }
         a = element.getAttribute("deckwidth");
         if (a != null) {
             try {
                 lt.setDeckWidth(a.getDoubleValue());
-                log.info("  deckwidth={}", lt.getDeckWidth());
+                log.debug("  deckwidth={}", lt.getDeckWidth());
             } catch (DataConversionException e) {
                 log.warn("Could not parse deckwidth attribute!");
             }
@@ -167,35 +167,35 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
         a = element.getAttribute("blockname");
         if (a != null) {
             lt.tLayoutBlockName = a.getValue();
-            log.info("  blockname={}", lt.tLayoutBlockName);
+            log.debug("  blockname={}", lt.tLayoutBlockName);
         }
 
         a = element.getAttribute("turnoutControlled");
         if (a != null) {
             lt.setTurnoutControlled("yes".equalsIgnoreCase(a.getValue()));
-            log.info("  turnoutControlled={}", lt.isTurnoutControlled());
+            log.debug("  turnoutControlled={}", lt.isTurnoutControlled());
         }
 
         a = element.getAttribute("dispatcherManaged");
         if (a != null) {
             lt.setDispatcherManaged("yes".equalsIgnoreCase(a.getValue()));
-            log.info("  dispatcherManaged={}", lt.isDispatcherManaged());
+            log.debug("  dispatcherManaged={}", lt.isDispatcherManaged());
             if (lt.isDispatcherManaged()) {
                 a = element.getAttribute("exitmast");
                 if (a != null) {
                     lt.tExitSignalMastName = a.getValue();
-                    log.info("  exitmast={}", lt.tExitSignalMastName);
+                    log.debug("  exitmast={}", lt.tExitSignalMastName);
                 }
                 a = element.getAttribute("buffermast");
                 if (a != null) {
                     lt.tBufferSignalMastName = a.getValue();
-                    log.info("  buffermast={}", lt.tBufferSignalMastName);
+                    log.debug("  buffermast={}", lt.tBufferSignalMastName);
                 }
                 a = element.getAttribute("signalIconPlacement");
                 if (a != null) {
                     try {
                         lt.setSignalIconPlacement(a.getIntValue());
-                        log.info("  signalIconPlacement={}", lt.getSignalIconPlacement());
+                        log.debug("  signalIconPlacement={}", lt.getSignalIconPlacement());
                     } catch (DataConversionException e) {
                         log.error("failed to convert signalIconPlacement attribute");
                     }
@@ -205,7 +205,7 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
 
         // load slot tracks
         List<Element> slotTrackList = element.getChildren("slot");
-        log.info("  found {} slot elements" + slotTrackList.size());
+        log.debug("  found {} slot elements" + slotTrackList.size());
         if (slotTrackList.size() > 0) {
             for (Element value : slotTrackList) {
                 double offset = 0.0;
@@ -213,7 +213,7 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
                 try {
                     offset = (value.getAttribute("offset")).getFloatValue();
                     index = (value.getAttribute("index")).getIntValue();
-                    log.info("    loading slot index = {} with offset = {}" , index , offset);
+                    log.debug("    loading slot index = {} with offset = {}" , index , offset);
                 } catch (DataConversionException e) {
                     log.error("failed to convert slot track offset or index attributes");
                 }
@@ -221,7 +221,7 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
                 a = value.getAttribute("connectname");
                 String connectName = (a != null) ? a.getValue() : "";
                 if (a != null) {
-                    log.info("connectname={}", connectName);
+                    log.debug("connectname={}", connectName);
                 }
 
                 lt.addSlotTrack(offset, index, connectName);
@@ -229,13 +229,13 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
                 a = value.getAttribute("approachmast");
                 if (a != null) {
                     lt.getSlotList().get(lt.getNumberSlots() - 1).approachMastName = a.getValue();
-                    log.info("      approachmast={}", a.getValue());
+                    log.debug("      approachmast={}", a.getValue());
                 }
 
                 a = value.getAttribute("turnout");
                 if (lt.isTurnoutControlled() && a != null) {
                     String turnoutName = a.getValue();
-                    log.info("      turnout={}", turnoutName);
+                    log.debug("      turnout={}", turnoutName);
                     Attribute stateAttr = value.getAttribute("turnoutstate");
                     int turnoutState = Turnout.CLOSED;
                     if (stateAttr != null && "thrown".equalsIgnoreCase(stateAttr.getValue())) {
@@ -243,22 +243,22 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
                     }
                     lt.setSlotTurnout(index, turnoutName, turnoutState);
                     if (stateAttr != null) {
-                        log.info("      turnoutstate={}", stateAttr.getValue());
+                        log.debug("      turnoutstate={}", stateAttr.getValue());
                     }
                 }
 
                 a = value.getAttribute("disabled");
                 lt.setSlotDisabled(index, (a != null) && "yes".equalsIgnoreCase(a.getValue()));
-                if (a != null) log.info("      disabled={}", a.getValue());
+                if (a != null) log.debug("      disabled={}", a.getValue());
 
                 a = value.getAttribute("disableWhenOccupied");
                 lt.setSlotDisabledWhenOccupied(index, (a != null) && "yes".equalsIgnoreCase(a.getValue()));
-                if (a != null) log.info("      disableWhenOccupied={}", a.getValue());
+                if (a != null) log.debug("      disableWhenOccupied={}", a.getValue());
             }
         }
 
         loadLogixNG_Data(lv, element);
-        log.info("  finished loading traverser {}" , name);
+        log.debug("  finished loading traverser {}" , name);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTraverserViewXml.class);
