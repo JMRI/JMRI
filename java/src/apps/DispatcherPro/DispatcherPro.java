@@ -108,7 +108,7 @@ public class DispatcherPro extends Apps {
         }
     }
 
-// main() method is removed since it's probably not used anymore
+// main() method is commented out since it's probably not used anymore
 // See: https://jmri-developers.groups.io/g/jmri/message/12240
 /*
     // Main entry point
