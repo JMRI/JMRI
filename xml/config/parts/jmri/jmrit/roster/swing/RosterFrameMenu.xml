@@ -52,7 +52,7 @@
     <node name="Export Roster Entry...">
         <name xml:lang="fr">Exporter Entrée d'Inventaire</name>
         <name xml:lang="it">Esporta Voce Roster...</name>
-        <name xml:lang="de">Exportiere Lokparkeingabe...</name>
+        <name xml:lang="de">Exportiere Lokparkeintrag...</name>
 		<name xml:lang="ca">Exporta una entrada de la flota...</name>
         <name xml:lang="cs">Exportovat záznam evidence...</name>
         <name xml:lang="nl">Exporteer Loc...</name>
@@ -61,7 +61,7 @@
     <node name="Import Roster Entry...">
         <name xml:lang="fr">Importer Entrée d'Inventaire...</name>
         <name xml:lang="it">Importa Voce Roster...</name>
-        <name xml:lang="de">Importiere Lokparkeingabe...</name>
+        <name xml:lang="de">Importiere Lokparkeintrag...</name>
 		<name xml:lang="ca">Importa una entrada de la flota...</name>
         <name xml:lang="cs">Importovat záznam evidence...</name>
         <name xml:lang="nl">Importeer Loc...</name>
@@ -143,7 +143,7 @@
     <node name="Close Window">
         <name xml:lang="fr">Fermer la Fenêtre</name>
         <name xml:lang="it">Chiudi</name>
-        <name xml:lang="de">Schließe</name>
+        <name xml:lang="de">Schließen</name>
 		<name xml:lang="ca">Tanca la finestra</name>
         <name xml:lang="cs">Zavřít okno</name>
         <name xml:lang="nl">Sluit venster</name>
@@ -154,7 +154,7 @@
     <node name="Print Displayed Roster Table">
         <name xml:lang="fr">Imprimer l'Tableu Résumé</name>
         <name xml:lang="it">Stampa Table Sommario</name>
-        <name xml:lang="de">Drucke Table Übersicht</name>
+        <name xml:lang="de">Drucke Übersichtstabelle</name>
         <name xml:lang="ca">Imprimeix la Table Resum</name>
         <name xml:lang="cs">Tisknout Table Souhrn</name>
         <name xml:lang="nl">Druk Table Samenvatting</name>
@@ -292,7 +292,7 @@
       <node name="New Entry...">
           <name xml:lang="it">Nuova Impresso...</name>
           <name xml:lang="da">Nyt Post...</name>
-          <name xml:lang="de">Neue Eintrag...</name>
+          <name xml:lang="de">Neuer Eintrag...</name>
           <name xml:lang="fr">Nouvelle Entrée ...</name>
           <name xml:lang="ca">Nova entrada...</name>
           <name xml:lang="cs">Nová seznam...</name>
@@ -345,7 +345,7 @@
     <node name="Hide/Show Summary Pane">
         <name xml:lang="fr">Cacher/Afficher Onglet Aperçu</name>
         <name xml:lang="it">Nascondi/Vedi Pannello</name>
-        <name xml:lang="de">Zeige/Verbirge Übersicht</name>
+        <name xml:lang="de">Ein/Ausblenden Übersicht</name>
 		<name xml:lang="ca">Oculta/Mostra Panell de Sumari</name>
         <name xml:lang="cs">Skrýt/zobrazit stránku souhrnu</name>
         <name xml:lang="nl">Toon/Verberg Samenvattingsscherm</name>
@@ -375,7 +375,7 @@
         <name xml:lang="fr">Cacher/Afficher Image d'Inventaire</name>
         <name xml:lang="it">Nascondi/Vedi Immagine Roster</name>
         <name xml:lang="da">Gem/Vis Roster Billede</name>
-        <name xml:lang="de">Zeige/Verbirge Lokparkbild</name>
+        <name xml:lang="de">Ein/Ausblenden Lokparkbild</name>
 		<name xml:lang="ca">Oculta/Mostra Imatge de la flota</name>
         <name xml:lang="cs">Skrýt/zobrazit obrázek evidence</name>
         <name xml:lang="nl">Toon/Verberg Loc-afbeelding</name>
@@ -386,7 +386,7 @@
         <name xml:lang="fr">Cacher/Afficher Groupes d'Inventaire</name>
         <name xml:lang="it">Nascondi/Vedi Gruppi Roster</name>
         <name xml:lang="da">Gem/Vis Roster Grupper</name>
-        <name xml:lang="de">Zeige/Verbirge Lokparkgruppen</name>
+        <name xml:lang="de">Ein/Ausblenden Lokparkgruppen</name>
 		<name xml:lang="ca">Oculta/Mostra Grups de la flota</name>
         <name xml:lang="cs">Skrýt/zobrazit skupinu evidence</name>
         <name xml:lang="nl">Toon/Verberg Locgroepen</name>
@@ -482,6 +482,7 @@
     </node>
     <node>separator</node><!-- separator -->
     <node name="Add Roster Entry to Group...">
+	    <name xml:lang="de">Eintrag einer Lokparkgruppe hinzufügen</name>
         <mnemonic>a</mnemonic>
         <adapter>jmri.jmrit.roster.swing.RosterEntryToGroupAction</adapter>
         <current>addgroup</current>
@@ -521,7 +522,7 @@
         <name xml:lang="fr">Étiquettes &amp; Médias...</name>
         <name xml:lang="it">Testi &amp; Immagini...</name>
         <name xml:lang="da">Etiketter &amp; Media...</name>
-        <name xml:lang="de">Aufschrifte &amp; Medien...</name>
+        <name xml:lang="de">Beschriftung &amp; Medien...</name>
 		<name xml:lang="ca">Etiquetes &amp; imatges...</name>
         <name xml:lang="cs">Štítky &amp; média...</name>
         <name xml:lang="nl">Labels &amp; beelden...</name>
