@@ -620,6 +620,7 @@
         <!-- Copy top level resources to include in jar file -->
         <copy todir="${target}/resources/">
             <fileset dir="${resourcedir}" includes="*.gif"/>
+            <fileset dir="${resourcedir}" includes="decoderpro*"/>
         </copy>
         <copy todir="${target}">
             <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png,**/*.json">

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.loconet.spjfile.SpjFile;
 import jmri.util.FileUtil;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -371,7 +371,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
      *
      * @param w the printer output to write to
      */
-    public void printTable(HardcopyWriter w) {
+    public void printTable(OriginalHardcopyWriter w) {
         // determine the column size - evenly sized, with space between for lines
         int columnSize = (w.getCharactersPerLine() - this.getColumnCount() - 1) / this.getColumnCount();
 
@@ -417,7 +417,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         w.close();
     }
 
-    protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
+    protected void printColumns(OriginalHardcopyWriter w, String columnStrings[], int columnSize) {
         String columnString = "";
         StringBuilder lineString = new StringBuilder("");
         // create a base string the width of the column

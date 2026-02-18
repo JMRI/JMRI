@@ -4,12 +4,10 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import jmri.InstanceManager;
 import jmri.Version;
-import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,16 +43,16 @@ public class PrintDecoderListAction extends AbstractAction {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, "DecoderPro V" + Version.name() + " Decoder Definitions", 10, .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(mFrame, "DecoderPro V" + Version.name() + " Decoder Definitions",
+                    null, null, 10, 
+                    .5 * 72, .5 * 72, .5 * 72, .5 * 72, isPreview, null, null, null, null, null);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
         }
 
-        // add the image
-        ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
-        // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
-        writer.write(icon.getImage(), new JLabel(icon));
+        // add the icon
+        writer.writeDecoderProIcon(true);
 
         // Loop through the decoder index, printing as needed
         String lastMfg = "";
