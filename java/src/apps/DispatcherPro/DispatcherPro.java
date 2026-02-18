@@ -12,8 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI program for creating control panels.
@@ -133,6 +131,6 @@ public class DispatcherPro extends Apps {
         splash(false);
     }
 */
-    private final static Logger log = LoggerFactory.getLogger(DispatcherPro.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DispatcherPro.class);
 
 }
