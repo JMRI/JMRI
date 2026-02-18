@@ -3781,7 +3781,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     @Nonnull
     public Point2D getCoords(LayoutTrack track, HitPointType connectionType) {
-        if (track == null) {log.warn ("track {} HitPointType {}", track, connectionType);}
+        if (track == null) {
+            log.warn("track is null, HitPointType={}", connectionType);
+        }
         LayoutTrack trk = Objects.requireNonNull(track);
         return getCoords(getLayoutTrackView(trk), connectionType);
     }

@@ -205,7 +205,7 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
 
         // load slot tracks
         List<Element> slotTrackList = element.getChildren("slot");
-        log.debug("  found {} slot elements" + slotTrackList.size());
+        log.debug("  found {} slot elements" , slotTrackList.size());
         if (slotTrackList.size() > 0) {
             for (Element value : slotTrackList) {
                 double offset = 0.0;
