@@ -445,8 +445,8 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Get the screen resolution in pixels per inch. It caches this so that a single
-     * value is used for the entire run of the preview/print.
+     * Get the screen resolution in pixels per inch. It caches this so that a
+     * single value is used for the entire run of the preview/print.
      * 
      * @return The screen resolution in pixels per inch.
      */
@@ -530,9 +530,7 @@ public class HardcopyWriter extends Writer {
 
             for (int i = index; i < index + len; i++) {
                 // if we haven't begun a new page, do that now
-                if (page == null) {
-                    newpage();
-                }
+                ensureOnPage();
 
                 // if the character is a line terminator, begin a new line
                 // unless its \n after \r
@@ -661,20 +659,16 @@ public class HardcopyWriter extends Writer {
      * Write a given String with the desired color.
      * <p>
      * Reset the text color back to the default after the string is written.
-     * This method is really only good for changing the color of a complete 
-     * line (or column). 
+     * This method is really only good for changing the color of a complete line
+     * (or column).
      *
      * @param c the color desired for this String
      * @param s the String
      * @throws java.io.IOException if unable to write to printer
      */
     public void write(Color c, String s) throws IOException {
-        if (page == null) {
-            newpage();
-        }
-        if (page != null) {
-            page.setColor(c);
-        }
+        ensureOnPage();
+        page.setColor(c);
         write(s);
         // note that the above write(s) can cause the page to become null!
         if (page != null) {
@@ -875,14 +869,14 @@ public class HardcopyWriter extends Writer {
                 page.dispose();
             }
             page = null;
-            newpage();
         }
     }
 
     /**
      * Return the number of columns of characters that fit on a page.
      *
-     * @return the number of characters in a line or null if the font is not monospaced
+     * @return the number of characters in a line or null if the font is not
+     *         monospaced
      */
     public Integer getCharactersPerLine() {
         if (!isMonospaced()) {
@@ -898,7 +892,7 @@ public class HardcopyWriter extends Writer {
      * @param points The amount of vertical space to ensure in points.
      */
     public void ensureVerticalSpace(int points) {
-        if (v_pos + points >= height) {
+        if (v_pos + points + lineheight >= height) {
             pageBreak();
         }
     }
@@ -927,8 +921,20 @@ public class HardcopyWriter extends Writer {
         v_pos = Math.max(v_pos, max_v_pos);
         max_v_pos = 0;
         v_pos += lineheight;
-        if (v_pos >= height) {
+        // Note that text is printed *below* the current v_pos, so we need to
+        // check if we have enough space for that line.
+        if (v_pos + lineheight >= height) {
             pageBreak();
+        }
+    }
+
+    /**
+     * Ensure that we have a page object. The page is null when we are before
+     * the first page, or between pages.
+     */
+    protected void ensureOnPage() {
+        if (page == null) {
+            newpage();
         }
     }
 
@@ -973,7 +979,7 @@ public class HardcopyWriter extends Writer {
                 page.setColor(color);
             }
         }
-        if (printHeader && page != null && inPageRange(pagenum)) {
+        if (printHeader && inPageRange(pagenum)) {
             page.setFont(headerfont);
             page.drawString(jobname, x0, headery);
 
@@ -991,10 +997,8 @@ public class HardcopyWriter extends Writer {
             page.drawLine(x0, y, x0 + width, y);
         }
         // set basic font
-        if (page != null) {
-            page.setFont(font);
-            refreshMetrics(page);
-        }
+        page.setFont(font);
+        refreshMetrics(page);
     }
 
     /**
@@ -1014,7 +1018,7 @@ public class HardcopyWriter extends Writer {
      * @return the current page number
      */
     public int getPageNum() {
-        return pagenum;
+        return pagenum + (page == null ? 1 : 0);
     }
 
     /**
@@ -1122,9 +1126,7 @@ public class HardcopyWriter extends Writer {
      */
     public Dimension writeSpecificSize(Image c, Dimension requiredSize) {
         // if we haven't begun a new page, do that now
-        if (page == null) {
-            newpage();
-        }
+        ensureOnPage();
 
         float widthScale = (float) requiredSize.width / c.getWidth(null);
         float heightScale = (float) requiredSize.height / c.getHeight(null);
@@ -1142,7 +1144,7 @@ public class HardcopyWriter extends Writer {
         int x = x0 + width - d.width;
         int y = y0 + v_pos + lineascent;
 
-        if (page != null && inPageRange(pagenum)) {
+        if (inPageRange(pagenum)) {
             page.drawImage(c, x, y,
                     d.width, d.height,
                     null);
@@ -1166,10 +1168,9 @@ public class HardcopyWriter extends Writer {
      */
     public void write(JWindow jW) {
         // if we haven't begun a new page, do that now
-        if (page == null) {
-            newpage();
-        }
-        if (page != null && inPageRange(pagenum)) {
+        ensureOnPage();
+
+        if (inPageRange(pagenum)) {
             int x = x0;
             int y = y0 + v_pos;
             // shift origin to current printing position
@@ -1210,14 +1211,13 @@ public class HardcopyWriter extends Writer {
      */
     public void writeLine(int vStart, int hStart, int vEnd, int hEnd) {
         // if we haven't begun a new page, do that now
-        if (page == null) {
-            newpage();
-        }
+        ensureOnPage();
+
         int xStart = x0 + hStart - useFontSize / 4;
         int xEnd = x0 + hEnd - useFontSize / 4;
         int yStart = y0 + vStart + (lineheight - lineascent) / 2;
         int yEnd = y0 + vEnd + (lineheight - lineascent) / 2;
-        if (page != null && inPageRange(pagenum)) {
+        if (inPageRange(pagenum)) {
             page.drawLine(xStart, yStart, xEnd, yEnd);
         }
     }
