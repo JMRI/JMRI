@@ -28,5 +28,5 @@ public class TablesSettings {
         // This will be implemented later to save to XML
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TablesSettings.class);
+//    private final static Logger log = LoggerFactory.getLogger(TablesSettings.class);
 }

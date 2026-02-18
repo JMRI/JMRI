@@ -11,7 +11,6 @@ import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.util.JmriJFrame;
 import jmri.util.gui.GuiLafPreferencesManager;
-import jmri.jmrit.beantable.Bundle;
 
 /**
  * Create a "Tables" menu for the main menu bar.

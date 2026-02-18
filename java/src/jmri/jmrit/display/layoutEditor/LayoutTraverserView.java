@@ -367,7 +367,8 @@ public class LayoutTraverserView extends LayoutTrackView {
     @Override
     protected HitPointType findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         HitPointType result = HitPointType.NONE;  // assume point not on connection
-        Point2D p, minPoint = MathUtil.zeroPoint2D;
+        Point2D p;
+        Point2D minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         double slotControlRadius = traverser.getSlotOffset() * 0.25;
@@ -620,11 +621,11 @@ public class LayoutTraverserView extends LayoutTrackView {
             if (!traverser.isSlotDisabled(i)) { // Only draw if the slot is NOT disabled
                 Color slotColor = null;
                 TrackSegment ts = getSlotConnectOrdered(i);
-                // A slot is mainline if the bridge is, or if the connected track is.
-                boolean slotIsMain = false;
-				if (ts != null) {
-					slotIsMain = ts.isMainline();
-				}
+//                // A slot is mainline if the bridge is, or if the connected track is.
+//                boolean slotIsMain = false;
+//				if (ts != null) {
+//					slotIsMain = ts.isMainline();
+//				}
                 // Set color for block, if any
 				if (isBlock) {
 					if (ts == null) {
@@ -639,7 +640,7 @@ public class LayoutTraverserView extends LayoutTrackView {
 				}
 
                 LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
-                float width = isMain ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
+                //float width = isMain ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
                 //g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
                 Point2D edgePoint = getSlotEdgePointOrdered(i);
                 Point2D anchorPoint = getSlotCoordsOrdered(i);
@@ -679,7 +680,7 @@ public class LayoutTraverserView extends LayoutTrackView {
             }
             // Set the stroke for the bridge
             LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
-            float width = traverser.isMainline() ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
+            //float width = traverser.isMainline() ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
             //g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
             Point2D center = getCoordsCenter();

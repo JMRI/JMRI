@@ -9,7 +9,6 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
-import jmri.util.MathUtil;
 
 /**
  * A LayoutTraverser is a representation used by LayoutEditor to display a

@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +62,6 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
     private NamedBeanComboBox<SignalMast> bufferMastComboBox;
 
     private final List<NamedBeanComboBox<SignalMast>> approachMastComboBoxes = new ArrayList<>();
-    private final java.util.Set<SignalMast> mastsUsedElsewhere = new java.util.HashSet<>();
     private boolean editLayoutTraverserOpen = false;
     private boolean editLayoutTraverserNeedsRedraw = false;
 
