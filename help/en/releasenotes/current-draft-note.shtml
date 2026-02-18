@@ -523,6 +523,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
+            <li>Improved the locomotive image resolution in printed rosters.</li>
             <li>Update "Export Complete Roster" process so that
                 upon "Import Complete Roster" the images will
                 properly display without the need to rebuild the roster.</li>

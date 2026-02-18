@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.gui.TrainsTableFrame;
 import jmri.jmrit.operations.trains.gui.TrainsTableModel;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 
 /**
  * Prints a summary of a train or trains. The trains list is controlled by the
@@ -129,7 +129,7 @@ public class PrintTrainsFrame extends OperationsFrame {
             return;
         }
 
-        // obtain a HardcopyWriter to do this
+        // obtain a OriginalHardcopyWriter to do this
         boolean isLandscape = false;
         if (manifestOrientationComboBox.getSelectedItem() != null &&
                 manifestOrientationComboBox.getSelectedItem().equals(Setup.LANDSCAPE)) {
@@ -137,7 +137,7 @@ public class PrintTrainsFrame extends OperationsFrame {
         }
 
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
-        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleTrainsTable"),
+        try (OriginalHardcopyWriter writer = new OriginalHardcopyWriter(new Frame(), Bundle.getMessage("TitleTrainsTable"),
                 fontSize, .5, .5, .5, .5, _isPreview, "", isLandscape, true, null, null);) {
 
             List<Train> trains = _trainsTableFrame.getSortByList((String) sortByComboBox.getSelectedItem());
@@ -167,14 +167,14 @@ public class PrintTrainsFrame extends OperationsFrame {
                     }
                 }
             }
-        } catch (HardcopyWriter.PrintCanceledException ex) {
+        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
             log.debug("Print canceled");
         } catch (IOException e1) {
             log.error("Exception in print train details: {}", e1.getLocalizedMessage());
         }
     }
 
-    private void printSummaryTrains(HardcopyWriter writer, List<Train> trains, TrainsTableFrame trainsTableFrame)
+    private void printSummaryTrains(OriginalHardcopyWriter writer, List<Train> trains, TrainsTableFrame trainsTableFrame)
             throws IOException {
         int maxLineLength = writer.getCharactersPerLine() - 1;
         int maxTrainNameLength = InstanceManager.getDefault(TrainManager.class).getMaxTrainNameLength();
@@ -220,12 +220,12 @@ public class PrintTrainsFrame extends OperationsFrame {
         if (_train == null) {
             return;
         }
-        // obtain a HardcopyWriter to do this
-        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleTrain", _train.getName()),
+        // obtain a OriginalHardcopyWriter to do this
+        try (OriginalHardcopyWriter writer = new OriginalHardcopyWriter(new Frame(), Bundle.getMessage("TitleTrain", _train.getName()),
                 Control.reportFontSize, .5, .5, .5, .5, _isPreview)) {
 
             printTrain(writer, _train);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
+        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
             log.debug("Print canceled");
         } catch (IOException ex) {
             log.error("Exception in print train: {}", ex.getLocalizedMessage());
@@ -235,7 +235,7 @@ public class PrintTrainsFrame extends OperationsFrame {
     // 7 lines of header plus NEW_LINE at start
     private static final int NUMBER_OF_HEADER_LINES = 8;
 
-    private void printTrain(HardcopyWriter writer, Train train) throws IOException {
+    private void printTrain(OriginalHardcopyWriter writer, Train train) throws IOException {
         String s = Bundle.getMessage("Name") + ": " + train.getName() + NEW_LINE;
         writer.write(s);
         s = Bundle.getMessage("Description") + ": " + train.getDescription() + NEW_LINE;
@@ -277,7 +277,7 @@ public class PrintTrainsFrame extends OperationsFrame {
         box.setSelectedItem(_trainsTableFrame.getSortBy());
     }
 
-    private int getNumberOfLines(HardcopyWriter writer, String string) {
+    private int getNumberOfLines(OriginalHardcopyWriter writer, String string) {
         String[] lines = string.split(NEW_LINE);
         int count = lines.length;
         // any long lines that exceed the page width?
