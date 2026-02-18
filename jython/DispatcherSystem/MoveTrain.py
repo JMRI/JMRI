@@ -1529,10 +1529,6 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         #print "edge_before" , edge
         #print "g.g_stopping.edgesOf(station_block_name)",g.g_stopping.edgesOf(station_block_name)
         break1 = False
-        print "g_stopping.edgeSet1 edges:", g.g_stopping.edgeSet()
-        print "g_stopping.edgeSet2"
-        for e in g.g_stopping.edgeSet():
-            print "e" , e
         for e in g.g_stopping.edgeSet():
             j+=1
             LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
@@ -1543,11 +1539,6 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             #print "in_siding", in_siding
             for i in range(station_block.getNumberOfNeighbours()):
                 neighbor_name = station_block.getNeighbourAtIndex(i).getDisplayName()
-                print "neighbor_name", neighbor_name
-                print "station_block_name", station_block_name
-                # print "penultimate_block_name", e.getItem("penultimate_block_name")
-                # print "last_block_name", e.getItem("last_block_name")
-                #print "***************"
                 if e.getItem("penultimate_block_name") == neighbor_name and e.getItem("last_block_name") == station_block_name:
                     edge = e
                     break1 = True
@@ -1626,8 +1617,6 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             #print "in_siding", in_siding
             for i in range(station_block.getNumberOfNeighbours()):
                 neighbor_name = station_block.getNeighbourAtIndex(i).getDisplayName()
-                print "neighbor_name", neighbor_name
-                print "station_block_name", station_block_name
                 # print "penultimate_block_name", e.getItem("penultimate_block_name")
                 # print "last_block_name", e.getItem("last_block_name")
                 print "***************"
