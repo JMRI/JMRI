@@ -1,14 +1,12 @@
 package jmri.jmrit.roster;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -27,7 +25,6 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneContainer;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
 import jmri.util.BusyGlassPane;
-import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.jdom2.*;
@@ -40,8 +37,9 @@ public class PrintRosterEntry implements PaneContainer {
 
     /**
      * List of {@link jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane} JPanels.
-     * Built up at line 150 or passed as argument paneList in line 188 via
-     * {link #PrintRosterEntry(RosterEntry, List, FunctionLabelPane, RosterMediaPane, JmriJFrame)}
+     * Built up at line 150 or passed as argument paneList in line 188 via {link
+     * #PrintRosterEntry(RosterEntry, List, FunctionLabelPane, RosterMediaPane,
+     * JmriJFrame)}
      */
     List<JPanel> _paneList = new ArrayList<>();
     FunctionLabelPane _flPane;
@@ -49,12 +47,13 @@ public class PrintRosterEntry implements PaneContainer {
     JmriJFrame _parent;
 
     /**
-     * Constructor for a Print roster item (programmer tabs) selection pane from an XML definition file.
-     * Includes &lt;pane&gt; elements (tabs) from Programmer (generic) as well as rosterEntry decoder.xml
-     * Called from RosterFrame &gt; PreviewAll context menu.
+     * Constructor for a Print roster item (programmer tabs) selection pane from
+     * an XML definition file. Includes &lt;pane&gt; elements (tabs) from
+     * Programmer (generic) as well as rosterEntry decoder.xml Called from
+     * RosterFrame &gt; PreviewAll context menu.
      *
-     * @param rosterEntry Roster item, either as a selection or object
-     * @param parent window over which this dialog will be centered
+     * @param rosterEntry        Roster item, either as a selection or object
+     * @param parent             window over which this dialog will be centered
      * @param programmerFilename xml file name for programmer used in printing.
      */
     public PrintRosterEntry(RosterEntry rosterEntry, JmriJFrame parent, String programmerFilename) {
@@ -82,26 +81,30 @@ public class PrintRosterEntry implements PaneContainer {
                 return;
             }
             log.debug("Success: xml file top element is 'programmer'");
-        } catch (JDOMException | java.io.IOException e) {
+        } catch (
+                JDOMException |
+                java.io.IOException e) {
             log.error("exception reading programmer file {}", programmerFilename, e);
             return;
         }
 
         CvTableModel cvModel = new CvTableModel(progStatus, null); // no programmer
 
-        VariableTableModel variableModel = new VariableTableModel(progStatus, new String[] {"Name", "Value"}, cvModel); // NOI18N
-        
+        VariableTableModel variableModel = new VariableTableModel(progStatus, new String[]{"Name", "Value"}, cvModel); // NOI18N
+
         String decoderModel = _rosterEntry.getDecoderModel();
         String decoderFamily = _rosterEntry.getDecoderFamily();
 
         log.debug("selected loco uses decoder {} {}", decoderFamily, decoderModel);
         // locate a decoder like that
-        List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
+        List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null,
+                decoderFamily, null, null, null, decoderModel);
         log.debug("found {} matches", l.size());
         if (l.isEmpty()) {
             log.debug("Loco uses {} {} decoder, but no such decoder defined", decoderFamily, decoderModel);
             // fall back to use just the decoder name, not family
-            l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, decoderModel);
+            l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null,
+                    decoderModel);
             log.debug("found {} matches without family key", l.size());
         }
         DecoderFile decoderFile = null;
@@ -142,7 +145,7 @@ public class PrintRosterEntry implements PaneContainer {
         // load defaults
         decoderFile.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
         decoderFile.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
-        
+
         // load the specific contents for this entry from rosterEntry file
         rosterEntry.readFile();
         rosterEntry.loadCvModel(variableModel, cvModel);
@@ -185,7 +188,7 @@ public class PrintRosterEntry implements PaneContainer {
             }
             PaneProgPane p;
             if (PaneProgFrame.isIncludedFE(elPane, modelElem, _rosterEntry, "", "")) {
-                 p = new PaneProgPane(this, name, elPane, cvModel, variableModel, modelElem, _rosterEntry);
+                p = new PaneProgPane(this, name, elPane, cvModel, variableModel, modelElem, _rosterEntry);
                 _paneList.add(p); // possible duplicates with prog pane titles handled by list
             }
         }
@@ -215,16 +218,19 @@ public class PrintRosterEntry implements PaneContainer {
     }
 
     /**
-     * Configure variable fields and create a PrintRosterEntry instance while doing so.
-     * Includes all (visible) Roster Entry programmer &lt;pane&gt; elements (tabs).
+     * Configure variable fields and create a PrintRosterEntry instance while
+     * doing so. Includes all (visible) Roster Entry programmer &lt;pane&gt;
+     * elements (tabs).
      *
      * @param rosterEntry an item in the Roster
-     * @param paneList list of programmer tabs, including all properties
-     * @param flPane extra pane w/checkbox to select printing of "Function List"
-     * @param rMPane pane containing roster media (image)
-     * @param parent window over which this dialog will be centered
+     * @param paneList    list of programmer tabs, including all properties
+     * @param flPane      extra pane w/checkbox to select printing of "Function
+     *                    List"
+     * @param rMPane      pane containing roster media (image)
+     * @param parent      window over which this dialog will be centered
      */
-    public PrintRosterEntry(RosterEntry rosterEntry, List<JPanel> paneList, FunctionLabelPane flPane, RosterMediaPane rMPane, JmriJFrame parent) {
+    public PrintRosterEntry(RosterEntry rosterEntry, List<JPanel> paneList, FunctionLabelPane flPane,
+            RosterMediaPane rMPane, JmriJFrame parent) {
         _rosterEntry = rosterEntry;
         _paneList = paneList;
         _flPane = flPane;
@@ -236,12 +242,14 @@ public class PrintRosterEntry implements PaneContainer {
     /**
      * Write a series of 'pages' to graphic output using HardcopyWriter.
      *
-     * @param preview true if output should go to the Preview panel, false to output to a printer
+     * @param preview true if output should go to the Preview panel, false to
+     *                output to a printer
      */
     public void doPrintPanes(boolean preview) {
         HardcopyWriter w;
         try {
-            w = new HardcopyWriter(_parent, _rosterEntry.getId(), 10, .8, .5, .5, .5, preview);
+            w = new HardcopyWriter(_parent, _rosterEntry.getId(), null, null, 10,
+            .8 * 72, .5 * 72, .5 * 72, .5 * 72, preview, null, null, null, null, null);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
@@ -259,14 +267,16 @@ public class PrintRosterEntry implements PaneContainer {
                 pane.printPane(w); // takes care of all I18N
             }
         }
-        w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(), w.getCharactersPerLine() + 1);
+        w.writeLine(w.getCurrentVPos(), 0, w.getCurrentVPos(), w.getPrintablePagesizePoints().width);
         w.close();
     }
 
     /**
-     * Create and display a pane to the user to select which Programmer tabs to include in printout.
+     * Create and display a pane to the user to select which Programmer tabs to
+     * include in printout.
      *
-     * @param preview true if output should go to a Preview pane on screen, false to output to a printer (dialog)
+     * @param preview true if output should go to a Preview pane on screen,
+     *                false to output to a printer (dialog)
      */
     public void printPanes(final boolean preview) {
         final JFrame frame = new JFrame(Bundle.getMessage("TitleSelectItemsToPrint"));
@@ -352,24 +362,12 @@ public class PrintRosterEntry implements PaneContainer {
      * @param w the active HardcopyWriter instance to be used
      */
     public void printInfoSection(HardcopyWriter w) {
-        ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
-        // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
-        w.write(icon.getImage(), new JLabel(icon));
-        w.setFontStyle(Font.BOLD);
-        // add a number of blank lines
-        int height = icon.getImage().getHeight(null);
-        int blanks = (height - w.getLineAscent()) / w.getLineHeight();
+        // Output the icon
+        w.writeDecoderProIcon();
+        w.setFont(null, Font.BOLD, null);
 
-        try {
-            for (int i = 0; i < blanks; i++) {
-                String s = "\n";
-                w.write(s, 0, s.length());
-            }
-        } catch (IOException e) {
-            log.warn("error during printing: ", e);
-        }
         _rosterEntry.printEntry(w);
-        w.setFontStyle(Font.PLAIN);
+        w.setFont(null, Font.PLAIN, null);
     }
 
     private final static Logger log = LoggerFactory.getLogger(PrintRosterEntry.class);

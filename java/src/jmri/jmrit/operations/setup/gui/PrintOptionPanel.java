@@ -87,7 +87,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     JTextField hazardousTextField = new JTextField(20);
 
     // text area
-    JTextArea commentTextArea = new JTextArea(2, 90);
+    JTextArea commentTextArea = new JTextArea(4, 90);
 
     JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

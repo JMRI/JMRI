@@ -2,6 +2,7 @@ package jmri.jmrit.roster;
 
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
+import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.File;
@@ -14,7 +15,6 @@ import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
@@ -25,7 +25,6 @@ import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.FileUtil;
-import jmri.util.StringUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
 import jmri.util.swing.JmriJOptionPane;
@@ -1142,6 +1141,14 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             for (Element fn : l) {
                 String key = fn.getChild("key").getText();
                 String value = fn.getChild("value").getText();
+                
+                // Special case:  If a No Name or All Entries
+                // group has been accidentally created, suppress that
+                if (key.equals(Roster.ROSTER_GROUP_PREFIX+"No Group") 
+                    || key.equals(Roster.ROSTER_GROUP_PREFIX+"All Entries")) {
+                        continue;
+                    }
+                    
                 this.putAttribute(key, value);
             }
         }
@@ -1681,6 +1688,19 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
+     * Function to get the size of an image in points when shrunk to fit a given
+     * size.
+     *
+     * @param img  the image to get the size of
+     * @param size the size to shrink the image to (in points)
+     * @return the size of the image in points
+     */
+    public static Dimension getImageSize(Image img, Dimension size) {
+        double scale = Math.min((double) size.width / img.getWidth(null), (double) size.height / img.getHeight(null));
+        return new Dimension((int) (img.getWidth(null) * scale), (int) (img.getHeight(null) * scale));
+    }
+
+    /**
      * Ultra-compact list view of roster entries. Shows text from fields as
      * initially visible in the Roster frame table.
      * <p>
@@ -1700,104 +1720,68 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             String thisText;
             String thisLine = "";
 
-            // start each entry on a new line
-            w.write(newLine, 0, 1);
-
-            int colWidth = 15;
             // roster entry ID (not the filname)
             if (_id != null) {
-                thisText = String.format("%-" + colWidth + "s", _id.substring(0, Math.min(_id.length(), colWidth))); // %- = left align
+                thisText = _id + "\t"; // %- = left align
                 log.debug("thisText = |{}|, length = {}", thisText, thisText.length());
             } else {
-                thisText = String.format("%-" + colWidth + "s", "<null>");
+                thisText = "<null>\t";
             }
             thisLine += thisText;
-            colWidth = 6;
             // _dccAddress
-            thisLine += StringUtil.padString(_dccAddress, colWidth);
-            colWidth = 6;
+            thisLine += _dccAddress + "\t";
             // _roadName
-            thisLine += StringUtil.padString(_roadName, colWidth);
-            colWidth = 6;
+            thisLine += _roadName + "\t";
             // _roadNumber
-            thisLine += StringUtil.padString(_roadNumber, colWidth);
-            colWidth = 6;
+            thisLine += _roadNumber + "\t";
             // _mfg
-            thisLine += StringUtil.padString(_mfg, colWidth);
-            colWidth = 10;
+            thisLine += _mfg + "\t";
             // _model
-            thisLine += StringUtil.padString(_model, colWidth);
-            colWidth = 10;
+            thisLine += _model + "\t";
             // _decoderModel
-            thisLine += StringUtil.padString(_decoderModel, colWidth);
-            colWidth = 12;
+            thisLine += _decoderModel + "\t";
             // _protocol (type)
-            thisLine += StringUtil.padString(_protocol.toString(), colWidth);
-            colWidth = 6;
+            thisLine += _protocol.toString() + "\t";
             // _owner
-            thisLine += StringUtil.padString(_owner, colWidth);
-            colWidth = 10;
+            thisLine += _owner + "\t";
 
             // dateModified (type)
             if (dateModified != null) {
                 DateFormat.getDateTimeInstance().format(dateModified);
-                thisText = String.format("%-" + colWidth + "s",
-                        dateModified.toString().substring(0, Math.min(dateModified.toString().length(), colWidth)));
+                thisText = dateModified + "\t";
                 thisLine += thisText;
             }
             // don't include comment and decoder family
 
+            thisLine += "\n";
+
             w.write(thisLine);
-            // extra whitespace line after each entry would miss goal of a compact listing
-            // w.write(newLine, 0, 1);
         } catch (IOException e) {
             log.error("Error printing RosterEntry: ", e);
         }
     }
 
     public void printEntry(HardcopyWriter w) {
-        printEntry(w, w.getIsPreview() ? 1.5f : 3.0f);
-    }
-
-    public void printEntry(HardcopyWriter w, float overSample) {
         if (getIconPath() != null) {
             ImageIcon icon = new ImageIcon(getIconPath());
             // We use an ImageIcon because it's guaranteed to have been loaded when ctor is complete.
             // We set the imagesize to 150x150 pixels times the overSample. The
             // resulting image on the page will be scaled back down to 150pt x 150pt
 
-            int imagesize = Math.round(150 * overSample);
-
             Image img = icon.getImage();
-            int width = img.getWidth(null);
-            int height = img.getHeight(null);
-            double widthratio = (double) width / imagesize;
-            double heightratio = (double) height / imagesize;
-            double ratio = Math.max(widthratio, heightratio);
-            Image newImg = img;
-            if (ratio > 1) {
-                width = (int) (width / ratio);
-                height = (int) (height / ratio);
-                newImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-            } else {
-                // The image isn't big enough to start with
-                // We don't want to scale it down by the original overSample value
-                // So we adjust the oversample so that it just fits.
-                overSample = Math.max(overSample * (float) ratio, 1f);
-            }
+            Dimension shape = new Dimension(150, 150); // in points
+            Dimension actualShape = getImageSize(img, shape);
 
-            blanks = ((int) Math.ceil(height / overSample) - w.getLineAscent()) / w.getLineHeight();
+            // Ensure there is enough vertical space for the image
+            w.ensureVerticalSpace(actualShape.height);
 
-            if (blanks + w.getCurrentLineNumber() > w.getLinesPerPage()) {
-                w.pageBreak();
-            }
-            ImageIcon newIcon = new ImageIcon(newImg);
-            w.writeWithScale(newIcon.getImage(), overSample, new JLabel(newIcon));
+            Dimension d = w.writeSpecificSize(img, shape);
             // Work out the number of line approx that the image takes up.
             // We might need to pad some areas of the roster out, so that things
             // look correct and text doesn't overflow into the image.
-            textSpaceWithIcon
-                    = w.getCharactersPerLine() - ((int)Math.ceil(width / overSample) / w.getCharWidth()) - indentWidth - 1;
+            textSpaceWithIcon = (int) (w.getCharactersPerLine() - (d.width / w.getCharWidth()) - indentWidth - 1);
+            // Update blanks to be the number of lines the image takes up.
+            blanks = (d.height - w.getLineAscent()) / w.getLineHeight();
         }
         printEntryDetails(w);
     }
@@ -1812,22 +1796,23 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Print the roster entry information.
      * <p>
      * Updated to allow for multiline comment and decoder comment fields.
-     * Separate write statements for text and line feeds to work around the
-     * HardcopyWriter bug that misplaces borders.
+     * Separate write statements for text and line feeds to work around the bug
+     * that misplaces borders. ISSUE: Still true? This could be converted to use
+     * TabStops instead of spaces. This would make the code cleaner and more
+     * maintainable. It would also make it easier to change the column widths in
+     * the future. It would also allow for proportional fonts to be used instead
+     * of fixed width fonts. It would also allow for the columns to be aligned
+     * on the right instead of the left.
      *
      * @param w the HardcopyWriter used to print
      */
-    public void printEntryDetails(Writer w) {
-        if (!(w instanceof HardcopyWriter)) {
-            throw new IllegalArgumentException("No HardcopyWriter instance passed");
-        }
+    public void printEntryDetails(HardcopyWriter w) {
         int linesAdded = -1;
         String title;
         String leftMargin = "   "; // 3 spaces in front of legend labels
         int labelColumn = 19; // pad remaining spaces for legend using fixed width font, forms "%-19s" in line
         try {
-            HardcopyWriter ww = (HardcopyWriter) w;
-            int textSpace = ww.getCharactersPerLine() - indentWidth - 1;
+            int textSpace = w.getCharactersPerLine() - indentWidth - 1;
             title = String.format("%-" + labelColumn + "s",
                     (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldID")))); // I18N ID:
             if ((textSpaceWithIcon != 0) && (linesAdded < blanks)) {

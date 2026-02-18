@@ -1,35 +1,19 @@
 package jmri.jmrix.maple.assignment;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+
+import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
-import jmri.jmrix.maple.InputBits;
-import jmri.jmrix.maple.MapleSystemConnectionMemo;
-import jmri.jmrix.maple.OutputBits;
-import jmri.jmrix.maple.SerialAddress;
-import jmri.jmrix.maple.SerialNode;
-import jmri.util.davidflanagan.HardcopyWriter;
+import javax.swing.table.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrix.maple.*;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 
 /**
  * Frame for running assignment list.
@@ -302,10 +286,10 @@ public class ListFrame extends jmri.util.JmriJFrame {
                     + Bundle.getMessage("NodeBoxLabel") + " " + selNodeID;
         }
         // initialize a printer writer
-        HardcopyWriter writer = null;
+        OriginalHardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(curFrame, head, 10, .8, .5, .5, .5, false);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
+            writer = new OriginalHardcopyWriter(curFrame, head, 10, .8, .5, .5, .5, false);
+        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
             //log.debug("Print cancelled");
             return;
         }
@@ -436,10 +420,10 @@ public class ListFrame extends jmri.util.JmriJFrame {
          * <p>
          * Adapted from routines in BeanTableDataModel.java by
          * Bob Jacobsen and Dennis Miller
-         * @param w the HardcopyWriter instance.
+         * @param w the OriginalHardcopyWriter instance.
          * @param colWidth column width array.
          */
-        public void printTable(HardcopyWriter w, int colWidth[]) {
+        public void printTable(OriginalHardcopyWriter w, int colWidth[]) {
             // determine the column sizes - proportionately sized, with space between for lines
             int[] columnSize = new int[4];
             int charPerLine = w.getCharactersPerLine();
@@ -466,7 +450,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             }
             w.setFontStyle(Font.BOLD);
             printColumns(w, columnStrings, columnSize);
-            w.setFontStyle(0);
+            w.setFontStyle(Font.PLAIN);
             // draw horizontal line
             w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
                     tableLineWidth);
@@ -497,7 +481,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
+        protected void printColumns(OriginalHardcopyWriter w, String columnStrings[], int columnSize[]) {
             String columnString = "";
             StringBuilder lineString = new StringBuilder("");
             StringBuilder[] spaces = new StringBuilder[4];

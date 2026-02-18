@@ -1,17 +1,14 @@
 
 package jmri.jmrix.loconet.locomon;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrix.AbstractMonPaneScaffold;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.assertj.swing.edt.GuiActionRunner;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.*;
@@ -27,7 +24,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
     public void testInput() {
-        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
         ThreadingUtil.runOnGUI( () -> ((LocoMonPane)pane).message(m));
@@ -37,7 +34,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
     public void testFilterNot() {
-        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
         // filter not match
         setAndCheckFilterTextEntry("A1","A1","filter set");
@@ -50,7 +47,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
     public void testFilterSimple() {
-        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
         // filter A0
         setAndCheckFilterTextEntry("A0","A0","filter set");
@@ -63,7 +60,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
     public void testFilterMultiple() {
-        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+        Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
         assertThat(thrown).isNull();
         // filter B1 A0
         setAndCheckFilterTextEntry("B1 A0","B1 A0","filter set");
@@ -79,14 +76,14 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     // startup compared to other AbstractMonPane derivatives.
     @Override
     @Test
+    @DisabledIfHeadless
     public void checkAutoScrollCheckBox(){
-         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-         AbstractMonPaneScaffold s = new AbstractMonPaneScaffold(pane);
+         AbstractMonPaneScaffold scaff = new AbstractMonPaneScaffold(pane);
 
          // for Jemmy to work, we need the pane inside of a frame
          JmriJFrame f = new JmriJFrame();
 
-         Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+         Throwable thrown = catchThrowable( () -> ThreadingUtil.runOnGUI( () ->  pane.initComponents()));
          assertThat(thrown).isNull();
 
         ThreadingUtil.runOnGUI( () -> {
@@ -98,18 +95,18 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
             f.pack();
             f.setVisible(true);
         });
-         assertThat(s.getAutoScrollCheckBoxValue()).isTrue();
-         s.checkAutoScrollCheckBox();
-         assertThat(s.getAutoScrollCheckBoxValue()).isFalse();
+        assertThat(scaff.getAutoScrollCheckBoxValue()).isTrue();
+        scaff.checkAutoScrollCheckBox();
+        assertThat(scaff.getAutoScrollCheckBoxValue()).isFalse();
         ThreadingUtil.runOnGUI( () -> {
             f.setVisible(false);
             f.dispose();
         });
     }
 
-    jmri.TurnoutManager l;
-    jmri.SensorManager s;
-    jmri.ReporterManager r;
+    private jmri.TurnoutManager l;
+    private jmri.SensorManager s;
+    private jmri.ReporterManager r;
 
     @Override
     @BeforeEach
@@ -123,15 +120,15 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
         // create and register the manager object
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalTurnoutManager();
         l = new jmri.jmrix.loconet.LnTurnoutManager(memo, lnis, false);
         jmri.InstanceManager.setTurnoutManager(l);
 
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSensorManager();
         s = new jmri.jmrix.loconet.LnSensorManager(memo, false);
         jmri.InstanceManager.setSensorManager(s);
 
-        jmri.util.JUnitUtil.initReporterManager();
+        JUnitUtil.initReporterManager();
         r = new jmri.jmrix.loconet.LnReporterManager(memo);
         jmri.InstanceManager.setReporterManager(r);
 
@@ -151,7 +148,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         s.dispose();
         r.dispose();
 
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

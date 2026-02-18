@@ -77,7 +77,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     JTextField trainDescriptionTextField = new JTextField(30);
 
     // text area
-    JTextArea commentTextArea = new JTextArea(2, 70);
+    JTextArea commentTextArea = new JTextArea(4, 70);
     JScrollPane commentScroller = new JScrollPane(commentTextArea);
     JColorChooser commentColorChooser = new JColorChooser(Color.black);
 

@@ -1,58 +1,25 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
-import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import javax.swing.JWindow;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
-import javax.swing.SwingConstants;
+import java.util.List;
+
+import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.symbolicprog.AbstractValue;
-import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.CvValue;
-import jmri.jmrit.symbolicprog.DccAddressPanel;
-import jmri.jmrit.symbolicprog.FnMapPanel;
-import jmri.jmrit.symbolicprog.FnMapPanelESU;
-import jmri.jmrit.symbolicprog.PrintCvAction;
-import jmri.jmrit.symbolicprog.Qualifier;
-import jmri.jmrit.symbolicprog.QualifierAdder;
-import jmri.jmrit.symbolicprog.SymbolicProgBundle;
-import jmri.jmrit.symbolicprog.ValueEditor;
-import jmri.jmrit.symbolicprog.CvValueRenderer;
-import jmri.jmrit.symbolicprog.VariableTableModel;
-import jmri.jmrit.symbolicprog.VariableValue;
-import jmri.util.CvUtil;
-import jmri.util.StringUtil;
-import jmri.util.ThreadingUtil;
-import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.util.jdom.LocaleSelector;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
+
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.*;
+import jmri.util.*;
+import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.jdom.LocaleSelector;
 
 /**
  * Provide the individual panes for the TabbedPaneProgrammer.
@@ -2495,26 +2462,25 @@ public class PaneProgPane extends javax.swing.JPanel
             String heading2 = SymbolicProgBundle.getMessage("PrintHeadingSetting");
             String s;
             int interval = spaces.length() - heading1.length();
-            w.setFontStyle(Font.BOLD);
+            w.setFont(null, Font.BOLD, null);
             // write the section name and dividing line
             s = mName;
             w.write(s, 0, s.length());
             w.writeBorders();
             //Draw horizontal dividing line for each Pane section
-            w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
-                    w.getCharactersPerLine() + 1);
+            w.writeLine(w.getCurrentVPos(), 0, w.getCurrentVPos(), w.getPrintablePagesizePoints().width);
             s = "\n";
             w.write(s, 0, s.length());
             // if this isn't the raw CV section, write the column headings
             if (cvList.isEmpty()) {
-                w.setFontStyle(Font.BOLD + Font.ITALIC);
+                w.setFont(null, Font.BOLD + Font.ITALIC, null);
                 s = "   " + heading1 + spaces.substring(0, interval) + "   " + heading2;
                 w.write(s, 0, s.length());
                 w.writeBorders();
                 s = "\n";
                 w.write(s, 0, s.length());
             }
-            w.setFontStyle(Font.PLAIN);
+            w.setFont(null, Font.PLAIN, null);
             // Define a vector to store the names of variables that have been printed
             // already.  If they have been printed, they will be skipped.
             // Using a vector here since we don't know how many variables will
@@ -2616,14 +2582,11 @@ public class PaneProgPane extends javax.swing.JPanel
                     // space down the rest of the page.
                     // don't use page break because we want the table borders to be written
                     // to the bottom of the page
-                    int pageSize = w.getLinesPerPage();
-                    int here = w.getCurrentLineNumber();
-                    if (pageSize - here < speedFrameLineHeight) {
-                        for (int j = 0; j < (pageSize - here); j++) {
-                            w.writeBorders();
-                            w.write(s, 0, s.length());
-                        }
-                    }
+                    Dimension pagesize = w.getPrintablePagesizePoints();
+                    int here = w.getCurrentVPos();
+                    w.writeLine(here, 0, pagesize.height, 0);
+                    w.writeLine(here, pagesize.width, pagesize.height, pagesize.width);
+                    w.pageBreak();
 
                     // Now that there is page space, create the window to hold the graphic speed table
                     JWindow speedWindow = new JWindow();
@@ -2685,7 +2648,7 @@ public class PaneProgPane extends javax.swing.JPanel
             if (!cvList.isEmpty()) {
 //            Check how many Cvs there are to print
                 int cvCount = cvList.size();
-                w.setFontStyle(Font.BOLD); //set font to Bold
+                w.setFont(null, Font.BOLD, null); //set font to Bold
                 // print a simple heading with I18N
                 s = String.format("%1$21s", Bundle.getMessage("Value"))
                     + String.format("%1$28s", Bundle.getMessage("Value")) +
@@ -2700,7 +2663,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 w.writeBorders();
                 s = "\n";
                 w.write(s, 0, s.length());
-                w.setFontStyle(0); //set font back to Normal
+                w.setFont(null, Font.PLAIN, null); //set font back to Normal
                 //           }
                 /*create an array to hold CV/Value strings to allow reformatting and sorting
                  Same size as the table drawn above (TABLE_COLS columns*tableHeight; heading rows

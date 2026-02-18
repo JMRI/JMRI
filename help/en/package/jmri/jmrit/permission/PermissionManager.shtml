@@ -72,9 +72,14 @@
       <h3>The current permissions are</h3>
       <table>
         <tr><th>Permission</th><th>Roles with this permission as standard</th></tr>
+        <tr><td>Change user's own password</td><td><strong>Administrator</strong> and <strong>Standard user</strong></td></tr>
         <tr><td>Edit preferences</td><td><strong>Administrator</strong></td></tr>
         <tr><td>Edit permissions</td><td><strong>Administrator</strong></td></tr>
-        <tr><td>Change user's own password</td><td><strong>Administrator</strong> and <strong>Standard user</strong></td></tr>
+
+        <tr><td>Edit Added Roster Columns</td><td><strong>Administrator</strong></td></tr>
+        <tr><td>Program on Programming Track</td><td><strong>Administrator</strong></td></tr>
+        <tr><td>Program on Main</td><td><strong>Administrator</strong></td></tr>
+
         <tr><td>Load table content and panels file</td><td><strong>Administrator</strong></td></tr>
         <tr><td>Store table content and panels file</td><td><strong>Administrator</strong></td></tr>
       </table>

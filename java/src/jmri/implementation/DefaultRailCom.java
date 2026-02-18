@@ -257,6 +257,10 @@ public class DefaultRailCom extends DefaultIdTag implements RailCom {
         StringBuilder sb = new StringBuilder(200);
         sb.append("Address ").append(getLocoAddress()).append(" ");
 
+        if (getLocoAddress().isConsistAddress()) {
+            sb.append("Consist ");
+        }
+        
         switch (getOrientation()) {
             case EAST:
                 sb.append("East ");
