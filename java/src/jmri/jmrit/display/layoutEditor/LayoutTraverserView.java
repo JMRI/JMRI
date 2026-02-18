@@ -368,7 +368,7 @@ public class LayoutTraverserView extends LayoutTrackView {
     protected HitPointType findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         HitPointType result = HitPointType.NONE;  // assume point not on connection
         Point2D p;
-        Point2D minPoint = MathUtil.zeroPoint2D;
+//        Point2D minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         double slotControlRadius = traverser.getSlotOffset() * 0.25;
@@ -380,7 +380,7 @@ public class LayoutTraverserView extends LayoutTrackView {
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
                 minDistance = distance;
-                minPoint = p;
+//                minPoint = p;
                 result = HitPointType.TRAVERSER_CENTER;
             }
         }
@@ -391,7 +391,7 @@ public class LayoutTraverserView extends LayoutTrackView {
                 distance = MathUtil.distance(p, hitPoint);
                 if (distance < minDistance) {
                     minDistance = distance;
-                    minPoint = p;
+//                    minPoint = p;
                     result = HitPointType.traverserTrackIndexedValue(getSlotIndex(k));
                 }
             }
@@ -639,7 +639,7 @@ public class LayoutTraverserView extends LayoutTrackView {
 					}
 				}
 
-                LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
+                //LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
                 //float width = isMain ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
                 //g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
                 Point2D edgePoint = getSlotEdgePointOrdered(i);
@@ -679,7 +679,7 @@ public class LayoutTraverserView extends LayoutTrackView {
                         : layoutEditor.getLayoutTrackDrawingOptions().getSideRailColor());
             }
             // Set the stroke for the bridge
-            LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
+            //LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
             //float width = traverser.isMainline() ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
             //g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 

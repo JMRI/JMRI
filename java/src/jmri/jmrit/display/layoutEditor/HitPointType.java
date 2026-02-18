@@ -573,7 +573,7 @@ public enum HitPointType {
     // limited use, remove?
     public static final int NUM_BEZIER_CONTROL_POINTS = 9;
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HitPointType.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HitPointType.class);
 
 
 }
