@@ -11,6 +11,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import jmri.util.JmriJFrame;
+
 
 /**
  * The JMRI application for controlling audio.
@@ -113,9 +115,6 @@ public class SoundPro extends Apps {
         }
     }
 
-// main() method is commented out since it's probably not used anymore
-// See: https://jmri-developers.groups.io/g/jmri/message/12240
-/*
     // Main entry point
     public static void main(String args[]) {
 
@@ -135,7 +134,7 @@ public class SoundPro extends Apps {
         log.debug("main initialization done");
         splash(false);
     }
-*/
-//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SoundPro.class);
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SoundPro.class);
 
 }
