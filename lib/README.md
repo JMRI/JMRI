@@ -547,11 +547,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### system-rules-1.16.0.jar
 - Handle rules for testing calls to java.System methods
 
-##### springframework-*
-- version 5.1.14
-- from https://search.maven.org/search?q=g:org.springframework%20v:5.1.14.RELEASE
-- Mocks Java Servlet requests and responses
-
 ##### jcip-annotations-1.0.jar
 - From Java Concurrency In Practice (http://jcip.net)
 - Only needed at compile/build time, not runtime
@@ -636,3 +631,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 #### SpotBugs static analysis
 - used in pom.xml
+
+##### springframework-*
+- version 5.1.14
+- from https://search.maven.org/search?q=g:org.springframework%20v:5.1.14.RELEASE
+- Mocks Java Servlet requests and responses
+- No longer used as of JMRI 5.15.5
