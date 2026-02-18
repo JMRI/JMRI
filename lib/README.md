@@ -522,8 +522,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - for ant builds
 - Downloaded from Maven Central 2025-09-25
 
-##### mockito-core mockito-junit-jupiter
-- version 5.20.0
+##### mockito-core
+- version 5.21.0
 
 ##### OpenIDE Utilities
 - org-openide-util-lookup-RELEASE150.jar
