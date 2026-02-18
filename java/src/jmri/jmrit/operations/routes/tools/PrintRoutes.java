@@ -12,7 +12,7 @@ import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 
 /**
  * Prints a summary of a route or all routes.
@@ -57,8 +57,8 @@ public class PrintRoutes {
     }
 
     private void printRoutes() {
-        // obtain a HardcopyWriter to do this
-        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleRoutesTable"),
+        // obtain a OriginalHardcopyWriter to do this
+        try (OriginalHardcopyWriter writer = new OriginalHardcopyWriter(new Frame(), Bundle.getMessage("TitleRoutesTable"),
                 Control.reportFontSize, .5, .5, .5, .5, _isPreview)) {
 
             writer.write(SPACE); // prevents exception when using Preview and no routes
@@ -71,7 +71,7 @@ public class PrintRoutes {
                     writer.write(FORM_FEED);
                 }
             }
-        } catch (HardcopyWriter.PrintCanceledException ex) {
+        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
             log.debug("Print canceled");
         } catch (IOException e1) {
             log.error("Exception in print routes: {}", e1.getLocalizedMessage());
@@ -82,19 +82,19 @@ public class PrintRoutes {
         if (route == null) {
             return;
         }
-        // obtain a HardcopyWriter to do this
-        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleRoute", route.getName()),
+        // obtain a OriginalHardcopyWriter to do this
+        try (OriginalHardcopyWriter writer = new OriginalHardcopyWriter(new Frame(), Bundle.getMessage("TitleRoute", route.getName()),
                 Control.reportFontSize, .5, .5, .5, .5, _isPreview)) {
 
             printRoute(writer, route);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
+        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
             log.debug("Print canceled");
         } catch (IOException e1) {
             log.error("Exception in print routes: {}", e1.getLocalizedMessage());
         }
     }
 
-    private void printRoute(HardcopyWriter writer, Route route) throws IOException {
+    private void printRoute(OriginalHardcopyWriter writer, Route route) throws IOException {
         writer.write(route.getComment() + NEW_LINE);
         if (!route.getComment().isBlank()) {
             writer.write(NEW_LINE);

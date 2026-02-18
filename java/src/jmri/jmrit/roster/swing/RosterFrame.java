@@ -593,6 +593,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         firePropertyChange("groupspane", "setEnabled", enable);
         firePropertyChange("grouptable", "setEnabled", enable);
         firePropertyChange("deletegroup", "setEnabled", enable);
+        firePropertyChange("addgroup", "setEnabled", enable);
     }
 
     protected void exportLoco() {
@@ -1329,6 +1330,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         menuItem.addActionListener((ActionEvent e1) -> deleteLoco());
         popupMenu.add(menuItem);
         menuItem.setEnabled(this.getSelectedRosterEntries().length > 0);
+
+        menuItem = new JMenuItem(new jmri.jmrit.roster.swing.RosterEntryToGroupAction(Bundle.getMessage("AddToGroup"), re));
+        if (re == null) {
+            menuItem.setEnabled(false);
+        }
+        popupMenu.add(menuItem);
 
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }

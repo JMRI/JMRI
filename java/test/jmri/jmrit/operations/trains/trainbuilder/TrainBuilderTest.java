@@ -21329,11 +21329,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         // train 2 arrives 2nd Boston at 2:40 same time as clone arrives
         train2.setDepartureTime("0", "02", "28");
 
-        TrainBuilder tb = new TrainBuilder();
-
-        tb.build(train1);
+        new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
-        tb.build(train2);
+        new TrainBuilder().build(train2);
         Assert.assertTrue("train status", train2.isBuilt());
 
         // two cars and two clones
@@ -21379,7 +21377,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         train2.reset();
         // train 2 arrives 2nd Boston at 2:39 one minute before clone arrives
         train2.setDepartureTime("0", "02", "27");
-        tb.build(train2);
+        new TrainBuilder().build(train2);
         Assert.assertTrue("train status", train2.isBuilt());
 
         Assert.assertEquals("should be 2 cars", 2, train1.getNumberCarsWorked());
@@ -21405,7 +21403,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Setup.setBuildAggressive(true);
 
-        tb.build(train2);
+        new TrainBuilder().build(train2);
         Assert.assertTrue("train status", train2.isBuilt());
 
         // 3 cars and 1 clone
