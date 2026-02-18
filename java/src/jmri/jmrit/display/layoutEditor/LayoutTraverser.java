@@ -490,8 +490,8 @@ public class LayoutTraverser extends LayoutTrack {
             rt.setDisabledWhenOccupied(boo);
         }
     }
-	
-	/**
+
+    /**
      * {@inheritDoc}
      */
     @Override

@@ -581,9 +581,9 @@ public class LayoutTraverserView extends LayoutTrackView {
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         float trackWidth = 2.F;
-		
-		
-		// Only draw in the appropriate pass (mainline or sideline)
+
+
+        // Only draw in the appropriate pass (mainline or sideline)
         if (isMain != traverser.isMainline()) {
             return;
         }
@@ -604,12 +604,12 @@ public class LayoutTraverserView extends LayoutTrackView {
             double circleRadius = Math.max(traverser.getDeckWidth() / 8.f, trackWidth * 2);
             double circleDiameter = circleRadius * 2.f;
             Point2D center = getControlPointCenter();
-			g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+            g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             g2.draw(new Ellipse2D.Double(center.getX() - circleRadius, center.getY() - circleRadius, circleDiameter, circleDiameter));
-			g2.setStroke(new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+            g2.setStroke(new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             g2.draw(trackControlCircleAt(center));
-			
-			// Restore original stroke and color for subsequent drawing
+
+            // Restore original stroke and color for subsequent drawing
             g2.setStroke(originalStroke);
             g2.setColor(originalColor);
         }
@@ -625,17 +625,17 @@ public class LayoutTraverserView extends LayoutTrackView {
 //					slotIsMain = ts.isMainline();
 //				}
                 // Set color for block, if any
-				if (isBlock) {
-					if (ts == null) {
-						g2.setColor(layoutEditor.getDefaultTrackColorColor());
-					} else {
-						LayoutBlock lb = ts.getLayoutBlock();
-						if (lb != null) {
-							slotColor = g2.getColor();
-							setColorForTrackBlock(g2, lb);
-						}
-					}
-				}
+                if (isBlock) {
+                    if (ts == null) {
+                        g2.setColor(layoutEditor.getDefaultTrackColorColor());
+                    } else {
+                        LayoutBlock lb = ts.getLayoutBlock();
+                        if (lb != null) {
+                            slotColor = g2.getColor();
+                            setColorForTrackBlock(g2, lb);
+                        }
+                    }
+                }
 
                 //LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
                 //float width = isMain ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
