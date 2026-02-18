@@ -22,9 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ThrottlesTableTransferHandler extends TransferHandler {
    
-   private final DataFlavor throttleControlObjectFlavor = new ActivationDataFlavor(ThrottleFrame.class, "application/x-jmri-throttleController", "JMRI Throttle Controller");
-   // shoud use ActivationDataFlavor(ThrottleController.class, "application/x-jmri-throttleController", "JMRI Throttle Controller");
-   // but not working interface vs implementation thing?
+   private final DataFlavor throttleControlObjectFlavor = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType + ";class=" + ThrottleFrame.class.getName(), "JMRI Throttle Controller UI");
    private JTable           table             = null;
 
     public ThrottlesTableTransferHandler(JTable throttleControllers) {
@@ -40,7 +38,7 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
 
    @Override
    public boolean canImport(TransferHandler.TransferSupport info) {       
-      boolean b = info.getComponent() == table && info.isDrop() && ( 
+      boolean b = info.getComponent() == table && info.isDrop() && (
               info.isDataFlavorSupported(throttleControlObjectFlavor) || info.isDataFlavorSupported(RosterEntrySelection.rosterEntryFlavor));
       table.setCursor(b ? DragSource.DefaultMoveDrop : DragSource.DefaultMoveNoDrop);
       return b;
@@ -48,7 +46,7 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
 
    @Override
    public int getSourceActions(JComponent c) {
-      return TransferHandler.COPY_OR_MOVE;
+      return TransferHandler.MOVE;
    }
 
    @Override

@@ -703,7 +703,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
         }
     }
 
-    public void removeAndDisposeCurentThrottleFrame() {
+    private void removeAndDisposeCurentThrottleFrame() {
         ThrottleFrame tf = getCurrentThrottleFrame();
         removeThrottleController(getCurrentThrottleFrame());
         tf.dispose();
@@ -721,7 +721,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
         throttlesPanel.add((ThrottleFrame)tp,txt,idx);
         ((ThrottleFrame)tp).setEditMode(isEditMode); // sync with window     
         updateGUI();
-        pcs.firePropertyChange("ThrottleFrame", otf, tp);
+        pcs.firePropertyChange("ThrottleFrame", otf, getCurrentThrottleFrame());
         return ;
     }
 
@@ -738,7 +738,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
         throttlesLayout.show(throttlesPanel, txt);
         setCurrentThrottleFrame(tf);
         updateGUI();
-        pcs.firePropertyChange("ThrottleFrame", otf, tf);
+        pcs.firePropertyChange("ThrottleFrame", otf, getCurrentThrottleFrame());
         return getCurrentThrottleFrame();
     }
 
