@@ -26,8 +26,7 @@ public enum HitPointType {
     TRACK,          //     10
     TURNOUT_CENTER,   //     11    non-connection points should be last
     LEVEL_XING_CENTER,  //     12
-    TURNTABLE_CENTER,   //     13
-    TRAVERSER_CENTER,   //     14
+    TURNTABLE_CENTER,   //     13      The TRAVERSER_CENTER is at the end to stop the enum values changing
     LAYOUT_POS_LABEL,   //     14
     LAYOUT_POS_JCOMP,   //     15
     MULTI_SENSOR,   //     16
@@ -192,8 +191,9 @@ public enum HitPointType {
     TRAVERSER_SLOT_61,   //     175     /
     TRAVERSER_SLOT_62,   //     176    /
     TRAVERSER_SLOT_63,   //     177
-    BLOCKCONTENTSICON,
-    LAYOUT_POS_JPNL;
+    BLOCKCONTENTSICON,   //     178
+    LAYOUT_POS_JPNL,     //     179
+    TRAVERSER_CENTER;     //     180;
 
     /**
      * @param hitType the hit point type
