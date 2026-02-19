@@ -44,11 +44,11 @@ public class AbstractIdTagReporter extends AbstractReporter
             var entryexit = id.getProperty("entryexit");
             if (entryexit == null || ! entryexit.equals("exits")) {
                 Reporter r = id.getWhereLastSeen();
+                id.setWhereLastSeen(this);
                 if (r != null) {
                     log.trace("{} notifyPreviousReporter {}", id, r);
                     notifyPreviousReporter(r,id);
                 }
-                id.setWhereLastSeen(this);
                 log.trace("{} last seen here: {}",id, this.mSystemName);
             } else {
                 log.trace("{} skipping setWhereLastSeen on {} exits report", this, id);

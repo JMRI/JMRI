@@ -27,7 +27,7 @@ public class HardcopyWriterTest {
         try {
             HardcopyWriter hcw = new HardcopyWriter(frame, "test", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72,
                     true, null, null, null, null, null);
-            Assertions.assertNotNull(hcw, "OriginalHardcopyWriter constructor");
+            Assertions.assertNotNull(hcw, "HardcopyWriter constructor");
             hcw.dispose();
         } catch (HardcopyWriter.PrintCanceledException pce) {
             // this isn't an error for this test.
@@ -42,7 +42,7 @@ public class HardcopyWriterTest {
         try {
             hcw = new HardcopyWriter(frame, "test", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72, true, null,
                     null, null, null, new Dimension((int) (8.5 * 72), (int) (11.0 * 72)));
-            Assertions.assertNotNull(hcw, "OriginalHardcopyWriter constructor");
+            Assertions.assertNotNull(hcw, "HardcopyWriter constructor");
         } catch (HardcopyWriter.PrintCanceledException pce) {
             // this isn't an error for this test.
             return;
@@ -135,6 +135,37 @@ public class HardcopyWriterTest {
                 headerPixelValue + col1PixelValue + col2PixelValue + col3PixelValue,
                 "totalPixelValue should match the sum of areas");
 
+        hcw.dispose();
+    }
+
+    @Test
+    @DisabledIfHeadless
+    public void testNoEmptyPage() throws IOException, HardcopyWriter.ColumnException {
+        JFrame frame = new JFrame();
+        HardcopyWriter hcw = null;
+        try {
+            hcw = new HardcopyWriter(frame, "test", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72, true, null,
+                    null, null, null, new Dimension((int) (8.5 * 72), (int) (11.0 * 72)));
+            Assertions.assertNotNull(hcw, "HardcopyWriter constructor");
+        } catch (HardcopyWriter.PrintCanceledException pce) {
+            // this isn't an error for this test.
+            return;
+        }
+
+        int pageNumber = hcw.getPageNum();
+
+        Assertions.assertEquals(1, pageNumber, "page number");
+        while (hcw.getPageNum() == 1) {
+            hcw.write("Hello World\n");
+        }
+
+        pageNumber = hcw.getPageNum();
+        Assertions.assertEquals(2, pageNumber, "page number");
+
+        Vector<Image> images = hcw.getPageImages();
+
+        Assertions.assertNotNull(images, "getImages");
+        Assertions.assertEquals(1, images.size(), "getImages");
         hcw.dispose();
     }
 
