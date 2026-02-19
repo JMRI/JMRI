@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.Component;
 import java.awt.geom.Point2D;
 
 import javax.swing.*;
@@ -43,16 +42,16 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
 
         // Set width
         // Use a ComponentChooser for more robust JLabel lookup
-        JLabelOperator jLabelOperator = new JLabelOperator(jFrameOperator, new org.netbeans.jemmy.ComponentChooser() {
-            @Override
-            public boolean checkComponent(java.awt.Component comp) {
-                return comp instanceof JLabel && ((JLabel) comp).getText().equals(Bundle.getMessage("Width"));
-            }
-            @Override
-            public String getDescription() {
-                return "JLabel with text '" + Bundle.getMessage("Width") + "'";
-            }
-        });
+//        JLabelOperator jLabelOperator = new JLabelOperator(jFrameOperator, new org.netbeans.jemmy.ComponentChooser() {
+//            @Override
+//            public boolean checkComponent(java.awt.Component comp) {
+//                return comp instanceof JLabel && ((JLabel) comp).getText().equals(Bundle.getMessage("Width"));
+//            }
+//            @Override
+//            public String getDescription() {
+//                return "JLabel with text '" + Bundle.getMessage("Width") + "'";
+//            }
+//        });
         // Find the JTextField for width directly by index (1), as getLabelFor() is null
         JTextFieldOperator jtxt = new JTextFieldOperator(jFrameOperator, 1);
         jtxt.setText("40");
@@ -115,16 +114,16 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
         
         // Click somewhere else (e.g., Slot Offset field)
         // Using JLabelOperator to find the SlotOffset field more robustly
-        JLabelOperator slotOffsetLabel = new JLabelOperator(jFrameOperator, new org.netbeans.jemmy.ComponentChooser() {
-            @Override
-            public boolean checkComponent(java.awt.Component comp) {
-                return comp instanceof JLabel && ((JLabel) comp).getText().equals(Bundle.getMessage("SlotOffset"));
-            }
-            @Override
-            public String getDescription() {
-                return "JLabel with text '" + Bundle.getMessage("SlotOffset") + "'";
-            }
-        });
+//        JLabelOperator slotOffsetLabel = new JLabelOperator(jFrameOperator, new org.netbeans.jemmy.ComponentChooser() {
+//            @Override
+//            public boolean checkComponent(java.awt.Component comp) {
+//                return comp instanceof JLabel && ((JLabel) comp).getText().equals(Bundle.getMessage("SlotOffset"));
+//            }
+//            @Override
+//            public String getDescription() {
+//                return "JLabel with text '" + Bundle.getMessage("SlotOffset") + "'";
+//            }
+//        });
         // Find the JTextField for slot offset directly by index (2)
         JTextFieldOperator slotOffsetTxt = new JTextFieldOperator(jFrameOperator, 2);
         slotOffsetTxt.clickMouse();
