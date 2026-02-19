@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
+import java.awt.Component;
 import java.awt.geom.Point2D;
 
 import javax.swing.*;
@@ -41,10 +42,19 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTraverser"));
 
         // Set width
-        JLabelOperator jLabelOperator = new JLabelOperator(
-                jFrameOperator, Bundle.getMessage("Width"));
-        JTextFieldOperator jtxt = new JTextFieldOperator(
-                (JTextField) jLabelOperator.getLabelFor());
+        // Use a ComponentChooser for more robust JLabel lookup
+        JLabelOperator jLabelOperator = new JLabelOperator(jFrameOperator, new org.netbeans.jemmy.ComponentChooser() {
+            @Override
+            public boolean checkComponent(java.awt.Component comp) {
+                return comp instanceof JLabel && ((JLabel) comp).getText().equals(Bundle.getMessage("Width"));
+            }
+            @Override
+            public String getDescription() {
+                return "JLabel with text '" + Bundle.getMessage("Width") + "'";
+            }
+        });
+        // Find the JTextField for width directly by index (1), as getLabelFor() is null
+        JTextFieldOperator jtxt = new JTextFieldOperator(jFrameOperator, 1);
         jtxt.setText("40");
 
         // Add a slot pair
@@ -85,8 +95,17 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
         turnout_cbo.selectItem(2); 
         state_cbo.selectItem(1); 
 
+        // NEW TEST: Disable one side of a slot
+        // Checkbox indices for text "Disabled":
+        // 0: Pair 0, Side A (Slot 0)
+        // 1: Pair 0, Side B (Slot 1)
+        // 2: Pair 1, Side A (Slot 2)
+        // 3: Pair 1, Side B (Slot 3)
+        JCheckBoxOperator disabledCheckBox = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("Disabled"), 0);
+        disabledCheckBox.doClick();
+
         // Test invalid width
-        jtxt.clickMouse();
+        // Removed jtxt.clickMouse() as it's not needed for setText and validation is on Done button.
         jtxt.setText("qqq");
 
         // Move focus to trigger validation
@@ -95,7 +114,19 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         
         // Click somewhere else (e.g., Slot Offset field)
-        JTextFieldOperator slotOffsetTxt = new JTextFieldOperator(jFrameOperator, 2); 
+        // Using JLabelOperator to find the SlotOffset field more robustly
+        JLabelOperator slotOffsetLabel = new JLabelOperator(jFrameOperator, new org.netbeans.jemmy.ComponentChooser() {
+            @Override
+            public boolean checkComponent(java.awt.Component comp) {
+                return comp instanceof JLabel && ((JLabel) comp).getText().equals(Bundle.getMessage("SlotOffset"));
+            }
+            @Override
+            public String getDescription() {
+                return "JLabel with text '" + Bundle.getMessage("SlotOffset") + "'";
+            }
+        });
+        // Find the JTextField for slot offset directly by index (2)
+        JTextFieldOperator slotOffsetTxt = new JTextFieldOperator(jFrameOperator, 2);
         slotOffsetTxt.clickMouse();
         
         // Wait for error dialog? 
@@ -117,6 +148,9 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
+
+        // VERIFY NEW TEST: Assert that the first slot (Side A) is disabled
+        Assertions.assertTrue(layoutTraverser.getSlotList().get(0).isDisabled(), "First slot (Side A) should be disabled after editing.");
     }
 
     @Test

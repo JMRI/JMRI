@@ -100,6 +100,8 @@ public class LayoutTrackEditorTest {
 
     protected Turnout turnout0 = null;
     protected Turnout turnout1 = null;
+    protected Turnout turnout2 = null;
+    protected Turnout turnout3 = null;
 
     /*
      * This is used to find a component by matching against its tooltip
@@ -133,6 +135,14 @@ public class LayoutTrackEditorTest {
         turnout1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT102");
         turnout1.setUserName("Turnout 102");
         turnout1.setCommandedState(Turnout.CLOSED);
+
+        turnout2 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT103");
+        turnout2.setUserName("Turnout 103");
+        turnout2.setCommandedState(Turnout.CLOSED);
+
+        turnout3 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT104");
+        turnout3.setUserName("Turnout 104");
+        turnout3.setCommandedState(Turnout.CLOSED);
     }
 
     protected void createBlocks() {
