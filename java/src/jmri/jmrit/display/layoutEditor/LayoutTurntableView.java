@@ -898,7 +898,7 @@ public class LayoutTurntableView extends LayoutTrackView {
                 // The short end (short_pt1) points away from it, at 0.8 * radius.
                 Point2D short_delta = MathUtil.normalize(delta, getRadius() * 0.8);
                 Point2D short_pt1 = MathUtil.subtract(getCoordsCenter(), short_delta);
-                g2.draw(new Line2D.Double(short_pt1, pt1));
+                g2.draw(new Line2D.Double(short_pt1, pt2));
             }
             if (color != null) {
                 g2.setColor(color); /// restore previous color
@@ -937,8 +937,6 @@ public class LayoutTurntableView extends LayoutTrackView {
             Point2D pt1R = MathUtil.add(pt1, vDeltaO);
             Point2D pt2L = MathUtil.subtract(pt2, vDeltaO);
             Point2D pt2R = MathUtil.add(pt2, vDeltaO);
-            Point2D ptCircleL = pt1L;
-            Point2D ptCircleR = pt1R;
             if (main == isMain) {
                 log.trace("   draw main at {} {}, {} {}", pt1L, pt2L, pt1R, pt2R);
                 g2.draw(new Line2D.Double(pt1L, pt2L));
@@ -959,8 +957,8 @@ public class LayoutTurntableView extends LayoutTrackView {
                 pt1L = MathUtil.subtract(pt1, vDeltaO);
                 pt1R = MathUtil.add(pt1, vDeltaO);
                 log.trace("   draw not main at {} {}, {} {}", pt1L, pt2L, pt1R, pt2R);
-                g2.draw(new Line2D.Double(pt1L, ptCircleL));
-                g2.draw(new Line2D.Double(pt1R, ptCircleR));
+                g2.draw(new Line2D.Double(pt1L, pt2L));
+                g2.draw(new Line2D.Double(pt1R, pt2R));
             }
 //            if (c != null) {
 //                g2.setColor(c); /// restore previous color
