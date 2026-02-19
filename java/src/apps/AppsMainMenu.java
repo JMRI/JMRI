@@ -58,7 +58,7 @@ public class AppsMainMenu {
         UserPreferencesManager prefMgr = InstanceManager.getNullableDefault(UserPreferencesManager.class);
         if (prefMgr != null) {
             Object pref = prefMgr.getProperty("jmri.jmrit.ToolsMenu", "showTablesMenu");
-            boolean showMenu = true; // Default to true
+            boolean showMenu = false; // Default to false
             if (pref instanceof Boolean) {
                 showMenu = (Boolean) pref;
             }
