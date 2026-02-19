@@ -10,7 +10,7 @@
     <node name="New Entry">
         <name xml:lang="it">Nuova voce</name>
         <name xml:lang="da">Ny indtastning</name>
-        <name xml:lang="de">Neue Eintrag</name>
+        <name xml:lang="de">Neuer Eintrag</name>
         <name xml:lang="fr">Nouvelle entrée</name>
 		<name xml:lang="ca">Nova entrada</name>
         <name xml:lang="cs">Nový záznam</name>
@@ -22,7 +22,7 @@
     <node name="Find in Roster">
         <name xml:lang="it">Trova nell'elenco</name>
         <name xml:lang="da">Find i listen</name>
-        <name xml:lang="de">Im Kader finden</name>
+        <name xml:lang="de">Eintrag finden</name>
         <name xml:lang="fr">Trouver dans la liste</name>
 		<name xml:lang="ca">Troba a la llista</name>
         <name xml:lang="cs">Najít v seznamu</name>
@@ -34,7 +34,7 @@
     <node name="Print Table">
         <name xml:lang="fr">Imprimer l'Tableu Résumé</name>
         <name xml:lang="it">Stampa Table Sommario</name>
-        <name xml:lang="de">Drucke Table Übersicht</name>
+        <name xml:lang="de">Drucke Übersichtstabelle</name>
         <name xml:lang="ca">Imprimeix la Table Resum</name>
         <name xml:lang="cs">Tisknout Table Souhrn</name>
         <name xml:lang="nl">Druk Table Samenvatting</name>
