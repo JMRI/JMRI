@@ -67,6 +67,7 @@ public class OlcbClockControlTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach
@@ -322,6 +323,7 @@ public class OlcbClockControlTest {
 
         // Simulates a new start of JMRI.
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         Timebase tb2 = InstanceManager.getDefault(Timebase.class);
         iface.dispose();
         iface = null;
@@ -369,6 +371,7 @@ public class OlcbClockControlTest {
 
         // Simulates a new start of JMRI.
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         Timebase tb2 = InstanceManager.getDefault(Timebase.class);
         iface.dispose();
         iface = null;
@@ -409,6 +412,7 @@ public class OlcbClockControlTest {
         Element store = new SimpleTimebaseXml().store(null);
         // Simulates a new start of JMRI.
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         Timebase tb2 = InstanceManager.getDefault(Timebase.class);
         iface.dispose();
         iface = null;

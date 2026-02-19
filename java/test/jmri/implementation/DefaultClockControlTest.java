@@ -25,19 +25,18 @@ public class DefaultClockControlTest {
 
         t.setTime(null); // doesn't do anything
         t.getTime();
-        
-        Assert.assertEquals(0, t.getStatus());
 
         Assert.assertEquals(null, t.getHardwareClockName());
-        
+
         Assert.assertTrue(! t.canCorrectHardwareClock());
         Assert.assertTrue(! t.canSet12Or24HourClock());
-        
+
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach

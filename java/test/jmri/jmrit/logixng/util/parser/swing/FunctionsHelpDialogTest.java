@@ -6,7 +6,7 @@ import org.junit.jupiter.api.*;
 
 /**
  * Test FunctionsHelpDialog
- * 
+ *
  * @author Daniel Bergqvist 2021
  */
 public class FunctionsHelpDialogTest {
@@ -16,10 +16,11 @@ public class FunctionsHelpDialogTest {
         FunctionsHelpDialog t = new FunctionsHelpDialog();
         Assertions.assertNotNull( t, "not null");
     }
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach
@@ -27,5 +28,5 @@ public class FunctionsHelpDialogTest {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

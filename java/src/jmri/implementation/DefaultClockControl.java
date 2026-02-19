@@ -27,16 +27,6 @@ public class DefaultClockControl implements ClockControl {
      * Operational instance variables (not saved between runs)
      */
     /**
-     * Get Status of the Fast Clock.
-     * Potentially unused?
-     * {@inheritDoc}
-     */
-    @Override
-    public int getStatus() {
-        return 0;
-    }
-
-    /**
      * Get name of hardware clock.
      * <p>
      * If there is no hardware clock, this method returns null.
@@ -50,7 +40,7 @@ public class DefaultClockControl implements ClockControl {
 
     /**
      * Returns true if hardware clock accuracy can be corrected using the
-     * computer clock. 
+     * computer clock.
      * <p>
      * Hardware implementations should override this and return
      * true if they can correct their hardware clock.

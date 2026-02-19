@@ -8,13 +8,13 @@ import jmri.util.JUnitUtil;
 
 /**
  * Tests for the BiDiBLightManager class
- * 
+ *
  * @author  Eckart Meyer  Copyright (C) 2020
  */
 public class BiDiBLightManagerTest  extends jmri.managers.AbstractLightMgrTestBase {
-    
+
     BiDiBSystemConnectionMemo memo;
-    
+
     @Override
     public String getSystemName(int i) {
         return "BL" + i;
@@ -24,11 +24,12 @@ public class BiDiBLightManagerTest  extends jmri.managers.AbstractLightMgrTestBa
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         memo = new BiDiBSystemConnectionMemo();
         memo.setBiDiBTrafficController(new TestBiDiBTrafficController(new BiDiBInterfaceScaffold()));
         l = new BiDiBLightManager(memo);
     }
-    
+
     @AfterEach
     public void tearDown() {
         l = null;

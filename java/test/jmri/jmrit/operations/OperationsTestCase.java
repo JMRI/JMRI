@@ -36,6 +36,7 @@ public class OperationsTestCase {
     public void reset() {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();

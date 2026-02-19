@@ -163,6 +163,7 @@ public class LogixActionTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+        JUnitUtil.initTimeProviderManager();
 
         JUnitUtil.initLogixManager();
         JUnitUtil.initConditionalManager();

@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test FunctionManager
- * 
+ *
  * @author Daniel Bergqvist 2019
  */
 public class FunctionManagerTest {
@@ -23,7 +23,7 @@ public class FunctionManagerTest {
     @Test
     public void testFunctions() {
         FunctionManager fm = InstanceManager.getDefault(FunctionManager.class);
-        
+
         for (Map.Entry<String, Function> entry : fm.getFunctions().entrySet()) {
             assertEquals(entry.getKey(), entry.getValue().getName());
             assertNotNull(entry.getValue().getName());
@@ -34,10 +34,11 @@ public class FunctionManagerTest {
             assertNotEquals("", entry.getValue().getDescription());
         }
     }
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach
@@ -45,5 +46,5 @@ public class FunctionManagerTest {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    
+
 }

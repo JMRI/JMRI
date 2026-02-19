@@ -175,6 +175,7 @@ public class ActiveLogixTest {
     public static void setUp() throws JmriConfigureXmlException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
 

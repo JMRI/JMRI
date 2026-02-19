@@ -21,8 +21,9 @@ public class ThrottleControllerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
     }
-    
+
     @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();

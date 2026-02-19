@@ -289,7 +289,7 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         InstanceManager.getDefault(TurnoutManager.class).newTurnout("IT2", "Turnout 2");
         assertFalse( expressionReference.evaluate(), "evaluate returns false");
         assertEquals("Reference {IM1} is not Turnout", expressionReference.getLongDescription());
-        
+
         // Potentially no Audio Device installed
         JUnitAppender.suppressWarnMessageStartsWith("Error initialising JOAL");
     }
@@ -341,6 +341,7 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
