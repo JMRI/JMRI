@@ -20,13 +20,14 @@ import jmri.implementation.*;
  *
  * @author Bob Jacobsen Copyright (C) 2009, 2021
  */
-public class MqttSignalMast extends AbstractSignalMast {
+public class MqttSignalMast extends AbstractSignalMast implements MqttEventListener {
 
     public MqttSignalMast(String systemName, String userName) {
         super(systemName, userName);
         configureFromName(systemName);
         sendTopic = makeSendTopic(systemName);
         mqttAdapter = jmri.InstanceManager.getDefault(MqttSystemConnectionMemo.class).getMqttAdapter();
+        mqttAdapter.subscribe(sendTopic, this);  // receive back on send topic
     }
 
     public MqttSignalMast(String systemName) {
@@ -34,6 +35,7 @@ public class MqttSignalMast extends AbstractSignalMast {
         configureFromName(systemName);
         sendTopic = makeSendTopic(systemName);
         mqttAdapter = jmri.InstanceManager.getDefault(MqttSystemConnectionMemo.class).getMqttAdapter();
+        mqttAdapter.subscribe(sendTopic, this);  // receive back on send topic
     }
 
     @Nonnull
@@ -149,6 +151,53 @@ public class MqttSignalMast extends AbstractSignalMast {
      */
     public static int getLastRef() {
         return lastRef;
+    }
+
+    @Override
+    public void notifyMqttMessage(String receivedTopic, String payload) {
+        if (! ( receivedTopic.endsWith(sendTopic) ) ) {
+            log.error("{} got a message whose topic ({}) wasn't for me ({})", getDisplayName(), receivedTopic, sendTopic);
+            return;
+        }
+        
+        // parse and  act
+        var parts =  payload.split(";");
+        int length = parts.length;
+        // part 0 is aspect
+        if (length >= 1) {
+            // parts[0] is the aspect name
+            String aspect = parts[0].trim();
+            // check it's a choice
+            if (!map.checkAspect(aspect)) {
+                // not a valid aspect
+                log.warn("received invalid aspect: {} on mast: {}", aspect, getDisplayName());
+                throw new IllegalArgumentException("attempting to set invalid aspect: " + aspect + " on mast: " + getDisplayName());
+            } else if (disabledAspects.contains(aspect)) {
+                log.warn("received an aspect that has been disabled: {} on mast: {}", aspect, getDisplayName());
+                throw new IllegalArgumentException("attempting to set an aspect that has been disabled: " + aspect + " on mast: " + getDisplayName());
+            }
+            log.debug("Setting aspect {} from received payload", aspect);
+            super.setAspect(aspect);
+            
+        } else {
+            log.error("{} got message with empty payload", getDisplayName());
+        }
+        if (length >= 2) {
+            // parts[1] is the Lit status
+            if (parts[1].trim().equals("Unlit")) {
+                super.setLit(false); // calling this class's setLit sends report
+            } else  {
+                super.setLit(true); // calling this class's setLit sends report
+            }
+        } 
+        if (length >= 3) {
+            // parts[2] is the Held status
+            if (parts[2].trim().equals("Held")) {
+                super.setHeld(true); // calling this class's setHeld sends report
+            } else  {
+                super.setHeld(false); // calling this class's setHeld sends report
+            }
+        }
     }
 
     /**

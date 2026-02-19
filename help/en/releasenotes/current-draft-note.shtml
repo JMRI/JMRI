@@ -106,7 +106,9 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Updated the Signal Mast support 
+                    so that a mast can be updated by an
+                    MQTT message from the layout.</li>
             </ul>
 
         <h4>MRC</h4>
