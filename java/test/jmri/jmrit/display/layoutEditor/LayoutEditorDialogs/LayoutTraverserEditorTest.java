@@ -1,8 +1,9 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
+import java.awt.Component;
 import java.awt.geom.Point2D;
 
-//import javax.swing.*;
+import javax.swing.*;
 
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
@@ -42,16 +43,16 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
 
         // Set width
         // Use a ComponentChooser for more robust JLabel lookup
-//        JLabelOperator jLabelOperator = new JLabelOperator(jFrameOperator, new org.netbeans.jemmy.ComponentChooser() {
-//            @Override
-//            public boolean checkComponent(java.awt.Component comp) {
-//                return comp instanceof JLabel && ((JLabel) comp).getText().equals(Bundle.getMessage("Width"));
-//            }
-//            @Override
-//            public String getDescription() {
-//                return "JLabel with text '" + Bundle.getMessage("Width") + "'";
-//            }
-//        });
+        JLabelOperator jLabelOperator = new JLabelOperator(jFrameOperator, new org.netbeans.jemmy.ComponentChooser() {
+            @Override
+            public boolean checkComponent(java.awt.Component comp) {
+                return comp instanceof JLabel && ((JLabel) comp).getText().equals(Bundle.getMessage("Width"));
+            }
+            @Override
+            public String getDescription() {
+                return "JLabel with text '" + Bundle.getMessage("Width") + "'";
+            }
+        });
         // Find the JTextField for width directly by index (1), as getLabelFor() is null
         JTextFieldOperator jtxt = new JTextFieldOperator(jFrameOperator, 1);
         jtxt.setText("40");
@@ -114,16 +115,16 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
         
         // Click somewhere else (e.g., Slot Offset field)
         // Using JLabelOperator to find the SlotOffset field more robustly
-//        JLabelOperator slotOffsetLabel = new JLabelOperator(jFrameOperator, new org.netbeans.jemmy.ComponentChooser() {
-//            @Override
-//            public boolean checkComponent(java.awt.Component comp) {
-//                return comp instanceof JLabel && ((JLabel) comp).getText().equals(Bundle.getMessage("SlotOffset"));
-//            }
-//            @Override
-//            public String getDescription() {
-//                return "JLabel with text '" + Bundle.getMessage("SlotOffset") + "'";
-//            }
-//        });
+        JLabelOperator slotOffsetLabel = new JLabelOperator(jFrameOperator, new org.netbeans.jemmy.ComponentChooser() {
+            @Override
+            public boolean checkComponent(java.awt.Component comp) {
+                return comp instanceof JLabel && ((JLabel) comp).getText().equals(Bundle.getMessage("SlotOffset"));
+            }
+            @Override
+            public String getDescription() {
+                return "JLabel with text '" + Bundle.getMessage("SlotOffset") + "'";
+            }
+        });
         // Find the JTextField for slot offset directly by index (2)
         JTextFieldOperator slotOffsetTxt = new JTextFieldOperator(jFrameOperator, 2);
         slotOffsetTxt.clickMouse();
@@ -161,6 +162,21 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
         jFrameOperator.waitClosed();
     }
 
+    @Test
+    public void testTraverserIsDrawn() {
+        // The layoutTraverserView is created and added to layoutEditor in setUp()
+        // Verify it's in the editor's contents
+        Assertions.assertTrue(layoutEditor.getContents().contains(layoutTraverserView),
+            "LayoutTraverserView should be present in LayoutEditor's contents.");
+
+        // Optionally, verify it's a visible component on the frame using Jemmy
+        // This requires the LayoutEditor to be visible, which is handled in setUp()
+        JFrameOperator editorFrameOperator = new JFrameOperator(layoutEditor.getTitle());
+        new ComponentOperator(editorFrameOperator, layoutTraverserView.getClass());
+        // If the above line doesn't throw an exception, it means Jemmy found the component.
+        // We don't need a specific assertion here, as a ComponentNotFoundException would fail the test.
+    }
+
     private LayoutTraverserView layoutTraverserView = null;
     private LayoutTraverser layoutTraverser = null;
 
@@ -169,7 +185,7 @@ public class LayoutTraverserEditorTest extends LayoutTrackEditorTest {
     public void setUp() {
         super.setUp();
 
-        Point2D point = new Point2D.Double(150.0, 100.0);
+        Point2D point = new Point2D.Double(300.0, 100.0);
         
         layoutTraverser = new LayoutTraverser("Traverser", layoutEditor);
         layoutTraverserView = new LayoutTraverserView(layoutTraverser, point, layoutEditor);
