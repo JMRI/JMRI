@@ -74,8 +74,9 @@ public class SensorIconTest extends PositionableIconTest {
         event = new JmriMouseEvent(source, id, when, modifiers, x+2, y, 
                                             clickCount, popupTrigger);
         p.doMouseClicked(event);
-        
-        event = new JmriMouseEvent(source, id, when, modifiers, x=2, y+2, 
+
+        x=2;
+        event = new JmriMouseEvent(source, id, when, modifiers, x, y+2, 
                                             clickCount, popupTrigger);
         p.doMouseReleased(event);
         

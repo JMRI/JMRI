@@ -1,6 +1,6 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -9,10 +9,9 @@ import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  * Test signal system via a specific layout file
@@ -27,8 +26,8 @@ import org.junit.Assume;
 public class SignalSystemTest {
 
     @Test
+    @DisabledIfHeadless
     public void testLoadSimplePanelOBlocksDB1969() throws jmri.JmriException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // load file
         InstanceManager.getDefault(ConfigureManager.class)
@@ -50,7 +49,9 @@ public class SignalSystemTest {
         checkAspect("IF$vsm:DB-HV-1969:exit_distant($0008)", "Hp1+Vr1");
         checkAspect("IF$vsm:DB-HV-1969:shunting_dwarf($0012)", "Sh0");
 
-        InstanceManager.turnoutManagerInstance().getTurnout("IT201").setCommandedState(Turnout.CLOSED);
+        Turnout it201 = InstanceManager.turnoutManagerInstance().getTurnout("IT201");
+        assertNotNull(it201);
+        it201.setCommandedState(Turnout.CLOSED);
 
         checkAspect("IF$vsm:DB-HV-1969:block_distant($0002)", "Hp1+Vr1");
         checkAspect("IF$vsm:DB-HV-1969:block_distant($0003)", "Hp1+Vr1");
@@ -64,7 +65,9 @@ public class SignalSystemTest {
         checkAspect("IF$vsm:DB-HV-1969:exit_distant($0008)", "Hp1+Vr1");
         checkAspect("IF$vsm:DB-HV-1969:shunting_dwarf($0012)", "Sh0");
 
-        InstanceManager.sensorManagerInstance().getSensor("IS101").setState(Sensor.ACTIVE);
+        Sensor is101 = InstanceManager.sensorManagerInstance().getSensor("IS101");
+        assertNotNull(is101);
+        is101.setState(Sensor.ACTIVE);
 
         checkAspect("IF$vsm:DB-HV-1969:block_distant($0002)", "Hp1+Vr1");
         checkAspect("IF$vsm:DB-HV-1969:block_distant($0003)", "Hp1+Vr1");
@@ -78,7 +81,9 @@ public class SignalSystemTest {
         checkAspect("IF$vsm:DB-HV-1969:exit_distant($0008)", "Hp1+Vr1");
         checkAspect("IF$vsm:DB-HV-1969:shunting_dwarf($0012)", "Sh0");
 
-        InstanceManager.sensorManagerInstance().getSensor("IS102").setState(Sensor.ACTIVE);
+        Sensor is102 = InstanceManager.sensorManagerInstance().getSensor("IS102");
+        assertNotNull(is102);
+        is102.setState(Sensor.ACTIVE);
 
         checkAspect("IF$vsm:DB-HV-1969:block_distant($0002)", "Hp0");
         checkAspect("IF$vsm:DB-HV-1969:block_distant($0003)", "Hp1+Vr1");
@@ -99,8 +104,8 @@ public class SignalSystemTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testLoadAA1UPtest() throws jmri.JmriException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // load file
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).setStabilisedSensor("IS_ROUTING_DONE");
@@ -111,10 +116,9 @@ public class SignalSystemTest {
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return InstanceManager.sensorManagerInstance().provideSensor("IS_ROUTING_DONE").getKnownState() == jmri.Sensor.ACTIVE;
-        },
-                "LayoutEditor stabilized sensor went ACTIVE");
+        }, "LayoutEditor stabilized sensor went ACTIVE");
 
         // check aspects
         checkAspect("IF$vsm:BNSF-1996:SE-1A($0152)", "Stop");  // not on visual panel
@@ -166,21 +170,20 @@ public class SignalSystemTest {
 
     void checkAspect(String mastName, String aspect) {
         SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(mastName);
-        if (mast != null) {
-            // wait present or error
-            jmri.util.JUnitUtil.waitFor(() -> {
-                return mast.getAspect().equals(aspect);
-            },
-                    "mast " + mastName + "currently showing \"" + mast.getAspect() + "\", expected aspect \"" + aspect + "\"," );
-        } else {
-            Assert.fail("Mast " + mastName + " not found");
-        }
+        assertNotNull(mast, "Mast " + mastName + " not found");
+
+        // wait present or error
+        JUnitUtil.waitFor(() -> {
+            return aspect.equals(mast.getAspect());
+        },
+            () -> "mast " + mastName + "currently showing \"" + mast.getAspect() + "\", expected aspect \"" + aspect + "\"," );
+
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
         JUnitUtil.initInternalTurnoutManager();
