@@ -281,7 +281,12 @@ public class HardcopyWriter extends Writer {
      * @return the graphics context
      */
     private Graphics getGraphics() {
-        Graphics g = null;
+        Graphics g = page;
+
+        if (g != null) {
+            return g;
+        }
+
         if (job != null) {
             if (printJobGraphics == null) {
                 printJobGraphics = job.getGraphics();
