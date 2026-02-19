@@ -21,7 +21,7 @@ public class Z21RailComDataRequestFormatter implements Z21MessageFormatter {
         if(!handlesMessage(m)) {
             throw new IllegalArgumentException("Message m is not a valid Z21 RailCom Data Request Message");
         }
-        int address = ((Z21Message)m).getElement(5) & 0xFF + (((Z21Message)m).getElement(6) & 0xFF) << 8;
+        int address = m.getElement(5) & 0xFF + ((m.getElement(6) & 0xFF) << 8);
         return Bundle.getMessage("Z21_RAILCOM_GETDATA",address);
     }
 
