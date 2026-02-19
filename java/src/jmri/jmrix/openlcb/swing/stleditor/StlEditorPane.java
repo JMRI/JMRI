@@ -2207,6 +2207,16 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             var logicRow = row.getLogicList();
             for (LogicRow logic : logicRow) {
                 var operName = logic.getOperName();
+
+                // skip empty logic rows since they look like an empty group row
+                if (logic.getLabel().isEmpty() &&
+                        operName.isEmpty() &&
+                        logic.getName().isEmpty() &&
+                        logic.getComment().isEmpty()) {
+                    log.info("skip empty row");
+                    continue;
+                }
+
                 csvFile.printRecord("", logic.getLabel(), operName, logic.getName(), logic.getComment());
             }
         }
