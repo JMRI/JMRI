@@ -129,19 +129,19 @@ public class MarklinSendBootActionTest {
         // Test the structure of the CAN BOOT message itself
         MarklinMessage bootMessage = MarklinMessage.getCanBoot();
         Assert.assertNotNull("CAN BOOT message created", bootMessage);
-        
+
         // Based on the implementation, verify the message structure
-        // Command 0xB1: (0xB1 >> 7) & 0xFF = 0x01, (0xB1 << 1) & 0xFF = 0x62
-        Assert.assertEquals("Element 0 (high bits)", 0x01, bootMessage.getElement(0));
-        Assert.assertEquals("Element 1 (low bits)", 0x62, bootMessage.getElement(1));
-        
+        // Command 0x1B: (0x1B >> 7) & 0xFF = 0x00, (0x1B << 1) & 0xFF = 0x36
+        Assert.assertEquals("Element 0 (high bits)", 0x00, bootMessage.getElement(0));
+        Assert.assertEquals("Element 1 (low bits)", 0x36, bootMessage.getElement(1));
+
         // Hash bytes should be from MarklinConstants
         Assert.assertEquals("Element 2 (hash byte 1)", 0x47, bootMessage.getElement(2)); // MarklinConstants.HASHBYTE1
         Assert.assertEquals("Element 3 (hash byte 2)", 0x11, bootMessage.getElement(3)); // MarklinConstants.HASHBYTE2
-        
+
         // DLC should be 0
         Assert.assertEquals("Element 4 (DLC)", 0x00, bootMessage.getElement(4));
-        
+
         // Remaining elements should be 0
         for (int i = 5; i < bootMessage.getNumDataElements(); i++) {
             Assert.assertEquals("Element " + i + " should be 0", 0x00, bootMessage.getElement(i));
