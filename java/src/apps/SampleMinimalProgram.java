@@ -6,10 +6,10 @@ import jmri.util.prefs.JmriPreferencesActionFactory;
 import jmri.web.server.WebServer;
 import jmri.web.server.WebServerPreferences;
 
-import apps.util.Log4JUtil;
-
 /**
  * A simple example of a "Faceless" (no gui) application
+ *
+ * To use it, uncomment the main() method.
  *
  * <hr>
  * This file is part of JMRI.
@@ -28,11 +28,14 @@ public class SampleMinimalProgram {
 
     static String name = "Faceless App";
 
+// Commented out since it's not normally used.
+// It's included as an example for anyone who wants to do their own program to launch JMRI.
+/*
     // Main entry point
     public static void main(String args[]) {
 
         initLog4J();
-        log.info("Startup: {}", Log4JUtil.startupInfo(name));
+        log.info("Startup: {}", apps.util.Log4JUtil.startupInfo(name));
 
         new SampleMinimalProgram(args);   // start the application class itself
 
@@ -42,6 +45,7 @@ public class SampleMinimalProgram {
         // for example.  The layout connection
         // is working at this point.
     }
+*/
 
     /**
      * Static method to return a first logging statement. Used for logging
