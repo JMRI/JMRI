@@ -27,7 +27,7 @@ public class MqttSignalMast extends AbstractSignalMast implements MqttEventListe
         configureFromName(systemName);
         sendTopic = makeSendTopic(systemName);
         mqttAdapter = jmri.InstanceManager.getDefault(MqttSystemConnectionMemo.class).getMqttAdapter();
-        mqttAdapter.subscribe(sendTopic, this);  // receive back on send topic
+        if (mqttAdapter!= null) mqttAdapter.subscribe(sendTopic, this);  // receive back on send topic
     }
 
     public MqttSignalMast(String systemName) {
@@ -35,7 +35,7 @@ public class MqttSignalMast extends AbstractSignalMast implements MqttEventListe
         configureFromName(systemName);
         sendTopic = makeSendTopic(systemName);
         mqttAdapter = jmri.InstanceManager.getDefault(MqttSystemConnectionMemo.class).getMqttAdapter();
-        mqttAdapter.subscribe(sendTopic, this);  // receive back on send topic
+        if (mqttAdapter!= null) mqttAdapter.subscribe(sendTopic, this);  // receive back on send topic
     }
 
     @Nonnull
