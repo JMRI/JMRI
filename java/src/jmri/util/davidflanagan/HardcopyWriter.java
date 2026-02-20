@@ -77,7 +77,7 @@ public class HardcopyWriter extends Writer {
     protected JButton closeButton;
     protected JLabel pageCount = new JLabel();
 
-    protected Column[] columns = {new Column(0, Integer.MAX_VALUE)};
+    protected Column[] columns = {new Column(0, Integer.MAX_VALUE, Align.LEFT_WRAP)};
     protected int columnIndex = 0;
 
     protected double pixelScale = 1;
@@ -332,16 +332,18 @@ public class HardcopyWriter extends Writer {
         });
 
         // We want to add the paper size / orientation
+        Dimension mediaSize = pagesizePoints;
         if (pagesizePixels.width > pagesizePixels.height) {
             JLabel orientationLabel = new JLabel(Bundle.getMessage("Landscape"));
             orientationLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
             previewToolBar.add(orientationLabel);
+            mediaSize = new Dimension(pagesizePoints.height, pagesizePoints.width);
         } else {
             JLabel orientationLabel = new JLabel(Bundle.getMessage("Portrait"));
             orientationLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
             previewToolBar.add(orientationLabel);
         }
-        String paperSizeName = PaperUtils.getNameFromPoints(pagesizePoints.width, pagesizePoints.height);
+        String paperSizeName = PaperUtils.getNameFromPoints(mediaSize.width, mediaSize.height);
         if (paperSizeName != null) {
             try {
                 // This converts the paper size name to the appropriate locale
@@ -501,7 +503,7 @@ public class HardcopyWriter extends Writer {
             }
         }
         if (columns.length == 0) {
-            columns = new Column[] { new Column(0, width, Align.LEFT) };
+            columns = new Column[]{new Column(0, width, Align.LEFT_WRAP)};
         }
         this.columns = columns;
     }
