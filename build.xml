@@ -332,8 +332,7 @@
 
     <!-- path containing jar files required while running tests -->
     <path id="test.jars.path">
-        <pathelement location="${libdir}/mockito-core-5.20.0.jar"/>
-        <pathelement location="${libdir}/mockito-junit-jupiter-5.20.0.jar"/>
+        <pathelement location="${libdir}/mockito-core-5.21.0.jar"/>
         <pathelement location="${libdir}/byte-buddy-1.18.2.jar"/>
         <pathelement location="${libdir}/byte-buddy-agent-1.18.2.jar"/>
         <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
