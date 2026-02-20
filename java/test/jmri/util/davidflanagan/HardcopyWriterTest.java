@@ -194,10 +194,11 @@ public class HardcopyWriterTest {
                     new HardcopyWriter.Column(width / 3, width / 3, HardcopyWriter.Align.CENTER_WRAP),
                     new HardcopyWriter.Column(2 * width / 3, width / 3, HardcopyWriter.Align.RIGHT_WRAP)
             });
-            hcw.write("A long string that should wrap around in the first column.\n");
-            hcw.write("\tA long string that should wrap around in the second column.\n");
-            hcw.write("\t\tA long string that should wrap around in the third column.\n");
-            hcw.write("A long string that should wrap around in the first column.\tNot wrap\tAnd also wrap here in the third column.\n");
+            hcw.write("A long string that should wrap around in the first column (thrice).\n");
+            hcw.write("\tA long string that should wrap around in the second column (thrice).\n");
+            hcw.write("\t\tA long string that should wrap around in the third column (thrice).\n");
+            hcw.write(
+                    "A long string that should wrap around in the first column (thrice).\tNot wrap\tAnd also wrap here in the third column.\n");
 
             hcw.leaveVerticalSpace(36); // half an inch
         }
@@ -235,13 +236,16 @@ public class HardcopyWriterTest {
         // Now we get boxes around bits
         int headerPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(0, 0, 850, 50));
 
-        int leftPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(50, 50, 220, 60));
+        int leftPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(50, 50, 220, 70));
         int centerPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(300, 110, 250, 70));
         int rightPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(570, 170, 230, 110));
         int acrossPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(50, 230, 500, 70));
 
-        if (totalPixelValue != 
-            headerPixelValue + leftPixelValue + centerPixelValue + rightPixelValue + acrossPixelValue) {
+        if (totalPixelValue != headerPixelValue +
+                leftPixelValue +
+                centerPixelValue +
+                rightPixelValue +
+                acrossPixelValue) {
             // This is a bit of a hack, but it's the best we can do.
             // Split the page up into  blocks and then print all a '*' for each block (if it
             // has a non-zero pixel value)
@@ -269,8 +273,6 @@ public class HardcopyWriterTest {
                 "totalPixelValue should match the sum of areas");
 
         hcw.dispose();
-
-
 
     }
 
