@@ -84,16 +84,22 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * Generate CAN BOOT command (0x1B).
+     * Generate CAN BOOT command (0x1B) for Gleisbox activation.
      * <p>
      * This command resets the Gleisbox/trackbox and initiates it to start
      * passing commands to locos and accessories on the rails. Without this
      * command on startup, the hardware does not respond to subsequent commands.
-     * This is part of the software/bootloader command range used for
-     * firmware updates and device initialization.
+     * This variant is used for normal operational startup of standalone
+     * Gleisbox devices when no CS2/MS2 is attached.
+     * <p>
+     * The packet uses DLC=5 with data byte 0 set to 0x11, which is the
+     * "magic value" that activates the Gleisbox for normal operations.
+     * This matches the behavior of Rocrail and the can2udp reference
+     * implementation (M_GLEISBOX_MAGIC_START_SEQUENCE).
      *
-     * @return MarklinMessage containing the CAN BOOT command
-     * @see <a href="https://www.stummiforum.de/t122854f7-M-rklin-CAN-Protokoll-x-B-commands-updates.html">Märklin CAN Protokoll 0x1B commands documentation</a>
+     * @return MarklinMessage containing the CAN BOOT activation command
+     * @see <a href="https://github.com/GBert/railroad/can2udp">can2udp reference implementation</a>
+     * @see #getCanBootloaderMode()
      */
     public static MarklinMessage getCanBoot() {
         MarklinMessage m = new MarklinMessage();
@@ -101,7 +107,41 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(1, (0x1B << 1) & 0xFF);  // Command 0x1B low bits (encodes to 0x36)
         m.setElement(2, MarklinConstants.HASHBYTE1 & 0xFF);
         m.setElement(3, MarklinConstants.HASHBYTE2 & 0xFF);
-        m.setElement(4, 0x00 & 0xFF); // DLC = 0 (no data bytes)
+        m.setElement(4, 0x05 & 0xFF); // DLC = 5 (five data bytes)
+        // Elements 5-8: Address bytes (0x00 for broadcast)
+        m.setElement(9, 0x11 & 0xFF); // Data byte 0: Magic value 0x11 to activate Gleisbox
+        // Elements 10-12 remain as 0x00 (initialized in constructor)
+        return m;
+    }
+
+    /**
+     * Generate CAN BOOT command (0x1B) for entering bootloader mode.
+     * <p>
+     * This variant of the CAN BOOT command invokes the bootloader update
+     * sequence on Märklin devices for firmware updates. It is sent after
+     * a system reset with approximately 400ms wait time, putting the device
+     * into bootloader mode ready to receive firmware data.
+     * <p>
+     * This command uses DLC=0 (no data bytes) and should be followed by
+     * firmware data transfer packets if performing an actual firmware update.
+     * This is different from {@link #getCanBoot()} which activates the device
+     * for normal operations.
+     * <p>
+     * <strong>Note:</strong> This command is intended for firmware update
+     * operations. For normal Gleisbox activation to run trains, use
+     * {@link #getCanBoot()} instead.
+     *
+     * @return MarklinMessage containing the CAN BOOT bootloader invocation command
+     * @see <a href="https://www.stummiforum.de/t122854f7-M-rklin-CAN-Protokoll-x-B-commands-updates.html">Märklin CAN Protokoll 0x1B commands documentation</a>
+     * @see #getCanBoot()
+     */
+    public static MarklinMessage getCanBootloaderMode() {
+        MarklinMessage m = new MarklinMessage();
+        m.setElement(0, (0x1B >> 7) & 0xFF);  // Command 0x1B high bits (encodes to 0x00)
+        m.setElement(1, (0x1B << 1) & 0xFF);  // Command 0x1B low bits (encodes to 0x36)
+        m.setElement(2, MarklinConstants.HASHBYTE1 & 0xFF);
+        m.setElement(3, MarklinConstants.HASHBYTE2 & 0xFF);
+        m.setElement(4, 0x00 & 0xFF); // DLC = 0 (no data bytes - bootloader invocation)
         // Elements 5-12 remain as 0x00 (initialized in constructor)
         return m;
     }

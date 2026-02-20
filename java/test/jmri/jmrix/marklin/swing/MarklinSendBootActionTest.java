@@ -139,11 +139,19 @@ public class MarklinSendBootActionTest {
         Assert.assertEquals("Element 2 (hash byte 1)", 0x47, bootMessage.getElement(2)); // MarklinConstants.HASHBYTE1
         Assert.assertEquals("Element 3 (hash byte 2)", 0x11, bootMessage.getElement(3)); // MarklinConstants.HASHBYTE2
 
-        // DLC should be 0
-        Assert.assertEquals("Element 4 (DLC)", 0x00, bootMessage.getElement(4));
+        // DLC should be 5
+        Assert.assertEquals("Element 4 (DLC)", 0x05, bootMessage.getElement(4));
+
+        // Elements 5-8 should be 0 (address bytes for broadcast)
+        for (int i = 5; i <= 8; i++) {
+            Assert.assertEquals("Element " + i + " should be 0", 0x00, bootMessage.getElement(i));
+        }
+
+        // Element 9 (data byte 0) should be 0x11 (magic value for Gleisbox activation)
+        Assert.assertEquals("Element 9 (data byte 0)", 0x11, bootMessage.getElement(9));
 
         // Remaining elements should be 0
-        for (int i = 5; i < bootMessage.getNumDataElements(); i++) {
+        for (int i = 10; i < bootMessage.getNumDataElements(); i++) {
             Assert.assertEquals("Element " + i + " should be 0", 0x00, bootMessage.getElement(i));
         }
     }
