@@ -170,6 +170,111 @@ public class HardcopyWriterTest {
     }
 
     @Test
+    @DisabledIfHeadless
+    public void testColumnWrap() throws IOException, HardcopyWriter.ColumnException {
+        JFrame frame = new JFrame();
+        HardcopyWriter hcw = null;
+        try {
+            hcw = new HardcopyWriter(frame, "test", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72, true, null,
+                    null, null, null, new Dimension((int) (8.5 * 72), (int) (11.0 * 72)));
+            Assertions.assertNotNull(hcw, "HardcopyWriter constructor");
+        } catch (HardcopyWriter.PrintCanceledException pce) {
+            // this isn't an error for this test.
+            return;
+        }
+
+        int width = hcw.getPrintablePagesizePoints().width;
+
+        for (String fontName : new String[]{"SansSerif"}) {
+            hcw.setFont(fontName, Font.PLAIN, 12);
+
+            // Make three columns that are 1/3 of the page width.
+            hcw.setColumns(new HardcopyWriter.Column[]{
+                    new HardcopyWriter.Column(0, width / 3, HardcopyWriter.Align.LEFT_WRAP),
+                    new HardcopyWriter.Column(width / 3, width / 3, HardcopyWriter.Align.CENTER_WRAP),
+                    new HardcopyWriter.Column(2 * width / 3, width / 3, HardcopyWriter.Align.RIGHT_WRAP)
+            });
+            hcw.write("A long string that should wrap around in the first column.\n");
+            hcw.write("\tA long string that should wrap around in the second column.\n");
+            hcw.write("\t\tA long string that should wrap around in the third column.\n");
+            hcw.write("A long string that should wrap around in the first column.\tNot wrap\tAnd also wrap here in the third column.\n");
+
+            hcw.leaveVerticalSpace(36); // half an inch
+        }
+
+        // This is what causes the page to get added to the vector of images.
+        hcw.pageBreak();
+
+        Vector<Image> images = hcw.getPageImages();
+        Assertions.assertNotNull(images, "getImages");
+        //Assertions.assertEquals(1, images.size(), "getImages");
+        Image image = images.get(0);
+        Assertions.assertNotNull(image, "getImage");
+
+        // ISSUE: Not entirely clear how to test this... especially since we don't want to
+        // do exact bitwise comparison of the image. 
+
+        // Write out the image to /tmp/test.png
+        // We *know* this is a BufferedImage, so we can cast it.
+        try {
+            ImageIO.write((BufferedImage) image, "png", new File("/tmp/jmri_testColumnWrap.png"));
+        } catch (Exception e) {
+            log.warn("Failed to save test image");
+        }
+
+        Assertions.assertEquals(850, image.getWidth(null), "image width");
+        Assertions.assertEquals(1100, image.getHeight(null), "image height");
+
+        Assertions.assertEquals(0, totalPixelValue((BufferedImage) image, new Rectangle(0, 0, 10, 10)),
+                "image top left area");
+        Assertions.assertEquals(0, totalPixelValue((BufferedImage) image, new Rectangle(840, 1090, 10, 10)),
+                "image bottom right area");
+
+        int totalPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(0, 0, 850, 1100));
+
+        // Now we get boxes around bits
+        int headerPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(0, 0, 850, 50));
+
+        int leftPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(50, 50, 220, 60));
+        int centerPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(300, 110, 250, 70));
+        int rightPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(570, 170, 230, 110));
+        int acrossPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(50, 230, 500, 70));
+
+        if (totalPixelValue != 
+            headerPixelValue + leftPixelValue + centerPixelValue + rightPixelValue + acrossPixelValue) {
+            // This is a bit of a hack, but it's the best we can do.
+            // Split the page up into  blocks and then print all a '*' for each block (if it
+            // has a non-zero pixel value)
+            // The size must divide the image size evenly.
+            int ySize = 10;
+            int xSize = 5;
+            for (int y = 0; y < image.getHeight(null); y += ySize) {
+                String row = String.format("%04d:", y);
+                for (int x = 0; x < image.getWidth(null); x += xSize) {
+                    if ((x % 100) == 0) {
+                        row += "|";
+                    }
+                    if (totalPixelValue((BufferedImage) image, new Rectangle(x, y, xSize, ySize)) > 0) {
+                        row += "*";
+                    } else {
+                        row += " ";
+                    }
+                }
+                System.out.println(row);
+            }
+        }
+
+        Assertions.assertEquals(totalPixelValue,
+                headerPixelValue + leftPixelValue + centerPixelValue + rightPixelValue + acrossPixelValue,
+                "totalPixelValue should match the sum of areas");
+
+        hcw.dispose();
+
+
+
+    }
+
+    @Test
     public void testStretch() {
         List<HardcopyWriter.Column> columns = new ArrayList<>();
         columns.add(new HardcopyWriter.Column(0, 1));
