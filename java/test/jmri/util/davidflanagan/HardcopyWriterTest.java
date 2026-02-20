@@ -103,36 +103,29 @@ public class HardcopyWriterTest {
         int totalPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(0, 0, 850, 1100));
 
         // Now we get boxes around bits
-        int headerPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(0, 0, 850, 50));
-        int col1PixelValue = totalPixelValue((BufferedImage) image, new Rectangle(50, 50, 120, 400));
-        int col2PixelValue = totalPixelValue((BufferedImage) image, new Rectangle(291, 50, 190, 400));
-        int col3PixelValue = totalPixelValue((BufferedImage) image, new Rectangle(538, 50, 275, 400));
+        Rectangle boxes[] = {
+                new Rectangle(0, 0, 850, 50),
+                new Rectangle(50, 50, 120, 400),
+                new Rectangle(291, 50, 190, 400),
+                new Rectangle(538, 50, 275, 400)
+        };
 
-        if (totalPixelValue != headerPixelValue + col1PixelValue + col2PixelValue + col3PixelValue) {
+        int pixelInsideBox = 0;
+
+        for (Rectangle box : boxes) {
+            pixelInsideBox += totalPixelValue((BufferedImage) image, box);
+        }
+
+        if (totalPixelValue != pixelInsideBox) {
             // This is a bit of a hack, but it's the best we can do.
             // Split the page up into  blocks and then print all a '*' for each block (if it
             // has a non-zero pixel value)
             // The size must divide the image size evenly.
-            int ySize = 10;
-            int xSize = 5;
-            for (int y = 0; y < image.getHeight(null); y += ySize) {
-                String row = String.format("%04d:", y);
-                for (int x = 0; x < image.getWidth(null); x += xSize) {
-                    if ((x % 100) == 0) {
-                        row += "|";
-                    }
-                    if (totalPixelValue((BufferedImage) image, new Rectangle(x, y, xSize, ySize)) > 0) {
-                        row += "*";
-                    } else {
-                        row += " ";
-                    }
-                }
-                System.out.println(row);
-            }
+            dumpOutImage((BufferedImage) image, boxes, 5, 10);
         }
 
         Assertions.assertEquals(totalPixelValue,
-                headerPixelValue + col1PixelValue + col2PixelValue + col3PixelValue,
+                pixelInsideBox,
                 "totalPixelValue should match the sum of areas");
 
         hcw.dispose();
@@ -234,46 +227,76 @@ public class HardcopyWriterTest {
         int totalPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(0, 0, 850, 1100));
 
         // Now we get boxes around bits
-        int headerPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(0, 0, 850, 50));
+        Rectangle boxes[] = {
+                new Rectangle(0, 0, 850, 50),
+                new Rectangle(50, 50, 220, 70),
+                new Rectangle(300, 110, 250, 70),
+                new Rectangle(570, 170, 230, 110),
+                new Rectangle(50, 230, 500, 70)
+        };
 
-        int leftPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(50, 50, 220, 70));
-        int centerPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(300, 110, 250, 70));
-        int rightPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(570, 170, 230, 110));
-        int acrossPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(50, 230, 500, 70));
+        int pixelInsideBox = 0;
 
-        if (totalPixelValue != headerPixelValue +
-                leftPixelValue +
-                centerPixelValue +
-                rightPixelValue +
-                acrossPixelValue) {
+        for (Rectangle box : boxes) {
+            pixelInsideBox += totalPixelValue((BufferedImage) image, box);
+        }
+
+        if (totalPixelValue != pixelInsideBox) {
             // This is a bit of a hack, but it's the best we can do.
             // Split the page up into  blocks and then print all a '*' for each block (if it
             // has a non-zero pixel value)
             // The size must divide the image size evenly.
-            int ySize = 10;
-            int xSize = 5;
-            for (int y = 0; y < image.getHeight(null); y += ySize) {
-                String row = String.format("%04d:", y);
-                for (int x = 0; x < image.getWidth(null); x += xSize) {
-                    if ((x % 100) == 0) {
-                        row += "|";
-                    }
-                    if (totalPixelValue((BufferedImage) image, new Rectangle(x, y, xSize, ySize)) > 0) {
-                        row += "*";
-                    } else {
-                        row += " ";
-                    }
-                }
-                System.out.println(row);
-            }
+            dumpOutImage((BufferedImage) image, boxes, 5, 10);
         }
 
         Assertions.assertEquals(totalPixelValue,
-                headerPixelValue + leftPixelValue + centerPixelValue + rightPixelValue + acrossPixelValue,
+                pixelInsideBox,
                 "totalPixelValue should match the sum of areas");
 
         hcw.dispose();
 
+    }
+
+    void dumpOutImage(BufferedImage image, Rectangle[] boxes, int xSize, int ySize) {
+        for (int y = 0; y < image.getHeight(null); y += ySize) {
+            String row = String.format("%04d:", y);
+            for (int x = 0; x < image.getWidth(null); x += xSize) {
+                if ((x % 100) == 0) {
+                    row += "|";
+                }
+                if (totalPixelValue(image, new Rectangle(x, y, xSize, ySize)) > 0) {
+                    // If all the non-zero pixels are inside a box, then use '.' instead
+                    // of '*'.
+                    boolean allInsideBox = true;
+                    for (int ypix = y; ypix < y + ySize && allInsideBox; ypix++) {
+                        for (int xpix = x; xpix < x + xSize; xpix++) {
+                            if (image.getRGB(xpix, ypix) != 0xffffff) {
+                                // This pixel is not white. See if it is inside a box
+                                boolean insideBox = false;
+                                for (Rectangle box : boxes) {
+                                    if (box.contains(xpix, ypix)) {
+                                        insideBox = true;
+                                        break;
+                                    }
+                                }
+                                if (!insideBox) {
+                                    allInsideBox = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (allInsideBox) {
+                        row += ".";
+                    } else {
+                        row += "*";
+                    }
+                } else {
+                    row += " ";
+                }
+            }
+            System.out.println(row);
+        }
     }
 
     @Test
