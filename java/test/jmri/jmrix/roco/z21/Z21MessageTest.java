@@ -145,17 +145,20 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testGetRailComDataRequest() {
         msg = Z21Message.getLanRailComGetDataRequestMessage();
-        assertEquals( 4, msg.getNumDataElements(), "length");
-        assertEquals( 0x04, msg.getElement(0) & 0xFF, "0th byte");
+        assertEquals( 7, msg.getNumDataElements(), "length");
+        assertEquals( 0x07, msg.getElement(0) & 0xFF, "0th byte");
         assertEquals( 0x00, msg.getElement(1) & 0xFF, "1st byte");
         assertEquals( 0x89, msg.getElement(2) & 0xFF, "2nd byte");
         assertEquals( 0x00, msg.getElement(3) & 0xFF, "3rd byte");
+        assertEquals( 0x01, msg.getElement(4) & 0xFF, "4th byte");
+        assertEquals( 0x00, msg.getElement(5) & 0xFF, "5th byte");
+        assertEquals( 0x00, msg.getElement(6) & 0xFF, "6th byte");
     }
 
     @Test
     public void toMonitorStringRailComDataRequest() {
         msg = Z21Message.getLanRailComGetDataRequestMessage();
-        assertEquals( Bundle.getMessage("Z21_RAILCOM_GETDATA"),
+        assertEquals( Bundle.getMessage("Z21_RAILCOM_GETDATA",0),
             msg.toMonitorString(), "Monitor String");
     }
 
