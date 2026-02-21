@@ -233,7 +233,7 @@ public class HardcopyWriterTest {
                 new Rectangle(50, 50, 250, 70),
                 new Rectangle(300, 100, 250, 70),
                 new Rectangle(570, 160, 230, 110),
-                new Rectangle(50, 210, 500, 70)
+                new Rectangle(50, 210, 500, 80)
         };
 
         int pixelInsideBox = 0;
