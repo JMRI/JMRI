@@ -10,6 +10,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.util.*;
 
@@ -55,7 +56,6 @@ public class HardcopyWriter extends Writer {
     protected float charwidth;
     protected int lineheight;
     protected int lineascent;
-    protected int chars_per_line;
     protected int v_pos = 0; // The offset of the current line from the top margin.
     protected int max_v_pos = 0; // The maximum offset of the current line from the top margin.
     protected int pagenum = 0;
@@ -233,15 +233,8 @@ public class HardcopyWriter extends Writer {
 
         // get body font and font size
         font = new Font(useFontName, useFontStyle, useFontSize);
-        metrics = frame.getFontMetrics(font);
-        lineheight = metrics.getHeight();
-        lineascent = metrics.getAscent();
-        Rectangle2D bounds = metrics.getStringBounds("m".repeat(100), g);
-        charwidth = (float) (bounds.getWidth() / 100.0);
-
-        // compute lines and columns within margins
-        // ISSUE: I really don't want to expose chars_per_line 
-        chars_per_line = (int) (width / charwidth);
+        g.setFont(font);
+        refreshMetrics(g);
 
         // header font info
         headerfont = new Font("SansSerif", Font.ITALIC, useFontSize);
@@ -787,6 +780,31 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
+     * Unwrap any GraphicsProxy objects to get the underlying Graphics object.
+     * Do this with reflection so we don't need to import and sun.* classes
+     * 
+     * @param g the graphics context to unwrap
+     * @return the unwrapped graphics context
+     */
+    private Graphics unwrapGraphicsProxy(Graphics g) {
+        if (!(g instanceof Graphics2D)) {
+            try {
+                // Use reflection to call getGraphics() on the ProxyPrintGraphics
+                Method getG = g.getClass().getMethod("getGraphics");
+                Object underlying = getG.invoke(g);
+                if (underlying instanceof Graphics2D) {
+                    g = (Graphics2D) underlying;
+                } else {
+                    log.info("Underlying graphics object is {}", underlying.getClass().getName());
+                }
+            } catch (Exception e) {
+                log.error("Could not get Graphics2D from {}", g.getClass().getName(), e);
+            }
+        }
+        return g;
+    }
+
+    /**
      * Refresh the font metrics after changing things like font, size, etc.
      * 
      * @param g the graphics context
@@ -800,12 +818,20 @@ public class HardcopyWriter extends Writer {
             g = getGraphics();
         }
 
-        Rectangle2D bounds = metrics.getStringBounds("m".repeat(100), g);
-        charwidth = (float) (bounds.getWidth() / 100.0);
+        g = unwrapGraphicsProxy(g);
+
+        if (g instanceof Graphics2D) {
+            Graphics2D g2d = (Graphics2D) g;
+            FontRenderContext frc = g2d.getFontRenderContext();
+            Rectangle2D bounds = font.getStringBounds("m".repeat(100), frc);
+            charwidth = (float) (bounds.getWidth() / 100.0);
+        } else {
+            log.info("refreshMetrics on {} using metrics", g.getClass().getName());
+            Rectangle2D bounds = metrics.getStringBounds("m".repeat(100), g);
+            charwidth = (float) (bounds.getWidth() / 100.0);
+        }
 
         // compute lines and columns within margins
-        chars_per_line = (int) (width / charwidth);
-
         int widthI = metrics.charWidth('i');
         int widthW = metrics.charWidth('W');
         int widthM = metrics.charWidth('M');
@@ -889,7 +915,9 @@ public class HardcopyWriter extends Writer {
         if (!isMonospaced()) {
             return null;
         }
-        return this.chars_per_line;
+        int chars_per_line = (int) (width / charwidth);
+        log.info("Returning {} chars_per_line = {} = {} / {}", isPreview ? "preview" : "print", chars_per_line, width, charwidth);
+        return chars_per_line;
     }
 
     /**
@@ -958,6 +986,7 @@ public class HardcopyWriter extends Writer {
                 if (inPageRange(pagenum)) {
                     if (printJobGraphics == null) {
                         page = job.getGraphics();
+                        setupGraphics(page);
                     } else {
                         page = printJobGraphics;
                         printJobGraphics = null;
@@ -1036,10 +1065,14 @@ public class HardcopyWriter extends Writer {
      * @param g the graphics context to setup
      */
     private void setupGraphics(Graphics g) {
+        g = unwrapGraphicsProxy(g);
+
         if (g instanceof Graphics2D) {
             Graphics2D g2d = (Graphics2D) g;
-            double scale = getScreenResolution() / 72.0;
-            g2d.scale(scale, scale);
+            if (isPreview) {
+                double scale = getScreenResolution() / 72.0;
+                g2d.scale(scale, scale);
+            }
 
             // Enable Antialiasing (Smooths the edges)
             g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -1060,6 +1093,8 @@ public class HardcopyWriter extends Writer {
             // Enable Antialiasing (Smooths the edges)
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
+        } else {
+            log.info("Not setting rendering hints for {}", g.getClass().getName());
         }
     }
 

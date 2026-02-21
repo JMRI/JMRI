@@ -567,6 +567,8 @@ Section "Main"
   StrCpy $OPTIONS "$OPTIONS -Dswing.defaultlaf=com.sun.java.swing.plaf.windows.WindowsLookAndFeel"
   ; following line is for DarkLAF
   StrCpy $OPTIONS "$OPTIONS --add-exports=java.desktop/sun.awt=ALL-UNNAMED"
+  ; following line is for HardcopyWriter
+  StrCpy $OPTIONS "$OPTIONS --add-exports=java.desktop/sun.print=ALL-UNNAMED"
   
   StrCmp ${ARCH_64BIT} $x64JRE x64Libs x86Libs
   x86Libs:
