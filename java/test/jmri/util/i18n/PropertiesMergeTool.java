@@ -86,10 +86,8 @@ class PropertiesMergeTool {
             // done, flush and close output
             outWriter.close();
 
-        } catch (RuntimeException e) {
-            throw e;
-        } catch (Exception e) {
-            System.err.println("Exception: "+e);
+        } catch (IOException e) {
+            System.err.println("IOException: "+e);
             e.printStackTrace();
         } finally {
             try {
@@ -107,8 +105,9 @@ class PropertiesMergeTool {
         return line.isEmpty();
     }
 
-    static File outFile = null;
-    static Writer outWriter = null;
+    private static File outFile = null;
+    private static Writer outWriter = null;
+
     static public void writeOutLine(String line) throws IOException {
 
         // double \ characters to have them go through explicitly
