@@ -359,11 +359,13 @@
         <li>
           <strong>Signal Masts</strong><span class="since">Since JMRI 4.26</span>:
           You can define MQTT-connected Signal Masts which will send
-          their aspect when changed.  These do not receive anything from the layout.
+          their aspect when changed. 
           A JMRI MQTT Signal Mast will send the
           aspect name, followed by the held status and the lit status. Examples are
           "Approach Medium; Lit; Unheld" and "Clear; Unlit; Held". The available
           aspect names are defined in the signal system definition being used.
+          If the mast receives information in the same format, it will update
+          the mast's state.
         </li>
         <li>
           <strong>Throttles and Power Control</strong><span class="since">Since JMRI 5.5.4</span>: 

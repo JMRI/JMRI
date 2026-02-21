@@ -1,9 +1,9 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.DccLocoAddress;
-import jmri.InstanceManager;
-import jmri.RailCom;
-import jmri.RailComManager;
+import jmri.*;
+
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Z21Reporter implements the Reporter Manager interface
@@ -13,9 +13,11 @@ import jmri.RailComManager;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class Z21Reporter extends jmri.implementation.AbstractRailComReporter implements Z21Listener {
+public class Z21Reporter extends jmri.implementation.AbstractRailComReporter implements Z21Listener, CollectingReporter {
 
     private Z21SystemConnectionMemo _memo;
+
+    private final HashSet<Object> entrySet;
 
     private javax.swing.Timer refreshTimer; // Timer used to periodically
     // referesh the RailCom data (this does not appear to happen automatically).
@@ -34,6 +36,7 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
         super(systemName,userName);
         _memo = memo;
         _memo.getTrafficController().addz21Listener(this);
+        entrySet = new HashSet<>();
         // request an update from the layout.
        requestUpdateFromLayout();
        refreshTimer();
@@ -70,9 +73,13 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
                  RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l.getNumber());
                  tag.setActualSpeed(msg.getRailComSpeed(i));
                  notify(tag);
+                 if(!entrySet.contains(tag)){
+                     entrySet.add(tag);
+                 }
              }
              if(tags == 0){
                  notify(null); // clear the current report if no tags.
+                 entrySet.clear();
              }
          }
     }
@@ -104,6 +111,11 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
         refreshTimer.setInitialDelay(refreshTimeoutValue);
         refreshTimer.setRepeats(true);
         refreshTimer.start();
+    }
+
+    @Override
+    public Collection<Object> getCollection() {
+        return entrySet;
     }
 
     @Override

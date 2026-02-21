@@ -251,11 +251,22 @@ public class Z21Message extends AbstractMRMessage {
      * @return z21 message for LAN_RAILCOM_GETDATA request.
      */
     public static Z21Message getLanRailComGetDataRequestMessage() {
-        Z21Message retval = new Z21Message(4);
-        retval.setElement(0, 0x04);
+        return getLanRailComGetDataRequestMessage(0); // address 0 causes the Z21 to search for the next address.
+    }
+
+    /**
+     * @param address the address of the locomotive to request RailCom data for.
+     * @return z21 message for LAN_RAILCOM_GETDATA request.
+     */
+    public static Z21Message getLanRailComGetDataRequestMessage(int address) {
+        Z21Message retval = new Z21Message(7);
+        retval.setElement(0, 0x07);
         retval.setElement(1, 0x00);
         retval.setElement(2, 0x89);
         retval.setElement(3, 0x00);
+        retval.setElement(4, 0x01);
+        retval.setElement(5, address & 0xff);
+        retval.setElement(6, (address & 0xff00)>>8);
         return retval;
     }
 
