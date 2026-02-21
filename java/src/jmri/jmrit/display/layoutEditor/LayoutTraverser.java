@@ -729,13 +729,7 @@ public class LayoutTraverser extends LayoutTrack {
     private void recalculateDimensions() {
         int numPairs = getNumberSlots() / 2;
 
-        double newLength = (numPairs > 0) ?  (getDeckWidth()/4f + (slotOffset * numPairs)) : slotOffset;
-        log.warn("length traverser {}", newLength);
-        double widthStationIcon = 0f;  // 20 (size of icon + a bit)
-        newLength = (numPairs > 0) ?  (getDeckWidth()/4f + ((slotOffset - 1) * numPairs)) + Math.max(slotOffset, widthStationIcon): slotOffset;
-        newLength = (numPairs > 0) ?  (((slotOffset - 1) * numPairs)) + Math.max(slotOffset/2f, widthStationIcon): slotOffset;
-        newLength = (numPairs > 0) ?  (((slotOffset - 1) * numPairs)) : slotOffset;
-        log.warn("length traverser2 {}", newLength);
+        double newLength = (numPairs > 0) ? (((slotOffset - 1) * numPairs)) : slotOffset;
         setDeckLength(newLength);
     }
 
@@ -1337,7 +1331,10 @@ public class LayoutTraverser extends LayoutTrack {
             //  #2)     add traverser to TrackNameSet (if not already there)
             //  #3)     if the track segment isn't in the TrackNameSet
             //  #4)         flood it
-            for (int k = 0; k < getNumberSlots() && !isSlotDisabled(k); k++) {
+            for (int k = 0; k < getNumberSlots(); k++) {
+                if (isSlotDisabled(k)) {
+                    continue;
+                }
                 TrackSegment ts = getSlotConnectOrdered(k);
                 if (ts != null) {
                     String blk = ts.getBlockName();

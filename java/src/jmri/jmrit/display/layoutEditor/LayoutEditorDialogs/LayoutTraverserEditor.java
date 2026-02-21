@@ -209,6 +209,19 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
                 }
             }
         });
+        slotOffsetTextField.addActionListener((ActionEvent e) -> {
+            try {
+                double offset = Double.parseDouble(slotOffsetTextField.getText());
+                if (!jmri.util.MathUtil.equals(layoutTraverser.getSlotOffset(), offset)) {
+                    layoutTraverser.setSlotOffset(offset);
+                    updateSlotPanel();
+                    layoutEditor.redrawPanel();
+                    layoutEditor.setDirty();
+                }
+            } catch (NumberFormatException ex) {
+                // ignore invalid input
+            }
+        });
         for (ActionListener al : orientationComboBox.getActionListeners()) {
             orientationComboBox.removeActionListener(al);
         }
@@ -448,6 +461,17 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
                     + ex, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
+        try {
+            double offset = Double.parseDouble(slotOffsetTextField.getText());
+            if (!jmri.util.MathUtil.equals(layoutTraverser.getSlotOffset(), offset)) {
+                layoutTraverser.setSlotOffset(offset);
+                editLayoutTraverserNeedsRedraw = true;
+            }
+        } catch (NumberFormatException ex) {
+            JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame, Bundle.getMessage("EntryError") + ": "
+                    + ex, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         String newName = editLayoutTraverserBlockNameComboBox.getSelectedItemDisplayName();
         if (newName == null) {
@@ -573,6 +597,9 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
                             JmriJOptionPane.ERROR_MESSAGE);
                     disabledCheckBoxA.setSelected(false);
                 }
+                slotA.setDisabled(disabledCheckBoxA.isSelected());
+                layoutEditor.redrawPanel();
+                layoutEditor.setDirty();
             });
 
             c.gridy = 0;
@@ -611,6 +638,9 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
                             JmriJOptionPane.ERROR_MESSAGE);
                     disabledCheckBoxB.setSelected(false);
                 }
+                slotB.setDisabled(disabledCheckBoxB.isSelected());
+                layoutEditor.redrawPanel();
+                layoutEditor.setDirty();
             });
 
             c.gridy = 1;
