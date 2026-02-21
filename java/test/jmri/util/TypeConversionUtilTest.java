@@ -181,30 +181,34 @@ public class TypeConversionUtilTest {
         JUnitAppender.suppressWarnMessage("the string \"\" cannot be converted to a number");
         assertTrue( 123 == TypeConversionUtil.convertToDouble(123, false), "doubles are equal Integer");
         assertTrue( 123 == TypeConversionUtil.convertToDouble(123L, false), "doubles are equal Long");
-        assertTrue( 123.523f == TypeConversionUtil.convertToDouble(123.523f, false), "doubles are equal Float");
-        assertTrue( 123.523 == TypeConversionUtil.convertToDouble(123.523d, false), "doubles are equal Double");
-        assertTrue( 12352.3 == TypeConversionUtil.convertToDouble(123.523e2, false), "doubles are equal");
-        assertTrue( 1.23523 == TypeConversionUtil.convertToDouble(123.523e-2, false), "doubles are equal");
+        assertEquals( 123.523f, TypeConversionUtil.convertToDouble(123.523f, false), 0.000, "doubles are equal Float");
+        assertEquals( 123.523, TypeConversionUtil.convertToDouble(123.523d, false), 0.000, "doubles are equal Double");
+        assertEquals( 12352.3, TypeConversionUtil.convertToDouble(123.523e2, false), 0.0, "doubles are equal");
+        assertEquals( 1.23523, TypeConversionUtil.convertToDouble(123.523e-2, false), 0.00000, "doubles are equal");
         assertTrue( 1 == TypeConversionUtil.convertToDouble(true, false),
             "doubles are equal true is autoboxed to a Boolean and converted to 1");
         assertTrue( 0 == TypeConversionUtil.convertToDouble(false, false),
             "doubles are equal false is autoboxed to a Boolean and converted to 0");
         assertTrue( 0.0 == TypeConversionUtil.convertToDouble("Abc", false), "doubles are equal");
+        JUnitAppender.assertWarnMessage("the string \"Abc\" cannot be converted to a number");
         assertTrue( 0.0 == TypeConversionUtil.convertToDouble("Ab12.32c", false), "doubles are equal");
+        JUnitAppender.assertWarnMessage("the string \"Ab12.32c\" cannot be converted to a number");
         assertTrue( 0.0 == TypeConversionUtil.convertToDouble("Abc12.34", false), "doubles are equal");
+        JUnitAppender.assertWarnMessage("the string \"Abc12.34\" cannot be converted to a number");
         assertTrue( 123 == TypeConversionUtil.convertToDouble("123", false), "doubles are equal");
-        assertTrue( 123.523 == TypeConversionUtil.convertToDouble("123.523", false), "doubles are equal");
-        assertTrue( 12352.3 == TypeConversionUtil.convertToDouble("123.523e2", false), "doubles are equal");
-        assertTrue( 1.23523 == TypeConversionUtil.convertToDouble("123.523e-2", false), "doubles are equal");
+        assertEquals( 123.523,  TypeConversionUtil.convertToDouble("123.523", false), 0.000, "doubles are equal");
+        assertEquals( 12352.3, TypeConversionUtil.convertToDouble("123.523e2", false), 0.0, "doubles are equal");
+        assertEquals( 1.23523, TypeConversionUtil.convertToDouble("123.523e-2", false), 0.00000, "doubles are equal");
         assertTrue( 123 == TypeConversionUtil.convertToDouble("123abc", false), "doubles are equal");
-        assertTrue( 123.523 == TypeConversionUtil.convertToDouble("123.523abc", false), "doubles are equal");
-        assertTrue( 12352.3 == TypeConversionUtil.convertToDouble("123.523e2abc", false), "doubles are equal");
-        assertTrue( 1.23523 == TypeConversionUtil.convertToDouble("123.523e-2abc", false), "doubles are equal");
+        assertEquals( 123.523, TypeConversionUtil.convertToDouble("123.523abc", false), 0.000, "doubles are equal");
+        assertEquals( 12352.3, TypeConversionUtil.convertToDouble("123.523e2abc", false), 0.0, "doubles are equal");
+        assertEquals( 1.23523, TypeConversionUtil.convertToDouble("123.523e-2abc", false), 0.00000, "doubles are equal");
         assertTrue( 0 == TypeConversionUtil.convertToDouble("true", false),
             "doubles are equal \"true\" is treated as a string, not as a boolean");
+        JUnitAppender.assertWarnMessage("the string \"true\" cannot be converted to a number");
         assertTrue( 0 == TypeConversionUtil.convertToDouble("false", false),
             "doubles are equal \"false\" is treated as a string, not as a boolean");
-        JUnitAppender.suppressWarnMessage("the string \"Abc\" cannot be converted to a number");
+        JUnitAppender.assertWarnMessage("the string \"false\" cannot be converted to a number");
 
         // Test report
         Reportable reportable = new Reportable() {
@@ -218,7 +222,7 @@ public class TypeConversionUtilTest {
             }
         };
         // Test that the method toReportString() is used for Reportable objects
-        assertTrue( 12.34 == TypeConversionUtil.convertToDouble(reportable, false), "doubles are equal");
+        assertEquals( 12.34, TypeConversionUtil.convertToDouble(reportable, false), 0.00, "doubles are equal");
     }
 
     @Test
@@ -250,12 +254,12 @@ public class TypeConversionUtilTest {
 
     // The minimal setup for log4J
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
