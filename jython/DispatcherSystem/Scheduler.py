@@ -635,7 +635,12 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                     return
                 elif option == "Run Route":
                     # print "Run Route"
-                    train = [trn for [rte, trn] in list_items_with_trains if rte == route_name][0]
+                    train_array = [trn for [rte, trn] in list_items_with_trains if str(rte) == route_name]
+                    if len(train_array) == 0:
+                        OptionDialog().displayMessage("Selected route is not on the scheduled list - try again")
+                        return
+                    else:
+                        train = train_array[0]
                     set_departure_times = True
                     param_scheduled_start = "00:00"
                     journey_time_row_displayed = True
