@@ -178,10 +178,11 @@ public class HardcopyWriterTest {
 
         int width = hcw.getPrintablePagesizePoints().width;
 
-        for (String fontName : new String[]{"SansSerif"}) {
-            hcw.setFont(fontName, Font.PLAIN, 12);
+        // Monospaced is used to make the output the same between Windows/Linux/Mac
+        for (String fontName : new String[]{"Monospaced"}) {
+            hcw.setFont(fontName, Font.PLAIN, 10);
 
-            // Make three columns that are 1/3 of the page width.
+            // Make three columns that are 1/3 of the page width. (i.e. 250 pixels each)
             hcw.setColumns(new HardcopyWriter.Column[]{
                     new HardcopyWriter.Column(0, width / 3, HardcopyWriter.Align.LEFT_WRAP),
                     new HardcopyWriter.Column(width / 3, width / 3, HardcopyWriter.Align.CENTER_WRAP),
@@ -229,10 +230,10 @@ public class HardcopyWriterTest {
         // Now we get boxes around bits
         Rectangle boxes[] = {
                 new Rectangle(0, 0, 850, 50),
-                new Rectangle(50, 50, 220, 70),
-                new Rectangle(300, 110, 250, 70),
-                new Rectangle(570, 170, 230, 110),
-                new Rectangle(50, 230, 500, 70)
+                new Rectangle(50, 50, 250, 70),
+                new Rectangle(300, 100, 250, 70),
+                new Rectangle(570, 160, 230, 110),
+                new Rectangle(50, 210, 500, 70)
         };
 
         int pixelInsideBox = 0;
