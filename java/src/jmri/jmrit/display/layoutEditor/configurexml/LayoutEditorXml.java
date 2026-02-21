@@ -178,6 +178,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         for (LayoutTrackView lv : p.getLevelXingViews())            {storeOne(panel, lv); }
         for (LayoutTrackView lv : p.getLayoutSlipViews())           {storeOne(panel, lv); }
         for (LayoutTrackView lv : p.getLayoutTurntableViews())      {storeOne(panel, lv); }
+        for (LayoutTrackView lv : p.getLayoutTraverserViews())      {storeOne(panel, lv); }
 
         // include Layout Shapes
         for (LayoutShape ls : p.getLayoutShapes()) {storeOne(panel, ls); }
@@ -616,6 +617,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         // Set editor's option flags, load content after
         // this so that individual item flags are set as saved
         panel.initView();
+
 
         // load the contents
         for (Element item : shared.getChildren()) {

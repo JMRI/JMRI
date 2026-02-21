@@ -325,6 +325,28 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                             transit_instruction = "change"
                             break
 
+        # check if current block is a traverser
+        for panel in jmri.util.JmriJFrame.getFrameList():
+            if isinstance(panel, jmri.jmrit.display.layoutEditor.LayoutEditor):
+                for traverser in panel.getLayoutTraversers():
+                    if traverser.getLayoutBlock() is not None:
+                        if (traverser.getLayoutBlock().getBlock() == current_block) and (current_block != next_block):
+                            # Found the traverser object
+                            entry_slot_index = -1
+                            exit_slot_index = -1
+                            slot_list = traverser.getSlotList()
+                            for i in range(len(slot_list)):
+                                slot = slot_list[i]
+                                ts = slot.getConnect()
+                                if ts is not None and ts.getLayoutBlock() is not None:
+                                    connected_block = ts.getLayoutBlock().getBlock()
+                                    if connected_block == previous_block: entry_slot_index = i
+                                    if connected_block == next_block: exit_slot_index = i
+                            if entry_slot_index != -1 and exit_slot_index != -1 and ((entry_slot_index % 2) == (exit_slot_index % 2)):
+                                if self.logLevel > 0: print strindex + "current_block is a traverser and slots are on the same side, so changing direction"
+                                transit_instruction = "change"
+                            break # Found the traverser, no need to check others
+
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
         current_layout_block = LayoutBlockManager.getLayoutBlock(current_block)
 
@@ -664,7 +686,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         # print strindex + "DF.dispatcherSystemSchedulingInOperation", DF.dispatcherSystemSchedulingInOperation
         if mode != "not_scheduling":  # == scheduling
             # if self.logLevel > 0: print strindex + "__________________________Start__" + self.train_name + "__transit: " + transit_name
-            if self.logLevel > -1: print "__________________________Start__" + self.train_name + "__transit: " + transit_name
+            if self.logLevel > 0: print "__________________________Start__" + self.train_name + "__transit: " + transit_name
         else:
             if self.logLevel > 0: print strindex + "_Start__" + self.train_name + "__transit: " + transit_name
 
@@ -1507,9 +1529,6 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         #print "edge_before" , edge
         #print "g.g_stopping.edgesOf(station_block_name)",g.g_stopping.edgesOf(station_block_name)
         break1 = False
-        #print "no edges", g.g_stopping.edgeSet()
-        # for e in g.g_stopping.edgeSet():
-        #     # print "e" , e
         for e in g.g_stopping.edgeSet():
             j+=1
             LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
@@ -1520,11 +1539,6 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             #print "in_siding", in_siding
             for i in range(station_block.getNumberOfNeighbours()):
                 neighbor_name = station_block.getNeighbourAtIndex(i).getDisplayName()
-                #print "neighbor_name", neighbor_name
-                #print "station_block_name", station_block_name
-                #print "penultimate_block_name", e.getItem("penultimate_block_name")
-                #print "last_block_name", e.getItem("last_block_name")
-                #print "***************"
                 if e.getItem("penultimate_block_name") == neighbor_name and e.getItem("last_block_name") == station_block_name:
                     edge = e
                     break1 = True
@@ -1532,7 +1546,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                 break
             #print "******************************++"
         if edge == None:
-            print "Error the required block has not been found. restart and try again. Sorry!"
+            print "Error the required block has not been found1. restart and try again. Sorry!"
             return
         train["edge"] = edge
         train["penultimate_block_name"] = edge.getItem("penultimate_block_name")
@@ -1603,11 +1617,9 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             #print "in_siding", in_siding
             for i in range(station_block.getNumberOfNeighbours()):
                 neighbor_name = station_block.getNeighbourAtIndex(i).getDisplayName()
-                #print "neighbor_name", neighbor_name
-                #print "station_block_name", station_block_name
-                #print "penultimate_block_name", e.getItem("penultimate_block_name")
-                #print "last_block_name", e.getItem("last_block_name")
-                #print "***************"
+                # print "penultimate_block_name", e.getItem("penultimate_block_name")
+                # print "last_block_name", e.getItem("last_block_name")
+                print "***************"
                 if e.getItem("penultimate_block_name") == neighbor_name and e.getItem("last_block_name") == station_block_name:
                     edge = e
                     break1 = True
@@ -1615,7 +1627,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                 break
             #print "******************************++"
         if edge == None:
-            print "Error the required block has not been found. restart and try again. Sorry!"
+            print "Error the required block has not been found2. restart and try again. Sorry!"
             return
         train["edge"] = edge
         train["penultimate_block_name"] = edge.getItem("penultimate_block_name")
@@ -1660,11 +1672,11 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             # print "in_siding", in_siding
             for i in range(station_block.getNumberOfNeighbours()):
                 neighbor_name = station_block.getNeighbourAtIndex(i).getDisplayName()
-                # print "neighbor_name", neighbor_name
-                # print "station_block_name", station_block_name
+                print "neighbor_name", neighbor_name
+                print "station_block_name", station_block_name
                 # print "penultimate_block_name", e.getItem("penultimate_block_name")
                 # print "last_block_name", e.getItem("last_block_name")
-                # print "***************"
+                print "***************"
                 if e.getItem("penultimate_block_name") == neighbor_name and e.getItem("last_block_name") == station_block_name:
                     edge = e
                     break1 = True
@@ -1672,7 +1684,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                 break
             #print "******************************++"
         if edge == None:
-            print "Error the required block has not been found. restart and try again. Sorry!"
+            print "Error the required block has not been found3. restart and try again. Sorry!"
             return ["Error", "Error", "Error"]
 
         # 3) set direction so can check direction of transit
@@ -1706,18 +1718,18 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             in_siding = (number_neighbors == 1)
             for i in range(station_block.getNumberOfNeighbours()):
                 neighbor_name = station_block.getNeighbourAtIndex(i).getDisplayName()
-                # print "neighbor_name", neighbor_name
-                # print "station_block_name", station_block_name
+                print "neighbor_name", neighbor_name
+                print "station_block_name", station_block_name
                 # print "penultimate_block_name", e.getItem("penultimate_block_name")
                 # print "last_block_name", e.getItem("last_block_name")
-                # print "***************"
+                print "***************"
                 if e.getItem("penultimate_block_name") == neighbor_name and e.getItem("last_block_name") == station_block_name:
                     edge = e
                     break1 = True
             if break1 == True:
                 break
         if edge == None:
-            # print "Error the required block has not been found. restart and try again. Sorry!"
+            # print "Error the required block has not been found4. restart and try again. Sorry!"
             return None
         penultimate_block_name = edge.getItem("penultimate_block_name")
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)

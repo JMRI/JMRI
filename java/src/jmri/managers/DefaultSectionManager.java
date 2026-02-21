@@ -349,6 +349,35 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
         if (isTurntableComponent) {
             return; // Skip creating a section for this block
         }
+
+        boolean isTraverserComponent = false;
+        for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+            for (jmri.jmrit.display.layoutEditor.LayoutTraverser traverser : panel.getLayoutTraversers()) {
+                if (traverser.getLayoutBlock() == layoutBlock) {
+                    isTraverserComponent = true;
+                    break;
+                }
+                for (jmri.jmrit.display.layoutEditor.LayoutTraverser.SlotTrack slot : traverser.getSlotList()) {
+//                    log.info("slot {}", slot);
+                    if (!slot.isDisabled() && slot.getConnect() != null) {
+                        jmri.jmrit.display.layoutEditor.LayoutBlock connectedBlock = slot.getConnect().getLayoutBlock();
+                        if (connectedBlock != null) {
+                            log.debug("slot {} connected block {} ", slot, connectedBlock.getDisplayName());
+                            if (connectedBlock == layoutBlock) {
+                                isTraverserComponent = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (isTraverserComponent) break;
+            }
+            if (isTraverserComponent) break;
+        }
+        if (isTraverserComponent) {
+            return; // Skip creating a section for this block
+        }
+        
         blockList = new ArrayList<>();
         var block = layoutBlock.getBlock();
         createSectionBlockList(block);

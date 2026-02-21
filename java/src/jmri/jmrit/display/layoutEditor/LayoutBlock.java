@@ -799,6 +799,34 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     }
                 }
             }
+            // Add traverser connectivity to the list
+            for (LayoutTraverser traverser : panel.getLayoutTraversers()) {
+                LayoutBlock traverserBlock = traverser.getLayoutBlock();
+                if (traverserBlock == null) continue;
+
+                if (this == traverserBlock) {
+                    // This is the traverser's block. Add connections to all valid slot blocks.
+                    for (int i = 0; i < traverser.getNumberSlots(); i++) {
+                        TrackSegment slotConnect = traverser.getSlotConnectOrdered(i);
+                        if (slotConnect != null) {
+                            LayoutBlock slotBlock = slotConnect.getLayoutBlock();
+                            if (slotBlock != null && slotBlock != this) {
+                                c.add(new LayoutConnectivity(this, slotBlock));
+                            }
+                        }
+                    }
+                } else {
+                    // This might be a slot block. Check if it connects to this traverser.
+                    for (int i = 0; i < traverser.getNumberSlots(); i++) {
+                        TrackSegment slotConnect = traverser.getSlotConnectOrdered(i);
+                        if (slotConnect != null && slotConnect.getLayoutBlock() == this) {
+                            // This is a slot block for this traverser. Add a connection to the traverser block.
+                            c.add(new LayoutConnectivity(this, traverserBlock));
+                            break; // Found our traverser, no need to check other slots
+                        }
+                    }
+                }
+            }
             // update block Paths to reflect connectivity as needed
             updateBlockPaths(c, panel);
         }
@@ -2215,6 +2243,26 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         if (isTurntableBlock) {
             addRouteLog.debug("Block {} is a turntable block. Skipping through path generation in addThroughPath(Adjacencies).", getDisplayName());
             return; // Do not create through paths for a turntable
+        }
+
+        // Check if this block is a traverser block on ANY panel it belongs to.
+        // If so, do not create through paths.
+        boolean isTraverserBlock = false;
+        for (LayoutEditor p : panels) {
+            for (LayoutTraverser traverser : p.getLayoutTraversers()) {
+                if (traverser.getLayoutBlock() == this) {
+                    isTraverserBlock = true;
+                    break;
+                }
+            }
+            if (isTraverserBlock) {
+                break;
+            }
+        }
+
+        if (isTraverserBlock) {
+            addRouteLog.debug("Block {} is a traverser block. Skipping through path generation in addThroughPath(Adjacencies).", getDisplayName());
+            return; // Do not create through paths for a traverser
         }
         
         Block newAdj = adj.getBlock();

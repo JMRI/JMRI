@@ -49,6 +49,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
     private final NamedBeanComboBox<Block> editLayoutTurntableBlockNameComboBox = new NamedBeanComboBox<>(
              InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private JButton editLayoutTurntableSegmentEditBlockButton;
+    private final JComboBox<String> editLayoutTurntableMainlineComboBox = new JComboBox<>();
 
     private JPanel editLayoutTurntableRayPanel;
     private JButton editLayoutTurntableAddRayTrackButton;
@@ -134,6 +135,17 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             panel2a.add(editLayoutTurntableSegmentEditBlockButton = new JButton(Bundle.getMessage("EditBlock", "")));  // NOI18N
             editLayoutTurntableSegmentEditBlockButton.addActionListener(this::editLayoutTurntableEditBlockPressed);
             editLayoutTurntableSegmentEditBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
+            log.info("mainline0 {}", layoutTurntable.isMainline());
+
+            boolean mainlineSaved = layoutTurntable.isMainline();  // the listener may be active so preserve the current state
+            editLayoutTurntableMainlineComboBox.removeAllItems();
+            editLayoutTurntableMainlineComboBox.addItem(Bundle.getMessage("Mainline"));
+            editLayoutTurntableMainlineComboBox.addItem(Bundle.getMessage("NotMainline"));
+            layoutTurntable.setMainline(mainlineSaved);  // restore the current state
+
+            panel2a.add(editLayoutTurntableMainlineComboBox);
+            log.info("mainline1 {}", layoutTurntable.isMainline());
+
             headerPane.add(panel2a);
 
             // setup add ray track button
@@ -187,6 +199,20 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
                 editLayoutTurntableBlockNameComboBox.setSelectedItem(blk);
             }
         }
+
+        if (layoutTurntable.isMainline()) {
+            editLayoutTurntableMainlineComboBox.setSelectedIndex(0);
+            log.info("setting mainline");
+        } else {
+            editLayoutTurntableMainlineComboBox.setSelectedIndex(1);
+            log.info("setting sideline");
+        }
+
+        editLayoutTurntableMainlineComboBox.addActionListener((java.awt.event.ActionEvent e) -> {
+            if (layoutTurntable != null) {
+                layoutTurntable.setMainline(editLayoutTurntableMainlineComboBox.getSelectedIndex() == 0);
+            }
+        });
 
         editLayoutTurntableDccControlledCheckBox.setSelected(layoutTurntable.isTurnoutControlled());
         editLayoutTurntableUseSignalMastsCheckBox.setSelected(layoutTurntable.isDispatcherManaged());
@@ -438,6 +464,8 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             ///layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             ///layoutTurntable.updateBlockInfo();
         }
+
+        layoutTurntable.setMainline(editLayoutTurntableMainlineComboBox.getSelectedIndex() == 0);
 
         layoutTurntable.setDispatcherManaged(editLayoutTurntableUseSignalMastsCheckBox.isSelected());
         if (editLayoutTurntableUseSignalMastsCheckBox.isSelected()) {

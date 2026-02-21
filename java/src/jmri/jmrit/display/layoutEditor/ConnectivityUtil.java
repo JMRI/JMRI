@@ -136,6 +136,19 @@ final public class ConnectivityUtil {
             }
         }
 
+        // If this is a traverser boundary, add the required turnouts to position the traverser.
+        for (LayoutTraverser traverser : layoutEditor.getLayoutTraversers()) {
+            if (traverser.isTraverserBoundary(currBlock, prevBlock)) {
+                log.debug("getTurnoutList: Detected traverser boundary between {} and {}.",
+                        (currBlock != null) ? currBlock.getDisplayName() : "null",
+                        (prevBlock != null) ? prevBlock.getDisplayName() : "null");
+                List<LayoutTrackExpectedState<LayoutTurnout>> traverserTurnouts =
+                        traverser.getTurnoutList(currBlock, prevBlock, nextBlock);
+                result.addAll(traverserTurnouts);
+                return result; // This path is handled, no need to check other turnouts.
+            }
+        }
+
         // initialize
         currLayoutBlock = null;
         String currUserName = null;
@@ -540,6 +553,9 @@ final public class ConnectivityUtil {
                 }
             } else if (HitPointType.isTurntableRayHitType(cType)) {
                 // Declare arrival at a turntable ray to be the end of the block
+                trackSegment = null;
+            } else if (HitPointType.isTraverserSlotHitType(cType)) {
+                // Declare arrival at a traverser slot to be the end of the block
                 trackSegment = null;
             }
         }

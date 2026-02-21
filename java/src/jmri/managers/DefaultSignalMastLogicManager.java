@@ -344,6 +344,7 @@ public class DefaultSignalMastLogicManager
         }
         if (!lbm.routingStablised()) {
             runWhenStablised = true;
+            log.info("routing not stabilised");
             return;
         }
         HashMap<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools()
@@ -391,6 +392,7 @@ public class DefaultSignalMastLogicManager
      * Signal Mast attributes as stored in Signal Mast Logic.
      */
     public void generateSection() {
+        log.debug("generateSection:");
         SectionManager sm = InstanceManager.getDefault(SectionManager.class);
         sm.getNamedBeanSet().stream().map( nb -> {
             if (nb.getSectionType() == Section.SIGNALMASTLOGIC) {
@@ -398,7 +400,10 @@ public class DefaultSignalMastLogicManager
             }
             return nb;
         }).forEachOrdered( nb -> nb.removeProperty("forwardMast"));
+        int x = 0;
         for (SignalMastLogic sml : getSignalMastLogicList()) {
+            x++;
+            log.debug("generateSection: sml {} x {}", sml, x);
             LayoutBlock faceLBlock = sml.getFacingBlock();
             if (faceLBlock != null) {
                 boolean sourceIntermediate = false;
@@ -413,6 +418,7 @@ public class DefaultSignalMastLogicManager
                     log.debug("generateSection: Found {} auto-blocks for this path: {}", autoBlocks.size(), autoBlocks);
                     if (!autoBlocks.isEmpty()) {
                         String secUserName = sml.getSourceMast().getDisplayName() + ":" + destMast.getDisplayName();
+                        log.debug ("secUserName {}", secUserName);
                         Section sec = sm.getSection(secUserName);
                         if (sec != null) {
                             //A Section already exists, lets check that it is one used with the SML, if so carry on using that.

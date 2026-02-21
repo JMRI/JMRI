@@ -129,6 +129,8 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         JPanel trackGroup2 = new JPanel(floatContentLayout);
         trackGroup2.add(trackButton);
         trackGroup2.add(levelXingButton);
+        trackGroup2.add(turntableButton);
+        trackGroup2.add(traverserButton);
         floatEditTrack.add(trackGroup2);
 
         JPanel trackGroup3 = new JPanel(floatContentLayout);
