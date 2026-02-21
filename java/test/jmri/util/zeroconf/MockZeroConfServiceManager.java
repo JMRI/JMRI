@@ -91,7 +91,7 @@ public class MockZeroConfServiceManager extends ZeroConfServiceManager {
                     try {
                         log.debug("Publishing ZeroConfService for '{}' on {}", service.getKey(), netService.getInetAddress().getHostAddress());
                     } catch (IOException ex) {
-                        log.debug("Publishing ZeroConfService for '{}' with IOException {}", service.getKey(), ex.getLocalizedMessage(), ex);
+                        log.debug("Publishing ZeroConfService for '{}' with IOException ", service.getKey(), ex);
                     }
                     // JmDNS requires a 1-to-1 mapping of getServiceInfo to InetAddress
                     if (!service.containsServiceInfo(netService.getInetAddress())) {
