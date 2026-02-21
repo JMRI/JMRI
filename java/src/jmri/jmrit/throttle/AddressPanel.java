@@ -510,6 +510,9 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         topPanel.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
 
         rosterBox = new RosterEntrySelectorPanel();
+        if ((InstanceManager.getDefault(ThrottlesPreferences.class).isUsingExThrottle()) && (InstanceManager.getDefault(ThrottlesPreferences.class).isAddressSelectorShowingAllRosterGroup())) {
+            rosterBox.getRosterGroupComboBox().setAllEntriesEnabled(true);
+        }
         getRosterEntrySelector().setNonSelectedItem(Bundle.getMessage("NoLocoSelected"));
         getRosterEntrySelector().setToolTipText(Bundle.getMessage("SelectLocoFromRosterTT"));
         getRosterEntrySelector().addPropertyChangeListener("selectedRosterEntries", pce -> selectRosterEntry());
@@ -901,7 +904,9 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     }
 
     void applyPreferences() {
-        // nothing to do, for now
+        if ((InstanceManager.getDefault(ThrottlesPreferences.class).isUsingExThrottle())) {
+            rosterBox.getRosterGroupComboBox().setAllEntriesEnabled(InstanceManager.getDefault(ThrottlesPreferences.class).isAddressSelectorShowingAllRosterGroup());
+        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddressPanel.class);

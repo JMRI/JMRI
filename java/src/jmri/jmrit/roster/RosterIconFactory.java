@@ -39,6 +39,10 @@ public class RosterIconFactory implements InstanceManagerAutoDefault {
     public RosterIconFactory() {
         iconHeight = 19; // OS X, because of Apple look'n feel constraints, ComboBox cannot be higher than this 19pixels
     }
+    
+    public int getIconFactoryHeight() {
+        return iconHeight;
+    }
 
     public ImageIcon getIcon(String id) {
         if (id == null) {

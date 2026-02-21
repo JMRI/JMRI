@@ -39,6 +39,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.swing.JmriJOptionPane;
+import jmri.util.swing.TransparencyUtils;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -51,11 +52,11 @@ import org.jdom2.JDOMException;
  * @author Glen Oberhauser
  * @author Andrew Berridge Copyright 2010
  */
-public class ThrottleFrame extends JDesktopPane implements ComponentListener, AddressListener {
+public class ThrottleFrame extends JDesktopPane implements ComponentListener, AddressListener, ThrottleControllerUI {
 
     private DccThrottle throttle;
     private final ThrottleManager throttleManager;
-    private final ThrottlesTableModel allThrottlesTableModel = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel();
+    private final ThrottleFrameManager throttleFrameManager = InstanceManager.getDefault(ThrottleFrameManager.class);    
 
     private final Integer BACKPANEL_LAYER = Integer.MIN_VALUE;
     private final Integer PANEL_LAYER_FRAME = 1;
@@ -70,7 +71,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     private JInternalFrame[] frameList;
     private int activeFrame;
 
-    private final ThrottleWindow throttleWindow;
+    private ThrottleWindow throttleWindow;
 
     private ControlPanel controlPanel;
     private FunctionPanel functionPanel;
@@ -106,11 +107,17 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         throttleManager = tm;
         initGUI();
         applyPreferences();
-        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().addThrottleFrame(tw,this);
+        throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableStructureChanged();
     }
 
-    public ThrottleWindow getThrottleWindow() {
+    @Override
+    public ThrottleWindow getThrottleControllersContainer() {
         return throttleWindow;
+    }
+    
+    @Override
+    public void setThrottleControllersContainer(ThrottleControllersUIContainer tw) {
+        throttleWindow = (ThrottleWindow) tw;
     }
 
     public ControlPanel getControlPanel() {
@@ -527,6 +534,29 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         loadDefaultThrottle();
     }
 
+    @Override
+    public void setRosterEntry(RosterEntry re) {
+        getAddressPanel().setRosterEntry(re);
+    }
+
+    @Override
+    public void setAddress(int number, boolean isLong) {
+        getAddressPanel().setAddress(number, isLong);
+    }
+    
+    @Override
+    public void setAddress(DccLocoAddress la) {
+        getAddressPanel().setCurrentAddress(la);
+    }
+    
+    @Override
+    public void eStop() {
+        DccThrottle throt = getAddressPanel().getThrottle();
+        if (throt != null) {
+            throt.setSpeedSetting(-1);
+        }
+    }
+    
     private static class TranslucentJPanel extends JPanel {
 
         private final Color TRANS_COL = new Color(100, 100, 100, 100);
@@ -561,7 +591,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         pane.setLayout(new BorderLayout());
         contentPanes.put(pane, jif);
         pane.add(jif.getContentPane(), BorderLayout.CENTER);
-        setTransparent(pane, true);
+        TransparencyUtils.setTransparent(pane, true);
         jif.setContentPane(new JPanel());
         jif.setVisible(false);
         Point loc = new Point(cpLoc.x - this.getLocationOnScreen().x, cpLoc.y - this.getLocationOnScreen().y);
@@ -577,7 +607,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 JPanel pane = (JPanel) cmp;
                 JInternalFrame jif = contentPanes.get(pane);
                 jif.setContentPane((Container) pane.getComponent(0));
-                setTransparent(jif, false);
+                TransparencyUtils.setTransparent(jif, false);
                 jif.setVisible(true);
                 remove(pane);
             }
@@ -617,13 +647,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         URIDrop.remove(backgroundPanel);
         addressPanel.removeAddressListener(this);
         // should the throttle list table stop listening to that throttle?
-        if (throttle!=null &&  allThrottlesTableModel.getNumberOfEntriesFor((DccLocoAddress) throttle.getLocoAddress()) == 1 ) {
-            throttleManager.removeListener(throttle.getLocoAddress(), allThrottlesTableModel);
-            allThrottlesTableModel.fireTableDataChanged();
+        if (throttle!=null &&  throttleFrameManager.getNumberOfEntriesFor((DccLocoAddress) throttle.getLocoAddress()) == 1 ) {
+            throttleManager.removeListener(throttle.getLocoAddress(), throttleFrameManager.getThrottlesListPanel().getTableModel());
+            throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableDataChanged();
         }
         
-        // remove from the throttle list table
-        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().removeThrottleFrame(this, addressPanel.getCurrentAddress());
         // check for any special disposing in InternalFrames
         controlPanel.destroy();
         functionPanel.destroy();
@@ -1004,14 +1032,14 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             log.debug("notifyAddressReleased() throttle already null, called for loc {}",la);
             return;
         }
-        if (allThrottlesTableModel.getNumberOfEntriesFor((DccLocoAddress) throttle.getLocoAddress()) == 1 )  {
-            throttleManager.removeListener(throttle.getLocoAddress(), allThrottlesTableModel);
+        if (throttleFrameManager.getNumberOfEntriesFor((DccLocoAddress) throttle.getLocoAddress()) == 1 )  {
+            throttleManager.removeListener(throttle.getLocoAddress(), throttleFrameManager.getThrottlesListPanel().getTableModel());
         }        
         throttle = null;
         setLastUsedSaveFile(null);        
         setFrameTitle();
         throttleWindow.updateGUI(); 
-        allThrottlesTableModel.fireTableDataChanged();        
+        throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableStructureChanged();        
     }
 
     @Override
@@ -1039,8 +1067,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         setFrameTitle();
         throttleWindow.updateGUI();
-        throttleManager.attachListener(throttle.getLocoAddress(), allThrottlesTableModel);        
-        allThrottlesTableModel.fireTableDataChanged();
+        throttleManager.attachListener(throttle.getLocoAddress(), throttleFrameManager.getThrottlesListPanel().getTableModel());        
+        throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableDataChanged();
     }
 
     
@@ -1083,30 +1111,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             try {
                 if (comp instanceof JComponent) {
                     setTransparentBackground((JComponent) comp);
-                }
-            } catch (Exception e) {
-                // Do nothing, just go on
-            }
-        }
-    }
-
-// some utilities to turn a component background transparent
-    public static void setTransparent(JComponent jcomp) {
-        setTransparent(jcomp, true);
-    }
-
-    public static void setTransparent(JComponent jcomp, boolean transparency) {
-        if (jcomp instanceof JPanel) { //OS X: Jpanel components are enough
-            jcomp.setOpaque(!transparency);
-        }
-        setTransparent(jcomp.getComponents(), transparency);
-    }
-
-    private static void setTransparent(Component[] comps, boolean transparency) {
-        for (Component comp : comps) {
-            try {
-                if (comp instanceof JComponent) {
-                    setTransparent((JComponent) comp, transparency);
                 }
             } catch (Exception e) {
                 // Do nothing, just go on

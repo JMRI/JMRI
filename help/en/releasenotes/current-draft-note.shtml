@@ -431,6 +431,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
+            <li>If multiple roster entries are selected, contextual menu allows opening a throttle window with a controler for each selected roster entries.</li>
+            <li>Drag'n drop of roster entries to the throttle list window is now allowed and will create new throttle control in the targetted window.</li>
             <li>Added a new (optional) 
                 <a href="https://www.jmri.org/help/en/package/jmri/jmrit/permission/PermissionManager.shtml">Permission</a>
                 to control whether the user can
@@ -593,7 +595,10 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Throttle list window is now displaying one column for each throttle window, each column showing the throttles for that window</li>
+            <li>Throttle list window allows drag'n drop from one window to another</li>
+            <li>A throttle preference allows to enable the "ALL" roster group in the roster group seletor of the address panel</li>
+            <li>Some interfaces introduced between sing implementation anf throttle controlers</li>            
         </ul>
 
     <h3>Timetable</h3>
