@@ -6,7 +6,6 @@ import java.awt.dnd.DragSource;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.activation.ActivationDataFlavor;
 import javax.activation.DataHandler;
 import javax.swing.*;
 

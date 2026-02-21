@@ -70,7 +70,7 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                 except AttributeError:
                     pass
                 
-                if (self.throttle == None) :
+                if ((self.throttle == None) and (self.addressPanel != None)) :
                     try:
                         # Browse through roster
                         if ((component == self.driver.componentNextRosterBrowse) and (value == self.driver.valueNextRoster)): #NEXT
@@ -408,16 +408,20 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                         pass
 
         # Nothing to customize bellow this point
-        if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
+        if (event.propertyName.startswith("ThrottleFrame")) :  # Current throttle frame changed
             self.speedTask.pause()
-            if event.oldValue != None :
+            if (event.oldValue != None) :
                 event.oldValue.getAddressPanel().removeAddressListener(self)
-            if event.newValue != None :
+            if (event.newValue != None) :
                 self.addressPanel = event.newValue.getAddressPanel()
                 self.throttle = self.addressPanel.getThrottle()
                 self.roster = self.addressPanel.getRosterEntry()
-                self.speedTimerTask.setThrottle( self.throttle )
                 event.newValue.getAddressPanel().addAddressListener(self)
+            else:
+                self.addressPanel = None
+                self.throttle = None
+                self.roster = None
+            self.speedTimerTask.setThrottle( self.throttle )
 
 #Jynstrument main and mandatory methods
     def getExpectedContextClassName(self):
@@ -425,10 +429,15 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
     
     def init(self):
         self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
-        self.getContext().getCurrentThrottleFrame().getAddressPanel().addAddressListener(self) # change of throttle in Current frame
-        self.addressPanel = self.getContext().getCurrentThrottleFrame().getAddressPanel()
-        self.throttle = self.addressPanel.getThrottle() # the throttle
-        self.roster = self.addressPanel.getRosterEntry() # roster entry if any
+        if ( self.getContext().getCurrentThrottleFrame() != None) :
+            self.addressPanel = self.getContext().getCurrentThrottleFrame().getAddressPanel()
+            self.addressPanel.addAddressListener(self) # change of throttle in Current frame
+            self.throttle = self.addressPanel.getThrottle() # the throttle
+            self.roster = self.addressPanel.getRosterEntry() # roster entry if any
+        else:
+            self.addressPanel = None
+            self.throttle = None
+            self.roster = None
         self.speedTimerTask = SpeedTimerTask() #Speed increase thread
         self.speedTimerTask.setThrottle( self.throttle )
         self.speedTimer = Timer()

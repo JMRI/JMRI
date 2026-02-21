@@ -198,7 +198,7 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
 #Property listener part
     def propertyChange(self, event):
         self.speedTimer.stop()                     
-        if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
+        if (event.propertyName.startswith("ThrottleFrame")) :  # Current throttle frame changed
             if event.oldValue != None : 
                 event.oldValue.getAddressPanel().removeAddressListener(self)
             if event.newValue != None : 

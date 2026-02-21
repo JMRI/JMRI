@@ -63,7 +63,9 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
                 (e.getPropertyName().equals(Throttle.ISFORWARD))) {
             fireTableDataChanged();
         }
-        if (e.getPropertyName().equals("ThrottleFrame")) {
+        if (e.getPropertyName().equals("ThrottleFrameChanged")) {
+            fireTableDataChanged();
+        } else if (e.getPropertyName().startsWith("ThrottleFrame")) {
             fireTableStructureChanged();
         }
     }

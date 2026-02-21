@@ -71,9 +71,13 @@ class WiimoteThrottle2(Jynstrument, PropertyChangeListener, AddressListener, Wii
     
     def init(self):
         self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
-        self.addressPanel=self.getContext().getCurrentThrottleFrame().getAddressPanel();
-        self.addressPanel.addAddressListener(self) # change of throttle in Current frame
-        self.throttle = self.getContext().getCurrentThrottleFrame().getAddressPanel().getThrottle() # the throttle
+        if ( self.getContext().getCurrentThrottleFrame() != None ):
+            self.addressPanel= self.getContext().getCurrentThrottleFrame().getAddressPanel();
+            self.addressPanel.addAddressListener(self) # change of throttle in Current frame
+            self.throttle = self.getContext().getCurrentThrottleFrame().getAddressPanel().getThrottle() # the throttle
+        else:
+            self.addressPanel = None
+            self.throttle = None
         self.speedAction =  SpeedAction()  #Speed increase thread
         self.speedAction.setThrottle( self.throttle )
         self.speedTimer = Timer(valueSpeedTimerRepeat, self.speedAction ) # Very important to use swing Timer object (see Swing and multithreading doc)
@@ -223,7 +227,7 @@ class WiimoteThrottle2(Jynstrument, PropertyChangeListener, AddressListener, Wii
 #Property listener part
     def propertyChange(self, event):
         self.speedTimer.stop()                     
-        if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
+        if (event.propertyName.startswith("ThrottleFrame")) :  # Current throttle frame changed
             if event.oldValue != None :
                 event.oldValue.getAddressPanel().removeAddressListener(self)
             if event.newValue != None :
