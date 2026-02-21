@@ -17,6 +17,7 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.util.JmriJFrame;
 import jmri.util.PaperUtils;
 
@@ -786,6 +787,10 @@ public class HardcopyWriter extends Writer {
      * @param g the graphics context to unwrap
      * @return the unwrapped graphics context
      */
+    @SuppressFBWarnings(
+        value = "REC_CATCH_EXCEPTION", 
+        justification = "We need a global safety net for this background task to prevent thread death."
+    )
     private Graphics unwrapGraphicsProxy(Graphics g) {
         if (!(g instanceof Graphics2D)) {
             try {
