@@ -65,9 +65,9 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(1, 0x00 & 0xFF);
         m.setElement(2, MarklinConstants.HASHBYTE1 & 0xFF);
         m.setElement(3, MarklinConstants.HASHBYTE2 & 0xFF);
-        m.setElement(4, 0x05 & 0xFF); //five bytes;
-        //5, 6, 7, 8 Address but this is a global command
-        m.setElement(9, MarklinConstants.CMDGOSYS & 0xFF); //Turn main on 0x01
+        m.setElement(4, 0x05 & 0xFF); // DLC = 5 (five data bytes)
+        // Elements 5-8: Address bytes (0x00 for global command)
+        m.setElement(9, MarklinConstants.CMDGOSYS & 0xFF); // Data byte 0: Turn main on (0x01)
         return m;
     }
 
@@ -77,31 +77,72 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(1, 0x00 & 0xFF);
         m.setElement(2, MarklinConstants.HASHBYTE1 & 0xFF);
         m.setElement(3, MarklinConstants.HASHBYTE2 & 0xFF);
-        m.setElement(4, 0x05 & 0xFF); //five bytes;
-        //5, 6, 7, 8 Address but this is a global command
-        m.setElement(9, MarklinConstants.CMDSTOPSYS & 0xFF); //Turn main off 0x00
+        m.setElement(4, 0x05 & 0xFF); // DLC = 5 (five data bytes)
+        // Elements 5-8: Address bytes (0x00 for global command)
+        m.setElement(9, MarklinConstants.CMDSTOPSYS & 0xFF); // Data byte 0: Turn main off (0x00)
         return m;
     }
 
     /**
-     * Generate CAN BOOT command (0xB1).
+     * Generate CAN BOOT command (0x1B) for Gleisbox activation.
      * <p>
-     * This command is used to invoke the bootloader update sequence
-     * for Märklin devices. According to German language forum research,
-     * this is part of the software/bootloader command range used for
-     * firmware updates and device initialization.
-     * 
-     * @return MarklinMessage containing the CAN BOOT command
-     * @see <a href="https://www.stummiforum.de/t122854f7-M-rklin-CAN-Protokoll-x-B-commands-updates.html">Märklin CAN Protokoll 0x1B commands documentation</a>
+     * This command resets the Gleisbox/trackbox and initiates it to start
+     * passing commands to locos and accessories on the rails. Without this
+     * command on startup, the hardware does not respond to subsequent commands.
+     * This variant is used for normal operational startup of standalone
+     * Gleisbox devices when no CS2/MS2 is attached.
+     * <p>
+     * The packet uses DLC=5 with data byte 0 set to 0x11, which is the
+     * "magic value" that activates the Gleisbox for normal operations.
+     * This matches the behavior of Rocrail and the can2udp reference
+     * implementation (M_GLEISBOX_MAGIC_START_SEQUENCE).
+     *
+     * @return MarklinMessage containing the CAN BOOT activation command
+     * @see <a href="https://github.com/GBert/railroad/can2udp">can2udp reference implementation</a>
+     * @see #getCanBootloaderMode()
      */
     public static MarklinMessage getCanBoot() {
         MarklinMessage m = new MarklinMessage();
-        m.setElement(0, (0xB1 >> 7) & 0xFF);  // Command 0xB1 high bits
-        m.setElement(1, (0xB1 << 1) & 0xFF);  // Command 0xB1 low bits
+        m.setElement(0, (0x1B >> 7) & 0xFF);  // Command 0x1B high bits (encodes to 0x00)
+        m.setElement(1, (0x1B << 1) & 0xFF);  // Command 0x1B low bits (encodes to 0x36)
         m.setElement(2, MarklinConstants.HASHBYTE1 & 0xFF);
         m.setElement(3, MarklinConstants.HASHBYTE2 & 0xFF);
-        m.setElement(4, 0x00 & 0xFF); // DLC = 0 for basic boot command
-        // Elements 5-12 are left as default 0x00 for this command
+        m.setElement(4, 0x05 & 0xFF); // DLC = 5 (five data bytes)
+        // Elements 5-8: Address bytes (0x00 for broadcast)
+        m.setElement(9, 0x11 & 0xFF); // Data byte 0: Magic value 0x11 to activate Gleisbox
+        // Elements 10-12 remain as 0x00 (initialized in constructor)
+        return m;
+    }
+
+    /**
+     * Generate CAN BOOT command (0x1B) for entering bootloader mode.
+     * <p>
+     * This variant of the CAN BOOT command invokes the bootloader update
+     * sequence on Märklin devices for firmware updates. It is sent after
+     * a system reset with approximately 400ms wait time, putting the device
+     * into bootloader mode ready to receive firmware data.
+     * <p>
+     * This command uses DLC=0 (no data bytes) and should be followed by
+     * firmware data transfer packets if performing an actual firmware update.
+     * This is different from {@link #getCanBoot()} which activates the device
+     * for normal operations.
+     * <p>
+     * <strong>Note:</strong> This command is intended for firmware update
+     * operations. For normal Gleisbox activation to run trains, use
+     * {@link #getCanBoot()} instead.
+     *
+     * @return MarklinMessage containing the CAN BOOT bootloader invocation command
+     * @see <a href="https://www.stummiforum.de/t122854f7-M-rklin-CAN-Protokoll-x-B-commands-updates.html">Märklin CAN Protokoll 0x1B commands documentation</a>
+     * @see #getCanBoot()
+     */
+    public static MarklinMessage getCanBootloaderMode() {
+        MarklinMessage m = new MarklinMessage();
+        m.setElement(0, (0x1B >> 7) & 0xFF);  // Command 0x1B high bits (encodes to 0x00)
+        m.setElement(1, (0x1B << 1) & 0xFF);  // Command 0x1B low bits (encodes to 0x36)
+        m.setElement(2, MarklinConstants.HASHBYTE1 & 0xFF);
+        m.setElement(3, MarklinConstants.HASHBYTE2 & 0xFF);
+        m.setElement(4, 0x00 & 0xFF); // DLC = 0 (no data bytes - bootloader invocation)
+        // Elements 5-12 remain as 0x00 (initialized in constructor)
         return m;
     }
 
@@ -112,7 +153,7 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(1, (MarklinConstants.ACCCOMMANDSTART << 1) & 0xFF);
         m.setElement(2, MarklinConstants.HASHBYTE1 & 0xFF);
         m.setElement(3, MarklinConstants.HASHBYTE2 & 0xFF);
-        m.setElement(4, 0x06 & 0xFF); //five bytes;
+        m.setElement(4, 0x06 & 0xFF); // DLC = 6 (six data bytes)
         m.setElement(MarklinConstants.CANADDRESSBYTE1, (addr >> 24) & 0xFF);
         m.setElement(MarklinConstants.CANADDRESSBYTE2, (addr >> 16) & 0xFF);
         m.setElement(MarklinConstants.CANADDRESSBYTE3, (addr >> 8) & 0xFF);
@@ -158,7 +199,7 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(1, 0x00 & 0xFF);
         m.setElement(2, MarklinConstants.HASHBYTE1 & 0xFF);
         m.setElement(3, MarklinConstants.HASHBYTE2 & 0xFF);
-        m.setElement(4, 0x05 & 0xFF); //five bytes;
+        m.setElement(4, 0x05 & 0xFF); // DLC = 5 (five data bytes)
         m.setElement(MarklinConstants.CANADDRESSBYTE1, (addr >> 24) & 0xFF);
         m.setElement(MarklinConstants.CANADDRESSBYTE2, (addr >> 16) & 0xFF);
         m.setElement(MarklinConstants.CANADDRESSBYTE3, (addr >> 8) & 0xFF);
@@ -173,7 +214,7 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(1, 0x00 & 0xFF);
         m.setElement(2, MarklinConstants.HASHBYTE1 & 0xFF);
         m.setElement(3, MarklinConstants.HASHBYTE2 & 0xFF);
-        m.setElement(4, 0x05 & 0xFF); //five bytes;
+        m.setElement(4, 0x05 & 0xFF); // DLC = 5 (five data bytes)
         m.setElement(MarklinConstants.CANADDRESSBYTE1, (addr >> 24) & 0xFF);
         m.setElement(MarklinConstants.CANADDRESSBYTE2, (addr >> 16) & 0xFF);
         m.setElement(MarklinConstants.CANADDRESSBYTE3, (addr >> 8) & 0xFF);
@@ -250,7 +291,7 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(1, (MarklinConstants.FEECOMMANDSTART << 1) & 0xFF);
         m.setElement(2, MarklinConstants.HASHBYTE1 & 0xFF);
         m.setElement(3, MarklinConstants.HASHBYTE2 & 0xFF);
-        m.setElement(4, 0x05 & 0xFF); //five bytes;
+        m.setElement(4, 0x05 & 0xFF); // DLC = 5 (five data bytes)
         m.setElement(MarklinConstants.CANADDRESSBYTE1, (MY_UID >> 24) & 0xFF);
         m.setElement(MarklinConstants.CANADDRESSBYTE2, (MY_UID >> 16) & 0xFF);
         m.setElement(MarklinConstants.CANADDRESSBYTE3, (MY_UID >> 8) & 0xFF);
