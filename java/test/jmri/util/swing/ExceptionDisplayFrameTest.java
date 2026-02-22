@@ -4,9 +4,10 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.*;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -14,7 +15,7 @@ import org.netbeans.jemmy.operators.*;
  * @author Paul Bender Copyright (C) 2017
  */
 @Timeout(10)
-@DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
+@DisabledIfHeadless
 public class ExceptionDisplayFrameTest {
 
     @Test
@@ -68,6 +69,8 @@ public class ExceptionDisplayFrameTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
+        // Cleaning up nameless invisible frame created by creating a dialog with a null parent
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 
