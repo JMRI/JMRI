@@ -672,6 +672,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         sensor.setUserName("DummyControlSensor")
         sensor = sensors.provideSensor('IS:DSCTA:' + str(0))
         sensor.setUserName("Jdialog_closed")       # used when setting nonmodal dialogs closed
+        sensor = sensors.provideSensor('IS:DSCTB:' + str(0))
         sensor.setUserName("stoppingDistanceSet")  # used when setting stopping distances
 
         # Create the stop sensors
