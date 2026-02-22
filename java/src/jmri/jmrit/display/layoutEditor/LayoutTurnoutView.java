@@ -18,6 +18,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout.Geometry;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout.LinkType;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
+import jmri.tracktiles.TrackTile;
 import jmri.util.IntlUtilities;
 import jmri.util.MathUtil;
 import jmri.util.swing.JmriJOptionPane;
@@ -29,7 +30,7 @@ import jmri.util.swing.JmriMouseEvent;
  * @author Bob Jacobsen Copyright (c) 2020
  *
  */
-public class LayoutTurnoutView extends LayoutTrackView {
+public class LayoutTurnoutView extends LayoutTrackView implements TileSupport {
 
     public LayoutTurnoutView(@Nonnull LayoutTurnout turnout,
             @Nonnull Point2D c, double rot,
@@ -270,6 +271,36 @@ public class LayoutTurnoutView extends LayoutTrackView {
     protected jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
 
     final private LayoutTurnout turnout;
+
+
+    // TileSupport implementation
+    private TrackTile trackTile = null;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasTile() {
+        return trackTile != null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @CheckForNull
+    public TrackTile getTile() {
+        return trackTile;
+    }
+
+    /**
+     * Set the track tile for this layout turnout.
+     *
+     * @param tile the track tile to associate with this turnout, or null to remove association
+     */
+    public void setTile(@CheckForNull TrackTile tile) {
+        this.trackTile = tile;
+    }
 
     public final LayoutTurnout getLayoutTurnout() {
         return turnout;

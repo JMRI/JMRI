@@ -623,6 +623,99 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
         }
     }
 
+    @Test
+    @Tag("tracktiles")
+    public void testGetOrientationAtA() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if (layoutEditor != null) {
+            // Create anchor points at (1,1) and (6,6)
+            PositionablePoint p1 = new PositionablePoint("A1", PositionablePoint.PointType.ANCHOR, layoutEditor);
+            PositionablePointView p1v = new PositionablePointView(p1, new Point2D.Double(1.0, 1.0), layoutEditor);
+            layoutEditor.addLayoutTrack(p1, p1v);
+
+            PositionablePoint p2 = new PositionablePoint("A2", PositionablePoint.PointType.ANCHOR, layoutEditor);
+            PositionablePointView p2v = new PositionablePointView(p2, new Point2D.Double(6.0, 6.0), layoutEditor);
+            layoutEditor.addLayoutTrack(p2, p2v);
+
+            // Test straight track segment
+            TrackSegment straightSegment = new TrackSegment("TS01", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, false, layoutEditor);
+            TrackSegmentView straightView = new TrackSegmentView(straightSegment, layoutEditor);
+            layoutEditor.addLayoutTrack(straightSegment, straightView);
+
+            // Test orientation at connection point A for straight segment - should be 45° (from (1,1) to (6,6))
+            double orientationA = straightView.getOrientationAtA();
+            Assert.assertEquals("Straight segment orientation at A should be 45°", 45.0, orientationA, 1.0);
+
+            // Test circular track segment
+            TrackSegment circleSegment = new TrackSegment("TS02", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, false, layoutEditor);
+            TrackSegmentView circleView = new TrackSegmentView(circleSegment, layoutEditor);
+
+            // Configure as a circular arc
+            circleView.setArc(true);
+            circleView.setCircle(true);
+            circleView.setAngle(90.0); // 90-degree arc
+            circleView.setFlip(false); // Left curve
+            layoutEditor.addLayoutTrack(circleSegment, circleView);
+
+            // Initialize the circle geometry - this calculates the radius and sets CW
+            circleView.calculateTrackSegmentAngle();
+
+            // Test orientation at connection point A for circular segment
+            double circleOrientationA = circleView.getOrientationAtA();
+
+            // The exact value depends on the curve geometry, but it should be calculated using LayoutTileMath
+            Assert.assertTrue("Circle segment orientation at A should be calculated", !Double.isNaN(circleOrientationA));
+            Assert.assertTrue("Circle segment orientation at A should be in valid range",
+                circleOrientationA >= 0.0 && circleOrientationA < 360.0);
+        }
+    }
+
+    @Test
+    @Tag("tracktiles")
+    public void testGetOrientationAtB() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if (layoutEditor != null) {
+            // Create anchor points at (1,1) and (6,6)
+            PositionablePoint p1 = new PositionablePoint("A1", PositionablePoint.PointType.ANCHOR, layoutEditor);
+            PositionablePointView p1v = new PositionablePointView(p1, new Point2D.Double(1.0, 1.0), layoutEditor);
+            layoutEditor.addLayoutTrack(p1, p1v);
+
+            PositionablePoint p2 = new PositionablePoint("A2", PositionablePoint.PointType.ANCHOR, layoutEditor);
+            PositionablePointView p2v = new PositionablePointView(p2, new Point2D.Double(6.0, 6.0), layoutEditor);
+            layoutEditor.addLayoutTrack(p2, p2v);
+
+            // Test straight track segment
+            TrackSegment straightSegment = new TrackSegment("TS01", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, false, layoutEditor);
+            TrackSegmentView straightView = new TrackSegmentView(straightSegment, layoutEditor);
+            layoutEditor.addLayoutTrack(straightSegment, straightView);
+
+            // Test orientation at connection point B for straight segment - should be 225° (from (6,6) to (1,1))
+            double orientationB = straightView.getOrientationAtB();
+            Assert.assertEquals("Straight segment orientation at B should be 225°", 225.0, orientationB, 1.0);
+
+            // Test circular track segment
+            TrackSegment circleSegment = new TrackSegment("TS02", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, false, layoutEditor);
+            TrackSegmentView circleView = new TrackSegmentView(circleSegment, layoutEditor);
+
+            // Configure as a circular arc
+            circleView.setArc(true);
+            circleView.setCircle(true);
+            circleView.setAngle(90.0); // 90-degree arc
+            circleView.setFlip(true); // Right curve (inverted for B direction)
+            layoutEditor.addLayoutTrack(circleSegment, circleView);
+
+            // Initialize the circle geometry - this calculates the radius and sets CW
+            circleView.calculateTrackSegmentAngle();
+
+            // Test orientation at connection point B for circular segment
+            double circleOrientationB = circleView.getOrientationAtB();
+
+            // The exact value depends on the curve geometry, but it should be calculated using LayoutTileMath
+            Assert.assertTrue("Circle segment orientation at B should be calculated", !Double.isNaN(circleOrientationB));
+            Assert.assertTrue("Circle segment orientation at B should be in valid range",
+                circleOrientationB >= 0.0 && circleOrientationB < 360.0);
+        }
+    }
     private TrackSegment segment;
     private TrackSegmentView segmentView;
 

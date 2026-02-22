@@ -114,6 +114,34 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
         }
         outerBorderPanel.add(hTop3Panel);
 
+        //Row 3.5 - Tiles section (aligned below Row 4 Nodes)
+        JPanel hTop3_5Panel = new JPanel();
+        hTop3_5Panel.setLayout(new BoxLayout(hTop3_5Panel, BoxLayout.LINE_AXIS));
+
+        //Row 3.5 : Left Components - Tile selection aligned to left
+        JPanel hTop3_5Left = new JPanel(leftRowLayout);
+        hTop3_5Left.add(new JLabel(Bundle.getMessage("MakeLabel", "Tiles")));
+        hTop3_5Left.add(tileVendorLabel);
+        hTop3_5Left.add(tileVendorComboBox);
+        hTop3_5Left.add(tileFamilyLabel);
+        hTop3_5Left.add(tileFamilyComboBox);
+        hTop3_5Left.add(tileNameLabel);
+        hTop3_5Left.add(tileComboBox);
+        hTop3_5Left.add(tileCurveDirectionLabel);
+        hTop3_5Left.add(tileLeftButton);
+        hTop3_5Left.add(tileRightButton);
+        hTop3_5Left.add(turnoutThroatButton);
+        hTop3_5Left.add(turnoutNormalButton);
+        hTop3_5Left.add(turnoutThrownButton);
+        hTop3_5Left.add(turnoutAButton);
+        hTop3_5Left.add(turnoutBButton);
+        hTop3_5Left.add(turnoutCButton);
+        hTop3_5Left.add(turnoutDButton);
+        hTop3_5Panel.add(hTop3_5Left);
+        hTop3_5Panel.add(Box.createHorizontalGlue());
+
+        outerBorderPanel.add(hTop3_5Panel);
+
         //Row 4
         JPanel hTop4Panel = new JPanel();
         hTop4Panel.setLayout(new BoxLayout(hTop4Panel, BoxLayout.LINE_AXIS));
@@ -193,6 +221,24 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
 
         hTop6Panel.add(hTop6Left);
         add(hTop6Panel);
+
+        // Initialize direction button visibility based on default selection
+        updateDirectionButtons();
+
+        // Add action listeners to update direction buttons when selection changes
+        java.awt.event.ActionListener selectionListAction = (java.awt.event.ActionEvent e) -> {
+            updateDirectionButtons();
+        };
+
+        turnoutRHButton.addActionListener(selectionListAction);
+        turnoutLHButton.addActionListener(selectionListAction);
+        turnoutWYEButton.addActionListener(selectionListAction);
+        doubleXoverButton.addActionListener(selectionListAction);
+        rhXoverButton.addActionListener(selectionListAction);
+        lhXoverButton.addActionListener(selectionListAction);
+        layoutSingleSlipButton.addActionListener(selectionListAction);
+        layoutDoubleSlipButton.addActionListener(selectionListAction);
+        trackButton.addActionListener(selectionListAction);
     }   //layoutComponents
 
     //initialize logging
