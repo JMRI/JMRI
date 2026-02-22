@@ -39,7 +39,6 @@ import jmri.util.PaperUtils;
 public class HardcopyWriter extends Writer implements Printable {
 
     // instance variables
-    protected PrintJob job;
     protected PrinterJob printerJob;
     protected PageFormat pageFormat;
     protected Graphics printJobGraphics;
@@ -60,7 +59,8 @@ public class HardcopyWriter extends Writer implements Printable {
     protected int height, width;
     protected int width_including_right_margin;
     protected int headery;
-    protected int titleTop; // Points down from top of page
+    protected double titleTop; // Points down from top of page
+    protected double leftMargin;
     protected float charwidth;
     protected int lineheight;
     protected int lineascent;
@@ -181,30 +181,58 @@ public class HardcopyWriter extends Writer implements Printable {
                     pagesizePoints.height * screenResolution / 72);
         }
 
+        leftMargin = leftmargin;
+
         // skip printer selection if preview
         if (!isPreview) {
             printerJob = PrinterJob.getPrinterJob();
             printerJob.setJobName(jobname);
             printerJob.setPrintable(this);
 
-            if ("SkipDialog".equals(printerName) || printerJob.printDialog()) {
-                pageFormat = printerJob.defaultPage();
-                if (isLandscape != null) {
-                    if (isLandscape) {
-                        pageFormat.setOrientation(PageFormat.LANDSCAPE);
-                    } else {
-                        pageFormat.setOrientation(PageFormat.PORTRAIT);
-                    }
-                }
+            PageFormat pageFormat = printerJob.defaultPage();
 
-                Paper paper = pageFormat.getPaper();
-                if (pagesize != null) {
-                    paper.setSize(pagesize.width, pagesize.height);
-                    paper.setImageableArea(0, 0, pagesize.width, pagesize.height);
+            if (isLandscape != null) {
+                pageFormat.setOrientation(isLandscape ? PageFormat.LANDSCAPE : PageFormat.PORTRAIT);
+            }
+
+            if (sidesType != null) {
+                if (sidesType == SidesType.ONE_SIDED) {
+                    pageFormat.setOrientation(PageFormat.PORTRAIT);
+                } else if (sidesType == SidesType.TWO_SIDED_LONG_EDGE) {
+                    pageFormat.setOrientation(PageFormat.LANDSCAPE);
+                } else if (sidesType == SidesType.TWO_SIDED_SHORT_EDGE) {
+                    pageFormat.setOrientation(PageFormat.PORTRAIT);
                 }
+            }
+
+            if (pagesize != null) {
+                Paper paper = new Paper();
+                paper.setSize(pagesize.width, pagesize.height);
+                paper.setImageableArea(0, 0, pagesize.width, pagesize.height);
                 pageFormat.setPaper(paper);
+            } else {
+                // Use the default page size but set the imageable area to the full page size
+                Paper paper = pageFormat.getPaper();
+                paper.setImageableArea(0, 0, paper.getWidth(), paper.getHeight());
+                pageFormat.setPaper(paper);
+            }
 
-                pagesizePoints = new Dimension((int) pageFormat.getWidth(), (int) pageFormat.getHeight());
+            printerJob.setPrintable(this, pageFormat);
+
+            if ("SkipDialog".equals(printerName) || printerJob.printDialog()) {
+                PageFormat updatedPf = printerJob.validatePage(pageFormat);
+
+                double widthPts = updatedPf.getPaper().getWidth();
+                double heightPts = updatedPf.getPaper().getHeight();
+                int orientation = updatedPf.getOrientation();
+
+                if (orientation == PageFormat.LANDSCAPE) {
+                    double temp = widthPts;
+                    widthPts = heightPts;
+                    heightPts = temp;
+                }
+
+                pagesizePoints = new Dimension((int) Math.round(widthPts), (int) Math.round(heightPts));
                 // For PrinterJob, we often work in points directly.
                 // We'll calculate pagesizePixels for compatibility if needed.
                 pagesizePixels = new Dimension((int) (pagesizePoints.width * getScreenResolution() / 72.0),
@@ -300,11 +328,7 @@ public class HardcopyWriter extends Writer implements Printable {
     }
 
     private void record(PrintCommand cmd) {
-        if (currentPageCommands != null) {
-            currentPageCommands.add(cmd);
-        } else {
-            log.info("Not adding {} to page commands", cmd);
-        }
+        currentPageCommands.add(cmd);
         if (page instanceof Graphics2D) {
             cmd.execute((Graphics2D) page);
         }
@@ -948,15 +972,12 @@ public class HardcopyWriter extends Writer implements Printable {
      * Internal method beings a new page and prints the header method modified
      * by Dennis Miller to add preview capability
      */
-    protected void newpage() {
+    private void newpage() {
         pagenum++;
         v_pos = 0;
         currentPageCommands = new ArrayList<>();
-        pageCommands.add(currentPageCommands);
 
-        if (page == null) {
-            page = getGraphics();
-        }
+        page = getGraphics();
 
         if (isPreview) {
             previewImage = previewPanel.createImage(pagesizePixels.width, pagesizePixels.height);
@@ -971,9 +992,8 @@ public class HardcopyWriter extends Writer implements Printable {
                     (int) (pagesizePixels.height * 72.0 / getScreenResolution()));
             page.setColor(color);
         } else {
-            if (page == null) {
-                page = getGraphics();
-            }
+            // We only need this is non-preview mode. 
+            pageCommands.add(currentPageCommands);
         }
 
         if (printHeader) {
@@ -1514,12 +1534,51 @@ public class HardcopyWriter extends Writer implements Printable {
             return NO_SUCH_PAGE;
         }
 
+        if (!(g instanceof Graphics2D)) {
+            throw new PrinterException("Graphics context is not a Graphics2D object: " + g.getClass().getName());
+        }
+
         Graphics2D g2d = (Graphics2D) g;
+
+        if (false) {
+            // draw calibration grid
+            // DEBUG: Print these to your console
+            log.info("--- Page Format Debug ---");
+            log.info("Orientation: {}", pf.getOrientation()); // 0 is Landscape
+            log.info("Paper Width: {}", pf.getPaper().getWidth());
+            log.info("Imageable X: {}", pf.getImageableX());
+            log.info("Imageable Y: {}", pf.getImageableY());
+            log.info("Imageable Width: {}", pf.getImageableWidth());
+            log.info("Imageable Height: {}", pf.getImageableHeight());
+
+            // DRAW THE IMAGEABLE BORDER (Red)
+            // If your 40pt shift is here, the Red box will be 40pts from the Blue box
+            g2d.setColor(Color.RED);
+            g2d.drawRect((int) pf.getImageableX(), (int) pf.getImageableY(),
+                    (int) pf.getImageableWidth() - 1, (int) pf.getImageableHeight() - 1);
+
+            // DRAW A COORDINATE GRID
+            g2d.setColor(Color.LIGHT_GRAY);
+            for (int i = 0; i < pf.getWidth(); i += 36) {
+                g2d.drawLine(i, 0, i, (int) pf.getHeight()); // Vertical lines
+            }
+            log.info("print: {} {} {} {} {}",
+                    pageIndex,
+                    pf.getImageableX(),
+                    pf.getImageableY(),
+                    pf.getWidth(),
+                    pf.getHeight());
+        }
         // We already include the margins, but we need to worry about the page header.
         double yOffset = pf.getImageableY();
         if (yOffset > titleTop) {
             // We have to translate down to make sure that the header is on the page
             g2d.translate(0, yOffset - titleTop);
+        }
+        double xOffset = pf.getImageableX();
+        if (xOffset > leftMargin) {
+            // We have to translate right to make sure that the left margin is printable.
+            g2d.translate(xOffset - leftMargin, 0);
         }
         //g2d.translate(pf.getImageableX(), pf.getImageableY());
 
