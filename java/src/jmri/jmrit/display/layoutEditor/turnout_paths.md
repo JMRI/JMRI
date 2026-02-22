@@ -28,16 +28,16 @@ A ==**== B       A ==**== B
 
 ```
    Wye
-      C
+      B
      //
 A ==**
      \\
-      B
+      C
 ```
 
 **Valid Routes:**
-- **A-C** (ROUTE_AC) - throat to left leg route (thrown)
-- **A-B** (ROUTE_AB) - throat to right leg route (closed)
+- **A-B** (ROUTE_AB) - throat to left leg (thrown)
+- **A-C** (ROUTE_AC) - throat to right leg (closed)
 
 *Note: Both B and C are diverging routes; no "straight through" path exists.*
 
