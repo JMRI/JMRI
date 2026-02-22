@@ -60,6 +60,7 @@ public class HardcopyWriter extends Writer implements Printable {
     protected int height, width;
     protected int width_including_right_margin;
     protected int headery;
+    protected int titleTop; // Points down from top of page
     protected float charwidth;
     protected int lineheight;
     protected int lineascent;
@@ -248,6 +249,7 @@ public class HardcopyWriter extends Writer implements Printable {
         headerfont = new Font("SansSerif", Font.ITALIC, useFontSize);
         headermetrics = frame.getFontMetrics(headerfont);
         headery = y0 - (int) (0.125 * 72) - headermetrics.getHeight() + headermetrics.getAscent();
+        titleTop = headery - headermetrics.getAscent();
 
         // compute date/time for header
         DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
@@ -300,6 +302,8 @@ public class HardcopyWriter extends Writer implements Printable {
     private void record(PrintCommand cmd) {
         if (currentPageCommands != null) {
             currentPageCommands.add(cmd);
+        } else {
+            log.info("Not adding {} to page commands", cmd);
         }
         if (page instanceof Graphics2D) {
             cmd.execute((Graphics2D) page);
@@ -861,7 +865,7 @@ public class HardcopyWriter extends Writer implements Printable {
      */
     public void pageBreak() {
         synchronized (this.lock) {
-            if (isPreview) {
+            if (isPreview && previewImage != null) {
                 pageImages.addElement(previewImage);
             }
             if (page != null) {
@@ -869,6 +873,7 @@ public class HardcopyWriter extends Writer implements Printable {
             }
             page = null;
             currentPageCommands = null;
+            previewImage = null;
         }
     }
 
@@ -883,8 +888,6 @@ public class HardcopyWriter extends Writer implements Printable {
             return null;
         }
         int chars_per_line = (int) (width / charwidth);
-        log.info("Returning {} chars_per_line = {} = {} / {}", isPreview ? "preview" : "print", chars_per_line, width,
-                charwidth);
         return chars_per_line;
     }
 
@@ -1109,15 +1112,15 @@ public class HardcopyWriter extends Writer implements Printable {
     }
 
     /**
-     * Write an image to the output at the current position, scaled to the required size.
-     * More importantly, it does not save the image object in memory, but will re-read it
-     * from the disk when it needs to be used. This is needed if there are a lot of 
-     * large images in a printout.
+     * Write an image to the output at the current position, scaled to the
+     * required size. More importantly, it does not save the image object in
+     * memory, but will re-read it from the disk when it needs to be used. This
+     * is needed if there are a lot of large images in a printout.
      * 
-     * @param icon The ImageIconWrapper object to display
+     * @param icon         The ImageIconWrapper object to display
      * @param requiredSize The size in points to display the image
      * @return The actual size rendered
-    */
+     */
     public Dimension writeSpecificSize(ImageIconWrapper icon, Dimension requiredSize) {
         ensureOnPage();
 
@@ -1140,7 +1143,7 @@ public class HardcopyWriter extends Writer implements Printable {
             record(new DrawImageIconFile(icon.getPathName(), x, y, d.width, d.height));
         }
         return d;
-   }     
+    }
 
     /**
      * Write a graphic to the printout at a specific size (in points)
@@ -1175,7 +1178,6 @@ public class HardcopyWriter extends Writer implements Printable {
 
         int x = x0 + width - d.width;
         int y = y0 + v_pos + lineascent;
-
 
         record(new DrawImage(c, x, y, d.width, d.height));
         return d;
@@ -1515,12 +1517,11 @@ public class HardcopyWriter extends Writer implements Printable {
         Graphics2D g2d = (Graphics2D) g;
         // We already include the margins, but we need to worry about the page header.
         double yOffset = pf.getImageableY();
-        if (yOffset > headery) {
+        if (yOffset > titleTop) {
             // We have to translate down to make sure that the header is on the page
-            g2d.translate(0, yOffset - headery);
+            g2d.translate(0, yOffset - titleTop);
         }
         //g2d.translate(pf.getImageableX(), pf.getImageableY());
-        // pf.getImageableWidth() and pf.getImageableHeight() are in points
 
         // Setup initial state
         g2d.setFont(font);
@@ -1583,7 +1584,7 @@ public class HardcopyWriter extends Writer implements Printable {
         }
 
         @Override
-        public void execute(Graphics2D g) { 
+        public void execute(Graphics2D g) {
             g.drawImage(img, x, y, width, height, null);
         }
     }
