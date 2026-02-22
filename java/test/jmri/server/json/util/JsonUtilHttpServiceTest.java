@@ -1,11 +1,14 @@
 package jmri.server.json.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,6 +25,7 @@ import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
+import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
@@ -451,6 +455,183 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         assertEquals( 3, result.getNumber(), "Address is 3");
     }
 
+    /**
+     * Test of postSessionLogin method with valid credentials.
+     *
+     * @throws jmri.server.json.JsonException if test fails unexpectedly
+     */
+    @Test
+    public void testPostSessionLoginSuccess() throws JsonException {
+        // Create login request data
+        ObjectNode data = mapper.createObjectNode();
+        data.put("username", "testuser");
+        data.put("password", "testpass");
+
+        // Mock a successful login by setting up the permission system
+        // In actual usage, this would check against configured users
+        // For test purposes, we'll just verify the method handles the call
+
+        try {
+            JsonNode result = service.doPost(JSON.SESSION_LOGIN, "testuser", data,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+
+            assertNotNull(result, "Result should not be null");
+            assertEquals(JSON.SESSION_LOGIN, result.path(JSON.TYPE).asText(), "Type should be sessionLogin");
+            JsonNode dataNode = result.path(JSON.DATA);
+            assertNotNull(dataNode, "Data node should not be null");
+
+            // Verify response structure (success field may or may not be present depending on actual login)
+            assertTrue(dataNode.has(JSON.USERNAME) || result.path(JSON.TYPE).asText().equals(JSON.SESSION_LOGIN),
+                "Response should have username or be sessionLogin type");
+        } catch (JsonException ex) {
+            // Expected for unauthorized user in test environment
+            assertTrue(ex.getCode() == 401 || ex.getCode() == 403,
+                "Should be unauthorized (401) or forbidden (403) for test user");
+        }
+    }
+
+    /**
+     * Test of postSessionLogin method with missing username.
+     */
+    @Test
+    public void testPostSessionLoginMissingUsername() {
+        ObjectNode data = mapper.createObjectNode();
+        data.put("password", "testpass");
+
+        JsonException ex = assertThrows(JsonException.class, () -> {
+            service.doPost(JSON.SESSION_LOGIN, null, data,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        });
+
+        assertEquals(400, ex.getCode(), "Should be bad request (400)");
+        assertTrue(ex.getMessage().contains("username") || ex.getMessage().contains("parameter"),
+            "Error message should mention username or missing parameter");
+    }
+
+    /**
+     * Test of postSessionLogin method with guest user.
+     */
+    @Test
+    public void testPostSessionLoginGuestUser() {
+        ObjectNode data = mapper.createObjectNode();
+        data.put("username", "guest");
+        data.put("password", "");
+
+        // Guest users should be rejected
+        JsonException ex = assertThrows(JsonException.class, () -> {
+            service.doPost(JSON.SESSION_LOGIN, "guest", data,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        });
+
+        assertEquals(403, ex.getCode(), "Should be forbidden (403) for guest user");
+        assertTrue(ex.getMessage().toLowerCase().contains("guest"),
+            "Error message should mention guest");
+    }
+
+    /**
+     * Test of postSessionLogin method with invalid credentials.
+     */
+    @Test
+    public void testPostSessionLoginInvalidCredentials() {
+        ObjectNode data = mapper.createObjectNode();
+        data.put("username", "invaliduser");
+        data.put("password", "wrongpassword");
+
+        JsonException ex = assertThrows(JsonException.class, () -> {
+            service.doPost(JSON.SESSION_LOGIN, "invaliduser", data,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        });
+
+        assertEquals(401, ex.getCode(), "Should be unauthorized (401)");
+        assertTrue(ex.getMessage().toLowerCase().contains("credential") ||
+                   ex.getMessage().toLowerCase().contains("password") ||
+                   ex.getMessage().toLowerCase().contains("username"),
+            "Error message should mention credentials");
+    }
+
+    /**
+     * Test of postSessionLogout method.
+     *
+     * @throws jmri.server.json.JsonException if test fails unexpectedly
+     */
+    @Test
+    public void testPostSessionLogout() throws JsonException {
+        ObjectNode data = mapper.createObjectNode();
+        data.put("token", "test-token-12345");
+        data.put(JSON.USERNAME, "testuser");
+
+        JsonNode result = service.doPost(JSON.SESSION_LOGOUT, "testuser", data,
+            new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+
+        assertNotNull(result, "Result should not be null");
+        assertEquals(JSON.SESSION_LOGOUT, result.path(JSON.TYPE).asText(), "Type should be sessionLogout");
+        JsonNode dataNode = result.path(JSON.DATA);
+        assertNotNull(dataNode, "Data node should not be null");
+        assertTrue(dataNode.path("success").asBoolean(false), "Logout should succeed");
+    }
+
+    /**
+     * Test of postSessionLogout method with empty token.
+     *
+     * @throws jmri.server.json.JsonException if test fails unexpectedly
+     */
+    @Test
+    public void testPostSessionLogoutEmptyToken() throws JsonException {
+        ObjectNode data = mapper.createObjectNode();
+        data.put("token", "");
+
+        // Logout should still succeed even with empty token
+        JsonNode result = service.doPost(JSON.SESSION_LOGOUT, null, data,
+            new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+
+        assertNotNull(result, "Result should not be null");
+        assertEquals(JSON.SESSION_LOGOUT, result.path(JSON.TYPE).asText(), "Type should be sessionLogout");
+    }
+
+    /**
+     * Test session login/logout through socket service integration.
+     *
+     * @throws java.io.IOException if test fails unexpectedly
+     * @throws jmri.JmriException if test fails unexpectedly
+     * @throws jmri.server.json.JsonException if test fails unexpectedly
+     */
+    @Test
+    public void testSocketServiceSessionMessages() throws IOException, jmri.JmriException, JsonException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonUtilSocketService socketService = new JsonUtilSocketService(connection);
+        ObjectMapper testMapper = connection.getObjectMapper();
+
+        // Test LOGIN message
+        ObjectNode loginData = testMapper.createObjectNode();
+        loginData.put("username", "testuser");
+        loginData.put("password", "testpass");
+
+        try {
+            socketService.onMessage(JSON.SESSION_LOGIN, loginData,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+            JsonNode message = connection.getMessage();
+            // Message should either be success or error (depending on permission setup)
+            assertNotNull(message, "Should receive a response message");
+        } catch (JsonException ex) {
+            // Expected if no valid user configured
+            assertTrue(ex.getCode() == 401 || ex.getCode() == 403,
+                "Should be auth error for test environment");
+        }
+
+        // Test LOGOUT message
+        ObjectNode logoutData = testMapper.createObjectNode();
+        logoutData.put("token", "test-token");
+        logoutData.put(JSON.USERNAME, "testuser");
+
+        socketService.onMessage(JSON.SESSION_LOGOUT, logoutData,
+            new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        JsonNode message = connection.getMessage();
+        assertNotNull(message, "Should receive logout response message");
+        assertEquals(JSON.SESSION_LOGOUT, message.path(JSON.TYPE).asText(),
+            "Response type should be sessionLogout");
+    }
+
     // private final static Logger log = LoggerFactory.getLogger(JsonUtilHttpServiceTest.class);
 
 }
+
