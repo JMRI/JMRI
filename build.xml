@@ -1246,9 +1246,6 @@
             <!-- This next is for DarkLAF -->
             <jvmarg value="--add-exports"/>
             <jvmarg value="java.desktop/sun.awt=ALL-UNNAMED"/>
-	    <!-- This next is for HardcopyWriter -->
-            <jvmarg value="--add-exports"/>
-            <jvmarg value="java.desktop/sun.print=ALL-UNNAMED"/>
 
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
@@ -1279,13 +1276,6 @@
             <sysproperty key="java.library.path"
                          path=".:${arch.lib.path}:${libdir}"/>
             <sysproperty key="purejavacomm.loglevel" value="${purejavacomm.loglevel}"/>
-
-            <!-- This next is for DarkLAF -->
-            <jvmarg value="--add-exports"/>
-            <jvmarg value="java.desktop/sun.awt=ALL-UNNAMED"/>
-	    <!-- This next is for HardcopyWriter -->
-            <jvmarg value="--add-exports"/>
-            <jvmarg value="java.desktop/sun.print=ALL-UNNAMED"/>
 
             <jvmarg value="-Xdebug"/>
             <jvmarg value="-Xrunjdwp:transport=dt_socket,server=${jdpa.server},suspend=${jdpa.suspend},address=${jpda.address}"/>
