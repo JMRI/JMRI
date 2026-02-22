@@ -522,8 +522,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - for ant builds
 - Downloaded from Maven Central 2025-09-25
 
-##### mockito-core mockito-junit-jupiter
-- version 5.20.0
+##### mockito-core
+- version 5.21.0
 
 ##### OpenIDE Utilities
 - org-openide-util-lookup-RELEASE150.jar
@@ -546,11 +546,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 ##### system-rules-1.16.0.jar
 - Handle rules for testing calls to java.System methods
-
-##### springframework-*
-- version 5.1.14
-- from https://search.maven.org/search?q=g:org.springframework%20v:5.1.14.RELEASE
-- Mocks Java Servlet requests and responses
 
 ##### jcip-annotations-1.0.jar
 - From Java Concurrency In Practice (http://jcip.net)
@@ -636,3 +631,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 #### SpotBugs static analysis
 - used in pom.xml
+
+##### springframework-*
+- version 5.1.14
+- from https://search.maven.org/search?q=g:org.springframework%20v:5.1.14.RELEASE
+- Mocks Java Servlet requests and responses
+- No longer used as of JMRI 5.15.5

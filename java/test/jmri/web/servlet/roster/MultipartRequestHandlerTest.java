@@ -1,13 +1,16 @@
 package jmri.web.servlet.roster;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
-import org.springframework.mock.web.MockHttpServletRequest;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  *
@@ -20,8 +23,8 @@ public class MultipartRequestHandlerTest {
     @Test
     public void testHandlerUpload() throws IOException, ServletException {
 
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addParameter("fileReplace", "false");
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        when(request.getParameter("fileReplace")).thenReturn("false");
         Assertions.assertNotNull(MultipartRequestHandler.uploadByJavaServletAPI(request));
 
     }

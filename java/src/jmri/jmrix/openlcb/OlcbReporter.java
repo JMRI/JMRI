@@ -1,6 +1,8 @@
 package jmri.jmrix.openlcb;
 
+import jmri.CollectingReporter;
 import jmri.DccLocoAddress;
+import jmri.IdTag;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.RailCom;
@@ -18,6 +20,10 @@ import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.ProducerIdentifiedMessage;
 import org.openlcb.implementations.EventTable;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -29,7 +35,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
  * @author Balazs Racz Copyright (C) 2023
  * @since 5.3.5
  */
-public final class OlcbReporter extends AbstractIdTagReporter {
+public final class OlcbReporter extends AbstractIdTagReporter implements CollectingReporter {
 
     /// How many bits does a reporter event range contain.
     private static final int REPORTER_BIT_COUNT = 16;
@@ -60,6 +66,8 @@ public final class OlcbReporter extends AbstractIdTagReporter {
 
     EventTable.EventTableEntryHolder baseEventTableEntryHolder = null;
 
+    Set<Object> entrySet = new HashSet<>();
+    
     public OlcbReporter(String prefix, String address, CanSystemConnectionMemo memo) {
         super(prefix + "R" + address);
         this.memo = memo;
@@ -166,6 +174,15 @@ public final class OlcbReporter extends AbstractIdTagReporter {
     }
 
     /**
+     *  {@inheritDoc}
+     */
+    @Override
+    @CheckReturnValue
+    public Collection<Object> getCollection() {
+        return entrySet;
+    }
+    
+    /**
      * {@inheritDoc}
      *
      * Sorts by decoded EventID(s)
@@ -196,17 +213,37 @@ public final class OlcbReporter extends AbstractIdTagReporter {
     }
     int lastLoco = -1;
 
+    @Override
+    public void notify(IdTag tag) {
+        log.trace("notified {} with tag {}", this, tag);
+        if (tag == null ) {
+        
+            if (log.isTraceEnabled()) {
+                for (var id : entrySet) {
+                    log.trace("  tag {} where seen {}", id, ((IdTag)id).getWhereLastSeen());
+                }
+            }
+        
+            var copySet = new HashSet<Object>(entrySet); // to avoid concurrent modification
+            copySet.stream().filter(id -> ((IdTag)id).getWhereLastSeen()!=this).forEach(entrySet::remove);
+        }
+        super.notify(tag);
+    }
+    
     /**
      * Callback from the message decoder when a relevant event message arrives.
      * @param reportBits The bottom 14 bits of the event report. (THe top bits are already checked against our base event number)
      * @param isEntry true for entry, false for exit
      */
     private void handleReport(long reportBits, boolean isEntry) {
+        log.trace("handleReport {} with isEntry {}", this, isEntry);
+        // Remove any tags held here if they've been moved to another reporter
+        var copySet = new HashSet<Object>(entrySet); // to avoid concurrent modification
+        copySet.stream().filter(id -> ((IdTag)id).getWhereLastSeen()!=this).forEach(entrySet::remove);
+
         // The extra notify with null is necessary to clear past notifications even if we have a new report.
         notify(null);
-        if (!isEntry) {
-            return; // having cleared the reporter
-        }
+        
         DccLocoAddress.Protocol protocol;
         boolean isConsist;
         long addressBits = reportBits & ADDRESS_MASK;
@@ -232,7 +269,9 @@ public final class OlcbReporter extends AbstractIdTagReporter {
         
         RailCom.Direction direction;
         
-        switch ( (int)(reportBits >> 14) & 0x3) {
+        int directionBits = (int)(reportBits >> 14) & 0x3;
+        
+        switch ( directionBits ) {
             case REPORTER_UNOCCUPIED_EXIT:
                 direction = RailCom.Direction.UNKNOWN;
                 break;
@@ -247,8 +286,27 @@ public final class OlcbReporter extends AbstractIdTagReporter {
                 direction = RailCom.Direction.UNKNOWN;
                 break;
         }
-        
+
+        // address 0x3800 is a special case:  Arrival means reporter is unoccupied, departure is ignored
+        if (addressBits == 0x3800) {
+            if (directionBits == REPORTER_UNOCCUPIED_EXIT) {
+                return;
+            } else {
+                log.trace("{} clearing collection", this);
+                entrySet.clear();
+                return; // having cleared the reporter earlier
+            }
+        }
+
         RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + address);
+
+        if (!isEntry || directionBits == REPORTER_UNOCCUPIED_EXIT) {
+            log.trace("{} removes tag {}", this,  tag);
+            entrySet.remove(tag);
+            return; // having cleared the reporter earlier
+        }
+        
+        entrySet.add(tag);
         tag.setOrientation(RailCom.Orientation.UNKNOWN);
         tag.setDirection(direction);
         tag.setDccAddress(new DccLocoAddress(address, protocol, isConsist));

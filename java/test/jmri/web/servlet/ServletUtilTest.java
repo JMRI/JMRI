@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
+import jmri.util.web.MockServletExchange;
 import jmri.web.server.WebServerPreferences;
 
 import org.junit.jupiter.api.*;
-import org.springframework.mock.web.MockHttpServletResponse;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -43,15 +43,16 @@ public class ServletUtilTest {
     @Test
     public void testSetNonCachingHeaders() {
         // create a ServletUtil instance
-        HttpServletResponse response = new MockHttpServletResponse();
         ServletUtil instance = new ServletUtil();
-        // set the headers for a response
+        MockServletExchange exchange = new MockServletExchange("GET", "/test");
+        HttpServletResponse response = exchange.getResponse();
+
         Date now = instance.setNonCachingHeaders(response);
+
         // get a date string matching the date in the response
         // Java has no standard method to get an RFC 7232 formatted date
-        HttpServletResponse template = new MockHttpServletResponse();
-        template.setDateHeader("Date", now.getTime());
-        String date = template.getHeader("Date");
+        String date = MockServletExchange.getRfc7232formatHttpDate(now.getTime());
+
         // verify instance has expected header values
         assertEquals(date, response.getHeader("Date"));
         assertEquals(date, response.getHeader("Last-Modified"));

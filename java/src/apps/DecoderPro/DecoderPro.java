@@ -16,7 +16,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.roster.swing.RosterFrameAction;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction;
-import jmri.util.JmriJFrame;
 
 /**
  * The JMRI application for configuring DCC decoders.
@@ -136,6 +135,9 @@ public class DecoderPro extends Apps {
         }
     }
 
+// main() method is commented out since it's probably not used anymore
+// See: https://jmri-developers.groups.io/g/jmri/message/12240
+/*
     // Main entry point
     public static void main(String args[]) {
 
@@ -155,6 +157,6 @@ public class DecoderPro extends Apps {
         log.debug("main initialization done");
         splash(false);
     }
-
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DecoderPro.class);
+*/
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DecoderPro.class);
 }
