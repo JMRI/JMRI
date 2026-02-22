@@ -1,8 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.geom.Point2D;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Tag;
+import jmri.util.JUnitUtil;
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -14,6 +14,16 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LayoutTileMathTest {
 
     private static final double TOLERANCE = 0.001; // 1mm tolerance for floating point comparisons
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
     /**
      * Test that 12 consecutive 30-degree curve segments with the same curveFace
