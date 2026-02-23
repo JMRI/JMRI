@@ -1540,35 +1540,6 @@ public class HardcopyWriter extends Writer implements Printable {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        if (false) {
-            // draw calibration grid
-            // DEBUG: Print these to your console
-            log.info("--- Page Format Debug ---");
-            log.info("Orientation: {}", pf.getOrientation()); // 0 is Landscape
-            log.info("Paper Width: {}", pf.getPaper().getWidth());
-            log.info("Imageable X: {}", pf.getImageableX());
-            log.info("Imageable Y: {}", pf.getImageableY());
-            log.info("Imageable Width: {}", pf.getImageableWidth());
-            log.info("Imageable Height: {}", pf.getImageableHeight());
-
-            // DRAW THE IMAGEABLE BORDER (Red)
-            // If your 40pt shift is here, the Red box will be 40pts from the Blue box
-            g2d.setColor(Color.RED);
-            g2d.drawRect((int) pf.getImageableX(), (int) pf.getImageableY(),
-                    (int) pf.getImageableWidth() - 1, (int) pf.getImageableHeight() - 1);
-
-            // DRAW A COORDINATE GRID
-            g2d.setColor(Color.LIGHT_GRAY);
-            for (int i = 0; i < pf.getWidth(); i += 36) {
-                g2d.drawLine(i, 0, i, (int) pf.getHeight()); // Vertical lines
-            }
-            log.info("print: {} {} {} {} {}",
-                    pageIndex,
-                    pf.getImageableX(),
-                    pf.getImageableY(),
-                    pf.getWidth(),
-                    pf.getHeight());
-        }
         // We already include the margins, but we need to worry about the page header.
         double yOffset = pf.getImageableY();
         if (yOffset > titleTop) {
