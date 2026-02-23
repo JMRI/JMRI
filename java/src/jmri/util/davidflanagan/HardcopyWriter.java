@@ -1,17 +1,23 @@
 package jmri.util.davidflanagan;
 
 import java.awt.*;
-import java.awt.JobAttributes.DefaultSelectionType;
 import java.awt.JobAttributes.SidesType;
 import java.awt.event.ActionEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.awt.print.*;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import java.util.TimeZone;
+import java.util.Date;
+import java.util.MissingResourceException;
+import java.util.Collection;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -30,10 +36,11 @@ import jmri.util.PaperUtils;
  * @author Dennis Miller
  * @author Philip Gladstone
  */
-public class HardcopyWriter extends Writer {
+public class HardcopyWriter extends Writer implements Printable {
 
     // instance variables
-    protected PrintJob job;
+    protected PrinterJob printerJob;
+    protected PageFormat pageFormat;
     protected Graphics printJobGraphics;
     protected Graphics page;
     protected String jobname;
@@ -52,14 +59,14 @@ public class HardcopyWriter extends Writer {
     protected int height, width;
     protected int width_including_right_margin;
     protected int headery;
+    protected double titleTop; // Points down from top of page
+    protected double leftMargin;
     protected float charwidth;
     protected int lineheight;
     protected int lineascent;
-    protected int chars_per_line;
     protected int v_pos = 0; // The offset of the current line from the top margin.
     protected int max_v_pos = 0; // The maximum offset of the current line from the top margin.
     protected int pagenum = 0;
-    protected int[][] prPages = {{1, Integer.MAX_VALUE}};
     protected Color color = Color.black;
     protected boolean printHeader = true;
 
@@ -83,12 +90,24 @@ public class HardcopyWriter extends Writer {
     protected double pixelScale = 1;
     protected Integer screenResolution;
 
+    protected List<List<PrintCommand>> pageCommands = new ArrayList<>();
+    protected List<PrintCommand> currentPageCommands;
+
     // save state between invocations of write()
     private boolean last_char_was_return = false;
 
     // Job and Page attributes
     JobAttributes jobAttributes = new JobAttributes();
     PageAttributes pageAttributes = new PageAttributes();
+
+    /**
+     * Get the list of commands for the whole document.
+     * 
+     * @return the list of commands for the document
+     */
+    public List<List<PrintCommand>> getPageCommands() {
+        return pageCommands;
+    }
 
     // constructor modified to add default printer name, page orientation, print header, print duplex, and page size
     // All length parameters are in points. 
@@ -142,26 +161,8 @@ public class HardcopyWriter extends Writer {
             this.printHeader = isPrintHeader;
         }
 
-        // set default print name
-        jobAttributes.setPrinter(printerName);
-
-        if (sidesType != null) {
-            jobAttributes.setSides(sidesType);
-        }
-        if (isLandscape != null) {
-            if (isLandscape) {
-                pageAttributes.setOrientationRequested(PageAttributes.OrientationRequestedType.LANDSCAPE);
-            } else {
-                pageAttributes.setOrientationRequested(PageAttributes.OrientationRequestedType.PORTRAIT);
-            }
-        }
-
         this.isPreview = isPreview;
         this.frame = frame;
-
-        // set default to color. 
-        // ISSUE: Ought this to be dependent on printer capabilities?
-        pageAttributes.setColor(PageAttributes.ColorType.COLOR);
 
         // Get the screen resolution and cache it. This also allows us to override
         // the default resolution for testing purposes.
@@ -180,32 +181,68 @@ public class HardcopyWriter extends Writer {
                     pagesizePoints.height * screenResolution / 72);
         }
 
+        leftMargin = leftmargin;
+
         // skip printer selection if preview
         if (!isPreview) {
-            Toolkit toolkit = frame.getToolkit();
+            printerJob = PrinterJob.getPrinterJob();
+            printerJob.setJobName(jobname);
+            printerJob.setPrintable(this);
 
-            PaperUtils.syncPageAttributesToPrinter(pageAttributes);
+            PageFormat pageFormat = printerJob.defaultPage();
 
-            jobAttributes.setDialog(JobAttributes.DialogType.NATIVE);
+            if (isLandscape != null) {
+                pageFormat.setOrientation(isLandscape ? PageFormat.LANDSCAPE : PageFormat.PORTRAIT);
+            }
 
-            job = toolkit.getPrintJob(frame, jobname, jobAttributes, pageAttributes);
+            if (sidesType != null) {
+                if (sidesType == SidesType.ONE_SIDED) {
+                    pageFormat.setOrientation(PageFormat.PORTRAIT);
+                } else if (sidesType == SidesType.TWO_SIDED_LONG_EDGE) {
+                    pageFormat.setOrientation(PageFormat.LANDSCAPE);
+                } else if (sidesType == SidesType.TWO_SIDED_SHORT_EDGE) {
+                    pageFormat.setOrientation(PageFormat.PORTRAIT);
+                }
+            }
 
-            if (job == null) {
+            if (pagesize != null) {
+                Paper paper = new Paper();
+                paper.setSize(pagesize.width, pagesize.height);
+                paper.setImageableArea(0, 0, pagesize.width, pagesize.height);
+                pageFormat.setPaper(paper);
+            } else {
+                // Use the default page size but set the imageable area to the full page size
+                Paper paper = pageFormat.getPaper();
+                paper.setImageableArea(0, 0, paper.getWidth(), paper.getHeight());
+                pageFormat.setPaper(paper);
+            }
+
+            printerJob.setPrintable(this, pageFormat);
+
+            if ("SkipDialog".equals(printerName) || printerJob.printDialog()) {
+                PageFormat updatedPf = printerJob.validatePage(pageFormat);
+
+                double widthPts = updatedPf.getPaper().getWidth();
+                double heightPts = updatedPf.getPaper().getHeight();
+                int orientation = updatedPf.getOrientation();
+
+                if (orientation == PageFormat.LANDSCAPE) {
+                    double temp = widthPts;
+                    widthPts = heightPts;
+                    heightPts = temp;
+                }
+
+                pagesizePoints = new Dimension((int) Math.round(widthPts), (int) Math.round(heightPts));
+                // For PrinterJob, we often work in points directly.
+                // We'll calculate pagesizePixels for compatibility if needed.
+                pagesizePixels = new Dimension((int) (pagesizePoints.width * getScreenResolution() / 72.0),
+                        (int) (pagesizePoints.height * getScreenResolution() / 72.0));
+
+            } else {
                 throw new PrintCanceledException("User cancelled print request");
             }
-
-            pagesizePixels = job.getPageDimension();
-            int printerDpi = job.getPageResolution();
-            pagesizePoints =
-                    new Dimension((72 * pagesizePixels.width) / printerDpi, (72 * pagesizePixels.height) / printerDpi);
-
-            // determine if user selected a range of pages to print out, note that page becomes null if range
-            // selected is less than the total number of pages, that's the reason for the page null checks
-            if (jobAttributes.getDefaultSelection().equals(DefaultSelectionType.RANGE)) {
-                prPages = jobAttributes.getPageRanges();
-            }
         } else {
-            if (pageAttributes.getOrientationRequested().equals(PageAttributes.OrientationRequestedType.LANDSCAPE)) {
+            if (isLandscape != null && isLandscape) {
                 pagesizePoints = new Dimension(pagesizePoints.height, pagesizePoints.width);
                 pagesizePixels = new Dimension(pagesizePixels.height, pagesizePixels.width);
             }
@@ -233,20 +270,14 @@ public class HardcopyWriter extends Writer {
 
         // get body font and font size
         font = new Font(useFontName, useFontStyle, useFontSize);
-        metrics = frame.getFontMetrics(font);
-        lineheight = metrics.getHeight();
-        lineascent = metrics.getAscent();
-        Rectangle2D bounds = metrics.getStringBounds("m".repeat(100), g);
-        charwidth = (float) (bounds.getWidth() / 100.0);
-
-        // compute lines and columns within margins
-        // ISSUE: I really don't want to expose chars_per_line 
-        chars_per_line = (int) (width / charwidth);
+        g.setFont(font);
+        refreshMetrics(g);
 
         // header font info
         headerfont = new Font("SansSerif", Font.ITALIC, useFontSize);
         headermetrics = frame.getFontMetrics(headerfont);
         headery = y0 - (int) (0.125 * 72) - headermetrics.getHeight() + headermetrics.getAscent();
+        titleTop = headery - headermetrics.getAscent();
 
         // compute date/time for header
         DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
@@ -287,20 +318,20 @@ public class HardcopyWriter extends Writer {
             return g;
         }
 
-        if (job != null) {
-            if (printJobGraphics == null) {
-                printJobGraphics = job.getGraphics();
-            }
-            g = printJobGraphics;
-        } else {
-            Image img = new BufferedImage(pagesizePixels.width, pagesizePixels.height, BufferedImage.TYPE_INT_RGB);
-            g = img.getGraphics();
-        }
+        Image img = new BufferedImage(pagesizePixels.width, pagesizePixels.height, BufferedImage.TYPE_INT_RGB);
+        g = img.getGraphics();
         if (g == null) {
             throw new RuntimeException("Could not get graphics context");
         }
-        setupGraphics(g);
+        setupGraphics(g, true);
         return g;
+    }
+
+    private void record(PrintCommand cmd) {
+        currentPageCommands.add(cmd);
+        if (page instanceof Graphics2D) {
+            cmd.execute((Graphics2D) page);
+        }
     }
 
     /**
@@ -479,12 +510,12 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Function to set the columns for future text output. Output starts in
-     * first first column, and advances to the next column on a tab
-     * character. This either causes truncation of the text or wrapping to the
-     * next line depending on the column alignment type.
+     * first first column, and advances to the next column on a tab character.
+     * This either causes truncation of the text or wrapping to the next line
+     * depending on the column alignment type.
      * <p>
-     * If no columns are set, then the default is one column, left aligned with the full 
-     * width of the page
+     * If no columns are set, then the default is one column, left aligned with
+     * the full width of the page
      * </p>
      * 
      * @param columns Array of Column objects
@@ -511,8 +542,8 @@ public class HardcopyWriter extends Writer {
     /**
      * Function to set Columns based on a {@code Collection<Column>} object
      * <p>
-     * If no columns are set, then the default is one column, left aligned with the full 
-     * width of the page
+     * If no columns are set, then the default is one column, left aligned with
+     * the full width of the page
      * </p>
      * 
      * @param columns Collection of Column objects
@@ -523,8 +554,8 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Send text to Writer output. Note that the text will be aligned to the
-     * current column (by default, this is one column, left aligned with the full 
-     * width of the page)
+     * current column (by default, this is one column, left aligned with the
+     * full width of the page)
      *
      * @param buffer block of text characters
      * @param index  position to start printing
@@ -573,7 +604,7 @@ public class HardcopyWriter extends Writer {
 
                 line += buffer[i];
             }
-            if (page != null && inPageRange(pagenum) && line.length() > 0) {
+            if (page != null && line.length() > 0) {
                 // If we have pending text, flush it now
                 flush_column();
             }
@@ -581,8 +612,9 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Flush the current line to the current column. This may be called recursively if
-     * the line is too long for the current column and wrapping is enabled. 
+     * Flush the current line to the current column. This may be called
+     * recursively if the line is too long for the current column and wrapping
+     * is enabled.
      */
     private void flush_column() {
         Column column = columns[columnIndex];
@@ -633,7 +665,7 @@ public class HardcopyWriter extends Writer {
             stringStartPos = column.getStartPos(metrics.getStringBounds(firstLine, page).getWidth());
 
             // We can now output the first line.
-            page.drawString(firstLine, x0 + stringStartPos, y0 + v_pos + lineascent);
+            record(new DrawString(firstLine, x0 + stringStartPos, y0 + v_pos + lineascent));
 
             if (column.isWrap()) {
                 // Skip any spaces at the split position
@@ -652,7 +684,7 @@ public class HardcopyWriter extends Writer {
                 v_pos -= lineheight;
             }
         } else {
-            page.drawString(line, x0 + stringStartPos, y0 + v_pos + lineascent);
+            record(new DrawString(line, x0 + stringStartPos, y0 + v_pos + lineascent));
         }
 
         if (columnIndex < columns.length - 1) {
@@ -675,11 +707,11 @@ public class HardcopyWriter extends Writer {
      */
     public void write(Color c, String s) throws IOException {
         ensureOnPage();
-        page.setColor(c);
+        record(new SetColor(c));
         write(s);
         // note that the above write(s) can cause the page to become null!
-        if (page != null) {
-            page.setColor(color); // reset color
+        if (currentPageCommands != null) {
+            record(new SetColor(color)); // reset color
         }
     }
 
@@ -694,28 +726,20 @@ public class HardcopyWriter extends Writer {
     @Override
     public void close() {
         synchronized (this.lock) {
+            if (page != null) {
+                pageBreak();
+            }
             if (isPreview) {
-                // new JMRI code using try / catch declaration can call this close twice
-                // writer.close() is no longer needed. Work around next line.
-                if (!pageImages.contains(previewImage)) {
-                    pageImages.addElement(previewImage);
-                }
                 // set up first page for display in preview frame
                 // to get the image displayed, put it in an icon and the icon in a label
                 pagenum = 1;
                 displayPage();
-            }
-            boolean jobEnded = false;
-            if (page != null) {
-                if (page == printJobGraphics) {
-                    // We haven't actually output anything (e.g. person selects page 10 of a 5 page report)
-                    job.end();
-                    jobEnded = true;
+            } else if (printerJob != null) {
+                try {
+                    printerJob.print();
+                } catch (PrinterException e) {
+                    log.error("Error printing", e);
                 }
-                page.dispose();
-            }
-            if (job != null && !jobEnded) {
-                job.end();
             }
         }
     }
@@ -730,16 +754,18 @@ public class HardcopyWriter extends Writer {
             if (page != null) {
                 page.dispose();
             }
-            previewFrame.dispose();
-            if (job != null) {
-                job.end();
+            if (previewFrame != null) {
+                previewFrame.dispose();
+            }
+            if (printerJob != null) {
+                printerJob.cancel();
             }
         }
     }
 
     /**
-     * Set the font to be used for the next write operation. This really
-     * only is good for the next line (or column) of output. Use with caution.
+     * Set the font to be used for the next write operation. This really only is
+     * good for the next line (or column) of output. Use with caution.
      * <p>
      * If any of the parameters are null, the current value will be used.
      * 
@@ -763,27 +789,11 @@ public class HardcopyWriter extends Writer {
             useFontStyle = style;
             useFontSize = size;
             // if a page is pending, set the new font, else newpage() will
-            if (page != null) {
-                page.setFont(font);
-
+            if (currentPageCommands != null) {
+                record(new SetFont(font));
                 refreshMetrics(page);
             }
         }
-    }
-
-    /**
-     * Check if the given page number is in the range of pages to be printed.
-     * 
-     * @param pagenum the page number to check
-     * @return true if the page number is in the range, false otherwise
-     */
-    private boolean inPageRange(int pagenum) {
-        for (int[] range : prPages) {
-            if (pagenum >= range[0] && pagenum <= range[1]) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
@@ -800,12 +810,18 @@ public class HardcopyWriter extends Writer {
             g = getGraphics();
         }
 
-        Rectangle2D bounds = metrics.getStringBounds("m".repeat(100), g);
-        charwidth = (float) (bounds.getWidth() / 100.0);
+        if (g instanceof Graphics2D) {
+            Graphics2D g2d = (Graphics2D) g;
+            FontRenderContext frc = g2d.getFontRenderContext();
+            Rectangle2D bounds = font.getStringBounds("m".repeat(100), frc);
+            charwidth = (float) (bounds.getWidth() / 100.0);
+        } else {
+            log.info("refreshMetrics on {} using metrics", g.getClass().getName());
+            Rectangle2D bounds = metrics.getStringBounds("m".repeat(100), g);
+            charwidth = (float) (bounds.getWidth() / 100.0);
+        }
 
         // compute lines and columns within margins
-        chars_per_line = (int) (width / charwidth);
-
         int widthI = metrics.charWidth('i');
         int widthW = metrics.charWidth('W');
         int widthM = metrics.charWidth('M');
@@ -816,8 +832,8 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Get the height of a line of text. This is the amount that the vertical position
-     * will advance for each line.
+     * Get the height of a line of text. This is the amount that the vertical
+     * position will advance for each line.
      * 
      * @return the height of a line of text
      */
@@ -847,7 +863,8 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Get the ascent of the font. This is the distance from the baseline to the top of the font.
+     * Get the ascent of the font. This is the distance from the baseline to the
+     * top of the font.
      * 
      * @return the ascent of the font
      */
@@ -862,6 +879,9 @@ public class HardcopyWriter extends Writer {
      */
     public void setTextColor(Color c) {
         color = c;
+        if (currentPageCommands != null) {
+            record(new SetColor(c));
+        }
     }
 
     /**
@@ -869,13 +889,15 @@ public class HardcopyWriter extends Writer {
      */
     public void pageBreak() {
         synchronized (this.lock) {
-            if (isPreview) {
+            if (isPreview && previewImage != null) {
                 pageImages.addElement(previewImage);
             }
             if (page != null) {
                 page.dispose();
             }
             page = null;
+            currentPageCommands = null;
+            previewImage = null;
         }
     }
 
@@ -889,7 +911,8 @@ public class HardcopyWriter extends Writer {
         if (!isMonospaced()) {
             return null;
         }
-        return this.chars_per_line;
+        int chars_per_line = (int) (width / charwidth);
+        return chars_per_line;
     }
 
     /**
@@ -920,7 +943,7 @@ public class HardcopyWriter extends Writer {
      * preview capability
      */
     protected void newline() {
-        if (page != null && inPageRange(pagenum)) {
+        if (page != null) {
             flush_column();
         }
         line = "";
@@ -949,62 +972,49 @@ public class HardcopyWriter extends Writer {
      * Internal method beings a new page and prints the header method modified
      * by Dennis Miller to add preview capability
      */
-    protected void newpage() {
+    private void newpage() {
         pagenum++;
         v_pos = 0;
-        // get a page graphics or image graphics object depending on output destination
-        if (page == null) {
-            if (!isPreview) {
-                if (inPageRange(pagenum)) {
-                    if (printJobGraphics == null) {
-                        page = job.getGraphics();
-                    } else {
-                        page = printJobGraphics;
-                        printJobGraphics = null;
-                    }
-                } else {
-                    // The job.getGraphics() method will return null if the number of pages requested is greater than
-                    // the number the user selected. Since the code checks for a null page in many places, we need to
-                    // create a "dummy" page for the pages the user has decided to skip.
-                    JFrame f = new JFrame();
-                    f.pack();
-                    page = f.createImage(pagesizePixels.width, pagesizePixels.height).getGraphics();
-                    if (page instanceof Graphics2D) {
-                        Graphics2D g2d = (Graphics2D) page;
-                        double scale = getScreenResolution() / 72.0;
-                        g2d.scale(scale, scale);
-                    }
-                }
-            } else { // Preview
-                previewImage = previewPanel.createImage(pagesizePixels.width, pagesizePixels.height);
-                page = previewImage.getGraphics();
+        currentPageCommands = new ArrayList<>();
 
-                setupGraphics(page);
+        page = getGraphics();
 
-                page.setColor(Color.white);
-                page.fillRect(0, 0, previewImage.getWidth(previewPanel), previewImage.getHeight(previewPanel));
-                page.setColor(color);
+        if (isPreview) {
+            previewImage = previewPanel.createImage(pagesizePixels.width, pagesizePixels.height);
+            page = previewImage.getGraphics();
+
+            if (page instanceof Graphics2D) {
+                setupGraphics(page, true);
             }
+
+            page.setColor(Color.white);
+            page.fillRect(0, 0, (int) (pagesizePixels.width * 72.0 / getScreenResolution()),
+                    (int) (pagesizePixels.height * 72.0 / getScreenResolution()));
+            page.setColor(color);
+        } else {
+            // We only need this is non-preview mode. 
+            pageCommands.add(currentPageCommands);
         }
-        if (printHeader && inPageRange(pagenum)) {
-            page.setFont(headerfont);
-            page.drawString(jobname, x0, headery);
+
+        if (printHeader) {
+            record(new SetFont(headerfont));
+            record(new DrawString(jobname, x0, headery));
 
             FontRenderContext frc = page.getFontMetrics().getFontRenderContext();
 
             String s = "- " + pagenum + " -"; // print page number centered
             Rectangle2D bounds = headerfont.getStringBounds(s, frc);
-            page.drawString(s, (int) (x0 + (this.width - bounds.getWidth()) / 2), headery);
+            record(new DrawString(s, (int) (x0 + (this.width - bounds.getWidth()) / 2), headery));
 
             bounds = headerfont.getStringBounds(time, frc);
-            page.drawString(time, (int) (x0 + width - bounds.getWidth()), headery);
+            record(new DrawString(time, (int) (x0 + width - bounds.getWidth()), headery));
 
             // draw a line under the header
             int y = headery + headermetrics.getDescent() + 1;
-            page.drawLine(x0, y, x0 + width, y);
+            record(new DrawLine(x0, y, x0 + width, y));
         }
         // set basic font
-        page.setFont(font);
+        record(new SetFont(font));
         refreshMetrics(page);
     }
 
@@ -1035,11 +1045,13 @@ public class HardcopyWriter extends Writer {
      * 
      * @param g the graphics context to setup
      */
-    private void setupGraphics(Graphics g) {
+    private void setupGraphics(Graphics g, boolean applyScale) {
         if (g instanceof Graphics2D) {
             Graphics2D g2d = (Graphics2D) g;
-            double scale = getScreenResolution() / 72.0;
-            g2d.scale(scale, scale);
+            if (applyScale) {
+                double scale = getScreenResolution() / 72.0;
+                g2d.scale(scale, scale);
+            }
 
             // Enable Antialiasing (Smooths the edges)
             g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -1060,6 +1072,8 @@ public class HardcopyWriter extends Writer {
             // Enable Antialiasing (Smooths the edges)
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
+        } else {
+            log.info("Not setting rendering hints for {}", g.getClass().getName());
         }
     }
 
@@ -1118,6 +1132,40 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
+     * Write an image to the output at the current position, scaled to the
+     * required size. More importantly, it does not save the image object in
+     * memory, but will re-read it from the disk when it needs to be used. This
+     * is needed if there are a lot of large images in a printout.
+     * 
+     * @param icon         The ImageIconWrapper object to display
+     * @param requiredSize The size in points to display the image
+     * @return The actual size rendered
+     */
+    public Dimension writeSpecificSize(ImageIconWrapper icon, Dimension requiredSize) {
+        ensureOnPage();
+
+        float widthScale = (float) requiredSize.width / icon.getIconWidth();
+        float heightScale = (float) requiredSize.height / icon.getIconHeight();
+        float scale = Math.min(widthScale, heightScale);
+
+        Dimension d = new Dimension(Math.round(icon.getIconWidth() * scale), Math.round(icon.getIconHeight() * scale));
+
+        int x = x0 + width - d.width;
+        int y = y0 + v_pos + lineascent;
+
+        if (isPreview) {
+            float pixelsPerPoint = getScreenResolution() / 72.0f;
+            Image c = ImageUtils.getScaledInstance(icon.getImage(), (int) (requiredSize.width * pixelsPerPoint),
+                    (int) (requiredSize.height * pixelsPerPoint));
+
+            record(new DrawImage(c, x, y, d.width, d.height));
+        } else {
+            record(new DrawImageIconFile(icon.getPathName(), x, y, d.width, d.height));
+        }
+        return d;
+    }
+
+    /**
      * Write a graphic to the printout at a specific size (in points)
      * <p>
      * This was not in the original class, but was added afterwards by Kevin
@@ -1151,11 +1199,7 @@ public class HardcopyWriter extends Writer {
         int x = x0 + width - d.width;
         int y = y0 + v_pos + lineascent;
 
-        if (inPageRange(pagenum)) {
-            page.drawImage(c, x, y,
-                    d.width, d.height,
-                    null);
-        }
+        record(new DrawImage(c, x, y, d.width, d.height));
         return d;
     }
 
@@ -1177,21 +1221,9 @@ public class HardcopyWriter extends Writer {
         // if we haven't begun a new page, do that now
         ensureOnPage();
 
-        if (inPageRange(pagenum)) {
-            int x = x0;
-            int y = y0 + v_pos;
-            // shift origin to current printing position
-            page.translate(x, y);
-            // Window must be visible to print
-            jW.setVisible(true);
-            // Have the window print itself
-            jW.printAll(page);
-            // Make it invisible again
-            jW.setVisible(false);
-            // Get rid of the window now that it's printed and put the origin back where it was
-            jW.dispose();
-            page.translate(-x, -y);
-        }
+        int x = x0;
+        int y = y0 + v_pos;
+        record(new PrintWindow(jW, x, y));
     }
 
     /**
@@ -1203,12 +1235,13 @@ public class HardcopyWriter extends Writer {
      * hStart and hEnd represent the horizontal point positions. The lines
      * actually start in the middle of the character position (to the left) to
      * make it easy to draw vertical lines and space them between printed
-     * characters. This is (unfortunately) bad for getting something on the right margin.
+     * characters. This is (unfortunately) bad for getting something on the
+     * right margin.
      * <p>
      * vStart and vEnd represent the vertical point positions. Horizontal lines
      * are drawn underneath below the vStart position. They are offset so they
      * appear evenly spaced, although they don't take into account any space
-     * needed for descenders, so they look best with all caps text. If vStart is 
+     * needed for descenders, so they look best with all caps text. If vStart is
      * set to the current vPos, then the line is under the current row of text.
      *
      * @param vStart vertical starting position
@@ -1224,9 +1257,7 @@ public class HardcopyWriter extends Writer {
         int xEnd = x0 + hEnd - useFontSize / 4;
         int yStart = y0 + vStart + (lineheight - lineascent) / 2;
         int yEnd = y0 + vEnd + (lineheight - lineascent) / 2;
-        if (inPageRange(pagenum)) {
-            page.drawLine(xStart, yStart, xEnd, yEnd);
-        }
+        record(new DrawLine(xStart, yStart, xEnd, yEnd));
     }
 
     /**
@@ -1335,8 +1366,9 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Class to represent a column in the output. This has a start position, width and alignment.
-     * This allows left, center or right alignment, with or without wrapping.
+     * Class to represent a column in the output. This has a start position,
+     * width and alignment. This allows left, center or right alignment, with or
+     * without wrapping.
      */
     public static class Column {
         int position;
@@ -1489,6 +1521,187 @@ public class HardcopyWriter extends Writer {
             }
 
             return newColumns;
+        }
+    }
+
+    /**
+     * Replay the recorded commands to the graphics context. This is called by
+     * the PrinterJob.
+     */
+    @Override
+    public int print(Graphics g, PageFormat pf, int pageIndex) throws PrinterException {
+        if (pageIndex >= pageCommands.size()) {
+            return NO_SUCH_PAGE;
+        }
+
+        if (!(g instanceof Graphics2D)) {
+            throw new PrinterException("Graphics context is not a Graphics2D object: " + g.getClass().getName());
+        }
+
+        Graphics2D g2d = (Graphics2D) g;
+
+        // We already include the margins, but we need to worry about the page header.
+        double yOffset = pf.getImageableY();
+        if (yOffset > titleTop) {
+            // We have to translate down to make sure that the header is on the page
+            g2d.translate(0, yOffset - titleTop);
+        }
+        double xOffset = pf.getImageableX();
+        if (xOffset > leftMargin) {
+            // We have to translate right to make sure that the left margin is printable.
+            g2d.translate(xOffset - leftMargin, 0);
+        }
+        //g2d.translate(pf.getImageableX(), pf.getImageableY());
+
+        // Setup initial state
+        g2d.setFont(font);
+        g2d.setColor(color);
+        setupGraphics(g2d, false);
+
+        for (PrintCommand cmd : pageCommands.get(pageIndex)) {
+            cmd.execute(g2d);
+        }
+
+        return PAGE_EXISTS;
+    }
+
+    protected interface PrintCommand {
+        void execute(Graphics2D g);
+    }
+
+    protected static class DrawString implements PrintCommand {
+        String s;
+        int x, y;
+
+        DrawString(String s, int x, int y) {
+            this.s = s;
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        public void execute(Graphics2D g) {
+            g.drawString(s, x, y);
+        }
+    }
+
+    protected static class DrawLine implements PrintCommand {
+        int x1, y1, x2, y2;
+
+        DrawLine(int x1, int y1, int x2, int y2) {
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
+        }
+
+        @Override
+        public void execute(Graphics2D g) {
+            g.drawLine(x1, y1, x2, y2);
+        }
+    }
+
+    protected static class DrawImage implements PrintCommand {
+        Image img;
+        int x, y, width, height;
+
+        DrawImage(Image img, int x, int y, int width, int height) {
+            this.img = img;
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+        }
+
+        @Override
+        public void execute(Graphics2D g) {
+            g.drawImage(img, x, y, width, height, null);
+        }
+    }
+
+    protected static class DrawImageIconFile implements PrintCommand {
+        String pathName;
+        int x, y, width, height;
+
+        DrawImageIconFile(String pathName, int x, int y, int width, int height) {
+            this.pathName = pathName;
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+        }
+
+        @Override
+        public void execute(Graphics2D g) {
+            // Convert this into a DrawImage call
+            ImageIcon icon = new ImageIcon(pathName);
+            Image img = icon.getImage();
+            g.drawImage(img, x, y, width, height, null);
+        }
+    }
+
+    protected static class SetFont implements PrintCommand {
+        Font font;
+
+        SetFont(Font font) {
+            this.font = font;
+        }
+
+        @Override
+        public void execute(Graphics2D g) {
+            g.setFont(font);
+        }
+    }
+
+    protected static class SetColor implements PrintCommand {
+        Color color;
+
+        SetColor(Color color) {
+            this.color = color;
+        }
+
+        @Override
+        public void execute(Graphics2D g) {
+            g.setColor(color);
+        }
+    }
+
+    protected static class PrintWindow implements PrintCommand {
+        JWindow jW;
+        int x, y;
+
+        PrintWindow(JWindow jW, int x, int y) {
+            this.jW = jW;
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        public void execute(Graphics2D g) {
+            g.translate(x, y);
+            jW.setVisible(true);
+            jW.printAll(g);
+            jW.setVisible(false);
+            jW.dispose();
+            g.translate(-x, -y);
+        }
+    }
+
+    public static class ImageIconWrapper extends ImageIcon {
+        String pathName;
+
+        /**
+         * Class to save and be able to restore the pathname of an ImageIcon.
+         * 
+         * @param pathName The filename to construct the ImageIcon for.
+         */
+        public ImageIconWrapper(String pathName) {
+            super(pathName);
+            this.pathName = pathName;
+        }
+
+        public String getPathName() {
+            return pathName;
         }
     }
 
