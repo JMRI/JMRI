@@ -364,6 +364,7 @@ public class OptionsMenu extends JMenu {
         autoTurnoutsCheckBox.setSelected(dispatcher.getAutoTurnouts());
         trustKnownTurnoutsCheckBox.setSelected(dispatcher.getTrustKnownTurnouts());
         useOccupiedTrackSpeedCheckBox.setSelected(dispatcher.getUseOccupiedTrackSpeed());
+        useStrictTrainTrackingBox.setSelected(dispatcher.getUseStrictTrainTracking());
         useTurnoutConnectionDelayCheckBox.setSelected(dispatcher.getUseTurnoutConnectionDelay());
         shortNameCheckBox.setSelected(dispatcher.getShortActiveTrainNames());
         nameInBlockCheckBox.setSelected(dispatcher.getShortNameInBlock());

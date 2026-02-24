@@ -174,9 +174,9 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                         }
                     }
                     if (options.getAttribute("usestricttraintracking") != null) {
-                        dispatcher.setUseOccupiedTrackSpeed(false);
-                        if (options.getAttribute("usestricttraintracking").getValue().equals("yes")) {
-                            dispatcher.setUseStrictTrainTracking(true);
+                        dispatcher.setUseStrictTrainTracking(true);
+                        if (options.getAttribute("usestricttraintracking").getValue().equals("no")) {
+                            dispatcher.setUseStrictTrainTracking(false);
                         }
                     }
                     if (options.getAttribute("minthrottleinterval") != null) {

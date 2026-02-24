@@ -180,7 +180,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     public synchronized void setTargetSpeedByPass(float speed) {
-        _autoEngineer.setTargetSpeed(-1.0f, speed);
+        _autoEngineer.setTargetSpeed(-1.0f);
     }
 
     public synchronized void setTargetSpeedByPass(float distance, float speed) {
@@ -909,7 +909,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     protected void setEngineDirection(boolean isFwd) {
         boolean oldFwd = getForward();
-        setForward(_activeTrain.isTransitReversed());
+        setForward(isFwd);
         log.debug("[{}]Force Flipped direction was [{}] now [{}]",_activeTrain.getActiveTrainName() ,oldFwd, getForward());
     }
 
@@ -2095,7 +2095,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         _previousBlock = null;
                         _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
                         // get head of train
-                        while (_nextBlock.getState()==Block.OCCUPIED) {
+                        while (_nextBlock.getState()==Block.OCCUPIED && _currentAllocatedSection.getSection().containsBlock(_nextBlock)) {
                             _previousBlock = _currentBlock;
                             _currentBlock = _nextBlock;
                             _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
