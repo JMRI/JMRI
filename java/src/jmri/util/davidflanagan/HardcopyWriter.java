@@ -103,15 +103,6 @@ public class HardcopyWriter extends Writer implements Printable {
     JobAttributes jobAttributes = new JobAttributes();
     PageAttributes pageAttributes = new PageAttributes();
 
-    /**
-     * Get the list of commands for the whole document.
-     * 
-     * @return the list of commands for the document
-     */
-    public List<List<PrintCommand>> getPageCommands() {
-        return pageCommands;
-    }
-
     // constructor modified to add default printer name, page orientation, print header, print duplex, and page size
     // All length parameters are in points. 
     // various combinations of parameters can be set. The paper size/shape is set by the pagesize
