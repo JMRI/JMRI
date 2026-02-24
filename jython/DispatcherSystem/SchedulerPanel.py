@@ -675,7 +675,7 @@ class MyModelListener4(TableModelListener):
         self.logLevel = 0
         self.i = 0
     def tableChanged(self, e) :
-        print "tableChanged"
+        # print "tableChanged"
         self.i +=1
         # if self.i % 2 == 0: return
         global trains_allocated

@@ -29,8 +29,11 @@ import jmri.util.PaperUtils;
  * Provide graphic output to a screen/printer.
  * <p>
  * This is from Chapter 12 of the O'Reilly Java book by David Flanagan with the
- * alligator on the front. This has been extensively modified by Philip
- * Gladstone to improve the print preview functionality.
+ * alligator on the front.
+ * <p>
+ * This has been extensively modified by Philip Gladstone to improve the print
+ * preview functionality and to switch to using the Java 1.8 (maybe 1.2)
+ * printing classes. The original code used the Java 1.1 printing classes.
  *
  * @author David Flanagan
  * @author Dennis Miller
@@ -181,6 +184,8 @@ public class HardcopyWriter extends Writer implements Printable {
                     pagesizePoints.height * screenResolution / 72);
         }
 
+        // Save this so that if we print, then we can keep printed stuff out of
+        // the left margin.
         leftMargin = leftmargin;
 
         // skip printer selection if preview
@@ -736,6 +741,9 @@ public class HardcopyWriter extends Writer implements Printable {
                 displayPage();
             } else if (printerJob != null) {
                 try {
+                    // This is where the actual printing happens. I wonder if this should
+                    // be spun off into its own task to prevent the GUI from freezing
+                    // if the printing process is slow.
                     printerJob.print();
                 } catch (PrinterException e) {
                     log.error("Error printing", e);
@@ -1169,7 +1177,11 @@ public class HardcopyWriter extends Writer implements Printable {
      * Write a graphic to the printout at a specific size (in points)
      * <p>
      * This was not in the original class, but was added afterwards by Kevin
-     * Dickerson. Heavily modified by P Gladstone.
+     * Dickerson. Heavily modified by P Gladstone. If the image is large and
+     * there are many images in the printout, then it probably makes sense to
+     * pass in a HardcopyWriter.ImageIconWrapper object instead. This will save
+     * memory as it just retains the filename until time comes to actually
+     * render the image.
      * <p>
      * The image is positioned on the right side of the paper, at the current
      * height. The image aspect ratio is maintained.
@@ -1214,6 +1226,9 @@ public class HardcopyWriter extends Writer implements Printable {
      * itself at the current line and aligned at the left margin. The calling
      * method should check for sufficient space left on the page and move it to
      * the top of the next page if there isn't enough space.
+     * <p>
+     * I'm not convinced that this is actually used as the code that invokes it
+     * is under a test for Java version before 1.5.
      *
      * @param jW the window to print
      */
@@ -1258,6 +1273,11 @@ public class HardcopyWriter extends Writer implements Printable {
         int yStart = y0 + vStart + (lineheight - lineascent) / 2;
         int yEnd = y0 + vEnd + (lineheight - lineascent) / 2;
         record(new DrawLine(xStart, yStart, xEnd, yEnd));
+
+        // We want to make sure that the lines are within the printable area
+        if (xStart < leftMargin) {
+            leftMargin = xStart;
+        }
     }
 
     /**
@@ -1308,6 +1328,15 @@ public class HardcopyWriter extends Writer implements Printable {
      */
     public boolean isMonospaced() {
         return isMonospacedFont;
+    }
+
+    /**
+     * Get the list of commands for the whole document.
+     * 
+     * @return the list of commands for the document
+     */
+    public List<List<PrintCommand>> getPageCommands() {
+        return pageCommands;
     }
 
     public static class PrintCanceledException extends Exception {
