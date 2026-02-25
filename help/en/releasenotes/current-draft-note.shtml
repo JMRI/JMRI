@@ -128,7 +128,17 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>A bug that would cause LCC Reporters to improperly be created as 
+                Internal Reporters has been fixed.  If you have Internal Reporters that
+                have been created in the past by this bug, 
+                    <ol>
+                        <li>Start this version of JMRI or later
+                        <li>Delete all the IdTags and, if relevant, RailCom tags that reference the internal Reporters
+                        <li>Delete the internal Reporters
+                        <li>Save your panels and table to your usual file
+                        <li>Quit and restart JMRI.
+                    </ol>
+                </li>
             </ul>
 
         <h4>Powerline</h4>

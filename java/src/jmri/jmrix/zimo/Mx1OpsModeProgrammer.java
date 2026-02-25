@@ -95,7 +95,7 @@ public class Mx1OpsModeProgrammer extends Mx1Programmer implements AddressedProg
             log.debug("readCV {} listens {}", CV, p);
         }
         useProgrammer(p);
-        _progRead = false;
+        _progRead = true;
         // set new state & save values
         progState = INQUIRESENT;
         _val = -1; // Read

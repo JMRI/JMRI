@@ -70,8 +70,9 @@ public class PipeListenerTest {
             }
         });
 
-        if (ref.get() != null) {
-            throw ref.get();
+        var refGet = ref.get();
+        if (refGet != null) {
+            throw refGet;
         }
 
         JUnitUtil.waitFor(()->{return !(pr.ready());},"buffer empty");

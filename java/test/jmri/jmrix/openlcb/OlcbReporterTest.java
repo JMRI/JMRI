@@ -92,7 +92,6 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
 
         Assert.assertEquals("expect 1 in reporter", 1, ((OlcbReporter)r).getCollection().size());
 
-        System.err.println("before 256 leaves");
         // create another reporter and send 256 to it
         var rman = ti.configurationManager.getReporterManager();
         var r2 = rman.provideReporter("01.02.03.04.05.07.00.00");
