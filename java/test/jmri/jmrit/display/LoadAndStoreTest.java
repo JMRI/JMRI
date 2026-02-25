@@ -1,7 +1,11 @@
 package jmri.jmrit.display;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import java.io.File;
 import java.util.stream.Stream;
+
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,6 +25,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
  */
+@DisabledIfHeadless
 public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
     public static Stream<Arguments> data() {
@@ -29,8 +34,9 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
-    public void loadAndStoreTest(File file, boolean pass) throws Exception {
-        super.loadLoadStoreFileCheck(file);
+    public void loadAndStoreTest(File file, boolean pass) {
+        assertDoesNotThrow( () ->
+            super.loadLoadStoreFileCheck(file));
     }
 
     public LoadAndStoreTest() {

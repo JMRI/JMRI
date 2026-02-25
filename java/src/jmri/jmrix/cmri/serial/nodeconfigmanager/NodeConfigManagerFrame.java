@@ -13,7 +13,7 @@ import javax.swing.table.*;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.nodeiolist.NodeIOListFrame;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -369,10 +369,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         // set up a page title
         String head = "CMRInet Node Table";
         // initialize a printer writer
-        HardcopyWriter writer = null;
+        OriginalHardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(curFrame, head, 10, .8, .5, .5, .5, false);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
+            writer = new OriginalHardcopyWriter(curFrame, head, 10, .8, .5, .5, .5, false);
+        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
             return;
         }
         writer.increaseLineSpacing(20);
@@ -614,10 +614,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
          * vertical lines between each column. Data is word wrapped within a
          * column. Can only handle 4 columns of data as strings. Adapted from
          * routines in BeanTableDataModel.java by Bob Jacobsen and Dennis Miller
-         * @param w hardcopywriter instance.
+         * @param w OriginalHardcopyWriter instance.
          * @param colWidth column width array.
         */
-        public void printTable(HardcopyWriter w, int colWidth[]) {
+        public void printTable(OriginalHardcopyWriter w, int colWidth[]) {
             // determine the column sizes - proportionately sized, with space between for lines
             int[] columnSize = new int[NUM_COLUMNS];
             int charPerLine = w.getCharactersPerLine();
@@ -685,7 +685,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
+        protected void printColumns(OriginalHardcopyWriter w, String columnStrings[], int columnSize[]) {
             String columnString = "";
             StringBuilder lineString = new StringBuilder("");
             String[] spaces = new String[NUM_COLUMNS];

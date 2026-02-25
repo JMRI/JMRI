@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 
 /**
  * Frame for running CMRI assignment list.
@@ -326,10 +326,10 @@ public class ListFrame extends jmri.util.JmriJFrame {
                     + Bundle.getMessage("NodeBoxLabel") + " " + selNodeID + "  ";
         }
         // initialize a printer writer
-        HardcopyWriter writer = null;
+        OriginalHardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(curFrame, head, 10, .8, .5, .5, .5, false);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
+            writer = new OriginalHardcopyWriter(curFrame, head, 10, .8, .5, .5, .5, false);
+        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
             //log.debug("Print cancelled");
             return;
         }
@@ -474,7 +474,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
          * @param w hard copy writer instance.
          * @param colWidth column width array.
          */
-        public void printTable(HardcopyWriter w, int colWidth[]) {
+        public void printTable(OriginalHardcopyWriter w, int colWidth[]) {
             // determine the column sizes - proportionately sized, with space between for lines
             int[] columnSize = new int[MAX_COLS];
             int charPerLine = w.getCharactersPerLine();
@@ -532,7 +532,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
+        protected void printColumns(OriginalHardcopyWriter w, String columnStrings[], int columnSize[]) {
             String columnString = "";
             StringBuilder lineString = new StringBuilder();
             StringBuilder[] spaces = new StringBuilder[MAX_COLS];

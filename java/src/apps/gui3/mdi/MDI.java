@@ -35,9 +35,12 @@ public class MDI extends apps.gui3.Apps3 {
                 "xml/config/apps/demo/Gui3MainToolBar.xml");
     }
 
+// main() method commented out since this method is probably not used any more.
+// See: https://jmri-developers.groups.io/g/jmri/message/12240
+/*
     // Main entry point
     public static void main(String args[]) {
         new MDI(args);
     }
-
+*/
 }

@@ -15,7 +15,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 
 /**
  * Print the cars in the train.
@@ -41,15 +41,15 @@ public class PrintShowCarsInTrain extends TrainCommon {
      */
     public void printCarsInTrain(Train train, boolean isPreview) {
         if (train.isBuilt()) {
-            // obtain a HardcopyWriter to do this
-            try (HardcopyWriter writer =
-                    new HardcopyWriter(new Frame(), Bundle.getMessage("TitleShowCarsInTrain", train.getName()),
+            // obtain a OriginalHardcopyWriter to do this
+            try (OriginalHardcopyWriter writer =
+                    new OriginalHardcopyWriter(new Frame(), Bundle.getMessage("TitleShowCarsInTrain", train.getName()),
                             Control.reportFontSize, .5,
                             .5, .5, .5, isPreview);) {
 
                 printCarsAtLocation(writer, train, train.getCurrentRouteLocation());
 
-            } catch (HardcopyWriter.PrintCanceledException ex) {
+            } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
                 log.debug("Print canceled");
             } catch (IOException ex) {
                 log.error("Error printing car roster: {}", ex.getLocalizedMessage());
@@ -57,7 +57,7 @@ public class PrintShowCarsInTrain extends TrainCommon {
         }
     }
 
-    public void printCarsAtLocation(HardcopyWriter writer, Train train, RouteLocation rl) throws IOException {
+    public void printCarsAtLocation(OriginalHardcopyWriter writer, Train train, RouteLocation rl) throws IOException {
         if (rl != null) {
             log.debug("RouteLocation rl: {}", rl.getName());
             // print location name followed by header
@@ -93,13 +93,13 @@ public class PrintShowCarsInTrain extends TrainCommon {
      */
     public void printCarsInTrainRoute(Train train, boolean isPreview) {
         if (train.isBuilt()) {
-            // obtain a HardcopyWriter to do this
-            try (HardcopyWriter writer =
-                    new HardcopyWriter(new Frame(), Bundle.getMessage("TitleShowCarsInTrain", train.getName()),
+            // obtain a OriginalHardcopyWriter to do this
+            try (OriginalHardcopyWriter writer =
+                    new OriginalHardcopyWriter(new Frame(), Bundle.getMessage("TitleShowCarsInTrain", train.getName()),
                             Control.reportFontSize, .5,
                             .5, .5, .5, isPreview);) {
                 printCarsRoute(writer, train);
-            } catch (HardcopyWriter.PrintCanceledException ex) {
+            } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
                 log.debug("Print canceled");
             } catch (IOException ex) {
                 log.error("Error printing car roster: {}", ex.getLocalizedMessage());
@@ -107,7 +107,7 @@ public class PrintShowCarsInTrain extends TrainCommon {
         }
     }
 
-    public void printCarsRoute(HardcopyWriter writer, Train train) throws IOException {
+    public void printCarsRoute(OriginalHardcopyWriter writer, Train train) throws IOException {
         loadCarsInTrain(train);
         // start printing at the train's current location
         boolean foundTrainLoc = false;
@@ -131,7 +131,7 @@ public class PrintShowCarsInTrain extends TrainCommon {
 
     List<Car> carsInTrain = new ArrayList<>();
 
-    private void printCars(HardcopyWriter writer, Train train, RouteLocation rl) throws IOException {
+    private void printCars(OriginalHardcopyWriter writer, Train train, RouteLocation rl) throws IOException {
         for (Car car : carManager.getByTrainDestinationList(train)) {
             if (car.getRouteLocation() == rl && !carsInTrain.contains(car)) {
                 carsInTrain.add(car);

@@ -258,27 +258,32 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         int b4 = m.getElement(4) & 0x3F;  // excludes high "type" bits
         int b5 = m.getElement(5);
         LocoAddress.Protocol dccType;
+        boolean isConsist;
         switch (dccTypeInt) {
             default:
             case 0xC0:
                 dccNumber = (b4<<8) | b5;
                 dccType = LocoAddress.Protocol.DCC_LONG;
+                isConsist = false;
                 break;
             case 0x00:
                 dccNumber = b5;
                 dccType = LocoAddress.Protocol.DCC_SHORT;
+                isConsist = false;
                 break;
             case 0x40:
                 dccNumber = b5&0x7F;  // remove direction bit
-                dccType = LocoAddress.Protocol.DCC_CONSIST;
+                dccType = LocoAddress.Protocol.DCC_SHORT;
+                isConsist = true;
                 break;
             case 0x80:
                 int decUpper = (b4 << 1) | ((b5>>7)&0x01); // BCD upper value
                 dccNumber = decUpper*100 + (b5&0x7F);
-                dccType = LocoAddress.Protocol.DCC_EXTENDED_CONSIST;
-                
+                dccType = LocoAddress.Protocol.DCC_LONG;
+                isConsist = true;
+                break;                
         }
-        return new DccLocoAddress(dccNumber, dccType);
+        return new DccLocoAddress(dccNumber, dccType, isConsist);
     }
     
     private String toClassicTag(int b1, int b2, int b3, int b4, int b5) {

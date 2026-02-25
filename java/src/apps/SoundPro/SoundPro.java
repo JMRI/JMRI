@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import jmri.util.JmriJFrame;
 
+
 /**
  * The JMRI application for controlling audio.
  * <p>
@@ -113,7 +114,7 @@ public class SoundPro extends Apps {
             jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.SoundPro.SoundPro");
         }
     }
-    
+
     // Main entry point
     public static void main(String args[]) {
 

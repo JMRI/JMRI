@@ -2,13 +2,9 @@ package jmri.jmrit.roster;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.util.List;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
-import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,46 +65,35 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
         if (rosterGroup == null) {
             title = title + " " + Bundle.getMessage("ALLENTRIES");
         } else {
-            title = title + " " + Bundle.getMessage("TitleGroup") + " " + Bundle.getMessage("TitleEntries", rosterGroup);
+            title = title +
+                    " " +
+                    Bundle.getMessage("TitleGroup") +
+                    " " +
+                    Bundle.getMessage("TitleEntries", rosterGroup);
         }
         HardcopyWriter writer;
         try {
-            writer = new HardcopyWriter(mFrame, title, 10, .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(mFrame, title, null, null, 10, 
+                .5 * 72, .5 * 72, .5 * 72, .5 * 72, isPreview, null, null, null, null, null);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
         }
 
-        // add the image
-        ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
-        // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
-        writer.write(icon.getImage(), new JLabel(icon));
-        //Add a number of blank lines, so that the roster entry starts below the decoderpro logo
-        int height = icon.getImage().getHeight(null);
-        int blanks = (height - writer.getLineAscent()) / writer.getLineHeight();
-
-        try {
-            for (int i = 0; i < blanks; i++) {
-                String s = "\n";
-                writer.write(s, 0, s.length());
-            }
-        } catch (IOException ex) {
-            log.warn("error during printing", ex);
-        }
-
-        float overSample = isPreview ? 1.5f : 3.0f;
+        // Write out the decoder pro logo
+        writer.writeDecoderProIcon();
 
         // Loop through the Roster, printing as needed
         List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all
         log.debug("Roster list size: {}", l.size());
         for (RosterEntry re : l) {
             if (rosterGroup != null) {
-                if (re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)) != null
-                        && re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)).equals("yes")) {
-                    re.printEntry(writer, overSample);
+                if (re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)) != null &&
+                        re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)).equals("yes")) {
+                    re.printEntry(writer);
                 }
             } else {
-                re.printEntry(writer, overSample);
+                re.printEntry(writer);
             }
         }
 

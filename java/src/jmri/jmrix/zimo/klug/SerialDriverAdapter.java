@@ -105,15 +105,15 @@ public class SerialDriverAdapter extends Mx1PortController {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600Zimo"),
+    protected String[] validSpeeds = new String[]{
             Bundle.getMessage("Baud1200"), Bundle.getMessage("Baud2400"),
-            Bundle.getMessage("Baud4800"), Bundle.getMessage("Baud19200"),
-            Bundle.getMessage("Baud38400")};
-    protected int[] validSpeedValues = new int[]{9600, 1200, 2400, 4800, 19200, 38400};
+            Bundle.getMessage("Baud4800"), Bundle.getMessage("Baud9600"), Bundle.getMessage("Baud19200"),
+            Bundle.getMessage("Baud38400"), Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
+    protected int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200};
 
     @Override
     public int defaultBaudIndex() {
-        return 0;
+        return 7;
     }
 
     // meanings are assigned to these above, so make sure the order is consistent
