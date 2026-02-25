@@ -331,6 +331,7 @@ public class InstanceManagerTest {
         assertNotNull(InstanceManager.getDefault(MemoryManager.class));
         assertNotNull(InstanceManager.getDefault(AudioManager.class));
         assertNotNull(InstanceManager.getDefault(RosterIconFactory.class));
+        assertNotNull(InstanceManager.getDefault(jmri.time.TimeProviderManager.class));
     }
 
     //
@@ -430,6 +431,7 @@ public class InstanceManagerTest {
         JUnitUtil.setUp();
         OkToDispose.startUp();
         InstanceManager.getDefault().clearAll();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach

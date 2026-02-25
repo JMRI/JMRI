@@ -904,6 +904,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
 
         tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();

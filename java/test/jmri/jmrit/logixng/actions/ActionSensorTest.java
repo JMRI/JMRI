@@ -501,6 +501,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initLogixNGManager();

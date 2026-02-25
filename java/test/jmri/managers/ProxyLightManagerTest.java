@@ -137,6 +137,7 @@ public class ProxyLightManagerTest extends AbstractProxyManagerTestBase<ProxyLig
     @Test
     public void testInstanceManagerIntegration() {
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         assertNotNull(InstanceManager.getDefault(LightManager.class));
 
         JUnitUtil.initInternalLightManager();
@@ -156,7 +157,7 @@ public class ProxyLightManagerTest extends AbstractProxyManagerTestBase<ProxyLig
     /**
      * Number of light to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers.
-     * 
+     *
      * @return the number to test
      */
     protected int getNumToTest1() {
@@ -170,6 +171,7 @@ public class ProxyLightManagerTest extends AbstractProxyManagerTestBase<ProxyLig
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         // create and register the manager object
         LightManager ilm = new InternalLightManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setLightManager(ilm);

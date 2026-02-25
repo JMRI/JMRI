@@ -41,10 +41,11 @@ public class DCCppInitializationManagerTest {
 
         t.terminateThreads();
     }
-    
+
     @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach

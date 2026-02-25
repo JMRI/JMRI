@@ -24,10 +24,10 @@ public class MultiThrottleStealTest {
         // set the address
         throttle.handleMessage("+L1234<;>L1234");
         Assert.assertFalse("Address Found", tcls.hasAddressBeenFound());
-        // the throttle manager send a steal request, which triggers a message 
-        // from the controller to the device 
+        // the throttle manager send a steal request, which triggers a message
+        // from the controller to the device
         Assert.assertEquals("outgoing message after throttle request", "MASL1234<;>L1234", cis.getLastPacket());
-        // normally the ThrottleControllerListener notifies the throttle of 
+        // normally the ThrottleControllerListener notifies the throttle of
         // a canceled request.
         throttle.canceledThrottleRequest("L1234");
         // the device then confirms the steal.
@@ -49,15 +49,15 @@ public class MultiThrottleStealTest {
         // set the address
         throttle.handleMessage("+L1234<;>L1234");
         Assert.assertFalse("Address Found", tcls.hasAddressBeenFound());
-        // the throttle manager send a steal request, which triggers a message 
-        // from the controller to the device 
+        // the throttle manager send a steal request, which triggers a message
+        // from the controller to the device
         Assert.assertEquals("outgoing message after throttle request", "MASL1234<;>L1234", cis.getLastPacket());
         // to refuse the steal, we have to send a different address
         throttle.handleMessage("+L4321<;>L4321");
         Assert.assertFalse("Address Found", tcls.hasAddressBeenFound());
-        // from the controller to the device 
+        // from the controller to the device
         Assert.assertEquals("outgoing message after throttle request", "MASL4321<;>L4321", cis.getLastPacket());
-        // normally the ThrottleControllerListener notifies the throttle of 
+        // normally the ThrottleControllerListener notifies the throttle of
         // a canceled request.
         throttle.canceledThrottleRequest("L4321");
         // the device then confirms the steal.
@@ -75,6 +75,7 @@ public class MultiThrottleStealTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initRosterConfigManager();
         // these tests use the StealingThrottleManager.
         var memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);

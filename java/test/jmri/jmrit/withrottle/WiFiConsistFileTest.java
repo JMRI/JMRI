@@ -25,12 +25,13 @@ public class WiFiConsistFileTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDebugCommandStation();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
+        JUnitUtil.initDebugCommandStation();
         JUnitUtil.initRosterConfigManager();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
-    
+
     @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();

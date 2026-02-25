@@ -287,6 +287,7 @@ public class LoadAtStartUpTest {
     public void setUp(@TempDir File tempDir) throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
+        JUnitUtil.initTimeProviderManager();
 
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugThrottleManager();

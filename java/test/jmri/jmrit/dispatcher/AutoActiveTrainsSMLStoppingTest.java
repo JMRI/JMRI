@@ -226,7 +226,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("Block East Switch"), Block.UNOCCUPIED);
         assertEquals(bm.provideBlock("Block South 1").getState(),Block.OCCUPIED);
         assertEquals(bm.provideBlock("Block East Switch").getState(),Block.UNOCCUPIED);
-        
+
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
         }, "Failed to slow entering south. begin - end - no stop - stopping sensors.");
@@ -823,7 +823,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         bo.push();
         // wait for cleanup to finish
         JUnitUtil.waitFor(200);
-        
+
         assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
         JFrameOperator aw = new JFrameOperator("AutoTrains");
 
@@ -929,6 +929,7 @@ public class AutoActiveTrainsSMLStoppingTest {
         JUnitUtil.resetFileUtilSupport();
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugThrottleManager();
     }

@@ -17,6 +17,7 @@ public class SimpleLightCtrlFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
 
         Timebase clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
         clock.setRun(false);

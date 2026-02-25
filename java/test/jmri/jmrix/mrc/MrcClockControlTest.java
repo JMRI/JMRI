@@ -24,6 +24,7 @@ public class MrcClockControlTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach

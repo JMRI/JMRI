@@ -52,10 +52,11 @@ public class TrackPowerControllerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initDebugPowerManager();
 
     }
-    
+
     @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();

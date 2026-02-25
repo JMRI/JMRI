@@ -36,14 +36,6 @@ import java.util.Date;
 public interface ClockControl {
 
     /**
-     * Get status of the fast clock.
-     * Potentially unused?
-     *
-     * @return the status
-     */
-    int getStatus();
-
-    /**
      * Get name of hardware clock Note: If there is no hardware clock,
      * DefaultClockControl returns null, so all hardware clocks must override
      * this method.
@@ -59,7 +51,7 @@ public interface ClockControl {
      * @return true if correctable; false otherwise
      */
     boolean canCorrectHardwareClock();
-    
+
     /**
      * Returns 'true' if hardware clock can be set to 12 or 24 hour display from
      * JMRI software.
@@ -89,10 +81,10 @@ public interface ClockControl {
     /**
      * Get the rate of the Fast Clock.
      * <p>
-     * The rate is a number that multiplies the wall clock. 
+     * The rate is a number that multiplies the wall clock.
      * For example, a rate of 4 specifies that the
      * fast clock runs 4 times faster than the wall clock.
-     * 
+     *
      * @return Fast Clock rate.
      */
     double getRate();
