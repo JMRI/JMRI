@@ -47,7 +47,7 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
         TableRowSorter<RosterGroupTableModel> sorter = new TableRowSorter<>(dataModel);
         dataTable.setRowSorter(sorter);
 
-        sorter.setComparator(RosterGroupTableModel.IDCOL, new jmri.util.AlphanumComparator());
+        sorter.setComparator(RosterGroupTableModel.IDCOL, new jmri.util.ChunkyNumbersComparator());
         sorter.toggleSortOrder(RosterGroupTableModel.IDCOL);
         
         dataScroll = new JScrollPane(dataTable);

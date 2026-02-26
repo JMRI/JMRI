@@ -15,7 +15,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 
 /**
  * @author Daniel Boudreau Copyright (C) 2024
@@ -41,24 +41,24 @@ public class PrintTrainsServingLocation {
 
     private void printLocations() {
 
-        // obtain a HardcopyWriter
+        // obtain a OriginalHardcopyWriter
         String title = Bundle.getMessage("TitleLocationsTable");
         if (_location != null) {
             title = _location.getName();
         }
-        try (HardcopyWriter writer =
-                new HardcopyWriter(new Frame(), title, Control.reportFontSize, .5, .5, .5, .5, _isPreview)) {
+        try (OriginalHardcopyWriter writer =
+                new OriginalHardcopyWriter(new Frame(), title, Control.reportFontSize, .5, .5, .5, .5, _isPreview)) {
 
             printTrains(writer);
 
-        } catch (HardcopyWriter.PrintCanceledException ex) {
+        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
             log.debug("Print canceled");
         } catch (IOException we) {
             log.error("Error printing PrintLocationAction: {}", we.getLocalizedMessage());
         }
     }
 
-    private void printTrains(HardcopyWriter writer) throws IOException {
+    private void printTrains(OriginalHardcopyWriter writer) throws IOException {
         // show track name if selected
         if (_track != null) {
             writer.write(Bundle.getMessage("Track") + TAB + _track.getName() + NEW_LINE);

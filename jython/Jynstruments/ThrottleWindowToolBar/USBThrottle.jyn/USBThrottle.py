@@ -29,7 +29,8 @@ import java.util.Calendar as Calendar
 import javax.swing.ImageIcon as ImageIcon
 import javax.swing.JButton as JButton
 import javax.swing.JCheckBoxMenuItem as JCheckBoxMenuItem
-import javax.swing.Timer as Timer
+import java.util.TimerTask as TimerTask
+import java.util.Timer as Timer
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import jmri.jmrit.throttle.AddressListener as AddressListener
 import org.jdom2.Element as Element
@@ -69,7 +70,7 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                 except AttributeError:
                     pass
                 
-                if (self.throttle == None) :
+                if ((self.throttle == None) and (self.addressPanel != None)) :
                     try:
                         # Browse through roster
                         if ((component == self.driver.componentNextRosterBrowse) and (value == self.driver.valueNextRoster)): #NEXT
@@ -104,21 +105,21 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                         # Speed - dynamic controler (joystick going back to neutral position)
                         if ((component == self.driver.componentSpeedIncrease) or (component == self.driver.componentSpeedDecrease) or (component == self.driver.componentSpeed)):
                             if ((component == self.driver.componentSpeedIncrease) and (value == self.driver.valueSpeedIncrease)) :
-                                self.speedAction.setSpeedIncrement( 0.03 )
+                                self.speedTimerTask.setSpeedIncrement( 0.03 )
                             if ((component == self.driver.componentSpeedDecrease) and (value == self.driver.valueSpeedDecrease)) :
-                                self.speedAction.setSpeedIncrement( -0.03 )
+                                self.speedTimerTask.setSpeedIncrement( -0.03 )
                             if (component == self.driver.componentSpeed) :
                                 try:
                                     self.vsd = valueSpeedDivider * self.driver.componentSpeedMultiplier
                                 except AttributeError:
                                     self.vsd = valueSpeedDivider
-                                self.speedAction.setSpeedIncrement(value / self.vsd)
-                            if ( abs(value) > self.driver.valueSpeedTrigger ) :
-                                self.speedTimer.start()
+                                self.speedTimerTask.setSpeedIncrement(value / self.vsd)
+                            if ( abs(value) > self.driver.valueSpeedTrigger ) :                                
+                                self.speedTimerTask.resume()                                
                             else :
-                                self.speedTimer.stop()
+                                self.speedTimerTask.pause()
                     except AttributeError:
-                        self.speedTimer.stop() # just in case, stop it, really should never get there
+                        self.speedTimerTask.pause() # just in case, stop it, really should never get there
                     
                     try:
                         # Speed v2 - static controler (lever on RailDriver or AAR105)
@@ -405,18 +406,22 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                             self.throttle.setF29( not self.throttle.getF29() )
                     except AttributeError:
                         pass
-                        
+
         # Nothing to customize bellow this point
-        if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
-            self.speedTimer.stop()
-            if event.oldValue != None :
+        if (event.propertyName.startswith("ThrottleFrame")) :  # Current throttle frame changed
+            self.speedTask.pause()
+            if (event.oldValue != None) :
                 event.oldValue.getAddressPanel().removeAddressListener(self)
-            if event.newValue != None :
+            if (event.newValue != None) :
                 self.addressPanel = event.newValue.getAddressPanel()
                 self.throttle = self.addressPanel.getThrottle()
                 self.roster = self.addressPanel.getRosterEntry()
-                self.speedAction.setThrottle( self.throttle )
                 event.newValue.getAddressPanel().addAddressListener(self)
+            else:
+                self.addressPanel = None
+                self.throttle = None
+                self.roster = None
+            self.speedTimerTask.setThrottle( self.throttle )
 
 #Jynstrument main and mandatory methods
     def getExpectedContextClassName(self):
@@ -424,14 +429,19 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
     
     def init(self):
         self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
-        self.getContext().getCurrentThrottleFrame().getAddressPanel().addAddressListener(self) # change of throttle in Current frame
-        self.addressPanel = self.getContext().getCurrentThrottleFrame().getAddressPanel()
-        self.throttle = self.addressPanel.getThrottle() # the throttle
-        self.roster = self.addressPanel.getRosterEntry() # roster entry if any
-        self.speedAction =  SpeedAction()  #Speed increase thread
-        self.speedAction.setThrottle( self.throttle )
-        self.speedTimer = Timer(valueSpeedTimerRepeat, self.speedAction ) # Very important to use swing Timer object (see Swing and multithreading doc)
-        self.speedTimer.setRepeats(True)
+        if ( self.getContext().getCurrentThrottleFrame() != None) :
+            self.addressPanel = self.getContext().getCurrentThrottleFrame().getAddressPanel()
+            self.addressPanel.addAddressListener(self) # change of throttle in Current frame
+            self.throttle = self.addressPanel.getThrottle() # the throttle
+            self.roster = self.addressPanel.getRosterEntry() # roster entry if any
+        else:
+            self.addressPanel = None
+            self.throttle = None
+            self.roster = None
+        self.speedTimerTask = SpeedTimerTask() #Speed increase thread
+        self.speedTimerTask.setThrottle( self.throttle )
+        self.speedTimer = Timer()
+        self.speedTimer.schedule(self.speedTimerTask, 0, valueSpeedTimerRepeat)
         self.label = JButton(ImageIcon(self.getFolder() + "/USBControl.png","USBThrottle")) #label
         self.label.addMouseListener(self.getMouseListeners()[0]) # In order to get the popupmenu on the button too
         self.add(self.label)
@@ -460,11 +470,13 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
 
 # On quit clean up resources       
     def quit(self):
-        self.speedTimer.stop()
+        self.speedTimerTask.cancel()
+        self.speedTimer.cancel()
+        self.speedTimer.purge()
         for mi in self.ctrlMenuItem :
             self.getPopUpMenu().remove( mi )
         self.ctrlMenuItem = None
-        self.speedAction = None
+        self.speedTimerTask = None
         self.speedTimer = None
         self.throttle = None
         self.addressPanel = None
@@ -548,22 +560,22 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         pass
         
     def notifyAddressThrottleFound(self, throttle):
-        self.speedTimer.stop() 
+        self.speedTimerTask.pause() 
         self.throttle = throttle
-        self.speedAction.setThrottle( self.throttle )
+        self.speedTimerTask.setThrottle( self.throttle )
             
     def notifyAddressReleased(self, address):
-        self.speedTimer.stop()
+        self.speedTimerTask.pause()
         self.throttle = None
-        self.speedAction.setThrottle( self.throttle )
+        self.speedTimerTask.setThrottle( self.throttle )
 
-    def notifyConsistAddressChosen(self, address, isLong):
+    def notifyConsistAddressChosen(self, address):
         self.notifyAddressChosen(address)
 
     def notifyConsistAddressThrottleFound(self, throttle):
         self.notifyAddressThrottleFound(throttle)
 
-    def notifyConsistAddressReleased(self, address, isLong):
+    def notifyConsistAddressReleased(self, address):
         self.notifyAddressReleased(address)
 
 # Item listeners for the PopUp menu
@@ -577,11 +589,22 @@ class ControllerItemListener( java.awt.event.ItemListener):
             self.jyns.setSelectedController( self.ctrl, evt.getItem() )     
                 
 # Speed timer class, to increase speed regularly once button pushed, thread stopped on button release
-class SpeedAction( java.awt.event.ActionListener):
+class SpeedTimerTask(TimerTask):
     def __init__(self):
         self.sync = thread.allocate_lock() # Protects properties getters and setters
         self.speedIncrement = 0
         self.throttle = None
+        self.isPaused = True
+
+    def pause(self):
+        self.sync.acquire()
+        self.isPaused = True
+        self.sync.release()
+
+    def resume(self):
+        self.sync.acquire()
+        self.isPaused = False
+        self.sync.release()
 
     def setSpeedIncrement(self, si):
         self.sync.acquire()
@@ -605,7 +628,9 @@ class SpeedAction( java.awt.event.ActionListener):
         self.sync.release()
         return throt
 
-    def actionPerformed(self, e):
+    def run(self):
+        if (self.isPaused) :
+            return
         throttle = self.getThrottle()
         spi = self.getSpeedIncrement()
         if (throttle != None) :

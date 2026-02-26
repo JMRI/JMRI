@@ -18,6 +18,8 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jmri.util.FileUtil;
+import jmri.util.ThreadingUtil;
+import jmri.util.swing.CountingBusyDialog;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.WindowInterface;
 
@@ -54,6 +56,12 @@ public class FullBackupImportAction extends ImportRosterItemAction {
     boolean acceptAll;
     boolean acceptAllDup;
     
+    JFileChooser chooser;
+    String filename;
+    FileInputStream inputfile;
+    ZipInputStream zipper;
+    CountingBusyDialog dialog;
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -64,10 +72,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
         Roster.getDefault();
 
         // set up to read import file
-        ZipInputStream zipper = null;
-        FileInputStream inputfile = null;
-
-        JFileChooser chooser = new jmri.util.swing.JmriJFileChooser();
+        chooser = new jmri.util.swing.JmriJFileChooser();
 
         String roster_filename_extension = "roster";
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -79,11 +84,22 @@ public class FullBackupImportAction extends ImportRosterItemAction {
             return;
         }
 
-        String filename = chooser.getSelectedFile().getAbsolutePath();
-        
+        filename = chooser.getSelectedFile().getAbsolutePath();
+
+        new Thread(() -> {run();}).start();
+    }
+
+    /** 
+     * actually do the processing on a separate thread
+     */
+    public void run() {    
         try {
 
             inputfile = new FileInputStream(filename);
+            
+            dialog = new CountingBusyDialog(null, "Importing Roster", true, -1);// indeterminate bar
+            ThreadingUtil.runOnGUIEventually(() -> {dialog.start();});
+            
             zipper = new ZipInputStream(inputfile) {
                 @Override
                 public void close() {
@@ -95,6 +111,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
             // entry call will return a ZipEntry for each file in the
             // stream
             ZipEntry entry;
+            int count = 0;
             acceptAll = false; // skip prompting for each entry and accept all
             acceptAllDup = false;  // skip prompting for dups and accept all
             SimpleDateFormat isoDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // NOI18N ISO8601
@@ -108,6 +125,9 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                                         entry.getComment()
                         );
 
+                final int thisCount = ++count;
+                ThreadingUtil.runOnGUI(() -> {dialog.count(thisCount);});
+                
                 // Once we get the entry from the stream, the stream is
                 // positioned read to read the raw data, and we keep
                 // reading until read returns 0 or less.
@@ -115,11 +135,25 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                 // find type and process
                 // Unfortunately, the comment field doesn't carry through (see debug above)
                 // so we check the filename
+                final var rosterEntry = entry;
                 if (entry.getName().endsWith(".xml") || entry.getName().endsWith(".XML")) {
-                    boolean retval = processRosterFile(zipper);
+                    boolean retval = ThreadingUtil.runOnGUIwithReturn(() -> {
+                        try {
+                            return processRosterFile(zipper);
+                        } catch (IOException ex) {
+                            log.error("Unable to read {}", filename, ex);
+                            return false;
+                        }
+                    });
                     if (!retval) break;
                 } else {
-                    processImageFile(zipper, entry, entry.getName());
+                    ThreadingUtil.runOnGUI(() -> {
+                        try {
+                            processImageFile(zipper, rosterEntry, rosterEntry.getName());
+                        } catch (IOException ex) {
+                            log.error("Unable to read {}", filename, ex);
+                        }
+                    });
                 }
                 
             }
@@ -129,12 +163,14 @@ public class FullBackupImportAction extends ImportRosterItemAction {
         } catch (IOException ex) {
             log.error("Unable to read {}", filename, ex);
         } finally {
+            ThreadingUtil.runOnGUIEventually(() -> {dialog.finish();});
             if (inputfile != null) {
                 try {
                     inputfile.close(); // zipper.close() is meaningless, see above, but this will do
                 } catch (IOException ex) {
                     log.error("Unable to close {}", filename, ex);
                 }
+            log.info("Reading backup done");
             }
         }
 
@@ -156,8 +192,8 @@ public class FullBackupImportAction extends ImportRosterItemAction {
     }
 
     /**
-     * @return true if OK to continue to next entry
      * @param zipper Stream to receive output
+     * @return true if OK to continue to next entry
      * @throws IOException from underlying operations
      */
 

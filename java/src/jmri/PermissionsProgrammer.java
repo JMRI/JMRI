@@ -18,6 +18,9 @@ public class PermissionsProgrammer {
     public static final Permission PERMISSION_PROGRAMMING_ON_MAIN =
             new PermissionProgrammingOnMain();
 
+    public static final Permission PERMISSION_ROSTER_ADDED_COLUMNS =
+            new PermissionRosterAddedColumns();
+
 
     @ServiceProvider(service = PermissionFactory.class)
     public static class Factory implements PermissionFactory {
@@ -27,6 +30,7 @@ public class PermissionsProgrammer {
             manager.registerOwner(PERMISSION_OWNER_PROGRAMMING);
             manager.registerPermission(PERMISSION_PROGRAMMING_TRACK);
             manager.registerPermission(PERMISSION_PROGRAMMING_ON_MAIN);
+            manager.registerPermission(PERMISSION_ROSTER_ADDED_COLUMNS);
         }
 
     }
@@ -70,6 +74,25 @@ public class PermissionsProgrammer {
         @Override
         public String getName() {
             return Bundle.getMessage("PermissionOwnerProgramming_PermissionProgrammingOnMain");
+        }
+
+        @Override
+        public BooleanValue getDefaultPermission(Role role) {
+            return BooleanValue.get(role.isAdminRole());
+        }
+
+    }
+
+    public static class PermissionRosterAddedColumns implements BooleanPermission {
+
+        @Override
+        public PermissionOwner getOwner() {
+            return PERMISSION_OWNER_PROGRAMMING;
+        }
+
+        @Override
+        public String getName() {
+            return Bundle.getMessage("PermissionOwnerProgramming_PermissionRosterAddedColumns");
         }
 
         @Override

@@ -693,7 +693,7 @@ public class SlotManagerTest {
         assertEquals( -999, status, "initial status");
 
         // check that SI write happened
-        assertEquals( 2, lnis.outbound.size(), "two messages sent");
+        JUnitUtil.waitFor(()->{return 2 == lnis.outbound.size();},"two messages not set");
         assertEquals( "EF 0E 7C 6B 00 00 00 00 00 0F 02 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
                 "write SI message");

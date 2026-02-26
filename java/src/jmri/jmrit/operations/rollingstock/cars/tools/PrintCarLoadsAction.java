@@ -15,7 +15,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 
 /**
  * Action to print a summary of car loads ordered by car type.
@@ -60,9 +60,9 @@ public class PrintCarLoadsAction extends AbstractAction {
 
         private void printCars() {
 
-            // obtain a HardcopyWriter to do this
-            try (HardcopyWriter writer =
-                    new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarLoads"), Control.reportFontSize, .5,
+            // obtain a OriginalHardcopyWriter to do this
+            try (OriginalHardcopyWriter writer =
+                    new OriginalHardcopyWriter(new Frame(), Bundle.getMessage("TitleCarLoads"), Control.reportFontSize, .5,
                             .5, .5, .5, _isPreview);) {
 
                 writer.write(getHeader());
@@ -109,7 +109,7 @@ public class PrintCarLoadsAction extends AbstractAction {
                         writer.write(buf.toString() + NEW_LINE);
                     }
                 }
-            } catch (HardcopyWriter.PrintCanceledException ex) {
+            } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
                 log.debug("Print canceled");
             } catch (IOException ex) {
                 log.error("Error printing car roster: {}", ex.getLocalizedMessage());

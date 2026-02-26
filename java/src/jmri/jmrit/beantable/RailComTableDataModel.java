@@ -196,7 +196,7 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
             case SPEEDCOL:
                 return (t.getActualSpeed()!=-1 ? t.getActualSpeed() : null);
             case DCCADDRESSCOL:
-                return t.getDccAddress().toString();
+                return t.getDccAddress().toString()+(t.getDccAddress().isConsistAddress() ? " Consist ": "");
             case ORIENTATIONCOL:
                 return t.getOrientation().toString();
             case DIRECTIONCOL:

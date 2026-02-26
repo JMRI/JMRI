@@ -225,6 +225,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         m.setElement(5, 0x01);
         address = r4.parseAddress(m); 
         assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_SHORT, "0x0001 type");
+        assertEquals(address.isConsistAddress(), false, "0x0001 consist");
         assertEquals(address.getNumber(), 1, "0x0001 number");
 
 
@@ -232,63 +233,73 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         m.setElement(5, 0x01);
         address = r4.parseAddress(m);
         assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_LONG,"0xC001 type");
+        assertEquals(address.isConsistAddress(), false, "0x8C01 consist");
         assertEquals(address.getNumber(), 1, "0xC001 number");
 
         m.setElement(4, 0xE6); // Long address 9876
         m.setElement(5, 0x94);
         address = r4.parseAddress(m);
         assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_LONG,"0xE694 type");
+        assertEquals(address.isConsistAddress(), false, "0xE694 consist");
         assertEquals(address.getNumber(), 9876, "0xE694 number");
 
 
         m.setElement(4, 0x40); // short consist 1
         m.setElement(5, 0x01);
         address = r4.parseAddress(m);
-        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_CONSIST,"0x4001 type");
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_SHORT,"0x4001 type");
+        assertEquals(address.isConsistAddress(), true, "0x4001 consist");
         assertEquals(address.getNumber(), 1,"0x4001 address");
 
 
         m.setElement(4, 0x80); // extended consist 1
         m.setElement(5, 0x01);
         address = r4.parseAddress(m);
-        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x8001 type");
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_LONG,"0x8001 type");
+        assertEquals(address.isConsistAddress(), true, "0x8001 consist");
         assertEquals(address.getNumber(), 1,"0x8001 address");
 
         m.setElement(4, 0x80); // extended consist 17
         m.setElement(5, 0x11);
         address = r4.parseAddress(m);
-        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x8011 type");
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_LONG,"0x8011 type");
+        assertEquals(address.isConsistAddress(), true, "0x8011 consist");
         assertEquals(address.getNumber(), 17,"0x8011 address");
 
         m.setElement(4, 0x80); // extended consist 99
         m.setElement(5, 0x63);
         address = r4.parseAddress(m);
-        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x8063 type");
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_LONG,"0x8063 type");
+        assertEquals(address.isConsistAddress(), true, "0x8063 consist");
         assertEquals(address.getNumber(), 99,"0x8063 address");
 
         m.setElement(4, 0x80); // extended consist 127
         m.setElement(5, 0x7F);
         address = r4.parseAddress(m);
-        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x807F type");
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_LONG,"0x807F type");
+        assertEquals(address.isConsistAddress(), true, "0x807F consist");
         assertEquals(address.getNumber(), 127,"0x807F address");
 
         m.setElement(4, 0x81); // extended consist 227
         m.setElement(5, 0x1B);
         address = r4.parseAddress(m);
-        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x80E3 type");
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_LONG,"0x80E3 type");
+        assertEquals(address.isConsistAddress(), true, "0x80E3 consist");
         assertEquals(address.getNumber(), 227,"0x80E3 address");
 
         m.setElement(4, 0x81); // extended consist 363
         m.setElement(5, 0xBF);
         address = r4.parseAddress(m);
-        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x881BF type");
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_LONG,"0x881BF type");
+        assertEquals(address.isConsistAddress(), true, "0x881BF consist");
         assertEquals(address.getNumber(), 363,"0x881BF address");
 
         m.setElement(4, 0xB1); // extended consist 9876
         m.setElement(5, 0x4C);
         address = r4.parseAddress(m);
-        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_EXTENDED_CONSIST,"0x881BF type");
-        assertEquals(address.getNumber(), 9876,"0x881BF address");
+        assertEquals(address.getProtocol(), jmri.DccLocoAddress.Protocol.DCC_LONG,"0x81BF type");
+        assertEquals(address.isConsistAddress(), true, "0x81BF consist");
+        assertEquals(address.getNumber(), 9876,"0x81BF address");
     }
 
 

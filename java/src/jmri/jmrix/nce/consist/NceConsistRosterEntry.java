@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import jmri.InstanceManager;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -481,17 +481,17 @@ public class NceConsistRosterEntry {
     /**
      * Prints the roster information. Updated to allow for multiline comment
      * field. Created separate write statements for text and line feeds to work
-     * around the HardcopyWriter bug that misplaces borders.
+     * around the OriginalHardcopyWriter bug that misplaces borders.
      * @param w stream to printer
      */
     public void printEntry(Writer w) {
-        if (!(w instanceof HardcopyWriter)){
-            throw new IllegalArgumentException("Writer is not an instance of HardcopyWriter");
+        if (!(w instanceof OriginalHardcopyWriter)){
+            throw new IllegalArgumentException("Writer is not an instance of OriginalHardcopyWriter");
         }
         try {
             String indent = "                      ";
             int indentWidth = indent.length();
-            HardcopyWriter ww = (HardcopyWriter) w;
+            OriginalHardcopyWriter ww = (OriginalHardcopyWriter) w;
             int textSpace = ww.getCharactersPerLine() - indentWidth - 1;
             String newLine = "\n";
 

@@ -23,7 +23,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 
 /**
  * Frame to print a summary of the Location Roster contents
@@ -65,7 +65,7 @@ public class PrintLocationsFrame extends OperationsFrame {
 
     private int charactersPerLine = 70;
 
-    HardcopyWriter writer;
+    OriginalHardcopyWriter writer;
 
     public PrintLocationsFrame(boolean isPreview, Location location) {
         super();
@@ -125,13 +125,13 @@ public class PrintLocationsFrame extends OperationsFrame {
                 !printErrorAnalysis.isSelected()) {
             return;
         }
-        // obtain a HardcopyWriter
+        // obtain a OriginalHardcopyWriter
         String title = Bundle.getMessage("TitleLocationsTable");
         if (_location != null) {
             title = _location.getName();
         }
-        try (HardcopyWriter writer =
-                new HardcopyWriter(new Frame(), title, Control.reportFontSize, .5, .5, .5, .5, _isPreview)) {
+        try (OriginalHardcopyWriter writer =
+                new OriginalHardcopyWriter(new Frame(), title, Control.reportFontSize, .5, .5, .5, .5, _isPreview)) {
 
             this.writer = writer;
 
@@ -159,7 +159,7 @@ public class PrintLocationsFrame extends OperationsFrame {
             if (printErrorAnalysis.isSelected()) {
                 printErrorAnalysisSelected();
             }
-        } catch (HardcopyWriter.PrintCanceledException ex) {
+        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
             log.debug("Print canceled");
         } catch (IOException we) {
             log.error("Error printing PrintLocationAction: {}", we.getLocalizedMessage());

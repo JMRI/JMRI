@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.OriginalHardcopyWriter;
 
 /**
  * Used for train Manifests and switch lists.
@@ -42,7 +42,7 @@ public class TrainPrintManifest extends TrainCommon {
      */
     public static void printReport(File file, String name, boolean isPreview, String fontName, String logoURL,
             String printerName, String orientation, int fontSize, boolean isPrintHeader, SidesType sidesType) {
-        // obtain a HardcopyWriter to do this
+        // obtain a OriginalHardcopyWriter to do this
 
         boolean isLandScape = false;
         double margin = .5;
@@ -58,7 +58,7 @@ public class TrainPrintManifest extends TrainCommon {
             pagesize = new Dimension(getPageSize(orientation).width + PAPER_MARGINS.width,
                     getPageSize(orientation).height + PAPER_MARGINS.height);
         }
-        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), name, fontSize, margin,
+        try (OriginalHardcopyWriter writer = new OriginalHardcopyWriter(new Frame(), name, fontSize, margin,
                 margin, .5, .5, isPreview, printerName, isLandScape, isPrintHeader, sidesType, pagesize);
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         new FileInputStream(file), StandardCharsets.UTF_8));) {
@@ -96,21 +96,22 @@ public class TrainPrintManifest extends TrainCommon {
             print(writer, lines, true);
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist", e);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
+        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
             log.debug("Print canceled");
         } catch (IOException e) {
             log.warn("Exception printing: {}", e.getLocalizedMessage());
         }
     }
 
-    private static void print(HardcopyWriter writer, List<String> lines, boolean lastBlock) throws IOException {
+    private static void print(OriginalHardcopyWriter writer, List<String> lines, boolean lastBlock) throws IOException {
+        int lineSize = getNumberOfLines(lines);
         if (Setup.isPrintNoPageBreaksEnabled() &&
                 writer.getCurrentLineNumber() != 0 &&
-                writer.getLinesPerPage() - writer.getCurrentLineNumber() < lines.size()) {
+                writer.getLinesPerPage() - writer.getCurrentLineNumber() < lineSize) {
             writer.pageBreak();
         }
         // check for exact page break
-        if (writer.getLinesPerPage() - writer.getCurrentLineNumber() + 1 == lines.size()) {
+        if (writer.getLinesPerPage() - writer.getCurrentLineNumber() + 1 == lineSize) {
             // eliminate blank line after page break
             String s = lines.get(lines.size() - 1);
             if (s.isBlank()) {
@@ -118,7 +119,7 @@ public class TrainPrintManifest extends TrainCommon {
             }
         }
         // use line feed for all lines?
-        if (lastBlock && writer.getLinesPerPage() - writer.getCurrentLineNumber() < lines.size()) {
+        if (lastBlock && writer.getLinesPerPage() - writer.getCurrentLineNumber() < lineSize) {
             lastBlock = false; // yes
         }
 
@@ -178,9 +179,26 @@ public class TrainPrintManifest extends TrainCommon {
     }
 
     /*
+     * When determining the number of lines to print, we need to ignore any
+     * horizontal lines.
+     */
+    private static int getNumberOfLines(List<String> lines) {
+        int numberLines = lines.size();
+        for (String line : lines) {
+            for (char c : line.toCharArray()) {
+                if (c == HORIZONTAL_LINE_CHAR) {
+                    numberLines--;
+                    break;
+                }
+            }
+        }
+        return numberLines;
+    }
+
+    /*
      * Returns true if horizontal line was printed, or line length = 0
      */
-    private static boolean printHorizontialLineSeparator(HardcopyWriter writer, String line) {
+    private static boolean printHorizontialLineSeparator(OriginalHardcopyWriter writer, String line) {
         boolean horizontialLineSeparatorFound = true;
         if (line.length() > 0) {
             for (int i = 0; i < line.length(); i++) {
@@ -197,7 +215,7 @@ public class TrainPrintManifest extends TrainCommon {
         return horizontialLineSeparatorFound;
     }
 
-    private static void printVerticalLineSeparator(HardcopyWriter writer, String line) {
+    private static void printVerticalLineSeparator(OriginalHardcopyWriter writer, String line) {
         for (int i = 0; i < line.length(); i++) {
             if (line.charAt(i) == VERTICAL_LINE_CHAR) {
                 // make a frame (two column format)

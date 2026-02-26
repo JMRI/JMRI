@@ -15,4 +15,7 @@ public class PermissionsProgrammerSwing {
     public static class PermissionProgrammingOnMainSwing extends BooleanPermissionSwing {
     }
 
+    public static class PermissionRosterAddedColumnsSwing extends BooleanPermissionSwing {
+    }
+
 }

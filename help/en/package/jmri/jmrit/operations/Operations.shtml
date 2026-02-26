@@ -797,7 +797,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         The OperationsPro&trade; default mode for building trains is to pick up and set out cars to
         empty tracks. If you want to perform car swaps, pull cars from a track and replacing them
         with new ones, you need to change the <a href="#BuildOptions">Build Options</a> to
-        aggressive.
+        Aggressive.
       </p>
 
       <p>
@@ -1074,7 +1074,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       "backups". The purpose of the automatic backups is to make a copy of the files for "safe
       keeping" before changes are made to the main operations files. This way, if anything gets
       messed up, there is a copy of the last known good data that can easily be restored to undo the
-      damage. In normal operation, an automatic backup is made each time OperationsPro&trade; starts
+      damage. In regular operation, an automatic backup is made each time OperationsPro&trade; starts
       if the
       <a href="#AutoBackup">Auto Backup</a> option is checked in the <a
         href="#Settings">Settings</a> window, and right before a Restore, Reset Database, or Load
@@ -1192,24 +1192,24 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <h3 id="BuildOptions">Build Options</h3>
-      There are three build train options, normal, aggressive and on time. Note that once you've
+      There are three build train options, Normal, Aggressive and On Time. Note that once you've
       built a train, the build option can not be changed until all trains are terminated or reset.
 
       <h4>Normal</h4>
 
       <p>
-        It is recommended that you select normal when you first begin using OperationsPro&trade;.
+        It is recommended that you select Normal when you first begin using OperationsPro&trade;.
         Normal builds guarantee that when a car is delivered (set out) by a train that there will be
         track space available for the car. Normal mode will not fill every track to capacity which
-        is more prototypical. However, normal mode won't swap a set of cars, cars are picked up or
+        is more prototypical. However, Normal mode won't swap a set of cars, cars are picked up or
         set out based on the available track space. Normal mode prevents track overloading. In
-        aggressive mode you can "accidentally" create track overloading by the order you build and
+        Aggressive mode you can "accidentally" create track overloading by the order you build and
         run your trains or by using the <a href="#TrainReset">Train Reset</a> function.
       </p>
 
       <h4>Aggressive</h4>
 
-      <p>Aggressive builds makes the car's track space available as soon as a car is scheduled
+      <p>Aggressive mode makes the car's track space available as soon as a car is scheduled
         for a pick up. Therefore there can be instances where a train was to pick up a car to vacate
         the track, but a "later" train arrives early with a set out to that track and the car hasn't
         been picked up. However, more often than not the same train will perform the pick up and set
@@ -1219,10 +1219,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         available spurs. The smaller the spur, yard, or interchange the more likely that the program
         will assign cars to that track.</p>
 
-      <p>One serious consideration when using aggressive mode is that you can cause your tracks
+      <p>One serious consideration when using Aggressive mode is that you can cause your tracks
         to be overloaded by selectively resetting your trains or building them and running them in a
         different order. Here's a simple example showing how it's possible to overload a track using
-        the aggressive mode. Say you have two trains that will service the same track. The track has
+        the Aggressive mode. Say you have two trains that will service the same track. The track has
         several cars on it, you build the first train and the Manifest shows to pull all of the cars
         from the track. You now build a second train, the program finds that the track will be
         vacated by the first train, so it schedules new cars to be spotted on to track by the second
@@ -1233,25 +1233,25 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         the second train before the first, the second train would try and deliver cars to the track
         that still has cars sitting on it.</p>
 
-      <p>To avoid overloading in aggressive mode, you also need to build, run, and terminate
+      <p>To avoid overloading in Aggressive mode, you also need to build, run, and terminate
         your trains in the same order. And do not use the train reset after you've built or
         terminated other trains! However, if you need to reset a train, you should also reset all of
         the trains built after the train that you want to reset, or live with possible track
         overloading. And never reset a train built before a train that you've already terminated.
         Normal mode will never overload a track, so you might consider using this mode if you find
         yourself having to reset trains or you want to build and run your trains in any order. The
-        recommendation is not to use train reset in aggressive mode once you've built or terminated
+        recommendation is not to use train reset in Aggressive mode once you've built or terminated
         additional trains. And if you do reset a train, there isn't a guarantee that building the
         train again will pull the same cars, each train build can be different depending on the car
         movements created by the other trains.</p>
 
       <h4>On Time</h4>
 
-      On time is an experimental mode of operations that was introduced in January of 2026. On Time
-      mode is an extension of aggressive mode. On time mode requires the use of a real or fast clock
-      to dictate train movement. To use on time, your trains must run on schedule. They should
+      On Time is an experimental mode of operations that was introduced in January of 2026. On Time
+      mode is an extension of Aggressive mode. On Time mode requires the use of a real or fast clock
+      to dictate train movement. To use On Time, your trains must run on schedule. They should
       depart at the correct departure time, and they should complete their work reasonably close to
-      the times provided on the train Manifests. When running OperationsPro in on time mode, tracks
+      the times provided on the train Manifests. When running OperationsPro in On Time mode, tracks
       that have
       <a href="#InterchangeQuickService">Quick Service</a> enabled can be reused multiple times
       based on when cars are set out and picked up. Cars and engines can travel on multiple trains
@@ -1273,7 +1273,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>
         See <a href="#ModifyLocationsByQuickService">Modify Locations and Tracks by Quick
           Service</a> to modify your tracks for quick service. Only tracks enabled for quick service are
-        reused based on train timing when using the on time mode. Note that train turns servicing
+        reused based on train timing when using the On Time mode. Note that train turns servicing
         locations on both the outbound and inbound legs, will in most cases pull the cars delivered
         on the outbound leg on the return leg. Use interchange tracks and <a href="#Schedules">spurs/schedules</a>
         with wait times to hold cars, or <a href="#RestrictingTrackToCertainTrains">restrict the
@@ -1284,12 +1284,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         copied route for the later train.
       </p>
 
-      <p>One restriction when using on time mode, is that trains must be built and terminated in
+      <p>One restriction when using On Time mode, is that trains must be built and terminated in
         chronological order. If you need to reset your trains, reset the last built trains first, or
         use the reset all trains button.</p>
 
       <p>
-        When selecting on time mode, a new column named "Done" in the <a href="#Trains">Trains</a>
+        When selecting On Time mode, a new column named "Done" in the <a href="#Trains">Trains</a>
         window will appear. The "Done" column shows when a built train will complete its work. This
         is useful when determining if a future train will have access to the the train's rolling
         stock. Once a train departs using the <a href="#Trains">Move</a> button, the "Done" column
@@ -1298,18 +1298,18 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>
-        To help troubleshoot timing problems with your cars using the on time mode, it is
+        To help troubleshoot timing problems with your cars using the On Time mode, it is
         recommended that you show the "Last Train" on your Manifests and switch lists for car pick
         ups. This way if a car isn't found, you'll at least know which train was supposed to drop
         off the car. You should also enable train, car and engine <a href="#LoggingOptions">logging</a>,
         and <a href="#SaveTrainManifests">Save Train Manifests, Build Reports, and Switch Lists</a>.
         Also recommended is that you use <a href="#AutoBackup">Auto Backup</a>. This will allow the
-        developers to reproduce any problems you encounter while using the new on time mode of
+        developers to reproduce any problems you encounter while using the new On Time mode of
         operations.
       </p>
 
       <h4>Number of Passes During Build</h4>
-      When building trains in aggressive mode, you can control the number of passes the program
+      When building trains in Aggressive mode, you can control the number of passes the program
       performs. Two passes is the default, and for most users is the correct value. The program
       works best when there's space for cars on the layout, and two passes should provide good car
       movement. If your layout is more towards the full side of the equation, increasing the number
@@ -1356,7 +1356,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       This option when selected makes the departure track in staging available for other trains
       immediately after the departing train is built. For trains that return to the same staging
       location, this option allows the train to use the same track it departed on. This option is
-      only available when using the <a href="#BuildOptions">aggressive</a> mode for building trains.
+      only available when using the <a href="#BuildOptions">Aggressive</a> mode for building trains.
 
       <h4 id="AllowCarsToReturnToStaging">Allow cars to return to staging</h4>
       When a train departs and returns to the same staging location, it is regarded as a turn by the
@@ -1389,15 +1389,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       available in staging that meet the train's requirements.
 
       <h4 id="TryNormalMode">Try Normal Mode if Build Failure from Staging</h4>
-      When using <a href="#BuildOptions">aggressive</a> mode to build a train, the program will
+      When using <a href="#BuildOptions">Aggressive</a> mode to build a train, the program will
       first try and pull cars from all of the train's locations to free up space for cars departing
       staging. Sometimes this causes the length of the train to exceed the maximum length
       requirements of the <a href="#EditRoute">route</a>, causing a build failure. If this option is
       selected, and the build fails, the program will automatically try to build the train in <a
-        href="#BuildOptions">normal</a> mode. In Normal mode cars from staging are placed along the
-      train's route before pulling cars from location, the exact opposite of aggressive mode.
+        href="#BuildOptions">Normal</a> mode. In Normal mode cars from staging are placed along the
+      train's route before pulling cars from location, the exact opposite of Aggressive mode.
       <p>
-        You can also request to build a specific train in normal mode, see <a
+        You can also request to build a specific train in Normal mode, see <a
           href="#TrainBuildOptions">Train Build Options</a>.
       </p>
 
@@ -2337,7 +2337,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         locomotives (Rolling Stock) at each location, the number of cars and locomotives that will
         be picked up (Pick ups) by trains, and the number of cars and locomotives that will be
         delivered (Set outs) by trains. When the program is building a train, the reserved value
-        shows the amount of track that is going to be consumed by set outs. In aggressive mode, the
+        shows the amount of track that is going to be consumed by set outs. In Aggressive mode, the
         reserved value also shows the amount of track that is going to be released by pick ups.
         Therefore a positive value means that track space is going to be consumed by set outs, and a
         negative number means that track space is going to be freed up by pick ups.</p>
@@ -3419,11 +3419,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       are ignored by the program, and are regarded as pass-through tracks.
       <p>
         Note if you are running a train to and from the same staging location using the <a
-          href="#BuildOptions">normal</a> build mode, you must define two staging tracks for the
+          href="#BuildOptions">Normal</a> build mode, you must define two staging tracks for the
         program, one to depart on and one to return on. Physically the two staging tracks can be the
         same one. If you want to use the same name for your staging tracks, the program allows you
         to name the staging tracks using a hyphen and a number as a suffix. The hyphen and number
-        are not printed on the switch lists or Manifests. If you're using <a href="#BuildOptions">aggressive</a>
+        are not printed on the switch lists or Manifests. If you're using <a href="#BuildOptions">Aggressive</a>
         mode for building trains, you can <a href="#MakeDepartureTrackAvailable">configure</a> the
         program to allow the train to return to the same staging track that the train departed on.
       </p>
@@ -3907,7 +3907,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       you can also use an <a href="#Interchange">interchange</a>, or <a href="#Spurs">spur</a> type
       track if you want more control over the car's movement or load.
       <p>
-        During the train build process in <a href="#BuildOptions">aggressive</a> mode, the program
+        During the train build process in <a href="#BuildOptions">Aggressive</a> mode, the program
         will check the alternate track for cars after assigning cars from the spur to the train
         being built. This way cars on the alternate are used to keep the spur full. Note that the <a
           href="#PlannedPickUps">Planned Pick Ups</a> feature can defeat the movement of cars from
@@ -4771,7 +4771,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h4>Car Roster&rArr;Reset car move counts</h4>
       The "Reset car move counts" will zero out the move counts for the cars displayed in the "Cars"
-      window. In normal use you should never reset the car move counts. The program uses the move
+      window. In regular use you should never reset the car move counts. The program uses the move
       counts to determine which cars have difficulty finding valid destination tracks. Cars with low
       move counts eventually get higher priority over cars with larger move counts. By servicing the
       lower move count cars first, the difficult car moves eventually get made by the program.
@@ -5021,7 +5021,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h4>Locomotive Roster&rArr;Reset move count all locomotives</h4>
       The "Reset move count all locomotives" will zero out all of the locomotive move counts. In
-      normal use you should never reset the locomotive move counts. The program uses the move counts
+      regular use you should never reset the locomotive move counts. The program uses the move counts
       to determine which locomotives have difficulty finding valid destination tracks. Locomotives
       with low move counts eventually get higher priority over locomotives with larger move counts.
       By servicing the lower move count locomotives first, the difficult locomotive moves eventually
@@ -5722,13 +5722,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Options</h4>
 
       <h5>Use normal mode when building this train</h5>
-      You can request that the program use normal mode when building the train. This is useful when
-      a train departs staging. In normal mode, all of the cars in staging are set out first, where
-      in aggressive mode, the cars in staging are set out last. Selecting this option when you have
+      You can request that the program use Normal mode when building the train. This is useful when
+      a train departs staging. In Normal mode, all of the cars in staging are set out first, where
+      in Aggressive mode, the cars in staging are set out last. Selecting this option when you have
       build failures out of staging, it could fix the failure.
       <p>
-        You can also configure the program to always try building a train in normal mode when
-        there's a build failure in a aggressive mode when departing staging. See <a
+        You can also configure the program to always try building a train in Normal mode when
+        there's a build failure in a Aggressive mode when departing staging. See <a
           href="#TryNormalMode">Try Normal Mode if Build Failure from Staging</a>.
       </p>
 
@@ -6957,25 +6957,25 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         The program can build trains in one of two modes, <a href="#SettingsOptions">Normal</a> or
-        Aggressive. In normal mode, the program sends cars to tracks that have physical space for
-        the new cars. In aggressive, the program can send cars to tracks that are full as long as
+        Aggressive. In Normal mode, the program sends cars to tracks that have physical space for
+        the new cars. In Aggressive, the program can send cars to tracks that are full as long as
         one or more of the cars on that track is scheduled to be picked up. A car can be scheduled
         to be picked up by a previously built train, or by the one being built.
       </p>
 
       <p>
-        In <a href="#SettingsOptions">aggressive mode</a> , the program when figuring out
+        In <a href="#SettingsOptions">Aggressive mode</a> , the program when figuring out
         destinations for cars, will perform multiple passes when determining where to place cars.
         Using the default value of two passes, the first pass uses 50% of the available moves for
         each location when determining the number of cars to pick up, and the second pass does the
         remainder. By doing multiple passes, the program can "free" up some tracks that already have
         cars there, thus increasing the number of cars that the train can service. Once a car has
-        been scheduled for a pick up by a train in aggressive mode, the car's current track space is
+        been scheduled for a pick up by a train in Aggressive mode, the car's current track space is
         available for other trains to use.
       </p>
 
       <p>
-        There is an exception when departing staging in aggressive mode, the program will skip
+        There is an exception when departing staging in Aggressive mode, the program will skip
         searching for destinations for cars out of staging on the first pass unless the <a
           href="#TrainBuildOptions">Use normal mode when building this train</a> is selected. The
         thinking is that car pick ups along the train's route will free up space which should

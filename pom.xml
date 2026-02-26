@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.15.3-SNAPSHOT</version>
+    <version>5.15.4-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -20,8 +20,8 @@
         <jetty.version>9.4.28.v20200408</jetty.version>
         <!-- this is a custom version, see lib/README.md -->
         <jemmy.version>RELEASE125</jemmy.version>
-        <slf4j.version>2.0.7</slf4j.version>
-        <log4j.version>2.20.0</log4j.version>
+        <slf4j.version>2.0.17</slf4j.version>
+        <log4j.version>2.25.3</log4j.version>
         <jackson-core.version>2.13.4</jackson-core.version>
         <jackson-databind.version>2.13.4.2</jackson-databind.version>
         <jackson-annotations.version>2.13.4</jackson-annotations.version>
@@ -37,7 +37,7 @@
         <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
         <!-- don't load JInput during CI tests -->
         <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin>
-        <ant.version>1.10.11</ant.version>
+        <ant.version>1.10.14</ant.version>
         <junit5.version>5.13.4</junit5.version>
         <junit.platform.version>1.13.4</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
@@ -45,8 +45,8 @@
         <!-- define argLines to allow running surefire:test -->
         <surefire.argLine></surefire.argLine>
         <failsafe.argLine></failsafe.argLine>
-        <surefire.version>2.22.0</surefire.version>
-        <failsafe.version>2.22.0</failsafe.version>
+        <surefire.version>3.5.4</surefire.version>
+        <failsafe.version>3.5.4</failsafe.version>
         <jqassistant.version>1.6.0</jqassistant.version>
         <checkstyle.config.location>${basedir}/checkstyle.xml</checkstyle.config.location>
     </properties>
@@ -196,6 +196,7 @@
                                 <properties>${basedir}/java/ecj.warning.options-ci</properties>
                                 <arg>-sourcepath</arg>
                                 <arg>${basedir}/java/src:${basedir}/target/generated-sources</arg>
+                                <arg>-proc:full</arg>
                             </compilerArgs>
                         </configuration>
                         <dependencies>
@@ -361,6 +362,7 @@
                 </includes>
                 <excludes>
                     <exclude>**/*.java</exclude>
+                    <exclude>**/junit-platform.properties</exclude><!-- Prevent Warning 2 JUnit properties found -->
                 </excludes>
             </resource>
             <resource>
@@ -397,7 +399,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version><!--$NO-MVN-MAN-VER$-->
+                <version>3.2.0</version><!--$NO-MVN-MAN-VER$-->
                 <!-- above line-end comment silences warning in Eclipse -->
                 <!--
                 <executions>
@@ -455,6 +457,17 @@
                         <arg>-proc:full</arg>
                     </compilerArgs>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <configuration>
+                            <compilerArgs combine.children="append">
+                                <arg>-Alog4j.graalvm.groupId=${project.groupId}</arg>
+                                <arg>-Alog4j.graalvm.artifactId=${project.artifactId}</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -543,6 +556,15 @@
                     <reuseForks>false</reuseForks>
                     -->
                 </configuration>
+                <!-- From Surefire 3.0+ ( due to junit-vintage-engine ), this forces the JU Platform runner. -->
+                <!-- Maven Test runner auto-detects JUnit4 Test Runner instead of JUnit Platform Runner. -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit-platform</artifactId>
+                        <version>${surefire.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -1204,6 +1226,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <!-- When this is removed, also remove surefire-junit-platform override. -->
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
             <version>${junit5.version}</version>
@@ -1216,8 +1239,20 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-runner</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-engine</artifactId>
             <version>${junit.platform.version}</version>
             <scope>test</scope>
         </dependency>
@@ -1230,6 +1265,12 @@
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-api</artifactId>
             <version>${junit.platform.version}</version>
             <scope>test</scope>
         </dependency>
@@ -1302,6 +1343,16 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId> <!-- Commons Logging to SLF4J Bridge -->
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId> <!-- Log4Jv1 to SLF4J Bridge ( CATS ) -->
             <version>${slf4j.version}</version>
         </dependency>
         <dependency>
@@ -1437,9 +1488,11 @@
         </dependency>
         <dependency>
             <!-- jsoup HTML parser library @ https://jsoup.org/ -->
+            <!-- used in jmri.util.GenerateSearchIndexTest -->
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.15.3</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
@@ -1583,13 +1636,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.20.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <version>5.20.0</version>
+            <version>5.21.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1649,18 +1696,6 @@
             <version>0.8.0</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>5.1.14.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>5.1.14.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
             <version>0.4.8</version>
@@ -1674,11 +1709,6 @@
             <groupId>org.apiguardian</groupId>
             <artifactId>apiguardian-api</artifactId>
             <version>1.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
         </dependency>
         <dependency>
             <groupId>com.github.sarxos</groupId>
@@ -1698,6 +1728,10 @@
                 <exclusion>
                     <groupId>xml-apis</groupId>
                     <artifactId>xml-apis</artifactId>
+                </exclusion>
+                <exclusion> <!-- Use jcl-over-slf4j JCL > SLF4J Bridge instead -->
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

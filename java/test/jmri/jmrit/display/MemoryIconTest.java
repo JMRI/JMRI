@@ -1,11 +1,16 @@
 package jmri.jmrit.display;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
@@ -14,9 +19,9 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
-import org.junit.Assume;
+import org.jdom2.JDOMException;
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.QueueTool;
@@ -28,13 +33,13 @@ import org.slf4j.event.Level;
  *
  * @author Bob Jacobsen Copyright 2007, 2015
  */
+@DisabledIfHeadless
 public class MemoryIconTest extends PositionableTestBase {
 
     protected MemoryIcon to = null;
 
     @Test
     public void testShowContent() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect \"Data Data\" as text");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
@@ -56,7 +61,7 @@ public class MemoryIconTest extends PositionableTestBase {
         int r = ((colors[1] >> 16) & 0xFF) + ((colors[2] >> 16) & 0xFF) + ((colors[3] >> 16) & 0xFF) + ((colors[4] >> 16) & 0xFF);
         int g = ((colors[1] >> 8) & 0xFF) + ((colors[2] >> 8) & 0xFF) + ((colors[3] >> 8) & 0xFF) + ((colors[4] >> 8) & 0xFF);
         int b = ((colors[1]) & 0xFF) + ((colors[2]) & 0xFF) + ((colors[3]) & 0xFF) + ((colors[4]) & 0xFF);
-        Assert.assertTrue("Expect gray/black text", r == g & g == b); // gray pixels
+        assertTrue(r == g & g == b, "Expect gray/black text"); // gray pixels
         // the following assert fails on some Linux machines, but I am
         // uncertain what that implies, since the previous test verifies the
         // text is grey.
@@ -70,7 +75,6 @@ public class MemoryIconTest extends PositionableTestBase {
 
     @Test
     public void testShowBlank() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //log.debug("testShowBlank");
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect blank");
@@ -89,7 +93,7 @@ public class MemoryIconTest extends PositionableTestBase {
         int[] colors = getColor("Expect blank", "| Expect blank", 0, 6, 10);
         //for (int i=0; i< 10; i++) System.out.println("   "+String.format("0x%8s", Integer.toHexString(colors[i])).replace(' ', '0'));
         boolean white = (colors[3] == 0xffffffff) && (colors[4] == 0xffffffff);
-        Assert.assertTrue("Expect white pixels", white);
+        assertTrue(white, "Expect white pixels");
 
         if (System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
@@ -99,7 +103,6 @@ public class MemoryIconTest extends PositionableTestBase {
 
     @Test
     public void testShowEmpty() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect empty");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
@@ -117,7 +120,8 @@ public class MemoryIconTest extends PositionableTestBase {
         new QueueTool().waitEmpty();
 
         int colors[] = getColor("Expect empty", "| Expect empty", 0, 6, 10);
-        Assert.assertTrue("Expect red X", (colors[3] == 0xff800000) || (colors[4] == 0xff800000) || (colors[5] == 0xff800000));
+        assertTrue((colors[3] == 0xff800000) || (colors[4] == 0xff800000) || (colors[5] == 0xff800000),
+            "Expect red X");
 
         if (System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
@@ -126,8 +130,7 @@ public class MemoryIconTest extends PositionableTestBase {
     }
 
     @Test
-    public void testShowNumber() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testShowNumber() {
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect Number");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
@@ -145,15 +148,14 @@ public class MemoryIconTest extends PositionableTestBase {
         jf.setVisible(true);
         new QueueTool().waitEmpty();
 
-        Assert.assertFalse("No Warn Level or higher Messages", JUnitAppender.unexpectedMessageSeen(Level.WARN));
+        assertFalse(JUnitAppender.unexpectedMessageSeen(Level.WARN), "No Warn Level or higher Messages");
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
     }
 
     @Test
-    public void testShowRosterEntry() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testShowRosterEntry() throws JDOMException, IOException {
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect Roster Entry");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
@@ -172,15 +174,14 @@ public class MemoryIconTest extends PositionableTestBase {
         jf.pack();
         jf.setVisible(true);
         new QueueTool().waitEmpty();
-        Assert.assertFalse("No Warn Level or higher Messages", JUnitAppender.unexpectedMessageSeen(Level.WARN));
+        assertFalse(JUnitAppender.unexpectedMessageSeen(Level.WARN), "No Warn Level or higher Messages");
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
     }
 
     @Test
-    public void testShowIdTag() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testShowIdTag() {
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect Roster Entry");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
@@ -199,16 +200,16 @@ public class MemoryIconTest extends PositionableTestBase {
         jf.pack();
         jf.setVisible(true);
         new QueueTool().waitEmpty();
-        Assert.assertFalse("No Warn Level or higher Messages", JUnitAppender.unexpectedMessageSeen(Level.WARN));
-        Assert.assertNotNull("Label with correct text value", jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(), tag.getDisplayName()));
+        assertFalse(JUnitAppender.unexpectedMessageSeen(Level.WARN), "No Warn Level or higher Messages");
+        assertNotNull(jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(), tag.getDisplayName()),
+            "Label with correct text value");
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
     }
 
     @Test
-    public void testShowReportable() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testShowReportable() {
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect Roster Entry");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
@@ -232,8 +233,9 @@ public class MemoryIconTest extends PositionableTestBase {
         jf.pack();
         jf.setVisible(true);
         new QueueTool().waitEmpty();
-        Assert.assertFalse("No Warn Level or higher Messages", JUnitAppender.unexpectedMessageSeen(Level.WARN));
-        Assert.assertNotNull("Label with correct text value", jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(), rpt.toReportString()));
+        assertFalse(JUnitAppender.unexpectedMessageSeen(Level.WARN), "No Warn Level or higher Messages");
+        assertNotNull(jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(), rpt.toReportString()),
+            "Label with correct text value");
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
@@ -241,7 +243,6 @@ public class MemoryIconTest extends PositionableTestBase {
 
     @Test
     public void testAddKeyAndIcon() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame jf = new JmriJFrame();
         jf.setTitle("Image From Key Value");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
@@ -260,14 +261,15 @@ public class MemoryIconTest extends PositionableTestBase {
 
         new QueueTool().waitEmpty();
 
-        Assert.assertNotNull("Label with correct text value before key", jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(), "1"));
+        assertNotNull(jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(), "1"),
+            "Label with correct text value before key");
 
         to.addKeyAndIcon(icon, "1");
 
         new QueueTool().waitEmpty();
 
         new QueueTool().waitEmpty();
-        Assert.assertFalse("No Warn Level or higher Messages", JUnitAppender.unexpectedMessageSeen(Level.WARN));
+        assertFalse(JUnitAppender.unexpectedMessageSeen(Level.WARN), "No Warn Level or higher Messages");
         // we should probably verify the icon displays the correct icon here.
         // The text contents of the field are not displayed.
 
@@ -298,7 +300,7 @@ public class MemoryIconTest extends PositionableTestBase {
 
         // find a point in mid-center of memory icon - location chosen by
         // looking at v4.0.1 on Mac
-        Point p = SwingUtilities.convertPoint(jl, x, y, frame);
+        Point point = SwingUtilities.convertPoint(jl, x, y, frame);
 
         // check pixel color (from http://stackoverflow.com/questions/13307962/how-to-get-the-color-of-a-point-in-a-jpanel )
         BufferedImage image = new BufferedImage(400, 300, BufferedImage.TYPE_4BYTE_ABGR);
@@ -308,7 +310,7 @@ public class MemoryIconTest extends PositionableTestBase {
         // display a sweep of color
         int[] colors = new int[n];
         for (int i = 0; i < n; i++) {
-            int color = image.getRGB(p.x + i, p.y);
+            int color = image.getRGB(point.x + i, point.y);
             //System.err.println(" "+i+" "+String.format("0x%8s", Integer.toHexString(color)).replace(' ', '0'));
             colors[i] = color;
         }
@@ -317,18 +319,15 @@ public class MemoryIconTest extends PositionableTestBase {
         return colors;
     }
 
-    // Setup for log4J
     @Override
     @BeforeEach
     public void setUp() {
         super.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
-        if (!GraphicsEnvironment.isHeadless()) {
-            editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
-            to = new MemoryIcon("MemoryTest1", editor);
-            to.setMemory("IM1");
-            p = to;
-        }
+        editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
+        to = new MemoryIcon("MemoryTest1", editor);
+        to.setMemory("IM1");
+        p = to;
     }
 
     @Override

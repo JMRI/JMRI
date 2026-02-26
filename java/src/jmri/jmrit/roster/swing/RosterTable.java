@@ -36,7 +36,10 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 
+import jmri.BooleanPermission;
 import jmri.InstanceManager;
+import jmri.PermissionManager;
+import jmri.PermissionsSystemAdmin;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
@@ -71,6 +74,8 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
 
     private static final String ATTRIBUTE_OPERATING_DURATION = Bundle.getMessage(RosterEntry.ATTRIBUTE_OPERATING_DURATION); //avoid lots of lookups
     
+    static final PermissionManager permissionManager = InstanceManager.getDefault(PermissionManager.class);
+
     public RosterTable() {
         this(false);
     }
@@ -98,8 +103,22 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
                 if (dataModel.getColumnName(modelColumn).equals(ATTRIBUTE_OPERATING_DURATION)) {
                     return super.getCellRenderer(row, column);
                 }
-                if (modelColumn == RosterTableModel.COMMENT || modelColumn >= RosterTableModel.NUMCOL) {
+                if (modelColumn == RosterTableModel.COMMENT) {
                     return new MultiLineCellRenderer();
+                }
+                if (modelColumn >= RosterTableModel.NUMCOL) {
+                     return new MultiLineCellRenderer() {
+                        @Override
+                        protected void customize() {
+                            // permission to edit optional columns?
+                            if (! permissionManager.hasAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                                                                BooleanPermission.BooleanValue.TRUE)) {
+                                setToolTipText( Bundle.getMessage("EditRequiresPermission"));
+                            } else {
+                                setToolTipText(null);
+                            }
+                        }
+                     };
                 }
                 return super.getCellRenderer(row, column);
             }

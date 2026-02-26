@@ -1,32 +1,29 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 /**
  *
  * @author Bob Jacobsen
  */
+@DisabledIfHeadless
 public class PanelEditorTest {
 
     @Test
-    public void testShow() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testShow() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/display/valid/PanelEditorTest1.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
     }
 
     @Test
-    public void testShow2() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testShow2() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -34,8 +31,7 @@ public class PanelEditorTest {
     }
 
     @Test
-    public void testShow3() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testShow3() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/display/configurexml/load/OneOfEach.3.3.3.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -45,7 +41,7 @@ public class PanelEditorTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initConfigureManager();

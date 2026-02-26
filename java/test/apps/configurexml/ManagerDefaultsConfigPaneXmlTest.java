@@ -3,7 +3,6 @@ package apps.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * ManagerDefaultsConfigPaneXmlTest.java
@@ -16,7 +15,7 @@ public class ManagerDefaultsConfigPaneXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("ManagerDefaultsConfigPaneXml constructor",new ManagerDefaultsConfigPaneXml());
+        Assertions.assertNotNull(new ManagerDefaultsConfigPaneXml(), "ManagerDefaultsConfigPaneXml constructor");
     }
 
     @BeforeEach

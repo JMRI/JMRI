@@ -26,12 +26,12 @@ public interface LocoAddress {
 
     Protocol getProtocol();
 
+    default boolean isConsistAddress() { return false; }
+    
     enum Protocol {
 
         DCC_SHORT("dcc_short", "ProtocolDCC_Short"), // NOI18N
         DCC_LONG("dcc_long", "ProtocolDCC_Long"), // NOI18N
-        DCC_CONSIST("dcc_consist", "ProtocolDCC_Consist"), // NOI18N
-        DCC_EXTENDED_CONSIST("dcc_extended_consist", "ProtocolDCC_Extended_Consist"), // NOI18N
         DCC("dcc", "ProtocolDCC"), // NOI18N
         SELECTRIX("selectrix", "ProtocolSelectrix"), // NOI18N
         MOTOROLA("motorola", "ProtocolMotorola"), // NOI18N
@@ -49,7 +49,8 @@ public interface LocoAddress {
 
         String shortName;
         String peopleName;
-
+        boolean isConsist = false;
+        
         public String getShortName() {
             return shortName;
         }
