@@ -757,13 +757,16 @@ public class AutoActiveTrain implements ThrottleListener {
                     // are we going to reverse at end
                     if ( _activeTrain.getReverseAtEnd() ) {
                         removeCurrentSignal();
+                        _activeTrain.holdAllocation(true); //dont go anywhere until stopped.
                         stopInCurrentSection(END_REVERSAL, StopContext.DESTINATION);
                         _previousBlock = _currentBlock;
                         _nextBlock = getNextBlock(b, as);
                         _activeTrain.setNextBlock(_currentBlock, _nextBlock);
                     }
-                    // are we going continuously without delay
-                    else if ( _activeTrain.getResetWhenDone() && _activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
+                    // are we going continuously without delay for round and round
+                    else if ( _activeTrain.getResetWhenDone()
+                            && _activeTrain.getDelayedRestart() == ActiveTrain.NODELAY
+                            && !_activeTrain.isTransitReversed()) {
                         _activeTrain.setRestart(_activeTrain.getDelayedRestart(),_activeTrain.getRestartDelay(),
                                 _activeTrain.getRestartSensor(),_activeTrain.getResetRestartSensor());
                         _activeTrain.setTransitReversed(false);
@@ -810,6 +813,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     // are we coming back from a reverse and running continiuosly
                     if ( _activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed() ) {
                         removeCurrentSignal();
+                        _activeTrain.holdAllocation(true);
                         stopInCurrentSection(BEGINNING_RESET, StopContext.DESTINATION);
                         _previousBlock = _currentBlock;
                         _nextBlock = getNextBlock(b, as);
@@ -1958,7 +1962,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                     if ((tBlock != null) && (tBlock.getState() == Block.OCCUPIED)) {
                         _stoppingBlock = tBlock;
-                        setStopByBlockOccupancy(false);
+                        setStopByBlockOccupancy(true);
                     } else {
                         setStopNow();
                     }
@@ -2662,6 +2666,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 throttle.setSpeedSetting(-1);
                 return;
             }
+
             // Physics ramp: only if enabled AND speed profile exists for current direction
             boolean physicsRamp = (ramping == RAMP_PHYSICS);
             boolean forward = getIsForward();
