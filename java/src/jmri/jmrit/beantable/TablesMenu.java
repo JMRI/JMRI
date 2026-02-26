@@ -96,8 +96,8 @@ public class TablesMenu extends JMenu {
             saveButton.addActionListener((java.awt.event.ActionEvent ev) -> {
                 prefMgr.setProperty("jmri.jmrit.ToolsMenu", "showTablesMenu", showTablesMenu.isSelected());
                 JOptionPane.showMessageDialog(f,
+                        Bundle.getMessage("RestartRequiredHint"),
                         Bundle.getMessage("RestartRequired"),
-                        Bundle.getMessage("RestartRequiredTitle"),
                         JOptionPane.INFORMATION_MESSAGE);
             });
 
