@@ -220,6 +220,7 @@ public interface ConfigureManager {
      * @param file to be backed up
      * @return true if successful
      */
+    @CheckReturnValue
     boolean makeBackup(File file);
 
     /**
