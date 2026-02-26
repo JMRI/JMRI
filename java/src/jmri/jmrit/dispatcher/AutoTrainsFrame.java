@@ -601,7 +601,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                         tmpIsForward = false;
                     }
                     Object[] options = {Bundle.getMessage("AutoTrainsFrameUseImpliedDirection",getDirString(tmpIsForward)),
-                            Bundle.getMessage("AutoTrainsFrameRestoreSaved",autoActiveTrain.getSavedDirection()),
+                            Bundle.getMessage("AutoTrainsFrameRestoreSaved",getDirString(autoActiveTrain.getSavedDirection())),
                             Bundle.getMessage("AutoTrainsFrameUseCurrent",getDirString(autoActiveTrain.getForward())) };
                     if ( tmpIsForward != autoActiveTrain.getSavedDirection() ||
                             tmpIsForward != autoActiveTrain.getForward()) {

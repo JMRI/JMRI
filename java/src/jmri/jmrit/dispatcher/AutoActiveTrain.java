@@ -1167,10 +1167,6 @@ public class AutoActiveTrain implements ThrottleListener {
 
     @CheckForNull
     private Block getNextBlock(Block b, AllocatedSection as) {
-//        if ((_currentBlock == _activeTrain.getStartBlock())
-//                && _activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed()
-//                && (as.getSequence() == _activeTrain.getStartBlockSectionSequenceNumber()))
-//            return _previousBlock;
         if (as.getNextSection() != null) {
             EntryPoint ep = as.getSection().getExitPointToSection(_nextSection, as.getDirection());
             if ((ep != null) && (ep.getBlock() == b))

@@ -458,7 +458,13 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Stop train immediately if it has no occupied section.</li>
+             <li>Stop train immediately if it has no occupied section, or
+                 blocks go active in the wrong order. This behaviour can be turned off
+                 in dispatcher options.</li>
+             <li>Add the current, next block and train held status to the dispatcher screen.</li>
+             <li>When resuming from a failure, inform user where the head of train needs to be
+                 or which block needs to be cleared. If they have being using Manual
+                 present them with choice about the direction.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
