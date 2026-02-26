@@ -6,9 +6,6 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * A PerformFileModel object loads an xml file when the program is started.
  *
@@ -18,7 +15,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PerformFileModel extends AbstractStartupModel {
 
-    private final static Logger log = LoggerFactory.getLogger(PerformFileModel.class);
 
     public String getFileName() {
         return this.getName();
@@ -36,7 +32,13 @@ public class PerformFileModel extends AbstractStartupModel {
         File file = new File(this.getFileName());
         ConfigureManager cm = InstanceManager.getNullableDefault(ConfigureManager.class);
         if (cm != null) {
-            cm.load(file);
+            boolean load = cm.load(file);
+            if (!load) {
+                log.error("Could not load file {}", getFileName());
+            }
         }
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PerformFileModel.class);
+
 }

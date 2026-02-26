@@ -868,13 +868,16 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         frame.setVisible(true);
     }
 
-    static protected void loadFile(String name) {
+    protected static void loadFile(String name) {
         ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cmOD != null) {
             URL pFile = cmOD.find(name);
             if (pFile != null) {
                 try {
-                    cmOD.load(pFile);
+                    boolean load = cmOD.load(pFile);
+                    if (!load) {
+                        log.error("Failed to load file:{}", pFile);
+                    }
                 } catch (JmriException e) {
                     log.error("Unhandled problem in loadFile", e);
                 }
