@@ -108,7 +108,7 @@ public class ToolsMenu extends JMenu {
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemRailComTable"), "jmri.jmrit.beantable.RailComTableAction"));
         
         tableMenu.add(new JSeparator());
-        JMenuItem settingsItem = new JMenuItem("Settings");
+        JMenuItem settingsItem = new JMenuItem(Bundle.getMessage("MenuItemTablesSettings"));
         tableMenu.add(settingsItem);
         settingsItem.addActionListener((ActionEvent e) -> {
             JmriJFrame f = new JmriJFrame("Settings");
