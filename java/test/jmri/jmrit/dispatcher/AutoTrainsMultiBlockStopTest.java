@@ -202,9 +202,11 @@ public class AutoTrainsMultiBlockStopTest {
             }, "Should have stop on block 2 inactive.");
 
         JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval/2);
         bo.push();
         // wait for cleanup to finish
-        JUnitUtil.waitFor(200);
+        JUnitUtil.waitFor(waitInterval);
 
         assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
         resetSensors(sm);
@@ -319,10 +321,11 @@ public class AutoTrainsMultiBlockStopTest {
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() == 0.0f;
             }, "Should have stop on block 2 inactive.");
-
-         bo.push();
         // wait for cleanup to finish
-        JUnitUtil.waitFor(200);
+        JUnitUtil.waitFor(waitInterval/2);
+        bo.push();
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval);
 
         assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
         resetSensors(sm);
@@ -434,9 +437,11 @@ public class AutoTrainsMultiBlockStopTest {
             return aat.getThrottle().getSpeedSetting() == 0.0f;
             }, "Should have stop on block 4 inactive.");
 
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval/2);
         bo.push();
         // wait for cleanup to finish
-        JUnitUtil.waitFor(200);
+        JUnitUtil.waitFor(waitInterval);
 
         assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
         resetSensors(sm);
@@ -549,9 +554,11 @@ public class AutoTrainsMultiBlockStopTest {
             return aat.getThrottle().getSpeedSetting() == 0.0f;
             }, "Should have stop on block 6 inactive.");
 
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval/2);
         bo.push();
         // wait for cleanup to finish
-        JUnitUtil.waitFor(200);
+        JUnitUtil.waitFor(waitInterval);
 
         assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
         resetSensors(sm);
@@ -662,10 +669,11 @@ public class AutoTrainsMultiBlockStopTest {
         JUnitUtil.waitFor(() -> {
             return aat.getThrottle().getSpeedSetting() == 0.0f;
             }, "Should have stop on block 5 inactive.");
-
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval/2);
         bo.push();
         // wait for cleanup to finish
-        JUnitUtil.waitFor(200);
+        JUnitUtil.waitFor(waitInterval);
 
         assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
         resetSensors(sm);
@@ -776,9 +784,11 @@ public class AutoTrainsMultiBlockStopTest {
             return aat.getThrottle().getSpeedSetting() == 0.0f;
             }, "Should have stop on block 6 inactive.");
 
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval/2);
         bo.push();
         // wait for cleanup to finish
-        JUnitUtil.waitFor(200);
+        JUnitUtil.waitFor(waitInterval);
 
         assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
 
@@ -940,6 +950,8 @@ public class AutoTrainsMultiBlockStopTest {
             }, "Should have stop on Block 2 inactive.");
 
         JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval/2);
         bo.push();
         
         // wait for cleanup to finish
@@ -1101,6 +1113,8 @@ public class AutoTrainsMultiBlockStopTest {
             }, "Still stop on block 1 inactive,  block 2, 3 still active");
 
         JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval/2);
         bo.push();
         
         // wait for cleanup to finish
@@ -1279,6 +1293,8 @@ public class AutoTrainsMultiBlockStopTest {
             }, "Still stop on block 4-1 inactive,  block 1, 2, 3 still active");
 
         JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval/2);
         bo.push();
         
         // wait for cleanup to finish
@@ -1444,6 +1460,8 @@ public class AutoTrainsMultiBlockStopTest {
             }, () -> "1 section clear speed medium "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
         // begin 3rd loop keep going...done terminate test.        
         JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval/2);
         bo.push();
         
         // wait for cleanup to finish
@@ -1608,6 +1626,8 @@ public class AutoTrainsMultiBlockStopTest {
             }, "And going again failed.");
 
         JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval/2);
         bo.push();
         
         // wait for cleanup to finish
