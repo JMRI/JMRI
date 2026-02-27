@@ -34,6 +34,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
     private JCheckBox cbHideSpeedSelector;
     private JCheckBox cbIgnoreThrottlePosition;
     private JCheckBox cbSaveThrottleOnLayoutSave;
+    private JCheckBox cbAddressSelectorShowingAllRosterGroup;
     private JCheckBox cbSilentSteal;
     private JCheckBox cbSilentShare;
     private JTextField tfDefaultThrottleLocation;
@@ -61,6 +62,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbEnableAutoLoad = new JCheckBox();
         cbHideUndefinedButtons = new JCheckBox();
         cbHideSpeedSelector = new JCheckBox();
+        cbAddressSelectorShowingAllRosterGroup = new JCheckBox();
         cbIgnoreThrottlePosition = new JCheckBox();
         cbSaveThrottleOnLayoutSave = new JCheckBox();
         cbSilentSteal = new JCheckBox();
@@ -77,6 +79,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbEnableAutoLoad.setText(Bundle.getMessage("ExThrottleEnableAutoSave"));
         cbHideUndefinedButtons.setText(Bundle.getMessage("ExThrottleHideUndefinedFunctionButtons"));
         cbHideSpeedSelector.setText(Bundle.getMessage("ExThrottleCheckBoxHideSpeedStepSelector"));
+        cbAddressSelectorShowingAllRosterGroup.setText(Bundle.getMessage("ExThrottleCheckBoxAddressSelectorShowingAllRosterGroup"));
         cbIgnoreThrottlePosition.setText(Bundle.getMessage("ExThrottleIgnoreThrottlePosition"));
         cbSaveThrottleOnLayoutSave.setText(Bundle.getMessage("ExThrottleSaveThrottleOnLayoutSave"));
         cbSilentSteal.setText(Bundle.getMessage("ExThrottleSilentSteal"));
@@ -95,6 +98,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbEnableAutoLoad.addActionListener(dirtyAL);
         cbHideUndefinedButtons.addActionListener(dirtyAL);
         cbHideSpeedSelector.addActionListener(dirtyAL);
+        cbAddressSelectorShowingAllRosterGroup.addActionListener(dirtyAL);
         cbIgnoreThrottlePosition.addActionListener(dirtyAL);     
         cbSaveThrottleOnLayoutSave.addActionListener(dirtyAL);     
         cbSilentSteal.addActionListener(dirtyAL);     
@@ -174,6 +178,9 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         
         constraints.gridy++;
         this.add(cbHideSpeedSelector, constraints);
+        
+        constraints.gridy++;
+        this.add(cbAddressSelectorShowingAllRosterGroup, constraints);
 
         constraints.gridy++;
         this.add(cbUseFunctionIcon, constraints);
@@ -217,6 +224,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbEnableAutoLoad.setSelected(tp.isAutoLoading());
         cbHideUndefinedButtons.setSelected(tp.isHidingUndefinedFuncButt());
         cbHideSpeedSelector.setSelected(tp.isHidingSpeedStepSelector());
+        cbAddressSelectorShowingAllRosterGroup.setSelected(tp.isAddressSelectorShowingAllRosterGroup());
         cbIgnoreThrottlePosition.setSelected(tp.isIgnoringThrottlePosition());
         cbUseLargeSpeedSlider.setSelected(tp.isUsingLargeSpeedSlider());
         cbSilentSteal.setSelected(tp.isSilentSteal());
@@ -239,6 +247,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         tp.setAutoLoad(cbEnableAutoLoad.isSelected());
         tp.setHideUndefinedFuncButt(cbHideUndefinedButtons.isSelected());
         tp.setHideSpeedStepSelector(cbHideSpeedSelector.isSelected());
+        tp.setAddressSelectorShowingAllRosterGroup(cbAddressSelectorShowingAllRosterGroup.isSelected());
         tp.setIgnoreThrottlePosition(cbIgnoreThrottlePosition.isSelected());        
         tp.setUseLargeSpeedSlider(cbUseLargeSpeedSlider.isSelected());
         tp.setDefaultThrottleFilePath(tfDefaultThrottleLocation.getText());
@@ -255,6 +264,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbResizeWinImg.setEnabled(cbUseExThrottle.isSelected() && cbUseRosterImage.isSelected());
         cbHideUndefinedButtons.setEnabled(cbUseExThrottle.isSelected());
         cbHideSpeedSelector.setEnabled(cbUseExThrottle.isSelected());
+        cbAddressSelectorShowingAllRosterGroup.setEnabled(cbUseExThrottle.isSelected());
         cbIgnoreThrottlePosition.setEnabled(cbUseExThrottle.isSelected() && cbEnableAutoLoad.isSelected());
         cbUseLargeSpeedSlider.setEnabled(cbUseExThrottle.isSelected());
         if (cbUseExThrottle.isSelected()) {

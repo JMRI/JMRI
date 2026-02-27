@@ -37,6 +37,7 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
     private boolean _hideSpeedStepSelector = false;
     private boolean _ignoreThrottlePosition = true;
     private boolean _saveThrottleOnLayoutSave = true;
+    private boolean _isAddressSelectorShowingAllRosterGroup = false;
     private boolean _isSilentSteal = false;
     private boolean _isSilentShare = false;
     private String _defaultThrottleFilePath = null;
@@ -118,7 +119,10 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
         }
         if ((a = e.getAttribute("isHidingSpeedStepSelector")) != null) {
             setHideSpeedStepSelector(a.getValue().compareTo("true") == 0);
-        }        
+        }
+        if ((a = e.getAttribute("isAddressSelectorShowingAllRosterGroup")) != null) {
+            setAddressSelectorShowingAllRosterGroup(a.getValue().compareTo("true") == 0);
+        }                 
         if (e.getChild("throttlesControls") != null) {
             this._tpwkc.load(e.getChild("throttlesControls"));
         }
@@ -162,6 +166,7 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
         e.setAttribute("isHidingSpeedStepSelector", "" + isHidingSpeedStepSelector());
         e.setAttribute("isUsingLargeSpeedSlider", "" + isUsingLargeSpeedSlider());
         e.setAttribute("defaultThrottleFilePath", "" + getDefaultThrottleFilePath());
+        e.setAttribute("isAddressSelectorShowingAllRosterGroup", "" + isAddressSelectorShowingAllRosterGroup());
         java.util.ArrayList<Element> children = new java.util.ArrayList<>(1);
         children.add(this._tpwkc.store());
         e.setContent(children);
@@ -186,7 +191,8 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
         setThrottlesKeyboardControls(tp.getThrottlesKeyboardControls());
         setDefaultThrottleFilePath(tp.getDefaultThrottleFilePath());
         setHideSpeedStepSelector(tp.isHidingSpeedStepSelector());
-
+        setAddressSelectorShowingAllRosterGroup(tp.isAddressSelectorShowingAllRosterGroup());
+        
         if (listeners != null) {
             for (int i = 0; i < listeners.size(); i++) {
                 PropertyChangeListener l = listeners.get(i);
@@ -386,6 +392,15 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
 
     public void setHideSpeedStepSelector(boolean b) {
         _hideSpeedStepSelector = b;
+        this.dirty = true;
+    }
+    
+    boolean isAddressSelectorShowingAllRosterGroup() {
+        return _isAddressSelectorShowingAllRosterGroup;
+    }
+    
+    public void setAddressSelectorShowingAllRosterGroup(boolean b) {
+        _isAddressSelectorShowingAllRosterGroup = b;
         this.dirty = true;
     }
 

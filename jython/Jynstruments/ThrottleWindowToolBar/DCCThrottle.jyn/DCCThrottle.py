@@ -30,9 +30,13 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
     
     def init(self):
         self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
-        self.addressPanel = self.getContext().getCurrentThrottleFrame().getAddressPanel()
-        self.addressPanel.addAddressListener(self) # change of throttle in Current frame
-        self.panelThrottle = self.getContext().getCurrentThrottleFrame().getAddressPanel().getThrottle() # the throttle
+        if (self.getContext().getCurrentThrottleFrame() != None) :
+            self.addressPanel = self.getContext().getCurrentThrottleFrame().getAddressPanel()
+            self.addressPanel.addAddressListener(self) # change of throttle in Current frame
+            self.panelThrottle = self.getContext().getCurrentThrottleFrame().getAddressPanel().getThrottle() # the throttle
+        else :
+            self.addressPanel = None
+            self.panelThrottle = None
         self.label = JButton(ImageIcon(self.getFolder() + "/DCCThrottle.png","DCCThrottle")) #label
         self.label.addMouseListener(self.getMouseListeners()[0]) # In order to get the popupmenu on the button too
         self.add(self.label)
@@ -57,7 +61,7 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
 
     #Property listener part
     def propertyChange(self, event):
-        if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
+        if (event.propertyName.startswith("ThrottleFrame")) :  # Current throttle frame changed
             if event.oldValue != None :
                 event.oldValue.getAddressPanel().removeAddressListener(self)
             if event.newValue != None :
@@ -152,13 +156,13 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
     def notifyAddressReleased(self, address):
         self.panelThrottle = None
 
-    def notifyConsistAddressChosen(self, address, isLong):
+    def notifyConsistAddressChosen(self, address):
         self.notifyAddressChosen(address)
 
     def notifyConsistAddressThrottleFound(self, throttle):
         self.notifyAddressThrottleFound(throttle)
 
-    def notifyConsistAddressReleased(self, address, isLong):
+    def notifyConsistAddressReleased(self, address):
         self.notifyAddressReleased(address)
     
 

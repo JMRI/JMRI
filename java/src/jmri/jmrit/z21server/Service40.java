@@ -7,14 +7,11 @@ import java.net.InetAddress;
 import java.util.Arrays;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
-import java.util.Iterator;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
-import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
-import jmri.DccThrottle;
 
 /**
  * Handle X-BUS Protokoll (header type 0x40).
@@ -295,14 +292,8 @@ public class Service40 {
  * @return a response packet to be sent to the client or null if nothing is to sent (yet).
  */
     private static byte[] handleHeader80() {
-        log.info("{} Stop all locos", moduleIdent);
-        Iterator<ThrottleFrame> tpi = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().iterator();
-        while (tpi.hasNext()) {
-            DccThrottle t = tpi.next().getAddressPanel().getThrottle();
-            if (t != null) {
-                t.setSpeedSetting(-1);
-            }
-        }
+        log.info("{} Stop all locos", moduleIdent);        
+        InstanceManager.getDefault(ThrottleFrameManager.class).emergencyStopAll();
         // send LAN_X_BC_STOPPED packet
         byte[] stoppedPacket =  new byte[7];
         stoppedPacket[0] = (byte) 0x07;

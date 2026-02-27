@@ -285,9 +285,9 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 tc.sendCanMessage(msg, null);
                 break;
             case LAUNCH_THROTTLE:
-                var tf = InstanceManager.getDefault(jmri.jmrit.throttle.ThrottleFrameManager.class).createThrottleFrame();
+                var tf = InstanceManager.getDefault(jmri.jmrit.throttle.ThrottleFrameManager.class).createThrottleController();
                 tf.toFront();
-                tf.getAddressPanel().setCurrentAddress(_mainArray.get(row).getLocoAddr() );
+                tf.setAddress(_mainArray.get(row).getLocoAddr() );
                 break;
             default:
                 log.warn("Failed to set value at column {}",col);

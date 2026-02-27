@@ -151,7 +151,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                     //log.debug("No default throttle layout, creating an empty throttle window");
                     // open a new throttle window and get its components
                     throttleWindow = tfManager.createThrottleWindow();
-                    activeThrottleFrame = throttleWindow.addThrottleFrame();
+                    activeThrottleFrame = (ThrottleFrame) throttleWindow.newThrottleController();
                 }
                 // move throttle on screen so multiple throttles don't overlay each other
                 //throttleWindow.setLocation(400 * numThrottles, 50 * numThrottles);
@@ -518,7 +518,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                     }
 
                     activeThrottleFrame = (ThrottleFrame) object;
-                    throttleWindow = activeThrottleFrame.getThrottleWindow();
+                    throttleWindow = activeThrottleFrame.getThrottleControllersContainer();
 
                     throttleWindow.addPropertyChangeListener(this);
                     activeThrottleFrame.addPropertyChangeListener(this);

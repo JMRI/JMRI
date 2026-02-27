@@ -1,10 +1,12 @@
 package jmri.jmrix.marklin;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.ThrottleManager;
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +17,7 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",instance);
+        assertNotNull(instance, "exists");
     }
 
     /**
@@ -26,7 +28,7 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetIsForward() {
         boolean expResult = true;
         boolean result = instance.getIsForward();
-        Assert.assertEquals(expResult, result);
+        assertEquals(expResult, result);
     }
 
     /**
@@ -37,7 +39,7 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetSpeedIncrement() {
         float expResult = 1.0F/28.0F;
         float result = instance.getSpeedIncrement();
-        Assert.assertEquals(expResult, result, 0.0);
+        assertEquals(expResult, result, 0.0);
     }
 
     /**
@@ -48,7 +50,7 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetSpeedStepMode() {
         SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_28;
         SpeedStepMode result = instance.getSpeedStepMode();
-        Assert.assertEquals(expResult, result);
+        assertEquals(expResult, result);
     }
 
     /**

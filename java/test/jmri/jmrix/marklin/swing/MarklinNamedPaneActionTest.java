@@ -1,12 +1,9 @@
 package jmri.jmrix.marklin.swing;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -15,19 +12,19 @@ import org.junit.Assume;
 public class MarklinNamedPaneActionTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
         jmri.jmrix.marklin.MarklinSystemConnectionMemo memo = new jmri.jmrix.marklin.MarklinSystemConnectionMemo();
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Marklin Named Pane Test");
         MarklinNamedPaneAction t = new MarklinNamedPaneAction("Test Action",jf,"test",memo);
-        Assert.assertNotNull("exists",t);
-        jf.dispose();
+        Assertions.assertNotNull(t, "exists");
+        JUnitUtil.dispose(jf);
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @AfterEach

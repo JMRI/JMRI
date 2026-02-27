@@ -31,6 +31,7 @@ import javax.swing.JFrame;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Metadata;
+import jmri.PermissionManager;
 import jmri.server.json.JsonServerPreferences;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
@@ -154,6 +155,10 @@ public class JsonUtilHttpService extends JsonHttpService {
             case JSON.RAILROAD:
                 InstanceManager.getDefault(WebServerPreferences.class).setRailroadName(name);
                 break;
+            case JSON.SESSION_LOGIN:
+                return this.postSessionLogin(name, data, request);
+            case JSON.SESSION_LOGOUT:
+                return this.postSessionLogout(name, data, request);
             default:
                 log.debug("Received unexpected POST command: '{}'", type);
                 break;
@@ -542,6 +547,78 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     /**
+     * Handle session login request.
+     *
+     * @param username the username (may be null if not provided in path)
+     * @param data JSON data containing username and password
+     * @param request the JSON request
+     * @return JSON response with session token or error
+     * @throws JsonException if login fails or parameters are missing
+     */
+    private JsonNode postSessionLogin(@CheckForNull String username, JsonNode data, JsonRequest request) throws JsonException {
+        // Extract username and password from JSON data
+        String user = username != null ? username : data.path("username").asText("");
+        String password = data.path("password").asText("");
+
+        if (user.isEmpty()) {
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                    Bundle.getMessage(request.locale, "ErrorMissingParameter", "username"), request.id);
+        }
+
+        PermissionManager mngr = InstanceManager.getDefault(PermissionManager.class);
+
+        // Check if guest user
+        if (mngr.isAGuestUser(user)) {
+            throw new JsonException(HttpServletResponse.SC_FORBIDDEN,
+                    Bundle.getMessage(request.locale, "ErrorGuestLogin"), request.id);
+        }
+
+        // Attempt login
+        StringBuilder sessionId = new StringBuilder("");
+        boolean result = mngr.remoteLogin(sessionId, request.locale, user, password);
+
+        if (!result) {
+            throw new JsonException(HttpServletResponse.SC_UNAUTHORIZED,
+                    Bundle.getMessage(request.locale, "ErrorInvalidCredentials"), request.id);
+        }
+
+        // Build success response
+        ObjectNode root = mapper.createObjectNode();
+        root.put(TYPE, JSON.SESSION_LOGIN);
+        ObjectNode dataNode = root.putObject(JSON.DATA);
+        dataNode.put("authenticationToken", sessionId.toString());
+
+        log.debug("Successful login for user: {}", user);
+        return root;
+    }
+
+    /**
+     * Handle session logout request.
+     *
+     * @param username the username (may be null)
+     * @param data JSON data containing session token or username
+     * @param request the JSON request
+     * @return JSON response confirming logout
+     * @throws JsonException if logout fails
+     */
+    private JsonNode postSessionLogout(@CheckForNull String username, JsonNode data, JsonRequest request) throws JsonException {
+        // Extract token
+        String token = data.path("token").asText("");
+
+        PermissionManager mngr = InstanceManager.getDefault(PermissionManager.class);
+        mngr.remoteLogout(token);
+
+        // Build success response
+        ObjectNode root = mapper.createObjectNode();
+        root.put(TYPE, JSON.SESSION_LOGOUT);
+        ObjectNode dataNode = root.putObject(JSON.DATA);
+        dataNode.put("authenticationToken", token);
+
+        log.debug("Successful logout for token: {}", token);
+        return root;
+    }
+
+    /**
      * Gets the {@link jmri.DccLocoAddress} for a String in the form
      * {@code number(type)} or {@code number}.
      * <p>
@@ -623,6 +700,8 @@ public class JsonUtilHttpService extends JsonHttpService {
                 case JSON.NODE:
                 case JSON.RAILROAD:
                 case JSON.VERSION:
+                case JSON.SESSION_LOGIN:
+                case JSON.SESSION_LOGOUT:
                     return doSchema(type,
                             server,
                             RESOURCE_PATH + type + "-server.json",

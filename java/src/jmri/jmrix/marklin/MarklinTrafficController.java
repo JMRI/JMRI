@@ -97,7 +97,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
 
     /**
      * Marklin doesn't support this function.
-     * @return empty Marklin Message.
+     * @return null as no message is needed.
      */
     @Override
     protected AbstractMRMessage enterProgMode() {
@@ -106,7 +106,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
 
     /**
      * Marklin doesn't support this function.
-     * @return empty Marklin Message.
+     * @return null as no message is needed.
      */
     @Override
     protected AbstractMRMessage enterNormalMode() {

@@ -2,7 +2,6 @@ package jmri.jmrix.marklin.configurexml;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,7 +15,7 @@ public class MarklinSensorManagerXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("MarklinSensorManagerXml constructor",new MarklinSensorManagerXml());
+        Assertions.assertNotNull(new MarklinSensorManagerXml(), "MarklinSensorManagerXml constructor");
     }
 
     @BeforeEach
