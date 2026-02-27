@@ -1,7 +1,11 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+            <li>Network connections now take their host name/address and port number
+                from the per-node individual configuration, if available,
+                and from the shared configurations if not.  This will allow
+                you to have different host name/address for different
+                computers sharing the same JMRI profile.</li>
         </ul>
 
         <h4>Acela CTI</h4>
@@ -441,6 +445,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
+            <li>If multiple roster entries are selected, contextual menu allows opening a throttle window with a controler for each selected roster entries.</li>
+            <li>Drag'n drop of roster entries to the throttle list window is now allowed and will create new throttle control in the targetted window.</li>
             <li>Added a new (optional) 
                 <a href="https://www.jmri.org/help/en/package/jmri/jmrit/permission/PermissionManager.shtml">Permission</a>
                 to control whether the user can
@@ -536,6 +542,7 @@
         <a id="Roster" name="Roster"></a>
         <ul>
             <li>Improved the locomotive image resolution in printed rosters.</li>
+            <li>Increased the size of the roster preview so that it matches the paper size and improved text legibility.</li>
             <li>Update "Export Complete Roster" process so that
                 upon "Import Complete Roster" the images will
                 properly display without the need to rebuild the roster.</li>
@@ -603,7 +610,10 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Throttle list window is now displaying one column for each throttle window, each column showing the throttles for that window</li>
+            <li>Throttle list window allows drag'n drop from one window to another</li>
+            <li>A throttle preference allows to enable the "ALL" roster group in the roster group seletor of the address panel</li>
+            <li>Some interfaces introduced between sing implementation anf throttle controlers</li>            
         </ul>
 
     <h3>Timetable</h3>
@@ -673,6 +683,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>When printing on MacOS, selecting a specific page range to print does not work correctly. This is a known Java issue. The workaround is to print the entire document to PDF, and then use a PDF reader to select the pages to print.</li>
         </ul>
 

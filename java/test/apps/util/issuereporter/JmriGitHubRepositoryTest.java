@@ -3,7 +3,6 @@ package apps.util.issuereporter;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Minimal test skeleton for JmriGitHubRepository class
@@ -12,7 +11,8 @@ public class JmriGitHubRepositoryTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("JmriGitHubRepository constructor", new JmriGitHubRepository());
+        Assertions.assertNotNull(new JmriGitHubRepository(),
+            "JmriGitHubRepository constructor");
     }
 
     @BeforeEach

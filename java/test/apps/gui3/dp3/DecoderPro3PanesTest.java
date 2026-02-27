@@ -3,7 +3,6 @@ package apps.gui3.dp3;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class DecoderPro3PanesTest {
     @Test
     public void testCTor() {
         DecoderPro3Panes t = new DecoderPro3Panes();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

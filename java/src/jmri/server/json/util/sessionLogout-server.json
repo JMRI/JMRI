@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "jmri-json-sessionLogout-server-message",
+    "type": "object",
+    "description": "Schema data object in message from server to client for type \"sessionLogout\"",
+    "properties": {
+        "authenticationToken": {
+            "type": ["string"],
+            "description": "The authentication token which was invalidated"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["authenticationToken"]
+}

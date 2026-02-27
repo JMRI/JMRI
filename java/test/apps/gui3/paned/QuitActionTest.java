@@ -1,13 +1,10 @@
 package apps.gui3.paned;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.JFrameInterface;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -16,11 +13,11 @@ import org.junit.Assume;
 public class QuitActionTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrameInterface w = new JFrameInterface(new jmri.util.JmriJFrame("foo"));
         QuitAction t = new QuitAction("test",w);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

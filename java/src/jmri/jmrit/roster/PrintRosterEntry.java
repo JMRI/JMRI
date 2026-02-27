@@ -249,7 +249,7 @@ public class PrintRosterEntry implements PaneContainer {
         HardcopyWriter w;
         try {
             w = new HardcopyWriter(_parent, _rosterEntry.getId(), null, null, 10,
-            .8 * 72, .5 * 72, .5 * 72, .5 * 72, preview, null, null, null, null, null);
+            .5 * 72, .5 * 72, .5 * 72, .5 * 72, preview, null, null, null, null, null);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;

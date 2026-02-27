@@ -1,15 +1,12 @@
 package apps.startup;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JFileChooser;
 
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -18,12 +15,12 @@ import org.junit.Assume;
 public class ScriptButtonPanelTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("Script Button Panel Test");
         JFileChooser jfc = new JFileChooser();
         ScriptButtonPanel t = new ScriptButtonPanel(jfc,jf);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
         JUnitUtil.dispose(jf);
     }
 

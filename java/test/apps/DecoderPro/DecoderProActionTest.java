@@ -3,7 +3,6 @@ package apps.DecoderPro;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class DecoderProActionTest {
     @Test
     public void testCTor() {
         DecoderProAction t = new DecoderProAction();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

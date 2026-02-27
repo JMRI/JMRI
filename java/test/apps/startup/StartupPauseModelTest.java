@@ -1,26 +1,17 @@
 package apps.startup;
 
-import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.jupiter.api.BeforeAll;
 
 /**
  *
  * @author Randall Wood (C) 2016
  */
 public class StartupPauseModelTest {
-    
-    public StartupPauseModelTest() {
-    }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
     
     @BeforeEach
     public void setUp() {
@@ -39,16 +30,16 @@ public class StartupPauseModelTest {
     public void testGetName() {
         StartupPauseModel model = new StartupPauseModel();
         // even though model is invalid by default return name as if valid
-        Assert.assertNotNull(model.getName());
-        Assert.assertEquals(Bundle.getMessage("StartupPauseModel.name", model.getDelay()), model.getName());
+        assertNotNull(model.getName());
+        assertEquals(Bundle.getMessage("StartupPauseModel.name", model.getDelay()), model.getName());
         model.setDelay(0);
-        Assert.assertNotNull(model.getName());
-        Assert.assertEquals(Bundle.getMessage("StartupPauseModel.name", model.getDelay()), model.getName());
+        assertNotNull(model.getName());
+        assertEquals(Bundle.getMessage("StartupPauseModel.name", model.getDelay()), model.getName());
         model.setDelay(StartupPauseModel.DEFAULT_DELAY);
-        Assert.assertNotNull(model.getName());
-        Assert.assertEquals(Bundle.getMessage("StartupPauseModel.name", model.getDelay()), model.getName());
+        assertNotNull(model.getName());
+        assertEquals(Bundle.getMessage("StartupPauseModel.name", model.getDelay()), model.getName());
         model.setDelay(-1); // invalid
-        Assert.assertNotNull(model.getName());
+        assertNotNull(model.getName());
     }
 
     /**
@@ -57,13 +48,13 @@ public class StartupPauseModelTest {
     @Test
     public void testIsValid() {
         StartupPauseModel model = new StartupPauseModel();
-        Assert.assertFalse(model.isValid());
+        assertFalse(model.isValid());
         model.setDelay(0);
-        Assert.assertTrue(model.isValid());
+        assertTrue(model.isValid());
         model.setDelay(StartupPauseModel.DEFAULT_DELAY);
-        Assert.assertTrue(model.isValid());
+        assertTrue(model.isValid());
         model.setDelay(-1);
-        Assert.assertFalse(model.isValid());
+        assertFalse(model.isValid());
     }
 
     /**
@@ -72,13 +63,13 @@ public class StartupPauseModelTest {
     @Test
     public void testGetDelay() {
         StartupPauseModel model = new StartupPauseModel();
-        Assert.assertEquals(-1, model.getDelay());
+        assertEquals(-1, model.getDelay());
         model.setDelay(0);
-        Assert.assertEquals(0, model.getDelay());
+        assertEquals(0, model.getDelay());
         model.setDelay(StartupPauseModel.DEFAULT_DELAY);
-        Assert.assertEquals(10, model.getDelay());
+        assertEquals(10, model.getDelay());
         model.setDelay(-1);
-        Assert.assertEquals(-1, model.getDelay());
+        assertEquals(-1, model.getDelay());
     }
 
     /**
@@ -87,13 +78,13 @@ public class StartupPauseModelTest {
     @Test
     public void testSetDelay() {
         StartupPauseModel model = new StartupPauseModel();
-        Assert.assertEquals(-1, model.getDelay());
+        assertEquals(-1, model.getDelay());
         model.setDelay(0);
-        Assert.assertEquals(0, model.getDelay());
+        assertEquals(0, model.getDelay());
         model.setDelay(StartupPauseModel.DEFAULT_DELAY);
-        Assert.assertEquals(10, model.getDelay());
+        assertEquals(10, model.getDelay());
         model.setDelay(-1);
-        Assert.assertEquals(-1, model.getDelay());
+        assertEquals(-1, model.getDelay());
     }
     
 }

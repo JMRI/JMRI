@@ -141,8 +141,6 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
                                                                writer.getFontSize() / 2);
             }
 
-            log.info("Columns: {}", columns);
-
             writer.setColumns(columns);                                            
             String headerText = "";
             // IDCOL (= Filename)

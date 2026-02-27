@@ -397,23 +397,20 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     }
 
     /**
-     * Initialize only once the MaximumSize for the screen
-     */
-    private final Dimension maxSizeDimension = getMaximumSize();
-
-    /**
      * Tries to get window to fix entirely on screen. First choice is to move
      * the origin up and left as needed, then to make the window smaller
      */
     void reSizeToFitOnScreen() {
         int width = this.getPreferredSize().width;
         int height = this.getPreferredSize().height;
+        Dimension maxSizeDimension = getMaximumSize();
         log.trace("reSizeToFitOnScreen of \"{}\" starts with maximum size {}", getTitle(), maxSizeDimension);
         log.trace("reSizeToFitOnScreen starts with preferred height {} width {}", height, width);
         log.trace("reSizeToFitOnScreen starts with location {},{}", getX(), getY());
         log.trace("reSizeToFitOnScreen starts with insets {},{}", getInsets().left, getInsets().top);
         // Normalise the location
-        ScreenDimensions sd = getContainingDisplay(this.getLocation());
+        int screenNb = getContainingDisplay(this.getLocation());
+        ScreenDimensions sd = getScreenDimensions().get(screenNb);
         Point locationOnDisplay = new Point(getLocation().x - sd.getBounds().x, getLocation().y - sd.getBounds().y);
         log.trace("reSizeToFitOnScreen normalises origin to {}, {}", locationOnDisplay.x, locationOnDisplay.y);
 
@@ -643,20 +640,22 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         return (escapeKeyActionClosesWindow && getEscapeKeyAction() != null);
     }
 
-    private ScreenDimensions getContainingDisplay(Point location) {
+    private int getContainingDisplay(Point location) {
         // Loop through attached screen to determine which
         // contains the top-left origin point of this window
+        int si = 0;
         for (ScreenDimensions sd: getScreenDimensions()) {
             boolean isOnThisScreen = sd.getBounds().contains(location);
             log.debug("Is \"{}\" window origin {} located on screen {}? {}", getTitle(), this.getLocation(), sd.getGraphicsDevice().getIDstring(), isOnThisScreen);
             if (isOnThisScreen) {
                 // We've found the screen that contains this origin
-                return sd;
+                return si;
             }
+            si++;
         }
         // As a fall-back, return the first display which is the primary
         log.debug("Falling back to using the primary display");
-        return getScreenDimensions().get(0);
+        return 0;
     }
 
     /**
@@ -682,7 +681,9 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
             // some Java installs, however, for unknown reasons, so be
             // prepared to fall back.
             try {
-                ScreenDimensions sd = getContainingDisplay(this.getLocation());
+                int screenNb = getContainingDisplay(this.getLocation());
+                ScreenDimensions sd = getScreenDimensions().get(screenNb);
+                log.trace("getMaximumSize on screen {} with size {}", screenNb, sd.getBounds());
                 int widthInset = sd.getInsets().right + sd.getInsets().left;
                 int heightInset = sd.getInsets().top + sd.getInsets().bottom;
 
@@ -692,7 +693,11 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
                     if (SystemType.isLinux()) {
                         // Linux generally has a bar across the top and/or bottom
                         // of the screen, but lets you have the full width.
-                        heightInset = 70;
+                        // Linux generally has a bar across the top and/or bottom
+                        // of the main screen, but lets you have the full width.
+                        if ( screenNb == 0) {
+                            heightInset = 70;
+                        }
                     } // Windows generally has values, but not always,
                     // so we provide observed values just in case
                     else if (osName.equals("Windows XP") || osName.equals("Windows 98")

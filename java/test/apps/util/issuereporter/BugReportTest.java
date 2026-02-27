@@ -3,7 +3,6 @@ package apps.util.issuereporter;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Minimal test skeleton for BugReport class
@@ -12,7 +11,8 @@ public class BugReportTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("BugReport constructor", new BugReport("title", "body", false, false, false));
+        Assertions.assertNotNull(new BugReport("title", "body", false, false, false),
+            "BugReport constructor");
     }
 
     @BeforeEach

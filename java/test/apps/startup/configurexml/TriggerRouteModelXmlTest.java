@@ -3,7 +3,6 @@ package apps.startup.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * TriggerRouteModelXmlTest.java
@@ -16,7 +15,7 @@ public class TriggerRouteModelXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("TriggerRouteModelXml constructor",new TriggerRouteModelXml());
+        Assertions.assertNotNull(new TriggerRouteModelXml(), "TriggerRouteModelXml constructor");
     }
 
     @BeforeEach

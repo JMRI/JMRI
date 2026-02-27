@@ -1,12 +1,9 @@
 package apps.gui3.dp3;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -15,10 +12,10 @@ import org.junit.Assume;
 public class DecoderPro3WindowTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DecoderPro3Window t = new DecoderPro3Window();
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
         JUnitUtil.dispose(t);
     }
 
