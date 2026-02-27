@@ -12,9 +12,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.annotation.CheckForNull;
+import jmri.jmrit.beantable.TablesSettings;
 
 import jmri.InstanceManager;
-import jmri.UserPreferencesManager;
 import jmri.jmrit.throttle.ThrottleCreationAction;
 import jmri.jmrit.z21server.Z21serverCreationAction;
 import jmri.util.gui.GuiLafPreferencesManager;
@@ -121,22 +121,17 @@ public class ToolsMenu extends JMenu {
             c.weightx = 1.0;
 
             JCheckBox showTablesMenu = new JCheckBox(Bundle.getMessage("MenuItemAddTablesMenuToMainMenu"));
-            UserPreferencesManager prefMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-            Object pref = prefMgr.getProperty("jmri.jmrit.ToolsMenu", "showTablesMenu");
-            boolean showMenu = false; // Default to false
-            if (pref instanceof Boolean) {
-                showMenu = (Boolean) pref;
-            }
-            showTablesMenu.setSelected(showMenu);
+            showTablesMenu.setSelected(TablesSettings.isMainMenuEnabled());
             c.gridx = 0;
             c.gridy = 0;
             f.getContentPane().add(showTablesMenu, c);
 
-            JButton saveButton = new JButton("Save");
+            JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
             c.gridy = 1;
             f.getContentPane().add(saveButton, c);
             saveButton.addActionListener((java.awt.event.ActionEvent ev) -> {
-                prefMgr.setProperty("jmri.jmrit.ToolsMenu", "showTablesMenu", showTablesMenu.isSelected());
+                TablesSettings.setMainMenuEnabled(showTablesMenu.isSelected());
+                TablesSettings.save();
                 JOptionPane.showMessageDialog(f,
                         Bundle.getMessage("RestartRequiredHint"),
                         Bundle.getMessage("RestartRequired"),

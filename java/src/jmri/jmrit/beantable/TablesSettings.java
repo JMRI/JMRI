@@ -1,7 +1,7 @@
 package jmri.jmrit.beantable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
 
 /**
  * Represents the settings for the Tables menu.
@@ -10,7 +10,12 @@ import org.slf4j.LoggerFactory;
  */
 public class TablesSettings {
 
-    private static boolean mainMenuEnabled = true;
+    private static boolean mainMenuEnabled = false;
+
+    // Load settings when class is initialized
+    static {
+        load();
+    }
 
     public static boolean isMainMenuEnabled() {
         return mainMenuEnabled;
@@ -21,12 +26,20 @@ public class TablesSettings {
     }
 
     public static void load() {
-        // This will be implemented later to load from XML
+        UserPreferencesManager prefMgr = InstanceManager.getNullableDefault(UserPreferencesManager.class);
+        if (prefMgr != null) {
+            Object pref = prefMgr.getProperty("jmri.jmrit.ToolsMenu", "showTablesMenu");
+            if (pref instanceof Boolean) {
+                mainMenuEnabled = (Boolean) pref;
+            }
+        }
     }
 
     public static void save() {
-        // This will be implemented later to save to XML
+        UserPreferencesManager prefMgr = InstanceManager.getNullableDefault(UserPreferencesManager.class);
+        if (prefMgr != null) {
+            prefMgr.setProperty("jmri.jmrit.ToolsMenu", "showTablesMenu", mainMenuEnabled);
+        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TablesSettings.class);
 }
