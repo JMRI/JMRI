@@ -66,10 +66,10 @@ public class TablesMenu extends JMenu {
         add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemRailComTable"), "jmri.jmrit.beantable.RailComTableAction"));
         
         add(new JSeparator());
-        JMenuItem settingsItem = new JMenuItem(Bundle.getMessage("MenuSettings"));
+        JMenuItem settingsItem = new JMenuItem(Bundle.getMessage("MenuItemTablesSettings"));
         add(settingsItem);
         settingsItem.addActionListener((ActionEvent e) -> {
-            JmriJFrame f = new JmriJFrame(Bundle.getMessage("MenuSettings"));
+            JmriJFrame f = new JmriJFrame(Bundle.getMessage("MenuItemTablesSettings"));
             f.getContentPane().setLayout(new java.awt.GridBagLayout());
             java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
             c.gridwidth = 1;
@@ -81,7 +81,7 @@ public class TablesMenu extends JMenu {
             JCheckBox showTablesMenu = new JCheckBox(Bundle.getMessage("MenuItemAddTablesMenuToMainMenu"));
             UserPreferencesManager prefMgr = InstanceManager.getDefault(UserPreferencesManager.class);
             Object pref = prefMgr.getProperty("jmri.jmrit.ToolsMenu", "showTablesMenu");
-            boolean showMenu = true; // Default to true
+            boolean showMenu = false; // Default to false
             if (pref instanceof Boolean) {
                 showMenu = (Boolean) pref;
             }

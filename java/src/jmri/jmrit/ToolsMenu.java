@@ -111,7 +111,7 @@ public class ToolsMenu extends JMenu {
         JMenuItem settingsItem = new JMenuItem(Bundle.getMessage("MenuItemTablesSettings"));
         tableMenu.add(settingsItem);
         settingsItem.addActionListener((ActionEvent e) -> {
-            JmriJFrame f = new JmriJFrame("Settings");
+            JmriJFrame f = new JmriJFrame(Bundle.getMessage("MenuItemTablesSettings"));
             f.getContentPane().setLayout(new java.awt.GridBagLayout());
             java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
             c.gridwidth = 1;
@@ -120,10 +120,10 @@ public class ToolsMenu extends JMenu {
             c.anchor = java.awt.GridBagConstraints.CENTER;
             c.weightx = 1.0;
 
-            JCheckBox showTablesMenu = new JCheckBox("Add Table Menu to Main Menu");
+            JCheckBox showTablesMenu = new JCheckBox(Bundle.getMessage("MenuItemAddTablesMenuToMainMenu"));
             UserPreferencesManager prefMgr = InstanceManager.getDefault(UserPreferencesManager.class);
             Object pref = prefMgr.getProperty("jmri.jmrit.ToolsMenu", "showTablesMenu");
-            boolean showMenu = true; // Default to true
+            boolean showMenu = false; // Default to false
             if (pref instanceof Boolean) {
                 showMenu = (Boolean) pref;
             }
