@@ -180,7 +180,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     public synchronized void setTargetSpeedByPass(float speed) {
-        _autoEngineer.setTargetSpeed(-1.0f);
+        _autoEngineer.setTargetSpeed(-1.0f,speed);
     }
 
     public synchronized void setTargetSpeedByPass(float distance, float speed) {
@@ -189,6 +189,10 @@ public class AutoActiveTrain implements ThrottleListener {
         } else {
             _autoEngineer.setTargetSpeed(distance, speed);
         }
+    }
+
+    public synchronized void setSpeedImmediate(float speed) {
+        _autoEngineer.setSpeedImmediate(speed);
     }
 
     public synchronized void setTargetSpeed(float speed) {
@@ -853,7 +857,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     saveSpeedAndDirection();
                     setSavedStatus(_activeTrain.getStatus());
                     _activeTrain.setStatus(ActiveTrain.STOPPED);
-                    setTargetSpeedByPass(-1); // Estop
+                    setSpeedImmediate(-1); // Estop
                 }
                 log.trace("{}: block going occupied {} is not ahead of_nextBlock - ignored.",
                         _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
@@ -878,7 +882,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     log.warn("{}:current block has gone inactive, disappeared leaving block[{}]",
                             _activeTrain.getActiveTrainName(),b.getDisplayName());
                     saveSpeedAndDirection();
-                    setTargetSpeedByPass(-1); //Estop
+                    setSpeedImmediate(-1); //Estop
                     setSavedStatus(_activeTrain.getStatus());
                     _activeTrain.setStatus(ActiveTrain.STOPPED);
                 }
@@ -886,7 +890,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     log.error("{}:Train has no occupied section, disappeared leaving block[{}]",
                             _activeTrain.getActiveTrainName(),b.getDisplayName());
                     saveSpeedAndDirection();
-                    setTargetSpeedByPass(-1);  //estop
+                    setSpeedImmediate(-1); //Estop
                     setSavedStatus(_activeTrain.getStatus());
                     _activeTrain.setStatus(ActiveTrain.STOPPED);
                 }
@@ -2319,7 +2323,7 @@ public class AutoActiveTrain implements ThrottleListener {
         } catch (Exception ex) {
             log.error("setTargetSpeedByProfile crashed - Emergency Stop: ", ex );
             _autoEngineer.slowToStop(false);
-            setTargetSpeed(-1.0f);
+            setSpeedImmediate(-1); //Estop;
             _autoEngineer.setHalt(true);
         }
     }
