@@ -465,7 +465,6 @@
              <li>When resuming from a failure, inform user where the head of train needs to be
                  or which block needs to be cleared. If they have being using Manual
                  present them with choice about the direction.</li>
-             <li>Fix NPE error on dispatcher train restart.</li>
         </ul>
 
     <h3>Dispatcher System</h3>

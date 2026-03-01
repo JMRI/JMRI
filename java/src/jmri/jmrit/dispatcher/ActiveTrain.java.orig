@@ -1349,6 +1349,9 @@ public class ActiveTrain implements PropertyChangeProvider {
         restartPoint = false;
         holdAllocation(false);
         setStatus(WAITING);
+        if (mAutoActiveTrain != null) {
+            mAutoActiveTrain.setupNewCurrentSignal(null,true);
+        }
     }
 
     public void terminate() {
