@@ -65,20 +65,19 @@ public class LoadAtStartUpTest {
 
         checkAndSetSpeeds();
 
-        //set sensors inactive
-        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-        for (Sensor s : sm.getNamedBeanSet()) {
-            s.setState(Sensor.INACTIVE);
+        BlockManager bm = InstanceManager.getDefault(BlockManager.class);
+        for (Block b : bm.getNamedBeanSet()) {
+            b.setState(Block.UNOCCUPIED);
         }
         // place train on layout
-        sm.provideSensor("Occ South Platform").setState(Sensor.ACTIVE);
-        sm.provideSensor("Occ West Platform Switch").setState(Sensor.ACTIVE); // set blocker
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("South Platform"),Block.OCCUPIED);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("West Platform Switch"),Block.OCCUPIED); // set blocker
 
         // and load. only one of 2 trains will load
         d.loadAtStartup();
         assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
 
-        sm.provideSensor("Occ West Platform Switch").setState(Sensor.INACTIVE); // release blocker
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("West Platform Switch"),Block.UNOCCUPIED); // release blocker
 
         // trains loads and runs, 4 allocated sections, the one we are in and 3 ahead.
         JUnitUtil.waitFor(() -> {
@@ -98,7 +97,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("1 East End Throat Signal Green").isEqualTo("Stop");
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "Exit South Platform Speed is correct");
 
-        sm.provideSensor("Occ West Platform Switch").setState(Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("West Platform Switch"),Block.OCCUPIED);
 
         JUnitUtil.waitFor(() -> {
             return "Stop".equals(smm.provideSignalMast("West End Div").getAspect());
@@ -109,9 +108,9 @@ public class LoadAtStartUpTest {
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("2 East End Throat Signal Green").isEqualTo("Stop");
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "West Platform Switch Speed is correct");
 
-        sm.provideSensor("Occ West Block").setState(Sensor.ACTIVE);
-        sm.provideSensor("Occ South Platform").setState(Sensor.INACTIVE);
-        sm.provideSensor("Occ West Platform Switch").setState(Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("West Block"),Block.OCCUPIED);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("South Platform"),Block.UNOCCUPIED);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("West Platform Switch"),Block.UNOCCUPIED);
         JUnitUtil.waitFor(() -> {
             return "Clear".equals(smm.provideSignalMast("South To East").getAspect());
         }, "Signal South To East now Clear");
@@ -120,7 +119,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("3 East End Throat Signal Approach").isEqualTo("Approach");
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "South To East Speed is correct");
 
-        sm.provideSensor("Occ South Block").setState(Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("South Block"),Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
             return "Stop".equals(smm.provideSignalMast("West To South").getAspect());
         }, "Signal Just passed West To South now stop");
@@ -133,8 +132,8 @@ public class LoadAtStartUpTest {
         //The signal head indicates 1.0f but train is limited to a max of 0.6f
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - 0.6f ) < TOLERANCE ); }, "West To South Speed is correct");
 
-        sm.provideSensor("Occ West Block").setState(Sensor.INACTIVE);
-        sm.provideSensor("Occ East Block").setState(Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("West Block"),Block.UNOCCUPIED);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("East Block"),Block.OCCUPIED);
 
         JUnitUtil.waitFor(() -> {
             return "Stop".equals(smm.provideSignalMast("South To East").getAspect());
@@ -145,8 +144,8 @@ public class LoadAtStartUpTest {
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("5 East End Throat Signal yellow").isEqualTo("Approach");
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "South To East Speed is correct");
 
-        sm.provideSensor("Occ South Block").setState(Sensor.INACTIVE);
-        sm.provideSensor("Occ East Platform Switch").setState(Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("South Block"),Block.UNOCCUPIED);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("East Platform Switch"),Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
             return "Stop".equals(smm.provideSignalMast("East End Throat").getAspect());
         }, "Signal Just passed east end throat now stop");
@@ -156,7 +155,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("6 East End Throat Signal Red").isEqualTo("Stop");
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "East Platform Switch Speed is correct");
 
-        sm.provideSensor("Occ East Platform Switch").setState(Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("East Platform Switch"),Block.OCCUPIED);
         // No change
         assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("7 West End Div Signal Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("7 West To South  Red").isEqualTo("Stop");
@@ -164,7 +163,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("7 East End Throat Signal Red").isEqualTo("Stop");
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "East Platform Switch Speed is correct");
 
-        sm.provideSensor("Occ South Platform").setState(Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("South Platform"),Block.OCCUPIED);
         // signals no change, speed changes
         assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("8 West End Div Signal Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("8 West To South  Red").isEqualTo("Stop");
@@ -172,8 +171,8 @@ public class LoadAtStartUpTest {
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("8 East End Throat Signal Red").isEqualTo("Stop");
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestrictedSlow ) < TOLERANCE ); }, "Speed is correct");
 
-        sm.provideSensor("Occ East Block").setState(Sensor.INACTIVE);
-        sm.provideSensor("Occ East Platform Switch").setState(Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("East Block"),Block.UNOCCUPIED);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("East Platform Switch"),Block.UNOCCUPIED);
         // signals no change, speed changes to stop
         assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("9 West End Div Signal Red").isEqualTo("Stop");
         assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("9 West To South  Red").isEqualTo("Stop");
@@ -197,23 +196,23 @@ public class LoadAtStartUpTest {
             return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE );
         }, "Started to move");
 
-        sm.provideSensor("Occ East Platform Switch").setState(Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("East Platform Switch"),Block.OCCUPIED);
         JUnitUtil.waitFor(50);
-        sm.provideSensor("Occ East Block").setState(Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("East Block"),Block.OCCUPIED);
         JUnitUtil.waitFor(50);
-        sm.provideSensor("Occ South Platform").setState(Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("South Platform"),Block.UNOCCUPIED);
 
        JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE );
         }, "Continuing speed was "+ aat.getTargetSpeed() + " not " + speedRestricted);
-        sm.provideSensor("Occ South Block").setState(Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("South Block"),Block.OCCUPIED);
 
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getTargetSpeed() - speedRestrictedSlow ) < TOLERANCE );
         }, "Prepare to stop");
-        sm.provideSensor("Occ East Platform Switch").setState(Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("East Platform Switch"),Block.UNOCCUPIED);
         JUnitUtil.waitFor(50);
-        sm.provideSensor("Occ East Block").setState(Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(bm.provideBlock("East Block"),Block.UNOCCUPIED);
         // train slows to stop
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getTargetSpeed() ) < TOLERANCE );

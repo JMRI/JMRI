@@ -278,6 +278,9 @@ public class AllocatedSection {
     }
 
     private synchronized void handleSectionChange(PropertyChangeEvent e) {
+        log.trace("{}:AllocatedSection[{}]:handleSectionChange Property Name[{}] old[{}] New[{}]",
+                mActiveTrain.getActiveTrainName(), mSection.getDisplayName(),
+                e.getPropertyName(), e.getOldValue(), e.getNewValue());
         if (mSection.getOccupancy() == Section.OCCUPIED) {
             mEntered = true;
         } else if (mSection.getOccupancy() == Section.UNOCCUPIED) {
