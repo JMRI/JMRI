@@ -1,5 +1,7 @@
 package jmri.jmrit.display;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 
 import jmri.*;
@@ -19,14 +21,14 @@ public class PanelEditorTest {
     public void testShow() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/display/valid/PanelEditorTest1.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
     }
 
     @Test
     public void testShow2() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
 
     }
 
@@ -34,7 +36,7 @@ public class PanelEditorTest {
     public void testShow3() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/display/configurexml/load/OneOfEach.3.3.3.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
 
     }
 

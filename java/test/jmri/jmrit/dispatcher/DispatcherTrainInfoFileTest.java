@@ -263,9 +263,9 @@ public class DispatcherTrainInfoFileTest {
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStop.xml");
 
-        assertDoesNotThrow(() -> {
-            cm.load(f);
-        });
+        boolean loaded = assertDoesNotThrow(() ->
+            cm.load(f));
+        assertTrue(loaded);
 
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class)
                 .initializeLayoutBlockPaths();

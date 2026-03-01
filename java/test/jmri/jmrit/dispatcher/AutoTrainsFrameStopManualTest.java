@@ -71,7 +71,7 @@ public class AutoTrainsFrameStopManualTest {
 
         // load layout file
         java.io.File f = new java.io.File("java/test/jmri/jmrit/dispatcher/DispatcherSMLLayout.xml");
-        cm.load(f);
+        Assertions.assertTrue(cm.load(f));
 
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 

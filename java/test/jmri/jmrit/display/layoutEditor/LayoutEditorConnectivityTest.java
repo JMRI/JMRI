@@ -31,7 +31,7 @@ public class LayoutEditorConnectivityTest {
 
         // load and display test panel file
         java.io.File f = new java.io.File("java/test/jmri/jmrit/display/layoutEditor/valid/LEConnectTest.xml");
-        cm.load(f);
+        Assertions.assertTrue(cm.load(f));
 
         // Find new window by name (should be more distinctive, comes from sample file)
         EditorFrameOperator to = new EditorFrameOperator("Connectivity Test");
