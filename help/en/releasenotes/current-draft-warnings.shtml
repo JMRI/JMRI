@@ -1,6 +1,8 @@
 
     <!-- contains new warnings for the release under development -->
-    <li>
-    </li>
+    <li>The web server folder <strong>app</strong> has been removed. It
+        might cause third party applications to fail. If this happens to
+        you, please contact us on 
+        <a href="https://groups.io/g/jmriusers">the JMRI users group</a>.</li>
     <li>
     </li>
