@@ -138,6 +138,39 @@ public class HardcopyWriterTest {
 
     @Test
     @DisabledIfHeadless
+    public void testTabHandling() throws IOException, HardcopyWriter.ColumnException {
+        JFrame frame = new JFrame();
+        HardcopyWriter hcw = null;
+        try {
+            hcw = new HardcopyWriter(frame, "test", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72, false,
+                    "SkipDialog",
+                    null, false, null, new Dimension((int) (8.5 * 72), (int) (11.0 * 72)));
+            Assertions.assertNotNull(hcw, "HardcopyWriter constructor");
+
+            hcw.write("a\t\tab\tabcd\tefghijk\tlmn");
+
+            List<List<HardcopyWriter.PrintCommand>> pages = hcw.getPageCommands();
+            Assertions.assertEquals(1, pages.size(), "Should have 1 page recorded");
+
+            List<HardcopyWriter.PrintCommand> firstPage = pages.get(0);
+
+            HardcopyWriter.DrawString[] ds = firstPage.stream()
+                    .filter(cmd -> cmd instanceof HardcopyWriter.DrawString).toArray(HardcopyWriter.DrawString[]::new);
+
+            Assertions.assertEquals(1, ds.length);
+
+            Assertions.assertEquals("a               ab      abcd    efghijk lmn", ds[0].getString());
+            // ......................a.......^.......^.......^.......^.......^
+        } catch (HardcopyWriter.PrintCanceledException pce) {
+            // OK
+        } finally {
+            if (hcw != null)
+                hcw.dispose();
+        }
+    }
+
+    @Test
+    @DisabledIfHeadless
     public void testColumnWrap() throws IOException, HardcopyWriter.ColumnException {
         JFrame frame = new JFrame();
         HardcopyWriter hcw = null;
