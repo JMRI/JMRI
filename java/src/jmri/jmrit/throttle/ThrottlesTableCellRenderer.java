@@ -89,7 +89,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             Throttle thr = tf.getAddressPanel().getThrottle();
             // direction
             JLabel dir = new JLabel();
-            if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+            if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
                 if (thr.getIsForward()) {
                     dir.setIcon(FWD_ICN);
                 } else {
@@ -105,7 +105,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             dir.setVerticalAlignment(JLabel.CENTER);
             ctrlPanel.add(dir, BorderLayout.WEST);
             // speed
-            if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+            if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {
                 JLayeredPane layerPane = new JLayeredPane();
                 int cmpWidth = jtable.getWidth()/jtable.getColumnCount()/4 ;
                 layerPane.setPreferredSize(new Dimension(cmpWidth, LINE_HEIGHT - 8));
