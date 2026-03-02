@@ -2271,12 +2271,13 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         _autoEngineer.slowToStop(false);
 
-        float stoppingDistanceAdjust =  _stopBySpeedProfileAdjust *
-                ( _activeTrain.isTransitReversed() ?
+        // Adjust by the direction thru the section not the transit.
+        float stoppingDistanceAdjust = _stopBySpeedProfileAdjust *
+                ( _currentAllocatedSection.getDirection() == Section.REVERSE  ?
                         _currentAllocatedSection.getTransitSection().getRevStopPerCent() :
                             _currentAllocatedSection.getTransitSection().getFwdStopPerCent());
-        log.debug("stoppingDistanceAdjust[{}] isReversed[{}] stopBySpeedProfileAdjust[{}]",stoppingDistanceAdjust,
-                _activeTrain.isTransitReversed(),_stopBySpeedProfileAdjust );
+        log.debug("stoppingDistanceAdjust[{}] allocateddirection[{}] stopBySpeedProfileAdjust[{}]",stoppingDistanceAdjust,
+                _currentAllocatedSection.getDirection(),_stopBySpeedProfileAdjust );
         if (speedState > STOP_SPEED) {
             cancelStopInCurrentSection();
             if (_currentRampRate == RAMP_SPEEDPROFILE && useSpeedProfile) {

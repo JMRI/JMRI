@@ -466,6 +466,8 @@
                  or which block needs to be cleared. If they have being using Manual
                  present them with choice about the direction.</li>
              <li>Fix NPE error on dispatcher train restart.</li>
+             <li>Correct percentage stop to use direction allocated</i>
+             <li>Fix up to and fro restart at far end</li>
         </ul>
 
     <h3>Dispatcher System</h3>
