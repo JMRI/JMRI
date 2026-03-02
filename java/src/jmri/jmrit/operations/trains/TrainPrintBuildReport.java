@@ -36,7 +36,8 @@ public class TrainPrintBuildReport extends TrainCommon {
         Dimension pagesize = null; // HardcopyWritter provides default page
                                    // sizes for portrait and landscape
 
-        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), name, null, null, fontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, isPreview, printerName, isLandScape, true, null, pagesize);
+        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), name, null, null, fontSize, .5 * 72, .5 * 72,
+                .5 * 72, .5 * 72, isPreview, printerName, isLandScape, true, null, pagesize);
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         new FileInputStream(file), StandardCharsets.UTF_8));) {
 
