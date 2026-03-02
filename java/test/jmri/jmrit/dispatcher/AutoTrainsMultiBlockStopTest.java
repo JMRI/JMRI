@@ -55,9 +55,10 @@ public class AutoTrainsMultiBlockStopTest {
 
         // load layout file
         File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStop.xml");
-        Assertions.assertDoesNotThrow(() -> {
-            cm.load(f);
-        });
+        boolean loaded = Assertions.assertDoesNotThrow(() ->
+            cm.load(f)
+        );
+        Assertions.assertTrue(loaded);
 
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
@@ -814,9 +815,9 @@ public class AutoTrainsMultiBlockStopTest {
 
         // load layout file
         File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStopRoundAndRound.xml");
-        Assertions.assertDoesNotThrow(() -> {
-            cm.load(f);
-        });
+        boolean loaded = Assertions.assertDoesNotThrow(() ->
+            cm.load(f));
+        Assertions.assertTrue(loaded);
 
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
@@ -981,9 +982,9 @@ public class AutoTrainsMultiBlockStopTest {
 
         // load layout file
         File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStopRoundAndRound.xml");
-        Assertions.assertDoesNotThrow(() -> {
-            cm.load(f);
-        });
+        boolean loaded = Assertions.assertDoesNotThrow(() ->
+            cm.load(f));
+        Assertions.assertTrue(loaded);
 
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
@@ -1144,9 +1145,9 @@ public class AutoTrainsMultiBlockStopTest {
 
         // load layout file
         File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStopRoundAndRound.xml");
-        Assertions.assertDoesNotThrow(() -> {
-            cm.load(f);
-        });
+        boolean loaded = Assertions.assertDoesNotThrow(() ->
+            cm.load(f));
+        Assertions.assertTrue(loaded);
 
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
@@ -1323,9 +1324,9 @@ public class AutoTrainsMultiBlockStopTest {
 
         // load layout file
         File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStopRoundAndRound.xml");
-        Assertions.assertDoesNotThrow(() -> {
-            cm.load(f);
-        });
+        boolean loaded = Assertions.assertDoesNotThrow(() ->
+            cm.load(f));
+        Assertions.assertTrue(loaded);
 
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
@@ -1490,9 +1491,9 @@ public class AutoTrainsMultiBlockStopTest {
 
         // load layout file
         File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStopRoundAndRound.xml");
-        Assertions.assertDoesNotThrow(() -> {
-            cm.load(f);
-        });
+        boolean loaded = Assertions.assertDoesNotThrow(() ->
+            cm.load(f));
+        Assertions.assertTrue(loaded);
 
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 

@@ -37,7 +37,7 @@ public class CtcEditorSignalMastsTest {
 
         // Load the test panel and initialize Logix and advanced block routing
         java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Masts-SML.xml");  // NOI18N
-        InstanceManager.getDefault(jmri.ConfigureManager.class).load(f);
+        Assertions.assertTrue(InstanceManager.getDefault(jmri.ConfigureManager.class).load(f));
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         JUnitUtil.waitFor(5000);     // Wait for block routing and SML initialization

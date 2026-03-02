@@ -33,8 +33,8 @@ public class BlockManagerXmlTest {
         JUnitUtil.initMemoryManager();
         JUnitUtil.initLayoutBlockManager();
         // load file
-        InstanceManager.getDefault(ConfigureManager.class)
-                .load(new java.io.File("java/test/jmri/configurexml/load/BlockManagerXmlTest.xml"));
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class)
+                .load(new java.io.File("java/test/jmri/configurexml/load/BlockManagerXmlTest.xml")));
 
         // check existence of blocks
         assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB1"));
@@ -389,8 +389,8 @@ public class BlockManagerXmlTest {
         JUnitUtil.initMemoryManager();
         JUnitUtil.initLayoutBlockManager();
         // load file
-        InstanceManager.getDefault(ConfigureManager.class)
-                .load(new java.io.File("java/test/jmri/configurexml/loadref/BlockAndSignalMastTest.xml"));
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class)
+                .load(new java.io.File("java/test/jmri/configurexml/loadref/BlockAndSignalMastTest.xml")));
         // in loadref because comparison not working right
 
         assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB1"));

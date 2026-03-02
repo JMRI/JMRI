@@ -58,9 +58,9 @@ public class AutoTrainsTurnTableTest {
 
         // load layout file
         File f = new File("java/test/jmri/jmrit/dispatcher/DistpatcherTurnTable.xml");
-        Assertions.assertDoesNotThrow(() -> {
-            cm.load(f);
-        });
+        boolean loaded = Assertions.assertDoesNotThrow(() ->
+            cm.load(f));
+        Assertions.assertTrue(loaded);
 
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
@@ -192,9 +192,9 @@ public class AutoTrainsTurnTableTest {
 
         // load layout file
         File f = new File("java/test/jmri/jmrit/dispatcher/DistpatcherTurnTable.xml");
-        Assertions.assertDoesNotThrow(() -> {
-            cm.load(f);
-        });
+        boolean loaded = Assertions.assertDoesNotThrow(() ->
+            cm.load(f));
+        Assertions.assertTrue(loaded);
 
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
@@ -362,9 +362,9 @@ public class AutoTrainsTurnTableTest {
 
         // load layout file
         File f = new File("java/test/jmri/jmrit/dispatcher/DistpatcherTurnTable.xml");
-        Assertions.assertDoesNotThrow(() -> {
-            cm.load(f);
-        });
+        boolean loaded = Assertions.assertDoesNotThrow(() ->
+            cm.load(f));
+        Assertions.assertTrue(loaded);
 
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
