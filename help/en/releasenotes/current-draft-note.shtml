@@ -1,7 +1,11 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+            <li>Network connections now take their host name/address and port number
+                from the per-node individual configuration, if available,
+                and from the shared configurations if not.  This will allow
+                you to have different host name/address for different
+                computers sharing the same JMRI profile.</li>
         </ul>
 
         <h4>Acela CTI</h4>
@@ -454,7 +458,14 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Stop train immediately if it has no occupied section, or
+                 blocks go active in the wrong order. This behaviour can be turned off
+                 in dispatcher options.</li>
+             <li>Add the current, next block and train held status to the dispatcher screen.</li>
+             <li>When resuming from a failure, inform user where the head of train needs to be
+                 or which block needs to be cleared. If they have being using Manual
+                 present them with choice about the direction.</li>
+             <li>Fix NPE error on dispatcher train restart.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -538,6 +549,7 @@
         <a id="Roster" name="Roster"></a>
         <ul>
             <li>Improved the locomotive image resolution in printed rosters.</li>
+            <li>Increased the size of the roster preview so that it matches the paper size and improved text legibility.</li>
             <li>Update "Export Complete Roster" process so that
                 upon "Import Complete Roster" the images will
                 properly display without the need to rebuild the roster.</li>
@@ -644,6 +656,10 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
+            <li>The web server folder <strong>app</strong> has been
+                removed. It might cause third party applications to
+                fail. If this happens to you, please contact us on 
+                <a href="https://groups.io/g/jmriusers">the JMRI users group</a>.</li>
             <li></li>
         </ul>
 
@@ -674,6 +690,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>When printing on MacOS, selecting a specific page range to print does not work correctly. This is a known Java issue. The workaround is to print the entire document to PDF, and then use a PDF reader to select the pages to print.</li>
         </ul>
 

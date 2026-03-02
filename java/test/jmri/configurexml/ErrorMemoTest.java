@@ -3,7 +3,6 @@ package jmri.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class ErrorMemoTest {
     @Test
     public void testCTor() {
         ErrorMemo t = new ErrorMemo(new jmri.jmrix.internal.configurexml.InternalSensorManagerXml(),"load","fail","IS0","",new IllegalArgumentException("test"));
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

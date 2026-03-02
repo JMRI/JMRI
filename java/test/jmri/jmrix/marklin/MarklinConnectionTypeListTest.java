@@ -2,7 +2,6 @@ package jmri.jmrix.marklin;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -17,7 +16,7 @@ public class MarklinConnectionTypeListTest {
     @Test
     public void testCtor() {
         MarklinConnectionTypeList c = new MarklinConnectionTypeList();
-        Assert.assertNotNull(c);
+        Assertions.assertNotNull(c);
     }
 
     @BeforeEach

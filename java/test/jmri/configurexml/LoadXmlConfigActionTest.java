@@ -3,7 +3,6 @@ package jmri.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class LoadXmlConfigActionTest {
     @Test
     public void testCTor() {
         LoadXmlConfigAction t = new LoadXmlConfigAction();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

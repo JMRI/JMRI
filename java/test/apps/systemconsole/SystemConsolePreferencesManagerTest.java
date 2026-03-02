@@ -3,7 +3,6 @@ package apps.systemconsole;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class SystemConsolePreferencesManagerTest {
     @Test
     public void testCTor() {
         SystemConsolePreferencesManager t = new SystemConsolePreferencesManager();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

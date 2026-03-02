@@ -3,7 +3,6 @@ package jmri.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class StoreXmlUserActionTest {
     @Test
     public void testCTor() {
         StoreXmlUserAction t = new StoreXmlUserAction();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

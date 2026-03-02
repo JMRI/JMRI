@@ -1,5 +1,8 @@
 package jmri.jmrix.marklin.swing;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.awt.event.ActionEvent;
 import java.util.List;
 
@@ -10,7 +13,6 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for MarklinSendBootAction.
@@ -25,49 +27,50 @@ public class MarklinSendBootActionTest {
     @Test
     public void testCTorWithName() {
         MarklinSendBootAction action = new MarklinSendBootAction("Test Boot Action", memo);
-        Assert.assertNotNull("Action created", action);
-        Assert.assertEquals("Action name", "Test Boot Action", action.getValue(MarklinSendBootAction.NAME));
+        assertNotNull(action, "Action created");
+        assertEquals("Test Boot Action", action.getValue(MarklinSendBootAction.NAME), "Action name");
     }
 
     @Test
     public void testCTorDefaultName() {
         MarklinSendBootAction action = new MarklinSendBootAction(memo);
-        Assert.assertNotNull("Action created", action);
-        Assert.assertNotNull("Action has default name", action.getValue(MarklinSendBootAction.NAME));
+        assertNotNull(action, "Action created");
+        assertNotNull(action.getValue(MarklinSendBootAction.NAME), "Action has default name");
     }
 
     @Test
     public void testCTorWithNullMemo() {
         MarklinSendBootAction action = new MarklinSendBootAction("Test Action", null);
-        Assert.assertNotNull("Action created with null memo", action);
+        assertNotNull(action, "Action created with null memo");
     }
 
     @Test
     public void testActionPerformed() {
         MarklinSendBootAction action = new MarklinSendBootAction("Test Boot Action", memo);
-        
+
         // Verify no messages sent initially
-        Assert.assertEquals("No initial messages", 0, tc.getSentMessages().size());
-        
+        assertEquals(0, tc.getSentMessages().size(), "No initial messages");
+
         // Trigger the action
         ActionEvent event = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "test");
         action.actionPerformed(event);
-        
+
         // Verify message was sent
         List<MarklinMessage> sentMessages = tc.getSentMessages();
-        Assert.assertEquals("One message sent", 1, sentMessages.size());
-        
+        assertEquals(1, sentMessages.size(), "One message sent");
+
         // Verify the message is a CAN BOOT message
         MarklinMessage sentMessage = sentMessages.get(0);
-        Assert.assertNotNull("Message exists", sentMessage);
-        
+        assertNotNull(sentMessage, "Message exists");
+
         // Compare with expected CAN BOOT message
         MarklinMessage expectedMessage = MarklinMessage.getCanBoot();
-        Assert.assertEquals("Message length matches", expectedMessage.getNumDataElements(), sentMessage.getNumDataElements());
-        
+        assertEquals(expectedMessage.getNumDataElements(), sentMessage.getNumDataElements(),
+                "Message length matches");
+
         // Check that the sent message has the same structure as the expected CAN BOOT message
         for (int i = 0; i < expectedMessage.getNumDataElements(); i++) {
-            Assert.assertEquals("Byte " + i + " matches", expectedMessage.getElement(i), sentMessage.getElement(i));
+            assertEquals(expectedMessage.getElement(i), sentMessage.getElement(i), "Byte " + i + " matches");
         }
     }
 
@@ -80,7 +83,7 @@ public class MarklinSendBootActionTest {
         action.actionPerformed(event);
         
         // Verify no messages were sent (since memo is null)
-        Assert.assertEquals("No messages sent", 0, tc.getSentMessages().size());
+        assertEquals(0, tc.getSentMessages().size(), "No messages sent");
         JUnitAppender.assertWarnMessage("Cannot send CanBoot message - no connection available");
     }
 
@@ -96,7 +99,7 @@ public class MarklinSendBootActionTest {
         action.actionPerformed(event);
         
         // Verify no messages were sent (since traffic controller is null)
-        Assert.assertEquals("No messages sent", 0, tc.getSentMessages().size());
+        assertEquals(0, tc.getSentMessages().size(), "No messages sent");
         JUnitAppender.assertWarnMessage("Cannot send CanBoot message - no connection available");
     }
 
@@ -104,22 +107,22 @@ public class MarklinSendBootActionTest {
     public void testMultipleActionCalls() {
         MarklinSendBootAction action = new MarklinSendBootAction("Test Boot Action", memo);
         ActionEvent event = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "test");
-        
+
         // Send multiple messages
         action.actionPerformed(event);
         action.actionPerformed(event);
         action.actionPerformed(event);
-        
+
         // Verify all messages were sent
         List<MarklinMessage> sentMessages = tc.getSentMessages();
-        Assert.assertEquals("Three messages sent", 3, sentMessages.size());
-        
+        assertEquals(3, sentMessages.size(), "Three messages sent");
+
         // Verify all are CAN BOOT messages
         MarklinMessage expectedMessage = MarklinMessage.getCanBoot();
         for (MarklinMessage sentMessage : sentMessages) {
             for (int i = 0; i < expectedMessage.getNumDataElements(); i++) {
-                Assert.assertEquals("Message byte " + i + " matches expected", 
-                                  expectedMessage.getElement(i), sentMessage.getElement(i));
+                assertEquals(expectedMessage.getElement(i), sentMessage.getElement(i),
+                        "Message byte " + i + " matches expected");
             }
         }
     }
@@ -128,31 +131,31 @@ public class MarklinSendBootActionTest {
     public void testCanBootMessageStructure() {
         // Test the structure of the CAN BOOT message itself
         MarklinMessage bootMessage = MarklinMessage.getCanBoot();
-        Assert.assertNotNull("CAN BOOT message created", bootMessage);
+        assertNotNull(bootMessage, "CAN BOOT message created");
 
         // Based on the implementation, verify the message structure
         // Command 0x1B: (0x1B >> 7) & 0xFF = 0x00, (0x1B << 1) & 0xFF = 0x36
-        Assert.assertEquals("Element 0 (high bits)", 0x00, bootMessage.getElement(0));
-        Assert.assertEquals("Element 1 (low bits)", 0x36, bootMessage.getElement(1));
+        assertEquals(0x00, bootMessage.getElement(0), "Element 0 (high bits)");
+        assertEquals(0x36, bootMessage.getElement(1), "Element 1 (low bits)");
 
         // Hash bytes should be from MarklinConstants
-        Assert.assertEquals("Element 2 (hash byte 1)", 0x47, bootMessage.getElement(2)); // MarklinConstants.HASHBYTE1
-        Assert.assertEquals("Element 3 (hash byte 2)", 0x11, bootMessage.getElement(3)); // MarklinConstants.HASHBYTE2
+        assertEquals(0x47, bootMessage.getElement(2), "Element 2 (hash byte 1)"); // MarklinConstants.HASHBYTE1
+        assertEquals(0x11, bootMessage.getElement(3), "Element 3 (hash byte 2)"); // MarklinConstants.HASHBYTE2
 
         // DLC should be 5
-        Assert.assertEquals("Element 4 (DLC)", 0x05, bootMessage.getElement(4));
+        assertEquals(0x05, bootMessage.getElement(4), "Element 4 (DLC)");
 
         // Elements 5-8 should be 0 (address bytes for broadcast)
         for (int i = 5; i <= 8; i++) {
-            Assert.assertEquals("Element " + i + " should be 0", 0x00, bootMessage.getElement(i));
+            assertEquals(0x00, bootMessage.getElement(i), "Element " + i + " should be 0");
         }
 
         // Element 9 (data byte 0) should be 0x11 (magic value for Gleisbox activation)
-        Assert.assertEquals("Element 9 (data byte 0)", 0x11, bootMessage.getElement(9));
+        assertEquals(0x11, bootMessage.getElement(9), "Element 9 (data byte 0)");
 
         // Remaining elements should be 0
         for (int i = 10; i < bootMessage.getNumDataElements(); i++) {
-            Assert.assertEquals("Element " + i + " should be 0", 0x00, bootMessage.getElement(i));
+            assertEquals(0x00, bootMessage.getElement(i), "Element " + i + " should be 0");
         }
     }
 

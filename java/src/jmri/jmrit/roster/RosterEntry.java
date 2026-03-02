@@ -14,7 +14,6 @@ import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.ImageIcon;
 
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
@@ -1763,7 +1762,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void printEntry(HardcopyWriter w) {
         if (getIconPath() != null) {
-            ImageIcon icon = new ImageIcon(getIconPath());
+            HardcopyWriter.ImageIconWrapper icon = new HardcopyWriter.ImageIconWrapper(getIconPath());
             // We use an ImageIcon because it's guaranteed to have been loaded when ctor is complete.
             // We set the imagesize to 150x150 pixels times the overSample. The
             // resulting image on the page will be scaled back down to 150pt x 150pt
@@ -1775,7 +1774,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             // Ensure there is enough vertical space for the image
             w.ensureVerticalSpace(actualShape.height);
 
-            Dimension d = w.writeSpecificSize(img, shape);
+            Dimension d = w.writeSpecificSize(icon, shape);
             // Work out the number of line approx that the image takes up.
             // We might need to pad some areas of the roster out, so that things
             // look correct and text doesn't overflow into the image.

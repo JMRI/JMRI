@@ -310,11 +310,11 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public static MarklinMessage getProgMode() {
-        return new MarklinMessage();
+        return null;
     }
 
     public static MarklinMessage getExitProgMode() {
-        return new MarklinMessage();
+        return null;
     }
 
     public static MarklinMessage getReadPagedCV(int cv) { //Rxxx

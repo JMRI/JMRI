@@ -3,7 +3,6 @@ package apps.startup;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class CreateButtonModelFactoryTest {
     @Test
     public void testCTor() {
         CreateButtonModelFactory t = new CreateButtonModelFactory();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

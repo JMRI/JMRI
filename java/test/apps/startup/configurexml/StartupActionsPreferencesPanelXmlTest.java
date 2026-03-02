@@ -3,7 +3,6 @@ package apps.startup.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * StartupActionsPreferencesPanelXmlTest.java
@@ -16,7 +15,7 @@ public class StartupActionsPreferencesPanelXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("StartupActionsPreferencesPanelXml constructor",new StartupActionsPreferencesPanelXml());
+      Assertions.assertNotNull(new StartupActionsPreferencesPanelXml(), "StartupActionsPreferencesPanelXml constructor");
     }
 
     @BeforeEach

@@ -3,7 +3,6 @@ package jmri.configurexml.swing;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class StoreAndCompareDialogTest {
     @Test
     public void testCTor() {
         StoreAndCompareDialog t = new StoreAndCompareDialog();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

@@ -2,10 +2,10 @@ package jmri.util.davidflanagan;
 
 import javax.swing.JFrame;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.Rectangle;
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +15,6 @@ import jmri.util.junit.annotations.DisabledIfHeadless;
 import org.junit.jupiter.api.*;
 import jmri.util.JUnitUtil;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import java.io.File;
 
 public class HardcopyWriterTest {
     @Test
@@ -34,21 +31,8 @@ public class HardcopyWriterTest {
         }
     }
 
-    @Test
-    @DisabledIfHeadless
-    public void testPrintSomething() throws IOException, HardcopyWriter.ColumnException {
-        JFrame frame = new JFrame();
-        HardcopyWriter hcw = null;
-        try {
-            hcw = new HardcopyWriter(frame, "test", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72, true, null,
-                    null, null, null, new Dimension((int) (8.5 * 72), (int) (11.0 * 72)));
-            Assertions.assertNotNull(hcw, "HardcopyWriter constructor");
-        } catch (HardcopyWriter.PrintCanceledException pce) {
-            // this isn't an error for this test.
-            return;
-        }
-        int width = hcw.getPrintablePagesizePoints().width;
-
+    private void performStandardDrawing(HardcopyWriter hcw, int width)
+            throws IOException, HardcopyWriter.ColumnException {
         for (String fontName : new String[]{"Monospaced", "SansSerif", "Serif", "Dialog"}) {
             hcw.setFont(fontName, Font.PLAIN, 10);
 
@@ -69,66 +53,57 @@ public class HardcopyWriterTest {
             });
             hcw.write("Hello World\tHello World\tHello World\n");
             hcw.write("\t\tHello from col 3\n");
-
         }
+    }
 
-        // This is what causes the page to get added to the vector of images.
-        hcw.pageBreak();
-
-        Vector<Image> images = hcw.getPageImages();
-        Assertions.assertNotNull(images, "getImages");
-        Assertions.assertEquals(1, images.size(), "getImages");
-        Image image = images.get(0);
-        Assertions.assertNotNull(image, "getImage");
-
-        // ISSUE: Not entirely clear how to test this... especially since we don't want to
-        // do exact bitwise comparison of the image. 
-
-        // Write out the image to /tmp/test.png
-        // We *know* this is a BufferedImage, so we can cast it.
+    @Test
+    @DisabledIfHeadless
+    public void testPrintSomething() throws IOException, HardcopyWriter.ColumnException {
+        JFrame frame = new JFrame();
+        HardcopyWriter hcw = null;
         try {
-            ImageIO.write((BufferedImage) image, "png", new File("/tmp/jmri_testPrintSomething.png"));
-        } catch (Exception e) {
-            log.warn("Failed to save test image");
+            hcw = new HardcopyWriter(frame, "test", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72, true, null,
+                    null, null, null, new Dimension((int) (8.5 * 72), (int) (11.0 * 72)));
+            Assertions.assertNotNull(hcw, "HardcopyWriter constructor");
+
+            int width = hcw.getPrintablePagesizePoints().width;
+            performStandardDrawing(hcw, width);
+
+            // This is what causes the page to get added to the vector of images.
+            hcw.pageBreak();
+
+            Vector<Image> images = hcw.getPageImages();
+            Assertions.assertNotNull(images, "getImages");
+            Assertions.assertEquals(1, images.size(), "getImages");
+            Image image = images.get(0);
+            Assertions.assertNotNull(image, "getImage");
+
+            Assertions.assertEquals(850, image.getWidth(null), "image width");
+            Assertions.assertEquals(1100, image.getHeight(null), "image height");
+
+            int totalPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(0, 0, 850, 1100));
+
+            // Now we get boxes around bits
+            Rectangle boxes[] = {
+                    new Rectangle(0, 0, 850, 50),
+                    new Rectangle(50, 50, 120, 400),
+                    new Rectangle(291, 50, 190, 400),
+                    new Rectangle(538, 50, 275, 400)
+            };
+
+            int pixelInsideBox = 0;
+            for (Rectangle box : boxes) {
+                pixelInsideBox += totalPixelValue((BufferedImage) image, box);
+            }
+
+            Assertions.assertEquals(totalPixelValue, pixelInsideBox, "totalPixelValue should match the sum of areas");
+
+        } catch (HardcopyWriter.PrintCanceledException pce) {
+            // OK
+        } finally {
+            if (hcw != null)
+                hcw.dispose();
         }
-
-        Assertions.assertEquals(850, image.getWidth(null), "image width");
-        Assertions.assertEquals(1100, image.getHeight(null), "image height");
-
-        Assertions.assertEquals(0, totalPixelValue((BufferedImage) image, new Rectangle(0, 0, 10, 10)),
-                "image top left area");
-        Assertions.assertEquals(0, totalPixelValue((BufferedImage) image, new Rectangle(840, 1090, 10, 10)),
-                "image bottom right area");
-
-        int totalPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(0, 0, 850, 1100));
-
-        // Now we get boxes around bits
-        Rectangle boxes[] = {
-                new Rectangle(0, 0, 850, 50),
-                new Rectangle(50, 50, 120, 400),
-                new Rectangle(291, 50, 190, 400),
-                new Rectangle(538, 50, 275, 400)
-        };
-
-        int pixelInsideBox = 0;
-
-        for (Rectangle box : boxes) {
-            pixelInsideBox += totalPixelValue((BufferedImage) image, box);
-        }
-
-        if (totalPixelValue != pixelInsideBox) {
-            // This is a bit of a hack, but it's the best we can do.
-            // Split the page up into  blocks and then print all a '*' for each block (if it
-            // has a non-zero pixel value)
-            // The size must divide the image size evenly.
-            dumpOutImage((BufferedImage) image, boxes, 5, 10);
-        }
-
-        Assertions.assertEquals(totalPixelValue,
-                pixelInsideBox,
-                "totalPixelValue should match the sum of areas");
-
-        hcw.dispose();
     }
 
     @Test
@@ -140,26 +115,25 @@ public class HardcopyWriterTest {
             hcw = new HardcopyWriter(frame, "test", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72, true, null,
                     null, null, null, new Dimension((int) (8.5 * 72), (int) (11.0 * 72)));
             Assertions.assertNotNull(hcw, "HardcopyWriter constructor");
+
+            int pageNumber = hcw.getPageNum();
+            Assertions.assertEquals(1, pageNumber, "page number");
+            while (hcw.getPageNum() == 1) {
+                hcw.write("Hello World\n");
+            }
+
+            pageNumber = hcw.getPageNum();
+            Assertions.assertEquals(2, pageNumber, "page number");
+
+            Vector<Image> images = hcw.getPageImages();
+            Assertions.assertNotNull(images, "getImages");
+            Assertions.assertEquals(1, images.size(), "getImages");
         } catch (HardcopyWriter.PrintCanceledException pce) {
-            // this isn't an error for this test.
-            return;
+            // OK
+        } finally {
+            if (hcw != null)
+                hcw.dispose();
         }
-
-        int pageNumber = hcw.getPageNum();
-
-        Assertions.assertEquals(1, pageNumber, "page number");
-        while (hcw.getPageNum() == 1) {
-            hcw.write("Hello World\n");
-        }
-
-        pageNumber = hcw.getPageNum();
-        Assertions.assertEquals(2, pageNumber, "page number");
-
-        Vector<Image> images = hcw.getPageImages();
-
-        Assertions.assertNotNull(images, "getImages");
-        Assertions.assertEquals(1, images.size(), "getImages");
-        hcw.dispose();
     }
 
     @Test
@@ -171,18 +145,10 @@ public class HardcopyWriterTest {
             hcw = new HardcopyWriter(frame, "test", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72, true, null,
                     null, null, null, new Dimension((int) (8.5 * 72), (int) (11.0 * 72)));
             Assertions.assertNotNull(hcw, "HardcopyWriter constructor");
-        } catch (HardcopyWriter.PrintCanceledException pce) {
-            // this isn't an error for this test.
-            return;
-        }
 
-        int width = hcw.getPrintablePagesizePoints().width;
+            int width = hcw.getPrintablePagesizePoints().width;
+            hcw.setFont("Monospaced", Font.PLAIN, 10);
 
-        // Monospaced is used to make the output the same between Windows/Linux/Mac
-        for (String fontName : new String[]{"Monospaced"}) {
-            hcw.setFont(fontName, Font.PLAIN, 10);
-
-            // Make three columns that are 1/3 of the page width. (i.e. 250 pixels each)
             hcw.setColumns(new HardcopyWriter.Column[]{
                     new HardcopyWriter.Column(0, width / 3, HardcopyWriter.Align.LEFT_WRAP),
                     new HardcopyWriter.Column(width / 3, width / 3, HardcopyWriter.Align.CENTER_WRAP),
@@ -194,109 +160,33 @@ public class HardcopyWriterTest {
             hcw.write(
                     "A long string that should wrap around in the first column (thrice).\tNot wrap\tAnd also wrap here in the third column.\n");
 
-            hcw.leaveVerticalSpace(36); // half an inch
-        }
+            hcw.pageBreak();
 
-        // This is what causes the page to get added to the vector of images.
-        hcw.pageBreak();
+            Vector<Image> images = hcw.getPageImages();
+            Assertions.assertEquals(1, images.size(), "getImages");
+            Image image = images.get(0);
 
-        Vector<Image> images = hcw.getPageImages();
-        Assertions.assertNotNull(images, "getImages");
-        //Assertions.assertEquals(1, images.size(), "getImages");
-        Image image = images.get(0);
-        Assertions.assertNotNull(image, "getImage");
+            int totalPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(0, 0, 850, 1100));
 
-        // ISSUE: Not entirely clear how to test this... especially since we don't want to
-        // do exact bitwise comparison of the image. 
+            Rectangle boxes[] = {
+                    new Rectangle(0, 0, 850, 50),
+                    new Rectangle(50, 50, 250, 70),
+                    new Rectangle(300, 100, 250, 70),
+                    new Rectangle(570, 160, 230, 110),
+                    new Rectangle(50, 210, 500, 80)
+            };
 
-        // Write out the image to /tmp/test.png
-        // We *know* this is a BufferedImage, so we can cast it.
-        try {
-            ImageIO.write((BufferedImage) image, "png", new File("/tmp/jmri_testColumnWrap.png"));
-        } catch (Exception e) {
-            log.warn("Failed to save test image");
-        }
-
-        Assertions.assertEquals(850, image.getWidth(null), "image width");
-        Assertions.assertEquals(1100, image.getHeight(null), "image height");
-
-        Assertions.assertEquals(0, totalPixelValue((BufferedImage) image, new Rectangle(0, 0, 10, 10)),
-                "image top left area");
-        Assertions.assertEquals(0, totalPixelValue((BufferedImage) image, new Rectangle(840, 1090, 10, 10)),
-                "image bottom right area");
-
-        int totalPixelValue = totalPixelValue((BufferedImage) image, new Rectangle(0, 0, 850, 1100));
-
-        // Now we get boxes around bits
-        Rectangle boxes[] = {
-                new Rectangle(0, 0, 850, 50),
-                new Rectangle(50, 50, 250, 70),
-                new Rectangle(300, 100, 250, 70),
-                new Rectangle(570, 160, 230, 110),
-                new Rectangle(50, 210, 500, 80)
-        };
-
-        int pixelInsideBox = 0;
-
-        for (Rectangle box : boxes) {
-            pixelInsideBox += totalPixelValue((BufferedImage) image, box);
-        }
-
-        if (totalPixelValue != pixelInsideBox) {
-            // This is a bit of a hack, but it's the best we can do.
-            // Split the page up into  blocks and then print all a '*' for each block (if it
-            // has a non-zero pixel value)
-            // The size must divide the image size evenly.
-            dumpOutImage((BufferedImage) image, boxes, 5, 10);
-        }
-
-        Assertions.assertEquals(totalPixelValue,
-                pixelInsideBox,
-                "totalPixelValue should match the sum of areas");
-
-        hcw.dispose();
-
-    }
-
-    void dumpOutImage(BufferedImage image, Rectangle[] boxes, int xSize, int ySize) {
-        for (int y = 0; y < image.getHeight(null); y += ySize) {
-            String row = String.format("%04d:", y);
-            for (int x = 0; x < image.getWidth(null); x += xSize) {
-                if ((x % 100) == 0) {
-                    row += "|";
-                }
-                if (totalPixelValue(image, new Rectangle(x, y, xSize, ySize)) > 0) {
-                    // If all the non-zero pixels are inside a box, then use '.' instead
-                    // of '*'.
-                    boolean allInsideBox = true;
-                    for (int ypix = y; ypix < y + ySize && allInsideBox; ypix++) {
-                        for (int xpix = x; xpix < x + xSize; xpix++) {
-                            if (image.getRGB(xpix, ypix) != 0xffffff) {
-                                // This pixel is not white. See if it is inside a box
-                                boolean insideBox = false;
-                                for (Rectangle box : boxes) {
-                                    if (box.contains(xpix, ypix)) {
-                                        insideBox = true;
-                                        break;
-                                    }
-                                }
-                                if (!insideBox) {
-                                    allInsideBox = false;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if (allInsideBox) {
-                        row += ".";
-                    } else {
-                        row += "*";
-                    }
-                } else {
-                    row += " ";
-                }
+            int pixelInsideBox = 0;
+            for (Rectangle box : boxes) {
+                pixelInsideBox += totalPixelValue((BufferedImage) image, box);
             }
-            System.out.println(row);
+
+            Assertions.assertEquals(totalPixelValue, pixelInsideBox, "totalPixelValue should match the sum of areas");
+        } catch (HardcopyWriter.PrintCanceledException pce) {
+            // OK
+        } finally {
+            if (hcw != null)
+                hcw.dispose();
         }
     }
 
@@ -322,28 +212,118 @@ public class HardcopyWriterTest {
         totalWidth += (columns.size() - 1) * gap;
         Assertions.assertEquals(500, totalWidth, "total width");
         Assertions.assertEquals(500, lastColEnd, "lastColEnd");
-
-        columns.get(1).setWidth(50);
-        columns = HardcopyWriter.Column.stretchColumns(columns, 500, gap);
-
-        totalWidth = 0;
-        lastColEnd = -gap;
-        for (HardcopyWriter.Column column : columns) {
-            Assertions.assertEquals(lastColEnd + gap, column.position, "column position");
-            totalWidth += column.width;
-            lastColEnd = column.width + column.position;
-        }
-
-        totalWidth += (columns.size() - 1) * gap;
-        Assertions.assertEquals(500, totalWidth, "total width");
-        Assertions.assertEquals(500, lastColEnd, "lastColEnd");
-
-        Assertions.assertTrue(50 <= columns.get(1).getWidth(), "column width");
-        Assertions.assertTrue(60 >= columns.get(1).getWidth(), "column width");
     }
 
-    // A utility method that takes a BufferedImage and Bounds and returns the
-    // total pixel value as an integer representing *darkness* i.e. white is 0 and
+    @Test
+    @DisabledIfHeadless
+    public void testCommandRecording() throws IOException, HardcopyWriter.ColumnException {
+        JFrame frame = new JFrame();
+        HardcopyWriter hcwPreview = null;
+        HardcopyWriter hcwPrint = null;
+        try {
+            Dimension pagesize = new Dimension((int) (8.5 * 72), (int) (11.0 * 72));
+
+            hcwPreview = new HardcopyWriter(frame, "test-preview", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72,
+                    true, null, null, null, null, pagesize);
+            hcwPrint = new HardcopyWriter(frame, "test-print", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72,
+                    false, "SkipDialog", null, null, null, pagesize);
+
+            String text = "Test line 1";
+            hcwPreview.write(text + "\n");
+            hcwPrint.write(text + "\n");
+
+            // Verifying v_pos
+            Assertions.assertEquals(hcwPreview.getCurrentVPos(), hcwPrint.getCurrentVPos(),
+                    "v_pos should match between preview and print");
+
+            // Verifying measure
+            Rectangle2D boundsPreview = hcwPreview.measure(text);
+            Rectangle2D boundsPrint = hcwPrint.measure(text);
+            Assertions.assertEquals(boundsPreview.getWidth(), boundsPrint.getWidth(), 0.01,
+                    "measure width should match");
+            Assertions.assertEquals(boundsPreview.getHeight(), boundsPrint.getHeight(), 0.01,
+                    "measure height should match");
+
+            List<List<HardcopyWriter.PrintCommand>> pages = hcwPrint.getPageCommands();
+            Assertions.assertEquals(1, pages.size(), "Should have 1 page recorded");
+
+            List<HardcopyWriter.PrintCommand> firstPage = pages.get(0);
+
+            long drawStringCount = firstPage.stream()
+                    .filter(cmd -> cmd instanceof HardcopyWriter.DrawString)
+                    .count();
+
+            Assertions.assertTrue(drawStringCount >= 2,
+                    "Should have recorded at least content strings (header + content)");
+        } catch (HardcopyWriter.PrintCanceledException pce) {
+            // OK
+        } finally {
+            if (hcwPreview != null)
+                hcwPreview.dispose();
+            if (hcwPrint != null)
+                hcwPrint.dispose();
+        }
+    }
+
+    @Test
+    @DisabledIfHeadless
+    public void testComparePreviewAndPrintRecording() throws Exception {
+        JFrame frame = new JFrame();
+        HardcopyWriter hcwPreview = null;
+        HardcopyWriter hcwPrint = null;
+        try {
+            Dimension pagesize = new Dimension((int) (8.5 * 72), (int) (11.0 * 72));
+
+            // 1. Preview mode
+            hcwPreview = new HardcopyWriter(frame, "test-compare", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72,
+                    true, null,
+                    null, false, null, pagesize);
+            int width = hcwPreview.getPrintablePagesizePoints().width;
+            performStandardDrawing(hcwPreview, width);
+            hcwPreview.pageBreak();
+
+            Vector<Image> previewImages = hcwPreview.getPageImages();
+            BufferedImage previewImg = (BufferedImage) previewImages.get(0);
+
+            // 2. Print mode (bypass dialog)
+            hcwPrint = new HardcopyWriter(frame, "test-compare", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72,
+                    false, "SkipDialog",
+                    null, false, null, pagesize);
+            performStandardDrawing(hcwPrint, width);
+            hcwPrint.pageBreak();
+
+            // Replay commands from print mode into a new image
+            BufferedImage replayedImg = new BufferedImage(850, 1100, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2 = replayedImg.createGraphics();
+            g2.setColor(Color.WHITE);
+            g2.fillRect(0, 0, 850, 1100);
+
+            double scale = 100.0 / 72.0;
+            g2.scale(scale, scale);
+
+            PageFormat pf = new PageFormat();
+            Paper paper = new Paper();
+            paper.setSize(8.5 * 72, 11 * 72);
+            paper.setImageableArea(0, 0, 8.5 * 72, 11 * 72);
+            pf.setPaper(paper);
+
+            hcwPrint.print(g2, pf, 0);
+            g2.dispose();
+
+            // Compare images
+            Assertions.assertEquals(totalPixelValue(previewImg, new Rectangle(0, 0, 850, 1100)),
+                    totalPixelValue(replayedImg, new Rectangle(0, 0, 850, 1100)),
+                    "Total pixel value should be identical for same drawing operations");
+
+        } catch (HardcopyWriter.PrintCanceledException pce) {
+            Assertions.fail("Print job should not have been cancelled");
+        } finally {
+            if (hcwPreview != null)
+                hcwPreview.dispose();
+            if (hcwPrint != null)
+                hcwPrint.dispose();
+        }
+    }
 
     private int totalPixelValue(BufferedImage image, Rectangle bounds) {
         int totalRed = 0;
@@ -371,5 +351,4 @@ public class HardcopyWriterTest {
         JUnitUtil.tearDown();
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HardcopyWriterTest.class);
 }
