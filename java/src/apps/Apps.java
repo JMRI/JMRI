@@ -15,6 +15,7 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.*;
 import java.util.*;
+
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
@@ -24,7 +25,6 @@ import jmri.jmrit.jython.*;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.LogixNGPreferences;
 import jmri.jmrit.revhistory.FileHistory;
-import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrix.*;
 import jmri.profile.*;
 import jmri.script.JmriScriptEngineManager;
@@ -420,7 +420,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.error("Error while creating Jynstrument {}", path);
             return;
         }
-        ThrottleFrame.setTransparent(it);
+        TransparencyUtils.setTransparent(it);
         it.setVisible(true);
         _jynstrumentSpace.setVisible(true);
         _jynstrumentSpace.add(it);
@@ -868,13 +868,16 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         frame.setVisible(true);
     }
 
-    static protected void loadFile(String name) {
+    protected static void loadFile(String name) {
         ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cmOD != null) {
             URL pFile = cmOD.find(name);
             if (pFile != null) {
                 try {
-                    cmOD.load(pFile);
+                    boolean load = cmOD.load(pFile);
+                    if (!load) {
+                        log.error("Failed to load file:{}", pFile);
+                    }
                 } catch (JmriException e) {
                     log.error("Unhandled problem in loadFile", e);
                 }

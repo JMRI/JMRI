@@ -3,7 +3,6 @@ package apps.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * SystemConsoleConfigPanelXmlTest.java
@@ -16,7 +15,7 @@ public class SystemConsoleConfigPanelXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("SystemConsoleConfigPanelXml constructor",new SystemConsoleConfigPanelXml());
+        Assertions.assertNotNull(new SystemConsoleConfigPanelXml(), "SystemConsoleConfigPanelXml constructor");
     }
 
     @BeforeEach

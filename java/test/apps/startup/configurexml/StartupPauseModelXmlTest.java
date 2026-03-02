@@ -3,7 +3,6 @@ package apps.startup.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * StartupPauseModelXmlTest.java
@@ -16,7 +15,7 @@ public class StartupPauseModelXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("StartupPauseModelXml constructor",new StartupPauseModelXml());
+        Assertions.assertNotNull(new StartupPauseModelXml(), "StartupPauseModelXml constructor");
     }
 
     @BeforeEach

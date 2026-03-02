@@ -1,12 +1,14 @@
 package apps.jmrit;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -38,8 +40,8 @@ public class XmlFileValidateRunnerTest {
 
         t.actionPerformed(null);
 
-        Assert.assertTrue(pass);
-        Assert.assertFalse(fail);
+        assertTrue(pass);
+        assertFalse(fail);
     }
 
     // should find a "Duplicate key value [LT1] declared" error on or about line 14 of java/test/jmri/configurexml/invalid/TurnoutDuplicateSystemName.xml
@@ -52,7 +54,8 @@ public class XmlFileValidateRunnerTest {
             }
             @Override
             protected void showFailResults(Component who, String fileName, String text) {
-                Assert.assertTrue("check message", text.startsWith("Error on line 14: cvc-identity-constraint.4.2.2: Duplicate key value [LT1]"));
+                assertTrue( text.startsWith("Error on line 14: cvc-identity-constraint.4.2.2: Duplicate key value [LT1]"),
+                    "check message");
                 fail = true;
             }
             @Override
@@ -63,8 +66,8 @@ public class XmlFileValidateRunnerTest {
 
         t.actionPerformed(null);
 
-        Assert.assertTrue(fail);
-        Assert.assertFalse(pass);
+        assertTrue(fail);
+        assertFalse(pass);
     }
 
     @BeforeEach

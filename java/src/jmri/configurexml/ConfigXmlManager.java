@@ -7,10 +7,14 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.CheckReturnValue;
+
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.util.FileUtil;
+
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -264,6 +268,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
 
+    @CheckReturnValue
     protected boolean addConfigStore(Element root) {
         boolean result = true;
         List<Map.Entry<Object, Integer>> l = new ArrayList<>(clist.entrySet());
@@ -284,6 +289,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return result;
     }
 
+    @CheckReturnValue
     protected boolean addToolsStore(Element root) {
         boolean result = true;
         for (Object o : tlist) {
@@ -301,6 +307,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return result;
     }
 
+    @CheckReturnValue
     protected boolean addUserStore(Element root) {
         boolean result = true;
         for (Object o : ulist) {
@@ -338,6 +345,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
 
+    @CheckReturnValue
     protected boolean finalStore(Element root, File file) {
         try {
             // Document doc = newDocument(root, dtdLocation+"layout-config-"+dtdVersion+".dtd");
@@ -381,7 +389,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         synchronized (this) {
             Element root = initStore();
             addPrefsStore(root);
-            finalStore(root, file);
+            boolean result = finalStore(root, file);
+            if (!result) {
+                log.error("storePrefs failed to store:{}",file);
+            }
         }
     }
 
@@ -391,7 +402,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         synchronized (this) {
             Element root = initStore();
             addUserPrefsStore(root);
-            finalStore(root, file);
+            boolean result = finalStore(root, file);
+            if (!result) {
+                log.error("storeUserPrefs failed to store:{}",file);
+            }
         }
     }
 
@@ -410,6 +424,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     /** {@inheritDoc} */
     @Override
+    @CheckReturnValue
     public boolean storeConfig(File file) {
         boolean result = true;
         Element root = initStore();
@@ -425,6 +440,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     /** {@inheritDoc} */
     @Override
+    @CheckReturnValue
     public boolean storeUser(File file) {
         boolean result = true;
         Element root = initStore();
@@ -716,6 +732,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     /** {@inheritDoc} */
     @Override
+    @CheckReturnValue
     public boolean loadDeferred(URL url) {
         boolean result = true;
         // Now process the load-later list

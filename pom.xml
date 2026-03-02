@@ -37,7 +37,7 @@
         <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
         <!-- don't load JInput during CI tests -->
         <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin>
-        <ant.version>1.10.11</ant.version>
+        <ant.version>1.10.14</ant.version>
         <junit5.version>5.13.4</junit5.version>
         <junit.platform.version>1.13.4</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
@@ -45,8 +45,8 @@
         <!-- define argLines to allow running surefire:test -->
         <surefire.argLine></surefire.argLine>
         <failsafe.argLine></failsafe.argLine>
-        <surefire.version>2.22.0</surefire.version>
-        <failsafe.version>2.22.0</failsafe.version>
+        <surefire.version>3.5.4</surefire.version>
+        <failsafe.version>3.5.4</failsafe.version>
         <jqassistant.version>1.6.0</jqassistant.version>
         <checkstyle.config.location>${basedir}/checkstyle.xml</checkstyle.config.location>
     </properties>
@@ -362,6 +362,7 @@
                 </includes>
                 <excludes>
                     <exclude>**/*.java</exclude>
+                    <exclude>**/junit-platform.properties</exclude><!-- Prevent Warning 2 JUnit properties found -->
                 </excludes>
             </resource>
             <resource>
@@ -398,7 +399,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version><!--$NO-MVN-MAN-VER$-->
+                <version>3.2.0</version><!--$NO-MVN-MAN-VER$-->
                 <!-- above line-end comment silences warning in Eclipse -->
                 <!--
                 <executions>
@@ -555,6 +556,15 @@
                     <reuseForks>false</reuseForks>
                     -->
                 </configuration>
+                <!-- From Surefire 3.0+ ( due to junit-vintage-engine ), this forces the JU Platform runner. -->
+                <!-- Maven Test runner auto-detects JUnit4 Test Runner instead of JUnit Platform Runner. -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit-platform</artifactId>
+                        <version>${surefire.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -1216,6 +1226,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <!-- When this is removed, also remove surefire-junit-platform override. -->
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
             <version>${junit5.version}</version>
@@ -1228,8 +1239,20 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-runner</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-engine</artifactId>
             <version>${junit.platform.version}</version>
             <scope>test</scope>
         </dependency>
@@ -1242,6 +1265,12 @@
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-api</artifactId>
             <version>${junit.platform.version}</version>
             <scope>test</scope>
         </dependency>

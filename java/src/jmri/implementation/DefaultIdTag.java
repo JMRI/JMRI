@@ -5,7 +5,12 @@ import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.text.*;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeParseException;
+import java.time.format.DateTimeFormatter;
 
 import javax.annotation.CheckForNull;
 
@@ -162,9 +167,18 @@ public class DefaultIdTag extends AbstractIdTag {
                     log.debug("ParseException in whenLastSeen ISO attempt: \"{}\"", lastSeenText, ex);
                     // next, try parse using how it was saved by JMRI < 5.3.5
                     try {
+                        // the result of this string may change between Java versions
                         this.whenLastSeen = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).parse(lastSeenText);
                     } catch (ParseException ex2) {
-                        log.warn("During load of IdTag \"{}\" {}", getDisplayName(), ex.getMessage());
+                        // next, try parse fixed format JMRI < 5.3.5, Java8 Locale US
+                        try {
+                            DateTimeFormatter previousUsFormatter =
+                            DateTimeFormatter.ofPattern("MMM d, yyyy, h:mm:ss a", Locale.US);
+                            LocalDateTime ldt = LocalDateTime.parse(lastSeenText, previousUsFormatter);
+                            this.whenLastSeen = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+                        } catch (DateTimeParseException ex3) {
+                            log.warn("During load of IdTag \"{}\" {}", getDisplayName(), ex.getMessage());
+                        }
                     }
                 }
             }

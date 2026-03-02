@@ -3,7 +3,6 @@ package jmri.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class StoreAndCompareTest {
     @Test
     public void testCTor() {
         StoreAndCompare sc = new StoreAndCompare();
-        Assert.assertNotNull("exists", sc);
+        Assertions.assertNotNull(sc, "exists");
     }
 
     @BeforeEach

@@ -60,7 +60,13 @@ public class JynstrumentFactory {
         jyns.setJythonFile(jyFile);
         jyns.setFolder(path);
         jyns.setPopUpMenu(new JynstrumentPopupMenu(jyns));
-        jyns.init();  // GO!
+        try {
+            jyns.init();  // GO!
+        } catch (RuntimeException e) {
+            // catch, log, and continue, we don't want to break the ongoing workflow
+            log.error("Error starting Jynstrument.",e);
+            return null;
+        }        
         return jyns;
     }
 

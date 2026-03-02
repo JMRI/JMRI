@@ -141,13 +141,17 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
             // configure host name
             String hostName = null;
             try {
-                hostName = shared.getAttribute("address").getValue();
+                var attr = perNode.getAttribute("address");
+                if (attr == null) attr = shared.getAttribute("address");
+                hostName = attr.getValue();
             } catch (NullPointerException ex) {  // considered normal if the attributes are not present
             }
             adapter.setHostName(hostName);
 
             try {
-                int port = shared.getAttribute("port").getIntValue();
+                var attr = perNode.getAttribute("port");
+                if (attr == null) attr = shared.getAttribute("port");
+                int port = attr.getIntValue();
                 adapter.setPort(port);
             } catch (org.jdom2.DataConversionException ex) {
                 log.warn("Could not parse port attribute: {}", shared.getAttribute("port"));

@@ -485,10 +485,12 @@
         </filterset>
     </target>
 
-    <target name="check-ant-requirements"> <!-- check build system requirements, not for user use -->
-      <antversion property="ant-version-ok" atleast="1.8.0"/>
+    <!-- check build system requirements, not for user use -->
+    <!-- Used in the warnings and warnings-check targets -->
+    <target name="check-ant-requirements"> 
+      <antversion property="ant-version-ok" atleast="1.10.6"/>
       <antversion property="ant-version-actual"/>
-      <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
+      <fail unless="ant-version-ok" message="Minimum ant version required is 1.10.6, this is ${ant-version-actual}"/>
     </target>
 
     <target name="show-java-version"> <!-- check build system requirements, not for user use -->
@@ -2019,7 +2021,7 @@
              index="true">  <!--  java -jar jmri.jar doesn't start when apps.PanelPro.PanelPro is specified & index="true" -->
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**,web/app/**" />
+                     excludes="help/en/manual/**" />
           <manifest>
             <attribute name="Main-Class" value="jmri.Version"/>
             <attribute name="Class-Path" value="${jar.classpath}"/>
@@ -2545,7 +2547,6 @@
                 <exclude name=".metadata/.plugins/org.eclipse.core.resources/**" />
                 <exclude name="help/en/JavaHelpSearch/**" />
                 <exclude name="help/fr/JavaHelpSearch/**" />
-                <exclude name="web/app/node_modules/**" />
                 <exclude name=".git/**" />
                 <exclude name="target/**" />
             </fileset>
@@ -2639,16 +2640,13 @@
                      includes="jmri.jar"/>
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**,web/app/**" />
+                     excludes="help/en/manual/**" />
             <fileset dir="${scriptdir}"
                      includes="default_lcf.xml,COPYING"/>
             <fileset dir="${scriptdir}/WinInstallFiles"
                      includes="*"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
-        </copy>
-        <copy todir="${dist.windows}/JMRI/">
-            <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.windows}/JMRI/lib"/>
         <copy todir="${dist.windows}/JMRI/lib" flatten="true">
@@ -2688,7 +2686,7 @@
                      includes="jmri.jar"/>
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**,web/app/**" />
+                     excludes="help/en/manual/**" />
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
                      includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/,LccPro.app/"/>
@@ -2696,9 +2694,6 @@
                      includes="default_lcf.xml,COPYING"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
-        </copy>
-        <copy todir="${dist.macosx}/JMRI/">
-            <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <copy todir="${dist.macosx}/JMRI/">
             <fileset file="${dist.scripts}/JmriFaceless.command"/>
@@ -2775,14 +2770,11 @@
                      includes="jmri.jar"/>
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**,web/app/**" />
+                     excludes="help/en/manual/**" />
             <fileset dir="${scriptdir}"
                      includes="default_lcf.xml,COPYING"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
-        </copy>
-        <copy todir="${dist.linux}/JMRI/">
-            <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib"/>
         <copy todir="${dist.linux}/JMRI/lib" flatten="true">

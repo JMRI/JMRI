@@ -59,7 +59,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
         }
 
         // if exising frames are open ask to destroy those or merge.
-        if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottleWindows().hasNext()) {
+        if (InstanceManager.getDefault(ThrottleFrameManager.class).iterator().hasNext()) {
             Object[] possibleValues = {Bundle.getMessage("LabelMerge"),
                 Bundle.getMessage("LabelReplace"),
                 Bundle.getMessage("ButtonCancel")};

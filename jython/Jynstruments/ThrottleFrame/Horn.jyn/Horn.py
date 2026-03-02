@@ -82,13 +82,13 @@ class Horn(Jynstrument, PropertyChangeListener, AddressListener, MouseListener):
         self.cleanThrottle()
         self.setIcon()
 
-    def notifyConsistAddressChosen(self, address, isLong):
+    def notifyConsistAddressChosen(self, address):
         self.notifyAddressChosen(address)
 
     def notifyConsistAddressThrottleFound(self, throttle):
         self.notifyAddressThrottleFound(throttle)
 
-    def notifyConsistAddressReleased(self, address, isLong):
+    def notifyConsistAddressReleased(self, address):
         self.notifyAddressReleased(address)
 
 #MouseListener part: to listen for mouse events

@@ -3,7 +3,6 @@ package apps.gui3.dp3;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,13 +13,14 @@ public class DecoderPro3ActionTest {
     @Test
     public void testCTor() {
         DecoderPro3Action t = new DecoderPro3Action("test",true);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @Test
     public void testMakePanel(){
         DecoderPro3Action t = new DecoderPro3Action("test",true);
-        Assert.assertThrows(IllegalArgumentException.class, () -> t.makePanel());
+        IllegalArgumentException ex = Assertions.assertThrows(IllegalArgumentException.class, () -> t.makePanel());
+        Assertions.assertNotNull(ex);
     }
 
     @BeforeEach

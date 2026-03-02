@@ -3,7 +3,6 @@ package apps.gui3.tabbedpreferences;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class TabbedPreferencesProfileActionTest {
     @Test
     public void testCTor() {
         TabbedPreferencesProfileAction t = new TabbedPreferencesProfileAction();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

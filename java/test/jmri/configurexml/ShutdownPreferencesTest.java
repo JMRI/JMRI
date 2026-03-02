@@ -3,7 +3,6 @@ package jmri.configurexml;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -14,7 +13,7 @@ public class ShutdownPreferencesTest {
     @Test
     public void testCTor() {
         ShutdownPreferences sh = new ShutdownPreferences();
-        Assert.assertNotNull("exists", sh);
+        Assertions.assertNotNull(sh, "exists");
     }
 
     @BeforeEach

@@ -180,7 +180,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     public synchronized void setTargetSpeedByPass(float speed) {
-        _autoEngineer.setTargetSpeed(-1.0f, speed);
+        _autoEngineer.setTargetSpeed(-1.0f,speed);
     }
 
     public synchronized void setTargetSpeedByPass(float distance, float speed) {
@@ -189,6 +189,10 @@ public class AutoActiveTrain implements ThrottleListener {
         } else {
             _autoEngineer.setTargetSpeed(distance, speed);
         }
+    }
+
+    public synchronized void setSpeedImmediate(float speed) {
+        _autoEngineer.setSpeedImmediate(speed);
     }
 
     public synchronized void setTargetSpeed(float speed) {
@@ -640,6 +644,10 @@ public class AutoActiveTrain implements ThrottleListener {
         _autoEngineer.setIsForward(_savedForward);
     }
 
+    protected boolean getSavedDirection() {
+        return _savedForward;
+    }
+
     // keeps track of number of horn execution threads that are active
     private int _activeHornThreads = 0;
 
@@ -744,6 +752,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
             }
             if (b == _nextBlock || _nextBlock == null) {
+                _activeTrain.setCurrentBlock(_currentBlock, b);
                 _currentBlock = b;
                 // defer setting the next/previous blocks until we know if its required and in what fashion
                 // for stopping blocks that action happens after the train has stopped.
@@ -752,16 +761,23 @@ public class AutoActiveTrain implements ThrottleListener {
                     // are we going to reverse at end
                     if ( _activeTrain.getReverseAtEnd() ) {
                         removeCurrentSignal();
+                        _activeTrain.holdAllocation(true); //dont go anywhere until stopped.
                         stopInCurrentSection(END_REVERSAL, StopContext.DESTINATION);
+                        _previousBlock = _currentBlock;
+                        _nextBlock = getNextBlock(b, as);
+                        _activeTrain.setNextBlock(_currentBlock, _nextBlock);
                     }
-                    // are we going continuously without delay
-                    else if ( _activeTrain.getResetWhenDone() && _activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
+                    // are we going continuously without delay for round and round
+                    else if ( _activeTrain.getResetWhenDone()
+                            && _activeTrain.getDelayedRestart() == ActiveTrain.NODELAY
+                            && !_activeTrain.isTransitReversed()) {
                         _activeTrain.setRestart(_activeTrain.getDelayedRestart(),_activeTrain.getRestartDelay(),
                                 _activeTrain.getRestartSensor(),_activeTrain.getResetRestartSensor());
                         _activeTrain.setTransitReversed(false);
                         _activeTrain.resetAllAllocatedSections();
                         _previousBlock = null;
                         _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
+                        _activeTrain.setNextBlock(_currentBlock, _nextBlock);
                         setEngineDirection();
                         if ((_nextSection != null) && !_activeTrain.isInAllocatedList(_nextSection)) {
                             // we need to get a next section
@@ -783,11 +799,11 @@ public class AutoActiveTrain implements ThrottleListener {
                         // whether the _nextSection is not null and allocated to us.
                         if ( _nextSection == null || !_activeTrain.isInAllocatedList(_nextSection)) {
                             removeCurrentSignal();
-                            _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
                             stopInCurrentSection(BEGINNING_RESET, StopContext.DESTINATION);
-                        } else {
-                            _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
                         }
+                        _previousBlock = _currentBlock;
+                        _nextBlock = getNextBlock(b, as);
+                        _activeTrain.setNextBlock(_currentBlock, _nextBlock);
                     }
                     // else we are ending here
                     else {
@@ -801,7 +817,11 @@ public class AutoActiveTrain implements ThrottleListener {
                     // are we coming back from a reverse and running continiuosly
                     if ( _activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed() ) {
                         removeCurrentSignal();
+                        _activeTrain.holdAllocation(true);
                         stopInCurrentSection(BEGINNING_RESET, StopContext.DESTINATION);
+                        _previousBlock = _currentBlock;
+                        _nextBlock = getNextBlock(b, as);
+                        _activeTrain.setNextBlock(_currentBlock, _nextBlock);
                     }
                     // else we are ending here
                     else {
@@ -818,9 +838,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         // set the blocks as normal
                         _previousBlock = _currentBlock;
                         _nextBlock = getNextBlock(b, as);
-                        //if (_nextBlock.getState() == Block.OCCUPIED) {
-                        //    handleBlockStateChange(as, _nextBlock);
-                        //}
+                        _activeTrain.setNextBlock(_currentBlock, _nextBlock);
                         setupNewCurrentSignal(as, false);
                     } else {
                         // assume we have reached last block in this transit, for safety sake.
@@ -829,9 +847,19 @@ public class AutoActiveTrain implements ThrottleListener {
                         removeCurrentSignal();
                         stopInCurrentSection(NO_TASK);
                     }
+                    _activeTrain.setNextBlock(_currentBlock, _nextBlock);
                 }
             } else if (b != _currentBlock) {
-                log.trace("{}: block going occupied {} is not _nextBlock or _currentBlock - ignored.",
+                // check to see if block is ahead of next block.
+                if (_dispatcher.getUseStrictTrainTracking() && isBlockAhead() != null) {
+                    log.error("{}:Block [{}] ahead has been entered illegally or next block [{}] never entered.",
+                            _activeTrain.getActiveTrainName(),b.getDisplayName(),_nextBlock.getDisplayName());
+                    saveSpeedAndDirection();
+                    setSavedStatus(_activeTrain.getStatus());
+                    _activeTrain.setStatus(ActiveTrain.STOPPED);
+                    setSpeedImmediate(-1); // Estop
+                }
+                log.trace("{}: block going occupied {} is not ahead of_nextBlock - ignored.",
                         _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                 return;
             }
@@ -850,6 +878,22 @@ public class AutoActiveTrain implements ThrottleListener {
                     setStopNow();
                 }
             } else {
+                if (b == _currentBlock && _nextBlock == null) {
+                    log.warn("{}:current block has gone inactive, disappeared leaving block[{}]",
+                            _activeTrain.getActiveTrainName(),b.getDisplayName());
+                    saveSpeedAndDirection();
+                    setSpeedImmediate(-1); //Estop
+                    setSavedStatus(_activeTrain.getStatus());
+                    _activeTrain.setStatus(ActiveTrain.STOPPED);
+                }
+                if (_dispatcher.getUseStrictTrainTracking() && isTrainLost()) {
+                    log.error("{}:Train has no occupied section, disappeared leaving block[{}]",
+                            _activeTrain.getActiveTrainName(),b.getDisplayName());
+                    saveSpeedAndDirection();
+                    setSpeedImmediate(-1); //Estop
+                    setSavedStatus(_activeTrain.getStatus());
+                    _activeTrain.setStatus(ActiveTrain.STOPPED);
+                }
                 if (!isStopping() && _dispatcher.getUseOccupiedTrackSpeed()) {
                     setSpeedBySignal();
                 }
@@ -871,8 +915,22 @@ public class AutoActiveTrain implements ThrottleListener {
         log.debug("[{}]flipping direction was [{}] now [{}]",_activeTrain.getActiveTrainName() ,oldFwd, getForward());
     }
 
+    protected void setEngineDirection(boolean isFwd) {
+        boolean oldFwd = getForward();
+        setForward(isFwd);
+        log.debug("[{}]Force Flipped direction was [{}] now [{}]",_activeTrain.getActiveTrainName() ,oldFwd, getForward());
+    }
+
     protected AllocatedSection getCurrentAllocatedSection() {
         return _currentAllocatedSection;
+    }
+
+    protected Block getCurrentBlock() {
+        return _currentBlock;
+    }
+
+    protected Block getNextBlock() {
+        return _nextBlock;
     }
 
     /*
@@ -885,6 +943,54 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         return null;
     }
+
+   /*
+    * Check for train still has an occupied section.
+    */
+   protected boolean isTrainLost() {
+       // No Occupied sections at all.
+       for (AllocatedSection allocatedSection : _activeTrain.getAllocatedSectionList()) {
+           if (allocatedSection.getSection().getOccupancy() == Section.OCCUPIED)
+               return false;
+       }
+       return true;
+   }
+
+   /*
+    * Check for a block being ahead of _currentBlock
+    * returns null if no block..
+    */
+   protected Block isBlockAhead() {
+       // No Occupied sections at all.
+       boolean foundSearchFromBlock = false;
+       for (AllocatedSection allocatedSection : _activeTrain.getAllocatedSectionList()) {
+           Section sec = allocatedSection.getSection();
+           log.info("Section[{}]",sec.getDisplayName());
+           if (allocatedSection.getDirection() == Section.FORWARD) {
+               for (int ixB = 0; ixB < sec.getNumBlocks(); ixB++) {
+                   if ( sec.getBlockBySequenceNumber(ixB) == _nextBlock) {
+                       foundSearchFromBlock = true;
+                   } else
+                   if ( foundSearchFromBlock
+                           && sec.getBlockBySequenceNumber(ixB) != null
+                           && sec.getBlockBySequenceNumber(ixB).getState() ==  Block.OCCUPIED) {
+                       return sec.getBlockBySequenceNumber(ixB);
+                   }
+               }
+           } else {
+               for (int ixB = sec.getNumBlocks() -1; ixB >= 0; ixB--) {
+                   if ( sec.getBlockBySequenceNumber(ixB) == _nextBlock) {
+                       foundSearchFromBlock = true;
+                   } else if ( foundSearchFromBlock
+                           && sec.getBlockBySequenceNumber(ixB) != null
+                           && sec.getBlockBySequenceNumber(ixB).getState() ==  Block.OCCUPIED) {
+                       return sec.getBlockBySequenceNumber(ixB);
+                   }
+               }
+           }
+       }
+       return null;
+   }
 
     protected void allocateAFresh() {
         //Reset initialized flag
@@ -900,6 +1006,7 @@ public class AutoActiveTrain implements ThrottleListener {
             // this is first allocated section, get things started
             _initialized = true;
             _nextSection = as.getSection();
+            _activeTrain.setCurrentBlock(_currentBlock, null);
             _currentBlock = _activeTrain.getStartBlock();
             if (as.getSection().containsBlock(_currentBlock)) {
                 // starting Block is in this allocated section - find next Block
@@ -914,6 +1021,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     log.error("failure to get entry point to Transit from Block {}", _currentBlock.getDisplayName(USERSYS));
                 }
             }
+            _activeTrain.setNextBlock(_currentBlock, _nextBlock);
             if (_nextBlock != null) {
                 // set up new current signal, as this a beginning we allow a signal not at end of block
                 // to control the speed.
@@ -1063,14 +1171,6 @@ public class AutoActiveTrain implements ThrottleListener {
 
     @CheckForNull
     private Block getNextBlock(Block b, AllocatedSection as) {
-        //if (((_currentBlock == _activeTrain.getEndBlock()) && _activeTrain.getReverseAtEnd()
-        //        && (as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber()))) {
-        //    return _previousBlock;
-        //}
-        if ((_currentBlock == _activeTrain.getStartBlock())
-                && _activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed()
-                && (as.getSequence() == _activeTrain.getStartBlockSectionSequenceNumber()))
-            return _previousBlock;
         if (as.getNextSection() != null) {
             EntryPoint ep = as.getSection().getExitPointToSection(_nextSection, as.getDirection());
             if ((ep != null) && (ep.getBlock() == b))
@@ -1862,7 +1962,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                     if ((tBlock != null) && (tBlock.getState() == Block.OCCUPIED)) {
                         _stoppingBlock = tBlock;
-                        setStopByBlockOccupancy(false);
+                        setStopByBlockOccupancy(true);
                     } else {
                         setStopNow();
                     }
@@ -1967,7 +2067,14 @@ public class AutoActiveTrain implements ThrottleListener {
                 _activeTrain.reverseAllAllocatedSections();
                 setEngineDirection();
                 _previousBlock = null;
+                // Set current block to head of train in reverse.
                 _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
+                while (_nextBlock.getState()==Block.OCCUPIED) {
+                    _previousBlock = _currentBlock;
+                    _currentBlock = _nextBlock;
+                    _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
+                }
+                _activeTrain.setNextBlock(null, _currentBlock);
                 if (_activeTrain.getDelayReverseRestart() == ActiveTrain.NODELAY) {
                     _activeTrain.holdAllocation(false);
                     // a reversal can happen in mid section
@@ -1991,6 +2098,13 @@ public class AutoActiveTrain implements ThrottleListener {
                         _activeTrain.resetAllAllocatedSections();
                         _previousBlock = null;
                         _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
+                        // get head of train
+                        while (_nextBlock.getState()==Block.OCCUPIED && _currentAllocatedSection.getSection().containsBlock(_nextBlock)) {
+                            _previousBlock = _currentBlock;
+                            _currentBlock = _nextBlock;
+                            _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
+                        }
+                        _activeTrain.setNextBlock(_currentBlock, null);
                         setEngineDirection();
                         _activeTrain.setRestart(_activeTrain.getDelayedRestart(),_activeTrain.getRestartDelay(),
                                 _activeTrain.getRestartSensor(), _activeTrain.getResetRestartSensor());
@@ -2209,7 +2323,7 @@ public class AutoActiveTrain implements ThrottleListener {
         } catch (Exception ex) {
             log.error("setTargetSpeedByProfile crashed - Emergency Stop: ", ex );
             _autoEngineer.slowToStop(false);
-            setTargetSpeed(-1.0f);
+            setSpeedImmediate(-1); //Estop;
             _autoEngineer.setHalt(true);
         }
     }
@@ -2547,6 +2661,11 @@ public class AutoActiveTrain implements ThrottleListener {
 
         public void setTargetSpeed(float speed) {
             stopAllTimers();
+            if (speed < 0.0f) {
+                // estop is estop
+                throttle.setSpeedSetting(-1);
+                return;
+            }
 
             // Physics ramp: only if enabled AND speed profile exists for current direction
             boolean physicsRamp = (ramping == RAMP_PHYSICS);
@@ -2716,6 +2835,9 @@ public class AutoActiveTrain implements ThrottleListener {
         public void setTargetSpeed(float distance, float speed) {
             log.debug("Set Target Speed[{}] with distance{{}] from speed[{}]",speed,distance,throttle.getSpeedSetting());
             stopAllTimers();
+            if (speed < 0.0f) {
+                setTargetSpeed((-1));
+            }
             if (rosterEntry != null) {
                 rosterEntry.getSpeedProfile().setExtraInitialDelay(1500f);
                 rosterEntry.getSpeedProfile().setMinMaxLimitsKmh(minReliableOperatingSpeed, maxSpeed,

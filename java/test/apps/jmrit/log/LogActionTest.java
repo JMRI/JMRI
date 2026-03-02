@@ -2,7 +2,6 @@ package apps.jmrit.log;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class LogActionTest {
     @Test
     public void testCTor() {
         LogAction t = new LogAction();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
