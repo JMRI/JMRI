@@ -57,7 +57,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
             throttleWindows.add(tw);
             activeFrame = throttleWindows.indexOf(tw);
         }
-        throttlesListPanel.getTableModel().fireTableStructureChanged();
+        getThrottlesListPanel().getTableModel().fireTableStructureChanged();
         return tw;
     }
 
@@ -74,7 +74,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
             throttleWindows.add(tw);
             activeFrame = throttleWindows.indexOf(tw);
         }
-        throttlesListPanel.getTableModel().fireTableStructureChanged();
+        getThrottlesListPanel().getTableModel().fireTableStructureChanged();
         return tw;
     }
 
@@ -117,7 +117,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
                 }
             }
         }
-        throttlesListPanel.getTableModel().fireTableStructureChanged();        
+        getThrottlesListPanel().getTableModel().fireTableStructureChanged();        
     }
 
     public synchronized void requestAllThrottleWindowsDestroyed() {
@@ -125,7 +125,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
             destroyThrottleWindow((ThrottleWindow)frame);
         }
         throttleWindows = new ArrayList<>(0);
-        throttlesListPanel.getTableModel().fireTableStructureChanged();        
+        getThrottlesListPanel().getTableModel().fireTableStructureChanged();        
     }
     
     public int generateUniqueFrameID() {
@@ -141,7 +141,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
     private void destroyThrottleWindow(ThrottleWindow window) {
         throttleWindows.remove(window);
         window.dispose();        
-        throttlesListPanel.getTableModel().fireTableStructureChanged();        
+        getThrottlesListPanel().getTableModel().fireTableStructureChanged();        
     }
 
     @Override
@@ -196,16 +196,9 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
 
     public ThrottlesListPanel getThrottlesListPanel() {
         if (throttlesListPanel == null) {
-            buildThrottleListFrame();
+            throttlesListPanel = new ThrottlesListPanel();
         }
         return throttlesListPanel;
-    }
-
-    private void buildThrottleListFrame() {
-        throttlesListFrame = new JmriJFrame(Bundle.getMessage("ThrottleListFrameTile"));
-        throttlesListPanel = new ThrottlesListPanel();
-        throttlesListFrame.setContentPane(throttlesListPanel);
-        throttlesListFrame.pack();
     }
 
     /*
@@ -213,8 +206,10 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
      *
      */
     public void showThrottlesList() {
-        if (throttlesListFrame == null) {
-            buildThrottleListFrame();
+        if (throttlesListFrame == null) {            
+            throttlesListFrame = new JmriJFrame(Bundle.getMessage("ThrottleListFrameTile"));        
+            throttlesListFrame.setContentPane(getThrottlesListPanel());
+            throttlesListFrame.pack();            
         }
         throttlesListFrame.setVisible(true);
     }
@@ -244,7 +239,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
         throttleWindows.forEach(tw -> {
             ((ThrottleWindow)tw).applyPreferences();
         });
-        throttlesListPanel.applyPreferences();
+        getThrottlesListPanel().applyPreferences();
     }
 
     /**
