@@ -3,6 +3,7 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.geom.Point2D;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -11,6 +12,8 @@ import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
+import jmri.tracktiles.NotATile;
+import jmri.tracktiles.TrackTile;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -18,7 +21,7 @@ import jmri.util.swing.JmriJOptionPane;
  * MVC Editor component for TrackSegment objects.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
- * 
+ *
  */
 public class TrackSegmentEditor extends LayoutTrackEditor {
 
@@ -30,7 +33,7 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
         super(layoutEditor);
     }
 
-    // ********** Members and methods from LayoutTrackEditors 
+    // ********** Members and methods from LayoutTrackEditors
     // ********** specific to TrackSegment
 
     // variables for Edit Track Segment pane
@@ -45,6 +48,13 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private final JTextField editTrackSegmentArcTextField = new JTextField(5);
     private JButton editTrackSegmentSegmentEditBlockButton;
+    private JLabel tileDisplayLabel;
+
+    // Orientation display fields
+    private final JTextField editTrackSegmentOrientationATextField = new JTextField(10);
+    private final JTextField editTrackSegmentOrientationBTextField = new JTextField(10);
+    private JLabel orientationALabel;
+    private JLabel orientationBLabel;
 
     private int editTrackSegmentMainlineTrackIndex;
     private int editTrackSegmentSideTrackIndex;
@@ -64,8 +74,8 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             this.trackSegmentView = (TrackSegmentView) layoutTrackView;
             this.trackSegment = this.trackSegmentView.getTrackSegment();
         } else {
-            log.error("editLayoutTrack received type {} content {}", 
-                    layoutTrackView.getClass(), layoutTrackView, 
+            log.error("editLayoutTrack received type {} content {}",
+                    layoutTrackView.getClass(), layoutTrackView,
                     new Exception("traceback"));
         }
         sensorList.clear();
@@ -115,6 +125,36 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             panel33.add(editTrackSegmentHiddenCheckBox);
             contentPane.add(panel33);
 
+            // add tile display
+            JPanel tilePanel = new JPanel();
+            tilePanel.setLayout(new FlowLayout());
+            tileDisplayLabel = new JLabel();
+            tilePanel.add(tileDisplayLabel);
+            contentPane.add(tilePanel);
+
+            // add orientation display fields
+            JPanel panelOrientationA = new JPanel();
+            panelOrientationA.setLayout(new FlowLayout());
+            Point2D coordsA = layoutEditor.getCoords(trackSegment.getConnect1(), trackSegment.getType1());
+            orientationALabel = new JLabel(String.format("A (%.0f, %.0f): °:", coordsA.getX(), coordsA.getY()));
+            panelOrientationA.add(orientationALabel);
+            orientationALabel.setLabelFor(editTrackSegmentOrientationATextField);
+            editTrackSegmentOrientationATextField.setEditable(false);
+            editTrackSegmentOrientationATextField.setToolTipText("Orientation at connection point A");
+            panelOrientationA.add(editTrackSegmentOrientationATextField);
+            contentPane.add(panelOrientationA);
+
+            JPanel panelOrientationB = new JPanel();
+            panelOrientationB.setLayout(new FlowLayout());
+            Point2D coordsB = layoutEditor.getCoords(trackSegment.getConnect2(), trackSegment.getType2());
+            orientationBLabel = new JLabel(String.format("B (%.0f, %.0f): °:", coordsB.getX(), coordsB.getY()));
+            panelOrientationB.add(orientationBLabel);
+            orientationBLabel.setLabelFor(editTrackSegmentOrientationBTextField);
+            editTrackSegmentOrientationBTextField.setEditable(false);
+            editTrackSegmentOrientationBTextField.setToolTipText("Orientation at connection point B");
+            panelOrientationB.add(editTrackSegmentOrientationBTextField);
+            contentPane.add(panelOrientationB);
+
             // setup block name
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
@@ -162,6 +202,17 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             editTrackSegmentDashedComboBox.setSelectedIndex(editTrackSegmentSolidIndex);
         }
         editTrackSegmentHiddenCheckBox.setSelected(trackSegmentView.isHidden());
+
+        // Update tile display
+        updateTileDisplay();
+
+        // Update orientation fields with orientation values only
+        double orientationA = trackSegmentView.getOrientationAtA();
+        double orientationB = trackSegmentView.getOrientationAtB();
+
+        editTrackSegmentOrientationATextField.setText(String.format("%.1f°", orientationA));
+        editTrackSegmentOrientationBTextField.setText(String.format("%.1f°", orientationB));
+
         Block block = InstanceManager.getDefault(BlockManager.class).getBlock(trackSegment.getBlockName());
         editTrackSegmentBlockNameComboBox.getEditor().setItem(block);   // Select the item via the editor, empty text field if null
         editTrackSegmentBlockNameComboBox.setEnabled(!hasNxSensorPairs(trackSegment.getLayoutBlock()));
@@ -278,6 +329,23 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             layoutEditor.setDirty();
             layoutEditor.redrawPanel();
             editTrackSegmentNeedsRedraw = false;
+        }
+    }
+
+    /**
+     * Update the tile display label with current tile information.
+     */
+    private void updateTileDisplay() {
+        if (trackSegmentView.hasTile()) {
+            TrackTile tile = trackSegmentView.getTile();
+            if (tile instanceof NotATile) {
+                tileDisplayLabel.setText("Not a Tile");
+            } else {
+                tileDisplayLabel.setText(String.format("Tile: %s, %s, %s", 
+                    tile.getVendor(), tile.getFamily(), tile.getPartCode()));
+            }
+        } else {
+            tileDisplayLabel.setText("Not a Tile");
         }
     }
 

@@ -7,6 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import jmri.jmrit.display.layoutEditor.*;
+import jmri.tracktiles.TrackTile;
+import jmri.tracktiles.TrackTileManager;
+import jmri.tracktiles.NotATile;
+import jmri.tracktiles.UnknownTile;
+import jmri.InstanceManager;
 import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -189,6 +194,16 @@ public class TrackSegmentViewXml extends LayoutTrackViewXml {
                 decorationElement.setAttribute("floorwidth", Integer.toString(view.getTunnelFloorWidth()));
                 decorationsElement.addContent(decorationElement);
             }
+        }
+
+        // store track tile association
+        TrackTile tile = view.getTile();
+        if (tile != null && !(tile instanceof NotATile)) {
+            Element tileElement = new Element("tracktile");
+            tileElement.setAttribute("vendor", tile.getVendor());
+            tileElement.setAttribute("family", tile.getFamily());
+            tileElement.setAttribute("partcode", tile.getPartCode());
+            element.addContent(tileElement);
         }
 
         //element.setAttribute("class", getClass().getName());
@@ -543,6 +558,31 @@ public class TrackSegmentViewXml extends LayoutTrackViewXml {
                 }
                 lv.setDecorations(decorations);
             }
+        }
+
+        // load track tile association
+        Element tileElement = element.getChild("tracktile");
+        if (tileElement != null) {
+            String vendor = tileElement.getAttributeValue("vendor");
+            String family = tileElement.getAttributeValue("family");
+            String partCode = tileElement.getAttributeValue("partcode");
+            
+            if (vendor != null && family != null && partCode != null) {
+                String systemName = "TT:" + vendor + ":" + family + ":" + partCode;
+                TrackTileManager tileManager = InstanceManager.getDefault(TrackTileManager.class);
+                TrackTile tile = tileManager.getBySystemName(systemName);
+                
+                if (tile != null) {
+                    lv.setTile(tile);
+                } else {
+                    // Create UnknownTile as placeholder
+                    lv.setTile(new UnknownTile(systemName));
+                    log.warn("TrackTile not found: {}, using UnknownTile placeholder", systemName);
+                }
+            }
+        } else {
+            // No tile element found, set NotATile
+            lv.setTile(NotATile.getInstance());
         }
 
         // get remaining attribute
