@@ -18,7 +18,7 @@ import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
-import jmri.util.davidflanagan.OriginalHardcopyWriter;
+import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
  * Prints a summary of the car roster
@@ -236,9 +236,9 @@ public class PrintCarRosterFrame extends OperationsFrame {
 
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
 
-        // obtain a OriginalHardcopyWriter to do this
-        try (OriginalHardcopyWriter writer = new OriginalHardcopyWriter(new Frame(), Bundle.getMessage("TitleCarRoster"), fontSize, .5,
-                .5, .5, .5, _isPreview, "", isLandscape, true, null, null)) {
+        // obtain a HardcopyWriter to do this
+        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarRoster"), null, null,
+                fontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, _isPreview, "", isLandscape, true, null, null)) {
 
             numberCharPerLine = writer.getCharactersPerLine();
 
@@ -246,14 +246,14 @@ public class PrintCarRosterFrame extends OperationsFrame {
 
             printRoster(writer);
 
-        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
+        } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print canceled");
         } catch (IOException we) {
             log.error("Error printing car roster: {}", we.getLocalizedMessage());
         }
     }
 
-    private void printHeader(OriginalHardcopyWriter writer) throws IOException {
+    private void printHeader(HardcopyWriter writer) throws IOException {
         String s = padAttribute(Bundle.getMessage("Number"), Control.max_len_string_print_road_number) +
                 padAttribute(Bundle.getMessage("Road"),
                         InstanceManager.getDefault(CarRoads.class).getMaxNameLength()) +
@@ -339,7 +339,7 @@ public class PrintCarRosterFrame extends OperationsFrame {
         writer.write(s + NEW_LINE);
     }
 
-    private void printRoster(OriginalHardcopyWriter writer) throws IOException {
+    private void printRoster(HardcopyWriter writer) throws IOException {
         // Loop through the Roster, printing as needed
         String location = "";
         String number;

@@ -256,7 +256,8 @@ public class Car extends RollingStock {
         if (track != null && track.isSpur() && !getScheduleItemId().equals(NONE)) {
             Schedule sch = track.getSchedule();
             if (sch == null) {
-                log.error("Schedule null for car ({}) at spur ({})", toString(), track.getName());
+                log.error("Schedule missing for car ({}) to spur ({}, {})", toString(), track.getLocation().getName(),
+                        track.getName());
             } else {
                 si = sch.getItemById(getScheduleItemId());
             }

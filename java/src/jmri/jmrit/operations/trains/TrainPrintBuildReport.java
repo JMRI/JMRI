@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.trains;
 
-import java.awt.Dimension;
 import java.awt.Frame;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -11,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
-import jmri.util.davidflanagan.OriginalHardcopyWriter;
+import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
  * Used for train build reports.
@@ -33,12 +32,9 @@ public class TrainPrintBuildReport extends TrainCommon {
         String printerName = "";
         int fontSize = Setup.getBuildReportFontSize();
         boolean isLandScape = false;
-        double margin = .5;
-        Dimension pagesize = null; // HardcopyWritter provides default page
-                                   // sizes for portrait and landscape
 
-        try (OriginalHardcopyWriter writer = new OriginalHardcopyWriter(new Frame(), name, fontSize, margin,
-                margin, .5, .5, isPreview, printerName, isLandScape, true, null, pagesize);
+        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), name, null, null, fontSize, .5 * 72, .5 * 72,
+                .5 * 72, .5 * 72, isPreview, printerName, isLandScape, true, null, null);
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         new FileInputStream(file), StandardCharsets.UTF_8));) {
 
@@ -66,7 +62,7 @@ public class TrainPrintBuildReport extends TrainCommon {
             }
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist", e);
-        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
+        } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print canceled");
         } catch (IOException e) {
             log.warn("Exception printing: {}", e.getLocalizedMessage());

@@ -211,8 +211,9 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     }
     
     private String getTime(Route route) {
-        if (!route.getDepartsRouteLocation().getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
-            return route.getDepartsRouteLocation().getFormatedDepartureTime(); 
+        if (route.getDepartsRouteLocation() != null &&
+                !route.getDepartsRouteLocation().getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
+            return route.getDepartsRouteLocation().getFormatedDepartureTime();
         }
         // check to see if there's a departure time anywhere in the route
         for (RouteLocation rl : route.getLocationsBySequenceList()) {

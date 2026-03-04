@@ -406,12 +406,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (minutes == -1) {
             minutes = 0; // provide the work time at routeLocation
         }
-        if (!routeLocation.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
+        if (routeLocation != null && !routeLocation.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
             return parseTime(checkForDepartureTime(minutes, routeLocation), isSortFormat);
         }
         // figure out the work at this location, note that there can be
         // consecutive locations with the same name
-        if (getRoute() != null) {
+        if (routeLocation != null && getRoute() != null) {
             boolean foundRouteLocation = false;
             for (RouteLocation rl : getRoute().getLocationsBySequenceList()) {
                 if (rl == routeLocation) {
@@ -427,7 +427,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 }
             }
         }
-        log.debug("Expected departure time {} for train ({}) at ({})", minutes, getName(), routeLocation.getName());
+//        log.debug("Expected departure time {} for train ({}) at ({})", minutes, getName(), routeLocation.getName());
         return parseTime(minutes, isSortFormat);
     }
 
