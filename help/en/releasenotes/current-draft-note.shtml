@@ -143,6 +143,19 @@
                         <li>Quit and restart JMRI.
                     </ol>
                 </li>
+                <li>The OpenLCB_Java library has been updated, which brings
+                    <ol>
+                        <li>Improvements to how streams are handled, which will make
+                            firmware updates to certain node types more reliable.
+                        <li>When opening a configuration ("CDI") window, the 
+                            window will stay minimized while both the display information (the CDI contents)
+                            and the configuration data contents are read.  Although this takes
+                            longer, it prevents you from accessing data variables that 
+                            have not yet been loaded.  Previously that early access
+                            has led to various problems with inconsistent data.
+                        <li>Blank lines are now accepted as comments in node backup files
+                    </ol>
+                </li>
             </ul>
 
         <h4>Powerline</h4>
