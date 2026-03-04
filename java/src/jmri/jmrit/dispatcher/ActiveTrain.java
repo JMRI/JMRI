@@ -311,7 +311,7 @@ public class ActiveTrain implements PropertyChangeProvider {
         mStatus = RUNNING;
         holdAllocation(false);
         setStatus(WAITING);
-        if (mAutoActiveTrain != null && mDispatcher.getSignalType() == DispatcherFrame.SIGNALMAST) {
+        if (mAutoActiveTrain != null) {
             mAutoActiveTrain.setupNewCurrentSignal(null,false);
         }
     }
@@ -1349,6 +1349,9 @@ public class ActiveTrain implements PropertyChangeProvider {
         restartPoint = false;
         holdAllocation(false);
         setStatus(WAITING);
+        if (mAutoActiveTrain != null) {
+            mAutoActiveTrain.setupNewCurrentSignal(null,false);
+        }
     }
 
     public void terminate() {
