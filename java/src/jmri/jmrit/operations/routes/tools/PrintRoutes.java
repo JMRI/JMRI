@@ -12,7 +12,7 @@ import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
-import jmri.util.davidflanagan.OriginalHardcopyWriter;
+import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
  * Prints a summary of a route or all routes.
@@ -57,9 +57,9 @@ public class PrintRoutes {
     }
 
     private void printRoutes() {
-        // obtain a OriginalHardcopyWriter to do this
-        try (OriginalHardcopyWriter writer = new OriginalHardcopyWriter(new Frame(), Bundle.getMessage("TitleRoutesTable"),
-                Control.reportFontSize, .5, .5, .5, .5, _isPreview)) {
+        // obtain a HardcopyWriter to do this
+        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleRoutesTable"), null, null,
+                Control.reportFontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, _isPreview, "", false, true, null, null)) {
 
             writer.write(SPACE); // prevents exception when using Preview and no routes
             List<Route> routes = InstanceManager.getDefault(RouteManager.class).getRoutesByNameList();
@@ -71,7 +71,7 @@ public class PrintRoutes {
                     writer.write(FORM_FEED);
                 }
             }
-        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
+        } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print canceled");
         } catch (IOException e1) {
             log.error("Exception in print routes: {}", e1.getLocalizedMessage());
@@ -82,19 +82,20 @@ public class PrintRoutes {
         if (route == null) {
             return;
         }
-        // obtain a OriginalHardcopyWriter to do this
-        try (OriginalHardcopyWriter writer = new OriginalHardcopyWriter(new Frame(), Bundle.getMessage("TitleRoute", route.getName()),
-                Control.reportFontSize, .5, .5, .5, .5, _isPreview)) {
+        // obtain a HardcopyWriter to do this
+        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleRoute", route.getName()),
+                null, null, Control.reportFontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, _isPreview, "", false, true,
+                null, null)) {
 
             printRoute(writer, route);
-        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
+        } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print canceled");
         } catch (IOException e1) {
             log.error("Exception in print routes: {}", e1.getLocalizedMessage());
         }
     }
 
-    private void printRoute(OriginalHardcopyWriter writer, Route route) throws IOException {
+    private void printRoute(HardcopyWriter writer, Route route) throws IOException {
         writer.write(route.getComment() + NEW_LINE);
         if (!route.getComment().isBlank()) {
             writer.write(NEW_LINE);
