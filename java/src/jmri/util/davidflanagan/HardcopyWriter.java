@@ -22,6 +22,8 @@ import java.util.Collection;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import org.python.google.common.annotations.VisibleForTesting;
+
 import jmri.util.JmriJFrame;
 import jmri.util.PaperUtils;
 
@@ -588,6 +590,21 @@ public class HardcopyWriter extends Writer implements Printable {
                 }
 
                 if (buffer[i] == '\t') {
+                    // If the tab is in the last column, then we treat it as a conventional
+                    // tab -- moving forward to the next multiple of 8 character position. Otherwise
+                    // we treat it as a column separator.
+                    // This only works for monospaced fonts. We also have to be in a left-aligned
+                    // column
+                    if (columnIndex == columns.length - 1 && columns[columnIndex].alignment.base == Align.LEFT) {
+                        // In the last column and it is LEFT aligned
+                        int spaces = 1; // Insert one space by default
+                        if (isMonospaced()) {
+                            spaces = 8 - (line.length() & 7);
+                        }
+
+                        line += " ".repeat(spaces);
+                        continue;
+                    }
                     // Compute where the line should go and output it
                     flush_column();
                     continue;
@@ -1233,7 +1250,8 @@ public class HardcopyWriter extends Writer implements Printable {
     }
 
     /**
-     * Draw a line on the printout.
+     * Draw a line on the printout. Calls to this should be replaced by calls to
+     * `writeExactLine` which doesn't offset the line by strange amounts.
      * <p>
      * This was not in the original class, but was added afterwards by Dennis
      * Miller.
@@ -1256,13 +1274,33 @@ public class HardcopyWriter extends Writer implements Printable {
      * @param hEnd   horizontal ending position
      */
     public void writeLine(int vStart, int hStart, int vEnd, int hEnd) {
+        writeExactLine(vStart + (lineheight - lineascent) / 2, hStart - useFontSize / 4,
+                vEnd + (lineheight - lineascent) / 2, hEnd - useFontSize / 4);
+    }
+
+    /**
+     * Draw a line on the printout.
+     * <p>
+     * This was not in the original class, but was added afterwards by Philip
+     * Gladstone.
+     * <p>
+     * hStart and hEnd represent the horizontal point positions.
+     * <p>
+     * vStart and vEnd represent the vertical point positions.
+     *
+     * @param vStart vertical starting position
+     * @param hStart horizontal starting position
+     * @param vEnd   vertical ending position
+     * @param hEnd   horizontal ending position
+     */
+    public void writeExactLine(int vStart, int hStart, int vEnd, int hEnd) {
         // if we haven't begun a new page, do that now
         ensureOnPage();
 
-        int xStart = x0 + hStart - useFontSize / 4;
-        int xEnd = x0 + hEnd - useFontSize / 4;
-        int yStart = y0 + vStart + (lineheight - lineascent) / 2;
-        int yEnd = y0 + vEnd + (lineheight - lineascent) / 2;
+        int xStart = x0 + hStart;
+        int xEnd = x0 + hEnd;
+        int yStart = y0 + vStart;
+        int yEnd = y0 + vEnd;
         record(new DrawLine(xStart, yStart, xEnd, yEnd));
 
         // We want to make sure that the lines are within the printable area
@@ -1597,6 +1635,11 @@ public class HardcopyWriter extends Writer implements Printable {
             this.s = s;
             this.x = x;
             this.y = y;
+        }
+
+        @VisibleForTesting
+        public String getString() {
+            return s;
         }
 
         @Override
