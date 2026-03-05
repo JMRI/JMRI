@@ -220,10 +220,10 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
         lib/windows/x64/intelbth_x64.dll
         lib/windows/x86/intelbth.dll
 
-##### jython-standalone-2.7.2.jar
-- from http://repo1.maven.org/maven2/org/python/jython-standalone/2.7.2/
-- unlike jython-2.7.2.jar, includes embedded standard python libs
-- unlike jython-slim-2.7.2.jar, includes embedded Java dependencies
+##### jython-standalone-2.7.4.jar
+- from http://repo1.maven.org/maven2/org/python/jython-standalone/2.7.4/
+- unlike jython-2.7.4.jar, includes embedded standard python libs
+- unlike jython-slim-2.7.4.jar, includes embedded Java dependencies
 
 ##### jinput (including jinput-2.0.9.jar and unpacked jinput-2.0.9-natives-all.jar)
 - 2.0.9 from maven central
