@@ -1374,8 +1374,10 @@ public class TrainCommon {
                 if (checkStringLength(sb.toString() + word, isManifest)) {
                     sb.append(word + SPACE);
                 } else {
-                    sb.setLength(sb.length() - 1); // remove last space added to string
-                    addLine(file, sb.toString());
+                    if (sb.length() > 0) {
+                        sb.setLength(sb.length() - 1); // remove last space added to string
+                        addLine(file, sb.toString());
+                    }
                     sb = new StringBuffer(word + SPACE);
                 }
             }

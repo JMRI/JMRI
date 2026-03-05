@@ -331,8 +331,8 @@ public class OperationsPanel extends JPanel {
     }
 
     public static void loadFontSizeComboBox(JComboBox<Integer> box) {
-        // load font sizes 7 through 18
-        for (int i = 7; i < 19; i++) {
+        // load font sizes 5 through 18
+        for (int i = 5; i < 19; i++) {
             box.addItem(i);
         }
         Dimension size = box.getPreferredSize();

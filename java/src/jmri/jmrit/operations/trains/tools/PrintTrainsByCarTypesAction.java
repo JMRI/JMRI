@@ -16,7 +16,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
-import jmri.util.davidflanagan.OriginalHardcopyWriter;
+import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
  * Action to print a summary of trains that service specific car types.
@@ -42,17 +42,17 @@ public class PrintTrainsByCarTypesAction extends AbstractAction {
      * Variable to set whether this is to be printed or previewed
      */
     boolean _isPreview;
-    OriginalHardcopyWriter writer;
+    HardcopyWriter writer;
     int max_name_length = Control.max_len_string_train_name + 1;
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // obtain a OriginalHardcopyWriter
+        // obtain a HardcopyWriter
         try {
-            writer = new OriginalHardcopyWriter(new Frame(), Bundle.getMessage("TitleTrainsByType"), Control.reportFontSize, .5,
-                    .5, .5, .5,
-                    _isPreview);
-        } catch (OriginalHardcopyWriter.PrintCanceledException ex) {
+            writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleTrainsByType"), null, null,
+                    Control.reportFontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, _isPreview, "", false, true, null,
+                    null);
+        } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print canceled");
             return;
         }

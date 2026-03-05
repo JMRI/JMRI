@@ -137,7 +137,7 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         // obtain a HardcopyWriter to do this
         try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleEngineRoster"),
                 null, null, fontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, _isPreview, "", isLandscape, true, null,
-                null);) {
+                null)) {
 
             numberCharPerLine = writer.getCharactersPerLine();
 

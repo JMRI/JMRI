@@ -14,7 +14,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
-import jmri.util.davidflanagan.OriginalHardcopyWriter;
+import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
  * Action to print a summary of locations and tracks that service specific car
@@ -48,10 +48,11 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
     }
 
     private void print() {
-        // obtain a OriginalHardcopyWriter
-        try ( OriginalHardcopyWriter writer = new OriginalHardcopyWriter(new Frame(), Bundle.getMessage("TitleLocationsByType"),
-            Control.reportFontSize, .5, .5, .5, .5, isPreview); ) {
-            
+        // obtain a HardcopyWriter
+        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleLocationsByType"), null,
+                null, Control.reportFontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, isPreview, "", false, true, null,
+                null)) {
+           
             // Loop through the car types showing which locations and tracks will
             // service that car type
             String carTypes[] = InstanceManager.getDefault(CarTypes.class).getNames();
@@ -82,7 +83,7 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
                     }
                 }
             }
-        } catch (OriginalHardcopyWriter.PrintCanceledException we) {
+        } catch (HardcopyWriter.PrintCanceledException we) {
             log.debug("Print canceled");
         } catch (IOException we) {
             log.error("Error printing PrintLocationAction: {}", we.getLocalizedMessage());
