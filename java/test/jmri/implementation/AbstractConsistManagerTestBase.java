@@ -1,5 +1,11 @@
 package jmri.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.ConsistListener;
@@ -7,8 +13,6 @@ import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -28,51 +32,54 @@ abstract public class AbstractConsistManagerTestBase {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",cm);
+        assertNotNull(cm, "exists");
     }
 
     @Test
     public void testConsists() {
         DccLocoAddress locoAddress_12 = new DccLocoAddress(12, false);
         DccLocoAddress locoAddress_34 = new DccLocoAddress(34, false);
-        
-        Assert.assertNotNull("AbstractConsistManager constructor return", cm);
+
+        assertNotNull(cm, "AbstractConsistManager constructor return");
         // Test create new consist
-        Assert.assertTrue("consist address is 12", cm.getConsist(locoAddress_12).getConsistAddress().getNumber() == 12);
+        assertEquals(12, cm.getConsist(locoAddress_12).getConsistAddress().getNumber(),
+                "consist address is 12");
         // Test getting an existing consist
-        Assert.assertTrue("consist address is 12", cm.getConsist(locoAddress_12).getConsistAddress().getNumber() == 12);
+        assertEquals(12, cm.getConsist(locoAddress_12).getConsistAddress().getNumber(),
+                "consist address is 12");
         // Add another consist
-        Assert.assertTrue("consist address is 34", cm.getConsist(locoAddress_34).getConsistAddress().getNumber() == 34);
+        assertEquals(34, cm.getConsist(locoAddress_34).getConsistAddress().getNumber(),
+                "consist address is 34");
         // Get list
-        Assert.assertTrue("consist list has two elements", cm.getConsistList().size() == 2);
+        assertEquals(2, cm.getConsistList().size(), "consist list has two elements");
     }
-    
+
     @Test
     public void testListener() {
         AtomicBoolean listenerHasTrigged = new AtomicBoolean(false);
-        
+
         // Test notify listeners
         cm.addConsistListListener(() -> {
             listenerHasTrigged.set(true);
         });
         cm.notifyConsistListChanged();
-        Assert.assertTrue("listener has trigged", listenerHasTrigged.get());
+        assertTrue(listenerHasTrigged.get(), "listener has trigged");
     }
-    
+
     @Test
     public void testDecodeErrorCode() {
         // Test decodeErrorCode
-        Assert.assertEquals("Not Implemented ", cm.decodeErrorCode(ConsistListener.NotImplemented));
-        Assert.assertEquals("Operation Completed Successfully ", cm.decodeErrorCode(ConsistListener.OPERATION_SUCCESS));
-        Assert.assertEquals("Consist Error ", cm.decodeErrorCode(ConsistListener.CONSIST_ERROR));
-        Assert.assertEquals("Address not controled by this device.", cm.decodeErrorCode(ConsistListener.LOCO_NOT_OPERATED));
-        Assert.assertEquals("Locomotive already consisted", cm.decodeErrorCode(ConsistListener.ALREADY_CONSISTED));
-        Assert.assertEquals("Locomotive Not Consisted ", cm.decodeErrorCode(ConsistListener.NOT_CONSISTED));
-        Assert.assertEquals("Speed Not Zero ", cm.decodeErrorCode(ConsistListener.NONZERO_SPEED));
-        Assert.assertEquals("Address Not Conist Address ", cm.decodeErrorCode(ConsistListener.NOT_CONSIST_ADDR));
-        Assert.assertEquals("Delete Error ", cm.decodeErrorCode(ConsistListener.DELETE_ERROR));
-        Assert.assertEquals("Stack Full ", cm.decodeErrorCode(ConsistListener.STACK_FULL));
-        Assert.assertEquals("Unknown Status Code: 61440", cm.decodeErrorCode(0xF000));
+        assertEquals("Not Implemented ", cm.decodeErrorCode(ConsistListener.NotImplemented));
+        assertEquals("Operation Completed Successfully ", cm.decodeErrorCode(ConsistListener.OPERATION_SUCCESS));
+        assertEquals("Consist Error ", cm.decodeErrorCode(ConsistListener.CONSIST_ERROR));
+        assertEquals("Address not controled by this device.", cm.decodeErrorCode(ConsistListener.LOCO_NOT_OPERATED));
+        assertEquals("Locomotive already consisted", cm.decodeErrorCode(ConsistListener.ALREADY_CONSISTED));
+        assertEquals("Locomotive Not Consisted ", cm.decodeErrorCode(ConsistListener.NOT_CONSISTED));
+        assertEquals("Speed Not Zero ", cm.decodeErrorCode(ConsistListener.NONZERO_SPEED));
+        assertEquals("Address Not Conist Address ", cm.decodeErrorCode(ConsistListener.NOT_CONSIST_ADDR));
+        assertEquals("Delete Error ", cm.decodeErrorCode(ConsistListener.DELETE_ERROR));
+        assertEquals("Stack Full ", cm.decodeErrorCode(ConsistListener.STACK_FULL));
+        assertEquals("Unknown Status Code: 61440", cm.decodeErrorCode(0xF000));
     }
 
     @Test
@@ -80,16 +87,16 @@ abstract public class AbstractConsistManagerTestBase {
         // getConsist with a valid address should always return
         // a consist.
         DccLocoAddress addr = new DccLocoAddress(5,false);
-        Assert.assertNotNull("add consist",cm.getConsist(addr));
-        Assert.assertEquals("list has 1 entry",1,cm.getConsistList().size());
+        assertNotNull(cm.getConsist(addr), "add consist");
+        assertEquals(1, cm.getConsistList().size(), "list has 1 entry");
     }
 
     @Test
     public void testGetConsistListEmpty(){
         // by default, there should be no consists
-        Assert.assertNotNull("consist exists",cm);
-        Assert.assertNotNull("list exists",cm.getConsistList());
-        Assert.assertTrue("empty list",cm.getConsistList().isEmpty());
+        assertNotNull(cm, "consist exists");
+        assertNotNull(cm.getConsistList(), "list exists");
+        assertTrue(cm.getConsistList().isEmpty(), "empty list");
     }
 
     @Test
@@ -98,37 +105,42 @@ abstract public class AbstractConsistManagerTestBase {
         cm.getConsist(addr);
         int size = cm.getConsistList().size();
         cm.delConsist(addr);
-        Assert.assertEquals("list has (size-1) entries",size-1,cm.getConsistList().size());
+        assertEquals(size-1, cm.getConsistList().size(), "list has (size-1) entries");
     }
 
     @Test
     public void testIsCommandStationConsistPossible(){
-       // default is false, override if necessary
-       Assert.assertFalse("CS Consist Possible",cm.isCommandStationConsistPossible());
+        // default is false, override if necessary
+        assertFalse(cm.isCommandStationConsistPossible(), "CS Consist Possible");
     }
 
     @Test
     public void testCsConsistNeedsSeperateAddress(){
-       Assume.assumeTrue(cm.isCommandStationConsistPossible());
-       // default is false, override if necessary
-       Assert.assertFalse("CS Consist Needs Seperate Address",cm.csConsistNeedsSeperateAddress());
+        Assumptions.assumeTrue(cm.isCommandStationConsistPossible(),
+            "CommandStation Consist not possible for this hardware type");
+        // default is false, override if necessary
+        assertFalse(cm.csConsistNeedsSeperateAddress(), "CS Consist Needs Seperate Address");
     }
 
     @Test
     public void testShouldRequestUpdateFromLayout(){
-       Assume.assumeTrue(cm instanceof AbstractConsistManager);
-       // default is true, override if necessary
-       Assert.assertTrue("Should Request Update From Layout",((AbstractConsistManager)cm).shouldRequestUpdateFromLayout());
+        Assumptions.assumeTrue(cm instanceof AbstractConsistManager,
+            cm.getClass() + "is not an AbstractConsistManager");
+        // default is true, override if necessary
+        assertTrue(((AbstractConsistManager)cm).shouldRequestUpdateFromLayout(),
+            "Should Request Update From Layout");
     }
 
     @Test
     public void testRequestUpdateFromLayout(){
-       Assume.assumeTrue(cm instanceof AbstractConsistManager);
-       Assume.assumeTrue(((AbstractConsistManager)cm).shouldRequestUpdateFromLayout());
-       // this test just calls the method, so checks for exceptions.
-       // derived classes should override and check the expected message
-       // sequence
-       ((AbstractConsistManager)cm).requestUpdateFromLayout();
+        Assumptions.assumeTrue(cm instanceof AbstractConsistManager,
+            cm.getClass() + "is not an AbstractConsistManager");
+        Assumptions.assumeTrue(((AbstractConsistManager)cm).shouldRequestUpdateFromLayout(),
+                "Hardware type should NOT request ipdate from layout.");
+        // this test just calls the method, so checks for exceptions.
+        // derived classes should override and check the expected message
+        // sequence
+        ((AbstractConsistManager)cm).requestUpdateFromLayout();
     }
 
     @Test
@@ -146,7 +158,9 @@ abstract public class AbstractConsistManagerTestBase {
                 return jmri.LocoAddress.Protocol.M4;
             }
         };
-        Assert.assertThrows(IllegalArgumentException.class, () -> cm.getConsist(addr));
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> cm.getConsist(addr));
+        assertNotNull(ex);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractConsistManagerTestBase.class);

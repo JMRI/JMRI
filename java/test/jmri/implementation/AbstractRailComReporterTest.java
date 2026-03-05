@@ -1,12 +1,16 @@
 package jmri.implementation;
 
-import jmri.util.JUnitUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.IdTag;
 import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -22,24 +26,26 @@ public class AbstractRailComReporterTest extends AbstractReporterTestBase {
     // includes a notify(IdTag) method.
     @Test
     public void testNotify() {
-        Assume.assumeTrue(r instanceof AbstractRailComReporter);
-        Assume.assumeTrue(generateObjectToReport() instanceof IdTag);
-        Assert.assertEquals("IdTag not Seen",IdTag.UNKNOWN,r.getState());
+        Assumptions.assumeTrue(r instanceof AbstractRailComReporter,
+            "Not an AbstractRailComReporter"); // EcosReporter
+        Assumptions.assumeTrue(generateObjectToReport() instanceof IdTag,
+            "generateObjectToReport is not an IdTag");
+        assertEquals(IdTag.UNKNOWN,r.getState(), "IdTag not Seen");
         ((AbstractRailComReporter)r).notify((IdTag)generateObjectToReport());
         // Check that both CurrentReport and LastReport are not null
-        Assert.assertNotNull("CurrentReport Object exists", r.getCurrentReport());
-        Assert.assertNotNull("LastReport Object exists", r.getLastReport());
+        assertNotNull(r.getCurrentReport(), "CurrentReport Object exists");
+        assertNotNull(r.getLastReport(), "LastReport Object exists");
         // Check the value of both CurrentReport and LastReport
-        Assert.assertEquals("CurrentReport equals LastReport",r.getLastReport(), r.getCurrentReport());
-        Assert.assertEquals("IdTag Seen",IdTag.SEEN,r.getState());
+        assertEquals(r.getLastReport(), r.getCurrentReport(), "CurrentReport equals LastReport");
+        assertEquals(IdTag.SEEN,r.getState(), "IdTag Seen");
 
         // send a null report.
 
         ((AbstractRailComReporter)r).notify(null);
         // Check that both CurrentReport and LastReport are not null
-        Assert.assertNull("CurrentReport Object Null", r.getCurrentReport());
-        Assert.assertNotNull("LastReport Object exists", r.getLastReport());
-        Assert.assertEquals("IdTag Seen",IdTag.UNSEEN,r.getState());
+        assertNull(r.getCurrentReport(), "CurrentReport Object Null");
+        assertNotNull(r.getLastReport(), "LastReport Object exists");
+        assertEquals(IdTag.UNSEEN,r.getState(), "IdTag Seen");
     }
 
     @BeforeEach
