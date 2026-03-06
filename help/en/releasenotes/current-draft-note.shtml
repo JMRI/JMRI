@@ -665,7 +665,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li></li>
+            <li>panel.js: handle BlockContentsInputIcon</li>
         </ul>
 
    <h3>Web Server</h3>

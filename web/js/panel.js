@@ -22,7 +22,6 @@
  *  TODO: update drawn track on color and width changes (would need to create system objects to reflect these chgs)
  *  TODO: research movement of locoicons ("promote" locoicon to system entity in JMRI?, add panel-level listeners?)
  *  TODO: deal with mouseleave, mouseout, touchout, etc. Slide off Stop button on rb1 for example.
- *  TODO: handle memoryComboIcon
  *  TODO: alignment of text sensorIcons without fixed width is very different.  Recommended workaround is to use fixed width.
  *  TODO: add support for slipturnouticon (one2beros)
  *  TODO: handle (and test) disableWhenOccupied for layoutslip
@@ -771,7 +770,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             jmri.getMemory($widget["systemName"]);
                             break;
                         case "reportericon" :
-                            $widget['name'] = $widget.reporter; //normalize name
+                            $widget['name'] = $widget.reporter; //normalize name    
                             $widget.jsonType = "reporter"; // JSON object type
                             $widget['text'] = $widget.reporter; //use name for initial text
                             if (isUndefined($widget["systemName"]))
@@ -783,6 +782,22 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget.jsonType = "block"; // JSON object type
                             $widget['text'] = $widget.name; //use name for initial text
                             $widget['state'] = $widget.name; //use name for initial state as well
+                            jmri.getBlock($widget["systemName"]);
+                            break;
+                        case "blockContentsInputIcon" :    
+                            $widget['name'] = $widget.block; //normalize name                            
+                            $widget.jsonType = "block"; // JSON object type
+                            $widget['text'] = $widget.block; //use name for initial text
+                            $widget['state'] = $widget.block; //use name for initial state as well
+                            if (isUndefined($widget.styles.width)) { //set missing width
+                                if (isDefined($widget.colWidth)) { 
+                                    $widget.styles['width'] = $widget.colWidth + "em";
+                                } else {
+                                    $widget.styles['width'] = "5em";
+                                }
+                            }
+                            if (isUndefined($widget["systemName"]))
+                                $widget["systemName"] = $widget.name;
                             jmri.getBlock($widget["systemName"]);
                             break;
                         case "memoryicon" :
@@ -1704,7 +1719,7 @@ function $handleInputKeyUp(e) {
         var newVal = $(this).val();
         var $id = $(this).attr('id');
         var $widget = $gWidgets[$id];
-        jmri.setMemory($widget.systemName, newVal);
+        jmri.setObject($widget.jsonType, $widget.systemName, newVal);
     } else if (e.keyCode == 27) { //on [Escape], restore the previous value
         var oldValue = $(this).data("oldValue")
         $(this).val(oldValue);        
@@ -1716,7 +1731,7 @@ function $handleInputBlur(e) {
     var newVal = $(this).val();
     var $id = $(this).attr('id');
     var $widget = $gWidgets[$id];
-    jmri.setMemory($widget.systemName, newVal);
+    jmri.setObject($widget.jsonType, $widget.systemName, newVal);
 };
 
 // End of Click Handling functions
@@ -2475,6 +2490,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "memorySpinnerIcon" :
         case "memoryComboIcon" :
         case "memoryInputIcon" :
+        case "blockContentsInputIcon" :
             return "input";
             break;
         case "positionablelabel" :
@@ -4336,7 +4352,7 @@ function createPanelCanvas() {
 function updateWidgets(name, state, data) {
     // update all widgets based on the element that changed, using systemname
     if (whereUsed[name]) {
-        //log.log("updateWidgets(" + name + ", " + state);
+        //log.log("updateWidgets(" + name + ", " + state + ")");
         $.each(whereUsed[name], function(index, widgetId) {
             $setWidgetState(widgetId, state, data);
         });
