@@ -85,6 +85,8 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
         hTop3Left.add(trackLabel);
         hTop3Left.add(levelXingButton);
         hTop3Left.add(trackButton);
+        hTop3Left.add(turntableButton);
+        hTop3Left.add(traverserButton);
         hTop3Left.add(trackSegmentPropertiesPanel);
 
         hTop3Panel.add(hTop3Left);

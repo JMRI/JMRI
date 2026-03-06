@@ -9,62 +9,51 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
-import jmri.util.MathUtil;
 
 /**
- * A LayoutTurntable is a representation used by LayoutEditor to display a
- * turntable.
+ * A LayoutTraverser is a representation used by LayoutEditor to display a
+ * traverser.
  * <p>
- * A LayoutTurntable has a variable number of connection points, called
- * RayTracks, each radiating from the center of the turntable. Each of these
- * points should be connected to a TrackSegment.
+ * A LayoutTraverser has a variable number of connection points, called
+ * SlotTracks. Each of these points should be connected to a TrackSegment.
  * <p>
- * Each radiating segment (RayTrack) gets its Block information from its
+ * Each slot gets its Block information from its
  * connected track segment.
  * <p>
- * Each radiating segment (RayTrack) has a unique connection index. The
- * connection index is set when the RayTrack is created, and cannot be changed.
+ * Each slot has a unique connection index. The
+ * connection index is set when the SlotTrack is created, and cannot be changed.
  * This connection index is used to maintain the identity of the radiating
- * segment to its connected Track Segment as ray tracks are added and deleted by
+ * segment to its connected Track Segment as slots are added and deleted by
  * the user.
  * <p>
- * The radius of the turntable circle is variable by the user.
- * <p>
- * Each radiating segment (RayTrack) connecting point is a fixed distance from
- * the center of the turntable. The user may vary the angle of the radiating
- * segment. Angles are measured from the vertical (12 o'clock) position in a
- * clockwise manner. For example, 30 degrees is 1 o'clock, 60 degrees is 2
- * o'clock, 90 degrees is 3 o'clock, etc.
- * <p>
- * Each radiating segment is drawn from its connection point to the turntable
- * circle in the direction of the turntable center.
+ * The length and width of the traverser is variable by the user.
  *
  * @author Dave Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2018
+ * @author Dave Sand Copyright (c) 2024
  */
-public class LayoutTurntable extends LayoutTrack {
+public class LayoutTraverser extends LayoutTrack {
 
-    /**
-     * Constructor method
-     *
-     * @param id           the name for the turntable
-     * @param models what layout editor panel to put it in
-     */
-    public LayoutTurntable(@Nonnull String id, @Nonnull LayoutEditor models) {
+    public LayoutTraverser(@Nonnull String id, @Nonnull LayoutEditor models) {
         super(id, models);
-
-        radius = 25.0; // initial default, change asap.
+        recalculateDimensions();
     }
 
     // defined constants
+    public static final int HORIZONTAL = 0;
+    public static final int VERTICAL = 1;
+    private double slotOffset = 25.0;
+
     // operational instance variables (not saved between sessions)
     private NamedBeanHandle<LayoutBlock> namedLayoutBlock = null;
 
     private boolean dispatcherManaged = false;
     private boolean turnoutControlled = false;
-    private double radius = 25.0;
-    private int knownIndex = -1;
-    private int commandedIndex = -1;
+    private double deckLength = 100.0;
+    private double deckWidth = 50.0;
+    private int orientation = HORIZONTAL;
+    private boolean mainline = false;
+    private int lastKnownIndex = -1;
 
     private int signalIconPlacement = 0; // 0: Do Not Place, 1: Left, 2: Right
 
@@ -72,11 +61,8 @@ public class LayoutTurntable extends LayoutTrack {
     private NamedBeanHandle<SignalMast> exitSignalMast;
 
     // persistent instance variables (saved between sessions)
-    private boolean mainline = false;
 
-    // temporary: this is referenced directly from LayoutTurntable, which
-    // should be using _functional_ accessors here.
-    public final List<RayTrack> rayTrackList = new ArrayList<>(); // list of Ray Track objects
+    public final List<SlotTrack> slotList = new ArrayList<>(); // list of Slot Track objects
 
     /**
      * Get a string that represents this object. This should only be used for
@@ -87,28 +73,36 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     @Nonnull
     public String toString() {
-        return "LayoutTurntable " + getName();
+        return "LayoutTraverser " + getName();
     }
 
     //
     // Accessor methods
     //
-    /**
-     * Get the radius for this turntable.
-     *
-     * @return the radius for this turntable
-     */
-    public double getRadius() {
-        return radius;
+    public double getSlotOffset() { return slotOffset; }
+    public void setSlotOffset(double offset) {
+        if (!jmri.util.MathUtil.equals(this.slotOffset, offset)) {
+            this.slotOffset = offset;
+            renumberSlots();
+        }
     }
 
-    /**
-     * Set the radius for this turntable.
-     *
-     * @param r the radius for this turntable
-     */
-    public void setRadius(double r) {
-        radius = r;
+    public double getDeckLength() { return deckLength; }
+    private void setDeckLength(double l) { deckLength = l; }
+    public double getDeckWidth() { return deckWidth; }
+    public void setDeckWidth(double w) {
+        if (!jmri.util.MathUtil.equals(deckWidth, w)) {
+            deckWidth = w;
+            recalculateDimensions();
+            models.redrawPanel();
+            models.setDirty();
+        }
+    }
+    public int getOrientation() { return orientation; }
+    public void setOrientation(int o) {
+        if (orientation != o) {
+            orientation = o;
+        }
     }
 
     public boolean isDispatcherManaged() {
@@ -202,12 +196,12 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Set up a LayoutBlock for this LayoutTurntable.
+     * Set up a LayoutBlock for this LayoutTraverser.
      *
      * @param newLayoutBlock the LayoutBlock to set
      */
     public void setLayoutBlock(@CheckForNull LayoutBlock newLayoutBlock) {
-        LayoutBlock layoutBlock = getLayoutBlock();
+        LayoutBlock layoutBlock = getLayoutBlock(); // This is for the traverser itself
         if (layoutBlock != newLayoutBlock) {
             /// block has changed, if old block exists, decrement use
             if (layoutBlock != null) {
@@ -227,7 +221,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Set up a LayoutBlock for this LayoutTurntable.
+     * Set up a LayoutBlock for this LayoutTraverser.
      *
      * @param name the name of the new LayoutBlock
      */
@@ -237,21 +231,21 @@ public class LayoutTurntable extends LayoutTrack {
         }
     }
 
-    /**
-     * Add a ray at the specified angle.
-     *
-     * @param angle the angle
-     * @return the RayTrack
-     */
-    public RayTrack addRay(double angle) {
-        RayTrack rt = new RayTrack(angle, getNewIndex());
-        rayTrackList.add(rt);
+    public void addSlotPair() {
+        addSlot(0); // Side A
+        addSlot(0); // Side B
+        renumberSlots();
+    }
+
+    private SlotTrack addSlot(double offset) {
+        SlotTrack rt = new SlotTrack(offset, getNewIndex());
+        slotList.add(rt);
         return rt;
     }
 
     private int getNewIndex() {
         int index = -1;
-        if (rayTrackList.isEmpty()) {
+        if (slotList.isEmpty()) {
             return 0;
         }
 
@@ -259,7 +253,7 @@ public class LayoutTurntable extends LayoutTrack {
         while (found) {
             index++;
             found = false; // assume failure (pessimist!)
-            for (RayTrack rt : rayTrackList) {
+            for (SlotTrack rt : slotList) {
                 if (index == rt.getConnectionIndex()) {
                     found = true;
                 }
@@ -268,25 +262,23 @@ public class LayoutTurntable extends LayoutTrack {
         return index;
     }
 
-    // the following method is only for use in loading layout turntables
-    public void addRayTrack(double angle, int index, String name) {
-        RayTrack rt = new RayTrack(angle, index);
-        /// if (ray!=null) {
-        rayTrackList.add(rt);
+    // the following method is only for use in loading layout traversers
+    public void addSlotTrack(double offset, int index, String name) { // Note: This was likely private or package-private
+        SlotTrack rt = new SlotTrack(offset, index);
+        slotList.add(rt);
         rt.connectName = name;
-        //}
     }
 
     /**
-     * Get the connection for the ray with this index.
+     * Get the connection for the slot with this index.
      *
      * @param index the index
-     * @return the connection for the ray with this value of getConnectionIndex
+     * @return the connection for the slot with this value of getConnectionIndex
      */
     @CheckForNull
-    public TrackSegment getRayConnectIndexed(int index) {
+    public TrackSegment getSlotConnectIndexed(int index) {
         TrackSegment result = null;
-        for (RayTrack rt : rayTrackList) {
+        for (SlotTrack rt : slotList) {
             if (rt.getConnectionIndex() == index) {
                 result = rt.getConnect();
                 break;
@@ -296,17 +288,17 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Get the connection for the ray at the index in the rayTrackList.
+     * Get the connection for the slot at the index in the slotList.
      *
-     * @param i the index in the rayTrackList
-     * @return the connection for the ray at that index in the rayTrackList or null
+     * @param i the index in the slotList
+     * @return the connection for the slot at that index in the slotList or null
      */
     @CheckForNull
-    public TrackSegment getRayConnectOrdered(int i) {
+    public TrackSegment getSlotConnectOrdered(int i) {
         TrackSegment result = null;
 
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
+        if (i < slotList.size()) {
+            SlotTrack rt = slotList.get(i);
             if (rt != null) {
                 result = rt.getConnect();
             }
@@ -315,13 +307,13 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Set the connection for the ray at the index in the rayTrackList.
+     * Set the connection for the slot at the index in the slotList.
      *
      * @param ts    the connection
-     * @param index the index in the rayTrackList
+     * @param index the index in the slotList
      */
-    public void setRayConnect(@CheckForNull TrackSegment ts, int index) {
-        for (RayTrack rt : rayTrackList) {
+    public void setSlotConnect(@CheckForNull TrackSegment ts, int index) {
+        for (SlotTrack rt : slotList) {
             if (rt.getConnectionIndex() == index) {
                 rt.setConnect(ts);
                 break;
@@ -331,59 +323,59 @@ public class LayoutTurntable extends LayoutTrack {
 
     // should only be used by xml save code
     @Nonnull
-    public List<RayTrack> getRayTrackList() {
-        return rayTrackList;
+    public List<SlotTrack> getSlotList() {
+        return slotList;
     }
 
     /**
-     * Get the number of rays on turntable.
+     * Get the number of slots on traverser.
      *
-     * @return the number of rays
+     * @return the number of slots
      */
-    public int getNumberRays() {
-        return rayTrackList.size();
+    public int getNumberSlots() {
+        return slotList.size();
     }
 
     /**
-     * Get the index for the ray at this position in the rayTrackList.
+     * Get the index for the slot at this position in the slotList.
      *
-     * @param i the position in the rayTrackList
+     * @param i the position in the slotList
      * @return the index
      */
-    public int getRayIndex(int i) {
+    public int getSlotIndex(int i) {
         int result = 0;
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
+        if (i < slotList.size()) {
+            SlotTrack rt = slotList.get(i);
             result = rt.getConnectionIndex();
         }
         return result;
     }
 
     /**
-     * Get the angle for the ray at this position in the rayTrackList.
+     * Get the offset for the slot at this position in the slotList.
      *
-     * @param i the position in the rayTrackList
-     * @return the angle
+     * @param i the position in the slotList
+     * @return the offset
      */
-    public double getRayAngle(int i) {
+    public double getSlotOffsetValue(int i) {
         double result = 0.0;
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
-            result = rt.getAngle();
+        if (i < slotList.size()) {
+            SlotTrack rt = slotList.get(i);
+            result = rt.getOffset();
         }
         return result;
     }
 
     /**
-     * Set the turnout and state for the ray with this index.
+     * Set the turnout and state for the slot with this index.
      *
      * @param index       the index
      * @param turnoutName the turnout name
      * @param state       the state
      */
-    public void setRayTurnout(int index, @CheckForNull String turnoutName, int state) {
+    public void setSlotTurnout(int index, @CheckForNull String turnoutName, int state) {
         boolean found = false; // assume failure (pessimist!)
-        for (RayTrack rt : rayTrackList) {
+        for (SlotTrack rt : slotList) {
             if (rt.getConnectionIndex() == index) {
                 rt.setTurnout(turnoutName, state);
                 found = true;
@@ -391,110 +383,110 @@ public class LayoutTurntable extends LayoutTrack {
             }
         }
         if (!found) {
-            log.error("{}.setRayTurnout({}, {}, {}); Attempt to add Turnout control to a non-existant ray track",
+            log.error("{}.setSlotTurnout({}, {}, {}); Attempt to add Turnout control to a non-existant slot track",
                     getName(), index, turnoutName, state);
         }
     }
 
     /**
-     * Get the name of the turnout for the ray at this index.
+     * Get the name of the turnout for the slot at this index.
      *
      * @param i the index
-     * @return name of the turnout for the ray at this index
+     * @return name of the turnout for the slot at this index
      */
     @CheckForNull
-    public String getRayTurnoutName(int i) {
+    public String getSlotTurnoutName(int i) {
         String result = null;
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
+        if (i < slotList.size()) {
+            SlotTrack rt = slotList.get(i);
             result = rt.getTurnoutName();
         }
         return result;
     }
 
     /**
-     * Get the turnout for the ray at this index.
+     * Get the turnout for the slot at this index.
      *
      * @param i the index
-     * @return the turnout for the ray at this index
+     * @return the turnout for the slot at this index
      */
     @CheckForNull
-    public Turnout getRayTurnout(int i) {
+    public Turnout getSlotTurnout(int i) {
         Turnout result = null;
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
+        if (i < slotList.size()) {
+            SlotTrack rt = slotList.get(i);
             result = rt.getTurnout();
         }
         return result;
     }
 
     /**
-     * Get the state of the turnout for the ray at this index.
+     * Get the state of the turnout for the slot at this index.
      *
      * @param i the index
-     * @return state of the turnout for the ray at this index
+     * @return state of the turnout for the slot at this index
      */
-    public int getRayTurnoutState(int i) {
+    public int getSlotTurnoutState(int i) {
         int result = 0;
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
+        if (i < slotList.size()) {
+            SlotTrack rt = slotList.get(i);
             result = rt.getTurnoutState();
         }
         return result;
     }
 
     /**
-     * Get if the ray at this index is disabled.
+     * Get if the slot at this index is disabled.
      *
      * @param i the index
      * @return true if disabled
      */
-    public boolean isRayDisabled(int i) {
+    public boolean isSlotDisabled(int i) {
         boolean result = false;    // assume not disabled
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
+        if (i < slotList.size()) {
+            SlotTrack rt = slotList.get(i);
             result = rt.isDisabled();
         }
         return result;
     }
 
     /**
-     * Set the disabled state of the ray at this index.
+     * Set the disabled state of the slot at this index.
      *
      * @param i   the index
      * @param boo the state
      */
-    public void setRayDisabled(int i, boolean boo) {
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
+    public void setSlotDisabled(int i, boolean boo) {
+        if (i < slotList.size()) {
+            SlotTrack rt = slotList.get(i);
             rt.setDisabled(boo);
         }
     }
 
     /**
-     * Get the disabled when occupied state of the ray at this index.
+     * Get the disabled when occupied state of the slot at this index.
      *
      * @param i the index
      * @return the state
      */
-    public boolean isRayDisabledWhenOccupied(int i) {
+    public boolean isSlotDisabledWhenOccupied(int i) {
         boolean result = false;    // assume not disabled when occupied
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
+        if (i < slotList.size()) {
+            SlotTrack rt = slotList.get(i);
             result = rt.isDisabledWhenOccupied();
         }
         return result;
     }
 
     /**
-     * Set the disabled when occupied state of the ray at this index.
+     * Set the disabled when occupied state of the slot at this index.
      *
      * @param i   the index
      * @param boo the state
      */
-    public void setRayDisabledWhenOccupied(int i, boolean boo) {
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
+    public void setSlotDisabledWhenOccupied(int i, boolean boo) {
+        if (i < slotList.size()) {
+            SlotTrack rt = slotList.get(i);
             rt.setDisabledWhenOccupied(boo);
         }
     }
@@ -505,8 +497,8 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     public LayoutTrack getConnection(HitPointType connectionType) throws jmri.JmriException {
         LayoutTrack result = null;
-        if (HitPointType.isTurntableRayHitType(connectionType)) {
-            result = getRayConnectIndexed(connectionType.turntableTrackIndex());
+        if (HitPointType.isTraverserSlotHitType(connectionType)) {
+            result = getSlotConnectIndexed(connectionType.traverserTrackIndex());
         } else {
             String errString = MessageFormat.format("{0}.getCoordsForConnectionType({1}); Invalid connection type",
                     getName(), connectionType); // NOI18N
@@ -515,6 +507,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
         return result;
     }
+
 
     /**
      * {@inheritDoc}
@@ -527,9 +520,9 @@ public class LayoutTurntable extends LayoutTrack {
             log.error("will throw {}", errString); // NOI18N
             throw new jmri.JmriException(errString);
         }
-        if (HitPointType.isTurntableRayHitType(connectionType)) {
+        if (HitPointType.isTraverserSlotHitType(connectionType)) {
             if ((o == null) || (o instanceof TrackSegment)) {
-                setRayConnect((TrackSegment) o, connectionType.turntableTrackIndex());
+                setSlotConnect((TrackSegment) o, connectionType.traverserTrackIndex());
             } else {
                 String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid object: {4}",
                         getName(), connectionType, o.getName(),
@@ -545,8 +538,9 @@ public class LayoutTurntable extends LayoutTrack {
         }
     }
 
+
     /**
-     * Test if ray with this index is a mainline track or not.
+     * Test if slot with this index is a mainline track or not.
      * <p>
      * Defaults to false (not mainline) if connecting track segment is missing.
      *
@@ -556,7 +550,7 @@ public class LayoutTurntable extends LayoutTrack {
     public boolean isMainlineIndexed(int index) {
         boolean result = false; // assume failure (pessimist!)
 
-        for (RayTrack rt : rayTrackList) {
+        for (SlotTrack rt : slotList) {
             if (rt.getConnectionIndex() == index) {
                 TrackSegment ts = rt.getConnect();
                 if (ts != null) {
@@ -569,7 +563,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Test if ray at this index is a mainline track or not.
+     * Test if slot at this index is a mainline track or not.
      * <p>
      * Defaults to false (not mainline) if connecting track segment is missing
      *
@@ -578,8 +572,8 @@ public class LayoutTurntable extends LayoutTrack {
      */
     public boolean isMainlineOrdered(int i) {
         boolean result = false; // assume failure (pessimist!)
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
+        if (i < slotList.size()) {
+            SlotTrack rt = slotList.get(i);
             if (rt != null) {
                 TrackSegment ts = rt.getConnect();
                 if (ts != null) {
@@ -595,6 +589,10 @@ public class LayoutTurntable extends LayoutTrack {
         return mainline;
     }
 
+    /**
+     * Set the mainline status of the traverser bridge itself.
+     * @param main true if the bridge is mainline, false otherwise.
+     */
     public void setMainline(boolean main) {
         if (mainline != main) {
             mainline = main;
@@ -603,14 +601,13 @@ public class LayoutTurntable extends LayoutTrack {
         }
     }
 
-
     public String tLayoutBlockName = "";
     public String tExitSignalMastName = "";
     public String tBufferSignalMastName = "";
 
     /**
-     * Initialization method The name of each track segment connected to a ray
-     * track is initialized by by LayoutTurntableXml, then the following method
+     * Initialization method The name of each track segment connected to a slot
+     * track is initialized by by LayoutTraverserXml, then the following method
      * is called after the entire LayoutEditor is loaded to set the specific
      * TrackSegment objects.
      *
@@ -632,16 +629,27 @@ public class LayoutTurntable extends LayoutTrack {
         }
         tExitSignalMastName = null;
 
-        rayTrackList.forEach((rt) -> {
-            rt.setConnect(p.getFinder().findTrackSegmentByName(rt.connectName));
-            if (rt.approachMastName != null && !rt.approachMastName.isEmpty()) {
-                rt.setApproachMast(rt.approachMastName);
+        slotList.forEach((rt) -> {
+            if (!rt.isDisabled()) {
+                log.info("Traverser '{}': trying to connect slot index {} to track '{}'", getName(), rt.getConnectionIndex(), rt.connectName);
+                TrackSegment connectedTrack = p.getFinder().findTrackSegmentByName(rt.connectName);
+                log.info("connectedTrack {}", connectedTrack == null ? "null" : connectedTrack.getName());
+                rt.setConnect(connectedTrack);
+                if (connectedTrack == null && rt.connectName != null && !rt.connectName.isEmpty()) {
+                    log.warn("Traverser '{}': FAILED to find track segment for connection name '{}'", getName(), rt.connectName);
+                }
+                if (rt.approachMastName != null && !rt.approachMastName.isEmpty()) {
+                    rt.setApproachMast(rt.approachMastName);
+                }
             }
         });
+
+        // Recalculate dimensions now that all slots are loaded
+        recalculateDimensions();
     }
 
     /**
-     * Is this turntable turnout controlled?
+     * Is this traverser turnout controlled?
      *
      * @return true if so
      */
@@ -650,7 +658,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Set if this turntable is turnout controlled.
+     * Set if this traverser is turnout controlled.
      *
      * @param boo set true if so
      */
@@ -659,16 +667,16 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Set turntable position to the ray with this index.
+     * Set traverser position to the slot with this index.
      *
      * @param index the index
      */
     public void setPosition(int index) {
         if (isTurnoutControlled()) {
             boolean found = false; // assume failure (pessimist!)
-            for (RayTrack rt : rayTrackList) {
+            for (SlotTrack rt : slotList) {
                 if (rt.getConnectionIndex() == index) {
-                    commandedIndex = index;
+                    lastKnownIndex = index;
                     rt.setPosition();
                     models.redrawPanel();
                     models.setDirty();
@@ -677,46 +685,68 @@ public class LayoutTurntable extends LayoutTrack {
                 }
             }
             if (!found) {
-                log.error("{}.setPosition({}); Attempt to set the position on a non-existant ray track",
+                log.error("{}.setPosition({}); Attempt to set the position on a non-existant slot track",
                         getName(), index);
             }
         }
     }
 
     /**
-     * Get the turntable position.
+     * Get the traverser position.
      *
-     * @return the turntable position
+     * @return the traverser position
      */
     public int getPosition() {
-        return knownIndex;
+        return lastKnownIndex;
     }
 
-    public int getCommandedPosition() {
-        return commandedIndex;
+    public void deleteTrackPair(int pairIndex) {
+        if (pairIndex < 0 || (pairIndex * 2 + 1) >= slotList.size()) {
+            return;
+        }
+        SlotTrack slotB = slotList.get(pairIndex * 2 + 1);
+        SlotTrack slotA = slotList.get(pairIndex * 2);
+        slotList.remove(slotB);
+        slotList.remove(slotA);
+        slotB.dispose();
+        slotA.dispose();
+        renumberSlots();
     }
 
-    /**
-     * Delete this ray track.
-     *
-     * @param rayTrack the ray track
-     */
-    public void deleteRay(@Nonnull RayTrack rayTrack) {
-        TrackSegment t = null;
-        if (rayTrackList == null) {
-            log.error("{}.deleteRay(null); rayTrack is null", getName()); // NOI18N
-        } else {
-            t = rayTrack.getConnect();
-            getRayTrackList().remove(rayTrack);
-            rayTrack.dispose();
-        }
-        if (t != null) {
-            models.removeTrackSegment(t);
-        }
+    private void renumberSlots() {
+        int numPairs = getNumberSlots() / 2;
+        double totalWidth = (numPairs > 1) ? (numPairs - 1) * slotOffset : 0;
+        double firstOffset = -totalWidth / 2.0;
 
-        // update the panel
-        models.redrawPanel();
-        models.setDirty();
+        for (int i = 0; i < numPairs; i++) {
+            double offset = firstOffset + (i * slotOffset);
+            slotList.get(i * 2).setOffset(offset);
+            slotList.get(i * 2 + 1).setOffset(offset);
+        }
+        recalculateDimensions();
+    }
+
+    private void recalculateDimensions() {
+        int numPairs = getNumberSlots() / 2;
+
+        double newLength = (numPairs > 0) ? (((slotOffset - 1) * numPairs)) : slotOffset;
+        setDeckLength(newLength);
+    }
+
+    public void moveSlotPairUp(int pairIndex) {
+        if (pairIndex > 0) {
+            Collections.swap(slotList, pairIndex * 2, (pairIndex - 1) * 2);
+            Collections.swap(slotList, pairIndex * 2 + 1, (pairIndex - 1) * 2 + 1);
+            renumberSlots();
+        }
+    }
+
+    public void moveSlotPairDown(int pairIndex) {
+        if (pairIndex < (getNumberSlots() / 2) - 1) {
+            Collections.swap(slotList, pairIndex * 2, (pairIndex + 1) * 2);
+            Collections.swap(slotList, pairIndex * 2 + 1, (pairIndex + 1) * 2 + 1);
+            renumberSlots();
+        }
     }
 
     /**
@@ -730,7 +760,7 @@ public class LayoutTurntable extends LayoutTrack {
     private boolean active = true;
 
     /**
-     * Get if turntable is active.
+     * Get if traverser is active.
      * "active" means that the object is still displayed, and should be stored.
      * @return true if active, else false.
      */
@@ -739,16 +769,16 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Checks if the given mast is an approach mast for any ray on this turntable.
+     * Checks if the given mast is an approach mast for any slot on this traverser.
      * @param mast The SignalMast to check.
-     * @return true if it is an approach mast for one of the rays.
+     * @return true if it is an approach mast for one of the slots.
      */
     public boolean isApproachMast(SignalMast mast) {
         if (mast == null) {
             return false;
         }
-        for (RayTrack ray : rayTrackList) {
-            if (mast.equals(ray.getApproachMast())) {
+        for (SlotTrack slot : slotList) {
+            if (mast.equals(slot.getApproachMast())) {
                 return true;
             }
         }
@@ -756,15 +786,15 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Checks if the given block is one of the ray blocks for this turntable.
+     * Checks if the given block is one of the slot blocks for this traverser.
      * @param block The Block to check.
-     * @return true if it is a block for one of the rays.
+     * @return true if it is a block for one of the slots.
      */
-    public boolean isRayBlock(Block block) {
+    public boolean isSlotBlock(Block block) {
         if (block == null) {
             return false;
         }
-        for (RayTrack ray : rayTrackList) {
+        for (SlotTrack ray : slotList) {
             TrackSegment ts = ray.getConnect();
             if (ts != null && ts.getLayoutBlock() != null && block.equals(ts.getLayoutBlock().getBlock())) {
                 return true;
@@ -774,16 +804,16 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
 
-    public class RayTrack {
+    public class SlotTrack {
 
         /**
-         * constructor for RayTracks
+         * constructor for SlotTracks
          *
-         * @param angle its angle
+         * @param offset its offset
          * @param index its index
          */
-        public RayTrack(double angle, int index) {
-            rayAngle = MathUtil.wrapPM360(angle);
+        public SlotTrack(double offset, int index) {
+            this.offset = offset;
             connect = null;
             connectionIndex = index;
 
@@ -792,7 +822,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         // persistant instance variables
-        private double rayAngle = 0.0;
+        private double offset = 0.0;
         private TrackSegment connect = null;
         private int connectionIndex = -1;
 
@@ -804,7 +834,7 @@ public class LayoutTurntable extends LayoutTrack {
         // Accessor routines
         //
         /**
-         * Set ray track disabled.
+         * Set slot track disabled.
          *
          * @param boo set true to disable
          */
@@ -818,7 +848,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * Is this ray track disabled?
+         * Is this slot track disabled?
          *
          * @return true if so
          */
@@ -827,7 +857,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * Set ray track disabled if occupied.
+         * Set slot track disabled if occupied.
          *
          * @param boo set true to disable if occupied
          */
@@ -841,7 +871,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * Is ray track disabled if occupied?
+         * Is slot track disabled if occupied?
          *
          * @return true if so
          */
@@ -850,53 +880,56 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * get the track segment connected to this ray
+         * get the track segment connected to this slot
          *
-         * @return the track segment connected to this ray
+         * @return the track segment connected to this slot
          */
-        // @CheckForNull termporary until we know whether this really can be null or not
         public TrackSegment getConnect() {
+            // This should be a simple getter, just like in LayoutTurntable.RayTrack.
+            // All connection resolution happens in LayoutTraverser.setObjects().
             return connect;
         }
 
         /**
-         * Set the track segment connected to this ray.
+         * Set the track segment connected to this slot.
          *
-         * @param ts the track segment to connect to this ray
+         * @param ts the track segment to connect to this slot
          */
         public void setConnect(TrackSegment ts) {
+            // This should ONLY set the live object reference, just like in LayoutTurntable.RayTrack.
+            // The public 'connectName' field is managed separately by the editor and XML loader.
             connect = ts;
         }
 
         /**
-         * Get the angle for this ray.
+         * Get the offset for this slot.
          *
-         * @return the angle for this ray
+         * @return the offset for this slot
          */
-        public double getAngle() {
-            return rayAngle;
+        public double getOffset() {
+            return offset;
         }
 
         /**
-         * Set the angle for this ray.
+         * Set the offset for this slot.
          *
-         * @param an the angle for this ray
+         * @param o the offset for this slot
          */
-        public void setAngle(double an) {
-            rayAngle = MathUtil.wrapPM360(an);
+        public void setOffset(double o) {
+            this.offset = o;
         }
 
         /**
-         * Get the connection index for this ray.
+         * Get the connection index for this slot.
          *
-         * @return the connection index for this ray
+         * @return the connection index for this slot
          */
         public int getConnectionIndex() {
             return connectionIndex;
         }
 
         /**
-         * Get the approach signal mast for this ray.
+         * Get the approach signal mast for this slot.
          * @return The signal mast, or null.
          */
         public SignalMast getApproachMast() {
@@ -914,7 +947,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * Set the approach signal mast for this ray by name.
+         * Set the approach signal mast for this slot by name.
          * @param name The name of the signal mast.
          */
         public void setApproachMast(String name) {
@@ -931,16 +964,15 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * Is this ray occupied?
+         * Is this slot occupied?
          *
          * @return true if occupied
          */
-        public boolean isOccupied() {  // temporary - accessed by View - is this topology or visualization?
+        public boolean isOccupied() {
             boolean result = false; // assume not
-            if (connect != null) {  // does it have a connection? (yes)
+            if (connect != null) {
                 LayoutBlock lb = connect.getLayoutBlock();
-                if (lb != null) {   // does the connection have a block? (yes)
-                    // is the block occupied?
+                if (lb != null) {
                     result = (lb.getOccupancy() == LayoutBlock.OCCUPIED);
                 }
             }
@@ -952,12 +984,11 @@ public class LayoutTurntable extends LayoutTrack {
         public String approachMastName = "";
 
         private NamedBeanHandle<Turnout> namedTurnout;
-        // Turnout t;
         private int turnoutState;
         private PropertyChangeListener mTurnoutListener;
 
         /**
-         * Set the turnout and state for this ray track.
+         * Set the turnout and state for this slot track.
          *
          * @param turnoutName the turnout name
          * @param state       its state
@@ -967,40 +998,39 @@ public class LayoutTurntable extends LayoutTrack {
         public void setTurnout(@Nonnull String turnoutName, int state) {
             Turnout turnout = null;
             if (mTurnoutListener == null) {
-                mTurnoutListener = (PropertyChangeEvent e) -> { // Lambda expression for listener
-                    if ("KnownState".equals(e.getPropertyName())) {
-                        int turnoutState = (Integer) e.getNewValue();
-                        if (turnoutState == Turnout.THROWN) {
-                            // This ray is now the active one. Update the turntable's known position.
-                            knownIndex = connectionIndex;
-                        } else if (turnoutState == Turnout.CLOSED) {
-                            // If the currently known active ray is now closed, turntable is un-aligned.
-                            if (knownIndex == connectionIndex) {
-                                knownIndex = -1;
-                            }
-                        }
-                        models.redrawPanel();
-                        models.setDirty();
-                    } else if ("CommandedState".equals(e.getPropertyName())) {
-                        if ((Integer) e.getNewValue() == Turnout.THROWN) {
-                            commandedIndex = connectionIndex;
+                mTurnoutListener = (PropertyChangeEvent e) -> {
+                    int turnoutState = getTurnout().getKnownState();
+                    if (turnoutState == Turnout.THROWN) {
+                        // This slot is now the active one.
+                        // Update the traverser's position indicator.
+                        if (lastKnownIndex != connectionIndex) {
+                            lastKnownIndex = connectionIndex;
                             models.redrawPanel();
                             models.setDirty();
+                        }
 
-                            // This is the "Smart Listener" logic.
-                            // If this ray was commanded THROWN, ensure all other rays are commanded CLOSED.
-                            if ((Integer) e.getNewValue() == Turnout.THROWN) {
-                                log.debug("Turntable Ray {} commanded THROWN, ensuring other rays are CLOSED.", connectionIndex);
-                                for (RayTrack otherRay : LayoutTurntable.this.rayTrackList) {
-                                    // Check this isn't the current ray and that it has a turnout assigned.
-                                    if (otherRay.getConnectionIndex() != connectionIndex && otherRay.getTurnout() != null) {
-                                        // Only send the command if it's not already CLOSED to avoid loops.
-                                        if (otherRay.getTurnout().getCommandedState() != Turnout.CLOSED) {
-                                            otherRay.getTurnout().setCommandedState(Turnout.CLOSED);
-                                        }
-                                    }
+                        // Command all other slot turnouts to CLOSED.
+                        for (SlotTrack otherSlot : LayoutTraverser.this.slotList) {
+                            if (otherSlot != this && otherSlot.getTurnout() != null) {
+                                // Check state before commanding to prevent potential listener loops
+                                if (otherSlot.getTurnout().getCommandedState() != Turnout.CLOSED) {
+                                    otherSlot.getTurnout().setCommandedState(Turnout.CLOSED);
                                 }
                             }
+                        }
+                    } else if (turnoutState == Turnout.CLOSED) {
+                        // This turnout is now closed. Check if all are closed.
+                        boolean allClosed = true;
+                        for (SlotTrack otherSlot : LayoutTraverser.this.slotList) {
+                            if (otherSlot.getTurnout() != null && otherSlot.getTurnout().getKnownState() != Turnout.CLOSED) {
+                                allClosed = false;
+                                break;
+                            }
+                        }
+                        if (allClosed && lastKnownIndex != -1) {
+                            lastKnownIndex = -1; // All turnouts are closed, blank the bridge
+                            models.redrawPanel();
+                            models.setDirty();
                         }
                     }
                 };
@@ -1011,10 +1041,10 @@ public class LayoutTurntable extends LayoutTrack {
             if (namedTurnout != null && namedTurnout.getBean() != turnout) {
                 namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
             }
-            if (turnout != null) {
+            if (turnout != null && (namedTurnout == null || namedTurnout.getBean() != turnout)) {
                 if (turnoutName != null && !turnoutName.isEmpty()) {
                     namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turnout);
-                    turnout.addPropertyChangeListener(mTurnoutListener, turnoutName, "Layout Editor Turntable");
+                    turnout.addPropertyChangeListener(mTurnoutListener, turnoutName, "Layout Editor Traverser");
                 }
             }
             if (turnout == null) {
@@ -1027,26 +1057,25 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * Set the position for this ray track.
+         * Set the position for this slot track.
          */
         public void setPosition() {
             if (namedTurnout != null) {
-                if (disableWhenOccupied && isOccupied()) { // isOccupied is on RayTrack, so check must be here
-                    log.debug("Can not setPosition of turntable ray when it is occupied");
+                if (disableWhenOccupied && isOccupied()) { // isOccupied is on SlotTrack, so check must be here
+                    log.debug("Can not setPosition of traverser slot when it is occupied");
                 } else {
-                    // This method is now only called by manual clicks on the panel.
-                    // The listener above handles the interlocking for all command sources.
+                    // The listener attached to the turnout will handle de-selecting other slots
+                    // by setting their turnouts to CLOSED.
                     getTurnout().setCommandedState(Turnout.THROWN);
                 }
             }
         }
 
         /**
-         * Get the turnout for this ray track.
+         * Get the turnout for this slot track.
          *
          * @return the turnout or null
          */
-       // @CheckForNull temporary until we have central paradigm for null
         public Turnout getTurnout() {
             if (namedTurnout == null) {
                 return null;
@@ -1055,7 +1084,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * Get the turnout name for the ray track.
+         * Get the turnout name for the slot track.
          *
          * @return the turnout name
          */
@@ -1068,7 +1097,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * Get the state for the turnout for this ray track.
+         * Get the state for the turnout for this slot track.
          *
          * @return the state
          */
@@ -1077,17 +1106,17 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
-         * Dispose of this ray track.
+         * Dispose of this slot track.
          */
         void dispose() {
             if (getTurnout() != null) {
                 getTurnout().removePropertyChangeListener(mTurnoutListener);
             }
-            if (knownIndex == connectionIndex) {
-                knownIndex = -1;
+            if (lastKnownIndex == connectionIndex) {
+                lastKnownIndex = -1;
             }
         }
-    }   // class RayTrack
+    }   // class SlotTrack
 
     /**
      * {@inheritDoc}
@@ -1115,9 +1144,9 @@ public class LayoutTurntable extends LayoutTrack {
     public List<HitPointType> checkForFreeConnections() {
         List<HitPointType> result = new ArrayList<>();
 
-        for (int k = 0; k < getNumberRays(); k++) {
-            if (getRayConnectOrdered(k) == null) {
-                result.add(HitPointType.turntableTrackIndexedValue(k));
+        for (int k = 0; k < getNumberSlots(); k++) {
+            if (getSlotConnectOrdered(k) == null) {
+                result.add(HitPointType.traverserTrackIndexedValue(k));
             }
         }
         return result;
@@ -1129,41 +1158,41 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     public boolean checkForUnAssignedBlocks() {
         // Layout turnouts get their block information from the
-        // track segments attached to their rays so...
+        // track segments attached to their slots so...
         // nothing to see here... move along...
         return true;
     }
 
     /**
-     * Checks if the path represented by the blocks crosses this turntable.
+     * Checks if the path represented by the blocks crosses this traverser.
      * @param block1 A block in the path.
      * @param block2 Another block in the path.
-     * @return true if the path crosses this turntable.
+     * @return true if the path crosses this traverser.
      */
-    public boolean isTurntableBoundary(Block block1, Block block2) {
+    public boolean isTraverserBoundary(Block block1, Block block2) {
         if (getLayoutBlock() == null) {
             return false;
         }
-        Block turntableBlock = getLayoutBlock().getBlock();
-        if (turntableBlock == null) {
+        Block traverserBlock = getLayoutBlock().getBlock();
+        if (traverserBlock == null) {
             return false;
         }
 
-        // Case 1: Moving to/from the turntable block itself.
-        if ((block1 == turntableBlock && isRayBlock(block2)) ||
-            (block2 == turntableBlock && isRayBlock(block1))) {
+        // Case 1: Moving to/from the traverser block itself.
+        if ((block1 == traverserBlock && isSlotBlock(block2)) ||
+            (block2 == traverserBlock && isSlotBlock(block1))) {
             return true;
         }
 
-        // Case 2: Moving between two ray blocks (crossing over the turntable).
-        if (isRayBlock(block1) && isRayBlock(block2)) {
+        // Case 2: Moving between two slot blocks (crossing over the traverser).
+        if (isSlotBlock(block1) && isSlotBlock(block2)) {
             return true;
         }
         return false;
     }
 
     /**
-     * Gets the list of turnouts and their required states to align the turntable
+     * Gets the list of turnouts and their required states to align the traverser
      * for a path defined by the given blocks.
      *
      * @param curBlock  The current block in the train's path.
@@ -1177,51 +1206,42 @@ public class LayoutTurntable extends LayoutTrack {
             return turnoutList;
         }
 
-        Block turntableBlock = (getLayoutBlock() != null) ? getLayoutBlock().getBlock() : null;
-        if (turntableBlock == null) {
+        Block traverserBlock = (getLayoutBlock() != null) ? getLayoutBlock().getBlock() : null;
+        if (traverserBlock == null) {
             return turnoutList;
         }
 
         int targetRay = -1;
 
-        // Determine which ray needs to be aligned.
-        if (prevBlock == turntableBlock) {
-            // Train is leaving the turntable, so align to the destination ray.
-            targetRay = getRayForBlock(curBlock);
-        } else if (curBlock == turntableBlock) {
-            // Train is entering the turntable, so align to the approaching ray.
-            targetRay = getRayForBlock(prevBlock);
+        // Determine which slot needs to be aligned.
+        if (prevBlock == traverserBlock) {
+            // Train is leaving the traverser, so align to the destination slot.
+            targetRay = getSlotForBlock(curBlock);
+        } else if (curBlock == traverserBlock) {
+            // Train is entering the traverser, so align to the approaching slot.
+            targetRay = getSlotForBlock(prevBlock);
         }
 
         if (targetRay != -1) {
-            Turnout t = getRayTurnout(targetRay);
+            Turnout t = getSlotTurnout(targetRay);
             if (t != null) {
                 // Create a temporary LayoutTurnout wrapper for the dispatcher.
                 // This object is not on a panel and is for logic purposes only.
-                // We give the dispatcher our real turnout, and our "Smart Listener"
-                // on CommandedState will handle the interlocking.
-                LayoutLHTurnout tempLayoutTurnout = new LayoutLHTurnout("TURNTABLE_WRAPPER_" + getId(), models) { // NOI18N
-                    @Override
-                    public Turnout getTurnout() {
-                        // Return the real turnout.
-                        return t;
-                    }
-                };
-                // We must associate the temp layout turnout with the real turnout to satisfy the dispatcher framework
+                LayoutLHTurnout tempLayoutTurnout = new LayoutLHTurnout("TRAVERSER_WRAPPER_" + t.getSystemName(), models);
                 tempLayoutTurnout.setTurnout(t.getSystemName());
                 int requiredState = Turnout.THROWN;
 
-                log.debug("Adding turntable turnout {} to list with required state {}", t.getDisplayName(), requiredState);
+                log.debug("Adding traverser turnout {} to list with required state {}", t.getDisplayName(), requiredState);
                 turnoutList.add(new LayoutTrackExpectedState<>(tempLayoutTurnout, requiredState));
             }
         }
         return turnoutList;
     }
 
-    private int getRayForBlock(Block block) {
+    private int getSlotForBlock(Block block) {
         if (block == null) return -1;
-        for (int i = 0; i < getNumberRays(); i++) {
-            TrackSegment ts = getRayConnectOrdered(i);
+        for (int i = 0; i < getNumberSlots(); i++) {
+            TrackSegment ts = getSlotConnectOrdered(i);
             if (ts != null && ts.getLayoutBlock() != null && ts.getLayoutBlock().getBlock() == block) {
                 return i;
             }
@@ -1235,6 +1255,7 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     public void checkForNonContiguousBlocks(
             @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
+        log.info("Traverser '{}': running checkForNonContiguousBlocks...", getName());
         /*
         * For each (non-null) blocks of this track do:
         * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
@@ -1251,9 +1272,10 @@ public class LayoutTurntable extends LayoutTrack {
         // We're using a map here because it is convient to
         // use it to pair up blocks and connections
         Map<LayoutTrack, String> blocksAndTracksMap = new HashMap<>();
-        for (int k = 0; k < getNumberRays(); k++) {
-            TrackSegment ts = getRayConnectOrdered(k);
+        for (int k = 0; k < getNumberSlots(); k++) {
+            TrackSegment ts = isSlotDisabled(k) ? null : getSlotConnectOrdered(k);
             if (ts != null) {
+                log.info("  - Found connection from slot {} to track '{}' in block '{}'", k, ts.getName(), ts.getBlockName());
                 String blockName = ts.getBlockName();
                 blocksAndTracksMap.put(ts, blockName);
             }
@@ -1264,18 +1286,23 @@ public class LayoutTurntable extends LayoutTrack {
         for (Map.Entry<LayoutTrack, String> entry : blocksAndTracksMap.entrySet()) {
             LayoutTrack theConnect = entry.getKey();
             String theBlockName = entry.getValue();
+            log.info("  Processing connection to block '{}'", theBlockName);
 
             TrackNameSet = null;    // assume not found (pessimist!)
             TrackNameSets = blockNamesToTrackNameSetsMap.get(theBlockName);
             if (TrackNameSets != null) { // (#1)
                 for (Set<String> checkTrackNameSet : TrackNameSets) {
+                    if (checkTrackNameSet.add(getName())) {
+                        log.debug("*    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
+                        log.info("    Added traverser '{}' to existing track set for block '{}'", getName(), theBlockName);
+                    }
                     if (checkTrackNameSet.contains(getName())) { // (#2)
                         TrackNameSet = checkTrackNameSet;
                         break;
                     }
                 }
             } else {    // (#3)
-                log.debug("*New block (''{}'') trackNameSets", theBlockName);
+                log.info("    Creating NEW track set for block '{}'", theBlockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(theBlockName, TrackNameSets);
             }
@@ -1284,8 +1311,9 @@ public class LayoutTurntable extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.debug("*    Add track ''{}'' to trackNameSet for block ''{}''", getName(), theBlockName);
+                log.info("    Added traverser '{}' to new track set for block '{}'", getName(), theBlockName);
             }
+            log.info("    Flooding from connection '{}'...", theConnect.getName());
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
     }
@@ -1297,19 +1325,23 @@ public class LayoutTurntable extends LayoutTrack {
     public void collectContiguousTracksNamesInBlockNamed(@Nonnull String blockName,
             @Nonnull Set<String> TrackNameSet) {
         if (!TrackNameSet.contains(getName())) {
-            // for all the rays with matching blocks in this turnout
+            log.info("Traverser '{}': running collectContiguousTracksNamesInBlockNamed for block '{}'", getName(), blockName);
+            // for all the slots with matching blocks in this turnout
             //  #1) if its track segment's block is in this block
-            //  #2)     add turntable to TrackNameSet (if not already there)
+            //  #2)     add traverser to TrackNameSet (if not already there)
             //  #3)     if the track segment isn't in the TrackNameSet
             //  #4)         flood it
-            for (int k = 0; k < getNumberRays(); k++) {
-                TrackSegment ts = getRayConnectOrdered(k);
+            for (int k = 0; k < getNumberSlots(); k++) {
+                if (isSlotDisabled(k)) {
+                    continue;
+                }
+                TrackSegment ts = getSlotConnectOrdered(k);
                 if (ts != null) {
                     String blk = ts.getBlockName();
                     if ((!blk.isEmpty()) && (blk.equals(blockName))) { // (#1)
                         // if we are added to the TrackNameSet
                         if (TrackNameSet.add(getName())) {
-                            log.debug("*    Add track ''{}'' for block ''{}''", getName(), blockName);
+                            log.info("  Added traverser '{}' to track set for block '{}'", getName(), blockName);
                         }
                         // it's time to play... flood your neighbours!
                         ts.collectContiguousTracksNamesInBlockNamed(blockName,
@@ -1325,7 +1357,7 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
-        // turntables don't have blocks...
+        // traversers don't have blocks...
         // nothing to see here, move along...
     }
 
@@ -1342,9 +1374,9 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     public String getTypeName() {
-        return Bundle.getMessage("TypeName_Turntable");
+        return Bundle.getMessage("TypeName_Traverser");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntable.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTraverser.class);
 
 }

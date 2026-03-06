@@ -69,6 +69,8 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
     protected JLabel trackLabel = new JLabel();
     protected JRadioButton levelXingButton = new JRadioButton(Bundle.getMessage("LevelCrossing"));
     protected JRadioButton trackButton = new JRadioButton(Bundle.getMessage("TrackSegment"));
+    protected JRadioButton turntableButton = new JRadioButton(Bundle.getMessage("Turntable"));
+    protected JRadioButton traverserButton = new JRadioButton(Bundle.getMessage("Traverser"));
 
     // 2nd row of check boxes
     protected JPanel trackSegmentPropertiesPanel = new JPanel(leftRowLayout);
@@ -195,6 +197,8 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         itemGroup.add(anchorButton);
         itemGroup.add(edgeButton);
         itemGroup.add(trackButton);
+        itemGroup.add(turntableButton);
+        itemGroup.add(traverserButton);
         itemGroup.add(multiSensorButton);
         itemGroup.add(sensorButton);
         itemGroup.add(signalButton);
@@ -240,12 +244,11 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
             }
 
             //track Segment properties
-            e = trackButton.isSelected();
-            log.debug("trackSegmentPropertiesPanel is {}", e ? "enabled" : "disabled");
-
-            for (Component i : trackSegmentPropertiesPanel.getComponents()) {
-                i.setEnabled(e);
-            }
+            boolean isTrack = trackButton.isSelected();
+            boolean isTT = turntableButton.isSelected() || traverserButton.isSelected();
+            log.debug("trackSegmentPropertiesPanel is {}", (isTrack || isTT) ? "enabled" : "disabled");
+            mainlineTrack.setEnabled(isTrack || isTT);
+            dashedLine.setEnabled(isTrack);
 
             // block properties
             e = (turnoutRHButton.isSelected()
@@ -257,7 +260,9 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
                     || layoutSingleSlipButton.isSelected()
                     || layoutDoubleSlipButton.isSelected()
                     || levelXingButton.isSelected()
-                    || trackButton.isSelected());
+                    || trackButton.isSelected()
+                    || turntableButton.isSelected()
+                    || traverserButton.isSelected());
             log.debug("blockPanel is {}", e ? "enabled" : "disabled");
 
             if (blockPropertiesPanel != null) {
@@ -313,6 +318,8 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         anchorButton.addActionListener(selectionListAction);
         edgeButton.addActionListener(selectionListAction);
         trackButton.addActionListener(selectionListAction);
+        turntableButton.addActionListener(selectionListAction);
+        traverserButton.addActionListener(selectionListAction);
         multiSensorButton.addActionListener(selectionListAction);
         sensorButton.addActionListener(selectionListAction);
         signalButton.addActionListener(selectionListAction);
@@ -415,6 +422,8 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         // second row of edit tool bar items
         levelXingButton.setToolTipText(Bundle.getMessage("LevelCrossingToolTip"));
         trackButton.setToolTipText(Bundle.getMessage("TrackSegmentToolTip"));
+        turntableButton.setToolTipText(Bundle.getMessage("AddTurntable"));
+        traverserButton.setToolTipText(Bundle.getMessage("AddTraverser"));
 
         // this is enabled/disabled via selectionListAction above
         trackSegmentPropertiesPanel.add(mainlineTrack);

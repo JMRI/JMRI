@@ -1,0 +1,265 @@
+package jmri.jmrit.display.layoutEditor.configurexml;
+
+import java.awt.geom.Point2D;
+import java.util.List;
+import jmri.Turnout;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTraverser;
+import jmri.jmrit.display.layoutEditor.LayoutTraverserView;
+import jmri.jmrit.display.layoutEditor.TrackSegment;
+import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
+import org.jdom2.Element;
+
+/**
+ * This module handles configuration for display.LayoutTraverser objects for a
+ * LayoutEditor.
+ *
+ * @author David Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (c) 2017-2018
+ * @author Bob Jacobsen  Copyright (c) 2020
+ */
+public class LayoutTraverserViewXml extends LayoutTrackViewXml {
+
+    public LayoutTraverserViewXml() {
+    }
+
+    /**
+     * Default implementation for storing the contents of a LayoutTraverser
+     *
+     * @param o Object to store, of type LayoutTraverser
+     * @return Element containing the complete info
+     */
+    @Override
+    public Element store(Object o) {
+
+        LayoutTraverserView pv = (LayoutTraverserView) o;
+        LayoutTraverser lt = pv.getTraverser();
+
+        Element element = new Element("layouttraverser");
+        boolean turnoutControl = lt.isTurnoutControlled();
+        // include attributes
+        element.setAttribute("ident", lt.getName());
+        if (!lt.getBlockName().isEmpty()) {
+            element.setAttribute("blockname", lt.getBlockName());
+        }
+        element.setAttribute("slotoffset", String.valueOf(lt.getSlotOffset()));
+        element.setAttribute("orientation", String.valueOf(lt.getOrientation()));
+        element.setAttribute("mainline", lt.isMainline() ? "yes" : "no");
+
+        Point2D coords = pv.getCoordsCenter();
+        element.setAttribute("xcen", "" + coords.getX());
+        element.setAttribute("ycen", "" + coords.getY());
+        element.setAttribute("turnoutControlled", "" + (turnoutControl ? "yes" : "no"));
+        element.setAttribute("deckwidth", "" + lt.getDeckWidth());
+        boolean dispatcherManaged = lt.isDispatcherManaged();
+        if (dispatcherManaged) {
+            String exitMastName = lt.getExitSignalMastName();
+            if (exitMastName != null && !exitMastName.isEmpty()) {
+                element.setAttribute("exitmast", exitMastName);
+            }
+            String bufferMastName = lt.getBufferSignalMastName();
+            if (bufferMastName != null && !bufferMastName.isEmpty()) {
+                element.setAttribute("buffermast", bufferMastName);
+            }
+            element.setAttribute("signalIconPlacement", "" + lt.getSignalIconPlacement());
+            element.setAttribute("dispatcherManaged", "yes");
+        }
+        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutTraverserViewXml");
+        // add slot tracks
+        for (int i = 0; i < lt.getNumberSlots(); i++) {
+            Element rElem = new Element("slot");
+            rElem.setAttribute("offset", "" + lt.getSlotOffsetValue(i));
+            TrackSegment t = lt.getSlotConnectOrdered(i);
+            if (t != null) {
+                rElem.setAttribute("connectname", t.getId());
+            }
+            String mastName = lt.getSlotList().get(i).getApproachMastName();
+            if (mastName != null && !mastName.isEmpty()) {
+                rElem.setAttribute("approachmast", mastName);
+            }
+            rElem.setAttribute("index", "" + lt.getSlotIndex(i));
+            if (turnoutControl && lt.getSlotTurnoutName(i) != null) {
+                rElem.setAttribute("turnout", lt.getSlotTurnoutName(i));
+                if (lt.getSlotTurnoutState(i) == Turnout.THROWN) {
+                    rElem.setAttribute("turnoutstate", "thrown");
+                } else {
+                    rElem.setAttribute("turnoutstate", "closed");
+                }
+            }
+            if (lt.isSlotDisabled(i)) {
+                rElem.setAttribute("disabled", "yes");
+            }
+            if (lt.isSlotDisabledWhenOccupied(i)) {
+                rElem.setAttribute("disableWhenOccupied", "yes");
+            }
+            element.addContent(rElem);
+        }
+        storeLogixNG_Data(pv, element);
+        return element;
+    }
+
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        log.error("Invalid method called");
+        return false;
+    }
+
+    /**
+     * Load, starting with the layout traverser element, then all the other data
+     *
+     * @param element Top level Element to unpack.
+     * @param o       LayoutEditor as an Object
+     */
+    @Override
+    public void load(Element element, Object o) {
+        // create the objects
+        LayoutEditor p = (LayoutEditor) o;
+
+        // get center point
+        String name = element.getAttribute("ident").getValue();
+        log.debug("Loading layouttraverser: {} " , name);
+        double x = 0.0;
+        double y = 0.0;
+        double slotOffset = 25.0;
+        int orientation = LayoutTraverser.HORIZONTAL;
+        try {
+            x = element.getAttribute("xcen").getFloatValue();
+            y = element.getAttribute("ycen").getFloatValue();
+            log.debug("  xcen={} ycen={}", x, y);
+            if (element.getAttribute("slotoffset") != null) {
+                slotOffset = element.getAttribute("slotoffset").getDoubleValue();
+                log.debug("  slotOffset={}", slotOffset);
+            }
+            if (element.getAttribute("orientation") != null) {
+                orientation = element.getAttribute("orientation").getIntValue();
+                log.debug("  orientation={}", orientation);
+            }
+        } catch (org.jdom2.DataConversionException e) {
+            log.error("failed to convert layouttraverser attributes", e);
+        }
+        // create the new LayoutTraverser
+        LayoutTraverser lt = new LayoutTraverser(name, p);
+        LayoutTraverserView lv = new LayoutTraverserView(lt, new Point2D.Double(x, y), p);
+
+        p.addLayoutTrack(lv.getTraverser(), lv);
+
+        lv.setCoordsCenter(new Point2D.Double(x, y));
+        lt.setSlotOffset(slotOffset);
+        lt.setOrientation(orientation);
+
+        // get remaining attributes
+        Attribute a = element.getAttribute("mainline");
+        if (a != null) {
+            lt.setMainline("yes".equalsIgnoreCase(a.getValue()));
+            log.debug("  mainline={}", lt.isMainline());
+        }
+        a = element.getAttribute("deckwidth");
+        if (a != null) {
+            try {
+                lt.setDeckWidth(a.getDoubleValue());
+                log.debug("  deckwidth={}", lt.getDeckWidth());
+            } catch (DataConversionException e) {
+                log.warn("Could not parse deckwidth attribute!");
+            }
+        }
+
+        a = element.getAttribute("blockname");
+        if (a != null) {
+            lt.tLayoutBlockName = a.getValue();
+            log.debug("  blockname={}", lt.tLayoutBlockName);
+        }
+
+        a = element.getAttribute("turnoutControlled");
+        if (a != null) {
+            lt.setTurnoutControlled("yes".equalsIgnoreCase(a.getValue()));
+            log.debug("  turnoutControlled={}", lt.isTurnoutControlled());
+        }
+
+        a = element.getAttribute("dispatcherManaged");
+        if (a != null) {
+            lt.setDispatcherManaged("yes".equalsIgnoreCase(a.getValue()));
+            log.debug("  dispatcherManaged={}", lt.isDispatcherManaged());
+            if (lt.isDispatcherManaged()) {
+                a = element.getAttribute("exitmast");
+                if (a != null) {
+                    lt.tExitSignalMastName = a.getValue();
+                    log.debug("  exitmast={}", lt.tExitSignalMastName);
+                }
+                a = element.getAttribute("buffermast");
+                if (a != null) {
+                    lt.tBufferSignalMastName = a.getValue();
+                    log.debug("  buffermast={}", lt.tBufferSignalMastName);
+                }
+                a = element.getAttribute("signalIconPlacement");
+                if (a != null) {
+                    try {
+                        lt.setSignalIconPlacement(a.getIntValue());
+                        log.debug("  signalIconPlacement={}", lt.getSignalIconPlacement());
+                    } catch (DataConversionException e) {
+                        log.error("failed to convert signalIconPlacement attribute");
+                    }
+                }
+            }
+        }
+
+        // load slot tracks
+        List<Element> slotTrackList = element.getChildren("slot");
+        log.debug("  found {} slot elements" , slotTrackList.size());
+        if (slotTrackList.size() > 0) {
+            for (Element value : slotTrackList) {
+                double offset = 0.0;
+                int index = 0;
+                try {
+                    offset = (value.getAttribute("offset")).getFloatValue();
+                    index = (value.getAttribute("index")).getIntValue();
+                    log.debug("    loading slot index = {} with offset = {}" , index , offset);
+                } catch (DataConversionException e) {
+                    log.error("failed to convert slot track offset or index attributes");
+                }
+
+                a = value.getAttribute("connectname");
+                String connectName = (a != null) ? a.getValue() : "";
+                if (a != null) {
+                    log.debug("connectname={}", connectName);
+                }
+
+                lt.addSlotTrack(offset, index, connectName);
+
+                a = value.getAttribute("approachmast");
+                if (a != null) {
+                    lt.getSlotList().get(lt.getNumberSlots() - 1).approachMastName = a.getValue();
+                    log.debug("      approachmast={}", a.getValue());
+                }
+
+                a = value.getAttribute("turnout");
+                if (lt.isTurnoutControlled() && a != null) {
+                    String turnoutName = a.getValue();
+                    log.debug("      turnout={}", turnoutName);
+                    Attribute stateAttr = value.getAttribute("turnoutstate");
+                    int turnoutState = Turnout.CLOSED;
+                    if (stateAttr != null && "thrown".equalsIgnoreCase(stateAttr.getValue())) {
+                        turnoutState = Turnout.THROWN;
+                    }
+                    lt.setSlotTurnout(index, turnoutName, turnoutState);
+                    if (stateAttr != null) {
+                        log.debug("      turnoutstate={}", stateAttr.getValue());
+                    }
+                }
+
+                a = value.getAttribute("disabled");
+                lt.setSlotDisabled(index, (a != null) && "yes".equalsIgnoreCase(a.getValue()));
+                if (a != null) log.debug("      disabled={}", a.getValue());
+
+                a = value.getAttribute("disableWhenOccupied");
+                lt.setSlotDisabledWhenOccupied(index, (a != null) && "yes".equalsIgnoreCase(a.getValue()));
+                if (a != null) log.debug("      disableWhenOccupied={}", a.getValue());
+            }
+        }
+
+        loadLogixNG_Data(lv, element);
+        log.debug("  finished loading traverser {}" , name);
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTraverserViewXml.class);
+}

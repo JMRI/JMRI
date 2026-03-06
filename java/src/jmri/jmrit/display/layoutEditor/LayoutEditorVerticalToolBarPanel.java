@@ -98,6 +98,8 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
         JPanel vTop8Panel = new JPanel(verticalContentLayout);
         vTop8Panel.add(levelXingButton);
         vTop8Panel.add(trackButton);
+        vTop8Panel.add(turntableButton);
+        vTop8Panel.add(traverserButton);
         vTop8Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop8Panel.getPreferredSize().height));
         outerBorderPanel.add(vTop8Panel);
 

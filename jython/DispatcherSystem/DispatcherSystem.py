@@ -75,12 +75,14 @@ def CreateIcons_action(event):
     # print "process panels"
     result = processPanels()    # result is "Success" or "Failure"
     # stage2
+
     if str(result) == "Success":
         CreateTransits()
     else:
         title = "Error in Routine"
         msg = "Not creating Transits as failure in earlier routine"
         Query().displayMessage(msg,title)
+
     # print "Created Transits"
 
 def saveOrigPanel():

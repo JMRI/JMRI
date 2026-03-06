@@ -18,6 +18,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LayoutTraverser;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.util.ThreadingUtil;
@@ -2546,6 +2547,44 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 }
             }
             // ----- End Turntable Alignment Check -----
+            // ----- Begin Traverser Alignment Check -----
+            for (LayoutEditor lay : layout) {
+                for (LayoutTraverser traverser : lay.getLayoutTraversers()) {
+                    // Check for a path from an Approach Mast to the Buffer Mast (Path 3).
+                    // The destination block is the traverser block, and the destination mast is the buffer mast.
+                    if (traverser.getLayoutBlock() == destinationBlock && traverser.getBufferMast() == destinationSignalMast) {
+                        // The source mast's facing block is the slot block for this path.
+                        for (LayoutTraverser.SlotTrack slot : traverser.getSlotList()) {
+                            if (slot.getConnect() != null && slot.getConnect().getLayoutBlock() == DefaultSignalMastLogic.this.facingBlock) {
+                                // This is the correct slot. Get its control turnout and required state.
+                                Turnout slotTurnout = slot.getTurnout();
+                                int requiredState = slot.getTurnoutState();
+                                if (slotTurnout != null) {
+                                    turnoutSettings.put(slotTurnout, requiredState);
+                                }
+                                break; // Found the slot, no need to check others.
+                            }
+                        }
+                    }
+                    // Check for a path from the Exit Mast to a remote mast (Path 1).
+                    // The source mast is the traverser's exit mast.
+                    if (traverser.getExitSignalMast() == getSourceMast()) {
+                        // The protecting block is the slot block for this path.
+                        for (LayoutTraverser.SlotTrack slot : traverser.getSlotList()) {
+                            if (slot.getConnect() != null && slot.getConnect().getLayoutBlock() == protectingBlock) {
+                                // This is the correct slot. Get its control turnout and required state.
+                                Turnout slotTurnout = slot.getTurnout();
+                                int requiredState = slot.getTurnoutState();
+                                if (slotTurnout != null) {
+                                    turnoutSettings.put(slotTurnout, requiredState);
+                                }
+                                break; // Found the slot, no need to check others.
+                            }
+                        }
+                    }
+                }
+            }
+            // ----- End Traverser Alignment Check -----
             if (useLayoutEditorTurnouts) {
                 setAutoTurnouts(turnoutSettings);
             }

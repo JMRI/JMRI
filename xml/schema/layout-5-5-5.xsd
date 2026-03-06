@@ -377,7 +377,7 @@ signals - obsolete, EMPTY, never used
         <xs:element name="LayoutEditor" type="LayoutEditorType" minOccurs="0" maxOccurs="unbounded" >
             <xs:key name="layoutEditorElementIdent">
               <xs:annotation><xs:documentation>Insist that each element ident attribute value in LayoutEditor is unique</xs:documentation></xs:annotation>
-              <xs:selector xpath="./tracksegment|./positionablepoint|./layoutSlip|./levelxing|./layoutturntable|./layoutturnout"/>
+              <xs:selector xpath="./tracksegment|./positionablepoint|./layoutSlip|./levelxing|./layoutturntable|./layouttraverser|./layoutturnout"/>
                 <!-- elements like sensoricon, memoryicon dont have ident attributes; standardization would have been better -->
             <xs:field xpath="@ident"/>
             </xs:key>
