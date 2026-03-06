@@ -770,7 +770,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             jmri.getMemory($widget["systemName"]);
                             break;
                         case "reportericon" :
-                            $widget['name'] = $widget.reporter; //normalize name
+                            $widget['name'] = $widget.reporter; //normalize name    
                             $widget.jsonType = "reporter"; // JSON object type
                             $widget['text'] = $widget.reporter; //use name for initial text
                             if (isUndefined($widget["systemName"]))
@@ -784,9 +784,9 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['state'] = $widget.name; //use name for initial state as well
                             jmri.getBlock($widget["systemName"]);
                             break;
-						case "blockContentsInputIcon" :
+                        case "blockContentsInputIcon" :    
                             $widget['name'] = $widget.block; //normalize name                            
-							$widget.jsonType = "block"; // JSON object type
+                            $widget.jsonType = "block"; // JSON object type
                             $widget['text'] = $widget.block; //use name for initial text
                             $widget['state'] = $widget.block; //use name for initial state as well
                             if (isUndefined($widget.styles.width)) { //set missing width
@@ -1731,7 +1731,7 @@ function $handleInputBlur(e) {
     var newVal = $(this).val();
     var $id = $(this).attr('id');
     var $widget = $gWidgets[$id];
-	jmri.setObject($widget.jsonType, $widget.systemName, newVal);
+    jmri.setObject($widget.jsonType, $widget.systemName, newVal);
 };
 
 // End of Click Handling functions
@@ -2489,8 +2489,8 @@ var $getWidgetFamily = function($widget, $element) {
             break;
         case "memorySpinnerIcon" :
         case "memoryComboIcon" :
-		case "memoryInputIcon" :
-		case "blockContentsInputIcon" :
+        case "memoryInputIcon" :
+        case "blockContentsInputIcon" :
             return "input";
             break;
         case "positionablelabel" :
