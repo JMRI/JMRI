@@ -436,7 +436,8 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Change the scaling menu item from "multiply current scaling"
+                to "set new scaling percentage" form.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -540,7 +541,8 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+           <li>Change the scaling menu item from "multiply current scaling"
+                to "set new scaling percentage" form.</li>
         </ul>
 
     <h3>Permissions</h3>
