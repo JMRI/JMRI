@@ -466,6 +466,8 @@
                 edit columns that have been added to the Roster Table.
                 This can be used to e.g. only allow certain people at a club
                 to mark a locomotive entry as having been inspected.</li>
+            <li>Added a copy/cut/paste pop-up menu to text fields that 
+                didn't previously have a pop-up menu.
         </ul>
 
    <h3>Dispatcher</h3>
@@ -509,7 +511,8 @@
     <h3>LccPro</h3>
         <a id="LccPro" name="LccPro"></a>
         <ul>
-          <li></li>
+            <li>Added a copy/cut/paste pop-up menu to text fields that 
+                didn't previously have a pop-up menu.
         </ul>
 
     <h3>Logix</h3>
