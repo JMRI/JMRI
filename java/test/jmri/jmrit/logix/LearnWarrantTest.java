@@ -45,7 +45,7 @@ public class LearnWarrantTest {
          * OB1/Main - OB6/EastSiding        Route {OB1, OB6}
          * OB1/WestSiding - OB6/EastSiding  Route {OB1, OB6}
         */
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
         JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);

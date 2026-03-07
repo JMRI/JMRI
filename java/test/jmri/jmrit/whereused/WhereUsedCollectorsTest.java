@@ -16,6 +16,7 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the SensorWhereUsed Class
@@ -96,7 +97,7 @@ public class WhereUsedCollectorsTest {
         JUnitUtil.clearBlockBossLogic();
 
         java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");  // NOI18N
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
     }
 
     @AfterEach
