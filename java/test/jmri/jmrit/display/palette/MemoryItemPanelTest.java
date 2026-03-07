@@ -1,15 +1,12 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -20,8 +17,8 @@ public class MemoryItemPanelTest {
     private ItemPalette ip;
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<jmri.Memory> tableModel = PickListModel.memoryPickModelInstance();
         Editor editor = new ControlPanelEditor("ED");
         jmri.util.ThreadingUtil.runOnGUI(() -> {
@@ -29,7 +26,7 @@ public class MemoryItemPanelTest {
             ip.pack();
         });
         MemoryItemPanel t = new MemoryItemPanel(ip, "IM01", "", tableModel);
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
         JUnitUtil.dispose(ip);
         JUnitUtil.dispose(editor);
     }
@@ -37,7 +34,7 @@ public class MemoryItemPanelTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @AfterEach

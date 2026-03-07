@@ -1,13 +1,10 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -18,8 +15,8 @@ public class DetectionPanelTest {
     private ItemPalette ip = null;
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor es = new ControlPanelEditor("ED");
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             ip = ItemPalette.getDefault("Test ItemPalette", es);
@@ -27,7 +24,7 @@ public class DetectionPanelTest {
         });
         TextItemPanel tip = new TextItemPanel(ip, "test");
         DetectionPanel t = new DetectionPanel(tip);
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t,"exists");
         JUnitUtil.dispose(ip);
         JUnitUtil.dispose(es);
     }
