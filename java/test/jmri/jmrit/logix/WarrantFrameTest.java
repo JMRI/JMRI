@@ -36,7 +36,7 @@ public class WarrantFrameTest {
     public void testCTorWarrant() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
         JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
@@ -60,7 +60,7 @@ public class WarrantFrameTest {
     public void testJoinWarrantsStop() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
         JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
@@ -107,7 +107,7 @@ public class WarrantFrameTest {
     public void testJoinWarrantsNoStop() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
         JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
