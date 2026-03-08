@@ -325,8 +325,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         log.debug("Done with statusPanel, start buttonSpace");
         add(buttonSpace());
         add(_jynstrumentSpace);
+ 
+        // Add a copy-cut-paste menu to all text fields that don't have a popup menu
         long eventMask = AWTEvent.MOUSE_EVENT_MASK;
-
         Toolkit.getDefaultToolkit().addAWTEventListener((AWTEvent e) -> {
             if (e instanceof MouseEvent) {
                 JmriMouseEvent me = new JmriMouseEvent((MouseEvent) e);
