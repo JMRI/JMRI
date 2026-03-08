@@ -708,6 +708,14 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>When printing on MacOS, selecting a specific page range to print does not work correctly. This is a known Java issue. The workaround is to print the entire document to PDF, and then use a PDF reader to select the pages to print.</li>
+            <li>When printing on MacOS, selecting a specific page range to print does not work 
+            correctly. This is a known Java issue. The workaround is to print the entire 
+            document to PDF, and then use a PDF reader to select the pages to print.</li>
+            <li>There's a new option in the Load and Store tab of the Preferences
+            that allows you to exclude storing the contents of memories.  Not the configuration
+            of the memories, just their contents. This might be useful if e.g.
+            you're storing your panel&amp;configuration files in a storage system like
+            git that keeps track of changes, and you don't need to track changes in the
+            (transient) memory contents.
         </ul>
 

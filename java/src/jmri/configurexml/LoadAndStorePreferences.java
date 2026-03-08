@@ -17,12 +17,14 @@ public final class LoadAndStorePreferences extends PreferencesBean implements In
 
     public static final String EXCLUDE_FILE_HISTORY = "excludeFileHistory";
     public static final String EXCLUDE_MEMORY_IMCURRENTTIME = "excludeMemoryIMCURRENTTIME";
+    public static final String EXCLUDE_MEMORY_CONTENTS = "excludeMemoryContents";
     public static final String EXCLUDE_JMRI_VERSION = "excludeJmriVersion";
     public static final String EXCLUDE_TIMEBASE = "excludeMemoryTimebase";
     public static final String EXCLUDE_FONT_EXTENSIONS = "excludeFontExtensions";
 
     private boolean _excludeFileHistory = false;
     private boolean _excludeMemoryIMCURRENTTIME = false;
+    private boolean _excludeMemoryContents = false;
     private boolean _excludeJmriVersion = false;
     private boolean _excludeTimebase = false;
     private boolean _excludeFontExtensions = false;
@@ -38,6 +40,7 @@ public final class LoadAndStorePreferences extends PreferencesBean implements In
     private void readPreferences(Preferences sharedPreferences) {
         _excludeFileHistory = sharedPreferences.getBoolean(EXCLUDE_FILE_HISTORY, false);
         _excludeMemoryIMCURRENTTIME = sharedPreferences.getBoolean(EXCLUDE_MEMORY_IMCURRENTTIME, false);
+        _excludeMemoryContents = sharedPreferences.getBoolean(EXCLUDE_MEMORY_CONTENTS, false);
         _excludeJmriVersion = sharedPreferences.getBoolean(EXCLUDE_JMRI_VERSION, false);
         _excludeTimebase = sharedPreferences.getBoolean(EXCLUDE_TIMEBASE, false);
         _excludeFontExtensions = sharedPreferences.getBoolean(EXCLUDE_FONT_EXTENSIONS, false);
@@ -50,6 +53,9 @@ public final class LoadAndStorePreferences extends PreferencesBean implements In
             return true;
         }
         if (isExcludeMemoryIMCURRENTTIME() != prefs.isExcludeMemoryIMCURRENTTIME()) {
+            return true;
+        }
+        if (isExcludeMemoryContents() != prefs.isExcludeMemoryContents()) {
             return true;
         }
         if (isExcludeJmriVersion() != prefs.isExcludeJmriVersion()) {
@@ -67,6 +73,7 @@ public final class LoadAndStorePreferences extends PreferencesBean implements In
     public void apply(LoadAndStorePreferences prefs) {
         setExcludeFileHistory(prefs.isExcludeFileHistory());
         setExcludeMemoryIMCURRENTTIME(prefs.isExcludeMemoryIMCURRENTTIME());
+        setExcludeMemoryContents(prefs.isExcludeMemoryContents());
         setExcludeJmriVersion(prefs.isExcludeJmriVersion());
         setExcludeTimebase(prefs.isExcludeTimebase());
         setExcludeFontExtensions(prefs.isExcludeFontExtensions());
@@ -76,6 +83,7 @@ public final class LoadAndStorePreferences extends PreferencesBean implements In
         Preferences sharedPreferences = ProfileUtils.getPreferences(this.getProfile(), this.getClass(), true);
         sharedPreferences.putBoolean(EXCLUDE_FILE_HISTORY, this.isExcludeFileHistory());
         sharedPreferences.putBoolean(EXCLUDE_MEMORY_IMCURRENTTIME, this.isExcludeMemoryIMCURRENTTIME());
+        sharedPreferences.putBoolean(EXCLUDE_MEMORY_CONTENTS, this.isExcludeMemoryContents());
         sharedPreferences.putBoolean(EXCLUDE_JMRI_VERSION, this.isExcludeJmriVersion());
         sharedPreferences.putBoolean(EXCLUDE_TIMEBASE, this.isExcludeTimebase());
         sharedPreferences.putBoolean(EXCLUDE_FONT_EXTENSIONS, this.isExcludeFontExtensions());
@@ -98,6 +106,15 @@ public final class LoadAndStorePreferences extends PreferencesBean implements In
 
     public boolean isExcludeMemoryIMCURRENTTIME() {
         return _excludeMemoryIMCURRENTTIME;
+    }
+
+    public void setExcludeMemoryContents(boolean value) {
+        _excludeMemoryContents = value;
+        setIsDirty(true);
+    }
+
+    public boolean isExcludeMemoryContents() {
+        return _excludeMemoryContents;
     }
 
     public void setExcludeJmriVersion(boolean value) {
