@@ -1,11 +1,13 @@
 package jmri.jmrit.picker;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.swing.JemmyUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
@@ -17,11 +19,11 @@ import org.netbeans.jemmy.operators.*;
 public class PickSinglePanelTest {
 
     @Test
+    @DisabledIfHeadless
     public void testSinglePanel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<Sensor> sensorModel = PickListModel.sensorPickModelInstance();
         PickSinglePanel<Sensor> sensorPanel = new PickSinglePanel<>(sensorModel);
-        Assert.assertNotNull("exists", sensorPanel);
+        assertNotNull(sensorPanel, "exists");
 
         jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("Single Pick List");  // NOI18N
         f.setContentPane(sensorPanel);
@@ -29,12 +31,13 @@ public class PickSinglePanelTest {
         f.setVisible(true);
 
         JFrameOperator jfo = new JFrameOperator("Single Pick List");
-        Assert.assertNotNull(jfo);
+        assertNotNull(jfo);
 
         // Add an invalid name
         JTextFieldOperator jto = new JTextFieldOperator(jfo, 0);
         jto.typeText("QRS");
-        Thread add1 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "add1");  // NOI18N
+        Thread add1 = JemmyUtil.createModalDialogOperatorThread(
+            Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));
         new JButtonOperator(jfo, "Add to Table").doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "add1 finished");  // NOI18N
 
@@ -49,7 +52,7 @@ public class PickSinglePanelTest {
         JTableOperator jtbo = new JTableOperator(jfo);
         jtbo.clickOnCell(0, 1);
         jmri.NamedBeanHandle<Sensor> nbh = sensorPanel.getSelectedBeanHandle();
-        Assert.assertNotNull(nbh);
+        assertNotNull(nbh);
 
         // Switch to the signal head table
         f.remove(sensorPanel);
@@ -60,21 +63,9 @@ public class PickSinglePanelTest {
 
         //  Verify that the add fields are gone
         JLabelOperator jlo = new JLabelOperator(jfo, 1);
-        Assert.assertTrue(jlo.getText().startsWith("Cannot add new items"));
+        Assertions.assertTrue(jlo.getText().startsWith("Cannot add new items"));
 
         JUnitUtil.dispose(f);
-    }
-
-    Thread createModalDialogOperatorThread(String dialogTitle, String buttonText, String threadName) {
-        Thread t = new Thread(() -> {
-            // constructor for jdo will wait until the dialog is visible
-            JDialogOperator jdo = new JDialogOperator(dialogTitle);
-            JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            jbo.pushNoBlock();
-        });
-        t.setName(dialogTitle + " Close Dialog Thread: " + threadName);  // NOI18N
-        t.start();
-        return t;
     }
 
     @BeforeEach
