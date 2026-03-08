@@ -1,15 +1,12 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -18,15 +15,15 @@ import org.junit.Assume;
 public class IndicatorTOIconDialogTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<jmri.Turnout> tableModel = PickListModel.turnoutPickModelInstance();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         EditorScaffold editor = new EditorScaffold("ED");
         DisplayFrame df = new DisplayFrame("DisplayFrame", editor);
         IndicatorTOItemPanel itp = new IndicatorTOItemPanel(df,"IT01","",tableModel);
         IndicatorTOIconDialog t = new IndicatorTOIconDialog("Turnout","Turnout",itp);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t,"exists");
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(df);
         JUnitUtil.dispose(editor);
@@ -35,16 +32,15 @@ public class IndicatorTOIconDialogTest {
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
         JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
     }
 
     @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
 
     }
 

@@ -6,10 +6,9 @@ import java.awt.event.ActionListener;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -18,7 +17,7 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 public class FontPanelTest {
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testCTor() {
 
         EditorScaffold layoutEditor = new EditorScaffold();
@@ -28,10 +27,10 @@ public class FontPanelTest {
             ca(); // callback
         });
         FontPanel t = new FontPanel(pos.getPopupUtility(), a);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t,"exists");
         t.setFontSelections();
 
-        layoutEditor.dispose();
+        JUnitUtil.dispose(layoutEditor);
 
     }
     

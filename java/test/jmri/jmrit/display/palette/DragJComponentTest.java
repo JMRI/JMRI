@@ -1,12 +1,8 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -15,6 +11,7 @@ import java.io.IOException;
 import javax.swing.JPanel;
 
 import jmri.jmrit.display.Editor;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 /**
  *
@@ -23,15 +20,15 @@ import jmri.jmrit.display.Editor;
 public class DragJComponentTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() throws ClassNotFoundException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DragJComponent t = new DragJComponent(new DataFlavor(Editor.POSITIONABLE_FLAVOR),new JPanel()){
            @Override
            public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
               return null;
            }
         };
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t,"exists");
     }
 
     @BeforeEach

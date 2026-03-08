@@ -1,16 +1,13 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.Sensor;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -19,14 +16,14 @@ import org.junit.Assume;
 public class MultiSensorIconDialogTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<Sensor> tableModel = PickListModel.sensorPickModelInstance(); // NOI18N
         EditorScaffold editor = new EditorScaffold("ED");
         DisplayFrame df = new DisplayFrame("Indicator TO Icon Dialog Test", editor); // NOI18N
         MultiSensorItemPanel mip = new MultiSensorItemPanel(df,"IS01","",tableModel);
         MultiSensorIconDialog t = new MultiSensorIconDialog("MultiSensor","MultiSensor",mip); // NOI18N
-        Assert.assertNotNull("exists",t); // NOI18N
+        Assertions.assertNotNull(t,"exists");
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(df);
         JUnitUtil.dispose(df);
