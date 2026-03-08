@@ -59,6 +59,8 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.util.swing.JmriMouseMotionListener").and()
 
                                 .doNotHaveFullyQualifiedName("apps.Apps").and()
+                                .doNotHaveFullyQualifiedName("apps.gui3.Apps3").and()
+
                                 .doNotHaveFullyQualifiedName("apps.SystemConsole$PopupListener").and()
                                 .doNotHaveFullyQualifiedName("apps.startup.StartupActionsPreferencesPanel$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.BeanTableJTable").and()

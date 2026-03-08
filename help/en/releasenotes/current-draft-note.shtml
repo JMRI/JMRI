@@ -436,7 +436,8 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Change the scaling menu item from "multiply current scaling"
+                to "set new scaling percentage" form.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -466,6 +467,8 @@
                 edit columns that have been added to the Roster Table.
                 This can be used to e.g. only allow certain people at a club
                 to mark a locomotive entry as having been inspected.</li>
+            <li>Added a copy/cut/paste pop-up menu to text fields that 
+                didn't previously have a pop-up menu.
         </ul>
 
    <h3>Dispatcher</h3>
@@ -479,7 +482,6 @@
                  or which block needs to be cleared. If they have being using Manual
                  present them with choice about the direction.</li>
              <li>Fix NPE error on dispatcher train restart.</li>
-             <li>Correct percentage stop to use direction allocated</i>
              <li>Fix up to and fro restart at far end</li>
         </ul>
 
@@ -498,6 +500,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
+            <li>Change the scaling menu item from "multiply current scaling"
+                to "set new scaling percentage" form.</li>
             <li>Fixed a problem that could cause bold-text labels to have 
                 their contents truncated. e.g. "West" would be 
                 shown as "Wes...". This was mostly a problem on 
@@ -512,7 +516,8 @@
     <h3>LccPro</h3>
         <a id="LccPro" name="LccPro"></a>
         <ul>
-          <li></li>
+            <li>Added a copy/cut/paste pop-up menu to text fields that 
+                didn't previously have a pop-up menu.
         </ul>
 
     <h3>Logix</h3>
@@ -542,7 +547,8 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+           <li>Change the scaling menu item from "multiply current scaling"
+                to "set new scaling percentage" form.</li>
         </ul>
 
     <h3>Permissions</h3>
@@ -708,6 +714,14 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>When printing on MacOS, selecting a specific page range to print does not work correctly. This is a known Java issue. The workaround is to print the entire document to PDF, and then use a PDF reader to select the pages to print.</li>
+            <li>When printing on MacOS, selecting a specific page range to print does not work 
+            correctly. This is a known Java issue. The workaround is to print the entire 
+            document to PDF, and then use a PDF reader to select the pages to print.</li>
+            <li>There's a new option in the Load and Store tab of the Preferences
+            that allows you to exclude storing the contents of memories.  Not the configuration
+            of the memories, just their contents. This might be useful if e.g.
+            you're storing your panel&amp;configuration files in a storage system like
+            git that keeps track of changes, and you don't need to track changes in the
+            (transient) memory contents.
         </ul>
 
