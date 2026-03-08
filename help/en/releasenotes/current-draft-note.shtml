@@ -498,7 +498,10 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Fixed a problem that could cause bold-text labels to have 
+                their contents truncated. e.g. "West" would be 
+                shown as "Wes...". This was mostly a problem on 
+                Windows, but could have affected any system type.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
