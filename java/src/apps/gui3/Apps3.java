@@ -9,16 +9,18 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.*;
 import java.awt.event.AWTEventListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.EventObject;
 
 import javax.swing.*;
+import javax.swing.text.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.profile.*;
 import jmri.util.*;
-import jmri.util.swing.JmriJOptionPane;
+import jmri.util.swing.*;
 
 /**
  * Base class for GUI3 JMRI applications.
@@ -127,7 +129,37 @@ public abstract class Apps3 extends AppsBase {
     public void createAndDisplayFrame() {
         createMainFrame();
 
-        //A Shutdown manager handles the quiting of the application
+        // Add a copy-cut-paste menu to all text fields that don't have a popup menu
+        long eventMask = AWTEvent.MOUSE_EVENT_MASK;
+        Toolkit.getDefaultToolkit().addAWTEventListener((AWTEvent e) -> {
+            if (e instanceof MouseEvent) {
+                JmriMouseEvent me = new JmriMouseEvent((MouseEvent) e);
+                if (me.isPopupTrigger() && me.getComponent() instanceof JTextComponent) {
+                    var tc = (JTextComponent)me.getComponent();
+                    // provide a pop up if one not already defined
+                    if (tc.getComponentPopupMenu() == null) {
+                        final JTextComponent component1 = (JTextComponent) me.getComponent();
+                        final JPopupMenu menu = new JPopupMenu();
+                        JMenuItem item;
+                        item = new JMenuItem(new DefaultEditorKit.CopyAction());
+                        item.setText("Copy");
+                        item.setEnabled(component1.getSelectionStart() != component1.getSelectionEnd());
+                        menu.add(item);
+                        item = new JMenuItem(new DefaultEditorKit.CutAction());
+                        item.setText("Cut");
+                        item.setEnabled(component1.isEditable() && component1.getSelectionStart() != component1.getSelectionEnd());
+                        menu.add(item);
+                        item = new JMenuItem(new DefaultEditorKit.PasteAction());
+                        item.setText("Paste");
+                        item.setEnabled(component1.isEditable());
+                        menu.add(item);
+                        menu.show(me.getComponent(), me.getX(), me.getY());
+                    }
+                }
+            }
+        }, eventMask);
+        
+        // A Shutdown manager handles the quiting of the application
         mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         displayMainFrame(mainFrame.getMaximumSize());
     }
