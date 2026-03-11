@@ -6166,11 +6166,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       selected a train.
 
       <h5>Build Train if Selected</h5>
-      This action will build a train if the "Build" checkbox in the <a href="#Trains">Trains</a>
-      window is selected for the train. You must choose a train using the "Train" menu. This action
-      will report "Failed" if you haven't selected a train, or if the "Build" checkbox isn't
-      selected for the train in the <a href="#Trains">Trains</a> window or if the train fails to
-      build.
+      This action will build a train if the "Build" checkbox in the
+      <a href="#Trains">Trains</a> window is selected for the train. You must choose a train using
+      the "Train" menu. This action will report "Failed" if you haven't selected a train, or if the
+      "Build" checkbox isn't selected for the train in the
+      <a href="#Trains">Trains</a> window or if the train fails to build.
 
       <h5>Preview or Print Train Manifest</h5>
       This action's name and function depends on the "Preview" checkbox in the <a href="#Trains">Trains</a>
@@ -6219,11 +6219,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h5>Wait for Train</h5>
       This action will wait for a train to build or move before executing the next action in the
       table. If a location is selected from the "Route Location" menu, the program will wait until
-      the train arrives at the location selected. Note that if the train is already at the location
-      chosen, that the program will wait until the next time the train arrives at that location. You
-      must choose a train using the "Train" menu. If the "Build" checkbox for the train being waited
-      on is manually changed from selected to unselected while the "Wait for Train" action is
-      running, the program will cancel the wait and move to the next action in the table.
+      the train arrives at the location selected. You must choose a train using the "Train" menu. If
+      the "Build" checkbox for the train being waited on is manually changed from selected to
+      unselected while the "Wait for Train" action is running, the program will cancel the wait and
+      move to the next action in the table.
+      
       <p>The program also allows you to wait for more than one train. Just enter each of the
         trains you want to wait for in consecutive rows. The program will then continue when all of
         the trains either move or arrive at the selected locations.</p>
@@ -6253,6 +6253,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       window. One use is to control which trains are displayed in the "Trains" window. See the "Show
       All" checkbox in the <a href="#Trains">Trains</a> window. You must choose a train using the
       "Train" menu.
+      
       <h5>Deselect Train (Build)</h5>
       Deselect the "Build" checkbox for the specified train in the <a href="#Trains">Trains</a>
       window.

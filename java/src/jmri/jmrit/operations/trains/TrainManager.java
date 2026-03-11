@@ -485,7 +485,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
 
     public Train getTrainBuilding() {
         for (Train train : getList()) {
-            if (train.getStatusCode() == Train.CODE_BUILDING) {
+            if (train.isBuilding()) {
                 log.debug("Train {} is currently building", train.getName());
                 return train;
             }

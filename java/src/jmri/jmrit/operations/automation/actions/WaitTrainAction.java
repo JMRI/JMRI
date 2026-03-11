@@ -2,11 +2,13 @@ package jmri.jmrit.operations.automation.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class WaitTrainAction extends Action implements PropertyChangeListener {
 
@@ -34,6 +36,12 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
             if (train != null && train.getRoute() != null) {
                 setRunning(true);
                 train.addPropertyChangeListener(this);
+                RouteLocation rl = getAutomationItem().getRouteLocation();
+                if (!train.isBuilt() || rl != null && rl != train.getCurrentRouteLocation()) {
+                    return; // wait for property change
+                }
+                train.removePropertyChangeListener(this);
+                finishAction(true); // done
             } else {
                 finishAction(false);
             }

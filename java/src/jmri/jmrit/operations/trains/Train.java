@@ -2020,7 +2020,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     private boolean isCarToStaging(PrintWriter buildReport, RouteLocation rldest, Car car) {
         if (rldest.getLocation().isStaging() &&
-                getStatusCode() == CODE_BUILDING &&
+                isBuilding() &&
                 getTerminationTrack() != null &&
                 getTerminationTrack().getLocation() == rldest.getLocation()) {
             if (debugFlag) {
@@ -2103,7 +2103,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     private boolean isRouteMovesAvailable(PrintWriter buildReport, RouteLocation rldest) {
-        if (getStatusCode() == CODE_BUILDING && rldest.getMaxCarMoves() - rldest.getCarMoves() <= 0) {
+        if (isBuilding() && rldest.getMaxCarMoves() - rldest.getCarMoves() <= 0) {
             setServiceStatus(Bundle.getMessage("trainNoMoves",
                     getName(), getRoute().getName(), rldest.getId(), rldest.getName()));
             if (debugFlag) {
@@ -2116,7 +2116,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     private boolean isTrainLengthOkay(PrintWriter buildReport, Car car, RouteLocation rldest, int length) {
-        if (getStatusCode() == CODE_BUILDING && rldest.getTrainLength() + length > rldest.getMaxTrainLength()) {
+        if (isBuilding() && rldest.getTrainLength() + length > rldest.getMaxTrainLength()) {
             setServiceStatus(Bundle.getMessage("trainExceedsMaximumLength",
                     getName(), getRoute().getName(), rldest.getId(), rldest.getMaxTrainLength(),
                     Setup.getLengthUnit().toLowerCase(), rldest.getName(), car.toString(),
@@ -3094,6 +3094,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             setDirtyAndFirePropertyChange("SendCarsWithCustomLoadsToStaging", old ? "true" : "false", // NOI18N
                     enable ? "true" : "false"); // NOI18N
         }
+    }
+    
+    public boolean isBuilding() {
+        return getStatusCode() == CODE_BUILDING;
     }
 
     public void setBuilt(boolean built) {

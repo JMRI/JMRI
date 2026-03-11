@@ -702,6 +702,17 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.pack();
         panel.setLayoutDimensions(windowWidth, windowHeight, x, y, panelWidth, panelHeight);
         panel.setVisible(true);    // always show the panel
+
+        // make a pass over positionables, setting (re)setting their font style.
+        // This is to bypass a problem on Windows, where bold labels need to have
+        // this done after pack() to avoid sizing issues.
+        for (jmri.jmrit.display.Positionable label : panel.getContents()) {
+            var popup = label.getPopupUtility();
+            if (popup != null) { // encountered in some testing
+                popup.setFontStyle(popup.getFontStyle());
+            }
+        }
+        
         panel.resetDirty();
 
         // register the resulting panel for later configuration

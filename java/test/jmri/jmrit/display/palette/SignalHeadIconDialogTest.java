@@ -1,16 +1,13 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.*;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -19,14 +16,14 @@ import org.junit.Assume;
 public class SignalHeadIconDialogTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<SignalHead> tableModel = PickListModel.signalHeadPickModelInstance(); // NOI18N
         ControlPanelEditor editor = new ControlPanelEditor("EdTextItem");
         DisplayFrame df = new DisplayFrame("Indicator TO Icon Dialog Test", editor); // NOI18N
         SignalHeadItemPanel ship = new SignalHeadItemPanel(df,"IS01","",tableModel);  // NOI18N
         SignalHeadIconDialog shd = new SignalHeadIconDialog("SignalHead","SignalHead",ship); // NOI18N
-        Assert.assertNotNull("exists",shd); // NOI18N
+        Assertions.assertNotNull(shd,"exists");
         JUnitUtil.dispose(shd);
         ship.dispose();
         JUnitUtil.dispose(df);

@@ -8,6 +8,8 @@ import java.awt.datatransfer.Transferable;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -32,6 +34,9 @@ import jmri.util.*;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.*;
 import jmri.util.swing.multipane.TwoPaneTBWindow;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 import org.openlcb.*;
 
@@ -579,7 +584,63 @@ public class LccProFrame extends TwoPaneTBWindow  {
         action.actionPerformed(null);
         firePropertyChange("closewindow", "setEnabled", true);
     }
+    
+    /**
+     * Print the displayed table, as displayed.
+     *
+     */
+    protected void printCurrentTable() {
+        try {
+            var cal = java.util.Calendar.getInstance();
+            var sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String time = sdf.format(cal.getTime());
 
+            String group = matchGroupName.getSelectedItem().toString();
+
+            nodetable.getTable().print(javax.swing.JTable.PrintMode.FIT_WIDTH,
+                            null,  // no header
+                            new java.text.MessageFormat(group+"    - {0} -   "+time)  // spaces for heuristic formatting, don't change
+                            );
+        } catch (java.awt.print.PrinterException ep) {
+            log.error("While printing",ep);
+        }    
+    }
+
+    JFileChooser fileChooser;
+    
+    protected void exportCurrentTable() {
+        if (fileChooser == null) {
+            fileChooser = new jmri.util.swing.JmriJFileChooser();
+        }
+
+        int retVal = fileChooser.showSaveDialog(this);
+
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            if (log.isDebugEnabled()) {
+                log.debug("start to export to CSV file {}", file);
+            }
+
+            try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
+                str.printRecord("Name", "ID", "Manufacturer", "Model", "Software", "Description");
+                var table = nodetable.getTable();
+                for (int row = 0; row < table.getRowCount(); row++) {
+                    var name = table.getValueAt(row, LccProTableModel.NAMECOL);
+                    var id = table.getValueAt(row, LccProTableModel.IDCOL);
+                    var mfg = table.getValueAt(row, LccProTableModel.MFGCOL);
+                    var model = table.getValueAt(row, LccProTableModel.MODELCOL);
+                    var software = table.getValueAt(row, LccProTableModel.SVERSIONCOL);
+                    var description = table.getValueAt(row, LccProTableModel.DESCRIPTIONCOL);
+                    
+                    str.printRecord(name, id, mfg, model, software, description);
+                }
+                str.flush();
+            } catch (IOException ex) {
+                log.error("Error writing file", ex);
+            }
+        }
+    }
+    
     /**
      * Match the first argument in the array against a locally-known method.
      *
@@ -607,6 +668,12 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 break;
             case "resettablecolumns":
                 nodetable.resetColumnWidths();
+                break;
+            case "printcurrenttable":
+                printCurrentTable();
+                break;
+            case "exportcurrenttable":
+                exportCurrentTable();
                 break;
             default:
                 log.error("method {} not found", args[0]);

@@ -5,6 +5,7 @@ import java.awt.JobAttributes.SidesType;
 import java.io.IOException;
 import java.util.*;
 
+import javax.print.attribute.standard.Sides;
 import javax.swing.JComboBox;
 
 import org.jdom2.Element;
@@ -216,7 +217,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private int buildReportFontSize = 10;
     private String manifestOrientation = PORTRAIT;
     private String switchListOrientation = PORTRAIT;
-    private SidesType sidesType = SidesType.ONE_SIDED;
+    private Sides sides = Sides.ONE_SIDED;
     private boolean printHeader = true;
     private Color pickupEngineColor = Color.black;
     private Color dropEngineColor = Color.black;
@@ -1166,12 +1167,12 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         getDefault().manifestFontSize = size;
     }
 
-    public static SidesType getPrintDuplexSides() {
-        return getDefault().sidesType;
+    public static Sides getPrintDuplexSides() {
+        return getDefault().sides;
     }
-
-    public static void setPrintDuplexSides(SidesType sidesType) {
-        getDefault().sidesType = sidesType;
+    
+    public static void setPrintDuplexSides(Sides sides) {
+        getDefault().sides = sides;
     }
 
     public static boolean isPrintPageHeaderEnabled() {
@@ -2653,10 +2654,10 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String sides = a.getValue();
                 log.debug("Print duplex: {}", sides);
                 if (sides.equals(SidesType.TWO_SIDED_LONG_EDGE.toString())) {
-                    setPrintDuplexSides(SidesType.TWO_SIDED_LONG_EDGE);
+                    setPrintDuplexSides(Sides.TWO_SIDED_LONG_EDGE);
                 }
                 if (sides.equals(SidesType.TWO_SIDED_SHORT_EDGE.toString())) {
-                    setPrintDuplexSides(SidesType.TWO_SIDED_SHORT_EDGE);
+                    setPrintDuplexSides(Sides.TWO_SIDED_SHORT_EDGE);
                 }
             }
         }

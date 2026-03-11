@@ -1,14 +1,11 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -17,12 +14,12 @@ import org.junit.Assume;
 public class IndicatorTOItemPanelTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<jmri.Turnout> tableModel = PickListModel.turnoutPickModelInstance();
         DisplayFrame df = new DisplayFrame("Indicator TO Item Panel Test");
         IndicatorTOItemPanel t = new IndicatorTOItemPanel(df,"IT01","",tableModel);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t,"exists");
         JUnitUtil.dispose(df);
     }
 

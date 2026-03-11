@@ -1,14 +1,15 @@
 package jmri.jmrit.operations.setup.gui;
 
 import java.awt.GridBagLayout;
-import java.awt.JobAttributes.SidesType;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.*;
 
+import javax.print.attribute.standard.Sides;
 import javax.swing.*;
 
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.setup.*;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
@@ -98,7 +99,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     JComboBox<String> manifestOrientationComboBox = Setup.getOrientationComboBox();
     JComboBox<Integer> fontSizeComboBox = new JComboBox<>();
     JComboBox<String> switchListOrientationComboBox = Setup.getOrientationComboBox();
-    JComboBox<SidesType> printDuplexComboBox = new JComboBox<>();
+    JComboBox<Sides> printDuplexComboBox = new JComboBox<>();
     JColorChooser pickupEngineColorChooser = new JColorChooser();
     JColorChooser dropEngineColorChooser = new JColorChooser();
     JColorChooser pickupColorChooser = new JColorChooser();
@@ -208,9 +209,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         pDuplex.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutDuplex")));
         pDuplex.add(printDuplexComboBox);
 
-        printDuplexComboBox.addItem(SidesType.ONE_SIDED);
-        printDuplexComboBox.addItem(SidesType.TWO_SIDED_LONG_EDGE);
-        printDuplexComboBox.addItem(SidesType.TWO_SIDED_SHORT_EDGE);
+        loadDuplexSidesComboBox();
 
         p1.add(pFont);
         p1.add(pFontSize);
@@ -739,6 +738,13 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         }
         fontComboBox.setSelectedItem(Setup.getFontName());
     }
+    
+    private void loadDuplexSidesComboBox() {
+        printDuplexComboBox.addItem(Sides.ONE_SIDED);
+        printDuplexComboBox.addItem(Sides.TWO_SIDED_LONG_EDGE);
+        printDuplexComboBox.addItem(Sides.TWO_SIDED_SHORT_EDGE);
+        OperationsPanel.padComboBox(printDuplexComboBox, Sides.TWO_SIDED_SHORT_EDGE.toString().length());
+    }
 
     @Override
     public String getTabbedPreferencesTitle() {
@@ -759,7 +765,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         // page orientation
         Setup.setManifestOrientation((String) manifestOrientationComboBox.getSelectedItem());
         Setup.setSwitchListOrientation((String) switchListOrientationComboBox.getSelectedItem());
-        Setup.setPrintDuplexSides((SidesType) printDuplexComboBox.getSelectedItem());
+        Setup.setPrintDuplexSides((Sides) printDuplexComboBox.getSelectedItem());
         // format
         Setup.setManifestFormat((String) manifestFormatComboBox.getSelectedItem());
         // drop and pick up color option

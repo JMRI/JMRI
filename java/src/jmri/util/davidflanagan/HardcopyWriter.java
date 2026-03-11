@@ -1,7 +1,6 @@
 package jmri.util.davidflanagan;
 
 import java.awt.*;
-import java.awt.JobAttributes.SidesType;
 import java.awt.event.ActionEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
@@ -11,14 +10,10 @@ import java.awt.print.*;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Vector;
-import java.util.TimeZone;
-import java.util.Date;
-import java.util.MissingResourceException;
-import java.util.Collection;
 
+import javax.print.attribute.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -102,8 +97,7 @@ public class HardcopyWriter extends Writer implements Printable {
     private boolean last_char_was_return = false;
 
     // Job and Page attributes
-    JobAttributes jobAttributes = new JobAttributes();
-    PageAttributes pageAttributes = new PageAttributes();
+    PrintRequestAttributeSet attributes = new HashPrintRequestAttributeSet();
 
     // constructor modified to add default printer name, page orientation, print header, print duplex, and page size
     // All length parameters are in points. 
@@ -133,7 +127,7 @@ public class HardcopyWriter extends Writer implements Printable {
      *                      is used)
      * @param isPrintHeader Whether to print the header (if null, default is
      *                      used)
-     * @param sidesType     The type of duplexing to use (if null, default is
+     * @param sides         The type of duplexing to use (if null, default is
      *                      used)
      * @param pagesize      The size of the page to use (if null, default is
      *                      used)
@@ -143,7 +137,7 @@ public class HardcopyWriter extends Writer implements Printable {
     public HardcopyWriter(Frame frame, String jobname, String fontName, Integer fontStyle, Integer fontsize,
             double leftmargin, double rightmargin,
             double topmargin, double bottommargin, boolean isPreview, String printerName, Boolean isLandscape,
-            Boolean isPrintHeader, SidesType sidesType, Dimension pagesize)
+            Boolean isPrintHeader, Attribute sides, Dimension pagesize)
             throws HardcopyWriter.PrintCanceledException {
 
         if (isPreview) {
@@ -193,14 +187,8 @@ public class HardcopyWriter extends Writer implements Printable {
                 pageFormat.setOrientation(isLandscape ? PageFormat.LANDSCAPE : PageFormat.PORTRAIT);
             }
 
-            if (sidesType != null) {
-                if (sidesType == SidesType.ONE_SIDED) {
-                    pageFormat.setOrientation(PageFormat.PORTRAIT);
-                } else if (sidesType == SidesType.TWO_SIDED_LONG_EDGE) {
-                    pageFormat.setOrientation(PageFormat.LANDSCAPE);
-                } else if (sidesType == SidesType.TWO_SIDED_SHORT_EDGE) {
-                    pageFormat.setOrientation(PageFormat.PORTRAIT);
-                }
+            if (sides != null) {
+                attributes.add(sides);
             }
 
             if (pagesize != null) {
@@ -217,7 +205,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
             printerJob.setPrintable(this, pageFormat);
 
-            if ("SkipDialog".equals(printerName) || printerJob.printDialog()) {
+            if ("SkipDialog".equals(printerName) || printerJob.printDialog(attributes)) {
                 PageFormat updatedPf = printerJob.validatePage(pageFormat);
 
                 double widthPts = updatedPf.getPaper().getWidth();
@@ -752,7 +740,7 @@ public class HardcopyWriter extends Writer implements Printable {
                     // This is where the actual printing happens. I wonder if this should
                     // be spun off into its own task to prevent the GUI from freezing
                     // if the printing process is slow.
-                    printerJob.print();
+                    printerJob.print(attributes);
                 } catch (PrinterException e) {
                     log.error("Error printing", e);
                 }
@@ -872,9 +860,10 @@ public class HardcopyWriter extends Writer implements Printable {
      * @return the width of a character, or null if the font is not monospaced
      */
     public Float getCharWidth() {
-        if (!isMonospaced()) {
-            return null;
-        }
+// TODO DAB temp fix to prevent NPE when printing non-monospaced fonts
+//        if (!isMonospaced()) {
+//            return null;
+//        }
         return this.charwidth;
     }
 
@@ -924,9 +913,10 @@ public class HardcopyWriter extends Writer implements Printable {
      *         monospaced
      */
     public Integer getCharactersPerLine() {
-        if (!isMonospaced()) {
-            return null;
-        }
+     // TODO DAB temp fix to prevent NPE when printing non-monospaced fonts
+//        if (!isMonospaced()) {
+//            return null;
+//        }
         int chars_per_line = (int) (width / charwidth);
         return chars_per_line;
     }

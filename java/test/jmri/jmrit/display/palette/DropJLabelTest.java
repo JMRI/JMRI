@@ -2,15 +2,13 @@ package jmri.jmrit.display.palette;
 
 import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
 
 import javax.swing.Icon;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -19,8 +17,8 @@ import org.junit.Assume;
 public class DropJLabelTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Icon i = new Icon(){
            @Override 
            public int getIconHeight(){
@@ -35,7 +33,7 @@ public class DropJLabelTest {
            }
         };
         DropJLabel t = new DropJLabel(i);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t,"exists");
     }
 
     @BeforeEach

@@ -1,10 +1,8 @@
 package jmri.jmrit.picker;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,9 +12,9 @@ import org.junit.jupiter.api.*;
 public class PickPanelTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel[] models = {
+        PickListModel<?>[] models = {
             PickListModel.turnoutPickModelInstance(),
             PickListModel.sensorPickModelInstance(),
             PickListModel.multiSensorPickModelInstance(),
@@ -32,7 +30,7 @@ public class PickPanelTest {
             PickListModel.logixPickModelInstance()
         };
         PickPanel t = new PickPanel(models);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t,"exists");
     }
 
     @BeforeEach

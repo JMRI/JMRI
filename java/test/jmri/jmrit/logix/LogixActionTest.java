@@ -28,7 +28,7 @@ public class LogixActionTest {
 
         // load and display sample file. Panel file does not display screen
         java.io.File f = new java.io.File("java/test/jmri/jmrit/logix/valid/LogixActionTest.xml");
-        cm.load(f);
+        Assertions.assertTrue(cm.load(f));
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
 
         Memory im6 = InstanceManager.memoryManagerInstance().getMemory("IM6");

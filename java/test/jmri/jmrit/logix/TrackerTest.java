@@ -60,7 +60,7 @@ public class TrackerTest {
 
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
-        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        Assertions.assertTrue(InstanceManager.getDefault(ConfigureManager.class).load(f));
         JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         TrackerTableAction tta = InstanceManager.getDefault(TrackerTableAction.class);

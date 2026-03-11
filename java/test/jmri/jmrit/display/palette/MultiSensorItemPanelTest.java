@@ -1,14 +1,11 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -17,12 +14,12 @@ import org.junit.Assume;
 public class MultiSensorItemPanelTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel<jmri.Sensor> tableModel = PickListModel.sensorPickModelInstance();
         DisplayFrame df = new DisplayFrame("MultiSensor Item Panel Test");
         MultiSensorItemPanel t = new MultiSensorItemPanel(df,"IS01","",tableModel);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t,"exists");
         JUnitUtil.dispose(df);
     }
 

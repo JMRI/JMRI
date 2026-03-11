@@ -1,12 +1,12 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.*;
-import java.awt.JobAttributes.SidesType;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.attribute.standard.Sides;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -38,10 +38,10 @@ public class TrainPrintManifest extends TrainCommon {
      * @param orientation   Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
      * @param fontSize      font size
      * @param isPrintHeader when true print page header
-     * @param sidesType     two sides long or short can be null
+     * @param sides         two sides long or short can be null
      */
     public static void printReport(File file, String name, boolean isPreview, String fontName, String logoURL,
-            String printerName, String orientation, int fontSize, boolean isPrintHeader, SidesType sidesType) {
+            String printerName, String orientation, int fontSize, boolean isPrintHeader, Sides sides) {
         // obtain a CompatibleHardcopyWriter to do this
 
         boolean isLandScape = false;
@@ -59,7 +59,7 @@ public class TrainPrintManifest extends TrainCommon {
                     getPageSize(orientation).height + PAPER_MARGINS.height);
         }
         try (CompatibleHardcopyWriter writer = new CompatibleHardcopyWriter(new Frame(), name, fontSize, margin,
-                margin, .5, .5, isPreview, printerName, isLandScape, isPrintHeader, sidesType, pagesize);
+                margin, .5, .5, isPreview, printerName, isLandScape, isPrintHeader, sides, pagesize);
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         new FileInputStream(file), StandardCharsets.UTF_8));) {
 
@@ -76,6 +76,8 @@ public class TrainPrintManifest extends TrainCommon {
                     writer.write(icon.getImage(), new JLabel(icon));
                 }
             }
+            
+            log.debug("Number of characters per line {}, fontName: {}, fontSize {}", writer.getCharactersPerLine(), fontName, fontSize);
 
             List<String> lines = new ArrayList<>();
             String line;
@@ -111,7 +113,7 @@ public class TrainPrintManifest extends TrainCommon {
             writer.pageBreak();
         }
         // check for exact page break
-        if (writer.getLinesPerPage() - writer.getCurrentLineNumber() + 1 == lineSize) {
+        if (writer.getLinesPerPage() - writer.getCurrentLineNumber() == lineSize) {
             // eliminate blank line after page break
             String s = lines.get(lines.size() - 1);
             if (s.isBlank()) {
@@ -163,6 +165,14 @@ public class TrainPrintManifest extends TrainCommon {
 
             printVerticalLineSeparator(writer, line);
             line = line.replace(VERTICAL_LINE_CHAR, SPACE);
+            
+            //TODO fix how line length is calculated when writing out to file
+            if (writer.isMonospaced()) {
+                Integer charPerLine = writer.getCharactersPerLine();
+                if (charPerLine != null && line.length() > charPerLine) {
+                    line = line.substring(0, charPerLine);
+                }
+            }
 
             if (color != null) {
                 writer.write(color, line + NEW_LINE);
@@ -207,9 +217,13 @@ public class TrainPrintManifest extends TrainCommon {
                     break;
                 }
             }
+            Integer charPerLine = writer.getCharactersPerLine();
+            if (charPerLine == null) {
+                charPerLine = line.length();
+            }
             if (horizontialLineSeparatorFound) {
                 writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber(),
-                        line.length() + 1);
+                        charPerLine);
             }
         }
         return horizontialLineSeparatorFound;
@@ -221,8 +235,8 @@ public class TrainPrintManifest extends TrainCommon {
                 // make a frame (two column format)
                 if (Setup.isTabEnabled()) {
                     writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber() + 1, 0);
-                    writer.write(writer.getCurrentLineNumber(), line.length() + 1,
-                            writer.getCurrentLineNumber() + 1, line.length() + 1);
+                    writer.write(writer.getCurrentLineNumber(), writer.getCharactersPerLine(),
+                            writer.getCurrentLineNumber() + 1, writer.getCharactersPerLine());
                 }
                 writer.write(writer.getCurrentLineNumber(), i + 1, writer.getCurrentLineNumber() + 1,
                         i + 1);

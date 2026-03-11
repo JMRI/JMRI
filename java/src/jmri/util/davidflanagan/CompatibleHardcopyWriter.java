@@ -1,8 +1,9 @@
 package jmri.util.davidflanagan;
 
-import java.awt.Frame;
-import java.awt.JobAttributes.SidesType;
 import java.awt.Dimension;
+import java.awt.Frame;
+
+import javax.print.attribute.standard.Sides;
 
 public class CompatibleHardcopyWriter extends HardcopyWriter {
 
@@ -11,17 +12,17 @@ public class CompatibleHardcopyWriter extends HardcopyWriter {
             double topmargin, double bottommargin, boolean isPreview) throws HardcopyWriter.PrintCanceledException {
         super(frame, jobname, (String) null, (Integer) null, fontsize,
                 leftmargin * 72, rightmargin * 72, topmargin * 72, bottommargin * 72,
-                isPreview, (String) null, (Boolean) null, (Boolean) null, (SidesType) null, (Dimension) null);
+                isPreview, (String) null, (Boolean) null, (Boolean) null, (Sides) null, (Dimension) null);
     }
 
     // constructor modified to add default printer name, page orientation, print header, print duplex, and page size
     public CompatibleHardcopyWriter(Frame frame, String jobname, int fontsize, double leftmargin, double rightmargin,
             double topmargin, double bottommargin, boolean isPreview, String printerName, boolean isLandscape,
-            boolean isPrintHeader, SidesType sidesType, Dimension pagesize)
+            boolean isPrintHeader, Sides sides, Dimension pagesize)
             throws HardcopyWriter.PrintCanceledException {
         super(frame, jobname, (String) null, (Integer) null, fontsize,
                 leftmargin * 72, rightmargin * 72, topmargin * 72, bottommargin * 72,
-                isPreview, printerName, isLandscape, isPrintHeader, sidesType, pagesize);
+                isPreview, printerName, isLandscape, isPrintHeader, sides, pagesize);
     }
 
     /**

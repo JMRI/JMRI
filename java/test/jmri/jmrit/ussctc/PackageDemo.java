@@ -28,8 +28,11 @@ public class PackageDemo {
 
         // load file that defines various NamedBeans and pops a demo panel
         try {
-            InstanceManager.getDefault(ConfigureManager.class)
+            boolean loaded = InstanceManager.getDefault(ConfigureManager.class)
                     .load(new java.io.File("java/test/jmri/jmrit/ussctc/PackageDemo.xml"));
+            if (!loaded){
+                log.error("Could not load PackageDemo.xml");
+            }
             InstanceManager.getDefault(LogixManager.class).activateAllLogixs();
         } catch (Exception e) { System.err.println(e); }
 

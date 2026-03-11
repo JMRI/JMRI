@@ -1,13 +1,10 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrit.display.DisplayFrame;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
@@ -16,11 +13,11 @@ import org.junit.Assume;
 public class BackgroundItemPanelTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DisplayFrame df = new DisplayFrame();
         BackgroundItemPanel t = new BackgroundItemPanel(df,"test");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t,"exists");
         JUnitUtil.dispose(df);
     }
 

@@ -110,7 +110,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         log.debug("Trains have been loaded!");
         
         for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
-            if (train.getStatusCode() == Train.CODE_BUILDING) {
+            if (train.isBuilding()) {
                 log.warn("Reseting train ({}), was building when saved", train.getName());
                 train.reset();
             }

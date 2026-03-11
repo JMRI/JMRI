@@ -1,13 +1,10 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -19,15 +16,15 @@ public class TextItemPanelTest {
     private ItemPalette ip = null;
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor es = new ControlPanelEditor("EdTextItem");
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             ip = ItemPalette.getDefault("Test ItemPalette", es);
             ip.pack();
         });
         TextItemPanel t = new TextItemPanel(ip, "test");
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
         JUnitUtil.dispose(ip);
         JUnitUtil.dispose(es);
    }
@@ -35,7 +32,7 @@ public class TextItemPanelTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @AfterEach

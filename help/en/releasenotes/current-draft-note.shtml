@@ -502,6 +502,10 @@
         <ul>
             <li>Change the scaling menu item from "multiply current scaling"
                 to "set new scaling percentage" form.</li>
+            <li>Fixed a problem that could cause bold-text labels to have 
+                their contents truncated. e.g. "West" would be 
+                shown as "Wes...". This was mostly a problem on 
+                Windows, but could have affected any system type.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -514,6 +518,8 @@
         <ul>
             <li>Added a copy/cut/paste pop-up menu to text fields that 
                 didn't previously have a pop-up menu.
+            <li>Added "Print Table" and "Export CSV" buttons that
+                do pretty much what they say.
         </ul>
 
     <h3>Logix</h3>
@@ -538,6 +544,7 @@
         <a id="Operations" name="Operations"></a>
         <ul>
             <li>Improvements to the print Manifest and no page breaks option.</li>
+            <li>New larger preview windows when printing.</li>
         </ul>
 
    <h3>Panel Editor</h3>

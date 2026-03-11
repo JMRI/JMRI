@@ -181,7 +181,7 @@ public class ActiveLogixTest {
         // load and activate sample file
         java.io.File f = new java.io.File("java/test/jmri/implementation/configurexml/load/ActiveLogixTestDefinitions.xml");
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {};
-        cm.load(f);
+        Assertions.assertTrue(cm.load(f));
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
     }
 
