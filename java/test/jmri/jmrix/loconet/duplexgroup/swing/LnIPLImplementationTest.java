@@ -1667,6 +1667,7 @@ public class LnIPLImplementationTest {
         JUnitUtil.setUp();
 
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
 
         memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
         lnis = new LocoNetInterfaceScaffold(memo);

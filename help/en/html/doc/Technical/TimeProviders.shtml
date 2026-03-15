@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>JMRI: Time providers</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Time providers</h1>
+      
+      <p><strong>jmri.TimeProvider</strong> is a new Java interface
+      used to provide a time source, for example a fast clock. There
+      can be multiple time providers at the same time.</p>
+      
+      <p>TimeProvider uses the type letter <strong>U</strong>. The German
+      word for clock is Uhr</p>
+      
+      <h2>Migration from jmri.Timebase to jmri.TimeProvider</h2>
+      
+      <p><strong>Timebase</strong> will be kept for a long time, but
+      JMRI should only use <strong>TimeProvider</strong>. Users of JMRI
+      are free to use any of them but TimeProvider offers more features.
+      Timebase uses the current selected TimeProvider.</p>
+      
+      <h3>Differences between Timebase and TimeProvider</h3>
+      
+      <p>Timebase uses <strong>Date</strong> while TimeProvider uses
+      <strong>LocalDateTime</strong>.</p>
+      
+      <p>Timebase property <strong>minutes</strong> have double values
+      while TimeProvider have int values.</p>
+      
+      <p>Timebase property <strong>time</strong> have <strong>Date</strong>
+      values while TimeProvider have property <strong>datetime</strong>
+      which has <strong>LocalDateTime</strong>values.</p>
+
+      <p>TimeProvider also has the property <strong>seconds</strong>
+      which has the values seconds since epoc as a long.</p>
+      
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

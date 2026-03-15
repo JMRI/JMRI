@@ -17,6 +17,7 @@ public class ControllerFilterFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         if(!GraphicsEnvironment.isHeadless()){
            frame = new ControllerFilterFrame();
         }

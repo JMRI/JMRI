@@ -7,6 +7,17 @@
     <test>8</test>
     <modifier>plus</modifier>
   </jmriversion>
+  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
+    <InternalDateTime class="jmri.time.implementation.configurexml.InternalDateTimeXml">
+      <systemName>IUInternalTimeProvider</systemName>
+      <isRunning>yes</isRunning>
+      <rate>1.0</rate>
+      <localDateTime>2021-12-02T00:00</localDateTime>
+    </InternalDateTime>
+    <InternalDateTime class="jmri.time.implementation.configurexml.SystemDateTimeXml">
+      <systemName>IUSystemClock</systemName>
+    </InternalDateTime>
+  </timeProviders>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
@@ -4135,7 +4146,6 @@
       <conditionalAction option="1" type="9" systemName="Roz-V3-Rad-Rele" data="4" delay="0" string="" />
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Mar 17 09:46:28 PDT 2019" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <entryexitpairs class="jmri.jmrit.entryexit.configurexml.EntryExitPairsXml">
     <cleardown>2</cleardown>
     <layoutPanel name="Dubová">

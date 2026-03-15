@@ -30,7 +30,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         @Override
         public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
             if ( question == DecisionType.STEAL ){
-                
+
                 flagGotStealRequest = address.getNumber();
                 log.debug("going to steal loco {}", address);
                 tm.responseThrottleDecision(address, this, DecisionType.STEAL );
@@ -780,6 +780,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         memo = new LocoNetSystemConnectionMemo();
         lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);

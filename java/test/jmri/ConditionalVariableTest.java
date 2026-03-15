@@ -35,6 +35,7 @@ public class ConditionalVariableTest {
 
         // Start with testing the exception handling in the constructor
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalTurnoutManagerThrowException();
         JUnitUtil.initLightManagerThrowException();
         JUnitUtil.initMemoryManagerThrowException();
@@ -84,6 +85,7 @@ public class ConditionalVariableTest {
 
 
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
@@ -960,6 +962,7 @@ public class ConditionalVariableTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();

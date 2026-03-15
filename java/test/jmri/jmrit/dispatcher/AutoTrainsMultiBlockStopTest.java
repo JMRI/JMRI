@@ -253,7 +253,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
             }, "Failed To Slow on entry to final section");
         assertEquals(speedStopping, aat.getThrottle().getSpeedSetting(), TOLERANCE , "Throttle should be in reverse");
-        
+
         JUnitUtil.setBeanStateAndWait( sensorBlock4, Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait( sensorBlock6, Sensor.ACTIVE);
         JUnitUtil.waitFor(waitInterval);
@@ -903,7 +903,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
             }, "Should have stop on Block 2 inactive.");
         JUnitUtil.waitFor(waitInterval);
-        
+
         JUnitUtil.setBeanStateAndWait( sensorTrainRestart, Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> {
             return(d.getAllocatedSectionsList().size()==3);
@@ -954,7 +954,7 @@ public class AutoTrainsMultiBlockStopTest {
         // wait for cleanup to finish
         JUnitUtil.waitFor(waitInterval/2);
         bo.push();
-        
+
         // wait for cleanup to finish
         JUnitUtil.waitFor(waitInterval);
 
@@ -1065,7 +1065,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
             }, "Still stop on block 1 inactive,  block 2, 3 still active");
         JUnitUtil.waitFor(waitInterval);
-        
+
         JUnitUtil.setBeanStateAndWait( sensorTrainRestart, Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> {
             return(d.getAllocatedSectionsList().size()==3);
@@ -1117,7 +1117,7 @@ public class AutoTrainsMultiBlockStopTest {
         // wait for cleanup to finish
         JUnitUtil.waitFor(waitInterval/2);
         bo.push();
-        
+
         // wait for cleanup to finish
         JUnitUtil.waitFor(waitInterval);
 
@@ -1239,7 +1239,7 @@ public class AutoTrainsMultiBlockStopTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
             }, "Still stop on block 1 inactive,  block 2, 3 still active");
         JUnitUtil.waitFor(waitInterval);
-        
+
         JUnitUtil.setBeanStateAndWait( sensorTrainRestart, Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> {
             return(d.getAllocatedSectionsList().size()==3);
@@ -1297,7 +1297,7 @@ public class AutoTrainsMultiBlockStopTest {
         // wait for cleanup to finish
         JUnitUtil.waitFor(waitInterval/2);
         bo.push();
-        
+
         // wait for cleanup to finish
         JUnitUtil.waitFor(waitInterval);
 
@@ -1319,7 +1319,7 @@ public class AutoTrainsMultiBlockStopTest {
          jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
         // THe train is 120 long and and doesnt fit in the section (2 blocks)..
-        
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         // load layout file
@@ -1395,20 +1395,20 @@ public class AutoTrainsMultiBlockStopTest {
             }, () -> "1 section clear speed normal "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
         JUnitUtil.setBeanStateAndWait( sensorBlock4, Sensor.INACTIVE);
         JUnitUtil.setBeanStateAndWait( sensorBlock1, Sensor.ACTIVE);
-        
-        // no delay keep going into loop2 we in 1 and 4 -1 not released and one (4) clear ahead. 
+
+        // no delay keep going into loop2 we in 1 and 4 -1 not released and one (4) clear ahead.
         JUnitUtil.waitFor(() -> {
             return(d.getAllocatedSectionsList().size()==3);
         },"Allocated sections should be 3");
         JUnitUtil.waitFor(() -> {
             return(getSectionsClearAhead(at)==1);
         },"Allocated sections clear ahead should be 1");
-        
+
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, "Still stop on block 1 active,  block 2, 3 not active");
         JUnitUtil.waitFor(waitInterval);
-        
+
         JUnitUtil.waitFor(() -> {
             return(d.getAllocatedSectionsList().size()==3);
         },"Allocated sections should be 3");
@@ -1459,12 +1459,12 @@ public class AutoTrainsMultiBlockStopTest {
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
             }, () -> "1 section clear speed medium "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
-        // begin 3rd loop keep going...done terminate test.        
+        // begin 3rd loop keep going...done terminate test.
         JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
         // wait for cleanup to finish
         JUnitUtil.waitFor(waitInterval/2);
         bo.push();
-        
+
         // wait for cleanup to finish
         JUnitUtil.waitFor(waitInterval);
 
@@ -1486,7 +1486,7 @@ public class AutoTrainsMultiBlockStopTest {
          jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
         // THe train is 120 long and and doesnt fit in the section (2 blocks)..
-        
+
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         // load layout file
@@ -1586,7 +1586,7 @@ public class AutoTrainsMultiBlockStopTest {
         JUnitUtil.setBeanStateAndWait( sensorBlock3, Sensor.ACTIVE);
         JUnitUtil.setBeanStateAndWait( sensorBlock4_1, Sensor.INACTIVE);
         JUnitUtil.waitFor(waitInterval);
-        
+
         // manually reset restart sensor.
         JUnitUtil.setBeanStateAndWait( sensorTrainRestart, Sensor.INACTIVE);
 
@@ -1630,7 +1630,7 @@ public class AutoTrainsMultiBlockStopTest {
         // wait for cleanup to finish
         JUnitUtil.waitFor(waitInterval/2);
         bo.push();
-        
+
         // wait for cleanup to finish
         JUnitUtil.waitFor(waitInterval);
 
@@ -1771,6 +1771,7 @@ public class AutoTrainsMultiBlockStopTest {
 
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugThrottleManager();
     }
@@ -1779,7 +1780,7 @@ public class AutoTrainsMultiBlockStopTest {
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.resetWindows(false,false);
-        
+
         try {
             Files.delete(outPathTrainInfo1);
         } catch  (IOException e) {
@@ -1790,8 +1791,8 @@ public class AutoTrainsMultiBlockStopTest {
         } catch  (IOException e) {
             // doesnt matter its gonezo
         }
-        
-        
+
+
         JUnitUtil.resetFileUtilSupport();
         JUnitUtil.tearDown();
     }

@@ -63,7 +63,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         boolean result = instance.getIsForward();
         Assert.assertEquals(expResult, result);
     }
-    
+
     private void testSingleFunction(int function){
         Assert.assertTrue(instance.getFunction(function));
         Assert.assertTrue(tc.outbound.size()==1);
@@ -368,51 +368,51 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSendFunctionGroup1() {
-        
+
         // not testing via setFunction in case this ever changes to use DFON / DFOF.
         // instead, we update function then send the group manually.
-        
+
         int startSize = tc.outbound.size();
 
         ((CbusThrottle) instance).sendFunctionGroup1();
         Assert.assertEquals(startSize+1, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 01 00", tc.outbound.elementAt(0).toString());
-        
+
         instance.updateFunction(0, true);
         ((CbusThrottle) instance).sendFunctionGroup1();
         Assert.assertEquals(startSize+2, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 01 10", tc.outbound.elementAt(1).toString());
         instance.updateFunction(0, false);
-        
+
         instance.updateFunction(1, true);
         ((CbusThrottle) instance).sendFunctionGroup1();
         Assert.assertEquals(startSize+3, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 01 01", tc.outbound.elementAt(2).toString());
         instance.updateFunction(1, false);
-        
+
         instance.updateFunction(2, true);
         ((CbusThrottle) instance).sendFunctionGroup1();
         Assert.assertEquals(startSize+4, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 01 02", tc.outbound.elementAt(3).toString());
         instance.updateFunction(2, false);
-        
+
         instance.updateFunction(3, true);
         ((CbusThrottle) instance).sendFunctionGroup1();
         Assert.assertEquals(startSize+5, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 01 04", tc.outbound.elementAt(4).toString());
         instance.updateFunction(3, false);
-        
+
         instance.updateFunction(4, true);
         ((CbusThrottle) instance).sendFunctionGroup1();
         Assert.assertEquals(startSize+6, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 01 08", tc.outbound.elementAt(5).toString());
         instance.updateFunction(4, false);
-        
+
         instance.updateFunction(5, true);
         ((CbusThrottle) instance).sendFunctionGroup1();
         Assert.assertEquals(startSize+7, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 01 00", tc.outbound.elementAt(6).toString());
-        
+
     }
 
     /**
@@ -421,45 +421,45 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSendFunctionGroup2() {
-        
+
         // not testing via setFunction in case this ever changes to use DFON / DFOF.
         // instead, we update function then send the group manually.
-        
+
         int startSize = tc.outbound.size();
 
         ((CbusThrottle) instance).sendFunctionGroup2();
         Assert.assertEquals(startSize+1, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 02 00", tc.outbound.elementAt(0).toString());
-        
+
         instance.updateFunction(5, true);
         ((CbusThrottle) instance).sendFunctionGroup2();
         Assert.assertEquals(startSize+2, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 02 01", tc.outbound.elementAt(1).toString());
         instance.updateFunction(5, false);
-        
+
         instance.updateFunction(6, true);
         ((CbusThrottle) instance).sendFunctionGroup2();
         Assert.assertEquals(startSize+3, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 02 02", tc.outbound.elementAt(2).toString());
         instance.updateFunction(6, false);
-        
+
         instance.updateFunction(7, true);
         ((CbusThrottle) instance).sendFunctionGroup2();
         Assert.assertEquals(startSize+4, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 02 04", tc.outbound.elementAt(3).toString());
         instance.updateFunction(7, false);
-        
+
         instance.updateFunction(8, true);
         ((CbusThrottle) instance).sendFunctionGroup2();
         Assert.assertEquals(startSize+5, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 02 08", tc.outbound.elementAt(4).toString());
         instance.updateFunction(8, false);
-        
+
         instance.updateFunction(9, true);
         ((CbusThrottle) instance).sendFunctionGroup2();
         Assert.assertEquals(startSize+6, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 02 00", tc.outbound.elementAt(5).toString());
-        
+
     }
 
     /**
@@ -468,45 +468,45 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSendFunctionGroup3() {
-        
+
         // not testing via setFunction in case this ever changes to use DFON / DFOF.
         // instead, we update function then send the group manually.
-        
+
         int startSize = tc.outbound.size();
 
         ((CbusThrottle) instance).sendFunctionGroup3();
         Assert.assertEquals(startSize+1, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 03 00", tc.outbound.elementAt(0).toString());
-        
+
         instance.updateFunction(9, true);
         ((CbusThrottle) instance).sendFunctionGroup3();
         Assert.assertEquals(startSize+2, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 03 01", tc.outbound.elementAt(1).toString());
         instance.updateFunction(9, false);
-        
+
         instance.updateFunction(10, true);
         ((CbusThrottle) instance).sendFunctionGroup3();
         Assert.assertEquals(startSize+3, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 03 02", tc.outbound.elementAt(2).toString());
         instance.updateFunction(10, false);
-        
+
         instance.updateFunction(11, true);
         ((CbusThrottle) instance).sendFunctionGroup3();
         Assert.assertEquals(startSize+4, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 03 04", tc.outbound.elementAt(3).toString());
         instance.updateFunction(11, false);
-        
+
         instance.updateFunction(12, true);
         ((CbusThrottle) instance).sendFunctionGroup3();
         Assert.assertEquals(startSize+5, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 03 08", tc.outbound.elementAt(4).toString());
         instance.updateFunction(12, false);
-        
+
         instance.updateFunction(13, true);
         ((CbusThrottle) instance).sendFunctionGroup3();
         Assert.assertEquals(startSize+6, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 03 00", tc.outbound.elementAt(5).toString());
-        
+
     }
 
     /**
@@ -515,69 +515,69 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSendFunctionGroup4() {
-        
+
         // not testing via setFunction in case this ever changes to use DFON / DFOF.
         // instead, we update function then send the group manually.
-        
+
         int startSize = tc.outbound.size();
 
         ((CbusThrottle) instance).sendFunctionGroup4();
         Assert.assertEquals(startSize+1, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 04 00", tc.outbound.elementAt(0).toString());
-        
+
         instance.updateFunction(13, true);
         ((CbusThrottle) instance).sendFunctionGroup4();
         Assert.assertEquals(startSize+2, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 04 01", tc.outbound.elementAt(1).toString());
         instance.updateFunction(13, false);
-        
+
         instance.updateFunction(14, true);
         ((CbusThrottle) instance).sendFunctionGroup4();
         Assert.assertEquals(startSize+3, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 04 02", tc.outbound.elementAt(2).toString());
         instance.updateFunction(14, false);
-        
+
         instance.updateFunction(15, true);
         ((CbusThrottle) instance).sendFunctionGroup4();
         Assert.assertEquals(startSize+4, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 04 04", tc.outbound.elementAt(3).toString());
         instance.updateFunction(15, false);
-        
+
         instance.updateFunction(16, true);
         ((CbusThrottle) instance).sendFunctionGroup4();
         Assert.assertEquals(startSize+5, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 04 08", tc.outbound.elementAt(4).toString());
         instance.updateFunction(16, false);
-        
+
         instance.updateFunction(17, true);
         ((CbusThrottle) instance).sendFunctionGroup4();
         Assert.assertEquals(startSize+6, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 04 10", tc.outbound.elementAt(5).toString());
         instance.updateFunction(17, false);
-        
+
         instance.updateFunction(18, true);
         ((CbusThrottle) instance).sendFunctionGroup4();
         Assert.assertEquals(startSize+7, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 04 20", tc.outbound.elementAt(6).toString());
         instance.updateFunction(18, false);
-        
+
         instance.updateFunction(19, true);
         ((CbusThrottle) instance).sendFunctionGroup4();
         Assert.assertEquals(startSize+8, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 04 40", tc.outbound.elementAt(7).toString());
         instance.updateFunction(19, false);
-        
+
         instance.updateFunction(20, true);
         ((CbusThrottle) instance).sendFunctionGroup4();
         Assert.assertEquals(startSize+9, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 04 80", tc.outbound.elementAt(8).toString());
         instance.updateFunction(20, false);
-        
+
         instance.updateFunction(21, true);
         ((CbusThrottle) instance).sendFunctionGroup4();
         Assert.assertEquals(startSize+10, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 04 00", tc.outbound.elementAt(9).toString());
-        
+
     }
 
     /**
@@ -586,77 +586,77 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testSendFunctionGroup5() {
-        
-        
+
+
         // not testing via setFunction in case this ever changes to use DFON / DFOF.
         // instead, we update function then send the group manually.
-        
+
         int startSize = tc.outbound.size();
 
         ((CbusThrottle) instance).sendFunctionGroup5();
         Assert.assertEquals(startSize+1, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 05 00", tc.outbound.elementAt(0).toString());
-        
+
         instance.updateFunction(21, true);
         ((CbusThrottle) instance).sendFunctionGroup5();
         Assert.assertEquals(startSize+2, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 05 01", tc.outbound.elementAt(1).toString());
         instance.updateFunction(21, false);
-        
+
         instance.updateFunction(22, true);
         ((CbusThrottle) instance).sendFunctionGroup5();
         Assert.assertEquals(startSize+3, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 05 02", tc.outbound.elementAt(2).toString());
         instance.updateFunction(22, false);
-        
+
         instance.updateFunction(23, true);
         ((CbusThrottle) instance).sendFunctionGroup5();
         Assert.assertEquals(startSize+4, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 05 04", tc.outbound.elementAt(3).toString());
         instance.updateFunction(23, false);
-        
+
         instance.updateFunction(24, true);
         ((CbusThrottle) instance).sendFunctionGroup5();
         Assert.assertEquals(startSize+5, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 05 08", tc.outbound.elementAt(4).toString());
         instance.updateFunction(24, false);
-        
+
         instance.updateFunction(25, true);
         ((CbusThrottle) instance).sendFunctionGroup5();
         Assert.assertEquals(startSize+6, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 05 10", tc.outbound.elementAt(5).toString());
         instance.updateFunction(25, false);
-        
+
         instance.updateFunction(26, true);
         ((CbusThrottle) instance).sendFunctionGroup5();
         Assert.assertEquals(startSize+7, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 05 20", tc.outbound.elementAt(6).toString());
         instance.updateFunction(26, false);
-        
+
         instance.updateFunction(27, true);
         ((CbusThrottle) instance).sendFunctionGroup5();
         Assert.assertEquals(startSize+8, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 05 40", tc.outbound.elementAt(7).toString());
         instance.updateFunction(27, false);
-        
+
         instance.updateFunction(28, true);
         ((CbusThrottle) instance).sendFunctionGroup5();
         Assert.assertEquals(startSize+9, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 05 80", tc.outbound.elementAt(8).toString());
         instance.updateFunction(28, false);
-        
+
         instance.updateFunction(7, true);
         ((CbusThrottle) instance).sendFunctionGroup5();
         Assert.assertEquals(startSize+10, tc.outbound.size());
         Assert.assertEquals("[78] 60 64 05 00", tc.outbound.elementAt(9).toString());
-        
+
     }
-    
+
     @Test
     public void testSendsDirectionChangeWhileMoving() {
-        
+
         int startSize = tc.outbound.size();
-        
+
         instance.setIsForward(false);
         Assert.assertEquals(startSize+1, tc.outbound.size());
         instance.setSpeedSetting(0.5f);
@@ -665,19 +665,19 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertEquals(startSize+3, tc.outbound.size());
         instance.setIsForward(false);
         Assert.assertEquals(startSize+4, tc.outbound.size());
-        
+
         Assert.assertNotEquals("Different message sent",
             tc.outbound.elementAt(tc.outbound.size() - 2).toString(),
             tc.outbound.elementAt(tc.outbound.size() - 1).toString());
-        
+
     }
-    
+
     private void assertFunctionsOn( int[] fns) {
         for ( int i=0; i<=28; i++ ){
             assertSingleFunc(fns,i);
         }
     }
-    
+
     private void assertSingleFunc( int[] fns, int i){
         if ( Arrays.stream(fns).anyMatch(j -> j == i)){
             Assert.assertTrue(instance.getFunction(i));
@@ -686,7 +686,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
             Assert.assertFalse(instance.getFunction(i));
         }
     }
-    
+
     @Test
     public void testUpdateFunctionGroup1() {
 
@@ -694,7 +694,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         ((CbusThrottle)instance).updateFunctionGroup(1,CbusConstants.CBUS_F0);
         assertFunctionsOn(new int[]{0});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(1,CbusConstants.CBUS_F1);
         assertFunctionsOn(new int[]{1});
 
@@ -703,24 +703,24 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         ((CbusThrottle)instance).updateFunctionGroup(1,CbusConstants.CBUS_F3);
         assertFunctionsOn(new int[]{3});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(1,CbusConstants.CBUS_F4);
         assertFunctionsOn(new int[]{4});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(1,CbusConstants.CBUS_F1 + CbusConstants.CBUS_F4);
         assertFunctionsOn(new int[]{4,1});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(1,CbusConstants.CBUS_F0 + CbusConstants.CBUS_F3);
         assertFunctionsOn(new int[]{0,3});
-        
+
     }
-    
+
     @Test
     public void testUpdateFunctionGroup2() {
 
         ((CbusThrottle)instance).updateFunctionGroup(2,CbusConstants.CBUS_F5);
         assertFunctionsOn(new int[]{5});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(2,CbusConstants.CBUS_F6);
         assertFunctionsOn(new int[]{6});
 
@@ -729,21 +729,21 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         ((CbusThrottle)instance).updateFunctionGroup(2,CbusConstants.CBUS_F8);
         assertFunctionsOn(new int[]{8});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(2,CbusConstants.CBUS_F7 + CbusConstants.CBUS_F8);
         assertFunctionsOn(new int[]{7,8});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(2,CbusConstants.CBUS_F5 + CbusConstants.CBUS_F8);
         assertFunctionsOn(new int[]{5,8});
-        
+
     }
-    
+
     @Test
     public void testUpdateFunctionGroup3() {
 
         ((CbusThrottle)instance).updateFunctionGroup(3,CbusConstants.CBUS_F9);
         assertFunctionsOn(new int[]{9});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(3,CbusConstants.CBUS_F10);
         assertFunctionsOn(new int[]{10});
 
@@ -752,16 +752,16 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         ((CbusThrottle)instance).updateFunctionGroup(3,CbusConstants.CBUS_F12);
         assertFunctionsOn(new int[]{12});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(3,CbusConstants.CBUS_F11 + CbusConstants.CBUS_F9 );
         assertFunctionsOn(new int[]{9,11});
 
         ((CbusThrottle)instance).updateFunctionGroup(3,
                 CbusConstants.CBUS_F9 + CbusConstants.CBUS_F10 +CbusConstants.CBUS_F11 + CbusConstants.CBUS_F12 );
         assertFunctionsOn(new int[]{9,10,11,12});
-        
+
     }
-    
+
     @Test
     public void testUpdateFunctionGroup4() {
 
@@ -769,7 +769,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         ((CbusThrottle)instance).updateFunctionGroup(4,CbusConstants.CBUS_F13);
         assertFunctionsOn(new int[]{13});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(4,CbusConstants.CBUS_F14);
         assertFunctionsOn(new int[]{14});
 
@@ -778,10 +778,10 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         ((CbusThrottle)instance).updateFunctionGroup(4,CbusConstants.CBUS_F16);
         assertFunctionsOn(new int[]{16});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(4,CbusConstants.CBUS_F17);
         assertFunctionsOn(new int[]{17});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(4,CbusConstants.CBUS_F18);
         assertFunctionsOn(new int[]{18});
 
@@ -790,14 +790,14 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         ((CbusThrottle)instance).updateFunctionGroup(4,CbusConstants.CBUS_F20);
         assertFunctionsOn(new int[]{20});
-        
-        
+
+
         ((CbusThrottle)instance).updateFunctionGroup(4,CbusConstants.CBUS_F13 + CbusConstants.CBUS_F19 );
         assertFunctionsOn(new int[]{13,19});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(4,CbusConstants.CBUS_F16 + CbusConstants.CBUS_F17 );
         assertFunctionsOn(new int[]{16,17});
-        
+
     }
 
     @Test
@@ -807,7 +807,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         ((CbusThrottle)instance).updateFunctionGroup(5,CbusConstants.CBUS_F21);
         assertFunctionsOn(new int[]{21});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(5,CbusConstants.CBUS_F22);
         assertFunctionsOn(new int[]{22});
 
@@ -816,10 +816,10 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         ((CbusThrottle)instance).updateFunctionGroup(5,CbusConstants.CBUS_F24);
         assertFunctionsOn(new int[]{24});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(5,CbusConstants.CBUS_F25);
         assertFunctionsOn(new int[]{25});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(5,CbusConstants.CBUS_F26);
         assertFunctionsOn(new int[]{26});
 
@@ -828,23 +828,23 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         ((CbusThrottle)instance).updateFunctionGroup(5,CbusConstants.CBUS_F28);
         assertFunctionsOn(new int[]{28});
-        
-        
+
+
         ((CbusThrottle)instance).updateFunctionGroup(5,CbusConstants.CBUS_F28 + CbusConstants.CBUS_F21);
         assertFunctionsOn(new int[]{21,28});
-        
+
         ((CbusThrottle)instance).updateFunctionGroup(5,
             CbusConstants.CBUS_F24 + CbusConstants.CBUS_F25 + CbusConstants.CBUS_F26);
         assertFunctionsOn(new int[]{24,25,26});
-        
+
     }
-    
+
     private boolean listenerkicked;
     private boolean listenerakicked;
-    
+
     @Test
     public void testFunction0Listener(){
-    
+
         listenerkicked = false;
         PropertyChangeListener l = (PropertyChangeEvent evt) -> {
             listenerkicked = true;
@@ -852,23 +852,23 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         PropertyChangeListener la = (PropertyChangeEvent evt) -> {
             listenerakicked = true;
         };
-        
+
         instance.addPropertyChangeListener("F0", l);
         instance.addPropertyChangeListener("F1", la);
-        
+
         instance.setF0(true);
-        
+
         Assert.assertEquals("F0 listener triggered", true, listenerkicked);
         Assert.assertEquals("F1 listener triggered", false, listenerakicked);
-        
+
         instance.removePropertyChangeListener(l);
         instance.removePropertyChangeListener(la);
-    
+
     }
-    
+
     @Test
     public void testFunction7Listener(){
-    
+
         listenerkicked = false;
         PropertyChangeListener l = (PropertyChangeEvent evt) -> {
             listenerkicked = true;
@@ -876,35 +876,35 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         PropertyChangeListener la = (PropertyChangeEvent evt) -> {
             listenerakicked = true;
         };
-        
+
         instance.addPropertyChangeListener("F0", l);
         instance.addPropertyChangeListener("F7", la);
-        
+
         instance.setFunction(7,true);
-        
+
         Assert.assertEquals("F0 listener triggered", false, listenerkicked);
         Assert.assertEquals("F7 listener triggered", true, listenerakicked);
-        
+
         instance.removePropertyChangeListener(l);
         instance.removePropertyChangeListener(la);
-    
+
     }
-    
+
     @Test
     public void testDefaultSpeedSteps(){
         Assert.assertEquals("default 128 SS", jmri.SpeedStepMode.NMRA_DCC_128, instance.getSpeedStepMode());
     }
-    
+
     private int propChangeCount = 0;
     private jmri.SpeedStepMode newMode;
     private jmri.SpeedStepMode oldMode;
-    
+
 
     @Test
     public void testChangeSpeedSteps(){
-        
+
         int outFrames = tc.outbound.size();
-        
+
         propChangeCount = 0;
         PropertyChangeListener l = (PropertyChangeEvent evt) -> {
             propChangeCount++;
@@ -912,11 +912,11 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
             newMode = (SpeedStepMode) evt.getNewValue();
         };
         instance.addPropertyChangeListener(jmri.Throttle.SPEEDSTEPS, l);
-        
+
         instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
         Assert.assertEquals(outFrames, tc.outbound.size());
         Assert.assertEquals(0, propChangeCount);
-        
+
         instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_14);
         Assert.assertEquals("14 SS", SpeedStepMode.NMRA_DCC_14, instance.getSpeedStepMode());
         Assert.assertEquals(outFrames+1, tc.outbound.size());
@@ -924,7 +924,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertEquals(1, propChangeCount);
         Assert.assertEquals(SpeedStepMode.NMRA_DCC_128,oldMode);
         Assert.assertEquals(SpeedStepMode.NMRA_DCC_14,newMode);
-        
+
         instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
         Assert.assertEquals("128 SS", SpeedStepMode.NMRA_DCC_128, instance.getSpeedStepMode());
         Assert.assertEquals(outFrames+2, tc.outbound.size());
@@ -932,7 +932,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertEquals(2, propChangeCount);
         Assert.assertEquals(SpeedStepMode.NMRA_DCC_14,oldMode);
         Assert.assertEquals(SpeedStepMode.NMRA_DCC_128,newMode);
-        
+
         instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
         Assert.assertEquals("28 SS", SpeedStepMode.NMRA_DCC_28, instance.getSpeedStepMode());
         Assert.assertEquals(outFrames+3, tc.outbound.size());
@@ -940,7 +940,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertEquals(3, propChangeCount);
         Assert.assertEquals(SpeedStepMode.NMRA_DCC_128,oldMode);
         Assert.assertEquals(SpeedStepMode.NMRA_DCC_28,newMode);
-        
+
         instance.removePropertyChangeListener(l);
     }
 
@@ -1082,12 +1082,12 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         assertEquals(sentMsgs++, tc.outbound.size());
         assertEquals("[78] 47 64 02", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
         // 47 - change spd dir, 64 - session 100, 00 - speed 2 backwards
-        
+
         instance.setSpeedSetting(125/126f);
         assertEquals(sentMsgs++, tc.outbound.size());
         assertEquals("[78] 47 64 7E", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
         // 47 - change spd dir, 64 - session 100, 00 - speed 126 backwards
-        
+
         instance.setSpeedSetting(1f);
         assertEquals(sentMsgs++, tc.outbound.size());
         assertEquals("[78] 47 64 7F", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
@@ -1129,7 +1129,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         assertEquals(outFrames, tc.outbound.size(), "msg sent" +tc.outbound );
         assertEquals("[78] 47 64 04", tc.outbound.elementAt(tc.outbound.size()-1).getToString(),"backwards 4");
         // 47 - change spd dir, 64 - session 100, 04 - speed backwards 4
-        
+
         instance.setSpeedSetting(1f);
         outFrames++;
         assertEquals(outFrames, tc.outbound.size(), "msg sent" +tc.outbound );
@@ -1238,7 +1238,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
             }
         }
         return newList;
-    } 
+    }
 
     private TrafficControllerScaffold tc;
     private CanSystemConnectionMemo memo;
@@ -1248,12 +1248,13 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.MERGCBUS);
         memo.configureManagers();
-        
+
         InstanceManager.setThrottleManager(new AbstractThrottleManager(memo) {
 
             @Override

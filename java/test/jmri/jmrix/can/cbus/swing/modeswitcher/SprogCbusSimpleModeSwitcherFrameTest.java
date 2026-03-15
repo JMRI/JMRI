@@ -66,6 +66,7 @@ public class SprogCbusSimpleModeSwitcherFrameTest extends jmri.util.JmriJFrameTe
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
 
         tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();

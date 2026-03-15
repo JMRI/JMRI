@@ -71,6 +71,7 @@ public class SprogCbusSprog3PlusModeSwitcherFrameTest extends jmri.util.JmriJFra
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
 
         tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();

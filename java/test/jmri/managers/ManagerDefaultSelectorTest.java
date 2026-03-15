@@ -37,6 +37,7 @@ public class ManagerDefaultSelectorTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetPreferencesProviders();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalSensorManager();  // start proxies, which start internal
         JUnitUtil.initInternalLightManager();  // start proxies, which start internal
     }
@@ -56,7 +57,7 @@ public class ManagerDefaultSelectorTest {
         // nothing has been configured, preferences are valid
         assertTrue(mds.isPreferencesValid(profile));
         assertDoesNotThrow( () -> mds.initialize(profile));
-        
+
 
         // empty profile has defaults for no managers
         assertTrue( mds.isPreferencesValid(profile));

@@ -23,9 +23,10 @@ public class WiThrottleManagerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
     }
-    
+
     @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();

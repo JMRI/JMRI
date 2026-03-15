@@ -31,11 +31,11 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         AcelaTrafficController atc = new AcelaTrafficControlScaffold();
         AcelaSystemConnectionMemo ascm = new AcelaSystemConnectionMemo(atc);
         ascm.register();
-        
+
         ThreadingUtil.runOnGUI(() -> {
             frame.initComponents();
         });
-        
+
         JFrameOperator jfo = new JFrameOperator( frame.getTitle() );
         JComboBoxOperator typeOperator = new JComboBoxOperator(jfo, 0);
         typeOperator.selectItem(Bundle.getMessage("StringAcelaaspect"));
@@ -44,12 +44,12 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelUserName")).getLabelFor()).setText("ACUName");
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSignalheadNumber")).getLabelFor()).setText("1");
         new JComboBoxOperator(jfo, 1).setSelectedItem(Bundle.getMessage("StringSignalheadTriple"));
-        
+
         Thread t1 = JemmyUtil.createModalDialogOperatorThread(
             Bundle.getMessage("ErrorSignalHeadAddFailed",1), Bundle.getMessage("ButtonOK"));
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCreate")).push();
         JUnitUtil.waitFor(() -> !t1.isAlive(),"acela no node dialogue complete");
-        
+
         new JComboBoxOperator(jfo, 1).setSelectedItem(Bundle.getMessage("StringSignalheadDouble"));
         new JComboBoxOperator(jfo, 1).setSelectedItem(Bundle.getMessage("StringSignalheadBiPolar"));
         new JComboBoxOperator(jfo, 1).setSelectedItem(Bundle.getMessage("StringSignalheadWigwag"));
@@ -63,14 +63,14 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
 
         new JComboBoxOperator(jfo, 1).setSelectedItem(Bundle.getMessage("StringSignalheadBiPolar"));
         jfo.getQueueTool().waitEmpty();
-        
+
         Thread t2 = JemmyUtil.createModalDialogOperatorThread(
             Bundle.getMessage("InvalidUserNameAlreadyExists", Bundle.getMessage("BeanNameSignalHead"),"ACUName")
             , Bundle.getMessage("ButtonOK"));
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCreate")).push();
         JUnitUtil.waitFor(() -> !t2.isAlive(),"acela duplicate username dialogue complete");
         JUnitAppender.assertErrorMessage("User name is not unique ACUName");
-        
+
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelUserName")).getLabelFor()).setText("ACUName2");
         Thread t3 = JemmyUtil.createModalDialogOperatorThread(
             Bundle.getMessage("WarningTitle")
@@ -78,21 +78,21 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCreate")).push();
         JUnitUtil.waitFor(() -> !t3.isAlive(),"acela duplicate systemname dialogue complete");
         JUnitAppender.assertWarnMessage("Attempt to create signal with duplicate system name AH1");
-        
+
         new JComboBoxOperator(jfo, 1).setSelectedItem(Bundle.getMessage("StringSignalheadDouble"));
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSignalheadNumber")).getLabelFor()).setText("2");
         Assertions.assertEquals(1, InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().size());
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCreate")).push();
         jfo.getQueueTool().waitEmpty();
         Assertions.assertEquals(2, InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().size());
-        
+
         SignalHead newHead = InstanceManager.getDefault(SignalHeadManager.class).getBySystemName("AH2");
         Assertions.assertNotNull(newHead);
         Assertions.assertInstanceOf(AcelaSignalHead.class, newHead);
-        
+
         int type = acelaNodeStartingAddress0.getOutputSignalHeadType(2); // SystemName AH2
         Assertions.assertEquals(AcelaNode.DOUBLE, type);
-        
+
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCancel")).push();
         jfo.waitClosed();
 
@@ -104,20 +104,20 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         jfo = new JFrameOperator(frame.getTitle());
         Assertions.assertNotNull(jfo);
         Assertions.assertEquals(newHead, ((SignalHeadAddEditFrame)frame).getSignalHead());
-        
+
         String title = new JLabelOperator(jfo,0).getText();
         Assertions.assertTrue(title.contains(Bundle.getMessage("StringAcelaaspect")));
-        
+
         String sysName = new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSystemName"))
             .getLabelFor()).getText();
         Assertions.assertEquals(newHead.getSystemName(), sysName);
-        
+
         String uName = new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelUserName")).getLabelFor()).getText();
         Assertions.assertEquals("ACUName2", uName);
-        
+
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelUserName")).getLabelFor()).setText("NewUName");
         new JComboBoxOperator(jfo, 0).setSelectedItem(Bundle.getMessage("StringSignalheadWigwag"));
-        
+
         new JButtonOperator(jfo,Bundle.getMessage("ButtonUpdate")).push(); // closes frame
         jfo.waitClosed();
         Assertions.assertEquals("NewUName", newHead.getUserName());
@@ -132,11 +132,11 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @Test
     public void testAddEditTripleTurnoutHead(){
-        
+
         ThreadingUtil.runOnGUI(() -> {
             frame.initComponents();
         });
-        
+
         JFrameOperator jfo = new JFrameOperator( frame.getTitle() );
         JComboBoxOperator typeOperator = new JComboBoxOperator(jfo, 0);
         typeOperator.selectItem(Bundle.getMessage("StringTripleTurnout"));
@@ -146,14 +146,14 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
             Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCreate")).push();
         JUnitUtil.waitFor(() -> !t1.isAlive(),"no system name dialogue complete");
-        
+
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSystemName"))
             .getLabelFor()).setText("IH3");
-        
+
         new JTextFieldOperator(jfo, 2).setText("4");
         new JTextFieldOperator(jfo, 3).setText("5");
         new JTextFieldOperator(jfo, 4).setText("6");
-        
+
         Assertions.assertEquals(0, InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().size());
         Assertions.assertEquals(0, InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().size());
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCreate")).push();
@@ -163,11 +163,11 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
 
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCancel")).push();
         jfo.waitClosed();
-        
+
         SignalHead newHead = InstanceManager.getDefault(SignalHeadManager.class).getBySystemName("IH3");
         Assertions.assertNotNull(newHead);
         Assertions.assertInstanceOf(jmri.implementation.TripleTurnoutSignalHead.class, newHead);
-        
+
         frame = new SignalHeadAddEditFrame(newHead);
         ThreadingUtil.runOnGUI(() -> {
             frame.initComponents();
@@ -175,28 +175,28 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         jfo = new JFrameOperator(frame.getTitle());
         Assertions.assertNotNull(jfo);
         Assertions.assertEquals(newHead, ((SignalHeadAddEditFrame)frame).getSignalHead());
-        
+
         String title = new JLabelOperator(jfo,0).getText();
         Assertions.assertTrue(title.contains(Bundle.getMessage("StringTripleTurnout")));
-        
+
         String sysName = new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSystemName"))
             .getLabelFor()).getText();
         Assertions.assertEquals("IH3", sysName);
-        
+
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelUserName")).getLabelFor()).setText("NewaUName");
         new JButtonOperator(jfo,Bundle.getMessage("ButtonUpdate")).push(); // closes frame
         jfo.waitClosed();
         Assertions.assertEquals("NewaUName", newHead.getUserName());
-        
+
     }
 
     @Test
     public void testAddEditDoubleTurnoutHead(){
-        
+
         ThreadingUtil.runOnGUI(() -> {
             frame.initComponents();
         });
-        
+
         JFrameOperator jfo = new JFrameOperator( frame.getTitle() );
         JComboBoxOperator typeOperator = new JComboBoxOperator(jfo, 0);
         typeOperator.selectItem(Bundle.getMessage("StringDoubleTurnout"));
@@ -204,10 +204,10 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
 
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSystemName"))
             .getLabelFor()).setText("IH222");
-        
+
         new JTextFieldOperator(jfo, 2).setText("4");
         new JTextFieldOperator(jfo, 3).setText("5");
-        
+
         Assertions.assertEquals(0, InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().size());
         Assertions.assertEquals(0, InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().size());
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCreate")).push();
@@ -242,16 +242,16 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         new JButtonOperator(jfo,Bundle.getMessage("ButtonUpdate")).push(); // closes frame
         jfo.waitClosed();
         Assertions.assertEquals("Nme", newHead.getUserName());
-        
+
     }
 
     @Test
     public void testAddEditTripleOutputHead(){
-        
+
         ThreadingUtil.runOnGUI(() -> {
             frame.initComponents();
         });
-        
+
         JFrameOperator jfo = new JFrameOperator( frame.getTitle() );
         JComboBoxOperator typeOperator = new JComboBoxOperator(jfo, 0);
         typeOperator.selectItem(Bundle.getMessage("StringTripleOutput"));
@@ -259,11 +259,11 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
 
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSystemName"))
             .getLabelFor()).setText("IH4");
-        
+
         new JTextFieldOperator(jfo, 2).setText("4");
         new JTextFieldOperator(jfo, 3).setText("5");
         new JTextFieldOperator(jfo, 4).setText("6");
-        
+
         Assertions.assertEquals(0, InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().size());
         Assertions.assertEquals(0, InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().size());
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCreate")).push();
@@ -298,16 +298,16 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         new JButtonOperator(jfo,Bundle.getMessage("ButtonUpdate")).push(); // closes frame
         jfo.waitClosed();
         Assertions.assertEquals("NewaUName", newHead.getUserName());
-        
+
     }
 
     @Test
     public void testAddEditQuadOutputHead(){
-        
+
         ThreadingUtil.runOnGUI(() -> {
             frame.initComponents();
         });
-        
+
         JFrameOperator jfo = new JFrameOperator( frame.getTitle() );
         JComboBoxOperator typeOperator = new JComboBoxOperator(jfo, 0);
         typeOperator.selectItem(Bundle.getMessage("StringQuadOutput"));
@@ -315,12 +315,12 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
 
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSystemName"))
             .getLabelFor()).setText("IH77");
-        
+
         new JTextFieldOperator(jfo, 2).setText("4");
         new JTextFieldOperator(jfo, 3).setText("5");
         new JTextFieldOperator(jfo, 4).setText("6");
         new JTextFieldOperator(jfo, 5).setText("7");
-        
+
         Assertions.assertEquals(0, InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().size());
         Assertions.assertEquals(0, InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().size());
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCreate")).push();
@@ -355,16 +355,16 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         new JButtonOperator(jfo,Bundle.getMessage("ButtonUpdate")).push(); // closes frame
         jfo.waitClosed();
         Assertions.assertEquals("NewaUName", newHead.getUserName());
-        
+
     }
 
     @Test
     public void testAddEditVirtualHead(){
-        
+
         ThreadingUtil.runOnGUI(() -> {
             frame.initComponents();
         });
-        
+
         JFrameOperator jfo = new JFrameOperator( frame.getTitle() );
         JComboBoxOperator typeOperator = new JComboBoxOperator(jfo, 0);
         typeOperator.selectItem(Bundle.getMessage("StringVirtual"));
@@ -372,7 +372,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
 
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSystemName"))
             .getLabelFor()).setText("IH123");
-        
+
         Assertions.assertEquals(0, InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().size());
         Assertions.assertEquals(0, InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().size());
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCreate")).push();
@@ -383,7 +383,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         SignalHead newHead = InstanceManager.getDefault(SignalHeadManager.class).getBySystemName("IH123");
         Assertions.assertNotNull(newHead);
         Assertions.assertInstanceOf(jmri.implementation.VirtualSignalHead.class, newHead);
-        
+
         ((SignalHeadAddEditFrame)frame).resetAddressFields();
         Assertions.assertEquals("", new JTextFieldOperator((JTextField) new JLabelOperator(jfo,
                 Bundle.getMessage("LabelSystemName")).getLabelFor()).getText());
@@ -413,16 +413,16 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         new JButtonOperator(jfo,Bundle.getMessage("ButtonUpdate")).push(); // closes frame
         jfo.waitClosed();
         Assertions.assertEquals("N", newHead.getUserName());
-        
+
     }
 
     @Test
     public void testAddEditSe8cHead(){
-        
+
         ThreadingUtil.runOnGUI(() -> {
             frame.initComponents();
         });
-        
+
         JFrameOperator jfo = new JFrameOperator( frame.getTitle() );
         JComboBoxOperator typeOperator = new JComboBoxOperator(jfo, 0);
         typeOperator.selectItem(Bundle.getMessage("StringSE8c4aspect"));
@@ -434,7 +434,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         new JTextFieldOperator(jfo, 0).setText("My se8c UserName");
         new JTextFieldOperator(jfo, 1).setText("11");
         new JTextFieldOperator(jfo, 2).setText("12");
-        
+
         Assertions.assertEquals(0, InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().size());
         Assertions.assertEquals(0, InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().size());
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCreate")).push();
@@ -509,20 +509,20 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         new JButtonOperator(jfo,Bundle.getMessage("ButtonUpdate")).push(); // closes frame
         jfo.waitClosed();
         Assertions.assertEquals("Nse8", newHead.getUserName());
-        
+
     }
 
     @Test
     public void testAddEditGrapevineHead(){
-        
+
         GrapevineSystemConnectionMemo gscm = new GrapevineSystemConnectionMemo();
         gscm.setTrafficController(new SerialTrafficControlScaffold(gscm));
         gscm.register();
-        
+
         ThreadingUtil.runOnGUI(() -> {
             frame.initComponents();
         });
-        
+
         JFrameOperator jfo = new JFrameOperator( frame.getTitle() );
         JComboBoxOperator typeOperator = new JComboBoxOperator(jfo, 0);
         typeOperator.selectItem(Bundle.getMessage("StringGrapevine"));
@@ -530,7 +530,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
 
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSystemName"))
             .getLabelFor()).setText("GH1");
-        
+
         Assertions.assertEquals(0, InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().size());
         Assertions.assertEquals(0, InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().size());
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCreate")).push();
@@ -565,10 +565,10 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         new JButtonOperator(jfo,Bundle.getMessage("ButtonUpdate")).push(); // closes frame
         jfo.waitClosed();
         Assertions.assertEquals("G_N", newHead.getUserName());
-        
+
         gscm.getTrafficController().terminateThreads();
         gscm.dispose();
-        
+
     }
 
     @Test
@@ -636,16 +636,16 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         new JButtonOperator(jfo,Bundle.getMessage("ButtonUpdate")).doClick();// closes frame
         jfo.waitClosed();
         Assertions.assertEquals("Nm", newHead.getUserName());
-        
+
     }
 
     @Test
     public void testAddEditSingleTurnoutHead(){
-        
+
         ThreadingUtil.runOnGUI(() -> {
             frame.initComponents();
         });
-        
+
         JFrameOperator jfo = new JFrameOperator( frame.getTitle() );
         JComboBoxOperator typeOperator = new JComboBoxOperator(jfo, 0);
         typeOperator.selectItem(Bundle.getMessage("StringSingle"));
@@ -653,7 +653,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
 
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSystemName"))
             .getLabelFor()).setText("IH13");
-        
+
         new JTextFieldOperator(jfo, 2).setText("4"); // turnout IH4
         new JComboBoxOperator(jfo, 2).setSelectedItem(Bundle.getMessage("SignalHeadStateRed"));
         new JComboBoxOperator(jfo, 3).setSelectedItem(Bundle.getMessage("SignalHeadStateGreen"));
@@ -687,20 +687,20 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         String sysName = new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSystemName"))
             .getLabelFor()).getText();
         Assertions.assertEquals(newHead.getSystemName(), sysName);
-        
+
         Assertions.assertEquals(Bundle.getMessage("SignalHeadStateRed"),  new JComboBoxOperator(jfo, 1).getSelectedItem());
         Assertions.assertEquals(Bundle.getMessage("SignalHeadStateGreen"),  new JComboBoxOperator(jfo, 2).getSelectedItem());
-        
+
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelUserName")).getLabelFor()).setText("Nme");
         new JButtonOperator(jfo,Bundle.getMessage("ButtonUpdate")).push(); // closes frame
         jfo.waitClosed();
         Assertions.assertEquals("Nme", newHead.getUserName());
-        
+
     }
 
     @Test
     public void testAddEditDccHead(){
-        
+
         // create a DCC Sys connection
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         TrafficControllerScaffold tcis = new TrafficControllerScaffold();
@@ -708,12 +708,12 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         memo.setTrafficController(tcis);
         memo.setProtocol(ConfigurationManager.MERGCBUS);
         memo.configureManagers();
-        
-        
+
+
         ThreadingUtil.runOnGUI(() -> {
             frame.initComponents();
         });
-        
+
         JFrameOperator jfo = new JFrameOperator( frame.getTitle() );
         JComboBoxOperator typeOperator = new JComboBoxOperator(jfo, 0);
         typeOperator.selectItem(Bundle.getMessage("StringDccSigDec"));
@@ -721,8 +721,8 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
 
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSignalheadNumber"))
             .getLabelFor()).setText("8");
-        
-        
+
+
         Assertions.assertEquals(0, InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().size());
         Assertions.assertEquals(0, InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().size());
         new JButtonOperator(jfo,Bundle.getMessage("ButtonCreate")).push();
@@ -757,19 +757,19 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         new JButtonOperator(jfo,Bundle.getMessage("ButtonUpdate")).push(); // closes frame
         jfo.waitClosed();
         Assertions.assertEquals("Nme", newHead.getUserName());
-        
+
         memo.getTrafficController().terminateThreads();
         memo.dispose();
-        
+
     }
 
     @Test
     public void testAddEditLsDecHead(){
-        
+
         ThreadingUtil.runOnGUI(() -> {
             frame.initComponents();
         });
-        
+
         JFrameOperator jfo = new JFrameOperator( frame.getTitle() );
         JComboBoxOperator typeOperator = new JComboBoxOperator(jfo, 0);
         typeOperator.selectItem(Bundle.getMessage("StringLsDec"));
@@ -777,7 +777,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
 
         new JTextFieldOperator((JTextField) new JLabelOperator(jfo,Bundle.getMessage("LabelSystemName"))
             .getLabelFor()).setText("IH123");
-        
+
         new JTextFieldOperator(jfo, 2).setText("2");
         new JTextFieldOperator(jfo, 3).setText("3");
         new JTextFieldOperator(jfo, 4).setText("4");
@@ -785,11 +785,11 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         new JTextFieldOperator(jfo, 6).setText("6");
         new JTextFieldOperator(jfo, 7).setText("7");
         new JTextFieldOperator(jfo, 8).setText("8");
-        
+
         new JComboBoxOperator(jfo, 4).selectItem(InstanceManager.getDefault(TurnoutManager.class).getThrownText());
         new JComboBoxOperator(jfo, 6).selectItem(InstanceManager.getDefault(TurnoutManager.class).getClosedText());
         new JComboBoxOperator(jfo, 8).selectItem(InstanceManager.getDefault(TurnoutManager.class).getThrownText());
-                
+
         jfo.getQueueTool().waitEmpty();
 
         Assertions.assertEquals(0, InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().size());
@@ -826,7 +826,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
         new JButtonOperator(jfo,Bundle.getMessage("ButtonUpdate")).push(); // closes frame
         jfo.waitClosed();
         Assertions.assertEquals("N", newHead.getUserName());
-        
+
     }
 
     @BeforeEach
@@ -834,6 +834,7 @@ public class SignalHeadAddEditFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         frame = new SignalHeadAddEditFrame(null); // New Signal Head
     }
 

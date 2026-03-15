@@ -56,7 +56,8 @@ public class UsbLightManagerTest extends AbstractLightMgrTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initTimeProviderManager();
 
         _memo = new AnymaDMX_SystemConnectionMemo();
         l = new UsbLightManager(_memo);
@@ -66,7 +67,7 @@ public class UsbLightManagerTest extends AbstractLightMgrTestBase {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-    
+
     private final static Logger log
             = LoggerFactory.getLogger(UsbLightManagerTest.class);
 }

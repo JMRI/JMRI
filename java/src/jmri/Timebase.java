@@ -3,7 +3,10 @@ package jmri;
 import java.beans.PropertyChangeListener;
 import java.time.Instant;
 import java.util.Date;
+
 import javax.annotation.Nonnull;
+
+import jmri.time.TimeProvider;
 
 /**
  * Provide access to clock capabilities in hardware or software.
@@ -17,25 +20,28 @@ import javax.annotation.Nonnull;
  * receive change notifications if the change is a minute or more, because it
  * changes continuously; query to {@code time} property when needed to get the
  * current value.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2004, 2007, 2008
+ *
+ * // @deprecated Use {@code jmri.time.TimeProvider} instead
  */
+// @Deprecated(since="5.15.1", forRemoval=false) // used in scripts
 public interface Timebase extends NamedBean {
 
     /**
      * Property Change sent when the minute value changes.
      */
-    String PROPERTY_CHANGE_MINUTES = "minutes";
+    String PROPERTY_CHANGE_MINUTES = TimeProvider.PROPERTY_CHANGE_MINUTES;
 
     /**
      * Property Change sent when the rate value changes.
      */
-    String PROPERTY_CHANGE_RATE = "rate";
+    String PROPERTY_CHANGE_RATE = TimeProvider.PROPERTY_CHANGE_RATE;
 
     /**
      * Property Change sent when the run status changes.
      */
-    String PROPERTY_CHANGE_RUN = "run";
+    String PROPERTY_CHANGE_RUN = TimeProvider.PROPERTY_CHANGE_RUN;
 
     /**
      * Property Change sent when the minute value changes.
@@ -124,7 +130,7 @@ public interface Timebase extends NamedBean {
     /**
      * Set internalMaster and update fields.
      *
-     * @param master true if fast clock time is derived from internal computer clock, 
+     * @param master true if fast clock time is derived from internal computer clock,
      *                  false if derived from hardware clock.
      * @param update true to send update, else false.
      */
@@ -133,7 +139,7 @@ public interface Timebase extends NamedBean {
     /**
      * Get internalMaster field.
      *
-     * @return true if fast clock time is derived from internal computer clock, 
+     * @return true if fast clock time is derived from internal computer clock,
      *  false if derived from hardware clock
      */
     boolean getInternalMaster();
@@ -284,7 +290,7 @@ public interface Timebase extends NamedBean {
      */
     void setStartClockOption(int option);
 
-    
+
     /**
      * Get the Start Clock Type.
      * @return Clock type, e.g. NIXIE_CLOCK or PRAGOTRON_CLOCK
