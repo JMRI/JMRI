@@ -14,6 +14,7 @@ import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.display.layoutEditor.LevelXing.Geometry;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
+import jmri.tracktiles.TrackTile;
 import jmri.util.MathUtil;
 import jmri.util.swing.JmriMouseEvent;
 
@@ -23,7 +24,7 @@ import jmri.util.swing.JmriMouseEvent;
  * @author Bob Jacobsen  Copyright (c) 2020
  *
  */
-public class LevelXingView extends LayoutTrackView {
+public class LevelXingView extends LayoutTrackView implements TileSupport {
 
     /**
      * Constructor method.
@@ -57,6 +58,9 @@ public class LevelXingView extends LayoutTrackView {
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor editor;
 
     final private LevelXing xing;
+
+    // TileSupport implementation
+    private TrackTile trackTile = null;
 
     // temporary?
     @Nonnull
@@ -275,6 +279,34 @@ public class LevelXingView extends LayoutTrackView {
 
     public void setConnectD(LayoutTrack o, HitPointType type) {
         xing.setConnectD(o, type);
+    }
+
+    // TileSupport implementation
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasTile() {
+        return trackTile != null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @javax.annotation.CheckForNull
+    public TrackTile getTile() {
+        return trackTile;
+    }
+
+    /**
+     * Set the track tile for this level crossing.
+     *
+     * @param tile the track tile to associate with this crossing, or null to remove association
+     */
+    public void setTile(@javax.annotation.CheckForNull TrackTile tile) {
+        trackTile = tile;
     }
 
     public LayoutBlock getLayoutBlockAC() {

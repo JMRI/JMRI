@@ -1442,6 +1442,13 @@
         <xs:element name="sensorB" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sensorC" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sensorD" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="tracktile" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:attribute name="vendor" type="xs:string" use="required"></xs:attribute>
+            <xs:attribute name="family" type="xs:string" use="required"></xs:attribute>
+            <xs:attribute name="partcode" type="xs:string" use="required"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
@@ -1561,6 +1568,13 @@
                 </xs:element>
               </xs:sequence>
             </xs:complexType>
+        </xs:element>
+        <xs:element name="tracktile" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:attribute name="vendor" type="xs:string" use="required"></xs:attribute>
+            <xs:attribute name="family" type="xs:string" use="required"></xs:attribute>
+            <xs:attribute name="partcode" type="xs:string" use="required"></xs:attribute>
+          </xs:complexType>
         </xs:element>
         <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
@@ -1851,6 +1865,13 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="tracktile" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:attribute name="vendor" type="xs:string" use="required"></xs:attribute>
+            <xs:attribute name="family" type="xs:string" use="required"></xs:attribute>
+            <xs:attribute name="partcode" type="xs:string" use="required"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
 
@@ -2028,6 +2049,13 @@
         <xs:element name="sensorB" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sensorC" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sensorD" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="tracktile" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:attribute name="vendor" type="xs:string" use="required"></xs:attribute>
+            <xs:attribute name="family" type="xs:string" use="required"></xs:attribute>
+            <xs:attribute name="partcode" type="xs:string" use="required"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
