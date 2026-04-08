@@ -34,17 +34,19 @@ public class CheckPointManager implements InstanceManagerAutoDefault {
         var ldt = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
         var key = ldt.toString().replace("T", " ");
 
-        // Get the xml content for the panel
+        // Get the current xml content for the panel
         var lex = new LayoutEditorXml();
         Element xml = lex.store(lepanel);
 
-//         log.info("XML :: {}", xml.toString());
-//         for (Attribute at : xml.getAttributes()) {
-//             log.info("  {}", at);
-//         }
-//         for (Element el : xml.getChildren()) {
-//             log.info("    {}", el);
-//         }
+        if (log.isDebugEnabled()) {
+            log.debug("XML Attributes and Elements:");
+            for (Attribute at : xml.getAttributes()) {
+                log.debug("  {}", at);
+            }
+            for (Element el : xml.getChildren()) {
+                log.debug("    {}", el);
+            }
+        }
 
         // Create the checkpoint
         Panel panel = _panelMap.get(lepanel);
@@ -54,17 +56,19 @@ public class CheckPointManager implements InstanceManagerAutoDefault {
         }
         panel.addCheckPoint(key, xml);
 
-//         for (String dt : panel.getCheckPointKeys()) {
-//             log.info("    {}", dt);
-//         }
-
+        if (log.isDebugEnabled()) {
+            log.debug("Current key list:");
+            for (String datetime : panel.getCheckPointKeys()) {
+                log.debug("  {}", datetime);
+            }
+        }
     }
 
     /**
      * Get the existing keys for the specified panel.  The list
      * will be used to create the check point menu items.
      * @param lepanel The LE panel instance.
-     * @return a list of keys.
+     * @return a list of keys in descending sequence.
      */
     List<String> getCheckPointList(LayoutEditor lepanel) {
         List<String> keyList = new ArrayList<>();
@@ -93,7 +97,6 @@ public class CheckPointManager implements InstanceManagerAutoDefault {
             lex.load(panel.getPanelData(key), null);
         }
     }
-
 
     /**
      * For each Layout Editor panel, create a tree map that
