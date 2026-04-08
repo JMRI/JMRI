@@ -7,9 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
-import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml;
 
 import org.jdom2.*;
