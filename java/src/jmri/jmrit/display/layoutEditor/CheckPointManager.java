@@ -39,10 +39,10 @@ public class CheckPointManager implements InstanceManagerAutoDefault {
         if (log.isDebugEnabled()) {
             log.debug("XML Attributes and Elements:");
             for (Attribute at : xml.getAttributes()) {
-                log.debug("  - {}", at);
+                log.debug("  A :: {}", at);
             }
             for (Element el : xml.getChildren()) {
-                log.debug("    - {}", el);
+                log.debug("   E :: {}", el);
             }
         }
 
@@ -57,7 +57,7 @@ public class CheckPointManager implements InstanceManagerAutoDefault {
         if (log.isDebugEnabled()) {
             log.debug("Current key list:");
             for (String datetime : panel.getCheckPointKeys()) {
-                log.debug("  - {}", datetime);
+                log.debug("  K :: {}", datetime);
             }
         }
     }
