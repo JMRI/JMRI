@@ -39,10 +39,10 @@ public class CheckPointManager implements InstanceManagerAutoDefault {
         if (log.isDebugEnabled()) {
             log.debug("XML Attributes and Elements:");
             for (Attribute at : xml.getAttributes()) {
-                log.debug("  {}", at);
+                log.debug("  - {}", at);
             }
             for (Element el : xml.getChildren()) {
-                log.debug("    {}", el);
+                log.debug("    - {}", el);
             }
         }
 
@@ -57,7 +57,7 @@ public class CheckPointManager implements InstanceManagerAutoDefault {
         if (log.isDebugEnabled()) {
             log.debug("Current key list:");
             for (String datetime : panel.getCheckPointKeys()) {
-                log.debug("  {}", datetime);
+                log.debug("  - {}", datetime);
             }
         }
     }
@@ -101,7 +101,7 @@ public class CheckPointManager implements InstanceManagerAutoDefault {
      * uses the current date and time for a key and the xml
      * data for the panel.
      */
-    class Panel {
+    static class Panel {
         LayoutEditor _lepanel;
         TreeMap<String, Element> _checkPoints;
 
