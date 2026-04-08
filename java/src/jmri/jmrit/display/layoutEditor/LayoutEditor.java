@@ -31,6 +31,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.dispatcher.DispatcherAction;
 import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.*;
+import jmri.jmrit.display.layoutEditor.CheckPointManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel.LocationFormat;
 import jmri.jmrit.display.panelEditor.PanelEditor;
@@ -186,6 +187,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private final JMenuItem undoTranslateSelectionMenuItem = new JMenuItem(Bundle.getMessage("UndoTranslateSelection"));
     private final JMenuItem assignBlockToSelectionMenuItem = new JMenuItem(Bundle.getMessage("AssignBlockToSelectionTitle") + "...");
 
+    // File modifiable menu
+    private JMenu _checkPointsMenu;
+
     // Selected point information
     private Point2D startDelta = new Point2D.Double(0.0, 0.0); // starting delta coordinates
     public Object selectedObject = null;       // selected object, null if nothing selected
@@ -291,6 +295,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private int numLayoutTraversers = 0;
 
     private LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
+    private CheckPointManager _checkPointManager = InstanceManager.getDefault(CheckPointManager.class);
 
     @Nonnull
     public LayoutEditorFindItems getFinder() {
@@ -527,6 +532,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("MenuItemStoreAccelerator")), primary_modifier));
         fileMenu.add(store);
+
         fileMenu.addSeparator();
 
         JMenuItem deleteItem = new JMenuItem(Bundle.getMessage("DeletePanel"));
@@ -536,6 +542,21 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 dispose();
             }
         });
+
+        fileMenu.addSeparator();
+
+        JMenuItem checkPointItem = new JMenuItem(Bundle.getMessage("MenuItemCheckPoint"));
+        String checkPointAccelerator = Bundle.getMessage("checkPointAccelerator");
+        checkPointItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(checkPointAccelerator), primary_modifier));
+        fileMenu.add(checkPointItem);
+        checkPointItem.addActionListener((ActionEvent event) -> {
+            _checkPointManager.createCheckPoint(this);
+            updateCheckPointsMenu();
+        });
+
+        _checkPointsMenu = new JMenu(Bundle.getMessage("MenuItemCheckPoints")); // used for CheckPoints SubMenu
+        fileMenu.add(_checkPointsMenu);
+
         setJMenuBar(menuBar);
 
         // setup Options menu
@@ -555,6 +576,22 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // setup Help menu
         addHelpMenu("package.jmri.jmrit.display.LayoutEditor", true);
+    }
+
+    /**
+     * Update a sub menu with the checkpoints in descending sequence.
+     */
+    private void updateCheckPointsMenu() {
+        _checkPointsMenu.removeAll();
+
+        for (String datetime : _checkPointManager.getCheckPointList(this)) {
+            JMenuItem checkPoint = new JMenuItem(datetime);
+            checkPoint.addActionListener((ActionEvent event) -> {
+                var item = (JMenuItem)event.getSource();
+                _checkPointManager.revertPanel(this, item.getText());
+            });
+            _checkPointsMenu.add(checkPoint);
+        }
     }
 
     @Override
@@ -3240,7 +3277,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                 }
                             }
                         }
-                        
+
                         if (selectedObject != null) {
                             selectedHitPointType = HitPointType.LAYOUT_POS_LABEL;
                             startDelta = MathUtil.subtract(((PositionableLabel) selectedObject).getLocation(), dLoc);
@@ -4464,7 +4501,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     PositionableLabel t = checkTurnoutIconPopUps(dLoc);
                     if (t != null) {
                         amendSelectionGroup(t);
-                    } else {   
+                    } else {
                         PositionableLabel sh = checkSignalHeadIconPopUps(dLoc);
                         if (sh != null) {
                             amendSelectionGroup(sh);
@@ -7244,7 +7281,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
         }
     }
-    
+
     /**
      * Add a signal head to the Panel
      */
@@ -9987,7 +10024,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class);
 }
 
-// This just exists to change the class name that's being 
+// This just exists to change the class name that's being
 // created for an Output Indicator so that it will show up
 // in the contextual menu.
 class OutputIndicator extends TurnoutIcon {
