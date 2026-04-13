@@ -6,6 +6,7 @@
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
         <listEntry value="2"/>
     </listAttribute>
+    <mapAttribute key="org.eclipse.debug.core.environmentVariables"/>
     <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
         <listEntry value="org.eclipse.eclemma.ui.launchGroup.coverage"/>
         <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
@@ -25,5 +26,5 @@
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value=""/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jmri"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
-    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea&#10;-Xmx1536m -Duser.language=en -Duser.region=US -Dnashorn.args=--no-deprecation-warning --add-exports java.desktop/sun.awt=ALL-UNNAMED -XX:+EnableDynamicAgentLoading  -Djava.security.policy=/home/sg/devl/jmri/JMRI-Pugwash1/JMRI/lib/security.policy&#10;-Djinput.useDefaultPlugin=false&#10;-Djmri.path.program=/home/sg/devl/jmri/JMRI-Pugwash1/JMRI&#10;-Djmri.prefsdir=/home/sg/devl/jmri/JMRI-Pugwash1/JMRI/temp&#10;-Djmri.shutdownmanager=jmri.util.MockShutDownManager"/>
 </launchConfiguration>
