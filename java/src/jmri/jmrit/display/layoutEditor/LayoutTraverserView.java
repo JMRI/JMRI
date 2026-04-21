@@ -121,7 +121,7 @@ public class LayoutTraverserView extends LayoutTrackView {
      * Get the center of the control point, which is on an edge of the traverser.
      * @return The center point for the control circles.
      */
-    private Point2D getControlPointCenter() {
+    public Point2D getControlPointCenter() {
         Point2D center = getCoordsCenter();
         Rectangle2D bounds = getBounds();
         if (getOrientation() == LayoutTraverser.HORIZONTAL) {
