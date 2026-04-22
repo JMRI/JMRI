@@ -1018,18 +1018,14 @@ public class LayoutTraverser extends LayoutTrack {
                     int tState = getTurnout().getKnownState();
                     if (tState == Turnout.THROWN) {
                         // This slot lane is now active.
-                        // Check if the current lastKnownIndex is part of this pair.
                         int pairBase = (connectionIndex / 2) * 2;
-                        boolean alreadyInPair = (lastKnownIndex == pairBase || lastKnownIndex == pairBase + 1);
-
-                        if (!alreadyInPair) {
-                             // Bridge moved from somewhere else, default to this slot's side
+                        log.warn("lastKnownIndex {} connectionIndex {}", lastKnownIndex, connectionIndex);
+                        // Update the traverser's position indicator.
+                        if (lastKnownIndex != connectionIndex) {
                              lastKnownIndex = connectionIndex;
                              models.redrawPanel();
                              models.setDirty();
                         }
-                        // else: already set to a slot in this pair (Side A or B), so leave it alone to preserve intent.
-
                         // Command all other slot turnouts (other lanes) to CLOSED.
                         for (int i = 0; i < LayoutTraverser.this.slotList.size(); i += 2) {
                             if (i != pairBase) {

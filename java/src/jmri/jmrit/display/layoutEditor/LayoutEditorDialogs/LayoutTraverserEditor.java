@@ -347,11 +347,27 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             bufferMastComboBox.setAllowNull(true);
             mastPanel.add(bufferMastComboBox, c);
 
+            exitMastComboBox.addActionListener(e -> {
+                if (!layoutTraverser.isDispatcherManaged()) {
+                    return;
+                }
+                layoutTraverser.setExitSignalMast(exitMastComboBox.getSelectedItemDisplayName());
+                placeTraverserBridgeMastsImmediately();
+            });
+
+            bufferMastComboBox.addActionListener(e -> {
+                if (!layoutTraverser.isDispatcherManaged()) {
+                    return;
+                }
+                layoutTraverser.setBufferSignalMast(bufferMastComboBox.getSelectedItemDisplayName());
+                placeTraverserBridgeMastsImmediately();
+            });
+
             footerAssignmentsPanel.add(mastPanel);
 
             JPanel bridgePlacementPanel = new JPanel();
             bridgePlacementPanel.setLayout(new BoxLayout(bridgePlacementPanel, BoxLayout.Y_AXIS)); // NOI18N
-            bridgePlacementPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TraverserAddMastIconsTitle")));
+            bridgePlacementPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TraverserAddExitMastIconsTitle")));
 
             bridgeDoNotPlaceIcons = new JRadioButton(Bundle.getMessage("DoNotPlace")); // NOI18N
             bridgePlaceIconsLeft = new JRadioButton(Bundle.getMessage("LeftHandSide")); // NOI18N
@@ -377,12 +393,65 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             bridgePlacementPanel.add(bridgeRadioPanel);
             footerAssignmentsPanel.add(bridgePlacementPanel);
 
+            bridgeDoNotPlaceIcons.addActionListener(e -> placeTraverserBridgeMastsImmediately());
+            bridgePlaceIconsLeft.addActionListener(e -> placeTraverserBridgeMastsImmediately());
+            bridgePlaceIconsRight.addActionListener(e -> placeTraverserBridgeMastsImmediately());
+
             editLayoutTraverserSlotPanel.add(footerAssignmentsPanel);
         }
 
         editLayoutTraverserSlotPanel.revalidate();
         editLayoutTraverserSlotPanel.repaint();
         editLayoutTraverserFrame.pack();
+    }
+
+    private void placeTraverserBridgeMastsImmediately() {
+        if (!layoutTraverser.isDispatcherManaged() || layoutTraverserView == null) {
+            return;
+        }
+
+        // Remove any existing exit/buffer icons first
+        List<SignalMastIcon> iconsToRemove = new ArrayList<>();
+        for (Positionable p : layoutEditor.getContents()) {
+            if (p instanceof SignalMastIcon) {
+                SignalMastIcon icon = (SignalMastIcon) p;
+                if ((layoutTraverser.getExitSignalMast() != null && layoutTraverser.getExitSignalMast().equals(icon.getSignalMast()))
+                        || (layoutTraverser.getBufferMast() != null && layoutTraverser.getBufferMast().equals(icon.getSignalMast()))) {
+                    iconsToRemove.add(icon);
+                }
+            }
+        }
+        for (SignalMastIcon icon : iconsToRemove) {
+            icon.remove();
+            editLayoutTraverserNeedsRedraw = true;
+        }
+
+        if (bridgeDoNotPlaceIcons.isSelected()) {
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+            return;
+        }
+
+        Point2D center = layoutTraverserView.getControlPointCenter();
+        int orientation = layoutTraverser.getOrientation();
+        boolean sideRight = bridgePlaceIconsRight.isSelected();
+
+        if (layoutTraverser.getBufferMast() != null) {
+            SignalMastIcon icon = new SignalMastIcon(layoutEditor);
+            icon.setSignalMast(layoutTraverser.getBufferMast().getDisplayName());
+            layoutEditor.getLETools().placingBlockForTurntable(icon, !sideRight, 0.0, orientation, center);
+            editLayoutTraverserNeedsRedraw = true;
+        }
+
+        if (layoutTraverser.getExitSignalMast() != null) {
+            SignalMastIcon icon = new SignalMastIcon(layoutEditor);
+            icon.setSignalMast(layoutTraverser.getExitSignalMast().getDisplayName());
+            layoutEditor.getLETools().placingBlockForTurntable(icon, sideRight, 0.0, orientation, center);
+            editLayoutTraverserNeedsRedraw = true;
+        }
+
+        layoutEditor.redrawPanel();
+        layoutEditor.setDirty();
     }
 
     private void saveSlotPanelDetail() {
