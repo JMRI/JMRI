@@ -1,0 +1,131 @@
+package jmri.jmrit.throttle;
+
+import javax.swing.ActionMap;
+import javax.swing.ComponentInputMap;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
+
+import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.ThrottleManager;
+import jmri.jmrit.throttle.actions.ThrottleWindowActionsFactory;
+import jmri.jmrit.throttle.actions.ThrottleWindowInputsListener;
+import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
+import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
+import jmri.util.JmriJFrame;
+
+public class SimpleThrottleWindow extends JmriJFrame implements ThrottleControllersUIContainer {
+
+    private final ThrottleFrameManager throttleFrameManager = InstanceManager.getDefault(ThrottleFrameManager.class);
+    private final ThrottleWindowActionsFactory myActionFactory;
+    private SimpleThrottlePanel throttleControllerUI;
+
+    /**
+     * Default constructor
+     * 
+     * @param la the loco address to set in the throttle
+     */
+    public SimpleThrottleWindow(DccLocoAddress la) {
+        this((jmri.jmrix.ConnectionConfig) null, la);
+    }
+
+    public SimpleThrottleWindow(jmri.jmrix.ConnectionConfig connectionConfig, DccLocoAddress la) {
+        super(Bundle.getMessage("ThrottleTitle"));
+
+        ThrottleManager throttleManager;
+        if (connectionConfig != null) {
+            throttleManager = connectionConfig.getAdapter().getSystemConnectionMemo().get(jmri.ThrottleManager.class);
+        } else {
+            throttleManager = InstanceManager.getDefault(jmri.ThrottleManager.class);
+        }
+        myActionFactory = new ThrottleWindowActionsFactory(this);
+        throttleControllerUI = new SimpleThrottlePanel(this, throttleManager);
+        initGUI();
+        if (la != null) {
+            throttleControllerUI.setAddress(la);
+        }        
+    }
+
+    private void initGUI() {
+        setTitle(Bundle.getMessage("ThrottleTitle") );        
+        add(throttleControllerUI);
+        pack();
+
+        // add keyboard controls
+        ActionMap am = myActionFactory.buildActionMap();
+        for (Object k : am.allKeys()) {
+            getRootPane().getActionMap().put(k, am.get(k));
+        }        
+        ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
+        ComponentInputMap im = new ComponentInputMap(getRootPane());
+        for (Object k : this.getRootPane().getActionMap().allKeys()) {
+            KeyStroke[] kss = preferences.getThrottlesKeyboardControls().getKeyStrokes((String)k);
+            if (kss !=null) {
+                for (KeyStroke keystroke : kss) {
+                    if (keystroke != null) {
+                        im.put(keystroke, k);
+                    }
+                }
+            }
+        }
+        getRootPane().setInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW,im);
+        getRootPane().setFocusable(true);
+        getRootPane().requestFocusInWindow();
+        // mouse wheel listener
+        addMouseWheelListener( new ThrottleWindowInputsListener(this) );
+    }
+
+    @Override
+    public int getNbThrottlesControllers() {
+        return 1;
+    }
+
+    @Override
+    public ThrottleControllerUI newThrottleController() {
+        return null;
+    }
+
+    @Override
+    public void addThrottleControllerAt(ThrottleControllerUI tf, int n) {
+        // do nothing
+    }
+
+    @Override
+    public void removeThrottleController(ThrottleControllerUI tf) {
+        // do nothing
+    }
+
+    @Override
+    public ThrottleControllerUI getThrottleControllerAt(int n) {
+        if (n == 0) {
+            return throttleControllerUI;
+        }
+        return null;
+    }
+
+    @Override
+    public ThrottleControllerUI getCurentThrottleController() {
+        return throttleControllerUI;
+    }
+
+    @Override
+    public void emergencyStopAll() {
+        throttleControllerUI.eStop();
+    }
+
+    @Override
+    public int getNumberOfEntriesFor(DccLocoAddress la) {
+        if (throttleControllerUI.getAddress() != null && throttleControllerUI.getAddress().equals(la)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    @Override
+    public void dispose() {        
+        throttleControllerUI.dispose(); // will release the throttle
+        throttleFrameManager.requestThrottleWindowDestruction(this);
+        super.dispose();        
+    }
+}
