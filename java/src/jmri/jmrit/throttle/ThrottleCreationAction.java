@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.ThrottleManager;
 import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.util.swing.JmriAbstractAction;
@@ -88,8 +89,8 @@ public class ThrottleCreationAction extends JmriAbstractAction {
         if (BeanUtil.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
             group = (String) BeanUtil.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
-        ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame(connectionConfig);
-        tf.getAddressPanel().getRosterEntrySelector().setSelectedRosterGroup(group);
+        ThrottleControllerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame(connectionConfig);
+        tf.getRosterEntrySelector().setSelectedRosterGroup(group); 
         tf.toFront();
     }
 

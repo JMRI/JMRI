@@ -54,6 +54,9 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
 import jmri.jmrit.throttle.*;
+import jmri.jmrit.throttle.buttons.LargePowerManagerButton;
+import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
+import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
@@ -275,7 +278,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             if (!checkIfEntrySelected()) {
                 return;
             }
-            ThrottleControllerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleController();
+            ThrottleControllerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
             tf.toFront();
             tf.setRosterEntry(re);
         });
@@ -1296,7 +1299,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             for (RosterEntry re : rtable.getSelectedRosterEntries()) {
                 ThrottleControllerUI tf;
                 if (tw == null) {
-                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleController();
+                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
                     tw = tf.getThrottleControllersContainer();
                 } else {
                     tf = tw.newThrottleController();

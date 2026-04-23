@@ -16,27 +16,19 @@
 listenToDCCThrottle = 3
 
 import jmri
+import jmri.ThrottleListener as ThrottleListener
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.beans.PropertyChangeListener as PropertyChangeListener
-import jmri.jmrit.throttle.AddressListener as AddressListener
 import javax.swing.JButton as JButton
 import javax.swing.ImageIcon as ImageIcon
 import time
 
-class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.ThrottleListener):
+class DCCThrottle(Jynstrument, ThrottleListener, PropertyChangeListener):
     #Jynstrument main and mandatory methods
     def getExpectedContextClassName(self):
         return "jmri.jmrit.throttle.ThrottleWindow"
     
     def init(self):
-        self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
-        if (self.getContext().getCurrentThrottleFrame() != None) :
-            self.addressPanel = self.getContext().getCurrentThrottleFrame().getAddressPanel()
-            self.addressPanel.addAddressListener(self) # change of throttle in Current frame
-            self.panelThrottle = self.getContext().getCurrentThrottleFrame().getAddressPanel().getThrottle() # the throttle
-        else :
-            self.addressPanel = None
-            self.panelThrottle = None
         self.label = JButton(ImageIcon(self.getFolder() + "/DCCThrottle.png","DCCThrottle")) #label
         self.label.addMouseListener(self.getMouseListeners()[0]) # In order to get the popupmenu on the button too
         self.add(self.label)
@@ -51,81 +43,71 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
         if (self.masterThrottle != None):
             self.masterThrottle.removePropertyChangeListener(self)
             self.masterThrottle = None
-        self.panelThrottle = None
-        self.advFunctions = None
-        if (self.addressPanel != None):
-            self.addressPanel.removeAddressListener(self)
-            self.addressPanel = None
-        if (self.getContext() != None):
-            self.getContext().removePropertyChangeListener(self)               
+        self.advFunctions = None          
 
     #Property listener part
     def propertyChange(self, event):
-        if (event.propertyName.startswith("ThrottleFrame")) :  # Current throttle frame changed
-            if event.oldValue != None :
-                event.oldValue.getAddressPanel().removeAddressListener(self)
-            if event.newValue != None :
-                self.addressPanel = event.newValue.getAddressPanel()
-                self.panelThrottle = self.addressPanel.getThrottle()
-                self.addressPanel.addAddressListener(self)
-            return
-        if(self.panelThrottle == None):
+        panelThrottle = None
+        if (self.getContext().getCurentThrottleController() != None) :
+            panelThrottle = self.getContext().getCurentThrottleController().getThrottle()
+            roster = self.getContext().getCurentThrottleController().getRosterEntry()
+        if(panelThrottle == None):
             return
         if(event.propertyName == "IsForward"):
-           self.panelThrottle.setIsForward(event.newValue)
+           panelThrottle.setIsForward(event.newValue)
            return
         if(event.propertyName == "SpeedSetting"):
-            self.panelThrottle.setSpeedSetting(event.newValue)
+            panelThrottle.setSpeedSetting(event.newValue)
             return
         if(event.propertyName == "F0"):
-            if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "0", event.newValue, self.panelThrottle) != None):
+            if (roster != None) and (self.advFunctions.call(roster, "0", event.newValue, panelThrottle) != None):
                 return
-            self.panelThrottle.setFunction(0,event.newValue)
+            panelThrottle.setFunction(0,event.newValue)
             return
         if(event.propertyName == "F1"):
-            if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "1", event.newValue, self.panelThrottle) != None):
+            if (roster != None) and (self.advFunctions.call(roster, "1", event.newValue, panelThrottle) != None):
                 return
-            self.panelThrottle.setFunction(1,event.newValue)
+            panelThrottle.setFunction(1,event.newValue)
             return
         if(event.propertyName == "F2"):
-            if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "2", event.newValue, self.panelThrottle) != None):
+            if (roster != None) and (self.advFunctions.call(roster, "2", event.newValue, panelThrottle) != None):
                 return
-            self.panelThrottle.setFunction(2,event.newValue)
+            panelThrottle.setFunction(2,event.newValue)
             return
         if(event.propertyName == "F3"):
-            if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "3", event.newValue, self.panelThrottle) != None):
+            if (roster != None) and (self.advFunctions.call(roster, "3", event.newValue, panelThrottle) != None):
                 return
-            self.panelThrottle.setFunction(3,event.newValue)
+            panelThrottle.setFunction(3,event.newValue)
             return
         if(event.propertyName == "F4"):
-            if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "4", event.newValue, self.panelThrottle) != None):
+            if (roster != None) and (self.advFunctions.call(roster, "4", event.newValue, panelThrottle) != None):
                 return
-            self.panelThrottle.setFunction(4,event.newValue)
+            panelThrottle.setFunction(4,event.newValue)
             return
         if(event.propertyName == "F5"):
-            if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "5", event.newValue, self.panelThrottle) != None):
+            if (roster != None) and (self.advFunctions.call(roster, "5", event.newValue, panelThrottle) != None):
                 return
-            self.panelThrottle.setFunction(5,event.newValue)
+            panelThrottle.setFunction(5,event.newValue)
             return
         if(event.propertyName == "F6"):
-            if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "6", event.newValue, self.panelThrottle) != None):
+            if (roster != None) and (self.advFunctions.call(roster, "6", event.newValue, panelThrottle) != None):
                 return
-            self.panelThrottle.setFunction(6,event.newValue)
+            panelThrottle.setFunction(6,event.newValue)
             return
         if(event.propertyName == "F7"):
-            if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "7", event.newValue, self.panelThrottle) != None):
+            if (roster != None) and (self.advFunctions.call(roster, "7", event.newValue, panelThrottle) != None):
                 return
-            self.panelThrottle.setFunction(7,event.newValue)
+            panelThrottle.setFunction(7,event.newValue)
             return
         if(event.propertyName == "F8"):
-            if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "8", event.newValue, self.panelThrottle) != None):
+            if (roster != None) and (self.advFunctions.call(roster, "8", event.newValue, panelThrottle) != None):
                 return
-            self.panelThrottle.setFunction(8,event.newValue)
+            panelThrottle.setFunction(8,event.newValue)
             return
         if(event.propertyName == "F9"):
-            if (self.addressPanel.getRosterEntry() != None) and (self.advFunctions.call(self.addressPanel.getRosterEntry(), "9", event.newValue, self.panelThrottle) != None):
+            if (roster != None) and (self.advFunctions.call(roster, "9", event.newValue, panelThrottle) != None):
                 return
-            self.panelThrottle.setFunction(9,event.newValue)
+            panelThrottle.setFunction(9,event.newValue)
             return
             
     #ThrottleListener part (real dccThrottle)
@@ -144,27 +126,7 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
             print "Couldn't request a throttle for "+locoAddress
         
     def notifyDecisionRequired(LocoAddress, decision):
-        pass # Throttle steal / share decisions are delegated to the ThrottleManager
-    
-    #AddressListener part: to listen for address changes in address panel (release, acquired)
-    def notifyAddressChosen(self, address):
-        pass
-
-    def notifyAddressThrottleFound(self, throt):
-        self.panelThrottle = throt
-
-    def notifyAddressReleased(self, address):
-        self.panelThrottle = None
-
-    def notifyConsistAddressChosen(self, address):
-        self.notifyAddressChosen(address)
-
-    def notifyConsistAddressThrottleFound(self, throttle):
-        self.notifyAddressThrottleFound(throttle)
-
-    def notifyConsistAddressReleased(self, address):
-        self.notifyAddressReleased(address)
-    
+        pass # Throttle steal / share decisions are delegated to the ThrottleManager        
 
 class AdvFunctions():
     def call(self, rosterEntry, advFn, status, throttle):

@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
 
+import jmri.jmrit.throttle.UIImplementation.ThrottleUICore;
+
 /**
  * Save throttles to XML
  *
@@ -33,7 +35,7 @@ public class StoreDefaultXmlThrottlesLayoutAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         StoreXmlThrottlesLayoutAction sxta = new StoreXmlThrottlesLayoutAction();
-        sxta.saveThrottlesLayout(new File(ThrottleFrame.getDefaultThrottleFilename()));
+        sxta.saveThrottlesLayout(new File(ThrottleUICore.getDefaultThrottleFilename()));
     }
 
 }

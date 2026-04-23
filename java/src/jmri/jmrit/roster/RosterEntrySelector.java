@@ -16,8 +16,9 @@ import java.beans.PropertyChangeListener;
  * @author Randall Wood
  */
 public interface RosterEntrySelector {
-
+    
     static final String SELECTED_ROSTER_ENTRIES = "selectedRosterEntries";
+    static final String HIGHLIGHTED_ROSTER_ENTRIES = "highlightedRosterEntries";
 
     /**
      * Get the currently selected roster entries. Since the selection could

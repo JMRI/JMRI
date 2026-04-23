@@ -9,6 +9,7 @@ import javax.swing.SwingUtilities;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.throttle.UIImplementation.ThrottleUICore;
 import jmri.util.swing.JmriJOptionPane;
 
 import org.jdom2.Element;
@@ -50,7 +51,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
         if (fileChooser == null) {
             fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
             fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
-            fileChooser.setCurrentDirectory(new File(ThrottleFrame.getDefaultThrottleFolder()));
+            fileChooser.setCurrentDirectory(new File(ThrottleUICore.getDefaultThrottleFolder()));
         }
         int retVal = fileChooser.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
@@ -100,9 +101,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
             if ((throttles != null) && (throttles.size() > 0)) { // OLD FORMAT
                 for (Element e : throttles) {
                     SwingUtilities.invokeLater(() -> {
-                        ThrottleFrame tf = tfManager.createThrottleFrame();
-                        tf.setXml(e);
-                        tf.toFront();
+                        tfManager.createThrottleWindow(e).setVisible(true);                        
                     });
                 }
             } else {
@@ -132,7 +131,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
      *
      * @author glen
      */
-    static class ThrottlePrefs extends XmlFile {
+    public static class ThrottlePrefs extends XmlFile {
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadXmlThrottlesLayoutAction.class);

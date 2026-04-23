@@ -6,7 +6,7 @@ import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.awt.CardLayout as CardLayout
 import jmri.util.swing.ResizableImagePanel as ResizableImagePanel
 import java.awt.event.MouseListener as MouseListener
-import jmri.jmrit.throttle.AddressListener as AddressListener
+import jmri.jmrit.throttle.interfaces.AddressListener as AddressListener
 from java.lang import Thread, Runnable
 
 class SoundOn2xF0(Jynstrument, AddressListener, MouseListener):
@@ -24,16 +24,16 @@ class SoundOn2xF0(Jynstrument, AddressListener, MouseListener):
         self.addComponentListener(self.labelOff)
         self.addComponentListener(self.labelOn)
         self.addMouseListener(self)
-        self.getContext().getAddressPanel().addAddressListener(self)
-        self.throttle = self.getContext().getAddressPanel().getThrottle()
+        self.getContext().addAddressListener(self)
+        self.throttle = self.getContext().getThrottle()
         self.onOffValue = False # There is no way to ask for value, hence this value
         self.updateThrottle()
         self.setIcon()
 
     def quit(self):   # very important to clean up everything to make sure GC will collect us
         self.cleanThrottle()
-        if (( self.getContext() != None) and ( self.getContext().getAddressPanel() != None)) :
-            self.getContext().getAddressPanel().removeAddressListener(self)
+        if (self.getContext() != None) :
+            self.getContext().removeAddressListener(self)
 
 # this is a good way to make sure that we're are actaully GCed 
 # using memory watcher in development menu, we can force a GC from there

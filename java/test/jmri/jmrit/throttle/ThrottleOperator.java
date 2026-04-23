@@ -2,6 +2,9 @@ package jmri.jmrit.throttle;
 
 import java.awt.Component;
 import jmri.DccLocoAddress;
+import jmri.jmrit.throttle.panels.AddressPanel;
+import jmri.jmrit.throttle.panels.FunctionButton;
+
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;

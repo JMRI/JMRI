@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import jmri.jmrit.throttle.panels.AddressPanel;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;

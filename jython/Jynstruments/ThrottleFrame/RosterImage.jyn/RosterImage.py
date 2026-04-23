@@ -7,7 +7,7 @@ import java.awt
 import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.awt.BorderLayout as BorderLayout
-import jmri.jmrit.throttle.BackgroundPanel as BackgroundPanel
+import jmri.jmrit.throttle.panels.BackgroundPanel as BackgroundPanel
 
 class RosterImage(Jynstrument):
 # Jynstrument mandatory part
@@ -18,18 +18,18 @@ class RosterImage(Jynstrument):
     def init(self):
         self.setLayout( BorderLayout() )
         self.image = BackgroundPanel()
-        self.image.setAddressPanel(self.getContext().getAddressPanel())
-        if ((self.getContext().getAddressPanel().getRosterEntry() != None) and 
-            (self.getContext().getAddressPanel().getRosterEntry().getImagePath() != None)):
-            self.image.setImagePath( self.getContext().getAddressPanel().getRosterEntry().getImagePath() )
+        self.image.setAddressPanel(self.getAddressPanel())
+        if ((self.getContext().getRosterEntry() != None) and 
+            (self.getContext().getRosterEntry().getImagePath() != None)):
+            self.image.setImagePath( self.getContext().getRosterEntry().getImagePath() )
         self.setPreferredSize(java.awt.Dimension(320,200))
         self.add(self.image, BorderLayout.CENTER )        
         self.addComponentListener(self.image)
-        self.getContext().getAddressPanel().addAddressListener(self.image)
+        self.getContext().addAddressListener(self.image)
 
     def quit(self):   # very important to clean up everything to make sure GC will collect us
-        if (( self.getContext() != None) and ( self.getContext().getAddressPanel() != None)) :
-            self.getContext().getAddressPanel().removeAddressListener(self)
+        if ( self.getContext() != None) 
+            self.getContext().removeAddressListener(self.image)
 
 
 
