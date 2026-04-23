@@ -788,6 +788,10 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
 
     @Override
     public void addThrottleControllerAt(ThrottleControllerUI tp, int idx) {
+        if (!(tp instanceof ThrottleFrame)) {
+            throw new IllegalArgumentException("Only ThrottleFrame supported in ThrottleWindow");
+        }
+
         String txt = "ThrottleJDesktopPane-" + throttleFrameManager.generateUniqueFrameID();
         ((ThrottleFrame)tp).setTitle(txt);
         if (idx>throttleFrames.size()) {

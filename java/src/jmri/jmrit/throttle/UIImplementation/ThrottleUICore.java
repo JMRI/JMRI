@@ -387,11 +387,11 @@ public class ThrottleUICore implements AddressListener  {
                 && (InstanceManager.getDefault(ThrottlesPreferences.class).isAutoLoading()) && (addressPanel != null)) {
             if ((addressPanel.getRosterEntry() != null)
                     && ((getLastUsedSaveFile() == null) || (getLastUsedSaveFile().compareTo(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml") != 0))) {
-                myThrottleController.loadThrottle(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml");
+                myThrottleController.loadThrottleFile(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml");
                 setLastUsedSaveFile(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml");
             } else if ((addressPanel.getRosterEntry() == null)
                     && ((getLastUsedSaveFile() == null) || (getLastUsedSaveFile().compareTo(getDefaultThrottleFolder() + addressPanel.getCurrentAddress()+ ".xml") != 0))) {
-                myThrottleController.loadThrottle(getDefaultThrottleFolder() + throttle.getLocoAddress().getNumber() + ".xml");
+                myThrottleController.loadThrottleFile(getDefaultThrottleFolder() + throttle.getLocoAddress().getNumber() + ".xml");
                 setLastUsedSaveFile(getDefaultThrottleFolder() + throttle.getLocoAddress().getNumber() + ".xml");
             }
         } else {

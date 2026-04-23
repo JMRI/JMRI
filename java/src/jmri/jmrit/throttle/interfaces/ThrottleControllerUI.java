@@ -123,18 +123,30 @@ public interface ThrottleControllerUI {
 
     /**
      * Check if that throttle control UI is selected (active and visible)
-      *
+     *
      * @return true if that throttle control UI is visible, false otherwise
      */    
-    boolean isVisible();    
+    boolean isVisible();
 
+    /*
+     * Update that throttle control UI containing frame title (if any) with the current address and roster entry.
+     *
+     */
     void updateFrameTitle();
 
+    /*
+     * Update that throttle control UI.
+     *
+     */
     void updateGUI();
 
+    /*
+     * Load the default throttle layout
+     *
+     */
     void loadDefaultThrottle();
 
-    void loadThrottle(String sfile);
+    void loadThrottleFile(String sfile);
 
     /**
      * Get a copy of that throttle control UI label (a text or the roster entry icon, for consits a consist icon will be built from the locomotives in the consist).

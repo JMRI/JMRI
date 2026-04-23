@@ -158,9 +158,9 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
         if (controlPanelJIF.getHeight() > functionPanelJIF.getHeight() + addressPanelJIF.getHeight()) {
             addressPanelJIF.setSize(addressPanelJIF.getWidth(), controlPanelJIF.getHeight() - functionPanelJIF.getHeight());
         }
-        if (functionPanelJIF.getWidth() < addressPanelJIF.getWidth()) {
-         //   functionPanelJIF.setSize(addressPanelJIF.getWidth(), functionPanelJIF.getHeight());
-        }
+//        if (functionPanelJIF.getWidth() < addressPanelJIF.getWidth()) {
+//            functionPanelJIF.setSize(addressPanelJIF.getWidth(), functionPanelJIF.getHeight());
+//        }
 
         speedPanelJIF.setSize(addressPanelJIF.getWidth() + controlPanelJIF.getWidth(), addressPanelJIF.getHeight() / 2);
         speedPanelJIF.setLocation(0, controlPanelJIF.getHeight());
@@ -288,7 +288,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
     
     @Override
     public void setThrottleControllersContainer(ThrottleControllersUIContainer tw) {
-        throttleWindow = (ThrottleWindow) tw;
+        if (tw instanceof ThrottleWindow) {
+            throttleWindow = (ThrottleWindow) tw;
+        } else {
+            log.warn("Unable to set throttle controllers container, provided container is not an instance of ThrottleWindow");
+        }        
     }
 
     @Override
@@ -703,7 +707,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
 
         String sfile = e.getAttributeValue("ThrottleXMLFile");
         if (sfile != null) {
-            loadThrottle(FileUtil.getExternalFilename(sfile));
+            loadThrottleFile(FileUtil.getExternalFilename(sfile));
             return;
         }
 
@@ -872,7 +876,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
             return;
         }
         log.debug("Loading default throttle file : {}", dtf);
-        loadThrottle(dtf);
+        loadThrottleFile(dtf);
         throuic.setLastUsedSaveFile(null);
         isLoadingDefault = false;
     }
@@ -885,11 +889,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
         if (file == null) {
             return ;
         }
-        loadThrottle(file.getAbsolutePath());
+        loadThrottleFile(file.getAbsolutePath());
     }
 
     @Override
-    public void loadThrottle(String sfile) {
+    public void loadThrottleFile(String sfile) {
         if (sfile == null) {
             loadThrottle();
             return;

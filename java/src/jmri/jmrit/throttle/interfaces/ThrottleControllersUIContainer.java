@@ -69,6 +69,12 @@ public interface ThrottleControllersUIContainer {
      */    
     public int getNumberOfEntriesFor(DccLocoAddress la);
 
+    /**
+     * Dispose of the container and its resources.
+     * This is called when the container is closed, and should clean up any resources used by the container, such as closing windows, releasing memory, etc.
+     * Particularly will release an ythrottle still in use.
+     * 
+     */
     public void dispose();
 
 }

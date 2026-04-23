@@ -57,6 +57,7 @@ public interface AddressListener extends EventListener {
 
     /**
      * Receive notification that a new roster entry has been selected (and not validated yet).
+     * In the RosterEntry combobox for example.
      *
      * @param re The roster entry that is now selected.
      */

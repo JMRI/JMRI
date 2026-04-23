@@ -1,6 +1,8 @@
 package jmri.jmrit.throttle;
 
 import java.awt.BorderLayout;
+import java.awt.Frame;
+import java.awt.Window;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -38,7 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI {
 
-    private SimpleThrottleWindow simpleThrottleWindow;
+    private ThrottleControllersUIContainer myContainer;
     private final ThrottleManager throttleManager;
     private final ThrottleFrameManager throttleFrameManager = InstanceManager.getDefault(ThrottleFrameManager.class);
     private final ThrottleUICore throuic;
@@ -46,7 +48,7 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
 
     public SimpleThrottlePanel(SimpleThrottleWindow stw, ThrottleManager tm) {
         super();
-        simpleThrottleWindow = stw;
+        myContainer = stw;
         throttleManager = tm;
         throuic = new ThrottleUICore(throttleManager, this);
         initGUI();
@@ -76,7 +78,11 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
             winTitle = winTitle + " - " + addr;
 
         }
-        simpleThrottleWindow.setTitle(winTitle);
+        if (myContainer != null && myContainer instanceof Frame) {
+            ((Frame) myContainer).setTitle(winTitle);
+        } else {
+            log.warn("Unable to set simple throttle window title, myContainer is not an instance of Frame");
+        }
     }
 
     public void resetFunctionPanelButton() {
@@ -98,20 +104,24 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
 
     @Override
     public ThrottleControllersUIContainer getThrottleControllersContainer() {
-        return simpleThrottleWindow;
+        return myContainer;
     }
     
     @Override
     public void setThrottleControllersContainer(ThrottleControllersUIContainer tw) {
-       simpleThrottleWindow = (SimpleThrottleWindow) tw;
+        myContainer = tw;
     }
 
     @Override
     public void toFront() {
-        if (simpleThrottleWindow == null) {
+        if (myContainer == null) {
             return;
         }
-        simpleThrottleWindow.toFront();
+        if (myContainer instanceof Window) {
+            ((Window) myContainer).toFront();
+        } else {
+            log.warn("Unable to set simple throttle window to front, myContainer is not an instance of Window");
+        }
     }
 
     @Override
@@ -216,7 +226,11 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
      */
     @Override
     public void setLocation(int x, int y) {
-        simpleThrottleWindow.setLocation(x, y);
+        if (myContainer instanceof SimpleThrottleWindow) {
+            ((SimpleThrottleWindow) myContainer).setLocation(x, y);
+        } else {
+            log.warn("Unable to set simple throttle window location, myContainer is not an instance of SimpleThrottleWindow");
+        }
     }
 
     public Element getXmlFile() {
@@ -235,7 +249,7 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
 
         String sfile = e.getAttributeValue("ThrottleXMLFile");
         if (sfile != null) {
-            loadThrottle(FileUtil.getExternalFilename(sfile));
+            loadThrottleFile(FileUtil.getExternalFilename(sfile));
             return;
         }
     
@@ -252,7 +266,7 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
             return;
         }
         log.debug("Loading default throttle file : {}", dtf);
-        loadThrottle(dtf);
+        loadThrottleFile(dtf);
         throuic.setLastUsedSaveFile(null);
         isLoadingDefault = false;
     }
@@ -265,11 +279,11 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
         if (file == null) {
             return ;
         }
-        loadThrottle(file.getAbsolutePath());
+        loadThrottleFile(file.getAbsolutePath());
     }
 
     @Override
-    public void loadThrottle(String sfile) {
+    public void loadThrottleFile(String sfile) {
         if (sfile == null) {
             loadThrottle();
             return;

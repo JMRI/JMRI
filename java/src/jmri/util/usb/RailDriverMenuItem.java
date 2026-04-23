@@ -517,12 +517,14 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                         activeThrottleFrame = null;
                     }
 
-                    activeThrottleFrame = (ThrottleFrame) object;
-                    throttleWindow = activeThrottleFrame.getThrottleControllersContainer();
-
-                    throttleWindow.addPropertyChangeListener(this);
-                    activeThrottleFrame.addPropertyChangeListener(this);
-
+                    if (object instanceof ThrottleFrame) {
+                        activeThrottleFrame = (ThrottleFrame) object;
+                        throttleWindow = activeThrottleFrame.getThrottleControllersContainer();
+                        throttleWindow.addPropertyChangeListener(this);
+                        activeThrottleFrame.addPropertyChangeListener(this);
+                    } else {
+                        log.warn("new ThrottleFrame is not a ThrottleFrame: {}", object);
+                    }
                 }
                 break;
             case "Value":
