@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2026</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2026-01-01</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<variable item="Parameter0 Servo1" CV="200" default="0">
+		<decVal/>
+		<label>Parameter 0 Servo 1 (CV 200)</label>
+		<label xml:lang="de">Parameter 0 Servo 1 (CV 200)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter1 Servo1" CV="201" default="0">
+		<decVal/>
+		<label>Parameter 1 Servo 1 (CV 201)</label>
+		<label xml:lang="de">Parameter 1 Servo 1 (CV 201)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter2 Servo1" CV="202" default="20">
+		<decVal/>
+		<label>Speed Servo 1 (CV 202)</label>
+		<label xml:lang="de">Geschwindigkeit Servo 1 (CV 202)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter3 Servo1" CV="203" default="128">
+		<decVal/>
+		<label>Position 1 Servo 1 (CV 203)</label>
+		<label xml:lang="de">Position 1 Servo 1 (CV 203)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter4 Servo1" CV="204" default="128">
+		<decVal/>
+		<label>Position 2 Servo 1 (CV 204)</label>
+		<label xml:lang="de">Position 2 Servo 1 (CV 204)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter5 Servo1" CV="205" default="0">
+		<decVal/>
+		<label>Parameter 5 Servo 1 (CV 205)</label>
+		<label xml:lang="de">Parameter 5 Servo 1 (CV 205)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter0 Servo2" CV="206" default="0">
+		<decVal/>
+		<label>Parameter 0 Servo 2 (CV 206)</label>
+		<label xml:lang="de">Parameter 0 Servo 2 (CV 206)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter1 Servo2" CV="207" default="0">
+		<decVal/>
+		<label>Parameter 1 Servo 2 (CV 207)</label>
+		<label xml:lang="de">Parameter 1 Servo 2 (CV 207)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter2 Servo2" CV="208" default="20">
+		<decVal/>
+		<label>Speed Servo 2 (CV 208)</label>
+		<label xml:lang="de">Geschwindigkeit Servo 2 (CV 208)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter3 Servo2" CV="209" default="128">
+		<decVal/>
+		<label>Position 1 Servo 2 (CV 209)</label>
+		<label xml:lang="de">Position 1 Servo 2 (CV 209)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter4 Servo2" CV="210" default="128">
+		<decVal/>
+		<label>Position 2 Servo 2 (CV 210)</label>
+		<label xml:lang="de">Position 2 Servo 2 (CV 210)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter5 Servo2" CV="211" default="0">
+		<decVal/>
+		<label>Parameter 5 Servo 2 (CV 211)</label>
+		<label xml:lang="de">Parameter 5 Servo 2 (CV 211)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter0 Servo3" CV="212" default="0">
+		<decVal/>
+		<label>Parameter 0 Servo 3 (CV 212)</label>
+		<label xml:lang="de">Parameter 0 Servo 3 (CV 212)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter1 Servo3" CV="213" default="0">
+		<decVal/>
+		<label>Parameter 1 Servo 3 (CV 213)</label>
+		<label xml:lang="de">Parameter 1 Servo 3 (CV 213)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter2 Servo3" CV="214" default="20">
+		<decVal/>
+		<label>Speed Servo 3 (CV 214)</label>
+		<label xml:lang="de">Geschwindigkeit Servo 3 (CV 214)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter3 Servo3" CV="215" default="128">
+		<decVal/>
+		<label>Position 1 Servo 3 (CV 215)</label>
+		<label xml:lang="de">Position 1 Servo 3 (CV 215)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter4 Servo3" CV="216" default="128">
+		<decVal/>
+		<label>Position 2 Servo 3 (CV 216)</label>
+		<label xml:lang="de">Position 2 Servo 3 (CV 216)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter5 Servo3" CV="217" default="0">
+		<decVal/>
+		<label>Parameter 5 Servo 3 (CV 217)</label>
+		<label xml:lang="de">Parameter 5 Servo 3 (CV 217)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter0 Servo4" CV="218" default="0">
+		<decVal/>
+		<label>Parameter 0 Servo 4 (CV 218)</label>
+		<label xml:lang="de">Parameter 0 Servo 4 (CV 218)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter1 Servo4" CV="219" default="0">
+		<decVal/>
+		<label>Parameter 1 Servo 4 (CV 219)</label>
+		<label xml:lang="de">Parameter 1 Servo 4 (CV 219)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter2 Servo4" CV="220" default="20">
+		<decVal/>
+		<label>Speed Servo 4 (CV 220)</label>
+		<label xml:lang="de">Geschwindigkeit Servo 4 (CV 220)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter3 Servo4" CV="221" default="128">
+		<decVal/>
+		<label>Position 1 Servo 4 (CV 221)</label>
+		<label xml:lang="de">Position 1 Servo 4 (CV 221)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter4 Servo4" CV="222" default="128">
+		<decVal/>
+		<label>Position 2 Servo 4 (CV 222)</label>
+		<label xml:lang="de">Position 2 Servo 4 (CV 222)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter5 Servo4" CV="223" default="0">
+		<decVal/>
+		<label>Parameter 5 Servo 4 (CV 223)</label>
+		<label xml:lang="de">Parameter 5 Servo 4 (CV 223)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter0 Servo5" CV="224" default="0">
+		<decVal/>
+		<label>Parameter 0 Servo 5 (CV 224)</label>
+		<label xml:lang="de">Parameter 0 Servo 5 (CV 224)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter1 Servo5" CV="225" default="0">
+		<decVal/>
+		<label>Parameter 1 Servo 5 (CV 225)</label>
+		<label xml:lang="de">Parameter 1 Servo 5 (CV 225)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter2 Servo5" CV="226" default="20">
+		<decVal/>
+		<label>Speed Servo 5 (CV 226)</label>
+		<label xml:lang="de">Geschwindigkeit Servo 5 (CV 226)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter3 Servo5" CV="227" default="128">
+		<decVal/>
+		<label>Position 1 Servo 5 (CV 227)</label>
+		<label xml:lang="de">Position 1 Servo 5 (CV 227)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter4 Servo5" CV="228" default="128">
+		<decVal/>
+		<label>Position 2 Servo 5 (CV 228)</label>
+		<label xml:lang="de">Position 2 Servo 5 (CV 228)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter5 Servo5" CV="229" default="0">
+		<decVal/>
+		<label>Parameter 5 Servo 5 (CV 229)</label>
+		<label xml:lang="de">Parameter 5 Servo 5 (CV 229)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter0 Servo6" CV="230" default="0">
+		<decVal/>
+		<label>Parameter 0 Servo 6 (CV 230)</label>
+		<label xml:lang="de">Parameter 0 Servo 6 (CV 230)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter1 Servo6" CV="231" default="0">
+		<decVal/>
+		<label>Parameter 1 Servo 6 (CV 231)</label>
+		<label xml:lang="de">Parameter 1 Servo 6 (CV 231)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter2 Servo6" CV="232" default="20">
+		<decVal/>
+		<label>Speed Servo 6 (CV 232)</label>
+		<label xml:lang="de">Geschwindigkeit Servo 6 (CV 232)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter3 Servo6" CV="233" default="128">
+		<decVal/>
+		<label>Position 1 Servo 6 (CV 233)</label>
+		<label xml:lang="de">Position 1 Servo 6 (CV 233)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter4 Servo6" CV="234" default="128">
+		<decVal/>
+		<label>Position 2 Servo 6 (CV 234)</label>
+		<label xml:lang="de">Position 2 Servo 6 (CV 234)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+	<variable item="Parameter5 Servo6" CV="235" default="0">
+		<decVal/>
+		<label>Parameter 5 Servo 6 (CV 235)</label>
+		<label xml:lang="de">Parameter 5 Servo 6 (CV 235)</label>
+		<tooltip> </tooltip>
+		<tooltip xml:lang="de"> </tooltip>
+	</variable>
+</variables>

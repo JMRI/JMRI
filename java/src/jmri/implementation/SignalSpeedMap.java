@@ -44,10 +44,10 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault, 
     private float _throttleFactor = 0.75f;
     private float _scale = 87.1f;
 
-    static public final int PERCENT_NORMAL = 1;
-    static public final int PERCENT_THROTTLE = 2;
-    static public final int SPEED_MPH = 3;
-    static public final int SPEED_KMPH = 4;
+    public static final int PERCENT_NORMAL = 1;
+    public static final int PERCENT_THROTTLE = 2;
+    public static final int SPEED_MPH = 3;
+    public static final int SPEED_KMPH = 4;
     private PropertyChangeListener warrantPreferencesListener = null;
 
     public SignalSpeedMap() {
@@ -329,5 +329,5 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault, 
         return _scale;
     }
 
-    static private final Logger log = LoggerFactory.getLogger(SignalSpeedMap.class);
+    private static final Logger log = LoggerFactory.getLogger(SignalSpeedMap.class);
 }

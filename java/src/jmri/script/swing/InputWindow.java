@@ -255,7 +255,7 @@ public class InputWindow extends JPanel {
         return results;
     }
 
-    static public File getFile(JFileChooser fileChooser) {
+    public static File getFile(JFileChooser fileChooser) {
         fileChooser.rescanCurrentDirectory();
         int retVal = fileChooser.showDialog(null, null);
         if (retVal != JFileChooser.APPROVE_OPTION) {

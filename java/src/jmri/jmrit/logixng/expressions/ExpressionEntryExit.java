@@ -296,7 +296,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
             this._text = text;
         }
 
-        static public EntryExitState get(int id) {
+        public static EntryExitState get(int id) {
             switch (id) {
                 case 0x04:
                     return Inactive;

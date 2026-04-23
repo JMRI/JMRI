@@ -129,7 +129,7 @@ public class FileLineEndingsCheck {
     private static boolean setup = false;
 
     @BeforeAll // want to reduce burden
-    static public void setUp() {
+    public static void setUp() {
         if (!setup) {
             JUnitUtil.setUp();
             setup = true;
@@ -137,7 +137,7 @@ public class FileLineEndingsCheck {
     }
 
     @AfterAll // want to reduce burden
-    static public void tearDown() {
+    public static void tearDown() {
         JUnitUtil.tearDown();
     }
 }

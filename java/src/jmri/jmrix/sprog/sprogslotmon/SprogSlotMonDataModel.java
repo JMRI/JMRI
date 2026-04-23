@@ -18,13 +18,13 @@ import org.slf4j.LoggerFactory;
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener {
 
-    static public final int SLOTCOLUMN = 0;
-    static public final int ADDRCOLUMN = 1;
-    static public final int SPDCOLUMN = 2;
-    static public final int STATCOLUMN = 3;  // status: free, common, etc
-    static public final int DIRCOLUMN = 4;
+    public static final int SLOTCOLUMN = 0;
+    public static final int ADDRCOLUMN = 1;
+    public static final int SPDCOLUMN = 2;
+    public static final int STATCOLUMN = 3;  // status: free, common, etc
+    public static final int DIRCOLUMN = 4;
 
-    static public final int NUMCOLUMN = 5;
+    public static final int NUMCOLUMN = 5;
 
     private SprogSystemConnectionMemo _memo = null;
 

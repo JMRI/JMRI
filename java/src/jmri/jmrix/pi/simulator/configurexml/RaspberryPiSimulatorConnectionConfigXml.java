@@ -33,7 +33,7 @@ public class RaspberryPiSimulatorConnectionConfigXml extends AbstractConnectionC
         log.debug("getInstance without Parameter called");
         if (adapter == null) {
             adapter = new RaspberryPiAdapter(true);
-            if (adapter.getGPIOController() == null) {
+            if (adapter.getPi4JContext() == null) {
                 handleException("Not running on Raspberry PI.", null, adapter.getSystemPrefix(), adapter.getUserName(), null);
             }
         }

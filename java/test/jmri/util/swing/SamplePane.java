@@ -70,22 +70,22 @@ public class SamplePane extends jmri.util.swing.JmriPanel {
         super.dispose();
     }
 
-    static public void resetCounts() {
+    public static void resetCounts() {
         disposed = new ArrayList<>();
         staticIndexCount = 1;
     }
 
-    static private void incrementStaticInstanceNumber() {
+    private static void incrementStaticInstanceNumber() {
         staticIndexCount++;
     }
 
-    static public List<Integer> getDisposedList() {
+    public static List<Integer> getDisposedList() {
         return Collections.unmodifiableList(disposed);
     }
 
     private int thisInstanceNumber;
 
-    static private ArrayList<Integer> disposed;
-    static private int staticIndexCount = 1;
+    private static ArrayList<Integer> disposed;
+    private static int staticIndexCount = 1;
 
 }

@@ -81,7 +81,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // static methods to return a formatted message
-    static public SerialMessage getPoll(int UA) {
+    public static SerialMessage getPoll(int UA) {
         SerialMessage m = new SerialMessage(2);
         m.setElement(0, 65 + UA);
         m.setElement(1, 0x50); // 'P'

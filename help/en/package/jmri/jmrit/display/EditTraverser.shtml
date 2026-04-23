@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Edit Traverser Help</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="JMRI help Layout Editor traverser">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1><span class="since">since 5.15.6</span>Edit Traverser</h1>
+
+      <p>A Layout Editor <strong>Traverser</strong> is a schematic representation of a
+      <em>traverser / transfer table</em> on the layout. The traverser is drawn as a rectangle with
+      a variable number of track connection pairs called <em>slots</em>.  A slot has connections for
+      two <em>track segments</em>.  Most of the track segments will connect a slot connection to an
+      end bumper.  Any number of traversers can be added to a panel and each traverser may have any
+      number of slots.</p>
+
+      <p>A traverser is added to a panel by selecting <strong>Add Traverser</strong> in the panel's
+      <strong>Options &rArr; Add</strong> menu. New traversers are placed at the center of the panel,
+      and are moved to the desired location by dragging its control point with the meta key pressed
+      (right button drag on Windows). A traverser can also be added to a panel by selecting
+      <strong>Traverser</strong> in the tool bar and shift-clicking on the desired location on the
+      panel.  When a traverser is added, it has two slot pairs.</p>
+
+      <p>The traverser's popup menu has two items. Selecting
+      <strong>Edit&hellip;</strong> brings up an Edit Traverser dialog, and selecting
+      <strong>Delete</strong> deletes the traverser. Before a traverser is actually deleted, the
+      program asks for verification of that action.</p>
+
+      <p><img src="images/EditTraverser.png" class="floatRight" alt="traverser dialog"> The Edit
+      Traverser dialog allows the following:</p>
+
+      <ul>
+        <li>Changing the bridge width and slot offset</li>
+        <li>Add New Slots</li>
+        <li>Remove Slots</li>
+        <li>Change Slot sequence</li>
+        <li>Configure Automation</li>
+        <li>Configure Signal masts</li>
+      </ul>
+
+      <p>The traverser image on the panel is based on the platform width, the offset between slots
+      and the orientation.  The <em>width</em> and slot <em>offset</em> are pixel values.  The
+      orientations are <em>horizontal</em> and <em>vertical</em>.  The <em>length</em> is based on
+      the slot offset and the number of slots.</p>
+
+      <p>When <strong>Add Slot Pair</strong> is clicked, a new slot is added to the end of the slot
+      list.  The <strong>Move Up</strong> and <strong>Move Down</strong> buttons in the slot list
+      are used to change the slot sequence.</p>
+
+      <p>To complete the configuration, assign a block for the traverser bridge.  The width of the
+      the track line is set by selecting <strong>Side Track</strong> or <strong>Main Track</strong>.</p>
+
+      <h3>DCC Controlled Traverser</h3>
+
+      <p>When this is selected it allows for control of traversers (and drivers) that use DCC turnout
+      addresses to set the traverser to various positions. For each slot connection,
+      select the DCC turnout address and the position
+      required to set it.
+
+      The <strong>Disabled</strong> option is used for inactive slot connections.  For example, the
+      right side may have one connection while the left side has multiple connections.</p>
+
+      <p>To set the traverser to the desired position, click on the slot connection that you wish
+      the traverser to be aligned with.</p>
+
+      <h3>Use Dispatcher with Signal Masts</h3>
+
+      <p><img src="images/EditTraverserSignals.png" class="floatRight" alt="traverser signals dialog"></p>
+
+      <p>When the <strong>Use Dispatcher with Signal Masts</strong> option is enabled, the edit
+      dialog is expanded.</p>
+
+      <p>While designed for use by Dispatcher, the signal masts can be used by any logic tool. </p>
+
+
+      <p>Each slot connection has an approach signal mast.  The destination mast for the signal mast logic (SML)
+      is a <strong>Buffer</strong> mast. When the traverser is aligned to the slot connections and the bridge is
+      not occupied, the approach mast will display an aspect indicating it is safe to move onto the
+      traverser bridge.</p>
+
+      <p>The move from the bridge to a slot track segment is controlled by the <strong>Exit</strong>
+      mast.  The Exit mast has SML for each slot track segment that contains a signal mast at the end
+      bumper or at an anchor point.  When the traverser is aligned to the slot track segment and the
+      track segment is
+      not occupied, the Exit mast will display an aspect indicating that is
+      is safe to move from the bridge to the slot track segment.</p>
+
+      <p>The <strong>Buffer</strong> and <strong>Exit</strong> signal masts are not automatically
+      added to the panel.  For reference it is handy to manually add these to the panel.</p>
+
+      <p>This is an example of a traverser with three slot connections on the left side and
+
+      a single slot connection on the right side.</p>
+
+      <p><img src="images/EditTraverserExample.png" alt="traverser signals example"></p>
+
+
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

@@ -359,6 +359,8 @@ public class DecoderFile extends XmlFile {
     public Showable getShowable() {
         if (_element.getAttribute("show") == null) {
             return Showable.YES; // default
+        } else if (_element.getAttributeValue("show").equals("yes")) {
+            return Showable.YES;
         } else if (_element.getAttributeValue("show").equals("no")) {
             return Showable.NO;
         } else if (_element.getAttributeValue("show").equals("maybe")) {
@@ -652,12 +654,12 @@ public class DecoderFile extends XmlFile {
         return titleString(getModel(), getFamily());
     }
 
-    static public String titleString(String model, String family) {
+    public static String titleString(String model, String family) {
         return model + " (" + family + ")";
     }
 
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // script access
-    static public String fileLocation = "decoders" + File.separator;
+    public static String fileLocation = "decoders" + File.separator;
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(DecoderFile.class);

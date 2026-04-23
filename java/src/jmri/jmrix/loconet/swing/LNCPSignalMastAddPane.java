@@ -54,7 +54,7 @@ public class LNCPSignalMastAddPane extends jmri.jmrit.beantable.signalmast.DccSi
     }
 
     @ServiceProvider(service = SignalMastAddPane.SignalMastAddPaneProvider.class)
-    static public class SignalMastAddPaneProvider extends SignalMastAddPane.SignalMastAddPaneProvider {
+    public static class SignalMastAddPaneProvider extends SignalMastAddPane.SignalMastAddPaneProvider {
         /**
          * {@inheritDoc}
          * Requires a valid LocoNet connection

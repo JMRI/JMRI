@@ -85,6 +85,8 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
         hTop3Left.add(trackLabel);
         hTop3Left.add(levelXingButton);
         hTop3Left.add(trackButton);
+        hTop3Left.add(turntableButton);
+        hTop3Left.add(traverserButton);
         hTop3Left.add(trackSegmentPropertiesPanel);
 
         hTop3Panel.add(hTop3Left);
@@ -180,6 +182,8 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
         hTop6Left.add(changeIconsButton);
         hTop6Left.add(sensorButton);
         hTop6Left.add(sensorComboBox);
+        hTop6Left.add(turnoutButton);
+        hTop6Left.add(turnoutComboBox);
         hTop6Left.add(signalMastButton);
         hTop6Left.add(signalMastComboBox);
         hTop6Left.add(signalButton);

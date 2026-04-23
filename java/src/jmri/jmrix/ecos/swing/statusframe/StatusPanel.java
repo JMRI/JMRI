@@ -144,7 +144,7 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
     /**
      * Nested class to create one of these using old-style defaults.
      */
-    static public class Default extends jmri.jmrix.ecos.swing.EcosNamedPaneAction {
+    public static class Default extends jmri.jmrix.ecos.swing.EcosNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MenuItemInfo"),

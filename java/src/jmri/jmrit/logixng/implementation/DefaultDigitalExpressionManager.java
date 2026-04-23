@@ -154,7 +154,7 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
     static volatile DefaultDigitalExpressionManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
-    static public DefaultDigitalExpressionManager instance() {
+    public static DefaultDigitalExpressionManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }

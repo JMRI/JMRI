@@ -23,7 +23,7 @@ public class LabelMacro extends SdfMacro {
         return 0;
     }
 
-    static public SdfMacro match(SdfBuffer buff) {
+    public static SdfMacro match(SdfBuffer buff) {
         // never match, because this doesn't occur in byte stream
         return null;
     }

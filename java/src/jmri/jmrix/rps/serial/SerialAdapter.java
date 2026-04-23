@@ -313,7 +313,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
         }
     }
 
-    static private final int SKIPCOLS = 0; // used to skip DATA,TIME; was there a trailing "'"?
+    private static final int SKIPCOLS = 0; // used to skip DATA,TIME; was there a trailing "'"?
     private boolean first = true;
 
     /**

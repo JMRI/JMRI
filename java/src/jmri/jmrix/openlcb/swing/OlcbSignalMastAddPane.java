@@ -394,7 +394,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
 
     @ServiceProvider(service = SignalMastAddPane.SignalMastAddPaneProvider.class)
-    static public class SignalMastAddPaneProvider extends SignalMastAddPane.SignalMastAddPaneProvider {
+    public static class SignalMastAddPaneProvider extends SignalMastAddPane.SignalMastAddPaneProvider {
 
         /**
          * {@inheritDoc}

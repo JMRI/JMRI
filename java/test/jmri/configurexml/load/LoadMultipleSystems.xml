@@ -195,6 +195,7 @@
       <userName>light0</userName>
     </light>
   </lights>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Sep 08 22:00:42 CEST 2019" startsettime="no" />
   <filehistory>
     <operation>
       <type>app</type>

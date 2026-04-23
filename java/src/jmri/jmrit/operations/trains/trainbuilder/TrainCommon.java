@@ -25,6 +25,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.*;
 import jmri.util.ColorUtil;
+import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
  * Common routines for trains
@@ -334,7 +335,7 @@ public class TrainCommon {
     public static boolean isNextCar(Car car, RouteLocation rl, RouteLocation rld) {
         return isNextCar(car, rl, rld, false);
     }
-        
+
     public static boolean isNextCar(Car car, RouteLocation rl, RouteLocation rld, boolean isIgnoreTrack) {
         Train train = car.getTrain();
         if (train != null &&
@@ -1730,7 +1731,7 @@ public class TrainCommon {
                         : TrainManifestHeaderText.getStringHeader_Last_Train() + SPACE + lastTrainName;
             }
             // the three utility attributes that don't get printed but need to
-              // be tabbed out
+            // be tabbed out
             else if (attribute.equals(Setup.NO_NUMBER)) {
                 return padAndTruncateIfNeeded("",
                         Control.max_len_string_print_road_number - (UTILITY_CAR_COUNT_FIELD_SIZE + 1));
@@ -2157,7 +2158,7 @@ public class TrainCommon {
     /*
      * Converts String time DAYS:HH:MM and DAYS:HH:MM AM/PM to minutes from
      * midnight. Note that the string time could be blank, and in that case
-     * returns 0 minutes. 
+     * returns 0 minutes.
      */
     public static int convertStringTime(String time) {
         int minutes = 0;
@@ -2179,7 +2180,7 @@ public class TrainCommon {
             minutes += 24 * 60 * Integer.parseInt(splitTime[0]);
             minutes += 60 * Integer.parseInt(splitTime[1]);
             minutes += Integer.parseInt(splitTime[2]);
-        } else if (splitTime.length  == 2){
+        } else if (splitTime.length == 2) {
             // hrs:minutes
             if (hrFormat && splitTime[0].equals("12")) {
                 splitTime[0] = "00";
@@ -2190,16 +2191,15 @@ public class TrainCommon {
         log.debug("convert time {} to minutes {}", time, minutes);
         return minutes;
     }
-    
+
     public String convertMinutesTime(int minutes) {
         int days = minutes / (24 * 60);
-        int h = (minutes - (days * 24 * 60))/60;
+        int h = (minutes - (days * 24 * 60)) / 60;
         String sHours = String.format("%02d", h);
         int m = minutes - days * 24 * 60 - h * 60;
         String sMinutes = String.format("%02d", m);
         return Integer.toString(days) + ":" + sHours + ":" + sMinutes;
     }
-        
 
     /**
      * Pads out a string by adding spaces to the end of the string, and will
@@ -2282,6 +2282,62 @@ public class TrainCommon {
     }
 
     private static int getLineLength(String orientation, String fontName, int fontStyle, int fontSize) {
+        Integer charsPerLine = InstanceManager.getDefault(TrainManager.class).getHardcopyWriterLineLength(fontName,
+                fontStyle, fontSize, getPageSize(orientation), orientation.equals(Setup.LANDSCAPE));
+        if (charsPerLine == null) {
+            // first try using hardcopywriter to get number of characters per line
+            charsPerLine = getCharsPerLineHardcopyWriter(orientation, fontName, fontStyle, fontSize);
+            if (charsPerLine == null) {
+                charsPerLine = getCharsPerLine(orientation, fontName, fontStyle, fontSize);
+            }
+            log.debug("Number of characters per line {}, fontName: {}, fontStyle {}, fontSize {}", charsPerLine,
+                    fontName,
+                    fontStyle, fontSize);
+            InstanceManager.getDefault(TrainManager.class).setHardcopyWriterLineLength(fontName,
+                    fontStyle, fontSize, getPageSize(orientation), orientation.equals(Setup.LANDSCAPE), charsPerLine);
+        }
+        return charsPerLine;
+    }
+
+    private static Integer getCharsPerLineHardcopyWriter(String orientation, String fontName, int fontStyle,
+            int fontSize) {
+        // get hand held or half page dimensions in DPI
+        Dimension pageSize = getFullPageSizeDPI(orientation);
+
+        Integer charsPerLine = null;
+        try (HardcopyWriter writer = new HardcopyWriter(fontName, fontStyle, fontSize, .5 * 72, .5 * 72, .5 * 72,
+                .5 * 72, orientation.equals(Setup.LANDSCAPE),
+                pageSize)) {
+
+            charsPerLine = writer.getCharactersPerLine();
+
+        } catch (HardcopyWriter.PrintCanceledException ex) {
+            log.debug("Print canceled");
+        }
+        log.debug("orientation: {}, fontName: {}, fontStyle: {}, fontSize {}, chars/line: {}", orientation, fontName,
+                fontStyle, fontSize, charsPerLine);
+        return charsPerLine;
+    }
+
+    /**
+     * Returns null if standard paper size, otherwise full lengths for hand held
+     * or half page in DPI.
+     * 
+     * @param orientation paper size
+     * @return null if landscape or portrait
+     */
+    public static Dimension getFullPageSizeDPI(String orientation) {
+        Dimension pageSize = null;
+        if (orientation.equals(Setup.HANDHELD) || orientation.equals(Setup.HALFPAGE)) {
+            // add margins to page size
+            pageSize = new Dimension((getPageSize(orientation).width + PAPER_MARGINS.width),
+                    (getPageSize(orientation).height + PAPER_MARGINS.height));
+        }
+        return pageSize;
+    }
+
+    // backup method for determining characters per line
+    private static int getCharsPerLine(String orientation, String fontName, int fontStyle, int fontSize) {
         Font font = new Font(fontName, fontStyle, fontSize); // NOI18N
         JLabel label = new JLabel();
         FontMetrics metrics = label.getFontMetrics(font);
@@ -2291,12 +2347,8 @@ public class TrainCommon {
             charwidth = fontSize / 2; // create a reasonable character width
         }
         // compute lines and columns within margins
-        int charLength = getPageSize(orientation).width / charwidth;
-        if (charLength % 2 != 0) {
-            charLength--; // make it even
-        }
-        log.debug("Number of characters per line {}, fontName: {}, fontStyle {}. fontSize {}", charLength, fontName, fontStyle, fontSize);
-        return charLength;
+        int charsPerLine = getPageSize(orientation).width / charwidth;
+        return charsPerLine;
     }
 
     private boolean checkStringLength(String string, boolean isManifest) {
@@ -2326,13 +2378,12 @@ public class TrainCommon {
 
     protected static final Dimension PAPER_MARGINS = new Dimension(84, 72);
 
-    protected static Dimension getPageSize(String orientation) {
+    public static Dimension getPageSize(String orientation) {
         // page size has been adjusted to account for margins of .5
-        // Dimension(84, 72)
+        // Dimension(72, 72) left & right, top & bottom margins
         Dimension pagesize = new Dimension(523, 720); // Portrait 8.5 x 11
-        // landscape has .65 margins
         if (orientation.equals(Setup.LANDSCAPE)) {
-            pagesize = new Dimension(702, 523); // 11 x 8.5
+            pagesize = new Dimension(720, 523); // 11 x 8.5
         }
         if (orientation.equals(Setup.HALFPAGE)) {
             pagesize = new Dimension(261, 720); // 4.25 x 11

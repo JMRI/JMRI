@@ -197,19 +197,19 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
     }
 
     // static methods to return a formatted message
-    static public QsiMessage getEnableMain() {
+    public static QsiMessage getEnableMain() {
         QsiMessage m = new QsiMessage(1);
         m.setOpCode('+');
         return m;
     }
 
-    static public QsiMessage getKillMain() {
+    public static QsiMessage getKillMain() {
         QsiMessage m = new QsiMessage(1);
         m.setOpCode('-');
         return m;
     }
 
-    static public QsiMessage getProgMode() {
+    public static QsiMessage getProgMode() {
         QsiMessage m = new QsiMessage(1);
         m.setOpCode('P');
         return m;
@@ -217,13 +217,13 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
 
     // [AC] 11/09/2002 Leave QSI in programmer mode. Don't want to go
     // to booster mode as this would power up the track.
-    static public QsiMessage getExitProgMode() {
+    public static QsiMessage getExitProgMode() {
         QsiMessage m = new QsiMessage(1);
         m.setOpCode(' ');
         return m;
     }
 
-    static public QsiMessage getClearStatus() {
+    public static QsiMessage getClearStatus() {
         // OP_REQ_CLEAR_ERROR_STATUS
         QsiMessage m = new QsiMessage(3);
         m.setElement(0, 17);
@@ -232,7 +232,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m;
     }
 
-    static public QsiMessage getReadCV(int cv, ProgrammingMode mode) {
+    public static QsiMessage getReadCV(int cv, ProgrammingMode mode) {
         // OP_REQ_READ_CV
         QsiMessage m = new QsiMessage(4);
         m.setElement(0, 9);
@@ -242,7 +242,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m;
     }
 
-    static public QsiMessage getWriteCV(int cv, int val, ProgrammingMode mode) {
+    public static QsiMessage getWriteCV(int cv, int val, ProgrammingMode mode) {
         // OP_REQ_WRITE_CV
         QsiMessage m = new QsiMessage(5);
         m.setElement(0, 30);
@@ -254,7 +254,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
     }
 
     // [AC] 11/09/2002 QSI doesn't currently support registered mode
-    static public QsiMessage getReadRegister(int reg) { //Vx
+    public static QsiMessage getReadRegister(int reg) { //Vx
         //        if (reg>8) log.error("register number too large: "+reg);
         //        QsiMessage m = new QsiMessage(2);
         //        m.setOpCode('V');
@@ -266,7 +266,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m;
     }
 
-    static public QsiMessage getWriteRegister(int reg, int val) { //Sx xx
+    public static QsiMessage getWriteRegister(int reg, int val) { //Sx xx
         //        if (reg>8) log.error("register number too large: "+reg);
         //        QsiMessage m = new QsiMessage(4);
         //        m.setOpCode('S');
@@ -282,7 +282,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
     // Bootloader messages are initially created long enough for
     // the message and checksum. The message is then framed with control
     // characters before being returned
-    static public QsiMessage getReadBootVersion() {
+    public static QsiMessage getReadBootVersion() {
         QsiMessage m = new QsiMessage(3);
         m.setOpCode(RD_VER);
         m.setLength(2);
@@ -290,7 +290,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m.frame();
     }
 
-    static public QsiMessage getWriteFlash(int addr, int[] data) {
+    public static QsiMessage getWriteFlash(int addr, int[] data) {
         int l = data.length;
         // Writes are rounded up to multiples of 8 bytes
         if (l % 8 != 0) {
@@ -315,7 +315,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m.frame();
     }
 
-    static public QsiMessage getV4WriteFlash(int addr, int[] data, int type) {
+    public static QsiMessage getV4WriteFlash(int addr, int[] data, int type) {
         // Create a v4 bootloader message which is same format as a record
         // in the hex file
         int l = (data.length + 5) * 2;
@@ -328,7 +328,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m.v4frame();
     }
 
-    static public QsiMessage getV4EndOfFile() {
+    public static QsiMessage getV4EndOfFile() {
         // Create a v4 bootloader end of file message
         int l = 10;
         QsiMessage m = new QsiMessage(l);
@@ -339,7 +339,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m.v4frame();
     }
 
-    static public QsiMessage getv4ExtAddr() {
+    public static QsiMessage getv4ExtAddr() {
         // Create a v4 bootloader extended address message
         int l = 14;
         int[] data = {0, 0};
@@ -352,7 +352,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m.v4frame();
     }
 
-    static public QsiMessage getEraseFlash(int addr, int rows) {
+    public static QsiMessage getEraseFlash(int addr, int rows) {
         QsiMessage m = new QsiMessage(6);
         m.setOpCode(ER_FLASH);
         // Erase a number of 64 byte rows
@@ -362,7 +362,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m.frame();
     }
 
-    static public QsiMessage getWriteEE(int addr, int[] data) {
+    public static QsiMessage getWriteEE(int addr, int[] data) {
         QsiMessage m = new QsiMessage(6 + data.length);
         m.setOpCode(WT_EEDATA);
         m.setLength(data.length);
@@ -372,7 +372,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m.frame();
     }
 
-    static public QsiMessage getReset() {
+    public static QsiMessage getReset() {
         QsiMessage m = new QsiMessage(3);
         m.setOpCode(0);
         m.setLength(0);

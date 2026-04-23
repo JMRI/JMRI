@@ -200,37 +200,37 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         // get a list of locations served by this route
         List<RouteLocation> routeList = route.getLocationsBySequenceList();
         // don't include Car at route destination
-        RouteLocation destination = null;
+        RouteLocation rlDestination = null;
         if (routeList.size() > 1) {
-            destination = routeList.get(routeList.size() - 1);
+            rlDestination = routeList.get(routeList.size() - 1);
             // However, if the destination is visited more than once, must
             // include all cars
             for (int i = 0; i < routeList.size() - 1; i++) {
-                if (destination.getName().equals(routeList.get(i).getName())) {
-                    destination = null; // include cars at destination
+                if (rlDestination.getName().equals(routeList.get(i).getName())) {
+                    rlDestination = null; // include cars at destination
                     break;
                 }
             }
-            // pickup allowed at destination? Don't include cars in staging
-            if (destination != null &&
-                    destination.isPickUpAllowed() &&
-                    destination.getLocation() != null &&
-                    !destination.getLocation().isStaging()) {
-                destination = null; // include cars at destination
+            // local moves allowed at destination? Don't include cars in staging
+            if (rlDestination != null &&
+                    rlDestination.isLocalMovesAllowed() &&
+                    rlDestination.getLocation() != null &&
+                    !rlDestination.getLocation().isStaging()) {
+                rlDestination = null; // include cars at destination
             }
         }
         // get rolling stock by track priority, load priority and then by moves
         List<Car> sortByPriority = sortByTrackPriority(sortByLoadPriority(getByMovesList()));
-        // now build list of available Car for this route
+        // now build list of available cars for this route
         for (Car car : sortByPriority) {
-            // only use Car with a location
+            // only use cars with a location
             if (car.getLocation() == null) {
                 continue;
             }
             RouteLocation rl = route.getLastLocationByName(car.getLocationName());
-            // get Car that don't have an assigned train, or the
+            // only allow cars that don't have an assigned train, or the
             // assigned train is this one
-            if (rl != null && rl != destination && (car.getTrain() == null || train.equals(car.getTrain()))) {
+            if (rl != null && rl != rlDestination && (car.getTrain() == null || train.equals(car.getTrain()))) {
                 out.add(car);
             }
         }

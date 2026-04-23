@@ -325,7 +325,7 @@ public class LogixNG_Thread {
         }
     }
 
-    static private class ThreadEvent {
+    private static class ThreadEvent {
         private final ThreadAction _threadAction;
         private final Object _lock;
 

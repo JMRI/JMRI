@@ -139,7 +139,7 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
     /**
      * Nested class to create one of these using old-style defaults
      */
-    static public class Default extends jmri.jmrix.tams.swing.TamsNamedPaneAction {
+    public static class Default extends jmri.jmrix.tams.swing.TamsNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("Title"),

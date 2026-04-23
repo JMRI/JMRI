@@ -69,7 +69,7 @@ public class BiDiBSignalMast extends AbstractSignalMast implements BiDiBNamedBea
     //protected String mastType = "F$bsm";
     protected String mastType = getNamePrefix();
     
-    static public String getNamePrefix() {
+    public static String getNamePrefix() {
         return "F$bsm";
     }
 

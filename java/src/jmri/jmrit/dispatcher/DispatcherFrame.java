@@ -586,7 +586,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     // dispatcher window variables
     protected JmriJFrame dispatcherFrame = null;
     private Container contentPane = null;
-    private ActiveTrainsTableModel activeTrainsTableModel = null;
+    public ActiveTrainsTableModel activeTrainsTableModel = null;
     private JButton addTrainButton = null;
     private JButton terminateTrainButton = null;
     private JButton cancelRestartButton = null;
@@ -3940,7 +3940,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         table.getTableHeader().addMouseListener(JmriMouseListener.adapt(mouseHeaderListener));
     }
 
-    static protected class HeaderActionListener implements ActionListener {
+    protected static class HeaderActionListener implements ActionListener {
 
         TableColumn tc;
         XTableColumnModel tcm;

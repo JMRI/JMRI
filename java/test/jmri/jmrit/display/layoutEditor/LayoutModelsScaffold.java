@@ -127,6 +127,14 @@ public class LayoutModelsScaffold implements LayoutModels {
 
     @Override
     public @Nonnull
+    List<LayoutTraverser> getLayoutTraversers() {
+        return getLayoutTracksOfClass(LayoutTraverser.class)
+                .map(LayoutTraverser.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @Override
+    public @Nonnull
     List<LevelXing> getLevelXings() {
         return getLayoutTracksOfClass(LevelXing.class)
                 .map(LevelXing.class::cast)
@@ -221,6 +229,19 @@ public class LayoutModelsScaffold implements LayoutModels {
     }
         
     // temporary
+    @Override
+    public LayoutTraverserView getLayoutTraverserView(LayoutTraverser to) {
+        LayoutTrackView lv = trkToView.get(to);
+        if (lv == null) {
+            log.warn("No View found for {} class {}", to, to.getClass());
+            throw new IllegalArgumentException("No matching View found: "+to);
+        }
+        if (lv instanceof LayoutTraverserView) return (LayoutTraverserView) lv;
+        else log.error("wrong type {} {} found {}", to, to.getClass(), lv);
+        throw new IllegalArgumentException("Wrong type: "+to.getClass());
+    }
+
+        // temporary
     @Override
     public TrackSegmentView getTrackSegmentView(TrackSegment to) {
         LayoutTrackView lv = trkToView.get(to);

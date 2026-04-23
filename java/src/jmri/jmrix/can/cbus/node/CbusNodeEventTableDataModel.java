@@ -25,14 +25,14 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     private final NodeConfigToolPane _mainpane;
     
     // column order needs to match list in column tooltips
-    static public final int NODE_NUMBER_COLUMN = 0;
-    static public final int EVENT_NUMBER_COLUMN = 1;
-    static public final int NODE_EDIT_BUTTON_COLUMN = 2;
-    static public final int NODE_NAME_COLUMN = 3;
-    static public final int EVENT_NAME_COLUMN = 4;
-    static public final int EV_VARS_COLUMN = 5;
-    static public final int EV_INDEX_COLUMN = 6;
-    static public final int MAX_COLUMN = 7;
+    public static final int NODE_NUMBER_COLUMN = 0;
+    public static final int EVENT_NUMBER_COLUMN = 1;
+    public static final int NODE_EDIT_BUTTON_COLUMN = 2;
+    public static final int NODE_NAME_COLUMN = 3;
+    public static final int EVENT_NAME_COLUMN = 4;
+    public static final int EV_VARS_COLUMN = 5;
+    public static final int EV_INDEX_COLUMN = 6;
+    public static final int MAX_COLUMN = 7;
     
     private final CanSystemConnectionMemo _memo;
 

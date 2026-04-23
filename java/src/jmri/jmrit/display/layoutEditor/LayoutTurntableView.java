@@ -832,7 +832,7 @@ public class LayoutTurntableView extends LayoutTrackView {
         float trackWidth = 2.F;
         double diameter = 2.f * getRadius();
 
-        if (isBlock && isMain) {
+        if (isBlock && (getTurntable().isMainline() == isMain)) {
             double radius2 = Math.max(getRadius() / 4.f, trackWidth * 2);
             double diameter2 = radius2 * 2.f;
             Stroke stroke = g2.getStroke();
@@ -883,7 +883,7 @@ public class LayoutTurntableView extends LayoutTrackView {
             }
 
             int currentPositionIndex = (knownPosition != -1) ? getRayIndex(knownPosition) : -1;
-            if (isMain && isTurnoutControlled() && (currentPositionIndex == j) ) {
+            if ((getTurntable().isMainline() == isMain) && isTurnoutControlled() && (currentPositionIndex == j) ) {
                 if (isBlock) {
                     LayoutBlock lb = getLayoutBlock();
                     if (lb != null) {
@@ -944,7 +944,7 @@ public class LayoutTurntableView extends LayoutTrackView {
             }
             // getPosition() will return -1 if no ray is selected (all turnouts are closed).
             int currentPositionIndex = (getPosition() != -1) ? getRayIndex(getPosition()) : -1;
-            if (isMain && isTurnoutControlled() && (currentPositionIndex == j)) {
+            if ((getTurntable().isMainline() == isMain) && isTurnoutControlled() && (currentPositionIndex == j)) {
 //                LayoutBlock lb = getLayoutBlock();
 //                if (lb != null) {
 //                    c = g2.getColor();

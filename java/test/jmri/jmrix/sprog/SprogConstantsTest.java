@@ -13,7 +13,11 @@ public class SprogConstantsTest {
     @Test
     public void testSprogConstants() {
         Assertions.assertEquals(50, SprogConstants.PACKET_DELAY_WARN_THRESHOLD);
+    }
 
+    @Test
+    public void testCSMaxTimeoutCount() {
+        Assertions.assertEquals(3, SprogConstants.CS_MAX_TIMEOUT_COUNT);
     }
 
     @BeforeEach

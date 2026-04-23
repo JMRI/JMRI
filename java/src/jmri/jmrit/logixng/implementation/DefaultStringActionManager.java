@@ -151,7 +151,7 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
     static volatile DefaultStringActionManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
-    static public DefaultStringActionManager instance() {
+    public static DefaultStringActionManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }

@@ -129,6 +129,8 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         JPanel trackGroup2 = new JPanel(floatContentLayout);
         trackGroup2.add(trackButton);
         trackGroup2.add(levelXingButton);
+        trackGroup2.add(turntableButton);
+        trackGroup2.add(traverserButton);
         floatEditTrack.add(trackGroup2);
 
         JPanel trackGroup3 = new JPanel(floatContentLayout);
@@ -176,6 +178,11 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         iconGroup2.add(sensorButton);
         iconGroup2.add(sensorComboBox);
         floatEditIcon.add(iconGroup2);
+
+        JPanel iconGroup2t = new JPanel(floatContentLayout);
+        iconGroup2t.add(turnoutButton);
+        iconGroup2t.add(turnoutComboBox);
+        floatEditIcon.add(iconGroup2t);
 
         JPanel iconGroup3 = new JPanel(floatContentLayout);
         iconGroup3.add(signalMastButton);

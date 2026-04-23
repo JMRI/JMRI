@@ -17,7 +17,7 @@ public class LightWhereUsed {
      * @param light The light bean.
      * @return a populated textarea.
      */
-    static public JTextArea getWhereUsed(NamedBean light) {
+    public static JTextArea getWhereUsed(NamedBean light) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameLight"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, light.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N

@@ -3822,6 +3822,10 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR90X",
                         l.getElement(3) & 0x07);
             }
+            case 0x3: {
+                return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_LNRP3",
+                        l.getElement(3) & 0x07);
+            }
            default: {
                 return "";
             }
@@ -4520,7 +4524,7 @@ public class LocoNetMessageInterpret {
      * @param a2 Byte containing the lower bits.
      * @return a locomotive address in the range of 0-16383
      */
-    static private int LOCO_ADR(int a1, int a2) {
+    private static int LOCO_ADR(int a1, int a2) {
         return (((a1 & 0x7f) * 128) + (a2 & 0x7f));
     }
 
@@ -4532,7 +4536,7 @@ public class LocoNetMessageInterpret {
      * @param a2 Byte containing the lower bits
      * @return 1-4096 address
      */
-    static private int SENSOR_ADR(int a1, int a2) {
+    private static int SENSOR_ADR(int a1, int a2) {
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
     }
 
@@ -4802,6 +4806,8 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_ALLDEVICES");
             case LnConstants.RE_IPL_DIGITRAX_HOST_LNRP:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_LNRP");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_LNRP3:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_LNRP3");
             case LnConstants.RE_IPL_DIGITRAX_HOST_UT4:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UT4");
             case LnConstants.RE_IPL_DIGITRAX_HOST_UT6:

@@ -51,7 +51,7 @@
         </revision>
     </revhistory>
     <!-- Piko Smart Decoder 4.1 -->
-    <variable item="Error register" CV="30" default="0" include="PIKO40501-18,PIKO46440-18,PIKO46442-16,PIKO46443-22">
+    <variable item="Error register" CV="30" default="0" include="PIKO SmartDecoder 4.1">
         <enumVal>
             <enumChoice choice="No error" value="0">
                 <choice>No error</choice>
@@ -121,7 +121,7 @@
         <tooltip xml:lang="cs">0 = žádná chyba (reset registru chyb)</tooltip>
     </variable>
     <!-- Piko Smart Decoder XP5.1 -->
-    <variable item="Error register" CV="30" default="0" include="PIKO46505-18,PIKO46540-18,PIKO46548-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22,PIKO36505-G,PIKO36537-G">
+    <variable item="Error register" CV="30" default="0" include="PIKO SmartDecoder XP5.1 (version 1.17+),PIKO SmartDecoder XP5.1 (version 1.8+),PIKO SmartDecoder XP5.1 (version 1.5+),PIKO SmartDecoder XP5.1 (version 1.1+)">
         <enumVal>
             <enumChoice choice="No error" value="0">
                 <choice>No error</choice>

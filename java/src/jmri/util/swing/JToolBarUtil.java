@@ -18,11 +18,11 @@ import org.jdom2.Element;
  */
 public class JToolBarUtil extends GuiUtilBase {
 
-    static public JToolBar loadToolBar(String name) {
+    public static JToolBar loadToolBar(String name) {
         return loadToolBar(name, null, null);  // tool bar without window or context
     }
 
-    static public JToolBar loadToolBar(String name, WindowInterface wi, Object context) {
+    public static JToolBar loadToolBar(String name, WindowInterface wi, Object context) {
         Element root = rootFromName(name);
 
         JToolBar retval = new JToolBar(root.getChild("name").getText());

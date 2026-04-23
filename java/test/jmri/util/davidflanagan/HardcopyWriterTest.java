@@ -1,20 +1,23 @@
 package jmri.util.davidflanagan;
 
-import javax.swing.JFrame;
-
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
-import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import jmri.util.junit.annotations.DisabledIfHeadless;
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+
 import org.junit.jupiter.api.*;
+
 import jmri.util.JUnitUtil;
-import java.io.IOException;
+import jmri.util.davidflanagan.HardcopyWriter.PrintCanceledException;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 public class HardcopyWriterTest {
     @Test
@@ -72,7 +75,7 @@ public class HardcopyWriterTest {
             // This is what causes the page to get added to the vector of images.
             hcw.pageBreak();
 
-            Vector<Image> images = hcw.getPageImages();
+            Vector<BufferedImage> images = hcw.getPageImages();
             Assertions.assertNotNull(images, "getImages");
             Assertions.assertEquals(1, images.size(), "getImages");
             Image image = images.get(0);
@@ -125,7 +128,7 @@ public class HardcopyWriterTest {
             pageNumber = hcw.getPageNum();
             Assertions.assertEquals(2, pageNumber, "page number");
 
-            Vector<Image> images = hcw.getPageImages();
+            Vector<BufferedImage> images = hcw.getPageImages();
             Assertions.assertNotNull(images, "getImages");
             Assertions.assertEquals(1, images.size(), "getImages");
         } catch (HardcopyWriter.PrintCanceledException pce) {
@@ -137,13 +140,11 @@ public class HardcopyWriterTest {
     }
 
     @Test
-    @DisabledIfHeadless
     public void testTabHandling() throws IOException, HardcopyWriter.ColumnException {
-        JFrame frame = new JFrame();
         HardcopyWriter hcw = null;
         try {
-            hcw = new HardcopyWriter(frame, "test", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72, false,
-                    "SkipDialog",
+            hcw = new HardcopyWriter(null, "test", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72, false,
+                    HardcopyWriter.NO_PRINTING_PRINTER,
                     null, false, null, new Dimension((int) (8.5 * 72), (int) (11.0 * 72)));
             Assertions.assertNotNull(hcw, "HardcopyWriter constructor");
 
@@ -195,7 +196,7 @@ public class HardcopyWriterTest {
 
             hcw.pageBreak();
 
-            Vector<Image> images = hcw.getPageImages();
+            Vector<BufferedImage> images = hcw.getPageImages();
             Assertions.assertEquals(1, images.size(), "getImages");
             Image image = images.get(0);
 
@@ -204,14 +205,18 @@ public class HardcopyWriterTest {
             Rectangle boxes[] = {
                     new Rectangle(0, 0, 850, 50),
                     new Rectangle(50, 50, 250, 70),
-                    new Rectangle(300, 100, 250, 70),
-                    new Rectangle(570, 160, 230, 110),
-                    new Rectangle(50, 210, 500, 80)
+                    new Rectangle(300, 98, 250, 70),
+                    new Rectangle(570, 148, 230, 110),
+                    new Rectangle(50, 195, 500, 80)
             };
 
             int pixelInsideBox = 0;
             for (Rectangle box : boxes) {
                 pixelInsideBox += totalPixelValue((BufferedImage) image, box);
+            }
+
+            if (totalPixelValue != pixelInsideBox) {
+                dumpOutImage((BufferedImage) image, boxes, 5, 10);
             }
 
             Assertions.assertEquals(totalPixelValue, pixelInsideBox, "totalPixelValue should match the sum of areas");
@@ -259,7 +264,7 @@ public class HardcopyWriterTest {
             hcwPreview = new HardcopyWriter(frame, "test-preview", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72,
                     true, null, null, null, null, pagesize);
             hcwPrint = new HardcopyWriter(frame, "test-print", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72,
-                    false, "SkipDialog", null, null, null, pagesize);
+                    false, HardcopyWriter.NO_PRINTING_PRINTER, null, null, null, pagesize);
 
             String text = "Test line 1";
             hcwPreview.write(text + "\n");
@@ -300,6 +305,108 @@ public class HardcopyWriterTest {
 
     @Test
     @DisabledIfHeadless
+    public void testIdenticalMetrics() throws Exception {
+        JFrame frame = new JFrame();
+        HardcopyWriter hcwPreview = null;
+        HardcopyWriter hcwPrint = null;
+        HardcopyWriter hcw = null;
+
+        Dimension pagesize = new Dimension((int) (8.5 * 72), (int) (11.0 * 72));
+
+        try {
+
+            // 1. Preview mode
+            hcwPreview = new HardcopyWriter(frame, "test-compare", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72,
+                    true, null,
+                    null, false, null, pagesize);
+
+            hcwPrint = new HardcopyWriter(frame, "test-compare", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72,
+                    false, HardcopyWriter.NO_PRINTING_PRINTER,
+                    null, false, null, pagesize);
+
+            hcw = new HardcopyWriter(null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 7, null, null);
+
+            Assertions.assertEquals(hcwPreview.getCharactersPerLine(), hcwPrint.getCharactersPerLine(),
+                    "Characters per line should match");
+            Assertions.assertEquals(hcwPreview.getCharactersPerLine(), hcw.getCharactersPerLine(),
+                    "Characters per line should match");
+
+            // Test with a string containing a superscript character
+            String testString = "The cat waited on platform 9¾";
+
+            Rectangle2D boundsPreview = hcwPreview.measure(testString);
+            Rectangle2D boundsPrint = hcwPrint.measure(testString);
+            Rectangle2D bounds = hcw.measure(testString);
+
+            Assertions.assertEquals(boundsPreview.getWidth(), boundsPrint.getWidth(), 0.01, "Width should match");
+            Assertions.assertEquals(boundsPreview.getHeight(), boundsPrint.getHeight(), 0.01, "Height should match");
+            Assertions.assertEquals(boundsPreview.getWidth(), bounds.getWidth(), 0.01, "Width should match");
+            Assertions.assertEquals(boundsPreview.getHeight(), bounds.getHeight(), 0.01, "Height should match");
+
+        } catch (HardcopyWriter.PrintCanceledException pce) {
+            // OK
+        } finally {
+            if (hcwPreview != null)
+                hcwPreview.dispose();
+            if (hcwPrint != null)
+                hcwPrint.dispose();
+        }
+    }
+
+    // brute force test all fonts and sizes, can take a long time!  Disabled DAB
+    // @Test
+    //@DisabledIfHeadless
+//    public void testCharsPerLine() throws Exception {
+//        JFrame frame = new JFrame();
+//        HardcopyWriter hcwPreview = null;
+//        HardcopyWriter hcwPrint = null;
+//        HardcopyWriter hcw = null;
+//
+//        for (String fontName : FontComboUtil.getFonts(FontComboUtil.ALL)) {
+//            for (int fontSize = 6; fontSize < 16; fontSize++) {
+//                try {
+//                    // 1. Preview mode
+//                    hcwPreview = new HardcopyWriter(frame, "test-compare " + fontName + fontSize, fontName, null,
+//                            fontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 72, true, null, null, false, null, null);
+//
+//                    hcwPrint = new HardcopyWriter(frame, "test-compare", fontName, null, fontSize, .5 * 72, .5 * 72,
+//                            .5 * 72, .5 * 72, false, HardcopyWriter.NO_PRINTING_PRINTER, null, false, null, null);
+//
+//                    hcw = new HardcopyWriter(fontName, null, fontSize, .5 * 72, .5 * 72, .5 * 72, .5 * 7, null, null);
+//
+//                    Assertions.assertEquals(hcwPreview.getCharactersPerLine(), hcwPrint.getCharactersPerLine(),
+//                            "Characters per line should match");
+//                    Assertions.assertEquals(hcwPreview.getCharactersPerLine(), hcw.getCharactersPerLine(),
+//                            "Characters per line should match");
+//
+//                    // Test with a string containing a superscript character
+//                    String testString = "The cat waited on platform 9¾";
+//
+//                    Rectangle2D boundsPreview = hcwPreview.measure(testString);
+//                    Rectangle2D boundsPrint = hcwPrint.measure(testString);
+//                    Rectangle2D bounds = hcw.measure(testString);
+//
+//                    Assertions.assertEquals(boundsPreview.getWidth(), boundsPrint.getWidth(), 0.01,
+//                            "Width should match");
+//                    Assertions.assertEquals(boundsPreview.getHeight(), boundsPrint.getHeight(), 0.01,
+//                            "Height should match");
+//                    Assertions.assertEquals(boundsPreview.getWidth(), bounds.getWidth(), 0.01, "Width should match");
+//                    Assertions.assertEquals(boundsPreview.getHeight(), bounds.getHeight(), 0.01, "Height should match");
+//
+//                } catch (HardcopyWriter.PrintCanceledException pce) {
+//                    // OK
+//                } finally {
+//                    if (hcwPreview != null)
+//                        hcwPreview.dispose();
+//                    if (hcwPrint != null)
+//                        hcwPrint.dispose();
+//                }
+//            }
+//        }
+//    }
+
+    @Test
+    @DisabledIfHeadless
     public void testComparePreviewAndPrintRecording() throws Exception {
         JFrame frame = new JFrame();
         HardcopyWriter hcwPreview = null;
@@ -315,12 +422,12 @@ public class HardcopyWriterTest {
             performStandardDrawing(hcwPreview, width);
             hcwPreview.pageBreak();
 
-            Vector<Image> previewImages = hcwPreview.getPageImages();
-            BufferedImage previewImg = (BufferedImage) previewImages.get(0);
+            Vector<BufferedImage> previewImages = hcwPreview.getPageImages();
+            BufferedImage previewImg = previewImages.get(0);
 
             // 2. Print mode (bypass dialog)
             hcwPrint = new HardcopyWriter(frame, "test-compare", null, null, 10, .5 * 72, .5 * 72, .5 * 72, .5 * 72,
-                    false, "SkipDialog",
+                    false, HardcopyWriter.NO_PRINTING_PRINTER,
                     null, false, null, pagesize);
             performStandardDrawing(hcwPrint, width);
             hcwPrint.pageBreak();
@@ -358,6 +465,24 @@ public class HardcopyWriterTest {
         }
     }
 
+    @Test
+    public void testMeasurement() throws PrintCanceledException {
+        HardcopyWriter hcw = null;
+        try {
+            hcw = new HardcopyWriter(null, null, 10, 36, 36,
+                    36, 36, null, null);
+            Rectangle2D bounds = hcw.measure("Hello World");
+            Assertions.assertTrue(bounds.getWidth() > 40, "measure width");
+            Assertions.assertTrue(bounds.getHeight() > 5, "measure height");
+
+        } catch (HardcopyWriter.PrintCanceledException pce) {
+            Assertions.fail("Print job should not have been cancelled");
+        } finally {
+            if (hcw != null)
+                hcw.dispose();
+        }
+    }
+
     private int totalPixelValue(BufferedImage image, Rectangle bounds) {
         int totalRed = 0;
         int totalGreen = 0;
@@ -371,6 +496,69 @@ public class HardcopyWriterTest {
             }
         }
         return totalRed + totalGreen + totalBlue;
+    }
+
+    void dumpOutImage(BufferedImage image, Rectangle[] boxes, int xSize, int ySize) {
+        for (int y = 0; y < image.getHeight(null); y += ySize) {
+            String row = String.format("%04d:", y);
+            for (int x = 0; x < image.getWidth(null); x += xSize) {
+                if ((x % 100) == 0) {
+                    row += "|";
+                }
+                if (totalPixelValue(image, new Rectangle(x, y, xSize, ySize)) > 0) {
+                    // If all the non-zero pixels are inside a box, then use '.' instead
+                    // of '*'.
+                    boolean allInsideBox = true;
+                    for (int ypix = y; ypix < y + ySize && allInsideBox; ypix++) {
+                        for (int xpix = x; xpix < x + xSize; xpix++) {
+                            if (image.getRGB(xpix, ypix) != 0xffffff) {
+                                // This pixel is not white. See if it is inside a box
+                                boolean insideBox = false;
+                                for (Rectangle box : boxes) {
+                                    if (box.contains(xpix, ypix)) {
+                                        insideBox = true;
+                                        break;
+                                    }
+                                }
+                                if (!insideBox) {
+                                    allInsideBox = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (allInsideBox) {
+                        row += ".";
+                    } else {
+                        row += "*";
+                    }
+                } else {
+                    row += " ";
+                }
+            }
+            System.out.println(row);
+        }
+
+        // Output the image to a png file
+        try {
+            File file = new File("/tmp/image.png");
+            // Copy the image so that we can overwrite it
+            BufferedImage copy =
+                    new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2d = copy.createGraphics();
+            g2d.drawImage(image, 0, 0, null);
+            // Draw the boxes on the copy
+            g2d.setColor(Color.RED);
+            for (Rectangle box : boxes) {
+                g2d.draw(box);
+            }
+            g2d.dispose();
+            ImageIO.write(copy, "png", file);
+        } catch (FileNotFoundException e) {
+            // /tmp is not writable
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @BeforeEach

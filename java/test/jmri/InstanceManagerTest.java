@@ -82,7 +82,7 @@ public class InstanceManagerTest {
         assertTrue(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
     }
 
-    static public class InstanceManagerInitCheck implements jmri.InstanceManagerAutoDefault {
+    public static class InstanceManagerInitCheck implements jmri.InstanceManagerAutoDefault {
         public InstanceManagerInitCheck() {}
     }
 

@@ -73,9 +73,9 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     protected void createModel() {
         m = new BeanTableDataModel<Section>() {
 
-            static public final int BEGINBLOCKCOL = NUMCOLUMN;
-            static public final int ENDBLOCKCOL = BEGINBLOCKCOL + 1;
-            static public final int EDITCOL = ENDBLOCKCOL + 1;
+            public static final int BEGINBLOCKCOL = NUMCOLUMN;
+            public static final int ENDBLOCKCOL = BEGINBLOCKCOL + 1;
+            public static final int EDITCOL = ENDBLOCKCOL + 1;
 
             @Override
             public String getValue(String name) {

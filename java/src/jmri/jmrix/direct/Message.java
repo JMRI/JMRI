@@ -80,27 +80,27 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
 
     // static methods to return a formatted message
 
-    static public Message getEnableMain() {
+    public static Message getEnableMain() {
         log.error("getEnableMain doesn't have a reasonable implementation yet");
         return null;
     }
 
-    static public Message getKillMain() {
+    public static Message getKillMain() {
         log.error("getKillMain doesn't have a reasonable implementation yet");
         return null;
     }
 
-    static public Message getProgMode() {
+    public static Message getProgMode() {
         log.error("getProgMode doesn't have a reasonable implementation yet");
         return null;
     }
 
-    static public Message getExitProgMode() {
+    public static Message getExitProgMode() {
         log.error("getExitProgMode doesn't have a reasonable implementation yet");
         return null;
     }
 
-    static public Message getReadCV(int cv, ProgrammingMode mode) {
+    public static Message getReadCV(int cv, ProgrammingMode mode) {
         Message m = new Message(5);
         if (mode.equals(ProgrammingMode.PAGEMODE)) {
             m.setOpCode('V');
@@ -112,7 +112,7 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public Message getWriteCV(int cv, int val, ProgrammingMode mode) {
+    public static Message getWriteCV(int cv, int val, ProgrammingMode mode) {
         Message m = new Message(9);
         if (mode.equals(ProgrammingMode.PAGEMODE)) {
             m.setOpCode('V');
@@ -126,11 +126,11 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public Message getReadRegister(int reg) { //Vx
+    public static Message getReadRegister(int reg) { //Vx
         return null;
     }
 
-    static public Message getWriteRegister(int reg, int val) { //Sx xx
+    public static Message getWriteRegister(int reg, int val) { //Sx xx
         return null;
     }
 

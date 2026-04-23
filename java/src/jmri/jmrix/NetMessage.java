@@ -97,11 +97,11 @@ public abstract class NetMessage implements Serializable {
     public abstract void setParity();
 
     // manipulate various things in a convenient way
-    static protected int lowByte(int val) {
+    protected static int lowByte(int val) {
         return val & 0xFF;
     }
 
-    static protected int highByte(int val) {
+    protected static int highByte(int val) {
         if ((val & (~0xFFFF)) != 0) {
             log.error("highByte called with too large value: {}", Integer.toHexString(val));
         }

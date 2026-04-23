@@ -151,7 +151,7 @@ public class LocoIOModeList {
      * @param a2 Byte containing the lower bits
      * @return 1-4096 address as decimal
      */
-    static private int SENSOR_ADR(int a1, int a2) {
+    private static int SENSOR_ADR(int a1, int a2) {
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
     }
 

@@ -41,9 +41,10 @@
     <!-- enumChoice choice="MS001" value = "11"/ Fleischmann Beilhack -->
     <enumChoice choice="MS491" value = "12"/>
     <enumChoice choice="MS581" value = "13"/>
-       <enumChoice choice="MS540E24" value = "14"/>
-       <enumChoice choice="MN140E24" value = "119"/>
-       <enumChoice choice="MN250" value = "120"/>
+    <enumChoice choice="MS540E24" value = "14"/>
+	<enumChoice choice="MS591N18" value = "15"/>
+    <enumChoice choice="MN140E24" value = "119"/>
+    <enumChoice choice="MN250" value = "120"/>
     <!-- enumChoice choice="MN150" value = "121"/ not available yet (2024-05-02) -->
     <enumChoice choice="MN160" value = "122"/>
     <enumChoice choice="MN340" value = "123"/>

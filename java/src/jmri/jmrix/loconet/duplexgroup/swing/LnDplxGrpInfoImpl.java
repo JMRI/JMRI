@@ -1272,7 +1272,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     /*
      * This class is used for populating the IPL devices Table
      */
-    static protected class BasicIPLDeviceInfo {
+    protected static class BasicIPLDeviceInfo {
 
         protected BasicIPLDeviceInfo(String type, String serialNumber, String swVersion) {
             this.type = type;
@@ -1318,7 +1318,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     /*
      * This class is used for populating the Device Response Table
      */
-    static protected class BasicIPLDeviceResponseInfo {
+    protected static class BasicIPLDeviceResponseInfo {
 
         protected BasicIPLDeviceResponseInfo(String groupName, String channel, String password, String groupId) {
             this.groupName = groupName;

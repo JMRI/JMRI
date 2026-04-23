@@ -13,36 +13,40 @@
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
       <h1>Edit Turntable</h1>
-      A Layout Editor turntable is a schematic representation of a turntable on the layout. A
+
+      <p>A Layout Editor turntable is a schematic representation of a turntable on the layout. A
       turntable is drawn as a circle with a variable number of track connections, called <em>ray
       tracks</em>. Each <em>ray track</em> is drawn as a short stub track radiating from the
       turntable circle. A track segment should connect to each ray track. Most of these track
       segments will connect a ray track to an end bumper. The distance of each ray track connection
       point from the turntable circle is fixed, but the direction of each ray track may be varied
       by dragging its connection point around the turntable circle. Any number of turntables may be
-      added to a panel, and each turntable may have any number of ray tracks.
+      added to a panel, and each turntable may have any number of ray tracks.</p>
+
       <p>A turntable is added to a panel by selecting <strong>Add Turntable</strong> in the panel's
-      Option menu. New turntables are placed at the center of the panel, and should be moved to
-      desired locations by dragging its center point with the meta key pressed (right button drag
-      on Windows). When a turntable is added, it has four ray tracks located in up, down, left, and
+      <strong>Options &rArr; Add</strong> menu. New turntables are placed at the center of the panel, and should be moved to the
+      desired location by dragging its center point with the meta key pressed (right button drag
+      on Windows). A turntable can also be added to a panel by selecting the <strong>Turntable</strong>
+      option in the toolbar and doing a shift-click at the desired location on the panel.</p>
+
+
+      <p>When a turntable is added, it has four ray tracks located in up, down, left, and
       right directions. The turntable's popup menu has two items. Selecting
-      <strong>Edit...</strong> brings up an Edit Turntable dialog, and selecting
-      <strong>Remove</strong> deletes the turntable and any track segments connected to it. Before
-      a turntable is actually deleted, the program asks for verification of that action.</p>
+      <strong>Edit&hellip;</strong> brings up an Edit Turntable dialog, and selecting
+      <strong>Delete</strong> deletes the turntable. Before a turntable is actually deleted, the
+      program asks for verification of that action.</p>
 
       <p><img src="images/EditTurntable.png" class="floatRight" alt="turnout dialog"> The Edit
-      Turntable dialog allows the following</p>
+      Turntable dialog allows the following:</p>
 
       <ul>
-        <li>Radius of the turntable circle to be changed</li>
-
-        <li>New Rays to be added</li>
-
-        <li>Angles of Ray to be altered</li>
-
-        <li>Rays to be removed</li>
-
-        <li>Automation to be configured</li>
+        <li>Changing the Radius of the turntable circle</li>
+        <li>Add New Rays</li>
+        <li>Change Ray Angles</li>
+        <li>Remove Rays</li>
+        <li>Configure Automation</li>
+        <li>Configure Signal masts<span class="since">since 5.15.1</span></li>
+        <li>Configure Bridge track<span class="since">since 5.15.6</span></li>
       </ul>
 
       <p>Ray track angles are measured from the vertical in a clockwise direction. So, thinking of
@@ -53,16 +57,8 @@
       <p>To add a ray track, enter the angle corresponding to it's desired position in <strong>Ray
       Track Angle</strong>, and click <strong>New Ray Track</strong>. The turntable shows the new
       ray track immediately. To delete a ray track, find it in the connection list and press
-      <strong>Remove</strong>. The ray track, and any connected track segment are immediately
+      <strong>Delete</strong>. The ray track, and any connected track segment are immediately
       deleted from the panel. <strong>Caution: There is no undo for these operations.</strong></p>
-
-      <p><strong>DCC Controlled Turntable</strong><br>
-      When this is selected it allows for control of turntables (and drivers) that use DCC turnout
-      addresses to set the turntable to various positions. Such examples are the LDT TT-DEC or
-      Heljan DCC Turntable. For each Ray, select or create the DCC turnout address and the position
-      required to set it.<br>
-      To set the turntable to the desired position, simply click on the ray that you wish the
-      turntable to be aligned with.</p>
 
       <p><strong>Note:</strong> An easy procedure is possible for accurately aligning ray track
       connection points and end bumpers so that each track segment extends through the center of
@@ -71,6 +67,51 @@
       bumpers adjacent to (or on top of) each ray track connection point. After shrinking the
       radius back to its final radius, add track segments. Track segments will be aligned fairly
       precisely to the turntable center.</p>
+
+      <p><span class="since">since 5.15.1</span>The bridge track can drawn as either <em>Side Track</em>
+      or <em>Mainline Track</em>.</p>
+
+      <h3>DCC Controlled Turntable</h3>
+
+      <p>When this is selected it allows for control of turntables (and drivers) that use DCC turnout
+      addresses to set the turntable to various positions. Such examples are the LDT TT-DEC or
+      Heljan DCC Turntable. For each Ray, select the DCC turnout address and the position
+      required to set it.<br>
+      To set the turntable to the desired position, simply click on the ray that you wish the
+      turntable to be aligned with.</p>
+
+      <p>Note:  There is no support for selecting the <strong>Head</strong> or <strong>Tail</strong>
+      of the turntable bridge.</p>
+
+      <h3><span class="since">since 5.15.6</span>Use Dispatcher with Signal Masts</h3>
+
+      <p><img src="images/EditTurntableSignals.png" class="floatRight" alt="turntable signals dialog"></p>
+
+      <p>When the <strong>Use Dispatcher with Signal Masts</strong> option is enabled, the edit
+      dialog is expanded.</p>
+
+      <p>While designed for use by Dispatcher, the signal masts can be used by any logic tool. </p>
+
+
+      <p>Each ray has an approach signal mast.  The destination mast for the signal mast logic (SML)
+      is a <strong>Buffer</strong> mast. When the turntable is aligned to the ray and the bridge is
+      not occupied, the approach mast will display an aspect indicating it is safe to move onto the
+      turntable bridge.</p>
+
+      <p>The move from the bridge to a ray track is controlled by the <strong>Exit</strong>
+      mast.  The Exit mast has SML for each ray track that contains a signal mast at the end
+      bumper or at an anchor point.  When the turntable is aligned to the ray and the ray is
+      not occupied, the Exit mast will display an aspect indicating that is
+      is safe to move from the bridge to the ray.</p>
+
+      <p>The <strong>Buffer</strong> and <strong>Exit</strong> signal masts are not automatically
+      added to the panel.  For reference it is handy to manually add these to the panel.</p>
+
+      <p>This is an example of a three ray turntable with a single layout connection.</p>
+
+      <p><img src="images/EditTurntableExample.png" alt="turntable signals example"></p>
+
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

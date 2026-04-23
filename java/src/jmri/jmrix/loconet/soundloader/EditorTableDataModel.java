@@ -24,16 +24,16 @@ import jmri.util.table.ButtonRenderer;
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
-    static public final int HEADERCOL = 0;
-    static public final int TYPECOL = 1;
-    static public final int MAPCOL = 2;
-    static public final int HANDLECOL = 3;
-    static public final int FILENAMECOL = 4;
-    static public final int LENGTHCOL = 5;
-    static public final int PLAYBUTTONCOL = 6;
-    static public final int REPLACEBUTTONCOL = 7;
+    public static final int HEADERCOL = 0;
+    public static final int TYPECOL = 1;
+    public static final int MAPCOL = 2;
+    public static final int HANDLECOL = 3;
+    public static final int FILENAMECOL = 4;
+    public static final int LENGTHCOL = 5;
+    public static final int PLAYBUTTONCOL = 6;
+    public static final int REPLACEBUTTONCOL = 7;
 
-    static public final int NUMCOLUMN = 8;
+    public static final int NUMCOLUMN = 8;
 
     SpjFile file;
 

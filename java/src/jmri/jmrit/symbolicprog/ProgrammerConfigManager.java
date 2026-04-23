@@ -18,13 +18,14 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author Randall Wood (C) 2015
+ * @author Bob Jacobsen (C) 2026
  */
 @ServiceProvider(service = PreferencesManager.class)
 public class ProgrammerConfigManager extends AbstractPreferencesManager {
 
-    private final static Logger log = LoggerFactory.getLogger(ProgrammerConfigManager.class);
     public final static String DEFAULT_FILE = "defaultFile";
     public final static String SHOW_EMPTY_PANES = "showEmptyPanes";
+    public final static String DONT_DETACH_PANES = "dontDetachPanes";
     public final static String SHOW_CV_NUMBERS = "showCvNumbers";
     public final static String CAN_CACHE_DEFAULT = "canCacheDefault";
     public final static String DO_CONFIRM_READ = "doConfirmRead";
@@ -32,6 +33,7 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
     public final static String DISABLE_PROGRAMMING_ON_MAIN = "disableProgrammingOnMain";
     private String defaultFile = null;
     private boolean showEmptyPanes = true;
+    private boolean dontDetachPanes = false;
     private boolean showCvNumbers = false;
     private boolean canCacheDefault = false;
     private boolean doConfirmRead = false;
@@ -49,6 +51,9 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
 
             this.setShowEmptyPanes(preferences.getBoolean(SHOW_EMPTY_PANES, this.isShowEmptyPanes()));
             PaneProgFrame.setShowEmptyPanes(this.isShowEmptyPanes());
+
+            this.setDontDetachPanes(preferences.getBoolean(DONT_DETACH_PANES, this.isDontDetachPanes()));
+            PaneProgFrame.setDontDetachPanes(this.isDontDetachPanes());
 
             this.setShowCvNumbers(preferences.getBoolean(SHOW_CV_NUMBERS, this.isShowCvNumbers()));
             PaneProgFrame.setShowCvNumbers(this.isShowCvNumbers());
@@ -96,6 +101,7 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
             preferences.remove(DEFAULT_FILE);
         }
         preferences.putBoolean(SHOW_EMPTY_PANES, this.showEmptyPanes);
+        preferences.putBoolean(DONT_DETACH_PANES, this.dontDetachPanes);
         preferences.putBoolean(SHOW_CV_NUMBERS, this.showCvNumbers);
         preferences.putBoolean(CAN_CACHE_DEFAULT, this.canCacheDefault);
         preferences.putBoolean(DO_CONFIRM_READ, this.doConfirmRead);
@@ -138,6 +144,22 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
         boolean oldShowEmptyPanes = this.showEmptyPanes;
         this.showEmptyPanes = showEmptyPanes;
         firePropertyChange(SHOW_EMPTY_PANES, oldShowEmptyPanes, showEmptyPanes);
+    }
+
+    /**
+     * @return the dontDetachPanes
+     */
+    public boolean isDontDetachPanes() {
+        return dontDetachPanes;
+    }
+
+    /**
+     * @param dontDetachPanes the dontDetachPanes to set
+     */
+    public void setDontDetachPanes(boolean dontDetachPanes) {
+        boolean oldDontDetachPanes = this.dontDetachPanes;
+        this.dontDetachPanes = dontDetachPanes;
+        firePropertyChange(DONT_DETACH_PANES, oldDontDetachPanes, dontDetachPanes);
     }
 
     /**
@@ -219,5 +241,7 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
         this.disableProgrammingOnMain = disableProgrammingOnMain;
         firePropertyChange(DISABLE_PROGRAMMING_ON_MAIN, oldDisableProgrammingOnMain, disableProgrammingOnMain);
     }
+
+    private final static Logger log = LoggerFactory.getLogger(ProgrammerConfigManager.class);
 
 }

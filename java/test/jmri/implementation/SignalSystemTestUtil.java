@@ -23,7 +23,7 @@ public class SignalSystemTestUtil {
     // name of a dummy signal system being used for testing
     private static File dummy = null;
 
-    static public void createMockSystem() throws IOException {
+    public static void createMockSystem() throws IOException {
         // creates mock (no appearances) system
         // in the user area.
         // Where in user space the "signals" file tree should live
@@ -48,15 +48,15 @@ public class SignalSystemTestUtil {
 
     }
 
-    static public String getMockUserName() {
+    public static String getMockUserName() {
         return "JUnit Test Signals"; // from testAspects.xml file
     }
 
-    static public String getMockSystemName() {
+    public static String getMockSystemName() {
         return dummy.getName();
     }
 
-    static public void deleteMockSystem() throws IOException {
+    public static void deleteMockSystem() throws IOException {
         FileUtil.delete(dummy);
         dummy = null;
         path = null;

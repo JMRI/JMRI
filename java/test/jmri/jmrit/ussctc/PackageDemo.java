@@ -16,7 +16,7 @@ public class PackageDemo {
     }
 
     // Main entry point
-    static public void main(String[] args) {
+    public static void main(String[] args) {
         JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();

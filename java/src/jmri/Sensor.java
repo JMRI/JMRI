@@ -218,7 +218,7 @@ public interface Sensor extends DigitalIO {
            return peopleName;
         }
 
-        static public PullResistance getByShortName(String shName) {
+        public static PullResistance getByShortName(String shName) {
             for (PullResistance p : PullResistance.values()) {
                 if (p.shortName.equals(shName)) {
                     return p;
@@ -227,7 +227,7 @@ public interface Sensor extends DigitalIO {
             throw new java.lang.IllegalArgumentException("argument value " + shName + " not valid");
         }
 
-        static public PullResistance getByPeopleName(String pName) {
+        public static PullResistance getByPeopleName(String pName) {
             for (PullResistance p : PullResistance.values()) {
                 if (p.peopleName.equals(pName)) {
                     return p;

@@ -772,7 +772,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             log.error("notified of change in different slot");
         }
 
-        if(!slot.getIsInitilized() && slot.slotStatus() == LnConstants.LOCO_IN_USE){
+        if(!slot.getIsInitialized() && slot.slotStatus() == LnConstants.LOCO_IN_USE){
            log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleManager.getThrottleID());
            network.sendLocoNetMessage(slot.writeThrottleID(throttleManager.getThrottleID()));
            // finally we are done...
@@ -893,7 +893,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                     | LnConstants.DEC_MODE_128;
         }
         log.debug("New Slot Mode: {}", LnConstants.DEC_MODE(status));
-        if (slot.getIsInitilized() )
+        if (slot.getIsInitialized() )
             // check that the throttle is completely initialized.
         {
             network.sendLocoNetMessage(slot.writeMode(status));

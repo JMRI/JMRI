@@ -72,7 +72,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
      * @see apps.startup.CreateButtonModelFactory
      * @return null if no such space exists
      */
-    static public JComponent buttonSpace() {
+    public static JComponent buttonSpace() {
         return _buttonSpace;
     }
     static JComponent _buttonSpace = null;

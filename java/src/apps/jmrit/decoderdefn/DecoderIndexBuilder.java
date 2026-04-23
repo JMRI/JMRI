@@ -15,7 +15,7 @@ import jmri.jmrit.decoderdefn.DecoderIndexCreateAction;
 public class DecoderIndexBuilder {
 
     // main entry point to run standalone
-    static public void main(String[] args) {
+    public static void main(String[] args) {
     
         // logging needed for code invoked from here
         String configFile = "default_lcf.xml";

@@ -42,14 +42,14 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // static methods to return a formatted message
-    static public EasyDccMessage getEnableMain() {
+    public static EasyDccMessage getEnableMain() {
         EasyDccMessage m = new EasyDccMessage(1);
         m.setBinary(false);
         m.setOpCode('E');
         return m;
     }
 
-    static public EasyDccMessage getKillMain() {
+    public static EasyDccMessage getKillMain() {
         EasyDccMessage m = new EasyDccMessage(1);
         m.setBinary(false);
         m.setOpCode('K');
@@ -65,7 +65,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
      * locomotive to add
      * @return an EasyDccMessage of the form GN cc llll 
      */
-    static public EasyDccMessage getAddConsistNormal(int ConsistAddress, DccLocoAddress LocoAddress) {
+    public static EasyDccMessage getAddConsistNormal(int ConsistAddress, DccLocoAddress LocoAddress) {
         EasyDccMessage m = new EasyDccMessage(10);
         m.setBinary(false);
         m.setOpCode('G');
@@ -86,7 +86,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
      * locomotive to add
      * @return an EasyDccMessage of the form GS cc llll 
      */
-    static public EasyDccMessage getAddConsistReverse(int ConsistAddress, DccLocoAddress LocoAddress) {
+    public static EasyDccMessage getAddConsistReverse(int ConsistAddress, DccLocoAddress LocoAddress) {
         EasyDccMessage m = new EasyDccMessage(10);
         m.setBinary(false);
         m.setOpCode('G');
@@ -106,7 +106,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
      * locomotive to remove
      * @return an EasyDccMessage of the form GS cc llll 
      */
-    static public EasyDccMessage getSubtractConsist(int ConsistAddress, DccLocoAddress LocoAddress) {
+    public static EasyDccMessage getSubtractConsist(int ConsistAddress, DccLocoAddress LocoAddress) {
         EasyDccMessage m = new EasyDccMessage(10);
         m.setBinary(false);
         m.setOpCode('G');
@@ -124,7 +124,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
      * @param ConsistAddress  a consist address in the range 1-255
      * @return an EasyDccMessage of the form GK cc 
      */
-    static public EasyDccMessage getKillConsist(int ConsistAddress) {
+    public static EasyDccMessage getKillConsist(int ConsistAddress) {
         EasyDccMessage m = new EasyDccMessage(5);
         m.setBinary(false);
         m.setOpCode('G');
@@ -140,7 +140,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
      * @param ConsistAddress  a consist address in the range 1-255
      * @return an EasyDccMessage of the form GD cc 
      */
-    static public EasyDccMessage getDisplayConsist(int ConsistAddress) {
+    public static EasyDccMessage getDisplayConsist(int ConsistAddress) {
         EasyDccMessage m = new EasyDccMessage(5);
         m.setBinary(false);
         m.setOpCode('G');
@@ -150,21 +150,21 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public EasyDccMessage getProgMode() {
+    public static EasyDccMessage getProgMode() {
         EasyDccMessage m = new EasyDccMessage(1);
         m.setBinary(false);
         m.setOpCode('M');
         return m;
     }
 
-    static public EasyDccMessage getExitProgMode() {
+    public static EasyDccMessage getExitProgMode() {
         EasyDccMessage m = new EasyDccMessage(1);
         m.setBinary(false);
         m.setOpCode('X');
         return m;
     }
 
-    static public EasyDccMessage getReadPagedCV(int cv) { //R xxx
+    public static EasyDccMessage getReadPagedCV(int cv) { //R xxx
         EasyDccMessage m = new EasyDccMessage(5);
         m.setBinary(false);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
@@ -175,7 +175,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public EasyDccMessage getWritePagedCV(int cv, int val) { //P xxx xx
+    public static EasyDccMessage getWritePagedCV(int cv, int val) { //P xxx xx
         EasyDccMessage m = new EasyDccMessage(8);
         m.setBinary(false);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
@@ -188,7 +188,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public EasyDccMessage getReadRegister(int reg) { //Vx
+    public static EasyDccMessage getReadRegister(int reg) { //Vx
         if (reg > 8) {
             log.error("register number too large: {}", reg);
         }
@@ -202,7 +202,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public EasyDccMessage getWriteRegister(int reg, int val) { //Sx xx
+    public static EasyDccMessage getWriteRegister(int reg, int val) { //Sx xx
         if (reg > 8) {
             log.error("register number too large: {}", reg);
         }
@@ -219,7 +219,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     @SuppressWarnings("hiding")  // redefines value from super class
-    static protected final int LONG_TIMEOUT = 180000; // e.g. for programming options
+    protected static final int LONG_TIMEOUT = 180000; // e.g. for programming options
 
     private final static Logger log = LoggerFactory.getLogger(EasyDccMessage.class);
 

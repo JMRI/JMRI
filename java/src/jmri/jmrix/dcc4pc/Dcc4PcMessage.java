@@ -122,14 +122,14 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     //Not supported
-    static public Dcc4PcMessage getProgMode() {
+    public static Dcc4PcMessage getProgMode() {
         Dcc4PcMessage m = new Dcc4PcMessage(1);
         //m.setOpCode('+');
         return m;
     }
 
     //Not supported
-    static public Dcc4PcMessage getExitProgMode() {
+    public static Dcc4PcMessage getExitProgMode() {
         Dcc4PcMessage m = new Dcc4PcMessage(1);
         // m.setOpCode(' ');
         return m;
@@ -160,7 +160,7 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
     static final int CHILDPOLL = 0x0a;
     static final int RESPONSE = 0x0c;
     
-    static public Dcc4PcMessage getInfo(int address) {
+    public static Dcc4PcMessage getInfo(int address) {
         Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) INFO});
         m.childBoard = true;
         m.board = address;
@@ -169,7 +169,7 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public Dcc4PcMessage getDescription(int address) {
+    public static Dcc4PcMessage getDescription(int address) {
         Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) DESC});
         m.childBoard = true;
         m.board = address;
@@ -177,7 +177,7 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public Dcc4PcMessage getSerialNumber(int address) {
+    public static Dcc4PcMessage getSerialNumber(int address) {
         Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) SERIAL});
         m.childBoard = true;
         m.board = address;
@@ -185,7 +185,7 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public Dcc4PcMessage resetBoardData(int address) {
+    public static Dcc4PcMessage resetBoardData(int address) {
         Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) CHILDRESET});
         m.childBoard = true;
         m.board = address;
@@ -193,7 +193,7 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
        
-    static public Dcc4PcMessage pollBoard(int address){
+    public static Dcc4PcMessage pollBoard(int address){
         Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) CHILDPOLL});
         m.childBoard = true;
         m.setTimeout(500);
@@ -202,7 +202,7 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public Dcc4PcMessage getEnabledInputs(int address) {
+    public static Dcc4PcMessage getEnabledInputs(int address) {
         Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) CHILDENABLEDINPUTS});
         m.childBoard = true;
         m.board = address;
@@ -210,26 +210,26 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public Dcc4PcMessage getInfo() {
+    public static Dcc4PcMessage getInfo() {
         Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) INFO});
         m.messageType = INFO;
         return m;
     }
 
-    static public Dcc4PcMessage getResponse() {
+    public static Dcc4PcMessage getResponse() {
         Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) RESPONSE});
         m.isResponse = true;
         m.messageType = RESPONSE;
         return m;
     }
 
-    static public Dcc4PcMessage getDescription() {
+    public static Dcc4PcMessage getDescription() {
         Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) DESC});
         m.messageType = DESC;
         return m;
     }
 
-    static public Dcc4PcMessage getSerialNumber() {
+    public static Dcc4PcMessage getSerialNumber() {
         Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) SERIAL});
         m.messageType = SERIAL;
         return m;

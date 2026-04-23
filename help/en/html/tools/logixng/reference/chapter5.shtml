@@ -877,6 +877,10 @@ LogixNG: IQ:AUTO:0001
       previous behavior. <em><strong>Warning:</strong> When the option is disabled and and a loco
       change occurs, the previous loco will continue running until some other process tells it to stop.</em></p>
 
+      <p><span class="since">since 5.15.4</span>When enabled, the <strong>Wait for throttle</strong>
+      option acquires a throttle, performs the action and then releases the throttle.  This can also
+      be used to a release a throttle that had been previously acquired.</p>
+
       <div style="margin-left: 2em">
         <a href="images/chapter5/throttle_action.png"><img src="images/chapter5/throttle_action.png"
         alt="Chapter 5 throttle action"></a>
@@ -2307,17 +2311,21 @@ LogixNG: IQ:AUTO:0001
 
       <h4 id="timeout">Timeout<span class="since">since 4.25.8</span></h4>
 
-      <p>The <strong>Timeout</strong> action is used to execute a default action if an expression is
-      not true within the specified time internval.</p>
+      <p>The <strong>Timeout</strong> action is used to execute an action if an expression is not
+      true within the specified time interval.</p>
 
-      <p>The Timeout action dialog is similar to the <a href="#ExecuteDelayed">Execute Delayed
-      </a> dialog. The <strong>Timeout</strong> configuration also requires an expression.
-      If the expression is true before the time expires, the action is not executed.</p>
+      <p>When the expression (E) becomes false and a timer is not running, a timer is started.  If the
+      expression becomes true while the timer is running, the timer is stopped.  If the timer
+      delay finishes while the expression is still false, the action (A) will be executed.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/delayed_vs_timeout.png"><img src=
-        "images/chapter5/delayed_vs_timeout.png" alt="delayed vs timeout"></a>
+        <a href="images/chapter5/timeout_example.png"><img src=
+        "images/chapter5/timeout_example.png" alt="timeout example"></a>
       </div>
+
+      <p>In this example, sensor <strong>S-Timer</strong> controls the <strong>Timeout</strong>
+      process.  When S-Timer becomes active, the timer runs for 10 seconds.  If the sensor does not
+      change to inactive in 10 seconds, the <strong>S-LED</strong> sensor will be set active.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

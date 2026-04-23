@@ -37,12 +37,12 @@ import jmri.util.table.ButtonRenderer;
  */
 abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTableModel implements PropertyChangeListener {
 
-    static public final int SYSNAMECOL = 0;
-    static public final int USERNAMECOL = 1;
-    static public final int VALUECOL = 2;
-    static public final int COMMENTCOL = 3;
-    static public final int DELETECOL = 4;
-    static public final int NUMCOLUMN = 5;
+    public static final int SYSNAMECOL = 0;
+    public static final int USERNAMECOL = 1;
+    public static final int VALUECOL = 2;
+    public static final int COMMENTCOL = 3;
+    public static final int DELETECOL = 4;
+    public static final int NUMCOLUMN = 5;
     protected List<String> sysNameList = null;
     private NamedBeanHandleManager nbMan;
     private Predicate<? super T> filter;

@@ -21,6 +21,9 @@ public class PermissionsProgrammer {
     public static final Permission PERMISSION_ROSTER_ADDED_COLUMNS =
             new PermissionRosterAddedColumns();
 
+    public static final Permission PERMISSION_ROSTER_ADD_EDIT_REMOVE_ADDITIONAL_COLUMNS =
+            new PermissionRosterAddEditRemoveAdditionalColumns();
+
 
     @ServiceProvider(service = PermissionFactory.class)
     public static class Factory implements PermissionFactory {
@@ -31,6 +34,7 @@ public class PermissionsProgrammer {
             manager.registerPermission(PERMISSION_PROGRAMMING_TRACK);
             manager.registerPermission(PERMISSION_PROGRAMMING_ON_MAIN);
             manager.registerPermission(PERMISSION_ROSTER_ADDED_COLUMNS);
+            manager.registerPermission(PERMISSION_ROSTER_ADD_EDIT_REMOVE_ADDITIONAL_COLUMNS);
         }
 
     }
@@ -93,6 +97,25 @@ public class PermissionsProgrammer {
         @Override
         public String getName() {
             return Bundle.getMessage("PermissionOwnerProgramming_PermissionRosterAddedColumns");
+        }
+
+        @Override
+        public BooleanValue getDefaultPermission(Role role) {
+            return BooleanValue.get(role.isAdminRole());
+        }
+
+    }
+
+    public static class PermissionRosterAddEditRemoveAdditionalColumns implements BooleanPermission {
+
+        @Override
+        public PermissionOwner getOwner() {
+            return PERMISSION_OWNER_PROGRAMMING;
+        }
+
+        @Override
+        public String getName() {
+            return Bundle.getMessage("PermissionOwnerProgramming_PermissionRosterAddEditRemoveAdditionalColumns");
         }
 
         @Override

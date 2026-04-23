@@ -554,9 +554,9 @@ public class PositionablePopupUtil {
         popup.add(justMenu);
     }
 
-    static public final int LEFT = 0x00;
-    static public final int RIGHT = 0x02;
-    static public final int CENTRE = 0x04;
+    public static final int LEFT = 0x00;
+    public static final int RIGHT = 0x02;
+    public static final int CENTRE = 0x04;
 
     private int justification = CENTRE; //Default is always Centre
 

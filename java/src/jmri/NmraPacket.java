@@ -1429,7 +1429,7 @@ public class NmraPacket {
      * @param longAddr true if address is long; false otherwise
      * @return true if address is valid; false otherwise
      */
-    static public boolean addressCheck(int address, boolean longAddr) {
+    public static boolean addressCheck(int address, boolean longAddr) {
         if (address < 0) {  // zero is valid broadcast
             log.error("invalid address {}", address);
             return false;
@@ -1464,7 +1464,7 @@ public class NmraPacket {
      * @param packet the packet
      * @return the type or {@link jmri.NmraPacket.DccAddressType#NO_ADDRESS}
      */
-    static public DccAddressType extractAddressType(byte[] packet) {
+    public static DccAddressType extractAddressType(byte[] packet) {
         if (packet[0] == 0x00) {
             return DccAddressType.BROADCAST;
         }
@@ -1499,7 +1499,7 @@ public class NmraPacket {
      * @return the address; -1 is returned if there is no address or the case
      *         isn't considered yet
      */
-    static public int extractAddressNumber(byte[] packet) {
+    public static int extractAddressNumber(byte[] packet) {
         switch (extractAddressType(packet)) {
             case BROADCAST:
                 return 0;
@@ -1534,7 +1534,7 @@ public class NmraPacket {
      * @param packet the packet
      * @return the instruction or 0
      */
-    static public int extractInstruction(byte[] packet) {
+    public static int extractInstruction(byte[] packet) {
         switch (extractAddressType(packet)) {
             case BROADCAST:
             case NO_ADDRESS:
@@ -1557,7 +1557,7 @@ public class NmraPacket {
      * @return the readable packet
      * @see jmri.util.StringUtil#hexStringFromBytes(byte[])
      */
-    static public String format(byte[] p) {
+    public static String format(byte[] p) {
         return jmri.util.StringUtil.hexStringFromBytes(p);
     }
 
@@ -1576,7 +1576,7 @@ public class NmraPacket {
      * @throws IllegalArgumentException if packet array can't be decoded, e.g.
      *                                  is too short or null
      */
-    static public String toString(byte[] p) throws IllegalArgumentException {
+    public static String toString(byte[] p) throws IllegalArgumentException {
         if (p == null || p.length == 0) {
             throw new IllegalArgumentException("Content required");
         }

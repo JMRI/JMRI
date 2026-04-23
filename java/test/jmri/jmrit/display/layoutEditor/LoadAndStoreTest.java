@@ -1,14 +1,15 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.io.*;
+import java.text.ParseException;
 import java.util.stream.Stream;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.util.*;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.logixng.LogixNG_Manager;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,7 +38,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
-    public void loadAndStoreTest(File file, boolean pass) throws Exception {
+    public void loadAndStoreTest(File file, boolean pass) throws IOException, JmriException, ParseException {
         this.loadLoadStoreFileCheck(file);
     }
 
@@ -100,10 +101,12 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
      * platform.
      *
      * @param file the file to check
-     * @throws Exception on any unexpected exceptional condition
+     * {@inheritDoc}
+     * @throws java.io.IOException on test failure
+     * @throws jmri.JmriException on test failure
      */
     @Override
-    public void loadLoadStoreFileCheck(File file) throws Exception {
+    public void loadLoadStoreFileCheck(File file) throws IOException, JmriException, ParseException {
         super.loadLoadStoreFileCheck(file);
 
         done = false;
@@ -115,7 +118,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
     // store image(s) of any JFrames
     //  inFile is an XML file
-    public void storeAndCompareImage(File inFile) throws Exception {
+    public void storeAndCompareImage(File inFile) throws IOException {
         int index = 0;
         for (JmriJFrame frame : JmriJFrame.getFrameList()) {
             index++;
@@ -162,11 +165,9 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         File compFile = new File(filepath + "/loadref/" + subdir + "/" + name + "." + index + ".png");
 
         int checkVal = compareImageFiles(compFile, outFile);
-        if (checkVal != 0) {
-            log.error("Fail to compare new: {}", outFile);
-            log.error("Fail to compare ref: {}", compFile);
-            Assert.assertEquals("Screenshots didn't compare", 0, checkVal);
-        }
+        Assertions.assertEquals(0, checkVal,
+            () -> "Screenshots didn't compare, new: " + outFile
+                + " ref: " + compFile);
     }
 
     /**
@@ -177,8 +178,8 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
      */
     public static int compareImageFiles(File fileA, File fileB) {
         try {
-            log.info("FileA: " + fileA.toString());
-            log.info("FileB: " + fileB.toString());
+            log.info("FileA: {}",fileA);
+            log.info("FileB: {}",fileB);
 
             // check comparison file exists
             if (!fileA.exists()) {
@@ -233,6 +234,6 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         super.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadAndStoreTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadAndStoreTest.class);
 
 }

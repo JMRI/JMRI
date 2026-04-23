@@ -25,7 +25,7 @@ public class StoreAndCompareDialog {
 
     private static ShutdownPreferences _preferences = jmri.InstanceManager.getDefault(ShutdownPreferences.class);
 
-    static public boolean showAbortShutdownDialogPermissionDenied() {
+    public static boolean showAbortShutdownDialogPermissionDenied() {
         AtomicBoolean result = new AtomicBoolean(false);
         try {
             // Provide option to invoke the store process before the shutdown.
@@ -71,7 +71,7 @@ public class StoreAndCompareDialog {
         return result.get();
     }
 
-    static public boolean showDialog() {
+    public static boolean showDialog() {
         if (_preferences.getDisplayDialog().equals(ShutdownPreferences.DialogDisplayOptions.SkipDialog)) {
             performStore();
             return false;
@@ -129,7 +129,7 @@ public class StoreAndCompareDialog {
         return cancelShutdown.get();
     }
 
-    static private void performStore() {
+    private static void performStore() {
         new jmri.configurexml.StoreXmlUserAction("").actionPerformed(null);
     }
 }

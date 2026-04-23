@@ -77,7 +77,7 @@ public class NBHTurnout {
         return null;
     }
 //  turnout is NOT optional and cannot be null.  Raises Exception in ALL error cases.
-    static private Turnout getExistingJMRITurnout(String module, String userIdentifier, String parameter, String turnout) throws CTCException {
+    private static Turnout getExistingJMRITurnout(String module, String userIdentifier, String parameter, String turnout) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(turnout)) {
             // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
             Turnout returnValue = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnout);

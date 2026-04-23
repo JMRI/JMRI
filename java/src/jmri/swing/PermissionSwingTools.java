@@ -65,7 +65,7 @@ public final class PermissionSwingTools {
      * @param permission The permission to get a PermissionSwing of
      * @return a PermissionSwing object
      */
-    static public PermissionSwing getPermissionSwingForClass(Permission permission) {
+    public static PermissionSwing getPermissionSwingForClass(Permission permission) {
         Class<?> clazz = permission.getClass();
         PermissionSwing permissionSwing;
         try {

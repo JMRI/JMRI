@@ -85,7 +85,7 @@ public abstract class SdfMacroEditor extends JPanel {
      * @param inst macro instance.
      * @return editor according to macro type.
      */
-    static public SdfMacroEditor attachEditor(SdfMacro inst) {
+    public static SdfMacroEditor attachEditor(SdfMacro inst) {
 
         // full 1st byte decoder
         if (inst instanceof ChannelStart) {

@@ -41,8 +41,8 @@ public class PositionablePointViewXml extends LayoutTrackViewXml {
         element.setAttribute("ident", p.getId());
         element.setAttribute("type", pTypeEnumMap.outputFromEnum(p.getType()));
         Point2D coords = pv.getCoordsCenter();
-        element.setAttribute("x", "" + coords.getX());
-        element.setAttribute("y", "" + coords.getY());
+        element.setAttribute("x", "" + roundForStore(coords.getX()));
+        element.setAttribute("y", "" + roundForStore(coords.getY()));
         if (p.getConnect1() != null) {
             element.setAttribute("connect1name", p.getConnect1().getId());
         }

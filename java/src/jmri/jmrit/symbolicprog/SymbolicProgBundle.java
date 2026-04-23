@@ -10,11 +10,11 @@ package jmri.jmrit.symbolicprog;
  */
 public class SymbolicProgBundle {
 
-    static public String getMessage(String key) {
+    public static String getMessage(String key) {
         return Bundle.getMessage(key);
     }
 
-    static public String getMessage(String key, Object... subs) {
+    public static String getMessage(String key, Object... subs) {
         return Bundle.getMessage(key, subs);
     }
 }

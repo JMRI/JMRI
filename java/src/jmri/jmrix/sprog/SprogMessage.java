@@ -236,19 +236,19 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // static methods to return a formatted message
-    static public SprogMessage getEnableMain() {
+    public static SprogMessage getEnableMain() {
         SprogMessage m = new SprogMessage(1);
         m.setOpCode('+');
         return m;
     }
 
-    static public SprogMessage getKillMain() {
+    public static SprogMessage getKillMain() {
         SprogMessage m = new SprogMessage(1);
         m.setOpCode('-');
         return m;
     }
 
-    static public SprogMessage getStatus() {
+    public static SprogMessage getStatus() {
         SprogMessage m = new SprogMessage(1);
         m.setOpCode('S');
         return m;
@@ -260,7 +260,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
      * bit direct modes. A single parameter is taken as the CV address to read.
      * Two parametes are taken as the CV address and data to be written.
      */
-    static public SprogMessage getReadCV(int cv, ProgrammingMode mode) {
+    public static SprogMessage getReadCV(int cv, ProgrammingMode mode) {
         SprogMessage m = new SprogMessage(6);
         if (mode == ProgrammingMode.PAGEMODE) {
             m.setOpCode('V');
@@ -281,7 +281,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
      * @param startVal  Hint
      * @return
      */
-    static public SprogMessage getReadCV(int cv, ProgrammingMode mode, int startVal) {
+    public static SprogMessage getReadCV(int cv, ProgrammingMode mode, int startVal) {
         SprogMessage m = new SprogMessage(10);
         if (mode == ProgrammingMode.PAGEMODE) {
             m.setOpCode('U');
@@ -295,7 +295,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public SprogMessage getWriteCV(int cv, int val, ProgrammingMode mode) {
+    public static SprogMessage getWriteCV(int cv, int val, ProgrammingMode mode) {
         SprogMessage m = new SprogMessage(10);
         if (mode == ProgrammingMode.PAGEMODE) {
             m.setOpCode('V');
@@ -310,13 +310,13 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // [AC] 11/09/2002 SPROG doesn't currently support registered mode
-    static public SprogMessage getReadRegister(int reg) { //Vx
+    public static SprogMessage getReadRegister(int reg) { //Vx
         SprogMessage m = new SprogMessage(1);
         m.setOpCode(' ');
         return m;
     }
 
-    static public SprogMessage getWriteRegister(int reg, int val) { //Sx xx
+    public static SprogMessage getWriteRegister(int reg, int val) { //Sx xx
         SprogMessage m = new SprogMessage(1);
         m.setOpCode(' ');
         return m;
@@ -328,7 +328,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
      * @param bytes byte[]
      * @return SprogMessage
      */
-    static public SprogMessage getPacketMessage(byte[] bytes) {
+    public static SprogMessage getPacketMessage(byte[] bytes) {
         SprogMessage m = new SprogMessage(1 + 3 * bytes.length);
         int i = 0; // counter to make it easier to format the message
 
@@ -344,7 +344,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     // Bootloader messages are initially created long enough for
     // the message and checksum. The message is then framed with control
     // characters before being returned
-    static public SprogMessage getReadBootVersion() {
+    public static SprogMessage getReadBootVersion() {
         SprogMessage m = new SprogMessage(3);
         m.setOpCode(RD_VER);
         m.setLength(2);
@@ -352,7 +352,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         return m.frame();
     }
 
-    static public SprogMessage getWriteFlash(int addr, int[] data, int blockLen) {
+    public static SprogMessage getWriteFlash(int addr, int[] data, int blockLen) {
         int l = data.length;
         int offset;
         // Writes are rounded up to multiples of blockLen
@@ -386,7 +386,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         return m.frame();
     }
 
-    static public SprogMessage getEraseFlash(int addr, int rows) {
+    public static SprogMessage getEraseFlash(int addr, int rows) {
         SprogMessage m = new SprogMessage(6);
         m.setOpCode(ER_FLASH);
         // Erase a number of 64 byte rows
@@ -396,7 +396,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         return m.frame();
     }
 
-    static public SprogMessage getWriteEE(int addr, int[] data) {
+    public static SprogMessage getWriteEE(int addr, int[] data) {
         SprogMessage m = new SprogMessage(6 + data.length);
         m.setOpCode(WT_EEDATA);
         m.setLength(data.length);
@@ -406,7 +406,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         return m.frame();
     }
 
-    static public SprogMessage getReset() {
+    public static SprogMessage getReset() {
         SprogMessage m = new SprogMessage(3);
         m.setOpCode(0);
         m.setLength(0);

@@ -2,6 +2,8 @@ package jmri.jmrit.roster;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -51,6 +53,18 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         initGUI();
     }
 
+    public List<String> getLabels() {
+        var retval = new ArrayList<String>();
+        for (JTextField j : labels) {
+            retval.add(j.getText());
+        }
+        return retval;
+    }
+    
+    public void setLabel(int n, String label) {
+        labels[n].setText(label);
+    }
+    
     private void initGUI() {
         maxfunction = re.getMaxFnNumAsInt();
         GridBagLayout gbLayout = new GridBagLayout();
@@ -331,7 +345,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
     public void printPane(HardcopyWriter w) {
         // if pane is empty, don't print anything
-        //if (varList.size() == 0 && cvList.size() == 0) return;
+        // if (varList.size() == 0 && cvList.size() == 0) return;
         // future work needed here to print indexed CVs
 
         // Define column widths for name and value output.
@@ -341,7 +355,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         int col2Width = w.getCharactersPerLine() / 2 - 3 + 5;
 
         try {
-            //Create a string of spaces the width of the first column
+            // Create a string of spaces the width of the first column
             StringBuilder spaces = new StringBuilder();
             for (int i = 0; i < col1Width; i++) {
                 spaces.append(" ");

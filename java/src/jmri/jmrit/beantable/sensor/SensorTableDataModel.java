@@ -317,7 +317,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
     /**
      * Small class to ensure type-safety of references otherwise lost to type erasure
      */
-    static private class PullResistanceComboBox extends JComboBox<Sensor.PullResistance> {
+    private static class PullResistanceComboBox extends JComboBox<Sensor.PullResistance> {
         PullResistanceComboBox(Sensor.PullResistance[] values) { super(values); }
     }
 

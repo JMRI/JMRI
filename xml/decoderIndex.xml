@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.15.3plus+jake+20260214T1345Z+R6499ef8baa2 on Sat Feb 14 08:45:44 EST 2026-->
-  <decoderIndex version="701">
+  <!--Written by JMRI version 5.15.5plus+jake+20260409T0807Z+R846a860169f on Thu Apr 09 04:07:53 EDT 2026-->
+  <decoderIndex version="707">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -16892,37 +16892,235 @@
       <family name="NYB Dual Mode Decoder" mfg="New York Byano Limited" type="locomotive" file="NYB_dualmode.xml">
         <model model="NYB Dual Mode Decoder" numOuts="2" numFns="0" lowVersionID="46" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
-      <family name="PIKO SUSI Lichtdekoder V2 (XP5.1)" mfg="PIKO" lowVersionID="0" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SUSI_LichtDecoder2_XP5.1.xml">
+      <family name="PIKO SUSI Lichtcontroller V0" mfg="PIKO" lowVersionID="0" highVersionID="29" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SUSI_LichtDecoder0_XP5.1.xml">
         <!-- to be checked by hardware owner -->
-        <model show="no" model="PIKO SUSI LC2" numOuts="22" numFns="31" productID="PIKO_SUSI_LC2" lowVersionID="0" comment="Piko ML4000 SUSI Lichtdekoder (XP5.1)">
-          <output name="1" label="A1" />
-          <output name="2" label="A2" />
-          <output name="3" label="A3" />
-          <output name="4" label="A4" />
-          <output name="5" label="A5" />
-          <output name="6" label="A6" />
-          <output name="7" label="A7" />
-          <output name="2" label="A8" />
-          <output name="3" label="A9" />
-          <output name="4" label="A10" />
-          <output name="5" label="A11" />
-          <output name="6" label="A12" />
-          <output name="7" label="A13" />
+        <model model="PIKO SUSI LC" numOuts="7" numFns="31" productID="LC" comment="Piko SUSI Lichtcontroller V0">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC_A2" />
+          <output name="3" label="LC_A3" />
+          <output name="4" label="LC_A4" />
+          <output name="5" label="LC_A5" />
+          <output name="6" label="LC_A6" />
+          <output name="7" label="LC_A7" />
         </model>
-        <model model="PIKO ML4000 SUSI LC2" numOuts="22" numFns="31" productID="PIKO_ML4000_SUSI_LC2" lowVersionID="0" comment="Piko ML4000 SUSI Lichtdekoder (XP5.1)">
-          <output name="1" label="A1" />
-          <output name="2" label="A2" />
-          <output name="3" label="A3" />
-          <output name="4" label="A4" />
-          <output name="5" label="A5" />
-          <output name="6" label="A6" />
-          <output name="7" label="A7" />
-          <output name="2" label="A8" />
-          <output name="3" label="A9" />
-          <output name="4" label="A10" />
-          <output name="5" label="A11" />
-          <output name="6" label="A12" />
-          <output name="7" label="A13" />
+        <model model="PIKO SUSI LC BR 83-TT" numOuts="6" numFns="31" productID="LC_BR83-TT" comment="Piko SUSI Lichtcontroller BR 83-TT (XP5.1)">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC_A2" />
+          <output name="3" label="LC_A3" />
+          <output name="4" label="LC_A4" />
+          <output name="5" label="LC_A5" />
+          <output name="6" label="LC_A6" />
+        </model>
+        <model model="PIKO SUSI LC BR 93-TT" numOuts="6" numFns="31" productID="LC_BR93-TT" comment="Piko SUSI Lichtcontroller BR 93-TT">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC_A2" />
+          <output name="3" label="LC_A3" />
+          <output name="4" label="LC_A4" />
+          <output name="5" label="LC_A5" />
+          <output name="6" label="LC_A6" />
+        </model>
+        <model model="PIKO SUSI LC BR 150-TT" numOuts="6" numFns="31" productID="LC_BR150-TT" comment="Piko SUSI Lichtcontroller BR 150-TT">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC_A2" />
+          <output name="3" label="LC_A3" />
+          <output name="4" label="LC_A4" />
+          <output name="5" label="LC_A5" />
+          <output name="6" label="LC_A6" />
+        </model>
+        <model model="PIKO SUSI LC S 499-TT" numOuts="7" numFns="31" productID="LC_S499-TT" comment="Piko SUSI Lichtcontroller S 499-TT">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC_A2" />
+          <output name="3" label="LC_A3" />
+          <output name="4" label="LC_A4" />
+          <output name="5" label="LC_A5" />
+          <output name="6" label="LC_A6" />
+          <output name="7" label="LC_A7" />
+        </model>
+        <model model="PIKO SUSI LC BR 152-N" numOuts="3" numFns="31" productID="LC" comment="Piko BR 152 SUSI Lichtcontroller" />
+        <model model="PIKO SUSI LC BR 185-N" numOuts="3" numFns="31" productID="LC" comment="Piko BR 185 SUSI Lichtcontroller" />
+        <model model="PIKO SUSI LC BR 216-N" numOuts="3" numFns="31" productID="LC" comment="Piko BR 216 SUSI Lichtcontroller" />
+        <model model="PIKO SUSI LC BR 101-N" numOuts="3" numFns="31" productID="LC" comment="Piko BR 101 SUSI Lichtcontroller" />
+        <model model="PIKO SUSI LC Rh 1000-N" numOuts="3" numFns="31" productID="LC" comment="Piko Rh 1100 SUSI Lichtcontroller" />
+      </family>
+      <family name="PIKO SUSI Lichtcontroller V2" mfg="PIKO" lowVersionID="0" highVersionID="29" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SUSI_LichtDecoder2_XP5.1.xml">
+        <!-- to be checked by hardware owner -->
+        <model show="yes" model="PIKO SUSI LC2" numOuts="22" numFns="31" productID="LC2" comment="Piko SUSI Lichtcontroller V2">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC-A2" />
+          <output name="3" label="LC-A3" />
+          <output name="4" label="LC-A4" />
+          <output name="5" label="LC-A5" />
+          <output name="6" label="LC-A6" />
+          <output name="7" label="LC-A7" />
+          <output name="8" label="LC-A8" />
+          <output name="9" label="LC-A9" />
+          <output name="10" label="LC-A10" />
+          <output name="11" label="LC-A11" />
+          <output name="12" label="LC-A12" />
+          <output name="13" label="LC-A13" />
+          <output name="14" label="LC-A14" />
+          <output name="15" label="LC-A15" />
+          <output name="16" label="LC-A16" />
+          <output name="17" label="LC-A17" />
+          <output name="18" label="LC-A18" />
+          <output name="19" label="LC-A19" />
+          <output name="20" label="LC-A20" />
+          <output name="21" label="LC-A21" />
+          <output name="22" label="LC-A22" />
+        </model>
+        <model show="yes" model="PIKO SUSI LC2 DE 18-H0" numOuts="22" numFns="31" productID="LC2" comment="Piko DE 18 SUSI Lichtcontroller V2">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC-A2" />
+          <output name="3" label="LC-A3" />
+          <output name="4" label="LC-A4" />
+          <output name="5" label="LC-A5" />
+          <output name="6" label="LC-A6" />
+          <output name="7" label="LC-A7" />
+          <output name="8" label="LC-A8" />
+          <output name="9" label="LC-A9" />
+          <output name="10" label="LC-A10" />
+          <output name="11" label="LC-A11" />
+          <output name="12" label="LC-A12" />
+          <output name="13" label="LC-A13" />
+          <output name="14" label="LC-A14" />
+          <output name="15" label="LC-A15" />
+          <output name="16" label="LC-A16" />
+          <output name="17" label="LC-A17" />
+          <output name="18" label="LC-A18" />
+          <output name="19" label="LC-A19" />
+          <output name="20" label="LC-A20" />
+          <output name="21" label="LC-A21" />
+          <output name="22" label="LC-A22" />
+        </model>
+        <model show="yes" model="PIKO SUSI LC2 BR 249-H0" numOuts="22" numFns="31" productID="LC2" comment="Piko BR 249 SUSI Lichtcontroller V2">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC-A2" />
+          <output name="3" label="LC-A3" />
+          <output name="4" label="LC-A4" />
+          <output name="5" label="LC-A5" />
+          <output name="6" label="LC-A6" />
+          <output name="7" label="LC-A7" />
+          <output name="8" label="LC-A8" />
+          <output name="9" label="LC-A9" />
+          <output name="10" label="LC-A10" />
+          <output name="11" label="LC-A11" />
+          <output name="12" label="LC-A12" />
+          <output name="13" label="LC-A13" />
+          <output name="14" label="LC-A14" />
+          <output name="15" label="LC-A15" />
+          <output name="16" label="LC-A16" />
+          <output name="17" label="LC-A17" />
+          <output name="18" label="LC-A18" />
+          <output name="19" label="LC-A19" />
+          <output name="20" label="LC-A20" />
+          <output name="21" label="LC-A21" />
+          <output name="22" label="LC-A22" />
+        </model>
+        <model show="yes" model="PIKO SUSI LC2 D.445-H0" numOuts="22" numFns="31" productID="LC2" comment="Piko D.445 SUSI Lichtcontroller V2">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC-A2" />
+          <output name="3" label="LC-A3" />
+          <output name="4" label="LC-A4" />
+          <output name="5" label="LC-A5" />
+          <output name="6" label="LC-A6" />
+          <output name="7" label="LC-A7" />
+          <output name="8" label="LC-A8" />
+          <output name="9" label="LC-A9" />
+          <output name="10" label="LC-A10" />
+          <output name="11" label="LC-A11" />
+          <output name="12" label="LC-A12" />
+          <output name="13" label="LC-A13" />
+          <output name="14" label="LC-A14" />
+          <output name="15" label="LC-A15" />
+          <output name="16" label="LC-A16" />
+          <output name="17" label="LC-A17" />
+          <output name="18" label="LC-A18" />
+          <output name="19" label="LC-A19" />
+          <output name="20" label="LC-A20" />
+          <output name="21" label="LC-A21" />
+          <output name="22" label="LC-A22" />
+        </model>
+        <model show="no" model="PIKO ML4000 SUSI LC2" numOuts="22" numFns="31" productID="PIKO_ML4000_SUSI_LC2" comment="Piko ML 4000 SUSI Lichtcontroller V2" replacementModel="PIKO SUSI LC2 ML 4000-H0" replacementFamily="query:PIKO SUSI Lichtcontroller V2">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC-A2" />
+          <output name="3" label="LC-A3" />
+          <output name="4" label="LC-A4" />
+          <output name="5" label="LC-A5" />
+          <output name="6" label="LC-A6" />
+          <output name="7" label="LC-A7" />
+          <output name="8" label="LC-A8" />
+          <output name="9" label="LC-A9" />
+          <output name="10" label="LC-A10" />
+          <output name="11" label="LC-A11" />
+          <output name="12" label="LC-A12" />
+          <output name="13" label="LC-A13" />
+          <output name="14" label="LC-A14" />
+          <output name="15" label="LC-A15" />
+          <output name="16" label="LC-A16" />
+          <output name="17" label="LC-A17" />
+          <output name="18" label="LC-A18" />
+          <output name="19" label="LC-A19" />
+          <output name="20" label="LC-A20" />
+          <output name="21" label="LC-A21" />
+          <output name="22" label="LC-A22" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">
+              <text>Headlights</text>
+              <text xml:lang="de">Spitzenlicht</text>
+            </functionlabel>
+            <functionlabel num="1" lockable="true" />
+            <functionlabel num="2" lockable="true" />
+            <functionlabel num="3" lockable="false" />
+            <functionlabel num="4" lockable="false" />
+            <functionlabel num="5" lockable="false" />
+            <functionlabel num="6" lockable="false" />
+            <functionlabel num="7" lockable="true">Headlight Dimmer</functionlabel>
+            <functionlabel num="8" lockable="false" />
+            <functionlabel num="9" lockable="false">Indicators + Markers Lights (multi steps)</functionlabel>
+            <functionlabel num="10" lockable="true">Dual White Gyralite</functionlabel>
+            <functionlabel num="11" lockable="true">Red Gyralite</functionlabel>
+            <functionlabel num="12" lockable="true" />
+            <functionlabel num="13" lockable="true">Cab Interior Light</functionlabel>
+            <functionlabel num="14" lockable="true">Engine Room Light</functionlabel>
+            <functionlabel num="15" lockable="false">Lighting Double Traction (multi steps)</functionlabel>
+            <functionlabel num="16" lockable="false" />
+            <functionlabel num="17" lockable="true" />
+            <functionlabel num="18" lockable="true" />
+            <functionlabel num="19" lockable="true" />
+            <functionlabel num="20" lockable="true" />
+            <functionlabel num="21" lockable="false" />
+            <functionlabel num="22" lockable="false" />
+            <functionlabel num="23" lockable="false" />
+            <functionlabel num="24" lockable="true" />
+            <functionlabel num="25" lockable="true">Control Stand Light</functionlabel>
+            <functionlabel num="26" lockable="false" />
+            <functionlabel num="27" lockable="true" />
+            <functionlabel num="28" lockable="true"> m </functionlabel>
+          </functionlabels>
+        </model>
+        <model show="yes" model="PIKO SUSI LC2 ML 4000-H0" numOuts="22" numFns="31" productID="LC2_ML4000-H0" comment="Piko ML 4000 SUSI Lichtcontroller V2 (XP5.1)">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC-A2" />
+          <output name="3" label="LC-A3" />
+          <output name="4" label="LC-A4" />
+          <output name="5" label="LC-A5" />
+          <output name="6" label="LC-A6" />
+          <output name="7" label="LC-A7" />
+          <output name="8" label="LC-A8" />
+          <output name="9" label="LC-A9" />
+          <output name="10" label="LC-A10" />
+          <output name="11" label="LC-A11" />
+          <output name="12" label="LC-A12" />
+          <output name="13" label="LC-A13" />
+          <output name="14" label="LC-A14" />
+          <output name="15" label="LC-A15" />
+          <output name="16" label="LC-A16" />
+          <output name="17" label="LC-A17" />
+          <output name="18" label="LC-A18" />
+          <output name="19" label="LC-A19" />
+          <output name="20" label="LC-A20" />
+          <output name="21" label="LC-A21" />
+          <output name="22" label="LC-A22" />
           <functionlabels>
             <functionlabel num="0" lockable="true">
               <text>Headlights</text>
@@ -16959,9 +17157,48 @@
           </functionlabels>
         </model>
       </family>
-      <family name="PIKO SUSI Lichtdekoder (XP5.1)" mfg="PIKO" lowVersionID="0" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SUSI_LichtDecoder_XP5.1.xml">
+      <family name="PIKO SUSI Lichtcontroller V4" mfg="PIKO" lowVersionID="0" highVersionID="29" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SUSI_LichtDecoder4_XP5.1.xml">
         <!-- to be checked by hardware owner -->
-        <model model="PIKO SUSI LC" numOuts="7" numFns="31" productID="PIKO_SUSI_LC" lowVersionID="0" comment="Piko BR 83 SUSI Lichtdekoder (XP5.1)">
+        <model model="PIKO SUSI LC4" numOuts="8" numFns="31" productID="LC4" comment="Piko SUSI Lichtcontroller V4">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC_A2" />
+          <output name="3" label="LC_A3" />
+          <output name="4" label="LC_A4" />
+          <output name="5" label="LC_A5" />
+          <output name="6" label="LC_A6" />
+          <output name="7" label="LC_A7" />
+          <output name="8" label="LC_A8" />
+        </model>
+        <model model="PIKO SUSI LC4 BR 62-TT" numOuts="3" numFns="31" productID="LC4_BR62-TT" comment="Piko BR 62 SUSI Lichtcontroller V4">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC_A2" />
+          <output name="3" label="LC_A3" />
+        </model>
+      </family>
+      <family name="PIKO SUSI Lichtcontroller V5" mfg="PIKO" lowVersionID="0" highVersionID="29" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SUSI_LichtDecoder5_XP5.1.xml">
+        <!-- to be checked by hardware owner -->
+        <model model="PIKO SUSI LC5" numOuts="8" numFns="31" productID="LC5" comment="Piko SUSI Lichtcontroller V5">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC_A2" />
+          <output name="3" label="LC_A3" />
+          <output name="4" label="LC_A4" />
+          <output name="5" label="LC_A5" />
+          <output name="6" label="LC_A6" />
+          <output name="7" label="LC_A7" />
+          <output name="8" label="LC_A8" />
+        </model>
+        <model model="PIKO SUSI LC5 BR 243-TT" numOuts="6" numFns="31" productID="LC5_BR243-TT" comment="Piko BR 243 SUSI Lichtcontroller V5">
+          <output name="1" label="LC_A1" />
+          <output name="2" label="LC_A2" />
+          <output name="3" label="LC_A3" />
+          <output name="4" label="LC_A4" />
+          <output name="5" label="LC_A5" />
+          <output name="6" label="LC_A6" />
+        </model>
+      </family>
+      <family name="PIKO SUSI Lichtcontroller (XP5.1)" mfg="PIKO" lowVersionID="0" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SUSI_LichtDecoder_XP5.1.xml">
+        <!-- to be checked by hardware owner -->
+        <model show="no" model="PIKO SUSI LC" numOuts="7" numFns="31" productID="PIKO_SUSI_LC" lowVersionID="0" comment="Piko BR 83 SUSI Lichtcontroller (XP5.1)" replacementModel="PIKO SUSI LC" replacementFamily="query:PIKO SUSI Lichtcontroller V0">
           <output name="1" label="A1" />
           <output name="2" label="A2" />
           <output name="3" label="A3" />
@@ -16970,7 +17207,7 @@
           <output name="6" label="A6" />
           <output name="7" label="A7" />
         </model>
-        <model model="PIKO BR 83 SUSI LC" numOuts="6" numFns="31" productID="PIKO_BR83_SUSI_LC" lowVersionID="0" comment="Piko BR 83 SUSI Lichtdekoder (XP5.1)">
+        <model show="no" model="PIKO BR 83 SUSI LC" numOuts="6" numFns="31" productID="PIKO_BR83_SUSI_LC" lowVersionID="0" comment="Piko BR 83 SUSI Lichtcontroller (XP5.1)" replacementModel="PIKO SUSI LC BR 83-TT" replacementFamily="query:PIKO SUSI Lichtcontroller V0">
           <output name="1" label="A1" />
           <output name="2" label="A2" />
           <output name="3" label="A3" />
@@ -16978,7 +17215,7 @@
           <output name="5" label="A5" />
           <output name="6" label="A6" />
         </model>
-        <model model="PIKO BR 93 SUSI LC" numOuts="6" numFns="31" productID="PIKO_BR93_SUSI_LC" lowVersionID="0" comment="Piko BR 93 SUSI Lichtdekoder (XP5.1)">
+        <model show="no" model="PIKO BR 93 SUSI LC" numOuts="6" numFns="31" productID="PIKO_BR93_SUSI_LC" lowVersionID="0" comment="Piko BR 93 SUSI Lichtcontroller (XP5.1)" replacementModel="PIKO SUSI LC BR 93-TT" replacementFamily="query:PIKO SUSI Lichtcontroller V0">
           <output name="1" label="A1" />
           <output name="2" label="A2" />
           <output name="3" label="A3" />
@@ -16986,7 +17223,7 @@
           <output name="5" label="A5" />
           <output name="6" label="A6" />
         </model>
-        <model model="PIKO BR 150 SUSI LC" numOuts="6" numFns="31" productID="PIKO_BR150_SUSI_LC" lowVersionID="0" comment="Piko BR 150 SUSI Lichtdekoder (XP5.1)">
+        <model show="no" model="PIKO BR 150 SUSI LC" numOuts="6" numFns="31" productID="PIKO_BR150_SUSI_LC" lowVersionID="0" comment="Piko BR 150 SUSI Lichtcontroller (XP5.1)" replacementModel="PIKO SUSI LC BR 150-TT" replacementFamily="query:PIKO SUSI Lichtcontroller V0">
           <output name="1" label="A1" />
           <output name="2" label="A2" />
           <output name="3" label="A3" />
@@ -16994,7 +17231,7 @@
           <output name="5" label="A5" />
           <output name="6" label="A6" />
         </model>
-        <model model="PIKO S 499 SUSI LC" numOuts="7" numFns="31" productID="PIKO_S499_SUSI_LC" lowVersionID="0" comment="Piko S 499 SUSI Lichtdekoder (XP5.1)">
+        <model show="no" model="PIKO S 499 SUSI LC" numOuts="7" numFns="31" productID="PIKO_S499_SUSI_LC" lowVersionID="0" comment="Piko S 499 SUSI Lichtcontroller (XP5.1)" replacementModel="PIKO SUSI LC S 499-TT" replacementFamily="query:PIKO SUSI Lichtcontroller V0">
           <output name="1" label="A1" />
           <output name="2" label="A2" />
           <output name="3" label="A3" />
@@ -17058,6 +17295,40 @@
           <!-- Anfahren/Bremsen -->
         </model>
       </family>
+      <family name="PIKO SmartDecoder XP5.1 (version 1.17+)" mfg="PIKO" lowVersionID="17" highVersionID="20" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1-G_Sound_v1.17.xml">
+        <model model="PIKO36505-G XP5.1 V1.17" numOuts="14" numFns="68" productID="PIKO36505-G" comment="Piko SmartDecoder XP5.1-G Sound allgemein (FW 1.17.0+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
+          <output name="10" label=". A8 ." />
+          <output name="11" label=". A9 ." />
+          <output name="12" label=". A10." />
+          <output name="13" label=". A11." />
+          <output name="14" label=". A12." />
+        </model>
+        <model model="PIKO36537 BR80-G V1.17" numOuts="14" numFns="68" productID="36537" comment="Piko SmartDecoder XP5.1-G Sound BR 80 G (FW 1.17.0+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
+          <output name="10" label=". A8 ." />
+          <output name="11" label=". A9 ." />
+          <output name="12" label=". A10." />
+          <output name="13" label=". A11." />
+          <output name="14" label=". A12." />
+        </model>
+      </family>
       <family name="PIKO SmartDecoder XP5.1 (old - not use)" mfg="PIKO" lowVersionID="3" highVersionID="9" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound.xml">
         <!-- to be checked by hardware owner -->
         <model show="no" model="PIKO46550-18" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug (Plus) (FW 1.5.0)" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
@@ -17073,7 +17344,7 @@
           <output name="4" label=". A2 ." />
         </model>
       </family>
-      <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound_ML4000_v1.8.xml">
+      <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="16" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound_ML4000_v1.8.xml">
         <model model="PIKO56627-22 KM ML4000-US V1.8" numOuts="9" numFns="68" productID="PIKO56627-22" comment="Piko SmartDecoder XP5.1 Sound KM ML4000 (FW 1.8.0 - 1.16.0) US Version">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
@@ -17259,7 +17530,13 @@
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46540-18 BR55-TT V1.17" numOuts="4" numFns="68" productID="PIKO46540-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.17.0+)">
+        <model show="no" model="PIKO46540-18 BR55-TT V1.17" numOuts="4" numFns="68" productID="PIKO46540-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.17.0+)" replacementModel="PIKO46540 BR55-TT V1.17" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.17+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46540 BR55-TT V1.17" numOuts="4" numFns="68" productID="46540" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.17.0+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -17284,38 +17561,6 @@
           <output name="5" label=". A3 ." />
           <output name="6" label=". A4 ." />
         </model>
-        <model model="PIKO36505-G XP5.1 V1.17 no LC (SUSI)" numOuts="14" numFns="68" productID="PIKO36505-G" comment="Piko SmartDecoder XP5.1 Sound G allgemein ohne LC (FW 1.17.0+)">
-          <output name="1" label="F0(f)" />
-          <output name="2" label="F0(r)" />
-          <output name="3" label=". A1 ." />
-          <output name="4" label=". A2 ." />
-          <output name="5" label=". A3 ." />
-          <output name="6" label=". A4 ." />
-          <output name="7" label=". A5 ." />
-          <output name="8" label=". A6 ." />
-          <output name="9" label=". A7 ." />
-          <output name="10" label=". A8 ." />
-          <output name="11" label=". A9 ." />
-          <output name="12" label=". A10." />
-          <output name="13" label=". A11." />
-          <output name="14" label=". A12." />
-        </model>
-        <model model="PIKO36537-G BR80-G V1.17" numOuts="14" numFns="68" productID="PIKO36537-G" comment="Piko SmartDecoder XP5.1 Sound BR 80 G ohne LC (FW 1.17.0+)">
-          <output name="1" label="F0(f)" />
-          <output name="2" label="F0(r)" />
-          <output name="3" label=". A1 ." />
-          <output name="4" label=". A2 ." />
-          <output name="5" label=". A3 ." />
-          <output name="6" label=". A4 ." />
-          <output name="7" label=". A5 ." />
-          <output name="8" label=". A6 ." />
-          <output name="9" label=". A7 ." />
-          <output name="10" label=". A8 ." />
-          <output name="11" label=". A9 ." />
-          <output name="12" label=". A10." />
-          <output name="13" label=". A11." />
-          <output name="14" label=". A12." />
-        </model>
       </family>
       <family name="PIKO SmartDecoder XP5.1 (version 1.5+)" mfg="PIKO" lowVersionID="3" highVersionID="5" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound_noSUSI_v1.5.xml">
         <model model="PIKO46505-18 XP5.1 V1.5 no LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein (FW 1.5.0)" replacementModel="PIKO46505-18 XP5.1 V1.8 no LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
@@ -17324,7 +17569,13 @@
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46540-18 BR55-TT V1.5" numOuts="4" numFns="68" productID="PIKO46540-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 (FW 1.5.0)" replacementModel="PIKO46540-18 BR55-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+        <model show="no" model="PIKO46540-18 BR55-TT V1.5" numOuts="4" numFns="68" productID="PIKO46540-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.5.0)" replacementModel="PIKO46540 BR55-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46540 BR55-TT V1.5" numOuts="4" numFns="68" productID="46540" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.5.0)" replacementModel="PIKO46540 BR55-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -17357,7 +17608,13 @@
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46540-18 BR55-TT V1.8" numOuts="4" numFns="68" productID="PIKO46540-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.8.0 - 1.16.0)">
+        <model show="no" model="PIKO46540-18 BR55-TT V1.8" numOuts="4" numFns="68" productID="PIKO46540-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.8.0 - 1.16.0)" replacementModel="PIKO46540 BR55-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46540 BR55-TT V1.8" numOuts="4" numFns="68" productID="46540" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -17435,13 +17692,25 @@
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46550-18 BR83-TT V1.5" numOuts="4" numFns="68" productID="PIKO46550-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 (FW 1.5.0)" replacementModel="PIKO46550-18 BR83-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+        <model show="no" model="PIKO46550-18 BR83-TT V1.5" numOuts="4" numFns="68" productID="PIKO46550-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 (FW 1.5.0)" replacementModel="PIKO46550 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46548-18 BR150-TT V1.5" numOuts="4" numFns="68" productID="PIKO46548-18" comment="Piko SmartDecoder XP5.1 Sound E Loco BR 150 TT Next18 (FW 1.5.0)" replacementModel="PIKO46548-18 BR150-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+        <model model="PIKO46550 BR83-TT V1.5" numOuts="4" numFns="68" productID="46550" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 (FW 1.5.0)" replacementModel="PIKO46550 BR83-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model show="no" model="PIKO46548-18 BR150-TT V1.5" numOuts="4" numFns="68" productID="PIKO46548-18" comment="Piko SmartDecoder XP5.1 Sound E Loco BR 150 TT Next18 (FW 1.5.0)" replacementModel="PIKO46548-18 BR150-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46548 BR150-TT V1.5" numOuts="4" numFns="68" productID="46548" comment="Piko SmartDecoder XP5.1 Sound E Loco BR 150 TT Next18 (FW 1.5.0)" replacementModel="PIKO46548 BR150-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -17455,19 +17724,37 @@
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46550-18 BR83-TT V1.8" numOuts="4" numFns="68" productID="PIKO46550-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)">
+        <model show="no" model="PIKO46548-18 BR150-TT V1.8" numOuts="4" numFns="68" productID="PIKO46548-18" comment="Piko SmartDecoder XP5.1 Sound E Loco BR 150 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO 46548 BR150-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46551-18 BR93-TT V1.8" numOuts="4" numFns="68" productID="PIKO46551-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)">
+        <model model="PIKO46548 BR150-TT V1.8" numOuts="4" numFns="68" productID="46548" comment="Piko SmartDecoder XP5.1 Sound E Loco BR 150 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46548-18 BR150-TT V1.8" numOuts="4" numFns="68" productID="PIKO46548-18" comment="Piko SmartDecoder XP5.1 Sound E Loco BR 150 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)">
+        <model show="no" model="PIKO46550-18 BR83-TT V1.8" numOuts="4" numFns="68" productID="PIKO46550-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO 46550 BR83-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46550 BR83-TT V1.8" numOuts="4" numFns="68" productID="46550" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model show="no" model="PIKO46551-18 BR93-TT V1.8" numOuts="4" numFns="68" productID="PIKO46551-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO 46551 BR93-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46551 BR93-TT V1.8" numOuts="4" numFns="68" productID="46551" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -21179,6 +21466,62 @@
           <functionlabel num="26" lockable="true">FX5 Output</functionlabel>
           <functionlabel num="27" lockable="true">FX6 Output</functionlabel>
           <functionlabel num="28" lockable="true">FX7,8 Output</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Tsunami2 Diesel OEM Athearn N" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" file="SoundTraxx_Tsu2_Diesel_OEM_Athearn_N.xml">
+        <model model="ATHN900.001 F59PHI" numOuts="2" numFns="30" productID="6209" />
+        <model model="ATHN900.002 F45/FP45" numOuts="2" numFns="30" productID="6210" />
+        <output name="3" label="  FX3  " />
+        <output name="4" label="  FX4  " />
+        <output name="5" label="Airhorn| ">
+          <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+          <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamic|Brakes">
+          <label xml:lang="it">Freni|Dinamici</label>
+        </output>
+        <output name="8" label="Short|Horn">
+          <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Straight|to 8" />
+        <output name="10" label="General|Service" />
+        <output name="11" label="Dimming| ">
+          <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+          <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="HEP|Mode" />
+        <output name="14" label="Ind/Train|Brake" />
+        <output name="15" label="Coupler| ">
+          <label xml:lang="it">Accoppiatore| </label>
+        </output>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="5" lockable="true" />
+          <functionlabel num="6" lockable="true" />
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Alt Mixer</functionlabel>
+          <functionlabel num="10" lockable="true">Straight to Eight</functionlabel>
+          <functionlabel num="11" lockable="true">Ind/Train Brake</functionlabel>
+          <functionlabel num="12" lockable="true">Brake Select</functionlabel>
+          <functionlabel num="13" lockable="true">Coupler</functionlabel>
+          <functionlabel num="14" lockable="true">Half Speed</functionlabel>
+          <functionlabel num="15" lockable="true">Handbrake</functionlabel>
+          <functionlabel num="16" lockable="true">HEP Mode</functionlabel>
+          <functionlabel num="17" lockable="true">Fuel Loading</functionlabel>
+          <functionlabel num="18" lockable="true">General Service</functionlabel>
+          <functionlabel num="20" lockable="true">Steam Generator</functionlabel>
+          <functionlabel num="23" lockable="true">All Aboard</functionlabel>
+          <functionlabel num="26" lockable="true">RPM+</functionlabel>
+          <functionlabel num="27" lockable="true">RPM-</functionlabel>
         </functionlabels>
       </family>
       <family name="Tsunami2 Diesel OEM Genesis" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" file="SoundTraxx_Tsu2_Diesel_OEM_Genesis.xml">
@@ -39589,7 +39932,7 @@
         </model>
       </family>
       <family name="Zimo Function Decoders" mfg="Zimo" file="Zimo_Unified_software_v32_MX685.xml">
-        <model model="MX685 version 32+" lowVersionID="32" highVersionID="32" productID="226" numOuts="8" numFns="14">
+        <model model="MX685 version 32+" lowVersionID="32" highVersionID="40" productID="226" numOuts="8" numFns="14">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />

@@ -229,7 +229,7 @@ public class Columns {
         lazy1(_mTRL_Enabled, _mEdit_TRL, signalDirectionLeverEnabled, _mSelectedCodeButtonHandlerData._mTRL_Enabled);
     }
 
-    static private void lazy1(JCheckBox jCheckBox, JButton jButton, boolean enabled, boolean value) {
+    private static void lazy1(JCheckBox jCheckBox, JButton jButton, boolean enabled, boolean value) {
         jCheckBox.setEnabled(enabled);
         jCheckBox.setSelected(value);
         jButton.setEnabled(value);

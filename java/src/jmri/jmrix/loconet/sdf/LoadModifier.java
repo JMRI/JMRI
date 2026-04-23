@@ -36,7 +36,7 @@ public class LoadModifier extends SdfMacro {
         return 4;
     }
 
-    static public SdfMacro match(SdfBuffer buff) {
+    public static SdfMacro match(SdfBuffer buff) {
         // course match
         if ((buff.getAtIndex() & 0xF0) != 0xE0) {
             return null;

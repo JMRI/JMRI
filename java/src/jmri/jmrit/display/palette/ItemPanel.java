@@ -161,7 +161,7 @@ public abstract class ItemPanel extends JPanel  {
         return newMap;
     }
 
-    static protected void checkIconMap(String type, HashMap<String, NamedIcon> map) {
+    protected static void checkIconMap(String type, HashMap<String, NamedIcon> map) {
         for (String name : STATE_MAP.get(type)) {
             if (map.get(name) == null) {
                 NamedIcon icon = new NamedIcon(ItemPalette.RED_X, ItemPalette.RED_X);
@@ -504,7 +504,7 @@ public abstract class ItemPanel extends JPanel  {
         return new Dimension(23, 48);
     }
 
-    static public GridBagConstraints itemGridBagConstraint() {
+    public static GridBagConstraints itemGridBagConstraint() {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.CENTER;

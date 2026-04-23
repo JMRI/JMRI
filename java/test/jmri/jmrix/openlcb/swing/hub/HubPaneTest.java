@@ -25,7 +25,7 @@ public class HubPaneTest {
     }
 
     @BeforeAll
-    static public void checkSeparate() {
+    public static void checkSeparate() {
        // this test is run separately because it leaves a lot of threads behind
         Assumptions.assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"),
             "Ignoring intermittent test");

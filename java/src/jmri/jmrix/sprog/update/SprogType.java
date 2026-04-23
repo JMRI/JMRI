@@ -119,7 +119,7 @@ public class SprogType {
      * @param bootVer the bootloader version
      * @return length in bytes
      */
-    static public int getBlockLen(int bootVer) {
+    public static int getBlockLen(int bootVer) {
         switch (bootVer) {
             case 10:
             case 11:

@@ -39,7 +39,7 @@ public class Bundle extends jmri.jmrit.beantable.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    static public String getMessage(String key) {
+    public static String getMessage(String key) {
         return getBundle().handleGetMessage(key);
     }
 

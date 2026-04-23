@@ -36,8 +36,8 @@
       before reading the various other sections in detail.</p>
 
       <p>Notice: The signal related portions of this help file have not been updated and apply
-      mainly to signal <em>heads</em>. Those discussions predate signal masts. <span class=
-      "since">since 2.14</span> Masts are fully supported in Layout Editor Panels, but only
+      mainly to signal <em>heads</em>. Those discussions predate signal masts. 
+      Masts are fully supported in Layout Editor Panels, but only
       described briefly.</p>
 
       <ul>
@@ -95,6 +95,10 @@
 
         <li>
           <a href="#turn">Turntables</a>
+        </li>
+
+        <li>
+          <a href="#traversers">Traversers</a>
         </li>
 
         <li>
@@ -295,6 +299,10 @@
 
         <li><strong>Track Segment</strong> - selects a piece of connecting track</li>
 
+        <li><strong>Turntable</strong> - selects a turntable</li>
+
+        <li><strong><span class="since">since 5.15.6</span>Traverser</strong> - selects a traverser</li>
+
         <li><strong>End Bumper</strong> - selects a connection point at the end of a track</li>
 
         <li><strong>Anchor Point</strong> - selects a connection point between two track
@@ -322,6 +330,11 @@
         <li><strong>Sensor Icon</strong> - selects a sensor icon showing the sensor whose name is
         selected on the right.</li>
 
+        <li><span class="since">since 5.15.6</span><strong>Output Indicator</strong> - selects an icon showing the Turnout object whose name is
+        selected on the right. Note that this is meant for showing the status of some 
+        object <em>other than</em> an actual trackwork turnout that's connected to a 
+        JMRI Turnout output.  You can't connect this icon into your trackwork diagrams.</li>
+
         <li><strong>Signal Icon</strong> - selects a signal head icon showing the signal head whose
         name is selected on the right</li>
 
@@ -338,7 +351,7 @@
         <li><strong>Shape</strong> - Create an arbitrary shape</li>
       </ul>
 
-      <p>The top 13 items are used to create a track diagram, and are new with Layout Editor. The
+      <p>The top 15 items are used to create a track diagram, and are new with Layout Editor. The
       next 11 items are icon-based and are similar to corresponding icon items in Panel
       Editor.  <strong>Shape</strong> is used to create an image using two to nine
       points connected by lines, such as four points to create a rectangle.</p>
@@ -419,7 +432,7 @@
       below, along with which created items they apply to and whether they are optional or
       required.</p>
 
-      <p><span class="since">Since 4.7.3</span> Most of the toolbar's options are set using
+      <p>Most of the toolbar's options are set using
       <strong>combo boxes</strong>. A <strong>combo box</strong> combines a <strong>text
       field</strong> with a <strong>drop down list</strong>. You may ether type text into the
       <strong>text field</strong> or select an item from the <strong>drop down list</strong>.
@@ -482,8 +495,11 @@
 
         <li><strong>Block Contents</strong> (ComboBox) - applies to Block Contents. Select an
         entry from the drop down list.</li>
-
+         
         <li><strong>Sensor Icon</strong> (ComboBox) - applies to Sensor Icon.  Select an entry from
+        the drop down list.</li>
+
+        <li><span class="since">since 5.15.6</span><strong>Output Icon</strong> (ComboBox) - applies to Output Indicator.  Select an entry from
         the drop down list.</li>
 
         <li><strong>Signal Mast Icon</strong> (ComboBox) - applies to Signal Mast Icon. Select an
@@ -512,7 +528,6 @@
       icons have black borders.</p>
 
       <h2 id="toolbox">Using the Layout Editor Floating Toolbox</h2>
-      <span class="since">since 4.7.2</span>
       <p>The classic toolbar resides to the top or side of the panel. The <strong>toolbox</strong>
       floats on the screen and can be moved around. It provides all of the same functions as the
       toolbar.</p>
@@ -560,7 +575,7 @@
         help bar if it is displayed.</li>
 
         <li>
-          <span class="since">since 4.7.2</span> <strong>ToolBar</strong> - This sub-menu controls
+          <strong>ToolBar</strong> - This sub-menu controls
           the Toolbar characteristics. It contains the following options:
           <ul>
             <li><strong>ToolBar Side...</strong> - Set the location of the toolbar. The choices are
@@ -632,7 +647,7 @@
         <li><strong>Set Default Text Color...</strong> - Select the default text color using a
         color chooser.</li>
 
-        <li><span class="since">Since 4.15.6</span> <strong>Save Location and Size</strong> - This
+        <li><strong>Save Location and Size</strong> - This
         item is only displayed when the <strong>Use old location and size logic for editor
         panels</strong> option is enabled in <strong>Preferences &gt; Display</strong>.<br>
         When this item is selected, the current panel window size and location replace the default
@@ -657,6 +672,10 @@
             <li><strong>Add Turntable</strong> - Selecting this item adds a turntable to the panel
             at the center of the panel. You can then drag it with the meta key pressed to any
             location on the panel.</li>
+
+            <li><span class="since">since 5.15.6</span><strong>Add Traverser</strong> - Selecting
+            this item adds a traverser to the panel at the center of the panel. You can then drag it
+            with the meta key pressed to any location on the panel.</li>
 
             <li><strong>Add Reporter Label...</strong> - Selecting this item brings up a dialog
             that allows entry of a Reporter name (system name or user name) and x, y coordinates of
@@ -697,7 +716,7 @@
           <strong>Track Options</strong>
           <ul>
             <li>
-              <span class="since">since 4.11.4</span> <strong>Set Track Drawing Options</strong> -
+              <strong>Set Track Drawing Options</strong> -
               Display a dialog window that is used to configure the track drawing settings. See
               <a href="#trackdrawoptions">Track Drawing Options</a> for details.
             </li>
@@ -1004,7 +1023,7 @@
       <p>When a panel is loaded, it always come up with <strong>No Zoom</strong> selected. Since
       zooming is temporary, the zoom factor is not preserved when a panel is saved.</p>
 
-      <p><span class="since">Since 4.7.3</span>The Layout Editor Zoom is saved and restored
+      <p>The Layout Editor Zoom is saved and restored
       per-system. Also the mouse wheel (with alt-(option-)key) may be used to zoom in and out.</p>
 
       <h2 id="markermenu">Using Layout Editor's Marker Menu</h2>
@@ -1088,7 +1107,7 @@
       any angle. More information on the edit dialogs of turnouts, level crossings, and track
       segments is contained below in the discussion of these items, and in the help page of each
       edit dialog.</p>
-      <span class="since">Since 4.11.4</span>
+
       <p>For <strong>Track Segments</strong>, there is also a <strong>Decorations</strong> item.
       The sub-menus provide the ability to add <strong>Arrows</strong>, <strong>Bridges</strong>,
       <strong>End Bumpers</strong> , and <strong>Tunnels</strong> to the track segment.</p>
@@ -1293,7 +1312,7 @@
 
       <p>A <strong>Track Segment</strong> is a two ended piece of track between two connection
       points. Connection points are found on anchor points, end bumpers, edge connectors, turnouts,
-      slips, cross overs, level crossings and turntables.</p>
+      slips, cross overs, level crossings, turntables and traversers.</p>
 
       <p>Anchor points have one connection point that accept two connections. All other connection
       points only accept one. End bumpers have one connection point. An Edge Connector only accepts
@@ -1443,17 +1462,46 @@
       added to a panel, and each turntable may have any number of ray tracks.</p>
 
       <p>A turntable is added to a panel by selecting <strong>Add Turntable</strong> in the panel's
-      Option menu. New turntables are placed at the center of the panel, and are moved to
-      desired locations by dragging its center point with the meta key pressed (right button drag
-      on Windows). When a turntable is added, it has four ray tracks located in up, down, left, and
-      right directions. The turntable's popup menu has two items. Selecting
-      <strong>Edit...</strong> brings up an Edit Turntable dialog, and selecting
-      <strong>Remove</strong> deletes the turntable and any track segments connected to it. Before
-      a turntable is actually deleted, the program asks for verification of that action.</p>
+      <strong>Options &rArr; Add</strong> menu. New turntables are placed at the center of the panel,
+      and are moved to desired locations by dragging its center point with the meta key pressed
+      (right button drag on Windows).  A turntable can also be added to a panel by selecting the
+      <strong>Turntable</strong> option in the toolbar and doing a shift-click at the desired
+      location on the panel.</p>
+
+      <p>When a turntable is added, it has four ray tracks located in up, down, left, and right
+      directions. The turntable's popup menu has two items. Selecting <strong>Edit&hellip;</strong> brings
+      up an Edit Turntable dialog, and selecting <strong>Delete</strong> deletes the turntable.
+      Before a turntable is actually deleted, the program asks for verification of that action.</p>
 
       <p>The Edit Turntable dialog allows the radius of the turntable circle to be changed, and
       provides for the addition and deletion of ray tracks. For more information on how to add and
-      delete ray tracks, see the help page of the Edit Turntable dialog.</p>
+      delete ray tracks, along with other options, see the
+      <a href="EditTurntable.shtml">Edit Turntable</a> help page.</p>
+
+      <h2 id="traversers"><span class="since">since 5.15.6</span>Traversers</h2>
+
+      <p>A Layout Editor traverser is a schematic representation of a <em>traverser / transfer table</em>
+      on the layout. The traverser is drawn as a rectangle with a variable number of track
+      connection pairs called <em>slots</em>.  A slot has two connections for track segments.
+      Most of the track segments will connect a slot connection to an end bumper.  Any number of
+      traversers can be added to a panel and each traverser may have any number of slots.</p>
+
+      <p>A traverser is added to a panel by selecting <strong>Add Traverser</strong> in the panel's
+      <strong>Options &rArr; Add</strong> menu. New traversers are placed at the center of the panel,
+      and are moved to the desired location by dragging its control point with the meta key pressed
+      (right button drag on Windows). A traverser can also be added to a panel by selecting
+      <strong>Traverser</strong> in the tool bar and shift-clicking on the desired location on the
+      panel.  When a traverser is added, it has two slot pairs.</p>
+
+      <p>The traverser's popup menu has two items. Selecting
+      <strong>Edit&hellip;</strong> brings up an Edit Traverser dialog, and selecting
+      <strong>Delete</strong> deletes the traverser. Before a traverser is actually deleted, the
+      program asks for verification of that action.</p>
+
+      <p>The Edit Traverser dialog is used to add, remove and configure slot pairs.
+      provides for the addition and deletion of ray tracks. For more information, see the help page
+      of the Edit Turntable dialog.  see the
+      <a href="EditTraverser.shtml">Edit Traverser</a> help page.</p>
 
       <h2 id="background">Backgrounds</h2>
 
@@ -1676,7 +1724,7 @@
       wheels to ensure a block doesn't loose detection before the train enters the next block.</p>
 
       <h2 id="tips">Tips</h2>
-      <span class="since">Since 4.10</span>
+
       <h3>Track Level</h3>
 
       <p>The Layout Editor track components are drawn at level 3. Icons are drawn at level 10 and

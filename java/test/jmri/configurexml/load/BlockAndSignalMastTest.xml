@@ -657,6 +657,7 @@
       </destinationMast>
     </signalmastlogic>
   </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun May 17 07:35:57 PDT 2020" startsettime="no" />
   <filehistory>
     <operation>
       <type>app</type>

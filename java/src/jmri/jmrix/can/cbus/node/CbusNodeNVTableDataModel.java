@@ -25,15 +25,15 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
     private CbusNode nodeOfInterest;
 
     // column order needs to match list in column tooltips
-    static public final int NV_NUMBER_COLUMN = 0;
-    static public final int NV_NAME_COLUMN = 1;
-    static public final int NV_CURRENT_VAL_COLUMN = 2;
-    static public final int NV_CURRENT_HEX_COLUMN = 3;
-    static public final int NV_CURRENT_BIT_COLUMN = 4;
-    static public final int NV_SELECT_COLUMN = 5;
-    static public final int NV_SELECT_HEX_COLUMN = 6;
-    static public final int NV_SELECT_BIT_COLUMN = 7;
-    static public final int MAX_COLUMN = 8;
+    public static final int NV_NUMBER_COLUMN = 0;
+    public static final int NV_NAME_COLUMN = 1;
+    public static final int NV_CURRENT_VAL_COLUMN = 2;
+    public static final int NV_CURRENT_HEX_COLUMN = 3;
+    public static final int NV_CURRENT_BIT_COLUMN = 4;
+    public static final int NV_SELECT_COLUMN = 5;
+    public static final int NV_SELECT_HEX_COLUMN = 6;
+    public static final int NV_SELECT_BIT_COLUMN = 7;
+    public static final int MAX_COLUMN = 8;
 
     public CbusNodeNVTableDataModel(CanSystemConnectionMemo memo, int row, int column ) {
         log.debug("Starting MERG CBUS Node NV Table");

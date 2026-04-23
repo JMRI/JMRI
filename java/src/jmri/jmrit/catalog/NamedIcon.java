@@ -161,8 +161,8 @@ public class NamedIcon extends ImageIcon {
         mRotation = 0;
     }
 
-    static private final String DEFAULTURL = "resources/icons/misc/X-red.gif";
-    static private URL substituteDefaultUrl(String pUrl) {
+    private static final String DEFAULTURL = "resources/icons/misc/X-red.gif";
+    private static URL substituteDefaultUrl(String pUrl) {
         URL url = FileUtil.findURL(pUrl, FileUtil.Location.ALL);
         if (url == null) {
             url = FileUtil.findURL(DEFAULTURL);
@@ -200,7 +200,7 @@ public class NamedIcon extends ImageIcon {
      * @param path The path to the file, either absolute or portable
      * @return the desired icon with this same name as its path
      */
-    static public NamedIcon getIconByName(String path) {
+    public static NamedIcon getIconByName(String path) {
         if (path == null || path.isEmpty()) {
             return null;
         }

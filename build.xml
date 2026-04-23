@@ -183,7 +183,11 @@
         <pathelement location="${libdir}/websocket-server-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/websocket-servlet-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/xbee-java-library-1.3.1.jar"/>
-        <pathelement location="${libdir}/pi4j-core-1.2.jar"/>
+        <pathelement location="${libdir}/pi4j-core-2.8.0.jar"/>
+        <pathelement location="${libdir}/pi4j-plugin-raspberrypi-2.8.0.jar"/>
+        <pathelement location="${libdir}/pi4j-plugin-linuxfs-2.8.0.jar"/>
+        <pathelement location="${libdir}/pi4j-plugin-gpiod-2.8.0.jar"/>
+        <pathelement location="${libdir}/pi4j-library-gpiod-2.8.0.jar"/>
         <pathelement location="${libdir}/commons-io-2.11.0.jar"/>
         <pathelement location="${libdir}/bluecove-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>
@@ -1244,7 +1248,7 @@
                          path=".:${arch.lib.path}:${libdir}"/>
             <sysproperty key="purejavacomm.loglevel" value="${purejavacomm.loglevel}"/>
             <jvmarg value="-Xms256m"/>
-            <jvmarg value="-Xmx640m"/>
+            <jvmarg value="-Xmx2640m"/>
             <!-- This next is for DarkLAF -->
             <jvmarg value="--add-exports"/>
             <jvmarg value="java.desktop/sun.awt=ALL-UNNAMED"/>

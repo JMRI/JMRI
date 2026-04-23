@@ -122,7 +122,7 @@ public class UsbNode extends DefaultMutableTreeNode {
      * @return the node, either an existing node with the same controller or
      *         component, or newly created
      */
-    static public UsbNode getNode(String name, Controller controller, Component component) {
+    public static UsbNode getNode(String name, Controller controller, Component component) {
         Object key = (component != null) ? component : controller;
         UsbNode result = NODES.get(key);
         if (result == null) {

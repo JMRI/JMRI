@@ -151,8 +151,8 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      * <p>
      * Units are milliseconds.
      */
-    static protected final int SHORT_TIMEOUT = 2000;
-    static protected final int LONG_TIMEOUT = 60000;  // e.g. for programming options
+    protected static final int SHORT_TIMEOUT = 2000;
+    protected static final int LONG_TIMEOUT = 60000;  // e.g. for programming options
     
     private int mTimeout;  // in milliseconds
 

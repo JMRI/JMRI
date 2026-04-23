@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.15.4-SNAPSHOT</version>
+    <version>5.15.6-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -1497,20 +1497,36 @@
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
-            <version>1.2</version>
+            <version>2.8.0</version>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
-            <artifactId>pi4j-device</artifactId>
-            <version>1.2</version>
-            <!-- not used at compile time, may be used at runtime. -->
+            <artifactId>pi4j-plugin-raspberrypi</artifactId>
+            <version>2.8.0</version>
+            <!-- loaded at runtime via ServiceLoader on Raspberry Pi hardware -->
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
-            <artifactId>pi4j-gpio-extension</artifactId>
-            <version>1.2</version>
-            <!-- not used at compile time, may be used at runtime. -->
+            <artifactId>pi4j-plugin-linuxfs</artifactId>
+            <version>2.8.0</version>
+            <!-- loaded at runtime via ServiceLoader on Raspberry Pi hardware -->
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-plugin-gpiod</artifactId>
+            <version>2.8.0</version>
+            <!-- GpioD plugin: uses Linux /dev/gpiochip* character-device interface
+                 (preferred on kernel 5.10+); loaded at runtime via ServiceLoader -->
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-library-gpiod</artifactId>
+            <version>2.8.0</version>
+            <!-- transitive runtime dependency of pi4j-plugin-gpiod; JNI wrapper for
+                 the native libgpiod C library (sudo apt install libgpiod2) -->
             <optional>true</optional>
         </dependency>
         <dependency>

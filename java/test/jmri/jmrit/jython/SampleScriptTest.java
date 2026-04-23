@@ -155,7 +155,7 @@ public class SampleScriptTest {
     }
 
     @BeforeAll
-    static public void startTests() {
+    public static void startTests() {
         // this is to System.out because that's where the test output goes
         System.out.println("\njmri.jmrit.jython.SampleScriptTest starts, following output is from script tests");
     }
@@ -192,7 +192,7 @@ public class SampleScriptTest {
     }
 
     @AfterAll
-    static public void endTests() {
+    public static void endTests() {
         // this is to System.out because that's where the test output goes
         System.out.println("jmri.jmrit.jython.SampleScriptTest ends, above output was from script tests");
     }

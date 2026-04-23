@@ -278,7 +278,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         if (JmriJOptionPane.showConfirmDialog(this,
                 Bundle.getMessage("WantAddCarsToTrain?", _train.getName()),
                 Bundle.getMessage("AddCarsToTrain?"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
-            new CarsTableFrame(false, _train.getCurrentRouteLocation().getName(), null);
+            new CarsTableFrame(false, textLocationName.getText(), null);
         }
     }
 

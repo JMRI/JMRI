@@ -210,7 +210,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
     public int maxSize() {
         return DEFAULTMAXSIZE;
     }
-    static public final int DEFAULTMAXSIZE = 120;
+    public static final int DEFAULTMAXSIZE = 120;
 
     protected String sourceLetter = "R";
     /** 

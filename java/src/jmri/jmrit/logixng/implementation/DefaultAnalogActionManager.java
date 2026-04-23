@@ -156,7 +156,7 @@ public class DefaultAnalogActionManager extends AbstractBaseManager<MaleAnalogAc
     static volatile DefaultAnalogActionManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
-    static public DefaultAnalogActionManager instance() {
+    public static DefaultAnalogActionManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }

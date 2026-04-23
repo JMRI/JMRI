@@ -22,7 +22,7 @@ public class Dcs210PlusUsbModeSelectPane extends jmri.jmrix.loconet.pr3.swing.Pr
     /**
      * Nested class to create one of these using old-style defaults
      */
-    static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
+    public static class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MenuItemUsbDcs210PlusModeSelect"),

@@ -875,8 +875,8 @@ public class Car extends RollingStock {
      * 
      * @param scheduleItem The schedule item to be applied this this car
      */
-    public void loadCarFinalDestination(ScheduleItem scheduleItem) {
-        if (scheduleItem != null) {
+    private void loadCarFinalDestination(ScheduleItem scheduleItem) {
+        if (scheduleItem != null && scheduleItem.getDestination() != null) {
             // set the car's final destination and track
             setFinalDestination(scheduleItem.getDestination());
             setFinalDestinationTrack(scheduleItem.getDestinationTrack());

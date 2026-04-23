@@ -808,7 +808,7 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
     /**
      * Nested class to create one of these using old-style defaults.
      */
-//    static public class Default extends BiDiBNamedPaneAction {
+//    public static class Default extends BiDiBNamedPaneAction {
 //
 //        public Default() {
 //            super(Bundle.getMessage("MonitorXTitle", "RFID Device"),

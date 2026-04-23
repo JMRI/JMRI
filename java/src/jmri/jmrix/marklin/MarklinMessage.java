@@ -146,7 +146,7 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    //static public MarklinMessage get
+    //public static MarklinMessage get
     public static MarklinMessage getSetTurnout(int addr, int state, int power) {
         MarklinMessage m = new MarklinMessage();
         m.setElement(0, (MarklinConstants.ACCCOMMANDSTART >> 7) & 0xFF);

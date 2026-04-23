@@ -1,13 +1,10 @@
 package jmri.jmrit.roster.swing;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -16,12 +13,12 @@ import org.junit.Assume;
 public class RenameRosterGroupActionTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("TestRenameWindow");
         jmri.util.swing.WindowInterface wi = jf;
         RenameRosterGroupAction t = new RenameRosterGroupAction("test rename roster group",wi);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t,"exists");
         JUnitUtil.dispose(jf);
     }
 

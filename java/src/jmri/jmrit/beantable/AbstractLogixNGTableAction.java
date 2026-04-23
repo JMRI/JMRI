@@ -704,8 +704,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     protected class TableModel extends BeanTableDataModel<E> {
 
         // overlay the state column with the edit column
-        static public final int ENABLECOL = VALUECOL;
-        static public final int EDITCOL = DELETECOL;
+        public static final int ENABLECOL = VALUECOL;
+        public static final int EDITCOL = DELETECOL;
         protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");  // NOI18N
 
         @Override

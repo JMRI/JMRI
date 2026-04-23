@@ -27,14 +27,14 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     // NOTE: We will embed the command opcode in the CALLBACKSUB field
     // so that we can tell what type of message the response keys to.
 
-    static protected final int DCCppProgrammerTimeout = 90000;
+    protected static final int DCCppProgrammerTimeout = 90000;
 
     // keep track of whether or not the command station is in service 
     // mode.  Used for determining if "OK" message is an aproriate 
     // response to a request to a programming request. 
     protected boolean _service_mode = false;  // TODO: Is this even meaningful for DCC++?
 
-    static protected final int LISTENER_MASK = DCCppInterface.CS_INFO | DCCppInterface.COMMINFO | DCCppInterface.INTERFACE;
+    protected static final int LISTENER_MASK = DCCppInterface.CS_INFO | DCCppInterface.COMMINFO | DCCppInterface.INTERFACE;
 
     public DCCppProgrammer(@Nonnull DCCppTrafficController tc) {
         // error if more than one constructed?
@@ -114,9 +114,9 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
 
     // members for handling the programmer interface
     protected int progState = 0;
-    static protected final int NOTPROGRAMMING = 0; // is notProgramming
-    static protected final int REQUESTSENT = 1; // waiting reply to command to go into programming mode
-    static protected final int INQUIRESENT = 2; // read/write command sent, waiting reply
+    protected static final int NOTPROGRAMMING = 0; // is notProgramming
+    protected static final int REQUESTSENT = 1; // waiting reply to command to go into programming mode
+    protected static final int INQUIRESENT = 2; // read/write command sent, waiting reply
     protected boolean _progRead = false;
     protected int _val; // remember the value being read/written for confirmative reply
     protected int _cv; // remember the cv being read/written

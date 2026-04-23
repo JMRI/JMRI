@@ -104,14 +104,30 @@
         <label>
             <text>  </text>
         </label>
-        <group include="PIKO36505-G,PIKO36537-G">
-            <display item="Energy buffer"/>
-            <display item="Energy Buffer Bit 7"/>
-            <display item="Energy Buffer Time"/>
-            <display item="True speed factor"/>
+        <group include="PIKO SmartDecoder XP5.1 (version 1.17+)">
+            <separator/>
+            <label>
+                <text>  </text>
+            </label>
+            <column>
+                <display item="Energy Buffer"/>
+                <display item="Energy Buffer Bit 7"/>
+                <display item="Energy Buffer Time"/>
+            <label>
+                <text>  </text>
+            </label>
+                <display item="True speed factor"/>
+            </column>
         </group>
     </column>
     <column>
+        <label>
+            <text>&gt;&gt; SUSI Options &lt;&lt;</text>
+            <text xml:lang="de">&gt;&gt; SUSI Optionen &lt;&lt;</text>
+        </label>
+        <label>
+            <text>  </text>
+        </label>
         <row>
             <!-- BEGIN - SUSI Sendeoption 1+2 Grid in Piko2-->
             <grid gridy="3" weightx="1" ipadx="1">
@@ -224,7 +240,7 @@
             <text>  </text>
         </label>
         <row>
-            <!--        <display item="SUSI Taktrate"/>-->
+            <!--<display item="SUSI Taktrate"/>-->
         </row>
         <separator/>
         <label>
@@ -235,7 +251,7 @@
             <text>  </text>
         </label>
         <label>
-            <text>Setting of servos 1 - 4 (CV 202 - CV 222) not implemented</text>
+            <text>Setting of Servos 1 - 4 (CV 202 - CV 222) not yet implemented</text>
             <text xml:lang="de">Einstellung der Servo 1 - 4 (CV 202 - CV 222) noch nicht implementiert</text>
         </label>
         <label>
@@ -244,24 +260,6 @@
         <!-- BEGIN - PWM Phase Grid -->
         <grid gridy="2" weightx="1" ipadx="1">
             <!-- BEGIN - Row 1 (headers)-->
-            <!--        <group exclude="PIKO46550-18">
-                                <!{1}**Piko SmartDecoder XP5.1**{1}>
-                                <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
-                                    <label>
-                                        <text>AUX0</text>
-                                    </label>
-                                </griditem>
-                                <griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER">
-                                    <label>
-                                        <text>AUX1</text>
-                                    </label>
-                                </griditem>
-                                <griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER">
-                                    <label>
-                                        <text>AUX2</text>
-                                    </label>
-                                </griditem>
-                            </group>-->
             <!-- BEGIN - Row 2 (checkboxes)-->
             <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
                 <display item="PWM Phase A0" format="checkbox">
@@ -333,7 +331,7 @@
             <griditem gridx="1" gridy="6" anchor="LINE_END">
                 <display item="Auto Off A2"/>
             </griditem>
-            <group include="PIKO56505-22,PIKO56508-16,PIKO36505-G,PIKO36537-G">
+            <group include="PIKO56505-22,PIKO56508-16,PIKO36505-G,36537,PIKO36537-G">
                 <griditem gridx="1" gridy="7" anchor="LINE_END">
                     <display item="Auto Off A3"/>
                 </griditem>

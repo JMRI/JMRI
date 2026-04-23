@@ -53,7 +53,7 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         return true;
     }
 
-    static public FileHistory loadFileHistory(Element e) {
+    public static FileHistory loadFileHistory(Element e) {
         FileHistory r = new FileHistory();
 
         java.util.List<Element> list = e.getChildren("operation");
@@ -63,7 +63,7 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         return r;
     }
 
-    static public void loadOperation(FileHistory r, Element e) {
+    public static void loadOperation(FileHistory r, Element e) {
         Element s;
 
         String type = null;
@@ -123,7 +123,7 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
 
     static int defaultDepth = 5;
 
-    static public Element storeDirectly(Object o, String fileName) {
+    public static Element storeDirectly(Object o, String fileName) {
         final FileHistory r = (FileHistory) o;
         if (r == null) {
             return null;  // no file history object, not recording

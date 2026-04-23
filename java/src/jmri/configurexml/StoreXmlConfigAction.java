@@ -34,7 +34,7 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
         super(s);
     }
 
-    static public File getFileName(JFileChooser fileChooser) {
+    public static File getFileName(JFileChooser fileChooser) {
         fileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         return getFileCustom(fileChooser);
     }

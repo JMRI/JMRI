@@ -131,7 +131,7 @@ public abstract class SdfMacro implements SdfConstants {
      * @param buff The SdfBuffer being scanned for instruction macros.
      * @return Object of SdfMacro subtype for specific next instruction
      */
-    static public SdfMacro decodeInstruction(SdfBuffer buff) {
+    public static SdfMacro decodeInstruction(SdfBuffer buff) {
         SdfMacro m;
 
         // full 1st byte decoder

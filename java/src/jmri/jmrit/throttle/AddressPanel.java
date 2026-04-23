@@ -259,11 +259,14 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         updateGUIOnThrottleFound(true);
         
         // send notification of new address
-        // work on a copy because some new listeners may be added while notifying the existing ones        
-        (new ArrayList<AddressListener>(listeners)).forEach((l) -> {
-            // log.debug("Notify address listener of address change {}", l.getClass());
-            l.notifyAddressThrottleFound(t);
-        });
+        // work on a copy because some new listeners may be added while notifying the existing ones 
+        // during testing listeners can be null
+        if (listeners != null) {
+            (new ArrayList<AddressListener>(listeners)).forEach((l) -> {
+                // log.debug("Notify address listener of address change {}", l.getClass());
+                l.notifyAddressThrottleFound(t);
+            });
+        }
     }
 
     @Override
@@ -633,9 +636,12 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             return; // no address
         }
         // send notification of new address
-        listeners.forEach((l) -> {
-            l.notifyAddressChosen(currentAddress);
-        });
+        // during testing listeners can be null
+        if (listeners != null) {
+            listeners.forEach((l) -> {
+                l.notifyAddressChosen(currentAddress);
+            });
+        }
         log.debug("Requesting new slot for address {} rosterEntry {}",currentAddress,rosterEntry);
         boolean requestOK;
         if (rosterEntry == null) {
@@ -890,6 +896,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             if (((Boolean) evt.getOldValue()) && (!((Boolean) evt.getNewValue()))) {
                 log.debug("propertyChange: ThrottleConnected to false");
                 notifyThrottleDisposed();
+                // remove all listeners and destroy the throttle
+                destroy();
                 throttle = null;
                 consistThrottle = null;
             }

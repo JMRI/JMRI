@@ -17,7 +17,7 @@ public class EntryExitWhereUsed {
      * @param entryexit The entry/exit bean.
      * @return a populated textarea.
      */
-    static public JTextArea getWhereUsed(NamedBean entryexit) {
+    public static JTextArea getWhereUsed(NamedBean entryexit) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameEntryExit"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, entryexit.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N

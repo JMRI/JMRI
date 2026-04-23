@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Dcc4PcReply extends AbstractMRReply {
 
-    static public final int maxSize = 2048;
+    public static final int maxSize = 2048;
 
     // create a new one
     public Dcc4PcReply() {

@@ -1895,7 +1895,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         evt.rejectDrop();
     }
 
-    static protected class PositionableListDnD implements Transferable {
+    protected static class PositionableListDnD implements Transferable {
 //        ControlPanelEditor _sourceEditor;
 
         List<Positionable> _sourceEditor;

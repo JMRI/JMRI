@@ -141,7 +141,7 @@ public class Version {
      *
      * @return The current version string
      */
-    static public String name() {
+    public static String name() {
         String version = major + "." + minor;
         if (test != 0) {
             version = version + "." + test;
@@ -176,7 +176,7 @@ public class Version {
      * @param version version string to check
      * @return true if version is a canonical version string
      */
-    static public boolean isCanonicalVersion(String version) {
+    public static boolean isCanonicalVersion(String version) {
         String[] parts = version.split("\\+");
         if (parts.length > 1) {
             return false;
@@ -210,7 +210,7 @@ public class Version {
      *                                  string
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    static public int compareCanonicalVersions(String version) throws IllegalArgumentException {
+    public static int compareCanonicalVersions(String version) throws IllegalArgumentException {
         return compareCanonicalVersions(version, getCanonicalVersion());
     }
 
@@ -227,7 +227,7 @@ public class Version {
      *                                  canonical version string
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    static public int compareCanonicalVersions(String version1, String version2) throws IllegalArgumentException {
+    public static int compareCanonicalVersions(String version1, String version2) throws IllegalArgumentException {
         int result = 0;
         if (!isCanonicalVersion(version1)) {
             throw new IllegalArgumentException("Parameter version1 (" + version1 + ") is not a canonical version string.");
@@ -255,7 +255,7 @@ public class Version {
      *
      * @return the canonical version
      */
-    static public String getCanonicalVersion() {
+    public static String getCanonicalVersion() {
         String version = major + "." + minor + "." + test;
         String modifiers = getModifier().replace(NON_OFFICIAL, ""); // remove "ish"
         if (!modifiers.isEmpty()) {
@@ -272,7 +272,7 @@ public class Version {
      *
      * @return the copyright
      */
-    static public String getCopyright() {
+    public static String getCopyright() {
         return Bundle.getMessage("Copyright", VERSION_BUNDLE.getString("jmri.copyright.year"));
     }
 
@@ -285,7 +285,7 @@ public class Version {
      *
      * @param args command-line arguments
      */
-    static public void main(String[] args) {
+    public static void main(String[] args) {
         System.out.println(name());
     }
 

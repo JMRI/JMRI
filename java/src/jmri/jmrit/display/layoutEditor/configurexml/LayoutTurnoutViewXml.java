@@ -62,24 +62,24 @@ public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
         element.setAttribute("continuing", "" + p.getContinuingSense());
 
         Point2D coords = pv.getCoordsCenter();
-        element.setAttribute("xcen", "" + coords.getX());
-        element.setAttribute("ycen", "" + coords.getY());
+        element.setAttribute("xcen", "" + roundForStore(coords.getX()));
+        element.setAttribute("ycen", "" + roundForStore(coords.getY()));
 
         coords = pv.getCoordsA();
-        element.setAttribute("xa", "" + coords.getX());
-        element.setAttribute("ya", "" + coords.getY());
+        element.setAttribute("xa", "" + roundForStore(coords.getX()));
+        element.setAttribute("ya", "" + roundForStore(coords.getY()));
 
         coords = pv.getCoordsB();
-        element.setAttribute("xb", "" + coords.getX());
-        element.setAttribute("yb", "" + coords.getY());
+        element.setAttribute("xb", "" + roundForStore(coords.getX()));
+        element.setAttribute("yb", "" + roundForStore(coords.getY()));
 
         coords = pv.getCoordsC();
-        element.setAttribute("xc", "" + coords.getX());
-        element.setAttribute("yc", "" + coords.getY());
+        element.setAttribute("xc", "" + roundForStore(coords.getX()));
+        element.setAttribute("yc", "" + roundForStore(coords.getY()));
 
         coords = pv.getCoordsD();
-        element.setAttribute("xd", "" + coords.getX());
-        element.setAttribute("yd", "" + coords.getY());
+        element.setAttribute("xd", "" + roundForStore(coords.getX()));
+        element.setAttribute("yd", "" + roundForStore(coords.getY()));
 
         element.setAttribute("ver", "" + p.getVersion());
 

@@ -84,24 +84,27 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
         // Set ray turnouts
         //TODO: fix hardcoded index
-        JComboBoxOperator turnout_cbo = new JComboBoxOperator(jFrameOperator, 1);
-        JComboBoxOperator state_cbo = new JComboBoxOperator(jFrameOperator, 2);
+        // Index 0 is Block Name
+        // Index 1 is Mainline (newly added)
+        // Index 2 starts the ray turnouts
+        JComboBoxOperator turnout_cbo = new JComboBoxOperator(jFrameOperator, 2);
+        JComboBoxOperator state_cbo = new JComboBoxOperator(jFrameOperator, 3);
 
         turnout_cbo.selectItem(1); //TODO: fix hardcoded index
         state_cbo.selectItem(0); //TODO: fix hardcoded index
 
-        turnout_cbo = new JComboBoxOperator(jFrameOperator, 3);
-        state_cbo = new JComboBoxOperator(jFrameOperator, 4);
+        turnout_cbo = new JComboBoxOperator(jFrameOperator, 4);
+        state_cbo = new JComboBoxOperator(jFrameOperator, 5);
         turnout_cbo.selectItem(1); //TODO: fix hardcoded index
         state_cbo.selectItem(1); //TODO: fix hardcoded index
 
-        turnout_cbo = new JComboBoxOperator(jFrameOperator, 5);
-        state_cbo = new JComboBoxOperator(jFrameOperator, 6);
+        turnout_cbo = new JComboBoxOperator(jFrameOperator, 6);
+        state_cbo = new JComboBoxOperator(jFrameOperator, 7);
         turnout_cbo.selectItem(2); //TODO: fix hardcoded index
         state_cbo.selectItem(0); //TODO: fix hardcoded index
 
-        turnout_cbo = new JComboBoxOperator(jFrameOperator, 7);
-        state_cbo = new JComboBoxOperator(jFrameOperator, 8);
+        turnout_cbo = new JComboBoxOperator(jFrameOperator, 8);
+        state_cbo = new JComboBoxOperator(jFrameOperator, 9);
         turnout_cbo.selectItem(2); //TODO: fix hardcoded index
         state_cbo.selectItem(1); //TODO: fix hardcoded index
 

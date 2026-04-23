@@ -451,7 +451,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
      */
     @CheckReturnValue
     @CheckForNull
-    static public String normalizeUserName(@CheckForNull String inputName) throws BadUserNameException {
+    public static String normalizeUserName(@CheckForNull String inputName) throws BadUserNameException {
         String result = inputName;
         if (result != null) {
             result = result.trim();

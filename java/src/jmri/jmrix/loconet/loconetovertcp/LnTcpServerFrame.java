@@ -108,7 +108,7 @@ public class LnTcpServerFrame extends JmriJFrame {
      *
      * @return the default server frame instance, creating it if needed
      */
-    static public synchronized LnTcpServerFrame getDefault() {
+    public static synchronized LnTcpServerFrame getDefault() {
         return InstanceManager.getOptionalDefault(LnTcpServerFrame.class).orElseGet(() -> {
             return InstanceManager.setDefault(LnTcpServerFrame.class, new LnTcpServerFrame(LnTcpServer.getDefault()));
         });

@@ -17,7 +17,7 @@ public class MqttLight extends AbstractVariableLight implements MqttEventListene
     private final String sendTopic;
     private final String rcvTopic;
 
-    static public String intensityText = "INTENSITY ";  // public for script access
+    public static String intensityText = "INTENSITY ";  // public for script access
 
     public MqttLight(MqttAdapter ma, String systemName, String userName, String sendTopic, String rcvTopic) {
         super(systemName, userName);

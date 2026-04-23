@@ -33,7 +33,7 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
     }
 
     // will this be enabled if created?
-    static public boolean willBeEnabled() {
+    public static boolean willBeEnabled() {
         // see if there's an openlcb connection
         var cscm = getSystemConnectionMemo();
         if (cscm == null) {

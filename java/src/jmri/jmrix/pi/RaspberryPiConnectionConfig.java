@@ -1,10 +1,5 @@
 package jmri.jmrix.pi;
 
-import java.awt.GraphicsEnvironment;
-import java.util.Date;
-
-import jmri.util.swing.JmriJOptionPane;
-
 /**
  * Handle configuring a Raspberry Pi layout connection.
  * <p>
@@ -18,7 +13,6 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
 
     private boolean disabled = false;
     private RaspberryPiAdapter adapter = null;
-    private Date GPIOMessageShown = null;
 
     /**
      * Ctor for an object being created during load process; Swing init is
@@ -93,17 +87,6 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
     protected void setInstance() {
         if (adapter == null) {
             adapter = new RaspberryPiAdapter();
-        }
-        if (adapter.getGPIOController() == null) {
-            // don't show more than once every 30 seconds
-            if (!GraphicsEnvironment.isHeadless()
-                    && (this.GPIOMessageShown == null || ((new Date().getTime() - this.GPIOMessageShown.getTime()) / 1000 % 60) > 30)) {
-                JmriJOptionPane.showMessageDialog(this._details,
-                        Bundle.getMessage("NoGpioControllerMessage"),
-                        Bundle.getMessage("NoGpioControllerTitle"),
-                        JmriJOptionPane.ERROR_MESSAGE);
-                this.GPIOMessageShown = new Date();
-            }
         }
     }
 

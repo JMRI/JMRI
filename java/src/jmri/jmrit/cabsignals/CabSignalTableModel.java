@@ -29,17 +29,17 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
 
     // column order needs to match list in columnToolTips
 
-    static public final int LOCO_ID_COLUMN = 0;
-    static public final int SEND_CABSIG_COLUMN = 1;
-    static public final int CURRENT_BLOCK = 2;
-    static public final int BLOCK_DIR = 3;
-    static public final int REVERSE_BLOCK_DIR_BUTTON_COLUMN = 4;
-    static public final int NEXT_BLOCK = 5;
-    static public final int NEXT_SIGNAL = 6;
-    static public final int NEXT_ASPECT = 7;
-    static public final int NEXT_ASPECT_ICON = 8;
+    public static final int LOCO_ID_COLUMN = 0;
+    public static final int SEND_CABSIG_COLUMN = 1;
+    public static final int CURRENT_BLOCK = 2;
+    public static final int BLOCK_DIR = 3;
+    public static final int REVERSE_BLOCK_DIR_BUTTON_COLUMN = 4;
+    public static final int NEXT_BLOCK = 5;
+    public static final int NEXT_SIGNAL = 6;
+    public static final int NEXT_ASPECT = 7;
+    public static final int NEXT_ASPECT_ICON = 8;
 
-    static public final int MAX_COLUMN = 9;
+    public static final int MAX_COLUMN = 9;
 
     static final int[] STARTUPCOLUMNS = {0,1,2,3,4,5,6,7,8};
 

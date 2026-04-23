@@ -17,7 +17,7 @@ public class SignalHeadWhereUsed {
      * @param signalHead The signal head bean.
      * @return a populated textarea.
      */
-    static public JTextArea getWhereUsed(NamedBean signalHead) {
+    public static JTextArea getWhereUsed(NamedBean signalHead) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSignalHead"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, signalHead.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N

@@ -57,7 +57,7 @@ public class IEEE802154MonPane extends jmri.jmrix.AbstractMonPane implements IEE
     /**
      * Nested class to create one of these using old-style defaults
      */
-    static public class Default extends jmri.util.swing.JmriNamedPaneAction {
+    public static class Default extends jmri.util.swing.JmriNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MonFrameTitle"), IEEE802154MonPane.class.getName());

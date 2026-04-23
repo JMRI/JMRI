@@ -14,41 +14,41 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusBasicEventTableModel extends javax.swing.table.AbstractTableModel {
 
-    static public final int NODE_COLUMN = 0;
-    static public final int EVENT_COLUMN = 1;
-    static public final int NAME_COLUMN = 2;
-    static public final int NODENAME_COLUMN = 3;
-    static public final int COMMENT_COLUMN = 4;
-    static public final int STATE_COLUMN = 5;
+    public static final int NODE_COLUMN = 0;
+    public static final int EVENT_COLUMN = 1;
+    public static final int NAME_COLUMN = 2;
+    public static final int NODENAME_COLUMN = 3;
+    public static final int COMMENT_COLUMN = 4;
+    public static final int STATE_COLUMN = 5;
 
-    static public final int TOGGLE_BUTTON_COLUMN = 6;
-    static public final int ON_BUTTON_COLUMN = 7;
-    static public final int OFF_BUTTON_COLUMN = 8;
-    static public final int CANID_COLUMN = 9;
-    static public final int LATEST_TIMESTAMP_COLUMN = 10;
-    static public final int STATUS_REQUEST_BUTTON_COLUMN = 11;
+    public static final int TOGGLE_BUTTON_COLUMN = 6;
+    public static final int ON_BUTTON_COLUMN = 7;
+    public static final int OFF_BUTTON_COLUMN = 8;
+    public static final int CANID_COLUMN = 9;
+    public static final int LATEST_TIMESTAMP_COLUMN = 10;
+    public static final int STATUS_REQUEST_BUTTON_COLUMN = 11;
 
-    static public final int SESSION_TOTAL_COLUMN = 12;
-    static public final int SESSION_ON_COLUMN = 13;
-    static public final int SESSION_OFF_COLUMN = 14;
-    static public final int SESSION_IN_COLUMN = 15;
-    static public final int SESSION_OUT_COLUMN = 16;
+    public static final int SESSION_TOTAL_COLUMN = 12;
+    public static final int SESSION_ON_COLUMN = 13;
+    public static final int SESSION_OFF_COLUMN = 14;
+    public static final int SESSION_IN_COLUMN = 15;
+    public static final int SESSION_OUT_COLUMN = 16;
 
-    static public final int ALL_TOTAL_COLUMN = 17;
-    static public final int ALL_ON_COLUMN = 18;
-    static public final int ALL_OFF_COLUMN = 19;
-    static public final int ALL_IN_COLUMN = 20;
-    static public final int ALL_OUT_COLUMN = 21;
+    public static final int ALL_TOTAL_COLUMN = 17;
+    public static final int ALL_ON_COLUMN = 18;
+    public static final int ALL_OFF_COLUMN = 19;
+    public static final int ALL_IN_COLUMN = 20;
+    public static final int ALL_OUT_COLUMN = 21;
 
-    static public final int DELETE_BUTTON_COLUMN = 22;
-    static public final int STLR_ON_COLUMN = 23;
-    static public final int STLR_OFF_COLUMN = 24;
+    public static final int DELETE_BUTTON_COLUMN = 22;
+    public static final int STLR_ON_COLUMN = 23;
+    public static final int STLR_OFF_COLUMN = 24;
 
     public final static int EVENT_DAT_1 = 25;
     public final static int EVENT_DAT_2 = 26;
     public final static int EVENT_DAT_3 = 27;
 
-    static public final int MAX_COLUMN = 28;
+    public static final int MAX_COLUMN = 28;
 
     protected final CanSystemConnectionMemo _memo;
     protected ArrayList<CbusTableEvent> _mainArray;

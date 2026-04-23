@@ -72,6 +72,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     private boolean sendSprogAddress = false;
     private long time, timeNow, packetDelay;
     private int lastId;
+    private int timeoutCount = 0;
 
     PowerManager powerMgr = null;
     int powerState = PowerManager.OFF;
@@ -703,6 +704,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                         }
                     }
                     replyAvailable = false;
+                    timeoutCount = 0;
                     if (p != null) {
                         // Send the packet
                         sendPacket(p, SprogConstants.S_REPEATS);
@@ -721,18 +723,33 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                     }
                 } else {
                     if (powerState == PowerManager.ON) {
-
-                        // Should never get here. Something is wrong so turn power off
-                        // Kill reply wait so send doesn't block
-                        log.warn("Slot thread timeout - removing power");
-                        waitingForReply = false;
-                        try {
-                            powerMgr.setPower(PowerManager.OFF);
-                        } catch (JmriException ex) {
-                            log.error("Exception turning power off", ex);
+                        timeoutCount++;
+                        if (timeoutCount < SprogConstants.CS_MAX_TIMEOUT_COUNT) {
+                            // Transient timeout — retry by sending an idle packet
+                            // to re-establish the message/reply handshake
+                            log.warn("Slot thread timeout ({} of {}), retrying",
+                                    timeoutCount, SprogConstants.CS_MAX_TIMEOUT_COUNT);
+                            sendPacket(jmri.NmraPacket.idlePacket(), SprogConstants.S_REPEATS);
+                            time = System.currentTimeMillis();
+                        } else {
+                            // Sustained loss of communication — shut down power
+                            log.warn("Slot thread timeout - removing power after {} consecutive timeouts",
+                                    timeoutCount);
+                            waitingForReply = false;
+                            timeoutCount = 0;
+                            try {
+                                powerMgr.setPower(PowerManager.OFF);
+                            } catch (JmriException ex) {
+                                log.error("Exception turning power off", ex);
+                            }
+                            // Show the error dialog without blocking the slot thread
+                            jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+                                JmriJOptionPane.showMessageDialog(null,
+                                        Bundle.getMessage("CSErrorFrameDialogString"),
+                                        Bundle.getMessage("SprogCSTitle"),
+                                        JmriJOptionPane.ERROR_MESSAGE);
+                            });
                         }
-                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CSErrorFrameDialogString"),
-                            Bundle.getMessage("SprogCSTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -801,6 +818,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             // Log the reply and wake the slot thread
             synchronized (lock) {
                 replyAvailable = true;
+                timeoutCount = 0;
                 lock.notifyAll();
             }
         }

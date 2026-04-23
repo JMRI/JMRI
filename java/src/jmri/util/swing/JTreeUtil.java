@@ -20,7 +20,7 @@ public class JTreeUtil extends GuiUtilBase {
      * @param context Blind context Object passed to the nodes in the tree
      * @return a mutable tree node
      */
-    static public DefaultMutableTreeNode loadTree(String name, WindowInterface wi, Object context) {
+    public static DefaultMutableTreeNode loadTree(String name, WindowInterface wi, Object context) {
         Element root = rootFromName(name);
 
         return treeFromElement(root, wi, context);

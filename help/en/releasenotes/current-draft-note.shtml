@@ -1,11 +1,7 @@
 
     <h3>Hardware Support</h3>
         <ul>
-            <li>Network connections now take their host name/address and port number
-                from the per-node individual configuration, if available,
-                and from the shared configurations if not.  This will allow
-                you to have different host name/address for different
-                computers sharing the same JMRI profile.</li>
+          <li></li>
         </ul>
 
         <h4>Acela CTI</h4>
@@ -110,9 +106,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Updated the Signal Mast support 
-                    so that a mast can be updated by an
-                    MQTT message from the layout.</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -132,35 +126,50 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>A bug that would cause LCC Reporters to improperly be created as 
-                Internal Reporters has been fixed.  If you have Internal Reporters that
-                have been created in the past by this bug, 
-                    <ol>
-                        <li>Start this version of JMRI or later
-                        <li>Delete all the IdTags and, if relevant, RailCom tags that reference the internal Reporters
-                        <li>Delete the internal Reporters
-                        <li>Save your panels and table to your usual file
-                        <li>Quit and restart JMRI.
-                    </ol>
-                </li>
-                <li>The OpenLCB_Java library has been updated, which brings
-                    <ol>
-                        <li>Improvements to how streams are handled, which will make
-                            firmware updates to certain node types more reliable.
-                        <li>When opening a configuration ("CDI") window, the 
-                            window will stay minimized while both the display information (the CDI contents)
-                            and the configuration data contents are read.  Although this takes
-                            longer, it prevents you from accessing data variables that 
-                            have not yet been loaded.  Previously that early access
-                            has led to various problems with inconsistent data.
-                        <li>Blank lines are now accepted as comments in node backup files
-                    </ol>
-                </li>
+                <li>(Internal) The load and store process for the Event Table
+                    now permits multiple "names" elements. This makes it easier
+                    to merge Event Table information from several profiles.</li>
             </ul>
 
         <h4>Powerline</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>Raspberry Pi</h4>
+            <ul>
+                <li>The Pi4J library used for Raspberry Pi GPIO support has been updated
+                    from version 1.2 to version 2.8.0 (the current 2.x release).
+                    Pi4J 2.x uses a new API and a plugin-based architecture replacing
+                    the older <code>GpioFactory</code> / <code>GpioController</code> model.
+                </li>
+                <li><strong>Pin numbering has changed.</strong>
+                    Pi4J 1.x addressed GPIO pins using WiringPi numbers.
+                    Pi4J 2.x uses BCM (Broadcom) numbers directly.
+                    Existing panel files and scripts that reference Raspberry Pi sensors
+                    or turnouts will need their GPIO address numbers updated to use
+                    the corresponding BCM pin numbers.
+                    For example, WiringPi GPIO 0 (BCM 17) becomes address 17 in the
+                    new numbering scheme.
+                </li>
+                <li>Support has been added for the Pi4J GpioD plugin
+                    (<code>pi4j-plugin-gpiod</code>), which uses the modern Linux GPIO
+                    character-device interface (<code>/dev/gpiochip*</code>) introduced
+                    in kernel 5.10.
+                    This is the preferred GPIO interface on Raspberry Pi OS with kernel
+                    5.10 or later (including the 6.x kernels shipped with current
+                    Raspberry Pi OS releases).
+                    It requires the <code>libgpiod2</code> package:
+                    <code>sudo apt install libgpiod2</code>
+                    The plugin is discovered and activated automatically alongside the
+                    existing LinuxFS and PiGpio plugins via Java ServiceLoader; no
+                    configuration change is required.
+                </li>
+                <li>Hardware GPIO plugins (<code>pi4j-plugin-raspberrypi</code>,
+                    <code>pi4j-plugin-linuxfs</code>, <code>pi4j-plugin-gpiod</code>)
+                    are now loaded at runtime via Java ServiceLoader on Raspberry Pi
+                    hardware and are no longer bundled as compile-time dependencies.
+                </li>
             </ul>
 
         <h4>RFID</h4>
@@ -178,7 +187,15 @@
                 <li></li>
             </ul>
 
-        <h4>SPROG</h4>
+                <li>Fixed spurious command station slot thread timeouts that could
+                    shut down track power when the GUI was busy. Reply notifications
+                    from the traffic controller to the command station are now
+                    delivered synchronously instead of being queued on the Swing EDT,
+                    so the slot thread is woken immediately when the hardware replies.</li>
+                <li>Added a consecutive-timeout retry counter to the command station
+                    slot thread. A single missed reply now triggers a retry with an
+                    idle packet instead of immediately removing track power.
+                    Track power is only removed after three consecutive timeouts.</li>
             <ul>
                 <li></li>
             </ul>
@@ -205,7 +222,7 @@
 
         <h4>Zimo</h4>
             <ul>
-                <li>Added additional,  faster speeds to the KLUG connection.</li>
+                <li></li>
             </ul>
 
         <h4>ZTC</h4>
@@ -436,8 +453,7 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>Change the scaling menu item from "multiply current scaling"
-                to "set new scaling percentage" form.</li>
+            <li></li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -459,30 +475,14 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>If multiple roster entries are selected, contextual menu allows opening a throttle window with a controler for each selected roster entries.</li>
-            <li>Drag'n drop of roster entries to the throttle list window is now allowed and will create new throttle control in the targetted window.</li>
-            <li>Added a new (optional) 
-                <a href="https://www.jmri.org/help/en/package/jmri/jmrit/permission/PermissionManager.shtml">Permission</a>
-                to control whether the user can
-                edit columns that have been added to the Roster Table.
-                This can be used to e.g. only allow certain people at a club
-                to mark a locomotive entry as having been inspected.</li>
-            <li>Added a copy/cut/paste pop-up menu to text fields that 
-                didn't previously have a pop-up menu.
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Stop train immediately if it has no occupied section, or
-                 blocks go active in the wrong order. This behaviour can be turned off
-                 in dispatcher options.</li>
-             <li>Add the current, next block and train held status to the dispatcher screen.</li>
-             <li>When resuming from a failure, inform user where the head of train needs to be
-                 or which block needs to be cleared. If they have being using Manual
-                 present them with choice about the direction.</li>
-             <li>Fix NPE error on dispatcher train restart.</li>
-             <li>Fix up to and fro restart at far end</li>
+             <li>Save dispatcher usestrict option correctly.</li>
+			 <li>Continue tracking blocks thru stopping at end.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -500,12 +500,15 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Change the scaling menu item from "multiply current scaling"
-                to "set new scaling percentage" form.</li>
-            <li>Fixed a problem that could cause bold-text labels to have 
-                their contents truncated. e.g. "West" would be 
-                shown as "Wes...". This was mostly a problem on 
-                Windows, but could have affected any system type.</li>
+            <li>Added a new "Make Layout Editor XML output more reproducible" option
+                to the Load and Store preference pane.  The default is off.  When
+                on, this option will result in positions of Layout Editor objects
+                being stored in a form that's more reproducible.  This will result
+                in fewer spurious changes if you're e.g. storing panel files in a
+                tracking system like Git.</li>
+            <li>Fixed a problem when storing and loading the new Output Indicator icons</li>
+            <li>When changing icon images for turnouts, sensors and signal heads, the
+                resource files are now listed in alpha order by name.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -516,10 +519,8 @@
     <h3>LccPro</h3>
         <a id="LccPro" name="LccPro"></a>
         <ul>
-            <li>Added a copy/cut/paste pop-up menu to text fields that 
-                didn't previously have a pop-up menu.
-            <li>Added "Print Table" and "Export CSV" buttons that
-                do pretty much what they say.
+            <li>Improved performance of Active display in lower right
+                on high-bandwidth links.</li>
         </ul>
 
     <h3>Logix</h3>
@@ -543,15 +544,13 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Improvements to the print Manifest and no page breaks option.</li>
-            <li>New larger preview windows when printing.</li>
+            <li>Fixed a bug where the RWL or RWE ship address wasn't used when spotted at a spur with a schedule that didn't have a ship address.</li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-           <li>Change the scaling menu item from "multiply current scaling"
-                to "set new scaling percentage" form.</li>
+            <li></li>
         </ul>
 
     <h3>Permissions</h3>
@@ -575,12 +574,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Improved the locomotive image resolution in printed rosters.</li>
-            <li>Increased the size of the roster preview so that it matches the paper size and improved text legibility.</li>
-            <li>Update "Export Complete Roster" process so that
-                upon "Import Complete Roster" the images will
-                properly display without the need to rebuild the roster.</li>
-            <li>The Import Complete Roster action now shows a progress bar.</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -592,7 +586,9 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>There's a new "WiThrottleMonitorTableSpeedRed.py" script that opens a window displaying
+                connected WiThrottle devices and locomotives (address, speed)
+                </li>
         </ul>
 
     <h3>Signals</h3>
@@ -644,10 +640,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Throttle list window is now displaying one column for each throttle window, each column showing the throttles for that window</li>
-            <li>Throttle list window allows drag'n drop from one window to another</li>
-            <li>A throttle preference allows to enable the "ALL" roster group in the roster group seletor of the address panel</li>
-            <li>Some interfaces introduced between sing implementation anf throttle controlers</li>            
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -677,16 +670,12 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>panel.js: handle BlockContentsInputIcon</li>
+            <li></li>
         </ul>
 
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>The web server folder <strong>app</strong> has been
-                removed. It might cause third party applications to
-                fail. If this happens to you, please contact us on 
-                <a href="https://groups.io/g/jmriusers">the JMRI users group</a>.</li>
             <li></li>
         </ul>
 
@@ -717,14 +706,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>When printing on MacOS, selecting a specific page range to print does not work 
-            correctly. This is a known Java issue. The workaround is to print the entire 
-            document to PDF, and then use a PDF reader to select the pages to print.</li>
-            <li>There's a new option in the Load and Store tab of the Preferences
-            that allows you to exclude storing the contents of memories.  Not the configuration
-            of the memories, just their contents. This might be useful if e.g.
-            you're storing your panel&amp;configuration files in a storage system like
-            git that keeps track of changes, and you don't need to track changes in the
-            (transient) memory contents.
+            <li></li>
         </ul>
 

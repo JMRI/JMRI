@@ -209,13 +209,17 @@ public final class OlcbEventNameStoreXml extends XmlFile {
 
         // Now read name-id mapping information
         if (root.getChild("names") != null) { // NOI18N
-            List<Element> l = root.getChild("names").getChildren("entry"); // NOI18N
-            log.debug("readFile sees {} event names", l.size());
-            for (Element e : l) {
-                String eid = e.getChild("eventID").getText(); // NOI18N
-                String name = e.getChild("name").getText();
-                log.debug("read EventID {}", eid);
-                nameStore.addMatch(new EventID(eid), name);
+            List<Element> names = root.getChildren("names");
+            log.debug("readFile sees {} names elements", names.size());
+            for (Element n : names) {
+                List<Element> l = n.getChildren("entry"); // NOI18N
+                log.debug("    readFile sees {} event names", l.size());
+                for (Element e : l) {
+                    String eid = e.getChild("eventID").getText(); // NOI18N
+                    String name = e.getChild("name").getText();
+                    log.debug("        read EventID {}", eid);
+                    nameStore.addMatch(new EventID(eid), name);
+                }
             }
         }
     }

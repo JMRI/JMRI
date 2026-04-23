@@ -19,11 +19,11 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
     /*
      * Default values and constraints
      */
-    static public final int minInterval = 100;
-    static public final int maxInterval = 5000;  // let's not get silly...
-    static public final int intervalStepSize = 50;
-    static public final int minMaxTries = 1;
-    static public final int maxMaxTries = 10;
+    public static final int minInterval = 100;
+    public static final int maxInterval = 5000;  // let's not get silly...
+    public static final int intervalStepSize = 50;
+    public static final int minMaxTries = 1;
+    public static final int maxMaxTries = 10;
 
     /**
      * Create common properties for Turnout Operation.

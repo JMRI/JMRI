@@ -307,7 +307,7 @@ public class ActionLight extends AbstractDigitalAction
             this._text = text;
         }
 
-        static public LightState get(int id) {
+        public static LightState get(int id) {
             switch (id) {
                 case Light.UNKNOWN:
                     return Unknown;

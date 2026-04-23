@@ -40,7 +40,7 @@ public class TurnoutOperationConfig extends JPanel {
      * @param op operation for which configurator is required
      * @return the configurator or null in case of an error
      */
-    static public TurnoutOperationConfig getConfigPanel(TurnoutOperation op) {
+    public static TurnoutOperationConfig getConfigPanel(TurnoutOperation op) {
         TurnoutOperationConfig config = null;
         String[] path = op.getClass().getName().split("\\.");
         String configName = "jmri.jmrit.turnoutoperations." + path[path.length - 1] + "Config";

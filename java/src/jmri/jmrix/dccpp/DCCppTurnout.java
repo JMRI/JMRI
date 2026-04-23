@@ -105,7 +105,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     }
 
     //Set the mode information for DCC++ Turnouts.
-    synchronized static private void setModeInformation(String[] feedbackNames, int[] feedbackModes) {
+    synchronized private static void setModeInformation(String[] feedbackNames, int[] feedbackModes) {
         // if it hasn't been done already, create static arrays to hold 
         // the DCC++ specific feedback information.
         if (modeNames == null) {

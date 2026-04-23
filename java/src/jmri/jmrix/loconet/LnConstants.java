@@ -577,6 +577,7 @@ public final class LnConstants {
     public final static int RE_IPL_MFR_DIGITRAX = 0x00;
     public final static int RE_IPL_MFR_ALL = 0x00;
     public final static int RE_IPL_DIGITRAX_HOST_LNRP = 0x01;
+    public final static int RE_IPL_DIGITRAX_HOST_LNRP3 = 0x03;
     public final static int RE_IPL_DIGITRAX_HOST_UT4 = 0x04;
     public final static int RE_IPL_DIGITRAX_HOST_UT6 = 0x06;
     public final static int RE_IPL_DIGITRAX_HOST_WTL12 = 0x0c;

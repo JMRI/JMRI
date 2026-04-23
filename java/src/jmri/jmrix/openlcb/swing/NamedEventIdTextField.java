@@ -1,11 +1,16 @@
 package jmri.jmrix.openlcb.swing;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.*;
 import java.awt.event.*;
+
+import javax.swing.*;
 
 import jmri.util.swing.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.OlcbAddress;
 
+import org.openlcb.EventID;
 import org.openlcb.swing.EventIdTextField;
 
 /**
@@ -48,8 +53,31 @@ public class NamedEventIdTextField extends OvertypeTextArea {
             @Override public void focusLost(FocusEvent e) {}
         });
 
-        EventIdTextField.configurePopUp(this);
-        
+        var popup = EventIdTextField.createPopupMenu(this);
+        // add a custom copy operator to capture the numerical value
+        JMenuItem menuItem = new JMenuItem("Copy Numerical Event ID");
+        popup.add(menuItem);
+        var self = this;
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String s = new OlcbAddress(self.getText(), memo).toDottedString();
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        self.selectAll();
+                    }
+                });
+                StringSelection eventToCopy = new StringSelection(s);
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                clipboard.setContents(eventToCopy, new ClipboardOwner() {
+                    @Override
+                    public void lostOwnership(Clipboard clipboard, Transferable transferable) {
+                    }
+                });
+            }
+        });
+        this.setComponentPopupMenu(popup);
     }
 
     final CanSystemConnectionMemo memo;
@@ -61,6 +89,10 @@ public class NamedEventIdTextField extends OvertypeTextArea {
         }
         return "Enter an event ID or event name";
     }    
+    
+    public EventID getEventID() {
+        return new EventID(new OlcbAddress(getText(), memo).toDottedString());
+    }
     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NamedEventIdTextField.class);
 }

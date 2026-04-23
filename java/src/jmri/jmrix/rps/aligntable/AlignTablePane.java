@@ -201,19 +201,19 @@ public class AlignTablePane extends javax.swing.JPanel {
      */
     public class AlignModel extends AbstractTableModel {
 
-        static private final int NUMCOL = 0;
-        static private final int XCOL = 1;
-        static private final int YCOL = 2;
-        static private final int ZCOL = 3;
+        private static final int NUMCOL = 0;
+        private static final int XCOL = 1;
+        private static final int YCOL = 2;
+        private static final int ZCOL = 3;
 
-        static private final int LASTTIMECOL = 4;
+        private static final int LASTTIMECOL = 4;
 
-        static private final int ACTIVECOL = 5;
+        private static final int ACTIVECOL = 5;
 
-        static private final int MINTIMECOL = 6;
-        static private final int MAXTIMECOL = 7;
+        private static final int MINTIMECOL = 6;
+        private static final int MAXTIMECOL = 7;
 
-        static private final int LAST = MAXTIMECOL;
+        private static final int LAST = MAXTIMECOL;
 
         @Override
         public int getColumnCount() {

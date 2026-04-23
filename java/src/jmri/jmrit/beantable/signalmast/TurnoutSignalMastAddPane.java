@@ -186,7 +186,7 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
     @ServiceProvider(service = SignalMastAddPane.SignalMastAddPaneProvider.class)
-    static public class SignalMastAddPaneProvider extends SignalMastAddPane.SignalMastAddPaneProvider {
+    public static class SignalMastAddPaneProvider extends SignalMastAddPane.SignalMastAddPaneProvider {
         /** {@inheritDoc} */
         @Override
         @Nonnull public String getPaneName() {

@@ -1,8 +1,5 @@
 package jmri.jmrix.pi;
 
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.GpioProvider;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -22,7 +19,7 @@ public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutT
     @Override
     public void checkClosedMsgSent() throws InterruptedException {}
 
-    private GpioProvider myProvider = null;
+    private PiGpioProviderScaffold myProvider = null;
 
     @BeforeEach
     @Override
@@ -30,7 +27,6 @@ public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutT
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         myProvider = new PiGpioProviderScaffold();
-        GpioFactory.setDefaultProvider(myProvider);
 
         t = new RaspberryPiTurnout("PT2"){
             @Override
@@ -42,9 +38,8 @@ public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutT
     @AfterEach
     public void tearDown() {
         if (t != null) {
-            t.dispose(); // is supposed to unprovisionPin 2
+            t.dispose();
         }
-        // shutdown() will forcefully shutdown all GPIO monitoring threads and scheduled tasks, includes unexport.pin
         Assertions.assertNotNull(myProvider);
         myProvider.shutdown();
 

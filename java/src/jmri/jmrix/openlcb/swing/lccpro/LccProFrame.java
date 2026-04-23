@@ -640,6 +640,14 @@ public class LccProFrame extends TwoPaneTBWindow  {
             }
         }
     }
+
+    /**
+     * Sets the backup directory used by the Backup buttons and 
+     * the NodeBackupAction class.
+     */
+    protected void setBackupDirectory() {
+        NodeBackupAction.showOpenDialog(this);
+    }
     
     /**
      * Match the first argument in the array against a locally-known method.
@@ -674,6 +682,9 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 break;
             case "exportcurrenttable":
                 exportCurrentTable();
+                break;
+            case "setbackupdirectory":
+                setBackupDirectory();
                 break;
             default:
                 log.error("method {} not found", args[0]);

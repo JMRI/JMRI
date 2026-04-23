@@ -122,7 +122,7 @@ public class MrcMessage {
         return MrcPackets.toString(this);
     }
 
-    static public MrcMessage getSendSpeed128(int addressLo, int addressHi, int speed) {
+    public static MrcMessage getSendSpeed128(int addressLo, int addressHi, int speed) {
         MrcMessage m = new MrcMessage(MrcPackets.getThrottlePacketLength());
         m.setMessageClass(MrcInterface.THROTTLEINFO);
         int i = m.putHeader(MrcPackets.THROTTLEPACKETHEADER);
@@ -141,7 +141,7 @@ public class MrcMessage {
         return m;
     }
 
-    static public MrcMessage getSendSpeed28(int addressLo, int addressHi, int speed, boolean fwd) {
+    public static MrcMessage getSendSpeed28(int addressLo, int addressHi, int speed, boolean fwd) {
         MrcMessage m = new MrcMessage(MrcPackets.getThrottlePacketLength());
         m.setMessageClass(MrcInterface.THROTTLEINFO);
         int i = m.putHeader(MrcPackets.THROTTLEPACKETHEADER);
@@ -165,7 +165,7 @@ public class MrcMessage {
         return m;
     }
 
-    static public MrcMessage getSendFunction(int group, int addressLo, int addressHi, int data) {
+    public static MrcMessage getSendFunction(int group, int addressLo, int addressHi, int data) {
         MrcMessage m = new MrcMessage(MrcPackets.getFunctionPacketLength());
         m.setMessageClass(MrcInterface.THROTTLEINFO);
         m.replyNotExpected();
@@ -212,7 +212,7 @@ public class MrcMessage {
         return (address ^ data);
     }
 
-    static public MrcMessage getReadCV(int cv) { //R xxx
+    public static MrcMessage getReadCV(int cv) { //R xxx
         int cvLo = (cv);
         int cvHi = (cv >> 8);
 
@@ -231,7 +231,7 @@ public class MrcMessage {
         return m;
     }
 
-    static public MrcMessage getPOM(int addressLo, int addressHi, int cv, int val) {
+    public static MrcMessage getPOM(int addressLo, int addressHi, int cv, int val) {
         MrcMessage m = new MrcMessage(MrcPackets.getWriteCVPOMPacketLength());
         m.setMessageClass(MrcInterface.PROGRAMMING);
         int i = m.putHeader(MrcPackets.WRITECVPOMHEADER);
@@ -253,7 +253,7 @@ public class MrcMessage {
         return m;
     }
 
-    static public MrcMessage getWriteCV(int cv, int val) {
+    public static MrcMessage getWriteCV(int cv, int val) {
         MrcMessage m = new MrcMessage(MrcPackets.getWriteCVPROGPacketLength());
         m.setMessageClass(MrcInterface.PROGRAMMING);
         int i = m.putHeader(MrcPackets.WRITECVPROGHEADER);
@@ -271,7 +271,7 @@ public class MrcMessage {
         return m;
     }
 
-    static protected final int LONG_TIMEOUT = 65000;  // e.g. for programming options
+    protected static final int LONG_TIMEOUT = 65000;  // e.g. for programming options
 
     public boolean validCheckSum() {
         if (getNumDataElements() > 6) {
@@ -343,7 +343,7 @@ public class MrcMessage {
      *
      * @return new message to set the clock speed ratio
      */
-    static public MrcMessage setClockRatio(int ratio) {
+    public static MrcMessage setClockRatio(int ratio) {
         if (ratio < 0 || ratio > 60) {
             log.error("ratio number too large: {}", ratio); // NOI18N
         }
@@ -365,7 +365,7 @@ public class MrcMessage {
      *
      * @return new message to set the hour/minutes of the fast clock
      */
-    static public MrcMessage setClockTime(int hour, int minute) {
+    public static MrcMessage setClockTime(int hour, int minute) {
         if (hour < 0 || hour > 23) {
             log.error("hour number out of range : {}", hour); // NOI18N
         }
@@ -390,7 +390,7 @@ public class MrcMessage {
      *
      * @return MrcMessage
      */
-    static public MrcMessage setClockAmPm() {
+    public static MrcMessage setClockAmPm() {
         MrcMessage m = new MrcMessage(MrcPackets.getSetClockAmPmPacketLength());
         m.setMessageClass(MrcInterface.CLOCK);
         int i = m.putHeader(MrcPackets.SETCLOCKAMPMHEADER);
@@ -407,7 +407,7 @@ public class MrcMessage {
      *
      * @return MrcMessage
      */
-    static public MrcMessage setPowerOff() {
+    public static MrcMessage setPowerOff() {
         MrcMessage m = new MrcMessage(MrcPackets.getPowerOffPacketLength());
         m.setMessageClass(MrcInterface.POWER);
         m.putHeader(MrcPackets.POWEROFF);
@@ -415,7 +415,7 @@ public class MrcMessage {
         return m;
     }
 
-    static public MrcMessage setPowerOn() {
+    public static MrcMessage setPowerOn() {
         MrcMessage m = new MrcMessage(MrcPackets.getPowerOffPacketLength());
         m.setMessageClass(MrcInterface.POWER);
         m.putHeader(MrcPackets.POWERON);
@@ -469,7 +469,7 @@ public class MrcMessage {
         return m;
     }
 
-    static public MrcMessage setNoData() {
+    public static MrcMessage setNoData() {
         MrcMessage m = new MrcMessage(4);
         m.setMessageClass(MrcInterface.POLL);
         m.setElement(0, 0x00);

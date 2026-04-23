@@ -17,7 +17,7 @@ public class BlockWhereUsed {
      * @param block The block bean.
      * @return a populated textarea.
      */
-    static public JTextArea getWhereUsed(NamedBean block) {
+    public static JTextArea getWhereUsed(NamedBean block) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, block.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N

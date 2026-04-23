@@ -41,7 +41,7 @@ public class StartupActionModelUtil extends Bean implements Disposable {
      * @return the default instance
      */
     @Nonnull
-    static public StartupActionModelUtil getDefault() {
+    public static StartupActionModelUtil getDefault() {
         return InstanceManager.getOptionalDefault(StartupActionModelUtil.class).orElseGet(() -> {
             return InstanceManager.setDefault(StartupActionModelUtil.class, new StartupActionModelUtil());
         });

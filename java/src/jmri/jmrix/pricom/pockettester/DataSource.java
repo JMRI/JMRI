@@ -43,7 +43,7 @@ public class DataSource extends jmri.util.JmriJFrame {
      *
      * @return null until a DataSource has been created.
      */
-    static public DataSource instance() {
+    public static DataSource instance() {
         return existingInstance;
     }
 

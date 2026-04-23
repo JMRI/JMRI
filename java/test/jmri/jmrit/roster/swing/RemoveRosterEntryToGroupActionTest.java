@@ -1,13 +1,10 @@
 package jmri.jmrit.roster.swing;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -16,11 +13,11 @@ import org.junit.Assume;
 public class RemoveRosterEntryToGroupActionTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("TestRemoveToGroupWindow");
         RemoveRosterEntryToGroupAction t = new RemoveRosterEntryToGroupAction("test remove roster entry to group",jf);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t,"exists");
         JUnitUtil.dispose(jf);
     }
 

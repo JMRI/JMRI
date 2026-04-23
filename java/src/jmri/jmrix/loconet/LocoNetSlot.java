@@ -237,7 +237,7 @@ public class LocoNetSlot {
      * If it is false then any changes to its state may be lost.
      * @return true
      */
-    public boolean getIsInitilized() {
+    public boolean getIsInitialized() {
         return isInitialized;
     }
 

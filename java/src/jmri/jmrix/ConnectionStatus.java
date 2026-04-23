@@ -198,7 +198,7 @@ public class ConnectionStatus {
      * It is allowable for either the port name or the system name to be null,
      * but not both.
      */
-    static private class ConnectionKey {
+    private static class ConnectionKey {
 
         String portName = null;
         String systemName = null;  // human-readable name for system

@@ -49,6 +49,17 @@ public final class SprogConstants {
     public static int CS_REPLY_TIMEOUT = 2500;
 
     /**
+     * Number of consecutive reply timeouts before the command station
+     * shuts down track power.
+     * <p>
+     * A single timeout can occur when the JVM is temporarily busy (e.g.
+     * garbage collection or Swing rendering). Requiring multiple consecutive
+     * timeouts before taking the drastic step of removing power avoids
+     * false-positive shutdowns on slower systems.
+     */
+    public static int CS_MAX_TIMEOUT_COUNT = 3;
+
+    /**
      * Timeout for traffic controller to wait for reply from hardware.
      * 
      * Most replies are received from SPROG hardware with a few seconds, but

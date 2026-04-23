@@ -460,7 +460,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * @param code The instruction code placed in the pcxt1 pcxt2 bytes
      * @return The formatted message
      */
-    static public LocoNetMessage makePeerXfr(int src, int dst, int[] d, int code) {
+    public static LocoNetMessage makePeerXfr(int src, int dst, int[] d, int code) {
         log.debug("makePeerXfr for src={}, dst={} subAddr={} data[]={} code={}", src, dst, d[4], d, code);
         LocoNetMessage msg = new LocoNetMessage(16);
         msg.setOpCode(LnConstants.OPC_PEER_XFER);
@@ -528,7 +528,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * @param val  value to be checked
      * @return True if the argument has the high bit set
      */
-    static protected boolean highBit(int val) {
+    protected static boolean highBit(int val) {
         if ((val & (~0xFF)) != 0) {
             log.error("highBit called with too large value: 0x{}", // NOI18N
                     Integer.toHexString(val));
@@ -536,11 +536,11 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         return (0 != (val & 0x80));
     }
 
-    static protected int lowByte(int val) {
+    protected static int lowByte(int val) {
         return val & 0xFF;
     }
 
-    static protected int highByte(int val) {
+    protected static int highByte(int val) {
         if ((val & (~0xFFFF)) != 0) {
             log.error("highByte called with too large value: {}", // NOI18N
                     Integer.toHexString(val));

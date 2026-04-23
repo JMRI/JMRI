@@ -102,7 +102,7 @@ public class ImportExternalData {
     }
 
     @SuppressFBWarnings(value = "OS_OPEN_STREAM_EXCEPTION_PATH", justification = "Low risk due to rare usage")
-    static private void convertClassNameReferences(String fileName) throws Exception {
+    private static void convertClassNameReferences(String fileName) throws Exception {
         String temporaryFilename = fileName + TEMPORARY_EXTENSION;
         int errors = 0;
         if (!CTCFiles.deleteFile(temporaryFilename)) errors++;   // Just delete it for safety before we start:
@@ -120,7 +120,7 @@ public class ImportExternalData {
         log.debug("convertClassNameReferences: errors = {}", errors);
      }
 
-    static private void writeLine(BufferedWriter bufferedWriter, String aLine) throws IOException {
+    private static void writeLine(BufferedWriter bufferedWriter, String aLine) throws IOException {
         bufferedWriter.write(aLine); bufferedWriter.newLine();
     }
 

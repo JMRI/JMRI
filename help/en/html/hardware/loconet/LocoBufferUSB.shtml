@@ -16,45 +16,142 @@
     <div id="mainContent">
       <h1>Hardware Support: Connecting a LocoBuffer-NG or LocoBuffer-USB to LocoNet&reg;</h1>
 
+      <img src="https://www.rr-cirkits.com/description/LB-NG-t.png" height="83" width="140"
+      alt="LocoBuffer-USB image">
       <img src="http://www.rr-cirkits.com/description/LocoBuffer-USB-t.gif" height="83" width="140"
       alt="LocoBuffer-USB image">
       <p>The LocoBuffer-NG or LocoBuffer-USB provide a very reliable way to connect a computer to a LocoNet&reg;.
       They are produced by Dick Bronson's <a href="http://www.rr-cirkits.com">RR-CirKits</a> company, based
       in part on the original LocoBuffer design.</p>
 
+
+
       <h2>Recommended setup</h2>
 
-      <p>The recommended setup for the LocoBuffer-NG is:</p>
-
+      <p>Install the RR-CirKits "drivers", if needed.
       <ul>
-        <li>Start DecoderPro or other program and configure it for:
-          <ul>
-            <li>LocoNet LocoBuffer-NG</li>
-
-            <li>Select your port</li>
-          </ul>
-        </li>
+          <li>Windows:
+              <ul>
+                  <li>Users of LocoBuffer-NG devices will "automatically" get Windows
+                      driver software installed if using Windows&nbsp;11 (and perhaps
+                      earlier Windows releases, too).</li>
+                  <li>Users of LocoBuffer-USB devices will need to download drivers
+                      from the RR-CirKits web page.  Note that the LocoBuffer-USB
+                      generally does not operate under Windows&nbsp;11 due to
+                      "security" features implemented in Windows&nbsp;11.  Windows&nbsp;11 
+                      users are encouraged to upgrade to the RR-CirKits 
+                      LocoBuffer-NG device.</li>
+              </ul>
+          </li>
+          <li>Linux and OS-X users generally do not need to install drivers for either
+              LocoBuffer-NG or LocoBuffer-USB devices.
+          </li>
       </ul>
 
-      <p>The recommended setup for the LocoBuffer-USB is:</p>
+      <p>The recommended JMRI setup for the LocoBuffer-NG or LocoBuffer-USB:
 
+      <p>Connect the LocoBuffer-NG or LocoBuffer-USB to the computer.  If a 
+          LocoBuffer-USB, make sure that you have installed the appropriate 
+          drivers.
+          
+      <p>Start DecoderPro, PanelPro, or one other JMRI other program to configure 
+          that program's hardware interface.  If you will be using other JMRI 
+          programs, each program must be separately configured.
+          
+      <p> If necessary, open Edit&Rightarrow;Preferences&RightArrow;Connection"
+          to get a window for the "connection" configuration.  If the program has
+          not been configured before, or if a new "configuration profile" is being 
+          used, the JMRI program may automatically open this window.
+          
+      <p>Select "Digitrax" as the system manufacturer.
+          
+      <p>Select the correct interface device - LocoBuffer-NG or LocoBuffer-USB, 
+          as appropriate - from the list of "System connections", as shown below:
+          
+      <p><img src="images/Configure_LB-NG_LB-USB.png" alt="Selecting the 
+              &quot;System connection&quot; type">
+
+
+      <p>Select the port which the LocoBuffer-NG or LocoBuffer is using.  With 
+          Windows machines, this is a "COM" port as shown below.
+      <p><img src="images/Configure_LB-NG_LB-USB_port.png" alt="Selecting the 
+              &quot;Serial port&quot; (on a Windows machine)">
+
+      <p>Select the appropriate "Command station type" from the types shown in the 
+          list.
+          
+      <p>If necessary, configure the "Additional Configuration Settings.
+          
+      <p>Activate the "Save" button in the lower left corner of the window, as 
+          shown below.  This will save the settings and causes the JMRI program 
+          to "restart", using the settings you have chosen.
+      <p><img src="images/Configure_LB-NG_LB-USB_save.png" alt="The &quot;Save&quot;
+              button at the lower left corner of the &quot;Preferences&quot;
+              window.">
+          
+
+      <h2>"Powering" the LocoBuffer-NG/LocoBuffer-USB</h2>
+
+      <p>The LocoBuffer-NG and LocoBuffer-USB devices do not require a separate
+          power supply under normal cases.  They receive power from the attached
+          computer, for powering their "USB" functionality and much of the LocoNet 
+          functionality.  They also require a small amount of power from the 
+          LocoNet's "RailSync" wires, to power the mechanisms which actually 
+          transmit message data to the LocoNet data lines and to receive data 
+          from the LocoNet data lines.  When a command station is being used on 
+          LocoNet, the command station typically provides "RailSync" power.  
+          
+      <p>There are some cases where the LocoBuffer-NG or LocoBuffer-USB is used
+          with a LocoNet which does not include a command station.  In those cases, 
+          it may be necessary to provide some other mechanism to provide the power 
+          needed by the LocoBuffer-NG or LocoBuffer-USB.  The "<a 
+              JMRI href="StandaloneLocoNet.shtml">Standalone LocoNet</a> help 
+          page provides some suggestions.
+              
+      <p>Note that the LocoBuffer-NG and LocoBuffer-USB devices provide electrical
+          "isolation" between your computer and LocoNet.  This pretty much
+          eliminates the likelihood of ground currents flowing through the
+          LocoNet cable, through the computer, to some other common connection.
+
+      <h2>Using a LocoBuffer-USB under Windows&nbsp;11</h2>
+
+      <p>According to the RR-Circuits web page, Windows&nbsp;11 does not support the LocoBuffer-USB.
+      This relates to some security "features" implemented by Microsoft, but which are not
+      supported by the LocoBuffer-USB hardware and/or driver software.  RR-CirKits recommends
+      use of their LocoBuffer-NG under Windows&nbsp;11, because the LocoBuffer-NG and its
+      software drivers are compatible with that particular Windows&nbsp;11 security feature.
+
+      <p>Several users have reported that their LocoBuffer-USB has worked under Windows&nbsp;11,
+          but <u>only</u> after "disabling" that Windows&nbsp;11 security feature.
+
+      <p><b>NOTE:  Disabling
+      of any Windows "security" feature may place you and users of your computer at elevated
+      risk of malware, viruses, etc.  You assume all risk when disabling security features!</b>
+
+      <p>Several of those successful users of LocoBuffer-USB devices under Windows&nbsp;11 have
+      found that their LocoBuffer-USB has mysteriously stopped working under Windows&nbsp;11.
+      It may be that some Windows&nbsp;11 "update" can re-enable that security feature,
+      without notifying the user, causing the LocoBuffer-USB to become unusable.
+
+      <p>Users of Windows&nbsp;11 with no longer functioning LocoBuffer-USB devices can <em>try</em>
+      to re-disable that security feature, subject to the security note above.  Hopefully,
+      one can find more information about this kind of problem by searching the web for
+      information about the specific Windows security problem.
+
+      <H2>Links</H2>
       <ul>
-        <li>Start DecoderPro or other program and configure it for:
-          <ul>
-            <li>LocoNet LocoBuffer-USB</li>
-
-            <li>Select your port</li>
-          </ul>
-        </li>
+          <li>The <a href="http://www.rr-cirkits.com/">RR-CirKits</a> web page.  
+              LocoBuffer-NG and LocoBuffer-USB device users may find support for 
+              their RR-CirKits devices via their web page.</li>
+          <li>The RR-CirKits <a href="https://www.rr-cirkits.com/firmware/">Updates</a>
+              web page, where LocoBuffer-USB drivers may be found.</li>
+          <li>A large number of LocoBuffer-NG and LocoBuffer-USB device owners
+              are members of the "JMRIusers" and "Digitrax-users" lists at 
+              <a href="groups.io">groups.io</a>.</li>
+          
       </ul>
 
-      <h2>LocoBuffer-USB Power</h2>
-
-      <p>The LocoBuffer-USB completely isolates your computer from the LocoNet, removing the
-      possibility of ground currents flowing through the LocoNet cable. It receives its power
-      partially from the LocoNet RailSync lines and the rest from your computer via the USB
-      cable.</p>
-
+      <hr>
       <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->

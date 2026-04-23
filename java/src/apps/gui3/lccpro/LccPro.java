@@ -134,7 +134,7 @@ public class LccPro extends Apps3 {
         app.start();
     }
 
-    static public void preInit(String[] args) {
+    public static void preInit(String[] args) {
         apps.gui3.Apps3.preInit(applicationName);
         apps.gui3.Apps3.setConfigFilename("LccProConfig.xml", args);
     }

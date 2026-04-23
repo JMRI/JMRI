@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 public class TamsPowerManager extends AbstractPowerManager<TamsSystemConnectionMemo> implements TamsListener {
     
     //This dummy message is used in case we expect a reply from polling
-    static private TamsMessage myDummy() {
+    private static TamsMessage myDummy() {
         //log.debug("*** myDummy ***");
         TamsMessage m = new TamsMessage(2);
         m.setElement(0, TamsConstants.POLLMSG & TamsConstants.MASKFF);

@@ -15,10 +15,7 @@ import javax.swing.JTable;
 import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
 
-import jmri.BooleanPermission;
-import jmri.InstanceManager;
-import jmri.PermissionManager;
-import jmri.PermissionsSystemAdmin;
+import jmri.*;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -59,9 +56,9 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     public static final int NUMCOL = COMMENT + 1;
     private String rosterGroup = null;
     boolean editable = false;
-    
+
     static final PermissionManager permissionManager = InstanceManager.getDefault(PermissionManager.class);
-    
+
     public RosterTableModel() {
         this(false);
     }
@@ -89,13 +86,13 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     public void setAssociatedTable(JTable associatedTable) {
         this.associatedTable = associatedTable;
     }
-    
+
     RowSorter<RosterTableModel> associatedSorter;
     public void setAssociatedSorter(RowSorter<RosterTableModel> associatedSorter) {
         this.associatedSorter = associatedSorter;
     }
-    
-    
+
+
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals(Roster.ADD)) {
@@ -245,7 +242,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         if (editable) {
             // permission to edit optional columns?
             if ( col >= NUMCOL && col < getColumnCount() ) {
-                if (! permissionManager.hasAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                if (! permissionManager.hasAtLeastPermission(PermissionsProgrammer.PERMISSION_ROSTER_ADDED_COLUMNS,
                                                     BooleanPermission.BooleanValue.TRUE)) {
                     return false;
                 }
@@ -341,25 +338,28 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         }
         return lines;
     }
-    
+
     int countLinesIn(String text) {
         String[] sections = text.split("\n");
         int lines = sections.length;
         return lines;
     }
-    
+
     @Override
     public void resizeRowToText(int modelRow, int heightInLines) {
         if (associatedSorter == null || associatedTable == null ) {
             return; // because not initialized, can't act - useful for tests
         }
+
+        if (heightInLines < 1) heightInLines = 1;       // always show at least one line
+
         var viewRow = associatedSorter.convertRowIndexToView(modelRow);
         int height = heightInLines * (InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize() + 4); // same line height as in RosterTable
         if (height != associatedTable.getRowHeight(viewRow)) {
             associatedTable.setRowHeight(viewRow, height);
         }
     }
-    
+
     private Object getValueAtAttribute(RosterEntry re, int col){
         String attributeKey = getAttributeKey(col);
         String value = re.getAttribute(attributeKey); // NOI18N
@@ -425,11 +425,11 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 break;
             default:
                 // permission to edit optional columns?
-                if (! permissionManager.ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                if (! permissionManager.ensureAtLeastPermission(PermissionsProgrammer.PERMISSION_ROSTER_ADDED_COLUMNS,
                                                         BooleanPermission.BooleanValue.TRUE)) {
                     return;
                 }
-                
+
                 setValueAtAttribute(valueToSet, re, col);
                 break;
         }
@@ -477,7 +477,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     }
 
     // access via method to ensure not null
-    private String[] attributeKeys = null; 
+    private String[] attributeKeys = null;
 
     private String[] getModelAttributeKeyColumnNames() {
         if ( attributeKeys == null ) {

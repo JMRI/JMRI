@@ -299,10 +299,10 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
     protected class TableModel extends AbstractLogixNGTableAction<GlobalVariable>.TableModel {
 
         // overlay the state column with the edit column
-        static private final int VARIABLE_TYPE_COL = NUMCOLUMN;
-        static private final int VARIABLE_INIT_VALUE_COL = NUMCOLUMN + 1;
-        static private final int SET_TO_INIT_VALUE_COL = VARIABLE_INIT_VALUE_COL + 1;
-        static private final int NUM_COLUMNS = SET_TO_INIT_VALUE_COL + 1;
+        private static final int VARIABLE_TYPE_COL = NUMCOLUMN;
+        private static final int VARIABLE_INIT_VALUE_COL = NUMCOLUMN + 1;
+        private static final int SET_TO_INIT_VALUE_COL = VARIABLE_INIT_VALUE_COL + 1;
+        private static final int NUM_COLUMNS = SET_TO_INIT_VALUE_COL + 1;
 
         @Override
         protected boolean isClearUserNameAllowed() {

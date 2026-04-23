@@ -18,9 +18,9 @@ import jmri.*;
  */
 public class SignalHeadTableModel extends jmri.jmrit.beantable.BeanTableDataModel<SignalHead> {
 
-    static public final int LITCOL = NUMCOLUMN;
-    static public final int HELDCOL = LITCOL + 1;
-    static public final int EDITCOL = HELDCOL + 1;
+    public static final int LITCOL = NUMCOLUMN;
+    public static final int HELDCOL = LITCOL + 1;
+    public static final int EDITCOL = HELDCOL + 1;
 
     public SignalHeadTableModel(){
         super();

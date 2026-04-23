@@ -272,7 +272,7 @@ public class ExpressionConditional extends AbstractDigitalExpression
             this._text = text;
         }
 
-        static public ConditionalState get(int id) {
+        public static ConditionalState get(int id) {
             switch (id) {
                 case Conditional.FALSE:
                     return False;

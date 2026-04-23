@@ -174,6 +174,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         getToolBar().add(Box.createHorizontalGlue());
         JPanel p = new JPanel();
         p.setAlignmentX(JPanel.RIGHT_ALIGNMENT);
+        p.setOpaque(false);
         p.add(modePanel);
         getToolBar().add(p);
     }

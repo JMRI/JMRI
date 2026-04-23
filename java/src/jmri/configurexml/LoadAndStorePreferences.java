@@ -21,6 +21,7 @@ public final class LoadAndStorePreferences extends PreferencesBean implements In
     public static final String EXCLUDE_JMRI_VERSION = "excludeJmriVersion";
     public static final String EXCLUDE_TIMEBASE = "excludeMemoryTimebase";
     public static final String EXCLUDE_FONT_EXTENSIONS = "excludeFontExtensions";
+    public static final String SHORTEN_LAYOUT_EDITOR_WRITES = "shortenLayoutEditorWrites";
 
     private boolean _excludeFileHistory = false;
     private boolean _excludeMemoryIMCURRENTTIME = false;
@@ -28,6 +29,7 @@ public final class LoadAndStorePreferences extends PreferencesBean implements In
     private boolean _excludeJmriVersion = false;
     private boolean _excludeTimebase = false;
     private boolean _excludeFontExtensions = false;
+    private boolean _shortenLayoutEditorWrites = false;
 
 
     public LoadAndStorePreferences() {
@@ -44,6 +46,7 @@ public final class LoadAndStorePreferences extends PreferencesBean implements In
         _excludeJmriVersion = sharedPreferences.getBoolean(EXCLUDE_JMRI_VERSION, false);
         _excludeTimebase = sharedPreferences.getBoolean(EXCLUDE_TIMEBASE, false);
         _excludeFontExtensions = sharedPreferences.getBoolean(EXCLUDE_FONT_EXTENSIONS, false);
+        _shortenLayoutEditorWrites = sharedPreferences.getBoolean(SHORTEN_LAYOUT_EDITOR_WRITES, false);
         
         setIsDirty(false);
     }
@@ -67,6 +70,9 @@ public final class LoadAndStorePreferences extends PreferencesBean implements In
         if (isExcludeFontExtensions() != prefs.isExcludeFontExtensions()) {
             return true;
         }
+        if (isShortenLayoutEditorWrites() != prefs.isShortenLayoutEditorWrites()) {
+            return true;
+        }
         return false;
     }
 
@@ -77,6 +83,7 @@ public final class LoadAndStorePreferences extends PreferencesBean implements In
         setExcludeJmriVersion(prefs.isExcludeJmriVersion());
         setExcludeTimebase(prefs.isExcludeTimebase());
         setExcludeFontExtensions(prefs.isExcludeFontExtensions());
+        setShortenLayoutEditorWrites(prefs.isShortenLayoutEditorWrites());
     }
 
     public void save() {
@@ -87,6 +94,7 @@ public final class LoadAndStorePreferences extends PreferencesBean implements In
         sharedPreferences.putBoolean(EXCLUDE_JMRI_VERSION, this.isExcludeJmriVersion());
         sharedPreferences.putBoolean(EXCLUDE_TIMEBASE, this.isExcludeTimebase());
         sharedPreferences.putBoolean(EXCLUDE_FONT_EXTENSIONS, this.isExcludeFontExtensions());
+        sharedPreferences.putBoolean(SHORTEN_LAYOUT_EDITOR_WRITES, this.isShortenLayoutEditorWrites());
         setIsDirty(false);
     }
 
@@ -142,6 +150,15 @@ public final class LoadAndStorePreferences extends PreferencesBean implements In
 
     public boolean isExcludeFontExtensions() {
         return _excludeFontExtensions;
+    }
+
+    public void setShortenLayoutEditorWrites(boolean value) {
+        _shortenLayoutEditorWrites = value;
+        setIsDirty(true);
+    }
+
+    public boolean isShortenLayoutEditorWrites() {
+        return _shortenLayoutEditorWrites;
     }
 
 

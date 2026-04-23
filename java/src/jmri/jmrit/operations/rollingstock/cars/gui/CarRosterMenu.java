@@ -23,19 +23,19 @@ public class CarRosterMenu extends JMenu {
      * main menu of the program, away from any GUI that can select or use a
      * RosterEntry.
      */
-    static public final int MAINMENU = 1;
+    public static final int MAINMENU = 1;
 
     /**
      * Ctor argument defining that the menu object will be used as a menu on a
      * GUI object that can select a RosterEntry.
      */
-    static public final int SELECTMENU = 2;
+    public static final int SELECTMENU = 2;
 
     /**
      * Ctor argument defining that the menu object will be used as a menu on a
      * GUI object that is dealing with a single RosterEntry.
      */
-    static public final int ENTRYMENU = 3;
+    public static final int ENTRYMENU = 3;
 
     /**
      * Create a

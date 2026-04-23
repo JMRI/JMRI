@@ -70,7 +70,7 @@ public class OlcbLightManagerXmlTest {
     private final static Logger log = LoggerFactory.getLogger(OlcbLightManagerXmlTest.class);
 
     @BeforeAll
-    static public void checkSeparate() {
+    public static void checkSeparate() {
        // this test is run separately because it leaves a lot of threads behind
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
     }

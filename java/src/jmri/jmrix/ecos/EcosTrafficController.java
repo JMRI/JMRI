@@ -121,7 +121,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
     // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
-    final static protected EcosTrafficController self = null;
+    final protected static EcosTrafficController self = null;
 
     /** {@inheritDoc} */
     @Override

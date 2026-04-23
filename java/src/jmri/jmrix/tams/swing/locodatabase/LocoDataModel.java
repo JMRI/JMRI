@@ -26,13 +26,13 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoDataModel extends javax.swing.table.AbstractTableModel implements TamsListener {
 
-    static public final int ADDRCOLUMN = 0;
-    static public final int SPDCOLUMN = 1;
-    static public final int FMTCOLUMN = 2;
-    static public final int NAMECOLUMN = 3;
-    static public final int DELCOLUMN = 4;
+    public static final int ADDRCOLUMN = 0;
+    public static final int SPDCOLUMN = 1;
+    public static final int FMTCOLUMN = 2;
+    public static final int NAMECOLUMN = 3;
+    public static final int DELCOLUMN = 4;
 
-    static public final int NUMCOLUMN = 5;
+    public static final int NUMCOLUMN = 5;
 
     jmri.jmrix.tams.TamsSystemConnectionMemo memo;
 

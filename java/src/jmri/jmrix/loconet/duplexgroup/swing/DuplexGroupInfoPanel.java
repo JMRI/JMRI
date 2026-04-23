@@ -793,7 +793,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
      * This is most useful when adding DuplexGroupInfoPanel as a JMRI Start-up
      * action.
      */
-    static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
+    public static class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MenuItemDuplexInfo"),
@@ -804,7 +804,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     // make the table model read only
-    static public class ResponsesTableModel extends DefaultTableModel {
+    public static class ResponsesTableModel extends DefaultTableModel {
          public ResponsesTableModel(String[] columns, int rows) {
              super(columns, rows);
          }

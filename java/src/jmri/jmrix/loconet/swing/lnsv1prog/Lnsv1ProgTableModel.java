@@ -38,7 +38,7 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
     public static final int ROSTERSV1MODE_COLUMN = 7;
     public static final int ROSTERNAME_COLUMN = 8;
     public static final int OPENPRGMRBUTTON_COLUMN = 9;
-    static public final int NUMCOLUMNS = 10;
+    public static final int NUMCOLUMNS = 10;
     private final Lnsv1ProgPane parent;
     private final transient LocoNetSystemConnectionMemo memo;
     protected Roster _roster;

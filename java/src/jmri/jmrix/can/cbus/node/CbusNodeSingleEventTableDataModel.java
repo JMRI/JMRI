@@ -27,14 +27,14 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
     private final CanSystemConnectionMemo _memo;
     
     // column order needs to match list in column tooltips
-    static public final int EV_NUMBER_COLUMN = 0;
-    static public final int EV_CURRENT_VAL_COLUMN = 1;
-    static public final int EV_CURRENT_HEX_COLUMN = 2;
-    static public final int EV_CURRENT_BIT_COLUMN = 3;
-    static public final int EV_SELECT_COLUMN = 4;
-    static public final int EV_SELECT_HEX_COLUMN = 5;
-    static public final int EV_SELECT_BIT_COLUMN = 6;
-    static public final int MAX_COLUMN = 7;
+    public static final int EV_NUMBER_COLUMN = 0;
+    public static final int EV_CURRENT_VAL_COLUMN = 1;
+    public static final int EV_CURRENT_HEX_COLUMN = 2;
+    public static final int EV_CURRENT_BIT_COLUMN = 3;
+    public static final int EV_SELECT_COLUMN = 4;
+    public static final int EV_SELECT_HEX_COLUMN = 5;
+    public static final int EV_SELECT_BIT_COLUMN = 6;
+    public static final int MAX_COLUMN = 7;
 
     public CbusNodeSingleEventTableDataModel(CanSystemConnectionMemo memo, int row, int column , CbusNodeEvent ndEv) {
         

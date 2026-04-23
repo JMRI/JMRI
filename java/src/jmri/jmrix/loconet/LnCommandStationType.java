@@ -491,7 +491,7 @@ public enum LnCommandStationType {
         return supportsSlot250 == SupportsSlot250.SLOT250_AVAILABLE;
     }
 
-    static public LnCommandStationType getByName(String name) {
+    public static LnCommandStationType getByName(String name) {
         for (LnCommandStationType p : LnCommandStationType.values()) {
             if (p.name.equals(name)) {
                 return p;

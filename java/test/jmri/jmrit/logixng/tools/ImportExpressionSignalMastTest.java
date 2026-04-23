@@ -151,7 +151,7 @@ public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestB
             super(sys);
         }
 
-        final static private int[] VALID_STATES = new int[]{
+        final private static int[] VALID_STATES = new int[]{
             DARK,
             RED,
             YELLOW,
@@ -163,7 +163,7 @@ public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestB
             FLASHLUNAR,
         }; // No int for Lunar
 
-        final static private String[] VALID_STATE_KEYS = new String[]{
+        final private static String[] VALID_STATE_KEYS = new String[]{
             "SignalHeadStateDark",
             "SignalHeadStateRed",
             "SignalHeadStateYellow",

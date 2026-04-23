@@ -53,7 +53,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * @return an SRCPMessage to turn the track power on
      */
-    static public SRCPMessage getEnableMain() {
+    public static SRCPMessage getEnableMain() {
         SRCPMessage m = new SRCPMessage("SET 1 POWER ON\n");
         m.setBinary(false);
         return m;
@@ -62,7 +62,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * @return an SRCPMessage to turn the track power off
      */
-    static public SRCPMessage getKillMain() {
+    public static SRCPMessage getKillMain() {
         SRCPMessage m = new SRCPMessage("SET 1 POWER OFF\n");
         m.setBinary(false);
         return m;
@@ -73,7 +73,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
      * @param bus  a bus number
      * @return an SRCPMessage to initialize programming on the given bus.
      */
-    static public SRCPMessage getProgMode(int bus) {
+    public static SRCPMessage getProgMode(int bus) {
         String msg = "INIT " + bus + " SM NMRA\n";
         SRCPMessage m = new SRCPMessage(msg);
         return m;
@@ -83,7 +83,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
      * @param bus  a bus number
      * @return an SRCPMessage to terminate programming on the given bus.
      */
-    static public SRCPMessage getExitProgMode(int bus) {
+    public static SRCPMessage getExitProgMode(int bus) {
         String msg = "TERM " + bus + " SM\n";
         SRCPMessage m = new SRCPMessage(msg);
         return m;
@@ -94,7 +94,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
      * @param cv  the CV to read.
      * @return an SRCPMessage to read the given CV in direct mode the given bus.
      */
-    static public SRCPMessage getReadDirectCV(int bus, int cv) {
+    public static SRCPMessage getReadDirectCV(int bus, int cv) {
         String msg = "GET " + bus + " SM 0 CV " + cv + "\n";
         SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
@@ -107,7 +107,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
      * @param val  a value for the CV.
      * @return an SRCPMessage to check the given cv has the given val using the given bus.
      */
-    static public SRCPMessage getConfirmDirectCV(int bus, int cv, int val) {
+    public static SRCPMessage getConfirmDirectCV(int bus, int cv, int val) {
         String msg = "VERIFY " + bus + " SM 0 CV " + cv + " " + val + "\n";
         SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
@@ -121,7 +121,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
      * @param val  a value for the CV.
      * @return an SRCPMessage to write the given value to the provided cv using the given bus.
      */
-    static public SRCPMessage getWriteDirectCV(int bus, int cv, int val) {
+    public static SRCPMessage getWriteDirectCV(int bus, int cv, int val) {
         String msg = "SET " + bus + " SM 0 CV " + cv + " " + val + "\n";
         SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
@@ -134,7 +134,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
      * @param bit  the bit to read.
      * @return an SRCPMessage to read the given bit of the given CV uisng the provided bus.
      */
-    static public SRCPMessage getReadDirectBitCV(int bus, int cv, int bit) {
+    public static SRCPMessage getReadDirectBitCV(int bus, int cv, int bit) {
         String msg = "GET " + bus + " SM 0 CVBIT " + cv + " " + bit + "\n";
         SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
@@ -148,7 +148,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
      * @param val  the value to check
      * @return an SRCPMessage to verify the given bit of the given CV has the given val uisng the provided bus.
      */
-    static public SRCPMessage getConfirmDirectBitCV(int bus, int cv, int bit, int val) {
+    public static SRCPMessage getConfirmDirectBitCV(int bus, int cv, int bit, int val) {
         String msg = "VERIFY " + bus + " SM 0 CVBIT " + cv + " " + bit + " " + val + "\n";
         SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
@@ -163,7 +163,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
      * @param val  the value to write
      * @return an SRCPMessage to write the given value to the given bit of the given CV uisng the provided bus.
      */
-    static public SRCPMessage getWriteDirectBitCV(int bus, int cv, int bit, int val) {
+    public static SRCPMessage getWriteDirectBitCV(int bus, int cv, int bit, int val) {
         String msg = "SET " + bus + " SM 0 CVBIT " + cv + " " + bit + " " + val + "\n";
         SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
@@ -176,7 +176,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
      * @return an SRCPMessage to read the provided register using the given bus.
      * @throws IllegalArgumentException if the register value is out of range.
      */
-    static public SRCPMessage getReadRegister(int bus, int reg) {
+    public static SRCPMessage getReadRegister(int bus, int reg) {
         if (reg > 8) {
             throw new IllegalArgumentException("register number too large: " + reg);
         }
@@ -193,7 +193,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
      * @return an SRCPMessage to verify the provided register has the expected val using the given bus.
      * @throws IllegalArgumentException if the register value is out of range.
      */
-    static public SRCPMessage getConfirmRegister(int bus, int reg, int val) {
+    public static SRCPMessage getConfirmRegister(int bus, int reg, int val) {
         if (reg > 8) {
             throw new IllegalArgumentException("register number too large: " + reg);
         }
@@ -210,7 +210,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
      * @return an SRCPMessage to write the given value to the provided register using the given bus.
      * @throws IllegalArgumentException if the register value is out of range.
      */
-    static public SRCPMessage getWriteRegister(int bus, int reg, int val) {
+    public static SRCPMessage getWriteRegister(int bus, int reg, int val) {
         if (reg > 8) {
             throw new IllegalArgumentException("register number too large: " + reg);
         }

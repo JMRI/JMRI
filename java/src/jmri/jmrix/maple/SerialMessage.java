@@ -101,7 +101,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     // static methods to return a formatted message
 
-    static public SerialMessage getPoll(int UA, int startAdd, int count) {
+    public static SerialMessage getPoll(int UA, int startAdd, int count) {
         if ((count <= 0) || (count > 99)) {
             log.error("Illegal count in Maple poll message - {}", count);
             return null;
@@ -155,7 +155,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 //    public int maxSize() {
 //        return DEFAULTMAXSIZE;
 //    }
-//    static public final int DEFAULTMAXSIZE = 404; // Maple RR Request Docs page 9
+//    public static final int DEFAULTMAXSIZE = 404; // Maple RR Request Docs page 9
 
     private final static Logger log = LoggerFactory.getLogger(SerialMessage.class);
 

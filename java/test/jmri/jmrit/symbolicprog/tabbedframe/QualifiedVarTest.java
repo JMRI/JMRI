@@ -46,6 +46,9 @@ public class QualifiedVarTest {
             protected boolean checkDirtyFile() {
                 return false;
             }
+            // detached pane selection
+            @Override
+            protected boolean checkDontDetachPanes() { return false; }
         };
         
         JUnitUtil.waitFor(()->{return p.threadCount.get() == 0;}, "PaneProgFrame threads done");
@@ -187,6 +190,7 @@ public class QualifiedVarTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
     }

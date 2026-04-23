@@ -2,7 +2,6 @@ package jmri.jmrit.roster.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class RosterGroupComboBoxTest {
     @Test
     public void testCTor() {
         RosterGroupComboBox t = new RosterGroupComboBox();
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach

@@ -39,8 +39,8 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
     public static final int FROM_PORTAL_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
     public static final int TO_PORTAL_COLUMN = 2;
-    static public final int LENGTHCOL = 3;
-    static public final int UNITSCOL = 4;
+    public static final int LENGTHCOL = 3;
+    public static final int UNITSCOL = 4;
     public static final int EDIT_COL = 5;
     public static final int DELETE_COL = 6;
     public static final int NUMCOLS = 7;

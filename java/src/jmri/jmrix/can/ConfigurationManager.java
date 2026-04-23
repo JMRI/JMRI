@@ -50,14 +50,14 @@ abstract public class ConfigurationManager {
      * Provide the current set of "Option1" values
      * @return Copy of System Options Array
      */
-    static public String[] getSystemOptions() {
+    public static String[] getSystemOptions() {
         return Arrays.copyOf(options, options.length);
     }
 
     /**
      * Set the list of protocols to start with OpenLCB.
      */
-    static public void setOpenLCB() {
+    public static void setOpenLCB() {
         log.debug("setOpenLCB");
         options = new String[]{OPENLCB, MERGCBUS, RAWCAN, TEST};
     }
@@ -65,7 +65,7 @@ abstract public class ConfigurationManager {
     /**
      * Set the list of protocols to start with MERG.
      */
-    static public void setMERG() {
+    public static void setMERG() {
         log.debug("setMERG");
         options = new String[]{MERGCBUS, OPENLCB, RAWCAN, TEST};
     }
@@ -73,7 +73,7 @@ abstract public class ConfigurationManager {
     /**
      * Set the list of protocols to start with SPROG.
      */
-    static public void setSPROG() {
+    public static void setSPROG() {
         log.debug("setSPROG");
         options = new String[]{SPROGCBUS};
     }

@@ -179,7 +179,7 @@ public class DefaultModuleManager extends AbstractManager<Module>
     static volatile DefaultModuleManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
-    static public DefaultModuleManager instance() {
+    public static DefaultModuleManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }

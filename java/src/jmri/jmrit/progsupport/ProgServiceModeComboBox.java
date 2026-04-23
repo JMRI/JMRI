@@ -99,6 +99,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
 
         // general GUI config
         setLayout(new BoxLayout(this, direction));
+        this.setOpaque(false);
 
         // create the programmer display combo box
         progBox = new JComboBox<>();

@@ -1780,7 +1780,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             // look correct and text doesn't overflow into the image.
             textSpaceWithIcon = (int) (w.getCharactersPerLine() - (d.width / w.getCharWidth()) - indentWidth - 1);
             // Update blanks to be the number of lines the image takes up.
-            blanks = (d.height - w.getLineAscent()) / w.getLineHeight();
+            blanks = (int) ((d.height - w.getLineAscent()) / w.getLineHeight());
         }
         printEntryDetails(w);
     }

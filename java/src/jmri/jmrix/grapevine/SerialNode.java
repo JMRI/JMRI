@@ -43,12 +43,12 @@ public class SerialNode extends AbstractNode {
     public static final int NODE2002V1 = 1;
     public static final int NODE2000 = 2;
 
-    static private final String[] boardNames = new String[]{
+    private static final String[] boardNames = new String[]{
             Bundle.getMessage("BoardName1"),
             Bundle.getMessage("BoardName2"),
             Bundle.getMessage("BoardName3")};
 
-    static public String[] getBoardNames() {
+    public static String[] getBoardNames() {
         return boardNames.clone();
     }
 

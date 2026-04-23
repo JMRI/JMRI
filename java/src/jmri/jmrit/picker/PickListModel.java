@@ -65,7 +65,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
     static HashMap<String, Integer> _listMap = new HashMap<String, Integer>();
 
-    static public int getNumInstances(@Nonnull String type) {
+    public static int getNumInstances(@Nonnull String type) {
         Integer num = _listMap.get(type.toLowerCase());
         log.debug("getNumInstances of {} num={}", type, num);
         if (num != null) {

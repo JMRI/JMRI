@@ -142,7 +142,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
         JScrollPane listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(250, 80));
         listScroller.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black)));
-        usage.addItem(new BeanEditItem(listScroller, Bundle.getMessage("ColumnLocation"), null));
+        usage.addItem(new BeanEditItem(listScroller, Bundle.getMessage("UsageLocation"), null));
 
         bei.add(usage);
         return usage;

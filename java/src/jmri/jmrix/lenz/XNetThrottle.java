@@ -43,8 +43,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected int address;
 
     // Get the number of valid functions from the software version number.
-    // Declared static private so it can be called as an argument to super(..)
-    static private int numberOfFuns(XNetTrafficController controller) {
+    // Declared private static so it can be called as an argument to super(..)
+    private static int numberOfFuns(XNetTrafficController controller) {
         int version = (int) controller.getCommandStation().getCommandStationSoftwareVersionBCD();
         if (version < 0x40) return 29;  // 0 - 28
         return 69;                      // 0 - 68

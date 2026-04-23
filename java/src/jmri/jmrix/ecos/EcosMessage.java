@@ -30,12 +30,12 @@ public class EcosMessage extends jmri.jmrix.AbstractMRMessage {
         super(m);
     }
 
-    static public EcosMessage getProgMode() {
+    public static EcosMessage getProgMode() {
         EcosMessage m = new EcosMessage();
         return m;
     }
 
-    static public EcosMessage getExitProgMode() {
+    public static EcosMessage getExitProgMode() {
         EcosMessage m = new EcosMessage();
         return m;
     }

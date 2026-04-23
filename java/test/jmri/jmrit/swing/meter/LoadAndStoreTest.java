@@ -2,6 +2,7 @@ package jmri.jmrit.swing.meter;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.*;
@@ -12,6 +13,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmrix.roco.z21.RocoZ21CommandStation;
 import jmri.jmrix.roco.z21.Z21InterfaceScaffold;
 import jmri.jmrix.roco.z21.Z21PredefinedMeters;
@@ -44,7 +46,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
-    public void loadAndStoreTest(File file, boolean pass) throws Exception {
+    public void loadAndStoreTest(File file, boolean pass) throws IOException, JmriException, ParseException {
         this.loadLoadStoreFileCheck(file);
     }
 

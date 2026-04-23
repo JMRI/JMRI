@@ -64,14 +64,14 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
 
     // static methods to return a formatted message
     // used within AcelaTrafficController to initialize Acela system
-    static public AcelaMessage getAcelaVersionMsg() {
+    public static AcelaMessage getAcelaVersionMsg() {
         AcelaMessage m = new AcelaMessage(1);
         m.setBinary(true);
         m.setElement(0, 0x19);
         return m;
     }
 
-    static public AcelaMessage getAcelaResetMsg() {
+    public static AcelaMessage getAcelaResetMsg() {
         // create an Acela message and add initialization bytes
         AcelaMessage m = new AcelaMessage(1);
         m.setBinary(true);
@@ -79,7 +79,7 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public AcelaMessage getAcelaOnlineMsg() {
+    public static AcelaMessage getAcelaOnlineMsg() {
         // create an Acela message and add initialization bytes
         AcelaMessage m = new AcelaMessage(1);
         m.setBinary(true);
@@ -87,7 +87,7 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public AcelaMessage getAcelaPollNodesMsg() {
+    public static AcelaMessage getAcelaPollNodesMsg() {
         // create an Acela message and add initialization bytes
         AcelaMessage m = new AcelaMessage(1);
         m.setBinary(true);
@@ -95,7 +95,7 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public AcelaMessage getAcelaPollSensorsMsg() {
+    public static AcelaMessage getAcelaPollSensorsMsg() {
         // create an Acela message and add initialization bytes
         AcelaMessage m = new AcelaMessage(1);
         m.setBinary(true);
@@ -103,7 +103,7 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public AcelaMessage getAcelaConfigSensorMsg() {
+    public static AcelaMessage getAcelaConfigSensorMsg() {
         // create an Acela message and add initialization bytes
         AcelaMessage m = new AcelaMessage(4);
         m.setBinary(true);

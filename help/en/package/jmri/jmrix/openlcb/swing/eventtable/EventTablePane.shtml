@@ -156,6 +156,15 @@
                 in the 1st column and the desired name in the second column.
                 A header row, if present, is ignored. Extra columns are ignored.
         </ul>
+    
+    The table's information is automatically stored within an "eventnames/eventNames.xml" file
+    within your profile directory. Should you want to merge the event names from two or more
+    profiles, you can copy the "names" element and its contents from one file into the
+    end of another file.  I.e. you can have more than one "names" element in the file,
+    and they will be combined the next time the file is written out.  Duplicate names
+    for an event (i.e. same name appearing twice for the same event) in the file are not a problem,
+    they are automatically handled.
+    
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>

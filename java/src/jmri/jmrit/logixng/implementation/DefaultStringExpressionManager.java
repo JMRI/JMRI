@@ -155,7 +155,7 @@ public class DefaultStringExpressionManager extends AbstractBaseManager<MaleStri
     static volatile DefaultStringExpressionManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
-    static public DefaultStringExpressionManager instance() {
+    public static DefaultStringExpressionManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }

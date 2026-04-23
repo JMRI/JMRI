@@ -15,7 +15,7 @@
   <version author="ronald@wirkuhns.de" version="1" lastUpdated="2016/12/14"/>
   <decoder>
     <family name="Zimo Function Decoders" mfg="Zimo">
-      <model model="MX685 version 32+" lowVersionID="32" highVersionID="32" maxInputVolts="10-35V" maxTotalCurrent="1.0A" productID="226" formFactor="N" numOuts="8" numFns="14">
+      <model model="MX685 version 32+" lowVersionID="32" highVersionID="40" maxInputVolts="10-35V" maxTotalCurrent="1.0A" productID="226" formFactor="N" numOuts="8" numFns="14">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
         </output>

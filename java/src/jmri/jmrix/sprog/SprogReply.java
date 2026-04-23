@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 public class SprogReply extends AbstractMRReply {
 
     // Longest boot reply is 256bytes each preceded by DLE + 2xSTX + ETX
-    static public final int maxSize = 515;
+    public static final int maxSize = 515;
     private boolean _isBoot = false;
     protected int _id = -1;
 

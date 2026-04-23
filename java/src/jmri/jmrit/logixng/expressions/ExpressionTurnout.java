@@ -272,7 +272,7 @@ public class ExpressionTurnout extends AbstractDigitalExpression
             this._text = text;
         }
 
-        static public TurnoutState get(int id) {
+        public static TurnoutState get(int id) {
             switch (id) {
                 case Turnout.CLOSED:
                     return Closed;

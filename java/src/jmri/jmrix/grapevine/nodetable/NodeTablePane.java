@@ -227,12 +227,12 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
      * </ol>
      */
     public class NodesModel extends AbstractTableModel {
-        static private final int ADDRCOL = 0;
-        static private final int STATUSCOL = 1;
-        static private final int EDITCOL = 2;
-        static private final int INITCOL = 3;
+        private static final int ADDRCOL = 0;
+        private static final int STATUSCOL = 1;
+        private static final int EDITCOL = 2;
+        private static final int INITCOL = 3;
 
-        static private final int LAST = 3;
+        private static final int LAST = 3;
 
         @Override
         public int getColumnCount() {

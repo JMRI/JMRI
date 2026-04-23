@@ -29,7 +29,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
     int cv;
     jmri.ProgListener progListener = null;
 
-    static protected final int DCC4PC_PROGRAMMER_TIMEOUT = 2000;
+    protected static final int DCC4PC_PROGRAMMER_TIMEOUT = 2000;
 
     AddressedProgrammerManager defaultManager;
     Programmer defaultProgrammer;

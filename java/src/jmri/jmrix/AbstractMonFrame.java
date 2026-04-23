@@ -374,7 +374,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
 
     StringBuffer linesBuffer = new StringBuffer();
-    static private int MAX_LINES = 500;
+    private static int MAX_LINES = 500;
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMonFrame.class);
 

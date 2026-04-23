@@ -42,24 +42,13 @@ public class TrainPrintManifest extends TrainCommon {
      */
     public static void printReport(File file, String name, boolean isPreview, String fontName, String logoURL,
             String printerName, String orientation, int fontSize, boolean isPrintHeader, Sides sides) {
-        // obtain a CompatibleHardcopyWriter to do this
-
-        boolean isLandScape = false;
+        
         double margin = .5;
-        Dimension pagesize = null; // HardcopyWritter provides default page
-                                   // sizes for portrait and landscape
-        if (orientation.equals(Setup.LANDSCAPE)) {
-            margin = .65;
-            isLandScape = true;
-        }
-        if (orientation.equals(Setup.HANDHELD) || orientation.equals(Setup.HALFPAGE)) {
-            isPrintHeader = false;
-            // add margins to page size
-            pagesize = new Dimension(getPageSize(orientation).width + PAPER_MARGINS.width,
-                    getPageSize(orientation).height + PAPER_MARGINS.height);
-        }
+        // get hand held or half page dimensions in DPI
+        Dimension pageSize = getFullPageSizeDPI(orientation);
+        
         try (CompatibleHardcopyWriter writer = new CompatibleHardcopyWriter(new Frame(), name, fontSize, margin,
-                margin, .5, .5, isPreview, printerName, isLandScape, isPrintHeader, sides, pagesize);
+                margin, margin, margin, isPreview, printerName, orientation.equals(Setup.LANDSCAPE), isPrintHeader, sides, pageSize);
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         new FileInputStream(file), StandardCharsets.UTF_8));) {
 
@@ -76,8 +65,6 @@ public class TrainPrintManifest extends TrainCommon {
                     writer.write(icon.getImage(), new JLabel(icon));
                 }
             }
-            
-            log.debug("Number of characters per line {}, fontName: {}, fontSize {}", writer.getCharactersPerLine(), fontName, fontSize);
 
             List<String> lines = new ArrayList<>();
             String line;
@@ -105,7 +92,8 @@ public class TrainPrintManifest extends TrainCommon {
         }
     }
 
-    private static void print(CompatibleHardcopyWriter writer, List<String> lines, boolean lastBlock) throws IOException {
+    private static void print(CompatibleHardcopyWriter writer, List<String> lines, boolean lastBlock)
+            throws IOException {
         int lineSize = getNumberOfLines(lines);
         if (Setup.isPrintNoPageBreaksEnabled() &&
                 writer.getCurrentLineNumber() != 0 &&
@@ -165,14 +153,6 @@ public class TrainPrintManifest extends TrainCommon {
 
             printVerticalLineSeparator(writer, line);
             line = line.replace(VERTICAL_LINE_CHAR, SPACE);
-            
-            //TODO fix how line length is calculated when writing out to file
-            if (writer.isMonospaced()) {
-                Integer charPerLine = writer.getCharactersPerLine();
-                if (charPerLine != null && line.length() > charPerLine) {
-                    line = line.substring(0, charPerLine);
-                }
-            }
 
             if (color != null) {
                 writer.write(color, line + NEW_LINE);
@@ -217,13 +197,10 @@ public class TrainPrintManifest extends TrainCommon {
                     break;
                 }
             }
-            Integer charPerLine = writer.getCharactersPerLine();
-            if (charPerLine == null) {
-                charPerLine = line.length();
-            }
             if (horizontialLineSeparatorFound) {
+                int endCol = writer.getCharactersPerLine() + 1;
                 writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber(),
-                        charPerLine);
+                        endCol);
             }
         }
         return horizontialLineSeparatorFound;
@@ -234,9 +211,10 @@ public class TrainPrintManifest extends TrainCommon {
             if (line.charAt(i) == VERTICAL_LINE_CHAR) {
                 // make a frame (two column format)
                 if (Setup.isTabEnabled()) {
+                    int endCol = writer.getCharactersPerLine() + 1;
                     writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber() + 1, 0);
-                    writer.write(writer.getCurrentLineNumber(), writer.getCharactersPerLine(),
-                            writer.getCurrentLineNumber() + 1, writer.getCharactersPerLine());
+                    writer.write(writer.getCurrentLineNumber(), endCol,
+                            writer.getCurrentLineNumber() + 1, endCol);
                 }
                 writer.write(writer.getCurrentLineNumber(), i + 1, writer.getCurrentLineNumber() + 1,
                         i + 1);

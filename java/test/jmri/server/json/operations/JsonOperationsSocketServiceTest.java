@@ -1,14 +1,18 @@
 package jmri.server.json.operations;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.NullNode;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.beans.PropertyChangeEvent;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
+
+import org.junit.jupiter.api.*;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.NullNode;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -20,15 +24,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.server.json.*;
 import jmri.util.*;
-
-import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonOperationsSocketServiceTest {
 
@@ -563,7 +558,7 @@ public class JsonOperationsSocketServiceTest {
         JUnitUtil.tearDown();
     }
 
-    static protected class InvalidJsonOperationsSocketService extends JsonOperationsSocketService {
+    protected static class InvalidJsonOperationsSocketService extends JsonOperationsSocketService {
 
         protected final HashMap<String, BeanListener<Train>> invalidBeanListeners = new HashMap<>();
         protected final InvalidBeansListener invalidBeansListener = new InvalidBeansListener();

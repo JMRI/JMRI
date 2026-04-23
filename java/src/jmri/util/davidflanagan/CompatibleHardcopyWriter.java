@@ -26,17 +26,20 @@ public class CompatibleHardcopyWriter extends HardcopyWriter {
     }
 
     /**
-     * Get the current line number -- this is nasty since it makes the implicit assumption
-     * that the line height is constant over the whole page. Further, things like images
-     * can throw this off.
+     * Get the current line number -- this is nasty since it makes the implicit
+     * assumption that the line height is constant over the whole page. Further,
+     * things like images can throw this off.
      * <p>
-     * We may want to adjust the current v_pos to align it with an integer line number (when
-     * this is called).
+     * We may want to adjust the current v_pos to align it with an integer line
+     * number (when this is called).
      * 
      * @return the current line number
      */
     public int getCurrentLineNumber() {
-        return getCurrentVPos() / getLineHeight();
+        if (page != null) {
+            return (int) (getCurrentVPos() / getLineHeight());
+        }
+        return 0; // new page
     }
 
     /**
@@ -46,7 +49,7 @@ public class CompatibleHardcopyWriter extends HardcopyWriter {
      * @return the number of lines per page
      */
     public int getLinesPerPage() {
-        return getPrintablePagesizePoints().height / getLineHeight();
+        return (int) (getPrintablePagesizePoints().height / getLineHeight());
     }
 
     /**
@@ -60,10 +63,10 @@ public class CompatibleHardcopyWriter extends HardcopyWriter {
      * @param endColumn The ending column number
      */
     public void write(int startLine, int startColumn, int endLine, int endColumn) {
-        int startVPos = startLine * getLineHeight();
-        int endVPos = endLine * getLineHeight();
-        int startHPos = (int) (startColumn * getCharWidth());
-        int endHPos = (int) (endColumn * getCharWidth());
+        float startVPos = startLine * getLineHeight();
+        float endVPos = endLine * getLineHeight();
+        float startHPos = startColumn * getCharWidth();
+        float endHPos = endColumn * getCharWidth();
 
         super.writeLine(startVPos, startHPos, endVPos, endHPos);
     }

@@ -156,7 +156,7 @@
         <name xml:lang="it">Stampa Table Sommario</name>
         <name xml:lang="de">Drucke Übersichtstabelle</name>
         <name xml:lang="ca">Imprimeix la Table Resum</name>
-        <name xml:lang="cs">Tisknout Table Souhrn</name>
+        <name xml:lang="cs">Tisknout zobrazenou tabulku evidence</name>
         <name xml:lang="nl">Druk Table Samenvatting</name>
         <current>printcurrenttable</current>
     </node>
@@ -173,7 +173,7 @@
             <name xml:lang="it">Singola Voce</name>
             <name xml:lang="de">Selektierte Eingabe</name>
 			<name xml:lang="ca">Entrada seleccionada</name>
-            <name xml:lang="cs">Vybrat záznam</name>
+            <name xml:lang="cs">Vybraný záznam</name>
             <name xml:lang="nl">Geselecteerde Loc</name>
             <current>printloco</current>
         </node>
@@ -211,7 +211,7 @@
             <name xml:lang="it">Singola Voce</name>
             <name xml:lang="de">Selektierte Eingabe</name>
 			<name xml:lang="ca">Entrada seleccionada</name>
-            <name xml:lang="cs">Vybrat záznam</name>
+            <name xml:lang="cs">Vybraný záznam</name>
             <name xml:lang="nl">Geselecteerde Loc</name>
             <current>printpreviewloco</current>
         </node>
@@ -295,7 +295,7 @@
           <name xml:lang="de">Neuer Eintrag...</name>
           <name xml:lang="fr">Nouvelle Entrée ...</name>
           <name xml:lang="ca">Nova entrada...</name>
-          <name xml:lang="cs">Nová seznam...</name>
+          <name xml:lang="cs">Nový záznam...</name>
           <name xml:lang="nl">Nieuwe Vermelding...</name>
           <adapter>apps.gui3.dp3.PaneProgDp3Action</adapter>
       </node>
@@ -305,7 +305,7 @@
         <name xml:lang="da">Dupliker Post</name>
         <name xml:lang="de">Dupliziere Eintrag</name>
         <name xml:lang="ca">Duplica entrada</name>
-        <name xml:lang="cs">Duplikovat seznam</name>
+        <name xml:lang="cs">Duplikovat záznam</name>
         <name xml:lang="nl">Dupliceer Vermelding</name>
         <current>copyloco</current>
     </node>
@@ -315,7 +315,7 @@
         <name xml:lang="da">Slet Post</name>
         <name xml:lang="de">Lösche Eintrag</name>
         <name xml:lang="ca">Suprimeix entrada</name>
-        <name xml:lang="cs">Vymazat seznam</name>
+        <name xml:lang="cs">Vymazat záznam</name>
         <name xml:lang="nl">Wis Vermelding</name>
         <current>deleteloco</current>
     </node>
@@ -357,7 +357,7 @@
         <name xml:lang="it">Reset Dimensioni Finestra</name>
         <name xml:lang="de">Setze Fensterabmessungen zurück</name>
 		<name xml:lang="ca">Reinicia les mides de les finestres</name>
-        <name xml:lang="cs">Reset rozměry okna</name>
+        <name xml:lang="cs">Obnovit rozměry okna</name>
         <name xml:lang="nl">Stel vensterafmetingen opnieuw in</name>
     </node>
     <node name="Reset Column Widths">
@@ -366,7 +366,7 @@
         <name xml:lang="da">Nulstil Kolonne Brede</name>
         <name xml:lang="de">Setze Spaltenbreite zurück</name>
 		<name xml:lang="ca">Reinicia l'amplada de les columnes</name>
-        <name xml:lang="cs">Resetovat šířku sloupců</name>
+        <name xml:lang="cs">Obnovit šířku sloupců</name>
         <name xml:lang="nl">Stel kolombreedtes opnieuw in</name>
         <mnemonic>w</mnemonic>
         <current>resettablecolumns</current>
@@ -483,6 +483,7 @@
     <node>separator</node><!-- separator -->
     <node name="Add Roster Entry to Group...">
 	    <name xml:lang="de">Eintrag einer Lokparkgruppe hinzufügen</name>
+        <name xml:lang="cs">Přidat záznam evidence do skupiny...</name>
         <mnemonic>a</mnemonic>
         <adapter>jmri.jmrit.roster.swing.RosterEntryToGroupAction</adapter>
         <current>addgroup</current>
@@ -492,7 +493,7 @@
         <name xml:lang="it">Tabella Associazioni Gruppo Roster</name>
         <name xml:lang="de">Lokparkgruppenübersicht</name>
 		<name xml:lang="ca">Taula d'associació de Grups de Flota</name>
-        <name xml:lang="cs">Tabulka spojení skupiny evidence</name>
+        <name xml:lang="cs">Tabulka přiřazení skupin v evidenci</name>
         <name xml:lang="nl">Locgroeplijst-koppelingen</name>
         <mnemonic>t</mnemonic>
         <adapter>jmri.jmrit.roster.swing.rostergroup.RosterGroupTableAction</adapter>
@@ -603,7 +604,7 @@
         <name xml:lang="ca">Control de diversos descodificadors</name>
         <name xml:lang="da">Multi-Dekoder Kontrol</name>
         <name xml:lang="de">Multi-Decoder Steuerung</name>
-        <name xml:lang="cs">Vícenásobné řízení dekodérů</name>
+        <name xml:lang="cs">Řízení vícenásobných dekodérů</name>
         <name xml:lang="nl">Multi-Decoder aansturing</name>
         <adapter>jmri.jmrit.dualdecoder.DualDecoderToolAction</adapter>
     </node>
@@ -613,6 +614,7 @@
         <name xml:lang="it">Lancia Server Palmare Wifi</name>
         <name xml:lang="de">Starte WiThrottle Server</name>
 		<name xml:lang="ca">Inicia Servidor Reguldors Wi-Fi</name>
+        <name xml:lang="cs">Start WiThrottle Server</name>
         <adapter>jmri.jmrit.withrottle.WiThrottleCreationAction</adapter>
     </node>
     <node name="Start Web Server">
@@ -620,6 +622,7 @@
         <name xml:lang="it">Lancia Server Web</name>
         <name xml:lang="de">Starte Web Server</name>
 		<name xml:lang="ca">Inicia Servidor Web</name>
+        <name xml:lang="cs">Start Web Server</name>
         <adapter>jmri.web.server.WebServerAction</adapter>
     </node>
     <node>separator</node><!-- separator -->

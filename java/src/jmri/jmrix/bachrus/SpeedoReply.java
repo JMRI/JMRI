@@ -134,7 +134,7 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
         return rep.indexOf(s);
     }
 
-    static public final int maxSize = 32;
+    public static final int maxSize = 32;
 
     @Override
     public int maxSize() {

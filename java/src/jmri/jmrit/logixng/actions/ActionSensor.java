@@ -149,7 +149,7 @@ public class ActionSensor extends AbstractDigitalAction
             this._text = text;
         }
 
-        static public SensorState get(int id) {
+        public static SensorState get(int id) {
             switch (id) {
                 case Sensor.UNKNOWN:
                     return Unknown;

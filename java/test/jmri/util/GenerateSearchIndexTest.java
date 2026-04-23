@@ -33,7 +33,7 @@ public class GenerateSearchIndexTest {
 
 
     // The main() method is used when this class is run directly from ant
-    static public void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
         new GenerateSearchIndexTest().generateSearchIndex();
     }
 

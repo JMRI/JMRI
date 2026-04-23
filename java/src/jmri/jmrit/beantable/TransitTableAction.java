@@ -73,8 +73,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     protected void createModel() {
         m = new BeanTableDataModel<Transit>() {
 
-            static public final int EDITCOL = NUMCOLUMN;
-            static public final int DUPLICATECOL = EDITCOL + 1;
+            public static final int EDITCOL = NUMCOLUMN;
+            public static final int DUPLICATECOL = EDITCOL + 1;
 
             @Override
             public String getValue(String name) {

@@ -48,6 +48,12 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(showEmptyTabs.isSelected());
         });
 
+        advancedPanel.add(dontDetachPanes = new JCheckBox(this.apb.getString("ProgDontDetachTabs")));
+        dontDetachPanes.setSelected(PaneProgFrame.getDontDetachPanes());
+        dontDetachPanes.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setDontDetachPanes(dontDetachPanes.isSelected());
+        });
+
         advancedPanel.add(showCvNums = new JCheckBox(this.apb.getString("ProgShowCVInTips")));
         showCvNums.setSelected(PaneProgFrame.getShowCvNumbers());
         showCvNums.addItemListener((ItemEvent e) -> {
@@ -96,6 +102,7 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
 
     JPanel advancedPanel;
     JCheckBox showEmptyTabs;
+    JCheckBox dontDetachPanes;
     JCheckBox showCvNums;
     JCheckBox canCacheDefault;
     JCheckBox doConfirmRead;
@@ -104,6 +111,10 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
 
     public boolean getShowEmptyTabs() {
         return showEmptyTabs.isSelected();
+    }
+
+    public boolean getDontDetachPanes() {
+        return dontDetachPanes.isSelected();
     }
 
     public boolean getShowCvNums() {
@@ -162,6 +173,7 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
     public boolean isDirty() {
         String programmer = this.getSelectedItem();
         return (this.getShowEmptyTabs() != PaneProgFrame.getShowEmptyPanes()
+                || this.getDontDetachPanes() != PaneProgFrame.getDontDetachPanes()
                 || this.getShowCvNums() != PaneProgFrame.getShowCvNumbers()
                 || this.getCanCacheDefault() != PaneProgFrame.getCanCacheDefault()
                 || this.getDoConfirmRead() != PaneProgFrame.getDoConfirmRead()

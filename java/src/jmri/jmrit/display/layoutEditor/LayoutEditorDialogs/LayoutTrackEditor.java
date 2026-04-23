@@ -33,7 +33,7 @@ abstract public class LayoutTrackEditor {
     // in type-specific *View classes
     // TODO: should be made not necessary
     @Nonnull
-    static public LayoutTrackEditor makeTrackEditor(@Nonnull LayoutTrack layoutTrack, @Nonnull LayoutEditor layoutEditor) {
+    public static LayoutTrackEditor makeTrackEditor(@Nonnull LayoutTrack layoutTrack, @Nonnull LayoutEditor layoutEditor) {
 
         if (layoutTrack instanceof LayoutTurnout) {
 

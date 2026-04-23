@@ -22,8 +22,8 @@ public class SensorTurnoutOperation extends CommonTurnoutOperation {
     /*
      * Default values and constraints.
      */
-    static public final int defaultInterval = 300;
-    static public final int defaultMaxTries = 3;
+    public static final int defaultInterval = 300;
+    public static final int defaultMaxTries = 3;
 
     public SensorTurnoutOperation(String n, int i, int mt) {
         super(n, i, mt);

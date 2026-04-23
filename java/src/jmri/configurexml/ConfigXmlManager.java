@@ -92,7 +92,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * @return name of the ConfigureXml class in newer package or of superseding
      *         class
      */
-    static public String currentClassName(String name) {
+    public static String currentClassName(String name) {
         return InstanceManager.getDefault(ClassMigrationManager.class).getClassName(name);
     }
 
@@ -468,7 +468,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * @param o The object to get an XML representation of
      * @return An XML element representing o
      */
-    static public Element elementFromObject(Object o) {
+    public static Element elementFromObject(Object o) {
         return ConfigXmlManager.elementFromObject(o, true);
     }
 
@@ -479,7 +479,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      *               be per-node
      * @return An XML element representing object
      */
-    static public Element elementFromObject(Object object, boolean shared) {
+    public static Element elementFromObject(Object object, boolean shared) {
         String aName = adapterName(object);
         log.debug("store using {}", aName);
         XmlAdapter adapter = null;
@@ -813,7 +813,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * @param exception   Any exception being handled in the processing, may be
      *                    null
      */
-    static public void creationErrorEncountered(
+    public static void creationErrorEncountered(
             XmlAdapter adapter,
             String operation,
             String description,
@@ -851,7 +851,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * @param exception   Any exception being handled in the processing, may be
      *                    null
      */
-    static public void storingErrorEncountered(
+    public static void storingErrorEncountered(
             XmlAdapter adapter,
             String operation,
             String description,
@@ -874,7 +874,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     private static ErrorHandler handler = new ErrorHandler();
 
-    static public void setErrorHandler(ErrorHandler handler) {
+    public static void setErrorHandler(ErrorHandler handler) {
         ConfigXmlManager.handler = handler;
     }
 

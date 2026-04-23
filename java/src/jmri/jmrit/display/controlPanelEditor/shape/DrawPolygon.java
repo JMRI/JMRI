@@ -191,7 +191,7 @@ public class DrawPolygon extends DrawFrame {
         }
     }
 
-    static private boolean near(Point p1, Point p2) {
+    private static boolean near(Point p1, Point p2) {
         return Math.abs(p1.x - p2.x) < NEAR && Math.abs(p1.y - p2.y) < NEAR;
     }
 

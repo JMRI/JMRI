@@ -274,19 +274,23 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                         }
                     }
                     if (list.get(0) instanceof AddressedMessage) {
-                        ptr = olcbInterface.getNodeStore().findNode(((AddressedMessage)list.get(0)).getDestNodeID());
-                        if (ptr != null && ptr.getSimpleNodeIdent() != null) {
-                            String name = "";
-                            var ident = ptr.getSimpleNodeIdent();
-                            if (ident != null) {
-                                name = ident.getUserName();
-                                if (name.isEmpty()) {
-                                    name = ident.getMfgName()+" - "+ident.getModelName();
+                        if (((AddressedMessage)list.get(0)).getDestNodeID() != null) {
+                            // avoid special case where there's no valid destination node ID defined, 
+                            // so can't find node in the node store
+                            ptr = olcbInterface.getNodeStore().findNode(((AddressedMessage)list.get(0)).getDestNodeID());
+                            if (ptr != null && ptr.getSimpleNodeIdent() != null) {
+                                String name = "";
+                                var ident = ptr.getSimpleNodeIdent();
+                                if (ident != null) {
+                                    name = ident.getUserName();
+                                    if (name.isEmpty()) {
+                                        name = ident.getMfgName()+" - "+ident.getModelName();
+                                    }
                                 }
-                            }
-                            if (!name.isBlank()) {
-                                sb.append("    Dest: ");
-                                sb.append(name);
+                                if (!name.isBlank()) {
+                                    sb.append("    Dest: ");
+                                    sb.append(name);
+                                }
                             }
                         }
                     }

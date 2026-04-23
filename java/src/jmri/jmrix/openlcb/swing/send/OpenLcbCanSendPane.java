@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -25,6 +24,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusAddress;
 import jmri.jmrix.openlcb.swing.ClientActions;
+import jmri.jmrix.openlcb.swing.NamedEventIdTextField;
 import jmri.util.StringUtil;
 import jmri.util.javaworld.GridLayout2;
 import jmri.util.swing.WrapLayout;
@@ -32,7 +32,6 @@ import jmri.util.swing.WrapLayout;
 import org.openlcb.*;
 import org.openlcb.can.AliasMap;
 import org.openlcb.implementations.MemoryConfigurationService;
-import org.openlcb.swing.EventIdTextField;
 import org.openlcb.swing.NodeSelector;
 import org.openlcb.swing.MemorySpaceSelector;
 
@@ -64,7 +63,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     final JTextField srcAliasField = new JTextField(4);
     NodeSelector nodeSelector;
-    final JFormattedTextField sendEventField = new EventIdTextField();// NOI18N
+    NamedEventIdTextField sendEventField;
     final JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");  // NOI18N
     final JTextField configNumberField = new JTextField("40");                        // NOI18N
     final JTextField configAddressField = new JTextField("000000");                   // NOI18N
@@ -99,6 +98,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         srcNodeID = memo.get(org.openlcb.NodeID.class);
         aliasMap = memo.get(org.openlcb.can.AliasMap.class);
 
+        sendEventField = new NamedEventIdTextField(memo);
+        
         // register request for notification
         Connection.ConnectionListener cl = new Connection.ConnectionListener() {
             @Override
@@ -418,8 +419,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     EventID eventID() {
-        return new EventID(jmri.util.StringUtil.bytesFromHexString(sendEventField.getText()
-                .replace(".", " ")));
+        return sendEventField.getEventID();
     }
 
     public void sendVerifyNodeGlobal(java.awt.event.ActionEvent e) {

@@ -354,7 +354,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
      * @param m the message to respond to
      * @return an appropriate reply by type and values
      */
-    static public LocoNetMessage generateReply(LocoNetMessage m) {
+    public static LocoNetMessage generateReply(LocoNetMessage m) {
         LocoNetMessage reply = null;
         log.debug("generateReply for {}", m.toMonitorString());
 

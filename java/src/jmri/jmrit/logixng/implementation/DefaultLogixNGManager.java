@@ -425,7 +425,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     static volatile DefaultLogixNGManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
-    static public DefaultLogixNGManager instance() {
+    public static DefaultLogixNGManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }

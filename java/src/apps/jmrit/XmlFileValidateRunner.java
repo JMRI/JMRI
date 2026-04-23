@@ -28,7 +28,7 @@ public class XmlFileValidateRunner extends jmri.jmrit.XmlFileValidateAction {
     }
 
     // Main entry point fires the action
-    static public void main(String[] args) {
+    public static void main(String[] args) {
         // if a 1st argument provided, act
         if (args.length == 0) {
             new XmlFileValidateRunner("", (Component) null).actionPerformed(null);

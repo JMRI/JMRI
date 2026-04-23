@@ -1,14 +1,14 @@
 package jmri.web.servlet.operations;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitUtil;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -38,7 +38,7 @@ public class HtmlManifestTest {
         JUnitUtil.setUp();
         JUnitUtil.initIdTagManager();
         jmri.util.JUnitOperationsUtil.setupOperationsTests();
-        jmri.util.JUnitOperationsUtil.initOperationsData();     
+        jmri.util.JUnitOperationsUtil.initOperationsData();
     }
 
     @AfterEach

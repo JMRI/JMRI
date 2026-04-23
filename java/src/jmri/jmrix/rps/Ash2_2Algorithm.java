@@ -244,15 +244,15 @@ public class Ash2_2Algorithm extends AbstractCalculator {
     static int offset = 0; //  Offset (usec), add to delay
 
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
-    static public int TMAX = 35000; //  Max. allowable delay (usec)
+    public static int TMAX = 35000; //  Max. allowable delay (usec)
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
-    static public int TMIN = 150;   //  Min. allowable delay (usec)
+    public static int TMIN = 150;   //  Min. allowable delay (usec)
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
-    static public int SMAX = 30;    //  Max. OK std. dev. (usec)
+    public static int SMAX = 30;    //  Max. OK std. dev. (usec)
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
-    static public int NMAX = 50;    //  Max. no. of receivers used
+    public static int NMAX = 50;    //  Max. no. of receivers used
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // for script access
-    static public int NERR = 6;     //  No. of rcvrs w/error reject
+    public static int NERR = 6;     //  No. of rcvrs w/error reject
 
     //  Compute RPS Position  using
     RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   many

@@ -75,6 +75,9 @@ public class CatalogTreeModel extends DefaultTreeModel implements InstanceManage
                 return;
             }
 
+            // put in alpha order by filename
+            java.util.Arrays.sort(sp);
+            
             for (String item : sp) {
                 log.trace("Descend into resource: {}", item);
                 insertResourceNodes(item, pPath + "/" + item, newElement);
@@ -112,10 +115,15 @@ public class CatalogTreeModel extends DefaultTreeModel implements InstanceManage
             // work on the kids
             String[] sp = fp.list();
             if (sp!=null) {
+
+                // put in alpha order by filename
+                java.util.Arrays.sort(sp);
+
                 for (String sp1 : sp) {
                     log.debug("Descend into file: {}",sp1);
                     insertFileNodes(sp1, path + "/" + sp1, newElement);
                 }
+
             }
         }
     }

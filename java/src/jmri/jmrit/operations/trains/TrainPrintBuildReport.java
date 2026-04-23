@@ -27,7 +27,7 @@ public class TrainPrintBuildReport extends TrainCommon {
      * @param isPreview true if preview
      */
     public static void printReport(File file, String name, boolean isPreview) {
-        // obtain a OriginalHardcopyWriter to do this
+        // obtain a HardcopyWriter to do this
 
         String printerName = "";
         int fontSize = Setup.getBuildReportFontSize();

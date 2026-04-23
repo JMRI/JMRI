@@ -18,7 +18,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.EditableResizableImagePanel;
 import jmri.util.swing.MultiLineCellRenderer;
@@ -57,6 +57,8 @@ public class RosterMediaPane extends JPanel {
     JLabel _URLlabel = new JLabel();
     JTextField _URL = new JTextField(30);
     RosterAttributesTableModel rosterAttributesModel;
+
+    private static final PermissionManager permissionManager = InstanceManager.getDefault(PermissionManager.class);
 
     /**
      * This constructor allows the panel to be used in visual bean editors, but
@@ -290,6 +292,7 @@ public class RosterMediaPane extends JPanel {
 
         @Override
         public void resizeRowToText(int modelRow, int heightInLines) {
+            if (heightInLines < 1 ) heightInLines = 1;
             int height = heightInLines * (InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize() + 4); // same line height as in RosterTable
             if (height != associatedTable.getRowHeight(modelRow)) {
                 associatedTable.setRowHeight(modelRow, height);
@@ -338,7 +341,25 @@ public class RosterMediaPane extends JPanel {
 
         @Override
         public boolean isCellEditable(int row, int col) {
-            return true;
+            // permission to edit optional columns?
+            switch (col) {
+                case 0:
+                    return permissionManager.hasAtLeastPermission(
+                            PermissionsProgrammer.PERMISSION_ROSTER_ADD_EDIT_REMOVE_ADDITIONAL_COLUMNS,
+                            BooleanPermission.BooleanValue.TRUE);
+                case 1:
+                    if (row >= attributes.size()) { // doesn't already exist?
+                        return permissionManager.hasAtLeastPermission(
+                                PermissionsProgrammer.PERMISSION_ROSTER_ADD_EDIT_REMOVE_ADDITIONAL_COLUMNS,
+                                BooleanPermission.BooleanValue.TRUE);
+                    }
+                    return permissionManager.hasAtLeastPermission(
+                            PermissionsProgrammer.PERMISSION_ROSTER_ADDED_COLUMNS,
+                            BooleanPermission.BooleanValue.TRUE);
+                default:
+                    log.error("Unknown column: {}", col, new IllegalArgumentException("Unknown column"));
+                    return false;
+            }
         }
 
         public boolean wasModified() {

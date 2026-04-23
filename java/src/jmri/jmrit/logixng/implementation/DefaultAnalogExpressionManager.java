@@ -159,7 +159,7 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
     static volatile DefaultAnalogExpressionManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
-    static public DefaultAnalogExpressionManager instance() {
+    public static DefaultAnalogExpressionManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }

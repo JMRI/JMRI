@@ -77,7 +77,7 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
      * @param op operation for which configurator is required
      * @return the configurator
      */
-    static public TurnoutOperationXml getAdapter(TurnoutOperation op) {
+    public static TurnoutOperationXml getAdapter(TurnoutOperation op) {
         TurnoutOperationXml adapter = null;
         String[] fullOpNameComponents = op.getClass().getName().split("\\.");
         log.debug("getAdapter found class name {}", op.getClass().getName());

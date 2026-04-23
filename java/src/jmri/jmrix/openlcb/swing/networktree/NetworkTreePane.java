@@ -235,7 +235,7 @@ public class NetworkTreePane extends JmriPanel implements CanListener, CanPanelI
     }
 
     // Create the panel-name of this node depending on what's available
-    static public String augmentedNodeName(MimicNodeStore.NodeMemo nodememo) {
+    public static String augmentedNodeName(MimicNodeStore.NodeMemo nodememo) {
         var node = nodememo.getNodeID();
         var ident = nodememo.getSimpleNodeIdent();
 

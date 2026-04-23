@@ -315,7 +315,7 @@ public class CbusMessage {
      * @param header CAN ID
      * @return CanMessage ready to send
      */
-    static public CanMessage getReadCV(int cv, ProgrammingMode mode, int header) {
+    public static CanMessage getReadCV(int cv, ProgrammingMode mode, int header) {
         CanMessage m = new CanMessage(5, header);
         m.setElement(0, CbusConstants.CBUS_QCVS);
         m.setElement(1, CbusConstants.SERVICE_HANDLE);
@@ -347,7 +347,7 @@ public class CbusMessage {
      * @param header CAN ID
      * @return CanMessage ready to send
      */
-    static public CanMessage getVerifyCV(int cv, ProgrammingMode mode, int startVal, int header) {
+    public static CanMessage getVerifyCV(int cv, ProgrammingMode mode, int startVal, int header) {
         CanMessage m = new CanMessage(6, header);
         m.setElement(0, CbusConstants.CBUS_VCVS);
         m.setElement(1, CbusConstants.SERVICE_HANDLE);
@@ -375,7 +375,7 @@ public class CbusMessage {
      * @param header CAN ID
      * @return ready to send CanMessage
      */
-    static public CanMessage getWriteCV(int cv, int val, ProgrammingMode mode, int header) {
+    public static CanMessage getWriteCV(int cv, int val, ProgrammingMode mode, int header) {
         CanMessage m = new CanMessage(6, header);
         m.setElement(0, CbusConstants.CBUS_WCVS);
         m.setElement(1, CbusConstants.SERVICE_HANDLE);
@@ -404,7 +404,7 @@ public class CbusMessage {
      * @param cv Which CV, 0-65534
      * @return ready to send CanMessage
      */
-    static public CanMessage getOpsModeWriteCV(int mAddress, boolean mLongAddr, int cv, int val, int header) {
+    public static CanMessage getOpsModeWriteCV(int mAddress, boolean mLongAddr, int cv, int val, int header) {
         CanMessage m = new CanMessage(7, header);
         int address = mAddress;
         m.setElement(0, CbusConstants.CBUS_WCVOA);
@@ -427,7 +427,7 @@ public class CbusMessage {
      * @param header for connection CAN ID
      * @return the CanMessage to send to request track power on
      */
-    static public CanMessage getRequestTrackOn(int header) {
+    public static CanMessage getRequestTrackOn(int header) {
         CanMessage m = new CanMessage(1, header);
         m.setElement(0, CbusConstants.CBUS_RTON);
         setPri(m, 0xb);
@@ -440,7 +440,7 @@ public class CbusMessage {
      * @param header for connection CAN ID
      * @return the CanMessage to send to request track power off
      */
-    static public CanMessage getRequestTrackOff(int header) {
+    public static CanMessage getRequestTrackOff(int header) {
         CanMessage m = new CanMessage(1, header);
         m.setElement(0, CbusConstants.CBUS_RTOF);
         setPri(m, 0xb);
@@ -456,7 +456,7 @@ public class CbusMessage {
      * @param header CAN ID
      * @return ready to send CanMessage
      */
-    static public CanMessage getBootEntry(int nn, int header) {
+    public static CanMessage getBootEntry(int nn, int header) {
         CanMessage m = new CanMessage(3, header);
         m.setElement(0, CbusConstants.CBUS_BOOTM);
         m.setElement(1, (nn / 256) & 0xFF);
@@ -474,7 +474,7 @@ public class CbusMessage {
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
-    static public CanMessage getBootNop(int a, int header) {
+    public static CanMessage getBootNop(int a, int header) {
         CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
@@ -500,7 +500,7 @@ public class CbusMessage {
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
-    static public CanMessage getBootReset(int header) {
+    public static CanMessage getBootReset(int header) {
         CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
@@ -528,7 +528,7 @@ public class CbusMessage {
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
-    static public CanMessage getBootInitialise(int a, int header) {
+    public static CanMessage getBootInitialise(int a, int header) {
         CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
@@ -558,7 +558,7 @@ public class CbusMessage {
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
-    static public CanMessage getBootCheck(int c, int header) {
+    public static CanMessage getBootCheck(int c, int header) {
         CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
@@ -584,7 +584,7 @@ public class CbusMessage {
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
-    static public CanMessage getBootTest(int header) {
+    public static CanMessage getBootTest(int header) {
         CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
@@ -610,7 +610,7 @@ public class CbusMessage {
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
-    static public CanMessage getBootDevId(int header) {
+    public static CanMessage getBootDevId(int header) {
         CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
@@ -636,7 +636,7 @@ public class CbusMessage {
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
-    static public CanMessage getBootId(int header) {
+    public static CanMessage getBootId(int header) {
         CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
@@ -663,7 +663,7 @@ public class CbusMessage {
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
-    static public CanMessage getBootEnables(int enables, int header) {
+    public static CanMessage getBootEnables(int enables, int header) {
         CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
@@ -690,7 +690,7 @@ public class CbusMessage {
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
-    static public CanMessage getBootWriteData(int[] d, int header) {
+    public static CanMessage getBootWriteData(int[] d, int header) {
         CanMessage m = new CanMessage(d.length, header);
         m.setExtended(true);
         m.setHeader(0x5);
@@ -707,7 +707,7 @@ public class CbusMessage {
      * @param header CAN ID - overridden by call to setHeader
      * @return ready to send CanMessage
      */
-    static public CanMessage getBootWriteData(byte[] d, int header) {
+    public static CanMessage getBootWriteData(byte[] d, int header) {
         CanMessage m = new CanMessage(d.length, header);
         m.setExtended(true);
         m.setHeader(0x5);

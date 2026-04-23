@@ -32,12 +32,12 @@
             <revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
         </revision>
     </revhistory>
-    <variable item="Energy buffer" CV="251" default="132" readOnly="yes">
+    <variable item="Energy Buffer" CV="251" default="132" readOnly="yes">
         <decVal max="255"/>
-        <label>Energy buffer (CV 251)</label>
+        <label>Energy Buffer (CV 251)</label>
         <label xml:lang="de">Energiespeicher (CV 251)</label>
-        <tooltip>Bit 0 - 3 Support time in 0.5s increments, Bit7 = On</tooltip>
-        <tooltip xml:lang="de">Bit 0 - 3 Stützzeit in 0,5s Schritten, Bit7 = Ein</tooltip>
+        <tooltip>Bit 0 - 3 Support time, Bit7 = On</tooltip>
+        <tooltip xml:lang="de">Bit 0 - 3 Stützzeit, Bit7 = Ein</tooltip>
     </variable>
     <variable item="True speed factor" CV="252" default="50">
         <decVal max="255"/>
@@ -55,8 +55,8 @@
     </variable>
     <variable item="Energy Buffer Time" CV="251" default="4" mask="XXXXVVVV">
         <decVal max="15"/>
-        <label>Support time in 0.5 steps</label>
-        <label xml:lang="de">Energiespeicherzeit in 0,5s</label>
+        <label>Energy Buffer support time in 0.5 steps</label>
+        <label xml:lang="de">Energiespeicherzeit in 0,5 s</label>
         <tooltip>max 7.5 sek (0 - 15)</tooltip>
         <tooltip xml:lang="de">Stützzeit in 0,5 sek Schritten (0 - 15)</tooltip>
     </variable>

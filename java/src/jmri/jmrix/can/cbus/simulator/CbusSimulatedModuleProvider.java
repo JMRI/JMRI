@@ -114,7 +114,7 @@ public abstract class CbusSimulatedModuleProvider implements JmriServiceProvider
      * @return the module provider, null if not known
      */
     @CheckForNull
-    final static public CbusSimulatedModuleProvider getProviderByName(String name) {
+    final public static CbusSimulatedModuleProvider getProviderByName(String name) {
         loadInstances();
         return instanceMap.get(name);
     }
@@ -125,7 +125,7 @@ public abstract class CbusSimulatedModuleProvider implements JmriServiceProvider
      * @return unmodifiable collection.
      */
     @Nonnull
-    final static public Collection<CbusSimulatedModuleProvider> getInstancesCollection() {
+    final public static Collection<CbusSimulatedModuleProvider> getInstancesCollection() {
         loadInstances();
         return Collections.unmodifiableCollection(instanceMap.values());
     }
@@ -134,7 +134,7 @@ public abstract class CbusSimulatedModuleProvider implements JmriServiceProvider
      * Load all the available instances. Note this only runs
      * once; there's no reloading once the program is running.
      */
-    static private void loadInstances() {
+    private static void loadInstances() {
         if (instanceMap != null) return;
 
         instanceMap = new TreeMap<>();  // sorted map, in string order on key

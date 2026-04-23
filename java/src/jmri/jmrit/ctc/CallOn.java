@@ -192,7 +192,7 @@ NOTE:
         return returnValue;
     }
 
-    static private int arrayFind(String[] array, String aString) {
+    private static int arrayFind(String[] array, String aString) {
         for (int index = 0; index < array.length; index++) {
             if (aString.equals(array[index])) return index;
         }

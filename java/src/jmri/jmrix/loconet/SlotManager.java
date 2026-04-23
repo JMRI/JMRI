@@ -50,7 +50,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Time to wait after programming operation complete on LocoNet
      * before reporting completion and hence starting next operation
      */
-    static public int postProgDelay = 50; // this is public to allow changes via script
+    public static int postProgDelay = 50; // this is public to allow changes via script
 
     public int slotScanInterval = 50; // this is public to allow changes via script and tests
 

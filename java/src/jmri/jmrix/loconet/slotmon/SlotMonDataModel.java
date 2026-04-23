@@ -24,48 +24,48 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener {
 
-    static public final int SLOTCOLUMN = 0;
-    static public final int ESTOPCOLUMN = 1;
-    static public final int ADDRCOLUMN = 2;
-    static public final int SPDCOLUMN = 3;
-    static public final int TYPECOLUMN = 4;
-    static public final int STATCOLUMN = 5;  // status: free, common, etc
-    static public final int DISPCOLUMN = 6;  // originally "dispatch" button, now "free"
-    static public final int CONSCOLUMN = 7;  // consist state
-    static public final int CONSISTADDRESS = 8; //consist address
-    static public final int THROTCOLUMN = 9;
-    static public final int DIRCOLUMN = 10;
-    static public final int F0COLUMN = 11;
-    static public final int F1COLUMN = 12;
-    static public final int F2COLUMN = 13;
-    static public final int F3COLUMN = 14;
-    static public final int F4COLUMN = 15;
-    static public final int F5COLUMN = 16;
-    static public final int F6COLUMN = 17;
-    static public final int F7COLUMN = 18;
-    static public final int F8COLUMN = 19;
-    static public final int F9COLUMN = 20;
-    static public final int F10COLUMN = 21;
-    static public final int F11COLUMN = 22;
-    static public final int F12COLUMN = 23;
-    static public final int F13COLUMN = 24;
-    static public final int F14COLUMN = 25;
-    static public final int F15COLUMN = 26;
-    static public final int F16COLUMN = 27;
-    static public final int F17COLUMN = 28;
-    static public final int F18COLUMN = 29;
-    static public final int F19COLUMN = 30;
-    static public final int F20COLUMN = 31;
-    static public final int F21COLUMN = 32;
-    static public final int F22COLUMN = 33;
-    static public final int F23COLUMN = 34;
-    static public final int F24COLUMN = 35;
-    static public final int F25COLUMN = 36;
-    static public final int F26COLUMN = 37;
-    static public final int F27COLUMN = 38;
-    static public final int F28COLUMN = 39;
+    public static final int SLOTCOLUMN = 0;
+    public static final int ESTOPCOLUMN = 1;
+    public static final int ADDRCOLUMN = 2;
+    public static final int SPDCOLUMN = 3;
+    public static final int TYPECOLUMN = 4;
+    public static final int STATCOLUMN = 5;  // status: free, common, etc
+    public static final int DISPCOLUMN = 6;  // originally "dispatch" button, now "free"
+    public static final int CONSCOLUMN = 7;  // consist state
+    public static final int CONSISTADDRESS = 8; //consist address
+    public static final int THROTCOLUMN = 9;
+    public static final int DIRCOLUMN = 10;
+    public static final int F0COLUMN = 11;
+    public static final int F1COLUMN = 12;
+    public static final int F2COLUMN = 13;
+    public static final int F3COLUMN = 14;
+    public static final int F4COLUMN = 15;
+    public static final int F5COLUMN = 16;
+    public static final int F6COLUMN = 17;
+    public static final int F7COLUMN = 18;
+    public static final int F8COLUMN = 19;
+    public static final int F9COLUMN = 20;
+    public static final int F10COLUMN = 21;
+    public static final int F11COLUMN = 22;
+    public static final int F12COLUMN = 23;
+    public static final int F13COLUMN = 24;
+    public static final int F14COLUMN = 25;
+    public static final int F15COLUMN = 26;
+    public static final int F16COLUMN = 27;
+    public static final int F17COLUMN = 28;
+    public static final int F18COLUMN = 29;
+    public static final int F19COLUMN = 30;
+    public static final int F20COLUMN = 31;
+    public static final int F21COLUMN = 32;
+    public static final int F22COLUMN = 33;
+    public static final int F23COLUMN = 34;
+    public static final int F24COLUMN = 35;
+    public static final int F25COLUMN = 36;
+    public static final int F26COLUMN = 37;
+    public static final int F27COLUMN = 38;
+    public static final int F28COLUMN = 39;
 
-    //static public final int NUMCOLUMN = 40; Number of columns comes from the pane.
+    //public static final int NUMCOLUMN = 40; Number of columns comes from the pane.
 
     private int numRows = 128;
     private int columns;
@@ -875,7 +875,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         javax.swing.SwingUtilities.invokeLater(new Notify(slotNum, this));
     }
 
-    static private class Notify implements Runnable {
+    private static class Notify implements Runnable {
 
         private final int _row;
         javax.swing.table.AbstractTableModel _model;

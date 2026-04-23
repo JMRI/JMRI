@@ -847,6 +847,16 @@ final public class LayoutEditorAuxTools {
                     );
                 }
                 curConnection = null;
+            } else if (HitPointType.isTraverserSlotHitType(typeCurConnection)) {
+                if (log.isInfoEnabled()) {
+                    log.warn("Layout Block: {}, found track type: {}, to " // NOI18N
+                                    + "Block: {}, is potentially assigned to traverser slot", // NOI18N
+                            layoutBlock.getDisplayName(),
+                            typeCurConnection,
+                            p.getBlock().getDisplayName()
+                    );
+                }
+                curConnection = null;
             } else {
                 // catch when some new type got added
                 log.error("Layout Block: {} found unknown track type: {}" // NOI18N

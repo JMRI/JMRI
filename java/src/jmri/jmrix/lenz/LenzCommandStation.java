@@ -165,7 +165,7 @@ public class LenzCommandStation implements jmri.CommandStation {
      * @param AL the low order byte of the address
      * @return the address as an integer.
      */
-    static public int calcLocoAddress(int AH, int AL) {
+    public static int calcLocoAddress(int AH, int AL) {
         if (AH == 0x00) {
             /* if AH is 0, this is a short address */
             return (AL);

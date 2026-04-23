@@ -657,6 +657,17 @@
       <variable item="Decoder ID 1 Text" CV="250" default="14" readOnly="yes" include="14">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
+      <variable item="Decoder ID 1" CV="250" default="15" readOnly="yes" include="15">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="15" readOnly="yes" include="15">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+
+
 
       <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>

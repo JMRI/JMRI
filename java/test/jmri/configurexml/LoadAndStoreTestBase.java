@@ -1,22 +1,26 @@
 package jmri.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.GraphicsEnvironment;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.text.ParseException;
 import java.util.stream.Stream;
 
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.provider.Arguments;
@@ -111,13 +115,13 @@ public class LoadAndStoreTestBase {
         return SchemaTestBase.getDirectories(new File(directory, "load"), recurse, pass);
     }
 
-    public static void checkFile(File inFile1, File inFile2) throws Exception {
+    public static void checkFile(File inFile1, File inFile2) throws IOException, ParseException {
 
         try ( // compare files, except for certain special lines
             BufferedReader fileStream1 = new BufferedReader( new InputStreamReader(new FileInputStream(inFile1)));
             BufferedReader fileStream2 = new BufferedReader( new InputStreamReader(new FileInputStream(inFile2)));
         ) {
-            
+
             String line1 = fileStream1.readLine();
             String line2 = fileStream2.readLine();
             int lineNumber1 = 0, lineNumber2 = 0;
@@ -125,24 +129,24 @@ public class LoadAndStoreTestBase {
             while ((next1 = fileStream1.readLine()) != null && (next2 = fileStream2.readLine()) != null) {
                 lineNumber1++;
                 lineNumber2++;
-                
+
                 // Do we have a multi line comment? Comments in the xml file is used by LogixNG.
                 // This only happens in the first file since store() will not store comments
                 if  (next1.startsWith("<!--")) {
                     while ((next1 = fileStream1.readLine()) != null && !next1.endsWith("-->")) {
                         lineNumber1++;
                     }
-                    
+
                     // If here, we either have a line that ends with --> or we have reached end of file
                     String nullCheck = fileStream1.readLine();
                     if (nullCheck == null) {
                         break;
                     }
-                    
+
                     // If here, we have a line that ends with --> or we have reached end of file
                     continue;
                 }
-                
+
                 // where the (empty) entryexitpairs line ends up seems to be non-deterministic
                 // so if we see it in either file we just skip it
                 String entryexitpairs = "<entryexitpairs class=\"jmri.jmrit.signalling.configurexml.EntryExitPairsXml\" />";
@@ -160,18 +164,17 @@ public class LoadAndStoreTestBase {
                     }
                     lineNumber2++;
                 }
-                
+
                 // if we get to the file history...
                 String filehistory = "filehistory";
                 if (line1.contains(filehistory) && line2.contains(filehistory)) {
                     break;  // we're done!
                 }
-                
+
                 boolean match = false;  // assume failure (pessimist!)
-                
+
                 String[] startsWithStrings = {
                     "  <!--Written by JMRI version",
-                    "  <timebase",      // time changes from timezone to timezone
                     "    <test>",       // version changes over time
                     "    <modifier",    // version changes over time
                     "    <major",       // version changes over time
@@ -187,7 +190,51 @@ public class LoadAndStoreTestBase {
                         break;
                     }
                 }
-                
+
+                // Check the <timebase> tag. When the time is stored in the xml file, it's
+                // stored in the current timezone, which differs from user to user.
+                // This check accept two times in different timezones, as long as the
+                // actual time is the same. For example, "Sun May 17 08:12:43 PDT 2020"
+                // is the same time as "Sun May 17 17:12:43 CEST 2020" but in different
+                // timezones.
+                if (line1.startsWith("  <timebase") && line2.startsWith("  <timebase")) {
+                    SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+                    int beginning = "  <timebase ".length();
+                    // Remove the beginning and the last four characters   "/ >
+                    String t1s = line1.substring(beginning, line1.length()-4);
+                    String t2s = line2.substring(beginning, line2.length()-4);
+                    // Split the attributes. There might be spaces in the values so
+                    // split using one double quote and a space.
+                    String[] t1sa = t1s.split("\" ");
+                    String[] t2sa = t2s.split("\" ");
+                    if (t1sa.length == t2sa.length) {
+                        boolean success = true;
+                        for (int i=0; i < t1sa.length; i++) {
+                            if (t1sa[i].startsWith("time=")) {
+                                // Check time independent of timezone
+                                String d1s = t1sa[i].substring("time=\"".length());
+                                String d2s = t2sa[i].substring("time=\"".length());
+                                Date d1 = format.parse(d1s);
+                                Date d2 = format.parse(d2s);
+                                if (!d1.equals(d2)) {
+                                    success = false;
+                                }
+                            } else if (t1sa[i].startsWith("class=") && t2sa[i].startsWith("class=")) {
+                                // Accept different classes. jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml and jmri.time.implementation.configurexml.DefaultTimebaseXml
+                            } else if (t1sa[i].equals(t2sa[i])) {
+                                // Other attributes in <timebase>
+                            } else {
+                                // Attributes are not equal
+                                success = false;
+                            }
+                        }
+
+                        if (success) {
+                            match = true;
+                        }
+                    }
+                }
+
                 // Screen size will vary when written out
                 if (!match) {
                     if (line1.contains("  <LayoutEditor")) {
@@ -201,7 +248,7 @@ public class LoadAndStoreTestBase {
                         line2 = filterLineUsingRegEx(line2, windowwidth_regexe);
                     }
                 }
-                
+
                 // window positions will sometimes differ based on window decorations.
                 if (!match) {
                     if (line1.contains("  <LayoutEditor") ||
@@ -216,7 +263,7 @@ public class LoadAndStoreTestBase {
                         line2 = filterLineUsingRegEx(line2, xposition_regexe);
                     }
                 }
-                
+
                 // Time will vary when written out
                 if (!match) {
                     String memory_value = "<memory value";
@@ -227,13 +274,13 @@ public class LoadAndStoreTestBase {
                         }
                     }
                 }
-                
+
                 // Dates can vary when written out
                 String date_string = "<date>";
                 if (!match && line1.contains(date_string) && line2.contains(date_string)) {
                     match = true;
                 }
-                
+
                 if (!match) {
                     // remove fontname and fontFamily attributes
                     String fontname_regexe = "( fontname=\"[^\"]*\")";
@@ -243,14 +290,13 @@ public class LoadAndStoreTestBase {
                     line1 = filterLineUsingRegEx(line1, fontFamily_regexe);
                     line2 = filterLineUsingRegEx(line2, fontFamily_regexe);
                 }
-                
+
                 if (!match && !line1.equals(line2)) {
-                    log.error("match failed in LoadAndStoreTest:");
-                    log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
-                    log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
-                    log.error("  comparing file1:\"{}\"", inFile1.getPath());
-                    log.error("         to file2:\"{}\"", inFile2.getPath());
-                    Assert.assertEquals(line1, line2);
+                    assertEquals(line1, line2, "match failed in LoadAndStoreTest:" +
+                        System.lineSeparator() + "    file1:line " + lineNumber1 + ": \"" + line1+ "\"" +
+                        System.lineSeparator() + "    file2:line " + lineNumber2 + ": \"" + line2+ "\"" +
+                        System.lineSeparator() + "  comparing file1: " + inFile1.getPath() + " line " + lineNumber1 +
+                        System.lineSeparator() + "            file2: " + inFile2.getPath() + " line " + lineNumber2);
                 }
                 line1 = next1;
                 line2 = next2;
@@ -267,18 +313,18 @@ public class LoadAndStoreTestBase {
     }
 
     // load file
-    public static void loadFile(File inFile) throws Exception {
+    public static void loadFile(File inFile) throws JmriException {
         ConfigureManager cm = InstanceManager.getDefault(ConfigureManager.class);
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         boolean good = cm.load(inFile);
-        Assert.assertTrue("loadFile(\"" + inFile.getPath() + "\")", good);
+        assertTrue(good, "loadFile(\"" + inFile.getPath() + "\")");
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
     }
 
     // store file
-    public static File storeFile(File inFile, SaveType inSaveType) throws Exception {
+    public static File storeFile(File inFile, SaveType inSaveType) {
         String name = inFile.getName();
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
@@ -286,7 +332,7 @@ public class LoadAndStoreTestBase {
         ConfigureManager cm = InstanceManager.getDefault(ConfigureManager.class);
         switch (inSaveType) {
             case Config: {
-                cm.storeConfig(outFile);
+                assertTrue(cm.storeConfig(outFile));
                 break;
             }
             case Prefs: {
@@ -294,7 +340,7 @@ public class LoadAndStoreTestBase {
                 break;
             }
             case User: {
-                cm.storeUser(outFile);
+                assertTrue(cm.storeUser(outFile));
                 break;
             }
             case UserPrefs: {
@@ -302,7 +348,7 @@ public class LoadAndStoreTestBase {
                 break;
             }
             default: {
-                Assert.fail("Unknown save type "+inSaveType);
+                Assertions.fail("Unknown save type "+inSaveType);
                 break;
             }
         }
@@ -310,9 +356,9 @@ public class LoadAndStoreTestBase {
         return outFile;
     }
 
-    public void loadLoadStoreFileCheck(File file) throws Exception {
+    public void loadLoadStoreFileCheck(File file) throws IOException, JmriException, ParseException {
         if (guiOnly) {
-            Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+            Assumptions.assumeFalse(GraphicsEnvironment.isHeadless(), "GUI Only test");
         }
 
         log.debug("Start check file {}", file.getCanonicalPath());
@@ -390,8 +436,8 @@ public class LoadAndStoreTestBase {
             clock.setTime(
                 new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse("2021-12-02 00:00:00.0")
             );
-        } catch (Exception e) {
-            log.warn("Unexpected Exception in test setup", e);
+        } catch (ParseException e) {
+            log.warn("Unexpected Exception in test clock setup", e);
         }
 
     }
@@ -405,6 +451,6 @@ public class LoadAndStoreTestBase {
         System.setProperty("jmri.test.no-dialogs", "false");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadAndStoreTestBase.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadAndStoreTestBase.class);
 
 }

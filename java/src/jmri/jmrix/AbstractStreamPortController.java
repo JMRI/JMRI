@@ -70,6 +70,6 @@ public abstract class AbstractStreamPortController extends AbstractPortControlle
         output = null;
     }
 
-    // static private final Logger log = LoggerFactory.getLogger(AbstractStreamPortController.class);
+    // private static final Logger log = LoggerFactory.getLogger(AbstractStreamPortController.class);
 
 }

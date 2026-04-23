@@ -101,7 +101,7 @@ public class SourceTest {
     }
 
     @BeforeAll
-    static public void setUp() throws JmriException {
+    public static void setUp() throws JmriException {
         JUnitUtil.setUp();
 
         JUnitUtil.resetProfileManager();
@@ -115,7 +115,7 @@ public class SourceTest {
     }
 
     @AfterAll
-    static public void tearDown() {
+    public static void tearDown() {
         JUnitUtil.clearRouteThreads();
         JUnitUtil.clearTurnoutThreads();
         JUnitUtil.removeMatchingThreads("Routing stabilising timer");

@@ -211,6 +211,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private List<PositionableLabel> backgroundImage = new ArrayList<>();    // background images
     private List<PositionableLabel> labelImage = new ArrayList<>();         // positionable label images
     private List<SensorIcon> sensorImage = new ArrayList<>();               // sensor images
+    private List<TurnoutIcon> turnoutImage = new ArrayList<>();             // turnout _images_
     private List<SignalHeadIcon> signalHeadImage = new ArrayList<>();       // signal head images
 
     // PositionableLabel's
@@ -220,6 +221,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private List<MemoryInputIcon> memoryInputList = new ArrayList<>();          // Memory Input List
     private List<GlobalVariableIcon> globalVariableLabelList = new ArrayList<>(); // LogixNG Global Variable Label List
     private List<SensorIcon> sensorList = new ArrayList<>();                    // Sensor Icons
+    private List<TurnoutIcon> turnoutList = new ArrayList<>();                  // Turnout _Icons_
     private List<SignalHeadIcon> signalList = new ArrayList<>();                // Signal Head Icons
     private List<SignalMastIcon> signalMastList = new ArrayList<>();            // Signal Mast Icons
 
@@ -228,6 +230,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Nonnull
     public List<SensorIcon> getSensorList() {
         return sensorList;
+    }
+
+    @Nonnull
+    public List<TurnoutIcon> getTurnoutList() {
+        return turnoutList;
     }
 
     @Nonnull
@@ -281,6 +288,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private int numLayoutSlips = 0;
     private int numLayoutTurnouts = 0;
     private int numLayoutTurntables = 0;
+    private int numLayoutTraversers = 0;
 
     private LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
 
@@ -1255,6 +1263,20 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
             addTurntable(pt);
             // note: panel resized in addTurntable
+            setDirty();
+            redrawPanel();
+        });
+
+        // add traverser
+        JMenuItem traverserItem = new JMenuItem(Bundle.getMessage("AddTraverser"));
+        optionsAddMenu.add(traverserItem);
+        traverserItem.addActionListener((ActionEvent event) -> {
+            Point2D pt = windowCenter();
+            if (selectionActive) {
+                pt = MathUtil.midPoint(getSelectionRect());
+            }
+            addTraverser(pt);
+            // note: panel resized in addTraverser
             setDirty();
             redrawPanel();
         });
@@ -2287,6 +2309,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         List<List<? extends Component>> listOfListsOfComponents = new ArrayList<>();
         listOfListsOfComponents.add(backgroundImage);
         listOfListsOfComponents.add(sensorImage);
+        listOfListsOfComponents.add(turnoutImage);
         listOfListsOfComponents.add(signalHeadImage);
         listOfListsOfComponents.add(markerImage);
         listOfListsOfComponents.add(labelImage);
@@ -2299,6 +2322,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         listOfListsOfComponents.add(blockContentsLabelList);
         listOfListsOfComponents.add(blockContentsInputList);
         listOfListsOfComponents.add(sensorList);
+        listOfListsOfComponents.add(turnoutList);
         listOfListsOfComponents.add(signalMastList);
         // combine their bounds
         for (List<? extends Component> listOfComponents : listOfListsOfComponents) {
@@ -2687,7 +2711,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         positionables.addAll(memoryInputList);
         positionables.addAll(globalVariableLabelList);
         positionables.addAll(sensorImage);
+        positionables.addAll(turnoutImage);
         positionables.addAll(sensorList);
+        positionables.addAll(turnoutList);
         positionables.addAll(signalHeadImage);
         positionables.addAll(signalList);
         positionables.addAll(signalMastList);
@@ -2756,7 +2782,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         positionables.addAll(memoryInputList);
         positionables.addAll(globalVariableLabelList);
         positionables.addAll(sensorImage);
+        positionables.addAll(turnoutImage);
         positionables.addAll(sensorList);
+        positionables.addAll(turnoutList);
         positionables.addAll(signalHeadImage);
         positionables.addAll(signalList);
         positionables.addAll(signalMastList);
@@ -2787,6 +2815,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 for (LayoutTurntable.RayTrack rt : tt.getRayTrackList()) {
                     int rayIndex = rt.getConnectionIndex();
                     ttv.setRayCoordsIndexed(MathUtil.granulize(ttv.getRayCoordsIndexed(rayIndex), gContext.getGridSize()), rayIndex);
+                }
+            }
+            if (lt instanceof LayoutTraverser) {
+                LayoutTraverser tt = (LayoutTraverser) lt;
+                LayoutTraverserView ttv = getLayoutTraverserView(tt);
+                for (LayoutTraverser.SlotTrack st : tt.getSlotList()) {
+                    int slotIndex = st.getConnectionIndex();
+                    ttv.setSlotCoordsIndexed(MathUtil.granulize(ttv.getSlotCoordsIndexed(slotIndex), gContext.getGridSize()), slotIndex);
                 }
             }
         }
@@ -2913,8 +2949,79 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         lt.addRay(90.0);
         lt.addRay(180.0);
         lt.addRay(270.0);
+
+        if (leToolBarPanel != null) {
+            lt.setMainline(leToolBarPanel.mainlineTrack.isSelected());
+            // check on layout block
+            String newName = leToolBarPanel.blockIDComboBox.getSelectedItemDisplayName();
+            if (newName == null) {
+                newName = "";
+            }
+            LayoutBlock b = provideLayoutBlock(newName);
+
+            if (b != null) {
+                lt.setLayoutBlock(b);
+
+                // check on occupancy sensor
+                String sensorName = leToolBarPanel.blockSensorComboBox.getSelectedItemDisplayName();
+                if (sensorName == null) {
+                    sensorName = "";
+                }
+
+                if (!sensorName.isEmpty()) {
+                    if (!validateSensor(sensorName, b, this)) {
+                        b.setOccupancySensorName("");
+                    } else {
+                        leToolBarPanel.blockSensorComboBox.setSelectedItem(b.getOccupancySensor());
+                    }
+                }
+            }
+        }
         setDirty();
 
+    }     /**
+     * Add a layout traverser at location specified
+     *
+     * @param pt x,y placement for traverser
+     */
+    public void addTraverser(@Nonnull Point2D pt) {
+        // get unique name
+        String name = finder.uniqueName("TRV", ++numLayoutTraversers);
+        LayoutTraverser lt = new LayoutTraverser(name, this);
+        LayoutTraverserView ltv = new LayoutTraverserView(lt, pt, this);
+        addLayoutTrack(lt, ltv);
+        // Initialise with a couple of tracks
+        lt.addSlotPair();
+        lt.addSlotPair();
+
+        if (leToolBarPanel != null) {
+            lt.setMainline(leToolBarPanel.mainlineTrack.isSelected());
+            // check on layout block
+            String newName = leToolBarPanel.blockIDComboBox.getSelectedItemDisplayName();
+            if (newName == null) {
+                newName = "";
+            }
+            LayoutBlock b = provideLayoutBlock(newName);
+
+            if (b != null) {
+                lt.setLayoutBlock(b);
+
+                // check on occupancy sensor
+                String sensorName = leToolBarPanel.blockSensorComboBox.getSelectedItemDisplayName();
+                if (sensorName == null) {
+                    sensorName = "";
+                }
+
+                if (!sensorName.isEmpty()) {
+                    if (!validateSensor(sensorName, b, this)) {
+                        b.setOccupancySensorName("");
+                    } else {
+                        leToolBarPanel.blockSensorComboBox.setSelectedItem(b.getOccupancySensor());
+                    }
+                }
+            }
+        }
+        setDirty();
     }
 
     /**
@@ -3122,11 +3229,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         // The next group are potential LAYOUT_POS_LABEL objects.
                         selectedObject = checkSensorIconPopUps(dLoc);
                         if (selectedObject == null) {
-                            selectedObject = checkSignalHeadIconPopUps(dLoc);
+                            selectedObject = checkTurnoutIconPopUps(dLoc);
                             if (selectedObject == null) {
-                                selectedObject = checkLabelImagePopUps(dLoc);
+                                selectedObject = checkSignalHeadIconPopUps(dLoc);
                                 if (selectedObject == null) {
-                                    selectedObject = checkSignalMastIconPopUps(dLoc);
+                                    selectedObject = checkLabelImagePopUps(dLoc);
+                                    if (selectedObject == null) {
+                                        selectedObject = checkSignalMastIconPopUps(dLoc);
+                                    }
                                 }
                             }
                         }
@@ -3476,6 +3586,21 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         return result;
     }
 
+    private TurnoutIcon checkTurnoutIconPopUps(@Nonnull Point2D loc) {
+        assert loc != null;
+
+        TurnoutIcon result = null;
+        // check turnout images, if any
+        for (int i = turnoutImage.size() - 1; i >= 0; i--) {
+            TurnoutIcon s = turnoutImage.get(i);
+            Rectangle2D r = s.getBounds();
+            if (r.contains(loc)) {
+                result = s;
+            }
+        }
+        return result;
+    }
+
     private SignalHeadIcon checkSignalHeadIconPopUps(@Nonnull Point2D loc) {
         assert loc != null;
 
@@ -3686,9 +3811,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @return the coordinates for the connection type of the specified object
      */
     @Nonnull
-    public Point2D getCoords(@Nonnull LayoutTrack track, HitPointType connectionType) {
+    public Point2D getCoords(LayoutTrack track, HitPointType connectionType) {
+        if (track == null) {
+            log.warn("track is null, HitPointType={}", connectionType);
+        }
         LayoutTrack trk = Objects.requireNonNull(track);
-
         return getCoords(getLayoutTrackView(trk), connectionType);
     }
 
@@ -3781,6 +3908,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     startMultiSensor();
                 } else if (leToolBarPanel.sensorButton.isSelected()) {
                     addSensor();
+                } else if (leToolBarPanel.turnoutButton.isSelected()) {
+                    addTurnout();
                 } else if (leToolBarPanel.signalButton.isSelected()) {
                     addSignalHead();
                 } else if (leToolBarPanel.textLabelButton.isSelected()) {
@@ -3808,6 +3937,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 } else if (leToolBarPanel.signalMastButton.isSelected()) {
                     addSignalMast();
+                } else if (leToolBarPanel.turntableButton.isSelected()) {
+                    addTurntable(currentPoint);
+                } else if (leToolBarPanel.traverserButton.isSelected()) {
+                    addTraverser(currentPoint);
                 } else {
                     log.warn("No item selected in panel edit mode");
                 }
@@ -3838,6 +3971,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 // controlling turntable, in edit mode
                 LayoutTurntable t = (LayoutTurntable) selectedObject;
                 t.setPosition(selectedHitPointType.turntableTrackIndex());
+            } else if ((selectedObject != null) && (HitPointType.isTraverserSlotHitType(selectedHitPointType))
+                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && !event.isPopupTrigger()
+                    && !event.isShiftDown() && !event.isControlDown()) {
+                // controlling Traverser, in edit mode
+                LayoutTraverser t = (LayoutTraverser) selectedObject;
+                t.setPosition(selectedHitPointType.traverserTrackIndex());
             } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.TURNOUT_CENTER)
                     || (selectedHitPointType == HitPointType.SLIP_CENTER)
                     || (selectedHitPointType == HitPointType.SLIP_LEFT)
@@ -3902,6 +4041,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // controlling turntable out of edit mode
             LayoutTurntable t = (LayoutTurntable) selectedObject;
             t.setPosition(selectedHitPointType.turntableTrackIndex());
+        } else if ((selectedObject != null) && (HitPointType.isTraverserSlotHitType(selectedHitPointType))
+                && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
+                && !event.isShiftDown() && (!delayedPopupTrigger)) {
+            // controlling traverser out of edit mode
+            LayoutTraverser t = (LayoutTraverser) selectedObject;
+            t.setPosition(selectedHitPointType.traverserTrackIndex());
         } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.BLOCKCONTENTSICON))
                 && allControlling()  && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
@@ -4050,6 +4195,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     LayoutTurntableView ltview = getLayoutTurntableView((LayoutTurntable) foundTrack);
                     ltview.showRayPopUp(event, foundHitPointType.turntableTrackIndex());
                 }
+            }else if (HitPointType.isTraverserSlotHitType(foundHitPointType)) {
+                LayoutTraverser t = (LayoutTraverser) foundTrack;
+                if (t.isTurnoutControlled()) {
+                    LayoutTraverserView ltview = getLayoutTraverserView((LayoutTraverser) foundTrack);
+                    ltview.showSlotPopUp(event, foundHitPointType.traverserTrackIndex());
+                }
             } else if (HitPointType.isPopupHitType(foundHitPointType)) {
                 foundTrackView.showPopup(event);
             } else if (HitPointType.isTurnoutHitType(foundHitPointType)) {
@@ -4069,6 +4220,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 SensorIcon s = checkSensorIconPopUps(dLoc);
                 if (s != null) {
                     showPopUp(s, event);
+                    break;
+                }
+
+                TurnoutIcon t = checkTurnoutIconPopUps(dLoc);
+                if (t != null) {
+                    showPopUp(t, event);
                     break;
                 }
 
@@ -4289,7 +4446,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     case LEVEL_XING_CENTER:
                     case SLIP_LEFT:
                     case SLIP_RIGHT:
-                    case TURNTABLE_CENTER: {
+            case TURNTABLE_CENTER:
+            case TRAVERSER_CENTER: {
                         amendSelectionGroup(foundTrack);
                         break;
                     }
@@ -4303,33 +4461,38 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 if (s != null) {
                     amendSelectionGroup(s);
                 } else {
-                    PositionableLabel sh = checkSignalHeadIconPopUps(dLoc);
-                    if (sh != null) {
-                        amendSelectionGroup(sh);
+                    PositionableLabel t = checkTurnoutIconPopUps(dLoc);
+                    if (t != null) {
+                        amendSelectionGroup(t);
                     } else {
-                        PositionableLabel ms = checkMultiSensorPopUps(dLoc);
-                        if (ms != null) {
-                            amendSelectionGroup(ms);
+                        PositionableLabel sh = checkSignalHeadIconPopUps(dLoc);
+                        if (sh != null) {
+                            amendSelectionGroup(sh);
                         } else {
-                            PositionableLabel lb = checkLabelImagePopUps(dLoc);
-                            if (lb != null) {
-                                amendSelectionGroup(lb);
+                            PositionableLabel ms = checkMultiSensorPopUps(dLoc);
+                            if (ms != null) {
+                                amendSelectionGroup(ms);
                             } else {
-                                PositionableLabel b = checkBackgroundPopUps(dLoc);
-                                if (b != null) {
-                                    amendSelectionGroup(b);
+                                PositionableLabel lb = checkLabelImagePopUps(dLoc);
+                                if (lb != null) {
+                                    amendSelectionGroup(lb);
                                 } else {
-                                    PositionableLabel sm = checkSignalMastIconPopUps(dLoc);
-                                    if (sm != null) {
-                                        amendSelectionGroup(sm);
+                                    PositionableLabel b = checkBackgroundPopUps(dLoc);
+                                    if (b != null) {
+                                        amendSelectionGroup(b);
                                     } else {
-                                        LayoutShape ls = checkLayoutShapePopUps(dLoc);
-                                        if (ls != null) {
-                                            amendSelectionGroup(ls);
+                                        PositionableLabel sm = checkSignalMastIconPopUps(dLoc);
+                                        if (sm != null) {
+                                            amendSelectionGroup(sm);
                                         } else {
-                                            PositionableJPanel jp = checkJPanelPopUps(dLoc);
-                                            if (jp != null) {
-                                                amendSelectionGroup(jp);
+                                            LayoutShape ls = checkLayoutShapePopUps(dLoc);
+                                            if (ls != null) {
+                                                amendSelectionGroup(ls);
+                                            } else {
+                                                PositionableJPanel jp = checkJPanelPopUps(dLoc);
+                                                if (jp != null) {
+                                                    amendSelectionGroup(jp);
+                                                }
                                             }
                                         }
                                     }
@@ -4422,6 +4585,24 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                         if (tt.getRayConnectIndexed(ray) == null) {
                             tt.setRayConnect(t, ray);
+
+                            if (t.getConnect1() == p) {
+                                t.setNewConnect1(tt, foundHitPointType);
+                            } else {
+                                t.setNewConnect2(tt, foundHitPointType);
+                            }
+                            p.removeTrackConnection(t);
+
+                            if ((p.getConnect1() == null) && (p.getConnect2() == null)) {
+                                removePositionablePoint(p);
+                            }
+                        }
+                    } else if (HitPointType.isTraverserSlotHitType(foundHitPointType)) {
+                        LayoutTraverser tt = (LayoutTraverser) foundTrack;
+                        int slot = foundHitPointType.traverserTrackIndex();
+
+                        if (tt.getSlotConnectIndexed(slot) == null) {
+                            tt.setSlotConnect(t, slot);
 
                             if (t.getConnect1() == p) {
                                 t.setNewConnect1(tt, foundHitPointType);
@@ -4782,6 +4963,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 noWarnTurntable = true;
                 removeTurntable((LayoutTurntable) lt);
                 noWarnTurntable = oldWarning;
+            } else if (lt instanceof LayoutTraverser) {
+                boolean oldWarning = noWarnTraverser;
+                noWarnTraverser = true;
+                removeTraverser((LayoutTraverser) lt);
+                noWarnTraverser = oldWarning;
             } else if (lt instanceof LayoutTurnout) {  //<== this includes LayoutSlips
                 boolean oldWarning = noWarnLayoutTurnout;
                 noWarnLayoutTurnout = true;
@@ -5185,7 +5371,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         case LEVEL_XING_CENTER:
                         case SLIP_LEFT:
                         case SLIP_RIGHT:
-                        case TURNTABLE_CENTER: {
+                        case TURNTABLE_CENTER:
+                        case TRAVERSER_CENTER: {
                             getLayoutTrackView((LayoutTrack) selectedObject).setCoordsCenter(currentPoint);
                             isDragging = true;
                             break;
@@ -5301,6 +5488,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                 LayoutTurntableView turnView = getLayoutTurntableView(turn);
                                 turnView.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
                                         selectedHitPointType.turntableTrackIndex());
+                            } else if (HitPointType.isTraverserSlotHitType(selectedHitPointType)) {
+                                LayoutTraverser turn = (LayoutTraverser) selectedObject;
+                                LayoutTraverserView turnView = getLayoutTraverserView(turn);
+                                turnView.setSlotCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
+                                        selectedHitPointType.traverserTrackIndex());
                             }
                             break;
                         }
@@ -5846,6 +6038,25 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         }
 
+        if (result) {   // only need to test Traverser turnouts if we haven't failed yet...
+            // ensure that this traverser turnout is unique among turnouts in this Layout
+            for (LayoutTraverser tt : getLayoutTraversers()) {
+                for (LayoutTraverser.SlotTrack ray : tt.getSlotList()) {
+                    t = ray.getTurnout();
+                    if (t != null) {
+                        String sname = t.getSystemName();
+                        String uname = t.getUserName();
+                        log.debug("{}: Traverser turnout tested '{}' and '{}'.", ray.getTurnoutName(), sname, uname);
+                        if ((sname.equals(inTurnoutName))
+                                || ((uname != null) && (uname.equals(inTurnoutName)))) {
+                            result = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         if (!result && (inOpenPane != null)) {
             JmriJOptionPane.showMessageDialog(inOpenPane,
                     MessageFormat.format(Bundle.getMessage("Error4"), inTurnoutName),
@@ -5906,6 +6117,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     if (toObject instanceof TrackSegment) {
                         ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
                                 fromPointType.turntableTrackIndex());
+                    } else {
+                        log.warn("setLink found expected toObject type {} with fromPointType {} fromObject type {}",
+                                toObject.getClass(), fromPointType, fromObject.getClass(), new Exception("traceback"));
+                    }
+                } else if (HitPointType.isTraverserSlotHitType(fromPointType) && (fromObject instanceof LayoutTraverser)) {
+                    if (toObject instanceof TrackSegment) {
+                        ((LayoutTraverser) fromObject).setSlotConnect((TrackSegment) toObject,
+                                fromPointType.traverserTrackIndex());
                     } else {
                         log.warn("setLink found expected toObject type {} with fromPointType {} fromObject type {}",
                                 toObject.getClass(), fromPointType, fromObject.getClass(), new Exception("traceback"));
@@ -6122,6 +6341,19 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         }
 
+        if (turnoutImage.contains(s) || turnoutList.contains(s)) {
+            Turnout turnout = ((TurnoutIcon) s).getTurnout();
+            if (turnout != null) {
+                if (removeAttachedBean((turnout))) {
+                    turnoutImage.remove(s);
+                    turnoutList.remove(s);
+                    found = true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
         if (signalHeadImage.contains(s) || signalList.contains(s)) {
             SignalHead head = ((SignalHeadIcon) s).getSignalHead();
             if (head != null) {
@@ -6185,6 +6417,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         } else if (bean instanceof Sensor) {
             beanKey = "BeanNameSensor";  // NOI18N
+        } else if (bean instanceof Turnout) {
+            beanKey = "BeanNameTurnout";  // NOI18N
         } else if (bean instanceof SignalHead) {
             beanKey = "BeanNameSignalHead";  // NOI18N
         }
@@ -6626,6 +6860,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private boolean noWarnTurntable = false;
+    private boolean noWarnTraverser = false;
 
     /**
      * Remove a Layout Turntable
@@ -6674,6 +6909,54 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         }
 
+        return removeLayoutTrackAndRedraw(o);
+    }
+
+    /**
+     * Remove a Layout Traverser
+     *
+     * @param o the LayoutTraverser to remove
+     * @return true if removed
+     */
+    public boolean removeTraverser(@Nonnull LayoutTraverser o) {
+        // First verify with the user that this is really wanted
+        if (!noWarnTraverser) {
+            int selectedValue = JmriJOptionPane.showOptionDialog(this,
+                    Bundle.getMessage("Question8r"), Bundle.getMessage("WarningTitle"),
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonYes"),
+                            Bundle.getMessage("ButtonNo"),
+                            Bundle.getMessage("ButtonYesPlus")},
+                    Bundle.getMessage("ButtonNo"));
+
+            // return without removing if array position 1 "No" response or Dialog closed
+            if (selectedValue == 1 || selectedValue==JmriJOptionPane.CLOSED_OPTION ) {
+                return false;
+            }
+
+            if (selectedValue == 2 ) { // ButtonYesPlus in array position 2
+                // Suppress future warnings, and continue
+                noWarnTraverser = true;
+            }
+        }
+
+        // remove from selection information
+        if (selectedObject == o) {
+            selectedObject = null;
+        }
+
+        if (prevSelectedObject == o) {
+            prevSelectedObject = null;
+        }
+
+        // remove connections if any
+        LayoutTraverserView ov = getLayoutTraverserView(o);
+        for (int j = 0; j < o.getNumberSlots(); j++) {
+            TrackSegment t = ov.getSlotConnectOrdered(j);
+            if (t != null) {
+                substituteAnchor(ov.getSlotCoordsIndexed(j), o, t);
+            }
+        }
         return removeLayoutTrackAndRedraw(o);
     }
 
@@ -6776,6 +7059,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 if (HitPointType.isTurntableRayHitType(type)) {
                     ((LayoutTurntable) o).setRayConnect(null, type.turntableTrackIndex());
                 }
+                if (HitPointType.isTraverserSlotHitType(type)) {
+                    ((LayoutTraverser) o).setSlotConnect(null, type.traverserTrackIndex());
+                }
                 break;
             }
         }
@@ -6861,6 +7147,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 break;
             }
             default: {
+                if (HitPointType.isTurntableRayHitType(type) ||
+                        HitPointType.isTraverserSlotHitType(type)) {
+                    break;
+                }
                 log.warn("Unhandled track type: {}", type);
                 break;
             }
@@ -6905,6 +7195,52 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void putSensor(@Nonnull SensorIcon l) {
         l.updateSize();
         l.setDisplayLevel(Editor.SENSORS);
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+    }
+
+    /**
+     * Add a turnout indicator to the Draw Panel
+     */
+    void addTurnout() {
+        String newName = leToolBarPanel.turnoutComboBox.getSelectedItemDisplayName();
+        if (newName == null) {
+            newName = "";
+        }
+
+        if (newName.isEmpty()) {
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error10"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        TurnoutIcon l = new OutputIndicator(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
+                "resources/icons/smallschematics/tracksegments/circuit-error.gif"), this);
+
+        l.setTurnout(newName);
+
+        l.setIcon("TurnoutStateThrown", leToolBarPanel.turnoutIconEditor.getIcon(0));
+        l.setIcon("TurnoutStateClosed", leToolBarPanel.turnoutIconEditor.getIcon(1));
+        l.setIcon("BeanStateInconsistent", leToolBarPanel.turnoutIconEditor.getIcon(2));
+        l.setIcon("BeanStateUnknown", leToolBarPanel.turnoutIconEditor.getIcon(3));
+        l.setDisplayLevel(Editor.TURNOUTS);
+
+        leToolBarPanel.turnoutComboBox.setSelectedItem(l.getTurnout());
+        setNextLocation(l);
+        try {
+            putItem(l); // note: this calls unionToPanelBounds & setDirty()
+        } catch (Positionable.DuplicateIdException e) {
+            // This should never happen
+            log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+    }
+
+    public void putTurnout(@Nonnull TurnoutIcon l) {
+        l.updateSize();
+        l.setDisplayLevel(Editor.TURNOUTS);
         try {
             putItem(l); // note: this calls unionToPanelBounds & setDirty()
         } catch (Positionable.DuplicateIdException e) {
@@ -7100,6 +7436,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (l instanceof SensorIcon) {
             sensorImage.add((SensorIcon) l);
             sensorList.add((SensorIcon) l);
+        } else if (l instanceof TurnoutIcon) {
+            turnoutImage.add((TurnoutIcon) l);
+            turnoutList.add((TurnoutIcon) l);
         } else if (l instanceof LocoIcon) {
             markerImage.add((LocoIcon) l);
         } else if (l instanceof SignalHeadIcon) {
@@ -7107,16 +7446,16 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             signalList.add((SignalHeadIcon) l);
         } else if (l instanceof SignalMastIcon) {
             signalMastList.add((SignalMastIcon) l);
+        } else if (l instanceof BlockContentsIcon) {
+            blockContentsLabelList.add((BlockContentsIcon) l);
         } else if (l instanceof MemoryIcon) {
             memoryLabelList.add((MemoryIcon) l);
+        } else if (l instanceof BlockContentsInputIcon) {
+            blockContentsInputList.add((BlockContentsInputIcon) l);
         } else if (l instanceof MemoryInputIcon) {
             memoryInputList.add((MemoryInputIcon) l);
         } else if (l instanceof GlobalVariableIcon) {
             globalVariableLabelList.add((GlobalVariableIcon) l);
-        } else if (l instanceof BlockContentsIcon) {
-            blockContentsLabelList.add((BlockContentsIcon) l);
-        } else if (l instanceof BlockContentsInputIcon) {
-            blockContentsInputList.add((BlockContentsInputIcon) l);
         } else if (l instanceof AnalogClock2Display) {
             clocks.add((AnalogClock2Display) l);
         } else if (l instanceof MultiSensorIcon) {
@@ -8634,6 +8973,21 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     @Override
     public @Nonnull
+    List<LayoutTraverser> getLayoutTraversers() {
+        return getLayoutTracksOfClass(LayoutTraverser.class)
+                .map(LayoutTraverser.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public @Nonnull
+    List<LayoutTraverserView> getLayoutTraverserViews() {
+        return getLayoutTrackViewsOfClass(LayoutTraverserView.class)
+                .map(LayoutTraverserView.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @Override
+    public @Nonnull
     List<LevelXing> getLevelXings() {
         return getLayoutTracksOfClass(LevelXing.class)
                 .map(LevelXing.class::cast)
@@ -8749,6 +9103,22 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
         if (lv instanceof LayoutTurntableView) {
             return (LayoutTurntableView) lv;
+        } else {
+            log.error("wrong type {} {} found {}", to, to.getClass(), lv);
+        }
+        throw new IllegalArgumentException("Wrong type: " + to.getClass());
+    }
+
+    // temporary
+    @Override
+    final public LayoutTraverserView getLayoutTraverserView(LayoutTraverser to) {
+        LayoutTrackView lv = trkToView.get(to);
+        if (lv == null) {
+            log.warn("No View found for {} class {}", to, to.getClass());
+            throw new IllegalArgumentException("No matching View found: " + to);
+        }
+        if (lv instanceof LayoutTraverserView) {
+            return (LayoutTraverserView) lv;
         } else {
             log.error("wrong type {} {} found {}", to, to.getClass(), lv);
         }
@@ -8941,6 +9311,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         if (nb instanceof Sensor) {
             theList = sensorList;
+        } else if (nb instanceof Turnout) {
+            theList = turnoutList;
         } else if (nb instanceof SignalHead) {
             theList = signalList;
         } else if (nb instanceof SignalMast) {
@@ -9085,6 +9457,19 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         }
                     }
                 }
+                for (LayoutTraverser lx : getLayoutTraversers()) {
+                    if (lx.isTurnoutControlled()) {
+                        for (int i = 0; i < lx.getNumberSlots(); i++) {
+                            if (nb.equals(lx.getSlotTurnout(i))) {
+                                found = true;
+                                message.append("<li>");
+                                message.append(Bundle.getMessage("VetoSlotTraverserControl", lx.getId()));
+                                message.append("</li>");
+                                break;
+                            }
+                        }
+                    }
+                }
             }
 
             if (nb instanceof SignalMast) {
@@ -9106,6 +9491,29 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 int count = 0;
 
                 for (SensorIcon si : sensorList) {
+                    if (nb.equals(si.getNamedBean())) {
+                        count++;
+                        found = true;
+                    }
+                }
+
+                if (count > 0) {
+                    message.append("<li>");
+                    message.append(String.format("As an Icon %s times", count));
+                    message.append("</li>");
+                }
+                String foundelsewhere = findBeanUsage(nb);
+
+                if (foundelsewhere != null) {
+                    message.append(foundelsewhere);
+                    found = true;
+                }
+            }
+
+            if (nb instanceof Turnout) {
+                int count = 0;
+
+                for (TurnoutIcon si : turnoutList) {
                     if (nb.equals(si.getNamedBean())) {
                         count++;
                         found = true;
@@ -9205,6 +9613,16 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         }
                     }
                 }
+
+                for (LayoutTraverser lx : getLayoutTraversers()) {
+                    if (lx.isTurnoutControlled()) {
+                        for (int i = 0; i < lx.getNumberSlots(); i++) {
+                            if (nb.equals(lx.getSlotTurnout(i))) {
+                                lx.setSlotTurnout(i, null, NamedBean.UNKNOWN);
+                            }
+                        }
+                    }
+                }
             }
 
             if (nb instanceof SignalMast) {
@@ -9234,6 +9652,22 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     SensorIcon i = icon.next();
 
                     if (nb.equals(i.getSensor())) {
+                        icon.remove();
+                        super.removeFromContents(i);
+                    }
+                }
+                setDirty();
+                redrawPanel();
+            }
+
+            if (nb instanceof Turnout) {
+                removeBeanRefs(nb);
+                Iterator<TurnoutIcon> icon = turnoutImage.iterator();
+
+                while (icon.hasNext()) {
+                    TurnoutIcon i = icon.next();
+
+                    if (nb.equals(i.getTurnout())) {
                         icon.remove();
                         super.removeFromContents(i);
                     }

@@ -17,11 +17,11 @@ import org.slf4j.LoggerFactory;
  */
 public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
 
-    static private final int ADDRCOLUMN = 0;     // Locomotive address
-    static private final int TYPECOLUMN = 1;     // Type of Database Entry
-    static private final int DELCOLUMN = 3;      // Remove Button
+    private static final int ADDRCOLUMN = 0;     // Locomotive address
+    private static final int TYPECOLUMN = 1;     // Type of Database Entry
+    private static final int DELCOLUMN = 3;      // Remove Button
 
-    static private final int NUMCOLUMN = 4;
+    private static final int NUMCOLUMN = 4;
 
     // the stack frame containing this object
     StackMonFrame _stackFrame;

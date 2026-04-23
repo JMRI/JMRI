@@ -11,7 +11,7 @@ import javax.annotation.*;
 /**
  * Navigation through a LayoutEditor panel to set the sound position.
  *
- * Almost all code from George Warner's LENavigator.
+ * Almost all code from George Warner's LENavigator. 
  * ------------------------------------------------
  * Added direction change feature with new methods
  * setReturnTrack(T), setReturnLastTrack(T) and
@@ -34,7 +34,7 @@ import javax.annotation.*;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * @author Klaus Killinger Copyright (C) 2022, 2023
+ * @author Klaus Killinger Copyright (C) 2022, 2023, 2026
  */
 public class VSDNavigation {
 
@@ -717,7 +717,6 @@ public class VSDNavigation {
     }
 
     boolean navigateLayoutTurntable() {
-        boolean result = false;
         if (use_blocks && !((LayoutTurntable) d.getLayoutTrack()).getBlockName().equals(VSDecoderManager.instance().currentBlock.get(d).getUserName())) {
             // we are not in the block
             d.setDistance(0);
@@ -736,89 +735,141 @@ public class VSDNavigation {
         Point2D pEnd   = null;
 
         // some checks ...
-        if (num_rays < 1) {
-            log.warn("A turntable must have at least one ray (better two)");
+        if (num_rays < 2) {
+            // A turntable must have a ray track at a 180 degree offset for each ray track
+            log.warn("A turntable must have at least two ray tracks)");
+        } else if (num_rays %2 != 0) {
+            log.warn("A turntable must have an even number of rays");
         } else if (turntable.getPosition() < 0) {
-            log.warn("Turntable position not set"); // setting the correct position allows to continue
+            log.warn("Turntable position not set, pos: {}", turntable.getPosition()); // setting the correct position allows to continue
         } else {
-            List<Point2D> points = new ArrayList<>();
-            for (int i = 0; i < num_rays; i++) {
-                points.add(ttv.getRayCoordsOrdered(i));
+            int currentPosition = turntable.getPosition();
+            int entryRay = -1;
+            int exitRay = -1;
+            if (lastTurntablePosition != -1 && lastTurntablePosition != currentPosition) {
+                // new bridge position detected
+                List<Double> angles = new ArrayList<>();
+                turntable.getRayTrackList().forEach((rt) -> angles.add(rt.getAngle()));
+                entryRay = angles.indexOf(MathUtil.wrap360(angles.get(currentPosition) + 180.0));
+                if (entryRay != -1) {
+                    d.setLastTrack(turntable.getRayConnectOrdered(entryRay));
+                    d.nextLayoutTrack = turntable.getRayConnectIndexed(currentPosition);
+                } else {
+                    log.warn("Counter ray for ray track angle {} not found", angles.get(currentPosition));
+                }
+            } else {
+                for (int i = 0; i < num_rays; i++) {
+                    if (turntable.getRayConnectOrdered(i) == d.getLastTrack()) {
+                        entryRay = i;
+                        break;
+                    }
+                }
             }
+            exitRay = turntable.getPosition();
 
-            for (LayoutTurntable.RayTrack rt : turntable.getRayTrackList()) {
-                if (rt.getConnect().equals(d.getLastTrack())) {
-                    // is there a counter-ray? If so, get this index
-                    double counterAngle = MathUtil.wrap360(rt.getAngle() + 180.0);
-                    boolean found = false;
-                    int indexT = -1; // init
-                    for (LayoutTurntable.RayTrack rta : turntable.getRayTrackList()) {
-                        if (counterAngle == rta.getAngle()) {
-                            found = true; // yes, counter-ray exists
-                            indexT = rta.getConnectionIndex();
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        // ray without counter-ray - not supported (there is no HitPoint for the bridge end)
-                        if (turntable.getPosition() == rt.getConnectionIndex()) {
-                            log.warn("non-existent opposite ray track; please return"); // going reverse works
-                        } else {
-                            log.warn("Wrong turntable position - please correct or return");
-                        }
-                    } else {
-                        boolean is_turned = false;
-                        int indexH = rt.getConnectionIndex();
-                        if (lastTurntablePosition >= 0 && turntable.getPosition() != lastTurntablePosition) {
-                            // new bridge position detected
-                            is_turned = true;
-                            double newAngle = turntable.getRayTrackList().get(turntable.getPosition()).getAngle();
-                            double lastAngle = MathUtil.wrap360(newAngle + 180.0);
-                            boolean found2 = false;
-                            for (LayoutTurntable.RayTrack rtb : turntable.getRayTrackList()) {
-                                if (lastAngle == rtb.getAngle()) {
-                                    found2 = true; // yes, counter-ray exists
-                                    indexH = rtb.getConnectionIndex();
-                                    break;
-                                }
-                            }
-                            if (found2) {
-                                d.setLastTrack(turntable.getRayConnectIndexed(indexH));
-                                d.nextLayoutTrack = turntable.getRayConnectIndexed(turntable.getPosition());
-                                indexT = turntable.getPosition(); // update index
-                            } else {
-                                log.info("non-existent opposite ray track)");
-                            }
-                        }
+            if (entryRay >= 0 && entryRay < num_rays && entryRay != exitRay) {
+                log.debug("entryray: {}, exitray: {}, current position: {}", entryRay, exitRay, currentPosition);
+                if (exitRay == currentPosition) {
+                    pStart = ttv.getRayCoordsIndexed(entryRay);
+                    pEnd = ttv.getRayCoordsIndexed(currentPosition);
+                    d.setLastTrack(turntable.getRayConnectIndexed(entryRay));
+                    d.nextLayoutTrack = turntable.getRayConnectIndexed(exitRay);
+                    lastTurntablePosition = turntable.getPosition();
+                    log.debug("Next layout track set to: {}, last track: {}", d.nextLayoutTrack, d.getLastTrack());
+                } else {
+                    log.warn("Turntable not aligned for exit. Current pos: {}, required for exit ray {}: {}", currentPosition, exitRay, turntable.getRayIndex(exitRay));
+                }
+            }
+        }
 
-                        if (turntable.getPosition() == indexT || turntable.getPosition() == indexH) {
-                            // turntable position is correct
-                            pStart = points.get(indexH);
-                            if (is_turned) {
-                                pEnd = points.get(turntable.getPosition());
-                            } else {
-                                pEnd = points.get(indexT);
-                            }
-                            d.nextLayoutTrack = turntable.getRayConnectIndexed(indexT);
-                            log.debug("Next layout track set to: {}", d.nextLayoutTrack);
-                            lastTurntablePosition = turntable.getPosition();
-                        } else {
-                            log.warn("Wrong turntable position - please correct position");
-                        }
-                    }
+        return navigateComplexTrack(pStart, pEnd, distanceOnTrack);
+    }
+
+    boolean navigateLayoutTraverser() {
+        if (use_blocks && !((LayoutTraverser) d.getLayoutTrack()).getBlockName().equals(VSDecoderManager.instance().currentBlock.get(d).getUserName())) {
+            // we are not in the block
+            d.setDistance(0);
+            return false;
+        }
+
+        double distanceOnTrack = d.getDistance() + d.distanceOnTrack;
+        d.nextLayoutTrack = null;
+
+        LayoutTraverser traverser = (LayoutTraverser) d.getLayoutTrack();
+        LayoutTraverserView trv = d.getModels().getLayoutTraverserView(traverser);
+        int num_slots = traverser.getNumberSlots();
+        log.debug("traverser name: {}, number slots: {}", trv.getName(), num_slots);
+
+        Point2D pStart = null;
+        Point2D pEnd = null;
+
+        if (num_slots < 1) {
+            log.warn("A traverser must have at least one slot");
+        } else if (traverser.getPosition() < 0) {
+            log.warn("Traverser position not set, pos: {}", traverser.getPosition());
+        } else {
+            int currentPosition = traverser.getPosition();
+            int entrySlot = -1;
+            for (int i = 0; i < num_slots; i++) {
+                if (traverser.getSlotConnectOrdered(i) == d.getLastTrack()) {
+                    entrySlot = i;
                     break;
                 }
             }
+
+            if (entrySlot != -1) {
+                // Find the corresponding exit slot. Traverser slots are in pairs.
+                int exitSlot = (entrySlot % 2 == 0) ? entrySlot + 1 : entrySlot - 1;
+                log.debug("entryslot: {}, exitslot: {}, current position: {}", entrySlot, exitSlot, currentPosition);
+
+                if (exitSlot >= 0 && exitSlot < num_slots) {
+                    // Check if the deck is aligned to the exit slot
+                    if (traverser.getSlotIndex(exitSlot) == currentPosition) {
+                        pStart = trv.getSlotCoordsIndexed(entrySlot);
+                        pEnd = trv.getSlotCoordsIndexed(exitSlot);
+                        d.nextLayoutTrack = traverser.getSlotConnectOrdered(exitSlot);
+                    } else if (exitSlot %2 == currentPosition %2) { 
+                        // Deck position has moved up or down
+                        if (entrySlot < exitSlot) {
+                            pStart = trv.getSlotCoordsIndexed(currentPosition - 1);
+                        } else {
+                            pStart = trv.getSlotCoordsIndexed(currentPosition + 1);
+                        }
+                        pEnd = trv.getSlotCoordsIndexed(currentPosition);
+                        d.nextLayoutTrack = traverser.getSlotConnectOrdered(currentPosition);
+                        log.debug("next track: {}", d.nextLayoutTrack);
+                    } else {
+                        log.warn("Traverser not aligned for exit. Current pos: {}, required for exit slot {}: {}", currentPosition, exitSlot, traverser.getSlotIndex(exitSlot));
+                    }
+
+                }
+            }
+        }
+
+        return navigateComplexTrack(pStart, pEnd, distanceOnTrack);
+    }
+
+    /**
+     * Common navigation logic for complex tracks like Turntables and Traversers.
+     *
+     * @param pStart          The starting point of movement on the component.
+     * @param pEnd            The ending point of movement on the component.
+     * @param distanceOnTrack The total distance to travel.
+     * @return True if navigation should continue to the next track piece.
+     */
+    private boolean navigateComplexTrack(Point2D pStart, Point2D pEnd, double distanceOnTrack) {
+        boolean result = false;
+        String tType = "";
+        if (d.getLayoutTrack() instanceof LayoutTraverser) {
+            tType = "Traverser";
+        } else {
+            tType = "Turntable";
         }
 
         if (d.nextLayoutTrack != null) {
             d.setReturnLastTrack(d.nextLayoutTrack);
             d.setReturnTrack(d.getLayoutTrack()); // just in case of a direction change
             d.setDistance(0);
-        }
-        if (d.nextLayoutTrack == null) {
-            log.debug("Next layout track not set");
-            result = false;
         }
 
         if (pStart != null && pEnd != null) {
@@ -833,10 +884,10 @@ public class VSDNavigation {
             } else { // it's not on this track
                 d.setDistance(distanceOnTrack - distance);
                 distanceOnTrack = 0;
-                result = true;
+                result = true; // move to next track
             }
         } else { // OOPS! we're lost!
-            log.info("Turntable caused a stop"); // correct position or change direction
+            log.info("A {} setting caused a stop", tType); // correct position or change direction
             result = false;
             distanceOnTrack = 0;
             d.setDistance(0);
@@ -852,9 +903,9 @@ public class VSDNavigation {
             LayoutTrack last = d.getLayoutTrack();
             if (d.nextLayoutTrack != null) {
                 d.setLayoutTrack(d.nextLayoutTrack);
-                lastTurntablePosition = -1;
-            } else { // OOPS! we're lost!
-                log.info(" TURNTABLE RESULT lost");
+                if (tType.equals("Turntable")) lastTurntablePosition = -1;
+            } else {
+                log.info("Lost a {} result", tType);
                 result = false;
             }
             if (result) {

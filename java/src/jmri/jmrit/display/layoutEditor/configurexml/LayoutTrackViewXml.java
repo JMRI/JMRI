@@ -36,4 +36,17 @@ public abstract class LayoutTrackViewXml extends AbstractXmlAdapter {
         }
     }
 
+    /**
+     * Common routine to round a floating point value
+     * to a specific number of digits before storing it.
+     */
+    protected double roundForStore(double value) {
+        if (shortenPrecision) {
+            return Math.round(value * 100.0) / 100.0;
+        } else {
+            return value;
+        }
+    }
+    boolean shortenPrecision = jmri.InstanceManager.getDefault(jmri.configurexml.LoadAndStorePreferences.class).isShortenLayoutEditorWrites();
+
 }

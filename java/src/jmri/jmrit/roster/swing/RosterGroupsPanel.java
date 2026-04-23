@@ -561,7 +561,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         }
     }
 
-    static public class TreeCellRenderer extends DefaultTreeCellRenderer {
+    public static class TreeCellRenderer extends DefaultTreeCellRenderer {
 
     }
 
@@ -606,7 +606,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         }
     }
 
-    static public class TreeUI extends BasicTreeUI {
+    public static class TreeUI extends BasicTreeUI {
 
         @Override
         public void paint(Graphics g, JComponent c) {

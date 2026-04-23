@@ -253,7 +253,7 @@ public class BiDiBAddress {
      * @param memo connection memo object
      * @return true if the system name is syntactically valid.
      */
-    static public boolean isValidSystemNameFormat(String systemName, char typeLetter, BiDiBSystemConnectionMemo memo) {
+    public static boolean isValidSystemNameFormat(String systemName, char typeLetter, BiDiBSystemConnectionMemo memo) {
         String aString = systemName.substring(memo.getSystemPrefix().length() + 1);
         if (addrPattern == null) {
             addrPattern = Pattern.compile(addrRegex);
@@ -503,7 +503,7 @@ public class BiDiBAddress {
      * @return true if the system name is valid and the BiDiB Node is available
      * @throws IllegalArgumentException when needed
      */
-    static public boolean isValidAddress(String systemName, char typeLetter, BiDiBSystemConnectionMemo memo) throws IllegalArgumentException {
+    public static boolean isValidAddress(String systemName, char typeLetter, BiDiBSystemConnectionMemo memo) throws IllegalArgumentException {
         BiDiBAddress addr = new BiDiBAddress(systemName, typeLetter, memo);
         return addr.isValid();
     }

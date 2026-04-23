@@ -40,7 +40,7 @@ public class HtmlTrainCommon extends TrainCommon {
         location, track, both;
     }
 
-    static private final Logger log = LoggerFactory.getLogger(HtmlTrainCommon.class);
+    private static final Logger log = LoggerFactory.getLogger(HtmlTrainCommon.class);
 
     public HtmlTrainCommon(Locale locale, Train train) throws IOException {
         this.locale = locale;

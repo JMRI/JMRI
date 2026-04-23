@@ -249,7 +249,7 @@ public class GuiUtilBase {
      * @param name the name of the XML file
      * @return the root element or null
      */
-    static protected Element rootFromName(String name) {
+    protected static Element rootFromName(String name) {
         try {
             return new jmri.jmrit.XmlFile() {
             }.rootFromName(name);

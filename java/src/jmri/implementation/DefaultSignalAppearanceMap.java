@@ -34,7 +34,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         return Bundle.getMessage("BeanNameSignalAppMap");
     }
 
-    static public DefaultSignalAppearanceMap getMap(String signalSystemName, String aspectMapName) {
+    public static DefaultSignalAppearanceMap getMap(String signalSystemName, String aspectMapName) {
         log.debug("getMap signalSystem= \"{}\", aspectMap= \"{}\"", signalSystemName, aspectMapName);
         DefaultSignalAppearanceMap map = maps.get("map:" + signalSystemName + ":" + aspectMapName);
         if (map == null) {
@@ -50,7 +50,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     // added 3.9.7 so CATS can create own implementations
-    static public DefaultSignalAppearanceMap findMap(String systemName) {
+    public static DefaultSignalAppearanceMap findMap(String systemName) {
         return maps.get(systemName);
     }
 

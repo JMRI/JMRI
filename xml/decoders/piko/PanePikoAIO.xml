@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <name>Equipment</name>
+    <name xml:lang="de">Ein-/Ausgänge</name>
+    <column>
+        <separator/>
+        <label>
+            <text>Config Inputs</text>
+            <text xml:lang="de">Konfiguration Eingänge Reedkontakt</text>
+            <text xml:lang="it">Configurazione ingressi</text>
+        </label>
+        <label>
+            <text>   </text>
+        </label>
+        <display item="Input1 Reed activ"/>
+        <display item="Input1 Verwendung"/>
+        <display item="Input1 Function Key"/>
+        <display item="Input1 DeadTime"/>
+        <display item="Input1 Config1"/>
+        <display item="Input1 Config2"/>
+        <label>
+            <text>   </text>
+        </label>
+        <display item="Input2 Reed activ"/>
+        <display item="Input2 Verwendung"/>
+        <display item="Input2 Function Key"/>
+        <display item="Input2 DeadTime"/>
+        <display item="Input2 Config1"/>
+        <display item="Input2 Config2"/>
+    </column>
+    <column>
+        <separator/>
+        <label>
+            <text>Configuration Servo 1 - 3</text>
+            <text xml:lang="de">Konfiguration Servo 1 - 3</text>
+        </label>
+        <label>
+            <text>   </text>
+        </label>
+        <display item="Parameter0 Servo1"/>
+        <display item="Parameter1 Servo1"/>
+        <display item="Parameter2 Servo1"/>
+        <display item="Parameter3 Servo1"/>
+        <display item="Parameter4 Servo1"/>
+        <display item="Parameter5 Servo1"/>
+        <label>
+            <text>   </text>
+        </label>
+        <display item="Parameter0 Servo2"/>
+        <display item="Parameter1 Servo2"/>
+        <display item="Parameter2 Servo2"/>
+        <display item="Parameter3 Servo2"/>
+        <display item="Parameter4 Servo2"/>
+        <display item="Parameter5 Servo2"/>
+        <label>
+            <text>   </text>
+        </label>
+        <display item="Parameter0 Servo3"/>
+        <display item="Parameter1 Servo3"/>
+        <display item="Parameter2 Servo3"/>
+        <display item="Parameter3 Servo3"/>
+        <display item="Parameter4 Servo3"/>
+        <display item="Parameter5 Servo3"/>
+    </column>
+    <column>
+        <separator/>
+        <label>
+            <text>Configuration Servo 4 - 6</text>
+            <text xml:lang="de">Konfiguration Servo 4 - 6</text>
+        </label>
+        <label>
+            <text>   </text>
+        </label>
+        <display item="Parameter0 Servo4"/>
+        <display item="Parameter1 Servo4"/>
+        <display item="Parameter2 Servo4"/>
+        <display item="Parameter3 Servo4"/>
+        <display item="Parameter4 Servo4"/>
+        <display item="Parameter5 Servo4"/>
+        <label>
+            <text>   </text>
+        </label>
+        <display item="Parameter0 Servo5"/>
+        <display item="Parameter1 Servo5"/>
+        <display item="Parameter2 Servo5"/>
+        <display item="Parameter3 Servo5"/>
+        <display item="Parameter4 Servo5"/>
+        <display item="Parameter5 Servo5"/>
+        <label>
+            <text>   </text>
+        </label>
+        <display item="Parameter0 Servo6"/>
+        <display item="Parameter1 Servo6"/>
+        <display item="Parameter2 Servo6"/>
+        <display item="Parameter3 Servo6"/>
+        <display item="Parameter4 Servo6"/>
+        <display item="Parameter5 Servo6"/>
+    </column>
+</pane>

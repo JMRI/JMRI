@@ -1,8 +1,5 @@
 package jmri.jmrix.pi;
 
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.GpioProvider;
-
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
@@ -71,7 +68,7 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
         Assert.assertEquals("default pull state", jmri.Sensor.PullResistance.PULL_DOWN, t.getPullResistance());
     }
 
-    private GpioProvider myProvider = null;
+    private PiGpioProviderScaffold myProvider = null;
 
     @Override
     @BeforeEach
@@ -79,7 +76,6 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         myProvider = new PiGpioProviderScaffold();
-        GpioFactory.setDefaultProvider(myProvider);
 
         t = new RaspberryPiSensor("PS4");
     }
@@ -88,9 +84,8 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
     @AfterEach
     public void tearDown() {
         if (t != null) {
-            t.dispose(); // is supposed to unprovisionPin 4
+            t.dispose();
         }
-        // shutdown() will forcefully shutdown all GPIO monitoring threads and scheduled tasks, includes unexport.pin
         Assertions.assertNotNull(myProvider);
         myProvider.shutdown();
 

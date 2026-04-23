@@ -29,7 +29,7 @@ public class BranchTo extends SdfMacro {
     int addr;
     int skemebase;
 
-    static public SdfMacro match(SdfBuffer buff) {
+    public static SdfMacro match(SdfBuffer buff) {
         if ((buff.getAtIndex() & 0xF0) != 0xC0) {
             return null;
         }

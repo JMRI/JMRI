@@ -177,7 +177,7 @@ public class ExpressionPower extends AbstractDigitalExpression
             this._text = text;
         }
 
-        static public PowerState get(int id) {
+        public static PowerState get(int id) {
             switch (id) {
                 case PowerManager.OFF:
                     return Off;

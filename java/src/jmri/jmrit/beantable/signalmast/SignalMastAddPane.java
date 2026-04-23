@@ -77,7 +77,7 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
     
     final protected static int NOTIONAL_ASPECT_COUNT = 12;  // size of maps, not critical
 
-    static public abstract class SignalMastAddPaneProvider implements JmriServiceProviderInterface {
+    public static abstract class SignalMastAddPaneProvider implements JmriServiceProviderInterface {
         /**
          * Is this pane available, given the current configuration of the program?
          * In other words, are all necessary managers and other objects present?
@@ -101,7 +101,7 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
          * name order.
          * @return all instance map sorted in name order.
          */
-        final static public Map<String, SignalMastAddPaneProvider> getInstancesMap() {
+        final public static Map<String, SignalMastAddPaneProvider> getInstancesMap() {
             if (instanceMap == null) loadInstances();
             return Collections.unmodifiableMap(instanceMap);
         }
@@ -111,7 +111,7 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
          * between the (localized) name and the pane. 
          * @return unmodifiable collection.
          */
-        final static public Collection<SignalMastAddPaneProvider> getInstancesCollection() {
+        final public static Collection<SignalMastAddPaneProvider> getInstancesCollection() {
             if (instanceMap == null) loadInstances();
             return Collections.unmodifiableCollection(instanceMap.values());
         }
@@ -120,7 +120,7 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
          * Load all the available instances. Note this only runs
          * once; there's no reloading once the program is running.
          */
-        final static public void loadInstances() {
+        final public static void loadInstances() {
             if (instanceMap != null) return;
         
             instanceMap = new TreeMap<>();  // sorted map, in string order on key

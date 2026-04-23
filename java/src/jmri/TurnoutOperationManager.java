@@ -243,7 +243,7 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
      * @param types list of types possibly containing duplicates
      * @return list reduced as described above
      */
-    static public String[] concatenateTypeLists(@Nonnull String[] types) {
+    public static String[] concatenateTypeLists(@Nonnull String[] types) {
         List<String> outTypes = new LinkedList<>();
         boolean noFeedbackWanted = false;
         for (String type : types) {

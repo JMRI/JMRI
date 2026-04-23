@@ -44,6 +44,8 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
         assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         OpenLcbCanSendPane p = (OpenLcbCanSendPane) panel;
 
+        panel.initContext(memo);
+
         p.sendEventField.setText("05.01.01.01.14.FF.01.02");
         EventID expected = new EventID(new byte[]{0x05, 0x01, 0x01, 0x01, 0x14, (byte) 0xff, 0x01, 0x02});
         assertEquals(expected, p.eventID());
@@ -53,6 +55,8 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
     public void testEventIdDotted() {
         assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
         OpenLcbCanSendPane p = (OpenLcbCanSendPane) panel;
+
+        panel.initContext(memo);
 
         p.sendEventField.setText("05.01.01.01.14.FF.01.02");
         EventID expected = new EventID(new byte[]{0x05, 0x01, 0x01, 0x01, 0x14, (byte) 0xff, 0x01, 0x02});

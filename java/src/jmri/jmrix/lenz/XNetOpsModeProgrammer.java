@@ -28,11 +28,11 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     protected jmri.ProgListener progListener = null;
 
     // possible states.
-    static protected final int NOTPROGRAMMING = 0; // is notProgramming
-    static protected final int REQUESTSENT = 1; // read/write command sent, waiting reply
-    static protected final int RESULTREQUESTED = 2; // result request sent, waiting reply
-    static protected final int WRITE = 0; // write mode
-    static protected final int READ = 1; // read mode
+    protected static final int NOTPROGRAMMING = 0; // is notProgramming
+    protected static final int REQUESTSENT = 1; // read/write command sent, waiting reply
+    protected static final int RESULTREQUESTED = 2; // result request sent, waiting reply
+    protected static final int WRITE = 0; // write mode
+    protected static final int READ = 1; // read mode
 
     protected XNetTrafficController tc;
 

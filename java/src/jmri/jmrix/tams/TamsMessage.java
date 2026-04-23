@@ -11,7 +11,7 @@ package jmri.jmrix.tams;
  */
 public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
 
-    static private final int TamsProgrammingTimeout = 5000;//ms
+    private static final int TamsProgrammingTimeout = 5000;//ms
 
     //The oneByteReply is used to tell TamsReply if one or more bytes are expected
     //The lastByteReply is gives the value of the last byte to be expected, for sensors this is always 0x00
@@ -99,12 +99,12 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         //log.info("Binary reply will be: one byte= " + getReplyOneByte() + ", last byte= " + getReplyLastByte());
     }
 
-    static public final int POLLTIMEOUT = 100;
+    public static final int POLLTIMEOUT = 100;
 
     // static methods to return a formatted message
     //Binary messages
     //Set power OFF via XPwrOff (0xA6)
-    static public TamsMessage setXPwrOff() {
+    public static TamsMessage setXPwrOff() {
         TamsMessage m = new TamsMessage(2);
         m.setElement(0, TamsConstants.LEADINGX & TamsConstants.MASKFF);
         m.setElement(1, TamsConstants.XPWROFF & TamsConstants.MASKFF);
@@ -116,7 +116,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     //Set power ON via XPwrOn (0xA7)
-    static public TamsMessage setXPwrOn() {
+    public static TamsMessage setXPwrOn() {
         TamsMessage m = new TamsMessage(2);
         m.setElement(0, TamsConstants.LEADINGX & TamsConstants.MASKFF);
         m.setElement(1, TamsConstants.XPWRON & TamsConstants.MASKFF);
@@ -128,7 +128,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     //Get power status via XStatus (0xA2)
-    static public TamsMessage getXStatus() {
+    public static TamsMessage getXStatus() {
         TamsMessage m = new TamsMessage(2);
         m.setElement(0, TamsConstants.LEADINGX & TamsConstants.MASKFF);
         m.setElement(1, TamsConstants.XSTATUS & TamsConstants.MASKFF);
@@ -142,7 +142,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
 
     //Get sensor status via XEvtSen (0xCB)
     //Only reports changes since last poll
-    static public TamsMessage getXEvtSen() {
+    public static TamsMessage getXEvtSen() {
         TamsMessage m = new TamsMessage(2);
         m.setElement(0, TamsConstants.LEADINGX & TamsConstants.MASKFF);
         m.setElement(1, TamsConstants.XEVTSEN & TamsConstants.MASKFF);
@@ -156,7 +156,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
 
     //Get loco changes via XEvtLok (0xC9)
     //Only reports changes which have not been initiated from PC
-    static public TamsMessage getXEvtLok() {
+    public static TamsMessage getXEvtLok() {
         TamsMessage m = new TamsMessage(2);
         m.setElement(0, TamsConstants.LEADINGX & TamsConstants.MASKFF);
         m.setElement(1, TamsConstants.XEVTLOK & TamsConstants.MASKFF);
@@ -170,7 +170,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
 
     //Get turnout changes via XEvtTrn (0xCA)
     //Only reports changes which have not been initiated from PC
-    static public TamsMessage getXEvtTrn() {
+    public static TamsMessage getXEvtTrn() {
         TamsMessage m = new TamsMessage(2);
         m.setElement(0, TamsConstants.LEADINGX & 0xFF);
         m.setElement(1, TamsConstants.XEVTTRN & 0xFF);
@@ -182,7 +182,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     //Set Tams MC to report only sensors which have been changed on polling
-    static public TamsMessage setXSR() {
+    public static TamsMessage setXSR() {
         TamsMessage m = new TamsMessage("xSR 1");
         m.setBinary(false);
         m.setReplyOneByte(false);
@@ -191,7 +191,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     //Set Tams MC so that a sensor module with at least 1 bit set is reporting its status
-    static public TamsMessage setXSensOff() {
+    public static TamsMessage setXSensOff() {
         TamsMessage m = new TamsMessage(2);
         m.setElement(0, TamsConstants.LEADINGX & 0xFF);
         m.setElement(1, TamsConstants.XSENSOFF & 0xFF);
@@ -202,7 +202,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     //Command Station messages
-    static public TamsMessage getReadPagedCV(int cv) { //Rxxx
+    public static TamsMessage getReadPagedCV(int cv) { //Rxxx
         TamsMessage m = new TamsMessage("xPTRP " + cv);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
@@ -211,7 +211,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public TamsMessage getWritePagedCV(int cv, int val) { //Pxxx xxx
+    public static TamsMessage getWritePagedCV(int cv, int val) { //Pxxx xxx
         TamsMessage m = new TamsMessage("xPTWP " + cv + ", " + val);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
@@ -220,7 +220,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public TamsMessage getReadRegister(int reg) { //Vx
+    public static TamsMessage getReadRegister(int reg) { //Vx
         TamsMessage m = new TamsMessage("xPTRR " + reg);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
@@ -229,7 +229,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public TamsMessage getWriteRegister(int reg, int val) { //Sx xxx
+    public static TamsMessage getWriteRegister(int reg, int val) { //Sx xxx
         TamsMessage m = new TamsMessage("xPTWR " + reg + ", " + val);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
@@ -238,7 +238,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public TamsMessage getReadDirectByteCV(int cv) { //Rxxx
+    public static TamsMessage getReadDirectByteCV(int cv) { //Rxxx
         TamsMessage m = new TamsMessage("xPTRD " + cv);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
@@ -247,7 +247,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public TamsMessage getWriteDirectByteCV(int cv, int val) { //Pxxx xxx
+    public static TamsMessage getWriteDirectByteCV(int cv, int val) { //Pxxx xxx
         TamsMessage m = new TamsMessage("xPTWD " + cv + ", " + val);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
@@ -256,7 +256,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public TamsMessage getReadDirectBitCV(int cv) { //Rxxx
+    public static TamsMessage getReadDirectBitCV(int cv) { //Rxxx
         TamsMessage m = new TamsMessage("xPTRB " + cv);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
@@ -265,7 +265,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public TamsMessage getWriteDirectBitCV(int cv, int bit, int val) { //Pxxx xxx
+    public static TamsMessage getWriteDirectBitCV(int cv, int bit, int val) { //Pxxx xxx
         TamsMessage m = new TamsMessage("xPTWB " + cv + ", " + bit + ", " + val);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
@@ -274,7 +274,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public TamsMessage getWriteOpsModeCVMsg(int adr, int cv, int val) { //Pxxx xxx
+    public static TamsMessage getWriteOpsModeCVMsg(int adr, int cv, int val) { //Pxxx xxx
         TamsMessage m = new TamsMessage("xPD " + adr + ", " + cv + ", " + val);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
@@ -283,7 +283,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public TamsMessage getWriteOpsModeAccCVMsg(int adr, int cv, int val) { //Pxxx xxx
+    public static TamsMessage getWriteOpsModeAccCVMsg(int adr, int cv, int val) { //Pxxx xxx
         TamsMessage m = new TamsMessage("xPA " + adr + ", " + cv + ", " + val);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);

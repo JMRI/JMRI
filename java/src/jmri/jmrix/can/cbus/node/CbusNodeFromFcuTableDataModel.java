@@ -14,13 +14,13 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 public class CbusNodeFromFcuTableDataModel extends CbusBasicNodeTableOperations {
 
     // column order needs to match list in column tooltips
-    static public final int FCU_NODE_NUMBER_COLUMN = 0; 
-    static public final int FCU_NODE_TYPE_NAME_COLUMN = 1; 
-    static public final int FCU_NODE_USER_NAME_COLUMN = 2;
-    static public final int FCU_NODE_EVENTS_COLUMN = 3;
-    static public final int NODE_NV_TOTAL_COLUMN = 4;
-    static public final int FCU_NODE_TOTAL_BYTES_COLUMN = 5;
-    static public final int FCU_MAX_COLUMN = 6;
+    public static final int FCU_NODE_NUMBER_COLUMN = 0; 
+    public static final int FCU_NODE_TYPE_NAME_COLUMN = 1; 
+    public static final int FCU_NODE_USER_NAME_COLUMN = 2;
+    public static final int FCU_NODE_EVENTS_COLUMN = 3;
+    public static final int NODE_NV_TOTAL_COLUMN = 4;
+    public static final int FCU_NODE_TOTAL_BYTES_COLUMN = 5;
+    public static final int FCU_MAX_COLUMN = 6;
 
     public CbusNodeFromFcuTableDataModel(CanSystemConnectionMemo memo, int row, int column) {
         super (memo, row, column);

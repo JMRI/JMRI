@@ -96,6 +96,7 @@
     </positionablelabel>
     <positionablelabel x="269" y="182" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="RGB-animated-once-Square" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
   </paneleditor>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Jun 01 14:08:11 EDT 2022" startsettime="no" />
   <filehistory>
     <operation>
       <type>app</type>

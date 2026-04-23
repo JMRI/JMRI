@@ -989,7 +989,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @see RosterEntry#ensureFilenameExists()
      * @since 2.1.5
      */
-    static public String makeValidFilename(String entry) {
+    public static String makeValidFilename(String entry) {
         if (entry == null) {
             throw new IllegalArgumentException("makeValidFilename requires non-null argument");
         }

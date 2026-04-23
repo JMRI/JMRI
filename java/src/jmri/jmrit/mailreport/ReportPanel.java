@@ -148,7 +148,7 @@ public class ReportPanel extends JPanel {
     }
 
     // made static, public, not final so can be changed via script
-    static public String requestURL = "http://jmri.org/problem-report.php";  // NOI18N
+    public static String requestURL = "http://jmri.org/problem-report.php";  // NOI18N
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle");

@@ -517,8 +517,13 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 continue; // no
             }
             // do alternate track moves on the second pass (makes FIFO / LIFO work correctly)
-            if (Setup.isBuildAggressive() && !isSecondPass && car.getTrack().isAlternate() && _completedMoves != 0) {
-                continue;
+            if (car.getTrack().isAlternate()) {
+                addLine(SEVEN, Bundle.getMessage("buildCarOnAlternateTrack", car.toString(),
+                        car.getTrack().getTrackTypeName(), car.getLocationName(), car.getTrackName()));
+                if (Setup.isBuildAggressive() && !isSecondPass && _completedMoves != 0) {
+                    addLine(SEVEN, BLANK_LINE);
+                    continue;
+                }
             }
 
             showCarServiceOrder(car); // car on FIFO or LIFO track?

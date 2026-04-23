@@ -654,7 +654,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     /**
      * Nested class to create one of these using old-style defaults
      */
-    static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
+    public static class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
 
         public Default() {
             super("Open NCE DCC Packet Analyzer",

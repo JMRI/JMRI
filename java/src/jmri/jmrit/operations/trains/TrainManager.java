@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.trains;
 
+import java.awt.Dimension;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.PrintWriter;
@@ -1195,6 +1196,25 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
             log.info(Bundle.getMessage("InfoMaxName", trainName, _maxTrainNameLength));
         }
         return _maxTrainNameLength;
+    }
+    
+    
+    private final Hashtable<String, Integer> _HardcopyWriterHashTable = new Hashtable<>();
+
+    public Integer getHardcopyWriterLineLength(String fontName, Integer fontStyle, Integer fontsize, Dimension pagesize,
+            boolean isLandscape) {
+        return _HardcopyWriterHashTable.get(getHardcopyWriterKey(fontName, fontStyle, fontsize, pagesize, isLandscape));
+    }
+
+    public void setHardcopyWriterLineLength(String fontName, Integer fontStyle, Integer fontsize, Dimension pagesize,
+            boolean isLandscape, Integer charsPerLine) {
+        _HardcopyWriterHashTable.put(getHardcopyWriterKey(fontName, fontStyle, fontsize, pagesize, isLandscape),
+                charsPerLine);
+    }
+
+    private String getHardcopyWriterKey(String fontName, Integer fontStyle, Integer fontsize, Dimension pagesize,
+            boolean isLandscape) {
+        return fontName + fontStyle + fontsize + pagesize.width + (isLandscape ? "L" : "P");
     }
 
     public void load(Element root) {

@@ -69,6 +69,8 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
     protected JLabel trackLabel = new JLabel();
     protected JRadioButton levelXingButton = new JRadioButton(Bundle.getMessage("LevelCrossing"));
     protected JRadioButton trackButton = new JRadioButton(Bundle.getMessage("TrackSegment"));
+    protected JRadioButton turntableButton = new JRadioButton(Bundle.getMessage("Turntable"));
+    protected JRadioButton traverserButton = new JRadioButton(Bundle.getMessage("Traverser"));
 
     // 2nd row of check boxes
     protected JPanel trackSegmentPropertiesPanel = new JPanel(leftRowLayout);
@@ -116,6 +118,10 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
     protected NamedBeanComboBox<Sensor> sensorComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SensorManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
+    protected JRadioButton turnoutButton = new JRadioButton(Bundle.getMessage("TurnoutIcon"));
+    protected NamedBeanComboBox<Turnout> turnoutComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(TurnoutManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
+
     protected JRadioButton signalButton = new JRadioButton(Bundle.getMessage("SignalIcon"));
     protected NamedBeanComboBox<SignalHead> signalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
@@ -131,6 +137,9 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
 
     protected MultiIconEditor sensorIconEditor = null;
     protected JFrame sensorFrame = null;
+
+    protected MultiIconEditor turnoutIconEditor = null;
+    protected JFrame turnoutFrame = null;
 
     protected MultiIconEditor signalIconEditor = null;
     protected JFrame signalFrame = null;
@@ -195,8 +204,11 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         itemGroup.add(anchorButton);
         itemGroup.add(edgeButton);
         itemGroup.add(trackButton);
+        itemGroup.add(turntableButton);
+        itemGroup.add(traverserButton);
         itemGroup.add(multiSensorButton);
         itemGroup.add(sensorButton);
+        itemGroup.add(turnoutButton);
         itemGroup.add(signalButton);
         itemGroup.add(signalMastButton);
         itemGroup.add(textLabelButton);
@@ -240,12 +252,11 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
             }
 
             //track Segment properties
-            e = trackButton.isSelected();
-            log.debug("trackSegmentPropertiesPanel is {}", e ? "enabled" : "disabled");
-
-            for (Component i : trackSegmentPropertiesPanel.getComponents()) {
-                i.setEnabled(e);
-            }
+            boolean isTrack = trackButton.isSelected();
+            boolean isTT = turntableButton.isSelected() || traverserButton.isSelected();
+            log.debug("trackSegmentPropertiesPanel is {}", (isTrack || isTT) ? "enabled" : "disabled");
+            mainlineTrack.setEnabled(isTrack || isTT);
+            dashedLine.setEnabled(isTrack);
 
             // block properties
             e = (turnoutRHButton.isSelected()
@@ -257,7 +268,9 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
                     || layoutSingleSlipButton.isSelected()
                     || layoutDoubleSlipButton.isSelected()
                     || levelXingButton.isSelected()
-                    || trackButton.isSelected());
+                    || trackButton.isSelected()
+                    || turntableButton.isSelected()
+                    || traverserButton.isSelected());
             log.debug("blockPanel is {}", e ? "enabled" : "disabled");
 
             if (blockPropertiesPanel != null) {
@@ -274,7 +287,6 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
                 blockLabel.setEnabled(e);
                 blockIDComboBox.setEnabled(e);
                 blockSensorLabel.setEnabled(e);
-                blockSensorLabel.setEnabled(e);
                 blockSensorComboBox.setEnabled(e);
             }
 
@@ -285,13 +297,15 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
             blockContentsComboBox.setEnabled(blockContentsButton.isSelected());
             textAudioComboBox.setEnabled(audioButton.isSelected());
 
-            // enable/disable signal mast, sensor & signal head text fields
+            // enable/disable signal mast, sensor, turnout & signal head text fields
             signalMastComboBox.setEnabled(signalMastButton.isSelected());
             sensorComboBox.setEnabled(sensorButton.isSelected());
+            turnoutComboBox.setEnabled(turnoutButton.isSelected());
             signalHeadComboBox.setEnabled(signalButton.isSelected());
 
             // changeIconsButton
             e = (sensorButton.isSelected()
+                    || turnoutButton.isSelected()
                     || signalButton.isSelected()
                     || iconLabelButton.isSelected()
                     || logixngButton.isSelected()
@@ -313,8 +327,11 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         anchorButton.addActionListener(selectionListAction);
         edgeButton.addActionListener(selectionListAction);
         trackButton.addActionListener(selectionListAction);
+        turntableButton.addActionListener(selectionListAction);
+        traverserButton.addActionListener(selectionListAction);
         multiSensorButton.addActionListener(selectionListAction);
         sensorButton.addActionListener(selectionListAction);
+        turnoutButton.addActionListener(selectionListAction);
         signalButton.addActionListener(selectionListAction);
         signalMastButton.addActionListener(selectionListAction);
         textLabelButton.addActionListener(selectionListAction);
@@ -415,6 +432,8 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         // second row of edit tool bar items
         levelXingButton.setToolTipText(Bundle.getMessage("LevelCrossingToolTip"));
         trackButton.setToolTipText(Bundle.getMessage("TrackSegmentToolTip"));
+        turntableButton.setToolTipText(Bundle.getMessage("AddTurntable"));
+        traverserButton.setToolTipText(Bundle.getMessage("AddTraverser"));
 
         // this is enabled/disabled via selectionListAction above
         trackSegmentPropertiesPanel.add(mainlineTrack);
@@ -523,6 +542,23 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif");
         sensorIconEditor.complete();
 
+        // turnout icon & text
+        turnoutButton.setToolTipText(Bundle.getMessage("TurnoutButtonToolTip"));
+
+        setupComboBox(turnoutComboBox, true, false, false);
+        turnoutComboBox.setToolTipText(Bundle.getMessage("TurnoutIconToolTip"));
+
+        turnoutIconEditor = new MultiIconEditor(4);
+        turnoutIconEditor.setIcon(0, Bundle.getMessage("MakeLabel", Bundle.getMessage("TurnoutStateThrown")),
+                "resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
+        turnoutIconEditor.setIcon(1, Bundle.getMessage("MakeLabel", Bundle.getMessage("TurnoutStateClosed")),
+                "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
+        turnoutIconEditor.setIcon(2, Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanStateInconsistent")),
+                "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+        turnoutIconEditor.setIcon(3, Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanStateUnknown")),
+                "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+        turnoutIconEditor.complete();
+
         // Signal icon & text
         signalButton.setToolTipText(Bundle.getMessage("SignalButtonToolTip"));
 
@@ -554,6 +590,11 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         sensorFrame.getContentPane().add(sensorIconEditor);
         sensorFrame.pack();
 
+        turnoutFrame = new JFrame(Bundle.getMessage("EditTurnoutIcons"));
+        turnoutFrame.getContentPane().add(new JLabel(Bundle.getMessage("IconChangeInfo")), BorderLayout.NORTH);
+        turnoutFrame.getContentPane().add(turnoutIconEditor);
+        turnoutFrame.pack();
+
         signalFrame = new JFrame(Bundle.getMessage("EditSignalIcons"));
         signalFrame.getContentPane().add(new JLabel(Bundle.getMessage("IconChangeInfo")), BorderLayout.NORTH);
         // no spaces around Label as that breaks html formatting
@@ -572,6 +613,8 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         changeIconsButton.addActionListener((ActionEvent event) -> {
             if (sensorButton.isSelected()) {
                 sensorFrame.setVisible(true);
+            } if (turnoutButton.isSelected()) {
+                turnoutFrame.setVisible(true);
             } else if (signalButton.isSelected()) {
                 signalFrame.setVisible(true);
             } else if (iconLabelButton.isSelected()) {
@@ -761,6 +804,7 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
             put(blockContentsButton, Bundle.getMessage("BlockContents_QuickKeys"));
             put(multiSensorButton, Bundle.getMessage("MultiSensor_QuickKeys"));
             put(sensorButton, Bundle.getMessage("Sensor_QuickKeys"));
+            put(turnoutButton, Bundle.getMessage("Turnout_QuickKeys"));
             put(signalMastButton, Bundle.getMessage("SignalMast_QuickKeys"));
             put(signalButton, Bundle.getMessage("Signal_QuickKeys"));
             put(iconLabelButton, Bundle.getMessage("IconLabel_QuickKeys"));
@@ -827,6 +871,10 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         if (sensorFrame != null) {
             sensorFrame.dispose();
             sensorFrame = null;
+        }
+        if (turnoutFrame != null) {
+            turnoutFrame.dispose();
+            turnoutFrame = null;
         }
         if (signalFrame != null) {
             signalFrame.dispose();

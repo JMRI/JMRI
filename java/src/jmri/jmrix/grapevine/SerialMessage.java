@@ -89,7 +89,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * @param addr address to poll.
      * @return serial message to poll data.
      */
-    static public SerialMessage getPoll(int addr) {
+    public static SerialMessage getPoll(int addr) {
         // eventually this will have to include logic for reading 
         // various bytes on the card, but our supported 
         // cards don't require that yet

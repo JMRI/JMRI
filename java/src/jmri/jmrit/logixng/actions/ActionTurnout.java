@@ -115,7 +115,7 @@ public class ActionTurnout extends AbstractDigitalAction
             this._text = text;
         }
 
-        static public TurnoutState get(int id) {
+        public static TurnoutState get(int id) {
             switch (id) {
                 case Turnout.UNKNOWN:
                     return Unknown;
