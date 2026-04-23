@@ -506,8 +506,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                         activeThrottleFrame.removePropertyChangeListener(this);
                         activeThrottleFrame = null;
                     }
-                } else if (object instanceof ThrottleUICore) {
-
+                } else if (object instanceof ThrottleFrame) {
                     if (throttleWindow != null) {
                         throttleWindow.removePropertyChangeListener(this);
                         throttleWindow = null;
@@ -516,15 +515,10 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                         activeThrottleFrame.removePropertyChangeListener(this);
                         activeThrottleFrame = null;
                     }
-
-                    if (object instanceof ThrottleFrame) {
-                        activeThrottleFrame = (ThrottleFrame) object;
-                        throttleWindow = activeThrottleFrame.getThrottleControllersContainer();
-                        throttleWindow.addPropertyChangeListener(this);
-                        activeThrottleFrame.addPropertyChangeListener(this);
-                    } else {
-                        log.warn("new ThrottleFrame is not a ThrottleFrame: {}", object);
-                    }
+                    activeThrottleFrame = (ThrottleFrame) object;
+                    throttleWindow = activeThrottleFrame.getThrottleControllersContainer();
+                    throttleWindow.addPropertyChangeListener(this);
+                    activeThrottleFrame.addPropertyChangeListener(this);                   
                 }
                 break;
             case "Value":

@@ -633,7 +633,10 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
     }
 
     @Override
-    public void removeThrottleController(ThrottleControllerUI tf) {       
+    public void removeThrottleController(ThrottleControllerUI tf) {
+        if (!(tf instanceof ThrottleFrame)) {
+            throw new IllegalArgumentException("Only ThrottleFrame can be removed from ThrottleWindow");
+        }
         if (getCurentThrottleController() == tf) {
             log.debug("Closing last created");
         }
