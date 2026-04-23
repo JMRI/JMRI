@@ -25,7 +25,6 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.throttle.ThrottleFrameManager;
-import jmri.jmrit.throttle.UIImplementation.ThrottleUICore;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.util.JmriJFrame;
 import jmri.util.gui.GuiLafPreferencesManager;

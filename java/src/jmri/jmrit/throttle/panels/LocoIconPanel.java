@@ -1,7 +1,6 @@
 package jmri.jmrit.throttle.panels;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -13,10 +12,6 @@ import jmri.jmrit.consisttool.ConsistListCellRenderer;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.throttle.interfaces.AddressListener;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 public class LocoIconPanel extends JPanel implements AddressListener {
 
@@ -121,6 +116,4 @@ public class LocoIconPanel extends JPanel implements AddressListener {
             addressPanel = null;
         }
     }
-
-    private final static Logger log = LoggerFactory.getLogger(LocoIconPanel.class);
 }
