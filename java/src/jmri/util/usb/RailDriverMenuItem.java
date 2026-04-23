@@ -617,7 +617,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                         String ledString = String.format("F%d", fNum + 1);
                         switch (fNum) {
                             case 28: {  // zoom/rocker button up
-                                if ((activeThrottleFrame != null) && isDown)  {
+                                if (isDown)  {
                                     activeThrottleFrame.getRosterEntrySelector().setSelectedRosterEntry();                                    
                                     DccLocoAddress a = activeThrottleFrame.getAddress();
                                     ledString = "sel " + ((a != null) ? a.toString() : "null");
@@ -625,7 +625,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                                 break;
                             }
                             case 29: {  // zoom/rocker button down
-                                if ((activeThrottleFrame != null) && isDown) {
+                                if (isDown) {
                                     activeThrottleFrame.dispatchAddress();
                                     DccLocoAddress a = activeThrottleFrame.getAddress();
                                     ledString = "dis " + ((a != null) ? a.toString() : "null");
@@ -633,7 +633,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                                 break;
                             }
                             case 30: {  // four way panning up
-                                if ((activeThrottleFrame != null) && isDown)  {
+                                if (isDown)  {
                                     int selectedIndex = activeThrottleFrame.getRosterEntrySelector().getRosterListSelectedIndex();
                                     if (selectedIndex > 1) {
                                         activeThrottleFrame.getRosterEntrySelector().setRosterListSelectedIndex(selectedIndex - 1);
@@ -652,7 +652,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                                 break;
                             }
                             case 32: {  // four way panning down
-                                if ((activeThrottleFrame != null) && isDown) {
+                                if (isDown) {
                                     RosterEntrySelectorPanel resp = activeThrottleFrame.getRosterEntrySelector();
                                     if (resp != null) {
                                         RosterEntryComboBox recb = resp.getRosterEntryComboBox();
