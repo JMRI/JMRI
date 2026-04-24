@@ -54,7 +54,6 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
                 (info.isDataFlavorSupported(throttleControlObjectFlavor) ||
                         info.isDataFlavorSupported(RosterEntrySelection.rosterEntryFlavor));
         table.setCursor(b ? DragSource.DefaultMoveDrop : DragSource.DefaultMoveNoDrop);
-        log.debug("canImport? {} {}",b, info.getDropAction());
         return b;
     }
 

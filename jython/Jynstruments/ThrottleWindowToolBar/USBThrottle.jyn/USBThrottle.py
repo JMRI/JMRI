@@ -21,10 +21,7 @@ import thread
 import java
 import java.awt
 import java.awt.event
-import java.beans
-import java.util
 import jmri
-import java.beans.PropertyChangeListener as PropertyChangeListener
 import java.util.Calendar as Calendar
 import javax.swing.ImageIcon as ImageIcon
 import javax.swing.JButton as JButton
@@ -32,9 +29,9 @@ import javax.swing.JCheckBoxMenuItem as JCheckBoxMenuItem
 import java.util.TimerTask as TimerTask
 import java.util.Timer as Timer
 import jmri.jmrit.jython.Jynstrument as Jynstrument
-import jmri.jmrit.throttle.interfaces.AddressListener as AddressListener
 import jmri.util.ThreadingUtil as ThreadingUtil
 import org.jdom2.Element as Element
+import java.beans.PropertyChangeListener as PropertyChangeListener
 
 # Some default speeds that will be used in the program
 speedMaxSpeed = 1
@@ -44,18 +41,26 @@ speedStopSpeed = 0
 EStopSpeed = -1
 
 # Some constants used by the program
-valueSpeedTimerRepeat = 200 # repeat time in ms for speed set task
-valueSpeedDivider = 10      # a divider for the value given by the pad, then used to increment speed
+valueSpeedTimerRepeat = 100 # repeat time in ms for speed set task
+valueSpeedDivider = 15       # a divider for the value given by the pad, then used to increment speed
 delay4doubleTap = 250       # max delay in ms for double tap => EStop (on 2xStop button) and MaxSpeed (on 2xCruise button)
 
-class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
+class USBThrottle(Jynstrument, PropertyChangeListener):
 #Property listener part: USB value
-    def propertyChange(self, event):
+    def propertyChange(self, event):        
         # Customize bellow for throttles calls:        
         if (event.propertyName == "Value") :  # USB
             if (event.oldValue.getController() == self.desiredController ) :
+#                print "Value change event from controller "+event.toString()
                 component = event.oldValue.getComponent().toString()
                 value = event.newValue
+                throttle = None
+                roster = None
+                if (self.getContext().getCurentThrottleController() != None) :
+                    throttle = self.getContext().getCurentThrottleController().getThrottle()
+                    roster = self.getContext().getCurentThrottleController().getRosterEntry()
+                else:
+                    return # no throttle, no control, exit
                 # Uncomment bellow line to see component name and its value
                 print "Component \""+component+"\" value changed to ",value
                 try:
@@ -71,33 +76,33 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                 except AttributeError:
                     pass
                 
-                if ((self.throttle == None) and (self.addressPanel != None)) :
+                if (throttle == None):
                     try:
                         # Browse through roster
                         if ((component == self.driver.componentNextRosterBrowse) and (value == self.driver.valueNextRoster)): #NEXT
-                            ThreadingUtil.runOnGUI(lambda : self.addressPanel.setRosterSelectedIndex(self.addressPanel.getRosterSelectedIndex() + 1) )
+                            ThreadingUtil.runOnGUI(lambda : self.getContext().getCurentThrottleController().getRosterEntrySelector().setRosterListSelectedIndex(self.getContext().getCurentThrottleController().getRosterEntrySelector().getRosterListSelectedIndex() + 1) )
                         if ((component == self.driver.componentPreviousRosterBrowse) and (value == self.driver.valuePreviousRoster)) : #PREVIOUS
-                            ThreadingUtil.runOnGUI(lambda : self.addressPanel.setRosterSelectedIndex(self.addressPanel.getRosterSelectedIndex() - 1) )
+                            ThreadingUtil.runOnGUI(lambda : self.getContext().getCurentThrottleController().getRosterEntrySelector().setRosterListSelectedIndex(self.getContext().getCurentThrottleController().getRosterEntrySelector().getRosterListSelectedIndex() - 1) )
                     except AttributeError:
                         pass
                     try:
                         # Request a throttle
                         if ((component == self.driver.componentRosterSelect) and (value == self.driver.valueRosterSelect)):
-                            ThreadingUtil.runOnGUI(lambda : self.addressPanel.selectRosterEntry() )
+                            ThreadingUtil.runOnGUI(lambda : self.getContext().getCurentThrottleController().getRosterEntrySelector().setSelectedRosterEntry() )
                     except AttributeError:
                         pass
 
                 # From there; current throttle control, hence require a throttle
-                if (self.throttle != None) :
+                if (throttle != None) :
                     # Release current throttle
                     try:
                         if ((component == self.driver.componentThrottleRelease) and (value == self.driver.valueThrottleRelease)):
-                            ThreadingUtil.runOnGUI(lambda : self.addressPanel.releaseAddress() )
+                            ThreadingUtil.runOnGUI(lambda : self.getContext().getCurentThrottleController().dispatchAddress() )
                     except AttributeError:
-                        pass
-                    
+                        pass                    
                     try:
                         # Speed - dynamic controler (joystick going back to neutral position)
+                        self.speedTimerTask.setThrottle( throttle )
                         if ((component == self.driver.componentSpeedIncrease) or (component == self.driver.componentSpeedDecrease) or (component == self.driver.componentSpeed)):
                             if ((component == self.driver.componentSpeedIncrease) and (value == self.driver.valueSpeedIncrease)) :
                                 self.speedTimerTask.setSpeedIncrement( 0.03 )
@@ -116,33 +121,33 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                     except AttributeError:
                         self.speedTimerTask.pause() # just in case, stop it, really should never get there
                     
-                    try:
-                        # Speed v2 - static controler (lever on RailDriver or AAR105)
-                        if (component == self.driver.componentSpeedSet):
-                            setSpeed = value * self.driver.componentValueSpeedMaxForward * self.driver.componentSpeedMaxForward
-                            if ((setSpeed > 0) and (self.isReversed)) : # it was previously going backward
-                                self.throttle.setIsForward(not self.throttle.getIsForward())
-                                self.isReversed = False
-                            if (setSpeed == -0) : setSpeed = 0 # avoid neg 0
-                            if (setSpeed < 0):  # going backward
-                                setSpeed = value * self.driver.componentValueSpeedMaxReverse * self.driver.componentSpeedMaxReverse
-                                if (not self.isReversed): # going backward for the first time
-                                    self.throttle.setIsForward(not self.throttle.getIsForward())
-                                    self.isReversed = True                            
-                            self.throttle.setSpeedSetting(setSpeed)
-                    except AttributeError:                        
-                        pass
+#                    try:
+#                        # Speed v2 - static controler (lever on RailDriver or AAR105)
+#                        if (component == self.driver.componentSpeedSet):
+#                            setSpeed = value * self.driver.componentValueSpeedMaxForward * self.driver.componentSpeedMaxForward
+#                            if ((setSpeed > 0) and (self.isReversed)) : # it was previously going backward
+#                                throttle.setIsForward(not throttle.getIsForward())
+#                                self.isReversed = False
+#                            if (setSpeed == -0) : setSpeed = 0 # avoid neg 0
+#                            if (setSpeed < 0):  # going backward
+#                                setSpeed = value * self.driver.componentValueSpeedMaxReverse * self.driver.componentSpeedMaxReverse
+#                                if (not self.isReversed): # going backward for the first time
+#                                    throttle.setIsForward(not throttle.getIsForward())
+#                                    self.isReversed = True                            
+#                            throttle.setSpeedSetting(setSpeed)
+#                    except AttributeError:                        
+#                        pass
                     # Direction
                     try:
                         if ((component == self.driver.componentDirectionForward) and (value == self.driver.valueDirectionForward)) :
-                            self.throttle.setIsForward(True)
+                            throttle.setIsForward(True)
                         if ((component == self.driver.componentDirectionBackward) and (value == self.driver.valueDirectionBackward)) :
-                            self.throttle.setIsForward(False)
+                            throttle.setIsForward(False)
                     except AttributeError:
                         pass                    
                     try:                    
                         if ((component == self.driver.componentDirectionSwitch) and (value == self.driver.valueDirectionSwitch)) :
-                            self.throttle.setIsForward(not self.throttle.getIsForward())
+                            throttle.setIsForward(not throttle.getIsForward())
                     except AttributeError:
                         pass
                     
@@ -150,302 +155,274 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                     try:  # STOP
                         if ((component == self.driver.componentStopSpeed) and (value == self.driver.valueStopSpeed)) :
                             if ( Calendar.getInstance().getTimeInMillis() - self.lastTimeStopButton < delay4doubleTap ) : 
-                                self.throttle.setSpeedSetting(EStopSpeed) # EStop on double tap
+                                throttle.setSpeedSetting(EStopSpeed) # EStop on double tap
                             else:
-                                self.throttle.setSpeedSetting(speedStopSpeed)
+                                throttle.setSpeedSetting(speedStopSpeed)
                             self.lastTimeStopButton = Calendar.getInstance().getTimeInMillis()
                     except AttributeError:
                         pass
                     try:   # EStop
                         if ((component == self.driver.componentEStopSpeed) and (value == self.driver.valueEStopSpeed)):
-                            self.throttle.setSpeedSetting(EStopSpeed)
+                            throttle.setSpeedSetting(EStopSpeed)
                     except AttributeError:
                         pass
                     try:   # EStop
                         if ((component == self.driver.componentEStopSpeedBis) and (value == self.driver.valueEStopSpeedBis)):
-                            self.throttle.setSpeedSetting(EStopSpeed)
+                            throttle.setSpeedSetting(EStopSpeed)
                     except AttributeError:
                         pass
                     try:   # SLOW
                         if ((component == self.driver.componentSlowSpeed) and (value == self.driver.valueSlowSpeed)) :
-                            self.throttle.setSpeedSetting(speedSlowSpeed)
+                            throttle.setSpeedSetting(speedSlowSpeed)
                     except AttributeError:
                         pass
                     try:   # CRUISE
                         if ((component == self.driver.componentCruiseSpeed) and (value == self.driver.valueCruiseSpeed)) :
                             if ( Calendar.getInstance().getTimeInMillis() - self.lastTimeCruiseButton < delay4doubleTap ) : # EStop on double tap
-                                self.throttle.setSpeedSetting(speedMaxSpeed) # Max speed on double tap
+                                throttle.setSpeedSetting(speedMaxSpeed) # Max speed on double tap
                             else:
                                 if (self.driver.cruiseSpeed == None) :
-                                    self.throttle.setSpeedSetting(speedCruiseSpeed)
+                                    throttle.setSpeedSetting(speedCruiseSpeed)
                                 else:
-                                    self.throttle.setSpeedSetting(self.driver.cruiseSpeed)
+                                    throttle.setSpeedSetting(self.driver.cruiseSpeed)
                             self.lastTimeCruiseButton = Calendar.getInstance().getTimeInMillis()
                     except AttributeError:
                         pass
                     try:   # MAX
                         if ((component == self.driver.componentMaxSpeed) and (value == self.driver.valueMaxSpeed)) :
-                            self.throttle.setSpeedSetting(speedMaxSpeed)
+                            throttle.setSpeedSetting(speedMaxSpeed)
                     except AttributeError:
                         pass
                         
                     # Functions
                     try:
                         if ((component == self.driver.componentF0) and (value == self.driver.valueF0)) :
-                            self.throttle.setF0( not self.throttle.getF0() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(0)) and (component == self.driver.componentF0) and (value == self.driver.valueF0Off)) :
-                            self.throttle.setF0( not self.throttle.getF0() )
+                            throttle.setF0( not throttle.getF0() )
+                        if ((roster != None) and (not roster.getFunctionLockable(0)) and (component == self.driver.componentF0) and (value == self.driver.valueF0Off)) :
+                            throttle.setF0( not throttle.getF0() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF1) and (value == self.driver.valueF1)) :
-                            self.throttle.setF1( not self.throttle.getF1() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(1)) and (component == self.driver.componentF1) and (value == self.driver.valueF1Off)) :
-                            self.throttle.setF1( not self.throttle.getF1() )
+                            throttle.setF1( not throttle.getF1() )
+                        if ((roster != None) and (not roster.getFunctionLockable(1)) and (component == self.driver.componentF1) and (value == self.driver.valueF1Off)) :
+                            throttle.setF1( not throttle.getF1() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF2) and (value == self.driver.valueF2)) :
-                            self.throttle.setF2( not self.throttle.getF2() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(2)) and (component == self.driver.componentF2) and (value == self.driver.valueF2Off)) :
-                            self.throttle.setF2( not self.throttle.getF2() )
+                            throttle.setF2( not throttle.getF2() )
+                        if ((roster != None) and (not roster.getFunctionLockable(2)) and (component == self.driver.componentF2) and (value == self.driver.valueF2Off)) :
+                            throttle.setF2( not throttle.getF2() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF3) and (value == self.driver.valueF3)) :
-                            self.throttle.setF3( not self.throttle.getF3() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(3)) and (component == self.driver.componentF3) and (value == self.driver.valueF3Off)) :
-                            self.throttle.setF3( not self.throttle.getF3() )
+                            throttle.setF3( not throttle.getF3() )
+                        if ((roster != None) and (not roster.getFunctionLockable(3)) and (component == self.driver.componentF3) and (value == self.driver.valueF3Off)) :
+                            throttle.setF3( not throttle.getF3() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF4) and (value == self.driver.valueF4)) :
-                            self.throttle.setF4( not self.throttle.getF4() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(4)) and (component == self.driver.componentF4) and (value == self.driver.valueF4Off)) :
-                            self.throttle.setF4( not self.throttle.getF4() )
+                            throttle.setF4( not throttle.getF4() )
+                        if ((roster != None) and (not roster.getFunctionLockable(4)) and (component == self.driver.componentF4) and (value == self.driver.valueF4Off)) :
+                            throttle.setF4( not throttle.getF4() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF5) and (value == self.driver.valueF5)) :
-                            self.throttle.setF5( not self.throttle.getF5() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(5)) and (component == self.driver.componentF5) and (value == self.driver.valueF5Off)) :
-                            self.throttle.setF5( not self.throttle.getF5() )
+                            throttle.setF5( not throttle.getF5() )
+                        if ((roster != None) and (not roster.getFunctionLockable(5)) and (component == self.driver.componentF5) and (value == self.driver.valueF5Off)) :
+                            throttle.setF5( not throttle.getF5() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF6) and (value == self.driver.valueF6)) :
-                            self.throttle.setF6( not self.throttle.getF6() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(6)) and (component == self.driver.componentF6) and (value == self.driver.valueF6Off)) :
-                            self.throttle.setF6( not self.throttle.getF6() )
+                            throttle.setF6( not throttle.getF6() )
+                        if ((roster != None) and (not roster.getFunctionLockable(6)) and (component == self.driver.componentF6) and (value == self.driver.valueF6Off)) :
+                            throttle.setF6( not throttle.getF6() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF7) and (value == self.driver.valueF7)) :
-                            self.throttle.setF7( not self.throttle.getF7() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(7)) and (component == self.driver.componentF7) and (value == self.driver.valueF7Off)) :
-                            self.throttle.setF7( not self.throttle.getF7() )
+                            throttle.setF7( not throttle.getF7() )
+                        if ((roster != None) and (not roster.getFunctionLockable(7)) and (component == self.driver.componentF7) and (value == self.driver.valueF7Off)) :
+                            throttle.setF7( not throttle.getF7() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF8) and (value == self.driver.valueF8)) :
-                            self.throttle.setF8( not self.throttle.getF8() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(8)) and (component == self.driver.componentF8) and (value == self.driver.valueF8Off)) :
-                            self.throttle.setF8( not self.throttle.getF8() )
+                            throttle.setF8( not throttle.getF8() )
+                        if ((roster != None) and (not roster.getFunctionLockable(8)) and (component == self.driver.componentF8) and (value == self.driver.valueF8Off)) :
+                            throttle.setF8( not throttle.getF8() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF9) and (value == self.driver.valueF9)) :
-                            self.throttle.setF9( not self.throttle.getF9() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(9)) and (component == self.driver.componentF9) and (value == self.driver.valueF9Off)) :
-                            self.throttle.setF9( not self.throttle.getF9() )
+                            throttle.setF9( not throttle.getF9() )
+                        if ((roster != None) and (not roster.getFunctionLockable(9)) and (component == self.driver.componentF9) and (value == self.driver.valueF9Off)) :
+                            throttle.setF9( not throttle.getF9() )
                     except AttributeError:
                         pass  
                     try:
                         if ((component == self.driver.componentF10) and (value == self.driver.valueF10)) :
-                            self.throttle.setF10( not self.throttle.getF10() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(10)) and (component == self.driver.componentF10) and (value == self.driver.valueF10Off)) :
-                            self.throttle.setF10( not self.throttle.getF10() )
+                            throttle.setF10( not throttle.getF10() )
+                        if ((roster != None) and (not roster.getFunctionLockable(10)) and (component == self.driver.componentF10) and (value == self.driver.valueF10Off)) :
+                            throttle.setF10( not throttle.getF10() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF11) and (value == self.driver.valueF11)) :
-                            self.throttle.setF11( not self.throttle.getF11() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(11)) and (component == self.driver.componentF11) and (value == self.driver.valueF11Off)) :
-                            self.throttle.setF11( not self.throttle.getF11() )
+                            throttle.setF11( not throttle.getF11() )
+                        if ((roster != None) and (not roster.getFunctionLockable(11)) and (component == self.driver.componentF11) and (value == self.driver.valueF11Off)) :
+                            throttle.setF11( not throttle.getF11() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF12) and (value == self.driver.valueF12)) :
-                            self.throttle.setF12( not self.throttle.getF12() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(12)) and (component == self.driver.componentF12) and (value == self.driver.valueF12Off)) :
-                            self.throttle.setF12( not self.throttle.getF12() )
+                            throttle.setF12( not throttle.getF12() )
+                        if ((roster != None) and (not roster.getFunctionLockable(12)) and (component == self.driver.componentF12) and (value == self.driver.valueF12Off)) :
+                            throttle.setF12( not throttle.getF12() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF13) and (value == self.driver.valueF13)) :
-                            self.throttle.setF13( not self.throttle.getF13() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(13)) and (component == self.driver.componentF13) and (value == self.driver.valueF13Off)) :
-                            self.throttle.setF13( not self.throttle.getF13() )
+                            throttle.setF13( not throttle.getF13() )
+                        if ((roster != None) and (not roster.getFunctionLockable(13)) and (component == self.driver.componentF13) and (value == self.driver.valueF13Off)) :
+                            throttle.setF13( not throttle.getF13() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF14) and (value == self.driver.valueF14)) :
-                            self.throttle.setF14( not self.throttle.getF14() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(14)) and (component == self.driver.componentF14) and (value == self.driver.valueF14Off)) :
-                            self.throttle.setF14( not self.throttle.getF14() )
+                            throttle.setF14( not throttle.getF14() )
+                        if ((roster != None) and (not roster.getFunctionLockable(14)) and (component == self.driver.componentF14) and (value == self.driver.valueF14Off)) :
+                            throttle.setF14( not throttle.getF14() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF15) and (value == self.driver.valueF15)) :
-                            self.throttle.setF15( not self.throttle.getF15() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(15)) and (component == self.driver.componentF15) and (value == self.driver.valueF15Off)) :
-                            self.throttle.setF15( not self.throttle.getF15() )
+                            throttle.setF15( not throttle.getF15() )
+                        if ((roster != None) and (not roster.getFunctionLockable(15)) and (component == self.driver.componentF15) and (value == self.driver.valueF15Off)) :
+                            throttle.setF15( not throttle.getF15() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF16) and (value == self.driver.valueF16)) :
-                            self.throttle.setF16( not self.throttle.getF16() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(16)) and (component == self.driver.componentF16) and (value == self.driver.valueF16Off)) :
-                            self.throttle.setF16( not self.throttle.getF16() )
+                            throttle.setF16( not throttle.getF16() )
+                        if ((roster != None) and (not roster.getFunctionLockable(16)) and (component == self.driver.componentF16) and (value == self.driver.valueF16Off)) :
+                            throttle.setF16( not throttle.getF16() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF17) and (value == self.driver.valueF17)) :
-                            self.throttle.setF17( not self.throttle.getF17() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(17)) and (component == self.driver.componentF17) and (value == self.driver.valueF17Off)) :
-                            self.throttle.setF17( not self.throttle.getF17() )
+                            throttle.setF17( not throttle.getF17() )
+                        if ((roster != None) and (not roster.getFunctionLockable(17)) and (component == self.driver.componentF17) and (value == self.driver.valueF17Off)) :
+                            throttle.setF17( not throttle.getF17() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF18) and (value == self.driver.valueF18)) :
-                            self.throttle.setF18( not self.throttle.getF18() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(18)) and (component == self.driver.componentF18) and (value == self.driver.valueF18Off)) :
-                            self.throttle.setF18( not self.throttle.getF18() )
+                            throttle.setF18( not throttle.getF18() )
+                        if ((roster != None) and (not roster.getFunctionLockable(18)) and (component == self.driver.componentF18) and (value == self.driver.valueF18Off)) :
+                            throttle.setF18( not throttle.getF18() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF19) and (value == self.driver.valueF19)) :
-                            self.throttle.setF19( not self.throttle.getF19() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(19)) and (component == self.driver.componentF19) and (value == self.driver.valueF19Off)) :
-                            self.throttle.setF19( not self.throttle.getF19() )
+                            throttle.setF19( not throttle.getF19() )
+                        if ((roster != None) and (not roster.getFunctionLockable(19)) and (component == self.driver.componentF19) and (value == self.driver.valueF19Off)) :
+                            throttle.setF19( not throttle.getF19() )
                     except AttributeError:
                         pass   
                     
                     try:
                         if ((component == self.driver.componentF20) and (value == self.driver.valueF20)) :
-                            self.throttle.setF20( not self.throttle.getF20() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(20)) and (component == self.driver.componentF20) and (value == self.driver.valueF20Off)) :
-                            self.throttle.setF20( not self.throttle.getF20() )
+                            throttle.setF20( not throttle.getF20() )
+                        if ((roster != None) and (not roster.getFunctionLockable(20)) and (component == self.driver.componentF20) and (value == self.driver.valueF20Off)) :
+                            throttle.setF20( not throttle.getF20() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF21) and (value == self.driver.valueF21)) :
-                            self.throttle.setF21( not self.throttle.getF21() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(21)) and (component == self.driver.componentF21) and (value == self.driver.valueF21Off)) :
-                            self.throttle.setF21( not self.throttle.getF21() )
+                            throttle.setF21( not throttle.getF21() )
+                        if ((roster != None) and (not roster.getFunctionLockable(21)) and (component == self.driver.componentF21) and (value == self.driver.valueF21Off)) :
+                            throttle.setF21( not throttle.getF21() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF22) and (value == self.driver.valueF22)) :
-                            self.throttle.setF22( not self.throttle.getF22() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(22)) and (component == self.driver.componentF22) and (value == self.driver.valueF22Off)) :
-                            self.throttle.setF22( not self.throttle.getF22() )
+                            throttle.setF22( not throttle.getF22() )
+                        if ((roster != None) and (not roster.getFunctionLockable(22)) and (component == self.driver.componentF22) and (value == self.driver.valueF22Off)) :
+                            throttle.setF22( not throttle.getF22() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF23) and (value == self.driver.valueF23)) :
-                            self.throttle.setF23( not self.throttle.getF23() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(23)) and (component == self.driver.componentF23) and (value == self.driver.valueF23Off)) :
-                            self.throttle.setF23( not self.throttle.getF23() )
+                            throttle.setF23( not throttle.getF23() )
+                        if ((roster != None) and (not roster.getFunctionLockable(23)) and (component == self.driver.componentF23) and (value == self.driver.valueF23Off)) :
+                            throttle.setF23( not throttle.getF23() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF24) and (value == self.driver.valueF24)) :
-                            self.throttle.setF24( not self.throttle.getF24() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(24)) and (component == self.driver.componentF24) and (value == self.driver.valueF24Off)) :
-                            self.throttle.setF24( not self.throttle.getF24() )
+                            throttle.setF24( not throttle.getF24() )
+                        if ((roster != None) and (not roster.getFunctionLockable(24)) and (component == self.driver.componentF24) and (value == self.driver.valueF24Off)) :
+                            throttle.setF24( not throttle.getF24() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF25) and (value == self.driver.valueF25)) :
-                            self.throttle.setF25( not self.throttle.getF25() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(25)) and (component == self.driver.componentF25) and (value == self.driver.valueF25Off)) :
-                            self.throttle.setF25( not self.throttle.getF25() )
+                            throttle.setF25( not throttle.getF25() )
+                        if ((roster != None) and (not roster.getFunctionLockable(25)) and (component == self.driver.componentF25) and (value == self.driver.valueF25Off)) :
+                            throttle.setF25( not throttle.getF25() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF26) and (value == self.driver.valueF26)) :
-                            self.throttle.setF26( not self.throttle.getF26() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(26)) and (component == self.driver.componentF26) and (value == self.driver.valueF26Off)) :
-                            self.throttle.setF26( not self.throttle.getF26() )
+                            throttle.setF26( not throttle.getF26() )
+                        if ((roster != None) and (not roster.getFunctionLockable(26)) and (component == self.driver.componentF26) and (value == self.driver.valueF26Off)) :
+                            throttle.setF26( not throttle.getF26() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF27) and (value == self.driver.valueF27)) :
-                            self.throttle.setF27( not self.throttle.getF27() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(27)) and (component == self.driver.componentF27) and (value == self.driver.valueF27Off)) :
-                            self.throttle.setF27( not self.throttle.getF27() )
+                            throttle.setF27( not throttle.getF27() )
+                        if ((roster != None) and (not roster.getFunctionLockable(27)) and (component == self.driver.componentF27) and (value == self.driver.valueF27Off)) :
+                            throttle.setF27( not throttle.getF27() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF28) and (value == self.driver.valueF28)) :
-                            self.throttle.setF28( not self.throttle.getF28() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(28)) and (component == self.driver.componentF28) and (value == self.driver.valueF28Off)) :
-                            self.throttle.setF28( not self.throttle.getF28() )
+                            throttle.setF28( not throttle.getF28() )
+                        if ((roster != None) and (not roster.getFunctionLockable(28)) and (component == self.driver.componentF28) and (value == self.driver.valueF28Off)) :
+                            throttle.setF28( not throttle.getF28() )
                     except AttributeError:
                         pass
                     try:
                         if ((component == self.driver.componentF29) and (value == self.driver.valueF29)) :
-                            self.throttle.setF29( not self.throttle.getF29() )
-                        if ((self.roster != None) and (not self.roster.getFunctionLockable(29)) and (component == self.driver.componentF29) and (value == self.driver.valueF29Off)) :
-                            self.throttle.setF29( not self.throttle.getF29() )
+                            throttle.setF29( not throttle.getF29() )
+                        if ((roster != None) and (not roster.getFunctionLockable(29)) and (component == self.driver.componentF29) and (value == self.driver.valueF29Off)) :
+                            throttle.setF29( not throttle.getF29() )
                     except AttributeError:
                         pass
-
-        # Nothing to customize bellow this point
-        if (event.propertyName.startswith("ThrottleFrame")) :  # Current throttle frame changed
-            self.speedTask.pause()
-            if (event.oldValue != None) :
-                event.oldValue.getAddressPanel().removeAddressListener(self)
-            if (event.newValue != None) :
-                self.addressPanel = event.newValue.getAddressPanel()
-                self.throttle = self.addressPanel.getThrottle()
-                self.roster = self.addressPanel.getRosterEntry()
-                event.newValue.getAddressPanel().addAddressListener(self)
-            else:
-                self.addressPanel = None
-                self.throttle = None
-                self.roster = None
-            self.speedTimerTask.setThrottle( self.throttle )
 
 #Jynstrument main and mandatory methods
     def getExpectedContextClassName(self):
         return "jmri.jmrit.throttle.ThrottleWindow"
     
     def init(self):
-        self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
-        if ( self.getContext().getCurentThrottleController() != None) :
-            self.addressPanel = self.getContext().getCurentThrottleController().getAddressPanel()
-            self.addressPanel.addAddressListener(self) # change of throttle in Current frame
-            self.throttle = self.addressPanel.getThrottle() # the throttle
-            self.roster = self.addressPanel.getRosterEntry() # roster entry if any
-        else:
-            self.addressPanel = None
-            self.throttle = None
-            self.roster = None
         self.speedTimerTask = SpeedTimerTask() #Speed increase thread
-        self.speedTimerTask.setThrottle( self.throttle )
         self.speedTimer = Timer()
         self.speedTimer.schedule(self.speedTimerTask, 0, valueSpeedTimerRepeat)
         self.label = JButton(ImageIcon(self.getFolder() + "/USBControl.png","USBThrottle")) #label
         self.label.addMouseListener(self.getMouseListeners()[0]) # In order to get the popupmenu on the button too
-        self.add(self.label)
-        self.model = jmri.jmrix.jinput.TreeModel.instance() # USB
+        self.add(self.label)        
         self.desiredController = None
         self.ctrlMenuItem = []
         self.USBDriver = None
-        self.driver = None
-        self.isReversed = False
+        self.driver = None        
+        self.model = jmri.jmrix.jinput.TreeModel.instance() # USB controllers model        
         mi = JCheckBoxMenuItem ("None")
         self.getPopUpMenu().add( mi )
         mi.addItemListener( ControllerItemListener(None, self) )
@@ -458,10 +435,10 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         if ( len(self.ctrlMenuItem) == 0 ):
             print "No matching USB device found"
         else:
-            self.ctrlMenuItem[0].setSelected(True)  # by default connect to the first one
-        self.model.addPropertyChangeListener(self)
+            self.ctrlMenuItem[0].setSelected(True)  # by default connect to the first one        
         self.lastTimeStopButton = Calendar.getInstance().getTimeInMillis()
         self.lastTimeCruiseButton = Calendar.getInstance().getTimeInMillis()
+        self.model.addPropertyChangeListener(self) # Listen to USB device changes to update the list of available controllers in the menu
 
 # On quit clean up resources       
     def quit(self):
@@ -473,24 +450,15 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         self.ctrlMenuItem = None
         self.speedTimerTask = None
         self.speedTimer = None
-        self.throttle = None
-        self.addressPanel = None
         self.driver = None
         self.USBDriver = None
-        if (self.model != None) :
-            self.model.removePropertyChangeListener(self)
-        if (self.getContext() != None) :
-            self.getContext().removePropertyChangeListener(self)        
-            if (self.getContext().getCurentThrottleController() != None) :
-                if (self.getContext().getCurentThrottleController().getAddressPanel() != None) :
-                    self.getContext().getCurentThrottleController().getAddressPanel().removeAddressListener(self)
 
 # Menu entry changed for Current controller and update driver
     def setSelectedController(self, ctrl, item):
         for mi in self.ctrlMenuItem :
             if ( mi != item ):  # Force deselection of other ones
                 mi.setSelected(False)
-        self.desiredController = ctrl
+        self.desiredController = ctrl  # we will compare against this reference in the property change event to be sure we are listening to the right one
         if (ctrl != None) :
             sys.path.append(self.getFolder()) # Load a driver
             try:
@@ -549,29 +517,6 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                elt.setAttribute("DesiredController", mi.getText())
                break
        return elt
-
-#AddressListener part: to listen for address changes in address panel (release, acquired)
-    def notifyAddressChosen(self, address):
-        pass
-        
-    def notifyAddressThrottleFound(self, throttle):
-        self.speedTimerTask.pause() 
-        self.throttle = throttle
-        self.speedTimerTask.setThrottle( self.throttle )
-            
-    def notifyAddressReleased(self, address):
-        self.speedTimerTask.pause()
-        self.throttle = None
-        self.speedTimerTask.setThrottle( self.throttle )
-
-    def notifyConsistAddressChosen(self, address):
-        self.notifyAddressChosen(address)
-
-    def notifyConsistAddressThrottleFound(self, throttle):
-        self.notifyAddressThrottleFound(throttle)
-
-    def notifyConsistAddressReleased(self, address):
-        self.notifyAddressReleased(address)
 
 # Item listeners for the PopUp menu
 class ControllerItemListener( java.awt.event.ItemListener):

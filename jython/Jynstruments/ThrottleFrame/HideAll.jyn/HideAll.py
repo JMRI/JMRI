@@ -32,13 +32,13 @@ class HideAll(Jynstrument, MouseListener):
     def switch(self):      # actually do stuff here
         self.isActive = not self.isActive
         # hide menu bar
-        self.getContext().getThrottleWindow().getJMenuBar().setVisible(not self.isActive)
+        self.getContext().getThrottleControllersContainer().getJMenuBar().setVisible(not self.isActive)
         # look for an hide toolbar
-        for comp in self.getContext().getThrottleWindow().getContentPane().getComponents() :
+        for comp in self.getContext().getThrottleControllersContainer().getContentPane().getComponents() :
             if (comp.getClass().getSimpleName() == 'JToolBar'):
                 comp.setVisible(not self.isActive)
         # switch edit mode, will hide all inner windows decorations
-        self.getContext().getThrottleWindow().setEditMode(not self.isActive)    
+        self.getContext().getThrottleControllersContainer().setEditMode(not self.isActive)    
         
 #MouseListener part: to listen for mouse events
     def mouseReleased(self, event):

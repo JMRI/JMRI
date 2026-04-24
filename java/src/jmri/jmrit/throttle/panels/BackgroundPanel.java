@@ -50,7 +50,7 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
         setImagePath(null);
         if (rosterEntry != null) {
             setImagePath(rosterEntry.getImagePath());
-        } else {
+        } else if (addressPanel != null) {
             DccThrottle t = addressPanel.getThrottle();
             if (t != null) {               
                 if (t.getLocoAddress().toString().compareTo("3(S)") == 0) { // default DCC address
@@ -66,7 +66,9 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
 
     @Override
     public void notifyAddressThrottleFound(DccThrottle t) {
-        updateImage(addressPanel.getRosterEntry());
+        if (addressPanel != null) {
+            updateImage(addressPanel.getRosterEntry());
+        }       
     }
 
     @Override
@@ -85,7 +87,9 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
 
     @Override
     public void notifyConsistAddressChosen(LocoAddress l) {
-        updateImage(addressPanel.getRosterEntry());
+        if (addressPanel != null) {
+            updateImage(addressPanel.getRosterEntry());
+        }
     }
 
     @Override
@@ -95,7 +99,9 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
 
     @Override
     public void notifyConsistAddressThrottleFound(DccThrottle t) {
-        updateImage(addressPanel.getRosterEntry());
+        if (addressPanel != null) {
+            updateImage(addressPanel.getRosterEntry());
+        }
     }
 
     public void destroy() {

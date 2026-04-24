@@ -32,7 +32,7 @@ class Direction(Jynstrument, PropertyChangeListener, AddressListener, MouseListe
 
     def quit(self):   # very important to clean up everything to make sure GC will collect us
         self.cleanThrottle()
-        if (( self.getContext() != None) and ( self.getContext().getAddressPanel() != None)) :
+        if (self.getContext() != None) :
             self.getContext().removeAddressListener(self)
 
 # this is a good way to make sure that we're are actaully GCed 
