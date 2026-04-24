@@ -187,7 +187,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             ((CMRISystemConnectionMemo) adapter.getSystemConnectionMemo())
                     .setExternalConfig(filename);
             File file = new File(FileUtil.getExternalFilename(filename));
-            log.error(file.getAbsolutePath());
             Element root = new XmlFile().rootFromURL(FileUtil.fileToURL(file));
             Element config = root.getChild("config");
             loadConfig(config);
