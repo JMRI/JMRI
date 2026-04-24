@@ -3,8 +3,8 @@ package jmri.jmrix.cmri;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
-import javax.annotation.CheckReturnValue;
+
+import javax.annotation.*;
 
 import jmri.*;
 import jmri.Manager.NameValidity;
@@ -39,8 +39,37 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo implem
         log.debug("Created CMRISystemConnectionMemo");
     }
 
+    private String externalConfig = null;
     private SerialTrafficController tc = null;
     ComponentFactory cf = null;
+
+    /**
+     * Set external config for this adapter.
+     * If external config is used, the configuration is read from an external
+     * xml file which can be shared among profiles.
+     * The filename usually starts with "settings:", for example
+     * "settings:cmri_external_config.xml".
+     *
+     * @param externalConfig the filename of the config xml file or null if no
+     *                       external config
+     */
+    public void setExternalConfig(String externalConfig) {
+        this.externalConfig = externalConfig;
+    }
+
+    /**
+     * Get external config for this adapter.
+     * If external config is used, the configuration is read from an external
+     * xml file which can be shared among profiles.
+     * The filename usually starts with "settings:", for example
+     * "settings:cmri_external_config.xml".
+     *
+     * @return externalConfig the filename of the config xml file or null if no
+     *                        external config
+     */
+    public String getExternalConfig() {
+        return this.externalConfig;
+    }
 
     /**
      * Set the traffic controller instance associated with this connection memo.
