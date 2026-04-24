@@ -245,6 +245,6 @@ public class ReporterTableDataModel extends BeanTableDataModel<Reporter> {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ReporterTableDataModel.class);
+    private static final Logger log = LoggerFactory.getLogger(ReporterTableDataModel.class);
 
 }

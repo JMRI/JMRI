@@ -139,5 +139,5 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
         return true;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionMemoryXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionMemoryXml.class);
 }

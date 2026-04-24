@@ -23,7 +23,7 @@ import jmri.util.swing.JemmyUtil;
  */
 public class ImportLocationsTest extends OperationsTestCase {
 
-    private final static Logger log = LoggerFactory.getLogger(ImportLocationsTest.class);
+    private static final Logger log = LoggerFactory.getLogger(ImportLocationsTest.class);
 
     @Test
     public void testCTor() {

@@ -275,5 +275,5 @@ public class ReferenceUtil {
         public int v;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ReferenceUtil.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ReferenceUtil.class);
 }

@@ -585,6 +585,6 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainSwitchListsTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainSwitchListsTest.class);
 
 }

@@ -426,7 +426,7 @@ public class TrainCsvSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("Place engine on track", Track.OKAY, e1.setLocation(locationA, yardA));
     }
 
-    // private final static Logger log =
+    // private static final Logger log =
     // LoggerFactory.getLogger(TrainCsvSwitchListsTest.class);
 
 }

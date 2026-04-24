@@ -23,6 +23,6 @@ public class SetupExcelProgramFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SetupExcelProgramFrameTest.class);
 
 }

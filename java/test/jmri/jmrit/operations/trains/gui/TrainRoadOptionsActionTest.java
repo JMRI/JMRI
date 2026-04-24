@@ -25,6 +25,6 @@ public class TrainRoadOptionsActionTest extends OperationsTestCase {
         JUnitUtil.dispose(tf);
     }
 
-    // private final static Logger log =
+    // private static final Logger log =
     // LoggerFactory.getLogger(TrainRoadOptionsActionTest.class);
 }

@@ -27,6 +27,6 @@ public class ToolTipTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ToolTipTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ToolTipTest.class);
 
 }

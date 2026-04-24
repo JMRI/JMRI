@@ -288,5 +288,5 @@ public class PrintTrainsFrame extends OperationsFrame {
         return count;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintTrainsFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintTrainsFrame.class);
 }

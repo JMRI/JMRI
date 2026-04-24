@@ -118,5 +118,5 @@ public class ActionRequestUpdateOfTurnout extends AbstractDigitalAction
     public void disposeMe() {
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionRequestUpdateOfTurnout.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionRequestUpdateOfTurnout.class);
 }

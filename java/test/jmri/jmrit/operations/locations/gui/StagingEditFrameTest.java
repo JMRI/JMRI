@@ -24,7 +24,7 @@ import jmri.util.swing.JemmyUtil;
  */
 public class StagingEditFrameTest extends OperationsTestCase {
 
-    final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
+    static final int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
     LocationManager lManager = null; // set in setUp, dispose in tearDown
     Location l = null;  // set in setUp, dispose in tearDown

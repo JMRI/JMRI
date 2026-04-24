@@ -49,6 +49,6 @@ public class TrackLoadEditActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrackLoadEditActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrackLoadEditActionTest.class);
 
 }

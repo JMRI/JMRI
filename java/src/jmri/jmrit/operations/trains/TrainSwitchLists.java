@@ -521,5 +521,5 @@ public class TrainSwitchLists extends TrainCommon {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainSwitchLists.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainSwitchLists.class);
 }

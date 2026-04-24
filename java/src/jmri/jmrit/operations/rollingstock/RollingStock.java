@@ -1757,6 +1757,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStock.class);
+    private static final Logger log = LoggerFactory.getLogger(RollingStock.class);
 
 }

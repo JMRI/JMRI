@@ -61,6 +61,6 @@ public class ImageIndexEditorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ImageIndexEditorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ImageIndexEditorTest.class);
 
 }

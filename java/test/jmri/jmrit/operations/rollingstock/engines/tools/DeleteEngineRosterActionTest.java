@@ -64,6 +64,6 @@ public class DeleteEngineRosterActionTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DeleteEngineRosterActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DeleteEngineRosterActionTest.class);
 
 }

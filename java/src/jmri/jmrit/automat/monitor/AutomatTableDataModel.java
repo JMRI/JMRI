@@ -215,6 +215,6 @@ public class AutomatTableDataModel extends AbstractTableModel {
         AutomatSummary.instance().removePropertyChangeListener(this.listener);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomatTableDataModel.class);
+    private static final Logger log = LoggerFactory.getLogger(AutomatTableDataModel.class);
 
 }

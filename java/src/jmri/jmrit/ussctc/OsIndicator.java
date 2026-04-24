@@ -26,7 +26,7 @@ import jmri.implementation.DefaultConditionalAction;
 public class OsIndicator implements Constants {
 
     static String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
-    final static String namePrefix = logixPrefix + ":" + commonNamePrefix + "OsIndicator" + commonNameSuffix; // NOI18N
+    static final String namePrefix = logixPrefix + ":" + commonNamePrefix + "OsIndicator" + commonNameSuffix; // NOI18N
 
     /**
      * Nobody can build anonymous object

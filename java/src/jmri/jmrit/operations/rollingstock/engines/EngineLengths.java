@@ -77,6 +77,6 @@ public class EngineLengths extends RollingStockAttribute implements InstanceMana
         super.firePropertyChange(p, old, n);
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(EngineLengths.class);
+//    private static final Logger log = LoggerFactory.getLogger(EngineLengths.class);
 
 }

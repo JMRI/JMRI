@@ -70,7 +70,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         preferencesItem = category;
     }
 
-    final public void actionPerformed() {
+    public final void actionPerformed() {
         if (! InstanceManager.getDefault(PermissionManager.class)
                 .ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
                         BooleanPermission.BooleanValue.TRUE)) {

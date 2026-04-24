@@ -161,6 +161,6 @@ public class RpsPositionIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.SENSORS, element);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RpsPositionIconXml.class);
+    private static final Logger log = LoggerFactory.getLogger(RpsPositionIconXml.class);
 
 }

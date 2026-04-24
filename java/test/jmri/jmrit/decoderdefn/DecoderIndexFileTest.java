@@ -255,6 +255,6 @@ public class DecoderIndexFileTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DecoderIndexFileTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DecoderIndexFileTest.class);
 
 }

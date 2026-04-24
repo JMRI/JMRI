@@ -231,6 +231,6 @@ public class LogDataTableModel extends AbstractTableModel {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogDataTableModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogDataTableModel.class);
 
 }

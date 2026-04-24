@@ -28,7 +28,7 @@ import jmri.util.swing.TextAreaFIFO;
 public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
 
     static int console_instance_num;
-    static final private int MAX_LINES = 5000;
+    private static final int MAX_LINES = 5000;
 
     private final ConcurrentLinkedDeque<CbusConsoleLogEntry> logBuffer;
 

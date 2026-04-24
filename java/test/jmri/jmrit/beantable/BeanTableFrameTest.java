@@ -28,6 +28,6 @@ public class BeanTableFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BeanTableFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(BeanTableFrameTest.class);
 
 }

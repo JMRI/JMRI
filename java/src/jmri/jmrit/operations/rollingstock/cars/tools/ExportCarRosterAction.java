@@ -26,5 +26,5 @@ public class ExportCarRosterAction extends AbstractAction {
         exportCars.writeOperationsCarFile();
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(ExportCarRosterAction.class);
+//    private static final Logger log = LoggerFactory.getLogger(ExportCarRosterAction.class);
 }

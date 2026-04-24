@@ -135,5 +135,5 @@ public class PrintCarLoadsAction extends AbstractAction {
         return TrainCommon.padAndTruncate(s, fieldSize) + " ";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintCarLoadsAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintCarLoadsAction.class);
 }

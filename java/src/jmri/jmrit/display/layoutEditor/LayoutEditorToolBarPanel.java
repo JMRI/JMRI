@@ -34,7 +34,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
 
-    final protected LayoutEditor layoutEditor; // initialized in constuctor
+    protected final LayoutEditor layoutEditor; // initialized in constuctor
 
     // top row of radio buttons
     protected JLabel turnoutLabel = new JLabel();

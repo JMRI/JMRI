@@ -1169,10 +1169,10 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
 
     jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
 
-    public final static int CANCELROUTE = 0;
-    public final static int CLEARROUTE = 1;
-    public final static int EXITROUTE = 2;
-    public final static int STACKROUTE = 4;
+    public static final int CANCELROUTE = 0;
+    public static final int CLEARROUTE = 1;
+    public static final int EXITROUTE = 2;
+    public static final int STACKROUTE = 4;
 
    /**
      * Return a point from a given LE Panel.

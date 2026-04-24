@@ -44,13 +44,13 @@ import jmri.jmrit.blockboss.BlockBossLogicProvider;
  * @author Dave Duchamp Copyright (c) 2009
  * @author George Warner Copyright (c) 2017-2018
  */
-final public class ConnectivityUtil {
+public final class ConnectivityUtil {
 
     // constants
     // operational instance variables
-    final private LayoutEditor layoutEditor;
-    final private LayoutEditorAuxTools auxTools;
-    final private LayoutBlockManager layoutBlockManager;
+    private final LayoutEditor layoutEditor;
+    private final LayoutEditorAuxTools auxTools;
+    private final LayoutBlockManager layoutBlockManager;
 
     private final int TRACKNODE_CONTINUING = 0;
     private final int TRACKNODE_DIVERGING = 1;
@@ -2869,5 +2869,5 @@ final public class ConnectivityUtil {
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConnectivityUtil.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConnectivityUtil.class);
 }

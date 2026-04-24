@@ -67,7 +67,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      * XmtHandler (a local class) object to implement the transmit thread
      */
     @GuardedBy ("xmtHandler")
-    final protected Runnable xmtHandler;
+    protected final Runnable xmtHandler;
 
     /**
      * RcvHandler (a local class) object to implement the receive thread

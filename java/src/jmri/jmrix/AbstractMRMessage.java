@@ -94,7 +94,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      * Final so that it can be called in constructors.
      * @param pMode required mode value.
      */
-    final public void setNeededMode(int pMode) {
+    public final void setNeededMode(int pMode) {
         mNeededMode = pMode;
     }
 
@@ -103,7 +103,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      * Final so that it can be called in constructors.
      * @return mNeededMode required mode value.
      */
-    final public int getNeededMode() {
+    public final int getNeededMode() {
         return mNeededMode;
     }
 
@@ -129,7 +129,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      * Final so that it can be called in constructors.
      * @return true if binary, else false.
      */
-    final public boolean isBinary() {
+    public final boolean isBinary() {
         return _isBinary;
     }
 
@@ -138,7 +138,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      * final so that it can be called in constructors.
      * @param b true if binary, else false.
      */
-    final public void setBinary(boolean b) {
+    public final void setBinary(boolean b) {
         _isBinary = b;
     }
 
@@ -161,7 +161,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      * Final so that it can be called in constructors.
      * @param t timeout value.
      */
-    final public void setTimeout(int t) {
+    public final void setTimeout(int t) {
         mTimeout = t;
     }
 
@@ -170,7 +170,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      * Final so that it can be called in constructors.
      * @return timeout value.
      */
-    final public int getTimeout() {
+    public final int getTimeout() {
         return mTimeout;
     }
 
@@ -183,7 +183,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      * Final so that it can be called in constructors
      * @param i number of retries, actual value to set, not an increment.
      */
-    final public void setRetries(int i) {
+    public final void setRetries(int i) {
         mRetries = i;
     }
 
@@ -192,7 +192,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      * final so that it can be called in constructors
      * @return number of retries count.
      */
-    final public int getRetries() {
+    public final int getRetries() {
         return mRetries;
     }
 

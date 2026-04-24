@@ -29,5 +29,5 @@ public class SignalMastRepeaterJFrameTest extends jmri.util.JmriJFrameTest {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterJFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SignalMastRepeaterJFrameTest.class);
 }

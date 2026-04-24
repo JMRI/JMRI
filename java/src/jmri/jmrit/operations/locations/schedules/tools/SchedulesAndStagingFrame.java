@@ -297,6 +297,6 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SchedulesAndStagingFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(SchedulesAndStagingFrame.class);
 
 }

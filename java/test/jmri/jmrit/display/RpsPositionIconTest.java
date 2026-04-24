@@ -100,5 +100,5 @@ public class RpsPositionIconTest extends PositionableTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RpsPositionIconTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RpsPositionIconTest.class);
 }

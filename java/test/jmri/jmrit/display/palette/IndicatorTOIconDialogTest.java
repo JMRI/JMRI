@@ -44,6 +44,6 @@ public class IndicatorTOIconDialogTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(IndicatorTOIconDialogTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(IndicatorTOIconDialogTest.class);
 
 }

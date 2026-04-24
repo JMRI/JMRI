@@ -340,5 +340,5 @@ public class LocoIcon extends PositionableLabel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoIcon.class);
 }

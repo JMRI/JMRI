@@ -352,6 +352,6 @@ public class ActionLight extends AbstractDigitalAction
         getConditionalNG().execute();
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLight.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLight.class);
 
 }

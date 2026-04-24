@@ -56,5 +56,5 @@ public class ActionRequestUpdateOfSensorXml extends jmri.managers.configurexml.A
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionRequestUpdateOfSensorXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionRequestUpdateOfSensorXml.class);
 }

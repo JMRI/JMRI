@@ -27,6 +27,6 @@ public class RosterConfigManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RosterConfigManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RosterConfigManagerTest.class);
 
 }

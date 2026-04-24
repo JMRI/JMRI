@@ -362,7 +362,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     Hashtable<Integer, SlotListener> mLocoAddrHash = new Hashtable<>();
 
     // data members to hold contact with the slot listeners
-    final private Vector<SlotListener> slotListeners = new Vector<>();
+    private final Vector<SlotListener> slotListeners = new Vector<>();
 
     /**
      * Add a slot listener, if it is not already registered

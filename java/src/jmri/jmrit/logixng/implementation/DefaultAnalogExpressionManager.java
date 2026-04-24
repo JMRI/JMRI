@@ -181,6 +181,6 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultAnalogExpressionManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultAnalogExpressionManager.class);
 
 }

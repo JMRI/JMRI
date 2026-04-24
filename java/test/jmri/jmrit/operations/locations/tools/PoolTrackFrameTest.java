@@ -39,6 +39,6 @@ public class PoolTrackFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PoolTrackFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PoolTrackFrameTest.class);
 
 }

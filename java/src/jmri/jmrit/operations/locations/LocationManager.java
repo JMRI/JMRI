@@ -528,7 +528,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationManager.class);
+    private static final Logger log = LoggerFactory.getLogger(LocationManager.class);
 
     @Override
     public void initialize() {

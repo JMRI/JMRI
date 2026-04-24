@@ -319,6 +319,6 @@ public class NamedIconTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NamedIconTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NamedIconTest.class);
 
 }

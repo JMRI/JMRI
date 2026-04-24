@@ -309,5 +309,5 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         return TrainCommon.padAndTruncate(attribute, length) + TrainCommon.SPACE;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintEngineRosterFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintEngineRosterFrame.class);
 }

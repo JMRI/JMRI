@@ -25,7 +25,7 @@ public class LayoutSingleSlipView extends LayoutSlipView {
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSingleSlipEditor(layoutEditor);
     }
         
-    // final private LayoutSingleSlip slip;
+    // private final LayoutSingleSlip slip;
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSingleSlipView.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSingleSlipView.class);
 }

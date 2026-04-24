@@ -210,6 +210,6 @@ public abstract class OperationsXml extends XmlFile {
                 || InstanceManager.getDefault(TrainManagerXml.class).isDirty();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsXml.class);
+    private static final Logger log = LoggerFactory.getLogger(OperationsXml.class);
 
 }

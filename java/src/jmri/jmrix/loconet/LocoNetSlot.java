@@ -1442,7 +1442,7 @@ public class LocoNetSlot {
     }
 
     // data values to echo slot contents
-    final private int slot;   // <SLOT#> is the number of the slot that was read.
+    private final int slot;   // <SLOT#> is the number of the slot that was read.
     private boolean isInitialized; // set when full initilization is complete with the throttle ID.
     private int loconetProtocol; // protocol used by the slot.
     private SlotType slotType; // system, loco, unknown
@@ -1465,7 +1465,7 @@ public class LocoNetSlot {
     private long lastUpdateTime; // Time of last update for detecting stale slots
 
     // data members to hold contact with the slot listeners
-    final private List<SlotListener> slotListeners = new ArrayList<>();
+    private final List<SlotListener> slotListeners = new ArrayList<>();
 
     /**
      * Registers a slot listener if it is not already registered.

@@ -89,6 +89,6 @@ public final class SwingTools {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SwingTools.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SwingTools.class);
 
 }

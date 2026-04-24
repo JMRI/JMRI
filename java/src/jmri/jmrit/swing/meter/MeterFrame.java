@@ -886,6 +886,6 @@ public class MeterFrame extends JmriJFrame {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MeterFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MeterFrame.class);
 
 }

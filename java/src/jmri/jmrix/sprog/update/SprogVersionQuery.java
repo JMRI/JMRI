@@ -36,7 +36,7 @@ public class SprogVersionQuery implements SprogListener {
     }       // Version has been found
     QueryState state = QueryState.IDLE;
 
-    final protected int LONG_TIMEOUT = 2000;
+    protected final int LONG_TIMEOUT = 2000;
     javax.swing.Timer timer = null;
 
     private SprogSystemConnectionMemo _memo = null;

@@ -34,6 +34,6 @@ public class BlockPortalTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BlockPortalTableModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(BlockPortalTableModelTest.class);
 
 }

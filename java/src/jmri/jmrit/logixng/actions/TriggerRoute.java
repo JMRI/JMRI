@@ -157,6 +157,6 @@ public class TriggerRoute extends AbstractDigitalAction
         getConditionalNG().execute();
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TriggerRoute.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TriggerRoute.class);
 
 }

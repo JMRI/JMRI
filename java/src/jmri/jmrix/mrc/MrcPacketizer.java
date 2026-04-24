@@ -172,25 +172,25 @@ public class MrcPacketizer extends MrcTrafficController {
     public OutputStream ostream = null;
 
     //We keep a copy of the lengths here to save on time on each request later.
-    final private static int THROTTLEPACKETLENGTH = MrcPackets.getThrottlePacketLength();
-    final private static int FUNCTIONGROUPLENGTH = MrcPackets.getFunctionPacketLength();
-    final private static int READCVLENGTH = MrcPackets.getReadCVPacketLength();
-    final private static int readCVReplyLength = MrcPackets.getReadCVPacketReplyLength();
-    final private static int readDecoderAddressLength = MrcPackets.getReadDecoderAddressLength();
-    final private static int WRITECVPROGLENGTH = MrcPackets.getWriteCVPROGPacketLength();
-    final private static int WRITECVPOMLENGTH = MrcPackets.getWriteCVPOMPacketLength();
-    final private static int SETCLOCKRATIOLENGTH = MrcPackets.getSetClockRatioPacketLength();
-    final private static int SETCLOCKTIMELENGTH = MrcPackets.getSetClockTimePacketLength();
-    final private static int setClockAMPMLength = MrcPackets.getSetClockAmPmPacketLength();
-    final private static int powerOnLength = MrcPackets.getPowerOnPacketLength();
-    final private static int powerOffLength = MrcPackets.getPowerOffPacketLength();
+    private static final int THROTTLEPACKETLENGTH = MrcPackets.getThrottlePacketLength();
+    private static final int FUNCTIONGROUPLENGTH = MrcPackets.getFunctionPacketLength();
+    private static final int READCVLENGTH = MrcPackets.getReadCVPacketLength();
+    private static final int readCVReplyLength = MrcPackets.getReadCVPacketReplyLength();
+    private static final int readDecoderAddressLength = MrcPackets.getReadDecoderAddressLength();
+    private static final int WRITECVPROGLENGTH = MrcPackets.getWriteCVPROGPacketLength();
+    private static final int WRITECVPOMLENGTH = MrcPackets.getWriteCVPOMPacketLength();
+    private static final int SETCLOCKRATIOLENGTH = MrcPackets.getSetClockRatioPacketLength();
+    private static final int SETCLOCKTIMELENGTH = MrcPackets.getSetClockTimePacketLength();
+    private static final int setClockAMPMLength = MrcPackets.getSetClockAmPmPacketLength();
+    private static final int powerOnLength = MrcPackets.getPowerOnPacketLength();
+    private static final int powerOffLength = MrcPackets.getPowerOffPacketLength();
 
-    final private static int addToConsistLength = MrcPackets.getClearConsistPacketLength();
-    final private static int clearConsistLength = MrcPackets.getClearConsistPacketLength();
-    final private static int routeControlLength = MrcPackets.getRouteControlPacketLength();
-    final private static int clearRouteLength = MrcPackets.getClearRoutePacketLength();
-    final private static int addToRouteLength = MrcPackets.getAddToRoutePacketLength();
-    final private static int accessoryLength = MrcPackets.getAccessoryPacketLength();
+    private static final int addToConsistLength = MrcPackets.getClearConsistPacketLength();
+    private static final int clearConsistLength = MrcPackets.getClearConsistPacketLength();
+    private static final int routeControlLength = MrcPackets.getRouteControlPacketLength();
+    private static final int clearRouteLength = MrcPackets.getClearRoutePacketLength();
+    private static final int addToRouteLength = MrcPackets.getAddToRoutePacketLength();
+    private static final int accessoryLength = MrcPackets.getAccessoryPacketLength();
 
     /**
      * Read a single byte, protecting against various timeouts, etc.

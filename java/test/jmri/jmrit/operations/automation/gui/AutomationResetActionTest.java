@@ -22,5 +22,5 @@ public class AutomationResetActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(AutomationResetActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AutomationResetActionTest.class);
 }

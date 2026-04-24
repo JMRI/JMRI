@@ -25,7 +25,7 @@ import jmri.util.JUnitOperationsUtil;
  */
 public class RouterTest extends OperationsTestCase {
 
-    private final static int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
+    private static final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
     @Test
     public void testCTor() {

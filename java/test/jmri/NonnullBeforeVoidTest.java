@@ -27,42 +27,43 @@ public class NonnullBeforeVoidTest {
     private static final Pattern PATTERN_NULL_BEFORE_VOID = Pattern.compile(".*\\@Nonnull\\s+(\\@\\w+(\\(.*?\\))\\s+)*(|public\\s+|protected\\s+|private\\s+)void.*", Pattern.MULTILINE | Pattern.DOTALL);
     private static final Pattern PATTERN_STATIC_BEFORE_PUBLIC = Pattern.compile(".*static\\s+(public|protected|private).*", Pattern.MULTILINE | Pattern.DOTALL);
 //    private static final Pattern PATTERN_FINAL_BEFORE_PUBLIC_OR_STATIC = Pattern.compile(".*final\\s+(public|protected|private|static).*", Pattern.MULTILINE | Pattern.DOTALL);
-//    private static final Pattern PATTERN_FINAL_BEFORE_STATIC = Pattern.compile(".*final\\s+static.*", Pattern.MULTILINE | Pattern.DOTALL);
 
 
     public static Stream<Arguments> data() {
-        File directory = new File("java/");
-//        File directory = new File("java/src/jmri/jmrit/logixng/actions/configurexml");
+        // Exclude java/graalvm/ since we don't have control over them
+        File[] directories = {new File("java/src/"), new File("java/test/")};
         boolean recurse = true;
         boolean pass = true;
-        return getFiles(directory, recurse, pass);
+        return getFiles(directories, recurse, pass);
     }
 
     /**
      * Get all Java files in a directory and validate them.
      *
-     * @param directory the directory containing XML files
-     * @param recurse   if true, will recurse into subdirectories
-     * @param pass      if true, successful validation will pass; if false,
-     *                  successful validation will fail
+     * @param directories the directories containing Java files
+     * @param recurse     if true, will recurse into subdirectories
+     * @param pass        if true, successful validation will pass; if false,
+     *                    successful validation will fail
      * @return a stream of {@link Arguments}, where each Argument contains the
      *         {@link java.io.File} with a filename ending in {@literal .java} to
      *         validate and a boolean matching the pass parameter
      */
-    private static Stream<Arguments> getFiles(File directory, boolean recurse, boolean pass) {
+    private static Stream<Arguments> getFiles(File[] directories, boolean recurse, boolean pass) {
         ArrayList<Arguments> files = new ArrayList<>();
-        if (directory.isDirectory()) {
-            for (File file : directory.listFiles()) {
-                if (file.isDirectory()) {
-                    if (recurse) {
-                        files.addAll(getFiles(file, recurse, pass).collect(Collectors.toList()));
+        for (File directory : directories) {
+            if (directory.isDirectory()) {
+                for (File file : directory.listFiles()) {
+                    if (file.isDirectory()) {
+                        if (recurse) {
+                            files.addAll(getFiles(new File[]{file}, recurse, pass).collect(Collectors.toList()));
+                        }
+                    } else {
+                        files.addAll(getFiles(new File[]{file}, recurse, pass).collect(Collectors.toList()));
                     }
-                } else {
-                    files.addAll(getFiles(file, recurse, pass).collect(Collectors.toList()));
                 }
+            } else if (directory.getName().endsWith(".java")) {
+                files.add(Arguments.of(directory, pass));
             }
-        } else if (directory.getName().endsWith(".java")) {
-            files.add(Arguments.of(directory, pass));
         }
         files.sort((a,b) -> {
             File aa = (File) a.get()[0];
@@ -102,15 +103,9 @@ public class NonnullBeforeVoidTest {
             fails++;
 //            System.out.format("File has static before public/protected/private: %s%n", file);
             System.out.format("%d, %d: File has final before public/protected/private/static: %s%n", total, fails, file);
-//            Assertions.fail(String.format("File %s has static before public/protected/private", file));
+//            Assertions.fail(String.format("File %s has final before public/protected/private", file));
         }
 */
-//        if (PATTERN_FINAL_BEFORE_STATIC.matcher(data).matches()) {
-//            fails++;
-//            System.out.format("File has static before public/protected/private: %s%n", file);
-//            System.out.format("%d, %d: File has final before static: %s%n", total, fails, file);
-//            Assertions.fail(String.format("File %s has static before public/protected/private", file));
-//        }
 //        System.out.println(data);
     }
 

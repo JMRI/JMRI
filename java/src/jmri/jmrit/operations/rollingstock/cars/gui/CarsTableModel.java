@@ -821,5 +821,5 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarsTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(CarsTableModel.class);
 }

@@ -25,7 +25,7 @@ package jmri.jmrit.display.layoutEditor;
  *
  * @author Bob Jacobsen Copyright (C) 2020
  */
-final public class LayoutEditorViewContext {
+public final class LayoutEditorViewContext {
 
     LayoutEditorViewContext() {}  // intentionally package-protected to limit exposure
 
@@ -33,57 +33,57 @@ final public class LayoutEditorViewContext {
     // Sides and positions
     // -----------------------------------
 
-    final public void setLayoutWidth(int width) {
+    public final void setLayoutWidth(int width) {
         panelWidth = width;
     }
-    final public int getLayoutWidth() {
+    public final int getLayoutWidth() {
         return panelWidth;
     }
     private int panelWidth = 0;
 
-    final public void setLayoutHeight(int height) {
+    public final void setLayoutHeight(int height) {
         panelHeight = height;
     }
-    final public int getLayoutHeight() {
+    public final int getLayoutHeight() {
         return panelHeight;
     }
     private int panelHeight = 0;
 
-    final public void setWindowWidth(int width) {
+    public final void setWindowWidth(int width) {
         windowWidth = width;
     }
-    final public int getWindowWidth() {
+    public final int getWindowWidth() {
         return windowWidth;
     }
     private int windowWidth = 0;
 
-    final public void setWindowHeight(int height) {
+    public final void setWindowHeight(int height) {
         windowHeight = height;
     }
-    final public int getWindowHeight() {
+    public final int getWindowHeight() {
         return windowHeight;
     }
     private int windowHeight = 0;
 
     // Window upper left x, not panel upper left x
-    final public int getUpperLeftX() {
+    public final int getUpperLeftX() {
         return upperLeftX;
     }
-    final public void setUpperLeftX(int x) {
+    public final void setUpperLeftX(int x) {
         upperLeftX = x;
     }
     private int upperLeftX = 0;
 
     // Window upper left y, not panel upper left y
-    final public int getUpperLeftY() {
+    public final int getUpperLeftY() {
         return upperLeftY;
     }
-    final public void setUpperLeftY(int y) {
+    public final void setUpperLeftY(int y) {
         upperLeftY = y;
     }
     private int upperLeftY = 0; // (not panel)
 
-    final public int setGridSize(int newSize) {
+    public final int setGridSize(int newSize) {
         gridSize1st = newSize;
         return gridSize1st;
     }
@@ -93,12 +93,12 @@ final public class LayoutEditorViewContext {
      * default/initial value.
      * @return current value
      */
-    final public int getGridSize() {
+    public final int getGridSize() {
         return gridSize1st;
     }
     private int gridSize1st = 10;
 
-    final public int setGridSize2nd(int newSize) {
+    public final int setGridSize2nd(int newSize) {
         gridSize2nd = newSize;
         return gridSize2nd;
     }
@@ -108,14 +108,14 @@ final public class LayoutEditorViewContext {
      * default/initial value.
      * @return current value
      */
-    final public int getGridSize2nd() {
+    public final int getGridSize2nd() {
         return gridSize2nd;
     }
     private int gridSize2nd = 10;
 
     // also found in LayoutTrackDrawingOptions?
     // why is this a float?  Needed for Graphics2D arguments?
-    final public void setMainlineTrackWidth(float width) {
+    public final void setMainlineTrackWidth(float width) {
         mainlineTrackWidth = (int)width;
     }
 
@@ -124,7 +124,7 @@ final public class LayoutEditorViewContext {
      * default/initial value.
      * @return current value
      */
-    final public int getMainlineTrackWidth() {
+    public final int getMainlineTrackWidth() {
         return (int) mainlineTrackWidth;
     }
     private float mainlineTrackWidth = 4.0F;
@@ -136,7 +136,7 @@ final public class LayoutEditorViewContext {
      */
     // also found in LayoutTrackDrawingOptions? (temporary?)
     // why is this a float? (temporary?)
-    final public void setSidelineTrackWidth(float width) {
+    public final void setSidelineTrackWidth(float width) {
         sidelineTrackWidth = (int)width;
     }
 
@@ -145,14 +145,14 @@ final public class LayoutEditorViewContext {
      * default/initial value.
      * @return current value
      */
-    final public int getSidelineTrackWidth() {
+    public final int getSidelineTrackWidth() {
         return (int) sidelineTrackWidth;
     }
     private float sidelineTrackWidth = 2.0F;
 
     // also found in LayoutTrackDrawingOptions?
     // why is this a float?  Needed for Graphics2D arguments?
-    final public void setMainlineBlockWidth(float width) {
+    public final void setMainlineBlockWidth(float width) {
         mainlineBlockWidth = (int)width;
     }
 
@@ -161,7 +161,7 @@ final public class LayoutEditorViewContext {
      * default/initial value.
      * @return current value
      */
-    final public int getMainlineBlockWidth() {
+    public final int getMainlineBlockWidth() {
         return (int) mainlineBlockWidth;
     }
     private float mainlineBlockWidth = 4.0F;
@@ -173,7 +173,7 @@ final public class LayoutEditorViewContext {
      */
     // also found in LayoutBlockDrawingOptions? (temporary?)
     // why is this a float? (temporary?)
-    final public void setSidelineBlockWidth(float width) {
+    public final void setSidelineBlockWidth(float width) {
         sidelineBlockWidth = (int)width;
     }
 
@@ -182,7 +182,7 @@ final public class LayoutEditorViewContext {
      * default/initial value.
      * @return current value
      */
-    final public int getSidelineBlockWidth() {
+    public final int getSidelineBlockWidth() {
         return (int) sidelineBlockWidth;
     }
     private float sidelineBlockWidth = 2.0F;
@@ -192,10 +192,10 @@ final public class LayoutEditorViewContext {
      * default/initial value.
      * @return current value
      */
-    final public double getXScale() {
+    public final double getXScale() {
         return xScale;
     }
-    final public void setXScale(double scale) {
+    public final void setXScale(double scale) {
         xScale = scale;
     }
     private double xScale = 1.0;
@@ -205,17 +205,17 @@ final public class LayoutEditorViewContext {
      * default/initial value.
      * @return current value
      */
-    final public double getYScale() {
+    public final double getYScale() {
         return yScale;
     }
-    final public void setYScale(double scale) {
+    public final void setYScale(double scale) {
         yScale = scale;
     }
     private double yScale = 1.0;
 
 
     // initialize logging
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class);
 
 }
 

@@ -136,6 +136,6 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockPortalTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(BlockPortalTableModel.class);
 
 }

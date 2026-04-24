@@ -384,6 +384,6 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainEditBuildOptionsFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainEditBuildOptionsFrameTest.class);
 
 }

@@ -375,6 +375,6 @@ public class ToolsMenu extends JMenu {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(jmri.jmrit.ToolsMenu.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(jmri.jmrit.ToolsMenu.class);
 
 }

@@ -166,6 +166,6 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
         }
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VirtualSignalMastAddPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VirtualSignalMastAddPane.class);
 
 }

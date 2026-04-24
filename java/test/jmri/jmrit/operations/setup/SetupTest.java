@@ -111,6 +111,6 @@ public class SetupTest extends OperationsTestCase {
         Assert.assertEquals("error", 0, Setup.getDirectionInt("X"));
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SetupTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SetupTest.class);
 
 }

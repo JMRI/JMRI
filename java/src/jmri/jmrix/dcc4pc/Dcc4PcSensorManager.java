@@ -149,7 +149,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
-    final protected void startPolling() {
+    protected final void startPolling() {
         if (stopPolling && pollThread != null) {
             pollThread = null;
         }

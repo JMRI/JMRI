@@ -76,6 +76,6 @@ public class SensorTableDataModelTest extends jmri.jmrit.beantable.AbstractBeanT
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SensorTableDataModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SensorTableDataModelTest.class);
 
 }

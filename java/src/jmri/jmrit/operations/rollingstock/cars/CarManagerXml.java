@@ -164,7 +164,7 @@ public class CarManagerXml extends OperationsXml implements InstanceManagerAutoD
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(CarManagerXml.class);
 
     @Override
     public void initialize() {

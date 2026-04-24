@@ -33,5 +33,5 @@ public class Kernel extends RollingStockGroup<Car> {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Kernel.class);
+    private static final Logger log = LoggerFactory.getLogger(Kernel.class);
 }

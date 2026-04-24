@@ -581,5 +581,5 @@ public abstract class PositionableShape extends PositionableJComponent implement
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableShape.class);
+    private static final Logger log = LoggerFactory.getLogger(PositionableShape.class);
 }

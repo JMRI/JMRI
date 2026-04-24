@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 
 public class TrafficLocking {
-    private final static Logger log = LoggerFactory.getLogger(TrafficLocking.class);
+    private static final Logger log = LoggerFactory.getLogger(TrafficLocking.class);
 
     private static class TrafficLockingRecord {
         private final SwitchIndicatorsRoute _mSwitchIndicatorsRoute;

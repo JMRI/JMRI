@@ -105,8 +105,8 @@ public class Distributor {
     ////////////////////////////
     // Implementation details //
     ////////////////////////////
-    final private Vector<ReadingListener> readingListeners = new Vector<ReadingListener>();
-    final private Vector<MeasurementListener> measurementListeners = new Vector<MeasurementListener>();
+    private final Vector<ReadingListener> readingListeners = new Vector<ReadingListener>();
+    private final Vector<MeasurementListener> measurementListeners = new Vector<MeasurementListener>();
 
     /**
      * Forward the Reading from the Swing thread.

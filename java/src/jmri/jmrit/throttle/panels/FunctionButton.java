@@ -56,12 +56,11 @@ public class FunctionButton extends JToggleButton {
     private ToggleOrPressButtonModel _model;
     private Throttle _throttle;
     private int img_size = DEFAULT_IMG_SIZE;
+    private static final int BUT_HGHT = 24;
+    private static final int BUT_MAX_WDTH = 256;
+    private static final int BUT_MIN_WDTH = 100;
 
-    private final static int BUT_HGHT = 24;
-    private final static int BUT_MAX_WDTH = 256;
-    private final static int BUT_MIN_WDTH = 54;
-
-    public final static int DEFAULT_IMG_SIZE = 48;
+    public static final int DEFAULT_IMG_SIZE = 48;
 
     public void destroy() {        
         if (editor != null) {
@@ -593,6 +592,6 @@ public class FunctionButton extends JToggleButton {
         return _throttle;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FunctionButton.class);
+    private static final Logger log = LoggerFactory.getLogger(FunctionButton.class);
 
 }

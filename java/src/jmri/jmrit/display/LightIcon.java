@@ -333,5 +333,5 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LightIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(LightIcon.class);
 }

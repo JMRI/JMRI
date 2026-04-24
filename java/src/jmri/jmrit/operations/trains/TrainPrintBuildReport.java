@@ -185,5 +185,5 @@ public class TrainPrintBuildReport extends TrainCommon {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainPrintBuildReport.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainPrintBuildReport.class);
 }

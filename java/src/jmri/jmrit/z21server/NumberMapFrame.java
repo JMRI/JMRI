@@ -472,6 +472,6 @@ public class NumberMapFrame extends JmriJFrame implements TableModelListener {
         public static final int TNUMCOL = 2;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(NumberMapFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(NumberMapFrame.class);
 
 }

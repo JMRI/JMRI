@@ -1375,6 +1375,6 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         return Bundle.getMessage("TitleSectionTable");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SectionTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SectionTableAction.class);
 
 }

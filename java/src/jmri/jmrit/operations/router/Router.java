@@ -1362,7 +1362,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         return NO;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Router.class);
+    private static final Logger log = LoggerFactory.getLogger(Router.class);
 
     // all router build report messages are at level seven
     protected void addLine(String string) {

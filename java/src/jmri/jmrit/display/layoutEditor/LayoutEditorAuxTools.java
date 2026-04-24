@@ -25,12 +25,12 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2008
  * @author George Warner Copyright (c) 2017-2018
  */
-final public class LayoutEditorAuxTools {
+public final class LayoutEditorAuxTools {
     // constants
 
     // operational instance variables
-    final private LayoutModels models;
-    final private List<LayoutConnectivity> cList = new ArrayList<>(); // LayoutConnectivity list
+    private final LayoutModels models;
+    private final List<LayoutConnectivity> cList = new ArrayList<>(); // LayoutConnectivity list
     private boolean blockConnectivityChanged = false;  // true if block connectivity may have changed
     private boolean initialized = false;
 
@@ -871,6 +871,6 @@ final public class LayoutEditorAuxTools {
     }   // addBeanSettings
 
     // initialize logging
-    private final static Logger log
+    private static final Logger log
             = LoggerFactory.getLogger(LayoutEditorAuxTools.class);
 }

@@ -351,6 +351,6 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Or.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Or.class);
 
 }

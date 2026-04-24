@@ -285,6 +285,6 @@ public class ActionSound extends AbstractDigitalAction
         getConditionalNG().execute();
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSound.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSound.class);
 
 }

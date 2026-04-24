@@ -90,5 +90,5 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintLocationsByCarTypesAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintLocationsByCarTypesAction.class);
 }

@@ -200,5 +200,5 @@ public class TcsUploadAction extends AbstractAction implements PropertyChangeLis
         return -1;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcsUploadAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcsUploadAction.class);
 }

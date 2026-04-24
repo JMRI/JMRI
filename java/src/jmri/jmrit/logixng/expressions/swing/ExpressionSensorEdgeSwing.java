@@ -131,6 +131,6 @@ public class ExpressionSensorEdgeSwing extends AbstractDigitalExpressionSwing {
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSensorEdgeSwing.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSensorEdgeSwing.class);
 
 }

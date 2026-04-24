@@ -243,5 +243,5 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MemoryIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MemoryIcon.class);
 }

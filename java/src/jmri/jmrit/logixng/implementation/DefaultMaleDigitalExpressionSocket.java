@@ -217,6 +217,6 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleDigitalExpressionSocket.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleDigitalExpressionSocket.class);
 
 }

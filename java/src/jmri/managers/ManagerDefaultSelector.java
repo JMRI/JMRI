@@ -274,7 +274,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     // Define set of items that we remember defaults for, manually maintained because
     // there are lots of JMRI-internal types of no interest to the user and/or not system-specific.
     // This grows if you add something to the SystemConnectionMemo system
-    final public Item[] knownManagers = new Item[]{
+    public final Item[] knownManagers = new Item[]{
         new Item("<html>Throttles</html>", ThrottleManager.class),
         new Item("<html>Power<br>Control</html>", PowerManager.class),
         new Item("<html>Command<br>Station</html>", CommandStation.class),

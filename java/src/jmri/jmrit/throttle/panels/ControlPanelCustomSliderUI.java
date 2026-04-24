@@ -17,14 +17,14 @@ import javax.swing.plaf.basic.BasicSliderUI;
 public class ControlPanelCustomSliderUI extends BasicSliderUI {
     
     // Color are coming from the Tango themes color palette (as well as icons on the Throttle window, for look consistency)
-    private final static Color TRACK_COLOR_BACK = new Color(0x88, 0x8a, 0x85, 0x88);
-    private final static Color TRACK_COLOR_FRONT = new Color(0xf5, 0x79, 0x00, 0xCC);
-    private final static Color TRACK_COLOR_FRONT_DISABLED = new Color(0xf5, 0xf5, 0xf5, 0xCC);
-    private final static Color TRACK_COLOR_TICKS = new Color(0x888a85);
-    private final static Color THUMB_INNER_COLOR_STOP = new Color(0xcc0000);
-    private final static Color THUMB_INNER_COLOR_RUN = new Color(0xd7d27A);
-    private final static Color THUMB_INNER_COLOR_DISABLED = new Color(0x101010);
-    private final static Color THUMB_CONTOUR_COLOR = new Color(0x555753);
+    private static final Color TRACK_COLOR_BACK = new Color(0x88, 0x8a, 0x85, 0x88);
+    private static final Color TRACK_COLOR_FRONT = new Color(0xf5, 0x79, 0x00, 0xCC);
+    private static final Color TRACK_COLOR_FRONT_DISABLED = new Color(0xf5, 0xf5, 0xf5, 0xCC);
+    private static final Color TRACK_COLOR_TICKS = new Color(0x888a85);
+    private static final Color THUMB_INNER_COLOR_STOP = new Color(0xcc0000);
+    private static final Color THUMB_INNER_COLOR_RUN = new Color(0xd7d27A);
+    private static final Color THUMB_INNER_COLOR_DISABLED = new Color(0x101010);
+    private static final Color THUMB_CONTOUR_COLOR = new Color(0x555753);
     
     public ControlPanelCustomSliderUI(JSlider b) {
         super(b);

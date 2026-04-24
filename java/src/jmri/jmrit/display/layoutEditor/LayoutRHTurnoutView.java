@@ -32,7 +32,7 @@ public class LayoutRHTurnoutView extends LayoutTurnoutView {
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutRHTurnoutEditor(layoutEditor);
     }
         
-    // final private LayoutRHTurnout turnout;
+    // private final LayoutRHTurnout turnout;
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutRHTurnoutView.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutRHTurnoutView.class);
 }

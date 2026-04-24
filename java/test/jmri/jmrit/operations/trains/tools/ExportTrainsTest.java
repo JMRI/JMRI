@@ -58,5 +58,5 @@ public class ExportTrainsTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ExportTrainsTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ExportTrainsTest.class);
 }

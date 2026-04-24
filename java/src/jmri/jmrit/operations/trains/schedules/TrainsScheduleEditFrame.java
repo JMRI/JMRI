@@ -121,5 +121,5 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         trainScheduleManager.updateComboBox(comboBox);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsScheduleEditFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainsScheduleEditFrame.class);
 }

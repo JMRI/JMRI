@@ -34,7 +34,7 @@ import jmri.util.JUnitUtil;
  */
 public class TrainBuilderTest extends OperationsTestCase {
 
-    private final static int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
+    private static final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
 

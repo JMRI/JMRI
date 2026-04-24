@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @Author Paul Bender Copyright (C) 2014
  */
-final public class XBeeIOStream extends AbstractPortController {
+public final class XBeeIOStream extends AbstractPortController {
 
     private DataOutputStream pout = null; // for output to other classes
     private DataInputStream pin = null; // for input from other classes

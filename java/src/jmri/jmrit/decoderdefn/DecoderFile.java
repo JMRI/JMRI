@@ -662,6 +662,6 @@ public class DecoderFile extends XmlFile {
     public static String fileLocation = "decoders" + File.separator;
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DecoderFile.class);
+    private static final Logger log = LoggerFactory.getLogger(DecoderFile.class);
 
 }

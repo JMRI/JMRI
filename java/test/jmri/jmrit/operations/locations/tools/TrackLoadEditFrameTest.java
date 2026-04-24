@@ -85,6 +85,6 @@ public class TrackLoadEditFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrackLoadEditFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrackLoadEditFrameTest.class);
 
 }

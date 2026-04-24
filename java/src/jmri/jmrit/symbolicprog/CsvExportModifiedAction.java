@@ -20,5 +20,5 @@ public class CsvExportModifiedAction extends CsvExportAction {
         return cv.getState() == AbstractValue.ValueState.EDITED;
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CsvExportModifiedAction.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CsvExportModifiedAction.class);
 }

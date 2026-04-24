@@ -19,7 +19,7 @@ import org.slf4j.MDC;
  * @author Kevin Dickerson Copyright (C) 2011
  * @author George Warner Copyright (c) 2017-2018
  */
-final public class LayoutBlockConnectivityTools {
+public final class LayoutBlockConnectivityTools {
 
     public LayoutBlockConnectivityTools() {
     }
@@ -1396,6 +1396,6 @@ final public class LayoutBlockConnectivityTools {
         }
     }
 
-    private final static Logger log
+    private static final Logger log
             = LoggerFactory.getLogger(LayoutBlockConnectivityTools.class);
 }

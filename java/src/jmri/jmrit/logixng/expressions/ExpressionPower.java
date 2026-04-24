@@ -207,6 +207,6 @@ public class ExpressionPower extends AbstractDigitalExpression
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionPower.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionPower.class);
 
 }

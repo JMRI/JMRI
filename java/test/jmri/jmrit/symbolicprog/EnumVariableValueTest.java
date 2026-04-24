@@ -244,6 +244,6 @@ public class EnumVariableValueTest extends AbstractVariableValueTestBase {
         super.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EnumVariableValueTest.class);
+    private static final Logger log = LoggerFactory.getLogger(EnumVariableValueTest.class);
 
 }

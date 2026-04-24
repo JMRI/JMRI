@@ -314,6 +314,6 @@ public class GlobalVariableComboIcon extends MemoryOrGVComboIcon
         namedGlobalVariable = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GlobalVariableComboIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(GlobalVariableComboIcon.class);
 
 }

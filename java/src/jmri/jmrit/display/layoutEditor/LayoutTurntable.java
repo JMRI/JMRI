@@ -1345,6 +1345,6 @@ public class LayoutTurntable extends LayoutTrack {
         return Bundle.getMessage("TypeName_Turntable");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntable.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntable.class);
 
 }

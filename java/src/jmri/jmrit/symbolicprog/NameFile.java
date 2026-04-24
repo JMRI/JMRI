@@ -139,5 +139,5 @@ public class NameFile extends XmlFile {
 
     }
     
-    private final static Logger log = LoggerFactory.getLogger(NameFile.class);
+    private static final Logger log = LoggerFactory.getLogger(NameFile.class);
 }

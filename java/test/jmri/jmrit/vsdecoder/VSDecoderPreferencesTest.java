@@ -27,6 +27,6 @@ public class VSDecoderPreferencesTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(VSDecoderPreferencesTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(VSDecoderPreferencesTest.class);
 
 }

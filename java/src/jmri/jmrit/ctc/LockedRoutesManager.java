@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019, 2020
  */
 public class LockedRoutesManager {
-    private final static Logger log = LoggerFactory.getLogger(LockedRoutesManager.class);
+    private static final Logger log = LoggerFactory.getLogger(LockedRoutesManager.class);
     private final ArrayList<LockedRoute> _mArrayListOfLockedRoutes = new ArrayList<>();
 
     public void clearAllLockedRoutes() {

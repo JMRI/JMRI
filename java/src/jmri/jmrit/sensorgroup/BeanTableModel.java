@@ -78,5 +78,5 @@ public abstract class BeanTableModel extends AbstractTableModel {
                 return null;
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(BeanTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(BeanTableModel.class);
 }

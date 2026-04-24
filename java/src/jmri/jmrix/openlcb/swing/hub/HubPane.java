@@ -112,7 +112,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         }
     }
 
-    final private javax.swing.JTextArea textArea;
+    private final javax.swing.JTextArea textArea;
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {

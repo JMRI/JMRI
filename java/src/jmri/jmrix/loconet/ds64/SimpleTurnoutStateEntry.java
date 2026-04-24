@@ -287,7 +287,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
      * 
      * @param addr Turnout address
      */
-    final public void setAddressLastQueriedValue(Integer addr) {
+    public final void setAddressLastQueriedValue(Integer addr) {
         addressField.setLastQueriedValue(String.valueOf(addr));
     }
 

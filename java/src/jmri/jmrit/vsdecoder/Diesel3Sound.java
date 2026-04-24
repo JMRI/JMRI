@@ -41,7 +41,7 @@ class Diesel3Sound extends EngineSound {
     private Integer idle_notch;
     private int first_notch;
     int top_speed;
-    final static int number_helper_buffers = 5; // in the loop-player is a limit of 2, but the unqueue takes some time too
+    static final int number_helper_buffers = 5; // in the loop-player is a limit of 2, but the unqueue takes some time too
 
     // Common variables
     private int current_notch = 1; // default

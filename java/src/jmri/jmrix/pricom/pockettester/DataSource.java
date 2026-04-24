@@ -451,7 +451,7 @@ public class DataSource extends jmri.util.JmriJFrame {
     } // end class Reader
 
     // data members to hold contact with the listeners
-    final private Vector<DataListener> listeners = new Vector<DataListener>();
+    private final Vector<DataListener> listeners = new Vector<DataListener>();
 
     public synchronized void addListener(DataListener l) {
         // add only if not already registered

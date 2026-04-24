@@ -87,6 +87,6 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrameTest.class);
 
 }

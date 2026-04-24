@@ -23,14 +23,14 @@ import org.slf4j.LoggerFactory;
 @ServiceProvider(service = PreferencesManager.class)
 public class ProgrammerConfigManager extends AbstractPreferencesManager {
 
-    public final static String DEFAULT_FILE = "defaultFile";
-    public final static String SHOW_EMPTY_PANES = "showEmptyPanes";
-    public final static String DONT_DETACH_PANES = "dontDetachPanes";
-    public final static String SHOW_CV_NUMBERS = "showCvNumbers";
-    public final static String CAN_CACHE_DEFAULT = "canCacheDefault";
-    public final static String DO_CONFIRM_READ = "doConfirmRead";
-    public final static String DISABLE_PROGRAMMING_TRACK = "disableProgrammingTrack";
-    public final static String DISABLE_PROGRAMMING_ON_MAIN = "disableProgrammingOnMain";
+    public static final String DEFAULT_FILE = "defaultFile";
+    public static final String SHOW_EMPTY_PANES = "showEmptyPanes";
+    public static final String DONT_DETACH_PANES = "dontDetachPanes";
+    public static final String SHOW_CV_NUMBERS = "showCvNumbers";
+    public static final String CAN_CACHE_DEFAULT = "canCacheDefault";
+    public static final String DO_CONFIRM_READ = "doConfirmRead";
+    public static final String DISABLE_PROGRAMMING_TRACK = "disableProgrammingTrack";
+    public static final String DISABLE_PROGRAMMING_ON_MAIN = "disableProgrammingOnMain";
     private String defaultFile = null;
     private boolean showEmptyPanes = true;
     private boolean dontDetachPanes = false;
@@ -242,6 +242,6 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
         firePropertyChange(DISABLE_PROGRAMMING_ON_MAIN, oldDisableProgrammingOnMain, disableProgrammingOnMain);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgrammerConfigManager.class);
+    private static final Logger log = LoggerFactory.getLogger(ProgrammerConfigManager.class);
 
 }

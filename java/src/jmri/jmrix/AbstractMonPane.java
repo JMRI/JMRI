@@ -205,7 +205,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         }
         //automatically uppercase input in filterField, and only accept spaces and valid hex characters
         ((AbstractDocument) filterField.getDocument()).setDocumentFilter(new DocumentFilter() {
-            final private static String PATTERN = "[0-9a-fA-F ]*+"; // typing inserts individual characters
+            private static final String PATTERN = "[0-9a-fA-F ]*+"; // typing inserts individual characters
 
             @Override
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String text,

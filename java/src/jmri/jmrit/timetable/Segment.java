@@ -66,6 +66,6 @@ public class Segment {
         return _segmentName;
     }
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Segment.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Segment.class);
 
 }

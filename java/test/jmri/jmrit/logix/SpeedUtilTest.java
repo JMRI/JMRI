@@ -41,6 +41,6 @@ public class SpeedUtilTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SpeedUtilTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SpeedUtilTest.class);
 
 }

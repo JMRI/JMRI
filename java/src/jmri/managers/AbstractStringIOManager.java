@@ -60,7 +60,7 @@ public abstract class AbstractStringIOManager extends AbstractManager<StringIO>
      */
     @Override
     @Nonnull
-    final public StringIO newStringIO(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+    public final StringIO newStringIO(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         log.debug(" newStringIO(\"{}\", \"{}\")", systemName, (userName == null ? "null" : userName));
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
                 + (userName == null ? "null" : userName));  // NOI18N

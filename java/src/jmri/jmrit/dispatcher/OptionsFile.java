@@ -380,5 +380,5 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OptionsFile.class);
+    private static final Logger log = LoggerFactory.getLogger(OptionsFile.class);
 }

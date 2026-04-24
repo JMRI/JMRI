@@ -33,6 +33,6 @@ public class CreateRosterGroupActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CreateRosterGroupActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CreateRosterGroupActionTest.class);
 
 }

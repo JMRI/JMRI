@@ -25,7 +25,7 @@ import jmri.util.swing.JemmyUtil;
  */
 public class YardEditFrameTest extends OperationsTestCase {
 
-    final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
+    static final int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
     private LocationManager lManager;
     private Location l;
 

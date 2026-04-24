@@ -79,6 +79,6 @@ public class WaitAutomationAction extends RunAutomationAction implements Propert
         automationUpdate(evt);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WaitAutomationAction.class);
+    private static final Logger log = LoggerFactory.getLogger(WaitAutomationAction.class);
 
 }

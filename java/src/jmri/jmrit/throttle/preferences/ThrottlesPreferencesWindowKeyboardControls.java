@@ -636,5 +636,5 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
         
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferencesWindowKeyboardControls.class);
+    private static final Logger log = LoggerFactory.getLogger(ThrottlesPreferencesWindowKeyboardControls.class);
 }

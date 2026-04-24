@@ -70,9 +70,9 @@ public class SwitchboardEditor extends Editor {
     private final JLabel next = new JLabel(iconNext);
     private final int rangeBottom = 1;
     private final int rangeTop = 100000; // for MERG etc where thousands = node number, total number on board limited to unconnectedRangeLimit anyway
-    private final static int unconnectedRangeLimit = 400;
-    private final static int rangeSizeWarning = 250;
-    private final static int initialMax = 24;
+    private static final int unconnectedRangeLimit = 400;
+    private static final int rangeSizeWarning = 250;
+    private static final int initialMax = 24;
     private final JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeBottom, rangeBottom, rangeTop - 1, 1));
     private final JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(initialMax, rangeBottom + 1, rangeTop, 1));
     private final JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
@@ -93,11 +93,11 @@ public class SwitchboardEditor extends Editor {
         Bundle.getMessage("Symbols")
     };
     private JComboBox<String> shapeList;
-    final static int BUTTON = 0;
-    final static int SLIDER = 1;
-    final static int KEY = 2;
-    final static int SYMBOL = 3;
-    //final static int ICON = 4;
+    static final int BUTTON = 0;
+    static final int SLIDER = 1;
+    static final int KEY = 2;
+    static final int SYMBOL = 3;
+    //static final int ICON = 4;
     private final ManagerComboBox<Turnout> turnoutManComboBox = new ManagerComboBox<>();
     private final ManagerComboBox<Sensor> sensorManComboBox = new ManagerComboBox<>();
     private final ManagerComboBox<Light> lightManComboBox = new ManagerComboBox<>();
@@ -115,9 +115,9 @@ public class SwitchboardEditor extends Editor {
     // editor items (adapted from LayoutEditor toolbar)
     private Color defaultTextColor = Color.BLACK;
     private Color defaultActiveColor = Color.RED; // user configurable since 4.21.3
-    protected final static Color darkActiveColor = new Color(180, 50, 50);
+    protected static final Color darkActiveColor = new Color(180, 50, 50);
     private Color defaultInactiveColor = Color.GREEN; // user configurable since 4.21.3
-    protected final static Color darkInactiveColor = new Color(40, 150, 30);
+    protected static final Color darkInactiveColor = new Color(40, 150, 30);
     private boolean _hideUnconnected = false;
     private boolean _autoItemRange = true;
     private int rows = 4; // matches initial autoRows pref for default pane size
@@ -155,9 +155,9 @@ public class SwitchboardEditor extends Editor {
     private final JRadioButtonMenuItem sizeSmall = new JRadioButtonMenuItem(Bundle.getMessage("optionSmaller"));
     private final JRadioButtonMenuItem sizeDefault = new JRadioButtonMenuItem(Bundle.getMessage("optionDefault"));
     private final JRadioButtonMenuItem sizeLarge = new JRadioButtonMenuItem(Bundle.getMessage("optionLarger"));
-    final static int SIZE_MIN = 50;
-    final static int SIZE_INIT = 100;
-    final static int SIZE_MAX = 150;
+    static final int SIZE_MIN = 50;
+    static final int SIZE_INIT = 100;
+    static final int SIZE_MAX = 150;
 
     /**
      * To count number of displayed beanswitches, this array holds all beanswitches to be displayed
@@ -1923,6 +1923,6 @@ public class SwitchboardEditor extends Editor {
         return _iconSquare;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SwitchboardEditor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SwitchboardEditor.class);
 
 }

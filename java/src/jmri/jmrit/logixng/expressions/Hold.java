@@ -211,6 +211,6 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     public void disposeMe() {
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Hold.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Hold.class);
 
 }

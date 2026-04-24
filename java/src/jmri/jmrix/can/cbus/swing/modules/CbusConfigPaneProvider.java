@@ -73,7 +73,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * @return name of object
      */
     @Override
-    final public String toString() {
+    public final String toString() {
         return getModuleType();
     }
     
@@ -84,7 +84,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * @return the module provider, null if not known
      */
     @CheckForNull
-    final public static CbusConfigPaneProvider getProviderByName(String name) {
+    public static final CbusConfigPaneProvider getProviderByName(String name) {
         loadInstances();
         CbusConfigPaneProvider p = instanceMap.get(name);
         return p;
@@ -96,7 +96,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * @param node the node instance
      * @return the module provider
      */
-    final public static CbusConfigPaneProvider getProviderByNode(CbusNode node) {
+    public static final CbusConfigPaneProvider getProviderByNode(CbusNode node) {
         loadInstances();
         CbusConfigPaneProvider p = instanceMap.get(node.getName());
         if (p != null) {
@@ -119,7 +119,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * 
      * @return all instance map sorted in name order.
      */
-    final public static Map<String, CbusConfigPaneProvider> getInstancesMap() {
+    public static final Map<String, CbusConfigPaneProvider> getInstancesMap() {
         loadInstances();
         return Collections.unmodifiableMap(instanceMap);
     }
@@ -130,7 +130,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * 
      * @return unmodifiable collection.
      */
-    final public static Collection<CbusConfigPaneProvider> getInstancesCollection() {
+    public static final Collection<CbusConfigPaneProvider> getInstancesCollection() {
         loadInstances();
         return Collections.unmodifiableCollection(instanceMap.values());
     }
@@ -139,7 +139,7 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
      * Load all the available instances. Note this only runs
      * once; there's no reloading once the program is running.
      */
-    final public static void loadInstances() {
+    public static final void loadInstances() {
         if (instanceMap != null) return;
 
         instanceMap = new TreeMap<>();  // sorted map, in string order on key

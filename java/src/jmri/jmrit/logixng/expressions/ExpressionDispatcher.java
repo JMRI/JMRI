@@ -438,6 +438,6 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
         log.debug("getUsageReport :: ExpressionDispatcher: bean = {}, report = {}", cdl, report);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionDispatcher.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionDispatcher.class);
 
 }

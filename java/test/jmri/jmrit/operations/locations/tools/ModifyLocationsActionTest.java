@@ -36,6 +36,6 @@ public class ModifyLocationsActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ModifyLocationsActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ModifyLocationsActionTest.class);
 
 }

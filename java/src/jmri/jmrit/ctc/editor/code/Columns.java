@@ -27,8 +27,8 @@ import jmri.jmrit.ctc.ctcserialdata.TrafficLockingData;
  interface.  It maintains the state of the screen for the higher level functions.
  */
 public class Columns {
-    public final static String REFERENCES_PRESENT_INDICATOR = " (";
-    private final static String ERROR_STRING = " ***ERROR***";
+    public static final String REFERENCES_PRESENT_INDICATOR = " (";
+    private static final String ERROR_STRING = " ***ERROR***";
 
     private final CTCSerialData _mCTCSerialData;
     private final CheckJMRIObject _mCheckJMRIObject;

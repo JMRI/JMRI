@@ -171,5 +171,5 @@ public class GlobalVariableIconXml extends PositionableLabelXml {
         l.displayState();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GlobalVariableIconXml.class);
+    private static final Logger log = LoggerFactory.getLogger(GlobalVariableIconXml.class);
 }

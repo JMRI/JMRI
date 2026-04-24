@@ -103,5 +103,5 @@ public class OperationsTestCase {
         sem.release();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsTestCase.class);
+    private static final Logger log = LoggerFactory.getLogger(OperationsTestCase.class);
 }

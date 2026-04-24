@@ -316,5 +316,5 @@ public class PositionablePolygon extends PositionableShape {
         return new GeneralPath(GeneralPath.WIND_EVEN_ODD);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePolygon.class);
+    private static final Logger log = LoggerFactory.getLogger(PositionablePolygon.class);
 }

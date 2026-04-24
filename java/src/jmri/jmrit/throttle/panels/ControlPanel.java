@@ -107,11 +107,11 @@ public class ControlPanel extends JPanel implements java.beans.PropertyChangeLis
 
     private AddressPanel addressPanel; //for access to roster entry
     /* Constants for speed selection method */
-    final public static int SLIDERDISPLAY = 0;
-    final public static int STEPDISPLAY = 1;
-    final public static int SLIDERDISPLAYCONTINUOUS = 2;
+    public static final int SLIDERDISPLAY = 0;
+    public static final int STEPDISPLAY = 1;
+    public static final int SLIDERDISPLAYCONTINUOUS = 2;
 
-    final public static int DEFAULT_BUTTON_SIZE = 24;
+    public static final int DEFAULT_BUTTON_SIZE = 24;
     private static final String LONGEST_SS_STRING="999";
     private static final int FONT_SIZE_MIN=12;
     private static final int FONT_INCREMENT = 2;
@@ -1543,5 +1543,5 @@ public class ControlPanel extends JPanel implements java.beans.PropertyChangeLis
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ControlPanel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ControlPanel.class);
 }

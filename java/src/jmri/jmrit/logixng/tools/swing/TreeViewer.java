@@ -81,6 +81,6 @@ public class TreeViewer extends JmriJFrame {
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreeViewer.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreeViewer.class);
 
 }

@@ -27,6 +27,6 @@ public class SimpleProgActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SimpleProgActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SimpleProgActionTest.class);
 
 }

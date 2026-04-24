@@ -86,6 +86,6 @@ public class EditManifestTextFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EditManifestTextFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EditManifestTextFrameTest.class);
 
 }

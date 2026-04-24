@@ -27,5 +27,5 @@ public class LayoutDoubleXOverEditor extends LayoutXOverEditor {
     // expand and the code will be brought here
     
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleXOverEditor.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleXOverEditor.class);
 }

@@ -85,7 +85,7 @@ public abstract class ItemPanel extends JPanel  {
             "BeanStateUnknown", "first", "second", "third"};
     // SIGNALMAST family is empty is signal system
     static final String[] RPSREPORTER = {"active", "error"};
-    final static String[] INDICATOR_TRACK = {"ClearTrack", "OccupiedTrack", "PositionTrack",
+    static final String[] INDICATOR_TRACK = {"ClearTrack", "OccupiedTrack", "PositionTrack",
             "AllocatedTrack", "DontUseTrack", "ErrorTrack"};
     static final String[] PORTAL = {PortalIcon.HIDDEN, PortalIcon.VISIBLE, PortalIcon.PATH,
             PortalIcon.TO_ARROW, PortalIcon.FROM_ARROW};

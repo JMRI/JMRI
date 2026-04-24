@@ -60,60 +60,60 @@ import java.util.ResourceBundle;
  */
 public class Version {
 
-    static final private ResourceBundle VERSION_BUNDLE = ResourceBundle.getBundle("jmri.Version"); // NOI18N
+    private static final ResourceBundle VERSION_BUNDLE = ResourceBundle.getBundle("jmri.Version"); // NOI18N
 
     /**
      * Major number changes with large incompatible changes in requirements or
      * API.
      */
-    static final public int major = Integer.parseInt(VERSION_BUNDLE.getString("release.major")); // NOI18N
+    public static final int major = Integer.parseInt(VERSION_BUNDLE.getString("release.major")); // NOI18N
 
     /**
      * Minor number changes with each production versionBundle. Odd is
      * development, even is production.
      */
-    static final public int minor = Integer.parseInt(VERSION_BUNDLE.getString("release.minor")); // NOI18N
+    public static final int minor = Integer.parseInt(VERSION_BUNDLE.getString("release.minor")); // NOI18N
 
     /**
      * Test number changes with individual releases, generally fastest for test
      * releases. In production releases, if non-zero, indicates a bug fix only
      * release.
      */
-    static final public int test = Integer.parseInt(VERSION_BUNDLE.getString("release.build")); // NOI18N
+    public static final int test = Integer.parseInt(VERSION_BUNDLE.getString("release.build")); // NOI18N
 
     /**
      * The additional MODIFIER for the release. Used to indicate a parallel
      * release of a feature that has not been accepted into main stream
      * development.
      */
-    static final public String MODIFIER = VERSION_BUNDLE.getString("release.modifier"); // NOI18N
+    public static final String MODIFIER = VERSION_BUNDLE.getString("release.modifier"); // NOI18N
 
     /**
      * Descriptor for non-official build. Included in {@link #name()}, but not
      * in {@link #getCanonicalVersion()}.
      */
-    static final public String NON_OFFICIAL = "plus"; // NOI18N
+    public static final String NON_OFFICIAL = "plus"; // NOI18N
 
     /**
      * The user who built this versionBundle, as determined by the build
      * machine.
      */
-    static final public String buildUser = VERSION_BUNDLE.getString("release.build_user"); // NOI18N
+    public static final String buildUser = VERSION_BUNDLE.getString("release.build_user"); // NOI18N
 
     /**
      * The Git revision ID for this versionBundle (if known).
      */
-    static final public String revisionId = VERSION_BUNDLE.getString("release.revision_id"); // NOI18N
+    public static final String revisionId = VERSION_BUNDLE.getString("release.revision_id"); // NOI18N
 
     /**
      * The date/time of this build.
      */
-    static final public String buildDate = VERSION_BUNDLE.getString("release.build_date"); // NOI18N
+    public static final String buildDate = VERSION_BUNDLE.getString("release.build_date"); // NOI18N
 
     /**
      * Has this build been created as a possible "official" versionBundle?
      */
-    static final public boolean official = Boolean.parseBoolean(VERSION_BUNDLE.getString("release.official")); // NOI18N
+    public static final boolean official = Boolean.parseBoolean(VERSION_BUNDLE.getString("release.official")); // NOI18N
 
     /**
      * Get the MODIFIER in the 1.2.3-MODIFIER version name. Non-official

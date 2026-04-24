@@ -719,5 +719,5 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTraverserEditor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTraverserEditor.class);
 }

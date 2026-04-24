@@ -92,10 +92,10 @@ public class PositionablePopupUtil {
     /**
      * *************************************************************************************
      */
-    static final public int FONT_COLOR = 0x00;
-    static final public int BACKGROUND_COLOR = 0x01;
-    static final public int BORDER_COLOR = 0x02;
-    static final public int MIN_SIZE = 5;
+    public static final int FONT_COLOR = 0x00;
+    public static final int BACKGROUND_COLOR = 0x01;
+    public static final int BORDER_COLOR = 0x02;
+    public static final int MIN_SIZE = 5;
 
     private int fixedWidth = 0;
     private int fixedHeight = 0;
@@ -653,9 +653,9 @@ public class PositionablePopupUtil {
         return null;
     }
 
-    public final static int HORIZONTAL = 0x00;
-    public final static int VERTICAL_UP = 0x01;
-    public final static int VERTICAL_DOWN = 0x02;
+    public static final int HORIZONTAL = 0x00;
+    public static final int VERTICAL_UP = 0x01;
+    public static final int VERTICAL_DOWN = 0x02;
 
     private int orientation = HORIZONTAL;
 
@@ -767,5 +767,5 @@ public class PositionablePopupUtil {
         viewAdditionalMenu.forEach(popup::add);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionablePopupUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(PositionablePopupUtil.class);
 }

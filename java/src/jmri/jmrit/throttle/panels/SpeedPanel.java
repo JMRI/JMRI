@@ -219,5 +219,5 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SpeedPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(SpeedPanel.class);
 }

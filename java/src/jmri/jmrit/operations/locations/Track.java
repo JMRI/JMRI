@@ -3067,6 +3067,6 @@ public class Track extends PropertyChangeSupport {
         return "";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Track.class);
+    private static final Logger log = LoggerFactory.getLogger(Track.class);
 
 }

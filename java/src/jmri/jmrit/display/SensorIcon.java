@@ -35,14 +35,14 @@ import jmri.util.swing.JmriMouseEvent;
  */
 public class SensorIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
-    static final public int UNKOWN_FONT_COLOR = 0x03;
-    static final public int UNKOWN_BACKGROUND_COLOR = 0x04;
-    static final public int ACTIVE_FONT_COLOR = 0x05;
-    static final public int ACTIVE_BACKGROUND_COLOR = 0x06;
-    static final public int INACTIVE_FONT_COLOR = 0x07;
-    static final public int INACTIVE_BACKGROUND_COLOR = 0x08;
-    static final public int INCONSISTENT_FONT_COLOR = 0x0A;
-    static final public int INCONSISTENT_BACKGROUND_COLOR = 0x0B;
+    public static final int UNKOWN_FONT_COLOR = 0x03;
+    public static final int UNKOWN_BACKGROUND_COLOR = 0x04;
+    public static final int ACTIVE_FONT_COLOR = 0x05;
+    public static final int ACTIVE_BACKGROUND_COLOR = 0x06;
+    public static final int INACTIVE_FONT_COLOR = 0x07;
+    public static final int INACTIVE_BACKGROUND_COLOR = 0x08;
+    public static final int INCONSISTENT_FONT_COLOR = 0x0A;
+    public static final int INCONSISTENT_BACKGROUND_COLOR = 0x0B;
 
     protected HashMap<String, Integer> _name2stateMap;       // name to state
     protected HashMap<Integer, String> _state2nameMap;       // state to name
@@ -1061,6 +1061,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorIcon.class);
 
 }

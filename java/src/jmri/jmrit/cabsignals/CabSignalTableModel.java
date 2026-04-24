@@ -348,6 +348,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CabSignalTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(CabSignalTableModel.class);
 
 }

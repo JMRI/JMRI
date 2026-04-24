@@ -118,6 +118,6 @@ public class AnalogActionMemory extends AbstractAnalogAction
         getConditionalNG().execute();
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionMemory.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionMemory.class);
 
 }

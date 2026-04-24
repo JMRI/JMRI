@@ -128,5 +128,5 @@ public class GlobalVariableIcon extends jmri.jmrit.display.GlobalVariableIcon {
         updateSize();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GlobalVariableIcon.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GlobalVariableIcon.class);
 }

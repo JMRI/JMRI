@@ -303,6 +303,6 @@ public class ExpressionConditional extends AbstractDigitalExpression
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionConditional.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionConditional.class);
 
 }

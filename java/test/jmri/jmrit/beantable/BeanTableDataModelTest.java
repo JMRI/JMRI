@@ -60,6 +60,6 @@ public class BeanTableDataModelTest extends AbstractBeanTableDataModelBase<Senso
         
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(BeanTableDataModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(BeanTableDataModelTest.class);
     
 }

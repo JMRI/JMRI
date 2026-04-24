@@ -340,5 +340,5 @@ public class OperationsPanel extends JPanel {
         box.setPreferredSize(size);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(OperationsPanel.class);
 }

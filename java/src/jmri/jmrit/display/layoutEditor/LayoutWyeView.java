@@ -31,7 +31,7 @@ public class LayoutWyeView extends LayoutTurnoutView {
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutWyeEditor(layoutEditor);
     }
         
-    // final private LayoutWye wye;
+    // private final LayoutWye wye;
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutWyeView.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutWyeView.class);
 }

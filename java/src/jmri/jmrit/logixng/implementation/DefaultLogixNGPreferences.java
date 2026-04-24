@@ -255,5 +255,5 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         return _logAllAfter;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGPreferences.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGPreferences.class);
 }

@@ -33,6 +33,6 @@ public class PortalItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PortalItemPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PortalItemPanelTest.class);
 
 }

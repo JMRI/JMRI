@@ -40,7 +40,7 @@ import jmri.util.swing.JmriJOptionPane;
  * @author Dave Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2019
  */
-final public class LayoutEditorTools {
+public final class LayoutEditorTools {
 
     //constants
     //private final int NONE = 0;  //Signal at Turnout Positions
@@ -14151,5 +14151,5 @@ final public class LayoutEditorTools {
         return result;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorTools.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorTools.class);
 }

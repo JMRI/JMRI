@@ -292,6 +292,6 @@ public class ActionFindTableRowOrColumn extends AbstractDigitalAction
 */
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionFindTableRowOrColumn.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionFindTableRowOrColumn.class);
 
 }

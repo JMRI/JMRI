@@ -313,6 +313,6 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
     }
 
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionOBlockSwing.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionOBlockSwing.class);
 
 }

@@ -158,5 +158,5 @@ public class ShowRoutesServingLocationFrame extends OperationsFrame implements j
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ShowRoutesServingLocationFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(ShowRoutesServingLocationFrame.class);
 }

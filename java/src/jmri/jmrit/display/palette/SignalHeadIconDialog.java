@@ -25,7 +25,7 @@ public class SignalHeadIconDialog extends IconDialog {
         log.debug("_iconMap size = {}", _iconMap.size());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalHeadIconDialog.class);
+    private static final Logger log = LoggerFactory.getLogger(SignalHeadIconDialog.class);
 
 }
 

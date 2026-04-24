@@ -456,7 +456,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainManagerXml.class);
 
     @Override
     public void initialize() {

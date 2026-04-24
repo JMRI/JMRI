@@ -72,7 +72,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     transient SignalMastLogic sml;
 
-    final static int NXMESSAGEBOXCLEARTIMEOUT = 30;
+    static final int NXMESSAGEBOXCLEARTIMEOUT = 30;
 
     /**
      * public for testing purposes.

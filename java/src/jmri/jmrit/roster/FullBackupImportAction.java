@@ -286,5 +286,5 @@ public class FullBackupImportAction extends ImportRosterItemAction {
         return true;
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FullBackupImportAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FullBackupImportAction.class);
 }

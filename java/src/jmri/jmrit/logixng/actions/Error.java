@@ -76,6 +76,6 @@ public class Error extends AbstractDigitalAction
         getConditionalNG().execute();
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebBrowser.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebBrowser.class);
 
 }

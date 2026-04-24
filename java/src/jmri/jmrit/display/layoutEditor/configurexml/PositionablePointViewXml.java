@@ -167,5 +167,5 @@ public class PositionablePointViewXml extends LayoutTrackViewXml {
         loadLogixNG_Data(pv, element);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointViewXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointViewXml.class);
 }

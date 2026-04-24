@@ -170,5 +170,5 @@ public class PrintShowCarsInTrain extends TrainCommon {
         return header;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintShowCarsInTrain.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintShowCarsInTrain.class);
 }

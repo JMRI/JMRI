@@ -255,6 +255,6 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
         return MemoryTableAction.class.getName();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MemoryTableAction.class);
+    // private static final Logger log = LoggerFactory.getLogger(MemoryTableAction.class);
 
 }

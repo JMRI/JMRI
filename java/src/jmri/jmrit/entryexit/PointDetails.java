@@ -765,5 +765,5 @@ public class PointDetails {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PointDetails.class);
+    private static final Logger log = LoggerFactory.getLogger(PointDetails.class);
 }

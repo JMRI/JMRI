@@ -121,5 +121,5 @@ public class ActionListenOnBeansLocalVariableXml extends jmri.managers.configure
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionListenOnBeansLocalVariableXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionListenOnBeansLocalVariableXml.class);
 }

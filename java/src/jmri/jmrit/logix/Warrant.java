@@ -3333,5 +3333,5 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return report;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Warrant.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Warrant.class);
 }

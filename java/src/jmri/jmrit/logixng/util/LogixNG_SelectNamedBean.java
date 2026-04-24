@@ -490,5 +490,5 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectNamedBean.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectNamedBean.class);
 }

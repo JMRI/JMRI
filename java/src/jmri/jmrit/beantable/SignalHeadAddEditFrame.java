@@ -87,13 +87,13 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
     private BeanSelectCreatePanel<Turnout> turnoutSelect6;
     private BeanSelectCreatePanel<Turnout> turnoutSelect7;
 
-    private final static String TURNOUT_STATE_THROWN = InstanceManager.getDefault(TurnoutManager.class).getThrownText();
-    private final static String TURNOUT_STATE_CLOSED = InstanceManager.getDefault(TurnoutManager.class).getClosedText();
+    private static final String TURNOUT_STATE_THROWN = InstanceManager.getDefault(TurnoutManager.class).getThrownText();
+    private static final String TURNOUT_STATE_CLOSED = InstanceManager.getDefault(TurnoutManager.class).getClosedText();
 
-    private final static int[] TURNOUT_STATE_VALUES = new int[]{Turnout.CLOSED, Turnout.THROWN};
-    private final static String[] TURNOUT_STATE_STRINGS = new String[]{TURNOUT_STATE_CLOSED, TURNOUT_STATE_THROWN};
+    private static final int[] TURNOUT_STATE_VALUES = new int[]{Turnout.CLOSED, Turnout.THROWN};
+    private static final String[] TURNOUT_STATE_STRINGS = new String[]{TURNOUT_STATE_CLOSED, TURNOUT_STATE_THROWN};
 
-    private final static String[] SIGNAL_STATE_STRINGS = new String[]{
+    private static final String[] SIGNAL_STATE_STRINGS = new String[]{
         Bundle.getMessage("SignalHeadStateDark"),
         Bundle.getMessage("SignalHeadStateRed"),
         Bundle.getMessage("SignalHeadStateLunar"),
@@ -101,7 +101,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
         Bundle.getMessage("SignalHeadStateGreen")
     };
 
-    private final static int[] SIGNAL_STATE_VALUES = new int[]{
+    private static final int[] SIGNAL_STATE_VALUES = new int[]{
         SignalHead.DARK,
         SignalHead.RED,
         SignalHead.LUNAR,
@@ -109,33 +109,33 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
         SignalHead.GREEN
     };
 
-    private final static String ACELA_ASPECT = Bundle.getMessage("StringAcelaaspect");
-    private final static String SE8C4_ASPECT = Bundle.getMessage("StringSE8c4aspect");
-    private final static String TRIPLE_OUTPUT = Bundle.getMessage("StringTripleOutput");
-    private final static String QUAD_OUTPUT = Bundle.getMessage("StringQuadOutput");
-    private final static String SINGLE_TURNOUT = Bundle.getMessage("StringSingle");
-    private final static String DOUBLE_TURNOUT = Bundle.getMessage("StringDoubleTurnout");
-    private final static String TRIPLE_TURNOUT = Bundle.getMessage("StringTripleTurnout");
-    private final static String VIRTUAL_HEAD = Bundle.getMessage("StringVirtual");
-    private final static String GRAPEVINE = Bundle.getMessage("StringGrapevine");
-    private final static String LSDEC = Bundle.getMessage("StringLsDec");
-    private final static String DCC_SIGNAL_DECODER = Bundle.getMessage("StringDccSigDec");
-    private final static String MERG_SIGNAL_DRIVER = Bundle.getMessage("StringMerg");
+    private static final String ACELA_ASPECT = Bundle.getMessage("StringAcelaaspect");
+    private static final String SE8C4_ASPECT = Bundle.getMessage("StringSE8c4aspect");
+    private static final String TRIPLE_OUTPUT = Bundle.getMessage("StringTripleOutput");
+    private static final String QUAD_OUTPUT = Bundle.getMessage("StringQuadOutput");
+    private static final String SINGLE_TURNOUT = Bundle.getMessage("StringSingle");
+    private static final String DOUBLE_TURNOUT = Bundle.getMessage("StringDoubleTurnout");
+    private static final String TRIPLE_TURNOUT = Bundle.getMessage("StringTripleTurnout");
+    private static final String VIRTUAL_HEAD = Bundle.getMessage("StringVirtual");
+    private static final String GRAPEVINE = Bundle.getMessage("StringGrapevine");
+    private static final String LSDEC = Bundle.getMessage("StringLsDec");
+    private static final String DCC_SIGNAL_DECODER = Bundle.getMessage("StringDccSigDec");
+    private static final String MERG_SIGNAL_DRIVER = Bundle.getMessage("StringMerg");
 
-    private final static String ACELA_SIG_HEAD_DOUBLE = Bundle.getMessage("StringSignalheadDouble");
-    private final static String ACELA_SIG_HEAD_TRIPLE = Bundle.getMessage("StringSignalheadTriple");
-    // private final static String ACELA_SIG_HEAD_RGB = Bundle.getMessage("StringSignalheadRGB");
-    private final static String ACELA_SIG_HEAD_BIPLOAR = Bundle.getMessage("StringSignalheadBiPolar");
-    private final static String ACELA_SIG_HEAD_WIGWAG = Bundle.getMessage("StringSignalheadWigwag");
+    private static final String ACELA_SIG_HEAD_DOUBLE = Bundle.getMessage("StringSignalheadDouble");
+    private static final String ACELA_SIG_HEAD_TRIPLE = Bundle.getMessage("StringSignalheadTriple");
+    // private static final String ACELA_SIG_HEAD_RGB = Bundle.getMessage("StringSignalheadRGB");
+    private static final String ACELA_SIG_HEAD_BIPLOAR = Bundle.getMessage("StringSignalheadBiPolar");
+    private static final String ACELA_SIG_HEAD_WIGWAG = Bundle.getMessage("StringSignalheadWigwag");
 
-    private final static String[] ACELA_SIG_HEAD_TYPES = new String[]{ACELA_SIG_HEAD_DOUBLE, ACELA_SIG_HEAD_TRIPLE,
+    private static final String[] ACELA_SIG_HEAD_TYPES = new String[]{ACELA_SIG_HEAD_DOUBLE, ACELA_SIG_HEAD_TRIPLE,
         ACELA_SIG_HEAD_BIPLOAR, ACELA_SIG_HEAD_WIGWAG};
 
-    private final static int[] ACELA_SIG_HEAD_TYPE_VALUES = new int[]{AcelaNode.DOUBLE, AcelaNode.TRIPLE,
+    private static final int[] ACELA_SIG_HEAD_TYPE_VALUES = new int[]{AcelaNode.DOUBLE, AcelaNode.TRIPLE,
         AcelaNode.BPOLAR, AcelaNode.WIGWAG};
 
-    private final static String[] UK_SEMAPHORE_TYPES = new String[]{Bundle.getMessage("HomeSignal"), Bundle.getMessage("DistantSignal")};
-    private final static String[] UK_SIGNAL_ASPECTS =  new String[]{"2", "3", "4"}; // NOI18N
+    private static final String[] UK_SEMAPHORE_TYPES = new String[]{Bundle.getMessage("HomeSignal"), Bundle.getMessage("DistantSignal")};
+    private static final String[] UK_SIGNAL_ASPECTS =  new String[]{"2", "3", "4"}; // NOI18N
 
     private final JLabel dccPacketSendCount = new JLabel(Bundle.getMessage("DCCMastPacketSendCount"));
     private final JSpinner dccPacketSendCountSpinner = new JSpinner();
@@ -1954,6 +1954,6 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadAddEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadAddEditFrame.class);
 
 }

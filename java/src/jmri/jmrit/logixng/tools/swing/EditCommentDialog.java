@@ -94,13 +94,13 @@ public class EditCommentDialog {
         return _comment;
     }
     
-    final protected void cancelPressed(ActionEvent e) {
+    protected final void cancelPressed(ActionEvent e) {
         _editCommentDialog.setVisible(false);
         _editCommentDialog.dispose();
         _editCommentDialog = null;
     }
     
-    final protected void okPressed(ActionEvent e) {
+    protected final void okPressed(ActionEvent e) {
         if (_commentTextArea.getText().isEmpty()) {
             _comment = null;
         } else {

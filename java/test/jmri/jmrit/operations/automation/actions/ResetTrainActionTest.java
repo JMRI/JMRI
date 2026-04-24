@@ -77,6 +77,6 @@ public class ResetTrainActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ResetTrainActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ResetTrainActionTest.class);
 
 }

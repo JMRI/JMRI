@@ -100,6 +100,6 @@ public class ResumeAutomationActionTest extends OperationsTestCase {
         Assert.assertTrue("message contains automation name", message.contains("TEST_AUTOMATION"));
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ResumeAutomationActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ResumeAutomationActionTest.class);
 
 }

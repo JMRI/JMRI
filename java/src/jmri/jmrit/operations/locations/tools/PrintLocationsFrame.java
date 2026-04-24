@@ -1179,5 +1179,5 @@ public class PrintLocationsFrame extends OperationsFrame {
         return TrainCommon.padAndTruncate(s, length);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintLocationsFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintLocationsFrame.class);
 }

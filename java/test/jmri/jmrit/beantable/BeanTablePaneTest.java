@@ -30,6 +30,6 @@ public class BeanTablePaneTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BeanTablePaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(BeanTablePaneTest.class);
 
 }

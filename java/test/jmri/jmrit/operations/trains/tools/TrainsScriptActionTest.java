@@ -27,6 +27,6 @@ public class TrainsScriptActionTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainsScriptActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainsScriptActionTest.class);
 
 }

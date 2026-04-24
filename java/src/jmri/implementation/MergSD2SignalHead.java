@@ -278,42 +278,42 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         mHome = boo;
     }
 
-    final private static int[] validStates2AspectHome = new int[]{
+    private static final int[] validStates2AspectHome = new int[]{
         RED,
         GREEN
     };
-    final private static String[] validStateKeys2AspectHome = new String[]{
+    private static final String[] validStateKeys2AspectHome = new String[]{
         "SignalHeadStateRed",
         "SignalHeadStateGreen"
     };
 
-    final private static int[] validStates2AspectDistant = new int[]{
+    private static final int[] validStates2AspectDistant = new int[]{
         YELLOW,
         GREEN
     };
-    final private static String[] validStateKeys2AspectDistant = new String[]{
+    private static final String[] validStateKeys2AspectDistant = new String[]{
         "SignalHeadStateYellow",
         "SignalHeadStateGreen"
     };
 
-    final private static int[] validStates3Aspect = new int[]{
+    private static final int[] validStates3Aspect = new int[]{
         RED,
         YELLOW,
         GREEN
     };
-    final private static String[] validStateKeys3Aspect = new String[]{
+    private static final String[] validStateKeys3Aspect = new String[]{
         "SignalHeadStateRed",
         "SignalHeadStateYellow",
         "SignalHeadStateGreen"
     };
 
-    final private static int[] validStates4Aspect = new int[]{
+    private static final int[] validStates4Aspect = new int[]{
         RED,
         YELLOW,
         LUNAR,
         GREEN
     };
-    final private static String[] validStateKeys4Aspect = new String[]{
+    private static final String[] validStateKeys4Aspect = new String[]{
         "SignalHeadStateRed",
         "SignalHeadStateYellow",
         "SignalHeadStateLunar",

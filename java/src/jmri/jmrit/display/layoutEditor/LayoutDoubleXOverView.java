@@ -31,7 +31,7 @@ public class LayoutDoubleXOverView extends LayoutXOverView {
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutDoubleXOverEditor(layoutEditor);
     }
         
-    // final private LayoutDoubleXOver xover;
+    // private final LayoutDoubleXOver xover;
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleXOverView.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleXOverView.class);
 }

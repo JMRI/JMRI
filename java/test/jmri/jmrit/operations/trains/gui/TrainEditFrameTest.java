@@ -579,6 +579,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.loadTrains();
     }
 
-    // private final static Logger log =
+    // private static final Logger log =
     // LoggerFactory.getLogger(TrainEditFrameTest.class);
 }

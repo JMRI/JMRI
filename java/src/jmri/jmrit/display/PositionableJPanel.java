@@ -671,5 +671,5 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
         _logixNG.setInlineLogixNG(this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableJPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(PositionableJPanel.class);
 }

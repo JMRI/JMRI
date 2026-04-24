@@ -511,7 +511,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * @param direct true if the help main-menu item goes directly to the help system,
      *               such as when there are no items in the help menu
      */
-    final public void addHelpMenu(String ref, boolean direct) {
+    public final void addHelpMenu(String ref, boolean direct) {
         // only works if no menu present?
         JMenuBar bar = getJMenuBar();
         if (bar == null) {

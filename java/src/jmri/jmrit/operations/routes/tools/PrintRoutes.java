@@ -182,5 +182,5 @@ public class PrintRoutes {
         return TrainCommon.padAndTruncate(string, fieldSize);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintRoutes.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintRoutes.class);
 }

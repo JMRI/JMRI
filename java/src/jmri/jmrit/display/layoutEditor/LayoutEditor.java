@@ -65,7 +65,7 @@ import jmri.util.swing.JmriMouseEvent;
  * @author Dave Duchamp Copyright: (c) 2004-2007
  * @author George Warner Copyright: (c) 2017-2019
  */
-final public class LayoutEditor extends PanelEditor implements MouseWheelListener, LayoutModels {
+public final class LayoutEditor extends PanelEditor implements MouseWheelListener, LayoutModels {
 
     // Operational instance variables - not saved to disk
     private JmriJFrame floatingEditToolBoxFrame = null;
@@ -9011,7 +9011,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     @Override
     @Nonnull
-    final public List<LayoutTrack> getLayoutTracks() {
+    public final List<LayoutTrack> getLayoutTracks() {
         return Collections.unmodifiableList(layoutTrackList);
     }
 
@@ -9041,7 +9041,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     @Override
     @Nonnull
-    final public List<LayoutTrackView> getLayoutTrackViews() {
+    public final List<LayoutTrackView> getLayoutTrackViews() {
         return Collections.unmodifiableList(layoutTrackViewList);
     }
 
@@ -9052,7 +9052,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     // temporary
     @Override
-    final public LayoutTrackView getLayoutTrackView(LayoutTrack trk) {
+    public final LayoutTrackView getLayoutTrackView(LayoutTrack trk) {
         LayoutTrackView lv = trkToView.get(trk);
         if (lv == null) {
             log.warn("No View found for {} class {}", trk, trk.getClass());
@@ -9063,7 +9063,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     // temporary
     @Override
-    final public LevelXingView getLevelXingView(LevelXing xing) {
+    public final LevelXingView getLevelXingView(LevelXing xing) {
         LayoutTrackView lv = trkToView.get(xing);
         if (lv == null) {
             log.warn("No View found for {} class {}", xing, xing.getClass());
@@ -9079,7 +9079,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     // temporary
     @Override
-    final public LayoutTurnoutView getLayoutTurnoutView(LayoutTurnout to) {
+    public final LayoutTurnoutView getLayoutTurnoutView(LayoutTurnout to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
             log.warn("No View found for {} class {}", to, to.getClass());
@@ -9095,7 +9095,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     // temporary
     @Override
-    final public LayoutTurntableView getLayoutTurntableView(LayoutTurntable to) {
+    public final LayoutTurntableView getLayoutTurntableView(LayoutTurntable to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
             log.warn("No View found for {} class {}", to, to.getClass());
@@ -9111,7 +9111,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     // temporary
     @Override
-    final public LayoutTraverserView getLayoutTraverserView(LayoutTraverser to) {
+    public final LayoutTraverserView getLayoutTraverserView(LayoutTraverser to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
             log.warn("No View found for {} class {}", to, to.getClass());
@@ -9126,7 +9126,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     // temporary
-    final public LayoutSlipView getLayoutSlipView(LayoutSlip to) {
+    public final LayoutSlipView getLayoutSlipView(LayoutSlip to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
             log.warn("No View found for {} class {}", to, to.getClass());
@@ -9142,7 +9142,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     // temporary
     @Override
-    final public TrackSegmentView getTrackSegmentView(TrackSegment to) {
+    public final TrackSegmentView getTrackSegmentView(TrackSegment to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
             log.warn("No View found for {} class {}", to, to.getClass());
@@ -9158,7 +9158,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     // temporary
     @Override
-    final public PositionablePointView getPositionablePointView(PositionablePoint to) {
+    public final PositionablePointView getPositionablePointView(PositionablePoint to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
             log.warn("No View found for {} class {}", to, to.getClass());
@@ -9179,7 +9179,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param trk the layout track to add.
      */
     @Override
-    final public void addLayoutTrack(@Nonnull LayoutTrack trk, @Nonnull LayoutTrackView v) {
+    public final void addLayoutTrack(@Nonnull LayoutTrack trk, @Nonnull LayoutTrackView v) {
         log.trace("addLayoutTrack {}", trk);
         if (layoutTrackList.contains(trk)) {
             log.warn("LayoutTrack {} already being maintained", trk.getName());
@@ -9201,7 +9201,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param trk the layout track to remove and redraw.
      * @return true is item was deleted and a redraw done.
      */
-    final public boolean removeLayoutTrackAndRedraw(@Nonnull LayoutTrack trk) {
+    public final boolean removeLayoutTrackAndRedraw(@Nonnull LayoutTrack trk) {
         log.trace("removeLayoutTrackAndRedraw {}", trk);
         if (layoutTrackList.contains(trk)) {
             removeLayoutTrack(trk);
@@ -9221,7 +9221,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param trk the layout track to remove.
      */
     @Override
-    final public void removeLayoutTrack(@Nonnull LayoutTrack trk) {
+    public final void removeLayoutTrack(@Nonnull LayoutTrack trk) {
         log.trace("removeLayoutTrack {}", trk);
         layoutTrackList.remove(trk);
         LayoutTrackView v = trkToView.get(trk);
@@ -9988,5 +9988,5 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class);
 }

@@ -38,7 +38,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * See the <a href="package-summary.html#schema">Schema versioning
      * discussion</a>. Also controls the stylesheet file version.
      */
-    static final public String schemaVersion = "-5-5-5";
+    public static final String schemaVersion = "-5-5-5";
 
     public ConfigXmlManager() {
     }

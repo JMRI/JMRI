@@ -16,7 +16,7 @@ import org.apache.commons.csv.CSVParser;
  */
 
 public class ProjectsCommonSubs {
-    static final public String SSV_SEPARATOR = ";";
+    public static final String SSV_SEPARATOR = ";";
 
     public static ArrayList<String> getArrayListFromCSV(String csvString) { return helper1(csvString, CSVFormat.DEFAULT.getDelimiterString());}
     public static ArrayList<String> getArrayListFromSSV(String ssvString) { return helper1(ssvString, SSV_SEPARATOR); }

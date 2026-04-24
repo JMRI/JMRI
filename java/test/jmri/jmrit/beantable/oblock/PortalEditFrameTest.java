@@ -46,6 +46,6 @@ public class PortalEditFrameTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PortalEditFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PortalEditFrameTest.class);
 
 }

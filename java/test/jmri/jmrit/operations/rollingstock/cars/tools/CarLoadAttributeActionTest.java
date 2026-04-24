@@ -41,7 +41,7 @@ public class CarLoadAttributeActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log =
+    // private static final Logger log =
     // LoggerFactory.getLogger(CarLoadAttributeActionTest.class);
 
 }

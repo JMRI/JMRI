@@ -446,5 +446,5 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
         listeners.remove(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferences.class);
+    private static final Logger log = LoggerFactory.getLogger(ThrottlesPreferences.class);
 }
