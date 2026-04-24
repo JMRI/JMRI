@@ -25,7 +25,6 @@ import jmri.jmrit.throttle.interfaces.AddressListener;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 import jmri.jmrit.throttle.panels.ControlPanel;
-import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +43,6 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
     private final ThrottleManager throttleManager;
     private final ThrottleFrameManager throttleFrameManager = InstanceManager.getDefault(ThrottleFrameManager.class);
     private final ThrottleUICore throuic;
-    private boolean isLoadingDefault = false;
 
     public SimpleThrottlePanel(SimpleThrottleWindow stw, ThrottleManager tm) {
         super();
