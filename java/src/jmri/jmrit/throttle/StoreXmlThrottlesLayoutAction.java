@@ -12,6 +12,8 @@ import javax.swing.JFileChooser;
 
 import jmri.InstanceManager;
 import jmri.configurexml.StoreXmlConfigAction;
+import jmri.jmrit.throttle.UIImplementation.ThrottleUICore;
+import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -55,7 +57,7 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
         fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
-        fileChooser.setCurrentDirectory(new File(ThrottleFrame.getDefaultThrottleFolder()));
+        fileChooser.setCurrentDirectory(new File(ThrottleUICore.getDefaultThrottleFolder()));
         java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);
         if (file == null) {
             return;

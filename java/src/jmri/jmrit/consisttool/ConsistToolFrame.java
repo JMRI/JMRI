@@ -24,8 +24,8 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
-import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.util.JmriJFrame;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JmriJOptionPane;
@@ -353,11 +353,11 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
         // make sure any new locomotives are added to the consist.
         addLocoButtonActionPerformed(e);
         // Create a throttle object with the
-        ThrottleFrame tf
+        ThrottleControllerUI tf
                 = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();        
 
         // Notify the throttle of the selected consist address
-        tf.getAddressPanel().setConsistAddress(adrSelector.getAddress());
+        tf.setConsistAddress(adrSelector.getAddress());
         tf.toFront();
     }
 

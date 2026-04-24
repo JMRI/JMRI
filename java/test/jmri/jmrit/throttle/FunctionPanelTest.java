@@ -1,5 +1,7 @@
 package jmri.jmrit.throttle;
 
+import jmri.jmrit.throttle.panels.FunctionButton;
+import jmri.jmrit.throttle.panels.FunctionPanel;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -38,7 +40,7 @@ public class FunctionPanelTest {
     @AfterEach
     public void tearDown() {
         if (frame != null) {
-            frame.dispose();
+            frame.destroy();
         }
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();

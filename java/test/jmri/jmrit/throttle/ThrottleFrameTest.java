@@ -3,6 +3,7 @@ package jmri.jmrit.throttle;
 import java.io.File;
 
 import jmri.InstanceManager;
+import jmri.jmrit.throttle.panels.FunctionButton;
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
@@ -266,21 +267,6 @@ public class ThrottleFrameTest {
         Assert.assertEquals("Throttle Speed Minimum", 0.0, to.getAttachedThrottle().getSpeedSetting(), 0.005);
 
         to.pushReleaseButton();
-    }
-
-    @Test
-    public void testSetAndGetFileName() throws java.io.IOException {
-        String fileName = folder.getPath() + File.separator + "testThrotttle.xml";
-        panel.setLastUsedSaveFile(fileName);
-        Assert.assertEquals("filename after set", fileName, panel.getLastUsedSaveFile());
-    }
-
-    @Test
-    public void testSaveThrottle() throws java.io.IOException {
-        String fileName = folder.getPath() + File.separator + "testThrotttle.xml";
-        panel.setLastUsedSaveFile(fileName);
-        // right now, just verify no error
-        panel.saveThrottle();
     }
 
     @Test

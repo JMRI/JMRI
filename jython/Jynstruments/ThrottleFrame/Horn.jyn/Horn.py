@@ -8,7 +8,6 @@ import java.awt.CardLayout as CardLayout
 import jmri.util.swing.ResizableImagePanel as ResizableImagePanel
 import java.awt.event.MouseListener as MouseListener
 import java.beans.PropertyChangeListener as PropertyChangeListener
-import jmri.jmrit.throttle.AddressListener as AddressListener
 
 class Horn(Jynstrument, PropertyChangeListener, AddressListener, MouseListener):
 # Jynstrument mandatory part
@@ -25,15 +24,15 @@ class Horn(Jynstrument, PropertyChangeListener, AddressListener, MouseListener):
         self.addComponentListener(self.labelOff)
         self.addComponentListener(self.labelOn)
         self.addMouseListener(self)
-        self.getContext().getAddressPanel().addAddressListener(self)
-        self.throttle = self.getContext().getAddressPanel().getThrottle()
+        self.getContext().addAddressListener(self)
+        self.throttle = self.getContext().getThrottle()
         self.updateThrottle()
         self.setIcon()
 
     def quit(self):   # very important to clean up everything to make sure GC will collect us
         self.cleanThrottle()
-        if (( self.getContext() != None) and ( self.getContext().getAddressPanel() != None)) :
-            self.getContext().getAddressPanel().removeAddressListener(self)
+        if (self.getContext() != None) :
+            self.getContext().removeAddressListener(self)
 
 #Inner workings:
     def updateThrottle(self):    # update throttle informations when a new one is detected

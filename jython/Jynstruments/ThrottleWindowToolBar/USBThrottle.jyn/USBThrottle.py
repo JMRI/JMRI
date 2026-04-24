@@ -32,7 +32,8 @@ import javax.swing.JCheckBoxMenuItem as JCheckBoxMenuItem
 import java.util.TimerTask as TimerTask
 import java.util.Timer as Timer
 import jmri.jmrit.jython.Jynstrument as Jynstrument
-import jmri.jmrit.throttle.AddressListener as AddressListener
+import jmri.jmrit.throttle.interfaces.AddressListener as AddressListener
+import jmri.util.ThreadingUtil as ThreadingUtil
 import org.jdom2.Element as Element
 
 # Some default speeds that will be used in the program
@@ -60,13 +61,13 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                 try:
                     # Change current ThrottleFrame
                     if ((component == self.driver.componentNextThrottleFrame) and (value == self.driver.valueNextThrottleFrame)) : #NEXT
-                        self.getContext().nextThrottleFrame()
+                        ThreadingUtil.runOnGUI(lambda : self.getContext().nextThrottleFrame() )
                     if  ((component == self.driver.componentPreviousThrottleFrame) and (value == self.driver.valuePreviousThrottleFrame)) : #PREVIOUS
-                        self.getContext().previousThrottleFrame()
+                        ThreadingUtil.runOnGUI(lambda : self.getContext().previousThrottleFrame() )
                     if ((component == self.driver.componentNextRunningThrottleFrame) and (value == self.driver.valueNextRunningThrottleFrame)) : #NEXT RUNNING
-                        self.getContext().nextRunningThrottleFrame()
+                        ThreadingUtil.runOnGUI(lambda : self.getContext().nextRunningThrottleFrame() )
                     if  ((component == self.driver.componentPreviousRunningThrottleFrame) and (value == self.driver.valuePreviousRunningThrottleFrame)) : #PREVIOUS RUNNING
-                        self.getContext().previousRunningThrottleFrame()  
+                        ThreadingUtil.runOnGUI(lambda : self.getContext().previousRunningThrottleFrame() )
                 except AttributeError:
                     pass
                 
@@ -74,30 +75,24 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                     try:
                         # Browse through roster
                         if ((component == self.driver.componentNextRosterBrowse) and (value == self.driver.valueNextRoster)): #NEXT
-                            selectedIndex = self.addressPanel.getRosterSelectedIndex()
-                            self.addressPanel.setVisible(True)
-                            self.addressPanel.setIcon(False)
-                            self.addressPanel.setRosterSelectedIndex(selectedIndex + 1)
+                            ThreadingUtil.runOnGUI(lambda : self.addressPanel.setRosterSelectedIndex(self.addressPanel.getRosterSelectedIndex() + 1) )
                         if ((component == self.driver.componentPreviousRosterBrowse) and (value == self.driver.valuePreviousRoster)) : #PREVIOUS
-                            selectedIndex = self.addressPanel.getRosterSelectedIndex()
-                            self.addressPanel.setVisible(True)
-                            self.addressPanel.setIcon(False)                            
-                            self.addressPanel.setRosterSelectedIndex(selectedIndex - 1)
+                            ThreadingUtil.runOnGUI(lambda : self.addressPanel.setRosterSelectedIndex(self.addressPanel.getRosterSelectedIndex() - 1) )
                     except AttributeError:
                         pass
                     try:
                         # Request a throttle
                         if ((component == self.driver.componentRosterSelect) and (value == self.driver.valueRosterSelect)):
-                            self.addressPanel.selectRosterEntry()
+                            ThreadingUtil.runOnGUI(lambda : self.addressPanel.selectRosterEntry() )
                     except AttributeError:
                         pass
-                        
+
                 # From there; current throttle control, hence require a throttle
                 if (self.throttle != None) :
                     # Release current throttle
                     try:
                         if ((component == self.driver.componentThrottleRelease) and (value == self.driver.valueThrottleRelease)):
-                            self.addressPanel.releaseAddress()
+                            ThreadingUtil.runOnGUI(lambda : self.addressPanel.releaseAddress() )
                     except AttributeError:
                         pass
                     
@@ -429,8 +424,8 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
     
     def init(self):
         self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
-        if ( self.getContext().getCurrentThrottleFrame() != None) :
-            self.addressPanel = self.getContext().getCurrentThrottleFrame().getAddressPanel()
+        if ( self.getContext().getCurentThrottleController() != None) :
+            self.addressPanel = self.getContext().getCurentThrottleController().getAddressPanel()
             self.addressPanel.addAddressListener(self) # change of throttle in Current frame
             self.throttle = self.addressPanel.getThrottle() # the throttle
             self.roster = self.addressPanel.getRosterEntry() # roster entry if any
@@ -486,9 +481,9 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
             self.model.removePropertyChangeListener(self)
         if (self.getContext() != None) :
             self.getContext().removePropertyChangeListener(self)        
-            if (self.getContext().getCurrentThrottleFrame() != None) :
-                if (self.getContext().getCurrentThrottleFrame().getAddressPanel() != None) :
-                    self.getContext().getCurrentThrottleFrame().getAddressPanel().removeAddressListener(self)
+            if (self.getContext().getCurentThrottleController() != None) :
+                if (self.getContext().getCurentThrottleController().getAddressPanel() != None) :
+                    self.getContext().getCurentThrottleController().getAddressPanel().removeAddressListener(self)
 
 # Menu entry changed for Current controller and update driver
     def setSelectedController(self, ctrl, item):

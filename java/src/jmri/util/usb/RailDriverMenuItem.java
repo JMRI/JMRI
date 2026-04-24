@@ -14,13 +14,13 @@ import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
 
 import jmri.*;
+import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
-import jmri.jmrit.throttle.AddressPanel;
 import jmri.jmrit.throttle.LoadXmlThrottlesLayoutAction;
 import jmri.jmrit.throttle.ThrottleFrame;
-import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrit.throttle.ThrottleWindow;
+import jmri.jmrit.throttle.UIImplementation.ThrottleUICore;
 import jmri.util.MathUtil;
 
 import org.hid4java.*;
@@ -142,7 +142,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                 // we're going to try to open the default throttles layout
                 try {
                     LoadXmlThrottlesLayoutAction lxta = new LoadXmlThrottlesLayoutAction();
-                    if (!lxta.loadThrottlesLayout(new File(ThrottleFrame.getDefaultThrottleFilename()))) {
+                    if (!lxta.loadThrottlesLayout(new File(ThrottleUICore.getDefaultThrottleFilename()))) {
                         // if there's no default throttle layout...
                         // throw this exception so we'll create a new throttle window
                         throw new IOException();
@@ -162,9 +162,9 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
             // actions here until after that one is done.
             SwingUtilities.invokeLater(() -> {
                 if (activeThrottleFrame == null) {
-                    throttleWindow = tfManager.getCurrentThrottleFrame();
+                    throttleWindow = (ThrottleWindow)tfManager.getCurentThrottleController();
                     if (throttleWindow != null) {
-                        activeThrottleFrame = throttleWindow.getCurrentThrottleFrame();
+                        activeThrottleFrame = throttleWindow.getCurentThrottleController();
                     }
                 }
                 if (activeThrottleFrame != null) {
@@ -507,7 +507,6 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                         activeThrottleFrame = null;
                     }
                 } else if (object instanceof ThrottleFrame) {
-
                     if (throttleWindow != null) {
                         throttleWindow.removePropertyChangeListener(this);
                         throttleWindow = null;
@@ -516,21 +515,17 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                         activeThrottleFrame.removePropertyChangeListener(this);
                         activeThrottleFrame = null;
                     }
-
                     activeThrottleFrame = (ThrottleFrame) object;
                     throttleWindow = activeThrottleFrame.getThrottleControllersContainer();
-
                     throttleWindow.addPropertyChangeListener(this);
-                    activeThrottleFrame.addPropertyChangeListener(this);
-
+                    activeThrottleFrame.addPropertyChangeListener(this);                   
                 }
                 break;
             case "Value":
                 String oldValue = event.getOldValue().toString();
                 String newValue = event.getNewValue().toString();
-                DccThrottle throttle = activeThrottleFrame.getAddressPanel().getThrottle();
-                AddressPanel addressPanel = activeThrottleFrame.getAddressPanel();
-                //log.info("propertyChange \"Value\" old: {}, new: {}", oldValue, newValue);
+                DccThrottle throttle = activeThrottleFrame.getThrottle();
+                log.debug("propertyChange \"Value\" old: {}, new: {}", oldValue, newValue);
 
                 double value;
                 try {
@@ -622,26 +617,26 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                         String ledString = String.format("F%d", fNum + 1);
                         switch (fNum) {
                             case 28: {  // zoom/rocker button up
-                                if ((addressPanel != null) && isDown) {
-                                    addressPanel.selectRosterEntry();
-                                    DccLocoAddress a = addressPanel.getCurrentAddress();
+                                if (isDown)  {
+                                    activeThrottleFrame.getRosterEntrySelector().setSelectedRosterEntry();                                    
+                                    DccLocoAddress a = activeThrottleFrame.getAddress();
                                     ledString = "sel " + ((a != null) ? a.toString() : "null");
                                 }
                                 break;
                             }
                             case 29: {  // zoom/rocker button down
-                                if ((addressPanel != null) && isDown) {
-                                    addressPanel.dispatchAddress();
-                                    DccLocoAddress a = addressPanel.getCurrentAddress();
+                                if (isDown) {
+                                    activeThrottleFrame.dispatchAddress();
+                                    DccLocoAddress a = activeThrottleFrame.getAddress();
                                     ledString = "dis " + ((a != null) ? a.toString() : "null");
                                 }
                                 break;
                             }
                             case 30: {  // four way panning up
-                                if ((addressPanel != null) && isDown) {
-                                    int selectedIndex = addressPanel.getRosterSelectedIndex();
+                                if (isDown)  {
+                                    int selectedIndex = activeThrottleFrame.getRosterEntrySelector().getRosterListSelectedIndex();
                                     if (selectedIndex > 1) {
-                                        addressPanel.setRosterSelectedIndex(selectedIndex - 1);
+                                        activeThrottleFrame.getRosterEntrySelector().setRosterListSelectedIndex(selectedIndex - 1);
                                         ledString = String.format("Prev %d", selectedIndex - 1);
                                     }
                                 }
@@ -657,16 +652,16 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                                 break;
                             }
                             case 32: {  // four way panning down
-                                if ((addressPanel != null) && isDown) {
-                                    RosterEntrySelectorPanel resp = addressPanel.getRosterEntrySelector();
+                                if (isDown) {
+                                    RosterEntrySelectorPanel resp = activeThrottleFrame.getRosterEntrySelector();
                                     if (resp != null) {
                                         RosterEntryComboBox recb = resp.getRosterEntryComboBox();
                                         if (recb != null) {
                                             int cnt = recb.getItemCount();
-                                            int selectedIndex = addressPanel.getRosterSelectedIndex();
+                                            int selectedIndex = resp.getRosterListSelectedIndex();
                                             if (selectedIndex + 1 < cnt) {
                                                 try {
-                                                    addressPanel.setRosterSelectedIndex(selectedIndex + 1);
+                                                    activeThrottleFrame.getRosterEntrySelector().setRosterListSelectedIndex(selectedIndex + 1);
                                                     ledString = String.format("Next %d", selectedIndex + 1);
                                                 } catch (ArrayIndexOutOfBoundsException ex) {
                                                     // ignore this

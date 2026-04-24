@@ -15,9 +15,9 @@ import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrix.nce.*;
 import jmri.util.swing.JmriJOptionPane;
-import jmri.jmrit.throttle.ThrottleControllerUI;
 
 /**
  * Pane for user edit of NCE Consists
@@ -460,12 +460,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 return;
             }
             consistNum = validConsist(consistTextField.getText());
-            ThrottleControllerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleController();
-            tf.setAddress(consistNum, false); // use consist address
+            ThrottleControllerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+            tf.setAddress( new DccLocoAddress(consistNum, false)); // use consist address
             if (JmriJOptionPane.showConfirmDialog(null,
                     Bundle.getMessage("DIALOG_Funct2Lead"), Bundle.getMessage("DIALOG_NceThrottle"),
                     JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
-                tf.setAddress(locoAddr, isLong);  // use lead loco address
+                tf.setAddress(new DccLocoAddress(locoAddr, isLong));  // use lead loco address
             }
             tf.toFront();
             return;

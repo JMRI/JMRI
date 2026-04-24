@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
+import jmri.jmrit.throttle.panels.FunctionButton;
+
 /**
  * Test simple functioning of FunctionButton
  *
