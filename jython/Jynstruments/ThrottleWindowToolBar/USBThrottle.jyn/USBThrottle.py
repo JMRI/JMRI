@@ -442,11 +442,13 @@ class USBThrottle(Jynstrument, PropertyChangeListener):
 
 # On quit clean up resources       
     def quit(self):
+        self.model.removePropertyChangeListener(self)        
         self.speedTimerTask.cancel()
         self.speedTimer.cancel()
         self.speedTimer.purge()
         for mi in self.ctrlMenuItem :
             self.getPopUpMenu().remove( mi )
+        self.model = None
         self.ctrlMenuItem = None
         self.speedTimerTask = None
         self.speedTimer = None
