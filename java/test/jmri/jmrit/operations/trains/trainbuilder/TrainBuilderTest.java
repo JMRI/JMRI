@@ -1611,17 +1611,21 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Location acton = route.getDepartsRouteLocation().getLocation();
         Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        actonSpur1.setLength(500); // make room for 5 cars
 
         Location boston = route.getRouteLocationBySequenceNumber(2).getLocation();
 
         Location chelmsford = route.getTerminatesRouteLocation().getLocation();
         Track chelmfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+        chelmfordSpur1.setLength(500); // make room for 5 cars
+        Track chelmfordSpur2 = chelmsford.getTrackByName("Chelmsford Spur 2", null);
 
         // place cars at start of route
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", actonSpur1, 2);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("A", "3", "Boxcar", "40", actonSpur1, 4);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("A", "4", "Boxcar", "40", actonSpur1, 6);
+        Car c5 = JUnitOperationsUtil.createAndPlaceCar("A", "5", "Boxcar", "40", actonSpur1, 8);
 
         // give the cars a RWE destination
         c1.setReturnWhenEmptyDestination(acton);
@@ -1632,6 +1636,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c3.setReturnWhenEmptyDestTrack(actonSpur1);
         c4.setReturnWhenEmptyDestination(acton);
         c4.setReturnWhenEmptyDestTrack(actonSpur1);
+        c5.setReturnWhenEmptyDestination(chelmsford);
+        c5.setReturnWhenEmptyDestTrack(chelmfordSpur2);
 
         // give the cars RWE loads
         cld.addName("Boxcar", "Empty");
@@ -1640,31 +1646,37 @@ public class TrainBuilderTest extends OperationsTestCase {
         c2.setReturnWhenEmptyLoadName("Empty");
         c3.setReturnWhenEmptyLoadName("Empty");
         c4.setReturnWhenEmptyLoadName("Empty");
+        c5.setReturnWhenEmptyLoadName("Empty");
 
         c1.setLoadName("car load"); // default is load type load
         c2.setLoadName("car load"); // default is load type load
         c3.setLoadName("Empty");
         c4.setLoadName("car load"); // default is load type load
+        c5.setLoadName("car load"); // default is load type load
 
         // confirm that none of the cars have a return when loaded load
         Assert.assertEquals("c1 RWL load", "L", c1.getReturnWhenLoadedLoadName());
         Assert.assertEquals("c2 RWL load", "L", c2.getReturnWhenLoadedLoadName());
         Assert.assertEquals("c3 RWL load", "L", c3.getReturnWhenLoadedLoadName());
+        Assert.assertEquals("c5 RWL load", "L", c5.getReturnWhenLoadedLoadName());
 
         // give c4 a RWL
         cld.addName("Boxcar", "Loaded");
         c4.setReturnWhenLoadedLoadName("Loaded");
         c4.setReturnWhenLoadedDestination(boston);
 
-        // add schedule to demand cars
+        // add sequential schedule to demand cars
         Schedule schedule = smanager.newSchedule("Schedule for car load");
         ScheduleItem sch1Item1 = schedule.addItem("Boxcar");
         sch1Item1.setReceiveLoadName("car load");
+        sch1Item1.setShipLoadName("Empty");
         ScheduleItem sch1Item2 = schedule.addItem("Boxcar");
         sch1Item2.setReceiveLoadName("car load");
         sch1Item2.setDestination(boston); // over ride RWE destination
         ScheduleItem sch1Item3 = schedule.addItem("Boxcar");
         sch1Item3.setReceiveLoadName("Empty");
+        ScheduleItem sch1Item4 = schedule.addItem("Boxcar");
+        sch1Item4.setReceiveLoadName("car load");
         chelmfordSpur1.setSchedule(schedule);
         chelmfordSpur1.setScheduleMode(Track.SEQUENTIAL);
 
@@ -1680,10 +1692,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car 3 track assignment", chelmfordSpur1, c3.getDestinationTrack());
         Assert.assertEquals("car 4 train assignment", train1, c4.getTrain());
         Assert.assertEquals("car 4 track assignment", chelmfordSpur1, c4.getDestinationTrack());
+        Assert.assertEquals("car 5 train assignment", train1, c5.getTrain());
+        Assert.assertEquals("car 5 track assignment", chelmfordSpur1, c5.getDestinationTrack());
 
         train1.terminate();
 
-        // confirm that RWL destinations and loads are correct
+        // confirm that RWE destinations and loads are correct
         Assert.assertEquals("car 1 destination", acton, c1.getFinalDestination());
         Assert.assertEquals("car 1 destination track", actonSpur1, c1.getFinalDestinationTrack());
         Assert.assertEquals("car 1 load", "Empty", c1.getLoadName());
@@ -1699,6 +1713,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car 4 destination", acton, c4.getFinalDestination());
         Assert.assertEquals("car 4 destination track", actonSpur1, c4.getFinalDestinationTrack());
         Assert.assertEquals("car 4 load", "Empty", c4.getLoadName());
+        // c5 RWE destination is Chelmsford
+        Assert.assertEquals("car 5 destination", chelmsford, c5.getFinalDestination());
+        Assert.assertEquals("car 5 destination track", chelmfordSpur2, c5.getFinalDestinationTrack());
+        Assert.assertEquals("car 5 load", "Empty", c5.getLoadName());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
@@ -1716,18 +1734,22 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Location acton = route.getDepartsRouteLocation().getLocation();
         Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        actonSpur1.setLength(500); // make room for 5 cars
 
         Location boston = route.getRouteLocationBySequenceNumber(2).getLocation();
         Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
 
         Location chelmsford = route.getTerminatesRouteLocation().getLocation();
         Track chelmfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+        chelmfordSpur1.setLength(500); // make room for 5 cars
+        Track chelmfordSpur2 = chelmsford.getTrackByName("Chelmsford Spur 2", null);
 
         // place cars at start of route
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", actonSpur1, 2);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("A", "3", "Boxcar", "40", actonSpur1, 4);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("A", "4", "Boxcar", "40", actonSpur1, 6);
+        Car c5 = JUnitOperationsUtil.createAndPlaceCar("A", "5", "Boxcar", "40", actonSpur1, 8);
 
         // give the cars a RWL destination
         c1.setReturnWhenLoadedDestination(acton);
@@ -1738,6 +1760,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c3.setReturnWhenLoadedDestTrack(actonSpur1);
         c4.setReturnWhenLoadedDestination(acton);
         c4.setReturnWhenLoadedDestTrack(actonSpur1);
+        c5.setReturnWhenLoadedDestination(chelmsford);
+        c5.setReturnWhenLoadedDestTrack(chelmfordSpur2);
 
         // give the cars RWL loads
         cld.addName("Boxcar", "Loaded");
@@ -1748,32 +1772,38 @@ public class TrainBuilderTest extends OperationsTestCase {
         c2.setReturnWhenLoadedLoadName("Loaded");
         c3.setReturnWhenLoadedLoadName("Loaded");
         c4.setReturnWhenLoadedLoadName("Loaded");
+        c5.setReturnWhenLoadedLoadName("Loaded");
 
         c1.setLoadName("Empty");
         c2.setLoadName("Empty");
         c3.setLoadName("Loaded");
         c4.setLoadName("Empty");
+        c5.setLoadName("Empty");
 
         // confirm that none of the cars have a return when empty load
         Assert.assertEquals("c1 RWE load", "E", c1.getReturnWhenEmptyLoadName());
         Assert.assertEquals("c2 RWE load", "E", c2.getReturnWhenEmptyLoadName());
         Assert.assertEquals("c3 RWE load", "E", c3.getReturnWhenEmptyLoadName());
+        Assert.assertEquals("c5 RWE load", "E", c5.getReturnWhenEmptyLoadName());
 
         // give c4 a RWE
         c4.setReturnWhenEmptyLoadName("Empty");
         c4.setReturnWhenEmptyDestination(boston);
         c4.setReturnWhenEmptyDestTrack(bostonSpur1);
 
-        // add schedule to demand cars
+        // add sequential schedule to demand cars
         Schedule schedule = smanager.newSchedule("Schedule for car load");
         ScheduleItem sch1Item1 = schedule.addItem("Boxcar");
         sch1Item1.setReceiveLoadName("Empty");
+        sch1Item1.setShipLoadName("Loaded");
         ScheduleItem sch1Item2 = schedule.addItem("Boxcar");
         sch1Item2.setReceiveLoadName("Empty");
         sch1Item2.setDestination(boston); // over ride RWL destination
         sch1Item2.setDestinationTrack(bostonSpur1); // over ride RWL track
         ScheduleItem sch1Item3 = schedule.addItem("Boxcar");
         sch1Item3.setReceiveLoadName("Loaded");
+        ScheduleItem sch1Item4 = schedule.addItem("Boxcar");
+        sch1Item4.setReceiveLoadName("Empty");
         chelmfordSpur1.setSchedule(schedule);
         chelmfordSpur1.setScheduleMode(Track.SEQUENTIAL);
 
@@ -1789,6 +1819,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car 3 track assignment", chelmfordSpur1, c3.getDestinationTrack());
         Assert.assertEquals("car 4 train assignment", train1, c4.getTrain());
         Assert.assertEquals("car 4 track assignment", chelmfordSpur1, c4.getDestinationTrack());
+        Assert.assertEquals("car 5 train assignment", train1, c5.getTrain());
+        Assert.assertEquals("car 5 track assignment", chelmfordSpur1, c5.getDestinationTrack());
 
         train1.terminate();
 
@@ -1808,6 +1840,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("car 4 destination", acton, c4.getFinalDestination());
         Assert.assertEquals("car 4 destination track", actonSpur1, c4.getFinalDestinationTrack());
         Assert.assertEquals("car 4 load", "Loaded", c4.getLoadName());
+        // c5 RWL destination is Chelmsford
+        Assert.assertEquals("car 5 destination", chelmsford, c5.getFinalDestination());
+        Assert.assertEquals("car 5 destination track", chelmfordSpur2, c5.getFinalDestinationTrack());
+        Assert.assertEquals("car 5 load", "Loaded", c5.getLoadName());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }

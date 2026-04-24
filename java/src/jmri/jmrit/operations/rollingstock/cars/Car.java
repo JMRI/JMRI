@@ -350,6 +350,15 @@ public class Car extends RollingStock {
         return _pickupScheduleId;
     }
 
+    /**
+     * Provides the train schedule name for pick up day if one available, or if
+     * assigned to a train the pick up time.
+     * 
+     * @return If assigned to a train, the car's pick up time. Otherwise if
+     *         there's a train schedule day/name assigned for pick up, the train
+     *         schedule name. Default train schedule names are Sunday through
+     *         Saturday.
+     */
     public String getPickupScheduleName() {
         if (getTrain() != null) {
             return getPickupTime();
