@@ -674,7 +674,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
 
 
     /**
-     * Set next running (with speed > 0) throttle frame as current frame. If the current frame is the only one running, then do nothing.
+     * Set next running (with non null speed) throttle frame as current frame. If the current frame is the only one running, then do nothing.
      *
      */
     public void nextRunningThrottleFrame() {
@@ -705,7 +705,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
     }
 
     /**
-     * Set previous running (with speed > 0) throttle frame as current frame. If the current frame is the only one running, then do nothing.
+     * Set previous running (with non null speed) throttle frame as current frame. If the current frame is the only one running, then do nothing.
      *
      */
     public void previousRunningThrottleFrame() {

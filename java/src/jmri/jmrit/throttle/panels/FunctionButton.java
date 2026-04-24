@@ -2,8 +2,6 @@ package jmri.jmrit.throttle.panels;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -15,6 +13,9 @@ import jmri.InstanceManager;
 import jmri.Throttle;
 import jmri.jmrit.throttle.interfaces.FunctionListener;
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriMouseAdapter;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.util.com.sun.ToggleOrPressButtonModel;
 import jmri.util.gui.GuiLafPreferencesManager;
@@ -114,7 +115,7 @@ public class FunctionButton extends JToggleButton {
         _model = new ToggleOrPressButtonModel(this, true);
         setModel(_model);
         //Add listener to components that can bring up popupMenu menus.
-        addMouseListener(new PopupListener());
+        addMouseListener(JmriMouseListener.adapt(new PopupListener()));
         setFont(new Font("Monospaced", Font.PLAIN, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize()));
         setMargin(new Insets(2, 2, 2, 2));
         setRolloverEnabled(false);
@@ -349,14 +350,14 @@ public class FunctionButton extends JToggleButton {
      * A PopupListener to handle mouse clicks and releases.
      * Handles the popupMenu menu.
      */
-    private class PopupListener extends MouseAdapter {
+    private class PopupListener extends JmriMouseAdapter {
 
         /**
          * If the event is the popupMenu trigger, which is dependent on the platform, present the popupMenu menu.
          * @param e The MouseEvent causing the action.
          */
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void mouseClicked(JmriMouseEvent e) {
             checkTrigger(e);
         }
 
@@ -365,7 +366,7 @@ public class FunctionButton extends JToggleButton {
          * @param e The MouseEvent causing the action.
          */
         @Override
-        public void mousePressed(MouseEvent e) {
+        public void mousePressed(JmriMouseEvent e) {
             checkTrigger( e);
         }
 
@@ -374,11 +375,11 @@ public class FunctionButton extends JToggleButton {
          * @param e The MouseEvent causing the action.
          */
         @Override
-        public void mouseReleased(MouseEvent e) {
+        public void mouseReleased(JmriMouseEvent e) {
             checkTrigger( e);
         }
 
-        private void checkTrigger( MouseEvent e) {
+        private void checkTrigger( JmriMouseEvent e) {
             if (e.isPopupTrigger() && e.getComponent().isEnabled() ) {
                 initPopupMenu();
                 popupMenu.show(e.getComponent(), e.getX(), e.getY());
