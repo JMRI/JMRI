@@ -1309,6 +1309,15 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         });
         popupMenu.add(menuItem);
+        menuItem = new JMenuItem(Bundle.getMessage("SimpleThrottle"));
+        menuItem.addActionListener((ActionEvent e1) -> {
+            ThrottleControllerUI tf =InstanceManager.getDefault(ThrottleFrameManager.class).createSimpleThrottleFrame(re);
+            tf.toFront();
+        });
+        if (re == null) {
+            menuItem.setEnabled(false);
+        }        
+        popupMenu.add(menuItem);
         popupMenu.addSeparator();
 
         menuItem = new JMenuItem(Bundle.getMessage("PrintSelection"));
