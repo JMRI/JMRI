@@ -83,7 +83,7 @@ public class SimpleThrottleWindow extends JmriJFrame implements ThrottleControll
 
     @Override
     public ThrottleControllerUI newThrottleController() {
-        return null;
+        return InstanceManager.getDefault(ThrottleFrameManager.class).createSimpleThrottleFrame(null, null);
     }
 
     @Override

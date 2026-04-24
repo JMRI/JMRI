@@ -64,29 +64,24 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
 
     @Override
     public boolean importData(TransferHandler.TransferSupport info) {
-        table.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        try {            
+        try {
+            JTable target = (JTable) info.getComponent();
             JTable.DropLocation dl = (JTable.DropLocation) info.getDropLocation();            
+	        target.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             if (info.isDataFlavorSupported(throttleControlObjectFlavor)) {
                 try {
-                    ThrottleControllerUI tf =
-                            (ThrottleControllerUI) info.getTransferable().getTransferData(throttleControlObjectFlavor);
+                    ThrottleControllerUI tf = (ThrottleControllerUI) info.getTransferable().getTransferData(throttleControlObjectFlavor);
                     if (tf != null) {
-                        ((ThrottlesTableModel) table.getModel()).moveThrottleController(tf, dl.getRow(),
-                                dl.getColumn());
-                        return true;
+                        return ((ThrottlesTableModel) table.getModel()).moveThrottleController(tf, dl.getRow(), dl.getColumn());                        
                     }
-                } catch (
-                        UnsupportedFlavorException |
-                        IOException e) {
+                } catch ( UnsupportedFlavorException | IOException e) {
                     log.error("Could not drag'n drop throttle frame.", e);
                 }
             }
             if (info.isDataFlavorSupported(RosterEntrySelection.rosterEntryFlavor)) {
                 try {
                     ArrayList<RosterEntry> REs = RosterEntrySelection.getRosterEntries(info.getTransferable());
-                    ThrottleControllersUIContainer tw =
-                            ((ThrottlesTableModel) table.getModel()).getThrottleControllersContainerAt(dl.getColumn());
+                    ThrottleControllersUIContainer tw = ((ThrottlesTableModel) table.getModel()).getThrottleControllersContainerAt(dl.getColumn());
                     for (RosterEntry re : REs) {
                         ThrottleControllerUI tf = tw.newThrottleController();
                         tf.toFront();
@@ -111,5 +106,5 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
         dropDone = true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottlesTableTransferHandler.class);
+   private static final Logger log = LoggerFactory.getLogger(ThrottlesTableTransferHandler.class);
 }

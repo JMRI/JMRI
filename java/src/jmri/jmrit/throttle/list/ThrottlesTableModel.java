@@ -9,6 +9,8 @@ import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A TableModel to display active Throttles in a summary table
@@ -48,11 +50,18 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
         return tw.getThrottleControllerAt(row_tf);
     }
     
-    public void moveThrottleController(ThrottleControllerUI tf, int row_tf, int col_tw ) {
-        tf.getThrottleControllersContainer().removeThrottleController(tf);
-        tf.setThrottleControllersContainer(throttleFrameManager.getThrottleControllersContainerAt(col_tw));
+    public boolean moveThrottleController(ThrottleControllerUI tf, int row_tf, int col_tw ) {
+        ThrottleControllersUIContainer prevContainer = tf.getThrottleControllersContainer();
+        try {
+            tf.setThrottleControllersContainer(throttleFrameManager.getThrottleControllersContainerAt(col_tw));
+        } catch ( IllegalArgumentException e) {
+            log.warn("Unable to move throttle frame, provided container is not an instance of ThrottleWindow, cancelling move.");
+            return false;
+        }
         throttleFrameManager.getThrottleControllersContainerAt(col_tw).addThrottleControllerAt(tf, row_tf);        
+        prevContainer.removeThrottleController(tf);                
         fireTableStructureChanged();
+        return true;
     }
     
     public ThrottleControllersUIContainer getThrottleControllersContainerAt( int col_tw) {
@@ -73,4 +82,5 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
         fireTableDataChanged();
     }
 
+    private static final Logger log = LoggerFactory.getLogger(ThrottlesTableModel.class);
 }

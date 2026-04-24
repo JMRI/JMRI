@@ -289,7 +289,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
         if (tw instanceof ThrottleWindow) {
             throttleWindow = (ThrottleWindow) tw;
         } else {
-            log.warn("Unable to set throttle controllers container, provided container is not an instance of ThrottleWindow");
+            throw new IllegalArgumentException("Unable to set throttle controllers container, provided container is not an instance of ThrottleWindow");
         }        
     }
 
