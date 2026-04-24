@@ -46,7 +46,6 @@ import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 import jmri.jmrit.throttle.panels.ControlPanel;
 import jmri.jmrit.throttle.panels.FunctionButton;
-import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.jmrit.throttle.utils.ComponentTransparency;
 import jmri.jmrit.throttle.utils.TranslucentJPanel;
 import jmri.jmrit.throttle.utils.WindowPreferences;
