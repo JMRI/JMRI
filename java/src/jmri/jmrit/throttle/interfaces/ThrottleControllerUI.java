@@ -7,6 +7,7 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
+import jmri.jmrit.throttle.SimpleThrottlePanel;
 
 /**
  * 
@@ -128,45 +129,70 @@ public interface ThrottleControllerUI {
      */    
     boolean isVisible();
 
-    /*
+    /**
+     * 
      * Update that throttle control UI containing frame title (if any) with the current address and roster entry.
+     * Called by the throttle core UI when the controlled throttle address or roster entry is updated to update the frame title with the new information.
      *
      */
     void updateFrameTitle();
 
-    /*
+    /**
+     * 
      * Update that throttle control UI.
+     * Called by the throttle core UI when the controlled throttle address or roster entry is updated
      *
      */
     void updateGUI();
 
-    /*
-     * Load the default throttle layout
-     *
+    /**
+     * Load that throttle control UI from a throttle file.
+      *
+     * @param sfile the throttle file to load, if null a file chooser will be prompted to select the throttle file to load
      */
-    void loadDefaultThrottle();
-
     void loadThrottleFile(String sfile);
 
     /**
-     * Get a copy of that throttle control UI label (a text or the roster entry icon, for consits a consist icon will be built from the locomotives in the consist).
-      *
+     * Get a copy of that throttle control UI label (a text or the roster entry icon, for consits a consist icon will be built from the locomotives in the consist).     
+     * See {@link SimpleThrottlePanel} for an example implementation
+     * 
      * @return  the label or null
      */
     JLabel getLabel();
 
     /**
      * Check if that throttle control UI is using continuous speed display (a speed slider from -100 to 100)
-     * (Used by external controls)
-     *
+     * (Used by external controls like USB game controllers)
+     * See {@link SimpleThrottlePanel} for an example implementation
+     * 
      * @return true if that throttle control UI is using continuous speed display, false otherwise
      */
     boolean isSpeedDisplayContinuous();
 
-
+    /**
+     * 
+     * Get that throttle control UI roster entry selector panel, or null if that throttle control UI does not have one.
+     * (Used by external controls like USB game controllers)
+     * See {@link SimpleThrottlePanel} for an example implementation
+     * 
+     * @return the roster entry selector panel or null
+     */
     public RosterEntrySelectorPanel getRosterEntrySelector();
     
+    /**
+     * Add an address listener to that throttle control UI.
+     * See {@link SimpleThrottlePanel} for an example implementation
+     *
+     * @param l the address listener to add
+     */
     public void addAddressListener(AddressListener l);
+
+    /**
+     * Remove an address listener from that throttle control UI.
+     * See {@link SimpleThrottlePanel} for an example implementation 
+     *
+     * @param l the address listener to remove
+     */
     public void removeAddressListener(AddressListener l);
 
 }

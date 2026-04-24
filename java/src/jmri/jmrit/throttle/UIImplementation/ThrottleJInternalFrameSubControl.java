@@ -4,9 +4,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import jmri.jmrit.throttle.interfaces.ThrottleSubControllerUI;
-
-public class ThrottleJInternalFrameSubControl extends JInternalFrame implements ThrottleSubControllerUI {
+public class ThrottleJInternalFrameSubControl extends JInternalFrame  {
 
     public ThrottleJInternalFrameSubControl(String title, JPanel content, boolean visible) {
         super(title, true, true, true, true);           

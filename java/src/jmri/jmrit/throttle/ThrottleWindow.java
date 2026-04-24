@@ -406,7 +406,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                getCurentThrottleController().loadThrottle();
+                getCurentThrottleController().loadThrottleFile(null);
             }
         });
         fileMenuSave = new JMenuItem(Bundle.getMessage("ThrottleFileMenuSaveThrottle"));
@@ -638,7 +638,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
             throw new IllegalArgumentException("Only ThrottleFrame can be removed from ThrottleWindow");
         }
         if (getCurentThrottleController() == tf) {
-            log.debug("Closing last created");
+            log.debug("Closing currently active throttle frame");
         }
         throttlesPanel.remove((ThrottleFrame)tf);
         throttleFrames.remove(tf);

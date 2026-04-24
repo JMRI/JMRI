@@ -256,37 +256,15 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
     }
 
     @Override
-    public void loadDefaultThrottle() {
-        if (isLoadingDefault) { // avoid looping on this method
-            return; 
-        }
-        isLoadingDefault = true;
-        String dtf = InstanceManager.getDefault(ThrottlesPreferences.class).getDefaultThrottleFilePath();
-        if (dtf == null || dtf.isEmpty()) {
-            return;
-        }
-        log.debug("Loading default throttle file : {}", dtf);
-        loadThrottleFile(dtf);
-        throuic.setLastUsedSaveFile(null);
-        isLoadingDefault = false;
-    }
-
-    public void loadThrottle() {
-        JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
-        fileChooser.setCurrentDirectory(new File(ThrottleUICore.getDefaultThrottleFolder()));
-        fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
-        java.io.File file = LoadXmlConfigAction.getFile(fileChooser, this);
-        if (file == null) {
-            return ;
-        }
-        loadThrottleFile(file.getAbsolutePath());
-    }
-
-    @Override
     public void loadThrottleFile(String sfile) {
         if (sfile == null) {
-            loadThrottle();
-            return;
+            JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
+            fileChooser.setCurrentDirectory(new File(ThrottleUICore.getDefaultThrottleFolder()));
+            fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
+            java.io.File file = LoadXmlConfigAction.getFile(fileChooser, this);
+            if (file == null) {
+                return ;
+            }
         }
 
         try {
@@ -296,14 +274,14 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
             // Don't show error dialog if file is not found
             log.debug("Loading throttle exception: {}", ex.getMessage());
             log.debug("Tried loading throttle file \"{}\" , reverting to default, if any", sfile);
-            loadDefaultThrottle(); // revert to loading default one
+            throuic.loadDefaultThrottle(); // revert to loading default one
         } catch (NullPointerException | IOException | JDOMException ex) {
             log.debug("Loading throttle exception: {}", ex.getMessage());
             log.debug("Tried loading throttle file \"{}\" , reverting to default, if any", sfile);
             jmri.configurexml.ConfigXmlManager.creationErrorEncountered(
                     null, "parsing file " + sfile,
                     "Parse error", null, null, ex);
-            loadDefaultThrottle(); // revert to loading default one
+            throuic.loadDefaultThrottle(); // revert to loading default one
         }
     }
 

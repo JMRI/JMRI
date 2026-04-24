@@ -352,6 +352,23 @@ public class ThrottleUICore implements AddressListener  {
         return conf;
     }
 
+    private boolean isLoadingDefault = false;
+
+    public void loadDefaultThrottle() {
+        if (isLoadingDefault) { // avoid looping on this method
+            return; 
+        }
+        isLoadingDefault = true;
+        String dtf = InstanceManager.getDefault(ThrottlesPreferences.class).getDefaultThrottleFilePath();
+        if (dtf == null || dtf.isEmpty()) {
+            return;
+        }
+        log.debug("Loading default throttle file : {}", dtf);
+        myThrottleController.loadThrottleFile(dtf);
+        setLastUsedSaveFile(null);
+        isLoadingDefault = false;
+    }
+
     @Override
     public void notifyAddressChosen(LocoAddress l) {
     }
@@ -396,7 +413,7 @@ public class ThrottleUICore implements AddressListener  {
             }
         } else {
             if ((addressPanel != null) && (addressPanel.getRosterEntry() == null)) { // no known roster entry
-                myThrottleController.loadDefaultThrottle();
+                loadDefaultThrottle();
             }
         }
         myThrottleController.updateFrameTitle();
