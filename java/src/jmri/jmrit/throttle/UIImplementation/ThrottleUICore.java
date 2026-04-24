@@ -224,6 +224,8 @@ public class ThrottleUICore implements AddressListener  {
     /**
      * Collect the prefs of this object into the given XML Element array
      * 
+     * @param children the array to fill with the XML Elements for this object.  The caller will add these to the parent element as needed.
+     * 
      */
     public void getXml(ArrayList<Element> children) {
         children.add(controlPanel.getXml());
