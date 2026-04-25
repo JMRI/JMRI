@@ -67,7 +67,7 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
         try {
             JTable target = (JTable) info.getComponent();
             JTable.DropLocation dl = (JTable.DropLocation) info.getDropLocation();            
-	        target.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            target.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             if (info.isDataFlavorSupported(throttleControlObjectFlavor)) {
                 try {
                     ThrottleControllerUI tf = (ThrottleControllerUI) info.getTransferable().getTransferData(throttleControlObjectFlavor);
