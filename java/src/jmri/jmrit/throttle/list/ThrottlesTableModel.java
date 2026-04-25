@@ -54,9 +54,7 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
     public boolean moveThrottleController(ThrottleFrame tcui, int row_tf, int col_tw ) {
         ThrottleControllersUIContainer destination = throttleFrameManager.getThrottleControllersContainerAt(col_tw);
         ThrottleControllersUIContainer source = tcui.getThrottleControllersContainer();
-        if (source instanceof ThrottleWindow) {
-            source.removeThrottleController(tcui);
-        }
+        source.removeThrottleController(tcui);
         if (destination instanceof ThrottleWindow) {
             tcui.setThrottleControllersContainer(destination);
             destination.addThrottleControllerAt(tcui, row_tf);            
@@ -64,9 +62,6 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
         if (destination instanceof SimpleThrottleWindow) {
             // create a new window with the same address as the one provided in parameter
             InstanceManager.getDefault(ThrottleFrameManager.class).createSimpleThrottleFrame(tcui.getAddress());
-        }
-        if (source  instanceof SimpleThrottleWindow) {
-            source.removeThrottleController(tcui);
         }
         fireTableStructureChanged();
         return true;
