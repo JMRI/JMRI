@@ -88,12 +88,16 @@ public class SimpleThrottleWindow extends JmriJFrame implements ThrottleControll
 
     @Override
     public void addThrottleControllerAt(ThrottleControllerUI tf, int n) {
-        // do nothing
+        // create a new window with the same address as the one provided in parameter
+        InstanceManager.getDefault(ThrottleFrameManager.class).createSimpleThrottleFrame(tf.getAddress());
     }
 
     @Override
     public void removeThrottleController(ThrottleControllerUI tf) {
-        // do nothing
+        // if we remove our one and only controler, we dispose ourselves
+        if (tf == throttleControllerUI) {
+            dispose();
+        }        
     }
 
     @Override

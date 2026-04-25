@@ -5,7 +5,11 @@ import java.util.*;
 import javax.swing.table.AbstractTableModel;
 
 import jmri.*;
+import jmri.jmrit.throttle.SimpleThrottlePanel;
+import jmri.jmrit.throttle.SimpleThrottleWindow;
+import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.jmrit.throttle.ThrottleWindow;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 
@@ -50,16 +54,37 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
         return tw.getThrottleControllerAt(row_tf);
     }
     
-    public boolean moveThrottleController(ThrottleControllerUI tf, int row_tf, int col_tw ) {
-        ThrottleControllersUIContainer prevContainer = tf.getThrottleControllersContainer();
-        try {
-            tf.setThrottleControllersContainer(throttleFrameManager.getThrottleControllersContainerAt(col_tw));
-        } catch ( IllegalArgumentException e) {
-            log.warn("Unable to move throttle frame, provided container is not an instance of ThrottleWindow, cancelling move.");
-            return false;
+    public boolean moveThrottleController(ThrottleFrame tcui, int row_tf, int col_tw ) {
+        ThrottleControllersUIContainer destination = throttleFrameManager.getThrottleControllersContainerAt(col_tw);
+        ThrottleControllersUIContainer source = tcui.getThrottleControllersContainer();
+        if (source instanceof ThrottleWindow) {
+            source.removeThrottleController(tcui);
         }
-        throttleFrameManager.getThrottleControllersContainerAt(col_tw).addThrottleControllerAt(tf, row_tf);        
-        prevContainer.removeThrottleController(tf);                
+        if (destination instanceof ThrottleWindow) {
+            tcui.setThrottleControllersContainer(destination);
+            destination.addThrottleControllerAt(tcui, row_tf);            
+        }
+        if (destination instanceof SimpleThrottleWindow) {
+            // create a new window with the same address as the one provided in parameter
+            InstanceManager.getDefault(ThrottleFrameManager.class).createSimpleThrottleFrame(tcui.getAddress());
+        }
+        if (source  instanceof SimpleThrottleWindow) {
+            source.removeThrottleController(tcui);
+        }
+        fireTableStructureChanged();
+        return true;
+    }
+
+    public boolean moveThrottleController(SimpleThrottlePanel tcui, int row_tf, int col_tw ) {
+        ThrottleControllersUIContainer destination = throttleFrameManager.getThrottleControllersContainerAt(col_tw);
+        ThrottleControllersUIContainer source = tcui.getThrottleControllersContainer();
+        if (destination instanceof ThrottleWindow) {
+            ThrottleFrame tf = new ThrottleFrame( (ThrottleWindow) destination);
+            tf.setAddress(tcui.getAddress());            
+            destination.addThrottleControllerAt(tf, row_tf);
+            source.dispose();
+        }
+        // nothing to do for destination instanceof SimpleThrottleWindow                       
         fireTableStructureChanged();
         return true;
     }

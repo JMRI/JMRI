@@ -15,7 +15,7 @@ import jmri.jmrit.throttle.interfaces.AddressListener;
 
 public class LocoIconPanel extends JPanel implements AddressListener {
 
-    final static int IMAGE_HEIGHT = 32;
+    private static final int IMAGE_HEIGHT = 32;
     private static final RosterIconFactory ICN_FACT = new RosterIconFactory(IMAGE_HEIGHT);
 
     AddressPanel addressPanel = null;
