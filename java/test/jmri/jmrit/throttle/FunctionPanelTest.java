@@ -40,7 +40,7 @@ public class FunctionPanelTest {
     @AfterEach
     public void tearDown() {
         if (frame != null) {
-            frame.destroy();
+            frame.dispose();
         }
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
