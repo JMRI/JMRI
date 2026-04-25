@@ -132,4 +132,23 @@ public class SimpleThrottleWindow extends JmriJFrame implements ThrottleControll
         throttleFrameManager.requestThrottleWindowDestruction(this);
         super.dispose();        
     }
+
+    @Override
+    public void applyPreferences() {
+        ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
+
+        ComponentInputMap im = new ComponentInputMap(getRootPane());
+        for (Object k : this.getRootPane().getActionMap().allKeys()) {
+            KeyStroke[] kss = preferences.getThrottlesKeyboardControls().getKeyStrokes((String)k);
+            if (kss !=null) {
+                for (KeyStroke keystroke : kss) {
+                    if (keystroke != null) {
+                        im.put(keystroke, k);
+                    }
+                }
+            }
+        }
+        getRootPane().setInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW,im);
+        throttleControllerUI.applyPreferences();
+    }
 }

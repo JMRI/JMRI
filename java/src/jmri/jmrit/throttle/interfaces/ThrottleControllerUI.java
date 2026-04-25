@@ -146,6 +146,12 @@ public interface ThrottleControllerUI {
     void updateGUI();
 
     /**
+     * Apply new preferences
+     * 
+     */
+    public void applyPreferences();
+
+    /**
      * Load that throttle control UI from a throttle file.
       *
      * @param sfile the throttle file to load, if null a file chooser will be prompted to select the throttle file to load

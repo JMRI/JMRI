@@ -260,7 +260,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      */
     public void applyPreferences() {
         throttleWindows.forEach(tw -> {
-            ((ThrottleWindow)tw).applyPreferences();
+            tw.applyPreferences();
         });
         getThrottlesListPanel().applyPreferences();
     }

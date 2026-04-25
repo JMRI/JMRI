@@ -980,6 +980,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
         }
     }
 
+    @Override
     public void applyPreferences() {
         ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
 

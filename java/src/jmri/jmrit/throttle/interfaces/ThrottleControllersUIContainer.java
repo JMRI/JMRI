@@ -77,4 +77,10 @@ public interface ThrottleControllersUIContainer {
      */
     public void dispose();
 
+    /**
+     * Apply new preferences when set
+     * 
+     */
+    public void applyPreferences();
+
 }

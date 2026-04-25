@@ -231,6 +231,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
         throttleWindow.updateGUI();        
     }
 
+    @Override
     public void applyPreferences() {        
         if (willSwitch) {
             setEditMode(true);
