@@ -1,6 +1,8 @@
 package jmri.jmrit.throttle.panels;
 
 import java.awt.Color;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -17,13 +19,14 @@ import jmri.util.swing.ResizableImagePanel;
  * 
  */
 
-public class BackgroundPanel extends ResizableImagePanel implements AddressListener {
+public class BackgroundPanel extends ResizableImagePanel implements AddressListener, PropertyChangeListener  {
 
     AddressPanel addressPanel = null;
 
     public BackgroundPanel() {
         super();
         initGUI();
+        InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
         applyPreferences();
     }
     
@@ -32,8 +35,11 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
         setRespectAspectRatio(true);
     }
     
-    public void applyPreferences() {
-        setResizingContainer(InstanceManager.getDefault(ThrottlesPreferences.class).isResizingWindow());
+    private void applyPreferences() {
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
+        
+        setResizingContainer(preferences.isResizingWindow());
+        setVisible(  (preferences.isUsingExThrottle()) && (preferences.isUsingRosterImage()));
     }
 
     public void setAddressPanel(AddressPanel addressPanel) {
@@ -104,11 +110,24 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
         }
     }
 
-    public void destroy() {
+    public void dispose() {
+        InstanceManager.getDefault(ThrottlesPreferences.class).removePropertyChangeListener(this);
         if (addressPanel != null) {
             addressPanel.removeAddressListener(this);
             addressPanel = null;
         }
     }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        if (e == null) {
+            return;
+        }        
+//        log.debug("Property change event received {} / {}", e.getPropertyName(), e.getNewValue());
+        if (ThrottlesPreferences.prefPopertyName.compareTo(e.getPropertyName()) == 0) {
+            applyPreferences();
+        }
+    }
+
     // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BackgroundPanel.class);    
 }

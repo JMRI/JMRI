@@ -185,9 +185,9 @@ public class LearnThrottleFrame extends JmriJFrame {
 
     @Override
     public void dispose() {
-        _controlPanel.destroy();
-        _functionPanel.destroy();
-        _speedPanel.destroy();
+        _controlPanel.dispose();
+        _functionPanel.dispose();
+        _speedPanel.dispose();
         _controlPanelJIF.dispose();
         _functionPanelJIF.dispose();
         super.dispose();

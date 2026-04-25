@@ -7,7 +7,6 @@ import java.beans.PropertyChangeListener;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.swing.PreferencesPanel;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -115,7 +114,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         uiSettingsPane.updateThrottlesPreferences(tp);
         ctrlSettingsPane.updateThrottlesPreferences(tp);
         InstanceManager.getDefault(ThrottlesPreferences.class).set(tp);
-        InstanceManager.getDefault(ThrottleFrameManager.class).applyPreferences();
+/*         InstanceManager.getDefault(ThrottleFrameManager.class).applyPreferences();*/
     }
 
     @Override

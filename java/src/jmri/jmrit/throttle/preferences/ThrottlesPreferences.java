@@ -25,6 +25,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
 
+    public static final String prefPopertyName = "ThrottlePreferences";
+
     private boolean _useExThrottle = true;
     private boolean _useToolBar = true;
     private boolean _useFunctionIcon = true;
@@ -196,7 +198,7 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
         if (listeners != null) {
             for (int i = 0; i < listeners.size(); i++) {
                 PropertyChangeListener l = listeners.get(i);
-                PropertyChangeEvent e = new PropertyChangeEvent(this, "ThrottlePreferences", null, this);
+                PropertyChangeEvent e = new PropertyChangeEvent(this, prefPopertyName, null, this);
                 l.propertyChange(e);
             }
         }
@@ -420,9 +422,8 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
     }
 
     /**
-     * Add an AddressListener.
-     * AddressListeners are notified when the user
-     * selects a new address and when a Throttle is acquired for that address.
+     * Add a PropertyChangeListener.
+     * AddressListeners are notified when the throtlle preferences are updated
      * @param l listener to add.
      *
      */
@@ -436,7 +437,7 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
     }
 
     /**
-     * Remove an AddressListener.
+     * Remove a PropertyChangeListener.
      * @param l listener to remove.
      */
     public void removePropertyChangeListener(PropertyChangeListener l) {

@@ -104,8 +104,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
         throttleManager = tm;
         throttleWindow = tw;
         throuic = new ThrottleUICore(throttleManager, this);
-        initGUI();
-        applyPreferences();
+        initGUI();       
         throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableStructureChanged();
     }
 
@@ -230,17 +229,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
     public void updateGUI() {
         throttleWindow.updateGUI();        
     }
-
-    @Override
-    public void applyPreferences() {        
-        if (willSwitch) {
-            setEditMode(true);
-            willSwitch = false;
-        } 
-        throuic.applyPreferences();
-        throuic.loadDefaultThrottle();
-    }
-
 
     public void setAddressPanelVisible(boolean visible) {
         addressPanelJIF.setVisible(visible);

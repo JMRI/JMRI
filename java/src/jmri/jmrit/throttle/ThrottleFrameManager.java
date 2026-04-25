@@ -1,5 +1,7 @@
 package jmri.jmrit.throttle;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -9,11 +11,13 @@ import javax.swing.JFrame;
 import org.jdom2.Element;
 
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 import jmri.jmrit.throttle.list.ThrottlesListPanel;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.jmrit.throttle.preferences.ThrottlesPreferencesWindow;
 import jmri.util.JmriJFrame;
 
@@ -258,12 +262,13 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      * Apply curent throttle preferences to all throttle windows
      *
      */
-    public void applyPreferences() {
+/*    public void applyPreferences() {
         throttleWindows.forEach(tw -> {
             tw.applyPreferences();
         });
         getThrottlesListPanel().applyPreferences();
-    }
+    }*/
+
 
     /**
      * Force emergency stop of all managed throttles windows
@@ -292,6 +297,6 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         }
         return ret;
     }
-    
+
     // private static final Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class);
 }

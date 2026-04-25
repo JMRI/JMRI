@@ -2,6 +2,7 @@ package jmri.jmrit.throttle;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.net.URI;
@@ -36,7 +37,7 @@ import org.jdom2.Attribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIContainer {
+public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIContainer, PropertyChangeListener {
 
     private final jmri.jmrix.ConnectionConfig connectionConfig;
     private final ThrottleManager throttleManager;
@@ -97,7 +98,6 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
         } else {
             this.throttleManager = InstanceManager.getDefault(jmri.ThrottleManager.class);
         }
-
         myActionFactory = new ThrottleWindowActionsFactory(this);
         powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr == null) {
@@ -105,6 +105,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
         }
         pcs.addPropertyChangeListener(throttleFrameManager.getThrottlesListPanel().getTableModel());        
         initGUI();
+        InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
         applyPreferences();
     }
 
@@ -561,6 +562,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
      */
     @Override
     public void dispose() {        
+        InstanceManager.getDefault(ThrottlesPreferences.class).removePropertyChangeListener(this);
         if (throttleToolBar != null) {
             URIDrop.remove(throttleToolBar);
             Component[] cmps = throttleToolBar.getComponents();
@@ -980,10 +982,9 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
         }
     }
 
-    @Override
-    public void applyPreferences() {
+    private void applyPreferences() {
         ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
-
+        // inputs
         ComponentInputMap im = new ComponentInputMap(getRootPane());
         for (Object k : this.getRootPane().getActionMap().allKeys()) {
             KeyStroke[] kss = preferences.getThrottlesKeyboardControls().getKeyStrokes((String)k);
@@ -996,16 +997,21 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
             }
         }
         getRootPane().setInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW,im);
-
+        // UI elements
         throttleToolBar.setVisible ( preferences.isUsingExThrottle() && preferences.isUsingToolBar() );
-
         if (smallPowerMgmtButton != null) {
             smallPowerMgmtButton.setVisible( (!preferences.isUsingExThrottle()) || (!preferences.isUsingToolBar()) );
         }
+        if (! preferences.isUsingExThrottle()) {        
+            setEditMode(true);            
+        } 
+    }
 
-        for (ThrottleFrame tf : throttleFrames) {
-            tf.applyPreferences();
-        }
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (ThrottlesPreferences.prefPopertyName.compareTo(evt.getPropertyName()) == 0) {
+            applyPreferences();
+        }        
     }
 
     private static final Logger log = LoggerFactory.getLogger(ThrottleWindow.class);

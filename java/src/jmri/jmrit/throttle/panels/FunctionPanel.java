@@ -2,6 +2,7 @@ package jmri.jmrit.throttle.panels;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 
 import javax.swing.*;
@@ -27,7 +28,7 @@ import org.jdom2.Element;
 /**
  * A JInternalFrame that contains buttons for each decoder function.
  */
-public class FunctionPanel extends OptionallyTabbedPanel implements FunctionListener, java.beans.PropertyChangeListener, AddressListener {
+public class FunctionPanel extends OptionallyTabbedPanel implements FunctionListener, PropertyChangeListener, AddressListener {
 
     private static final int DEFAULT_FUNCTION_BUTTONS = 24; // just enough to fill the initial pane
     private static final int MAX_FUNCTION_BUTTONS_PER_TAB = 33; 
@@ -43,11 +44,13 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
      */
     public FunctionPanel() {
         super(MAX_FUNCTION_BUTTONS_PER_TAB);
+        InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
         initGUI();
         applyPreferences();
     }
 
-    public void destroy() {
+    public void dispose() {
+        InstanceManager.getDefault(ThrottlesPreferences.class).removePropertyChangeListener(this);
         if (functionButtons != null) {
             for (FunctionButton fb : functionButtons) {
                 fb.destroy();
@@ -68,7 +71,6 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
     public FunctionButton[] getFunctionButtons() {
         return Arrays.copyOf(functionButtons, functionButtons.length);
     }
-
 
     /**
      * Resize inner function buttons array
@@ -249,7 +251,7 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
      *   + global throttles preferences
      *   + this throttle settings if any
      */
-    public final void applyPreferences() {
+    private void applyPreferences() {
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
         RosterEntry re = null;
         if (mThrottle != null && addressPanel != null) {
@@ -424,6 +426,10 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (e == null) {
+            return;
+        }
+        log.debug("Property change event received {} / {}", e.getPropertyName(), e.getNewValue());        
         if (mThrottle!=null){
             for (int i = 0; i < mThrottle.getFunctions().length; i++) {
                 if (e.getPropertyName().equals(Throttle.getFunctionString(i))) {
@@ -433,6 +439,9 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
                 }
             }
         }
+        if (ThrottlesPreferences.prefPopertyName.compareTo(e.getPropertyName()) == 0) {
+            applyPreferences();
+        }        
     }
 
     private void setButtonByFuncNumber(int function, boolean lockable, boolean newVal){

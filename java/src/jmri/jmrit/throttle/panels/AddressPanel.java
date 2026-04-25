@@ -80,12 +80,18 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
      */
     public AddressPanel(ThrottleManager throttleManager) {
         this.throttleManager = throttleManager;
-        consistManager = InstanceManager.getNullableDefault(jmri.ConsistManager.class);
+        consistManager = InstanceManager.getNullableDefault(jmri.ConsistManager.class);        
         initGUI();
+        InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
         applyPreferences();
     }
 
-    public void destroy() { // Handle disposing of the throttle
+    public void dispose() {
+        InstanceManager.getDefault(ThrottlesPreferences.class).removePropertyChangeListener(this);
+        destroy();                
+    }
+
+    private void destroy() { // Handle disposing of the throttle        
         if (conRosterBox != null && conRosterBox instanceof ConsistComboBox) {
             ((ConsistComboBox)conRosterBox).dispose();
         }
@@ -853,29 +859,25 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
                 throttle = null;
                 consistThrottle = null;
             }
-        }
-
-        if ("DispatchEnabled".compareTo(evt.getPropertyName()) == 0) {
+        } else if ("DispatchEnabled".compareTo(evt.getPropertyName()) == 0) {
             log.debug("propertyChange: Dispatch Button Enabled {}" , evt.getNewValue() );
             dispatchButton.setEnabled( (Boolean) evt.getNewValue() );
-        }
-
-        if ("ReleaseEnabled".compareTo(evt.getPropertyName()) == 0) {
+        } else if ("ReleaseEnabled".compareTo(evt.getPropertyName()) == 0) {
             log.debug("propertyChange: release Button Enabled {}" , evt.getNewValue() );
             releaseButton.setEnabled( (Boolean) evt.getNewValue() );
-        }
-
-        if (RosterEntrySelector.HIGHLIGHTED_ROSTER_ENTRIES.compareTo(evt.getPropertyName()) == 0) {
+        } else if (RosterEntrySelector.HIGHLIGHTED_ROSTER_ENTRIES.compareTo(evt.getPropertyName()) == 0) {
             log.debug("propertyChange: new roster entry highlighted {}" , evt.getNewValue() );
             if (listeners != null) {
                 listeners.forEach((l) -> {
                     l.notifyRosterEntrySelected( ((RosterEntry[]) evt.getNewValue())[0]);
                 });
             }
-        }
+        } else if (ThrottlesPreferences.prefPopertyName.compareTo(evt.getPropertyName()) == 0) {
+            applyPreferences();
+        }          
     }
 
-    public void applyPreferences() {
+    private void applyPreferences() {
         if ((InstanceManager.getDefault(ThrottlesPreferences.class).isUsingExThrottle())) {
             rosterBox.getRosterGroupComboBox().setAllEntriesEnabled(InstanceManager.getDefault(ThrottlesPreferences.class).isAddressSelectorShowingAllRosterGroup());
         }

@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.*;
 
@@ -42,7 +44,7 @@ import org.w3c.dom.Document;
  * @author Ken Cameron Copyright (C) 2008
  * @author Lionel Jeanson 2009-2021
  */
-public class ControlPanel extends JPanel implements java.beans.PropertyChangeListener, AddressListener {
+public class ControlPanel extends JPanel implements PropertyChangeListener, AddressListener {
 
     private final ThrottleManager throttleManager;
     private final ThrottleFrameManager throttleFrameManager = InstanceManager.getDefault(ThrottleFrameManager.class);
@@ -157,6 +159,7 @@ public class ControlPanel extends JPanel implements java.beans.PropertyChangeLis
     public ControlPanel(ThrottleManager tm) {
         throttleManager = tm;
         initGUI();
+        InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
         applyPreferences();
     }
 
@@ -173,10 +176,8 @@ public class ControlPanel extends JPanel implements java.beans.PropertyChangeLis
         }
     }
 
-    /*
-     * "Destructor"
-     */
-    public void destroy() {
+    public void dispose() {
+        InstanceManager.getDefault(ThrottlesPreferences.class).removePropertyChangeListener(this);
         if (addressPanel != null) {
             addressPanel.removeAddressListener(this);
             addressPanel = null;
@@ -1102,10 +1103,13 @@ public class ControlPanel extends JPanel implements java.beans.PropertyChangeLis
         }
     }
 
-
     // update the state of this panel if any of the properties change
     @Override
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
+        if (e == null) {
+            return;
+        }
+        log.debug("Property change event received {} / {}", e.getPropertyName(), e.getNewValue());
         if (e.getPropertyName().equals(Throttle.SPEEDSETTING)) {
             float speed = ((Float) e.getNewValue());
             log.debug("Throttle panel speed updated to {} increment {}", speed,
@@ -1131,14 +1135,15 @@ public class ControlPanel extends JPanel implements java.beans.PropertyChangeLis
                     setSpeedController(SLIDERDISPLAY);
                 }
             }
+        } else if (ThrottlesPreferences.prefPopertyName.compareTo(e.getPropertyName()) == 0) {
+            applyPreferences();
         }
-        log.debug("Property change event received {} / {}", e.getPropertyName(), e.getNewValue());
     }
 
     /**
      * Apply current throttles preferences to this panel
      */
-    public final void applyPreferences() {
+    private void applyPreferences() {
         final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
 
         if (preferences.isUsingExThrottle() && preferences.isUsingLargeSpeedSlider()) {

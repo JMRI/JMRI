@@ -124,7 +124,8 @@ public class LearnSpeedPanel extends JInternalFrame implements java.beans.Proper
     /**
      * "Destructor"
      */
-    public void destroy() {
+    @Override
+    public void dispose() {
         DccThrottle throttle = _warrant.getSpeedUtil().getThrottle();
         if (throttle != null) {
             throttle.removePropertyChangeListener(this);

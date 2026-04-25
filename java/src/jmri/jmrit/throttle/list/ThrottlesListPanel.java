@@ -3,6 +3,8 @@ package jmri.jmrit.throttle.list;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 
@@ -14,6 +16,7 @@ import jmri.jmrit.throttle.ThrottlesPreferencesAction;
 import jmri.jmrit.throttle.buttons.LargePowerManagerButton;
 import jmri.jmrit.throttle.buttons.StopAllButton;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.jmrit.throttle.utils.WindowPreferences;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
@@ -29,7 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 
-public class ThrottlesListPanel extends JPanel {
+public class ThrottlesListPanel extends JPanel implements PropertyChangeListener  {
 
     private final ThrottlesTableModel throttleFramesLM;
     private JTable throttleFrames;
@@ -41,6 +44,7 @@ public class ThrottlesListPanel extends JPanel {
         if (consistManager != null && consistManager.isEnabled()) {
             consistManager.addConsistListListener(throttleFramesLM);
         }
+        InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
         initGUI();
     }
 
@@ -137,9 +141,16 @@ public class ThrottlesListPanel extends JPanel {
         }
     }
 
-    public void applyPreferences() {
+    private void applyPreferences() {
         repaint();
     }
-    
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (ThrottlesPreferences.prefPopertyName.compareTo(evt.getPropertyName()) == 0) {
+            applyPreferences();
+        }        
+    }
+        
     private static final Logger log = LoggerFactory.getLogger(ThrottlesListPanel.class);    
 }

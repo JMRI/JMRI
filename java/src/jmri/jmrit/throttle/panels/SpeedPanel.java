@@ -68,7 +68,7 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
     /**
      * "Destructor"
      */
-    public void destroy() {
+    public void dispose() {
         if (addressPanel != null) {
             addressPanel.removeAddressListener(this);
             addressPanel = null;

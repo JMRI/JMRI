@@ -1,5 +1,8 @@
 package jmri.jmrit.throttle;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import javax.swing.ActionMap;
 import javax.swing.ComponentInputMap;
 import javax.swing.JComponent;
@@ -15,7 +18,7 @@ import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.util.JmriJFrame;
 
-public class SimpleThrottleWindow extends JmriJFrame implements ThrottleControllersUIContainer {
+public class SimpleThrottleWindow extends JmriJFrame implements ThrottleControllersUIContainer, PropertyChangeListener {
 
     private final ThrottleFrameManager throttleFrameManager = InstanceManager.getDefault(ThrottleFrameManager.class);
     private final ThrottleWindowActionsFactory myActionFactory;
@@ -42,6 +45,7 @@ public class SimpleThrottleWindow extends JmriJFrame implements ThrottleControll
         myActionFactory = new ThrottleWindowActionsFactory(this);
         throttleControllerUI = new SimpleThrottlePanel(this, throttleManager);
         initGUI();
+        InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
         if (la != null) {
             throttleControllerUI.setAddress(la);
         }        
@@ -128,13 +132,13 @@ public class SimpleThrottleWindow extends JmriJFrame implements ThrottleControll
 
     @Override
     public void dispose() {        
+        InstanceManager.getDefault(ThrottlesPreferences.class).removePropertyChangeListener(this);
         throttleControllerUI.dispose(); // will release the throttle
         throttleFrameManager.requestThrottleWindowDestruction(this);
         super.dispose();        
     }
 
-    @Override
-    public void applyPreferences() {
+    private void applyPreferences() {
         ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
 
         ComponentInputMap im = new ComponentInputMap(getRootPane());
@@ -149,6 +153,12 @@ public class SimpleThrottleWindow extends JmriJFrame implements ThrottleControll
             }
         }
         getRootPane().setInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW,im);
-        throttleControllerUI.applyPreferences();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (ThrottlesPreferences.prefPopertyName.compareTo(evt.getPropertyName()) == 0) {
+            applyPreferences();
+        }        
     }
 }

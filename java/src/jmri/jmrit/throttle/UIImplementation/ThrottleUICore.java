@@ -1,5 +1,7 @@
 package jmri.jmrit.throttle.UIImplementation;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -38,7 +40,7 @@ import org.jdom2.JDOMException;
  * @author Glen Oberhauser
  * @author Andrew Berridge Copyright 2010
  */
-public class ThrottleUICore implements AddressListener  {
+public class ThrottleUICore implements AddressListener, PropertyChangeListener  {
 
     private DccThrottle throttle;
     private final ThrottleManager throttleManager;
@@ -56,8 +58,6 @@ public class ThrottleUICore implements AddressListener  {
 
     private static final String DEFAULT_THROTTLE_FILENAME = "JMRI_ThrottlePreference.xml";
 
-
-
     public static String getDefaultThrottleFolder() {
         return FileUtil.getUserFilesPath() + "throttle" + File.separator;
     }
@@ -70,6 +70,7 @@ public class ThrottleUICore implements AddressListener  {
         super();
         throttleManager = tm;
         myThrottleController = tc;
+        InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
         initGUI();
         applyPreferences();
     }
@@ -147,15 +148,15 @@ public class ThrottleUICore implements AddressListener  {
         addressPanel.addAddressListener(this);                       
     }
 
-    public void applyPreferences() {
-        ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);
+    private void applyPreferences() {
+        loadDefaultThrottle();
+    }
 
-        backgroundPanel.setVisible(  (preferences.isUsingExThrottle()) && (preferences.isUsingRosterImage()));
-
-        controlPanel.applyPreferences();
-        functionPanel.applyPreferences();
-        addressPanel.applyPreferences();
-        backgroundPanel.applyPreferences();        
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (ThrottlesPreferences.prefPopertyName.compareTo(evt.getPropertyName()) == 0) {
+            applyPreferences();
+        }        
     }
 
     public void setRosterEntry(RosterEntry re) {
@@ -196,14 +197,15 @@ public class ThrottleUICore implements AddressListener  {
         if (throttle!=null &&  throttleFrameManager.getNumberOfEntriesFor((DccLocoAddress) throttle.getLocoAddress()) == 0 ) { // 0 because this throtte frame window has been removed from the list already, so this is last chance to remove listener
             throttleManager.removeListener(throttle.getLocoAddress(), throttleFrameManager.getThrottlesListPanel().getTableModel());
             throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableDataChanged();
-        }          
+        }
+        InstanceManager.getDefault(ThrottlesPreferences.class).removePropertyChangeListener(this);
         // check for any special disposing in InternalFrames
-        controlPanel.destroy();
-        functionPanel.destroy();
-        speedPanel.destroy();
-        backgroundPanel.destroy();      
+        controlPanel.dispose();
+        functionPanel.dispose();
+        speedPanel.dispose();
+        backgroundPanel.dispose();      
         // dispose of this last because it will release and destroy the throttle.
-        addressPanel.destroy();
+        addressPanel.dispose();
     }
 
     public void saveRosterChanges() {

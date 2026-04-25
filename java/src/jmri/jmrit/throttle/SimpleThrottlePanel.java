@@ -88,12 +88,6 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
         throuic.getFunctionPanel().setEnabled();
     }
 
-    @Override
-    public void applyPreferences() {        
-        throuic.applyPreferences();
-        throuic.loadDefaultThrottle();
-    }
-
     /**
      * Handle my own destruction.
      * <ol>
