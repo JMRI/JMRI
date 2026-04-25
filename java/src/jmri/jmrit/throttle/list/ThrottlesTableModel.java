@@ -13,9 +13,6 @@ import jmri.jmrit.throttle.ThrottleWindow;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * A TableModel to display active Throttles in a summary table
  * (see ThrottlesListPanel)
@@ -107,5 +104,5 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
         fireTableDataChanged();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ThrottlesTableModel.class);
+//    private static final Logger log = LoggerFactory.getLogger(ThrottlesTableModel.class);
 }
