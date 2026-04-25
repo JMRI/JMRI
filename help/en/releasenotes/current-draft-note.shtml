@@ -545,6 +545,7 @@
         <a id="Operations" name="Operations"></a>
         <ul>
             <li>Fixed a bug where the RWL or RWE ship address wasn't used when spotted at a spur with a schedule that didn't have a ship address.</li>
+            <li>Added the "Random" column to the tool "Show Schedules by Car Type and Load".
         </ul>
 
    <h3>Panel Editor</h3>

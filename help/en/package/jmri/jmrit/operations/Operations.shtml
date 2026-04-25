@@ -3113,13 +3113,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3 id="ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and Load</h3>
       <img src="images/ShowSchedulesByCarTypeAndLoad.png" alt="">
       <p>You can access this useful tool from the Schedules window. The Schedules window can be
-        found under "Tools" in the Locations window. It allows you to select a car type, and then
-        any load that you've created for the that type of car. The window then shows which schedules
-        by location are receiving or shipping that specific car load. Selecting the "All Loads"
+        found under "Tools" in the Locations window. It allows you to select a car type, and a load
+        that you've created for the that type of car. The window then shows which schedules by
+        location are receiving or shipping that specific car load. Selecting the "All Loads"
         checkbox will show you every schedule for the car type selected. Selecting the "All Types"
-        checkbox allows you to see which loads are being serviced by your schedules. And selecting
-        both checkboxes will list all of the schedules by car types, along with the loads received
-        and shipped.</p>
+        checkbox allows you to see which car types are being serviced by your schedules with the
+        load name selected. And selecting both checkboxes will list all of the schedules by car
+        types, along with the loads received and shipped.</p>
 
       <p>
         If you want a list of custom car loads for each of your car types, you can use the <a
@@ -3146,7 +3146,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         "All Loads" checkbox will show you every schedule for the car type selected.</p>
 
       <p>
-        The window also show which <a href="#StagingAndCarLoads">car load options</a> have been
+        The window also shows which <a href="#StagingAndCarLoads">car load options</a> have been
         selected for the staging tracks. The abbreviations are listed below:
       </p>
 

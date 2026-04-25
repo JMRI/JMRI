@@ -35,7 +35,7 @@
                 <size length="21.5" width="10.5" height="3.7" units="mm"/>
             </model>
 
-            <model show="no" model="PIKO46548-18 BR150-TT V1.8" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46548-18" comment="Piko SmartDecoder XP5.1 Sound E Loco BR 150 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO 46548 BR150-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
+            <model show="no" model="PIKO46548-18 BR150-TT V1.8" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46548-18" comment="Piko SmartDecoder XP5.1 Sound E Loco BR 150 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO46548 BR150-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
                 <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -51,7 +51,7 @@
                 <size length="21.5" width="10.5" height="3.7" units="mm"/>
             </model>
 
-            <model show="no" model="PIKO46550-18 BR83-TT V1.8" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO 46550 BR83-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
+            <model show="no" model="PIKO46550-18 BR83-TT V1.8" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO46550 BR83-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
                 <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -67,7 +67,7 @@
                 <size length="21.5" width="10.5" height="3.7" units="mm"/>
             </model>
 
-            <model show="no" model="PIKO46551-18 BR93-TT V1.8" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46551-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO 46551 BR93-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
+            <model show="no" model="PIKO46551-18 BR93-TT V1.8" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46551-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO46551 BR93-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
                 <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
