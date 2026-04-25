@@ -35,18 +35,27 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
     private DccThrottle mThrottle;
 
     private FunctionButton[] functionButtons;
+    private boolean withPopupMenuOnFnButtons;
     private boolean fnBtnUpdatedFromRoster = false; // avoid to reinit function button twice (from throttle xml and from roster)
 
     private AddressPanel addressPanel = null; // to access roster infos
 
     /**
      * Constructor
+     * 
+     *  @param withPopupMenu  popup menu on function button available if true
+     * 
      */
-    public FunctionPanel() {
+    public FunctionPanel(boolean withPopupMenu) {
         super(MAX_FUNCTION_BUTTONS_PER_TAB);
         InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
+        withPopupMenuOnFnButtons = withPopupMenu;
         initGUI();
         applyPreferences();
+    }
+
+    public FunctionPanel() {
+        this(true);
     }
 
     public void dispose() {
@@ -81,7 +90,7 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
         System.arraycopy(functionButtons, 0, newFunctionButtons, 0, Math.min( functionButtons.length, n));
         if (n > functionButtons.length) {
             for (int i=functionButtons.length;i<n;i++) {
-                newFunctionButtons[i] = new FunctionButton();
+                newFunctionButtons[i] = new FunctionButton(withPopupMenuOnFnButtons);
                 add(newFunctionButtons[i]);
                 resetFnButton(newFunctionButtons[i],i);
                 // Copy mouse and keyboard controls to new components
@@ -292,7 +301,7 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
         removeAll();
         functionButtons = new FunctionButton[n];
         for (int i = 0; i < functionButtons.length; i++) {
-            functionButtons[i] = new FunctionButton();
+            functionButtons[i] = new FunctionButton(withPopupMenuOnFnButtons);
             resetFnButton(functionButtons[i],i);
             add(functionButtons[i]);
             // Copy mouse and keyboard controls to new components

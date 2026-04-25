@@ -103,18 +103,26 @@ public class FunctionButton extends JToggleButton {
 
     /**
      * Construct the FunctionButton.
+     * 
+     * @param withPopupMenu  popup menu on function button available if true
      */
-    public FunctionButton() {
+    public FunctionButton(boolean withPopupMenu) {
         super();
         listeners = new ArrayList<>();
-        initGUI();
+        initGUI(withPopupMenu);
     }
 
-    private void initGUI(){
+    public FunctionButton() {
+        this(true);
+    }
+
+    private void initGUI(boolean withPopupMenu){
         _model = new ToggleOrPressButtonModel(this, true);
         setModel(_model);
         //Add listener to components that can bring up popupMenu menus.
-        addMouseListener(JmriMouseListener.adapt(new PopupListener()));
+        if (withPopupMenu) {
+            addMouseListener(JmriMouseListener.adapt(new PopupListener()));
+        }
         setFont(new Font("Monospaced", Font.PLAIN, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize()));
         setMargin(new Insets(2, 2, 2, 2));
         setRolloverEnabled(false);

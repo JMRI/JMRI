@@ -149,16 +149,17 @@ public class ControlPanel extends JPanel implements PropertyChangeListener, Addr
      * Constructor.
      */
     public ControlPanel() {
-        this(InstanceManager.getDefault(ThrottleManager.class));
+        this(InstanceManager.getDefault(ThrottleManager.class), true);
     }
 
     /**
      * Constructor.
      * @param tm the throttle manager
+     * @param withPopupMenu popup menu on control panel available if true
      */
-    public ControlPanel(ThrottleManager tm) {
+    public ControlPanel(ThrottleManager tm, boolean withPopupMenu) {
         throttleManager = tm;
-        initGUI();
+        initGUI(withPopupMenu);
         InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
         applyPreferences();
     }
@@ -644,7 +645,7 @@ public class ControlPanel extends JPanel implements PropertyChangeListener, Addr
     /**
      * Create, initialize and place GUI components.
      */
-    private void initGUI() {
+    private void initGUI(boolean withPopupMenu) {
         setLayout(new BorderLayout());
 
         JPanel speedPanel = new JPanel();
@@ -961,7 +962,9 @@ public class ControlPanel extends JPanel implements PropertyChangeListener, Addr
         layoutTopButtonPanel();
 
         // Add a mouse listener all components to trigger the popup menu.
-        MouseInputAdapterInstaller.installMouseListenerOnAllComponents(new PopupListener(), this);
+        if (withPopupMenu) {
+            MouseInputAdapterInstaller.installMouseListenerOnAllComponents(new PopupListener(), this);
+        }
 
         // set by default which speed selection method is on top
         setSpeedController(_displaySlider);

@@ -39,6 +39,7 @@ import org.jdom2.JDOMException;
  *
  * @author Glen Oberhauser
  * @author Andrew Berridge Copyright 2010
+ * 
  */
 public class ThrottleUICore implements AddressListener, PropertyChangeListener  {
 
@@ -66,13 +67,17 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
         return getDefaultThrottleFolder() + DEFAULT_THROTTLE_FILENAME;
     }
 
-    public ThrottleUICore(ThrottleManager tm, ThrottleControllerUI tc) {
+    public ThrottleUICore(ThrottleManager tm, ThrottleControllerUI tc, boolean withPopupMenu) {
         super();
         throttleManager = tm;
         myThrottleController = tc;
         InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
-        initGUI();
+        initGUI(withPopupMenu);
         applyPreferences();
+    }
+
+    public ThrottleUICore(ThrottleManager tm, ThrottleControllerUI tc) {
+        this(tm,tc,true);
     }
 
     public ControlPanel getControlPanel() {
@@ -125,10 +130,10 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
      * <li> JMenu
      * </ul>
      */
-    private void initGUI() {
+    private void initGUI( boolean withPopupMenu ) {
         addressPanel = new AddressPanel(throttleManager);
-        controlPanel = new ControlPanel(throttleManager);
-        functionPanel = new FunctionPanel();
+        controlPanel = new ControlPanel(throttleManager, withPopupMenu);
+        functionPanel = new FunctionPanel(withPopupMenu);
         speedPanel = new SpeedPanel();
         backgroundPanel = new BackgroundPanel();
         locoIconPanel = new LocoIconPanel();
