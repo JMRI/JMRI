@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Window;
 import java.io.File;
@@ -53,11 +54,12 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
         throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableStructureChanged();
     }
 
-    private void initGUI() {
+    private void initGUI() {    
         setLayout(new BorderLayout());        
         add(throuic.getControlPanel(), BorderLayout.WEST);
         add(throuic.getFunctionPanel(), BorderLayout.CENTER);
-        add(throuic.getLocoIconPanel(), BorderLayout.NORTH);        
+        add(throuic.getLocoIconPanel(), BorderLayout.NORTH);
+        setPreferredSize(new Dimension(450,350));        
     }
 
     @Override
