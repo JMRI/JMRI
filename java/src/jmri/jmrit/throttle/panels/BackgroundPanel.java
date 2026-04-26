@@ -49,7 +49,8 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
         this.addressPanel = addressPanel;
         if (this.addressPanel != null) {
             this.addressPanel.addAddressListener(this);
-        }    
+        }
+        updateImage(addressPanel.getRosterEntry());
     }
 
     private void updateImage(RosterEntry rosterEntry) {

@@ -11,7 +11,6 @@ import jmri.Throttle;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.interfaces.AddressListener;
 
-import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,12 +55,18 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
      * @param addressPanel  reference to the addresspanel
      */
     public void setAddressPanel(AddressPanel addressPanel) {
+        if (throttle != null) {
+            notifyAddressReleased(throttle.getLocoAddress());
+        }
         if (this.addressPanel != null) {
             this.addressPanel.removeAddressListener(this);
         }
         this.addressPanel = addressPanel;
         if (this.addressPanel != null) {
             this.addressPanel.addAddressListener(this);
+        }
+        if (this.addressPanel.getThrottle() != null ) {
+            notifyAddressThrottleFound(this.addressPanel.getThrottle());
         }
     }
 
@@ -146,16 +151,11 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
     }
 
     @Override
-    public void notifyAddressThrottleFound(DccThrottle t) {
-        if (throttle != null) {
-            log.debug("notifyAddressThrottleFound() throttle non null, called for loc {}",t.getLocoAddress());
-            return;
-        }        
+    public void notifyAddressThrottleFound(DccThrottle t) {       
         if (log.isDebugEnabled()) {
             log.debug("control panel received new throttle {}",t);
         }
         this.throttle = t;
-
         this.throttle.addPropertyChangeListener(this);
         if (log.isDebugEnabled()) {
             jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
@@ -187,35 +187,6 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
             log.debug("control panel received consist throttle");
         }
         notifyAddressThrottleFound(throttle);
-    }
-
-    /**
-     * Collect the prefs of this object into XML Element Just Positional Data
-     * <ul>
-     * <li> Window prefs
-     * </ul>
-     *
-     *
-     * @return the XML of this object.
-     */
-    public Element getXml() {
-        Element me = new Element("SpeedPanel");
-        java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);
-        me.setContent(children);
-        return me;
-    }
-
-    /**
-     * Set the preferences based on the XML Element. Just positional data
-     * <ul>
-     * <li> Window prefs
-     * </ul>
-     *
-     *
-     * @param e The Element for this object.
-     */
-    public void setXml(Element e) {
-
     }
 
     // initialize logging

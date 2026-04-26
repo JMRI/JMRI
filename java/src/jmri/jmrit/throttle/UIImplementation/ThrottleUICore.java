@@ -26,7 +26,6 @@ import jmri.jmrit.throttle.panels.SpeedPanel;
 import jmri.jmrit.throttle.panels.LocoIconPanel;
 import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.util.FileUtil;
-import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.swing.JmriJOptionPane;
 
 import org.jdom2.Document;
@@ -97,10 +96,18 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
     }
 
     public SpeedPanel getSpeedPanel() {
+        if (speedPanel == null) { // init only when requested
+            speedPanel = new SpeedPanel();
+            speedPanel.setAddressPanel(addressPanel);
+        }
         return speedPanel;
     }
 
     public BackgroundPanel getBackgroundPanel() {
+        if (backgroundPanel == null) { // init only when requested
+            backgroundPanel = new BackgroundPanel();
+            backgroundPanel.setAddressPanel(addressPanel);
+        }
         return backgroundPanel;
     }
 
@@ -120,34 +127,20 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
         return false;
     }   
 
-    /**
-     * Place and initialize the GUI elements.
-     * <ul>
-     * <li> ControlPanel
-     * <li> FunctionPanel
-     * <li> AddressPanel
-     * <li> SpeedPanel
-     * <li> JMenu
-     * </ul>
-     */
     private void initGUI( boolean withPopupMenu ) {
+        // create panels that are actually required for a throttle
+        // some (speed Panel, backgroundPanel) will be created on demand only (see getters)
         addressPanel = new AddressPanel(throttleManager);
         controlPanel = new ControlPanel(throttleManager, withPopupMenu);
         functionPanel = new FunctionPanel(withPopupMenu);
-        speedPanel = new SpeedPanel();
-        backgroundPanel = new BackgroundPanel();
         locoIconPanel = new LocoIconPanel();
             
         controlPanel.setEnabled(false);
         functionPanel.setEnabled(false);
-        speedPanel.setEnabled(false);
         addressPanel.setEnabled(true);
-        locoIconPanel.setEnabled(true);
 
-        functionPanel.setAddressPanel(addressPanel); // so the function panel can get access to the roster
+        functionPanel.setAddressPanel(addressPanel);
         controlPanel.setAddressPanel(addressPanel);
-        backgroundPanel.setAddressPanel(addressPanel); // reusing same way to do it than existing thing in functionPanel
-        speedPanel.setAddressPanel(addressPanel);
         locoIconPanel.setAddressPanel(addressPanel);
 
         addressPanel.addAddressListener(this);                       
@@ -196,7 +189,6 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
      */
     public void dispose() {
         log.debug("Disposing");
-        URIDrop.remove(backgroundPanel);
         addressPanel.removeAddressListener(this);
         // should the throttle list table stop listening to that throttle?
         if (throttle!=null &&  throttleFrameManager.getNumberOfEntriesFor((DccLocoAddress) throttle.getLocoAddress()) == 0 ) { // 0 because this throtte frame window has been removed from the list already, so this is last chance to remove listener
@@ -207,8 +199,12 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
         // check for any special disposing in InternalFrames
         controlPanel.dispose();
         functionPanel.dispose();
-        speedPanel.dispose();
-        backgroundPanel.dispose();      
+        if (speedPanel!=null) {
+            speedPanel.dispose();
+        }
+        if (backgroundPanel!=null) {
+            backgroundPanel.dispose();      
+        }
         // dispose of this last because it will release and destroy the throttle.
         addressPanel.dispose();
     }
@@ -238,7 +234,6 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
         children.add(controlPanel.getXml());
         children.add(functionPanel.getXml());
         children.add(addressPanel.getXml());
-        children.add(speedPanel.getXml());
     }
 
     /**
@@ -264,10 +259,6 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
         functionPanel.setXml(functionPanelElement);
         Element addressPanelElement = e.getChild("AddressPanel");
         addressPanel.setXml(addressPanelElement);
-        Element speedPanelElement = e.getChild("SpeedPanel");
-        if (speedPanelElement != null) { // older throttle configs may not have this element
-            speedPanel.setXml(speedPanelElement);
-        }
     }
 
     public void saveThrottleAs(Element throttleElement) {
