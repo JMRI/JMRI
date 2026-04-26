@@ -40,7 +40,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     public static final String NO_PORTS_FOUND = Bundle.getMessage("noPortsFound");
     public static final String NONE = Bundle.getMessage("none");
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
+    private static final Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
 
     /*
      * Create panel is separated off from the instance and synchronized, so that only

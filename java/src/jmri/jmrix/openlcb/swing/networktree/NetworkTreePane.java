@@ -139,7 +139,7 @@ public class NetworkTreePane extends JmriPanel implements CanListener, CanPanelI
     public synchronized void reply(CanReply l) {  // receive a reply and log it
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(NetworkTreePane.class);
+    //private static final Logger log = LoggerFactory.getLogger(NetworkTreePane.class);
 
     /**
      * Nested class to open specific windows when proper tree element is picked.

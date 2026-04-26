@@ -79,7 +79,7 @@ public class Bundle extends jmri.jmrix.loconet.usb_dcs210Plus.Bundle {
     }
 
 
-    private final static Bundle b = new Bundle();
+    private static final Bundle b = new Bundle();
 
     @Override
     @CheckForNull

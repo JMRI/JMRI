@@ -538,7 +538,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     protected String selectedSpeed = validSpeeds[0];
 
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
     private static final Logger MSG_RAW_LOGGER = LoggerFactory.getLogger("RAW");
 
 }

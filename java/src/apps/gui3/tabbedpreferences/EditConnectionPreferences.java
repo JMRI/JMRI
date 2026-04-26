@@ -481,6 +481,6 @@ public class EditConnectionPreferences extends AppConfigBase {
         });
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EditConnectionPreferences.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EditConnectionPreferences.class);
 
 }

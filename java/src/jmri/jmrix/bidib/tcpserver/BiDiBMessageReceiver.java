@@ -110,5 +110,5 @@ public class BiDiBMessageReceiver implements RawMessageListener {
         // we are not interested in data sent to the connection
     }
     
-    private final static Logger log = LoggerFactory.getLogger(BiDiBMessageReceiver.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBMessageReceiver.class);
 }

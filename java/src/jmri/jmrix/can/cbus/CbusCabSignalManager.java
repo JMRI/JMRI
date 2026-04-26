@@ -42,5 +42,5 @@ public class CbusCabSignalManager extends AbstractCabSignalManager {
            return new CbusCabSignal(_memo,address);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusCabSignalManager.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusCabSignalManager.class);
 }

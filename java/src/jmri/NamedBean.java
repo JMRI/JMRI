@@ -84,18 +84,18 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
      * the user name and system name without quotation marks around the user
      * name.
      */
-    final static String DISPLAY_NAME_FORMAT = "%s (%s)";
+    static final String DISPLAY_NAME_FORMAT = "%s (%s)";
 
     /**
      * Format used for {@link #getDisplayName(DisplayOptions)} when displaying
      * the user name and system name with quotation marks around the user name.
      */
-    final static String QUOTED_NAME_FORMAT = "\"%s\" (%s)";
+    static final String QUOTED_NAME_FORMAT = "\"%s\" (%s)";
 
     /**
      * Property of changed state.
      */
-    final static String PROPERTY_STATE = "state";
+    static final String PROPERTY_STATE = "state";
 
     /**
      * Property of known state.

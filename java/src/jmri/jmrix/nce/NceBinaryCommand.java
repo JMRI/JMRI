@@ -218,7 +218,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
-    private final static int BUFFER_SIZE_16 = 16;
+    private static final int BUFFER_SIZE_16 = 16;
     public static byte[] accMemoryWriteN(int address, byte[] data) {
 
         int addr_h = address / 256;
@@ -238,7 +238,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
-    private final static int BUFFER_SIZE_8 = 8;
+    private static final int BUFFER_SIZE_8 = 8;
     public static byte[] accMemoryWrite8(int address, byte[] data) {
 
         int addr_h = address / 256;
@@ -257,7 +257,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
-    private final static int BUFFER_SIZE_4 = 4;
+    private static final int BUFFER_SIZE_4 = 4;
     public static byte[] accMemoryWrite4(int address, byte[] data) {
 
         int addr_h = address / 256;
@@ -276,7 +276,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
-    private final static int BUFFER_SIZE_2 = 2;
+    private static final int BUFFER_SIZE_2 = 2;
     public static byte[] accMemoryWrite2(int address, byte[] data) {
 
         int addr_h = address / 256;
@@ -489,5 +489,5 @@ public class NceBinaryCommand {
         return retVal;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceBinaryCommand.class);
+    private static final Logger log = LoggerFactory.getLogger(NceBinaryCommand.class);
 }

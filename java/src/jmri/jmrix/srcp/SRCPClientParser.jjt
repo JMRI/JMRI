@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 
 public class SRCPClientParser {
 
-   private final static Logger log = LoggerFactory.getLogger(SRCPClientParser.class.getName());
+   private static final Logger log = LoggerFactory.getLogger(SRCPClientParser.class.getName());
 
   }
 

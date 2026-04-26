@@ -126,6 +126,6 @@ public class SampleMinimalProgram {
         log.info("Up!");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleMinimalProgram.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleMinimalProgram.class);
 
 }

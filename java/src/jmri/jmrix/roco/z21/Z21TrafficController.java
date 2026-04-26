@@ -488,5 +488,5 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         sendMessage(m, reply);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21TrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21TrafficController.class);
 }

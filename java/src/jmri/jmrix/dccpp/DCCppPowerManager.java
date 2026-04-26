@@ -103,7 +103,7 @@ public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectio
     }
 
     // Initialize logging information
-    private final static Logger log = LoggerFactory.getLogger(DCCppPowerManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppPowerManager.class);
 
 }
 

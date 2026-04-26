@@ -121,6 +121,6 @@ public class EasyDccTurnout extends AbstractTurnout {
         tc.sendEasyDccMessage(m, null);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccTurnout.class);
+    private static final Logger log = LoggerFactory.getLogger(EasyDccTurnout.class);
 
 }

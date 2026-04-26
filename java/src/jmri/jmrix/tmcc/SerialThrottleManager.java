@@ -99,6 +99,6 @@ public class SerialThrottleManager extends AbstractThrottleManager {
         return EnumSet.of(SpeedStepMode.TMCC1_32, SpeedStepMode.TMCC2_32, SpeedStepMode.TMCC1_100, SpeedStepMode.TMCC2_200, SpeedStepMode.TMCC1TR_32, SpeedStepMode.TMCC2TR_32, SpeedStepMode.TMCC1TR_100, SpeedStepMode.TMCC2TR_200);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialThrottleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialThrottleManager.class);
 
 }

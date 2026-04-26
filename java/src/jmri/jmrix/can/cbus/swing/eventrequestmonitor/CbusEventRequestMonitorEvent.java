@@ -184,6 +184,6 @@ public class CbusEventRequestMonitorEvent extends CbusEvent {
         return super.hashCode();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventRequestMonitorEvent.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusEventRequestMonitorEvent.class);
 
 }

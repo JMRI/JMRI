@@ -65,6 +65,6 @@ public class MqttConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionCo
         // it's OK, even it it doesn't match a pre-load
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MqttConnectionConfig.class);
+    // private static final Logger log = LoggerFactory.getLogger(MqttConnectionConfig.class);
 
 }

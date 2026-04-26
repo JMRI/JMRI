@@ -213,6 +213,6 @@ public class DCCppPredefinedMeters implements DCCppListener {
         log.debug("Notified of timeout on message '{}', not retrying", msg);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppPredefinedMeters.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppPredefinedMeters.class);
 
 }

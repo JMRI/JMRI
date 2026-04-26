@@ -81,6 +81,6 @@ public class RaspberryPiConnectionConfigXml extends AbstractConnectionConfigXml 
         adapter.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RaspberryPiConnectionConfigXml.class);
+    private static final Logger log = LoggerFactory.getLogger(RaspberryPiConnectionConfigXml.class);
 
 }

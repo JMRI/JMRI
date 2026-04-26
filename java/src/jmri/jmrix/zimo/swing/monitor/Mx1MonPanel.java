@@ -121,6 +121,6 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         nextLineWithTime(timestamp, src + " " + m.toString() + "\n", raw.toString());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1MonPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(Mx1MonPanel.class);
 
 }

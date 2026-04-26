@@ -2788,6 +2788,6 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return report;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSection.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSection.class);
 
 }

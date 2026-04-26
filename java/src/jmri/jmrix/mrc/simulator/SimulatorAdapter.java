@@ -407,7 +407,7 @@ public class SimulatorAdapter extends MrcPortController implements Runnable {
 //  reply.setElement(0, MRC_OKAY);   // Mrc okay reply!
 //  return reply;
 // }
-    private final static Logger log = LoggerFactory
+    private static final Logger log = LoggerFactory
             .getLogger(SimulatorAdapter.class);
 
 }

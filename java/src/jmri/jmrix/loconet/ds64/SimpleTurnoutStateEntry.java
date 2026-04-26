@@ -304,6 +304,6 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutStateEntry.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleTurnoutStateEntry.class);
 
 }

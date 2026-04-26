@@ -134,6 +134,6 @@ public class AcelaSystemConnectionMemo extends DefaultSystemConnectionMemo imple
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaSystemConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(AcelaSystemConnectionMemo.class);
 
 }

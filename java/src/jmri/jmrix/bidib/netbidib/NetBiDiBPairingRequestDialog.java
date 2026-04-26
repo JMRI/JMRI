@@ -172,6 +172,6 @@ public class NetBiDiBPairingRequestDialog {
         return remoteLinkData;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(NetBiDiBPairingRequestDialog.class);
+    private static final Logger log = LoggerFactory.getLogger(NetBiDiBPairingRequestDialog.class);
 
 }

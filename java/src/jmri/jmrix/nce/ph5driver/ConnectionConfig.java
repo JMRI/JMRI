@@ -9,7 +9,7 @@ package jmri.jmrix.nce.ph5driver;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
-    public final static String NAME = Bundle.getMessage("TypePh5USB");
+    public static final String NAME = Bundle.getMessage("TypePh5USB");
 
     /**
      * Ctor for an object being created during load process; Swing init is

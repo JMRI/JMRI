@@ -238,6 +238,6 @@ public class LnPowerManager extends AbstractPowerManager<LocoNetSystemConnection
         return supportsIdleState;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnPowerManager.class);
+    private static final Logger log = LoggerFactory.getLogger(LnPowerManager.class);
 
 }

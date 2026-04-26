@@ -751,6 +751,6 @@ public class LocoIOData extends PropertyChangeSupport
         lim = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIOData.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoIOData.class);
 
 }

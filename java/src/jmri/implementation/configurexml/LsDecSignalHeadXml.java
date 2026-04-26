@@ -143,6 +143,6 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LsDecSignalHeadXml.class);
+    private static final Logger log = LoggerFactory.getLogger(LsDecSignalHeadXml.class);
 
 }

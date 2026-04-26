@@ -83,6 +83,6 @@ public class CbusFilterFrame extends JmriJFrame {
         ftp.dispose();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusFilterFrame.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusFilterFrame.class);
 
 }

@@ -33,7 +33,7 @@ import javax.annotation.Nonnull;
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
  
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceMessage.class); // called in static block
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceMessage.class); // called in static block
     private static final jmri.jmrix.nce.ncemon.NceMonBinary nceMon = new jmri.jmrix.nce.ncemon.NceMonBinary();
 
     public static final int NOP_CMD = 0x80; //NCE NOP command

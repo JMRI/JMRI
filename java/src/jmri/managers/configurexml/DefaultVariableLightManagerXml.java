@@ -37,6 +37,6 @@ public class DefaultVariableLightManagerXml extends jmri.managers.configurexml.A
         return InstanceManager.getDefault(jmri.VariableLightManager.class).getXMLOrder();
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(DefaultVariableLightManagerXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(DefaultVariableLightManagerXml.class);
 
 }

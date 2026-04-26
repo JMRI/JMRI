@@ -120,6 +120,6 @@ public class DCCppAdapter extends DCCppSerialPortController {
     protected String[] validStartupDelays = new String[]{"1.5 seconds", "5 seconds", "10 seconds", "20 seconds", "30 seconds"};
     protected int[] validStartupDelayValues = new int[]{1500, 5000, 10000, 20000, 30000};
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppAdapter.class);
 
 }

@@ -668,6 +668,6 @@ public class LoaderPane extends javax.swing.JPanel {
         return buffer;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoaderPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoaderPane.class);
 
 }

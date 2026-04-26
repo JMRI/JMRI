@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
-    public final static String NAME = "Simulator";// NOI18N
+    public static final String NAME = "Simulator";// NOI18N
 
     /**
      * Ctor for an object being created during load process; Swing init is

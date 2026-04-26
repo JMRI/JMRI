@@ -44,6 +44,6 @@ public class SerialPacketGenAction extends PowerlineSystemConnectionAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class);
 
 }

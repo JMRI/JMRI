@@ -216,6 +216,6 @@ public class CompareUtil {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CompareUtil.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CompareUtil.class);
 
 }

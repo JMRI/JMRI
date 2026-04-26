@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class StartupActionsPreferencesPanelXml extends AbstractXmlAdapter {
 
-    private final static Logger log = LoggerFactory.getLogger(StartupActionsPreferencesPanelXml.class);
+    private static final Logger log = LoggerFactory.getLogger(StartupActionsPreferencesPanelXml.class);
 
     /**
      * Arrange for all {@link jmri.util.startup.StartupModel} objects to be stored.

@@ -80,7 +80,7 @@ public class RosterServlet extends HttpServlet {
 
     private transient ObjectMapper mapper;
 
-    private final static Logger log = LoggerFactory.getLogger(RosterServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(RosterServlet.class);
 
     @Override
     public void init() throws ServletException {

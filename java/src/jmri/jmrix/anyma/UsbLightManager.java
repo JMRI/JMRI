@@ -145,6 +145,6 @@ public class UsbLightManager extends AbstractLightManager {
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UsbLightManager.class);
+    private static final Logger log = LoggerFactory.getLogger(UsbLightManager.class);
 
 }

@@ -54,7 +54,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
     private boolean _respectAspectRatio = true;
     private static Color backgroundColor = Color.BLACK;
     boolean toResize = false;
-    final static Dimension SMALL_DIM = new Dimension(10, 10);
+    static final Dimension SMALL_DIM = new Dimension(10, 10);
 
     /**
      * Default constructor.
@@ -380,5 +380,5 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ResizableImagePanel.class);
+    private static final Logger log = LoggerFactory.getLogger(ResizableImagePanel.class);
 }

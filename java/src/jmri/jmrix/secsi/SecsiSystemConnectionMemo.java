@@ -126,6 +126,6 @@ public class SecsiSystemConnectionMemo extends DefaultSystemConnectionMemo imple
         store(l,LightManager.class);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SecsiSystemConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(SecsiSystemConnectionMemo.class);
 
 }

@@ -260,6 +260,6 @@ public class DefaultSectionManagerXml extends jmri.managers.configurexml.Abstrac
         return InstanceManager.getDefault(jmri.SectionManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSectionManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultSectionManagerXml.class);
 
 }

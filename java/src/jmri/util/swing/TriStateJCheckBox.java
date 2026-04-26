@@ -313,6 +313,6 @@ public class TriStateJCheckBox extends JPanel {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(TriStateJCheckBox.class);
+    private static final Logger log = LoggerFactory.getLogger(TriStateJCheckBox.class);
 
 }

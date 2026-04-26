@@ -326,6 +326,6 @@ public class CbusClockControl extends jmri.implementation.DefaultClockControl im
         this.removeTc(_memo);
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusClockControl.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusClockControl.class);
 
 }

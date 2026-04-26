@@ -77,5 +77,5 @@ public class TrafficStatusLabel extends JLabel implements CanListener {
         traffic();
     }
     
-    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrafficStatusLabel.class);
+    //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrafficStatusLabel.class);
 }

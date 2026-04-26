@@ -278,6 +278,6 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnOverTcpPacketizer.class);
+    private static final Logger log = LoggerFactory.getLogger(LnOverTcpPacketizer.class);
 
 }

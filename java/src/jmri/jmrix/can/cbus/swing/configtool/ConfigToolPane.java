@@ -29,7 +29,7 @@ import jmri.util.swing.JmriJOptionPane;
 public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
     static int configtool_instance_num;
-    final static int NRECORDERS = 6;
+    static final int NRECORDERS = 6;
     private final CbusEventRecorder[] recorders = new CbusEventRecorder[NRECORDERS];
     private CbusFilterFrame _filterFrame;
     private CbusEventHighlightFrame _highlightFrame;

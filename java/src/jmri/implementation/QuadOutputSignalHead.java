@@ -85,7 +85,7 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
     }
 
     // claim support for Lunar aspects
-    private final static int[] validStates = new int[]{
+    private static final int[] validStates = new int[]{
         DARK,
         RED,
         LUNAR,

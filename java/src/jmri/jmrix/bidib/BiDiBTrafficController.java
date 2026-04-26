@@ -1820,6 +1820,6 @@ public class BiDiBTrafficController implements CommandStation {
 //    }
 //
     
-    private final static Logger log = LoggerFactory.getLogger(BiDiBTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBTrafficController.class);
 
 }

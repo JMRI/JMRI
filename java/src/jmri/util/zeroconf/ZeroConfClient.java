@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 public class ZeroConfClient {
 
     private ServiceListener mdnsServiceListener = null;
-    private final static Logger log = LoggerFactory.getLogger(ZeroConfClient.class);
+    private static final Logger log = LoggerFactory.getLogger(ZeroConfClient.class);
     private long timeout = DNSConstants.SERVICE_INFO_TIMEOUT;
 
     // mdns related routines.

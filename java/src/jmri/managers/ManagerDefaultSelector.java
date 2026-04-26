@@ -55,7 +55,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     public final HashMap<Class<?>, String> defaults = new HashMap<>();
     private PropertyChangeListener memoListener;
     private boolean allInternalDefaultsValid = false;
-    public final static String ALL_INTERNAL_DEFAULTS = "allInternalDefaults";
+    public static final String ALL_INTERNAL_DEFAULTS = "allInternalDefaults";
 
     public ManagerDefaultSelector() {
         memoListener = (PropertyChangeEvent e) -> {
@@ -453,5 +453,5 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
         this.allInternalDefaultsValid = isAllInternalDefaultsValid;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerDefaultSelector.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerDefaultSelector.class);
 }

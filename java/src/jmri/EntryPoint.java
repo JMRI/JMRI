@@ -140,5 +140,5 @@ public class EntryPoint {
         return mFromBlockDirection;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EntryPoint.class);
+    private static final Logger log = LoggerFactory.getLogger(EntryPoint.class);
 }

@@ -247,6 +247,6 @@ public class DefaultSignalGroupManagerXml
         return InstanceManager.getDefault(jmri.SignalGroupManager.class).getXMLOrder();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSignalGroupManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSignalGroupManagerXml.class);
 
 }

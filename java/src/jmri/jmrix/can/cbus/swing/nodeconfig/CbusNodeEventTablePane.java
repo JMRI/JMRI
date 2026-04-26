@@ -188,6 +188,6 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         eventVarScroll = null;
     }
 
- //   private final static Logger log = LoggerFactory.getLogger(CbusNodeEventTablePane.class);
+ //   private static final Logger log = LoggerFactory.getLogger(CbusNodeEventTablePane.class);
 
 }

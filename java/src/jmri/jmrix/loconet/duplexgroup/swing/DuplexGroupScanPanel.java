@@ -35,7 +35,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
     private javax.swing.Timer tmr;
     DuplexGroupScanPanel safe;
 
-    private final static int DEFAULT_SCAN_COUNT = 25;
+    private static final int DEFAULT_SCAN_COUNT = 25;
     private boolean isInitialized = false;
 
     public DuplexGroupScanPanel() {
@@ -503,7 +503,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DuplexGroupScanPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(DuplexGroupScanPanel.class);
 
     @Override
     public void stateChanged(javax.swing.event.ChangeEvent e) {
@@ -524,10 +524,10 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         private int barWidth = 7;
         private int barSpace = barWidth + 8;
         private int barOffset = (barSpace - barWidth) / 2;
-        private final static int channelCount = 26 - 11 + 1;
-        private final static int barGraphScale = 2;
-        private final static int maxScanValue = 255;
-        private final static int maxScaledBarValue = ((maxScanValue + 1) / barGraphScale);
+        private static final int channelCount = 26 - 11 + 1;
+        private static final int barGraphScale = 2;
+        private static final int maxScanValue = 255;
+        private static final int maxScaledBarValue = ((maxScanValue + 1) / barGraphScale);
         private int baseline = maxScaledBarValue + 5;
 
         public int requiredMinWindowWidth = (channelCount * barSpace);

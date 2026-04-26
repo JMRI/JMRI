@@ -304,6 +304,6 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         return sourceLetter;
     } 
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMRMessage.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractMRMessage.class);
 
 }

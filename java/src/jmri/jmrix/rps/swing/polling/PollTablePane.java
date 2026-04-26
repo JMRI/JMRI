@@ -212,6 +212,6 @@ public class PollTablePane extends javax.swing.JPanel {
         pollModel.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PollTablePane.class);
+    private static final Logger log = LoggerFactory.getLogger(PollTablePane.class);
 
 }

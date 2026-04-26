@@ -172,6 +172,6 @@ public class DCCppPacketizer extends DCCppTrafficController {
         log.warn("msg truncated to: '{}'", m);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppPacketizer.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppPacketizer.class);
 
 }

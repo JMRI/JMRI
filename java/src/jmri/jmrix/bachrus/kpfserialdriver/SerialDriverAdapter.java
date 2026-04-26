@@ -186,6 +186,6 @@ public class SerialDriverAdapter extends SpeedoPortController {
     private boolean opened = false;
     InputStream serialStream = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

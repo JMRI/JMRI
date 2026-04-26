@@ -518,6 +518,6 @@ public class LnTurnout extends AbstractTurnout {
     int noConsistencyTimersRunning = 0;
     private java.util.TimerTask consistencyTask = null;
 
-    private final static Logger log = LoggerFactory.getLogger(LnTurnout.class);
+    private static final Logger log = LoggerFactory.getLogger(LnTurnout.class);
 
 }

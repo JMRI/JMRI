@@ -308,6 +308,6 @@ abstract public class AbstractCanTrafficController
         distributeReply(r);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class);
 
 }

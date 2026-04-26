@@ -298,6 +298,6 @@ public class SE8Panel extends AbstractBoardProgPanel {
     JCheckBox setdefault = new JCheckBox(Bundle.getMessage("Box20"));   // opsw 20
     JCheckBox exercise = new JCheckBox(Bundle.getMessage("Box21"));     // opsw 21
 
-    private final static Logger log = LoggerFactory.getLogger(SE8Panel.class);
+    private static final Logger log = LoggerFactory.getLogger(SE8Panel.class);
 
 }

@@ -175,7 +175,7 @@ public class SerialThrottle extends AbstractThrottle {
     }
 
     // TMCC 1 Function Keys to trigger with TMCC1_32 and TMCC1_100 speed steps.
-    private final static long[][] SERIAL_FUNCTION_CODES_TMCC1 = new long[][] {
+    private static final long[][] SERIAL_FUNCTION_CODES_TMCC1 = new long[][] {
 
         // TMCC1 Remote - Defined FnKeys
         {0x00000D}, // Fn0 (Headlamp)
@@ -275,7 +275,7 @@ public class SerialThrottle extends AbstractThrottle {
     };
 
     // TMCC 1 TR Function Keys to trigger with TMCC1TR_32 and TMCC1TR_100 speed steps.
-    private final static long[][] SERIAL_FUNCTION_CODES_TMCC1TR = new long[][] {
+    private static final long[][] SERIAL_FUNCTION_CODES_TMCC1TR = new long[][] {
 
         // TMCC1TR Remote - Defined FnKeys
         {0x00C80D}, // Fn0 (Headlamp)
@@ -387,7 +387,7 @@ public class SerialThrottle extends AbstractThrottle {
     */
 
     // TMCC 2 Legacy Function Keys to trigger with TMCC2_32 speed steps.
-    private final static long[][] SERIAL_FUNCTION_CODES_TMCC2_32 = new long[][] {
+    private static final long[][] SERIAL_FUNCTION_CODES_TMCC2_32 = new long[][] {
 
         // TMCC2_32 Remote - Defined FnKeys
         {0xF8010D}, // Fn0 (Headlamp)
@@ -518,7 +518,7 @@ public class SerialThrottle extends AbstractThrottle {
 };
 
     // TMCC 2 Legacy TR Function Keys to trigger with TMCC2TR_32 speed steps.
-    private final static long[][] SERIAL_FUNCTION_CODES_TMCC2TR_32 = new long[][] {
+    private static final long[][] SERIAL_FUNCTION_CODES_TMCC2TR_32 = new long[][] {
 
         // TMCC2TR_32 Remote - Defined FnKeys
         {0xF9010D}, // Fn0 (Headlamp)
@@ -649,7 +649,7 @@ public class SerialThrottle extends AbstractThrottle {
 };
 
     // TMCC 2 Legacy Function Keys to trigger with TMCC2_200 speed steps.
-    private final static long[][] SERIAL_FUNCTION_CODES_TMCC2_200 = new long[][] {
+    private static final long[][] SERIAL_FUNCTION_CODES_TMCC2_200 = new long[][] {
 
         // TMCC2_200 Remote - Defined FnKeys
         {0xF8010D}, // Fn0 (Headlamp)
@@ -780,7 +780,7 @@ public class SerialThrottle extends AbstractThrottle {
     };
 
     // TMCC 2 Legacy TR Function Keys to trigger with TMCC2TR_200 speed steps.
-    private final static long[][] SERIAL_FUNCTION_CODES_TMCC2TR_200 = new long[][] {
+    private static final long[][] SERIAL_FUNCTION_CODES_TMCC2TR_200 = new long[][] {
 
         // TMCC2TR_200 Remote - Defined FnKeys
         {0xF9010D}, // Fn0 (Headlamp)

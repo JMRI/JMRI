@@ -169,6 +169,6 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(StatusFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(StatusFrame.class);
 
 }

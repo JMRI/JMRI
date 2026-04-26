@@ -520,5 +520,5 @@ public class BiDiBAddress {
         return "BiDiBAdress[UID=" + ByteUtils.formatHexUniqueId(nodeuid) + ",addrType=" + addrType + ",addr=" + addr + s + "]";
     }
     
-    private final static Logger log = LoggerFactory.getLogger(BiDiBAddress.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBAddress.class);
 }

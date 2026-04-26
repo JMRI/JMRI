@@ -646,6 +646,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         return null;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSerialConnectionConfig.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSerialConnectionConfig.class);
 
 }

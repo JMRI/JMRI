@@ -180,6 +180,6 @@ public class SendMergCbusEvent extends AbstractDigitalAction
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SendMergCbusEvent.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SendMergCbusEvent.class);
 
 }

@@ -946,6 +946,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LocoNetThrottle.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoNetThrottle.class);
 
 }

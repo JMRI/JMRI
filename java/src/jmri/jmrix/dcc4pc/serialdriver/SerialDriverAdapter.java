@@ -205,6 +205,6 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

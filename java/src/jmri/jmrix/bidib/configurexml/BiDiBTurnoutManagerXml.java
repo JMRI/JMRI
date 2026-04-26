@@ -57,6 +57,6 @@ public class BiDiBTurnoutManagerXml extends jmri.managers.configurexml.AbstractT
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BiDiBTurnoutManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBTurnoutManagerXml.class);
 
 }

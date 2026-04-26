@@ -558,11 +558,11 @@ public class ValidatedTextField extends javax.swing.JTextField {
     public static final String VTF_PC_STAT_LN_UPDATE = "VTFPCK_STAT_LN_UPDATE";
 
     // defines for colorizing the user input GUI elements and status line
-    public final static java.awt.Color COLOR_BG_EDITED = java.awt.Color.orange; // use default color for the component
-    public final static java.awt.Color COLOR_ERROR_VAL = java.awt.Color.black;
-    public final static java.awt.Color COLOR_OK = java.awt.Color.black;
-    public final static java.awt.Color COLOR_BG_OK = java.awt.Color.white;
-    public final static java.awt.Color COLOR_BG_UNEDITED = COLOR_BG_OK;
-    public final static java.awt.Color COLOR_BG_ERROR = java.awt.Color.red;
+    public static final java.awt.Color COLOR_BG_EDITED = java.awt.Color.orange; // use default color for the component
+    public static final java.awt.Color COLOR_ERROR_VAL = java.awt.Color.black;
+    public static final java.awt.Color COLOR_OK = java.awt.Color.black;
+    public static final java.awt.Color COLOR_BG_OK = java.awt.Color.white;
+    public static final java.awt.Color COLOR_BG_UNEDITED = COLOR_BG_OK;
+    public static final java.awt.Color COLOR_BG_ERROR = java.awt.Color.red;
 
 }

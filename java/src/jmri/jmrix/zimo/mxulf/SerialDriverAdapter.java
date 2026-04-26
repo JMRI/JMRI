@@ -121,6 +121,6 @@ public class SerialDriverAdapter extends Mx1PortController {
 
     //protected String selectedOption1=validOption1[0];
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

@@ -327,5 +327,5 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusConsolePane.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusConsolePane.class);
 }

@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 
 public class SignalMastRepeater {
 
-    public final static int BOTHWAY = 0x00;
-    public final static int MASTERTOSLAVE = 0x01;
-    public final static int SLAVETOMASTER = 0x02;
+    public static final int BOTHWAY = 0x00;
+    public static final int MASTERTOSLAVE = 0x01;
+    public static final int SLAVETOMASTER = 0x02;
 
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
@@ -142,6 +142,6 @@ public class SignalMastRepeater {
         _slave = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastRepeater.class);
+    private static final Logger log = LoggerFactory.getLogger(SignalMastRepeater.class);
 
 }

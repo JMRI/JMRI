@@ -119,6 +119,6 @@ public class EditNodeFrame extends jmri.util.JmriJFrame {
         nodeAddr64Field.setText(jmri.util.StringUtil.hexStringFromBytes(curNode.getGlobalAddress()));
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EditNodeFrame.class);
+    // private static final Logger log = LoggerFactory.getLogger(EditNodeFrame.class);
 
 }

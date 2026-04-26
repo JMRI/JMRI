@@ -50,5 +50,5 @@ public class DnDStringImportHandler extends TransferHandler {
         }
         return false;
     }
-    private final static Logger log = LoggerFactory.getLogger(DnDStringImportHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(DnDStringImportHandler.class);
 }

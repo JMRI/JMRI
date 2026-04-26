@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
-    public final static String NAME = Bundle.getMessage("TypeSerial");
+    public static final String NAME = Bundle.getMessage("TypeSerial");
 //    protected JCheckBox useAutoScan = new JCheckBox(Bundle.getMessage("Use Autoscan"));
     // TODO: use Bundle for localization of the field text
     protected JCheckBox useAutoScan = new JCheckBox(Bundle.getMessage("SerialConnectionUseAutoscan"));
@@ -281,5 +281,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
 }

@@ -57,7 +57,7 @@ public class PropertyChangeEventQueue {
     }
 
     final Collection<NamedBean> items = new ArrayList<>();
-    final static int MAX_SIZE = 100;
+    static final int MAX_SIZE = 100;
     final BlockingQueue<PropertyChangeEvent> dq = new ArrayBlockingQueue<>(MAX_SIZE);
     final PropertyChangeListener listener = (PropertyChangeEvent e) -> {
         log.trace(" handling event {}", e);
@@ -98,5 +98,5 @@ public class PropertyChangeEventQueue {
         return new String(b);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PropertyChangeEventQueue.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PropertyChangeEventQueue.class);
 }

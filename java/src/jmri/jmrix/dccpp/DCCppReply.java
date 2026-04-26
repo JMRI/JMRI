@@ -2043,6 +2043,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DCCppReply.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppReply.class);
 
 }

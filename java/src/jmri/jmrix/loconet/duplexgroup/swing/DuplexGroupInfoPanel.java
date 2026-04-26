@@ -773,20 +773,20 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     // defines for colorizing the user input GUI elements and status line
-    public final static java.awt.Color COLOR_MISMATCH_VAL = java.awt.Color.red.darker();
-    public final static java.awt.Color COLOR_UNKN_VAL = java.awt.Color.yellow.brighter();
-    public final static java.awt.Color COLOR_READ = null; // use default color for the component
-    public final static java.awt.Color COLOR_BG_EDITED = java.awt.Color.orange; // use default color for the component
-    public final static java.awt.Color COLOR_ERROR_VAL = java.awt.Color.black;
-    public final static java.awt.Color COLOR_OK = java.awt.Color.black;
-    public final static java.awt.Color COLOR_BG_OK = java.awt.Color.white;
-    public final static java.awt.Color COLOR_BG_UNEDITED = java.awt.Color.white;
-    public final static java.awt.Color COLOR_STATUS_OK = java.awt.Color.black;
-    public final static java.awt.Color COLOR_STATUS_ERROR = java.awt.Color.red;
-    public final static java.awt.Color COLOR_BG_ERROR = java.awt.Color.red;
+    public static final java.awt.Color COLOR_MISMATCH_VAL = java.awt.Color.red.darker();
+    public static final java.awt.Color COLOR_UNKN_VAL = java.awt.Color.yellow.brighter();
+    public static final java.awt.Color COLOR_READ = null; // use default color for the component
+    public static final java.awt.Color COLOR_BG_EDITED = java.awt.Color.orange; // use default color for the component
+    public static final java.awt.Color COLOR_ERROR_VAL = java.awt.Color.black;
+    public static final java.awt.Color COLOR_OK = java.awt.Color.black;
+    public static final java.awt.Color COLOR_BG_OK = java.awt.Color.white;
+    public static final java.awt.Color COLOR_BG_UNEDITED = java.awt.Color.white;
+    public static final java.awt.Color COLOR_STATUS_OK = java.awt.Color.black;
+    public static final java.awt.Color COLOR_STATUS_ERROR = java.awt.Color.red;
+    public static final java.awt.Color COLOR_BG_ERROR = java.awt.Color.red;
 
     // helper for laying out the GUI
-    public final static int DEFAULT_WINDOW_WIDTH = 200;
+    public static final int DEFAULT_WINDOW_WIDTH = 200;
 
     /**
      * Nested class to create a DuplexGroupInfoPanel using old-style defaults.
@@ -814,6 +814,6 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         }
    }
 
-   //    private final static Logger log = LoggerFactory.getLogger(DuplexGroupInfoPanel.class);
+   //    private static final Logger log = LoggerFactory.getLogger(DuplexGroupInfoPanel.class);
 
 }

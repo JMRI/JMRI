@@ -98,6 +98,6 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
         return new HashSet<>(Arrays.asList(LocoNetSystemConnectionMemo.class));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnNamedPaneAction.class);
+    private static final Logger log = LoggerFactory.getLogger(LnNamedPaneAction.class);
 
 }

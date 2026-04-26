@@ -153,6 +153,6 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         log.debug("Notified of timeout on message '{}'", msg);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppLight.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppLight.class);
 
 }

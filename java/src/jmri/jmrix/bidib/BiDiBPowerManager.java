@@ -189,7 +189,7 @@ public class BiDiBPowerManager implements PowerManager {
     }
 
     // Initialize logging information
-    private final static Logger log = LoggerFactory.getLogger(BiDiBPowerManager.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBPowerManager.class);
 
 }
 

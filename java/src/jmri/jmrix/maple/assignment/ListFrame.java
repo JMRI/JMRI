@@ -554,6 +554,6 @@ public class ListFrame extends jmri.util.JmriJFrame {
             Bundle.getMessage("HeadingSystemName"),
             Bundle.getMessage("HeadingUserName")};
 
-    private final static Logger log = LoggerFactory.getLogger(ListFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(ListFrame.class);
 
 }

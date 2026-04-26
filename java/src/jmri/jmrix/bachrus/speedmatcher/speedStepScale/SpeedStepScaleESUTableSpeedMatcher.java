@@ -630,5 +630,5 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
     //</editor-fold>
 
     //debugging logger
-    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SpeedStepScaleESUTableSpeedMatcher.class);
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SpeedStepScaleESUTableSpeedMatcher.class);
 }

@@ -192,6 +192,6 @@ public class Dcc4PcReply extends AbstractMRReply {
         }
         return -1;
     }
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReply.class);
+    private static final Logger log = LoggerFactory.getLogger(Dcc4PcReply.class);
 
 }

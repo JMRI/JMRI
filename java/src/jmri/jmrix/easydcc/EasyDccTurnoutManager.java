@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager implements EasyDccListener {
 
     private EasyDccTrafficController trafficController = null;
-    public final static int MAX_ACC_DECODER_ADDRESS = 2044;
+    public static final int MAX_ACC_DECODER_ADDRESS = 2044;
 
     /**
      * Create an new EasyDCC TurnoutManager.
@@ -118,6 +118,6 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccTurnoutManager.class);
+    private static final Logger log = LoggerFactory.getLogger(EasyDccTurnoutManager.class);
 
 }

@@ -439,6 +439,6 @@ public class DCCppCommandStation implements jmri.CommandStation {
     /*
      * We need to register for logging
      */
-    private final static Logger log = LoggerFactory.getLogger(DCCppCommandStation.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppCommandStation.class);
 
 }

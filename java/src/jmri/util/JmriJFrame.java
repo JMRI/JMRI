@@ -266,7 +266,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         });
     }
 
-    private final static ArrayList<ScreenDimensions> screenDim = getInitialScreenDimensionsOnce();
+    private static final ArrayList<ScreenDimensions> screenDim = getInitialScreenDimensionsOnce();
 
     /**
      * returns the previously initialized array of screens. See getScreenDimensionsOnce()
@@ -901,7 +901,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
 
     // For marking the window as modified on Mac OS X
     // See: https://web.archive.org/web/20090712161630/http://developer.apple.com/qa/qa2001/qa1146.html
-    final static String WINDOW_MODIFIED = "windowModified";
+    static final String WINDOW_MODIFIED = "windowModified";
 
     public void markWindowModified(boolean yes) {
         getRootPane().putClientProperty(WINDOW_MODIFIED, yes ? Boolean.TRUE : Boolean.FALSE);

@@ -265,5 +265,5 @@ public class TransitSection {
         return new ArrayList<>(mTransitSectionActionList);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransitSection.class);
+    private static final Logger log = LoggerFactory.getLogger(TransitSection.class);
 }

@@ -275,6 +275,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
 
 }

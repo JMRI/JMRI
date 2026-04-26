@@ -105,6 +105,6 @@ public abstract class AbstractStringIOManagerConfigXML extends AbstractNamedBean
         return InstanceManager.getDefault(jmri.StringIOManager.class).getXMLOrder();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractStringIOManagerConfigXML.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractStringIOManagerConfigXML.class);
 
 }

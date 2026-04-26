@@ -122,6 +122,6 @@ abstract public class AbstractProvidingProxyManager<E extends NamedBean> extends
     abstract protected E makeBean(Manager<E> manager,@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProvidingProxyManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProvidingProxyManager.class);
 
 }

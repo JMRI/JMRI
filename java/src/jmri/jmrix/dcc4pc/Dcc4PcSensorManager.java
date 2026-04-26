@@ -345,10 +345,10 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         return rtr;
     }
 
-    public final static int NO_ADDRESS = 0x00;
-    public final static int SHORT_ADDRESS = 0x02;
-    public final static int LONG_ADDRESS = 0x04;
-    public final static int CONSIST_ADDRESS = 0x08;
+    public static final int NO_ADDRESS = 0x00;
+    public static final int SHORT_ADDRESS = 0x02;
+    public static final int LONG_ADDRESS = 0x04;
+    public static final int CONSIST_ADDRESS = 0x08;
 
     /**
      * Determine if the Railcom data is duplicated.
@@ -1090,6 +1090,6 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Dcc4PcSensorManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Dcc4PcSensorManager.class);
 
 }

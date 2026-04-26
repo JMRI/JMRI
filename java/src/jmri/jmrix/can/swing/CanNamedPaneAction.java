@@ -89,6 +89,6 @@ public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction
         return new HashSet<>(Arrays.asList(CanSystemConnectionMemo.class));
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CanNamedPaneAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CanNamedPaneAction.class);
 
 }

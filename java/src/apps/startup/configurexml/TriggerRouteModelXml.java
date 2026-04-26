@@ -20,7 +20,7 @@ import org.jdom2.Element;
  */
 public class TriggerRouteModelXml extends AbstractXmlAdapter {
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TriggerRouteModelXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TriggerRouteModelXml.class);
 
     public TriggerRouteModelXml() {
     }

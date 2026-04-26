@@ -173,5 +173,5 @@ public class CbusConsoleDisplayOptionsPane extends javax.swing.JPanel {
         p.setSimplePreferenceState(getClass().getName() + SHOW_PACKET, showPacketCheckBox.isSelected());
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusConsoleDisplayOptionsPane.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusConsoleDisplayOptionsPane.class);
 }

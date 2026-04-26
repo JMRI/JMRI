@@ -51,5 +51,5 @@ public class LnSimple7thGenRoute {
         return this.routeEntries[entryNum];
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(LnSimple7thGenRoute.class);
+//    private static final Logger log = LoggerFactory.getLogger(LnSimple7thGenRoute.class);
 }

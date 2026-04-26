@@ -227,6 +227,6 @@ public class TamsTurnout extends AbstractTurnout
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsTurnout.class);
+    private static final Logger log = LoggerFactory.getLogger(TamsTurnout.class);
 
 }

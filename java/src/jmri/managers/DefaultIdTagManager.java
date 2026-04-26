@@ -33,7 +33,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     private boolean useFastClock = false;
     private Runnable shutDownTask = null;
 
-    public final static String PROPERTY_INITIALISED = "initialised";
+    public static final String PROPERTY_INITIALISED = "initialised";
 
     public DefaultIdTagManager(SystemConnectionMemo memo) {
         super(memo);

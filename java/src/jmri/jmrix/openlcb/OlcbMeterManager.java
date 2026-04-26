@@ -119,6 +119,6 @@ public class OlcbMeterManager extends jmri.managers.AbstractMeterManager {
         return meter;
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbMeterManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbMeterManager.class);
     
 }

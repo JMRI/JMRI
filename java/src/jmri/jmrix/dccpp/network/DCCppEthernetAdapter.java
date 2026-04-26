@@ -195,6 +195,6 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         return Bundle.getMessage("defaultMDNSServiceType");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppEthernetAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppEthernetAdapter.class);
 
 }

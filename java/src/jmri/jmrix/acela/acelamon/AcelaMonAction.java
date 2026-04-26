@@ -40,7 +40,7 @@ public class AcelaMonAction extends AbstractSystemConnectionAction<AcelaSystemCo
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaMonAction.class);
+    private static final Logger log = LoggerFactory.getLogger(AcelaMonAction.class);
 
     @Override
     public Set<Class<? extends SystemConnectionMemo>> getSystemConnectionMemoClasses() {

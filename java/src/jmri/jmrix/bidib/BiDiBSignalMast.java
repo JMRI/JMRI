@@ -406,7 +406,7 @@ public class BiDiBSignalMast extends AbstractSignalMast implements BiDiBNamedBea
         tc.addMessageListener(messageHandler);
     }
     
-    private final static Logger log = LoggerFactory.getLogger(BiDiBSignalMast.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBSignalMast.class);
 
 }
 

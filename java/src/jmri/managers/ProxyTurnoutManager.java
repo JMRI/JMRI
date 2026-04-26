@@ -299,6 +299,6 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyTurnoutManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyTurnoutManager.class);
 
 }

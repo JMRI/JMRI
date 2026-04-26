@@ -389,6 +389,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialAdapter.class);
 
 }

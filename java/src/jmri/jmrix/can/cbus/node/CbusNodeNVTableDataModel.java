@@ -375,5 +375,5 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeNVTableDataModel.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusNodeNVTableDataModel.class);
 }

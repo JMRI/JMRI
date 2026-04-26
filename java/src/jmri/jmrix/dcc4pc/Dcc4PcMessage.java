@@ -235,5 +235,5 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcMessage.class);
+    private static final Logger log = LoggerFactory.getLogger(Dcc4PcMessage.class);
 }

@@ -150,6 +150,6 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
         return -1;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpeedoReply.class);
+    private static final Logger log = LoggerFactory.getLogger(SpeedoReply.class);
 
 }

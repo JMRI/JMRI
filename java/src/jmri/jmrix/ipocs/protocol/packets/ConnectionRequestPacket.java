@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
  */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class ConnectionRequestPacket extends Packet {
-  public final static byte IDENT = 1;
+  public static final byte IDENT = 1;
   private short protocolVersion;
   private String siteDataVersion = null;
 

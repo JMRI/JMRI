@@ -530,6 +530,6 @@ public class BiDiBThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(BiDiBThrottle.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBThrottle.class);
 
 }

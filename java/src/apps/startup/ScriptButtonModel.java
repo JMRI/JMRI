@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 public class ScriptButtonModel extends AbstractStartupModel {
 
     private File script;
-    private final static Logger log = LoggerFactory.getLogger(ScriptButtonModel.class);
+    private static final Logger log = LoggerFactory.getLogger(ScriptButtonModel.class);
 
     public File getScript() {
         return this.script;

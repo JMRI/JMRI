@@ -430,6 +430,6 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FirstTimeStartUpWizard.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FirstTimeStartUpWizard.class);
 
 }

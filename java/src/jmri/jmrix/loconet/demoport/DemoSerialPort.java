@@ -142,5 +142,5 @@ public class DemoSerialPort extends AbstractSerialPortController {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DemoSerialPort.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DemoSerialPort.class);
 }

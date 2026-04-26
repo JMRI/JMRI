@@ -174,6 +174,6 @@ public class PR3Adapter extends LocoBufferAdapter {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class);
+    private static final Logger log = LoggerFactory.getLogger(PR3Adapter.class);
 
 }

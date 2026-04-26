@@ -171,5 +171,5 @@ public class CbusEventTableAction implements PropertyChangeListener {
         addRemoveListenersToNbManagers(false);
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusEventTableAction.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusEventTableAction.class);
 }

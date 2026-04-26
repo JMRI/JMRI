@@ -147,6 +147,6 @@ public class SerialNode extends AbstractNode {
         return timeout;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialNode.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialNode.class);
 
 }

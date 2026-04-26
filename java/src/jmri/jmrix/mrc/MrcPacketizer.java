@@ -491,12 +491,12 @@ public class MrcPacketizer extends MrcTrafficController {
         }
     }
 
-    final static int IDLESTATE = 0x00;
-    final static int WAITFORCMDRECEIVED = 0x01;
-    final static int DOUBLELOCOCONTROL = 0x02;
-    final static int MISSEDPOLL = 0x04;
-    final static int BADCOMMAND = 0x08;
-    final static int CONFIRMATIONONLY = 0x10;
+    static final int IDLESTATE = 0x00;
+    static final int WAITFORCMDRECEIVED = 0x01;
+    static final int DOUBLELOCOCONTROL = 0x02;
+    static final int MISSEDPOLL = 0x04;
+    static final int BADCOMMAND = 0x08;
+    static final int CONFIRMATIONONLY = 0x10;
     int mCurrentState = IDLESTATE;
 
     int consecutiveMissedPolls = 0;
@@ -728,5 +728,5 @@ public class MrcPacketizer extends MrcTrafficController {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcPacketizer.class);
+    private static final Logger log = LoggerFactory.getLogger(MrcPacketizer.class);
 }

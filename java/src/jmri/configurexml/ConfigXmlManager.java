@@ -886,6 +886,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConfigXmlManager.class);
+    private static final Logger log = LoggerFactory.getLogger(ConfigXmlManager.class);
 
 }

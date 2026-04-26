@@ -113,7 +113,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
         log.debug("Notified of timeout on message '{}'", msg);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutReplyCache.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppTurnoutReplyCache.class);
 
 }
 

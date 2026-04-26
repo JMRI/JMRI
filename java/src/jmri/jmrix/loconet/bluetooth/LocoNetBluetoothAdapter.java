@@ -251,6 +251,6 @@ public class LocoNetBluetoothAdapter extends LnPortController {
         return portNameVector;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetBluetoothAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoNetBluetoothAdapter.class);
 
 }

@@ -43,6 +43,6 @@ public class SerialMonAction extends CMRISystemConnectionAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialMonAction.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialMonAction.class);
 
 }

@@ -139,6 +139,6 @@ public class TrafficController implements jmri.CommandStation {
         return _memo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(TrafficController.class);
 
 }

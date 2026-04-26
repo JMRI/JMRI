@@ -328,6 +328,6 @@ public class SprogVersionQuery implements SprogListener {
         timer.start();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogVersionQuery.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogVersionQuery.class);
 
 }

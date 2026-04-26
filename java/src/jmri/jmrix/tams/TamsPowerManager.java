@@ -141,5 +141,5 @@ public class TamsPowerManager extends AbstractPowerManager<TamsSystemConnectionM
         // messages are ignored
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsPowerManager.class);
+    private static final Logger log = LoggerFactory.getLogger(TamsPowerManager.class);
 }

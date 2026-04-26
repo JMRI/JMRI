@@ -149,6 +149,6 @@ public class Z21RMBusSensor extends AbstractSensor implements Z21Listener {
         return moduleAddress;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21RMBusSensor.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21RMBusSensor.class);
 
 }

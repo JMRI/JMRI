@@ -95,5 +95,5 @@ public class PublishXml extends jmri.managers.configurexml.AbstractNamedBeanMana
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PublishXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PublishXml.class);
 }

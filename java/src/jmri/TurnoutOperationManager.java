@@ -302,5 +302,5 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
         return null;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutOperationManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutOperationManager.class);
 }

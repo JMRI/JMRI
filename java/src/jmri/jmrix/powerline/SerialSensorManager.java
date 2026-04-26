@@ -118,6 +118,6 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialSensorManager.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialSensorManager.class);
 
 }

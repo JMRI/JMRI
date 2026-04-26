@@ -149,5 +149,5 @@ public abstract class CbusSimulatedModuleProvider implements JmriServiceProvider
 
     private static volatile Map<String, CbusSimulatedModuleProvider> instanceMap = null;
 
-    private final static Logger log = LoggerFactory.getLogger(CbusSimulatedModuleProvider.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusSimulatedModuleProvider.class);
 }

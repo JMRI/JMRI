@@ -156,6 +156,6 @@ public class OlcbNodeGroupStore implements InstanceManagerAutoDefault { // not f
          this.pcs.removePropertyChangeListener(listener);
      }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbNodeGroupStore.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbNodeGroupStore.class);
 
 }

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
-    public final static String NAME = "BiDiB over TCP"; //text to show in ComboBox
+    public static final String NAME = "BiDiB over TCP"; //text to show in ComboBox
 
     /**
      * Ctor for an object being created during load process; Swing init is

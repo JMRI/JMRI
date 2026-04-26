@@ -154,5 +154,5 @@ public abstract class CbusConfigPaneProvider extends jmri.jmrix.can.swing.CanPan
 
     static volatile Map<String, CbusConfigPaneProvider> instanceMap = null;
 
-    private final static Logger log = LoggerFactory.getLogger(CbusConfigPaneProvider.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusConfigPaneProvider.class);
 }

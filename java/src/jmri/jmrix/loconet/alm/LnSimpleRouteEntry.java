@@ -83,5 +83,5 @@ public class LnSimpleRouteEntry {
         this.position = position;
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(LnSimpleRouteEntry.class);
+//    private static final Logger log = LoggerFactory.getLogger(LnSimpleRouteEntry.class);
 }

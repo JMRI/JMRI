@@ -162,5 +162,5 @@ public class CbusNodeFromFcuTableDataModel extends CbusBasicNodeTableOperations 
         return cs;        
     }
     
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeFromFcuTableDataModel.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeFromFcuTableDataModel.class);
 }

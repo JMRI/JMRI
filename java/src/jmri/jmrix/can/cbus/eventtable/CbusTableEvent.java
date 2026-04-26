@@ -232,6 +232,6 @@ public class CbusTableEvent extends CbusEvent {
         return super.hashCode();
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(CbusTableEvent.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusTableEvent.class);
 
 }

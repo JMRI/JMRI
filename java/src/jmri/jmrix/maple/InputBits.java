@@ -188,6 +188,6 @@ public class InputBits {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(InputBits.class);
+    private static final Logger log = LoggerFactory.getLogger(InputBits.class);
 
 }

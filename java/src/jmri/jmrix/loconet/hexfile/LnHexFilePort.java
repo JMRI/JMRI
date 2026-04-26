@@ -449,6 +449,6 @@ public class LnHexFilePort extends LnPortController implements Runnable {
         return reply;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnHexFilePort.class);
+    private static final Logger log = LoggerFactory.getLogger(LnHexFilePort.class);
 
 }

@@ -254,6 +254,6 @@ public class PM4Panel extends AbstractBoardProgPanel {
             Bundle.getMessage("Box1c"), Bundle.getMessage("Box1d")});
     JCheckBox rev4 = new JCheckBox(Bundle.getMessage("AutoReverseBox"));
 
-    private final static Logger log = LoggerFactory.getLogger(PM4Panel.class);
+    private static final Logger log = LoggerFactory.getLogger(PM4Panel.class);
 
 }

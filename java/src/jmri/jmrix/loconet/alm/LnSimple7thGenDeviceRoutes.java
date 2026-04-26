@@ -332,5 +332,5 @@ public class LnSimple7thGenDeviceRoutes extends LnPanel {
         this.baseAddr = baseAddr;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnSimple7thGenDeviceRoutes.class);
+    private static final Logger log = LoggerFactory.getLogger(LnSimple7thGenDeviceRoutes.class);
 }

@@ -113,6 +113,6 @@ public class ToggleOrPressButtonModel extends javax.swing.JToggleButton.ToggleBu
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ToggleOrPressButtonModel.class);
+    // private static final Logger log = LoggerFactory.getLogger(ToggleOrPressButtonModel.class);
 
 }

@@ -182,6 +182,6 @@ public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController {
         return sharedPi4JContext;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RaspberryPiAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(RaspberryPiAdapter.class);
 
 }

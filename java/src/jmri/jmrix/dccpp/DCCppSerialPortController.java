@@ -87,6 +87,6 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
         return (DCCppSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppSerialPortController.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppSerialPortController.class);
 
 }

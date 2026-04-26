@@ -135,5 +135,5 @@ public class ProxySensorManager extends AbstractProvidingProxyManager<Sensor>
         return ((SensorManager) getManagerOrDefault(systemName)).isPullResistanceConfigurable();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxySensorManager.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxySensorManager.class);
 }

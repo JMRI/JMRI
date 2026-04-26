@@ -113,7 +113,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     JComboBox<String> matchGroupName;   // required group name to display; index <= 0 is all
 
     final JLabel statusField = new JLabel();
-    final static Dimension summaryPaneDim = new Dimension(0, 170);
+    static final Dimension summaryPaneDim = new Dimension(0, 170);
 
     protected void additionsToToolBar() {
         getToolBar().add(Box.createHorizontalGlue());

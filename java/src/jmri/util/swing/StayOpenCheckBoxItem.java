@@ -60,5 +60,5 @@ public class StayOpenCheckBoxItem extends JCheckBoxMenuItem {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(StayOpenCheckBoxItem.class);
+    private static final Logger log = LoggerFactory.getLogger(StayOpenCheckBoxItem.class);
 }

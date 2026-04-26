@@ -25,12 +25,12 @@ public class SystemConnectionMemoManager extends Bean implements InstanceManager
      * Property name change fired when a connection is registered. The fired
      * event has a null old value and the added connection as the new value.
      */
-    public final static String CONNECTION_ADDED = "ConnectionAdded";
+    public static final String CONNECTION_ADDED = "ConnectionAdded";
     /**
      * Property name change fired when a connection is deregistered. The fired
      * event has the removed connection as the old value and a null new value.
      */
-    public final static String CONNECTION_REMOVED = "ConnectionRemoved";
+    public static final String CONNECTION_REMOVED = "ConnectionRemoved";
 
     /**
      * Register a SystemConnectionMemo in the InstanceManager.
@@ -197,5 +197,5 @@ public class SystemConnectionMemoManager extends Bean implements InstanceManager
         return null;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SystemConnectionMemoManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SystemConnectionMemoManager.class);
 }

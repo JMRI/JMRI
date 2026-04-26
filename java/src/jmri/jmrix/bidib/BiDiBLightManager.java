@@ -193,6 +193,6 @@ public class BiDiBLightManager extends AbstractLightManager {
         tc.allPortConfigX();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(BiDiBLightManager.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBLightManager.class);
 
 }

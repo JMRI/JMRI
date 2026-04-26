@@ -224,5 +224,5 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
         ThreadingUtil.runOnGUI( ()->{ fireTableRowsDeleted(row,row); });
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeEventTableDataModel.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusNodeEventTableDataModel.class);
 }

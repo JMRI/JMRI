@@ -56,5 +56,5 @@ public class PanelProFrame extends MultiPaneWindow {
         return top;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PanelProFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(PanelProFrame.class);
 }

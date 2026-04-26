@@ -134,6 +134,6 @@ public class NceLightManager extends AbstractLightManager {
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceLightManager.class);
+    private static final Logger log = LoggerFactory.getLogger(NceLightManager.class);
 
 }

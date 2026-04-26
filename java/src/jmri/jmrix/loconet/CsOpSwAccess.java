@@ -438,6 +438,6 @@ public class CsOpSwAccess implements LocoNetListener {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(CsOpSwAccess.class);
+    private static final Logger log = LoggerFactory.getLogger(CsOpSwAccess.class);
 
 }

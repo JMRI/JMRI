@@ -146,6 +146,6 @@ public class CbusEventTableXmlAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusEventTableXmlAction.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusEventTableXmlAction.class);
 
 }

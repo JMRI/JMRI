@@ -147,6 +147,6 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         return Bundle.getMessage("EnterNumber1to9999ToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractReporterManager.class);
 
 }

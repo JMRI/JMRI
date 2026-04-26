@@ -818,6 +818,6 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
 //        }
 //    }
 
-    private final static Logger log = LoggerFactory.getLogger(BiDiBMonPane.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBMonPane.class);
 
 }

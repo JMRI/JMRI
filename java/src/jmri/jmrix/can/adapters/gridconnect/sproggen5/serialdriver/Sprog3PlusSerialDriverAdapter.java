@@ -81,6 +81,6 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
         return 0;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Sprog3PlusSerialDriverAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Sprog3PlusSerialDriverAdapter.class);
 
 }

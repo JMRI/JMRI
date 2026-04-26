@@ -459,6 +459,6 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         return new String(retval);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalAppearanceMap.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultSignalAppearanceMap.class);
 
 }

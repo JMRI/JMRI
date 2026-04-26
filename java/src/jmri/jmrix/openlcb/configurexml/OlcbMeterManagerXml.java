@@ -67,6 +67,6 @@ public class OlcbMeterManagerXml extends jmri.managers.configurexml.AbstractMete
         loadCommon(m, el);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbMeterManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbMeterManagerXml.class);
 
 }

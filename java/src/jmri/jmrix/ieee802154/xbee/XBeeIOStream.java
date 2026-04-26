@@ -230,6 +230,6 @@ public final class XBeeIOStream extends AbstractPortController {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeIOStream.class);
+    private static final Logger log = LoggerFactory.getLogger(XBeeIOStream.class);
 
 }

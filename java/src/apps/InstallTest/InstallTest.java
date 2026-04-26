@@ -123,5 +123,5 @@ public class InstallTest extends Apps {
         splash(false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(InstallTest.class);
+    private static final Logger log = LoggerFactory.getLogger(InstallTest.class);
 }

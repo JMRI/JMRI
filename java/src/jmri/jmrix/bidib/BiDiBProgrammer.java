@@ -326,6 +326,6 @@ public class BiDiBProgrammer extends AbstractProgrammer {
         notifyProgListenerEnd(temp, value, status);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BiDiBProgrammer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BiDiBProgrammer.class);
 
 }

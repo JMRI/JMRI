@@ -59,7 +59,7 @@ public class CbusBeanRenderer  {
         return img;
     }
 
-    private final static String ROOTPATH = "resources/icons/misc/switchboard/"; // also used in display.switchboardEditor
+    private static final String ROOTPATH = "resources/icons/misc/switchboard/"; // also used in display.switchboardEditor
 
     private static ImageIcon getTurnoutIcon(String file, int iconHeight) throws IOException {
         BufferedImage bigImage = ImageIO.read(new File(ROOTPATH+file));
@@ -101,6 +101,6 @@ public class CbusBeanRenderer  {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusBeanRenderer.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusBeanRenderer.class);
 
 }

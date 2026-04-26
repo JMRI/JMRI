@@ -160,6 +160,6 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(TamsOpsModeProgrammer.class);
+    private static final Logger log = LoggerFactory.getLogger(TamsOpsModeProgrammer.class);
 
 }

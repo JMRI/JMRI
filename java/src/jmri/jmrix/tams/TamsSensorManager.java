@@ -286,5 +286,5 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(TamsSensorManager.class);
 }

@@ -128,6 +128,6 @@ public abstract class SdfMacroEditor extends JPanel {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SdfMacroEditor.class);
+    private static final Logger log = LoggerFactory.getLogger(SdfMacroEditor.class);
 
 }

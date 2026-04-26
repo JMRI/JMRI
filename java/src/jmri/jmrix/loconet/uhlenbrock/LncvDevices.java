@@ -96,6 +96,6 @@ public class LncvDevices {
         return deviceList.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LncvDevices.class);
+    private static final Logger log = LoggerFactory.getLogger(LncvDevices.class);
 
 }

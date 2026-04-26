@@ -180,5 +180,5 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
     public void handleTimeout(Dcc4PcMessage m) {
     }
     
-    private final static Logger log = LoggerFactory.getLogger(StatusPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(StatusPanel.class);
 }

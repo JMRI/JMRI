@@ -147,6 +147,6 @@ public abstract class AbstractStringIOManager extends AbstractManager<StringIO>
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractStringIOManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractStringIOManager.class);
 
 }

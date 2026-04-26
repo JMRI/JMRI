@@ -388,6 +388,6 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         return (mInput3 != null && t.equals(mInput3.getBean()));
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MergSD2SignalHead.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MergSD2SignalHead.class);
 
 }
