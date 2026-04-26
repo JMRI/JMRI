@@ -19,6 +19,8 @@ public class LocoIconPanel extends JPanel implements AddressListener {
     private static final RosterIconFactory ICN_FACT = new RosterIconFactory(IMAGE_HEIGHT);
 
     AddressPanel addressPanel = null;
+    String description;
+    ImageIcon icon;
     JLabel iconLabel = new JLabel();
 
     public LocoIconPanel() {
@@ -41,38 +43,42 @@ public class LocoIconPanel extends JPanel implements AddressListener {
         updateLabel();
     }
 
-    public JLabel getLabel() {
-        return iconLabel;
+    public String getDescription() {
+        return description;
+    }
+
+    public ImageIcon getIcon() {
+        return icon;
     }
 
     private void updateLabel() {
-        String ltext = Bundle.getMessage("ThrottleNotAssigned");
-        ImageIcon licon = null;
+        description = Bundle.getMessage("ThrottleNotAssigned");
+        icon = null;
         if (addressPanel != null && (addressPanel.getThrottle() != null)) {
             if (addressPanel.getConsistAddress() != null) { 
                 // consists                
-                licon = ConsistListCellRenderer.getConsistIcon(addressPanel.getConsistAddress(), ICN_FACT);
-                ltext = addressPanel.getConsistAddress().toString();
+                icon = ConsistListCellRenderer.getConsistIcon(addressPanel.getConsistAddress(), ICN_FACT);
+                description = addressPanel.getConsistAddress().toString();
             } else if (addressPanel.getRosterEntry() != null) {  
                 // regular locomotive                                   
-                licon = ICN_FACT.getIcon(addressPanel.getRosterEntry());
-                ltext = addressPanel.getRosterEntry().getId();
+                icon = ICN_FACT.getIcon(addressPanel.getRosterEntry());
+                description = addressPanel.getRosterEntry().getId();
             } else if (addressPanel.getCurrentAddress() != null)  {
                 switch (addressPanel.getCurrentAddress().getNumber()) {
                     case 0:
-                        ltext = Bundle.getMessage("ThrottleDCControl") + " - " + addressPanel.getCurrentAddress();
+                        description = Bundle.getMessage("ThrottleDCControl") + " - " + addressPanel.getCurrentAddress();
                         break;
                     case 3:
-                        ltext = Bundle.getMessage("ThrottleDCCControl") + " - " + addressPanel.getCurrentAddress();
+                        description = Bundle.getMessage("ThrottleDCCControl") + " - " + addressPanel.getCurrentAddress();
                         break;
                     default:
-                        ltext = Bundle.getMessage("ThrottleAddress") + " " + addressPanel.getCurrentAddress();
+                        description = Bundle.getMessage("ThrottleAddress") + " " + addressPanel.getCurrentAddress();
                         break;
                 }
             }
         }
-        iconLabel.setIcon(licon);
-        iconLabel.setText(ltext);
+        iconLabel.setIcon(icon);
+        iconLabel.setText(description);
     }
 
     @Override

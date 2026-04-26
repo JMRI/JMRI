@@ -267,12 +267,13 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
             re = addressPanel.getRosterEntry();
         }
         for (int i = 0; i < functionButtons.length; i++) {
+            functionButtons[i].setDisplay(true); // default to true
             if ((i == 0) && preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
                 setUpDefaultLightFunctionButton();
             } else {
                 functionButtons[i].setIconPath(null);
                 functionButtons[i].setSelectedIconPath(null);
-            }
+            }            
             if (re != null) {
                 if (re.getFunctionLabel(i) != null) {
                     functionButtons[i].setDisplay(re.getFunctionVisible(i));

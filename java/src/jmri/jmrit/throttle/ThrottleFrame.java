@@ -356,8 +356,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
 
     @Override
     public JLabel getLabel() {
-        JLabel ret = new JLabel(throuic.getLocoIconPanel().getLabel().getText(), throuic.getLocoIconPanel().getLabel().getIcon(), JLabel.RIGHT);
-        return ret;
+        return new JLabel(throuic.getLocoIconPanel().getDescription(), throuic.getLocoIconPanel().getIcon(), JLabel.CENTER);
     }
 
     @Override

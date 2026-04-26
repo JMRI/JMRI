@@ -185,8 +185,7 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
 
     @Override
     public JLabel getLabel() {
-        JLabel ret = new JLabel(throuic.getLocoIconPanel().getLabel().getText(), throuic.getLocoIconPanel().getLabel().getIcon(), JLabel.CENTER);
-        return ret;
+        return new JLabel(throuic.getLocoIconPanel().getDescription(), throuic.getLocoIconPanel().getIcon(), JLabel.CENTER);
     }
 
     @Override
