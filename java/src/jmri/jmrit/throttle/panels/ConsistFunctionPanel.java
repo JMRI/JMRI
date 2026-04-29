@@ -18,10 +18,11 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
+import jmri.ThrottleManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
-import jmri.jmrit.throttle.UIImplementation.SimpleThrottlePanel;
+import jmri.jmrit.throttle.implementation.SimpleThrottlePanel;
 import jmri.jmrit.throttle.interfaces.AddressListener;
 
 /**
@@ -45,12 +46,14 @@ import jmri.jmrit.throttle.interfaces.AddressListener;
 
 public class ConsistFunctionPanel extends JPanel implements AddressListener {
 
+    private final ThrottleManager throttleManager;
     private AddressPanel addressPanel = null;    
     private JTabbedPane consistFunctionsPanels;
     private JLabel errorLabel = new JLabel(Bundle.getMessage("ThrottleConsistsFunctionPanelError"));
     private static final RosterIconFactory ICN_FACT = InstanceManager.getDefault(RosterIconFactory.class);
     
-    public ConsistFunctionPanel() {
+    public ConsistFunctionPanel(ThrottleManager tm) {
+        throttleManager = tm;
         initGUI();        
         updateFunctionPanels();
     }
@@ -110,7 +113,7 @@ public class ConsistFunctionPanel extends JPanel implements AddressListener {
         ArrayList<DccLocoAddress> consistList = consist.getConsistList(); 
         // go backward, we want the head on the right (added last)
         for (int i=consistList.size()-1; i>=0; i--) {
-            SimpleThrottlePanel stp = new SimpleThrottlePanel(null, InstanceManager.getDefault(jmri.ThrottleManager.class), false, true, false);
+            SimpleThrottlePanel stp = new SimpleThrottlePanel(null, throttleManager, false, true, false);
             stp.setAddress(consistList.get(i));
             // do we have a matching roster entry
             Icon tabIcon = null;

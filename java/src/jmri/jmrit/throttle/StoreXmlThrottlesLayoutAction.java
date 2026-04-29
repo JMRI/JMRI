@@ -12,7 +12,7 @@ import javax.swing.JFileChooser;
 
 import jmri.InstanceManager;
 import jmri.configurexml.StoreXmlConfigAction;
-import jmri.jmrit.throttle.UIImplementation.ThrottleUICore;
+import jmri.jmrit.throttle.implementation.ThrottleUICore;
 import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 
 import org.jdom2.Document;

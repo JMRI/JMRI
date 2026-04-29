@@ -5,7 +5,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
 import jmri.ThrottleManager;
-import jmri.jmrit.throttle.UIImplementation.ThrottleFrame;
+import jmri.jmrit.throttle.implementation.ThrottleFrame;
 import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;

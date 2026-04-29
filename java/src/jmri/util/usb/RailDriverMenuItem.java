@@ -19,8 +19,8 @@ import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.jmrit.throttle.LoadXmlThrottlesLayoutAction;
 import jmri.jmrit.throttle.ThrottleWindow;
-import jmri.jmrit.throttle.UIImplementation.ThrottleFrame;
-import jmri.jmrit.throttle.UIImplementation.ThrottleUICore;
+import jmri.jmrit.throttle.implementation.ThrottleFrame;
+import jmri.jmrit.throttle.implementation.ThrottleUICore;
 import jmri.util.MathUtil;
 
 import org.hid4java.*;

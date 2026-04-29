@@ -15,9 +15,9 @@ import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrit.throttle.ThrottlesPreferencesAction;
 import jmri.jmrit.throttle.buttons.LargePowerManagerButton;
 import jmri.jmrit.throttle.buttons.StopAllButton;
+import jmri.jmrit.throttle.implementation.WindowPreferences;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
-import jmri.jmrit.throttle.utils.WindowPreferences;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
 

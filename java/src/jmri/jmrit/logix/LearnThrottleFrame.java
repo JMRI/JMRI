@@ -17,7 +17,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.SpeedStepMode;
-import jmri.jmrit.throttle.UIImplementation.ThrottleJInternalFrameSubControl;
+import jmri.jmrit.throttle.implementation.ThrottleJInternalFrameSubControl;
 import jmri.jmrit.throttle.panels.FunctionButton;
 import jmri.util.JmriJFrame;
 

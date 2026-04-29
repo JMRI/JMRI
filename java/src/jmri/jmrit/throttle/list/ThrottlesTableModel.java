@@ -8,8 +8,8 @@ import jmri.*;
 import jmri.jmrit.throttle.SimpleThrottleWindow;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrit.throttle.ThrottleWindow;
-import jmri.jmrit.throttle.UIImplementation.SimpleThrottlePanel;
-import jmri.jmrit.throttle.UIImplementation.ThrottleFrame;
+import jmri.jmrit.throttle.implementation.SimpleThrottlePanel;
+import jmri.jmrit.throttle.implementation.ThrottleFrame;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 

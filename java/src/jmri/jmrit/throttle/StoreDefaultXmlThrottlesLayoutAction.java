@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
 
-import jmri.jmrit.throttle.UIImplementation.ThrottleUICore;
+import jmri.jmrit.throttle.implementation.ThrottleUICore;
 
 /**
  * Save throttles to XML

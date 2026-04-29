@@ -10,7 +10,7 @@ import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.throttle.LoadXmlThrottlesLayoutAction;
-import jmri.jmrit.throttle.UIImplementation.ThrottleUICore;
+import jmri.jmrit.throttle.implementation.ThrottleUICore;
 import jmri.util.swing.JmriJOptionPane;
 
 import org.jdom2.Element;

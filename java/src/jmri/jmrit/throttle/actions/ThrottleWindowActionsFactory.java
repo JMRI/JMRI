@@ -10,7 +10,7 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrit.throttle.ThrottleWindow;
-import jmri.jmrit.throttle.UIImplementation.ThrottleFrame;
+import jmri.jmrit.throttle.implementation.ThrottleFrame;
 import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 
 

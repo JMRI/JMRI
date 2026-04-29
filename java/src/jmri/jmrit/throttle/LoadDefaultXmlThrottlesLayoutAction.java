@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.Icon;
 import jmri.InstanceManager;
-import jmri.jmrit.throttle.UIImplementation.ThrottleUICore;
+import jmri.jmrit.throttle.implementation.ThrottleUICore;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
