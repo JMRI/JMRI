@@ -167,18 +167,18 @@ public class ControlPanel extends JPanel implements PropertyChangeListener, Addr
     /*
      * Set the AddressPanel this throttle control is listenning for new throttle event
      */
-    public void setAddressPanel(AddressPanel addressPanel) {
-        if (this.addressPanel != null) {
-            this.addressPanel.removeAddressListener(this);
+    public void setAddressPanel(AddressPanel ap) {
+        if (addressPanel != null) {
+            addressPanel.removeAddressListener(this);
         }
-        this.addressPanel = addressPanel;
-        if (this.addressPanel != null) {
-            this.addressPanel.addAddressListener(this);
-        }
-        if (this.addressPanel.getThrottle() != null ) {
-            notifyAddressThrottleFound(this.addressPanel.getThrottle());
-        } else {
-            notifyAddressReleased(this.addressPanel.getCurrentAddress());
+        addressPanel = ap;
+        if (addressPanel != null) {
+            addressPanel.addAddressListener(this);     
+            if (addressPanel.getThrottle() != null ) {
+                notifyAddressThrottleFound(addressPanel.getThrottle());
+            } else {
+                notifyAddressReleased(addressPanel.getCurrentAddress());
+            }
         }
     }
 

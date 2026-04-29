@@ -55,23 +55,23 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
      * Set the AddressPanel this throttle control is listening for new throttle
      * event
      *
-     * @param addressPanel  reference to the addresspanel
+     * @param ap  reference to the addresspanel
      */
-    public void setAddressPanel(AddressPanel addressPanel) {
+    public void setAddressPanel(AddressPanel ap) {
         if (throttle != null) {
             notifyAddressReleased(throttle.getLocoAddress());
         }
-        if (this.addressPanel != null) {
-            this.addressPanel.removeAddressListener(this);
+        if (addressPanel != null) {
+            addressPanel.removeAddressListener(this);
         }
-        this.addressPanel = addressPanel;
-        if (this.addressPanel != null) {
-            this.addressPanel.addAddressListener(this);
-        }
-        if (this.addressPanel.getThrottle() != null ) {
-            notifyAddressThrottleFound(this.addressPanel.getThrottle());
-        } else {
-            notifyAddressReleased(this.addressPanel.getCurrentAddress());
+        addressPanel = ap;
+        if (addressPanel != null) {
+            addressPanel.addAddressListener(this);        
+            if (addressPanel.getThrottle() != null ) {
+                notifyAddressThrottleFound(addressPanel.getThrottle());
+            } else {
+                notifyAddressReleased(addressPanel.getCurrentAddress());
+            }
         }
     }
 

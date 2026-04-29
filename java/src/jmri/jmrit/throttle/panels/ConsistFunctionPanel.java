@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Icon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -27,7 +28,8 @@ public class ConsistFunctionPanel extends JPanel implements AddressListener {
 
     private AddressPanel addressPanel = null;    
     private JTabbedPane consistFunctionsPanels;
-    private final static RosterIconFactory ICN_FACT = InstanceManager.getDefault(RosterIconFactory.class);
+    private JLabel errorLabel = new JLabel(Bundle.getMessage("ThrottleConsistsFunctionPanelError"));
+    private static final RosterIconFactory ICN_FACT = InstanceManager.getDefault(RosterIconFactory.class);
     
     public ConsistFunctionPanel() {
         initGUI();        
@@ -36,7 +38,8 @@ public class ConsistFunctionPanel extends JPanel implements AddressListener {
     
     private void initGUI() {
         setLayout(new BorderLayout());
-        consistFunctionsPanels = new JTabbedPane();           
+        consistFunctionsPanels = new JTabbedPane();    
+        add(errorLabel, BorderLayout.NORTH);       
         add(consistFunctionsPanels, BorderLayout.CENTER);
     }
 
@@ -65,9 +68,10 @@ public class ConsistFunctionPanel extends JPanel implements AddressListener {
 
     private void updateFunctionPanels() {
         if (consistFunctionsPanels == null) {
+            errorLabel.setVisible(true);
             return; // we're self desctructing
         }
-        // clean up
+        // clean up       
         consistFunctionsPanels.removeAll();        
         for (Component cmp : consistFunctionsPanels.getComponents()) {
             if (cmp instanceof SimpleThrottlePanel) {
@@ -83,6 +87,7 @@ public class ConsistFunctionPanel extends JPanel implements AddressListener {
             return;
         }
         // let's go
+        errorLabel.setVisible(false);
         ArrayList<DccLocoAddress> consistList = consist.getConsistList(); 
         // go backward, we want the head on the right (added last)
         for (int i=consistList.size()-1; i>=0; i--) {

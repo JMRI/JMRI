@@ -42,15 +42,15 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
         setVisible(  (preferences.isUsingExThrottle()) && (preferences.isUsingRosterImage()));
     }
 
-    public void setAddressPanel(AddressPanel addressPanel) {
-        if (this.addressPanel != null) {
-            this.addressPanel.removeAddressListener(this);
+    public void setAddressPanel(AddressPanel ap) {
+        if (addressPanel != null) {
+            addressPanel.removeAddressListener(this);
         }
-        this.addressPanel = addressPanel;
-        if (this.addressPanel != null) {
-            this.addressPanel.addAddressListener(this);
-        }
-        updateImage(addressPanel.getRosterEntry());
+        addressPanel = ap;
+        if (addressPanel != null) {
+            addressPanel.addAddressListener(this);
+            updateImage(addressPanel.getRosterEntry());
+        }        
     }
 
     private void updateImage(RosterEntry rosterEntry) {
