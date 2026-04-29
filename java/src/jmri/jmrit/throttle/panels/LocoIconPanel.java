@@ -15,6 +15,22 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.throttle.interfaces.AddressListener;
 
+/**
+ * A Panel that displays the loco icon and label as defined in its roster entry. 
+ * 
+ * <hr>
+ * This file is part of JMRI.
+ * <p>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <p>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ */
+
 public class LocoIconPanel extends JPanel implements AddressListener {
 
     private static final int IMAGE_HEIGHT = 32;

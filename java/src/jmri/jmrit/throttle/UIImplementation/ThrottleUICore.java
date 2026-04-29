@@ -34,12 +34,27 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
 /**
+ * 
+ * Inner class of a throttle UI holding most of the logic.
+ * Used by classes actually implementing a throttle view (ThrottleFrame, SimpleThrottlePanel, ConsistFunctionPanel)
+ * 
+ * <hr>
+ * This file is part of JMRI.
+ * <p>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <p>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Glen Oberhauser
  * @author Andrew Berridge Copyright 2010
  * @author Lionel Jeanson 2026
  * 
  */
+
 public class ThrottleUICore implements AddressListener, PropertyChangeListener  {
 
     private DccThrottle throttle;

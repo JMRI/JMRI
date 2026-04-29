@@ -36,13 +36,24 @@ import org.jdom2.Attribute;
 import org.w3c.dom.Document;
 
 /**
- * A JInternalFrame that contains a JSlider to control loco speed, and buttons
+ * A JPanel that contains a JSlider to control loco speed, and buttons
  * for forward, reverse and STOP.
+ * 
+ * <hr>
+ * This file is part of JMRI.
+ * <p>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <p>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author glen Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2007, 2021
  * @author Ken Cameron Copyright (C) 2008
- * @author Lionel Jeanson 2009-2021
+ * @author Lionel Jeanson 2009-2026
  */
 public class ControlPanel extends JPanel implements PropertyChangeListener, AddressListener {
 

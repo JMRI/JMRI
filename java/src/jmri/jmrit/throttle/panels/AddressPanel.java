@@ -42,13 +42,24 @@ import jmri.util.swing.WrapLayout;
 import org.jdom2.Element;
 
 /**
- * A JInternalFrame that provides a way for the user to enter a decoder address.
+ * A JPanel that provides a way for the user to enter a decoder address.
  * This class also store AddressListeners and notifies them when the user enters
  * a new address.
+ * 
+ * <hr>
+ * This file is part of JMRI.
+ * <p>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <p>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @author Lionel Jeanson 2009-2021
+ * @author Lionel Jeanson 2009-2026
  */
 public class AddressPanel extends JPanel implements ThrottleListener, PropertyChangeListener {
 

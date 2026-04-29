@@ -18,6 +18,17 @@ import org.slf4j.LoggerFactory;
 /**
  * A Panel that contains a label to display scale speed if available
  * for forward, reverse and STOP. TODO: fix speed increments (14, 28)
+ * 
+ * <hr>
+ * This file is part of JMRI.
+ * <p>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <p>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author glen Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2007
