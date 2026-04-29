@@ -628,7 +628,6 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
     }
     
     private void updateCurentThrottleFrame() {
-        ThrottleFrame prev = currentThrottleFrame;
         currentThrottleFrame = null;
         for (Component comp : throttlesPanel.getComponents()) {
             if (comp instanceof ThrottleFrame && comp.isVisible()) {
