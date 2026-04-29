@@ -14,7 +14,7 @@ class RosterImage(Jynstrument, AddressListener):
 # Jynstrument mandatory part
 # Here this JYnstrument like to be in a ThrottleFrame and no anywhere else
     def getExpectedContextClassName(self):
-        return "jmri.jmrit.throttle.ThrottleFrame"
+        return "jmri.jmrit.throttle.UIImplementation.ThrottleFrame"
 
     def init(self):
         self.setLayout( BorderLayout() )

@@ -3,6 +3,7 @@ package jmri.jmrit.throttle;
 import java.io.File;
 
 import jmri.InstanceManager;
+import jmri.jmrit.throttle.UIImplementation.ThrottleFrame;
 import jmri.jmrit.throttle.panels.FunctionButton;
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;

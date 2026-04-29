@@ -44,7 +44,7 @@ class VideoViewIP(Jynstrument, ItemListener):
 
     def getExpectedContextClassName(self):
         # This Jynstrument likes to be in a ThrottleFrame and not anywhere else
-        return "jmri.jmrit.throttle.ThrottleFrame"
+        return "jmri.jmrit.throttle.UIImplementation.ThrottleFrame"
 
     def init(self):
         Webcam.setDriver( IpCamDriver() )
