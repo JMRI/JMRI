@@ -11,17 +11,20 @@ import jmri.Throttle;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.interfaces.AddressListener;
 
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A JInternalFrame that contains a label to display scale speed if available
+ * A Panel that contains a label to display scale speed if available
  * for forward, reverse and STOP. TODO: fix speed increments (14, 28)
  *
  * @author glen Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  * @author Steve Gigiel Copyright (C) 2017
+ * @author Lionel Jeanson 2026
+ * 
  */
 public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListener, AddressListener {
 
@@ -67,6 +70,8 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
         }
         if (this.addressPanel.getThrottle() != null ) {
             notifyAddressThrottleFound(this.addressPanel.getThrottle());
+        } else {
+            notifyAddressReleased(this.addressPanel.getCurrentAddress());
         }
     }
 
@@ -148,6 +153,7 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
         this.setEnabled(false);
         throttle.removePropertyChangeListener(this);
         throttle = null;
+        updateSpeedLabel(useSpeedProfile, 0, true);
     }
 
     @Override
@@ -169,6 +175,7 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
                 && re.getSpeedProfile().getProfileSize() > 0) {
             useSpeedProfile = true;
         }
+        updateSpeedLabel(useSpeedProfile, t.getSpeedSetting(), t.getIsForward());
     }
 
     @Override
@@ -187,6 +194,16 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
             log.debug("control panel received consist throttle");
         }
         notifyAddressThrottleFound(throttle);
+    }
+
+    public Element getXml() {
+        Element me = new Element("SpeedPanel"); // NOI18N
+        // put nothing
+        return me;
+    }
+
+    public void setXml(Element e) {
+        // do nothing
     }
 
     // initialize logging

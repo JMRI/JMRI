@@ -7,7 +7,7 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
-import jmri.jmrit.throttle.SimpleThrottlePanel;
+import jmri.jmrit.throttle.UIImplementation.SimpleThrottlePanel;
 
 /**
  * 

@@ -16,6 +16,7 @@ import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
+import jmri.jmrit.throttle.UIImplementation.ThrottleFrame;
 import jmri.jmrit.throttle.UIImplementation.ThrottleFramePropertyEditor;
 import jmri.jmrit.throttle.actions.ThrottleWindowActionsFactory;
 import jmri.jmrit.throttle.actions.ThrottleWindowInputsListener;
@@ -52,6 +53,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
     private JCheckBoxMenuItem viewAddressPanel;
     private JCheckBoxMenuItem viewSpeedPanel;
     private JCheckBoxMenuItem viewLocoIconPanel;
+    private JCheckBoxMenuItem viewConsistFunctionsPanel;
     private JMenuItem viewAllButtons;
     private JMenuItem fileMenuSave;
     private JMenuItem editMenuExportRoster;
@@ -185,12 +187,14 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
         viewFunctionPanel.setEnabled(isEditMode);
         viewSpeedPanel.setEnabled(isEditMode);
         viewLocoIconPanel.setEnabled(isEditMode);
+        viewConsistFunctionsPanel.setEnabled(isEditMode);
         if (isEditMode) {
             viewAddressPanel.setSelected(getCurentThrottleController().isAddressPanelVisible());
             viewControlPanel.setSelected(getCurentThrottleController().isControlPanelVisible());
             viewFunctionPanel.setSelected(getCurentThrottleController().isFunctionPanelVisible());
             viewSpeedPanel.setSelected(getCurentThrottleController().isSpeedPanelVisible());
             viewLocoIconPanel.setSelected(getCurentThrottleController().isLocoIconPanelVisible());
+            viewConsistFunctionsPanel.setSelected(getCurentThrottleController().isConsistFunctionsPanelVisible());
         }
         fileMenuSave.setEnabled(getCurentThrottleController().isKnownLastUsedSaveFile() || getCurentThrottleController().isKnownRosterEntry());
         editMenuExportRoster.setEnabled(getCurentThrottleController().isKnownRosterEntry());
@@ -389,7 +393,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
             log.error("Error while creating Jynstrument {}", path);
             return null;
         }
-        TransparencyUtils.setTransparent(it, true);
+        TransparencyUtils.setOpacityRec(it, true);
         it.setVisible(true);
         throttleToolBar.add(it);
         throttleToolBar.repaint();
@@ -458,6 +462,9 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
         viewLocoIconPanel = new JCheckBoxMenuItem(Bundle.getMessage("ThrottleMenuViewLocoIconPanel"));
         viewLocoIconPanel.setSelected(false);
         viewLocoIconPanel.addItemListener(e -> getCurentThrottleController().setLocoIconPanelVisible(e.getStateChange() == ItemEvent.SELECTED));
+        viewConsistFunctionsPanel = new JCheckBoxMenuItem(Bundle.getMessage("ThrottleMenuViewConsistFunctionsPanel"));
+        viewConsistFunctionsPanel.setSelected(false);
+        viewConsistFunctionsPanel.addItemListener(e -> getCurentThrottleController().setConsistFunctionsPanelVisible(e.getStateChange() == ItemEvent.SELECTED));
 
         viewAllButtons = new JMenuItem(Bundle.getMessage("ThrottleMenuViewAllFunctionButtons"));
         viewAllButtons.addActionListener(new AbstractAction() {
@@ -493,6 +500,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
         viewMenu.add(viewFunctionPanel);
         viewMenu.add(viewSpeedPanel);
         viewMenu.add(viewLocoIconPanel);
+        viewMenu.add(viewConsistFunctionsPanel);
         viewMenu.addSeparator();
         viewMenu.add(viewAllButtons);
         viewMenu.add(makeAllComponentsInBounds);
@@ -614,8 +622,13 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
     public JCheckBoxMenuItem getViewLocoIconPanel() {
         return viewLocoIconPanel;
     }
+
+    public JCheckBoxMenuItem getViewConsistFunctionsPanel() {
+        return viewConsistFunctionsPanel;
+    }
     
     private void updateCurentThrottleFrame() {
+        ThrottleFrame prev = currentThrottleFrame;
         currentThrottleFrame = null;
         for (Component comp : throttlesPanel.getComponents()) {
             if (comp instanceof ThrottleFrame && comp.isVisible()) {
@@ -641,6 +654,7 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
         }
         if (getCurentThrottleController() == tf) {
             log.debug("Closing currently active throttle frame");
+            throttlesLayout.previous(throttlesPanel);
         }
         throttlesPanel.remove((ThrottleFrame)tf);
         throttleFrames.remove(tf);

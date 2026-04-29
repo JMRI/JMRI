@@ -254,18 +254,6 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         throttlePreferencesFrame.requestFocus();
     }
 
-    /*
-     * Apply curent throttle preferences to all throttle windows
-     *
-     */
-/*    public void applyPreferences() {
-        throttleWindows.forEach(tw -> {
-            tw.applyPreferences();
-        });
-        getThrottlesListPanel().applyPreferences();
-    }*/
-
-
     /**
      * Force emergency stop of all managed throttles windows
      *

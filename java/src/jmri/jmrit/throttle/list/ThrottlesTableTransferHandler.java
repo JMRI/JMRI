@@ -10,8 +10,8 @@ import javax.activation.DataHandler;
 import javax.swing.*;
 
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.throttle.SimpleThrottlePanel;
-import jmri.jmrit.throttle.ThrottleFrame;
+import jmri.jmrit.throttle.UIImplementation.SimpleThrottlePanel;
+import jmri.jmrit.throttle.UIImplementation.ThrottleFrame;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 import jmri.util.datatransfer.RosterEntrySelection;

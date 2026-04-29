@@ -26,7 +26,9 @@ import jmri.util.swing.OptionallyTabbedPanel;
 import org.jdom2.Element;
 
 /**
- * A JInternalFrame that contains buttons for each decoder function.
+ * A Panel that contains buttons for each decoder function.
+ * 
+ * 
  */
 public class FunctionPanel extends OptionallyTabbedPanel implements FunctionListener, PropertyChangeListener, AddressListener {
 
@@ -160,6 +162,11 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
         this.addressPanel = addressPanel;
         if (this.addressPanel != null) {
             this.addressPanel.addAddressListener(this);
+        }
+        if (this.addressPanel.getThrottle() != null ) {
+            notifyAddressThrottleFound(this.addressPanel.getThrottle());
+        } else {
+            notifyAddressReleased(this.addressPanel.getCurrentAddress());
         }
     }
 

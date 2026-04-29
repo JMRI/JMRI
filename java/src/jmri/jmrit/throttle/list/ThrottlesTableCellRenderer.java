@@ -6,6 +6,9 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableCellRenderer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
@@ -128,4 +131,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             }
         }
     }
+
+//    private static final Logger log = LoggerFactory.getLogger(ThrottlesTableCellRenderer.class);
+
 }

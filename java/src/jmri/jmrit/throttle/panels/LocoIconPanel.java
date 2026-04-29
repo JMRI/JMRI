@@ -6,6 +6,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.jdom2.Element;
+
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.jmrit.consisttool.ConsistListCellRenderer;
@@ -16,7 +18,7 @@ import jmri.jmrit.throttle.interfaces.AddressListener;
 public class LocoIconPanel extends JPanel implements AddressListener {
 
     private static final int IMAGE_HEIGHT = 32;
-    private static final RosterIconFactory ICN_FACT = new RosterIconFactory(IMAGE_HEIGHT);
+    private static final RosterIconFactory ICN_FACT = new RosterIconFactory(IMAGE_HEIGHT); // same instance reused
 
     AddressPanel addressPanel = null;
     String description;
@@ -25,11 +27,15 @@ public class LocoIconPanel extends JPanel implements AddressListener {
 
     public LocoIconPanel() {
         super();
+        initGUI();
+    }
+
+    private void initGUI() {
         setLayout(new BorderLayout());
         iconLabel.setHorizontalAlignment(JLabel.CENTER);
         iconLabel.setVerticalAlignment(JLabel.CENTER);
         updateLabel();
-        add(iconLabel, BorderLayout.CENTER);
+        add(iconLabel, BorderLayout.CENTER);        
     }
 
     public void setAddressPanel(AddressPanel addressPanel) {
@@ -122,4 +128,15 @@ public class LocoIconPanel extends JPanel implements AddressListener {
             addressPanel = null;
         }
     }
+
+    public Element getXml() {
+        Element me = new Element("LocoIconPanel"); // NOI18N
+        // put nothing
+        return me;
+    }
+
+    public void setXml(Element e) {
+        // do nothing
+    }
+
 }

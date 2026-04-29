@@ -20,6 +20,7 @@ import jmri.jmrit.throttle.interfaces.AddressListener;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrit.throttle.panels.AddressPanel;
 import jmri.jmrit.throttle.panels.BackgroundPanel;
+import jmri.jmrit.throttle.panels.ConsistFunctionPanel;
 import jmri.jmrit.throttle.panels.ControlPanel;
 import jmri.jmrit.throttle.panels.FunctionPanel;
 import jmri.jmrit.throttle.panels.SpeedPanel;
@@ -33,11 +34,10 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
 /**
- * Should be named ThrottlePanel but was already existing with that name and
- * don't want to break dependencies (particularly in Jython code)
  *
  * @author Glen Oberhauser
  * @author Andrew Berridge Copyright 2010
+ * @author Lionel Jeanson 2026
  * 
  */
 public class ThrottleUICore implements AddressListener, PropertyChangeListener  {
@@ -46,6 +46,7 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
     private final ThrottleManager throttleManager;
     private final ThrottleFrameManager throttleFrameManager = InstanceManager.getDefault(ThrottleFrameManager.class);
     private final ThrottleControllerUI myThrottleController;
+    private final boolean withPopupMenu; // should panel show the contextual menu that enable customization
 
     private ControlPanel controlPanel;
     private FunctionPanel functionPanel;
@@ -53,6 +54,7 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
     private BackgroundPanel backgroundPanel;
     private SpeedPanel speedPanel;
     private LocoIconPanel locoIconPanel;
+    private ConsistFunctionPanel consistFunctionsPanel;
 
     private String lastUsedSaveFile = null;
 
@@ -70,21 +72,13 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
         super();
         throttleManager = tm;
         myThrottleController = tc;
+        this.withPopupMenu = withPopupMenu;
         InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
-        initGUI(withPopupMenu);
-        applyPreferences();
+        initGUI();
     }
 
     public ThrottleUICore(ThrottleManager tm, ThrottleControllerUI tc) {
         this(tm,tc,true);
-    }
-
-    public ControlPanel getControlPanel() {
-        return controlPanel;
-    }
-
-    public FunctionPanel getFunctionPanel() {
-        return functionPanel;
     }
 
     public AddressPanel getAddressPanel() {
@@ -95,12 +89,36 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
         return addressPanel.getRosterEntry();
     }
 
+    public ControlPanel getControlPanel() {
+        if (controlPanel == null) { // init only when requested
+            controlPanel = new ControlPanel(throttleManager, withPopupMenu);
+            controlPanel.setAddressPanel(addressPanel);
+        }        
+        return controlPanel;
+    }
+
+    public FunctionPanel getFunctionPanel() {
+        if (functionPanel == null) { // init only when requested
+            functionPanel = new FunctionPanel(withPopupMenu);
+            functionPanel.setAddressPanel(addressPanel);
+        }          
+        return functionPanel;
+    }
+
     public SpeedPanel getSpeedPanel() {
         if (speedPanel == null) { // init only when requested
             speedPanel = new SpeedPanel();
             speedPanel.setAddressPanel(addressPanel);
         }
         return speedPanel;
+    }
+
+    public ConsistFunctionPanel getConsistFunctionsPanel() {
+        if (consistFunctionsPanel == null) { // init only when requested
+            consistFunctionsPanel = new ConsistFunctionPanel();
+            consistFunctionsPanel.setAddressPanel(addressPanel);
+        }
+        return consistFunctionsPanel;
     }
 
     public BackgroundPanel getBackgroundPanel() {
@@ -112,6 +130,10 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
     }
 
     public LocoIconPanel getLocoIconPanel() {
+        if (locoIconPanel == null) { // init only when requested
+            locoIconPanel = new LocoIconPanel();
+            locoIconPanel.setAddressPanel(addressPanel);
+        }        
         return locoIconPanel;
     }
 
@@ -127,26 +149,15 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
         return false;
     }   
 
-    private void initGUI( boolean withPopupMenu ) {
+    private void initGUI() {
         // create panels that are actually required for a throttle
         // some (speed Panel, backgroundPanel) will be created on demand only (see getters)
-        addressPanel = new AddressPanel(throttleManager);
-        controlPanel = new ControlPanel(throttleManager, withPopupMenu);
-        functionPanel = new FunctionPanel(withPopupMenu);
-        locoIconPanel = new LocoIconPanel();
-            
-        controlPanel.setEnabled(false);
-        functionPanel.setEnabled(false);
+        addressPanel = new AddressPanel(throttleManager);            
         addressPanel.setEnabled(true);
-
-        functionPanel.setAddressPanel(addressPanel);
-        controlPanel.setAddressPanel(addressPanel);
-        locoIconPanel.setAddressPanel(addressPanel);
-
         addressPanel.addAddressListener(this);                       
     }
 
-    private void applyPreferences() {
+    public void applyPreferences() {
         loadDefaultThrottle();
     }
 
@@ -197,13 +208,20 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
         }
         InstanceManager.getDefault(ThrottlesPreferences.class).removePropertyChangeListener(this);
         // check for any special disposing in InternalFrames
-        controlPanel.dispose();
-        functionPanel.dispose();
+        if (controlPanel!=null) {
+            controlPanel.dispose();
+        }
+        if (functionPanel!=null) {
+            functionPanel.dispose();
+        }
         if (speedPanel!=null) {
             speedPanel.dispose();
         }
         if (backgroundPanel!=null) {
             backgroundPanel.dispose();      
+        }
+        if (consistFunctionsPanel!=null) {
+            consistFunctionsPanel.dispose();
         }
         // dispose of this last because it will release and destroy the throttle.
         addressPanel.dispose();
@@ -220,8 +238,12 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
             Bundle.getMessage("ThrottleFrameRosterChangeTitleDialog"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION)) {
             return;
         }
-        functionPanel.saveFunctionButtonsToRoster(rosterEntry);
-        controlPanel.saveToRoster(rosterEntry);
+        if (functionPanel!=null) {
+            functionPanel.saveFunctionButtonsToRoster(rosterEntry);
+        }
+        if (controlPanel!=null) {
+            controlPanel.saveToRoster(rosterEntry);
+        }
     }
 
     /**
@@ -231,9 +253,22 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
      * 
      */
     public void getXml(ArrayList<Element> children) {
-        children.add(controlPanel.getXml());
-        children.add(functionPanel.getXml());
+        if (controlPanel != null) {
+            children.add(controlPanel.getXml());
+        }
+        if (functionPanel != null) {
+            children.add(functionPanel.getXml());
+        }
         children.add(addressPanel.getXml());
+        if (speedPanel != null) { 
+            children.add(speedPanel.getXml());
+        }
+        if (locoIconPanel != null) {
+            children.add(locoIconPanel.getXml());
+        }
+        if (consistFunctionsPanel != null) {
+            children.add(consistFunctionsPanel.getXml());
+        }
     }
 
     /**
@@ -253,12 +288,28 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
         if (e == null) {
             return;
         }
-        Element controlPanelElement = e.getChild("ControlPanel");
-        controlPanel.setXml(controlPanelElement);
-        Element functionPanelElement = e.getChild("FunctionPanel");
-        functionPanel.setXml(functionPanelElement);
-        Element addressPanelElement = e.getChild("AddressPanel");
-        addressPanel.setXml(addressPanelElement);
+        Element child = e.getChild("AddressPanel");
+        addressPanel.setXml(child);
+        child = e.getChild("ControlPanel");
+        if (child != null) {
+            getControlPanel().setXml(child);
+        }
+        child = e.getChild("FunctionPanel");
+        if (child != null) {
+            getFunctionPanel().setXml(child);
+        }
+        child = e.getChild("SpeedPanel");
+        if (child != null) {
+            getSpeedPanel().setXml(child);
+        }
+        child = e.getChild("LocoIconPanel");
+        if (child != null) {
+            getLocoIconPanel().setXml(child);
+        }
+        child = e.getChild("ConsistFunctionsPanel");
+        if (child != null) {
+            getConsistFunctionsPanel().setXml(child);
+        }            
     }
 
     public void saveThrottleAs(Element throttleElement) {
@@ -338,6 +389,9 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
 
     public Element loadThrottle(String sfile) throws IOException, NullPointerException, JDOMException, FileNotFoundException {
         log.debug("Loading throttle file : {}", sfile);
+        if (sfile == null) {
+            return null;
+        }
         
         XmlFile xf = new XmlFile() {};   // odd syntax is due to XmlFile being abstract
         xf.setValidate(XmlFile.Validate.CheckDtdThenSchema);
@@ -364,7 +418,9 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
             return;
         }
         log.debug("Loading default throttle file : {}", dtf);
-        myThrottleController.loadThrottleFile(dtf);
+        if (myThrottleController!=null) {
+            myThrottleController.loadThrottleFile(dtf);
+        }
         setLastUsedSaveFile(null);
         isLoadingDefault = false;
     }
@@ -382,14 +438,15 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
         if (throttle == null) {
             log.debug("notifyAddressReleased() throttle already null, called for loc {}",la);
             return;
-        }
+        }        
         if (throttleFrameManager.getNumberOfEntriesFor((DccLocoAddress) throttle.getLocoAddress()) == 1 )  {
             throttleManager.removeListener(throttle.getLocoAddress(), throttleFrameManager.getThrottlesListPanel().getTableModel());
-        }        
-        throttle = null;
-        setLastUsedSaveFile(null);        
-        myThrottleController.updateFrameTitle();
-        myThrottleController.updateGUI(); 
+        }        throttle = null;
+        setLastUsedSaveFile(null);
+        if (myThrottleController!=null) {
+            myThrottleController.updateFrameTitle();
+            myThrottleController.updateGUI();
+        }
         throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableStructureChanged();        
     }
 
@@ -404,11 +461,15 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
                 && (InstanceManager.getDefault(ThrottlesPreferences.class).isAutoLoading()) && (addressPanel != null)) {
             if ((addressPanel.getRosterEntry() != null)
                     && ((getLastUsedSaveFile() == null) || (getLastUsedSaveFile().compareTo(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml") != 0))) {
-                myThrottleController.loadThrottleFile(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml");
+                if (myThrottleController!=null) {
+                    myThrottleController.loadThrottleFile(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml");
+                }
                 setLastUsedSaveFile(getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml");
             } else if ((addressPanel.getRosterEntry() == null)
                     && ((getLastUsedSaveFile() == null) || (getLastUsedSaveFile().compareTo(getDefaultThrottleFolder() + addressPanel.getCurrentAddress()+ ".xml") != 0))) {
-                myThrottleController.loadThrottleFile(getDefaultThrottleFolder() + throttle.getLocoAddress().getNumber() + ".xml");
+                if (myThrottleController!=null) {
+                    myThrottleController.loadThrottleFile(getDefaultThrottleFolder() + throttle.getLocoAddress().getNumber() + ".xml");
+                }
                 setLastUsedSaveFile(getDefaultThrottleFolder() + throttle.getLocoAddress().getNumber() + ".xml");
             }
         } else {
@@ -416,8 +477,10 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
                 loadDefaultThrottle();
             }
         }
-        myThrottleController.updateFrameTitle();
-        myThrottleController.updateGUI();        
+        if (myThrottleController!=null) {
+            myThrottleController.updateFrameTitle();
+            myThrottleController.updateGUI();
+        }
         throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableDataChanged();
     }
     
@@ -442,7 +505,9 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
 
     public void setLastUsedSaveFile(String lusf) {
         lastUsedSaveFile = lusf;
-        myThrottleController.updateGUI();
+        if (myThrottleController!=null) {
+            myThrottleController.updateGUI();
+        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThrottleUICore.class);

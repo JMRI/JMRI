@@ -71,6 +71,8 @@ public class ThrottlesListPanel extends JPanel implements PropertyChangeListener
                 if (tf != null) {
                     tf.toFront();
                 }
+                // refresh selected/unselected
+                throttleFramesLM.fireTableDataChanged();
             }
 
             @Override

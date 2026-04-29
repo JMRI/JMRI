@@ -5,11 +5,11 @@ import java.util.*;
 import javax.swing.table.AbstractTableModel;
 
 import jmri.*;
-import jmri.jmrit.throttle.SimpleThrottlePanel;
 import jmri.jmrit.throttle.SimpleThrottleWindow;
-import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrit.throttle.ThrottleWindow;
+import jmri.jmrit.throttle.UIImplementation.SimpleThrottlePanel;
+import jmri.jmrit.throttle.UIImplementation.ThrottleFrame;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 
@@ -57,7 +57,7 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
         source.removeThrottleController(tcui);
         if (destination instanceof ThrottleWindow) {
             tcui.setThrottleControllersContainer(destination);
-            destination.addThrottleControllerAt(tcui, row_tf);            
+            destination.addThrottleControllerAt(tcui, row_tf);
         }
         if (destination instanceof SimpleThrottleWindow) {
             // create a new window with the same address as the one provided in parameter

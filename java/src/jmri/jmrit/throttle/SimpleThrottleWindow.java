@@ -11,6 +11,7 @@ import javax.swing.KeyStroke;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.ThrottleManager;
+import jmri.jmrit.throttle.UIImplementation.SimpleThrottlePanel;
 import jmri.jmrit.throttle.actions.ThrottleWindowActionsFactory;
 import jmri.jmrit.throttle.actions.ThrottleWindowInputsListener;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
@@ -43,7 +44,7 @@ public class SimpleThrottleWindow extends JmriJFrame implements ThrottleControll
             throttleManager = InstanceManager.getDefault(jmri.ThrottleManager.class);
         }
         myActionFactory = new ThrottleWindowActionsFactory(this);
-        throttleControllerUI = new SimpleThrottlePanel(this, throttleManager);
+        throttleControllerUI = new SimpleThrottlePanel(this, throttleManager, true, true, true);
         initGUI();
         InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
         if (la != null) {

@@ -175,6 +175,11 @@ public class ControlPanel extends JPanel implements PropertyChangeListener, Addr
         if (this.addressPanel != null) {
             this.addressPanel.addAddressListener(this);
         }
+        if (this.addressPanel.getThrottle() != null ) {
+            notifyAddressThrottleFound(this.addressPanel.getThrottle());
+        } else {
+            notifyAddressReleased(this.addressPanel.getCurrentAddress());
+        }
     }
 
     public void dispose() {
@@ -1320,12 +1325,7 @@ public class ControlPanel extends JPanel implements PropertyChangeListener, Addr
     }
 
     @Override
-    public void notifyAddressReleased(LocoAddress la) {
-        if (throttle == null) {
-            log.debug("notifyAddressReleased() throttle already null, called for loc {}", la);
-            return;
-        }        
-        this.setEnabled(false);
+    public void notifyAddressReleased(LocoAddress la) {     
         if (throttle != null) {
             throttle.removePropertyChangeListener(this);
         }
@@ -1334,6 +1334,7 @@ public class ControlPanel extends JPanel implements PropertyChangeListener, Addr
             setSwitchSliderFunction(prevShuntingFn);
             prevShuntingFn = null;
         }
+        setEnabled(false);
     }
 
     private void addressThrottleFound() {

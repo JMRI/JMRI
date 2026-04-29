@@ -86,7 +86,7 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
     @Override
     public void notifyAddressReleased(LocoAddress la) {
         setImagePath(null);
-    }
+    } 
 
     @Override
     public void notifyAddressChosen(LocoAddress l) {
