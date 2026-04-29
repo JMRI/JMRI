@@ -27,6 +27,6 @@ public class WangrowConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(WangrowConnectionTypeListTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(WangrowConnectionTypeListTest.class);
 
 }

@@ -40,6 +40,6 @@ public class PollTablePaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PollTablePaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PollTablePaneTest.class);
 
 }

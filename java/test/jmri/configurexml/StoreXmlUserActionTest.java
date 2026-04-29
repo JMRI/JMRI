@@ -27,6 +27,6 @@ public class StoreXmlUserActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StoreXmlUserActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StoreXmlUserActionTest.class);
 
 }

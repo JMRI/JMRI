@@ -37,6 +37,6 @@ public class ScaleManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ScaleManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ScaleManagerTest.class);
 
 }

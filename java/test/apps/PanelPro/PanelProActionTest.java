@@ -26,6 +26,6 @@ public class PanelProActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PanelProActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PanelProActionTest.class);
 
 }

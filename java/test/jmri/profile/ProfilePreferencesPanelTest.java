@@ -19,6 +19,6 @@ public class ProfilePreferencesPanelTest extends PreferencesPanelTestBase<Profil
         prefsPanel = new ProfilePreferencesPanel();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProfilePreferencesPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ProfilePreferencesPanelTest.class);
 
 }

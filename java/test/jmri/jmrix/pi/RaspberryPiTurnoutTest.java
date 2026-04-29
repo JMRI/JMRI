@@ -48,6 +48,6 @@ public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutT
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RaspberryPiTurnoutTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RaspberryPiTurnoutTest.class);
 
 }

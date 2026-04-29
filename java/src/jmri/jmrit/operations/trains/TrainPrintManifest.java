@@ -24,7 +24,7 @@ import jmri.util.davidflanagan.CompatibleHardcopyWriter;
  */
 public class TrainPrintManifest extends TrainCommon {
 
-    static final char SPACE = ' ';
+    protected static final char SPACE = ' ';
 
     /**
      * Print or preview a train Manifest or switch list.

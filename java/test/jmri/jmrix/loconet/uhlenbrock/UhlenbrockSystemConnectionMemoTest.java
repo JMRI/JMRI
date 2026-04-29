@@ -29,5 +29,5 @@ public class UhlenbrockSystemConnectionMemoTest extends LnSystemConnectionMemoTe
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UhlenbrockSystemConnectionMemoTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(UhlenbrockSystemConnectionMemoTest.class);
 }

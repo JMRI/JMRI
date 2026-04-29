@@ -41,6 +41,6 @@ public class UhlenbrockLnThrottleManagerTest extends jmri.managers.AbstractThrot
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UhlenbrockLnThrottleManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(UhlenbrockLnThrottleManagerTest.class);
 
 }

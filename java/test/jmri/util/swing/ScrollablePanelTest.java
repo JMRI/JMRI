@@ -36,6 +36,6 @@ public class ScrollablePanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ScrollablePanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ScrollablePanelTest.class);
 
 }

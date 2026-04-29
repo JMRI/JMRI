@@ -219,5 +219,5 @@ public abstract class AbstractThrottleManagerTestBase {
         JUnitUtil.waitFor(()-> (tm.getThrottleUsageCount(addr) == 0), "throttle still in use after release");
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractThrottleManagerTestBase.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractThrottleManagerTestBase.class);
 }

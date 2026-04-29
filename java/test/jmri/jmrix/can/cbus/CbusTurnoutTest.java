@@ -593,5 +593,5 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         JUnitUtil.tearDown();
 
     }
-    // private final static Logger log = LoggerFactory.getLogger(CbusTurnoutTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusTurnoutTest.class);
 }

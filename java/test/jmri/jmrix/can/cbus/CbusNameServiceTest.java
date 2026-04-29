@@ -136,6 +136,6 @@ public class CbusNameServiceTest {
 
     }
 
-    // private final static org.slf4j.LoggerLogger log = org.slf4j.LoggerLoggerFactory.getLogger(CbusNameServiceTest.class);
+    // private static final org.slf4j.LoggerLogger log = org.slf4j.LoggerLoggerFactory.getLogger(CbusNameServiceTest.class);
 
 }

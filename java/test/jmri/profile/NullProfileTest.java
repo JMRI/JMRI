@@ -30,6 +30,6 @@ public class NullProfileTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NullProfileTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NullProfileTest.class);
 
 }

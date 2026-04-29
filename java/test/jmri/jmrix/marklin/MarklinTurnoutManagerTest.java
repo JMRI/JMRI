@@ -53,6 +53,6 @@ public class MarklinTurnoutManagerTest  extends jmri.managers.AbstractTurnoutMgr
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MarklinTurnoutManagerTest.class);
 
 }

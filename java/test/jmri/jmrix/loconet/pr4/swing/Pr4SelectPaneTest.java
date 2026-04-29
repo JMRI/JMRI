@@ -26,6 +26,6 @@ public class Pr4SelectPaneTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Pr4SelectPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Pr4SelectPaneTest.class);
 
 }

@@ -74,6 +74,6 @@ public class MqttReporterTest extends jmri.implementation.AbstractReporterTestBa
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MqttReporterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MqttReporterTest.class);
 
 }

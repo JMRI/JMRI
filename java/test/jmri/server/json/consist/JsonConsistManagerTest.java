@@ -59,5 +59,5 @@ public class JsonConsistManagerTest extends jmri.implementation.AbstractConsistM
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonConsistManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JsonConsistManagerTest.class);
 }

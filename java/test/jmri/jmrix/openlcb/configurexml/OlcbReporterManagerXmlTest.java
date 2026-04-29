@@ -64,7 +64,7 @@ public class OlcbReporterManagerXmlTest {
     }
 
     private OlcbTestInterface t;
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbReporterManagerXmlTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbReporterManagerXmlTest.class);
 
     @BeforeAll
     public static void checkSeparate() {

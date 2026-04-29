@@ -176,6 +176,6 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusPowerManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusPowerManagerTest.class);
 
 }

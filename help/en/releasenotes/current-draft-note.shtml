@@ -509,6 +509,12 @@
             <li>Fixed a problem when storing and loading the new Output Indicator icons</li>
             <li>When changing icon images for turnouts, sensors and signal heads, the
                 resource files are now listed in alpha order by name.</li>
+            <li>The LayoutTurnout and LayoutTraverser require manual changes when the
+                <strong>Use Dispatcher with Signal Masts</strong> feature is enabled.  To
+                prevent JMRI errors and Java exceptions, these changes have to be removed
+                before deletion or some modifications.  When needed, a dialog is displayed
+                with a list of the items to be removed.</li>
+
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>

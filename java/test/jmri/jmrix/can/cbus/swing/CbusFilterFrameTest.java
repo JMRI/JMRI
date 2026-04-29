@@ -187,6 +187,6 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         // super.tearDown(); // disposes frame, calls JUnitUtil.shutDown
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventFilterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusEventFilterTest.class);
 
 }

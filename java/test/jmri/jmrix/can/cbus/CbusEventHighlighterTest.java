@@ -160,6 +160,6 @@ public class CbusEventHighlighterTest {
         t = null;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventHighlighterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusEventHighlighterTest.class);
 
 }

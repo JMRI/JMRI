@@ -26,6 +26,6 @@ public class Dcs210PlusUsbModeSelectPaneTest extends jmri.util.swing.JmriPanelTe
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UsbDcs210PlusSelectPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(UsbDcs210PlusSelectPaneTest.class);
 
 }

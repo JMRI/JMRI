@@ -19,14 +19,34 @@ import org.junit.jupiter.params.provider.MethodSource;
 /**
  * Check that there is no @Nonnull annotation before a void declaration.
  * Also checks that "static" comes after and not before public/protected/private.
+ * Also checks that "final" comes after and not before public/protected/private/static.
  *
  * @author Daniel Bergqvist (C) 2026
  */
 public class NonnullBeforeVoidTest {
 
-    private static final Pattern PATTERN_NULL_BEFORE_VOID = Pattern.compile(".*\\@Nonnull\\s+(\\@\\w+(\\(.*?\\))\\s+)*(|public\\s+|protected\\s+|private\\s+)void.*", Pattern.MULTILINE | Pattern.DOTALL);
+    private static final Pattern PATTERN_NULL_BEFORE_VOID = Pattern.compile(
+            ".*"                    // Beginning of the file
+            + "\\@Nonnull"          // @Nonnull
+            + "\\s+"                // One or more whitespace characters
+            + "(\\@\\w+"            // Zero or more other annotations
+                    + "(\\(.*?\\))\\s+)*"   // Possible parameters to the annotation
+            + "(|public\\s+|protected\\s+|private\\s+)"     // Optional public/protected/private/static declaration
+            + "("
+                    + "void|"               // void
+                    + "byte[^\\[]\\s+|"     // byte but not byte array
+                    + "short[^\\[]\\s+|"    // short but not short array
+                    + "int[^\\[]\\s+|"      // int but not int array
+                    + "long[^\\[]\\s+"      // long but not long array
+            + ")"
+            + ".*",                 // End of file
+            Pattern.MULTILINE | Pattern.DOTALL);    // Check the entire file at once
+
+    // Check that static doesn't come before public/protected/private.
     private static final Pattern PATTERN_STATIC_BEFORE_PUBLIC = Pattern.compile(".*static\\s+(public|protected|private).*", Pattern.MULTILINE | Pattern.DOTALL);
-//    private static final Pattern PATTERN_FINAL_BEFORE_PUBLIC_OR_STATIC = Pattern.compile(".*final\\s+(public|protected|private|static).*", Pattern.MULTILINE | Pattern.DOTALL);
+
+    // Check that final doesn't come before public/protected/private/static.
+    private static final Pattern PATTERN_FINAL_BEFORE_PUBLIC_OR_STATIC = Pattern.compile(".*final\\s+(public|protected|private|static).*", Pattern.MULTILINE | Pattern.DOTALL);
 
 
     public static Stream<Arguments> data() {
@@ -75,38 +95,22 @@ public class NonnullBeforeVoidTest {
 
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
-    public void loadAndStoreTest(File file, boolean pass) throws IOException, JmriException, ParseException {
+    public void checkFilesTest(File file, boolean pass) throws IOException, JmriException, ParseException {
         checkFile(file);
     }
 
-//    private static int total = 0;
-//    private static int fails = 0;
-
     private void checkFile(File file) throws IOException {
 
-//        total++;
-
-//        System.out.format("File: %s%n", file);
-//        log.warn("File: {}", file);
         String data = new String(Files.readAllBytes(file.toPath()));
         if (PATTERN_NULL_BEFORE_VOID.matcher(data).matches()) {
             Assertions.fail(String.format("File %s has @Nonnull annotation for a void declaration", file));
         }
         if (PATTERN_STATIC_BEFORE_PUBLIC.matcher(data).matches()) {
-//            fails++;
-//            System.out.format("File has static before public/protected/private: %s%n", file);
-//            System.out.format("%d, %d: File has static before public/protected/private: %s%n", total, fails, file);
             Assertions.fail(String.format("File %s has static before public/protected/private", file));
         }
-/* Ignore for now
         if (PATTERN_FINAL_BEFORE_PUBLIC_OR_STATIC.matcher(data).matches()) {
-            fails++;
-//            System.out.format("File has static before public/protected/private: %s%n", file);
-            System.out.format("%d, %d: File has final before public/protected/private/static: %s%n", total, fails, file);
-//            Assertions.fail(String.format("File %s has final before public/protected/private", file));
+            Assertions.fail(String.format("File %s has final before public/protected/private/static", file));
         }
-*/
-//        System.out.println(data);
     }
 
     @BeforeEach

@@ -27,14 +27,14 @@ import org.junit.jupiter.api.*;
 public class ConnectionConfigManagerTest {
 
     private Path workspace = null;
-    public final static String MFG1 = "Mfg1";
-    public final static String MFG2 = "Mfg2";
-    public final static String MFG3 = "Mfg3";
-    public final static String TYPE_A = "TypeA";
-    public final static String TYPE_B = "TypeB";
-    public final static String TYPE_C = "TypeC";
-    public final static String TYPE_D = "TypeD";
-    // private final static Logger log = LoggerFactory.getLogger(ConnectionConfigManagerTest.class);
+    public static final String MFG1 = "Mfg1";
+    public static final String MFG2 = "Mfg2";
+    public static final String MFG3 = "Mfg3";
+    public static final String TYPE_A = "TypeA";
+    public static final String TYPE_B = "TypeB";
+    public static final String TYPE_C = "TypeC";
+    public static final String TYPE_D = "TypeD";
+    // private static final Logger log = LoggerFactory.getLogger(ConnectionConfigManagerTest.class);
 
     @BeforeEach
     public void setUp() throws Exception {

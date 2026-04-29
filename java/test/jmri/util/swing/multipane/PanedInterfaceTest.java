@@ -35,6 +35,6 @@ public class PanedInterfaceTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PanedInterfaceTest.class.getName());
+    // private static final Logger log = LoggerFactory.getLogger(PanedInterfaceTest.class.getName());
 
 }

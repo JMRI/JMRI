@@ -39,5 +39,5 @@ public class JmrixConfigPaneTest extends PreferencesPanelTestBase<JmrixConfigPan
     public void isRestartRequired() {
         assertThat(prefsPanel.isRestartRequired()).isTrue();
     }
-    // private final static Logger log = LoggerFactory.getLogger(JmrixConfigPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JmrixConfigPaneTest.class);
 }

@@ -70,6 +70,6 @@ public class JMRIClientTrafficControlScaffold extends JMRIClientTrafficControlle
         return cmdListeners.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientTrafficControlScaffold.class);
+    private static final Logger log = LoggerFactory.getLogger(JMRIClientTrafficControlScaffold.class);
 
 }

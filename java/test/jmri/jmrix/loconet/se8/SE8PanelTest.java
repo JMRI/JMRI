@@ -26,6 +26,6 @@ public class SE8PanelTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SE8PanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SE8PanelTest.class);
 
 }

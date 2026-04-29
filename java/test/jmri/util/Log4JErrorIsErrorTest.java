@@ -28,5 +28,5 @@ public class Log4JErrorIsErrorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Log4JErrorIsErrorTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Log4JErrorIsErrorTest.class);
 }

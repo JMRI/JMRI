@@ -2,15 +2,11 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.io.File;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.ProcessingInstruction;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
@@ -26,9 +22,9 @@ import jmri.jmrit.operations.setup.Setup;
 public class CarManagerXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
     
     // the directories under operations
-    static final String CAR_ROUTER_REPORTS = "carRouterReports"; // NOI18N
+    protected static final String CAR_ROUTER_REPORTS = "carRouterReports"; // NOI18N
     // sub directory under CAR_ROUTER_REPORTS
-    static final String CAR_ROUTER_REPORTS_RAW = "carRouterReports";
+    protected static final String CAR_ROUTER_REPORTS_RAW = "carRouterReports";
     
     public CarManagerXml() {
     }

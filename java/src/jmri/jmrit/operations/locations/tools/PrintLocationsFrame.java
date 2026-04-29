@@ -37,14 +37,14 @@ import jmri.util.davidflanagan.HardcopyWriter;
  */
 public class PrintLocationsFrame extends OperationsFrame {
 
-    static final String FORM_FEED = "\f"; // NOI18N
-    static final String TAB = "\t"; // NOI18N
-    static final int TAB_LENGTH = 10;
-    static final String SPACES_2 = "  ";
-    static final String SPACES_3 = "   ";
-    static final String SPACES_4 = "    ";
+    protected static final String FORM_FEED = "\f"; // NOI18N
+    protected static final String TAB = "\t"; // NOI18N
+    protected static final int TAB_LENGTH = 10;
+    protected static final String SPACES_2 = "  ";
+    protected static final String SPACES_3 = "   ";
+    protected static final String SPACES_4 = "    ";
 
-    static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
+    protected static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
 
     JCheckBox printLocations = new JCheckBox(Bundle.getMessage("PrintLocations"));
     JCheckBox printSchedules = new JCheckBox(Bundle.getMessage("PrintSchedules"));

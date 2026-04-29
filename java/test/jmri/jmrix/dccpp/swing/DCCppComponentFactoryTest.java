@@ -37,6 +37,6 @@ public class DCCppComponentFactoryTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCppComponentFactoryTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DCCppComponentFactoryTest.class);
 
 }

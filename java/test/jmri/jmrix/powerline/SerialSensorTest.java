@@ -45,6 +45,6 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialSensorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SerialSensorTest.class);
 
 }

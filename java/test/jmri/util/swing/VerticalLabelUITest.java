@@ -26,6 +26,6 @@ public class VerticalLabelUITest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(VerticalLabelUITest.class);
+    // private static final Logger log = LoggerFactory.getLogger(VerticalLabelUITest.class);
 
 }

@@ -225,5 +225,5 @@ public class JUnitSwingUtilTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JUnitSwingUtilTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JUnitSwingUtilTest.class);
 }

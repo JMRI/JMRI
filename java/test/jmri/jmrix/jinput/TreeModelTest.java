@@ -45,5 +45,5 @@ public class TreeModelTest {
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreeModelTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreeModelTest.class);
 }

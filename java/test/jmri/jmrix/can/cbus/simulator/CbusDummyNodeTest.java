@@ -641,6 +641,6 @@ public class CbusDummyNodeTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusDummyNodeTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusDummyNodeTest.class);
 
 }

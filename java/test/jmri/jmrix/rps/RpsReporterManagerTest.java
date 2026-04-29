@@ -84,6 +84,6 @@ public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RpsReporterManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RpsReporterManagerTest.class);
 
 }

@@ -174,5 +174,5 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XBeeSensorManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(XBeeSensorManagerTest.class);
 }

@@ -47,6 +47,6 @@ public class JmriColorChooserPanelTest {
         panel = null;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriColorChooserPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JmriColorChooserPanelTest.class);
 
 }

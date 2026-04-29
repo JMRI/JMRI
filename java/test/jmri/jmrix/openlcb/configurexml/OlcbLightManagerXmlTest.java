@@ -67,7 +67,7 @@ public class OlcbLightManagerXmlTest {
     }
 
     OlcbTestInterface t;
-    private final static Logger log = LoggerFactory.getLogger(OlcbLightManagerXmlTest.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbLightManagerXmlTest.class);
 
     @BeforeAll
     public static void checkSeparate() {

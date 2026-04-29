@@ -137,5 +137,5 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Dcc4PcSensorManagerTest.class);
 }

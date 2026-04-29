@@ -131,7 +131,7 @@ public class NamedBeanPreferNumericComparatorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log =
+    // private static final Logger log =
     // LoggerFactory.getLogger(NamedBeanComparatorTest.class);
 
 }

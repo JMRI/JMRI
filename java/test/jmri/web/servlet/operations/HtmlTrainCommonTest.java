@@ -33,6 +33,6 @@ public class HtmlTrainCommonTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HtmlTrainCommonTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(HtmlTrainCommonTest.class);
 
 }

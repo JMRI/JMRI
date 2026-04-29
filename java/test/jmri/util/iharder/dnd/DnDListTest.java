@@ -28,6 +28,6 @@ public class DnDListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DnDListTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DnDListTest.class);
 
 }

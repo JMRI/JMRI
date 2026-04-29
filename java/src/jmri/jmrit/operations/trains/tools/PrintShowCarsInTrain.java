@@ -27,11 +27,11 @@ import jmri.util.davidflanagan.HardcopyWriter;
  */
 public class PrintShowCarsInTrain extends TrainCommon {
 
-    static final String NEW_LINE = "\n"; // NOI18N
+    protected static final String NEW_LINE = "\n"; // NOI18N
 
-    static int fieldSize =
+    protected static int fieldSize =
             InstanceManager.getDefault(CarRoads.class).getMaxNameLength() + Control.max_len_string_road_number;
-    static final String TAB = padString("", fieldSize);
+    protected static final String TAB = padString("", fieldSize);
 
     /**
      * Prints the block order for a train at the train's current location.

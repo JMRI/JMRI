@@ -2817,14 +2817,10 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                     ttv.setRayCoordsIndexed(MathUtil.granulize(ttv.getRayCoordsIndexed(rayIndex), gContext.getGridSize()), rayIndex);
                 }
             }
-            if (lt instanceof LayoutTraverser) {
-                LayoutTraverser tt = (LayoutTraverser) lt;
-                LayoutTraverserView ttv = getLayoutTraverserView(tt);
-                for (LayoutTraverser.SlotTrack st : tt.getSlotList()) {
-                    int slotIndex = st.getConnectionIndex();
-                    ttv.setSlotCoordsIndexed(MathUtil.granulize(ttv.getSlotCoordsIndexed(slotIndex), gContext.getGridSize()), slotIndex);
-                }
-            }
+//             if (lt instanceof LayoutTraverser) {
+//                 Placeholder comment:
+//                 Do nothing since slot connection points are relative to the traverser center point.
+//             }
         }
         for (LayoutShape ls : shapes) {
             ls.setCoordsCenter(MathUtil.granulize(ls.getCoordsCenter(), gContext.getGridSize()));
@@ -5488,11 +5484,10 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                                 LayoutTurntableView turnView = getLayoutTurntableView(turn);
                                 turnView.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
                                         selectedHitPointType.turntableTrackIndex());
-                            } else if (HitPointType.isTraverserSlotHitType(selectedHitPointType)) {
-                                LayoutTraverser turn = (LayoutTraverser) selectedObject;
-                                LayoutTraverserView turnView = getLayoutTraverserView(turn);
-                                turnView.setSlotCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
-                                        selectedHitPointType.traverserTrackIndex());
+//                             } else if (HitPointType.isTraverserSlotHitType(selectedHitPointType)) {
+//                                 Placeholder comment:
+//                                 The ability to drag the slot connection points is disabled.
+//                                 Connection point locations are relative to the traverser center point.
                             }
                             break;
                         }
@@ -6890,6 +6885,11 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         }
 
+        // Check if removing the turntable will cause errors.
+        if (!o.isRemoveAllowed()) {
+            return false;
+        }
+
         // remove from selection information
         if (selectedObject == o) {
             selectedObject = null;
@@ -6938,6 +6938,11 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 // Suppress future warnings, and continue
                 noWarnTraverser = true;
             }
+        }
+
+        // Check if removing the traverser will cause errors.
+        if (!o.isRemoveAllowed()) {
+            return false;
         }
 
         // remove from selection information

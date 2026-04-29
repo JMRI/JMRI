@@ -27,6 +27,6 @@ public class TransitManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TransitManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TransitManagerTest.class);
 
 }

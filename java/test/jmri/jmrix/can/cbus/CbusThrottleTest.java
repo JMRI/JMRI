@@ -1294,6 +1294,6 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusThrottleTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusThrottleTest.class);
 
 }

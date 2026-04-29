@@ -27,6 +27,6 @@ public class LoadStorePanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LoadStorePanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LoadStorePanelTest.class);
 
 }

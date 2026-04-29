@@ -27,6 +27,6 @@ public class GraphPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(GraphPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(GraphPaneTest.class);
 
 }

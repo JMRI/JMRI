@@ -196,5 +196,5 @@ public class ProtocolOptionsPersistenceTest {
         expectOptionValue("Single", "Foo", "");
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProtocolOptionsPersistenceTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ProtocolOptionsPersistenceTest.class);
 }

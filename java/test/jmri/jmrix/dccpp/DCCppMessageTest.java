@@ -856,6 +856,6 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         super.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppMessageTest.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppMessageTest.class);
 
 }

@@ -95,6 +95,6 @@ public class PropertyChangeEventQueueTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PropertyChangeEventQueueTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PropertyChangeEventQueueTest.class);
 
 }
