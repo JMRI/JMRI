@@ -13,11 +13,23 @@ import jmri.jmrit.throttle.ThrottleWindow;
 import jmri.jmrit.throttle.implementation.ThrottleFrame;
 import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 
-
 /**
+ * Actions implementation for a Throttle Window
+ * 
+ * <hr>
+ * This file is part of JMRI.
+ * <p>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <p>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Lionel Jeanson
  */
+
 public class ThrottleWindowActionsFactory extends ThrottleWindowActions {
    
     private final List<String> actionStrings = new ArrayList<>(Arrays.asList(
@@ -231,7 +243,9 @@ public class ThrottleWindowActionsFactory extends ThrottleWindowActions {
         @Override
         public void actionPerformed(ActionEvent e) {
             DccThrottle throttle = tw.getCurentThrottleController().getFunctionThrottle();
-            if (throttle!=null) throttle.setFunction(fn, ! throttle.getFunction(fn));
+            if (throttle!=null) {
+                throttle.setFunction(fn, ! throttle.getFunction(fn));
+            }
         }                
     }
 }
