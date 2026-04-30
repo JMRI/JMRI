@@ -683,7 +683,9 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>The JSON WebSocket power and throttle endpoints now support an optional
+                <code>prefix</code> field, allowing clients to specify which connection
+                the command should be sent to.</li>
         </ul>
 
     <h3>Where Used</h3>
