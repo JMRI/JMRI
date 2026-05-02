@@ -155,6 +155,10 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
                     Bundle.getMessage(locale, "ErrorThrottleNoAddress"), id); // NOI18N
         }
+        // NOTE: JsonThrottleManager keys by DccLocoAddress only. If the same address is
+        // requested on two different connections (different prefix), the existing JsonThrottle
+        // (and its underlying connection) is reused and the new prefix is ignored. Fixing this
+        // would require keying on (address, prefix) — a separate, larger change.
         if (manager.containsKey(address)) {
             throttle = manager.get(address);
             manager.put(throttle, server);
