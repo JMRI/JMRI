@@ -538,7 +538,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>Fix the Dispatcher Expression.  Active train status changes were being missed.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -715,6 +715,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Added new button icons at <a href="https://jmri.org/resources/icons/buttons">resources/icons/buttons</a>.</li>
         </ul>
 

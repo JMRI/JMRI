@@ -294,7 +294,6 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (! _listenersAreRegistered) {
             _atManager.addPropertyChangeListener(this);
-            _selectEnum.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -304,7 +303,6 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _atManager.removePropertyChangeListener(this);
-            _selectEnum.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
