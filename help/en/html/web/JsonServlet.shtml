@@ -326,7 +326,7 @@ code {
 				<tr>
 					<td><code>{"type":"throttle","data":{"name":"CSX754","address":754,"prefix":"L"}}</code></td>
 					<td><code>{"type":"throttle","data":{"name":"CSX754","address":754,"prefix":"L","speed":0.0,"forward":true,"throttle":"CSX754"}}</code></td>
-					<td>request throttle for address 754 on a specific connection by system prefix — useful when multiple command stations are configured; subsequent speed/function commands use the name "CSX754" as normal</td>
+					<td>request throttle for address 754 on a specific connection by system prefix &mdash; useful when multiple command stations are configured; subsequent speed/function commands use the name "CSX754" as normal</td>
 				</tr>
 				<tr>
 					<td><code>{"type":"throttle","data":{"name":"CSX754","speed":0.25}}</code></td>

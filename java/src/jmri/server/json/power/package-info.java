@@ -8,7 +8,8 @@
  * <dt>prefix</dt><dd>The system prefix of the connection supplying power
  * (e.g. {@code "L"} for LocoNet, {@code "D"} for DCC-EX).</dd>
  * <dt>state</dt><dd>One of
- * {@link jmri.server.json.JSON#UNKNOWN}, {@link jmri.server.json.JSON#ON},
+ * {@link jmri.server.json.JSON#UNKNOWN},
+ * {@link jmri.server.json.JSON#ON},
  * {@link jmri.server.json.JSON#OFF}, or
  * {@link jmri.server.json.JSON#IDLE}</dd>
  * <dt>default</dt><dd>True if this message represents the power state for the
