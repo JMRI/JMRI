@@ -120,6 +120,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String LANDSCAPE = Bundle.getMessage("Landscape");
     public static final String HALFPAGE = Bundle.getMessage("HalfPage");
     public static final String HANDHELD = Bundle.getMessage("HandHeld");
+    public static final String RECEIPT = Bundle.getMessage("Receipt");
 
     public static final String PAGE_NORMAL = Bundle.getMessage("PageNormal");
     public static final String PAGE_PER_TRAIN = Bundle.getMessage("PagePerTrain");
@@ -1850,6 +1851,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         box.addItem(LANDSCAPE);
         box.addItem(HALFPAGE);
         box.addItem(HANDHELD);
+        box.addItem(RECEIPT);
         OperationsPanel.padComboBox(box, LANDSCAPE.length());
         return box;
     }

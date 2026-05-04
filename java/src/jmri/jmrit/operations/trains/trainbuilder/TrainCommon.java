@@ -2304,9 +2304,19 @@ public class TrainCommon {
         // get hand held or half page dimensions in DPI
         Dimension pageSize = getFullPageSizeDPI(orientation);
 
+        double leftmargin = .5 * 72;
+        double rightmargin = .5 * 72;
+        double topmargin = .5 * 72;
+        double bottommargin = .5 * 72;
+
+        if (orientation.equals(Setup.RECEIPT)) {
+            leftmargin = .1 * 72;
+            rightmargin = .1 * 72;
+        }
+
         Integer charsPerLine = null;
-        try (HardcopyWriter writer = new HardcopyWriter(fontName, fontStyle, fontSize, .5 * 72, .5 * 72, .5 * 72,
-                .5 * 72, orientation.equals(Setup.LANDSCAPE),
+        try (HardcopyWriter writer = new HardcopyWriter(fontName, fontStyle, fontSize, leftmargin, rightmargin, topmargin,
+                bottommargin, orientation.equals(Setup.LANDSCAPE),
                 pageSize)) {
 
             charsPerLine = writer.getCharactersPerLine();
@@ -2320,7 +2330,7 @@ public class TrainCommon {
     }
 
     /**
-     * Returns null if standard paper size, otherwise full lengths for hand held
+     * Returns null if standard paper size, otherwise paper dimensions for hand held
      * or half page in DPI.
      * 
      * @param orientation paper size
@@ -2332,6 +2342,12 @@ public class TrainCommon {
             // add margins to page size
             pageSize = new Dimension((getPageSize(orientation).width + PAPER_MARGINS.width),
                     (getPageSize(orientation).height + PAPER_MARGINS.height));
+        }
+        // 2.25 inch paper width
+        if (orientation.equals(Setup.RECEIPT)) {
+            // margins .1 inch width
+            pageSize = new Dimension((getPageSize(orientation).width + RECEIPT_MARGINS.width),
+                    (getPageSize(orientation).height + RECEIPT_MARGINS.height));
         }
         return pageSize;
     }
@@ -2351,17 +2367,12 @@ public class TrainCommon {
         return charsPerLine;
     }
 
-    private boolean checkStringLength(String string, boolean isManifest) {
-        return checkStringLength(string, isManifest ? Setup.getManifestOrientation() : Setup.getSwitchListOrientation(),
-                Setup.getFontName(), Setup.getManifestFontSize());
-    }
-
     /**
      * Checks to see if the string fits on the page.
      *
      * @return false if string length is longer than page width.
      */
-    private boolean checkStringLength(String string, String orientation, String fontName, int fontSize) {
+    private boolean checkStringLength(String string, boolean isManifest) {
         // ignore text color controls when determining line length
         if (string.startsWith(TEXT_COLOR_START) && string.contains(TEXT_COLOR_DONE)) {
             string = string.substring(string.indexOf(TEXT_COLOR_DONE) + 2);
@@ -2369,14 +2380,11 @@ public class TrainCommon {
         if (string.contains(TEXT_COLOR_END)) {
             string = string.substring(0, string.indexOf(TEXT_COLOR_END));
         }
-        Font font = new Font(fontName, Font.PLAIN, fontSize); // NOI18N
-        JLabel label = new JLabel();
-        FontMetrics metrics = label.getFontMetrics(font);
-        int stringWidth = metrics.stringWidth(string);
-        return stringWidth <= getPageSize(orientation).width;
+        return string.length() <= getLineLength(isManifest);
     }
 
     protected static final Dimension PAPER_MARGINS = new Dimension(84, 72);
+    protected static final Dimension RECEIPT_MARGINS = new Dimension(14, 72);
 
     public static Dimension getPageSize(String orientation) {
         // page size has been adjusted to account for margins of .5
@@ -2390,6 +2398,10 @@ public class TrainCommon {
         }
         if (orientation.equals(Setup.HANDHELD)) {
             pagesize = new Dimension(206, 720); // 3.25 x 11
+        }
+        if (orientation.equals(Setup.RECEIPT)) {
+         // page size has been adjusted to account for margins of .1
+            pagesize = new Dimension(148, 720); // 2.25 x 11
         }
         return pagesize;
     }
