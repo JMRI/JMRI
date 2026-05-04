@@ -1,7 +1,5 @@
 package jmri.jmrit.throttle.implementation;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -55,7 +53,7 @@ import org.jdom2.JDOMException;
  * 
  */
 
-public class ThrottleUICore implements AddressListener, PropertyChangeListener  {
+public class ThrottleUICore implements AddressListener  {
 
     private DccThrottle throttle;
     private final ThrottleManager throttleManager;
@@ -88,7 +86,6 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
         throttleManager = tm;
         myThrottleController = tc;
         this.withPopupMenu = withPopupMenu;
-        InstanceManager.getDefault(ThrottlesPreferences.class).addPropertyChangeListener(this);
         initGUI();
     }
 
@@ -172,17 +169,6 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
         addressPanel.addAddressListener(this);                       
     }
 
-    public void applyPreferences() {
-        loadDefaultThrottle();
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        if (ThrottlesPreferences.prefPopertyName.compareTo(evt.getPropertyName()) == 0) {
-            applyPreferences();
-        }        
-    }
-
     public void setRosterEntry(RosterEntry re) {
         getAddressPanel().setRosterEntry(re);
     }
@@ -221,7 +207,6 @@ public class ThrottleUICore implements AddressListener, PropertyChangeListener  
             throttleManager.removeListener(throttle.getLocoAddress(), throttleFrameManager.getThrottlesListPanel().getTableModel());
             throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableDataChanged();
         }
-        InstanceManager.getDefault(ThrottlesPreferences.class).removePropertyChangeListener(this);
         // check for any special disposing in InternalFrames
         if (controlPanel!=null) {
             controlPanel.dispose();

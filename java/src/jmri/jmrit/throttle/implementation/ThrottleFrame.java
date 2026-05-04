@@ -115,7 +115,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
         throttleWindow = tw;
         throuic = new ThrottleUICore(throttleManager, this);
         initGUI();
-        throuic.applyPreferences();
+        throuic.loadDefaultThrottle();
         throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableStructureChanged();
     }
 

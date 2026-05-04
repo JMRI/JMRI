@@ -62,7 +62,7 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
         throttleManager = tm;
         throuic = new ThrottleUICore(throttleManager, this, false);
         initGUI(isShowingCtrlPanel, isShowingFnPanel, isShowingIconPanel);
-        throuic.applyPreferences();
+        throuic.loadDefaultThrottle();
         throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableStructureChanged();
     }
 
