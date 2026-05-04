@@ -383,6 +383,6 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
 
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusReporterTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusReporterTest.class);
 
 }

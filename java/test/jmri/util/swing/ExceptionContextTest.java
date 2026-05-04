@@ -44,6 +44,6 @@ public class ExceptionContextTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ExceptionContextTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ExceptionContextTest.class);
 
 }

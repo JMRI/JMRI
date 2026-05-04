@@ -138,6 +138,6 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         JUnitUtil.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnSensorManagerTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnSensorManagerTest.class);
 
 }

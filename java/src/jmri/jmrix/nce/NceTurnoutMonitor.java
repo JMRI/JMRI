@@ -58,7 +58,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
     boolean turnoutUpdateValid = true; // keep the thread running
     private boolean sentWarnMessage = false; // used to report about early 2007 EPROM problem
 
-    // debug final
+    // debug final.
     private NceTrafficController tc = null;
 
     public NceTurnoutMonitor(NceTrafficController t) {

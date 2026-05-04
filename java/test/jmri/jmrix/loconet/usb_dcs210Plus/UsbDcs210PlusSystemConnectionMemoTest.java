@@ -29,5 +29,5 @@ public class UsbDcs210PlusSystemConnectionMemoTest extends LnSystemConnectionMem
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SBDCS210PlusSystemConnectionMemoTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SBDCS210PlusSystemConnectionMemoTest.class);
 }

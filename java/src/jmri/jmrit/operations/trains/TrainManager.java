@@ -39,7 +39,7 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class TrainManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
-    static final String NONE = "";
+    protected static final String NONE = "";
 
     // Train frame attributes
     private String _trainAction = TrainsTableFrame.MOVE; // Trains frame table button action

@@ -28,6 +28,6 @@ public class FileLocationPaneTest extends PreferencesPanelTestBase<FileLocationP
         Assertions.assertTrue( prefsPanel.isPersistant() );
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(FileLocationPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(FileLocationPaneTest.class);
 
 }

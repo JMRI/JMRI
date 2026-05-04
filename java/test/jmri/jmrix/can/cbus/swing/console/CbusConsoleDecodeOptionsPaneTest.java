@@ -105,7 +105,7 @@ public class CbusConsoleDecodeOptionsPaneTest  {
     /**
      * Local order of check boxes is used for test, not screen display order.
      */
-    private final static String[] checkBoxLabels = new String[]{
+    private static final String[] checkBoxLabels = new String[]{
         Bundle.getMessage("TrafficDirection"),
         Bundle.getMessage("ButtonShowTimestamp"),
         Bundle.getMessage("showOpcCheckbox"),

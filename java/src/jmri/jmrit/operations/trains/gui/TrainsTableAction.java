@@ -19,7 +19,7 @@ public class TrainsTableAction extends AbstractAction {
         super(Bundle.getMessage("MenuTrains")); // NOI18N
     }
 
-    static TrainsTableFrame trainsTableFrame = null;
+    private static TrainsTableFrame trainsTableFrame = null;
 
     @Override
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Show only one TrainsTableFrame")

@@ -65,6 +65,6 @@ public class DCCppTurnoutManagerTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DCCppTurnoutManagerTest.class);
 
 }

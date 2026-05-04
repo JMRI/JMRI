@@ -29,6 +29,6 @@ public class AbstractMessageTest extends AbstractMessageTestBase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AbstractMessageTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AbstractMessageTest.class);
 
 }

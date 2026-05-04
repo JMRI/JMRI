@@ -679,7 +679,9 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
                     Bundle.getMessage("WarningTitle"), // NOI18N
                     JmriJOptionPane.YES_NO_OPTION);
             if (n == JmriJOptionPane.YES_OPTION) {
-                layoutTurntable.deleteRay(rayTrack);
+                if (layoutTurntable.isRayDeleteAllowed(rayTrack)) {
+                    layoutTurntable.deleteRay(rayTrack);
+                }
             }
         }
 

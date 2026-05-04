@@ -29,6 +29,6 @@ public class DrawSquaresTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DrawSquaresTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DrawSquaresTest.class);
 
 }

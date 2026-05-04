@@ -234,6 +234,6 @@ public class CbusEventResponderTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventResponderTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusEventResponderTest.class);
 
 }

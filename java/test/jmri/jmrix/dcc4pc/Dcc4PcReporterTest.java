@@ -25,6 +25,6 @@ public class Dcc4PcReporterTest extends jmri.implementation.AbstractRailComRepor
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcReporterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Dcc4PcReporterTest.class);
 
 }

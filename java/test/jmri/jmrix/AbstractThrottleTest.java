@@ -1680,6 +1680,6 @@ public class AbstractThrottleTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractThrottleTest.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractThrottleTest.class);
 
 }

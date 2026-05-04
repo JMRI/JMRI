@@ -102,6 +102,6 @@ public class SpeedoDialTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SpeedoDialTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SpeedoDialTest.class);
 
 }

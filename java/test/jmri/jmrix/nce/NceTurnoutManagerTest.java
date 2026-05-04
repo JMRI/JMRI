@@ -50,6 +50,6 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
         JUnitUtil.tearDown();
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceTurnoutManagerTest.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceTurnoutManagerTest.class);
 
 }

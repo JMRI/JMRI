@@ -175,6 +175,6 @@ public class Dcc4PcMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcMessageTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Dcc4PcMessageTest.class);
 
 }

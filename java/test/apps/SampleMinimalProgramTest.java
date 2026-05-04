@@ -35,6 +35,6 @@ public class SampleMinimalProgramTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SampleMinimalProgramTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SampleMinimalProgramTest.class);
 
 }

@@ -27,6 +27,6 @@ public class StayOpenCheckBoxItemTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StayOpenCheckBoxItemTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StayOpenCheckBoxItemTest.class);
 
 }

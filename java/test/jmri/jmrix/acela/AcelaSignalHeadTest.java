@@ -41,6 +41,6 @@ public class AcelaSignalHeadTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AcelaSignalHeadTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AcelaSignalHeadTest.class);
 
 }

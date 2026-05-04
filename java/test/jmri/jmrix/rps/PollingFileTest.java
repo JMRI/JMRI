@@ -27,6 +27,6 @@ public class PollingFileTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PollingFileTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PollingFileTest.class);
 
 }

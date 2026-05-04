@@ -49,6 +49,6 @@ public class TimeStampedOutputTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TimeStampedOutputTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TimeStampedOutputTest.class);
 
 }

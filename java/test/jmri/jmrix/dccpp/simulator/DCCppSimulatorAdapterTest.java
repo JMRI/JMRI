@@ -85,6 +85,6 @@ public class DCCppSimulatorAdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCppSimulatorAdapterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DCCppSimulatorAdapterTest.class);
 
 }

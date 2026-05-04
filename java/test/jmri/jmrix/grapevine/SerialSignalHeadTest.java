@@ -36,6 +36,6 @@ public class SerialSignalHeadTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialSignalHeadTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SerialSignalHeadTest.class);
 
 }

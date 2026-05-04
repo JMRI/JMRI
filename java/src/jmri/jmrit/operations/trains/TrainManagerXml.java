@@ -34,15 +34,15 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     private static final String FILE_TYPE_CSV = ").csv"; // NOI18N
 
     // the directories under operations
-    static final String BUILD_STATUS = "buildstatus"; // NOI18N
-    static final String MANIFESTS = "manifests"; // NOI18N
-    static final String SWITCH_LISTS = "switchLists"; // NOI18N
+    protected static final String BUILD_STATUS = "buildstatus"; // NOI18N
+    protected static final String MANIFESTS = "manifests"; // NOI18N
+    protected static final String SWITCH_LISTS = "switchLists"; // NOI18N
     public static final String CSV_MANIFESTS = "csvManifests"; // NOI18N
     public static final String CSV_SWITCH_LISTS = "csvSwitchLists"; // NOI18N
-    static final String JSON_MANIFESTS = "jsonManifests"; // NOI18N
-    static final String MANIFESTS_BACKUPS = "manifestsBackups"; // NOI18N
-    static final String SWITCH_LISTS_BACKUPS = "switchListsBackups"; // NOI18N
-    static final String BUILD_STATUS_BACKUPS = "buildStatusBackups"; // NOI18N
+    protected static final String JSON_MANIFESTS = "jsonManifests"; // NOI18N
+    protected static final String MANIFESTS_BACKUPS = "manifestsBackups"; // NOI18N
+    protected static final String SWITCH_LISTS_BACKUPS = "switchListsBackups"; // NOI18N
+    protected static final String BUILD_STATUS_BACKUPS = "buildStatusBackups"; // NOI18N
 
     public TrainManagerXml() {
     }

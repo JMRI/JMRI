@@ -49,6 +49,6 @@ public class DCCppMenuTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCppMenuTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DCCppMenuTest.class);
 
 }

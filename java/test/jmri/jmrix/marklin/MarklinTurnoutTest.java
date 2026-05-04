@@ -100,6 +100,6 @@ public class MarklinTurnoutTest extends jmri.implementation.AbstractTurnoutTestB
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MarklinTurnoutTest.class);
 
 }

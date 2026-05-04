@@ -26,6 +26,6 @@ public class StatusBarTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StatusBarTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StatusBarTest.class);
 
 }

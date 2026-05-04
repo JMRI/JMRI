@@ -19,6 +19,6 @@ public class JsonServerPreferencesPanelTest extends PreferencesPanelTestBase<Jso
         prefsPanel = new JsonServerPreferencesPanel();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonServerPreferencesPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JsonServerPreferencesPanelTest.class);
 
 }

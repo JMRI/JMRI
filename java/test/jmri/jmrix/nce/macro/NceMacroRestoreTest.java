@@ -36,6 +36,6 @@ public class NceMacroRestoreTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceMacroRestoreTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NceMacroRestoreTest.class);
 
 }

@@ -35,5 +35,5 @@ public class CanSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Ca
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CanSystemConnectionMemoTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CanSystemConnectionMemoTest.class);
 }

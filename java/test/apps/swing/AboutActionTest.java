@@ -26,5 +26,5 @@ public class AboutActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AboutActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AboutActionTest.class);
 }

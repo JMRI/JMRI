@@ -48,6 +48,6 @@ public class EcosProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosProgrammerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EcosProgrammerTest.class);
 
 }

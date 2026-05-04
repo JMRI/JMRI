@@ -37,6 +37,6 @@ public class HelpUtilTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HelpUtilTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(HelpUtilTest.class);
 
 }

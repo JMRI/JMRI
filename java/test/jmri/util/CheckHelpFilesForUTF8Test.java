@@ -132,6 +132,6 @@ public class CheckHelpFilesForUTF8Test {
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CheckHelpFilesForUTF8Test.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CheckHelpFilesForUTF8Test.class);
 
 }

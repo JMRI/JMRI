@@ -164,6 +164,6 @@ public class AddressedHighCvProgrammerFacadeTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacadeTest.class);
+    private static final Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacadeTest.class);
 
 }

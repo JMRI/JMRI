@@ -15,7 +15,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  */
 public class AutoSave {
 
-    static Thread autoSave = null;
+    private static Thread autoSave = null;
 
     public static synchronized void start() {
         if (Setup.isAutoSaveEnabled() && autoSave == null) {

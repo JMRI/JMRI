@@ -27,6 +27,6 @@ public class UhlenbrockSlotTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UhlenbrockSlotTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(UhlenbrockSlotTest.class);
 
 }

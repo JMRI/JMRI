@@ -171,6 +171,6 @@ public class CbusEventDataElementsTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventDataElementsTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusEventDataElementsTest.class);
 
 }

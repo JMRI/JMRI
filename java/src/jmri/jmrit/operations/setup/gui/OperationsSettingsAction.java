@@ -19,7 +19,7 @@ public class OperationsSettingsAction extends AbstractAction {
         super(Bundle.getMessage("MenuSetup")); // NOI18N
     }
 
-    static OperationsSettingsFrame operationsSettingsFrame = null;
+    private static OperationsSettingsFrame operationsSettingsFrame = null;
 
     @Override
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Only one OperationsSetupFrame")

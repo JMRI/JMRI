@@ -32,6 +32,6 @@ public class StackMonDataModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StackMonDataModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StackMonDataModelTest.class);
 
 }

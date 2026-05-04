@@ -9,6 +9,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * A LayoutTraverser is a representation used by LayoutEditor to display a
@@ -110,6 +111,11 @@ public class LayoutTraverser extends LayoutTrack {
     }
 
     public void setDispatcherManaged(boolean managed) {
+        if (isDispatcherManaged() && !managed) {
+            if (!isRemoveAllowed()) {
+                return;
+            }
+        }
         dispatcherManaged = managed;
     }
 
@@ -706,6 +712,7 @@ public class LayoutTraverser extends LayoutTrack {
         }
         SlotTrack slotB = slotList.get(pairIndex * 2 + 1);
         SlotTrack slotA = slotList.get(pairIndex * 2);
+
         slotList.remove(slotB);
         slotList.remove(slotA);
         slotB.dispose();
@@ -1145,10 +1152,12 @@ public class LayoutTraverser extends LayoutTrack {
         List<HitPointType> result = new ArrayList<>();
 
         for (int k = 0; k < getNumberSlots(); k++) {
-            if (getSlotConnectOrdered(k) == null) {
+            var slotTrack = slotList.get(k);
+            if (slotTrack != null && slotTrack.getConnect() == null && !slotTrack.isDisabled()) {
                 result.add(HitPointType.traverserTrackIndexedValue(k));
             }
         }
+
         return result;
     }
 
@@ -1248,6 +1257,155 @@ public class LayoutTraverser extends LayoutTrack {
         }
         return -1;
     }
+
+    /**
+     * Check for conditions that will caused subsequent errors if the the traverser slot is removed.
+     * Both slot connections have to be clear.
+     * @param pairIndex The traverser slot to be deleted.
+     * @return true if the slot can be deleted.
+     */
+    public boolean isSlotDeleteAllowed(int pairIndex) {
+        if (pairIndex < 0 || (pairIndex * 2 + 1) >= slotList.size()) {
+            log.warn("pairIndex out of range, {}, for isSlotDeleteAllowed", pairIndex);
+            return false;
+        }
+
+        var deleteOk = true;
+        var msg = new StringBuilder();
+
+        for (int idx = 0; idx < 2; idx++) {
+            var slot = slotList.get(pairIndex * 2 + idx);
+            msg.append(isSlotConnectionClear(slot));
+        }
+
+        if (msg.length() > 0) {
+            msg.insert(0, Bundle.getMessage("TV_Message_Header"));
+            msg.append(Bundle.getMessage("TV_Message_Slot_Delete"));
+            JmriJOptionPane.showMessageDialog(models,
+                    msg.toString(),
+                    Bundle.getMessage("WarningTitle"),  // NOI18N
+                    JmriJOptionPane.WARNING_MESSAGE);
+            deleteOk = false;
+        }
+
+        return deleteOk;
+    }
+
+    /**
+     * Check for a connected track segment, signal masts or SML.
+     * @param track The A or B side of a slot.
+     * @return an empty StringBuilder if clear or a set of messages.
+     */
+    public StringBuilder isSlotConnectionClear(SlotTrack track) {
+        var smlManager = InstanceManager.getDefault(SignalMastLogicManager.class);
+        var msg = new StringBuilder();
+
+        var trackSegment = track.getConnect();
+        if (trackSegment != null) {
+            msg.append(Bundle.getMessage("TV_Connection"));
+        }
+
+        // slot approach mast
+        var approachMast = track.getApproachMast();
+        if (approachMast != null && smlManager.isSignalMastUsed(approachMast)) {
+            msg.append(Bundle.getMessage("TTV_Approach_SML", approachMast.getDisplayName()));
+        }
+
+        if (approachMast != null && models.containsSignalMast(approachMast)) {
+            msg.append(Bundle.getMessage("TTV_Approach_Mast", approachMast.getDisplayName()));
+        }
+
+        // slot destination mast attached to end bumper or anchor point.
+        if (trackSegment != null) {
+            SignalMast destMast = null;
+
+            if (trackSegment.getType1() == HitPointType.POS_POINT) {
+                destMast = getDestinationMast(trackSegment, trackSegment.getConnect1());
+            } else if (trackSegment.getType2() == HitPointType.POS_POINT) {
+                destMast = getDestinationMast(trackSegment, trackSegment.getConnect2());
+            }
+
+            if (destMast != null && smlManager.isSignalMastUsed(destMast)) {
+                msg.append(Bundle.getMessage("TTV_Approach_SML", destMast.getDisplayName()));
+            }
+
+            if (destMast != null && models.containsSignalMast(destMast)) {
+                msg.append(Bundle.getMessage("TTV_Destination_Mast", destMast.getDisplayName()));
+            }
+        }
+
+        return msg;
+    }
+
+    /**
+     * Check for conditions that will caused subsequent errors if the the traverser is removed
+     * or dispatcherManaged is changed from true to false.
+     * - The exit mast is a SML source.
+     * - The buffer mast is a SML destination.
+     * - Exit, buffer or approach masts are on the panel.
+     */
+    public boolean isRemoveAllowed() {
+            var smlManager = InstanceManager.getDefault(SignalMastLogicManager.class);
+        var removeOk = true;
+        var msg = new StringBuilder();
+
+        // Exit SML and icon
+        var exit = getExitSignalMast();
+        if (exit != null && smlManager.isSignalMastUsed(exit)) {
+            msg.append(Bundle.getMessage("TTV_Exit_SML", exit.getDisplayName()));
+        }
+        if (exit != null && models.containsSignalMast(exit)) {
+            msg.append(Bundle.getMessage("TTV_Exit_Mast", exit.getDisplayName()));
+        }
+
+        // Buffer SML and icon
+        var buffer = getBufferMast();
+        if (buffer != null && smlManager.isSignalMastUsed(buffer)) {
+            msg.append(Bundle.getMessage("TTV_Buffer_SML", buffer.getDisplayName()));
+        }
+        if (buffer != null && models.containsSignalMast(buffer)) {
+            msg.append(Bundle.getMessage("TTV_Buffer_Mast", buffer.getDisplayName()));
+        }
+
+        for (var slotTrack : slotList) {
+           msg.append(isSlotConnectionClear(slotTrack));
+        }
+
+        if (msg.length() > 0) {
+            msg.insert(0, Bundle.getMessage("TV_Message_Header"));
+            msg.append(Bundle.getMessage("TV_Message_Remove"));
+            msg.append(Bundle.getMessage("TTV_Actions"));
+            msg.append(Bundle.getMessage("TTV_Dispatcher"));
+            JmriJOptionPane.showMessageDialog(models,
+                    msg.toString(),
+                    Bundle.getMessage("WarningTitle"),  // NOI18N
+                    JmriJOptionPane.WARNING_MESSAGE);
+            removeOk = false;
+        }
+
+        return removeOk;
+    }
+
+    /**
+     * Check for the presence of destination masts at end bumper and anchor points.
+     * These are the masts used by the Exit mast SML.
+     * @param trackSegment The track segment for a turnout ray.
+     * @param connection The end bumper or anchor point at the end of the track segment.
+     * @return the destination mast at the end bumper or anchor point.  Return null if none assigned.
+     */
+    private SignalMast getDestinationMast(TrackSegment trackSegment, LayoutTrack connection) {
+        SignalMast destMast =  null;
+        var point = (PositionablePoint)connection;
+
+        if (LayoutEditorTools.isAtWestEndOfAnchor(models, trackSegment, point)) {
+            destMast = point.getEastBoundSignalMast();
+        } else {
+            destMast = point.getWestBoundSignalMast();
+        }
+
+        return destMast;
+    }
+
 
     /**
      * {@inheritDoc}

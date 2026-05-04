@@ -27,6 +27,6 @@ public class LoadModifierEditorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LoadModifierEditorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LoadModifierEditorTest.class);
 
 }

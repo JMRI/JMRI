@@ -49,8 +49,8 @@ public class PrintCarLoadsAction extends AbstractAction {
 
     public class CarLoadPrintOption {
 
-        static final String TAB = "\t"; // NOI18N
-        static final String NEW_LINE = "\n"; // NOI18N
+        protected static final String TAB = "\t"; // NOI18N
+        protected static final String NEW_LINE = "\n"; // NOI18N
 
         // no frame needed for now
         public CarLoadPrintOption() {

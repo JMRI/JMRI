@@ -38,6 +38,6 @@ public class SerialPacketGenActionTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialPacketGenActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SerialPacketGenActionTest.class);
 
 }

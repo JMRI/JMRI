@@ -27,8 +27,8 @@ public class MqttTurnoutTest extends AbstractTurnoutTestBase {
     @Test
     public void testParserUpdate() {
         MqttContentParser<Turnout> parser = new MqttContentParser<Turnout>() {
-            private final static String CLOSED_TEXT = "BAR";
-            private final static String THROWN_TEXT = "FOO";
+            private static final String CLOSED_TEXT = "BAR";
+            private static final String THROWN_TEXT = "FOO";
             @Override
             public void beanFromPayload(@Nonnull Turnout bean, @Nonnull String payload, @Nonnull String topic) {
                 switch (payload) {

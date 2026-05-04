@@ -138,6 +138,6 @@ public class LnConstantsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnConstantsTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LnConstantsTest.class);
 
 }

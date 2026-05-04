@@ -93,6 +93,6 @@ public class EcosLocoAddressManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EcosLocoAddressManagerTest.class);
 
 }

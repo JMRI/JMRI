@@ -45,6 +45,6 @@ public class LoaderActionTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LoaderActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LoaderActionTest.class);
 
 }

@@ -36,6 +36,6 @@ public class AcelaComponentFactoryTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AcelaComponentFactoryTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AcelaComponentFactoryTest.class);
 
 }

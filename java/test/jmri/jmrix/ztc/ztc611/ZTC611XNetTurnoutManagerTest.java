@@ -73,6 +73,6 @@ public class ZTC611XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
         JUnitUtil.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ZTC611XNetTurnoutManagerTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ZTC611XNetTurnoutManagerTest.class);
 
 }

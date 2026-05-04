@@ -24,7 +24,7 @@ import jmri.util.ThreadingUtil;
  * @author Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbTurnoutTest {
-    private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class);
 
     protected PropertyChangeListenerScaffold l;
 

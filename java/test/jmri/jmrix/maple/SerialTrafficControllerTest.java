@@ -164,6 +164,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
 
 }

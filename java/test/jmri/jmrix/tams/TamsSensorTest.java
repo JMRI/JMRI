@@ -36,6 +36,6 @@ public class TamsSensorTest extends jmri.implementation.AbstractSensorTestBase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TamsSensorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TamsSensorTest.class);
 
 }

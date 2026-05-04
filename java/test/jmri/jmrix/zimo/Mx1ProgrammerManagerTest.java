@@ -41,6 +41,6 @@ public class Mx1ProgrammerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Mx1ProgrammerManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Mx1ProgrammerManagerTest.class);
 
 }
