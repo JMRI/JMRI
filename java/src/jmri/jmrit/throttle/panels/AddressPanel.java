@@ -162,6 +162,7 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
         }
         if (getRosterEntrySelector().getSelectedRosterEntries().length != 0) {
             setRosterEntry(getRosterEntrySelector().getSelectedRosterEntries()[0]);
+            
             consistAddress = null;
         }
     }
@@ -208,20 +209,6 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
             if (!l.isEmpty()) {
                 rosterEntry = l.get(0);
             }
-        }
-        
-        if (consistAddress != null) {
-            // if we get there, it means we got the throttle for the head locomotive of a consist
-            // only update the function panel
-            log.debug("Advanced consist throttle, got the throttle for the head locomotive functions control");
-            (new ArrayList<AddressListener>(listeners)).forEach((l) -> {
-                if (l instanceof FunctionPanel) {
-                    l.notifyAddressThrottleFound(t);
-                }
-            });
-            // and we store, it will be returned as the function throttle (see getFunctionThrottle() vs getConsistThrottle())
-            throttle = t;
-            return;
         }
         
         if (throttle != null) {
@@ -365,17 +352,7 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
         // work on a clone because some new listeners may be added while notifying the existing ones
         (new ArrayList<AddressListener>(listeners)).forEach((l) -> {
             l.notifyConsistAddressThrottleFound(t);
-        });
-        
-        if (consist != null && consist.getConsistType() == Consist.ADVANCED_CONSIST) {
-            // request a throttle for head locomotive for functions
-            DccLocoAddress headLocoAddress = consist.getConsistList().get(0);
-            // only if consist address is not head locomotive address
-            if (! headLocoAddress.equals(currentAddress)) {
-                log.debug("Advanced consist throttle, requesting secondary throttle for head locomotive function control.");
-                changeOfAddress(headLocoAddress);
-            }
-        }
+        });        
     }
     
     private void updateGUIOnThrottleFound(boolean throttleActive) {
@@ -557,7 +534,7 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
             return;
         }
         if ((conRosterBox.getSelectedIndex() != 0) && (conRosterBox.getSelectedItem() instanceof DccLocoAddress)) {
-            consistAddress = (DccLocoAddress) conRosterBox.getSelectedItem() ;            
+            consistAddress = (DccLocoAddress) conRosterBox.getSelectedItem() ;
             changeOfConsistAddress();
         }
     }
@@ -792,18 +769,7 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
             return consistThrottle;
         }
         return throttle;
-    }
-    
-    /**
-     * @return the curently assigned function throttle for regular locomotives or consist
-     */
-    public DccThrottle getFunctionThrottle() {        
-        if (throttle != null) {
-            return throttle;
-        }
-        return consistThrottle;
-    }
-        
+    }    
     
     /**
      * @return the currently used decoder address

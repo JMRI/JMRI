@@ -366,7 +366,16 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
     @Override
     public RosterEntry getRosterEntry() {
         return throuic.getRosterEntry();
-    }    
+    }
+
+    @Override
+    public RosterEntry getFunctionRosterEntry() {
+        if (throuic.getConsistFunctionsPanel() != null) {
+            return throuic.getConsistFunctionsPanel().getFunctionRosterEntry();
+        }
+        return getRosterEntry();  
+    }
+
 
     @Override
     public void setAddress(DccLocoAddress la) {
@@ -419,8 +428,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
 
     @Override
     public DccThrottle getFunctionThrottle() {
-        return throuic.getAddressPanel().getFunctionThrottle();  
-     }
+        if (throuic.getConsistFunctionsPanel() != null) {
+            return throuic.getConsistFunctionsPanel().getFunctionThrottle();
+        }
+        return getThrottle();  
+    }
 
     @Override
     public JLabel getLabel() {

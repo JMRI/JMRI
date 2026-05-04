@@ -88,10 +88,34 @@ public class ConsistFunctionPanel extends JPanel implements AddressListener {
         updateFunctionPanels();
     }
 
+     public DccThrottle getFunctionThrottle() {
+         if (consistFunctionsPanels == null || consistFunctionsPanels.getComponentCount() == 0) {
+            return null;
+         }
+         Component lastCmp = consistFunctionsPanels.getComponentAt(consistFunctionsPanels.getComponentCount()-1);
+         if (! (lastCmp instanceof SimpleThrottlePanel)) {
+            return null;
+         }         
+         // the throttle of the last panel will be the head unit one, we'll use that one for consist functions
+         return ((SimpleThrottlePanel)lastCmp).getThrottle();
+     }
+
+      public RosterEntry getFunctionRosterEntry() {
+         if (consistFunctionsPanels == null || consistFunctionsPanels.getComponentCount() == 0) {
+            return null;
+         }
+         Component lastCmp = consistFunctionsPanels.getComponentAt(consistFunctionsPanels.getComponentCount()-1);
+         if (! (lastCmp instanceof SimpleThrottlePanel)) {
+            return null;
+         }         
+         // the throttle of the last panel will be the head unit one, we'll use that one for consist functions
+         return ((SimpleThrottlePanel)lastCmp).getRosterEntry();
+      }
+
     private void updateFunctionPanels() {
         if (consistFunctionsPanels == null) {
             errorLabel.setVisible(true);
-            return; // we're self desctructing
+            return; // we're self destructing
         }
         // clean up       
         consistFunctionsPanels.removeAll();        

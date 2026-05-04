@@ -95,6 +95,13 @@ public interface ThrottleControllerUI {
      * @return the function throttle or null
      */
     DccThrottle getFunctionThrottle();
+
+    /**
+     * Get that throttle control roster entry for the function locomotive
+     * 
+     * @return the roster entry or null
+     */
+    RosterEntry getFunctionRosterEntry();
     
     /**
      * Emergency stop that throttle
