@@ -219,6 +219,8 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
                     l.notifyAddressThrottleFound(t);
                 }
             });
+            // and we store, it will be returned as the function throttle (see getFunctionThrottle() vs getConsistThrottle())
+            throttle = t;
             return;
         }
         
@@ -365,7 +367,7 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
             l.notifyConsistAddressThrottleFound(t);
         });
         
-        if (consist != null && consist.getConsistType() == Consist.ADVANCED_CONSIST) {      
+        if (consist != null && consist.getConsistType() == Consist.ADVANCED_CONSIST) {
             // request a throttle for head locomotive for functions
             DccLocoAddress headLocoAddress = consist.getConsistList().get(0);
             // only if consist address is not head locomotive address
