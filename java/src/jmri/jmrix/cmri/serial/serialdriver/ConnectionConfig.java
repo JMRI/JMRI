@@ -95,5 +95,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConnectionConfig.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConnectionConfig.class);
 }
