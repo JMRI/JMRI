@@ -1,14 +1,16 @@
 package jmri.jmrit.throttle.panels;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 
 import org.jdom2.Element;
@@ -134,14 +136,14 @@ public class ConsistFunctionPanel extends JPanel implements AddressListener {
         }
         // let's go
         errorLabel.setVisible(false);
-        ArrayList<DccLocoAddress> consistList = consist.getConsistList(); 
+        ArrayList<DccLocoAddress> consistList = consist.getConsistList();
         // go backward, we want the head on the right (added last)
         for (int i=consistList.size()-1; i>=0; i--) {
             SimpleThrottlePanel stp = new SimpleThrottlePanel(null, throttleManager, false, true, false);
             stp.setAddress(consistList.get(i));
-            // do we have a matching roster entry
             Icon tabIcon = null;
             String tabText = Bundle.getMessage("ThrottleAddress") + " " + consistList.get(i);
+            // do we have a matching roster entry
             List<RosterEntry> l = Roster.getDefault().matchingList(null, null, "" + consistList.get(i).getNumber(), null, null, null, null);
             if (!l.isEmpty()) {                
                 tabText = l.get(0).getId();
@@ -150,9 +152,8 @@ public class ConsistFunctionPanel extends JPanel implements AddressListener {
                 } else {
                     tabIcon = ICN_FACT.getReversedIcon(l.get(0));
                 }
-            }           
+            }
             consistFunctionsPanels.addTab(tabText, tabIcon, stp);
-            consistFunctionsPanels.setBackgroundAt(consistList.size()-i-1, Color.RED);
         }
         consistFunctionsPanels.setSelectedIndex(consistList.size()-1); // select last (head)
     }

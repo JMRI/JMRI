@@ -323,7 +323,14 @@ public class ThrottleUICore implements AddressListener  {
         child = e.getChild("LocoIconPanel");
         if (child != null) {
             getLocoIconPanel().setXml(child);
-        }         
+        }
+        child = e.getChild("ConsistFunctionsPanel");
+        if (child != null &&
+            //  SimpleThrottlePanel being used to implement ConsistFunctionsPanel, avoid loading recursively
+            //  when using CS consist, xml for consist will be head unit one, that will be reloaded again and agin here
+          (myThrottleController != null) && (myThrottleController.getThrottleControllersContainer() != null)) {
+            getConsistFunctionsPanel().setXml(child);
+        }
     }
 
     public void saveThrottleAs(Element throttleElement) {
