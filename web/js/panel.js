@@ -470,6 +470,21 @@ function processPanelXML($returnedData, $success, $xhr) {
                             }
                             jmri.getTurnout($widget["systemName"]);
                             break;
+						case "outputindicator" :
+						    $widget['name'] = $widget.turnout; //normalize name
+						    $widget.jsonType = "turnout"; // JSON object type
+						    $widget['icon' + UNKNOWN] = $(this).find('icons').find('unknown').attr('url');
+						    $widget['icon2'] = $(this).find('icons').find('closed').attr('url');
+						    $widget['icon4'] = $(this).find('icons').find('thrown').attr('url');
+						    $widget['icon8'] = $(this).find('icons').find('inconsistent').attr('url');
+						    $widget['rotation'] = $(this).find('icons').find('unknown').find('rotation').text() * 1;
+						    $widget['degrees'] = ($(this).find('icons').find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
+						    $widget['scale'] = $(this).find('icons').find('unknown').attr('scale');
+						    if ($widget.forcecontroloff != "true") {
+						        $widget.classes += " " + $widget.jsonType + " clickable ";
+						    }
+						    jmri.getTurnout($widget["systemName"]);
+						    break;
                         case "sensoricon" :
                             $widget['name'] = $widget.sensor; //normalize name
                             $widget.jsonType = "sensor"; // JSON object type
@@ -2497,7 +2512,8 @@ var $getWidgetFamily = function($widget, $element) {
         case "audioicon" :
         case "logixngicon" :
         case "linkinglabel" :
-        case "turnouticon" :
+		case "turnouticon" :
+		case "outputindicator" :
         case "sensoricon" :
         case "LightIcon" :
         case "multisensoricon" :
