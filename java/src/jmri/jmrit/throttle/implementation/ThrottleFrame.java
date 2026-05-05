@@ -826,7 +826,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
                 ((javax.swing.plaf.basic.BasicInternalFrameUI) consistFunctionsPanelJIF.getUI()).getNorthPane().setPreferredSize(new Dimension(0, bSize));
             }
             setWindowXML(child, consistFunctionsPanelJIF);
-            throuic.getConsistFunctionsPanel().setXml(child);
         } else if (consistFunctionsPanelJIF != null) {
             consistFunctionsPanelJIF.setVisible(false);
         }
