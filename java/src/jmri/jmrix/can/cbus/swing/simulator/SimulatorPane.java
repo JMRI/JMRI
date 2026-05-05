@@ -190,5 +190,5 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
-    // private final static Logger log = LoggerFactory.getLogger(SimulatorPane.class);
+    // private static final Logger log = LoggerFactory.getLogger(SimulatorPane.class);
 }

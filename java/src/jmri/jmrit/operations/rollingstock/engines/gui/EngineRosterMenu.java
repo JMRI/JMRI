@@ -79,6 +79,6 @@ public class EngineRosterMenu extends JMenu {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(EngineRosterMenu.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(EngineRosterMenu.class.getName());
 
 }

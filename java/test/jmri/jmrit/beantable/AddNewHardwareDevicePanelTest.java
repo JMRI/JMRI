@@ -66,7 +66,7 @@ public class AddNewHardwareDevicePanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanelTest.class);
     /**
      * Test of setStatusBarText method, of class AddNewHardwareDevicePanel.
      */

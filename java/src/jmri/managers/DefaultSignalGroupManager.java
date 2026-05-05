@@ -163,6 +163,6 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         return SignalGroup.class;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class);
 
 }

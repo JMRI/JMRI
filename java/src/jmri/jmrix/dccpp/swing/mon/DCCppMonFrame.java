@@ -229,6 +229,6 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppMonFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppMonFrame.class);
 
 }

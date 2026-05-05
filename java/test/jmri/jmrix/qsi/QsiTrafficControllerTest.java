@@ -207,6 +207,6 @@ public class QsiTrafficControllerTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(QsiTrafficControllerTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(QsiTrafficControllerTest.class);
 
 }

@@ -72,7 +72,7 @@ public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LoadDefaultXmlThrottlesLayoutAction.class);
+    private static final Logger log = LoggerFactory.getLogger(LoadDefaultXmlThrottlesLayoutAction.class);
 
     @Override
     public JmriPanel makePanel() {

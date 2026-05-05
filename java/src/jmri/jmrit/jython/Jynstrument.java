@@ -100,7 +100,7 @@ public abstract class Jynstrument extends JPanel {
 
     protected abstract void quit();
 
-    private final static Logger log = LoggerFactory.getLogger(Jynstrument.class);
+    private static final Logger log = LoggerFactory.getLogger(Jynstrument.class);
 
     public JPopupMenu getPopUpMenu() {
         return myPopUpMenu;

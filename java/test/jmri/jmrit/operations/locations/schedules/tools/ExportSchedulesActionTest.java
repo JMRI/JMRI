@@ -49,6 +49,6 @@ public class ExportSchedulesActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ExportCarRosterActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ExportCarRosterActionTest.class);
 
 }

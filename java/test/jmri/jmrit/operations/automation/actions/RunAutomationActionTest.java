@@ -97,6 +97,6 @@ public class RunAutomationActionTest extends OperationsTestCase {
         Assert.assertTrue(automationItem.isActionSuccessful());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RunAutomationActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RunAutomationActionTest.class);
 
 }

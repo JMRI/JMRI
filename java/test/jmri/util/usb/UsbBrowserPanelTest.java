@@ -43,7 +43,7 @@ public class UsbBrowserPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UsbBrowserPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(UsbBrowserPanelTest.class);
 
     private static class UsbHubScaffold extends UsbDeviceScaffold implements UsbHub {
 

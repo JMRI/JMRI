@@ -534,6 +534,6 @@ public class AutomationItem extends PropertyChangeSupport implements java.beans.
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationItem.class);
+    private static final Logger log = LoggerFactory.getLogger(AutomationItem.class);
 
 }

@@ -607,5 +607,5 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
     public void disposeMe() {
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Antecedent.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Antecedent.class);
 }

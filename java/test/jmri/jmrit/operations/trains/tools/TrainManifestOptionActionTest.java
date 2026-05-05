@@ -43,7 +43,7 @@ public class TrainManifestOptionActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log =
+    // private static final Logger log =
     // LoggerFactory.getLogger(TrainManifestOptionActionTest.class);
 
 }

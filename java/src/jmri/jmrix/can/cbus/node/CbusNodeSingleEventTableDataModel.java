@@ -369,5 +369,5 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
         _ndEv.setEditTableModel(null);
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeSingleEventTableDataModel.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusNodeSingleEventTableDataModel.class);
 }

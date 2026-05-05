@@ -105,8 +105,8 @@ public class Distributor {
     ////////////////////////////
     // Implementation details //
     ////////////////////////////
-    final private Vector<ReadingListener> readingListeners = new Vector<ReadingListener>();
-    final private Vector<MeasurementListener> measurementListeners = new Vector<MeasurementListener>();
+    private final Vector<ReadingListener> readingListeners = new Vector<ReadingListener>();
+    private final Vector<MeasurementListener> measurementListeners = new Vector<MeasurementListener>();
 
     /**
      * Forward the Reading from the Swing thread.
@@ -146,6 +146,6 @@ public class Distributor {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Distributor.class);
+    private static final Logger log = LoggerFactory.getLogger(Distributor.class);
 
 }

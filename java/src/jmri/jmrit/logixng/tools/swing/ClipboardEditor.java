@@ -69,6 +69,6 @@ public class ClipboardEditor extends TreeEditor {
     }
     
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClipboardEditor.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClipboardEditor.class);
 
 }

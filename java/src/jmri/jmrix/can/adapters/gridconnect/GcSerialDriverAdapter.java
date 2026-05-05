@@ -338,7 +338,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         private final String portName;
         // After this many consecutive read attempts resulting in an exception we will terminate
         // the read thread and return the last exception to the reader.
-        private final static int MAX_IO_ERRORS_TO_ABORT = 10;
+        private static final int MAX_IO_ERRORS_TO_ABORT = 10;
         // Queue holding the buffered data.
         private final BlockingQueue<BufferEntry> readAhead = new LinkedBlockingQueue<>();
         // The last entry we got from the queue if there are still bytes we need to return from it.
@@ -409,6 +409,6 @@ public class GcSerialDriverAdapter extends GcPortController {
     // Stream wrapper that buffers the input bytes.
     private InputStream bufferedStream = null;
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GcSerialDriverAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GcSerialDriverAdapter.class);
 
 }

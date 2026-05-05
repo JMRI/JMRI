@@ -233,6 +233,6 @@ public class DisplayFrame extends JmriJFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DisplayFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(DisplayFrame.class);
 
 }

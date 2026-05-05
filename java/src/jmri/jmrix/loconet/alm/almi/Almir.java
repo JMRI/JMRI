@@ -370,6 +370,6 @@ public class Almir {
         DS78V_3_POS,
         UNKN
     }
-//    private final static Logger log = LoggerFactory.getLogger(Almir.class);
+//    private static final Logger log = LoggerFactory.getLogger(Almir.class);
 
 }

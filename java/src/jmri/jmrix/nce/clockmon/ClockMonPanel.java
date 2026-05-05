@@ -1714,6 +1714,6 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ClockMonPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(ClockMonPanel.class);
 
 }

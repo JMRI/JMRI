@@ -26,6 +26,6 @@ public class ZeroConfClientTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ZeroConfClientTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ZeroConfClientTest.class);
 
 }

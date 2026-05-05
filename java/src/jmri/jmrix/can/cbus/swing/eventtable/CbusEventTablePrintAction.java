@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusEventTablePrintAction extends AbstractAction {
 
-    private final static int[] whichPrintColumns = {CbusEventTableDataModel.NODE_COLUMN,
+    private static final int[] whichPrintColumns = {CbusEventTableDataModel.NODE_COLUMN,
         CbusEventTableDataModel.EVENT_COLUMN,CbusEventTableDataModel.NAME_COLUMN,
         CbusEventTableDataModel.NODENAME_COLUMN,CbusEventTableDataModel.COMMENT_COLUMN};
 
@@ -231,6 +231,6 @@ public class CbusEventTablePrintAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusEventTablePrintAction.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusEventTablePrintAction.class);
 
 }

@@ -188,5 +188,5 @@ public class FullBackupExportAction
         throw new IllegalArgumentException("Should not be invoked");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FullBackupExportAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FullBackupExportAction.class);
 }

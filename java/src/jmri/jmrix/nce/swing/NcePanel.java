@@ -43,6 +43,6 @@ abstract public class NcePanel extends jmri.util.swing.JmriPanel implements NceP
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NcePanel.class);
+    private static final Logger log = LoggerFactory.getLogger(NcePanel.class);
 
 }

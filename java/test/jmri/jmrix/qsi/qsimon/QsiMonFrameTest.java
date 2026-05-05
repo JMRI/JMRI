@@ -72,6 +72,6 @@ public class QsiMonFrameTest extends JmriJFrameTestBase {
 
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(QsiMonFrameTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(QsiMonFrameTest.class);
 
 }

@@ -166,6 +166,6 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(AbstractEditNVPane.class);
+//    private static final Logger log = LoggerFactory.getLogger(AbstractEditNVPane.class);
 
 }

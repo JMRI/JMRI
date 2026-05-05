@@ -21,7 +21,7 @@ public class LocationTrackPairTest extends OperationsTestCase {
         Assert.assertNotNull("exists", t);
     }
 
-    // private final static Logger log =
+    // private static final Logger log =
     // LoggerFactory.getLogger(LocationTrackPairTest.class);
 
 }

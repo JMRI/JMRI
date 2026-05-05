@@ -44,6 +44,6 @@ public class MrcTrafficListenerFilterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MrcTrafficListenerFilterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MrcTrafficListenerFilterTest.class);
 
 }

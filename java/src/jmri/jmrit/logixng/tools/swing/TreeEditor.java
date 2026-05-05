@@ -121,7 +121,7 @@ public class TreeEditor extends TreeViewer {
     }
 
     @Override
-    final public void initComponents() {
+    public final void initComponents() {
         super.initComponents();
 
         // The menu is created in parent class TreeViewer
@@ -348,7 +348,7 @@ public class TreeEditor extends TreeViewer {
      * dialog is closed.
      * @return true if the popup menu is locked.
      */
-    final protected boolean isPopupMenuLocked() {
+    protected final boolean isPopupMenuLocked() {
         if (_lockPopupMenu) {
             JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("TreeEditor_PopupLockMessage"),
@@ -358,7 +358,7 @@ public class TreeEditor extends TreeViewer {
         return _lockPopupMenu;
     }
 
-    final protected void setPopupMenuLock(boolean lock) {
+    protected final void setPopupMenuLock(boolean lock) {
         _lockPopupMenu = lock;
     }
 
@@ -369,7 +369,7 @@ public class TreeEditor extends TreeViewer {
      * @param femaleSocket the female socket
      * @param path the path to the item the user has clicked on
      */
-    final protected void renameSocketPressed(FemaleSocket femaleSocket, TreePath path) {
+    protected final void renameSocketPressed(FemaleSocket femaleSocket, TreePath path) {
         setPopupMenuLock(true);
         _renameSocketDialog = new JDialog(
                 this,
@@ -460,7 +460,7 @@ public class TreeEditor extends TreeViewer {
      * @param swingConfiguratorInterface the swing configurator used to configure the new class
      * @param path the path to the item the user has clicked on
      */
-    final protected void createAddFrame(FemaleSocket femaleSocket, TreePath path,
+    protected final void createAddFrame(FemaleSocket femaleSocket, TreePath path,
             SwingConfiguratorInterface swingConfiguratorInterface) {
         // possible change
         _showReminder = true;
@@ -597,7 +597,7 @@ public class TreeEditor extends TreeViewer {
      * @param femaleSocket the female socket
      * @param path the path to the item the user has clicked on
      */
-    final protected void editPressed(FemaleSocket femaleSocket, TreePath path) {
+    protected final void editPressed(FemaleSocket femaleSocket, TreePath path) {
         setPopupMenuLock(true);
 
         // possible change
@@ -700,7 +700,7 @@ public class TreeEditor extends TreeViewer {
      * @param button a button to add to the dialog
      * @param commentStr the new comment
      */
-    final protected void makeAddEditFrame(
+    protected final void makeAddEditFrame(
             boolean addOrEdit,
             FemaleSocket femaleSocket,
             JButton button,
@@ -921,7 +921,7 @@ public class TreeEditor extends TreeViewer {
      * @param femaleSocket the female socket
      * @param path the path to the item the user has clicked on
      */
-    final protected void editLocalVariables(FemaleSocket femaleSocket, TreePath path) {
+    protected final void editLocalVariables(FemaleSocket femaleSocket, TreePath path) {
         // possible change
         _showReminder = true;
         setPopupMenuLock(true);
@@ -1080,7 +1080,7 @@ public class TreeEditor extends TreeViewer {
      * @param femaleSocket the female socket
      * @param path the path to the item the user has clicked on
      */
-    final protected void changeUsername(FemaleSocket femaleSocket, TreePath path) {
+    protected final void changeUsername(FemaleSocket femaleSocket, TreePath path) {
         // possible change
         _showReminder = true;
         setPopupMenuLock(true);
@@ -1239,7 +1239,7 @@ public class TreeEditor extends TreeViewer {
      * Enable/disable fields for data entry when user selects to have system
      * name automatically generated.
      */
-    final protected void autoSystemName() {
+    protected final void autoSystemName() {
         if (_autoSystemName.isSelected()) {
             _systemName.setEnabled(false);
             _sysNameLabel.setEnabled(false);
@@ -1256,7 +1256,7 @@ public class TreeEditor extends TreeViewer {
      *
      * @param e The event heard
      */
-    final protected void cancelRenameSocketPressed(ActionEvent e) {
+    protected final void cancelRenameSocketPressed(ActionEvent e) {
         _renameSocketDialog.setVisible(false);
         _renameSocketDialog.dispose();
         _renameSocketDialog = null;
@@ -1271,7 +1271,7 @@ public class TreeEditor extends TreeViewer {
      *
      * @param e The event heard
      */
-    final protected void cancelCreateItem(ActionEvent e) {
+    protected final void cancelCreateItem(ActionEvent e) {
         _addItemDialog.setVisible(false);
         _addSwingConfiguratorInterface.dispose();
         _addItemDialog.dispose();
@@ -1289,7 +1289,7 @@ public class TreeEditor extends TreeViewer {
      *
      * @param e The event heard
      */
-    final protected void cancelEditPressed(ActionEvent e) {
+    protected final void cancelEditPressed(ActionEvent e) {
         for (Map.Entry<SwingConfiguratorInterface, Base> entry : _swingConfiguratorInterfaceList) {
             // Abort if we cannot close the dialog
             if (!entry.getKey().canClose()) return;
@@ -2177,6 +2177,6 @@ public class TreeEditor extends TreeViewer {
 
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreeEditor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreeEditor.class);
 
 }

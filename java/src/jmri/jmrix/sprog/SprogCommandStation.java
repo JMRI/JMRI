@@ -597,7 +597,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     // data members to hold contact with the slot listeners
-    final private Vector<SprogSlotListener> slotListeners = new Vector<>();
+    private final Vector<SprogSlotListener> slotListeners = new Vector<>();
 
     public synchronized void addSlotListener(SprogSlotListener l) {
         // add only if not already registered

@@ -36,6 +36,6 @@ public class FullBackupImportActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(FullBackupImportActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(FullBackupImportActionTest.class);
 
 }

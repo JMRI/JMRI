@@ -194,7 +194,7 @@ public class EngineModels extends RollingStockAttribute {
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineModels.class);
+    private static final Logger log = LoggerFactory.getLogger(EngineModels.class);
 
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {

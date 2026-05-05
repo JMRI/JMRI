@@ -32,6 +32,6 @@ public class Dcs210PlusUsbModeSelectPane extends jmri.jmrix.loconet.pr3.swing.Pr
         }
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(Dcs210PlusUsbModeSelectPane.class);
+//    private static final Logger log = LoggerFactory.getLogger(Dcs210PlusUsbModeSelectPane.class);
 
 }

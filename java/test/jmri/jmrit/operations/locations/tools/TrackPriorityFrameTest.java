@@ -56,6 +56,6 @@ public class TrackPriorityFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(tpf);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrackLoadEditFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrackLoadEditFrameTest.class);
 
 }

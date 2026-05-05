@@ -51,6 +51,6 @@ public class PanelEditorTest extends AbstractEditorTestBase<PanelEditor> {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PanelEditorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PanelEditorTest.class);
 
 }

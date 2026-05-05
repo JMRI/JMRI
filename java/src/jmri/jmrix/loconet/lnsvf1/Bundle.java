@@ -28,7 +28,7 @@ import java.util.Locale;
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
     @CheckForNull
-    private final static String name = "jmri.jmrix.loconet.lnsvf1.Lnsv1Bundle"; // NOI18N
+    private static final String name = "jmri.jmrix.loconet.lnsvf1.Lnsv1Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -64,7 +64,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
         log.debug("interpreting key {} with {} parameters", key, subs.length);
         return getBundle().handleGetMessage(key, subs);
     }
-    private final static Bundle b = new Bundle();
+    private static final Bundle b = new Bundle();
 
     @Override
     @CheckForNull
@@ -81,7 +81,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
         return super.getBundle().handleGetMessage(locale,key);
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Bundle.class);
+    private static final Logger log = LoggerFactory.getLogger(Bundle.class);
 
     /**
      * Merges user data with a translated string for a given key in a given

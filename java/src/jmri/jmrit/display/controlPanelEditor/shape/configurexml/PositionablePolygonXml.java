@@ -117,5 +117,5 @@ public class PositionablePolygonXml extends PositionableShapeXml {
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }
-    private final static Logger log = LoggerFactory.getLogger(PositionablePolygonXml.class);
+    private static final Logger log = LoggerFactory.getLogger(PositionablePolygonXml.class);
 }

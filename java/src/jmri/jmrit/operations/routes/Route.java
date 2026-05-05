@@ -634,6 +634,6 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Route.class);
+    private static final Logger log = LoggerFactory.getLogger(Route.class);
 
 }

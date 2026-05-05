@@ -208,7 +208,7 @@ public class DCCppSystemConnectionMemo extends DefaultSystemConnectionMemo {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppSystemConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppSystemConnectionMemo.class);
 
 }
 

@@ -55,5 +55,5 @@ public class SerialSensor extends AbstractSensor {
         return CMRISystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialSensor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialSensor.class);
 }

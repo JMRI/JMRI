@@ -38,6 +38,6 @@ public class SerialX10LightTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialX10LightTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SerialX10LightTest.class);
 
 }

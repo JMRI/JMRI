@@ -534,5 +534,5 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadSection.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadSection.class);
 }

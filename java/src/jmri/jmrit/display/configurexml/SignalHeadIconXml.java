@@ -277,6 +277,6 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         return icon;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalHeadIconXml.class);
+    private static final Logger log = LoggerFactory.getLogger(SignalHeadIconXml.class);
 
 }

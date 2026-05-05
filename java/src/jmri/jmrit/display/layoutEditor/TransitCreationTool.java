@@ -27,7 +27,7 @@ import jmri.NamedBean.BadNameException;
  * @author Kevin Dickerson Copyright (C) 2011
  * @author George Warner Copyright (c) 2017-2018
  */
-final public class TransitCreationTool {
+public final class TransitCreationTool {
 
     public TransitCreationTool() {
     }
@@ -137,5 +137,5 @@ final public class TransitCreationTool {
         return !list.isEmpty();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitCreationTool.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitCreationTool.class);
 }

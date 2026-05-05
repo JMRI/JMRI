@@ -202,5 +202,5 @@ public class ControlPanelPropertyEditor extends JDialog {
         return true;
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ControlPanelPropertyEditor.class);    
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ControlPanelPropertyEditor.class);    
 }

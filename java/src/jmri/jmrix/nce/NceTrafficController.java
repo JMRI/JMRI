@@ -708,6 +708,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     public NceCmdStationMemory csm;
     
-    private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(NceTrafficController.class);
 
 }

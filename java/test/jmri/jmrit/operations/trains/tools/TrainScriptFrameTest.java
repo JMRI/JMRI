@@ -48,6 +48,6 @@ public class TrainScriptFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainScriptFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainScriptFrameTest.class);
 
 }

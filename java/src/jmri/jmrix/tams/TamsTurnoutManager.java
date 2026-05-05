@@ -139,6 +139,6 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManager.class);
+    private static final Logger log = LoggerFactory.getLogger(TamsTurnoutManager.class);
 
 }

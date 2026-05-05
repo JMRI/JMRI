@@ -16,6 +16,6 @@ public class PrintMoreOptionActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintMoreOptionActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PrintMoreOptionActionTest.class);
 
 }

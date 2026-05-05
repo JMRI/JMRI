@@ -34,78 +34,78 @@ public class Lnsv2MessageContents {
     private int d4;
 
     // LocoNet "SV 2 format" helper definitions: length byte value for OPC_PEER_XFER message
-    public final static int SV2_LENGTH_ELEMENT_VALUE = 0x10;
+    public static final int SV2_LENGTH_ELEMENT_VALUE = 0x10;
     
     // LocoNet "SV 2 format" helper definitions: indexes into the LocoNet message
-    public final static int SV2_LENGTH_ELEMENT_INDEX = 1;
-    public final static int SV2_SRC_ELEMENT_INDEX = 2;
-    public final static int SV2_SV_CMD_ELEMENT_INDEX = 3;
-    public final static int SV2_SV_TYPE_ELEMENT_INDEX = 4;
-    public final static int SV2_SVX1_ELEMENT_INDEX = 5;
-    public final static int SV2_SV_DST_L_ELEMENT_INDEX = 6;
-    public final static int SV2_SV_DST_H_ELEMENT_INDEX = 7;
-    public final static int SV2_SV_ADRL_ELEMENT_INDEX = 8;
-    public final static int SV2_SV_ADRH_ELEMENT_INDEX = 9;
-    public final static int SV2_SVX2_ELEMENT_INDEX = 10;
-    public final static int SV2_SVD1_ELEMENT_INDEX = 11;
-    public final static int SV2_SVD2_ELEMENT_INDEX = 12;
-    public final static int SV2_SVD3_ELEMENT_INDEX = 13;
-    public final static int SV2_SVD4_ELEMENT_INDEX = 14;
+    public static final int SV2_LENGTH_ELEMENT_INDEX = 1;
+    public static final int SV2_SRC_ELEMENT_INDEX = 2;
+    public static final int SV2_SV_CMD_ELEMENT_INDEX = 3;
+    public static final int SV2_SV_TYPE_ELEMENT_INDEX = 4;
+    public static final int SV2_SVX1_ELEMENT_INDEX = 5;
+    public static final int SV2_SV_DST_L_ELEMENT_INDEX = 6;
+    public static final int SV2_SV_DST_H_ELEMENT_INDEX = 7;
+    public static final int SV2_SV_ADRL_ELEMENT_INDEX = 8;
+    public static final int SV2_SV_ADRH_ELEMENT_INDEX = 9;
+    public static final int SV2_SVX2_ELEMENT_INDEX = 10;
+    public static final int SV2_SVD1_ELEMENT_INDEX = 11;
+    public static final int SV2_SVD2_ELEMENT_INDEX = 12;
+    public static final int SV2_SVD3_ELEMENT_INDEX = 13;
+    public static final int SV2_SVD4_ELEMENT_INDEX = 14;
     
     //  helpers for decoding SV format 2 messages (versus other OCP_PEER_XFER messages with length 0x10)
-    public final static int SV2_SRC_ELEMENT_MASK = 0x7f;
-    public final static int SV2_SVX1_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
-    public final static int SV2_SVX1_ELEMENT_VALIDITY_CHECK_VALUE = 0x10;
-    public final static int SV2_SV_DST_L_DSTLX7_CHECK_MASK = 0x01;
-    public final static int SV2_SV_DST_H_DSTHX7_CHECK_MASK = 0x02;
-    public final static int SV2_SV_ADRL_SVADRL7_CHECK_MASK = 0x04;
-    public final static int SV2_SV_ADRH_SVADRH7_CHECK_MASK = 0x08;
-    public final static int SV2_SVX2_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
-    public final static int SV2_SVX2_ELEMENT_VALIDITY_CHECK_VALUE = 0x10;
-    public final static int SV2_SV_D1_D1X7_CHECK_MASK = 0x01;
-    public final static int SV2_SV_D2_D2X7_CHECK_MASK = 0x02;
-    public final static int SV2_SV_D3_D3X7_CHECK_MASK = 0x04;
-    public final static int SV2_SV_D4_D4X7_CHECK_MASK = 0x08;
-    public final static int SV2_SV_TYPE_ELEMENT_VALIDITY_CHECK_MASK = 0x7F;
-    public final static int SV2_SV_TYPE_ELEMENT_VALIDITY_CHECK_VALUE = 0x02;
+    public static final int SV2_SRC_ELEMENT_MASK = 0x7f;
+    public static final int SV2_SVX1_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
+    public static final int SV2_SVX1_ELEMENT_VALIDITY_CHECK_VALUE = 0x10;
+    public static final int SV2_SV_DST_L_DSTLX7_CHECK_MASK = 0x01;
+    public static final int SV2_SV_DST_H_DSTHX7_CHECK_MASK = 0x02;
+    public static final int SV2_SV_ADRL_SVADRL7_CHECK_MASK = 0x04;
+    public static final int SV2_SV_ADRH_SVADRH7_CHECK_MASK = 0x08;
+    public static final int SV2_SVX2_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
+    public static final int SV2_SVX2_ELEMENT_VALIDITY_CHECK_VALUE = 0x10;
+    public static final int SV2_SV_D1_D1X7_CHECK_MASK = 0x01;
+    public static final int SV2_SV_D2_D2X7_CHECK_MASK = 0x02;
+    public static final int SV2_SV_D3_D3X7_CHECK_MASK = 0x04;
+    public static final int SV2_SV_D4_D4X7_CHECK_MASK = 0x08;
+    public static final int SV2_SV_TYPE_ELEMENT_VALIDITY_CHECK_MASK = 0x7F;
+    public static final int SV2_SV_TYPE_ELEMENT_VALIDITY_CHECK_VALUE = 0x02;
 
     // helpers for decoding SV_CMD
-    public final static int SV_CMD_WRITE_ONE = 0x01;
-    public final static int SV_CMD_WRITE_ONE_REPLY = 0x41; // reply to SV_CMD_WRITE_ONE
+    public static final int SV_CMD_WRITE_ONE = 0x01;
+    public static final int SV_CMD_WRITE_ONE_REPLY = 0x41; // reply to SV_CMD_WRITE_ONE
     
-    public final static int SV_CMD_QUERY_ONE = 0x02;
-    public final static int SV_CMD_REPORT_ONE = 0x42;   // reply to SV_CMD_QUERY_ONE
+    public static final int SV_CMD_QUERY_ONE = 0x02;
+    public static final int SV_CMD_REPORT_ONE = 0x42;   // reply to SV_CMD_QUERY_ONE
     
-    public final static int SV_CMD_WRITE_ONE_MASKED = 0x03;
-    public final static int SV_CMD_WRITE_ONE_MASKED_REPLY = 0x43;   // reply to SV_CMD_WRITE_ONE_MASKED
+    public static final int SV_CMD_WRITE_ONE_MASKED = 0x03;
+    public static final int SV_CMD_WRITE_ONE_MASKED_REPLY = 0x43;   // reply to SV_CMD_WRITE_ONE_MASKED
     
-    public final static int SV_CMD_WRITE_FOUR = 0x05;
-    public final static int SV_CMD_WRITE_FOUR_REPLY = 0x45;   // reply to SV_CMD_WRITE_FOUR
+    public static final int SV_CMD_WRITE_FOUR = 0x05;
+    public static final int SV_CMD_WRITE_FOUR_REPLY = 0x45;   // reply to SV_CMD_WRITE_FOUR
     
-    public final static int SV_CMD_QUERY_FOUR = 0x06;
-    public final static int SV_CMD_REPORT_FOUR = 0x46;   // reply to SV_CMD_QUERY_FOUR
+    public static final int SV_CMD_QUERY_FOUR = 0x06;
+    public static final int SV_CMD_REPORT_FOUR = 0x46;   // reply to SV_CMD_QUERY_FOUR
     
-    public final static int SV_CMD_DISCOVER_DEVICES_QUERY = 0x07;
-    public final static int SV_CMD_DISCOVER_DEVICE_REPORT = 0x47;   // reply to SV_CMD_DISCOVER_DEVICES_QUERY
+    public static final int SV_CMD_DISCOVER_DEVICES_QUERY = 0x07;
+    public static final int SV_CMD_DISCOVER_DEVICE_REPORT = 0x47;   // reply to SV_CMD_DISCOVER_DEVICES_QUERY
     
-    public final static int SV_CMD_IDENTIFY_DEVICE_BY_DEVICE_ADDRESS = 0x08;
-    public final static int SV_CMD_IDENTIFY_DEVICE_BY_DEVICE_ADDRESS_REPLY = 0x48;   // reply to SV_CMD_IDENTIFY_DEVICE_BY_DEVICE_ADDRESS
+    public static final int SV_CMD_IDENTIFY_DEVICE_BY_DEVICE_ADDRESS = 0x08;
+    public static final int SV_CMD_IDENTIFY_DEVICE_BY_DEVICE_ADDRESS_REPLY = 0x48;   // reply to SV_CMD_IDENTIFY_DEVICE_BY_DEVICE_ADDRESS
     
-    public final static int SV_CMD_CHANGE_ADDRESS_REQUEST = 0x09;
-    public final static int SV_CMD_CHANGE_ADDRESS_REPLY = 0x49;   // reply to SV_CMD_CHANGE_ADDRESS_REQUEST
+    public static final int SV_CMD_CHANGE_ADDRESS_REQUEST = 0x09;
+    public static final int SV_CMD_CHANGE_ADDRESS_REPLY = 0x49;   // reply to SV_CMD_CHANGE_ADDRESS_REQUEST
     
-    public final static int SV_CMD_RECONFIGURE_REQUEST = 0x0F;
-    public final static int SV_CMD_RECONFIGURE_REPLY = 0x4F;   // reply to SV_CMD_RECONFIGURE_REQUEST
+    public static final int SV_CMD_RECONFIGURE_REQUEST = 0x0F;
+    public static final int SV_CMD_RECONFIGURE_REPLY = 0x4F;   // reply to SV_CMD_RECONFIGURE_REQUEST
 
     // LocoNet "SV 2 format" helper definitions: SV_CMD "reply" bit
-    public final static int SV2_SV_CMD_REPLY_BIT_NUMBER = 0x6;
-    public final static int SV2_SV_CMD_REPLY_BIT_MASK = (2^SV2_SV_CMD_REPLY_BIT_NUMBER);
+    public static final int SV2_SV_CMD_REPLY_BIT_NUMBER = 0x6;
+    public static final int SV2_SV_CMD_REPLY_BIT_MASK = (2^SV2_SV_CMD_REPLY_BIT_NUMBER);
 
     // LocoNet "SV 2 format" helper definitions for data
-    public final static int SV2_SV_DATA_INDEX_EEPROM_SIZE = 1;
-    public final static int SV2_SV_DATA_INDEX_SOFTWARE_VERSION = 2;
-    public final static int SV2_SV_DATA_INDEX_SERIAL_NUMBER_LOW = 3;
-    public final static int SV2_SV_DATA_INDEX_SERIAL_NUMBER_HIGH = 4;
+    public static final int SV2_SV_DATA_INDEX_EEPROM_SIZE = 1;
+    public static final int SV2_SV_DATA_INDEX_SOFTWARE_VERSION = 2;
+    public static final int SV2_SV_DATA_INDEX_SERIAL_NUMBER_LOW = 3;
+    public static final int SV2_SV_DATA_INDEX_SERIAL_NUMBER_HIGH = 4;
     
             
     /**
@@ -952,6 +952,6 @@ public class Lnsv2MessageContents {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Lnsv2MessageContents.class);
+    private static final Logger log = LoggerFactory.getLogger(Lnsv2MessageContents.class);
     
 }

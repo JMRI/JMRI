@@ -12,8 +12,8 @@ public final class SprogConstants {
     private SprogConstants(){}
 
     /* SPROG mode */
-    public final static int SPROG = 0;
-    public final static int SPROG_CS = 1;
+    public static final int SPROG = 0;
+    public static final int SPROG_CS = 1;
 
     // Current SPROG state
     public enum SprogState {
@@ -73,17 +73,17 @@ public final class SprogConstants {
     
     /* The following should be altered only if you know what you are doing */
     /* How many times to repeat an accessory or function packet in the S queue */
-    public final static int S_REPEATS = 1;
+    public static final int S_REPEATS = 1;
 
     /* How many times to repeat an ops mode programming packet */
-    public final static int OPS_REPEATS = 3;
+    public static final int OPS_REPEATS = 3;
 
     /* Longest packet possible */
-    public final static int MAX_PACKET_LENGTH = 6;
+    public static final int MAX_PACKET_LENGTH = 6;
 
     /* Slot status */
-    public final static int SLOT_FREE = 0;
-    public final static int SLOT_IN_USE = 1;
+    public static final int SLOT_FREE = 0;
+    public static final int SLOT_IN_USE = 1;
 
     /*
      * Maximum number of slots for soft command station 
@@ -93,56 +93,56 @@ public final class SprogConstants {
      * 
      */
     /* Default */
-    public final static int DEFAULT_MAX_SLOTS = 16;
+    public static final int DEFAULT_MAX_SLOTS = 16;
 
     /* Minimum number of slots */
-    public final static int MIN_SLOTS = 8;
+    public static final int MIN_SLOTS = 8;
     
     /* Maimum number of slots */
-    public final static int SLOTS_LIMIT = 64;
+    public static final int SLOTS_LIMIT = 64;
     
     /* Number of function buttons on a throttle */
     public static int MAX_FUNCTIONS = 32; 
     
     /* various bit masks */
-    public final static int F8 = 0x100; /* Function 8 bit */
+    public static final int F8 = 0x100; /* Function 8 bit */
 
-    public final static int F7 = 0x80; /* Function 7 bit */
+    public static final int F7 = 0x80; /* Function 7 bit */
 
-    public final static int F6 = 0x40; /* Function 6 bit */
+    public static final int F6 = 0x40; /* Function 6 bit */
 
-    public final static int F5 = 0x20; /* Function 5 bit */
+    public static final int F5 = 0x20; /* Function 5 bit */
 
-    public final static int F4 = 0x10; /* Function 4 bit   */
+    public static final int F4 = 0x10; /* Function 4 bit   */
 
-    public final static int F3 = 0x08; /* Function 3 bit   */
+    public static final int F3 = 0x08; /* Function 3 bit   */
 
-    public final static int F2 = 0x04; /* Function 2 bit   */
+    public static final int F2 = 0x04; /* Function 2 bit   */
 
-    public final static int F1 = 0x02; /* Function 1 bit   */
+    public static final int F1 = 0x02; /* Function 1 bit   */
 
-    public final static int F0 = 0x01; /* Function 0 bit   */
+    public static final int F0 = 0x01; /* Function 0 bit   */
 
     /* Mode word bit masks */
-    public final static int UNLOCK_BIT = 0x0001;      /* Unlock bootloader */
+    public static final int UNLOCK_BIT = 0x0001;      /* Unlock bootloader */
 
-    public final static int CALC_BIT = 0x0008;        /* Add error byte */
+    public static final int CALC_BIT = 0x0008;        /* Add error byte */
 
-    public final static int POWER_BIT = 0x0010;       /* Track power */
+    public static final int POWER_BIT = 0x0010;       /* Track power */
 
-    public final static int ZTC_BIT = 0x0020;         /* Old ZTC bit timing */
+    public static final int ZTC_BIT = 0x0020;         /* Old ZTC bit timing */
 
-    public final static int BLUE_BIT = 0x0040;        /* Use direct byte for Blueline */
+    public static final int BLUE_BIT = 0x0040;        /* Use direct byte for Blueline */
 
-    public final static int STEP_MASK = 0x0E00;       /* Mask for speed step bits */
+    public static final int STEP_MASK = 0x0E00;       /* Mask for speed step bits */
 
-    public final static int STEP14_BIT = 0x0200;
-    public final static int STEP28_BIT = 0x0400;
-    public final static int STEP128_BIT = 0x0800;
-    public final static int LONG_ADD = 0x1000;
+    public static final int STEP14_BIT = 0x0200;
+    public static final int STEP28_BIT = 0x0400;
+    public static final int STEP128_BIT = 0x0800;
+    public static final int LONG_ADD = 0x1000;
 
-    public final static int DEFAULT_I = 996;            /* milliAmps */
+    public static final int DEFAULT_I = 996;            /* milliAmps */
 
-    public final static int MAX_ACC_DECODER_JMRI_ADDR = 2044; // copied from DCCppConstants
+    public static final int MAX_ACC_DECODER_JMRI_ADDR = 2044; // copied from DCCppConstants
 
 }

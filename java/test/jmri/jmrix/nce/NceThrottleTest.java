@@ -417,6 +417,6 @@ public class NceThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceThrottleTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NceThrottleTest.class);
 
 }

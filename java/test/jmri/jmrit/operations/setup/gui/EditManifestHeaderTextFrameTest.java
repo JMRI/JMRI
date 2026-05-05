@@ -94,6 +94,6 @@ public class EditManifestHeaderTextFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EditManifestHeaderTextFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EditManifestHeaderTextFrameTest.class);
 
 }

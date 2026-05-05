@@ -44,5 +44,5 @@ public class UsbLightManagerXml extends AbstractLightManagerConfigXML {
         return loadLights(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UsbLightManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(UsbLightManagerXml.class);
 }

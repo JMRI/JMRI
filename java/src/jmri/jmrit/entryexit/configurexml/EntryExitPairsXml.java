@@ -358,5 +358,5 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         return InstanceManager.getDefault(EntryExitPairs.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EntryExitPairsXml.class);
+    private static final Logger log = LoggerFactory.getLogger(EntryExitPairsXml.class);
 }

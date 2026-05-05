@@ -44,16 +44,16 @@ public class CbusBasicEventTableModel extends javax.swing.table.AbstractTableMod
     public static final int STLR_ON_COLUMN = 23;
     public static final int STLR_OFF_COLUMN = 24;
 
-    public final static int EVENT_DAT_1 = 25;
-    public final static int EVENT_DAT_2 = 26;
-    public final static int EVENT_DAT_3 = 27;
+    public static final int EVENT_DAT_1 = 25;
+    public static final int EVENT_DAT_2 = 26;
+    public static final int EVENT_DAT_3 = 27;
 
     public static final int MAX_COLUMN = 28;
 
     protected final CanSystemConnectionMemo _memo;
     protected ArrayList<CbusTableEvent> _mainArray;
     public final CbusEventTableAction ta;
-    public final static int[] INITIAL_COLS = new int[]{ 0,1,2,4,5,6,23,24 };
+    public static final int[] INITIAL_COLS = new int[]{ 0,1,2,4,5,6,23,24 };
 
     // list of Columns which may update on receipt of CanFrame.
     static final int[] canFrameCols = new int[]{
@@ -305,6 +305,6 @@ public class CbusBasicEventTableModel extends javax.swing.table.AbstractTableMod
         return new ArrayList<>(_mainArray);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusBasicEventTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusBasicEventTableModel.class);
 
 }

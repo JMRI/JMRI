@@ -92,7 +92,7 @@ public class DCCppRegisterManager {
     /*
      * We need to register for logging
      */
-    private final static Logger log = LoggerFactory.getLogger(DCCppRegisterManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppRegisterManager.class);
 
 }
 

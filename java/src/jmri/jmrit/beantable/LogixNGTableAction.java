@@ -437,6 +437,6 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableAction.class);
 
 }

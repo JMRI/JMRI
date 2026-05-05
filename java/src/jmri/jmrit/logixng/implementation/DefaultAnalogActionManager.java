@@ -178,6 +178,6 @@ public class DefaultAnalogActionManager extends AbstractBaseManager<MaleAnalogAc
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultAnalogActionManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultAnalogActionManager.class);
 
 }

@@ -766,6 +766,6 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
     }   // propertyChange
 
     //initialize logging
-    private transient final static Logger log = LoggerFactory.getLogger(RailDriverMenuItem.class);
+    private transient static final Logger log = LoggerFactory.getLogger(RailDriverMenuItem.class);
 
 }

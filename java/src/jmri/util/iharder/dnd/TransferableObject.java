@@ -60,7 +60,7 @@ public class TransferableObject implements java.awt.datatransfer.Transferable {
      *
      * @since 1.1
      */
-    public final static String MIME_TYPE = "application/x-net.iharder.dnd.TransferableObject";
+    public static final String MIME_TYPE = "application/x-net.iharder.dnd.TransferableObject";
 
     /**
      * The default {@link java.awt.datatransfer.DataFlavor} for
@@ -71,7 +71,7 @@ public class TransferableObject implements java.awt.datatransfer.Transferable {
      *
      * @since 1.1
      */
-    public final static java.awt.datatransfer.DataFlavor DATA_FLAVOR
+    public static final java.awt.datatransfer.DataFlavor DATA_FLAVOR
             = new DataFlavor(jmri.util.iharder.dnd.TransferableObject.class, MIME_TYPE);
 
     private Fetcher fetcher;

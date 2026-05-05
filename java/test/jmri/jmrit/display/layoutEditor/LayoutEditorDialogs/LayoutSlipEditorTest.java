@@ -19,5 +19,5 @@ public class LayoutSlipEditorTest extends LayoutTurnoutEditorTest {
         Assertions.assertNotNull(t);
     }
     
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipEditorTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipEditorTest.class);
 }

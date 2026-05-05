@@ -512,6 +512,6 @@ public abstract class AbstractVariableValueTestBase {
         JUnitUtil.tearDown();
     }
 
-    // private final static  org.slf4j.Logger log =  org.slf4j.LoggerFactory.getLogger(AbstractVariableValueTestBase.class);
+    // private static final  org.slf4j.Logger log =  org.slf4j.LoggerFactory.getLogger(AbstractVariableValueTestBase.class);
 
 }

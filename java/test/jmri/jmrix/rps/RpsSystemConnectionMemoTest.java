@@ -48,5 +48,5 @@ public class RpsSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Rp
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RpsSystemConnectionMemoTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RpsSystemConnectionMemoTest.class);
 }

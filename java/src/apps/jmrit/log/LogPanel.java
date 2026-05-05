@@ -39,6 +39,6 @@ public class LogPanel extends JPanel {
         log.error(textField.getText());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LogPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(LogPanel.class);
 
 }

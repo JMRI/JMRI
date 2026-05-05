@@ -27,6 +27,6 @@ public class SerialConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialConnectionTypeListTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SerialConnectionTypeListTest.class);
 
 }

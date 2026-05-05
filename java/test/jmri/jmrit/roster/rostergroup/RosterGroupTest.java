@@ -27,6 +27,6 @@ public class RosterGroupTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RosterGroupTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RosterGroupTest.class);
 
 }

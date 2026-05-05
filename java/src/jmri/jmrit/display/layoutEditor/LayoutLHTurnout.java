@@ -116,5 +116,5 @@ public class LayoutLHTurnout extends LayoutTurnout {
         super(id, TurnoutType.LH_TURNOUT, layoutEditor, 1);
     }
     
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutLHTurnout.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutLHTurnout.class);
 }

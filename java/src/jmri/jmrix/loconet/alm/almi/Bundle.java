@@ -25,7 +25,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
     @CheckForNull
-    private final static String name = "jmri.jmrix.loconet.alm.almi.Almi"; // NOI18N
+    private static final String name = "jmri.jmrix.loconet.alm.almi.Almi"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -78,7 +78,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
         return getBundle().handleGetMessage(locale, key, subs);
     }
 
-    private final static Bundle b = new Bundle();
+    private static final Bundle b = new Bundle();
 
     @Override
     @CheckForNull

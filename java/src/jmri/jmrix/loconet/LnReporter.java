@@ -345,6 +345,6 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
     private final int _number;   // LocoNet Reporter number
     private final HashSet<Object> entrySet;
 
-    private final static Logger log = LoggerFactory.getLogger(LnReporter.class);
+    private static final Logger log = LoggerFactory.getLogger(LnReporter.class);
 
 }

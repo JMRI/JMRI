@@ -100,5 +100,5 @@ public class FastClockController extends AbstractController {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FastClockController.class);
+    private static final Logger log = LoggerFactory.getLogger(FastClockController.class);
 }

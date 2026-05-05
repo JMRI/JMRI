@@ -541,6 +541,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         return ((hh * 60 * 60) + (mm * 60) + ss + (ms / 1000));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceClockControl.class);
+    private static final Logger log = LoggerFactory.getLogger(NceClockControl.class);
 
 }

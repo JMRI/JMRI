@@ -211,5 +211,5 @@ public class OutputIndicatorXml extends PositionableLabelXml {
         return icon;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OutputIndicatorXml.class);
+    private static final Logger log = LoggerFactory.getLogger(OutputIndicatorXml.class);
 }

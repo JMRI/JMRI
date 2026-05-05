@@ -38,6 +38,6 @@ public class Pr1ExportActionTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Pr1ExportActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Pr1ExportActionTest.class);
 
 }

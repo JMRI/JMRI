@@ -19,6 +19,6 @@ public class RestoreDialogTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RestoreDialogTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RestoreDialogTest.class);
 
 }

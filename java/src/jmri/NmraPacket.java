@@ -55,9 +55,9 @@ import org.slf4j.LoggerFactory;
         justification = "null returned is documented in each method to mean no valid result")
 public class NmraPacket {
 
-    static final public int accIdLowLimit = 1;
-    static final public int accIdHighLimit = 2044;
-    static final public int accIdAltHighLimit = 2048;
+    public static final int accIdLowLimit = 1;
+    public static final int accIdHighLimit = 2044;
+    public static final int accIdAltHighLimit = 2048;
 
     /**
      * Create a packet containing a decoder idle instruction.
@@ -1588,5 +1588,5 @@ public class NmraPacket {
      */
     private NmraPacket() {
     }
-    private final static Logger log = LoggerFactory.getLogger(NmraPacket.class);
+    private static final Logger log = LoggerFactory.getLogger(NmraPacket.class);
 }

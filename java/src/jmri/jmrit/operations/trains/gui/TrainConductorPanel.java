@@ -218,5 +218,5 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainConductorPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainConductorPanel.class);
 }

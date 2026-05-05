@@ -74,6 +74,6 @@ public class CbusEventBeanDataTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventBeanDataTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusEventBeanDataTest.class);
 
 }

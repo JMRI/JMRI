@@ -59,5 +59,5 @@ public class ExportCarsTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ExportCarsTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ExportCarsTest.class);
 }

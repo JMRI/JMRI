@@ -30,6 +30,6 @@ public class OBlockTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OBlockTableModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(OBlockTableModelTest.class);
 
 }

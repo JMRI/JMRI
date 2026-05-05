@@ -27,6 +27,6 @@ public class SystemConsoleConfigPanelTest extends PreferencesPanelTestBase<Syste
         assertThat(prefsPanel.isPersistant()).isTrue();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SystemConsoleConfigPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SystemConsoleConfigPanelTest.class);
 
 }

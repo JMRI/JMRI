@@ -12,7 +12,7 @@ import jmri.util.StringUtil;
 public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
 
-    final static int POLL_TIMEOUT = 250;
+    static final int POLL_TIMEOUT = 250;
 
     public AcelaMessage() {
         super();

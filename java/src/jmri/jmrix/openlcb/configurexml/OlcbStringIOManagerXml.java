@@ -47,5 +47,5 @@ public class OlcbStringIOManagerXml extends jmri.managers.configurexml.AbstractS
         return result;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbStringIOManagerXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbStringIOManagerXml.class);
 }

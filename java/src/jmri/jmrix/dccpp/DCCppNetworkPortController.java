@@ -15,7 +15,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     // base class. Implementations will provide InputStream and OutputStream
     // objects to LnTrafficController classes, who in turn will deal in messages.
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppNetworkPortController.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppNetworkPortController.class);
     
     protected DCCppNetworkPortController() {
         super(new DCCppSystemConnectionMemo());

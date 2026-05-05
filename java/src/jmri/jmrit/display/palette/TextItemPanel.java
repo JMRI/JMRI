@@ -815,6 +815,6 @@ public class TextItemPanel extends ItemPanel {
         JmriColorChooser.suppressAddRecentColor(false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TextItemPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(TextItemPanel.class);
 
 }

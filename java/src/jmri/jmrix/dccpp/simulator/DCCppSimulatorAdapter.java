@@ -48,7 +48,7 @@ import edu.umd.cs.findbugs.annotations.*;
  */
 public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implements Runnable {
 
-    final static int SENSOR_MSG_RATE = 10;
+    static final int SENSOR_MSG_RATE = 10;
 
     private boolean outputBufferEmpty = true;
     private final boolean checkBuffer = true;
@@ -880,6 +880,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private DataInputStream inpipe = null; // feed pout
     private Thread sourceThread;
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppSimulatorAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppSimulatorAdapter.class);
 
 }

@@ -543,5 +543,5 @@ public final class TypeConversionUtil {
         return value.toString();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TypeConversionUtil.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TypeConversionUtil.class);
 }

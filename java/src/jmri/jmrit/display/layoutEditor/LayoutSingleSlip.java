@@ -45,5 +45,5 @@ public class LayoutSingleSlip extends LayoutSlip {
         super(id, layoutEditor, TurnoutType.SINGLE_SLIP);
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSingleSlip.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSingleSlip.class);
 }

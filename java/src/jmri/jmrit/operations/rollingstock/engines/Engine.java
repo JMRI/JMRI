@@ -527,6 +527,6 @@ public class Engine extends RollingStock {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Engine.class);
+    private static final Logger log = LoggerFactory.getLogger(Engine.class);
 
 }

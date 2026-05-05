@@ -125,6 +125,6 @@ public class TrackEditCommentsFrame extends OperationsFrame {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(TrackEditCommentsFrame.class
+    private static final Logger log = LoggerFactory.getLogger(TrackEditCommentsFrame.class
             .getName());
 }

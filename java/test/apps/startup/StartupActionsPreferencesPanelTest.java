@@ -24,6 +24,6 @@ public class StartupActionsPreferencesPanelTest extends PreferencesPanelTestBase
     public void isPersistant(){
         assertThat(prefsPanel.isPersistant()).isTrue();
     }
-    // private final static Logger log = LoggerFactory.getLogger(StartupActionsPreferencesPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StartupActionsPreferencesPanelTest.class);
 
 }

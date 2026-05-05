@@ -380,6 +380,6 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         // table = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogSlotMonDataModel.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogSlotMonDataModel.class);
 
 }

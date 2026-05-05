@@ -26,9 +26,9 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
     private static final ImageIcon BCK_ICN = new ImageIcon(FileUtil.findURL("resources/icons/throttles/dirBckOn.png"));
     private static final ImageIcon ESTOP_ICN = new ImageIcon(FileUtil.findURL("resources/icons/throttles/estop24.png"));
     private static final ImageIcon STOP_ICN = new ImageIcon(FileUtil.findURL("resources/icons/throttles/stopOn24.png"));    
-    final static int IMAGE_HEIGHT = 32;
+    static final int IMAGE_HEIGHT = 32;
     private static final RosterIconFactory ICN_FACT = new RosterIconFactory(IMAGE_HEIGHT);
-    final static int LINE_HEIGHT = 42;    
+    static final int LINE_HEIGHT = 42;    
     
     @Override
     public Component getTableCellRendererComponent(JTable jtable, Object value, boolean bln, boolean bln1, int i, int i1) {

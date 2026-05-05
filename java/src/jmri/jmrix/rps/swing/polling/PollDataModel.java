@@ -193,6 +193,6 @@ public class PollDataModel extends AbstractTableModel implements MeasurementList
         Distributor.instance().removeMeasurementListener(this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PollDataModel.class);
+    private static final Logger log = LoggerFactory.getLogger(PollDataModel.class);
 
 }

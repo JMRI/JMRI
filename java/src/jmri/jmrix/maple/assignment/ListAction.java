@@ -35,6 +35,6 @@ public class ListAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ListAction.class);
+    private static final Logger log = LoggerFactory.getLogger(ListAction.class);
 
 }

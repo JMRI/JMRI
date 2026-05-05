@@ -365,7 +365,7 @@ public class ScheduleManager extends PropertyChangeSupport implements InstanceMa
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScheduleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(ScheduleManager.class);
 
     @Override
     public void initialize() {

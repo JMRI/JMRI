@@ -79,6 +79,6 @@ public class TurnoutTableDataModelTest extends jmri.jmrit.beantable.AbstractBean
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TurnoutTableDataModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TurnoutTableDataModelTest.class);
 
 }

@@ -100,7 +100,7 @@ public class NceAIU {
         return sensorArray[index];
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceAIU.class);
+    private static final Logger log = LoggerFactory.getLogger(NceAIU.class);
 }
 
 

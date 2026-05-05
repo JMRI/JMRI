@@ -208,6 +208,6 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppSensorManager.class);
 
 }

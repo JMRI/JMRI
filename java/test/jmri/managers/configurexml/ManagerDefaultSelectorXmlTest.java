@@ -27,6 +27,6 @@ public class ManagerDefaultSelectorXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelectorXmlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ManagerDefaultSelectorXmlTest.class);
 
 }

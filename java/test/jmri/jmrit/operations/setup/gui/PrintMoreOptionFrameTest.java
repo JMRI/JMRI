@@ -62,6 +62,6 @@ public class PrintMoreOptionFrameTest extends OperationsTestCase {
         f.initComponents();
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
-    // private final static Logger log = LoggerFactory.getLogger(PrintMoreOptionFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PrintMoreOptionFrameTest.class);
 
 }

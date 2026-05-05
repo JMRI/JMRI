@@ -769,5 +769,5 @@ public class ScheduleTableModel extends OperationsTableModel implements Property
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScheduleTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(ScheduleTableModel.class);
 }

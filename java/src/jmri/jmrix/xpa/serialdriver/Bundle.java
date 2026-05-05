@@ -83,7 +83,7 @@ public class Bundle extends jmri.jmrix.xpa.Bundle {
         return getBundle().handleGetMessage(locale, key, subs);
     }
    
-    private final static Bundle b = new Bundle();
+    private static final Bundle b = new Bundle();
     @Override @CheckForNull protected String bundleName() {return name; }
     protected static jmri.Bundle getBundle() { return b; }
 

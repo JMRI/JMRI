@@ -76,6 +76,6 @@ public class TestTrafficController extends TrafficController {
         sndMessage = null;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TestTrafficController.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TestTrafficController.class);
 
 }

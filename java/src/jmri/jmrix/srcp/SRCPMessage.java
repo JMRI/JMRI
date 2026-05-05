@@ -223,7 +223,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     @SuppressWarnings("hiding")  // changes constant value from superclass
     static final int LONG_TIMEOUT = 180000;  // e.g. for programming options
 
-    // private final static Logger log = LoggerFactory.getLogger(SRCPMessage.class);
+    // private static final Logger log = LoggerFactory.getLogger(SRCPMessage.class);
 
 }
 

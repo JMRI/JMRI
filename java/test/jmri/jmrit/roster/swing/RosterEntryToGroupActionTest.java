@@ -32,6 +32,6 @@ public class RosterEntryToGroupActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RosterEntryToGroupActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RosterEntryToGroupActionTest.class);
 
 }

@@ -190,5 +190,5 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
     @Override
     public void dispose() {
     }
-    private final static Logger log = LoggerFactory.getLogger(ProgServiceModeComboBox.class);
+    private static final Logger log = LoggerFactory.getLogger(ProgServiceModeComboBox.class);
 }

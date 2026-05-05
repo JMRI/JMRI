@@ -133,6 +133,6 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpecificSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(SpecificSensorManager.class);
 }
 

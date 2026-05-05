@@ -156,6 +156,6 @@ public class CbusNodeEventTableDataModelTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeEventTableDataModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeEventTableDataModelTest.class);
 
 }

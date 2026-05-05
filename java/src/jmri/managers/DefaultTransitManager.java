@@ -218,6 +218,6 @@ public class DefaultTransitManager extends AbstractManager<Transit> implements j
         super.dispose();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultTransitManager.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultTransitManager.class);
 
 }

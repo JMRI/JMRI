@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<Route, JsonRouteHttpService>{
 
-    private final static Logger log = LoggerFactory.getLogger(JsonRouteHttpServiceTest.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonRouteHttpServiceTest.class);
 
     @Test
     public void testDoGetWithRouteSensor() throws JmriException, JsonException {

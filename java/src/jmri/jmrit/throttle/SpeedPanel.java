@@ -220,5 +220,5 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SpeedPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(SpeedPanel.class);
 }

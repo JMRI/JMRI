@@ -387,7 +387,7 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
         return ret;
     }
 
-    final private class ShortCutsField extends JPanel {
+    private final class ShortCutsField extends JPanel {
         int[][] shortcuts;
         boolean isDirty = false;
 
@@ -426,7 +426,7 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
         }
     }
 
-    final private class ShortCutPanel extends JPanel {
+    private final class ShortCutPanel extends JPanel {
         ShortCutsField shortCutsField;
         int[] shortcut; // [0]:modifier , [1]: extended key code
 
@@ -451,7 +451,7 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
 
     @SuppressFBWarnings(value = "SIC_INNER_SHOULD_BE_STATIC", 
                 justification="SpotBugs says should be static; compiler differs in opinion")
-    final private class ShortCutTextField extends JTextField {
+    private final class ShortCutTextField extends JTextField {
         ShortCutsField shortCutsField;
 
         @SuppressWarnings("deprecation") // KeyEvent.getKeyModifiersText
@@ -490,5 +490,5 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferencesControlsSettingsPane.class);
+    private static final Logger log = LoggerFactory.getLogger(ThrottlesPreferencesControlsSettingsPane.class);
 }

@@ -31,6 +31,6 @@ public class RaspberryPiConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RaspberryPiConnectionTypeListTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RaspberryPiConnectionTypeListTest.class);
 
 }

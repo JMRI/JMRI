@@ -154,6 +154,6 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(StatusPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(StatusPanel.class);
 
 }

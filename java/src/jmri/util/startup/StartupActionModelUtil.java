@@ -32,7 +32,7 @@ public class StartupActionModelUtil extends Bean implements Disposable {
     private ArrayList<String> actionNames = null; // built on demand, invalidated in changes to actions
     private final PropertyChangeListener memosListener = this::memoChanged;
     private final PropertyChangeListener actionFactoryListener = this::actionFactoryChanged;
-    private final static Logger log = LoggerFactory.getLogger(StartupActionModelUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(StartupActionModelUtil.class);
 
     /**
      * Get the default StartupActionModelUtil instance, creating it if

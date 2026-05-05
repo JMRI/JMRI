@@ -234,5 +234,5 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
         return InstanceManager.getDefault(jmri.jmrit.logixng.ConditionalNG_Manager.class).getXMLOrder();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNGManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNGManagerXml.class);
 }

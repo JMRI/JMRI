@@ -28,6 +28,6 @@ public class SerialFilterActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialFilterActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SerialFilterActionTest.class);
 
 }

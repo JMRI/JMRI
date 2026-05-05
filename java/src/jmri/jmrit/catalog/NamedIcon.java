@@ -634,9 +634,9 @@ public class NamedIcon extends ImageIcon {
         return scale;
     }
 
-    public final static int NOFLIP = 0X00;
-    public final static int HORIZONTALFLIP = 0X01;
-    public final static int VERTICALFLIP = 0X02;
+    public static final int NOFLIP = 0X00;
+    public static final int HORIZONTALFLIP = 0X01;
+    public static final int VERTICALFLIP = 0X02;
 
     public void flip(int flip, Component comp) {
         if (flip == NOFLIP) {
@@ -661,6 +661,6 @@ public class NamedIcon extends ImageIcon {
         transformImage(w, h, _transformF, null);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NamedIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(NamedIcon.class);
 
 }

@@ -58,6 +58,6 @@ public class BlockTableDataModelTest extends AbstractBeanTableDataModelBase<Bloc
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BlockTableDataModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(BlockTableDataModelTest.class);
 
 }

@@ -188,5 +188,5 @@ public class DefaultAnalogExpressionManagerXml extends AbstractManagerXml {
         return InstanceManager.getDefault(AnalogExpressionManager.class).getXMLOrder();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultAnalogExpressionManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultAnalogExpressionManagerXml.class);
 }

@@ -235,6 +235,6 @@ public class LocoBufferAdapter extends LnPortController {
         return packets;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoBufferAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoBufferAdapter.class);
 
 }

@@ -237,6 +237,6 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EasyDccThrottleTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(EasyDccThrottleTest.class);
 
 }

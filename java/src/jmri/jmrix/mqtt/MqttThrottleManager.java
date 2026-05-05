@@ -189,6 +189,6 @@ public class MqttThrottleManager extends AbstractThrottleManager {
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(MqttThrottleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(MqttThrottleManager.class);
 
 }

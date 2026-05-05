@@ -80,7 +80,7 @@ public class Bundle extends jmri.jmrix.lenz.hornbyelite.Bundle {
     }
 
 
-    private final static Bundle b = new Bundle();
+    private static final Bundle b = new Bundle();
 
     @Override
     @CheckForNull

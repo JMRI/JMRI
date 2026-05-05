@@ -53,6 +53,6 @@ public class DCCppInitializationManager {
         log.info("DCC++/DCC-EX Initialization Complete");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppInitializationManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppInitializationManager.class);
 
 }

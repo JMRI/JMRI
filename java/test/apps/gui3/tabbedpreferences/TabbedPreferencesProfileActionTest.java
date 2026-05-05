@@ -26,6 +26,6 @@ public class TabbedPreferencesProfileActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TabbedPreferencesProfileActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TabbedPreferencesProfileActionTest.class);
 
 }

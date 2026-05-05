@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractBaseTestBase {
 
-    final static String TREE_INDENT = "   ";
+    static final String TREE_INDENT = "   ";
     protected Base _base;
     protected MaleSocket _baseMaleSocket;
     protected LogixNG_Category _category;
@@ -572,6 +572,6 @@ public abstract class AbstractBaseTestBase {
     }
 
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBaseTestBase.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBaseTestBase.class);
 
 }

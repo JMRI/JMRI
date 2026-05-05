@@ -97,5 +97,5 @@ public class TcpServerNetMessageHandler  implements NetMessageHandler {
         log.info("Cleanup client with address: {}", remoteHost);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TcpServerNetMessageHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(TcpServerNetMessageHandler.class);
 }

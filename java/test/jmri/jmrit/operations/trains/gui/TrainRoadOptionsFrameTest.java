@@ -251,6 +251,6 @@ public class TrainRoadOptionsFrameTest extends OperationsTestCase {
         f.initComponents(trainEditFrame);
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
-    // private final static Logger log = LoggerFactory.getLogger(TrainRoadOptionsFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainRoadOptionsFrameTest.class);
 
 }

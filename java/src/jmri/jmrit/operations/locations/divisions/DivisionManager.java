@@ -244,7 +244,7 @@ public class DivisionManager extends PropertyChangeSupport implements InstanceMa
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DivisionManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DivisionManager.class);
 
     @Override
     public void initialize() {

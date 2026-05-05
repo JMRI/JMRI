@@ -75,6 +75,6 @@ public class SampleFunctionalClassXml extends jmri.configurexml.AbstractXmlAdapt
         return jmri.Manager.TIMEBASE;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleFunctionalClassXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleFunctionalClassXml.class);
 
 }

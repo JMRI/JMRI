@@ -45,6 +45,6 @@ public class PrintOptionPanelTest extends OperationsTestCase {
         Assert.assertFalse(p.printLocoLastCheckBox.isSelected());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintOptionPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PrintOptionPanelTest.class);
 
 }

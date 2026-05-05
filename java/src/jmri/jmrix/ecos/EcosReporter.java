@@ -135,6 +135,6 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosReporter.class);
+    private static final Logger log = LoggerFactory.getLogger(EcosReporter.class);
 
 }

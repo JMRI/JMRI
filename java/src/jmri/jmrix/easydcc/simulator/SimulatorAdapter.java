@@ -32,7 +32,7 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
     // private control members
     private Thread sourceThread;
 
-    final static int SENSOR_MSG_RATE = 10;
+    static final int SENSOR_MSG_RATE = 10;
 
     private boolean outputBufferEmpty = true;
     private final boolean checkBuffer = true;
@@ -387,6 +387,6 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
     private DataOutputStream outpipe = null; // feed pin
     private DataInputStream inpipe = null; // feed pout
 
-    private final static Logger log = LoggerFactory.getLogger(SimulatorAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(SimulatorAdapter.class);
 
 }

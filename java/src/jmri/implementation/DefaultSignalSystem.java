@@ -204,6 +204,6 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         return new String(retval);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystem.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultSignalSystem.class);
 }
 

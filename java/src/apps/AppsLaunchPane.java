@@ -342,5 +342,5 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
      */
     protected abstract String windowHelpID();
 
-    private final static Logger log = LoggerFactory.getLogger(AppsLaunchPane.class);
+    private static final Logger log = LoggerFactory.getLogger(AppsLaunchPane.class);
 }

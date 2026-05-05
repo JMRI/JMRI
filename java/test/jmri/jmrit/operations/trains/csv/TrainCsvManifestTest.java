@@ -49,5 +49,5 @@ public class TrainCsvManifestTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainCsvManifestTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainCsvManifestTest.class);
 }

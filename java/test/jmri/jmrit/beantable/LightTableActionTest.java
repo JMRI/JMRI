@@ -806,5 +806,5 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LightTableActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LightTableActionTest.class);
 }

@@ -741,6 +741,6 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteLocation.class);
+    private static final Logger log = LoggerFactory.getLogger(RouteLocation.class);
 
 }

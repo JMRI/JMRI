@@ -208,6 +208,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfigXml.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfigXml.class);
 
 }

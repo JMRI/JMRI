@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 public class VSDListener {
 
     // Only one Audio Listener can exist, and it is already present in the Audio Table
-    public final static String ListenerSysName = "IAL$";
+    public static final String ListenerSysName = "IAL$";
 
     private AudioFactory af;
     private AudioListener listener;
@@ -79,6 +79,6 @@ public class VSDListener {
         // Set position here
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VSDListener.class);
+    private static final Logger log = LoggerFactory.getLogger(VSDListener.class);
 
 }

@@ -92,5 +92,5 @@ public class ThrottlesTableTransferHandler extends TransferHandler {
       }
    }
 
-   private final static Logger log = LoggerFactory.getLogger(ThrottlesTableTransferHandler.class);    
+   private static final Logger log = LoggerFactory.getLogger(ThrottlesTableTransferHandler.class);    
 }

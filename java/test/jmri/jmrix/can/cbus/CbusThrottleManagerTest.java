@@ -926,6 +926,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         JUnitUtil.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusThrottleManagerTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusThrottleManagerTest.class);
 
 }

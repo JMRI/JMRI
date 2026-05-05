@@ -459,6 +459,6 @@ public class ActionWarrant extends AbstractDigitalAction
         getConditionalNG().execute();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionWarrant.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionWarrant.class);
 
 }

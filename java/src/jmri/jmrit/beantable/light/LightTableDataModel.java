@@ -457,6 +457,6 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
 
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LightTableDataModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LightTableDataModel.class);
             
 }

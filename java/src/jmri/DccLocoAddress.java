@@ -129,8 +129,8 @@ public class DccLocoAddress implements LocoAddress {
     public int getNumber() {
         return (int) number;
     }
-    final protected long number;
-    final protected LocoAddress.Protocol protocol;
+    protected final long number;
+    protected final LocoAddress.Protocol protocol;
     final boolean isConsist;
 
 }

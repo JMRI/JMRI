@@ -614,6 +614,6 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Schedule.class);
+    private static final Logger log = LoggerFactory.getLogger(Schedule.class);
 
 }

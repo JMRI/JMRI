@@ -18,7 +18,7 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
     private NamedIcon powerUnknownIcon;
     private NamedIcon powerOffIcon;
     private NamedIcon powerOnIcon;
-    private final static Logger log = LoggerFactory.getLogger(PowerManagerButton.class);
+    private static final Logger log = LoggerFactory.getLogger(PowerManagerButton.class);
 
     public PowerManagerButton() {
         this(true);

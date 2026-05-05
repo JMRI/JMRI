@@ -85,5 +85,5 @@ public class LinkingLabelTest extends PositionableTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);
 }

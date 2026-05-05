@@ -394,6 +394,6 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(TamsThrottle.class);
+    private static final Logger log = LoggerFactory.getLogger(TamsThrottle.class);
 
 }

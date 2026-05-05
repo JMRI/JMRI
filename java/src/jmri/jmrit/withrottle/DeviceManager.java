@@ -64,6 +64,6 @@ public interface DeviceManager {
             log.debug("Leaving DeviceManagerThread.run()");
         }
 
-        private final static Logger log = LoggerFactory.getLogger(DeviceManagerThread.class);
+        private static final Logger log = LoggerFactory.getLogger(DeviceManagerThread.class);
     }
 }

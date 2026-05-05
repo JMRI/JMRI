@@ -103,7 +103,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public static final int OUT_OF_SERVICE = 0x40; // OBlock that should not be used
     public static final int TRACK_ERROR = 0x80;    // OBlock has Error
     // UNDETECTED state bit is used for DARK blocks
-    // static final public int DARK = 0x01;        // meaning: OBlock has no Sensor, same as UNKNOWN
+    // public static final int DARK = 0x01;        // meaning: OBlock has no Sensor, same as UNKNOWN
 
     private static final Color DEFAULT_FILL_COLOR = new Color(200, 0, 200);
 

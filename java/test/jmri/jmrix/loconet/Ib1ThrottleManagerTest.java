@@ -35,6 +35,6 @@ public class Ib1ThrottleManagerTest extends jmri.managers.AbstractThrottleManage
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Ib1ThrottleManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Ib1ThrottleManagerTest.class);
 
 }

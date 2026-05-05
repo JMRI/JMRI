@@ -46,6 +46,6 @@ public class ResetSwitchListsActionTest extends OperationsTestCase {
 //
 //    }
 
-    // private final static Logger log = LoggerFactory.getLogger(UpdateSwitchListActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(UpdateSwitchListActionTest.class);
 
 }

@@ -96,6 +96,6 @@ public class SerialDriverAdapter extends SerialPortController {
         return 1;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

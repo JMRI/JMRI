@@ -135,5 +135,5 @@ public class ThrottlesListPanel extends JPanel {
         repaint();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ThrottlesListPanel.class);    
+    private static final Logger log = LoggerFactory.getLogger(ThrottlesListPanel.class);    
 }

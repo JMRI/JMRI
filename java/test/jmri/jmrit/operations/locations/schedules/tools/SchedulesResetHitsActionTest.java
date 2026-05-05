@@ -38,6 +38,6 @@ public class SchedulesResetHitsActionTest extends OperationsTestCase {
         Assert.assertEquals("confirm hit count", 0, si.getHits());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SchedulesResetHitsActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SchedulesResetHitsActionTest.class);
 
 }

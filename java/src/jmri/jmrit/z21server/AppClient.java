@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 
 public class AppClient implements PropertyChangeListener  {
 
-    private final static Logger log = LoggerFactory.getLogger(AppClient.class);
+    private static final Logger log = LoggerFactory.getLogger(AppClient.class);
     private final InetAddress address;
     private final HashMap<Integer, DccThrottle> throttles; //list of throttles the client uses
     private final PropertyChangeListener changeListener; //a throttle change event will be forwarded to this listener

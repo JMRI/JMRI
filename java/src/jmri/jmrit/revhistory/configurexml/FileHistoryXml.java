@@ -188,5 +188,5 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         return rev;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileHistoryXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileHistoryXml.class);
 }

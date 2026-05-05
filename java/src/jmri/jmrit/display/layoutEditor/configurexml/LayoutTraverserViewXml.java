@@ -261,5 +261,5 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
         log.debug("  finished loading traverser {}" , name);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTraverserViewXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTraverserViewXml.class);
 }

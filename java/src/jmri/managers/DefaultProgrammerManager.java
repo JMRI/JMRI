@@ -250,5 +250,5 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultProgrammerManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultProgrammerManager.class);
 }

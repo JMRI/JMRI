@@ -26,5 +26,5 @@ public class ExportEngineRosterAction extends AbstractAction {
         ex.writeOperationsEngineFile();
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(ExportEngineRosterAction.class);
+//    private static final Logger log = LoggerFactory.getLogger(ExportEngineRosterAction.class);
 }

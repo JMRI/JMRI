@@ -243,7 +243,7 @@ public class PositionableLabelTest extends PositionableTestBase {
     }
 
     // c.f. http://www.ssec.wisc.edu/~tomw/java/unicode.html#x2580
-    final static String SAMPLE_TEXT_U25CF = "  \u25CF  "; // note spaces
+    static final String SAMPLE_TEXT_U25CF = "  \u25CF  "; // note spaces
 
     // FULL BLOCK \u2588
     // BLACK SQUARE \u25A0
@@ -400,5 +400,5 @@ public class PositionableLabelTest extends PositionableTestBase {
         super.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionableLabelTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionableLabelTest.class);
 }

@@ -26,6 +26,6 @@ public class DeferringProgrammerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DeferringProgrammerManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DeferringProgrammerManagerTest.class);
 
 }

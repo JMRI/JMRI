@@ -157,6 +157,6 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 //    }
 //    public static final int DEFAULTMAXSIZE = 404; // Maple RR Request Docs page 9
 
-    private final static Logger log = LoggerFactory.getLogger(SerialMessage.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialMessage.class);
 
 }

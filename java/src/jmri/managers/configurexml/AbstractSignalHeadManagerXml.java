@@ -146,6 +146,6 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         return InstanceManager.getDefault(SignalHeadManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerXml.class);
 
 }

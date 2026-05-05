@@ -48,6 +48,6 @@ public class ExportLocationsRosterActionTest extends OperationsTestCase {
         Assert.assertTrue("Confirm file creation", file.exists());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ExportCarRosterActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ExportCarRosterActionTest.class);
 
 }

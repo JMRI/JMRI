@@ -281,6 +281,6 @@ public class BiDiBSensorManager extends jmri.managers.AbstractSensorManager {
     }
     
 
-    private final static Logger log = LoggerFactory.getLogger(BiDiBSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBSensorManager.class);
 
 }

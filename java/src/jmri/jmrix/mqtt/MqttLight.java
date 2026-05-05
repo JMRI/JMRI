@@ -197,5 +197,5 @@ public class MqttLight extends AbstractVariableLight implements MqttEventListene
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttLight.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttLight.class);
 }

@@ -262,6 +262,6 @@ public class SprogType {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogType.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogType.class);
 
 }

@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FileLineEndingsCheck {
 
-    private final static Logger log = LoggerFactory.getLogger(FileLineEndingsCheck.class);
+    private static final Logger log = LoggerFactory.getLogger(FileLineEndingsCheck.class);
 
     public static Iterable<File> data() {
         return getFiles(new File("."),

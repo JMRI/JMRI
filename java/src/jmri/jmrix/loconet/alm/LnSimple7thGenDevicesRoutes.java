@@ -163,5 +163,5 @@ public class LnSimple7thGenDevicesRoutes {
         }
         return null;
     }
-    private final static Logger log = LoggerFactory.getLogger(LnSimple7thGenDevicesRoutes.class);
+    private static final Logger log = LoggerFactory.getLogger(LnSimple7thGenDevicesRoutes.class);
 }

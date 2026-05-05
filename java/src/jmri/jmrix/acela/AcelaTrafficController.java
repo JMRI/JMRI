@@ -507,6 +507,6 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(AcelaTrafficController.class);
 
 }

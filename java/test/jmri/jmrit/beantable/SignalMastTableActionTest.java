@@ -74,5 +74,5 @@ public class SignalMastTableActionTest extends AbstractTableActionBase<SignalMas
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignalMastTableActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SignalMastTableActionTest.class);
 }

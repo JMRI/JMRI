@@ -34,6 +34,6 @@ public class DCCppTurnoutReplyCacheTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutReplyCacheTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DCCppTurnoutReplyCacheTest.class);
 
 }

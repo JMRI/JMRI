@@ -269,5 +269,5 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault, Throttl
         return ret;
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class);
+    // private static final Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class);
 }

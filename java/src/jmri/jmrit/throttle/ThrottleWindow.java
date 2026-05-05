@@ -925,5 +925,5 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottleWindow.class);
+    private static final Logger log = LoggerFactory.getLogger(ThrottleWindow.class);
 }

@@ -50,6 +50,6 @@ public class MergePromptTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MergePromptTest.class.getName());
+    // private static final Logger log = LoggerFactory.getLogger(MergePromptTest.class.getName());
 
 }

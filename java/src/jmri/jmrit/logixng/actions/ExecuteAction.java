@@ -132,6 +132,6 @@ public class ExecuteAction extends AbstractDigitalAction
     public void disposeMe() {
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExecuteAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExecuteAction.class);
 
 }

@@ -123,5 +123,5 @@ public class AutomationsTableFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationsTableFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(AutomationsTableFrame.class);
 }

@@ -113,6 +113,6 @@ public class AcelaLightManager extends AbstractLightManager {
         return (AcelaAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaLightManager.class);
+    private static final Logger log = LoggerFactory.getLogger(AcelaLightManager.class);
 
 }

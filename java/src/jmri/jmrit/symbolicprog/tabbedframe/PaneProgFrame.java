@@ -2377,6 +2377,6 @@ abstract public class PaneProgFrame extends JmriJFrame
         return _rosterEntry;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PaneProgFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PaneProgFrame.class);
 
 }

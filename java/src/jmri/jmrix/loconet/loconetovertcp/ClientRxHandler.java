@@ -231,6 +231,6 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ClientRxHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(ClientRxHandler.class);
 
 }

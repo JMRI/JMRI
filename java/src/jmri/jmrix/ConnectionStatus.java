@@ -251,6 +251,6 @@ public class ConnectionStatus {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConnectionStatus.class);
+    private static final Logger log = LoggerFactory.getLogger(ConnectionStatus.class);
 
 }

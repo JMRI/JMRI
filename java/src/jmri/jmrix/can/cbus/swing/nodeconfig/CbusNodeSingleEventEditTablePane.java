@@ -160,6 +160,6 @@ public class CbusNodeSingleEventEditTablePane extends jmri.jmrix.can.swing.CanPa
         super.dispose();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeSingleEventEditTablePane.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeSingleEventEditTablePane.class);
 
 }

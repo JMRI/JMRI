@@ -325,5 +325,5 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
         return InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class).getXMLOrder();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNGManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNGManagerXml.class);
 }

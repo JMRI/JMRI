@@ -86,6 +86,6 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialMessage.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialMessage.class);
 
 }

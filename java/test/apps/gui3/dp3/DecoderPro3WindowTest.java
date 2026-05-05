@@ -36,5 +36,5 @@ public class DecoderPro3WindowTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DecoderPro3WindowTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DecoderPro3WindowTest.class);
 }

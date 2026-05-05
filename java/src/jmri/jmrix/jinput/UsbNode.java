@@ -134,5 +134,5 @@ public class UsbNode extends DefaultMutableTreeNode {
 
     private static final HashMap<Object, UsbNode> NODES = new HashMap<>();
 
-    private final static Logger log = LoggerFactory.getLogger(UsbNode.class);
+    private static final Logger log = LoggerFactory.getLogger(UsbNode.class);
 }

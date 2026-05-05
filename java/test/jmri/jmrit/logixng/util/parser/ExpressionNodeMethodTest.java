@@ -133,7 +133,7 @@ public class ExpressionNodeMethodTest {
                     " */\n" +
                     "public class ExpressionNodeMethodPrimTest {\n" +
                     "\n" +
-                    "    private final static TestClass tc = new TestClass();\n" +
+                    "    private static final TestClass tc = new TestClass();\n" +
                     "\n" +
                     "    public void testCall(Object object, String method, Object expectedResult, Object[] params)\n" +
                     "            throws FunctionNotExistsException, JmriException {\n" +

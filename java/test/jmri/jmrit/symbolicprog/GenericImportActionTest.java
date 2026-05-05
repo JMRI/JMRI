@@ -38,6 +38,6 @@ public class GenericImportActionTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(GenericImportActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(GenericImportActionTest.class);
 
 }

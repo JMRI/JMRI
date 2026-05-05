@@ -77,6 +77,6 @@ public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
         return 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CanisbSerialDriverAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(CanisbSerialDriverAdapter.class);
 
 }

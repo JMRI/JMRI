@@ -241,6 +241,6 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(EcosSensorManager.class);
 
 }

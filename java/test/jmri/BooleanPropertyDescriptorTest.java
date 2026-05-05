@@ -36,6 +36,6 @@ public class BooleanPropertyDescriptorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TurnoutOperationManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TurnoutOperationManagerTest.class);
 
 }

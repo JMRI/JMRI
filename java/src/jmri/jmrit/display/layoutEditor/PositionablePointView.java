@@ -55,7 +55,7 @@ public class PositionablePointView extends LayoutTrackView {
         this.positionablePoint = point;
     }
 
-    final private PositionablePoint positionablePoint;
+    private final PositionablePoint positionablePoint;
 
     public PositionablePoint getPoint() {
         return positionablePoint;
@@ -1991,5 +1991,5 @@ public class PositionablePointView extends LayoutTrackView {
         // nothing to see here, move along...
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointView.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointView.class);
 }

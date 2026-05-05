@@ -143,5 +143,5 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
         _selectBlockValueSwing.dispose();
     }
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionBlockSwing.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionBlockSwing.class);
 }

@@ -73,5 +73,5 @@ public class NotXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NotXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NotXml.class);
 }

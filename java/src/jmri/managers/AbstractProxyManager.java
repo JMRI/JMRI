@@ -677,6 +677,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProxyManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProxyManager.class);
 
 }

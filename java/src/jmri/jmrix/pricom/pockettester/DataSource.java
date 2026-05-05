@@ -379,7 +379,7 @@ public class DataSource extends jmri.util.JmriJFrame {
             justification = "Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DataSource.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DataSource.class);
 
     /**
      * Internal class to handle the separate character-receive thread
@@ -451,7 +451,7 @@ public class DataSource extends jmri.util.JmriJFrame {
     } // end class Reader
 
     // data members to hold contact with the listeners
-    final private Vector<DataListener> listeners = new Vector<DataListener>();
+    private final Vector<DataListener> listeners = new Vector<DataListener>();
 
     public synchronized void addListener(DataListener l) {
         // add only if not already registered

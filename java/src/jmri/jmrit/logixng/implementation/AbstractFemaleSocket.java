@@ -510,6 +510,6 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         return isConnected() && getConnectedSocket() == b;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractFemaleSocket.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractFemaleSocket.class);
 
 }

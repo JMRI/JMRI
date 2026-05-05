@@ -334,7 +334,7 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainScheduleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainScheduleManager.class);
 
     @Override
     public void initialize() {

@@ -240,6 +240,6 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppTurnoutManager.class);
 
 }

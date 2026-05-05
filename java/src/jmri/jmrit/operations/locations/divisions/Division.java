@@ -113,5 +113,5 @@ public class Division extends PropertyChangeSupport implements Identifiable {
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Division.class);
+    private static final Logger log = LoggerFactory.getLogger(Division.class);
 }

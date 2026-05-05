@@ -88,6 +88,6 @@ public class OlcbConfigurationManagerTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbConfigurationManagerTest.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbConfigurationManagerTest.class);
 
 }

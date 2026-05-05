@@ -1519,6 +1519,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(CbusBootloaderPane.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusBootloaderPane.class);
 
 }

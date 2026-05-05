@@ -381,6 +381,6 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         return _TurnoutReplyCache;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppTrafficController.class);
 
 }

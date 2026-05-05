@@ -935,5 +935,5 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         assertTrue( h > 0, "scroll bound h");
     }
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorTest.class.getName());
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorTest.class.getName());
 }

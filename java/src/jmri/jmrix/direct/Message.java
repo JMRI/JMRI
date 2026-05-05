@@ -171,6 +171,6 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         return getElement(0) & 0x7F;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Message.class);
+    private static final Logger log = LoggerFactory.getLogger(Message.class);
 
 }

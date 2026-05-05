@@ -43,6 +43,6 @@ public class MemoryItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MemoryItemPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MemoryItemPanelTest.class);
 
 }

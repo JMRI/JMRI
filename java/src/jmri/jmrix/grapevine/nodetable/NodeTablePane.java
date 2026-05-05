@@ -331,6 +331,6 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NodeTablePane.class);
+    private static final Logger log = LoggerFactory.getLogger(NodeTablePane.class);
 
 }

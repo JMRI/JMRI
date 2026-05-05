@@ -615,6 +615,6 @@ public class Engine implements ReadingListener {
         prop.addPropertyChangeListener(p);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Engine.class);
+    private static final Logger log = LoggerFactory.getLogger(Engine.class);
 
 }

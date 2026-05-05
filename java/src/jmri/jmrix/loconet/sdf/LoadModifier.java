@@ -260,5 +260,5 @@ public class LoadModifier extends SdfMacro {
         return indent + oneInstructionString();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(LoadModifier.class);
+    private static final Logger log = LoggerFactory.getLogger(LoadModifier.class);
 }

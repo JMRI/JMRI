@@ -27,7 +27,7 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 public class Z21SimulatorAdapterTest {
 
     private java.net.InetAddress host;
-    private final static int PORT = 21105; // default port for Z21 connections.
+    private static final int PORT = 21105; // default port for Z21 connections.
     private Z21SimulatorAdapter a = null;
 
     @Test

@@ -36,6 +36,6 @@ public class TrainsScheduleActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainsScheduleActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainsScheduleActionTest.class);
 
 }

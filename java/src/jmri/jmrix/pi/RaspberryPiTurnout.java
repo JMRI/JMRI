@@ -143,6 +143,6 @@ public class RaspberryPiTurnout extends AbstractTurnout implements java.io.Seria
     protected void turnoutPushbuttonLockout(boolean locked) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RaspberryPiTurnout.class);
+    private static final Logger log = LoggerFactory.getLogger(RaspberryPiTurnout.class);
 
 }

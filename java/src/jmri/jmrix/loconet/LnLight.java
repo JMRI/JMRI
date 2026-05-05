@@ -85,6 +85,6 @@ public class LnLight extends AbstractLight {
         tc.sendLocoNetMessage(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnLight.class);
+    private static final Logger log = LoggerFactory.getLogger(LnLight.class);
 
 }

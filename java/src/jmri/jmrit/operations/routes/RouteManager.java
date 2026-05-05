@@ -315,7 +315,7 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteManager.class);
+    private static final Logger log = LoggerFactory.getLogger(RouteManager.class);
 
     @Override
     public void initialize() {

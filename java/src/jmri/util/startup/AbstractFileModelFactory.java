@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractFileModelFactory implements StartupModelFactory {
 
     private JFileChooser chooser = null;
-    private final static Logger log = LoggerFactory.getLogger(AbstractFileModelFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractFileModelFactory.class);
 
     @Override
     public String getDescription() {

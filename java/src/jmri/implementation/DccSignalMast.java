@@ -250,6 +250,6 @@ public class DccSignalMast extends AbstractSignalMast {
         return packetSendCount;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DccSignalMast.class);
+    private static final Logger log = LoggerFactory.getLogger(DccSignalMast.class);
 
 }

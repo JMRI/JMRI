@@ -187,6 +187,6 @@ public class MatrixSignalMastXml
         log.error("Invalid method called");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MatrixSignalMastXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MatrixSignalMastXml.class);
 
 }

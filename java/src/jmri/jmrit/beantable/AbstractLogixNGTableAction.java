@@ -896,6 +896,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLogixNGTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLogixNGTableAction.class);
 
 }

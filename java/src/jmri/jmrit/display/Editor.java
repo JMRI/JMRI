@@ -131,11 +131,11 @@ public abstract class Editor extends JmriJFrameWithPermissions
     private boolean _showToolTip = true;
 //    private boolean _showCoordinates = true;
 
-    final public static int OPTION_POSITION = 1;
-    final public static int OPTION_CONTROLS = 2;
-    final public static int OPTION_HIDDEN = 3;
-    final public static int OPTION_TOOLTIP = 4;
-//    final public static int OPTION_COORDS = 5;
+    public static final int OPTION_POSITION = 1;
+    public static final int OPTION_CONTROLS = 2;
+    public static final int OPTION_HIDDEN = 3;
+    public static final int OPTION_TOOLTIP = 4;
+//    public static final int OPTION_COORDS = 5;
 
     private boolean _globalSetsLocal = true;    // pre 2.9.6 behavior
     private boolean _useGlobalFlag = false;     // pre 2.9.6 behavior

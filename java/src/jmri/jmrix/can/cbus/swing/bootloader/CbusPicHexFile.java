@@ -127,6 +127,6 @@ public class CbusPicHexFile extends HexFile{
             return new CbusParameters();
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(CbusPicHexFile.class);
+//    private static final Logger log = LoggerFactory.getLogger(CbusPicHexFile.class);
 
 }

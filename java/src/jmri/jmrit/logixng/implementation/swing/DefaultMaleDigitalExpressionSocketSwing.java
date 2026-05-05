@@ -53,6 +53,6 @@ public class DefaultMaleDigitalExpressionSocketSwing extends AbstractMaleSocketS
         maleSocket.setListen(_listenCheckBox.isSelected());
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleDigitalExpressionSocketSwing.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleDigitalExpressionSocketSwing.class);
 
 }

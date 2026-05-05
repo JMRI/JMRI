@@ -26,7 +26,7 @@ public class TrainScriptActionTest extends OperationsTestCase {
         JUnitUtil.dispose(tef);
     }
 
-    // private final static Logger log =
+    // private static final Logger log =
     // LoggerFactory.getLogger(TrainScriptActionTest.class);
 
 }

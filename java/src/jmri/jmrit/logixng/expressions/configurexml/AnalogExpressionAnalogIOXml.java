@@ -58,5 +58,5 @@ public class AnalogExpressionAnalogIOXml extends jmri.managers.configurexml.Abst
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionAnalogIOXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionAnalogIOXml.class);
 }

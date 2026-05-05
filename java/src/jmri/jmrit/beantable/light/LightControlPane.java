@@ -183,6 +183,6 @@ public class LightControlPane extends JPanel {
         closeEditControlWindow();
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(LightControlPane.class);
+    // private static final Logger log = LoggerFactory.getLogger(LightControlPane.class);
     
 }

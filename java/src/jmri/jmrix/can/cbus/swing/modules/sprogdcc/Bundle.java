@@ -82,7 +82,7 @@ public class Bundle extends jmri.jmrix.can.cbus.swing.modules.Bundle {
     }
 
 
-    private final static Bundle b = new Bundle();
+    private static final Bundle b = new Bundle();
 
     @Override
     @CheckForNull

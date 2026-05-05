@@ -139,5 +139,5 @@ public final class ArrayUtil {
         return result;
     }
 
-    // private transient final static Logger log = LoggerFactory.getLogger(ArrayUtil.class);
+    // private transient static final Logger log = LoggerFactory.getLogger(ArrayUtil.class);
 }

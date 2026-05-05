@@ -31,7 +31,7 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected ObjectMapper mapper;
     private JsonNode jsonManifest = null;
-    private final static Logger log = LoggerFactory.getLogger(HtmlManifest.class);
+    private static final Logger log = LoggerFactory.getLogger(HtmlManifest.class);
 
     public HtmlManifest(Locale locale, Train train) throws IOException {
         super(locale, train);

@@ -9,14 +9,14 @@ import jmri.jmrit.ctc.NBHSensor;
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
 public class OtherData {
-    public final static String CTC_VERSION = "v2.0";
+    public static final String CTC_VERSION = "v2.0";
 
     public enum CTC_PANEL_TYPE {
 // The values in paren's are the RadioGroup values set by "CommonSubs.numberButtonGroup",
 // gotten by calling "CommonSubs.getButtonSelectedInt".
         USS(0), OTHER(1);
         private final int _mRadioGroupValue;
-        private final static HashMap<Integer, CTC_PANEL_TYPE> map = new HashMap<>();
+        private static final HashMap<Integer, CTC_PANEL_TYPE> map = new HashMap<>();
         private CTC_PANEL_TYPE (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (CTC_PANEL_TYPE value : CTC_PANEL_TYPE.values()) { map.put(value._mRadioGroupValue, value); }}
         public int getRadioGroupValue() { return _mRadioGroupValue; }
@@ -28,7 +28,7 @@ public class OtherData {
 // gotten by calling "CommonSubs.getButtonSelectedInt".
         ALL(0), GREEN_OFF(1), NONE(2);
         private final int _mRadioGroupValue;
-        private final static HashMap<Integer, SIGNALS_ON_PANEL> map = new HashMap<>();
+        private static final HashMap<Integer, SIGNALS_ON_PANEL> map = new HashMap<>();
         private SIGNALS_ON_PANEL (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (SIGNALS_ON_PANEL value : SIGNALS_ON_PANEL.values()) { map.put(value._mRadioGroupValue, value); }}
         public int getRadioGroupValue() { return _mRadioGroupValue; }
@@ -40,7 +40,7 @@ public class OtherData {
 // gotten by calling "CommonSubs.getButtonSelectedInt".
         SMALL(0), MEDIUM(1), LARGE(2);
         private final int _mRadioGroupValue;
-        private final static HashMap<Integer, VERTICAL_SIZE> map = new HashMap<>();
+        private static final HashMap<Integer, VERTICAL_SIZE> map = new HashMap<>();
         private VERTICAL_SIZE (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (VERTICAL_SIZE value : VERTICAL_SIZE.values()) { map.put(value._mRadioGroupValue, value); }}
         public int getRadioGroupValue() { return _mRadioGroupValue; }
@@ -52,7 +52,7 @@ public class OtherData {
 // gotten by calling "CommonSubs.getButtonSelectedInt".
         SIGNALHEAD(0), SIGNALMAST(1);
         private final int _mRadioGroupValue;
-        private final static HashMap<Integer, SIGNAL_SYSTEM_TYPE> map = new HashMap<>();
+        private static final HashMap<Integer, SIGNAL_SYSTEM_TYPE> map = new HashMap<>();
         private SIGNAL_SYSTEM_TYPE (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (SIGNAL_SYSTEM_TYPE value : SIGNAL_SYSTEM_TYPE.values()) { map.put(value._mRadioGroupValue, value); }}
         public int getInt() { return _mRadioGroupValue; }

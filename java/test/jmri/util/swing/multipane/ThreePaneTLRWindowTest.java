@@ -33,6 +33,6 @@ public class ThreePaneTLRWindowTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ThreePaneTLRWindowTest.class.getName());
+    // private static final Logger log = LoggerFactory.getLogger(ThreePaneTLRWindowTest.class.getName());
 
 }

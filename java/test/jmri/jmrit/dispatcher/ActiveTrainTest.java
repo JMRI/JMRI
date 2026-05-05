@@ -28,6 +28,6 @@ public class ActiveTrainTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ActiveTrainTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ActiveTrainTest.class);
 
 }

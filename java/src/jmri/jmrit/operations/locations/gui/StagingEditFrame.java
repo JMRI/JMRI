@@ -238,5 +238,5 @@ public class StagingEditFrame extends TrackEditFrame {
         }
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(StagingEditFrame.class);
+//    private static final Logger log = LoggerFactory.getLogger(StagingEditFrame.class);
 }

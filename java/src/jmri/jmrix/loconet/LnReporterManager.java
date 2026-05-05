@@ -139,6 +139,6 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         r.messageFromManager(l); // make sure it got the message
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnReporterManager.class);
+    private static final Logger log = LoggerFactory.getLogger(LnReporterManager.class);
 
 }

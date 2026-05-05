@@ -179,6 +179,6 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
         }
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(Sol8BaseEditNVPane.class);
+//    private static final Logger log = LoggerFactory.getLogger(Sol8BaseEditNVPane.class);
 
 }

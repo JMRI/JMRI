@@ -154,6 +154,6 @@ public class SensorTableTabActionTest extends AbstractTableTabActionBase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SensorTableTabActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SensorTableTabActionTest.class);
 
 }

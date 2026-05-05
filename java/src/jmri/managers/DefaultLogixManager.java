@@ -174,6 +174,6 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         return Logix.class;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultLogixManager.class);
 
 }

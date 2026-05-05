@@ -178,6 +178,6 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
         setTurnoutHandling(value);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnNetworkPortController.class);
+    private static final Logger log = LoggerFactory.getLogger(LnNetworkPortController.class);
 
 }

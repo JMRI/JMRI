@@ -34,6 +34,6 @@ public class ShowTrackMovesActionTest extends OperationsTestCase {
         Assert.assertTrue("confirm change", Setup.isShowTrackMovesEnabled());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ShowTrackMovesActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ShowTrackMovesActionTest.class);
 
 }

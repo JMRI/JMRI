@@ -538,5 +538,5 @@ public class OlcbClockControlTest {
         new org.netbeans.jemmy.QueueTool().waitEmpty();  // using 100 as argument has a high fail rate 2018-12-15
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbClockControlTest.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbClockControlTest.class);
 }

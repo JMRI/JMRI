@@ -56,6 +56,6 @@ public class TrainCustomManifestTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainCustomManifestTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainCustomManifestTest.class);
 
 }

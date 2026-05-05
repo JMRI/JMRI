@@ -235,10 +235,10 @@ public class Ash2_0Algorithm extends AbstractCalculator {
      */
     int offset = 0; //  Offset (usec), add to delay
 
-    final static int TMAX = 35000; //  Max. allowable delay (usec)
-    final static int TMIN = 150;   //  Min. allowable delay (usec)
-    final static int SMAX = 30;    //  Max. OK std. dev. (usec)
-    final static int NMAX = 50;    //  Max. no. of receivers used
+    static final int TMAX = 35000; //  Max. allowable delay (usec)
+    static final int TMIN = 150;   //  Min. allowable delay (usec)
+    static final int SMAX = 30;    //  Max. OK std. dev. (usec)
+    static final int NMAX = 50;    //  Max. no. of receivers used
 
     //  Compute RPS Position using
     @SuppressFBWarnings(value = "IP_PARAMETER_IS_DEAD_BUT_OVERWRITTEN") // it's secretly FORTRAN..
@@ -428,6 +428,6 @@ public class Ash2_0Algorithm extends AbstractCalculator {
         double x, y, z, t, vs;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Ash2_0Algorithm.class);
+    private static final Logger log = LoggerFactory.getLogger(Ash2_0Algorithm.class);
 
 }

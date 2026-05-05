@@ -610,6 +610,6 @@ public class AlignmentPanel extends javax.swing.JPanel
         double s1, s2, s3, s4, s5, s6;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AlignmentPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(AlignmentPanel.class);
 
 }

@@ -218,6 +218,6 @@ public class ManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ManagerTest.class);
 
 }

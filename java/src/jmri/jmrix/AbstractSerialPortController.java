@@ -98,7 +98,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param log Logger to use for errors, passed so that errors are logged from low-level class
      * @return the serial port object for later use
      */
-    final protected SerialPort activatePort(String portName, org.slf4j.Logger log) {
+    protected final SerialPort activatePort(String portName, org.slf4j.Logger log) {
         return activatePort(this.getSystemPrefix(), portName, log, 1, SerialPort.Parity.NONE);
     }
 
@@ -117,7 +117,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param stop_bits The number of stop bits, either 1 or 2
      * @return the serial port object for later use
      */
-    final protected SerialPort activatePort(String portName, org.slf4j.Logger log, int stop_bits) {
+    protected final SerialPort activatePort(String portName, org.slf4j.Logger log, int stop_bits) {
         return activatePort(this.getSystemPrefix(), portName, log, stop_bits, SerialPort.Parity.NONE);
     }
 
@@ -142,7 +142,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         return jmri.jmrix.jserialcomm.JSerialPort.activatePort(systemPrefix, portName, log, stop_bits, parity);
     }
 
-    final protected void setComPortTimeouts(SerialPort serialPort, Blocking blocking, int timeout) {
+    protected final void setComPortTimeouts(SerialPort serialPort, Blocking blocking, int timeout) {
         serialPort.setComPortTimeouts(blocking.getValue(), timeout, 0);
     }
 
@@ -226,7 +226,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param serialPort Port to be updated
      * @param baud baud rate to be set
      */
-    final protected void setBaudRate(SerialPort serialPort, int baud) {
+    protected final void setBaudRate(SerialPort serialPort, int baud) {
         serialPort.setBaudRate(baud);
     }
 
@@ -237,7 +237,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param rts        set RTS active if true
      * @param dtr        set DTR active if true
      */
-    final protected void configureLeads(SerialPort serialPort, boolean rts, boolean dtr) {
+    protected final void configureLeads(SerialPort serialPort, boolean rts, boolean dtr) {
         if (rts) {
             serialPort.setRTS();
         } else {
@@ -286,7 +286,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param serialPort Port to be updated
      * @param flow  set which kind of flow control to use
      */
-    final protected void setFlowControl(SerialPort serialPort, FlowControl flow) {
+    protected final void setFlowControl(SerialPort serialPort, FlowControl flow) {
         lastFlowControl = flow;
         serialPort.setFlowControl(flow);
     }
@@ -297,7 +297,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param serialPort Port to be examined
      * @return flow control setting observed in the port
      */
-    final protected FlowControl getFlowControl(SerialPort serialPort) {
+    protected final FlowControl getFlowControl(SerialPort serialPort) {
         // do a cross-check, just in case there's an issue
         int nowFlow = serialPort.getFlowControlSettings();
 
@@ -329,7 +329,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param serialPort Port to be updated
      * @param serialPortDataListener the listener to add
      */
-    final protected void setDataListener(SerialPort serialPort, SerialPortDataListener serialPortDataListener){
+    protected final void setDataListener(SerialPort serialPort, SerialPortDataListener serialPortDataListener){
         serialPort.addDataListener(serialPortDataListener);
     }
 
@@ -337,7 +337,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * Cleanly close the specified port
      * @param serialPort Port to be closed
      */
-    final protected void closeSerialPort(SerialPort serialPort){
+    protected final void closeSerialPort(SerialPort serialPort){
         serialPort.closePort();
     }
 
@@ -348,7 +348,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param flow       flow control mode from (@link jmri.jmrix.purejavacomm.SerialPort}
      */
     //@Deprecated(forRemoval=true) // with jmri.jmrix.PureJavaComm
-    final protected void configureLeadsAndFlowControl(jmri.jmrix.purejavacomm.SerialPort serialPort, int flow) {
+    protected final void configureLeadsAndFlowControl(jmri.jmrix.purejavacomm.SerialPort serialPort, int flow) {
         configureLeadsAndFlowControl(serialPort, flow, true, true);
     }
 
@@ -358,7 +358,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param log The low-level logger to get this reported against the right class
      * @param portName low-level name of selected port
      */
-    final protected void reportPortStatus(org.slf4j.Logger log, String portName) {
+    protected final void reportPortStatus(org.slf4j.Logger log, String portName) {
         if (log.isInfoEnabled()) {
             log.info("{}: Port {} opened at {} baud, sees DTR: {} RTS: {} DSR: {} CTS: {} DCD: {} flow: {}",
                     this.getSystemConnectionMemo().getUserName(), currentSerialPort.getDescriptivePortName(),
@@ -414,7 +414,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * {@inheritDoc}
      */
     @Override
-    final public void configureBaudRate(String rate) {
+    public final void configureBaudRate(String rate) {
         mBaudRate = rate;
     }
 
@@ -422,7 +422,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * {@inheritDoc}
      */
     @Override
-    final public void configureBaudRateFromNumber(String indexString) {
+    public final void configureBaudRateFromNumber(String indexString) {
         int baudNum;
         int index = 0;
         final String[] rates = validBaudRates();
@@ -490,7 +490,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * Invalid indexes are ignored.
      */
     @Override
-    final public void configureBaudRateFromIndex(int index) {
+    public final void configureBaudRateFromIndex(int index) {
         if (validBaudRates().length > index && index > -1 ) {
             mBaudRate = validBaudRates()[index];
             log.debug("mBaudRate set by index to: {}", mBaudRate);
@@ -522,7 +522,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * {@inheritDoc}
      */
     @Override
-    final public String getCurrentBaudNumber() {
+    public final String getCurrentBaudNumber() {
         int[] numbers = validBaudNumbers();
         String[] rates = validBaudRates();
         if (numbers == null || rates == null || numbers.length != rates.length) { // entries in arrays should correspond
@@ -547,7 +547,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     @Override
-    final public int getCurrentBaudIndex() {
+    public final int getCurrentBaudIndex() {
         if (mBaudRate != null) {
             String[] rates = validBaudRates();
             // find the configured baud rate value
@@ -592,7 +592,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      *         0 if baudrate not supported by this adapter,
      *         -1 if no match (configuration system should prevent this)
      */
-    final public int currentBaudNumber(String currentBaudRate) {
+    public final int currentBaudNumber(String currentBaudRate) {
         String[] rates = validBaudRates();
         int[] numbers = validBaudNumbers();
 

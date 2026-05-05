@@ -457,5 +457,5 @@ public class SplitHundredsVariableValueTest extends AbstractVariableValueTestBas
         super.tearDown();
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(SplitHundredsVariableValueTest.class);
+//    private static final Logger log = LoggerFactory.getLogger(SplitHundredsVariableValueTest.class);
 }

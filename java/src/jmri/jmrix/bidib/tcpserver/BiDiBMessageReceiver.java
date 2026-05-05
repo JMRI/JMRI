@@ -24,8 +24,8 @@ import org.slf4j.LoggerFactory;
  */
 public class BiDiBMessageReceiver implements RawMessageListener {
     
-    final private NetMessageHandler serverMessageHandler;
-    final private NetBidibPort port;
+    private final NetMessageHandler serverMessageHandler;
+    private final NetBidibPort port;
     private final BidibResponseFactory responseFactory = new BidibResponseFactory();
 
 
@@ -110,5 +110,5 @@ public class BiDiBMessageReceiver implements RawMessageListener {
         // we are not interested in data sent to the connection
     }
     
-    private final static Logger log = LoggerFactory.getLogger(BiDiBMessageReceiver.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBMessageReceiver.class);
 }

@@ -49,5 +49,5 @@ public class RailComTableActionTest extends AbstractTableActionBase<IdTag> {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RailComTableActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RailComTableActionTest.class);
 }

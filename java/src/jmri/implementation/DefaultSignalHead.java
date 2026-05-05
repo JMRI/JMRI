@@ -163,7 +163,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         mFlashOn = true;
     }
 
-    final private static int[] VALID_STATES = new int[]{
+    private static final int[] VALID_STATES = new int[]{
         DARK,
         RED,
         YELLOW,
@@ -173,7 +173,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         FLASHGREEN,
     }; // No int for Lunar
 
-    final private static String[] VALID_STATE_KEYS = new String[]{
+    private static final String[] VALID_STATE_KEYS = new String[]{
         "SignalHeadStateDark",
         "SignalHeadStateRed",
         "SignalHeadStateYellow",

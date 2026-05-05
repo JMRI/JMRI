@@ -69,6 +69,6 @@ public class InstallDecoderFileAction extends InstallDecoderURLAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(InstallDecoderFileAction.class);
+    private static final Logger log = LoggerFactory.getLogger(InstallDecoderFileAction.class);
 
 }

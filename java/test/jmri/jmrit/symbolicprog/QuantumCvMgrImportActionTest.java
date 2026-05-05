@@ -38,6 +38,6 @@ public class QuantumCvMgrImportActionTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(QuantumCvMgrImportActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(QuantumCvMgrImportActionTest.class);
 
 }

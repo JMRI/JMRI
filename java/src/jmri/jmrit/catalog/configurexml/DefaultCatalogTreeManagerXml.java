@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultCatalogTreeManagerXml extends XmlFile {
 
-    private final static String DEFAULT_FILE_NAME = FileUtil.getUserFilesPath() + "catalogTrees.xml";
+    private static final String DEFAULT_FILE_NAME = FileUtil.getUserFilesPath() + "catalogTrees.xml";
 
     public DefaultCatalogTreeManagerXml() {
     }
@@ -285,6 +285,6 @@ public class DefaultCatalogTreeManagerXml extends XmlFile {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManagerXml.class);
 
 }

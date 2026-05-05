@@ -308,5 +308,5 @@ public class LogixNG_SelectBoolean implements VetoableChangeListener {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectBoolean.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectBoolean.class);
 }

@@ -85,5 +85,5 @@ public class TimeTablePrintGraph  implements Printable {
         return PAGE_EXISTS;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTablePrintGraph.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTablePrintGraph.class);
 }

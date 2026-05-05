@@ -65,6 +65,6 @@ public class InternalScriptEngineSelector implements InstanceManagerAutoDefault 
         return Collections.unmodifiableList(_engines);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalScriptEngineSelector.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalScriptEngineSelector.class);
 
 }

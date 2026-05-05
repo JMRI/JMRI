@@ -200,6 +200,6 @@ public class TurnoutOperationFrame extends JDialog {
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutOperationFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutOperationFrame.class);
 
 }

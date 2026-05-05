@@ -27,6 +27,6 @@ public class ConstantValueTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ConstantValueTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ConstantValueTest.class);
 
 }

@@ -141,6 +141,6 @@ public class SerialSignalHead extends DefaultSignalHead {
     int output;         // output connector number, 0-23
     int bank;           // bank number, 0-3
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSignalHead.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialSignalHead.class);
 
 }

@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PerformScriptModel extends AbstractStartupModel {
 
-    private final static Logger log = LoggerFactory.getLogger(PerformScriptModel.class);
+    private static final Logger log = LoggerFactory.getLogger(PerformScriptModel.class);
 
     public String getFileName() {
         return this.getName();

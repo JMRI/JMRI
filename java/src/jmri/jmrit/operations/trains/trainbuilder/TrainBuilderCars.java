@@ -2141,5 +2141,5 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         return cloneCar; // return clone
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainBuilderCars.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainBuilderCars.class);
 }

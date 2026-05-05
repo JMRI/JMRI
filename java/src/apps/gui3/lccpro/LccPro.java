@@ -164,6 +164,6 @@ public class LccPro extends Apps3 {
         });
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LccPro.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LccPro.class);
 
 }

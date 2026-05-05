@@ -651,5 +651,5 @@ public enum LnCommandStationType {
         SLOT250_UNAVAILABLE
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnCommandStationType.class);
+    private static final Logger log = LoggerFactory.getLogger(LnCommandStationType.class);
 }

@@ -138,6 +138,6 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CheckForUpdateAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CheckForUpdateAction.class);
 
 }

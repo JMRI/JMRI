@@ -77,5 +77,5 @@ public class CsvFunctionImportAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CsvFunctionImportAction.class);
+    private static final Logger log = LoggerFactory.getLogger(CsvFunctionImportAction.class);
 }

@@ -123,6 +123,6 @@ public class BuildTrainActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BuildTrainActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(BuildTrainActionTest.class);
 
 }

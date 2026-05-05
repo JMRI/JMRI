@@ -27,8 +27,8 @@ import java.beans.PropertyChangeEvent;
 
 public class MainServer implements Runnable, PropertyChangeListener {
 
-    private final static Logger log = LoggerFactory.getLogger(MainServer.class);
-    public final static int port = 21105;
+    private static final Logger log = LoggerFactory.getLogger(MainServer.class);
+    public static final int port = 21105;
     DatagramSocket mySS;
     
 /**

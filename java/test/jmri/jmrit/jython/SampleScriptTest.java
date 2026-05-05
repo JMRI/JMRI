@@ -197,6 +197,6 @@ public class SampleScriptTest {
         System.out.println("jmri.jmrit.jython.SampleScriptTest ends, above output was from script tests");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleScriptTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleScriptTest.class);
 
 }

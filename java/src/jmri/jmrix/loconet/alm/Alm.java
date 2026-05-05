@@ -117,6 +117,6 @@ public class Alm {
         }
         return AlmMsgTypes.NOT_ALM_MSG;
     }
-//    private final static Logger log = LoggerFactory.getLogger(Alm.class);
+//    private static final Logger log = LoggerFactory.getLogger(Alm.class);
 
 }

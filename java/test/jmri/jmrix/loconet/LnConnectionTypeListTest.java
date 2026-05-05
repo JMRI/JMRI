@@ -27,6 +27,6 @@ public class LnConnectionTypeListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnConnectionTypeListTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LnConnectionTypeListTest.class);
 
 }

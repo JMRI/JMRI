@@ -125,6 +125,6 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         });
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DecoderPro3.class);
+    private static final Logger log = LoggerFactory.getLogger(DecoderPro3.class);
 
 }

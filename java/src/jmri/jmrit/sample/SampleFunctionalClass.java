@@ -25,7 +25,7 @@ public class SampleFunctionalClass {
     @Override
     public String toString() { return remember; }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleFunctionalClass.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SampleFunctionalClass.class);
 
 }
 

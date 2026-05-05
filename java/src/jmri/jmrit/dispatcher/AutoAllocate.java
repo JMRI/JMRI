@@ -1638,6 +1638,6 @@ public class AutoAllocate implements Runnable {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoAllocate.class);
+    private static final Logger log = LoggerFactory.getLogger(AutoAllocate.class);
 
 }

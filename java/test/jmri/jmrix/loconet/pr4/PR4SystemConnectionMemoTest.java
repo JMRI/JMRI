@@ -28,5 +28,5 @@ public class PR4SystemConnectionMemoTest extends LnSystemConnectionMemoTestBase<
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PR4SystemConnectionMemoTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PR4SystemConnectionMemoTest.class);
 }

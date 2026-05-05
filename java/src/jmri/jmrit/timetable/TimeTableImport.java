@@ -295,5 +295,5 @@ public class TimeTableImport {
         _routeLast = Integer.parseInt(lineStrings[4]);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableImport.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableImport.class);
 }

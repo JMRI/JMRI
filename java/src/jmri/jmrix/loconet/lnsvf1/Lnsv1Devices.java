@@ -86,6 +86,6 @@ public class Lnsv1Devices {
         return deviceList.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Lnsv1Devices.class);
+    private static final Logger log = LoggerFactory.getLogger(Lnsv1Devices.class);
 
 }

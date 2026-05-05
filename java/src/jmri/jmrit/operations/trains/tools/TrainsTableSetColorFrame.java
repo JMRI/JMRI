@@ -249,5 +249,5 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsTableSetColorFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainsTableSetColorFrame.class);
 }

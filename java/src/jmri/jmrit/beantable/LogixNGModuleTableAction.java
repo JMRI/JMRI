@@ -268,6 +268,6 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
         return module.getRootSocket().isConnected();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGModuleTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGModuleTableAction.class);
 
 }

@@ -12,7 +12,7 @@ import jmri.jmrix.ipocs.protocol.enums.RqInputState;
  */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class InputStatusPacket extends Packet {
-  public final static byte IDENT = 20;
+  public static final byte IDENT = 20;
   private RqInputState state = null;
 
   @Override

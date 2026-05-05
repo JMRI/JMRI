@@ -51,6 +51,6 @@ public class PositionableJPanelTest extends PositionableTestBase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PositionableJPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PositionableJPanelTest.class);
 
 }

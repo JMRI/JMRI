@@ -211,6 +211,6 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
         
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleAnalogActionSocket.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMaleAnalogActionSocket.class);
 
 }

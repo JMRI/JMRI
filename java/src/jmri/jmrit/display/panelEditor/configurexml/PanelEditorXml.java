@@ -232,6 +232,6 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         return jmri.Manager.PANELFILES;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PanelEditorXml.class);
+    private static final Logger log = LoggerFactory.getLogger(PanelEditorXml.class);
 
 }

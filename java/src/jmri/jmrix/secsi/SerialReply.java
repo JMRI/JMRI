@@ -40,6 +40,6 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(SerialReply.class);
+    //private static final Logger log = LoggerFactory.getLogger(SerialReply.class);
 
 }

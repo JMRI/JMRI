@@ -24,7 +24,7 @@ public final class FunctionButtonPropertyEditor extends JDialog {
     private EditableResizableImagePanel _imageFilePath;
     private EditableResizableImagePanel _imagePressedFilePath;
     private JTextField imageSize;
-    final static int BUT_IMG_SIZE = 45;
+    static final int BUT_IMG_SIZE = 45;
 
     /**
      * Constructor. Create it and pack it.

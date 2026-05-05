@@ -53,7 +53,7 @@ public class EcosNamedPaneAction extends SystemConnectionNamedPaneAction<EcosSys
         return p;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosNamedPaneAction.class);
+    private static final Logger log = LoggerFactory.getLogger(EcosNamedPaneAction.class);
 
     @Override
     public Set<Class<? extends SystemConnectionMemo>> getSystemConnectionMemoClasses() {

@@ -247,7 +247,7 @@ public class AllocatedSection {
     /**
      * Methods
      */
-    final protected void setStoppingSensors() {
+    protected final void setStoppingSensors() {
         if (mSection.getState() == Section.FORWARD) {
             mForwardStoppingSensor = mSection.getForwardStoppingSensor();
             mReverseStoppingSensor = mSection.getReverseStoppingSensor();
@@ -465,5 +465,5 @@ public class AllocatedSection {
         pcs.firePropertyChange(name, oldVal, newVal);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AllocatedSection.class);
+    private static final Logger log = LoggerFactory.getLogger(AllocatedSection.class);
 }

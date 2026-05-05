@@ -238,6 +238,6 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSimulatorConnectionConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractSimulatorConnectionConfig.class);
 
 }

@@ -123,6 +123,6 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsThrottleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(TamsThrottleManager.class);
 
 }

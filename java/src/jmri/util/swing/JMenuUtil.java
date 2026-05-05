@@ -247,5 +247,5 @@ public class JMenuUtil extends GuiUtilBase {
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMenuUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(JMenuUtil.class);
 }   // class JMenuUtil

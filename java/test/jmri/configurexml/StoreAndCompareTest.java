@@ -26,6 +26,6 @@ public class StoreAndCompareTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StoreAndCompareTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StoreAndCompareTest.class);
 
 }

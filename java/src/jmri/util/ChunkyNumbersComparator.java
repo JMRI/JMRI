@@ -85,6 +85,6 @@ public class ChunkyNumbersComparator implements Comparator<String> {
     //    return (('0' <= ch) && (ch <= '9'));
     //}
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ChunkyNumbersComparator.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ChunkyNumbersComparator.class);
 
 }

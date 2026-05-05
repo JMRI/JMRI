@@ -320,6 +320,6 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21LocoNetTunnel.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21LocoNetTunnel.class);
 
 }

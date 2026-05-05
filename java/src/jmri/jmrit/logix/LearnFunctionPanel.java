@@ -36,5 +36,5 @@ public class LearnFunctionPanel extends jmri.jmrit.throttle.FunctionPanel {
         }
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(LearnFunctionPanel.class);
+//    private static final Logger log = LoggerFactory.getLogger(LearnFunctionPanel.class);
 }

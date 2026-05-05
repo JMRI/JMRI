@@ -215,6 +215,6 @@ public class UsbPortAdapter extends AbstractPortController {
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UsbPortAdapter.class
+    private static final Logger log = LoggerFactory.getLogger(UsbPortAdapter.class
     );
 }

@@ -193,5 +193,5 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
         return InstanceManager.getDefault(jmri.jmrit.logixng.DigitalExpressionManager.class).getXMLOrder();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultDigitalExpressionManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultDigitalExpressionManagerXml.class);
 }

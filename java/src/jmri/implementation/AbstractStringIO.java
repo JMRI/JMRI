@@ -134,6 +134,6 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
         return suffix1.compareTo(suffix2);
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractStringIO.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractStringIO.class);
 
 }

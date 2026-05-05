@@ -66,6 +66,6 @@ public class EngineTypes extends RollingStockAttribute implements InstanceManage
         super.firePropertyChange(p, old, n);
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(EngineTypes.class);
+//    private static final Logger log = LoggerFactory.getLogger(EngineTypes.class);
 
 }

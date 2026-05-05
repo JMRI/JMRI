@@ -26,6 +26,6 @@ public class CreateButtonModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CreateButtonModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CreateButtonModelTest.class);
 
 }

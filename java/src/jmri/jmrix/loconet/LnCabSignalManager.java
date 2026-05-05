@@ -40,5 +40,5 @@ public class LnCabSignalManager extends AbstractCabSignalManager {
            return new LnCabSignal(_memo,address);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnCabSignalManager.class);
+    private static final Logger log = LoggerFactory.getLogger(LnCabSignalManager.class);
 }

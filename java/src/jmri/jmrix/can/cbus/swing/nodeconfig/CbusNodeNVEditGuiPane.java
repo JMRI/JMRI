@@ -81,6 +81,6 @@ public class CbusNodeNVEditGuiPane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(CbusNodeNVEditGuiPane.class);
+//    private static final Logger log = LoggerFactory.getLogger(CbusNodeNVEditGuiPane.class);
 
 }

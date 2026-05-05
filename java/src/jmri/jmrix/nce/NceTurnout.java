@@ -278,6 +278,6 @@ public class NceTurnout extends AbstractTurnout {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceTurnout.class);
+    private static final Logger log = LoggerFactory.getLogger(NceTurnout.class);
 
 }

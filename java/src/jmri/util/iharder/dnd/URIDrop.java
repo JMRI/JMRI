@@ -590,5 +590,5 @@ public class URIDrop {
     }            
         
     
-    private final static Logger log = LoggerFactory.getLogger(URIDrop.class);
+    private static final Logger log = LoggerFactory.getLogger(URIDrop.class);
 }

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * @since 4.21.2
  */
 public class IpocsSocketAcceptor implements CompletionHandler<AsynchronousSocketChannel, Object> {
-  private final static Logger log = LoggerFactory.getLogger(IpocsSocketAcceptor.class);
+  private static final Logger log = LoggerFactory.getLogger(IpocsSocketAcceptor.class);
   private final AsynchronousServerSocketChannel serverSocket;
   private final IpocsPortController portController;
 

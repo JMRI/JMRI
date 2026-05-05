@@ -29,5 +29,5 @@ public class LnSensorManagerXml extends jmri.managers.configurexml.AbstractSenso
         return true;
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(LnSensorManagerXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(LnSensorManagerXml.class);
 }

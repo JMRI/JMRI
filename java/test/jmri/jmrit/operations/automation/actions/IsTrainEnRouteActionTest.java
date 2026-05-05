@@ -124,6 +124,6 @@ public class IsTrainEnRouteActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(IsTrainEnRouteActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(IsTrainEnRouteActionTest.class);
 
 }

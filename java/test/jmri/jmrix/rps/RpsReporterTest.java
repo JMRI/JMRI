@@ -29,5 +29,5 @@ public class RpsReporterTest extends jmri.implementation.AbstractReporterTestBas
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RpsReporterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RpsReporterTest.class);
 }

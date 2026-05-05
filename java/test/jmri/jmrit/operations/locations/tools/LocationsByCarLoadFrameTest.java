@@ -84,6 +84,6 @@ public class LocationsByCarLoadFrameTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocationsByCarLoadFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LocationsByCarLoadFrameTest.class);
 
 }

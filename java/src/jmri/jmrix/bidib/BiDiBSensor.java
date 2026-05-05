@@ -172,6 +172,6 @@ public class BiDiBSensor extends AbstractSensor implements BiDiBNamedBeanInterfa
     }
     
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(BiDiBSensor.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBSensor.class);
 
 }

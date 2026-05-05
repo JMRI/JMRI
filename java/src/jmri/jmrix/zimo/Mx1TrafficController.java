@@ -35,8 +35,8 @@ public abstract class Mx1TrafficController implements Mx1Interface {
         protocol = prot;
     }
 
-    public final static boolean ASCII = false;
-    public final static boolean BINARY = true;
+    public static final boolean ASCII = false;
+    public static final boolean BINARY = true;
 
     boolean protocol = ASCII;
 
@@ -143,6 +143,6 @@ public abstract class Mx1TrafficController implements Mx1Interface {
         return adaptermemo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1TrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(Mx1TrafficController.class);
 
 }

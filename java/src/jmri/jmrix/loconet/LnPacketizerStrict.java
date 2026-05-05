@@ -383,6 +383,6 @@ public class LnPacketizerStrict extends LnPacketizer {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnPacketizerStrict.class);
+    private static final Logger log = LoggerFactory.getLogger(LnPacketizerStrict.class);
 
 }

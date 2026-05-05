@@ -81,6 +81,6 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         setCommandStationType(value);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTcpDriverAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(LnTcpDriverAdapter.class);
 
 }

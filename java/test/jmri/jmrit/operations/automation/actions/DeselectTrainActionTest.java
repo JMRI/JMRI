@@ -63,6 +63,6 @@ public class DeselectTrainActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DeselectTrainActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DeselectTrainActionTest.class);
 
 }

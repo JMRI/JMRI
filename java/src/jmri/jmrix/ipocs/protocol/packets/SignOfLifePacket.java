@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
  */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class SignOfLifePacket extends Packet {
-  public final static byte IDENT = 23;
+  public static final byte IDENT = 23;
   
   @Override
   public byte getId() {

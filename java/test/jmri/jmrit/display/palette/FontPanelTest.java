@@ -49,6 +49,6 @@ public class FontPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RPSItemPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RPSItemPanelTest.class);
 
 }

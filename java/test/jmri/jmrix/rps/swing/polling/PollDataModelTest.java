@@ -39,6 +39,6 @@ public class PollDataModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PollDataModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PollDataModelTest.class);
 
 }

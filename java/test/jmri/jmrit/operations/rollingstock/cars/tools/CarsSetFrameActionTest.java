@@ -47,6 +47,6 @@ public class CarsSetFrameActionTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CarsSetFrameActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CarsSetFrameActionTest.class);
 
 }

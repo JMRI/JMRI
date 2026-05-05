@@ -57,8 +57,8 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         return null;
     }
 
-    final static int PR3MODE = 0x00;
-    final static int MS100MODE = 0x01;
+    static final int PR3MODE = 0x00;
+    static final int MS100MODE = 0x01;
 
     int mode = PR3MODE;
     private Runnable restoreToLocoNetInterfaceModeTask;
@@ -180,6 +180,6 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PR3SystemConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(PR3SystemConnectionMemo.class);
 
 }

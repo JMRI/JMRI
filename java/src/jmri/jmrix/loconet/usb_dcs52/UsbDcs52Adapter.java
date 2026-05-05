@@ -175,6 +175,6 @@ public class UsbDcs52Adapter extends LocoBufferAdapter {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UsbDcs52Adapter.class);
+    private static final Logger log = LoggerFactory.getLogger(UsbDcs52Adapter.class);
 
 }

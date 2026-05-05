@@ -28,5 +28,5 @@ public class MqttReporterManagerXml extends jmri.managers.configurexml.AbstractR
         return loadReporters(shared);
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(MqttReporterManagerXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(MqttReporterManagerXml.class);
 }

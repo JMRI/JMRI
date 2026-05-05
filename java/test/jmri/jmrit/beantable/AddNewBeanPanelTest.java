@@ -43,6 +43,6 @@ public class AddNewBeanPanelTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AddNewBeanPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AddNewBeanPanelTest.class);
 
 }

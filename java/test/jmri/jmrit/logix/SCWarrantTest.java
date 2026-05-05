@@ -235,5 +235,5 @@ public class SCWarrantTest extends WarrantTest {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SCWarrantTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SCWarrantTest.class);
 }

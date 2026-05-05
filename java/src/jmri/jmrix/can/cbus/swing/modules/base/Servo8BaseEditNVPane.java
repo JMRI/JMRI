@@ -519,6 +519,6 @@ public class Servo8BaseEditNVPane extends AbstractEditNVPane {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Servo8BaseEditNVPane.class);
+    private static final Logger log = LoggerFactory.getLogger(Servo8BaseEditNVPane.class);
 
 }

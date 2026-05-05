@@ -71,6 +71,6 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
     }
 
     // initialize logging
-//    private final static Logger log = LoggerFactory.getLogger(PerformScriptModelXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(PerformScriptModelXml.class);
 
 }

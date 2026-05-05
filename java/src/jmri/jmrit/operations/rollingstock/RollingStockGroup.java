@@ -126,5 +126,5 @@ public abstract class RollingStockGroup<T extends RollingStock> extends Property
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockGroup.class);
+    private static final Logger log = LoggerFactory.getLogger(RollingStockGroup.class);
 }

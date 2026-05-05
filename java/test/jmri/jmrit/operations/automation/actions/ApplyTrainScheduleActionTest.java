@@ -84,6 +84,6 @@ public class ApplyTrainScheduleActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ApplyTrainScheduleActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ApplyTrainScheduleActionTest.class);
 
 }

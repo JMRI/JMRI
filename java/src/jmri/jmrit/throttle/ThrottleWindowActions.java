@@ -102,5 +102,5 @@ public abstract class ThrottleWindowActions implements PropertyChangeListener {
         }               
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ThrottleWindowActions.class);    
+    private static final Logger log = LoggerFactory.getLogger(ThrottleWindowActions.class);    
 }

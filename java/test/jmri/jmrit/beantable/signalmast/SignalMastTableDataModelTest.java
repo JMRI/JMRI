@@ -63,6 +63,6 @@ public class SignalMastTableDataModelTest extends jmri.jmrit.beantable.AbstractB
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignalMastTableDataModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SignalMastTableDataModelTest.class);
 
 }

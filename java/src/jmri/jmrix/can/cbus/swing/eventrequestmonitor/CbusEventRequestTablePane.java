@@ -345,6 +345,6 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusEventRequestTablePane.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusEventRequestTablePane.class);
 
 }

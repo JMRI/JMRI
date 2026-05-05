@@ -24,7 +24,7 @@ import jmri.util.davidflanagan.CompatibleHardcopyWriter;
  */
 public class TrainPrintManifest extends TrainCommon {
 
-    static final char SPACE = ' ';
+    protected static final char SPACE = ' ';
 
     /**
      * Print or preview a train Manifest or switch list.
@@ -43,12 +43,21 @@ public class TrainPrintManifest extends TrainCommon {
     public static void printReport(File file, String name, boolean isPreview, String fontName, String logoURL,
             String printerName, String orientation, int fontSize, boolean isPrintHeader, Sides sides) {
         
-        double margin = .5;
+        double leftmargin = .5;
+        double rightmargin = .5;
+        double topmargin = .5;
+        double bottommargin = .5;
+        
         // get hand held or half page dimensions in DPI
         Dimension pageSize = getFullPageSizeDPI(orientation);
         
-        try (CompatibleHardcopyWriter writer = new CompatibleHardcopyWriter(new Frame(), name, fontSize, margin,
-                margin, margin, margin, isPreview, printerName, orientation.equals(Setup.LANDSCAPE), isPrintHeader, sides, pageSize);
+        if (orientation.equals(Setup.RECEIPT)) {
+            leftmargin = .1;
+            rightmargin = .1;
+        }
+        
+        try (CompatibleHardcopyWriter writer = new CompatibleHardcopyWriter(new Frame(), name, fontSize, leftmargin,
+                rightmargin, topmargin, bottommargin, isPreview, printerName, orientation.equals(Setup.LANDSCAPE), isPrintHeader, sides, pageSize);
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         new FileInputStream(file), StandardCharsets.UTF_8));) {
 
@@ -198,7 +207,7 @@ public class TrainPrintManifest extends TrainCommon {
                 }
             }
             if (horizontialLineSeparatorFound) {
-                int endCol = writer.getCharactersPerLine() + 1;
+                int endCol = writer.getCharactersPerLine() + 2;
                 writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber(),
                         endCol);
             }
@@ -222,5 +231,5 @@ public class TrainPrintManifest extends TrainCommon {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainPrintManifest.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainPrintManifest.class);
 }

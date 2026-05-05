@@ -121,5 +121,5 @@ public class JynstrumentFactory {
         return className;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JynstrumentFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(JynstrumentFactory.class);
 }

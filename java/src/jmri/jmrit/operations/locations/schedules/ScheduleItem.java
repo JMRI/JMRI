@@ -430,6 +430,6 @@ public class ScheduleItem extends PropertyChangeSupport implements java.beans.Pr
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScheduleItem.class);
+    private static final Logger log = LoggerFactory.getLogger(ScheduleItem.class);
 
 }

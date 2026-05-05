@@ -252,6 +252,6 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetThrottledTransmitter.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoNetThrottledTransmitter.class);
 
 }

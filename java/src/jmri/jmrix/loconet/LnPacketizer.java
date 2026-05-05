@@ -539,6 +539,6 @@ public class LnPacketizer extends LnTrafficController {
      */
     protected volatile boolean threadStopRequest = false;
 
-    private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class);
+    private static final Logger log = LoggerFactory.getLogger(LnPacketizer.class);
 
 }

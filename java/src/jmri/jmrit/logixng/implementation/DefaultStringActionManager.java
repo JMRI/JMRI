@@ -173,6 +173,6 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultStringActionManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultStringActionManager.class);
 
 }

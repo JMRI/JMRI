@@ -414,16 +414,16 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
         return rcTag;
     }
 
-    public final static char ACK = 0x80;
-    public final static char ACK_1 = 0x81;
-    public final static char ACK_2 = 0x82;
-    public final static char ACK_3 = 0x83;
-    public final static char ACK_4 = 0x84;
-    public final static char ACK_5 = 0x85;
-    public final static char ACK_6 = 0x86;
-    public final static char ERROR = 0xFF;
+    public static final char ACK = 0x80;
+    public static final char ACK_1 = 0x81;
+    public static final char ACK_2 = 0x82;
+    public static final char ACK_3 = 0x83;
+    public static final char ACK_4 = 0x84;
+    public static final char ACK_5 = 0x85;
+    public static final char ACK_6 = 0x86;
+    public static final char ERROR = 0xFF;
 
-    private final static char[] decode = new char[]{
+    private static final char[] decode = new char[]{
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ACK_1,
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0x33,
@@ -457,6 +457,6 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
         ACK_4, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR};
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Dcc4PcReporter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Dcc4PcReporter.class);
 
 }

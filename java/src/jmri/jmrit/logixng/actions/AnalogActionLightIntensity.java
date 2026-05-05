@@ -120,6 +120,6 @@ public class AnalogActionLightIntensity extends AbstractAnalogAction
         getConditionalNG().execute();
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionLightIntensity.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionLightIntensity.class);
 
 }

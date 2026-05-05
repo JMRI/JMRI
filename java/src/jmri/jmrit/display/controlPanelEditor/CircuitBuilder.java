@@ -119,9 +119,9 @@ public class CircuitBuilder {
     protected ControlPanelEditor _editor;
     private Positionable _selection;
 
-    public final static Color _editGroupColor = new Color(100, 200, 255);
-    public final static Color _pathColor = Color.green;
-    public final static Color _highlightColor = new Color(255, 150, 220);
+    public static final Color _editGroupColor = new Color(100, 200, 255);
+    public static final Color _pathColor = Color.green;
+    public static final Color _highlightColor = new Color(255, 150, 220);
 
     /**
      * ***************************************************************

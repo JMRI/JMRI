@@ -14,7 +14,7 @@ import javax.swing.JPanel;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
-    public final static String NAME = "Network Interface"; // NOI18N
+    public static final String NAME = "Network Interface"; // NOI18N
 
     /**
      * Ctor for an object being created during load process; Swing init is

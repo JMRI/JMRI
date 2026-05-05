@@ -764,5 +764,5 @@ public class OriginalHardcopyWriter extends Writer {
         }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HardcopyWriter.class);
+    // private static final Logger log = LoggerFactory.getLogger(HardcopyWriter.class);
 }

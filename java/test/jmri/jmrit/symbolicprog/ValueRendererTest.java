@@ -27,6 +27,6 @@ public class ValueRendererTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ValueRendererTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ValueRendererTest.class);
 
 }

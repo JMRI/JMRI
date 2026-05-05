@@ -133,7 +133,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         return m;
     }
    
-    final public BeanTableDataModel<E> getTableDataModel() {
+    public final BeanTableDataModel<E> getTableDataModel() {
         createModel();
         return m;
     }

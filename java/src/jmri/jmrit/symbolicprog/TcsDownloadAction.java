@@ -200,6 +200,6 @@ public class TcsDownloadAction extends AbstractAction implements PropertyChangeL
         return -1;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcsDownloadAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcsDownloadAction.class);
 
 }

@@ -161,6 +161,6 @@ public class TrainSchedule extends PropertyChangeSupport {
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainSchedule.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainSchedule.class);
 
 }

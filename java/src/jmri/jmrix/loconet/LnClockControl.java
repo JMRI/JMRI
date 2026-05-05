@@ -109,9 +109,9 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
     private boolean correctFastClock = false;
     private boolean readInProgress = false;
     /* constants */
-    final static long MSECPERHOUR = 3600000;
-    final static long MSECPERMINUTE = 60000;
-    final static double CORRECTION = 915.0;
+    static final long MSECPERHOUR = 3600000;
+    static final long MSECPERMINUTE = 60000;
+    static final double CORRECTION = 915.0;
 
     /**
      * Accessor routines
@@ -368,6 +368,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnClockControl.class);
+    private static final Logger log = LoggerFactory.getLogger(LnClockControl.class);
 
 }

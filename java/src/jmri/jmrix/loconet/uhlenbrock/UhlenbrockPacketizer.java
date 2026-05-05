@@ -351,6 +351,6 @@ public class UhlenbrockPacketizer extends LnPacketizer {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(UhlenbrockPacketizer.class);
+    private static final Logger log = LoggerFactory.getLogger(UhlenbrockPacketizer.class);
 
 }

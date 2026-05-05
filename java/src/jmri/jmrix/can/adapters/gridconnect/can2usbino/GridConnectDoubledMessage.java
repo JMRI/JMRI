@@ -160,6 +160,6 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GridConnectDoubledMessage.class);
+    private static final Logger log = LoggerFactory.getLogger(GridConnectDoubledMessage.class);
 
 }

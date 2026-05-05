@@ -27,6 +27,6 @@ public class AudioCommandThreadTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AudioCommandThreadTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AudioCommandThreadTest.class);
 
 }

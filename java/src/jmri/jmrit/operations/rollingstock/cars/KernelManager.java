@@ -131,5 +131,5 @@ public class KernelManager extends RollingStockGroupManager implements InstanceM
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(KernelManager.class);
+    private static final Logger log = LoggerFactory.getLogger(KernelManager.class);
 }

@@ -38,7 +38,7 @@ import apps.util.Log4JUtil;
  */
 public abstract class AppsBase {
 
-    private final static String CONFIG_FILENAME = System.getProperty("org.jmri.Apps.configFilename", "/JmriConfig3.xml");
+    private static final String CONFIG_FILENAME = System.getProperty("org.jmri.Apps.configFilename", "/JmriConfig3.xml");
     protected boolean configOK;
     protected boolean configDeferredLoadOK;
     protected boolean preferenceFileExists;
@@ -424,5 +424,5 @@ public abstract class AppsBase {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AppsBase.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AppsBase.class);
 }

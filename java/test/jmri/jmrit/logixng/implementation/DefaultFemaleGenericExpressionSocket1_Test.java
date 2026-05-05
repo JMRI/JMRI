@@ -463,6 +463,6 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
 
     }
 
-//    private final static org.slf4j.Logger log =
+//    private static final org.slf4j.Logger log =
 //            org.slf4j.LoggerFactory.getLogger(DefaultFemaleGenericExpressionSocket1_Test.class);
 }

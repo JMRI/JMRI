@@ -110,7 +110,7 @@ public class EngineManagerXml extends OperationsXml implements InstanceManagerAu
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(EngineManagerXml.class);
 
     @Override
     public void initialize() {

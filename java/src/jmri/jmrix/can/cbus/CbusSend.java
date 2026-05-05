@@ -397,5 +397,5 @@ public class CbusSend {
         tc.sendCanMessage(m, null);  
     }
     
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusSend.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusSend.class);
 }

@@ -140,5 +140,5 @@ public class SignalList extends JList<SignalPair> {
             }
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(SignalList.class);
+    private static final Logger log = LoggerFactory.getLogger(SignalList.class);
 }

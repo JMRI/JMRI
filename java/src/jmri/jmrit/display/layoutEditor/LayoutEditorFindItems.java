@@ -21,7 +21,7 @@ import jmri.Turnout;
  * @author George Warner Copyright (c) 2017-2018
  * @author Bob Jacobsen Copyright (c) 2019-2020
  */
-final public class LayoutEditorFindItems {
+public final class LayoutEditorFindItems {
 
     private final LayoutModels layoutModels;
 
@@ -594,5 +594,5 @@ final public class LayoutEditorFindItems {
         return uniqueName(inPrefix, 1);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorFindItems.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorFindItems.class);
 }

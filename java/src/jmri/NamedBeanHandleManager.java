@@ -254,6 +254,6 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
         return NamedBean.class;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class);
 
 }

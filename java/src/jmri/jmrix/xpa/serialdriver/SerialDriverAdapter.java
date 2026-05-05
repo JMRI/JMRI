@@ -144,6 +144,6 @@ public class SerialDriverAdapter extends XpaPortController {
         return 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

@@ -182,5 +182,5 @@ public class TcsExportAction extends AbstractAction {
         }
 }
 
-    private final static Logger log = LoggerFactory.getLogger(TcsExportAction.class);
+    private static final Logger log = LoggerFactory.getLogger(TcsExportAction.class);
 }

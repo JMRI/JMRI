@@ -43,7 +43,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
 
     private UsbTreeNode root;
     private final UsbDeviceTableModel deviceModel = new UsbDeviceTableModel();
-    private final static Logger log = LoggerFactory.getLogger(UsbBrowserPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(UsbBrowserPanel.class);
     private transient final UsbServicesListener usbServicesListener = new UsbServicesListener() {
         @Override
         public void usbDeviceAttached(UsbServicesEvent use) {
@@ -404,7 +404,7 @@ public class UsbBrowserPanel extends javax.swing.JPanel {
         }
     }
 
-    private final static class UsbTreeCellRenderer extends DefaultTreeCellRenderer {
+    private static final class UsbTreeCellRenderer extends DefaultTreeCellRenderer {
 
         public UsbTreeCellRenderer() {
             int width = getOpenIcon().getIconWidth();

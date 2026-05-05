@@ -85,5 +85,5 @@ public class ExpressionSectionXml extends jmri.managers.configurexml.AbstractNam
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSectionXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSectionXml.class);
 }

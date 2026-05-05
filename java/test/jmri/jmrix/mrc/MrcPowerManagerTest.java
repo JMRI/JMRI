@@ -31,6 +31,6 @@ public class MrcPowerManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MrcPowerManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MrcPowerManagerTest.class);
 
 }

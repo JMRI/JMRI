@@ -322,6 +322,6 @@ public class AutomationManager extends PropertyChangeSupport implements Instance
         InstanceManager.getDefault(TrainManagerXml.class); // load trains
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationManager.class);
+    private static final Logger log = LoggerFactory.getLogger(AutomationManager.class);
 
 }

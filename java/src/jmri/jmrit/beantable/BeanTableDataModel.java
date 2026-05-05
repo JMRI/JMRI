@@ -1505,6 +1505,6 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BeanTableDataModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BeanTableDataModel.class);
 
 }

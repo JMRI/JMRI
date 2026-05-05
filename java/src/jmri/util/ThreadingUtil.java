@@ -486,7 +486,7 @@ public class ThreadingUtil {
         return lastWarnLocksException;
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThreadingUtil.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThreadingUtil.class);
 
 }
 

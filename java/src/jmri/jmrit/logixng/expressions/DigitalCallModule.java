@@ -201,6 +201,6 @@ public class DigitalCallModule extends AbstractDigitalExpression
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalCallModule.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalCallModule.class);
 
 }

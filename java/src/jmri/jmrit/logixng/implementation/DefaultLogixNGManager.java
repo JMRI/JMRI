@@ -577,6 +577,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNGManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNGManager.class);
 
 }

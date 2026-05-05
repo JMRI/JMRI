@@ -80,6 +80,6 @@ public class SRCPMonPane extends jmri.jmrix.AbstractMonPane implements SRCPListe
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPMonPane.class);
+    private static final Logger log = LoggerFactory.getLogger(SRCPMonPane.class);
 
 }

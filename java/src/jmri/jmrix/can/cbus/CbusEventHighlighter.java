@@ -154,5 +154,5 @@ public class CbusEventHighlighter {
         return _color;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventHighlighter.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusEventHighlighter.class);
 }

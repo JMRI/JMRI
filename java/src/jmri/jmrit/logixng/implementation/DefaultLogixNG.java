@@ -108,7 +108,7 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
-    final public void setup() {
+    public final void setup() {
         for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
             if ( entry._conditionalNG == null
                     || !entry._conditionalNG.getSystemName()
@@ -540,5 +540,5 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNG.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNG.class);
 }

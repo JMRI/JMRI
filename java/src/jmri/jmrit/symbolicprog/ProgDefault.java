@@ -100,5 +100,5 @@ public class ProgDefault {
         InstanceManager.getDefault(ProgrammerConfigManager.class).setDefaultFile(s);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProgDefault.class);
+    private static final Logger log = LoggerFactory.getLogger(ProgDefault.class);
 }

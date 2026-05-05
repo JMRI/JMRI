@@ -90,5 +90,5 @@ public class TimerXml extends jmri.managers.configurexml.AbstractNamedBeanManage
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimerXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimerXml.class);
 }

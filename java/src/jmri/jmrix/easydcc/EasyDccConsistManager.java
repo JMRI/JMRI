@@ -95,8 +95,8 @@ public class EasyDccConsistManager extends AbstractConsistManager {
         // Storage for addresses
         int _lastAddress = 0;
         // Possible States
-        final static int IDLE = 0;
-        final static int SEARCHREQUESTSENT = 1;
+        static final int IDLE = 0;
+        static final int SEARCHREQUESTSENT = 1;
         // Current State
         int currentState = IDLE;
 
@@ -194,6 +194,6 @@ public class EasyDccConsistManager extends AbstractConsistManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManager.class);
+    private static final Logger log = LoggerFactory.getLogger(EasyDccConsistManager.class);
 
 }

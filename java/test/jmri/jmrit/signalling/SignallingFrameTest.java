@@ -27,6 +27,6 @@ public class SignallingFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignallingFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SignallingFrameTest.class);
 
 }
