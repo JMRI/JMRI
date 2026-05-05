@@ -441,7 +441,7 @@
                 } else {
                     $.getJSON(jmri.url + "power", function (json) {
                         if ($.isArray(json)) json=json[0]; //unwrap array
-                        if (!jmri.defaultPowerPrefix && json.data.prefix) {
+                        if (json.data.default && json.data.prefix) {
                             jmri.defaultPowerPrefix = json.data.prefix;
                         }
                         jmri.powerWithPrefix(json.data.prefix, json.data.state);
@@ -1037,7 +1037,7 @@
                     jmri.panels(e);
                 },
                 power: function (e) {
-                    if (!jmri.defaultPowerPrefix && e.data.prefix) {
+                    if (e.data.default && e.data.prefix) {
                         jmri.defaultPowerPrefix = e.data.prefix;
                     }
                     jmri.powerWithPrefix(e.data.prefix, e.data.state);
