@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.Component;
 
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -25,7 +24,6 @@ import org.netbeans.jemmy.operators.JMenuOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.JToggleButtonOperator;
-import org.netbeans.jemmy.operators.JMenuItemOperator.JMenuItemByLabelFinder;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
 import org.netbeans.jemmy.operators.JSliderOperator;
 import org.netbeans.jemmy.operators.JSpinnerOperator;

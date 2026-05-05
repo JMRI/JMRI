@@ -97,9 +97,27 @@ public class ThrottleUICore implements AddressListener  {
         return addressPanel;
     }
 
+    public DccThrottle getThrottle() {
+        return getAddressPanel().getThrottle();  
+    }
+
+    public DccThrottle getFunctionThrottle() {
+        if (getAddressPanel().getConsistAddress() == null) {
+            return getThrottle();
+        }
+        return getConsistFunctionsPanel().getFunctionThrottle();        
+    }    
+
     public RosterEntry getRosterEntry() {
         return addressPanel.getRosterEntry();
     }
+
+    public RosterEntry getFunctionRosterEntry() {
+        if (getAddressPanel().getConsistAddress() == null) {
+            return getRosterEntry();
+        }        
+        return getConsistFunctionsPanel().getFunctionRosterEntry();                
+    }    
 
     public ControlPanel getControlPanel() {
         if (controlPanel == null) { // init only when requested
