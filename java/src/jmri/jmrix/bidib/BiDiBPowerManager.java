@@ -4,7 +4,6 @@ import jmri.JmriException;
 import jmri.PowerManager;
 
 import java.beans.PropertyChangeListener;
-import java.util.Map;
 import org.bidib.jbidibc.messages.AddressData;
 import org.bidib.jbidibc.core.DefaultMessageListener;
 import org.bidib.jbidibc.core.MessageListener;
@@ -17,8 +16,6 @@ import org.bidib.jbidibc.messages.message.BoostOnMessage;
 import org.bidib.jbidibc.messages.message.BoostOffMessage;
 import org.bidib.jbidibc.messages.message.BoostQueryMessage;
 import org.bidib.jbidibc.messages.message.CommandStationSetStateMessage;
-import org.bidib.jbidibc.messages.utils.NodeUtils;
-import org.bidib.jbidibc.messages.utils.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
