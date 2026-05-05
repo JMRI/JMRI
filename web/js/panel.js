@@ -3,7 +3,7 @@
  *    Retrieves panel xml from JMRI and builds panel client-side from that xml, including
  *    click functions.  Sends and listens for changes to panel elements using the JSON WebSocket server.
  *    If no parm "name" passed, page will list links to available panels.
- *	  Include parm protect=yes to treat panel as read-only
+ *    Include parm protect=yes to treat panel as read-only
  *  Approach:  Read panel's xml and create widget objects in the browser with all needed attributes.
  *    There are 5 "widgetFamily"s: text, input, icon, drawn and switch.  States are handled by storing member's
  *    iconX, textX, cssX where X is the state.  The corresponding members are "shown" whenever the state changes.
@@ -470,21 +470,21 @@ function processPanelXML($returnedData, $success, $xhr) {
                             }
                             jmri.getTurnout($widget["systemName"]);
                             break;
-						case "outputindicator" :
-						    $widget['name'] = $widget.turnout; //normalize name
-						    $widget.jsonType = "turnout"; // JSON object type
-						    $widget['icon' + UNKNOWN] = $(this).find('icons').find('unknown').attr('url');
-						    $widget['icon2'] = $(this).find('icons').find('closed').attr('url');
-						    $widget['icon4'] = $(this).find('icons').find('thrown').attr('url');
-						    $widget['icon8'] = $(this).find('icons').find('inconsistent').attr('url');
-						    $widget['rotation'] = $(this).find('icons').find('unknown').find('rotation').text() * 1;
-						    $widget['degrees'] = ($(this).find('icons').find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
-						    $widget['scale'] = $(this).find('icons').find('unknown').attr('scale');
-						    if ($widget.forcecontroloff != "true") {
-						        $widget.classes += " " + $widget.jsonType + " clickable ";
-						    }
-						    jmri.getTurnout($widget["systemName"]);
-						    break;
+                        case "outputindicator" :   
+                            $widget['name'] = $widget.turnout; //normalize name
+                            $widget.jsonType = "turnout"; // JSON object type
+                            $widget['icon' + UNKNOWN] = $(this).find('icons').find('unknown').attr('url');
+                            $widget['icon2'] = $(this).find('icons').find('closed').attr('url');
+                            $widget['icon4'] = $(this).find('icons').find('thrown').attr('url');
+                            $widget['icon8'] = $(this).find('icons').find('inconsistent').attr('url');
+                            $widget['rotation'] = $(this).find('icons').find('unknown').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('icons').find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('icons').find('unknown').attr('scale');
+                            if ($widget.forcecontroloff != "true") {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+                            jmri.getTurnout($widget["systemName"]);
+                            break;
                         case "sensoricon" :
                             $widget['name'] = $widget.sensor; //normalize name
                             $widget.jsonType = "sensor"; // JSON object type
@@ -2512,8 +2512,8 @@ var $getWidgetFamily = function($widget, $element) {
         case "audioicon" :
         case "logixngicon" :
         case "linkinglabel" :
-		case "turnouticon" :
-		case "outputindicator" :
+        case "turnouticon" :
+        case "outputindicator" :
         case "sensoricon" :
         case "LightIcon" :
         case "multisensoricon" :
