@@ -1,16 +1,12 @@
 package jmri.jmrix.cmri;
 
-import java.util.Comparator;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javax.annotation.*;
 
 import jmri.*;
 import jmri.Manager.NameValidity;
-import jmri.jmrix.AbstractNode;
-import jmri.jmrix.ConfiguringSystemConnectionMemo;
-import jmri.jmrix.DefaultSystemConnectionMemo;
+import jmri.jmrix.*;
 import jmri.jmrix.cmri.serial.*;
 import jmri.jmrix.cmri.swing.CMRIComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
@@ -41,6 +37,7 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo implem
 
     private String externalConfig = null;
     private SerialTrafficController tc = null;
+    private Config config;
     ComponentFactory cf = null;
 
     /**
@@ -78,6 +75,9 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo implem
      */
     public void setTrafficController(SerialTrafficController s) {
         tc = s;
+        if (config != null) {
+            restoreConfig();
+        }
     }
 
     /**
@@ -797,6 +797,63 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo implem
         }
         super.dispose();
     }
+
+    /**
+     * Get the configuration to be used if the user changes the connection type.
+     * @return the configuration
+     */
+    public Config getConfig() {
+        var cfg = new Config(getTrafficController());
+        cfg.setExternalConfig(getExternalConfig());
+        return cfg;
+    }
+
+    /**
+     * Set the configuration when the user has changed the connection type.
+     * @param config the configuration
+     */
+    public void setConfig(Config config) {
+        this.config = config;
+    }
+
+    /**
+     * Restore the configuration when the user has changed the connection type.
+     * This must be done after the traffic controller has been created.
+     */
+    public void restoreConfig() {
+        setExternalConfig(config.getExternalConfig());
+        for (var node : config.nodes) {
+            tc.registerNode(node);
+        }
+    }
+
+
+    /**
+     * Configuration to be used if the user changes the connection type.
+     */
+    public static class Config implements jmri.jmrix.ConnectionConfig.Config {
+
+        private String externalConfig = null;
+        private final List<AbstractNode> nodes = new ArrayList<>();
+
+        private Config(SerialTrafficController tc) {
+            int index = 0;
+            AbstractNode node;
+            while ((node = tc.getNode(index)) != null) {
+                nodes.add(node);
+                index++;
+            }
+        }
+
+        public void setExternalConfig(String externalConfig) {
+            this.externalConfig = externalConfig;
+        }
+
+        public String getExternalConfig() {
+            return this.externalConfig;
+        }
+    }
+
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRISystemConnectionMemo.class);
 
