@@ -652,9 +652,9 @@
         <ul>
             <li>Throttle code was refactored in order to have a clean seperation between JInternalFrame implementation of JMRI throttles and inner JPanel, some interfaces were introduced, inner classes moved to subpackages</li>
             <li>Jython code was updated accordingly</li>
-            <li>A new SimpleThrottleWindow was introduced, it's leveraging the existing panels in order to diplay a much simpler window, it's accessible through the contextual menu of a selected roster entry (It may be relevant to use in other JMRI screens where a simple throttle GUI is required)</li>
+            <li>A new SimpleThrottleWindow was introduced, it's leveraging the existing throttle panels in order to diplay a much simpler window, it's accessible through the contextual menu of a selected roster entry (It may be relevant to use in other JMRI screens where a simple throttle GUI is required)</li>
             <li>The throttle list window allows drag'n drop from one kind of throttle window to another (hence moving from simple GUI to more complex one)</li>
-            <li>Layout throttles are actually released on throttle last window close <a href="https://github.com/JMRI/JMRI/issues/15067">(bug fix)</a> </li>
+            <li>UI acquired throttles are actually released on throttle last window close <a href="https://github.com/JMRI/JMRI/issues/15067">(bug fix)</a> </li>
             <li>New throttle inner components are introduced, particularly a consist function panel allowing to independantly control functions of each locomotive in a consist</li>
         </ul>
 
