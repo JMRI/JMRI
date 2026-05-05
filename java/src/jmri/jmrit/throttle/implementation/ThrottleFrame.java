@@ -370,12 +370,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
 
     @Override
     public RosterEntry getFunctionRosterEntry() {
-        if (throuic.getConsistFunctionsPanel() != null) {
-            return throuic.getConsistFunctionsPanel().getFunctionRosterEntry();
-        }
-        return getRosterEntry();  
+        if (throuic.getAddressPanel().getConsistAddress() == null) {
+            return getRosterEntry();
+        }        
+        return throuic.getConsistFunctionsPanel().getFunctionRosterEntry();                
     }
-
 
     @Override
     public void setAddress(DccLocoAddress la) {
@@ -428,10 +427,10 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
 
     @Override
     public DccThrottle getFunctionThrottle() {
-        if (throuic.getConsistFunctionsPanel() != null) {
-            return throuic.getConsistFunctionsPanel().getFunctionThrottle();
+        if (throuic.getAddressPanel().getConsistAddress() == null) {
+            return getThrottle();
         }
-        return getThrottle();  
+        return throuic.getConsistFunctionsPanel().getFunctionThrottle();        
     }
 
     @Override
@@ -833,6 +832,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
                 ((javax.swing.plaf.basic.BasicInternalFrameUI) consistFunctionsPanelJIF.getUI()).getNorthPane().setPreferredSize(new Dimension(0, bSize));
             }
             setWindowXML(child, consistFunctionsPanelJIF);
+            throuic.getConsistFunctionsPanel().setXml(child);
         } else if (consistFunctionsPanelJIF != null) {
             consistFunctionsPanelJIF.setVisible(false);
         }

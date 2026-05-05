@@ -305,11 +305,7 @@ public class ThrottleUICore implements AddressListener  {
         child = e.getChild("LocoIconPanel");
         if (child != null) {
             getLocoIconPanel().setXml(child);
-        }
-        child = e.getChild("ConsistFunctionsPanel");
-        if (child != null) {
-            getConsistFunctionsPanel().setXml(child);
-        }            
+        }         
     }
 
     public void saveThrottleAs(Element throttleElement) {

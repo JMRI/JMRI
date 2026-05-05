@@ -195,18 +195,18 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
 
     @Override
     public DccThrottle getFunctionThrottle() {
-        if (throuic.getConsistFunctionsPanel() != null) {
-            return throuic.getConsistFunctionsPanel().getFunctionThrottle();
+        if (throuic.getAddressPanel().getConsistAddress() == null) {
+            return getThrottle();
         }
-        return getThrottle();  
+        return throuic.getConsistFunctionsPanel().getFunctionThrottle();        
     }
 
     @Override
     public RosterEntry getFunctionRosterEntry() {
-        if (throuic.getConsistFunctionsPanel() != null) {
-            return throuic.getConsistFunctionsPanel().getFunctionRosterEntry();
-        }
-        return getRosterEntry();  
+        if (throuic.getAddressPanel().getConsistAddress() == null) {
+            return getRosterEntry();
+        }        
+        return throuic.getConsistFunctionsPanel().getFunctionRosterEntry();                
     }
 
     @Override
