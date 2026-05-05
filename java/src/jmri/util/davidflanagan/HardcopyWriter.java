@@ -310,6 +310,10 @@ public class HardcopyWriter extends Writer implements Printable {
 
         // compute date/time for header
         DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
+        // short date when page width is less than 4"
+        if (width < DPI * 4) {
+            df = DateFormat.getDateInstance(DateFormat.SHORT);
+        }
         df.setTimeZone(TimeZone.getDefault());
         time = df.format(new Date());
 
@@ -844,7 +848,7 @@ public class HardcopyWriter extends Writer implements Printable {
      * Refresh the font metrics after changing things like font, size, etc.
      */
     private void refreshMetrics() {
-        Rectangle2D bounds = font.getStringBounds("m".repeat(100), neutralFRC);
+        Rectangle2D bounds = font.getStringBounds("n".repeat(100), neutralFRC);
         charwidth = (float) (bounds.getWidth() / 100.0);
         LineMetrics lm = font.getLineMetrics("Your text here", neutralFRC);
         lineheight = lm.getHeight();
