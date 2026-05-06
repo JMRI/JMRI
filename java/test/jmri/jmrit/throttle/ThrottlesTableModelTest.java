@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import jmri.jmrit.throttle.list.ThrottlesTableModel;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;

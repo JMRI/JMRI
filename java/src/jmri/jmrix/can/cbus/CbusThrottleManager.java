@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.awt.GraphicsEnvironment;
 
 import jmri.*;
-import jmri.jmrit.throttle.ThrottlesPreferences;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.jmrix.AbstractThrottleManager;
 import jmri.jmrix.can.*;
 import jmri.util.TimerUtil;

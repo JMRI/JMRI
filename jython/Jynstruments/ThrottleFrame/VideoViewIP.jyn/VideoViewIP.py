@@ -44,7 +44,7 @@ class VideoViewIP(Jynstrument, ItemListener):
 
     def getExpectedContextClassName(self):
         # This Jynstrument likes to be in a ThrottleFrame and not anywhere else
-        return "jmri.jmrit.throttle.ThrottleFrame"
+        return "jmri.jmrit.throttle.UIImplementation.ThrottleFrame"
 
     def init(self):
         Webcam.setDriver( IpCamDriver() )
@@ -56,7 +56,7 @@ class VideoViewIP(Jynstrument, ItemListener):
         self.miMirror.addItemListener(self)        
         self.getPopUpMenu().add( self.miMirror )                
         # Adjust bellow URL accordingly
-        IpCamDeviceRegistry.register("MyTest", "http://localhost:8080/?action=stream", IpCamMode.PUSH);        
+        IpCamDeviceRegistry.register("MyTest", "http://root:salambo42@10.0.0.127/x/ch1.mjpg", IpCamMode.PUSH);        
         self.addCamPanel()
 
     def quit(self):   # very important to clean up everything to make sure GC will collect us

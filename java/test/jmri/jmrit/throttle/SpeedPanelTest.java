@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import jmri.jmrit.throttle.panels.SpeedPanel;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;

@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
 import jmri.InstanceManager;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 

@@ -17,7 +17,8 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.SpeedStepMode;
-import jmri.jmrit.throttle.FunctionButton;
+import jmri.jmrit.throttle.implementation.ThrottleJInternalFrameSubControl;
+import jmri.jmrit.throttle.panels.FunctionButton;
 import jmri.util.JmriJFrame;
 
 /**
@@ -39,6 +40,8 @@ public class LearnThrottleFrame extends JmriJFrame {
     private LearnControlPanel _controlPanel;
     private LearnFunctionPanel _functionPanel;
     private LearnSpeedPanel _speedPanel;
+    private ThrottleJInternalFrameSubControl _controlPanelJIF;
+    private ThrottleJInternalFrameSubControl _functionPanelJIF;
 
     /**
      * Default constructor
@@ -97,35 +100,35 @@ public class LearnThrottleFrame extends JmriJFrame {
         _controlPanel = new LearnControlPanel(this);
         _controlPanel.setVisible(true);
         _controlPanel.setEnabled(false);
-        _controlPanel.setTitle(Bundle.getMessage("speed"));
-        _controlPanel.setSize(_controlPanel.getPreferredSize());
+        _controlPanelJIF = new ThrottleJInternalFrameSubControl(Bundle.getMessage("speed"), _controlPanel, true);
+        _controlPanelJIF.setSize(_controlPanel.getPreferredSize());
 
         int width = 3 * (FunctionButton.getButtonWidth()) + 2 * 3 * 5 + 11;   // = 192
         int height = 9 * (FunctionButton.getButtonHeight()) + 2 * 6 * 5 + 20; // FunctionButton.BUT_IMG_SIZE = 45
-        _functionPanel = new LearnFunctionPanel(this);
-        _functionPanel.setSize(width, height);
+        _functionPanel = new LearnFunctionPanel(this);        
         _functionPanel.setVisible(true);
         _functionPanel.setEnabled(false);
-        _functionPanel.setTitle(Bundle.getMessage("setFunction"));
+        _functionPanelJIF = new ThrottleJInternalFrameSubControl(Bundle.getMessage("setFunction"), _functionPanel, true);
+        _functionPanelJIF.setSize(width, height);
 
         _speedPanel = new LearnSpeedPanel(_warrantFrame.getWarrant());
-        _speedPanel.setSize(_functionPanel.getWidth(), _controlPanel.getHeight() - _functionPanel.getHeight());
+        _speedPanel.setSize(_functionPanelJIF.getWidth(), _controlPanelJIF.getHeight() - _functionPanelJIF.getHeight());
         _speedPanel.setVisible(true);
         _speedPanel.setClosable(true);
         _speedPanel.setTitle(java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("ThrottleMenuViewSpeedPanel"));
 
-        _controlPanel.setLocation(0, 0);
-        _functionPanel.setLocation(_controlPanel.getWidth(), 0);
+        _controlPanelJIF.setLocation(0, 0);
+        _functionPanelJIF.setLocation(_controlPanel.getWidth(), 0);
         _speedPanel.setLocation(_controlPanel.getWidth(), _functionPanel.getHeight());
 
         JDesktopPane desktop = new JDesktopPane();
         getContentPane().add(desktop);
-        desktop.add(_controlPanel);
-        desktop.add(_functionPanel);
+        desktop.add(_controlPanelJIF);
+        desktop.add(_functionPanelJIF);
         desktop.add(_speedPanel);
 
         desktop.setPreferredSize(new Dimension(
-                _controlPanel.getWidth() + _functionPanel.getWidth(), _controlPanel.getHeight()));
+                _controlPanelJIF.getWidth() + _functionPanelJIF.getWidth(), _controlPanelJIF.getHeight()));
 
         setResizable(false);
         jmri.util.PlaceWindow.getDefault().nextTo(_warrantFrame, null, this);
@@ -140,13 +143,13 @@ public class LearnThrottleFrame extends JmriJFrame {
         ButtonGroup buttonGroup = new ButtonGroup();
         JRadioButtonMenuItem displaySlider = new JRadioButtonMenuItem(Bundle.getMessage("ButtonDisplaySpeedSlider"));
         displaySlider.addActionListener((ActionEvent e)->
-            _controlPanel.setSpeedController(jmri.jmrit.throttle.ControlPanel.SLIDERDISPLAYCONTINUOUS));
+            _controlPanel.setSpeedController(jmri.jmrit.throttle.panels.ControlPanel.SLIDERDISPLAYCONTINUOUS));
         displaySlider.setSelected(true);
         buttonGroup.add(displaySlider);
         speedControl.add(displaySlider);
         JRadioButtonMenuItem displaySteps = new JRadioButtonMenuItem(Bundle.getMessage("ButtonDisplaySpeedSteps"));
         displaySteps.addActionListener((ActionEvent e)->
-            _controlPanel.setSpeedController(jmri.jmrit.throttle.ControlPanel.STEPDISPLAY));
+            _controlPanel.setSpeedController(jmri.jmrit.throttle.panels.ControlPanel.STEPDISPLAY));
         buttonGroup.add(displaySteps);
         speedControl.add(displaySteps);
         this.setJMenuBar(new JMenuBar());
@@ -182,11 +185,11 @@ public class LearnThrottleFrame extends JmriJFrame {
 
     @Override
     public void dispose() {
-        _controlPanel.destroy();
-        _functionPanel.destroy();
-        _speedPanel.destroy();
         _controlPanel.dispose();
         _functionPanel.dispose();
+        _speedPanel.dispose();
+        _controlPanelJIF.dispose();
+        _functionPanelJIF.dispose();
         super.dispose();
     }
 

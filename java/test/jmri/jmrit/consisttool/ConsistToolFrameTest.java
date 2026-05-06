@@ -153,8 +153,9 @@ public class ConsistToolFrameTest {
         // need to verify throttle is setup with two addresses.
 
         ThrottleOperator to = new ThrottleOperator("1(S)");
+        
         assertEquals(new DccLocoAddress(12, false),
-                to.getAddressValue(), "Throttle has right visible address");
+                to.getConsistFunctionAddressValue(), "Throttle has right visible address");
         assertEquals(new DccLocoAddress(1, false),
                 to.getConsistAddressValue(), "Throttle has right consist address");
 
