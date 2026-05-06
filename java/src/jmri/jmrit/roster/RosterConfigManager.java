@@ -1,5 +1,6 @@
 package jmri.jmrit.roster;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.HeadlessException;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
@@ -57,6 +58,7 @@ public class RosterConfigManager extends AbstractPreferencesManager {
         });
     }
 
+    @SuppressFBWarnings(value = "DM_EXIT", justification = "This exit is at the user's explicit request when the roster location is unavailable at startup")
     @Override
     public void initialize(Profile profile) throws InitializationException {
         if (!this.isInitialized(profile)) {
