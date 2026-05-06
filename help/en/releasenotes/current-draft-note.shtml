@@ -599,13 +599,12 @@
             <li>There's a new "WiThrottleMonitorTableSpeedRed.py" script that opens a window displaying
                 connected WiThrottle devices and locomotives (address, speed)
                 </li>
-            <li>Due to the refactoring the JMRI Swing Throttle code, some scripts may be broken, to be noted particularly :
+            <li>Due to the refactoring the JMRI Swing Throttle code, some scripts may be broken, particularly : <ul>
+                <li>ThrottleFrame was moved to package jmri.jmrit.throttle.implementation (was jmri.jmrit.throttle previously)</li>
                 <li>jmri.jmrit.throttle.ThrottleFrameManager.createThrottleFrame() now returns a jmri.jmrit.throttle.interfaces.ThrottleControllerUI 
                     which is an interface implemented by (among other) jmri.jmrit.throttle.implementation.ThrottleFrame (same class name as previously but moved to a new package) </li>
                 <li>if you need a small throttle, see ThrottleFrameManager.createSimpleThrottleFrame(RosterEntry) or ThrottleFrameManager.createSimpleThrottleFrame(DccLocoAddress)</li>
-
-
-            </li>
+            </ul></li>
         </ul>
 
     <h3>Signals</h3>
