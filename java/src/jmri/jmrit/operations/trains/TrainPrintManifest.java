@@ -52,8 +52,8 @@ public class TrainPrintManifest extends TrainCommon {
         Dimension pageSize = getFullPageSizeDPI(orientation);
         
         if (orientation.equals(Setup.RECEIPT)) {
-            leftmargin = .1;
-            rightmargin = .1;
+            leftmargin = .2;
+            rightmargin = .2;
         }
         
         try (CompatibleHardcopyWriter writer = new CompatibleHardcopyWriter(new Frame(), name, fontSize, leftmargin,
