@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -13,6 +14,7 @@ import jmri.JmriException;
 import jmri.Throttle;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
@@ -344,6 +346,59 @@ public class JsonThrottleSocketServiceTest {
         assertEquals( 400, ex.getCode(), "Error code is HTTP Bad Request");
         assertEquals( "Throttles must be assigned a client ID.", ex.getMessage(), "Error message");
         JUnitAppender.assertWarnMessage("JSON throttle \"\" requested using \"throttle\" instead of \"name\"");
+    }
+
+    /**
+     * Test that a throttle request with a {@code prefix} field uses the
+     * specified connection's ThrottleManager and that the prefix is echoed
+     * back in the status response.
+     */
+    @Test
+    public void testRunThrottleWithPrefix() throws IOException, JmriException, JsonException {
+        InternalSystemConnectionMemo memo2 = new InternalSystemConnectionMemo("J", "Juliet");
+        JUnitUtil.initDebugThrottleManager(memo2);
+
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonThrottleSocketService service = new JsonThrottleSocketService(connection);
+        JsonThrottleManager manager = InstanceManager.getDefault(JsonThrottleManager.class);
+        assertEquals(0, manager.getThrottles().size(), "No throttles initially");
+
+        ObjectNode data = connection.getObjectMapper().createObjectNode();
+        data.put(JSON.NAME, "myThrottle");
+        data.put(JSON.ADDRESS, 42);
+        data.put(JSON.PREFIX, "J");
+
+        service.onMessage(JsonThrottle.THROTTLE, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+        assertEquals(1, manager.getThrottles().size(), "One throttle acquired");
+
+        JsonNode message = connection.getMessage();
+        assertNotNull(message);
+        assertEquals(42, message.path(JSON.DATA).path(JSON.ADDRESS).asInt(), "Address");
+        assertEquals("J", message.path(JSON.DATA).path(JSON.PREFIX).asText(), "Prefix echoed in status");
+        assertEquals("myThrottle", message.path(JSON.DATA).path(JSON.NAME).asText(), "Name");
+
+        service.onClose();
+        assertEquals(0, manager.getThrottles().size(), "No throttles after close");
+    }
+
+    /**
+     * Test that a throttle request with an unknown {@code prefix} returns HTTP 400.
+     */
+    @Test
+    public void testRunThrottleWithUnknownPrefix() throws IOException, JmriException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonThrottleSocketService service = new JsonThrottleSocketService(connection);
+        JsonThrottleManager manager = InstanceManager.getDefault(JsonThrottleManager.class);
+
+        ObjectNode data = connection.getObjectMapper().createObjectNode();
+        data.put(JSON.NAME, "myThrottle");
+        data.put(JSON.ADDRESS, 42);
+        data.put(JSON.PREFIX, "Z"); // unknown prefix — should fail with HTTP 400
+
+        JsonException ex = assertThrows(JsonException.class, () ->
+                service.onMessage(JsonThrottle.THROTTLE, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0)));
+        assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
+        assertEquals(0, manager.getThrottles().size(), "No throttle acquired");
     }
 
     @BeforeEach

@@ -2,12 +2,14 @@ package jmri.server.json.power;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javax.servlet.http.HttpServletResponse;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
@@ -106,6 +108,70 @@ public class JsonPowerHttpServiceTest extends JsonHttpServiceTestBase<JsonPowerH
                 new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
             "Expected exception not thrown");
         assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
+    }
+
+    @Test
+    public void testDoGetWithPrefix() throws JmriException, JsonException {
+        // Capture original default PM before memo2 creation (store() makes new PM the default)
+        PowerManager defaultPm = InstanceManager.getDefault(PowerManager.class);
+        defaultPm.setPower(PowerManager.OFF);
+
+        InternalSystemConnectionMemo memo2 = new InternalSystemConnectionMemo("J", "Juliet", false);
+        PowerManager pm2 = memo2.get(PowerManager.class);
+        assertNotNull(pm2);
+        pm2.setPower(PowerManager.ON);
+
+        // Restore original as default so no-prefix queries resolve to defaultPm
+        InstanceManager.setDefault(PowerManager.class, defaultPm);
+
+        // No prefix: uses default manager (OFF)
+        JsonNode result = service.doGet(JsonPowerServiceFactory.POWER, "",
+                mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        this.validate(result);
+        assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
+
+        // With prefix "J": uses memo2's manager (ON)
+        ObjectNode dataWithPrefix = mapper.createObjectNode();
+        dataWithPrefix.put(JSON.PREFIX, "J");
+        result = service.doGet(JsonPowerServiceFactory.POWER, "", dataWithPrefix,
+                new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        this.validate(result);
+        assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
+        assertEquals("J", result.path(JSON.DATA).path(JSON.PREFIX).asText());
+
+        // With unknown prefix: throws JsonException (HTTP 400)
+        ObjectNode dataUnknown = mapper.createObjectNode();
+        dataUnknown.put(JSON.PREFIX, "Z");
+        JsonException ex = assertThrows(JsonException.class, () ->
+                service.doGet(JsonPowerServiceFactory.POWER, "", dataUnknown,
+                        new JsonRequest(locale, JSON.V5, JSON.GET, 0)));
+        assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
+    }
+
+    @Test
+    public void testDoPostWithPrefix() throws JmriException, JsonException {
+        // Capture original default PM before memo2 creation (store() makes new PM the default)
+        PowerManager defaultPm = InstanceManager.getDefault(PowerManager.class);
+        defaultPm.setPower(PowerManager.OFF);
+
+        InternalSystemConnectionMemo memo2 = new InternalSystemConnectionMemo("J", "Juliet", false);
+        PowerManager pm2 = memo2.get(PowerManager.class);
+        assertNotNull(pm2);
+        pm2.setPower(PowerManager.OFF);
+
+        // Restore original as default so no-prefix queries resolve to defaultPm
+        InstanceManager.setDefault(PowerManager.class, defaultPm);
+
+        // Post ON to prefix "J": affects pm2, not default
+        ObjectNode data = mapper.createObjectNode();
+        data.put(JSON.PREFIX, "J");
+        data.put(JSON.STATE, JSON.ON);
+        JsonNode result = service.doPost(JsonPowerServiceFactory.POWER, "", data,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+        this.validate(result);
+        assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
+        assertEquals(PowerManager.ON, pm2.getPower());
+        assertEquals(PowerManager.OFF, defaultPm.getPower());
     }
 
     @BeforeEach
