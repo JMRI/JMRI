@@ -2310,8 +2310,8 @@ public class TrainCommon {
         double bottommargin = .5 * 72;
 
         if (orientation.equals(Setup.RECEIPT)) {
-            leftmargin = .1 * 72;
-            rightmargin = .1 * 72;
+            leftmargin = .2 * 72;
+            rightmargin = .2 * 72;
         }
 
         Integer charsPerLine = null;
@@ -2384,7 +2384,7 @@ public class TrainCommon {
     }
 
     protected static final Dimension PAPER_MARGINS = new Dimension(84, 72);
-    protected static final Dimension RECEIPT_MARGINS = new Dimension(14, 72);
+    protected static final Dimension RECEIPT_MARGINS = new Dimension(28, 72);
 
     public static Dimension getPageSize(String orientation) {
         // page size has been adjusted to account for margins of .5
@@ -2400,8 +2400,8 @@ public class TrainCommon {
             pagesize = new Dimension(206, 720); // 3.25 x 11
         }
         if (orientation.equals(Setup.RECEIPT)) {
-         // page size has been adjusted to account for margins of .1
-            pagesize = new Dimension(148, 720); // 2.25 x 11
+         // page size has been adjusted to account for margins of .2
+            pagesize = new Dimension(136, 720); // 2.25 x 11 (58mm)
         }
         return pagesize;
     }
