@@ -41,7 +41,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
     private int activeFrame;
     private int frameCounterID = 0; // to generate unique names for each card    
 
-    private ArrayList<ThrottleControllersUIContainer> throttleWindows; // synchronized access
+    private ArrayList<ThrottleControllersUIContainer> throttleUIContainers; // synchronized access
 
     private ThrottlesPreferencesWindow throttlePreferencesFrame;
     private JmriJFrame throttlesListFrame;
@@ -51,11 +51,11 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      * Constructor for the ThrottleFrameManager object.
      */
     public ThrottleFrameManager() {
-        throttleWindows = new ArrayList<>(0);
+        throttleUIContainers = new ArrayList<>(0);
     }
 
     /**
-     * Tell this manager that a new ThrottleWindow was created.
+     * Ask this manager to create a new Throttle Window
      *
      * @return The newly created ThrottleWindow
      */
@@ -64,7 +64,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
     }
 
     /**
-     * Tell this manager that a new ThrottleWindow was created.
+     * Ask this manager to create a new Throttle Window
      *
      * @param connectionConfig the connection config
      * @return The newly created ThrottleWindow
@@ -73,15 +73,15 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         ThrottleWindow tw = new ThrottleWindow(connectionConfig);
         tw.pack();
         synchronized (this) {
-            throttleWindows.add(tw);
-            activeFrame = throttleWindows.indexOf(tw);
+            throttleUIContainers.add(tw);
+            activeFrame = throttleUIContainers.indexOf(tw);
         }
         getThrottlesListPanel().getTableModel().fireTableStructureChanged();
         return tw;
     }
 
     /**
-     * Tell this manager that a new ThrottleWindow was created.
+     * Ask this manager to create a new Throttle Window
      *
      * @param e the xml element for the throttle window
      * @return The newly created ThrottleWindow
@@ -90,15 +90,19 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         ThrottleWindow tw = ThrottleWindow.createThrottleWindow(e);
         tw.pack();
         synchronized (this) {
-            throttleWindows.add(tw);
-            activeFrame = throttleWindows.indexOf(tw);
+            throttleUIContainers.add(tw);
+            activeFrame = throttleUIContainers.indexOf(tw);
         }
         getThrottlesListPanel().getTableModel().fireTableStructureChanged();
         return tw;
     }
 
     /**
-     * Tell this manager that a new ThrottleFrame was created.
+     * Ask this manager to create a new Throttle Frame
+     * A ThrottleWindow will be created, but the inner Panel (ThrottleFrame)
+     * will be returned.
+     * 
+     * This method is backward compatible with the first implementation of JMRI throttle (200x).
      *
      * @return The newly created ThrottleFrame
      */
@@ -107,7 +111,11 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
     }    
 
     /**
-     * Tell this manager that a new ThrottleFrame was created.
+     * Ask this manager to create a new Throttle Frame
+     * A ThrottleWindow will be created, but the inner Panel (ThrottleFrame)
+     * will be returned.
+     * 
+     * This method is backward compatible with the first implementation of JMRI throttle (200x).
      *
      * @param connectionConfig the connection config
      * @return The newly created ThrottleFrame
@@ -116,37 +124,66 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         return createThrottleWindow(connectionConfig).getCurentThrottleController();
     }
 
+    /**
+     * Ask this manager to create a new Simple Throttle Frame
+     * A SimpleThrottleWindow will be created, but the inner Panel (SimpleThrottleFrame)
+     * will be returned.
+     * 
+     * @param re the RosterEntry that this throttle should control
+     *
+     * @return The newly created SimpleThrottleFrame
+     */
     public ThrottleControllerUI createSimpleThrottleFrame(RosterEntry re) {
         return createSimpleThrottleFrame(null,re.getDccLocoAddress());
     }
 
+    /**
+     * Ask this manager to create a new Simple Throttle Frame
+     * A SimpleThrottleWindow will be created, but the inner Panel (SimpleThrottleFrame)
+     * will be returned.
+     * 
+     * @param la the loco address that this throttle should control
+     *
+     * @return The newly created SimpleThrottleFrame
+     */
     public ThrottleControllerUI createSimpleThrottleFrame(DccLocoAddress la) {
         return createSimpleThrottleFrame(null, la);
     } 
 
+    /**
+     * Ask this manager to create a new Simple Throttle Frame
+     * A SimpleThrottleWindow will be created, but the inner Panel (SimpleThrottleFrame)
+     * will be returned.
+     * 
+     * @param connectionConfig the connection config
+     * @param la the loco address that this throttle should control
+     *
+     * @return The newly created SimpleThrottleFrame
+     */    
     public ThrottleControllerUI createSimpleThrottleFrame(jmri.jmrix.ConnectionConfig connectionConfig, DccLocoAddress la) {
         SimpleThrottleWindow stw = new SimpleThrottleWindow(connectionConfig, la);
         stw.pack();
         stw.setVisible(true);
         synchronized (this) {
-            throttleWindows.add(stw);
-            activeFrame = throttleWindows.indexOf(stw);
+            throttleUIContainers.add(stw);
+            activeFrame = throttleUIContainers.indexOf(stw);
         }
         getThrottlesListPanel().getTableModel().fireTableStructureChanged();
         return stw.getThrottleControllerAt(0);
     }
 
     /**
-     * Request that this manager destroy a throttle frame. Is called by the Throttle window when it is disposed
+     * Request that this manager destroy a ThrottleControllersUIContainer. 
+     * Is called by the ThrottleWindow, or SimpleThrottleWindow, when it is disposed
      *
-     * @param frame The to-be-destroyed ThrottleFrame
+     * @param throtCont The to-be-destroyed Throttle Container
      */
-    public void requestThrottleWindowDestruction(ThrottleControllersUIContainer frame) {
-        if (frame != null) {
-            destroyThrottleWindow(frame);
+    public void requestThrottleWindowDestruction(ThrottleControllersUIContainer throtCont) {
+        if (throtCont != null) {
+            destroyThrottleWindow(throtCont);
             synchronized (this) {
-                throttleWindows.remove(frame);
-                if (!throttleWindows.isEmpty()) {
+                throttleUIContainers.remove(throtCont);
+                if (!throttleUIContainers.isEmpty()) {
                     requestFocusForNextThrottleWindow();
                 }
             }
@@ -154,40 +191,53 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         getThrottlesListPanel().getTableModel().fireTableStructureChanged();        
     }
 
+    /**
+     * Request that this manager destroy all throttle containers.
+     */    
     public synchronized void requestAllThrottleWindowsDestroyed() {
-        for (ThrottleControllersUIContainer frame : throttleWindows) {
+        for (ThrottleControllersUIContainer frame : throttleUIContainers) {
             destroyThrottleWindow(frame);
         }
-        throttleWindows = new ArrayList<>(0);
+        throttleUIContainers = new ArrayList<>(0);
         getThrottlesListPanel().getTableModel().fireTableStructureChanged();        
     }
-    
+
+    /**
+     * Request this manager for a unique identifier (used by ThrottleWindow to identify themselves).
+     * 
+     * @return a unique identifier
+     * 
+     */         
     public int generateUniqueFrameID() {
          return frameCounterID++;
     }
 
     /**
-     * Perform the destruction of a ThrottleFrame. This method will not affect
-     * the throttleFrames list, thus ensuring no synchronozation problems.
+     * Perform the destruction of a Throttle UI containers 
      *
-     * @param window The ThrottleFrame to be destroyed.
+     * @param throtCont The ThrottleFrame to be destroyed.
      */
-    private void destroyThrottleWindow(ThrottleControllersUIContainer window) {
-        throttleWindows.remove(window);        
+    private void destroyThrottleWindow(ThrottleControllersUIContainer throtCont) {
+        throttleUIContainers.remove(throtCont);        
         getThrottlesListPanel().getTableModel().fireTableStructureChanged();        
     }
     
+    /**
+     * Gets an iterator over all the Throttle UI containers
+     * 
+     * @return an iterator over all the Throttle UI containers
+     */    
     public Iterator<ThrottleControllersUIContainer> iterator() {
-        return throttleWindows.iterator();
+        return throttleUIContainers.iterator();
     }
        
     /**
-     * Return the number of active thottle windows
+     * Return the number of active thottle UI containers
      *
-     * @return the number of active thottle windows
+     * @return the number of active thottle UI containers
      */
     public synchronized int getNbThrottleControllersContainers() {
-        return throttleWindows.size();
+        return throttleUIContainers.size();
     }
     
     /**
@@ -197,15 +247,15 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      * @return a thottle controller container
      */ 
     public synchronized ThrottleControllersUIContainer getThrottleControllersContainerAt(int n) {
-        if (! (n < throttleWindows.size())) {
+        if (! (n < throttleUIContainers.size())) {
             return null;
         }
-        return throttleWindows.get(n);
+        return throttleUIContainers.get(n);
     }
 
     public synchronized void requestFocusForNextThrottleWindow() {
-        activeFrame = (activeFrame + 1) % throttleWindows.size();
-        JmriJFrame tw = (JmriJFrame) throttleWindows.get(activeFrame);
+        activeFrame = (activeFrame + 1) % throttleUIContainers.size();
+        JmriJFrame tw = (JmriJFrame) throttleUIContainers.get(activeFrame);
         tw.requestFocus();
         tw.toFront();
     }
@@ -213,21 +263,21 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
     public synchronized void requestFocusForPreviousThrottleWindow() {
         activeFrame--;
         if (activeFrame < 0) {
-            activeFrame = throttleWindows.size() - 1;
+            activeFrame = throttleUIContainers.size() - 1;
         }
-        JmriJFrame tw =(JmriJFrame) throttleWindows.get(activeFrame);
+        JmriJFrame tw =(JmriJFrame) throttleUIContainers.get(activeFrame);
         tw.requestFocus();
         tw.toFront();
     }
 
     public synchronized JmriJFrame getCurentThrottleController() {
-        if (throttleWindows == null) {
+        if (throttleUIContainers == null) {
             return null;
         }
-        if (throttleWindows.isEmpty()) {
+        if (throttleUIContainers.isEmpty()) {
             return null;
         }
-        return  (JmriJFrame) throttleWindows.get(activeFrame);
+        return  (JmriJFrame) throttleUIContainers.get(activeFrame);
     }
 
     public ThrottlesListPanel getThrottlesListPanel() {
@@ -272,7 +322,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      *
      */   
     public void emergencyStopAll() {
-        throttleWindows.forEach(tw -> {
+        throttleUIContainers.forEach(tw -> {
             tw.emergencyStopAll();
         });
     }
@@ -289,7 +339,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
             return 0; 
         }
         int ret = 0;
-        for (ThrottleControllersUIContainer tw : throttleWindows) {        
+        for (ThrottleControllersUIContainer tw : throttleUIContainers) {        
             ret += tw.getNumberOfEntriesFor(la);
         }
         return ret;
