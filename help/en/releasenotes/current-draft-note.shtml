@@ -129,6 +129,10 @@
                 <li>(Internal) The load and store process for the Event Table
                     now permits multiple "names" elements. This makes it easier
                     to merge Event Table information from several profiles.</li>
+                <li>Improved how mouse clicks are handled with showing/hiding 
+                    sections of the configuration screens.</li>
+                <li>Resolved an issue where reading a memory space from a CS-105
+                    would timeout and fail.</li>
             </ul>
 
         <h4>Powerline</h4>
