@@ -43,6 +43,9 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
     public void connect() throws java.io.IOException {
         super.connect();
         log.debug("openPort called");
+        // Set a read timeout so the receive loop detects a dead connection
+        // rather than blocking indefinitely. Value is 3x the keepAlive interval.
+        setConnectionTimeout((int) (keepAliveTimeoutValue * 3));
         keepAliveTimer();
     }
     
@@ -79,6 +82,15 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         new DCCppInitializationManager(this.getSystemConnectionMemo());
     }
     
+    @Override
+    protected void closeConnection() {
+        if (keepAliveTimer != null) {
+            keepAliveTimer.cancel();
+            keepAliveTimer = null;
+        }
+        super.closeConnection();
+    }
+
     /**
      * Set up the keepAliveTimer, and start it.
      */

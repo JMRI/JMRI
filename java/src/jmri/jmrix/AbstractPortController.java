@@ -524,6 +524,22 @@ abstract public class AbstractPortController implements PortAdapter {
      * {@inheritDoc}
      */
     @Override
+    public boolean getAllowConnectionRecovery() {
+        return allowConnectionRecovery;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAllowConnectionRecovery(boolean allow) {
+        allowConnectionRecovery = allow;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setReconnectMaxInterval(int maxInterval) {
         reconnectMaxInterval = maxInterval;
     }
