@@ -11,6 +11,7 @@ import jmri.util.swing.JmriJOptionPane;
 public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVersionListener {
 
     private SprogSystemConnectionMemo _memo = null;
+    private volatile boolean disposed = false;
 
     public SprogVersionFrame(SprogSystemConnectionMemo memo) {
         super();
@@ -21,7 +22,7 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
      * {@inheritDoc}
      */
     @Override
-    synchronized public void initComponents() {
+    public void initComponents() {
         setTitle(Bundle.getMessage("SprogVersionTitle"));
 
         // add help menu to window
@@ -32,16 +33,26 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
         query.requestVersion(this);
     }
 
-    /** 
+    /**
+     * Handle the version reply. May be called on any thread (serial event
+     * thread or Swing timer thread), so dispatch to the EDT to show the dialog
+     * and dispose the frame. Not synchronized — dispatching via
+     * runOnGUIEventually ensures neither the calling thread nor the EDT blocks
+     * waiting for a lock held by the other.
      * {@inheritDoc}
      */
     @Override
-    public synchronized void notifyVersion(SprogVersion v) {
+    public void notifyVersion(SprogVersion v) {
         log.debug("Version {} notified", v.toString());
-        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("SprogVersionDialogString", v.toString()),
-                Bundle.getMessage("SprogVersionTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
-        setVisible(false);
-        dispose();
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            if (!disposed) {
+                JmriJOptionPane.showMessageDialog(SprogVersionFrame.this,
+                        Bundle.getMessage("SprogVersionDialogString", v.toString()),
+                        Bundle.getMessage("SprogVersionTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
+                setVisible(false);
+                dispose();
+            }
+        });
     }
 
     /**
@@ -50,6 +61,7 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
      */
     @Override
     public void dispose() {
+        disposed = true;
         _memo.getSprogVersionQuery().removeSprogVersionListener(this);
         super.dispose();
     }
