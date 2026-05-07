@@ -1,7 +1,9 @@
 package jmri.jmrix.cmri.serial.networkdriver;
 
+import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 
@@ -63,4 +65,25 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public Config getConfig() {
+        return ((CMRISystemConnectionMemo) getAdapter().getSystemConnectionMemo())
+                .getConfig();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setConfig(@Nonnull Config config) {
+        if (config instanceof CMRISystemConnectionMemo.Config) {
+            ((CMRISystemConnectionMemo) getAdapter().getSystemConnectionMemo())
+                    .setConfig((CMRISystemConnectionMemo.Config) config);
+        } else {
+            log.info("Can't set config. Expected {} but got {}",
+                    config.getClass().getName(),
+                    CMRISystemConnectionMemo.Config.class.getName());
+        }
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConnectionConfig.class);
 }
