@@ -15,13 +15,13 @@ import javax.annotation.CheckForNull;
 import jmri.jmrit.beantable.TablesSettings;
 
 import jmri.InstanceManager;
-import jmri.jmrit.throttle.ThrottleCreationAction;
 import jmri.jmrit.z21server.Z21serverCreationAction;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.JmriJFrame;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.jmrit.swing.ToolsMenuAction;
+import jmri.jmrit.throttle.ThrottleCreationAction;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;

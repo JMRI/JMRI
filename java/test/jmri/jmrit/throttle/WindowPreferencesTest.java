@@ -2,6 +2,7 @@ package jmri.jmrit.throttle;
 
 import javax.swing.JInternalFrame;
 
+import jmri.jmrit.throttle.implementation.WindowPreferences;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;

@@ -1,15 +1,25 @@
 package jmri.jmrix.cmri.serial.networkdriver.configurexml;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import jmri.jmrit.XmlFile;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.networkdriver.ConnectionConfig;
 import jmri.jmrix.cmri.serial.networkdriver.NetworkDriverAdapter;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
+import jmri.util.FileUtil;
+import jmri.util.jdom.JDOMUtil;
+import jmri.util.prefs.JmriConfigurationProvider;
+import jmri.util.xml.XMLUtil;
+
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.w3c.dom.Document;
 
 /**
  * Handle XML persistence of layout connections by persisting the
@@ -50,7 +60,37 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
      */
     @Override
     protected void extendElement(Element e) {
-         // Create a polling list from the configured nodes
+        var memo = ((CMRISystemConnectionMemo) adapter.getSystemConnectionMemo());
+        String externalConfig = memo.getExternalConfig();
+        if (externalConfig != null) {
+            Element element = new Element("external-config");
+            element.addContent(externalConfig);
+            e.addContent(element);
+            storeExternalConfig(externalConfig);
+        } else {
+            storeConfig(e);
+        }
+    }
+
+    private void storeExternalConfig(String externalConfig) {
+        try {
+            Document doc = XMLUtil.createDocument("external-cmri-configuration", JmriConfigurationProvider.NAMESPACE, null, null); // NOI18N
+            var root = doc.getDocumentElement();
+            Element config = new Element("config");
+            storeConfig(config);
+            var w3cElement = JDOMUtil.toW3CElement(config);
+            root.appendChild(root.getOwnerDocument().importNode(w3cElement, true));
+            String filename = FileUtil.getExternalFilename(externalConfig);
+            try (final OutputStream os = new FileOutputStream(filename)) {
+                XMLUtil.write(doc, os, StandardCharsets.UTF_8.name());
+            }
+        } catch (IOException | JDOMException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void storeConfig(Element e) {
+        // Create a polling list from the configured nodes
         StringBuilder polllist = new StringBuilder("");
         SerialTrafficController tcPL = ((CMRISystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController();
         SerialNode plNode = (SerialNode) tcPL.getNode(0);
@@ -131,6 +171,30 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     @Override
     protected void unpackElement(Element shared, Element perNode) {
+
+        Element externalConfig = shared.getChild("external-config");
+        if (externalConfig != null) {
+            loadExternalConfig(externalConfig);
+        } else {
+            loadConfig(shared);
+        }
+    }
+
+    private void loadExternalConfig(Element externalConfig) {
+        try {
+            String filename = externalConfig.getTextTrim();
+            ((CMRISystemConnectionMemo) adapter.getSystemConnectionMemo())
+                    .setExternalConfig(filename);
+            File file = new File(FileUtil.getExternalFilename(filename));
+            Element root = new XmlFile().rootFromURL(FileUtil.fileToURL(file));
+            Element config = root.getChild("config");
+            loadConfig(config);
+        } catch (IOException | JDOMException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadConfig(Element shared) {
         // --------------------------------------
         // Load the poll list sequence if present
         // --------------------------------------

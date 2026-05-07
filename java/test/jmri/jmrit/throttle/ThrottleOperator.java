@@ -1,13 +1,26 @@
 package jmri.jmrit.throttle;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.awt.Component;
+
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+
 import jmri.DccLocoAddress;
+import jmri.jmrit.throttle.panels.AddressPanel;
+import jmri.jmrit.throttle.panels.ConsistFunctionPanel;
+import jmri.jmrit.throttle.panels.FunctionButton;
+
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JInternalFrameOperator;
+import org.netbeans.jemmy.operators.JMenuBarOperator;
+import org.netbeans.jemmy.operators.JMenuItemOperator;
+import org.netbeans.jemmy.operators.JMenuOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.JToggleButtonOperator;
@@ -168,6 +181,44 @@ public class ThrottleOperator extends JFrameOperator {
         (new JCheckBoxOperator(jdo, Bundle.getMessage("CheckBoxLockable"))).doClick();
         (new JButtonOperator(jdo, Bundle.getMessage("ButtonApply"))).doClick();
         (new JButtonOperator(jdo, Bundle.getMessage("ButtonClose"))).doClick();
+    }
+
+    // Consist function panel operations
+    public boolean showConsistFunctionsPanel() {
+        JMenuBarOperator mainbar = new JMenuBarOperator(this);        
+        JMenuOperator jmo  = new JMenuOperator(mainbar, Bundle.getMessage("ThrottleMenuView"));
+        JPopupMenu jpm = jmo.getPopupMenu();
+        JMenuItem viewCFP = (JMenuItem) jpm.getComponent(5);
+        assertEquals(Bundle.getMessage("ThrottleMenuViewConsistFunctionsPanel"), viewCFP.getText());
+        new JMenuItemOperator(viewCFP).doClick();
+        return true;
+    }
+
+    private ConsistFunctionPanel getConsistFunctionsPanel() {
+        showConsistFunctionsPanel();
+        ConsistFunctionPanel ap = (ConsistFunctionPanel) findSubComponent(
+                new ComponentChooser() {
+            @Override
+            public boolean checkComponent(Component c) {
+                if (c instanceof ConsistFunctionPanel) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            @Override
+            public String getDescription() {
+                return "Find ConsistFunctionPanel";
+            }
+        });
+        return ap;
+    }
+
+    // get the consist address value.
+    public DccLocoAddress getConsistFunctionAddressValue() {
+        ConsistFunctionPanel cfp = getConsistFunctionsPanel();
+        return (DccLocoAddress) cfp.getFunctionThrottle().getLocoAddress();
     }
 
     // Control (Speed and Direction) panel operations

@@ -297,12 +297,17 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         // first choice is -no- protocol chosen
         log.debug("new selection is {} {}", current, modeBox.getSelectedItem());
         if ((current != 0) && (current != -1)) {
+            ConnectionConfig.Config config = null;
             if ((ccCurrent != null) && (ccCurrent != classConnectionList[current])) {
+                config = ccCurrent.getConfig();
                 ccCurrent.dispose();
             }
             ccCurrent = classConnectionList[current];
             ccCurrent.setManufacturer((String) manuBox.getSelectedItem());
             ccCurrent.loadDetails(details);
+            if (config != null) {
+                ccCurrent.setConfig(config);
+            }
         } else {
             if (ccCurrent != null) {
                 ccCurrent.dispose();

@@ -17,12 +17,11 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.TrackerTableAction;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.util.swing.JmriMouseEvent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.jmrit.throttle.ThrottleControllerUI;
 
 /**
  * An icon that displays the position of a loco on a panel.<p>
@@ -117,7 +116,7 @@ public class LocoIcon extends PositionableLabel {
             popup.add(new AbstractAction("Throttle") {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleController();
+                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
                     tf.setRosterEntry(_entry);
                     tf.toFront();
                 }

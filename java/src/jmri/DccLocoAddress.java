@@ -43,6 +43,7 @@ public class DccLocoAddress implements LocoAddress {
         this.isConsist = false;
     }
     
+    @Override
     public boolean isConsistAddress () {
         return isConsist;
     }

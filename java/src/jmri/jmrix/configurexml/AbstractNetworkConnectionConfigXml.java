@@ -173,6 +173,10 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
         } catch (Exception ex) {
             log.debug("Caught exception in adapter.connect", ex);
             handleException(ex.getMessage(), "opening connection", null, null, ex);
+            // Load configuration despite the failure to let the user change
+            // the connection type while keeping the configuration. This is
+            // important for C/MRI connections.
+            unpackElement(shared, perNode);
             return false;
         }
 

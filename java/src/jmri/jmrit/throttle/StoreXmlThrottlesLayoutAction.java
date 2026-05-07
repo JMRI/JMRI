@@ -12,6 +12,8 @@ import javax.swing.JFileChooser;
 
 import jmri.InstanceManager;
 import jmri.configurexml.StoreXmlConfigAction;
+import jmri.jmrit.throttle.implementation.ThrottleUICore;
+import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -21,7 +23,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Save throttles to XML
+ * Save JMRI throttle window layout to XML
+ * 
+ * <hr>
+ * This file is part of JMRI.
+ * <p>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <p>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
@@ -55,7 +68,7 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
         fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
-        fileChooser.setCurrentDirectory(new File(ThrottleFrame.getDefaultThrottleFolder()));
+        fileChooser.setCurrentDirectory(new File(ThrottleUICore.getDefaultThrottleFolder()));
         java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);
         if (file == null) {
             return;
