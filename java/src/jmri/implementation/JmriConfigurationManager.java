@@ -263,7 +263,8 @@ public class JmriConfigurationManager implements ConfigureManager {
                 }
             });
 
-            if (rosterUnavailable.get() != null && handleRosterLocationUnavailable(rosterUnavailable.get())) {
+            RosterLocationUnavailableException rosterUnavailException = rosterUnavailable.get();
+            if (rosterUnavailException != null && handleRosterLocationUnavailable(rosterUnavailException)) {
                 return; // user chose Quit; ShutDownManager will end the JVM
             }
 
