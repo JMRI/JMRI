@@ -1,7 +1,5 @@
 package jmri.jmrit.roster;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.HeadlessException;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,7 +18,6 @@ import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
-import jmri.util.swing.JmriJOptionPane;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +55,6 @@ public class RosterConfigManager extends AbstractPreferencesManager {
         });
     }
 
-    @SuppressFBWarnings(value = "DM_EXIT", justification = "This exit is at the user's explicit request when the roster location is unavailable at startup")
     @Override
     public void initialize(Profile profile) throws InitializationException {
         if (!this.isInitialized(profile)) {
@@ -70,29 +66,10 @@ public class RosterConfigManager extends AbstractPreferencesManager {
                 this.setInitialized(profile, true);
                 String unavailablePath = preferences.get(DIRECTORY, this.getDirectory());
                 log.warn("Roster location unavailable: {}", unavailablePath);
-                try {
-                    Object[] options = {
-                        Bundle.getMessage("RosterLocationUnavailableContinue"),
-                        Bundle.getMessage("RosterLocationUnavailableQuit")
-                    };
-                    int choice = JmriJOptionPane.showOptionDialog(
-                            null,
-                            Bundle.getMessage("RosterLocationUnavailableText", unavailablePath),
-                            Bundle.getMessage("RosterLocationUnavailableTitle"),
-                            JmriJOptionPane.DEFAULT_OPTION,
-                            JmriJOptionPane.WARNING_MESSAGE,
-                            null,
-                            options,
-                            options[0]);
-                    if (choice == 1) {
-                        System.exit(0);
-                    }
-                } catch (HeadlessException he) {
-                    // headless environment: no dialog, fall through to InitializationException
-                }
-                throw new InitializationException(
+                throw new RosterLocationUnavailableException(
                         Bundle.getMessage(Locale.ENGLISH, "IllegalRosterLocation", unavailablePath),
                         ex.getMessage(),
+                        unavailablePath,
                         ex);
             }
             getRoster(profile).setRosterLocation(this.getDirectory());

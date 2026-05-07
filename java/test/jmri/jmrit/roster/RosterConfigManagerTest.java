@@ -1,16 +1,19 @@
 package jmri.jmrit.roster;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.prefs.Preferences;
 
+import jmri.profile.NullProfile;
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import jmri.util.prefs.InitializationException;
-import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -26,7 +29,6 @@ public class RosterConfigManagerTest {
 
     /**
      * setDirectory() must reject a path that does not exist as a directory.
-     * Headless-safe: no dialog is involved at this level.
      */
     @Test
     public void testSetDirectoryNonExistentThrows() {
@@ -37,37 +39,30 @@ public class RosterConfigManagerTest {
 
     /**
      * When the configured roster directory is unavailable at startup,
-     * initialize() must log a warning, show a Continue/Quit dialog, and throw
-     * InitializationException if the user chooses Continue.
-     * Uses Jemmy to dismiss the modal dialog automatically.
+     * initialize() must log a warning and throw RosterLocationUnavailableException
+     * carrying the unavailable path. The Continue/Quit dialog is owned by
+     * JmriConfigurationManager, not this class, so this test does not exercise UI.
      */
     @Test
-    @jmri.util.junit.annotations.DisabledIfHeadless
-    public void testInitializeWithUnavailableDirectoryShowsDialog() throws Exception {
+    public void testInitializeWithUnavailableDirectoryThrows() throws Exception {
         String badPath = "/nonexistent/roster/path/that/does/not/exist/";
-        Preferences prefs = ProfileUtils.getPreferences(
-                ProfileManager.getDefault().getActiveProfile(),
-                RosterConfigManager.class,
-                true);
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        Preferences prefs = ProfileUtils.getPreferences(profile, RosterConfigManager.class, true);
         prefs.put(RosterConfigManager.DIRECTORY, badPath);
         prefs.sync();
 
-        String title = Bundle.getMessage("RosterLocationUnavailableTitle");
-        String continueBtn = Bundle.getMessage("RosterLocationUnavailableContinue");
-        Thread dialogThread = JemmyUtil.createModalDialogOperatorThread(title, continueBtn);
-
         RosterConfigManager manager = new RosterConfigManager();
-        Assertions.assertThrows(InitializationException.class, () ->
-                manager.initialize(ProfileManager.getDefault().getActiveProfile()));
-
-        JUnitUtil.waitFor(() -> !dialogThread.isAlive(), "dialog dismissed");
+        RosterLocationUnavailableException ex = Assertions.assertThrows(
+                RosterLocationUnavailableException.class,
+                () -> manager.initialize(profile));
+        Assertions.assertEquals(badPath, ex.getUnavailablePath());
         JUnitAppender.assertWarnMessage("Roster location unavailable: " + badPath);
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir File folder) throws IOException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(new NullProfile(folder));
     }
 
     @AfterEach
