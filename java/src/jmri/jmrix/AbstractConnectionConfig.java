@@ -185,6 +185,10 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
         }
 
         if (adapter.getSystemConnectionMemo() != null) {
+            // Labels are field initializers created before the L&F is fully set up on some
+            // platforms (e.g. GTK); updateUI() resets the font/paint delegate to the current L&F.
+            systemPrefixLabel.updateUI();
+            connectionNameLabel.updateUI();
             cR.gridy = i;
             cL.gridy = i;
             gbLayout.setConstraints(systemPrefixLabel, cL);

@@ -37,12 +37,26 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         setHostName(DEFAULT_IP_ADDRESS);
         setPort(COMMUNICATION_TCP_PORT);
         this.manufacturerName = jmri.jmrix.dccpp.DCCppConnectionTypeList.DCCPP;
+        // Recover automatically from a dropped connection by default; retry indefinitely.
+        allowConnectionRecovery = true;
+        reconnectMaxAttempts = -1;
+    }
+
+    @Override
+    public void recover() {
+        if (allowConnectionRecovery && opened) {
+            log.info("Connection to {}:{} lost. Attempting to recover...", getHostName(), getPort());
+        }
+        super.recover();
     }
     
     @Override
     public void connect() throws java.io.IOException {
         super.connect();
         log.debug("openPort called");
+        // Set a read timeout so the receive loop detects a dead connection
+        // rather than blocking indefinitely. Value is 3x the keepAlive interval.
+        setConnectionTimeout((int) (keepAliveTimeoutValue * 3));
         keepAliveTimer();
     }
     
@@ -79,6 +93,15 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         new DCCppInitializationManager(this.getSystemConnectionMemo());
     }
     
+    @Override
+    protected void closeConnection() {
+        if (keepAliveTimer != null) {
+            keepAliveTimer.cancel();
+            keepAliveTimer = null;
+        }
+        super.closeConnection();
+    }
+
     /**
      * Set up the keepAliveTimer, and start it.
      */
