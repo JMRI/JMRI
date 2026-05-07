@@ -10,13 +10,12 @@ import org.bidib.jbidibc.core.MessageListener;
 import org.bidib.jbidibc.messages.enums.BoosterState;
 import org.bidib.jbidibc.messages.enums.CommandStationState;
 import org.bidib.jbidibc.messages.Node;
+import org.bidib.jbidibc.messages.StringData;
 import org.bidib.jbidibc.messages.enums.BoosterControl;
 import org.bidib.jbidibc.messages.message.BoostOnMessage;
 import org.bidib.jbidibc.messages.message.BoostOffMessage;
 import org.bidib.jbidibc.messages.message.BoostQueryMessage;
 import org.bidib.jbidibc.messages.message.CommandStationSetStateMessage;
-import org.bidib.jbidibc.messages.utils.NodeUtils;
-import org.bidib.jbidibc.messages.utils.ByteUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -166,13 +165,18 @@ public class BiDiBPowerManager implements PowerManager {
         messageListener = new DefaultMessageListener() {
             @Override
             public void boosterState(byte[] address, int messageNum, BoosterState state, BoosterControl control) {//ByteUtils
-                Node node = tc.getFirstBoosterNode();
-                log.trace("booster state: msg addr: {}, booster: {}, state: {}, control: {}", ByteUtils.bytesToHex(address), node, state.getType(), control.getType());
-                if (NodeUtils.isAddressEqual(node.getAddr(), address)) {
-                    log.info("POWER booster state was signalled: {}, control: {}", state.getType(), control.getType());
+                Node node = tc.getNodeByAddr(address); //the sending node
+                log.info("POWER booster state was signalled: {}, control: {}, node: {}", state, control, node);
+                if (state == BoosterState.OFF_SHORT) {
+                    log.warn("Short circuit detected on booster {} ({})", node.getStoredString(StringData.INDEX_USERNAME), node);
+                }
+                else if (state == BoosterState.OFF_HOT) {
+                    log.warn("Overtemperature detected on booster {} ({})", node.getStoredString(StringData.INDEX_USERNAME), node);
+                }
+                if (node.equals(tc.getFirstBoosterNode())) {
                     int old = power;
                     power = BoosterState.isOnState(state) ? ON : OFF;
-                    log.debug("change {} from {} to {}", POWER, old, power);
+                    log.info("change {} from {} to {}", POWER, old, power);
                     firePropertyChange(POWER, old, power);
                 }
             }

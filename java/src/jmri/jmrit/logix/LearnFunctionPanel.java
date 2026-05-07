@@ -7,7 +7,7 @@ import jmri.Throttle;
  *
  * @author Pete Cressman Copyright 2020
  */
-public class LearnFunctionPanel extends jmri.jmrit.throttle.FunctionPanel {
+public class LearnFunctionPanel extends jmri.jmrit.throttle.panels.FunctionPanel {
 
     private final LearnThrottleFrame _throttleFrame;
 
