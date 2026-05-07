@@ -36,10 +36,11 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>DCC++ Ethernet connections now support optional automatic reconnection when
-                    the connection is lost. Enable "Reconnect automatically if connection is lost"
-                    in Additional Connection Settings to have JMRI retry the connection
-                    indefinitely until the command station comes back online.</li>
+                <li>DCC++ Ethernet connections now automatically attempt to reconnect when
+                    the connection is lost, retrying indefinitely until the command station comes
+                    back online. This behavior can be disabled by unchecking
+                    "Reconnect automatically if connection is lost" in Additional Connection
+                    Settings.</li>
             </ul>
 
         <h4>DCC4pc</h4>

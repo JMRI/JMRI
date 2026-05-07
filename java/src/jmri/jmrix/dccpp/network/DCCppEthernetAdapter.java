@@ -37,6 +37,17 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         setHostName(DEFAULT_IP_ADDRESS);
         setPort(COMMUNICATION_TCP_PORT);
         this.manufacturerName = jmri.jmrix.dccpp.DCCppConnectionTypeList.DCCPP;
+        // Recover automatically from a dropped connection by default; retry indefinitely.
+        allowConnectionRecovery = true;
+        reconnectMaxAttempts = -1;
+    }
+
+    @Override
+    public void recover() {
+        if (allowConnectionRecovery && opened) {
+            log.info("Connection to {}:{} lost. Attempting to recover...", getHostName(), getPort());
+        }
+        super.recover();
     }
     
     @Override
