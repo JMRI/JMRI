@@ -1038,7 +1038,7 @@ public class HardcopyWriter extends Writer implements Printable {
             record(new DrawString(s, (int) (x0 + (this.width - bounds.getWidth()) / 2), headery));
 
             bounds = headerfont.getStringBounds(time, frc);
-            record(new DrawString(time, (int) (x0 + width - bounds.getWidth()), headery));
+            record(new DrawString(time, (int) (x0 + width - bounds.getWidth() - 1), headery));
 
             // draw a line under the header
             int y = headery + headermetrics.getDescent() + 1;
