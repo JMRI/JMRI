@@ -12,6 +12,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.Action;
 import javax.swing.JFileChooser;
@@ -31,6 +32,7 @@ import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.swing.DialogErrorHandler;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.roster.RosterLocationUnavailableException;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.spi.PreferencesManager;
@@ -240,6 +242,7 @@ public class JmriConfigurationManager implements ConfigureManager {
         if (!GraphicsEnvironment.isHeadless()) {
 
             AtomicBoolean isUnableToConnect = new AtomicBoolean(false);
+            AtomicReference<RosterLocationUnavailableException> rosterUnavailable = new AtomicReference<>();
 
             List<String> errors = new ArrayList<>();
             this.initialized.forEach((provider) -> {
@@ -252,9 +255,19 @@ public class JmriConfigurationManager implements ConfigureManager {
                         errors.add(exception.getLocalizedMessage());
                     });
                 } else if (this.initializationExceptions.get(provider) != null) {
-                    errors.add(this.initializationExceptions.get(provider).getLocalizedMessage());
+                    InitializationException stored = this.initializationExceptions.get(provider);
+                    if (stored instanceof RosterLocationUnavailableException) {
+                        rosterUnavailable.compareAndSet(null, (RosterLocationUnavailableException) stored);
+                    }
+                    errors.add(stored.getLocalizedMessage());
                 }
             });
+
+            RosterLocationUnavailableException rosterUnavailException = rosterUnavailable.get();
+            if (rosterUnavailException != null && handleRosterLocationUnavailable(rosterUnavailException)) {
+                return; // user chose Quit; ShutDownManager will end the JVM
+            }
+
             Object list = getErrorListObject(errors);
 
             if (isUnableToConnect.get()) {
@@ -263,6 +276,40 @@ public class JmriConfigurationManager implements ConfigureManager {
                 displayErrorListDialog(list);
             }
         }
+    }
+
+    /**
+     * Show a Continue/Quit dialog when the configured roster location is
+     * unavailable at startup. Returns true if the user chose Quit (in which
+     * case {@link #handleQuit()} has been invoked); returns false if the user
+     * chose Continue or dismissed the dialog.
+     *
+     * @param ex the exception describing the unavailable roster location
+     * @return true if the user chose to quit
+     */
+    private boolean handleRosterLocationUnavailable(RosterLocationUnavailableException ex) {
+        Object[] options = {
+            Bundle.getMessage("ErrorDialogButtonContinue"),
+            Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName())
+        };
+        Object[] message = {
+            Bundle.getMessage("RosterLocationUnavailableText", ex.getUnavailablePath()),
+            Bundle.getMessage("RosterLocationUnavailablePrompt")
+        };
+        int choice = JmriJOptionPane.showOptionDialog(
+                null,
+                message,
+                Bundle.getMessage("RosterLocationUnavailableTitle"),
+                JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.WARNING_MESSAGE,
+                null,
+                options,
+                options[0]);
+        if (choice == 1) {
+            handleQuit();
+            return true;
+        }
+        return false;
     }
 
     private Object getErrorListObject(List<String> errors) {

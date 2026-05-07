@@ -587,7 +587,12 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>If the configured roster location is on a network share or removable
+                device that is not available when JMRI starts, a dialog now gives you
+                the choice to <strong>Continue</strong> (start with an empty roster)
+                or <strong>Quit JMRI</strong> to reconnect the device before
+                restarting. Previously JMRI would silently start with an empty roster,
+                risking the real roster being overwritten on shutdown.</li>
         </ul>
 
     <h3>Routes</h3>
