@@ -2157,7 +2157,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>
         <img src="images/ManifestPrintOptionsTab.png" alt="">
       </p>
-      
+
+      <p>You can also adjust the length of the tab when printing Manifests or switch lists. The
+        tab default is four spaces. When printing the program adds one space between each field, so
+        a new line in a Manifest or switch lists indents five spaces.</p>
+
       <h3 id="EditManifestHeaderText">Edit Manifest Header Text</h3>
 
       The tools "Edit Manifest Header Text", "Edit Manifest Text" and "Edit Switch List Text" allow

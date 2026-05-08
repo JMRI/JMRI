@@ -35,7 +35,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  */
 public class TrainCommon {
 
-    protected static final String TAB = "    "; // NOI18N
+    protected String tab = tabString("", Setup.getManifestTabLength()); // NOI18N
     protected static final String NEW_LINE = "\n"; // NOI18N
     public static final String SPACE = " ";
     public static final String BLANK_LINE = " ";
@@ -126,7 +126,7 @@ public class TrainCommon {
             String s = getEngineAttribute(engine, attribute, PICKUP);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
                 addLine(file, buf, Setup.getPickupEngineColor());
-                buf = new StringBuffer(TAB); // new line
+                buf = new StringBuffer(tab); // new line
             }
             buf.append(s);
         }
@@ -163,7 +163,7 @@ public class TrainCommon {
             String s = getEngineAttribute(engine, attribute, !PICKUP);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
                 addLine(file, buf, Setup.getDropEngineColor());
-                buf = new StringBuffer(TAB); // new line
+                buf = new StringBuffer(tab); // new line
             }
             buf.append(s);
         }
@@ -856,7 +856,7 @@ public class TrainCommon {
             String s = getCarAttribute(car, attribute, PICKUP, !LOCAL);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
                 addLine(file, buf, Setup.getPickupColor());
-                buf = new StringBuffer(TAB); // new line
+                buf = new StringBuffer(tab); // new line
             }
             buf.append(s);
         }
@@ -948,7 +948,7 @@ public class TrainCommon {
             String s = getCarAttribute(car, attribute, !PICKUP, isLocal);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
                 addLine(file, buf, isLocal ? Setup.getLocalColor() : Setup.getDropColor());
-                buf = new StringBuffer(TAB); // new line
+                buf = new StringBuffer(tab); // new line
             }
             buf.append(s);
         }

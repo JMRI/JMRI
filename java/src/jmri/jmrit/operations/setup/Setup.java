@@ -270,6 +270,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private int tab1CharLength = Control.max_len_string_attibute;
     private int tab2CharLength = 6; // arbitrary lengths
     private int tab3CharLength = 8;
+    private int manifestTabLength = 4; // plus one space
 
     private String manifestFormat = STANDARD_FORMAT;
     private boolean manifestEditorEnabled = false; // when true use text editor to view build report
@@ -1243,6 +1244,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static void setTab3length(int length) {
         getDefault().tab3CharLength = length;
     }
+    
+    public static int getManifestTabLength() {
+        return getDefault().manifestTabLength;
+    }
+
+    public static void setManifestTablength(int length) {
+        getDefault().manifestTabLength = length;
+    }
 
     public static String getManifestFormat() {
         return getDefault().manifestFormat;
@@ -2113,6 +2122,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.LENGTH, Integer.toString(getTab1Length()));
         values.setAttribute(Xml.TAB2_LENGTH, Integer.toString(getTab2Length()));
         values.setAttribute(Xml.TAB3_LENGTH, Integer.toString(getTab3Length()));
+        values.setAttribute(Xml.MANIFEST_TAB_LENGTH, Integer.toString(getManifestTabLength()));
 
         e.addContent(values = new Element(Xml.MANIFEST));
         values.setAttribute(Xml.PRINT_LOC_COMMENTS, isPrintLocationCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2727,6 +2737,15 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                     setTab3length(Integer.parseInt(length));
                 } catch (NumberFormatException ee) {
                     log.error("Tab 3 length ({}) isn't a valid number", a.getValue());
+                }
+            }
+            if ((a = operations.getChild(Xml.TAB).getAttribute(Xml.MANIFEST_TAB_LENGTH)) != null) {
+                String length = a.getValue();
+                log.debug("Manifest tab length: {}", length);
+                try {
+                    setManifestTablength(Integer.parseInt(length));
+                } catch (NumberFormatException ee) {
+                    log.error("Manifest tab length ({}) isn't a valid number", a.getValue());
                 }
             }
         }

@@ -566,6 +566,7 @@
             <li>Fixed a bug with the "Edit Car Loads" from the "Show Schedules by Car Type and Load" tools menu.</li>
             <li>Added 2.25" by 11" paper size.</li>
             <li>Made some improvements with line wrapping when printing Manifests and switch lists.</li>
+            <li>Added the ability to set the additional line tab size for Manifest and Switch Lists. Useful when using the smaller page widths. See "More Print Options" in the help.</li>
         </ul>
 
    <h3>Panel Editor</h3>

@@ -159,6 +159,7 @@ public class Xml {
     protected static final String TAB = "tab"; // NOI18N
     protected static final String TAB2_LENGTH = "tab2Length"; // NOI18N
     protected static final String TAB3_LENGTH = "tab3Length"; // NOI18N
+    protected static final String MANIFEST_TAB_LENGTH = "manifestTabLength"; // NOI18N
     protected static final String ENABLED = "enabled"; // NOI18N
 
     protected static final String COLUMN_FORMAT = "columnFormat"; // NOI18N
