@@ -439,6 +439,10 @@
         <li>Paul Fraker, who wrote the documentation for the Throttles and provided MRC decoder
         definitions</li>
 
+        <li>Chad Francis, <!-- yamanote1138 -->
+        who improved DCC++ connection reliability, improved WebSocket power control,
+        and improved the handling of missing roster mount points.
+        
         <li>Joe Fugate and the other people of <a href="https://model-railroad-hobbyist.com">Model
         Railroad Hobbyist</a> emagazine for putting the <a href=
         "https://model-railroad-hobbyist.com/mrht_decoderpro">JMRI clinics from the NMRA 2008
