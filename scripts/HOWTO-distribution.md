@@ -337,13 +337,13 @@ For each, if it doesn't have the right milestone set, add the current milestone 
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.15.5-SNAPSHOT/5.15.7-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.15.6-SNAPSHOT/5.15.7-SNAPSHOT/g pom.xml
         head -10 pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=5/release.build=6/g release.properties
+        sed -i.bak s/release.build=6/release.build=7/g release.properties
         head -10 release.properties
 ```
  - Check that both those edits left 5.15.7 defined in the two files
@@ -415,6 +415,7 @@ If you're developing any additional (post-5.15.7) changes that you want in the J
 - Fetch back to make sure your repository is fully up to date but stay on the release-5.15.7 branch
 
 ================================================================================
+
 ## Build Files with Jenkins
 
 (If you can't build with Jenkins, see the "Local Build Alternative" section near the bottom)
@@ -564,7 +565,7 @@ Run a script to download the created files, create checksums and create text for
 ```
 ./scripts/releasesummary 5.15.7
 ```
-(This attempts a very large download.  If it fails, [download the files](https://builds.jmri.org/jenkins/job/testreleases/job/5.15.7/) individually     
+(This attempts a large ~628MB download.  If it fails, [download the files](https://builds.jmri.org/jenkins/job/testreleases/job/5.15.7/) individually     
 
     https://builds.jmri.org/jenkins/job/testreleases/job/5.15.7/
 
@@ -597,15 +598,16 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```
+
 [Release notes](https://jmri.org/releasenotes/jmri5.15.7.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.15.7+Redb35646a6.dmg](https://github.com/JMRI/JMRI/releases/download/v5.15.7/JMRI.5.15.7+Redb35646a6.dmg) | e1b81d70095040d78e2994258ecb5d931e9f005c311aea2e625e7988be573d11
-[JMRI.5.15.7+Redb35646a6.exe](https://github.com/JMRI/JMRI/releases/download/v5.15.7/JMRI.5.15.7+Redb35646a6.exe) | dc9aa8f164f0aaacc5ace28047711fcb581abc011799d0ad0953659624ca11a7
-[JMRI.5.15.7+Redb35646a6.tgz](https://github.com/JMRI/JMRI/releases/download/v5.15.7/JMRI.5.15.7+Redb35646a6.tgz) | ecc065f31c35d910dd6e90b87ede99f7b609dd2c3bcce5ee32c3ea24e2dbd42b
+[JMRI.5.15.7+R380e60fa42.dmg](https://github.com/JMRI/JMRI/releases/download/v5.15.7/JMRI.5.15.7+R380e60fa42.dmg) | be51bc7fca92f8b1b7d03cd0288a2cb5a8dcd5509f06b59575c1b414ef1563fb
+[JMRI.5.15.7+R380e60fa42.exe](https://github.com/JMRI/JMRI/releases/download/v5.15.7/JMRI.5.15.7+R380e60fa42.exe) | 959c920e2dee1fca0fbd2d9c84ac1d583d798a9f401d242c467b879f60480b78
+[JMRI.5.15.7+R380e60fa42.tgz](https://github.com/JMRI/JMRI/releases/download/v5.15.7/JMRI.5.15.7+R380e60fa42.tgz) | 02ae1b38c9595ae84125407b131a13f9a18521070af95a8c27af206e834c9a48
 
 ```
 
@@ -701,7 +703,7 @@ This is the next release in the 5.16 cycle. It's intended to be created from the
 
 - Mail announcement to
 
-[jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20release%205.15.7%20of%20JMRI/DecoderPro%20is%20available%20for%20download%20#announcement&body=Test%20release%205.15.7%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20June%202026.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20releases%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20release,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.99.10%20or%20earlier,%20there%20is%20an%20update%20process%20that%20we%20strongly%20recommend.%20See%20the%20release%20note%20section%20on%20updates:%0A<https://www.jmri.org/releasenotes/jmri5.15.7.shtml#update>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%205.15.7%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri5.15.7.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri5.15.7.shtml>%0A)
+[jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20release%205.15.7%20of%20JMRI/DecoderPro%20is%20available%20for%20download%20#announcement&body=Test%20release%205.15.7%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20July%202026.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20releases%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20release,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.99.10%20or%20earlier,%20there%20is%20an%20update%20process%20that%20we%20strongly%20recommend.%20See%20the%20release%20note%20section%20on%20updates:%0A<https://www.jmri.org/releasenotes/jmri5.15.7.shtml#update>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%205.15.7%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri5.15.7.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri5.15.7.shtml>%0A)
 
 Subject:
 
