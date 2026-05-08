@@ -343,6 +343,18 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertTrue(r.isAutomationIDsReply());
         r = DCCppReply.parseDCCppReply("jA 456 R \"description\"");
         Assert.assertTrue(r.isAutomationIDReply());
+        r = DCCppReply.parseDCCppReply("jB 123 3");
+        Assert.assertTrue(r.isAutomationStateReply());
+        r = DCCppReply.parseDCCppReply("jB 123 \"description\"");
+        Assert.assertTrue(r.isAutomationCaptionReply());
+        r = DCCppReply.parseDCCppReply("jB -123 3");
+        Assert.assertTrue(r.isAutomationStateReply());
+        r = DCCppReply.parseDCCppReply("jB -123 \"description\"");
+        Assert.assertTrue(r.isAutomationCaptionReply());
+        r = DCCppReply.parseDCCppReply("jB 123 X");
+        Assert.assertFalse(r.isAutomationStateReply());
+        r = DCCppReply.parseDCCppReply("jB 123 1 \"description\"");
+        Assert.assertFalse(r.isAutomationCaptionReply());
 
         //max Num Slots
         r = DCCppReply.parseDCCppReply("# 50");
