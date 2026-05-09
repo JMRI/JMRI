@@ -1,20 +1,6 @@
-<!-- contains new warnings for the release under development -->
+
+    <!-- contains new warnings for the release under development -->
     <li>
-        <strong>Raspberry Pi GPIO pin numbering has changed.</strong>
-        The Pi4J library has been updated from version 1.2 to 2.8.0.
-        Pi4J 2.x uses BCM (Broadcom) GPIO numbers instead of the WiringPi numbers
-        used by Pi4J 1.x.
-        Any panel files or scripts that define Raspberry Pi sensors or turnouts
-        must have their GPIO address numbers updated to the equivalent BCM pin
-        numbers before they will work correctly with this release.
     </li>
     <li>
-        <strong>Raspberry Pi: the libgpiod2 library is required for GpioD GPIO support.</strong>
-        This release adds support for the Pi4J GpioD plugin, which uses the modern Linux
-        GPIO character-device interface preferred on kernel 5.10 and later.
-        To enable it, install the native library before starting JMRI:
-        <code>sudo apt install libgpiod2</code>
-        (Raspberry Pi OS / Raspbian) or the equivalent for your distribution.
-        If libgpiod2 is absent, Pi4J will fall back to the LinuxFS provider
-        for digital I/O; all sensors and turnouts will still function.
     </li>

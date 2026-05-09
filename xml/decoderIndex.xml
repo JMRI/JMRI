@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.15.5plus+jake+20260409T0807Z+R846a860169f on Thu Apr 09 04:07:53 EDT 2026-->
-  <decoderIndex version="707">
+  <!--Written by JMRI version 5.15.6plus+jake+20260508T1153Z+R3425e5bb3e9 on Fri May 08 07:53:53 EDT 2026-->
+  <decoderIndex version="709">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -17724,7 +17724,7 @@
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model show="no" model="PIKO46548-18 BR150-TT V1.8" numOuts="4" numFns="68" productID="PIKO46548-18" comment="Piko SmartDecoder XP5.1 Sound E Loco BR 150 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO 46548 BR150-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
+        <model show="no" model="PIKO46548-18 BR150-TT V1.8" numOuts="4" numFns="68" productID="PIKO46548-18" comment="Piko SmartDecoder XP5.1 Sound E Loco BR 150 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO46548 BR150-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -17736,7 +17736,7 @@
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model show="no" model="PIKO46550-18 BR83-TT V1.8" numOuts="4" numFns="68" productID="PIKO46550-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO 46550 BR83-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
+        <model show="no" model="PIKO46550-18 BR83-TT V1.8" numOuts="4" numFns="68" productID="PIKO46550-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO46550 BR83-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -17748,7 +17748,7 @@
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model show="no" model="PIKO46551-18 BR93-TT V1.8" numOuts="4" numFns="68" productID="PIKO46551-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO 46551 BR93-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
+        <model show="no" model="PIKO46551-18 BR93-TT V1.8" numOuts="4" numFns="68" productID="PIKO46551-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)" replacementModel="PIKO46551 BR93-TT V1.8" replacementFamily="PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />

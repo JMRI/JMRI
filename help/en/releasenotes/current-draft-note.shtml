@@ -31,19 +31,12 @@
 
         <h4>C/MRI</h4>
             <ul>
-                <li>The node configuration is now preserved if the
-                    connection type is changed. For example, if you
-                    change the connection from serial to simulator,
-                    the node configuration is kept.</li>
+                <li></li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>DCC++ Ethernet connections now automatically attempt to reconnect when
-                    the connection is lost, retrying indefinitely until the command station comes
-                    back online. This behavior can be disabled by unchecking
-                    "Reconnect automatically if connection is lost" in Additional Connection
-                    Settings.</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -133,13 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>(Internal) The load and store process for the Event Table
-                    now permits multiple "names" elements. This makes it easier
-                    to merge Event Table information from several profiles.</li>
-                <li>Improved how mouse clicks are handled with showing/hiding 
-                    sections of the configuration screens.</li>
-                <li>Resolved an issue where reading a memory space from a CS-105
-                    would timeout and fail.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -147,43 +134,12 @@
                 <li></li>
             </ul>
 
-        <h4>Raspberry Pi</h4>
+        <h4>RFID</h4>
             <ul>
-                <li>The Pi4J library used for Raspberry Pi GPIO support has been updated
-                    from version 1.2 to version 2.8.0 (the current 2.x release).
-                    Pi4J 2.x uses a new API and a plugin-based architecture replacing
-                    the older <code>GpioFactory</code> / <code>GpioController</code> model.
-                </li>
-                <li><strong>Pin numbering has changed.</strong>
-                    Pi4J 1.x addressed GPIO pins using WiringPi numbers.
-                    Pi4J 2.x uses BCM (Broadcom) numbers directly.
-                    Existing panel files and scripts that reference Raspberry Pi sensors
-                    or turnouts will need their GPIO address numbers updated to use
-                    the corresponding BCM pin numbers.
-                    For example, WiringPi GPIO 0 (BCM 17) becomes address 17 in the
-                    new numbering scheme.
-                </li>
-                <li>Support has been added for the Pi4J GpioD plugin
-                    (<code>pi4j-plugin-gpiod</code>), which uses the modern Linux GPIO
-                    character-device interface (<code>/dev/gpiochip*</code>) introduced
-                    in kernel 5.10.
-                    This is the preferred GPIO interface on Raspberry Pi OS with kernel
-                    5.10 or later (including the 6.x kernels shipped with current
-                    Raspberry Pi OS releases).
-                    It requires the <code>libgpiod2</code> package:
-                    <code>sudo apt install libgpiod2</code>
-                    The plugin is discovered and activated automatically alongside the
-                    existing LinuxFS and PiGpio plugins via Java ServiceLoader; no
-                    configuration change is required.
-                </li>
-                <li>Hardware GPIO plugins (<code>pi4j-plugin-raspberrypi</code>,
-                    <code>pi4j-plugin-linuxfs</code>, <code>pi4j-plugin-gpiod</code>)
-                    are now loaded at runtime via Java ServiceLoader on Raspberry Pi
-                    hardware and are no longer bundled as compile-time dependencies.
-                </li>
+                <li></li>
             </ul>
 
-        <h4>RFID</h4>
+        <h4>Raspberry PI</h4>
             <ul>
                 <li></li>
             </ul>
@@ -198,15 +154,7 @@
                 <li></li>
             </ul>
 
-                <li>Fixed spurious command station slot thread timeouts that could
-                    shut down track power when the GUI was busy. Reply notifications
-                    from the traffic controller to the command station are now
-                    delivered synchronously instead of being queued on the Swing EDT,
-                    so the slot thread is woken immediately when the hardware replies.</li>
-                <li>Added a consecutive-timeout retry counter to the command station
-                    slot thread. A single missed reply now triggers a retry with an
-                    idle packet instead of immediately removing track power.
-                    Track power is only removed after three consecutive timeouts.</li>
+        <h4>SPROG</h4>
             <ul>
                 <li></li>
             </ul>
@@ -492,8 +440,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Save dispatcher usestrict option correctly.</li>
-			 <li>Continue tracking blocks thru stopping at end.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -511,21 +458,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Added a new "Make Layout Editor XML output more reproducible" option
-                to the Load and Store preference pane.  The default is off.  When
-                on, this option will result in positions of Layout Editor objects
-                being stored in a form that's more reproducible.  This will result
-                in fewer spurious changes if you're e.g. storing panel files in a
-                tracking system like Git.</li>
-            <li>Fixed a problem when storing and loading the new Output Indicator icons</li>
-            <li>When changing icon images for turnouts, sensors and signal heads, the
-                resource files are now listed in alpha order by name.</li>
-            <li>The LayoutTurnout and LayoutTraverser require manual changes when the
-                <strong>Use Dispatcher with Signal Masts</strong> feature is enabled.  To
-                prevent JMRI errors and Java exceptions, these changes have to be removed
-                before deletion or some modifications.  When needed, a dialog is displayed
-                with a list of the items to be removed.</li>
-
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -536,8 +469,7 @@
     <h3>LccPro</h3>
         <a id="LccPro" name="LccPro"></a>
         <ul>
-            <li>Improved performance of Active display in lower right
-                on high-bandwidth links.</li>
+          <li></li>
         </ul>
 
     <h3>Logix</h3>
@@ -549,7 +481,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Fix the Dispatcher Expression.  Active train status changes were being missed.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -561,12 +493,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Fixed a bug where the RWL or RWE ship address wasn't used when spotted at a spur with a schedule that didn't have a ship address.</li>
-            <li>Added the "Random" column to the tool "Show Schedules by Car Type and Load".</li>
-            <li>Fixed a bug with the "Edit Car Loads" from the "Show Schedules by Car Type and Load" tools menu.</li>
-            <li>Added 2.25" by 11" paper size.</li>
-            <li>Made some improvements with line wrapping when printing Manifests and switch lists.</li>
-            <li>Added the ability to set the additional line tab size for Manifest and Switch Lists. Useful when using the smaller page widths. See "More Print Options" in the help.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -596,12 +523,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>If the configured roster location is on a network share or removable
-                device that is not available when JMRI starts, a dialog now gives you
-                the choice to <strong>Continue</strong> (start with an empty roster)
-                or <strong>Quit JMRI</strong> to reconnect the device before
-                restarting. Previously JMRI would silently start with an empty roster,
-                risking the real roster being overwritten on shutdown.</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -613,15 +535,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>There's a new "WiThrottleMonitorTableSpeedRed.py" script that opens a window displaying
-                connected WiThrottle devices and locomotives (address, speed)
-                </li>
-            <li>Due to the refactoring the JMRI Swing Throttle code, some scripts may be broken, particularly : <ul>
-                <li>ThrottleFrame was moved to package jmri.jmrit.throttle.implementation (was jmri.jmrit.throttle previously)</li>
-                <li>jmri.jmrit.throttle.ThrottleFrameManager.createThrottleFrame() now returns a jmri.jmrit.throttle.interfaces.ThrottleControllerUI 
-                    which is an interface implemented by (among other) jmri.jmrit.throttle.implementation.ThrottleFrame (same class name as previously but moved to a new package) </li>
-                <li>if you need a small throttle, see ThrottleFrameManager.createSimpleThrottleFrame(RosterEntry) or ThrottleFrameManager.createSimpleThrottleFrame(DccLocoAddress)</li>
-            </ul></li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -673,12 +587,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Throttle code was refactored in order to have a clean seperation between JInternalFrame implementation of JMRI throttles and inner JPanel, some interfaces were introduced, inner classes moved to subpackages</li>
-            <li>Jython code was updated accordingly</li>
-            <li>A new SimpleThrottleWindow was introduced, it's leveraging the existing throttle panels in order to diplay a much simpler window, it's accessible through the contextual menu of a selected roster entry (It may be relevant to use in other JMRI screens where a simple throttle GUI is required)</li>
-            <li>The throttle list window allows drag'n drop from one kind of throttle window to another (hence moving from simple GUI to more complex one)</li>
-            <li>UI acquired throttles are actually released on throttle last window close <a href="https://github.com/JMRI/JMRI/issues/15067">(bug fix)</a> </li>
-            <li>New throttle inner components are introduced, particularly a consist function panel allowing to independantly control functions of each locomotive in a consist</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -714,11 +623,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>The JSON WebSocket power and throttle endpoints now support an optional
-                <code>prefix</code> field, allowing clients to specify which connection
-                the command should be sent to. WebSocket clients now also receive
-                state-change notifications only for the connection they subscribed to,
-                rather than all configured connections.</li>
+            <li></li>
         </ul>
 
     <h3>Where Used</h3>
@@ -748,6 +653,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Added new button icons at <a href="https://jmri.org/resources/icons/buttons">resources/icons/buttons</a>.</li>
+            <li></li>
         </ul>
 
