@@ -653,6 +653,10 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>It's now possible to listen on connections for when
+                they connects/disconnects. It's currently implemented
+                for DCC-EX network connections, but is intended to be
+                supported by other connections as well.</li>
             <li></li>
         </ul>
 

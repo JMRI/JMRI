@@ -13,11 +13,11 @@ import jmri.SystemConnectionMemo;
  * connection types (network, serial, etc).
  * <p>
  * For historical reasons, this provides both four specific options (option1 to option4)
- * plus a more flexible interface based on a String array.  The more flexible 
- * interface is the preferred one for new work, but the 1-4 form hasn't been 
+ * plus a more flexible interface based on a String array.  The more flexible
+ * interface is the preferred one for new work, but the 1-4 form hasn't been
  * deprecated yet.
  * <p>
- * General design documentation is available on the 
+ * General design documentation is available on the
  * <a href="http://jmri.org/help/en/html/doc/Technical/SystemStructure.shtml">Structure of External System Connections page</a>.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008, 2010
@@ -144,14 +144,14 @@ public interface PortAdapter {
      * @return true for text representation preferred
      */
     boolean isOptionTypeText(String option);
-    
+
     /**
      * Should this option be represented by a password field
      * @param option Name of the option to check
      * @return true for text representation preferred
      */
     boolean isOptionTypePassword(String option);
-    
+
     /**
      * Get the system manufacturer's name.
      *
@@ -251,26 +251,26 @@ public interface PortAdapter {
      * @return true if application needs to restart, false otherwise
      */
     boolean isRestartRequired();
-    
+
     /**
      * Set the maximum interval between reconnection attempts.
      * @param maxInterval in seconds.
      */
     void setReconnectMaxInterval(int maxInterval);
-    
+
     /**
      * Set the maximum number of reconnection attempts.
      * -1 will set an infinite number of attempts.
      * @param maxAttempts total maximum reconnection attempts.
      */
     void setReconnectMaxAttempts(int maxAttempts);
-    
+
     /**
      * Get the maximum interval between reconnection attempts.
      * @return maximum interval in seconds.
      */
     int getReconnectMaxInterval();
-    
+
     /**
      * Get the maximum number of reconnection attempts which should be made.
      * A value of -1 means no maximum value, i.e. infinite attempts.
@@ -289,5 +289,19 @@ public interface PortAdapter {
      * @param allow true to enable recovery.
      */
     void setAllowConnectionRecovery(boolean allow);
+
+    /**
+     * Add a connection listener.
+     *
+     * @param l the listener
+     */
+    void addConnectionListener(ConnectionListener l);
+
+    /**
+     * Remove a connection listener.
+     *
+     * @param l the listener
+     */
+    void removeConnectionListener(ConnectionListener l);
 
 }

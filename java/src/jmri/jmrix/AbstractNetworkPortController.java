@@ -38,6 +38,27 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         connect();
     }
 
+    private long lastAttemptingOpeningConnectionTime = 0;
+    private long lastErrorOpeningConnectionTime = 0;
+
+    private void logAttemptingOpeningConnectionMessage(String hostName, int port) {
+        // Show a message no more often than 30 seconds.
+        // This is relevant when trying to reconnect.
+        if ((System.currentTimeMillis() - lastAttemptingOpeningConnectionTime) > 30*1000) {
+            log.info("Attempting to open connection to {}:{}", hostName, port);
+            lastAttemptingOpeningConnectionTime = System.currentTimeMillis();
+        }
+    }
+
+    private void logErrorOpeningConnectionMessage(String hostName, String exceptionMessage) {
+        // Show a message no more often than 30 seconds.
+        // This is relevant when trying to reconnect.
+        if ((System.currentTimeMillis() - lastErrorOpeningConnectionTime) > 30*1000) {
+            log.error("Error opening network connection to {} because {}", hostName, exceptionMessage);
+            lastErrorOpeningConnectionTime = System.currentTimeMillis();
+        }
+    }
+
     @Override
     public void connect() throws IOException {
         log.debug("connect() starts to {}:{}", getHostName(), getPort());
@@ -48,13 +69,16 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         }
         try {
             var address = getHostAddress();
-            log.info("Attempting to open connection to {}:{}", address, m_port);
+            // Show connection message, but not too often
+            logAttemptingOpeningConnectionMessage(address, m_port);
             socketConn = new Socket(address, m_port);
             socketConn.setKeepAlive(true);
             socketConn.setSoTimeout(getConnectionTimeout());
             opened = true;
+            notifyOpenedConnection();
         } catch (IOException e) {
-            log.error("Error opening network connection to {} because {}", getHostName(), e.getMessage()); // nothing to help user in full exception
+            // Show exception message, but not too often
+            logErrorOpeningConnectionMessage(getHostName(), e.getMessage()); // nothing to help user in full exception
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
                         getUserName(), m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
@@ -284,7 +308,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         }
         return null;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -296,6 +320,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             log.trace("Unable to close socket", e);
         }
         opened=false;
+        notifyClosedConnection();
     }
 
     /**
@@ -305,7 +330,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     @Override
     protected void resetupConnection() {
     }
-    
+
     /**
      * {@inheritDoc}
      */
