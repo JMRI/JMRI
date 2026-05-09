@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import jmri.jmrix.PortAdapter;
 import jmri.jmrix.dccpp.*;
 import jmri.util.JmriJFrame;
 
@@ -23,23 +24,36 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
 
     static final int TOTALLINES = 64;
     private ArrayList<JLabel> lines;
-    
+
     public VirtualLCDFrame(DCCppSystemConnectionMemo memo) {
         super();
         _tc = memo.getDCCppTrafficController();
         _memo = memo;
-        _tc.sendDCCppMessage(DCCppMessage.makeLCDRequestMsg(), null);        
+        _tc.sendDCCppMessage(DCCppMessage.makeLCDRequestMsg(), null);
         lines = new ArrayList<>(TOTALLINES + 1);
+
+        _tc.controller.addConnectionListener(new PortAdapter.ConnectionListener(){
+            @Override
+            public void connected(PortAdapter adapter) {
+                log.debug("VirtualLCDFrame.Connected: {}", adapter.getSystemPrefix());
+                _tc.sendDCCppMessage(DCCppMessage.makeLCDRequestMsg(), null);
+            }
+            @Override
+            public void disconnected(PortAdapter adapter) {
+                log.debug("VirtualLCDFrame.Disconnected: {}", adapter.getSystemPrefix());
+            }
+        });
+
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
     public void message(DCCppMessage msg) {
     }
-    
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -50,23 +64,23 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
                 int lineNumber = msg.getLCDLineNumInt();
                 if (lineNumber < TOTALLINES) {
                     lines.get(lineNumber).setText(msg.getLCDTextString()+"   "); // padding for appearance
-                    pack(); 
+                    pack();
                 } else {
-                    log.warn("Received LCD message for line {}, but configured for TOTALLINES limit of {}", 
+                    log.warn("Received LCD message for line {}, but configured for TOTALLINES limit of {}",
                                 lineNumber, TOTALLINES-1);
                 }
                 log.debug("Received LCD message for display# {}, only display 0 supported at this time.", displayNumber);
-            } 
+            }
         }
     }
-    
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void notifyTimeout(DCCppMessage msg) {
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -74,16 +88,16 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
     public void initComponents() {
         super.initComponents();
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        
+
         Font font = null;
         // load the custom 5x8 found
-        try { 
+        try {
             InputStream stream = new FileInputStream(new File("resources/fonts/5x8_lcd_hd44780u_a02.ttf"));
             font = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(16f).deriveFont(Font.BOLD);
         } catch (IOException e1) { log.error("failed to find or open font file");
         } catch (FontFormatException e2) { log.error("font file not valid");
         }
-        
+
         var pane = new JPanel();
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         // initialize the list of display lines
@@ -99,14 +113,14 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
         pane.setOpaque(true);
         pane.setBackground(Color.BLACK);
         this.add(pane);
-        
-        // set the title, include prefix in event of multiple connections 
+
+        // set the title, include prefix in event of multiple connections
         setTitle(Bundle.getMessage("VirtualLCDFrameTitle") + " (" + _memo.getSystemPrefix() + ")");
-        
+
         // pack to layout display
         pack();
     }
-   
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VirtualLCDFrame.class);
 
 }

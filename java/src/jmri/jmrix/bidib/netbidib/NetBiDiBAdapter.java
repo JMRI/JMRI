@@ -7,7 +7,9 @@ import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Set;
+
 import jmri.util.FileUtil;
+
 import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +19,11 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+
 import javax.jmdns.ServiceInfo;
 
 //import jmri.InstanceManager;
+
 import jmri.jmrix.bidib.BiDiBNetworkPortController;
 import jmri.jmrix.bidib.BiDiBPortController;
 import jmri.jmrix.bidib.BiDiBSystemConnectionMemo;
@@ -30,7 +34,6 @@ import jmri.util.zeroconf.ZeroConfClient;
 import org.bidib.jbidibc.core.MessageListener;
 import org.bidib.jbidibc.core.NodeListener;
 import org.bidib.jbidibc.core.node.listener.TransferListener;
-import org.bidib.jbidibc.messages.ConnectionListener;
 import org.bidib.jbidibc.netbidib.client.NetBidibClient;
 import org.bidib.jbidibc.netbidib.client.BidibNetAddress;
 import org.bidib.jbidibc.netbidib.pairingstore.LocalPairingStore;
@@ -64,30 +67,30 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
     public static final String NET_BIDIB_DEFAULT_PAIRING_STORE_FILE = "preference:netBiDiBPairingStore.bidib";
     static final String OPTION_DEVICE_LIST = "AvailableDeviceList";
     static final String OPTION_UNIQUE_ID = "UniqueID";
-    
+
     // The PID (product id as part of the Unique ID) was registered for JMRI with bidib.org (thanks to Andreas Kuhtz and Wolfgang Kufer)
     static final int BIDIB_JMRI_PID = 0x00FE; //don't touch without synchronizing with bidib.org
-    
+
     private final Map<Long, NetBiDiDDevice> deviceList = new LinkedHashMap<>();
     private boolean mDNSConfigure = false;
     private final javax.swing.Timer delayedCloseTimer;
     private PairingStore pairingStore = null;
     private NetBiDiBPairingRequestDialog pairingDialog = null;
     private ActionListener pairingListener = null;
-    
+
     private Long uniqueId = null; //also used as mDNS advertisement name
     long timeout;
     private ZeroConfClient mdnsClient = null;
 
     private final BiDiBPortController portController = this; //this instance is used from a listener class
-    
+
     protected static class NetBiDiDDevice {
         private PairingStoreEntry pairingStoreEntry = new PairingStoreEntry();
         private BidibNetAddress bidibAddress = null;
 
         public NetBiDiDDevice() {
         }
-        
+
         public PairingStoreEntry getPairingStoreEntry() {
             return pairingStoreEntry;
         }
@@ -95,7 +98,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
             this.pairingStoreEntry = pairingStoreEntry;
             //uniqueID = ByteUtils.parseHexUniqueId(pairingStoreEntry.getUid());
         }
-        
+
         public Long getUniqueId() {
             //return ByteUtils.parseHexUniqueId(pairingStoreEntry.getUid());
             //return uniqueID & 0xFFFFFFFFFFL;
@@ -104,7 +107,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         public void setUniqueId(Long uid) {
             pairingStoreEntry.setUid(ByteUtils.formatHexUniqueId(uid));
         }
-        
+
         public void setAddressAndPort(String addr, String port) {
             InetAddress address = null;
             try {
@@ -140,11 +143,11 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         public void setPort(int port) {
             bidibAddress = new BidibNetAddress(getAddress(), port);
         }
-        
+
         public String getProductName() {
             return pairingStoreEntry.getProductName();
         }
-        
+
         public void setProductName(String productName) {
             pairingStoreEntry.setProductName(productName);
         }
@@ -152,7 +155,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         public String getUserName() {
             return pairingStoreEntry.getUserName();
         }
-        
+
         public void setUserName(String userName) {
             pairingStoreEntry.setUserName(userName);
         }
@@ -160,7 +163,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         public boolean isPaired() {
             return pairingStoreEntry.isPaired();
         }
-        
+
         public void setPaired(boolean paired) {
             pairingStoreEntry.setPaired(paired);
         }
@@ -195,11 +198,11 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
             log.warn("pairing store file is invalid: {}", ex.getMessage());
         }
         //deviceListAddFromPairingStore();
-        
+
         options.put("ConnectionKeepAlive", new Option(Bundle.getMessage("KeepAlive"),
                 new String[]{Bundle.getMessage("KeepAliveLocalPing"),Bundle.getMessage("KeepAliveNone")} )); // NOI18N
     }
-    
+
     public void deviceListAddFromPairingStore() {
         pairingStore.load();
         List<PairingStoreEntry> entries = pairingStore.getPairingStoreEntries();
@@ -217,7 +220,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
             }
         }
     }
-    
+
     @Override
     public void connect(String host, int port) throws IOException {
         setHostName(host);
@@ -228,24 +231,24 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
     /**
      * This methods is called from network connection config. It creates the BiDiB object from jbidibc and opens it.
      * The connectPort method of the traffic controller is called for generic initialisation.
-     * 
+     *
      */
     @Override
     public void connect() {// throws IOException {
         log.debug("connect() starts to {}:{}", getHostName(), getPort());
-        
+
         opened = false;
-        
+
         prepareOpenContext();
-        
+
         // create the BiDiB instance
         bidib = NetBidibClient.createInstance(getContext());
         // create the correspondent traffic controller
         BiDiBTrafficController tc = new BiDiBTrafficController(bidib);
         this.getSystemConnectionMemo().setBiDiBTrafficController(tc);
-        
+
         log.debug("memo: {}, netBiDiB: {}", this.getSystemConnectionMemo(), bidib);
-        
+
         // connect to the device
         context = tc.connnectPort(this); //must be done before configuring managers since they may need features from the device
 
@@ -258,7 +261,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
             log.warn("No device found on port {} ({}})",
                     getCurrentPortName(), getCurrentPortName());
         }
-        
+
 // DEBUG!
 //        final NetBidibLinkData clientLinkData = ctx.get(Context.NET_BIDIB_CLIENT_LINK_DATA, NetBidibLinkData.class, null);
 //        try {
@@ -275,7 +278,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
 // /DEBUG!
 
     }
-    
+
     private void prepareOpenContext() {
         if (getContext() == null) {
             context = new DefaultContext();
@@ -322,15 +325,15 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
 
                 log.info("Register the created client link data in the create context: {}", localClientLinkData);
                 ctx.register(Context.NET_BIDIB_CLIENT_LINK_DATA, localClientLinkData);
-            
+
         }
-        
+
         ctx.register(BiDiBTrafficController.ASYNCCONNECTIONINIT, true); //netBiDiB uses asynchroneous initialization
         ctx.register(BiDiBTrafficController.ISNETBIDIB, true);
         ctx.register(BiDiBTrafficController.USELOCALPING, getOptionState("ConnectionKeepAlive").equals(Bundle.getMessage("KeepAliveLocalPing")));
 
         log.debug("Context: {}", ctx);
-        
+
     }
 
     /**
@@ -357,30 +360,33 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
      * {@inheritDoc}
      */
     @Override
-    public void registerAllListeners(ConnectionListener connectionListener, Set<NodeListener> nodeListeners,
-                Set<MessageListener> messageListeners, Set<TransferListener> transferListeners) {
-        
+    public void registerAllListeners(
+            org.bidib.jbidibc.messages.ConnectionListener connectionListener,
+            Set<NodeListener> nodeListeners,
+            Set<MessageListener> messageListeners,
+            Set<TransferListener> transferListeners) {
+
         NetBidibClient b = (NetBidibClient)bidib;
         b.setConnectionListener(connectionListener);
         b.registerListeners(nodeListeners, messageListeners, transferListeners);
     }
-    
+
     /**
      * Get a unique id for ourself. The product id part is fixed and registered with bidib.org.
      * The serial number is a hash from the MAC address.
-     * 
+     *
      * This is a variation of org.bidib.wizard.core.model.settings.NetBidibSettings.getNetBidibUniqueId().
      * Instead of just using the network interface from InetAddress.getLocalHost() - which can result to the loopback-interface,
      * which does not have a hardware address - we loop through the list of interfaces until we find an interface which is up and
      * not a loopback. It would be even better, if we check for virtual interfaces (those could be present if VMs run on the machine)
      * and then exclude them. But there is no generic method to find those interfaces. So we just return an UID derived from the first
      * found non-loopback interface or the default UID if there is no such interface.
-     * 
+     *
      * @return Unique ID as long
      */
     public Long getNetBidibUniqueId() {
         // set a default UID
-        byte[] uniqueId = 
+        byte[] uniqueId =
                 new byte[] { 0x00, 0x00, 0x0D, ByteUtils.getLowByte(BIDIB_JMRI_PID), ByteUtils.getHighByte(BIDIB_JMRI_PID),
                     0x00, (byte) 0xE8 };
 
@@ -433,7 +439,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
     public DataOutputStream getOutputStream() {
         return null;
     }
-    
+
     // autoconfig via mDNS
 
     /**
@@ -447,7 +453,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         log.debug("Setting netBiDiB adapter autoconfiguration to: {}", autoconfig);
         mDNSConfigure = autoconfig;
     }
-    
+
     /**
      * Get whether or not this adapter is configured
      * to use autoconfiguration via MDNS.
@@ -458,7 +464,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
     public boolean getMdnsConfigure() {
         return mDNSConfigure;
     }
-    
+
     /**
      * Set the server's host name and port
      * using mdns autoconfiguration.
@@ -545,7 +551,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
                 dev.setProductName(serviceInfo.getPropertyString("prod"));
                 dev.setUserName(serviceInfo.getPropertyString("user"));
                 deviceList.put(uid, dev);
-                
+
                 log.info("Found announcement: {}", dev.getString());
 
                 // if no current unique id is known, try the known IP address if valid
@@ -564,7 +570,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
                     setHostName(dev.getAddress().getHostAddress());
                     setPort(dev.getPort());
                     foundUniqueId = uid; //we have found what we have looked for
-                    //break; //exit the for loop as 
+                    //break; //exit the for loop as
                 }
             }
             if (foundUniqueId != null) {
@@ -576,7 +582,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
                 /* Stub */
             }
         }
-        
+
         // some log info
         if (foundUniqueId == null) {
             // Write out a warning if we have been looking for a known uid.
@@ -596,7 +602,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
      * Get and set the ZeroConf/mDNS advertisement name.
      * <p>
      * This value is the unique id in BiDiB.
-     * 
+     *
      * @return advertisement name.
      */
     @Override
@@ -606,7 +612,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         /////// use "VnnPnnnnnn" instead
         return ByteUtils.getUniqueIdAsStringCompact(getUniqueId());
     }
-    
+
     @Override
     public void setAdvertisementName(String AdName) {
         // AdName has the format "VvvPppppssss"
@@ -618,22 +624,22 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
      * <p>
      * This value is fixed in BiDiB, so return the default
      * value.
-     * 
+     *
      * @return service type.
      */
     @Override
     public String getServiceType() {
         return Bundle.getMessage("defaultMDNSServiceType");
     }
-    
+
     // netBiDiB Adapter specific methods
-    
+
     /**
      * Get the device list of all found devices and return them as a map
      * of strings suitable for display and indexed by the unique id.
-     * 
+     *
      * This is used by the connection config.
-     * 
+     *
      * @return map of strings containing device info.
      */
 
@@ -644,10 +650,10 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         }
         return stringList;
     }
-    
+
     /**
      * Set hostname, port and unique id from the device list entry selected by a given index.
-     * 
+     *
      * @param i selected index into device list
      */
     public void selectDeviceListItem(int i) {
@@ -661,13 +667,13 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
             setUniqueId(dev.getUniqueId());
         }
     }
-    
+
     /**
      * Get and set the BiDiB Unique ID.
      * <p>
      * If we haven't set the unique ID of the connection before, try to find it from the root node
      * of the connection. This will work only if the connection is open and not detached.
-     * 
+     *
      * @return unique Id as Long
      */
     public Long getUniqueId() {
@@ -680,11 +686,11 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         }
         return uniqueId;
     }
-    
+
     public void setUniqueId(Long uniqueId) {
         this.uniqueId = uniqueId;
     }
-    
+
 //UNUSED
 //    public boolean isLocalPaired() {
 //        if (getUniqueId() != null) {
@@ -698,7 +704,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
 
     /**
      * Get the connection ready status from the traffic controller
-     * 
+     *
      * @return true if the connection is opened and ready to use (paired and logged in)
      */
     public boolean isConnectionReady() {
@@ -711,20 +717,20 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         }
         return false;
     }
-    
+
     /**
      * Set new pairing state.
-     * 
+     *
      * If the pairing should be removed, close the connection, set pairing state in
      * the device list and update the pairing store.
-     * 
+     *
      * If pairing should be initiated, a connection is temporary opened and a pariring dialog
      * is displayed which informs the user to confirm the pairing on the remote device.
      * If the process has completed, the temporary connection is closed.
-     * 
+     *
      * Pairing and unpairing is an asynchroneous process, so an action listener may be provided which
      * is called when the process has completed.
-     * 
+     *
      * @param paired - true if the pairing should be initiated, false if pairing should be removed
      * @param l - and event listener, called when pairing or unpairing has finished.
      */
@@ -770,8 +776,8 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
                 log.warn("Pairing request - BiDiB instance is already opened. This should never happen.");
                 return;
             }
-            ConnectionListener connectionListener = new ConnectionListener() {
-                
+            var connectionListener = new org.bidib.jbidibc.messages.ConnectionListener() {
+
                 @Override
                 public void opened(String port) {
                     // no implementation
@@ -794,7 +800,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
                 public void status(String messageKey, Context context) {
                     // no implementation
                 }
-                
+
                 @Override
                 public void pairingFinished(final PairingResult pairingResult, long uniqueId) {
                     log.debug("** pairingFinished - result: {}, uniqueId: {}", pairingResult,
@@ -835,10 +841,10 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
                             // Show the dialog.
                             pairingDialog.show();
                         }
-                    }       
+                    }
                 }
 
-                
+
             };
             // open the device
             String portName = getRealPortName();
@@ -855,11 +861,11 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
             }
         }
     }
-    
+
     /**
      * Check of the connection is opened.
      * This does not mean that it is paired or logged on.
-     * 
+     *
      * @return true if opened
      */
     public boolean isOpened() {
@@ -868,26 +874,26 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         }
         return false;
     }
-    
+
     /**
      * Check if the connection is detached i.e. it is opened, paired
      * but the logon has been rejected.
-     * 
+     *
      * @return true if detached
      */
     public boolean isDetached() {
         return getSystemConnectionMemo().getBiDiBTrafficController().isDetached();
     }
-    
+
     /**
      * Set or remove the detached state.
-     * 
+     *
      * @param logon - true for logon (attach), false for logoff (detach)
      */
     public void setLogon(boolean logon) {
         getSystemConnectionMemo().getBiDiBTrafficController().setLogon(logon);
     }
-    
+
     public void addConnectionChangedListener(ActionListener l) {
         getSystemConnectionMemo().getBiDiBTrafficController().addConnectionChangedListener(l);
     }
@@ -918,5 +924,5 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
 
     private static final Logger log = LoggerFactory.getLogger(NetBiDiBAdapter.class);
 
-    
+
 }

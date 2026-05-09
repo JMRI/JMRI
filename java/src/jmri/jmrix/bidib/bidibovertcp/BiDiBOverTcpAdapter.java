@@ -7,10 +7,10 @@ import java.util.Set;
 
 import jmri.jmrix.bidib.BiDiBNetworkPortController;
 import jmri.jmrix.bidib.BiDiBTrafficController;
+
 import org.bidib.jbidibc.core.MessageListener;
 import org.bidib.jbidibc.core.NodeListener;
 import org.bidib.jbidibc.core.node.listener.TransferListener;
-import org.bidib.jbidibc.messages.ConnectionListener;
 import org.bidib.jbidibc.net.serialovertcp.NetBidib;
 import org.bidib.jbidibc.messages.helpers.Context;
 
@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This connects a DCC++ via a telnet connection. Normally controlled by the
  * DCCppTcpDriverFrame class.
- * 
+ *
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003
  * @author Alex Shepherd Copyright (C) 2003, 2006
@@ -38,7 +38,7 @@ public class BiDiBOverTcpAdapter extends BiDiBNetworkPortController {
         //super(new BiDiBSystemConnectionMemo());
         setManufacturer(jmri.jmrix.bidib.BiDiBConnectionTypeList.BIDIB);
     }
-    
+
     @Override
     public void connect(String host, int port) throws IOException {
         setHostName(host);
@@ -49,7 +49,7 @@ public class BiDiBOverTcpAdapter extends BiDiBNetworkPortController {
     /**
      * This methods is called from network connection config and creates the BiDiB object from jbidibc and opens it.
      * The connectPort method of the traffic controller is called for generic initialisation.
-     * 
+     *
      */
     @Override
     public void connect() {// throws IOException {
@@ -72,7 +72,7 @@ public class BiDiBOverTcpAdapter extends BiDiBNetworkPortController {
         }
     }
 
-    
+
     @Override
     public void configure() {
         log.debug("configure");
@@ -83,14 +83,17 @@ public class BiDiBOverTcpAdapter extends BiDiBNetworkPortController {
      * {@inheritDoc}
      */
     @Override
-    public void registerAllListeners(ConnectionListener connectionListener, Set<NodeListener> nodeListeners,
-                Set<MessageListener> messageListeners, Set<TransferListener> transferListeners) {
-        
+    public void registerAllListeners(
+            org.bidib.jbidibc.messages.ConnectionListener connectionListener,
+            Set<NodeListener> nodeListeners,
+            Set<MessageListener> messageListeners,
+            Set<TransferListener> transferListeners) {
+
         NetBidib b = (NetBidib)bidib;
         b.setConnectionListener(connectionListener);
         b.registerListeners(nodeListeners, messageListeners, transferListeners);
     }
-    
+
     // base class methods for the BiDiBNetworkPortController interface
     // not used but must be implemented
 
@@ -107,5 +110,5 @@ public class BiDiBOverTcpAdapter extends BiDiBNetworkPortController {
 
     private static final Logger log = LoggerFactory.getLogger(BiDiBOverTcpAdapter.class);
 
-    
+
 }

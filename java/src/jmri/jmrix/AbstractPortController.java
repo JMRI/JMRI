@@ -5,8 +5,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -27,6 +26,44 @@ import jmri.SystemConnectionMemo;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 abstract public class AbstractPortController implements PortAdapter {
+
+    private final List<ConnectionListener> connectedListeners = new ArrayList<>();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addConnectionListener(ConnectionListener l) {
+        connectedListeners.add(l);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeConnectionListener(ConnectionListener l) {
+        connectedListeners.remove(l);
+    }
+
+    /**
+     * Notify listeners that the connection has been opened.
+     */
+    public void notifyOpenedConnection() {
+        log.debug("Notify opened connection: {}", this);
+        for (var l : connectedListeners) {
+            l.connected(this);
+        }
+    }
+
+    /**
+     * Notify listeners that the connection has been closed.
+     */
+    public void notifyClosedConnection() {
+        log.debug("Notify closed connection: {}", this);
+        for (var l : connectedListeners) {
+            l.disconnected(this);
+        }
+    }
 
     /**
      * {@inheritDoc}

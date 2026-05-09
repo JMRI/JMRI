@@ -4,17 +4,18 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.util.Set;
+
 import jmri.util.FileUtil;
 
 import jmri.jmrix.bidib.BiDiBSerialPortController;
 import jmri.jmrix.bidib.BiDiBTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.bidib.jbidibc.core.MessageListener;
 import org.bidib.jbidibc.core.NodeListener;
 import org.bidib.jbidibc.core.node.listener.TransferListener;
-import org.bidib.jbidibc.messages.ConnectionListener;
 import org.bidib.jbidibc.simulation.comm.SimulationBidib;
 import org.bidib.jbidibc.simulation.SimulationInterface;
 
@@ -41,7 +42,7 @@ public class BiDiBSimulatorAdapter extends BiDiBSerialPortController {
     public String getSimulationFile() {
         return simulationFile;
     }
-    
+
     public void setSimulationFile(String f) {
         if (loadedSimulationFilename == null) {
             loadedSimulationFilename = f;
@@ -65,9 +66,9 @@ public class BiDiBSimulatorAdapter extends BiDiBSerialPortController {
         log.debug("isRestartRequired");
         return super.isRestartRequired();
     }
-    
-    
-    
+
+
+
     /**
      * {@inheritDoc}
      */
@@ -80,10 +81,10 @@ public class BiDiBSimulatorAdapter extends BiDiBSerialPortController {
             return absoluteSimulationFile;
         }
     }
-    
+
     /**
      * {@inheritDoc}
-     * 
+     *
      * Get the "port name" in the format which is used by jbidibc - this is absolute path to the simulation XML file
      * @return real port name
      */
@@ -92,13 +93,13 @@ public class BiDiBSimulatorAdapter extends BiDiBSerialPortController {
         File f = new File(FileUtil.getExternalFilename("profile:" + getSimulationFile()));
         return f.getAbsolutePath();
     }
-    
+
 //    @Override
 //    public void recover() {
 //        log.debug("recover called - ignored.");
 //        // nothing
 //    }
-//    
+//
 //    /**
 //     * {@inheritDoc}
 //     */
@@ -110,7 +111,7 @@ public class BiDiBSimulatorAdapter extends BiDiBSerialPortController {
 
     /**
      * Here we do not really open something.
-     * 
+     *
      * @param fileName name of simulation file
      * @param appName not used
      * @return error string, null if no error
@@ -156,7 +157,7 @@ public class BiDiBSimulatorAdapter extends BiDiBSerialPortController {
     public void configure() {
         log.debug("configure");
         MSG_RAW_LOGGER.debug("RAW> create BiDiB Instance");
-        
+
         bidib = SimulationBidib.createInstance(getContext());
         BiDiBTrafficController tc = new BiDiBTrafficController(bidib);
         log.debug("memo: {}, bidib simulator: {}", this.getSystemConnectionMemo(), bidib);
@@ -177,14 +178,17 @@ public class BiDiBSimulatorAdapter extends BiDiBSerialPortController {
      * {@inheritDoc}
      */
     @Override
-    public void registerAllListeners(ConnectionListener connectionListener, Set<NodeListener> nodeListeners,
-                Set<MessageListener> messageListeners, Set<TransferListener> transferListeners) {
-        
+    public void registerAllListeners(
+            org.bidib.jbidibc.messages.ConnectionListener connectionListener,
+            Set<NodeListener> nodeListeners,
+            Set<MessageListener> messageListeners,
+            Set<TransferListener> transferListeners) {
+
         SimulationInterface b = (SimulationInterface)bidib;
         b.setConnectionListener(connectionListener);
         b.registerListeners(nodeListeners, messageListeners, transferListeners);
     }
-    
+
     // base class methods for the BiDiBSerialPortController interface
     // not used but must be implemented
 

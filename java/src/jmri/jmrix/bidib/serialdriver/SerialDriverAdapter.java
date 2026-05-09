@@ -11,9 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Collections;
 import java.util.Set;
+
 import jmri.util.SystemType;
 import jmri.jmrix.bidib.BiDiBSerialPortController;
 import jmri.jmrix.bidib.BiDiBTrafficController;
+
 import org.bidib.jbidibc.core.BidibFactory;
 import org.bidib.jbidibc.core.BidibInterface;
 import org.bidib.jbidibc.core.MessageListener;
@@ -23,7 +25,6 @@ import org.bidib.jbidibc.messages.exception.PortNotFoundException;
 import org.bidib.jbidibc.messages.exception.PortNotOpenedException;
 import org.bidib.jbidibc.messages.helpers.DefaultContext;
 import org.bidib.jbidibc.core.node.BidibNode;
-import org.bidib.jbidibc.messages.ConnectionListener;
 import org.bidib.jbidibc.messages.helpers.Context;
 import org.bidib.jbidibc.messages.utils.ByteUtils;
 import org.bidib.jbidibc.jserialcomm.JSerialCommSerialBidib;
@@ -47,17 +48,17 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     private static final boolean usePurjavacomm = !useJSerailComm;
     private static final boolean useScm = false;
     private static final Map<String, Long> connectionRootNodeList = new HashMap<>(); //our static connection list
-    
+
     protected String portNameFilter = "";
     protected Long rootNodeUid;
     protected boolean useAutoScan = false;
-    
+
 //    @SuppressWarnings("OverridableMethodCallInConstructor")
     public SerialDriverAdapter() {
         //super(new BiDiBSystemConnectionMemo());
         setManufacturer(jmri.jmrix.bidib.BiDiBConnectionTypeList.BIDIB);
         configureBaudRate(validSpeeds[0]);
-        
+
         if (SystemType.isLinux()) {
             //portNameFilter = "/dev/ttyUSB*";
             portNameFilter = "ttyUSB*";
@@ -67,7 +68,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
         List<String> portList = getPortIdentifiers();
         log.info("portList: {}", portList);
     }
-    
+
     /**
      * Get the filter string for port names to scan when autoScan is on
      * @return port name filter as a string (wildcard is allowed at the end)
@@ -75,7 +76,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     public String getPortNameFilter() {
         return portNameFilter;
     }
-    
+
     /**
      * Set the port name filter
      * @param filter filter string
@@ -83,7 +84,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     public void setPortNameFilter(String filter) {
         portNameFilter = filter;
     }
-    
+
     /**
      * Get the root node unique ID
      * @return UID as Long
@@ -91,7 +92,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     public Long getRootNodeUid() {
         return rootNodeUid;
     }
-    
+
     /**
      * Set the root node unique ID
      * @param uid Unique ID as Long
@@ -99,7 +100,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     public void setRootNodeUid(Long uid) {
         rootNodeUid = uid;
     }
-    
+
     /**
      * Get the AutoScan status
      * @return true of autoScan is on, false if not
@@ -107,7 +108,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     public boolean getUseAutoScan() {
         return useAutoScan;
     }
-    
+
     /**
      * Set the AutoScan status
      * @param flag true of ON is requested
@@ -115,10 +116,10 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     public void setUseAutoScan(boolean flag) {
         useAutoScan = flag;
     }
-    
+
     /**
      * {@inheritDoc}
-     * 
+     *
      * Get the port name in the format which is used by jbidibc
      * @return real port name
      */
@@ -130,7 +131,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     /**
      * Get the canonical port name from the underlying operating system.
      * For a symbolic link, the real path is returned.
-     * 
+     *
      * @param portName human-readable name
      * @return canonical path
      */
@@ -146,7 +147,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
         }
         return portName;
     }
-    
+
     /**
      * Static function to get the port name in the format which is used by jbidibc
      * @param portName displayed port name
@@ -159,11 +160,11 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
         // TODO: MaxOSX. Windows just uses the displayed port name (COMx:)
         return getCanonicalPortName(portName);
     }
-    
+
     /**
      * This methods is called from serial connection config and creates the BiDiB object from jbidibc and opens it.
      * The connectPort method of the traffic controller is called for generic initialisation.
-     * 
+     *
      * @param portName port name from XML
      * @param appName not used
      * @return error string to be displayed by JMRI. null of no error
@@ -171,7 +172,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     @Override
     public String openPort(String portName, String appName) {
         log.debug("openPort called for {}, driver: {}, expected UID: {}", portName, getRealPortName(), ByteUtils.formatHexUniqueId(rootNodeUid));
-        
+
         MSG_RAW_LOGGER.debug("RAW> create BiDiB Instance for port {}", getCurrentPortName());
         //BidibInterface bidib = createSerialBidib();
         if (useAutoScan) {
@@ -217,7 +218,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
             connectionRootNodeList.put(getRealPortName(), null); //this port does not have a BiDiB device connected - remember this
             return "No device found on port " + getCurrentPortName() + "(" + getCurrentPortName() + ")";
         }
-        
+
         return null; // indicates OK return
 //        return "CANT DO!!"; //DEBUG
 
@@ -232,12 +233,12 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
         log.debug("configure");
         this.getSystemConnectionMemo().configureManagers();
     }
-    
+
     /**
      * Create a BiDiB object. jbidibc has support for various serial implementations.
      * We tested SCM, PUREJAVACOMM and later JSerialComm. All worked without problems. Since
      * JMRI generally uses JSerialComm, we also use it here
-     * 
+     *
      * @return a BiDiB object from jbidibc
      */
     private static BidibInterface createSerialBidib(Context context) {
@@ -252,14 +253,17 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
         }
         return null;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void registerAllListeners(ConnectionListener connectionListener, Set<NodeListener> nodeListeners,
-                Set<MessageListener> messageListeners, Set<TransferListener> transferListeners) {
-        
+    public void registerAllListeners(
+            org.bidib.jbidibc.messages.ConnectionListener connectionListener,
+            Set<NodeListener> nodeListeners,
+            Set<MessageListener> messageListeners,
+            Set<TransferListener> transferListeners) {
+
         if (useScm) { //NOT SUPPORTED ANY MORE
 //            PureJavaCommSerialBidib b = (ScmSerialBidib)bidib;
 //            b.setConnectionListener(connectionListener);
@@ -276,7 +280,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
             b.registerListeners(nodeListeners, messageListeners, transferListeners);
         }
     }
-    
+
     /**
      * Get a list of available port names
      * @return list of portnames
@@ -309,7 +313,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
         }
         return ret;
     }
-    
+
     /**
      * Internal method to find a port, possibly with already created BiDiB object
      * @param requid requested unique ID of the root node
@@ -363,10 +367,10 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
         }
         return null;
     }
-    
+
     /**
      * Scan all ports (filtered by portNameFilter) for a unique ID of the root node.
-     * 
+     *
      * @param requid requested unique ID of the root node
      * @param portNameFilter a port name filter (e.g. /dev/ttyUSB* for Linux)
      * @return found port name (e.g. /dev/ttyUSB0) or null of not found
@@ -392,11 +396,11 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
         }
         return null;
     }
-    
+
     /**
      * Check if the given port is a BiDiB connection and returns the unique ID of the root node.
      * Return the UID from cache if we already know the UID.
-     * 
+     *
      * @param portName port name to check
      * @return unique ID of the root node
      */
@@ -415,7 +419,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     /**
      * Internal method to check if the given port is a BiDiB connection and returns the unique ID of the root node.
      * Return the UID from cache if we already know the UID.
-     * 
+     *
 //     * @param bidib a BiDiB object from jbidibc
      * @param portName port name to check
      * @return unique ID of the root node
@@ -438,11 +442,11 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
             String realPortName = getRealPortName(portName);
             bidib.open(realPortName, null, Collections.<NodeListener> emptySet(), Collections.<MessageListener> emptySet(), Collections.<TransferListener> emptySet(), context);
             BidibNode rootNode = bidib.getRootNode();
-            
+
             uid = rootNode.getUniqueId() & 0x0000ffffffffffL; //mask the classid
             log.info("root node UID: {}", ByteUtils.formatHexUniqueId(uid));
             connectionRootNodeList.put(realPortName, uid);
-            
+
         }
         catch (PortNotOpenedException ex) {
             log.warn("port not opened: {}", portName);
@@ -459,10 +463,10 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
         }
         return uid;
     }
-    
+
     /**
      * Check if the port name of a given UID already exists in the cache.
-     * 
+     *
      * @param reqUid requested UID
      * @return port name or null if not found in cache
      */
@@ -479,7 +483,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
         return null;
     }
 
-    
+
 
     // base class methods for the BiDiBSerialPortController interface
     // not used but must be implemented
