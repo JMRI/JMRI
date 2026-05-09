@@ -3350,7 +3350,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       industries could use two boxcars, and one tank car. You would create two C/I tracks, one would
       be the length of two boxcars, and only allow boxcars, the other would only allow tank cars,
       and would be the length of one tank car. Each C/I track could have the "same" name using the
-      hyphen feature, for example you could name the C/I boxcar track "Yard-(boxcars)", and the tank
+      "hyphen" feature, for example you could name the C/I boxcar track "Yard-(boxcars)", and the tank
       car track "Yard-(tank cars)". Both tracks would print as "Yard" on Manifests and switch lists.
       And finally to facilitate the exchange of cars from the spur tracks to the through freight,
       create another C/I track that only accepts set outs from the local switcher. The other
@@ -3369,7 +3369,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <a href="#RestrictingTrackToCertainTrains">Restricting Track to Certain Trains or Routes</a>
       for more details. To service the A/D tracks, you would create a switcher that would pull cars
       off the arrival track and place them where needed. The could be a location using a "similar"
-      name using the hyphen feature, or whatever location name you want. Same goes for servicing the
+      name using the "hyphen" feature, or whatever location name you want. Same goes for servicing the
       departure track. The switcher would be configured to pull cars off the desired tracks and
       place them on the departure track.
       <p>
@@ -3382,7 +3382,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         that 5 could use one set of A/D tracks and the remaining 5 the another set of A/D tracks.
         Another choice is to create one A/D track for every main line train and <a href="#Pools">pool</a>
         the track space together. Again the track names could be unique, or "similar" using the
-        hyphen feature. In all cases, the key is to get the program to show the main trains arriving
+        "hyphen" feature. In all cases, the key is to get the program to show the main trains arriving
         or departing from only one track.
       </p>
 
@@ -4602,6 +4602,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       creating the new custom load name you can change the load's type, priority, hazardous, and
       optional messages. Press the "Save" button after making the changes.
 
+      <p>You can also use the "hyphen" feature for load names. For example "Coal-Anthracite"
+        would print out as "Coal" in your Manifest or switch lists.</p>
+
       <h4>Delete Car Load Name</h4>
       Select the load name you want to delete, then press the "Delete" button.
 
@@ -5623,7 +5626,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Enter the train's name and optional description, and then press the "Add Train" button. Both
         will show up in the train's Manifest. The train's name will also appear on the <a
           href="#PanelOptionsTrainIcons">train icon</a>, so short names work best. If you want to
-        create several trains that will print out using the same train name, use the hyphen feature
+        create several trains that will print out using the same train name, use the "hyphen" feature
         by adding "-(something)" to the train's name. The program will drop the characters after the
         hyphen when printing Manifests and switch lists. If you want the train's lead locomotive
         number and departure direction as part of the train's description when printing, enter {0}

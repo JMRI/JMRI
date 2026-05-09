@@ -142,9 +142,8 @@ public class HardcopyWriter extends Writer implements Printable {
      *                                               cancelled.
      */
     public HardcopyWriter(Frame frame, String jobname, String fontName, Integer fontStyle, Integer fontsize,
-            double leftmargin, double rightmargin,
-            double topmargin, double bottommargin, boolean isPreview, String printerName, Boolean isLandscape,
-            Boolean isPrintHeader, Attribute sides, Dimension pagesize)
+            double leftmargin, double rightmargin, double topmargin, double bottommargin, boolean isPreview,
+            String printerName, Boolean isLandscape, Boolean isPrintHeader, Attribute sides, Dimension pagesize)
             throws HardcopyWriter.PrintCanceledException {
 
         initalize(frame, jobname, fontName, fontStyle, fontsize, leftmargin, rightmargin, topmargin, bottommargin,
