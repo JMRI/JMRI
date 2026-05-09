@@ -40,6 +40,7 @@ public class PrintMoreOptionFrameTest extends OperationsTestCase {
         pop.tab1TextField.setText("11");
         pop.tab2TextField.setText("22");
         pop.tab3TextField.setText("33");
+        pop.manifestTabTextField.setText("6");
         
         Assert.assertTrue("Should be dirty", pop.isDirty());
         
@@ -47,8 +48,9 @@ public class PrintMoreOptionFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(pop.saveButton);
         
         Assert.assertEquals("tab 1", 11, Setup.getTab1Length());
-        Assert.assertEquals("tab 1", 22, Setup.getTab2Length());
-        Assert.assertEquals("tab 1", 33, Setup.getTab3Length());
+        Assert.assertEquals("tab 2", 22, Setup.getTab2Length());
+        Assert.assertEquals("tab 3", 33, Setup.getTab3Length());
+        Assert.assertEquals("tab", 6, Setup.getManifestTabLength());
         Assert.assertFalse("not dirty", pop.isDirty());
 
         // done
