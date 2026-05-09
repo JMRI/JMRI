@@ -493,7 +493,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+          <li>Added the ability to set the additional line tab size for Manifest and Switch Lists. Useful when using the smaller page widths. See "More Print Options" in the help.</li>
         </ul>
 
    <h3>Panel Editor</h3>
