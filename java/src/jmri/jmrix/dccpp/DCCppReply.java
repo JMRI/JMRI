@@ -307,6 +307,14 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     text += " Type:" + getAutomationTypeString();
                     text += " Desc:'" + getAutomationDescString() + "'";
                     break;
+                } else if (isAutomationStateReply()) {    
+                    text = "AutomationID:" + getAutomationIDString();
+                    text += " State:" + getAutomationStateString() + "'";
+                    break;
+                } else if (isAutomationCaptionReply()) {    
+                    text = "AutomationID:" + getAutomationIDString();
+                    text += " Caption:'" + getAutomationCaptionString() + "'";
+                    break;
                 } else if (isCurrentMaxesReply()) {    
                     text = "CurrentMaxes:" + getCurrentMaxesList();
                     break;
@@ -610,6 +618,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.AUTOMATION_IDS_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.AUTOMATION_ID_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.AUTOMATION_ID_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.AUTOMATION_STATE_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.AUTOMATION_STATE_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.AUTOMATION_CAPTION_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.AUTOMATION_CAPTION_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.CURRENT_MAXES_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.CURRENT_MAXES_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.CURRENT_VALUES_REPLY_REGEX)) {
@@ -1106,10 +1118,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         return (Integer.toString(this.getAutomationIDInt()));
     }
     public int getAutomationIDInt() {
-        if (this.isAutomationIDReply()) {
+        if (this.isAutomationIDReply() || this.isAutomationStateReply() || this.isAutomationCaptionReply()) {
             return (this.getValueInt(1));
         } else {
-            log.error("AutomationIDInt Parser called on non-AutomationIDInt message type {}", this.getOpCodeChar());
+            log.error("AutomationIDInt Parser called on non-AutomationIDInt message '{}'", this.toString());
             return (0);
         }
     }
@@ -1697,7 +1709,23 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if (this.isAutomationIDReply()) {
             return (this.getValueString(3));
         } else {
-            log.error("getAutomationDescString called on nonAutomationIDReply message type {}", this.getOpCodeChar());
+            log.error("getAutomationDescString called on non-AutomationIDReply message type {}", this.getOpCodeChar());
+            return ("");
+        }
+    }
+    public String getAutomationStateString() {
+        if (this.isAutomationStateReply()) {
+            return (this.getValueString(2));
+        } else {
+            log.error("getAutomationStateString called on non-AutomationStateReply message '{}'", this.toString());
+            return ("");
+        }
+    }
+    public String getAutomationCaptionString() {
+        if (this.isAutomationCaptionReply()) {
+            return (this.getValueString(2));
+        } else {
+            log.error("getAutomationCaptionString called on non-AutomationCaption message '{}'", this.toString());
             return ("");
         }
     }
@@ -1978,6 +2006,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isAutomationIDReply() {
         return (this.matches(DCCppConstants.AUTOMATION_ID_REPLY_REGEX));
     }
+    public boolean isAutomationStateReply() {
+        return (this.matches(DCCppConstants.AUTOMATION_STATE_REPLY_REGEX));
+    }
+    public boolean isAutomationCaptionReply() {
+        return (this.matches(DCCppConstants.AUTOMATION_CAPTION_REPLY_REGEX));
+    }
     public boolean isCurrentMaxesReply() {
         return (this.matches(DCCppConstants.CURRENT_MAXES_REPLY_REGEX));
     }
@@ -2024,6 +2058,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 (this.matches(DCCppConstants.ROSTER_ID_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.AUTOMATION_IDS_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.AUTOMATION_ID_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.AUTOMATION_STATE_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.AUTOMATION_CAPTION_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.CURRENT_MAXES_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.CURRENT_VALUES_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TURNOUT_IMPL_REGEX)) ||

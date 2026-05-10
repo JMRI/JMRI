@@ -267,9 +267,11 @@ public final class DCCppConstants {
     public static final String ROSTER_ID_REPLY_REGEX  = "^j\\s*R\\s+(\\d+)\\s\\\"(.*)\\\"\\s\\\"(.*)\\\""; // <jR 123 "description" "functionkeystring">   
     public static final String AUTOMATION_IDS             = "J A"; //Request Automation ID list
     public static final String AUTOMATION_IDS_REGEX       = "^J\\s*A$"; // <J A> or <JA>
-    public static final String AUTOMATION_ID_REGEX        = "^J\\s*A\\s*(\\d+)$"; // <J A 123>
-    public static final String AUTOMATION_IDS_REPLY_REGEX = "^j\\s*A\\s*((?:\\s*\\d+)*)$"; // <j A 123 456 789>
-    public static final String AUTOMATION_ID_REPLY_REGEX  = "^j\\s*A\\s+(\\d+)\\s([A|R])\\s\\\"(.*)\\\""; // <jA 123 R "description">   
+    public static final String AUTOMATION_ID_REGEX        = "^J\\s*A\\s*([-]?\\d+)$"; // <J A 123>
+    public static final String AUTOMATION_IDS_REPLY_REGEX = "^j\\s*A\\s*((?:\\s*[-]?\\d+)*)$"; // <j A 123 456 -789>
+    public static final String AUTOMATION_ID_REPLY_REGEX  = "^j\\s*A\\s+([-]?\\d+)\\s([A|R])\\s\\\"(.*)\\\""; // <jA -123 R "description">   
+    public static final String AUTOMATION_STATE_REPLY_REGEX  = "^j\\s*B\\s+([-]?\\d+)\\s(\\d)"; // <jB 123 2>   
+    public static final String AUTOMATION_CAPTION_REPLY_REGEX   = "^j\\s*B\\s+([-]?\\d+)\\s\\\"(.*)\\\""; // <jB 123 "description">   
     public static final String CURRENT_MAXES              = "J G"; //Request list of current maximums (always mA)
     public static final String CURRENT_MAXES_REGEX        = "^J\\s*G$"; // <J G> or <JG>
     public static final String CURRENT_MAXES_REPLY_REGEX  = "^j\\s*G\\s*((?:\\s*\\d+)*)$"; // <j A 123 456 789>
