@@ -1,6 +1,11 @@
 package jmri.swing;
 
+import java.io.*;
+import java.util.Comparator;
+
+import jmri.NamedBean;
 import jmri.jmrix.ConnectionStatus;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 
@@ -72,6 +77,19 @@ public class ConnectionLabelTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+
+        DefaultSystemConnectionMemo memo = new DefaultSystemConnectionMemo("T", "Test") {
+            @Override
+            protected java.util.ResourceBundle getActionModelResourceBundle() {
+                return null;
+            }
+
+            @Override
+            public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+                return null;
+            }
+        };
+
         config = new jmri.jmrix.AbstractConnectionConfig() {
             @Override
             protected void checkInitDone() {
@@ -123,7 +141,33 @@ public class ConnectionLabelTest {
 
             @Override
             public jmri.jmrix.PortAdapter getAdapter() {
-                return null;
+
+                return new jmri.jmrix.AbstractPortController(memo) {
+
+                    @Override
+                    public DataInputStream getInputStream() {
+                        return null;
+                    }
+
+                    @Override
+                    public DataOutputStream getOutputStream() {
+                        return null;
+                    }
+
+                    @Override
+                    public String getCurrentPortName() {
+                        return null;
+                    }
+
+                    @Override
+                    public void configure() {
+                    }
+
+                    @Override
+                    public void connect() throws IOException {
+                    }
+
+                };
             }
 
             @Override
@@ -135,6 +179,8 @@ public class ConnectionLabelTest {
 
     @AfterEach
     public void tearDown() {
+        config.setDisabled(true);
+        config = null;
         JUnitUtil.tearDown();
     }
 
