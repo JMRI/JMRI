@@ -27,6 +27,7 @@ import javax.swing.event.ChangeListener;
 import jmri.InstanceManager;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
+import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.profile.ProfileManager;
 import jmri.swing.ManagingPreferencesPanel;
@@ -197,13 +198,12 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
 
         this.setToolTipTextAt(tabPosition, title);
 
-        // FIX THIS!!!!
-//        if (ConnectionStatus.instance().isConnectionOk(null,
-//                configPane.getCurrentProtocolInfo())) {
-//            tabLabel.setForeground(Color.black);
-//        } else {
-//            tabLabel.setForeground(Color.red);
-//        }
+        if (ConnectionStatus.instance().isConnectionOk(
+                configPane.getCurrentObject().getAdapter().getSystemConnectionMemo())) {
+            tabLabel.setForeground(Color.black);
+        } else {
+            tabLabel.setForeground(Color.red);
+        }
         if (configPane.getDisabled()) {
             tabLabel.setForeground(Color.ORANGE);
         }
