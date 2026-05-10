@@ -46,6 +46,7 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
     @Override
     public void dispose() {
         ConnectionStatus.instance().removePropertyChangeListener(_memo, _listener);
+        super.dispose();
     }
 
     /**
