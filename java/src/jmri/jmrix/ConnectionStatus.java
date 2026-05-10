@@ -1,6 +1,7 @@
 package jmri.jmrix;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
@@ -143,18 +144,41 @@ public class ConnectionStatus {
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    Map<SystemConnectionMemo, java.beans.PropertyChangeSupport> pcsMap = new HashMap<>();
 
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+    public synchronized void addPropertyChangeListener(
+            @Nonnull java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
-    protected void firePropertyChange(@Nonnull String p, Object old, Object n) {
-        log.debug("firePropertyChange {} old: {} new: {}", p, old, n);
-        pcs.firePropertyChange(p, old, n);
+    public synchronized void addPropertyChangeListener(
+            @Nonnull SystemConnectionMemo memo, @Nonnull java.beans.PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+        pcsMap.computeIfAbsent(memo, k -> new java.beans.PropertyChangeSupport(this))
+                .addPropertyChangeListener(l);
     }
 
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+    protected void firePropertyChange(@Nonnull String p, Object old, @Nonnull SystemConnectionMemo memo) {
+        log.debug("firePropertyChange {} old: {} new: {}", p, old, memo);
+        pcs.firePropertyChange(p, old, memo);
+        var memoPCS = pcsMap.get(memo);
+        if (memoPCS != null) {
+            memoPCS.firePropertyChange(p, old, memo);
+        }
+    }
+
+    public synchronized void removePropertyChangeListener(
+            @Nonnull java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+
+    public synchronized void removePropertyChangeListener(
+            @Nonnull SystemConnectionMemo memo, @Nonnull java.beans.PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+        var memoPCS = pcsMap.get(memo);
+        if (memoPCS != null) {
+            memoPCS.removePropertyChangeListener(l);
+        }
     }
 
     private static final Logger log = LoggerFactory.getLogger(ConnectionStatus.class);
