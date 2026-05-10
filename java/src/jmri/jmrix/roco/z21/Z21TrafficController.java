@@ -203,13 +203,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                     p.getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         } catch (java.net.UnknownHostException uhe) {
             log.error("Unknown Host: {} ", ((Z21Adapter) controller).getHostName());
-            if (((Z21Adapter) p).getPort() != 0) {
-                ConnectionStatus.instance().setConnectionState(
-                        p.getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
-            } else {
-                ConnectionStatus.instance().setConnectionState(
-                        p.getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
-            }
+            ConnectionStatus.instance().setConnectionState(
+                    p.getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
         // and start threads
         xmtThread = new Thread(xmtRunnable = () -> {

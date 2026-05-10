@@ -60,22 +60,12 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
             opened = true;
         } catch (java.net.SocketException se) {
             log.error("Socket Exception creating connection.");
-            if (m_port != 0) {
-                ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo(),
-                        ConnectionStatus.CONNECTION_DOWN);
-            } else {
-                ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo(),
-                        ConnectionStatus.CONNECTION_DOWN);
-            }
-            throw (se);
-        }
-        if (opened && m_port != 0) {
             ConnectionStatus.instance().setConnectionState(
                     this.getSystemConnectionMemo(),
-                    ConnectionStatus.CONNECTION_UP);
-        } else if (opened) {
+                    ConnectionStatus.CONNECTION_DOWN);
+            throw (se);
+        }
+        if (opened) {
             ConnectionStatus.instance().setConnectionState(
                     this.getSystemConnectionMemo(),
                     ConnectionStatus.CONNECTION_UP);
