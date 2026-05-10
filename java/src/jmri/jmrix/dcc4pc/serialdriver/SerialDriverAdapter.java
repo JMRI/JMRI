@@ -45,7 +45,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
         try {
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = portID.open(appName, 2000);
+                activeSerialPort = portID.open(getSystemConnectionMemo(), 2000);
             } catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }

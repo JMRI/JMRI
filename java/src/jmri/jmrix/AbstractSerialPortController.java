@@ -42,7 +42,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     //@Deprecated(forRemoval=true) // with jmri.jmrix.PureJavaComm
     public String handlePortBusy(jmri.jmrix.purejavacomm.PortInUseException p, String portName, org.slf4j.Logger log) {
         log.error("{} port is in use: {}", portName, p.getMessage());
-        ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
+        ConnectionStatus.instance().setConnectionState(this.getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         return Bundle.getMessage("SerialPortInUse", portName);
     }
 
@@ -56,22 +56,22 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     //@Deprecated(forRemoval=true) // with jmri.jmrix.PureJavaComm
     public String handlePortNotFound(jmri.jmrix.purejavacomm.NoSuchPortException p, String portName, org.slf4j.Logger log) {
         log.error("Serial port {} not found", portName);
-        ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
+        ConnectionStatus.instance().setConnectionState(this.getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         return Bundle.getMessage("SerialPortNotFound", portName);
     }
 
     /**
      * Standard error handling for the general port-not-found case.
-     * @param systemPrefix the system prefix
+     * @param memo the system memo
      * @param portName port name.
      * @param log system log, passed so logging comes from bottom level class
      * @param ex Underlying Exception that caused this failure
      * @return human readable string with error detail.
      */
-    public static String handlePortNotFound(String systemPrefix, String portName, org.slf4j.Logger log, Exception ex) {
+    public static String handlePortNotFound(SystemConnectionMemo memo, String portName, org.slf4j.Logger log, Exception ex) {
         log.error("Serial port {} not found: {}", portName, ex.getMessage());
-        if (systemPrefix != null) {
-            ConnectionStatus.instance().setConnectionState(systemPrefix, portName, ConnectionStatus.CONNECTION_DOWN);
+        if (memo != null) {
+            ConnectionStatus.instance().setConnectionState(memo, ConnectionStatus.CONNECTION_DOWN);
         }
         return Bundle.getMessage("SerialPortNotFound", portName);
     }
@@ -99,7 +99,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return the serial port object for later use
      */
     protected final SerialPort activatePort(String portName, org.slf4j.Logger log) {
-        return activatePort(this.getSystemPrefix(), portName, log, 1, SerialPort.Parity.NONE);
+        return activatePort(this.getSystemConnectionMemo(), portName, log, 1, SerialPort.Parity.NONE);
     }
 
     /**
@@ -118,7 +118,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return the serial port object for later use
      */
     protected final SerialPort activatePort(String portName, org.slf4j.Logger log, int stop_bits) {
-        return activatePort(this.getSystemPrefix(), portName, log, stop_bits, SerialPort.Parity.NONE);
+        return activatePort(this.getSystemConnectionMemo(), portName, log, stop_bits, SerialPort.Parity.NONE);
     }
 
     /**
@@ -131,15 +131,21 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * This is usually followed by calls to
      * {@link #setBaudRate}, {@link #configureLeads} and {@link #setFlowControl}.
      *
-     * @param systemPrefix the system prefix
+     * @param memo the system memo
      * @param portName local system name for the desired port
      * @param log Logger to use for errors, passed so that errors are logged from low-level class'
      * @param stop_bits The number of stop bits, either 1 or 2
      * @param parity one of the defined parity contants
      * @return the serial port object for later use
      */
-    public static SerialPort activatePort(String systemPrefix, String portName, org.slf4j.Logger log, int stop_bits, SerialPort.Parity parity) {
-        return jmri.jmrix.jserialcomm.JSerialPort.activatePort(systemPrefix, portName, log, stop_bits, parity);
+    public static SerialPort activatePort(
+            SystemConnectionMemo memo,
+            String portName,
+            org.slf4j.Logger log,
+            int stop_bits,
+            SerialPort.Parity parity) {
+
+        return jmri.jmrix.jserialcomm.JSerialPort.activatePort(memo, portName, log, stop_bits, parity);
     }
 
     protected final void setComPortTimeouts(SerialPort serialPort, Blocking blocking, int timeout) {

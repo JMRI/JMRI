@@ -29,7 +29,7 @@ public class ConnectionLabelTest {
     @Test
     @DisabledIfHeadless
     public void checkSuccessColor() {
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_UP);
+        ConnectionStatus.instance().setConnectionState(config.getAdapter().getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         ConnectionLabel action = new ConnectionLabel(config);
         assertEquals( java.awt.Color.BLACK, action.getForeground(), "Color for Success");
     }
@@ -37,7 +37,7 @@ public class ConnectionLabelTest {
     @Test
     @DisabledIfHeadless
     public void checkUnknownColor() {
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_UNKNOWN);
+        ConnectionStatus.instance().setConnectionState(config.getAdapter().getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UNKNOWN);
         ConnectionLabel action = new ConnectionLabel(config);
         // unknown is currently the same color as up.
         assertEquals( java.awt.Color.BLACK, action.getForeground(), "Color for Unknown");
@@ -46,7 +46,7 @@ public class ConnectionLabelTest {
     @Test
     @DisabledIfHeadless
     public void checkFailColor() {
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_DOWN);
+        ConnectionStatus.instance().setConnectionState(config.getAdapter().getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         ConnectionLabel action = new ConnectionLabel(config);
         assertEquals( java.awt.Color.RED, action.getForeground(), "Color for Failure");
     }
@@ -54,18 +54,18 @@ public class ConnectionLabelTest {
     @Test
     @DisabledIfHeadless
     public void checkColorOnChangeFromSuccess() {
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_UP);
+        ConnectionStatus.instance().setConnectionState(config.getAdapter().getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         ConnectionLabel action = new ConnectionLabel(config);
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_DOWN);
+        ConnectionStatus.instance().setConnectionState(config.getAdapter().getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         assertEquals( java.awt.Color.RED, action.getForeground(), "Color for Failure after success");
     }
 
     @Test
     @DisabledIfHeadless
     public void checkColorOnChangeFromFailure() {
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_DOWN);
+        ConnectionStatus.instance().setConnectionState(config.getAdapter().getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         ConnectionLabel action = new ConnectionLabel(config);
-        ConnectionStatus.instance().setConnectionState(config.getConnectionName(), config.getInfo(), ConnectionStatus.CONNECTION_UP);
+        ConnectionStatus.instance().setConnectionState(config.getAdapter().getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         assertEquals( java.awt.Color.BLACK, action.getForeground(), "Color for Failure after success");
     }
 

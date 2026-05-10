@@ -27,7 +27,6 @@ import javax.swing.event.ChangeListener;
 import jmri.InstanceManager;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
-import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.profile.ProfileManager;
 import jmri.swing.ManagingPreferencesPanel;
@@ -45,7 +44,7 @@ import org.openide.util.lookup.ServiceProvider;
 public class ConnectionsPreferencesPanel extends JTabbedPane implements ManagingPreferencesPanel {
 
     private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle"); // for some items // NOI18N
-    
+
 
     private final ImageIcon deleteIcon;
     private final ImageIcon deleteIconRollOver;
@@ -198,12 +197,13 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
 
         this.setToolTipTextAt(tabPosition, title);
 
-        if (ConnectionStatus.instance().isConnectionOk(null, 
-                configPane.getCurrentProtocolInfo())) {
-            tabLabel.setForeground(Color.black);
-        } else {
-            tabLabel.setForeground(Color.red);
-        }
+        // FIX THIS!!!!
+//        if (ConnectionStatus.instance().isConnectionOk(null,
+//                configPane.getCurrentProtocolInfo())) {
+//            tabLabel.setForeground(Color.black);
+//        } else {
+//            tabLabel.setForeground(Color.red);
+//        }
         if (configPane.getDisabled()) {
             tabLabel.setForeground(Color.ORANGE);
         }

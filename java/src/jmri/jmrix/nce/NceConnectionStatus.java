@@ -68,11 +68,11 @@ public class NceConnectionStatus implements NceListener {
 
     private static final int VV_2012 = 7; // Revision 2012 EPROM VV.MM.mm = 7.2.0
     private static final int MM_2012 = 2;
-    
+
     // PH5 details, 2023
     private static final int VV_PH5 = 8;    // 1st Edition
     private static final int MM_PH5 = 0;
-    
+
     // USB -> Cab bus adapter:
     // When used with PowerCab V1.28 - 6.3.0
     // When used with SB3 V1.28 - 6.3.1 (No program track on an SB3)
@@ -103,7 +103,7 @@ public class NceConnectionStatus implements NceListener {
     private static final int mm_USB_V7_SB3 = 5; // SB3 with 1.28c
     private static final int mm_USB_V7_PH = 6; // PowerPro with 3.1.2007
     // private static final int mm_USB_V7_ALL = 7; // All systems
-    
+
 
     private NceTrafficController tc = null;
 
@@ -138,14 +138,14 @@ public class NceConnectionStatus implements NceListener {
         }
 
         if (epromState == CHECK_OK) {
-            ConnectionStatus.instance().setConnectionState(tc.getUserName(), tc.getPortName(),
+            ConnectionStatus.instance().setConnectionState(tc.getAdapterMemo(),
                     ConnectionStatus.CONNECTION_UP);
             epromState = NORMAL_STATE;
             return null;
         }
 
         if (epromState != INIT_STATE) {
-            ConnectionStatus.instance().setConnectionState(tc.getUserName(), tc.getPortName(),
+            ConnectionStatus.instance().setConnectionState(tc.getAdapterMemo(),
                     ConnectionStatus.CONNECTION_DOWN);
         }
 
@@ -199,7 +199,7 @@ public class NceConnectionStatus implements NceListener {
                                 " contact NCE if you want to use MONITORING feedback ",
                         Bundle.getMessage("WarningTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
             }
-            ConnectionStatus.instance().setConnectionState(tc.getUserName(), tc.getPortName(),
+            ConnectionStatus.instance().setConnectionState(tc.getAdapterMemo(),
                     ConnectionStatus.CONNECTION_UP);
             epromState = NORMAL_STATE;
             return null;

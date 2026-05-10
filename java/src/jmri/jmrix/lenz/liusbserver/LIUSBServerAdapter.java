@@ -81,21 +81,21 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         } catch (java.io.IOException e) {
             log.error("init (pipe): Exception",e);
             ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo().getUserName(),
-                        m_HostName, ConnectionStatus.CONNECTION_DOWN);
+                        this.getSystemConnectionMemo(),
+                        ConnectionStatus.CONNECTION_DOWN);
             throw e; // re-throw so this can be seen externally.
         } catch (Exception ex) {
             log.error("init (connect): Exception", ex);
             ConnectionStatus.instance().setConnectionState(
-                        this.getSystemConnectionMemo().getUserName(),
-                        m_HostName, ConnectionStatus.CONNECTION_DOWN);
+                        this.getSystemConnectionMemo(),
+                        ConnectionStatus.CONNECTION_DOWN);
             throw ex; // re-throw so this can be seen externally.
         }
         keepAliveTimer();
         if (opened) {
             ConnectionStatus.instance().setConnectionState(
-                    this.getSystemConnectionMemo().getUserName(),
-                    m_HostName, ConnectionStatus.CONNECTION_UP);
+                    this.getSystemConnectionMemo(),
+                    ConnectionStatus.CONNECTION_UP);
         }
 
     }
@@ -317,7 +317,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         }
 
         @Override
-        @SuppressFBWarnings(value="OVERRIDING_METHODS_MUST_INVOKE_SUPER", 
+        @SuppressFBWarnings(value="OVERRIDING_METHODS_MUST_INVOKE_SUPER",
                 justification="this object does not own SystemConnectionMemo")
         public void dispose() {
             // override to prevent super class from disposing of the
@@ -361,7 +361,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         }
 
         @Override
-        @SuppressFBWarnings(value="OVERRIDING_METHODS_MUST_INVOKE_SUPER", 
+        @SuppressFBWarnings(value="OVERRIDING_METHODS_MUST_INVOKE_SUPER",
                 justification="this object does not own SystemConnectionMemo")
         public void dispose() {
             // override to prevent super class from disposing of the
