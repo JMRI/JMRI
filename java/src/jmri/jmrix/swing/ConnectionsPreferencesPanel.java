@@ -198,11 +198,13 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
 
         this.setToolTipTextAt(tabPosition, title);
 
-        if (ConnectionStatus.instance().isConnectionOk(
-                configPane.getCurrentObject().getAdapter().getSystemConnectionMemo())) {
-            tabLabel.setForeground(Color.black);
-        } else {
-            tabLabel.setForeground(Color.red);
+        if (configPane.getCurrentObject() != null) {
+            if (ConnectionStatus.instance().isConnectionOk(
+                    configPane.getCurrentObject().getAdapter().getSystemConnectionMemo())) {
+                tabLabel.setForeground(Color.black);
+            } else {
+                tabLabel.setForeground(Color.red);
+            }
         }
         if (configPane.getDisabled()) {
             tabLabel.setForeground(Color.ORANGE);
