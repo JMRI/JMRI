@@ -3,19 +3,19 @@ package jmri.jmrix.nce;
 import jmri.jmrix.ConnectionStatus;
 import jmri.util.swing.JmriJOptionPane;
 
-/* 
- * Checks to see if AIU broadcasts are enabled and warns user to 
+/*
+ * Checks to see if AIU broadcasts are enabled and warns user to
  * disable AIU broadcast for proper operation.  NCE command station
  * battery-backed memory location 0xDC15 contains the control for
  * AIU broadcasts, 0 = disabled, 1 = enabled.
- *  
+ *
  * @author Daniel Boudreau (C) 2007
  * @author Ken Cameron Copyright (C) 2023
  */
 public class NceAIUChecker implements NceListener {
- 
+
     private static final int REPLY_LEN = 1;  // number of bytes read
-    private boolean EXPECT_REPLY = false;   // flag 
+    private boolean EXPECT_REPLY = false;   // flag
 
     private NceTrafficController tc = null;
 
@@ -67,8 +67,7 @@ public class NceAIUChecker implements NceListener {
             if (AIUstatus == 1) {
                 log.warn("AIU broadcasts are enabled");
                 ConnectionStatus.instance().setConnectionState(
-                        tc.getUserName(),
-                        tc.getPortName(),
+                        tc.getAdapterMemo(),
                         ConnectionStatus.CONNECTION_DOWN);
                 JmriJOptionPane.showMessageDialog(null,
                         "JMRI has detected that AIU broadcasts are enabled. \n"

@@ -1,7 +1,8 @@
 package jmri.jmrix;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 
 import jmri.SystemConnectionMemo;
@@ -32,8 +33,8 @@ public class ConnectionStatus {
     public static final String CONNECTION_UP = "Connected";
     public static final String CONNECTION_DOWN = "Not Connected";
 
-    // hashmap of ConnectionKey objects and their status
-    private final HashMap<ConnectionKey, String> portStatus = new HashMap<>();
+    // hashmap of SystemConnectionMemo's and their status
+    private final HashMap<SystemConnectionMemo, String> portStatus = new HashMap<>();
 
     /**
      * Record the single instance *
@@ -60,95 +61,63 @@ public class ConnectionStatus {
     }
 
     /**
-     * Add a connection with a given name and port name to the portStatus set
+     * Add a connection with a given memo to the portStatus set
      * if not yet present in the set.
      *
-     * @param systemName human-readable name for system like "LocoNet 2"
-     *                   which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
-     * @param portName   the port name
+     * @param memo the system memo
      */
-    public synchronized void addConnection(String systemName, @Nonnull String portName) {
-        log.debug("addConnection systemName {} portName {}", systemName, portName);
-        ConnectionKey newKey = new ConnectionKey(systemName, portName);
-        if (!portStatus.containsKey(newKey)) {
-            portStatus.put(newKey, CONNECTION_UNKNOWN);
-            firePropertyChange("add", null, portName);
+    public synchronized void addConnection(@Nonnull SystemConnectionMemo memo) {
+        log.debug("addConnection memo {}", memo);
+        if (!portStatus.containsKey(memo)) {
+            portStatus.put(memo, CONNECTION_UNKNOWN);
+            firePropertyChange("add", null, memo);
         }
     }
 
     /**
      * Set the connection state of a communication port.
      *
-     * @param systemName human-readable name for system like "LocoNet 2"
-     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
-     * @param portName   the port name
+     * @param memo the system memo
      * @param state      one of ConnectionStatus.UP, ConnectionStatus.DOWN, or
      *                   ConnectionStatus.UNKNOWN.
      */
-    public synchronized void setConnectionState(String systemName, @Nonnull String portName, @Nonnull String state) {
-        log.debug("setConnectionState systemName: {} portName: {} state: {}", systemName, portName, state);
-        ConnectionKey newKey = new ConnectionKey(systemName, portName);
-        if (!portStatus.containsKey(newKey)) {
-            portStatus.put(newKey, state);
-            firePropertyChange("add", null, portName);
-            log.debug("New Connection added: {} ", newKey);
+    public synchronized void setConnectionState(@Nonnull SystemConnectionMemo memo, @Nonnull String state) {
+        log.debug("setConnectionState memo: {} state: {}", memo, state);
+        if (!portStatus.containsKey(memo)) {
+            portStatus.put(memo, state);
+            firePropertyChange("add", null, memo);
+            log.debug("New Connection added: {} ", memo);
         } else {
-            firePropertyChange("change", portStatus.put(newKey, state), portName);
+            firePropertyChange("change", portStatus.put(memo, state), memo);
         }
     }
 
     /**
      * Get the status of a communication port with a given name.
      *
-     * @param systemName human-readable name for system like "LocoNet 2"
-     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
-     * @param portName   the port name
+     * @param memo the system memo
      * @return the status
      */
-    public synchronized String getConnectionState(String systemName, @Nonnull String portName) {
-        log.debug("getConnectionState systemName: {} portName: {}", systemName, portName);
+    public synchronized String getConnectionState(@Nonnull SystemConnectionMemo memo) {
+        log.debug("getConnectionState memo {}", memo);
         String stateText = CONNECTION_UNKNOWN;
-        ConnectionKey newKey = new ConnectionKey(systemName, portName);
-        if (portStatus.containsKey(newKey)) {
-            stateText = portStatus.get(newKey);
+        if (portStatus.containsKey(memo)) {
+            stateText = portStatus.get(memo);
             log.debug("connection found : {}", stateText);
         } else {
-            log.debug("connection systemName {} portName {} not found, {}", systemName, portName, stateText);
+            log.debug("connection memo {} not found, {}", memo, stateText);
         }
         return stateText;
     }
 
     /**
-     * Get the status of a communication port, based on the system name only.
-     *
-     * @param systemName human-readable name for system like "LocoNet 2"
-     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
-     * @return the status
-     */
-    public synchronized String getSystemState(@Nonnull String systemName) {
-        log.debug("getSystemState systemName: {} ", systemName);
-        // see if there is a key that has systemName as the port value.
-        for (Map.Entry<ConnectionKey, String> entry : portStatus.entrySet()) {
-            if ((entry.getKey().getSystemName() != null) && (entry.getKey().getSystemName().equals(systemName))) {
-                // if we find a match, return it
-                return entry.getValue();
-            }
-        }
-        // If we still don't find a match, then we don't know the status
-        log.warn("Didn't find system status for system {}", systemName);
-        return CONNECTION_UNKNOWN;
-    }
-
-    /**
      * Confirm status of a communication port is not down.
      *
-     * @param systemName human-readable name for system like "LocoNet 2"
-     *                   which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
-     * @param portName   the port name
+     * @param memo the system memo
      * @return true if port connection is operational or unknown, false if not
      */
-    public synchronized boolean isConnectionOk(String systemName, @Nonnull String portName) {
-        String stateText = getConnectionState(systemName, portName);
+    public synchronized boolean isConnectionOk(@Nonnull SystemConnectionMemo memo) {
+        String stateText = getConnectionState(memo);
         return !stateText.equals(CONNECTION_DOWN);
     }
 
@@ -162,8 +131,9 @@ public class ConnectionStatus {
      */
     public synchronized boolean isSystemOk(@Nonnull String systemName) {
         // see if there is a key that has systemName as the port value.
-        for (Map.Entry<ConnectionKey, String> entry : portStatus.entrySet()) {
-            if ((entry.getKey().getSystemName() != null) && (entry.getKey().getSystemName().equals(systemName))) {
+        for (var entry : portStatus.entrySet()) {
+            var memoSystemName = entry.getKey().getUserName();
+            if ((memoSystemName != null) && (memoSystemName.equals(systemName))) {
                 // if we find a match, return it
                 return !portStatus.get(entry.getKey()).equals(CONNECTION_DOWN);
             }
@@ -174,81 +144,41 @@ public class ConnectionStatus {
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    Map<SystemConnectionMemo, java.beans.PropertyChangeSupport> pcsMap = new HashMap<>();
 
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+    public synchronized void addPropertyChangeListener(
+            @Nonnull java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
-    protected void firePropertyChange(@Nonnull String p, Object old, Object n) {
-        log.debug("firePropertyChange {} old: {} new: {}", p, old, n);
-        pcs.firePropertyChange(p, old, n);
+    public synchronized void addPropertyChangeListener(
+            @Nonnull SystemConnectionMemo memo, @Nonnull java.beans.PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+        pcsMap.computeIfAbsent(memo, k -> new java.beans.PropertyChangeSupport(this))
+                .addPropertyChangeListener(l);
     }
 
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+    protected void firePropertyChange(@Nonnull String p, Object old, @Nonnull SystemConnectionMemo memo) {
+        log.debug("firePropertyChange {} old: {} new: {}", p, old, memo);
+        pcs.firePropertyChange(p, old, memo);
+        var memoPCS = pcsMap.get(memo);
+        if (memoPCS != null) {
+            memoPCS.firePropertyChange(p, old, memo);
+        }
+    }
+
+    public synchronized void removePropertyChangeListener(
+            @Nonnull java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
-    /**
-     * ConnectionKey is an internal class containing the port name and system
-     * name of a connection.
-     * <p>
-     * ConnectionKey is used as a key in a HashMap of the connections on the
-     * system.
-     * <p>
-     * It is allowable for either the port name or the system name to be null,
-     * but not both.
-     */
-    private static class ConnectionKey {
-
-        String portName = null;
-        String systemName = null;  // human-readable name for system
-
-        /**
-         * constructor
-         *
-         * @param system human-readable name for system like "LocoNet 2"
-         *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
-         * @param port   port name
-         * @throws IllegalArgumentException if both system and port are null;
-         */
-        public ConnectionKey(String system, @Nonnull String port) {
-            if (system == null && port == null) {
-                throw new IllegalArgumentException("At least the port name must be provided");
-            }
-            systemName = system;
-            portName = port;
+    public synchronized void removePropertyChangeListener(
+            @Nonnull SystemConnectionMemo memo, @Nonnull java.beans.PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+        var memoPCS = pcsMap.get(memo);
+        if (memoPCS != null) {
+            memoPCS.removePropertyChangeListener(l);
         }
-
-        public String getSystemName() {
-            return systemName;
-        }
-
-        public String getPortName() {
-            return portName;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (o == null || !(o instanceof ConnectionKey)) {
-                return false;
-            }
-            ConnectionKey other = (ConnectionKey) o;
-
-            return (systemName == null ? other.getSystemName() == null : systemName.equals(other.getSystemName()))
-                    && (portName == null ? other.getPortName() == null : portName.equals(other.getPortName()));
-        }
-
-        @Override
-        public int hashCode() {
-            if (systemName == null) {
-                return portName.hashCode();
-            } else if (portName == null) {
-                return systemName.hashCode();
-            } else {
-                return (systemName.hashCode() + portName.hashCode());
-            }
-        }
-
     }
 
     private static final Logger log = LoggerFactory.getLogger(ConnectionStatus.class);

@@ -156,7 +156,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
             cs.setText(" ");
             return;
         }
-        ConnectionStatus.instance().addConnection(conn.name(), conn.getInfo());
+        ConnectionStatus.instance().addConnection(conn.getAdapter().getSystemConnectionMemo());
         cs.setFont(pane.getFont());
         updateLine(conn, cs);
         pane.add(cs);
@@ -170,7 +170,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
         if (name == null) {
             name = conn.getManufacturer();
         }
-        if (ConnectionStatus.instance().isConnectionOk(null, conn.getInfo())) {
+        if (ConnectionStatus.instance().isConnectionOk(conn.getAdapter().getSystemConnectionMemo())) {
             cs.setForeground(Color.black);
             String cf = Bundle.getMessage("ConnectionSucceeded", name, conn.name(), conn.getInfo());
             cs.setText(cf);

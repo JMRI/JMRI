@@ -78,7 +78,7 @@ public class GcSerialDriverAdapter extends GcPortController {
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting CAN to {} {}", portName, currentSerialPort);
-        
+
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
@@ -88,7 +88,7 @@ public class GcSerialDriverAdapter extends GcPortController {
 
         // get and save stream
         serialStream = currentSerialPort.getInputStream();
-        // this is referenced in several other methods, 
+        // this is referenced in several other methods,
         // so can't easily be removed.
 
         // report status
@@ -99,7 +99,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         return null; // indicates OK return
     }
 
-    /** 
+    /**
      * Local set up the flow contro, here to allow override
      */
     protected void localSetFlowControl() {
@@ -138,7 +138,7 @@ public class GcSerialDriverAdapter extends GcPortController {
     protected void resetupConnection() {
         if (!getSystemConnectionMemo().getTrafficController().status()) {
             getSystemConnectionMemo().getTrafficController().connectPort(this);
-            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(),
+            ConnectionStatus.instance().setConnectionState(getSystemConnectionMemo(),
                 ((getSystemConnectionMemo().getTrafficController().status() && status()) ? ConnectionStatus.CONNECTION_UP : ConnectionStatus.CONNECTION_DOWN));
         }
     }

@@ -899,9 +899,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                             );
         } catch (java.awt.print.PrinterException ep) {
             log.error("While printing",ep);
-        }    
+        }
     }
-    
+
     /**
      * Match the first argument in the array against a locally-known method.
      *
@@ -1317,7 +1317,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         });
         if (re == null) {
             menuItem.setEnabled(false);
-        }        
+        }
         popupMenu.add(menuItem);
         popupMenu.addSeparator();
 
@@ -1603,7 +1603,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
         log.trace("start global check with {}, {}, {}", serModeProCon, gpm, (gpm != null ? gpm.isGlobalProgrammerAvailable() : "<none>"));
         if (serModeProCon != null && gpm != null && gpm.isGlobalProgrammerAvailable()) {
-            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getConnectionName(), serModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getAdapter().getSystemConnectionMemo())) {
                 log.debug("GPM Connection online 1");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
@@ -1664,7 +1664,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         if (opsModeProCon != null && apm != null && apm.isAddressedModePossible()) {
-            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getConnectionName(), opsModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getAdapter().getSystemConnectionMemo())) {
                 log.debug("Ops Mode Connection online");
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));

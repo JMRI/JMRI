@@ -614,7 +614,7 @@ public abstract class AbstractMRTrafficController {
 
         log.warn("Timeout on reply to message: {} consecutive timeouts = {} in {}", msg, timeouts, name);
     }
-    
+
     protected void resetTimeout(AbstractMRMessage msg) {
         if (timeouts > 0) {
             log.debug("Reset timeout after {} timeouts", timeouts);
@@ -809,7 +809,7 @@ public abstract class AbstractMRTrafficController {
                             }
                             // see http://docs.oracle.com/javase/7/docs/api/java/lang/ThreadDeath.html
                             // ThreadDeath must be thrown per Java API Javadocs
-                            // 
+                            //
                             // The type ThreadDeath has been deprecated since version 20 and marked for removal
                             // and the warning cannot be suppressed in Java 21. But external libraries might
                             // throw the exception outside of JMRI control. So check the name of the exception
@@ -931,7 +931,7 @@ public abstract class AbstractMRTrafficController {
             }
         }
         if (!threadStopRequest) { // if e.g. unexpected end
-            ConnectionStatus.instance().setConnectionState(controller.getUserName(), controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(controller.getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
             log.debug("Exit from rcv loop in {}", this.getClass());
             log.info("Exiting receive loop");
             recovery(); // see if you can restart
@@ -955,7 +955,7 @@ public abstract class AbstractMRTrafficController {
      */
     protected void reportReceiveLoopException(Exception e) {
         log.error("run: Exception: {} in {}", e.toString(), this.getClass().toString(), e);
-        jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getUserName(), controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
+        jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getSystemConnectionMemo(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
         if (controller instanceof AbstractNetworkPortController) {
             portWarnTCP(e);
         }
@@ -978,7 +978,7 @@ public abstract class AbstractMRTrafficController {
      * Read a single byte, protecting against various timeouts, etc.
      * <p>
      * When a port is set to have a receive timeout, some will return
-     * zero bytes, an EOFException or a InterruptedIOException at the end of the timeout. 
+     * zero bytes, an EOFException or a InterruptedIOException at the end of the timeout.
      * In that case, the read()
      * should be repeated to get the next real character.
      *
@@ -994,7 +994,7 @@ public abstract class AbstractMRTrafficController {
             int nchars;
             // The istream should be configured so that the following
             // read(..) call only blocks for a short time, e.g. 100msec, if no
-            // data is available.  It's OK if it 
+            // data is available.  It's OK if it
             // throws e.g. java.io.InterruptedIOException
             // in that case, as the calling loop should just go around
             // and request input again.  This semi-blocking behavior will

@@ -385,7 +385,7 @@ public class LoaderPane extends javax.swing.JPanel {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = portID.open(appName, 2000);  // name of program, msec to wait
+                activeSerialPort = portID.open(null, 2000);  // name of program, msec to wait
             } catch (PortInUseException p) {
                 handlePortBusy(p, portName);
                 return "Port " + p + " already in use";

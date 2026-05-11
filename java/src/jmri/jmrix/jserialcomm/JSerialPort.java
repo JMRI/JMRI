@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import jmri.SystemConnectionMemo;
 import jmri.util.SystemType;
 
 /**
@@ -242,14 +243,20 @@ public class JSerialPort implements SerialPort {
     /**
      * Open the port.
      *
-     * @param systemPrefix the system prefix
+     * @param memo the system memo
      * @param inputPortName local system name for the desired port
      * @param log Logger to use for errors, passed so that errors are logged from low-level class'
      * @param stop_bits The number of stop bits, either 1 or 2
      * @param parity one of the defined parity contants
      * @return the serial port object for later use
      */
-    public static JSerialPort activatePort(String systemPrefix, String inputPortName, org.slf4j.Logger log, int stop_bits, Parity parity) {
+    public static JSerialPort activatePort(
+            SystemConnectionMemo memo,
+            String inputPortName,
+            org.slf4j.Logger log,
+            int stop_bits,
+            Parity parity) {
+
         com.fazecast.jSerialComm.SerialPort serialPort;
 
         // check environment for overriding portName
@@ -268,7 +275,7 @@ public class JSerialPort implements SerialPort {
         } else {
             portName = inputPortName;
         }
-        
+
         // convert the 1 or 2 stop_bits argument to the proper jSerialComm code value
         int stop_bits_code;
         switch (stop_bits) {
@@ -292,7 +299,7 @@ public class JSerialPort implements SerialPort {
         } catch (java.io.IOException | com.fazecast.jSerialComm.SerialPortInvalidPortException ex) {
             // IOException includes
             //      com.fazecast.jSerialComm.SerialPortIOException
-            AbstractSerialPortController.handlePortNotFound(systemPrefix, portName, log, ex);
+            AbstractSerialPortController.handlePortNotFound(memo, portName, log, ex);
             return null;
         }
         return new JSerialPort(serialPort);

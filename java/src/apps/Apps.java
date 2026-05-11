@@ -325,7 +325,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         log.debug("Done with statusPanel, start buttonSpace");
         add(buttonSpace());
         add(_jynstrumentSpace);
- 
+
         // Add a copy-cut-paste menu to all text fields that don't have a popup menu
         long eventMask = AWTEvent.MOUSE_EVENT_MASK;
         Toolkit.getDefaultToolkit().addAWTEventListener((AWTEvent e) -> {
@@ -528,7 +528,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         log.debug("conn.getConnectionName() is {} ", conn.getConnectionName()); // eg MERG2
         log.debug("conn.getManufacturer() is {} ", conn.getManufacturer()); // eg MERG
 
-        ConnectionStatus.instance().addConnection(conn.getConnectionName(), conn.getInfo());
+        ConnectionStatus.instance().addConnection(conn.getAdapter().getSystemConnectionMemo());
         cs.setFont(pane.getFont());
         updateLine(conn, cs);
         pane.add(cs);
@@ -542,7 +542,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (name == null) {
             name = conn.getManufacturer();
         }
-        if (ConnectionStatus.instance().isConnectionOk(name, conn.getInfo())) {
+        if (ConnectionStatus.instance().isConnectionOk(conn.getAdapter().getSystemConnectionMemo())) {
             cs.setForeground(Color.black);
             String cf = Bundle.getMessage("ConnectionSucceeded", name, conn.name(), conn.getInfo());
             cs.setText(cf);

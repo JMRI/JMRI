@@ -50,19 +50,19 @@ public class NetworkDriverAdapter extends MarklinPortController {
             log.error("a error opening network connection", e);
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
-                        null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
+                        getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
             } else {
                 ConnectionStatus.instance().setConnectionState(
-                        null, m_HostName, ConnectionStatus.CONNECTION_DOWN);
+                        getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
             }
             throw (e);
         }
         if (opened && m_port != 0) {
             ConnectionStatus.instance().setConnectionState(
-                    null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_UP);
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         } else if (opened) {
             ConnectionStatus.instance().setConnectionState(
-                    null, m_HostName, ConnectionStatus.CONNECTION_UP);
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         }
     }
 
@@ -70,13 +70,8 @@ public class NetworkDriverAdapter extends MarklinPortController {
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
-            if (m_port != 0) {
-                ConnectionStatus.instance().setConnectionState(
-                        null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
-            } else {
-                ConnectionStatus.instance().setConnectionState(
-                        null, m_HostName, ConnectionStatus.CONNECTION_DOWN);
-            }
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
         try {
             return new DataInputStream(new UDPInputStream(null, 15730));
@@ -95,13 +90,8 @@ public class NetworkDriverAdapter extends MarklinPortController {
             return new DataOutputStream(new UDPOutputStream(m_HostName, 15731));
         } catch (java.io.IOException e) {
             log.error("getOutputStream exception", e);
-            if (m_port != 0) {
-                ConnectionStatus.instance().setConnectionState(
-                        null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
-            } else {
-                ConnectionStatus.instance().setConnectionState(
-                        null, m_HostName, ConnectionStatus.CONNECTION_DOWN);
-            }
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
         return null;
     }

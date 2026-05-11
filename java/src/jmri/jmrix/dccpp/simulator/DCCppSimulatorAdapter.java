@@ -153,11 +153,11 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     DCCppTrafficController tc = DCCppSimulatorAdapter.this.getSystemConnectionMemo().getDCCppTrafficController();
                     DCCppCommandStation cs = tc.getCommandStation();
                     if (cs.isMaxNumSlotsMsgSupported()) {
-                        tc.sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSMaxNumSlotsMsg(), null);                        
+                        tc.sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSMaxNumSlotsMsg(), null);
                     } else {
                         tc.sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
                     }
-                    
+
                 }
             };
         } else {
@@ -176,7 +176,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     public DataInputStream getInputStream() {
         if (pin == null) {
             log.error("getInputStream called before load(), stream not available");
-            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
         return pin;
     }
@@ -188,7 +189,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     public DataOutputStream getOutputStream() {
         if (pout == null) {
             log.error("getOutputStream called before load(), stream not available");
-            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
         return pout;
     }
@@ -229,7 +231,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
         keepAliveTimer();
 
-        ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
+        ConnectionStatus.instance().setConnectionState(
+                getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         for (;;) {
             DCCppMessage m = readMessage();
             log.debug("Simulator Thread received message '{}'", m);
@@ -255,7 +258,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             msg = loadChars();
         } catch (java.io.IOException e) {
             // should do something meaningful here.
-            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
 
         }
         setOutputBufferEmpty(true);
@@ -287,7 +291,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                         if (!m.matches()) {
                             log.error("Malformed Throttle Command: {}", s);
                             return (null);
-                        }                       
+                        }
                         int locoId = Integer.parseInt(m.group(1));
                         int speed = Integer.parseInt(m.group(2));
                         int dir = Integer.parseInt(m.group(3));
@@ -315,12 +319,12 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 s = msg.toString();
                 r = "";
                 try {
-                    p = Pattern.compile(DCCppConstants.FUNCTION_V4_CMD_REGEX); 
+                    p = Pattern.compile(DCCppConstants.FUNCTION_V4_CMD_REGEX);
                     m = p.matcher(s); //<F locoId func 1|0>
                     if (!m.matches()) {
                         log.error("Malformed FunctionV4 Command: {}", s);
                         return (null);
-                    }                       
+                    }
                     int locoId = Integer.parseInt(m.group(1));
                     int fn = Integer.parseInt(m.group(2));
                     int state = Integer.parseInt(m.group(3));
@@ -459,7 +463,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                         // Response: <r CV Value>
                         r = "r " + m.group(1) + " " + m.group(2);
                         CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
-                    }                    
+                    }
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } catch (PatternSyntaxException e) {
@@ -663,7 +667,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     generateCurrentValuesReply(); // Handle this special.
                 }
                 break;
-                
+
             case DCCppConstants.FUNCTION_CMD:
             case DCCppConstants.FORGET_CAB_CMD:
             case DCCppConstants.ACCESSORY_CMD:
@@ -695,16 +699,16 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     //stores the calculated value of the functionsByte as used by DCC++EX
     private void storeLocoFunction(int locoId, int function, int state) {
         int functions = 0; //init functions to all off if not stored
-        if (locoFunctions.containsKey(locoId)) 
+        if (locoFunctions.containsKey(locoId))
             functions = locoFunctions.get(locoId); //get stored value, if any
         int mask = 1 << function;
         if (state == 1) {
             functions = functions | mask; //apply ON
         } else {
-            functions = functions & ~mask; //apply OFF            
+            functions = functions & ~mask; //apply OFF
         }
         locoFunctions.put(locoId, functions); //store new value
-        if (!locoSpeedByte.containsKey(locoId)) 
+        if (!locoSpeedByte.containsKey(locoId))
             locoSpeedByte.put(locoId, 0); //init speedByte if not set
     }
 
@@ -799,7 +803,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             }
             outpipe.writeByte((byte) '>');
         } catch (java.io.IOException ex) {
-            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
     }
 

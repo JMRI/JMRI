@@ -46,7 +46,8 @@ public class Z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortC
                 .consistManager(null)
                 .noCommandStation()
                 .init();
-        jmri.jmrix.ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(),jmri.jmrix.ConnectionStatus.CONNECTION_UP);
+        jmri.jmrix.ConnectionStatus.instance().setConnectionState(
+                getSystemConnectionMemo(), jmri.jmrix.ConnectionStatus.CONNECTION_UP);
     }
 
     @Override

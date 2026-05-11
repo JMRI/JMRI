@@ -78,15 +78,15 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
     /**
      * This is normal, don't log at ERROR level
      */
-    @Override 
+    @Override
     protected void reportReceiveLoopException(Exception e) {
         log.debug("run: Exception: {} in {} (considered normal in testing)", e.toString(), this.getClass().toString(), e);
-        jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getUserName(), controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
+        jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getSystemConnectionMemo(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
         if (controller instanceof jmri.jmrix.AbstractNetworkPortController) {
             portWarnTCP(e);
         }
     }
-    
+
     private static final Logger log = LoggerFactory.getLogger(Z21InterfaceScaffold.class);
 
 }
