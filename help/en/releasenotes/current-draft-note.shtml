@@ -653,6 +653,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>The class <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionStatus.html">jmri.jmrix.ConnectionStatus</a>
+                has been refactorized to use <a href="https://www.jmri.org/JavaDoc/doc/jmri/SystemConnectionMemo.html">SystemConnectionMemo</a>
+                instead of <strong>systemName</strong> and <strong>portName</strong>.</li>
             <li></li>
         </ul>
 
