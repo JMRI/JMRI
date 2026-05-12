@@ -207,15 +207,27 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
     }
 
     @Override
+    protected JPanel getActionButtonsPanel() {
+        // Buttons are stacked above the checkboxes via getCheckBoxPanel() so a
+        // narrowed window can't clip them. Return an empty panel here.
+        return new JPanel();
+    }
+
+    @Override
     public JPanel getCheckBoxPanel(){
-        JPanel a = super.getCheckBoxPanel();
-        a.add(displayTranslatedCheckBox,0);
+        JPanel checks = super.getCheckBoxPanel();
+        checks.add(displayTranslatedCheckBox,0);
         displayTranslatedCheckBox.addActionListener(this::displayTranslatedEvent);
         rawCheckBox.addActionListener(this::rawCheckBoxEvent);
-        
+
         displayTranslatedCheckBox.setSelected(!userPrefs.getSimplePreferenceState(doNotDisplayTranslatedCheck));
-        rawCheckBoxEvent(null); // if neither raw on tranalated selected, display translated.
-        return a;
+        rawCheckBoxEvent(null); // if neither raw nor translated selected, display translated.
+
+        JPanel stacked = new JPanel();
+        stacked.setLayout(new BoxLayout(stacked, BoxLayout.Y_AXIS));
+        stacked.add(super.getActionButtonsPanel());
+        stacked.add(checks);
+        return stacked;
     }
 
     @Override

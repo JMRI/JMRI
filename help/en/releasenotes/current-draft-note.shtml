@@ -36,7 +36,11 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>DCC-EX Traffic Monitor: action buttons (Clear / Freeze) now sit on their own
+                row above the checkboxes, so narrowing the window no longer clips the checkboxes
+                off the visible area (<a href="https://github.com/JMRI/JMRI/issues/15134">#15134</a>).
+                The window title and menu action label also now read &quot;DCC-EX&quot; rather
+                than &quot;DCC++&quot;.</li>
             </ul>
 
         <h4>DCC4pc</h4>
