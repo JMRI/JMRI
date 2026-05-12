@@ -40,7 +40,10 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
 
     public DCCppMonFrame(DCCppSystemConnectionMemo memo) {
         super();
-        _memo = memo;        
+        _memo = memo;
+        // DCC-EX commands are natively bracketed with <...>; match that style in the raw display.
+        rawOpenBracket = "<";
+        rawCloseBracket = ">";
     }
 
     @Override
@@ -116,19 +119,18 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
         // display the decoded data
         StringBuilder text = new StringBuilder();
         if ( displayTranslatedCheckBox.isSelected() ) {
-            text.append("TX: ");
             text.append(l.toMonitorString());
         }
         text.append("\n");
 
-        nextLine(text.toString(), (rawCheckBox.isSelected() ? l.toString() : ""));
+        nextLine(text.toString(), (rawCheckBox.isSelected() ? l.toString() : ""), "TX:");
         refreshQueuedMessages();
 
     }
 
     @Override
     public void message(DCCppReply l) {
-        // receive a DCC++ message and log it
+        // receive a DCC-EX message and log it
         // display the raw data if requested
         if (log.isDebugEnabled()) {
             log.debug("Message in Monitor: '{}' opcode {}", l, Character.toString(l.getOpCodeChar()));
@@ -136,12 +138,11 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
 
         StringBuilder text = new StringBuilder();
         if ( displayTranslatedCheckBox.isSelected() ) {
-            text.append(" RX: ");
             text.append(l.toMonitorString());
         }
         text.append("\n");
 
-        nextLine( text.toString(), (rawCheckBox.isSelected() ? l.toString() : ""));
+        nextLine(text.toString(), (rawCheckBox.isSelected() ? l.toString() : ""), "RX:");
 
         //enable or disable the refresh pane based on support by command station
         if (l.isStatusReply()) { 
@@ -208,8 +209,13 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
 
     @Override
     protected JPanel getActionButtonsPanel() {
-        // Buttons are stacked above the checkboxes via getCheckBoxPanel() so a
-        // narrowed window can't clip them. Return an empty panel here.
+        // Relocated into getCheckBoxPanel below so action and log buttons share one row.
+        return new JPanel();
+    }
+
+    @Override
+    protected JPanel getLogToFilePanel() {
+        // Relocated into getCheckBoxPanel below so action and log buttons share one row.
         return new JPanel();
     }
 
@@ -223,9 +229,15 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
         displayTranslatedCheckBox.setSelected(!userPrefs.getSimplePreferenceState(doNotDisplayTranslatedCheck));
         rawCheckBoxEvent(null); // if neither raw nor translated selected, display translated.
 
+        // Row 1: action buttons (Clear / Freeze) + log buttons (Choose log file / Start logging).
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+        buttons.add(super.getActionButtonsPanel());
+        buttons.add(super.getLogToFilePanel());
+
         JPanel stacked = new JPanel();
         stacked.setLayout(new BoxLayout(stacked, BoxLayout.Y_AXIS));
-        stacked.add(super.getActionButtonsPanel());
+        stacked.add(buttons);
         stacked.add(checks);
         return stacked;
     }

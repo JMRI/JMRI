@@ -74,6 +74,12 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     protected JButton openFileChooserButton = new JButton(Bundle.getMessage("ButtonChooseLogFile"));
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton(Bundle.getMessage("ButtonAddMessage"));
+
+    /** Opening bracket wrapped around the raw data in the displayed line. Subclasses may override. */
+    protected String rawOpenBracket = "[";
+    /** Closing bracket wrapped around the raw data in the displayed line. Subclasses may override. */
+    protected String rawCloseBracket = "]";
+
     private final String rawDataCheck = this.getClass().getName() + ".RawData"; // NOI18N
     private final String timeStampCheck = this.getClass().getName() + ".TimeStamp"; // NOI18N
     private final String alwaysOnTopCheck = this.getClass().getName() + ".alwaysOnTop"; // NOI18N
@@ -249,6 +255,18 @@ public abstract class AbstractMonFrame extends JmriJFrame {
      * @param raw is the "raw form" , should NOT end with \n
      */
     public void nextLine(String line, String raw) {
+        nextLine(line, raw, null);
+    }
+
+    /**
+     * Handle display of traffic with an explicit direction marker (e.g. "TX:" or "RX:").
+     * If non-empty, the direction is shown between the timestamp and the raw bracketed
+     * section regardless of which display checkboxes are selected.
+     * @param line is the traffic in 'normal form'. Should end with \n
+     * @param raw is the "raw form", should NOT end with \n
+     * @param direction direction marker to display, or null/empty to omit
+     */
+    public void nextLine(String line, String raw, String direction) {
         StringBuilder sb = new StringBuilder(120);
 
         // display the timestamp if requested
@@ -256,9 +274,14 @@ public abstract class AbstractMonFrame extends JmriJFrame {
             sb.append(df.format(new Date())).append(": "); // NOI18N
         }
 
+        // direction marker (TX:/RX:) when supplied — always shown
+        if (direction != null && !direction.isEmpty()) {
+            sb.append(direction).append(' ');
+        }
+
         // display the raw data if requested
         if (rawCheckBox.isSelected()) {
-            sb.append('[').append(raw).append("]  "); // NOI18N
+            sb.append(rawOpenBracket).append(raw).append(rawCloseBracket).append("  "); // NOI18N
         }
 
         // display decoded data
