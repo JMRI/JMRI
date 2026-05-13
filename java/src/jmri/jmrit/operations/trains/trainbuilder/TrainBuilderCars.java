@@ -520,6 +520,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         }
         // can this car be pulled from an interchange or spur?
         if (!checkPickupInterchangeOrSpur(car)) {
+            log.debug("Removing car ({}) from list", car.toString());
             remove(car);
             addLine(FIVE, BLANK_LINE);
             return; // no
@@ -1366,19 +1367,13 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     Bundle.getMessage("buildCarHasFinalDestNoMove", car.toString(), car.getLocationName(),
                             car.getFinalDestinationName(), getTrain().getName()));
             addLine(FIVE, BLANK_LINE);
-            log.debug("Removing car ({}) from list", car.toString());
-            remove(car);
             return true; // car has a final destination, but no local moves by
                          // this train
         }
         // is the car's destination the terminal and is that allowed?
         if (!checkThroughCarsAllowed(car, car.getFinalDestinationName())) {
-            // don't remove car from list if departing staging
             if (car.getTrack() == getDepartureStagingTrack()) {
                 addLine(ONE, Bundle.getMessage("buildErrorCarStageDest", car.toString()));
-            } else {
-                log.debug("Removing car ({}) from list", car.toString());
-                remove(car);
             }
             return true; // car has a final destination, but through traffic not
                          // allowed by this train

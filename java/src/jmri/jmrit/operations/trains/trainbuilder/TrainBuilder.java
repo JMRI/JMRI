@@ -371,7 +371,7 @@ public class TrainBuilder extends TrainBuilderCars {
                 // there could be a an optional destination
                 car.setFinalDestination(mbi.getDestination());
                 car.setFinalDestinationTrack(mbi.getDestinationTrack());
-                // case where there's a routelocation
+                // case where there's a route location
                 if (mbi.getRouteLocation() != null) {
                     if (checkRouteLocation(mbi.getRouteLocation())) {
                         findDestinationsFromLocation(mbi.getRouteLocation(), car, false);
