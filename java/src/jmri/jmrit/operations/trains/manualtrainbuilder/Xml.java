@@ -30,7 +30,6 @@ public class Xml {
     protected static final String ITEM = "item"; // NOI18N
     protected static final String SEQUENCE_ID = "sequenceId"; // NOI18N
     protected static final String TRAIN_SCHEDULE_ID = "trainScheduleId"; // NOI18N
-    protected static final String PICKUP_TRAIN_SCHEDULE_ID = "pickupTrainScheduleId"; // NOI18N
     protected static final String TYPE = "type"; // NOI18N
     protected static final String ROAD = "road"; // NOI18N
     protected static final String LOAD = "load"; // NOI18N

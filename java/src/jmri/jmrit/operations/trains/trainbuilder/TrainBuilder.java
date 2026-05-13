@@ -325,7 +325,7 @@ public class TrainBuilder extends TrainBuilderCars {
             addLine(THREE,
                     Bundle.getMessage("mbuildRequest", mbi.getTypeName(), mbi.getRoadName(), mbi.getLoadName(),
                             mbi.getLocationName(), mbi.getLocationTrackName(), mbi.getDestinationName(),
-                            mbi.getDestinationTrackName(), mbi.getPickupTrainScheduleName(), mbi.getCount()));
+                            mbi.getDestinationTrackName(), mbi.getTrainScheduleName(), mbi.getCount()));
             // the number of cars requested by this line item
             int count = mbi.getCount();
             for (_carIndex = 0; _carIndex < getCarList().size(); _carIndex++) {
@@ -361,8 +361,8 @@ public class TrainBuilder extends TrainBuilderCars {
                 }
                 // pick up day
                 if (trainScheduleManager.getActiveSchedule() != null &&
-                        !mbi.getPickupTrainScheduleName().equals(TrainManualBuildItem.NONE) &&
-                        !trainScheduleManager.getActiveSchedule().getId().equals(mbi.getPickupTrainScheduleId())) {
+                        !mbi.getTrainScheduleName().equals(TrainManualBuildItem.NONE) &&
+                        !trainScheduleManager.getActiveSchedule().getId().equals(mbi.getTrainScheduleId())) {
                     continue;
                 }
                 addLine(FIVE,

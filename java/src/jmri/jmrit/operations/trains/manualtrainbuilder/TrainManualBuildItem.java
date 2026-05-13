@@ -30,7 +30,7 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
     protected Track _trackLocation = null;// car location track
     protected Location _destination = null; // car destination
     protected Track _trackDestination = null;// car destination track
-    protected String _pickupTrainScheduleId = NONE; // which day of the week to pickup car
+    protected String _trainScheduleId = NONE; // which day of the week to pickup car
     protected int _count = 1;
     protected boolean _warn = false; // when true issue warning
     protected boolean _fail = false; // when true issue build failure
@@ -84,23 +84,23 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
         setDirtyAndFirePropertyChange(TYPE_CHANGED_PROPERTY, old, type);
     }
 
-    public String getPickupTrainScheduleId() {
-        return _pickupTrainScheduleId;
+    public String getTrainScheduleId() {
+        return _trainScheduleId;
     }
 
-    public String getPickupTrainScheduleName() {
+    public String getTrainScheduleName() {
         String name = NONE;
         TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
-                .getScheduleById(getPickupTrainScheduleId());
+                .getScheduleById(getTrainScheduleId());
         if (sch != null) {
             name = sch.getName();
         }
         return name;
     }
 
-    public void setPickupTrainScheduleId(String id) {
-        String old = _pickupTrainScheduleId;
-        _pickupTrainScheduleId = id;
+    public void setTrainScheduleId(String id) {
+        String old = _trainScheduleId;
+        _trainScheduleId = id;
         setDirtyAndFirePropertyChange(TRAIN_SCHEDULE_CHANGED_PROPERTY, old, id);
     }
 
@@ -305,7 +305,7 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
         setLocationTrack(mbi.getLocationTrack());
         setDestination(mbi.getDestination());
         setDestinationTrack(mbi.getDestinationTrack());
-        setPickupTrainScheduleId(mbi.getPickupTrainScheduleId());
+        setTrainScheduleId(mbi.getTrainScheduleId());
     }
 
     public void dispose() {
@@ -328,8 +328,8 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
         if ((a = e.getAttribute(Xml.SEQUENCE_ID)) != null) {
             _sequenceId = Integer.parseInt(a.getValue());
         }
-        if ((a = e.getAttribute(Xml.PICKUP_TRAIN_SCHEDULE_ID)) != null) {
-            _pickupTrainScheduleId = a.getValue();
+        if ((a = e.getAttribute(Xml.TRAIN_SCHEDULE_ID)) != null) {
+            _trainScheduleId = a.getValue();
         }
         if ((a = e.getAttribute(Xml.TYPE)) != null) {
             _type = a.getValue();
@@ -373,7 +373,7 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
         org.jdom2.Element e = new org.jdom2.Element(Xml.ITEM);
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.SEQUENCE_ID, Integer.toString(getSequenceId()));
-        e.setAttribute(Xml.PICKUP_TRAIN_SCHEDULE_ID, getPickupTrainScheduleId());
+        e.setAttribute(Xml.TRAIN_SCHEDULE_ID, getTrainScheduleId());
         e.setAttribute(Xml.TYPE, getTypeName());
         e.setAttribute(Xml.ROAD, getRoadName());
         e.setAttribute(Xml.LOAD, getLoadName());

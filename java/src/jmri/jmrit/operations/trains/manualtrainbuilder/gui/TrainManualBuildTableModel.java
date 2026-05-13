@@ -445,7 +445,7 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
     private JComboBox<TrainSchedule> getPickupDayComboBox(TrainManualBuildItem mbi) {
         JComboBox<TrainSchedule> cb = InstanceManager.getDefault(TrainScheduleManager.class).getSelectComboBox();
         TrainSchedule sch =
-                InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(mbi.getPickupTrainScheduleId());
+                InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(mbi.getTrainScheduleId());
         cb.setSelectedItem(sch);
         return cb;
     }
@@ -453,9 +453,9 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
     private void setPickupDay(Object value, TrainManualBuildItem mbi) {
         Object obj = ((JComboBox<?>) value).getSelectedItem();
         if (obj == null) {
-            mbi.setPickupTrainScheduleId(TrainManualBuildItem.NONE);
+            mbi.setTrainScheduleId(TrainManualBuildItem.NONE);
         } else if (obj.getClass().equals(TrainSchedule.class)) {
-            mbi.setPickupTrainScheduleId(((TrainSchedule) obj).getId());
+            mbi.setTrainScheduleId(((TrainSchedule) obj).getId());
         }
     }
 
