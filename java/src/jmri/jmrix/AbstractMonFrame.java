@@ -75,9 +75,8 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton(Bundle.getMessage("ButtonAddMessage"));
 
-    /** Opening bracket wrapped around the raw data in the displayed line. Subclasses may override. */
+    /** Bracket characters wrapping the raw data in the displayed line; subclasses may override. */
     protected String rawOpenBracket = "[";
-    /** Closing bracket wrapped around the raw data in the displayed line. Subclasses may override. */
     protected String rawCloseBracket = "]";
 
     private final String rawDataCheck = this.getClass().getName() + ".RawData"; // NOI18N
@@ -125,15 +124,32 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         // add items to GUI
         getContentPane().add(jScrollPane1);
 
-        JPanel paneA = new JPanel();
+        JPanel paneA;
+        if (useStackedControlsLayout()) {
+            // Track preferred height so WrapLayout-based control rows can grow when
+            // the window narrows; unconstrained width lets the area stretch.
+            paneA = new JPanel() {
+                @Override
+                public Dimension getMaximumSize() {
+                    return new Dimension(Short.MAX_VALUE, getPreferredSize().height);
+                }
+            };
+        } else {
+            paneA = new JPanel();
+        }
         paneA.setLayout(new BoxLayout(paneA, BoxLayout.Y_AXIS));
 
-        JPanel topActions = new JPanel();
-        topActions.add(getActionButtonsPanel());
-        topActions.add(getCheckBoxPanel());
-
-        paneA.add(topActions);
-        paneA.add(getLogToFilePanel());
+        if (useStackedControlsLayout()) {
+            paneA.add(getActionButtonsPanel());
+            paneA.add(getCheckBoxPanel());
+            paneA.add(getLogToFilePanel());
+        } else {
+            JPanel topActions = new JPanel();
+            topActions.add(getActionButtonsPanel());
+            topActions.add(getCheckBoxPanel());
+            paneA.add(topActions);
+            paneA.add(getLogToFilePanel());
+        }
 
         JPanel pane3 = new JPanel();
         pane3.setLayout(new BoxLayout(pane3, BoxLayout.X_AXIS));
@@ -153,10 +169,26 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         // add help menu to window
         setHelp();
 
-        // prevent button areas from expanding
         pack();
-        paneA.setMaximumSize(paneA.getSize());
-        pack();
+        if (!useStackedControlsLayout()) {
+            // Legacy path pins the controls area at its packed size; the stacked
+            // path handles this via paneA's getMaximumSize override above.
+            paneA.setMaximumSize(paneA.getSize());
+            pack();
+        }
+    }
+
+    /**
+     * Whether to lay out the action, checkbox, and log button panels as separate
+     * stacked rows directly inside paneA (with paneA's height tracking its
+     * preferred so {@code WrapLayout}-based rows can grow when the window is
+     * narrowed). Defaults to {@code false} — legacy side-by-side layout with a
+     * FlowLayout wrapper and a static max-size pin. Subclasses opt in.
+     *
+     * @return true for stacked rows, false for the legacy layout
+     */
+    protected boolean useStackedControlsLayout() {
+        return false;
     }
 
     protected JPanel getCheckBoxPanel() {
@@ -259,9 +291,8 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     }
 
     /**
-     * Handle display of traffic with an explicit direction marker (e.g. "TX:" or "RX:").
-     * If non-empty, the direction is shown between the timestamp and the raw bracketed
-     * section regardless of which display checkboxes are selected.
+     * Handle display of traffic with an explicit direction marker (e.g. "TX:" or "RX:")
+     * that is shown regardless of which display checkboxes are selected.
      * @param line is the traffic in 'normal form'. Should end with \n
      * @param raw is the "raw form", should NOT end with \n
      * @param direction direction marker to display, or null/empty to omit
@@ -274,7 +305,6 @@ public abstract class AbstractMonFrame extends JmriJFrame {
             sb.append(df.format(new Date())).append(": "); // NOI18N
         }
 
-        // direction marker (TX:/RX:) when supplied — always shown
         if (direction != null && !direction.isEmpty()) {
             sb.append(direction).append(' ');
         }

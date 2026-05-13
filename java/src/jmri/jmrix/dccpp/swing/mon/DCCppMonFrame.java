@@ -9,9 +9,14 @@ import jmri.jmrix.dccpp.serial.SerialDCCppPacketizer;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.*;
+
+import jmri.util.swing.WrapLayout;
 
 /**
  * Frame displaying (and logging) DCCpp command messages.
@@ -41,7 +46,7 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
     public DCCppMonFrame(DCCppSystemConnectionMemo memo) {
         super();
         _memo = memo;
-        // DCC-EX commands are natively bracketed with <...>; match that style in the raw display.
+        // Match DCC-EX's native <...> command syntax for the raw display.
         rawOpenBracket = "<";
         rawCloseBracket = ">";
     }
@@ -209,37 +214,57 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
 
     @Override
     protected JPanel getActionButtonsPanel() {
-        // Relocated into getCheckBoxPanel below so action and log buttons share one row.
-        return new JPanel();
+        // Combine action + log buttons into one wrapping row so they stay grouped.
+        super.getActionButtonsPanel(); // wire listeners/tooltips on the shared buttons
+        super.getLogToFilePanel();
+        JPanel p = new JPanel(new WrapLayout(FlowLayout.CENTER, 5, 0));
+        p.add(clearButton);
+        p.add(freezeButton);
+        p.add(openFileChooserButton);
+        p.add(startLogButton);
+        p.add(stopLogButton);
+        return p;
     }
 
     @Override
     protected JPanel getLogToFilePanel() {
-        // Relocated into getCheckBoxPanel below so action and log buttons share one row.
-        return new JPanel();
+        return new JPanel(); // log buttons live in getActionButtonsPanel
     }
 
     @Override
     public JPanel getCheckBoxPanel(){
-        JPanel checks = super.getCheckBoxPanel();
-        checks.add(displayTranslatedCheckBox,0);
+        super.getCheckBoxPanel(); // wire listeners/tooltips on the shared checkboxes
         displayTranslatedCheckBox.addActionListener(this::displayTranslatedEvent);
         rawCheckBox.addActionListener(this::rawCheckBoxEvent);
-
         displayTranslatedCheckBox.setSelected(!userPrefs.getSimplePreferenceState(doNotDisplayTranslatedCheck));
-        rawCheckBoxEvent(null); // if neither raw nor translated selected, display translated.
+        rawCheckBoxEvent(null); // if neither raw nor translated selected, force translated on.
 
-        // Row 1: action buttons (Clear / Freeze) + log buttons (Choose log file / Start logging).
-        JPanel buttons = new JPanel();
-        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
-        buttons.add(super.getActionButtonsPanel());
-        buttons.add(super.getLogToFilePanel());
+        JPanel p = new JPanel(new WrapLayout(FlowLayout.CENTER, 5, 0));
+        p.add(displayTranslatedCheckBox);
+        p.add(rawCheckBox);
+        p.add(timeCheckBox);
+        p.add(alwaysOnTopCheckBox);
+        p.add(autoScrollCheckBox);
+        return p;
+    }
 
-        JPanel stacked = new JPanel();
-        stacked.setLayout(new BoxLayout(stacked, BoxLayout.Y_AXIS));
-        stacked.add(buttons);
-        stacked.add(checks);
-        return stacked;
+    @Override
+    protected boolean useStackedControlsLayout() {
+        return true;
+    }
+
+    @Override
+    public void initComponents() {
+        super.initComponents();
+        // BoxLayout's first pass after a resize computes child preferred-heights
+        // with the stale widths, so WrapLayout rows can be one pass out of date.
+        // Defer a second revalidate to settle layout using the new widths.
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                SwingUtilities.invokeLater(DCCppMonFrame.this::revalidate);
+            }
+        });
     }
 
     @Override

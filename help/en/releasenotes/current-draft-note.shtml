@@ -36,10 +36,10 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>DCC-EX Traffic Monitor: the action buttons (Clear / Freeze) and log buttons
-                (Choose log file&hellip; / Start logging) now share a single row above the
-                checkboxes, so narrowing the window no longer clips the checkboxes off the visible
-                area (<a href="https://github.com/JMRI/JMRI/issues/15134">#15134</a>).
+                <li>DCC-EX Traffic Monitor: controls now wrap onto additional rows when the
+                window is narrowed and the controls area grows upward to keep everything visible,
+                rather than clipping checkboxes off the bottom
+                (<a href="https://github.com/JMRI/JMRI/issues/15134">#15134</a>).
                 The window title and menu action label also now read &quot;DCC-EX&quot; rather
                 than &quot;DCC++&quot;.</li>
                 <li>DCC-EX Traffic Monitor: traffic lines now show an explicit &quot;TX:&quot; or
