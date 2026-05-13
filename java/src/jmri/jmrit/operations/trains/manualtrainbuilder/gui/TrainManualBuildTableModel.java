@@ -65,9 +65,6 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
     Train _train;
 
     private void updateList() {
-        if (_manualBuild == null) {
-            return;
-        }
         // first, remove listeners from the individual objects
         removePropertyChangeManualBuildItems();
         _list = _manualBuild.getItemsBySequenceList();
@@ -93,9 +90,7 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
         _train = InstanceManager.getDefault(TrainManager.class).getTrainById(_manualBuild.getTrainId());
 
         // add property listeners
-        if (_manualBuild != null) {
-            _manualBuild.addPropertyChangeListener(this);
-        }
+        _manualBuild.addPropertyChangeListener(this);
         initTable();
     }
 
