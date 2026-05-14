@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.trains.csv.TrainCsvManifest;
+import jmri.jmrit.operations.trains.manualtrainbuilder.*;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -103,6 +106,7 @@ public class TrainBuilder extends TrainBuilderCars {
         blockCarsFromStaging(); // block cars from staging
         showTracksNotQuickService(); // list tracks that aren't using quick service
 
+        manualBuild(); // adds cars to train based on user's requests
         addCarsToTrain(); // finds and adds cars to the train (main routine)
 
         checkStuckCarsInStaging(); // determine if cars are stuck in staging
@@ -138,8 +142,8 @@ public class TrainBuilder extends TrainBuilderCars {
     /**
      * Figures out if the train terminates into staging, and if true, sets the
      * termination track. Note if the train is returning back to the same track
-     * in staging getTerminateStagingTrack() is null, and is loaded later when the
-     * departure track is determined.
+     * in staging getTerminateStagingTrack() is null, and is loaded later when
+     * the departure track is determined.
      * 
      * @throws BuildFailedException if staging track can't be found
      */
@@ -154,7 +158,7 @@ public class TrainBuilder extends TrainBuilderCars {
             if (stagingTracksTerminate.size() > 1 && Setup.isStagingPromptToEnabled()) {
                 setTerminateStagingTrack(promptToStagingDialog());
                 setStartTime(new Date()); // reset build time since user can take
-                                         // awhile to pick
+                                          // awhile to pick
             } else {
                 // is this train returning to the same staging in aggressive
                 // mode?
@@ -228,12 +232,14 @@ public class TrainBuilder extends TrainBuilderCars {
                     // is the departure track available?
                     if (!checkDepartureStagingTrack(track)) {
                         addLine(SEVEN,
-                                Bundle.getMessage("buildStagingTrackRestriction", track.getName(), getTrain().getName()));
+                                Bundle.getMessage("buildStagingTrackRestriction", track.getName(),
+                                        getTrain().getName()));
                         continue;
                     }
                     setDepartureStagingTrack(track);
                     // try each departure track for the required engines
-                    if (getEngines(getTrain().getNumberEngines(), getTrain().getEngineModel(), getTrain().getEngineRoad(),
+                    if (getEngines(getTrain().getNumberEngines(), getTrain().getEngineModel(),
+                            getTrain().getEngineRoad(),
                             getTrain().getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
                         addLine(SEVEN, Bundle.getMessage("buildDoneAssignEnginesStaging"));
                         break; // done!
@@ -243,7 +249,8 @@ public class TrainBuilder extends TrainBuilderCars {
             }
             if (getDepartureStagingTrack() == null) {
                 showTrainRequirements();
-                throw new BuildFailedException(Bundle.getMessage("buildErrorStagingEmpty", getDepartureLocation().getName()));
+                throw new BuildFailedException(
+                        Bundle.getMessage("buildErrorStagingEmpty", getDepartureLocation().getName()));
             }
         }
         getTrain().setTerminationTrack(getTerminateStagingTrack());
@@ -279,7 +286,8 @@ public class TrainBuilder extends TrainBuilderCars {
         if ((getTrain().getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE &&
                 getTrain().getThirdLegStartRouteLocation() != null &&
                 getTrain().getTrainTerminatesRouteLocation() != null) {
-            getCaboose(getTrain().getThirdLegCabooseRoad(), _thirdLeadEngine, getTrain().getThirdLegStartRouteLocation(),
+            getCaboose(getTrain().getThirdLegCabooseRoad(), _thirdLeadEngine,
+                    getTrain().getThirdLegStartRouteLocation(),
                     getTrain().getTrainTerminatesRouteLocation(), true);
         }
 
@@ -287,14 +295,118 @@ public class TrainBuilder extends TrainBuilderCars {
         if ((getTrain().getSecondLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE &&
                 getTrain().getSecondLegStartRouteLocation() != null &&
                 cabooseOrFredTerminatesSecondLeg != null) {
-            getCaboose(getTrain().getSecondLegCabooseRoad(), _secondLeadEngine, getTrain().getSecondLegStartRouteLocation(),
+            getCaboose(getTrain().getSecondLegCabooseRoad(), _secondLeadEngine,
+                    getTrain().getSecondLegStartRouteLocation(),
                     cabooseOrFredTerminatesSecondLeg, true);
         }
 
         // departure caboose or car with FRED
         getCaboose(getTrain().getCabooseRoad(), getTrain().getLeadEngine(), getTrain().getTrainDepartsRouteLocation(),
                 cabooseOrFredTerminatesFirstLeg, getTrain().isCabooseNeeded());
-        getCarWithFred(getTrain().getCabooseRoad(), getTrain().getTrainDepartsRouteLocation(), cabooseOrFredTerminatesFirstLeg);
+        getCarWithFred(getTrain().getCabooseRoad(), getTrain().getTrainDepartsRouteLocation(),
+                cabooseOrFredTerminatesFirstLeg);
+    }
+
+    /*
+     * User can manually assigns cars that don't have a train, destination or
+     * final destination. Build items can request car type, road, load, route
+     * location, track, and pick up day. Build items can also provide a final
+     * destination, which allows for routing if needed.
+     */
+    private void manualBuild() throws BuildFailedException {
+        // determine if there's a manual build available
+        TrainManualBuildManager manualBuildManager = InstanceManager.getDefault(TrainManualBuildManager.class);
+        TrainManualBuild manualBuild = manualBuildManager.getManualBuildByTrainId(getTrain().getId());
+        if (manualBuild == null) {
+            return;
+        }
+        addLine(ONE, Bundle.getMessage("mbuildFound", getTrain().getName()));
+        for (TrainManualBuildItem mbi : manualBuild.getItemsBySequenceList()) {
+            addLine(THREE,
+                    Bundle.getMessage("mbuildRequest", mbi.getTypeName(), mbi.getRoadName(), mbi.getLoadName(),
+                            mbi.getLocationName(), mbi.getLocationTrackName(), mbi.getDestinationName(),
+                            mbi.getDestinationTrackName(), mbi.getTrainScheduleName(), mbi.getCount()));
+            // the number of cars requested by this line item
+            int count = mbi.getCount();
+            for (_carIndex = 0; _carIndex < getCarList().size(); _carIndex++) {
+                Car car = getCarList().get(_carIndex);
+                // find a car
+                if (car.getTrain() != null) {
+                    log.debug("Car ({}) is assigned to train ({})", car.toString(), car.getTrain().getName());
+                    continue;
+                }
+                if (car.getDestination() != null) {
+                    log.debug("Car ({}) has destination ({})", car.toString(), car.getDestination().getName());
+                    continue;
+                }
+                if (car.getFinalDestination() != null) {
+                    log.debug("Car ({}) has final destination ({})", car.toString(),
+                            car.getFinalDestination().getName());
+                    continue;
+                }
+                if (!mbi.getTypeName().equals(Car.NONE) && !car.getTypeName().equals(mbi.getTypeName())) {
+                    continue;
+                }
+                if (!mbi.getRoadName().equals(Car.NONE) && !car.getRoadName().equals(mbi.getRoadName())) {
+                    continue;
+                }
+                if (!mbi.getLoadName().equals(Car.NONE) && !car.getLoadName().equals(mbi.getLoadName())) {
+                    continue;
+                }
+                if (mbi.getRouteLocation() != null && car.getLocation() != mbi.getRouteLocation().getLocation()) {
+                    continue;
+                }
+                if (mbi.getLocationTrack() != null && car.getTrack() != mbi.getLocationTrack()) {
+                    continue;
+                }
+                // pick up day
+                if (trainScheduleManager.getActiveSchedule() != null &&
+                        !mbi.getTrainScheduleName().equals(TrainManualBuildItem.NONE) &&
+                        !trainScheduleManager.getActiveSchedule().getId().equals(mbi.getTrainScheduleId())) {
+                    continue;
+                }
+                addLine(FIVE,
+                        Bundle.getMessage("mbuildFoundCar", car.getTypeName(), car.getRoadName(), car.getLoadName(),
+                                car.getLocationName(), car.getTrackName()));
+                // there could be a an optional destination
+                car.setFinalDestination(mbi.getDestination());
+                car.setFinalDestinationTrack(mbi.getDestinationTrack());
+                // case where there's a route location
+                if (mbi.getRouteLocation() != null) {
+                    if (checkRouteLocation(mbi.getRouteLocation())) {
+                        findDestinationsFromLocation(mbi.getRouteLocation(), car, false);
+                    }
+                } else
+                    for (RouteLocation rl : getRouteList()) {
+                        // start looking at car's location
+                        if (rl.getLocation() == car.getLocation()) {
+                            if (checkRouteLocation(rl)) {
+                                findDestinationsFromLocation(rl, car, false);
+                                break;
+                            }
+                        }
+                    }
+                // if not assigned to train, clear final destination
+                if (car.getTrain() == null) {
+                    car.setFinalDestination(null);
+                    car.setFinalDestinationTrack(null);
+                } else {
+                    if (--count <= 0) {
+                        break; // done
+                    }
+                }
+            }
+            if (count > 0 && mbi.isFailEnabled()) {
+                throw new BuildFailedException(
+                        Bundle.getMessage("mbuildFail", manualBuild.getTrainName(), mbi.getId()));
+            }
+            else if (count > 0 && mbi.isWarnEnabled()) {
+                _warnings++;
+                addLine(ONE, Bundle.getMessage("mbuildWarn", manualBuild.getTrainName(), mbi.getId()));
+            }
+        }
+        addLine(ONE, Bundle.getMessage("mbuildDone"));
+        addLine(ONE, BLANK_LINE); // end of manual build
     }
 
     /**
@@ -307,7 +419,8 @@ public class TrainBuilder extends TrainBuilderCars {
      */
     private void addCarsToTrain() throws BuildFailedException {
         addLine(THREE,
-                Bundle.getMessage("buildTrain", getTrain().getNumberCarsRequested(), getTrain().getName(), getCarList().size()));
+                Bundle.getMessage("buildTrain", getTrain().getNumberCarsRequested(), getTrain().getName(),
+                        getCarList().size()));
 
         if (Setup.isBuildAggressive() && !getTrain().isBuildTrainNormalEnabled()) {
             // perform a multiple pass build for this train, default is two
@@ -375,26 +488,10 @@ public class TrainBuilder extends TrainBuilderCars {
         // now go through each location starting at departure and place cars as
         // requested
         for (RouteLocation rl : getRouteList()) {
-            if (getTrain().isLocationSkipped(rl)) {
-                addLine(ONE,
-                        Bundle.getMessage("buildLocSkipped", rl.getName(), rl.getId(), getTrain().getName()));
+            if (!checkRouteLocation(rl)) {
                 continue;
             }
-            if (!rl.isPickUpAllowed() && !rl.isLocalMovesAllowed()) {
-                addLine(ONE,
-                        Bundle.getMessage("buildLocNoPickups", getTrain().getRoute().getName(), rl.getId(), rl.getName()));
-                continue;
-            }
-            // no pick ups from staging unless at the start of the train's route
-            if (rl != getTrain().getTrainDepartsRouteLocation() && rl.getLocation().isStaging()) {
-                addLine(ONE, Bundle.getMessage("buildNoPickupsFromStaging", rl.getName()));
-                continue;
-            }
-            // the next check provides a build report message if there's an
-            // issue with the train direction
-            if (!checkPickUpTrainDirection(rl)) {
-                continue;
-            }
+
             _completedMoves = 0; // moves completed for this location
             _reqNumOfMoves = rl.getMaxCarMoves() - rl.getCarMoves();
 
@@ -453,7 +550,9 @@ public class TrainBuilder extends TrainBuilderCars {
                     addLine(SEVEN, BLANK_LINE);
                 }
             }
-            if (rl == getTrain().getTrainDepartsRouteLocation() && pass == Setup.getNumberPasses() && isCarStuckStaging()) {
+            if (rl == getTrain().getTrainDepartsRouteLocation() &&
+                    pass == Setup.getNumberPasses() &&
+                    isCarStuckStaging()) {
                 return; // report ASAP that there are stuck cars
             }
             addLine(ONE,
@@ -491,7 +590,9 @@ public class TrainBuilder extends TrainBuilderCars {
         new TrainManifest(getTrain());
         try {
             new JsonManifest(getTrain()).build();
-        } catch (IOException | RuntimeException ex) {
+        } catch (
+                IOException |
+                RuntimeException ex) {
             log.error("Unable to create JSON manifest: {}", ex.getLocalizedMessage());
             log.error("JSON manifest stack trace:", ex);
             throw new BuildFailedException(ex);

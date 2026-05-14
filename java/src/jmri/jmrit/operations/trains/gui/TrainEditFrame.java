@@ -19,6 +19,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.manualtrainbuilder.gui.TrainManualBuildAction;
 import jmri.jmrit.operations.trains.tools.*;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.swing.JmriJOptionPane;
@@ -396,6 +397,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         toolMenu.add(new TrainLoadOptionsAction(this));
         toolMenu.add(new TrainRoadOptionsAction(this));
         toolMenu.add(new TrainManifestOptionAction(this));
+        toolMenu.addSeparator();
+        toolMenu.add(new TrainManualBuildAction(_train));
         toolMenu.addSeparator();
         toolMenu.add(new TrainCopyAction(_train));
         toolMenu.addSeparator();
