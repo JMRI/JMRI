@@ -4,7 +4,7 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
- * Create a menu containing the DCC++ specific tools.
+ * Create a menu containing the DCC-EX specific tools.
  *
  * @author Paul Bender Copyright 2003,2010
  * @author Mark Underwood Copyright 2015

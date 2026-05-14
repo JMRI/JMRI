@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to DCC++ Base Station via Ethernet. NOTES: By default,
+ * Provide access to DCC-EX Base Station via Ethernet. NOTES: By default,
  * the LIUSBEthernet has an IP address of 192.168.0.200 and listens to port
  * 5550. The LIUSBEtherenet disconnects both ports if there is 60 seconds of
  * inactivity on the port.
@@ -112,7 +112,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         keepAliveTimer = new java.util.TimerTask(){
                 @Override
                 public void run() {
-                    // When the timer times out, send a heartbeat (status request on DCC++, max num slots request on DCC-EX
+                    // When the timer times out, send a heartbeat (status request on DCC-EX, max num slots request on DCC-EX
                     DCCppTrafficController tc = DCCppEthernetAdapter.this.getSystemConnectionMemo().getDCCppTrafficController();
                     DCCppCommandStation cs = tc.getCommandStation();
                     if (cs.isMaxNumSlotsMsgSupported()) {
@@ -135,7 +135,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
      */
     @Override
     public void setMdnsConfigure(boolean autoconfig) {
-        log.debug("Setting DCC++ Ethernet adapter autoconfiguration to: {}", autoconfig);
+        log.debug("Setting DCC-EX Ethernet adapter autoconfiguration to: {}", autoconfig);
         mDNSConfigure = autoconfig;
     }
     
@@ -156,7 +156,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
      */
     @Override
     public void autoConfigure() {
-        log.info("Configuring DCC++ interface via JmDNS");
+        log.info("Configuring DCC-EX interface via JmDNS");
         if (getHostName().equals(DEFAULT_IP_ADDRESS)) {
             setHostName(""); // reset the hostname to none.
         }

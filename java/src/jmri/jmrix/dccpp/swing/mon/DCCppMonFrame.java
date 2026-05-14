@@ -128,7 +128,7 @@ public class DCCppMonFrame extends jmri.jmrix.AbstractMonFrame implements DCCppL
 
     @Override
     public void message(DCCppReply l) {
-        // receive a DCC++ message and log it
+        // receive a DCC-EX message and log it
         // display the raw data if requested
         if (log.isDebugEnabled()) {
             log.debug("Message in Monitor: '{}' opcode {}", l, Character.toString(l.getOpCodeChar()));

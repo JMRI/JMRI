@@ -28,12 +28,12 @@ import org.slf4j.LoggerFactory;
 import edu.umd.cs.findbugs.annotations.*;
 
 /**
- * Provide access to a simulated DCC++ system.
+ * Provide access to a simulated DCC-EX system.
  *
  * Currently, the DCCppSimulator reacts to commands sent from the user interface
  * with messages an appropriate reply message.
  *
- * NOTE: Most DCC++ commands are still unsupported in this implementation.
+ * NOTE: Most DCC-EX commands are still unsupported in this implementation.
  *
  * Normally controlled by the dccpp.DCCppSimulator.DCCppSimulatorFrame class.
  *
@@ -149,7 +149,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             keepAliveTimer = new java.util.TimerTask(){
                 @Override
                 public void run() {
-                    // When the timer times out, send a heartbeat (status request on DCC++, max num slots request on DCC-EX
+                    // When the timer times out, send a heartbeat (status request on DCC-EX, max num slots request on DCC-EX
                     DCCppTrafficController tc = DCCppSimulatorAdapter.this.getSystemConnectionMemo().getDCCppTrafficController();
                     DCCppCommandStation cs = tc.getCommandStation();
                     if (cs.isMaxNumSlotsMsgSupported()) {
@@ -686,7 +686,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         return (reply);
     }
 
-    //calc speedByte value matching DCC++EX, then store it, so it can be used in the locoState replies
+    //calc speedByte value matching DCC-EXEX, then store it, so it can be used in the locoState replies
     private void storeLocoSpeedByte(int locoId, int speed, int dir) {
         if (speed>0) speed++; //add 1 to speed if not zero or estop
         if (speed<0) speed = 1; //eStop is actually 1
@@ -696,7 +696,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         if (!locoFunctions.containsKey(locoId)) locoFunctions.put(locoId, 0); //init functions if not set
     }
 
-    //stores the calculated value of the functionsByte as used by DCC++EX
+    //stores the calculated value of the functionsByte as used by DCC-EXEX
     private void storeLocoFunction(int locoId, int function, int state) {
         int functions = 0; //init functions to all off if not stored
         if (locoFunctions.containsKey(locoId))

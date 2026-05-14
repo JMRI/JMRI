@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An extension of the DCCppPacketizer to handle the device specific
- * requirements of the DCC++ Ethernet.
+ * requirements of the DCC-EX Ethernet.
  * <p>
  * In particular, DCCppEthernetPacketizer counts the number of commands
  * received.
@@ -24,7 +24,7 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
 
     public DCCppEthernetPacketizer(jmri.jmrix.dccpp.DCCppCommandStation pCommandStation) {
         super(pCommandStation);
-        log.debug("Loading DCC++ Ethernet Extension to DCCppPacketizer");
+        log.debug("Loading DCC-EX Ethernet Extension to DCCppPacketizer");
     }
 
     /**
