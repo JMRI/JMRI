@@ -373,19 +373,34 @@ public class TrainBuilder extends TrainBuilderCars {
                 car.setFinalDestinationTrack(mbi.getDestinationTrack());
                 // case where there's a route location
                 if (mbi.getRouteLocation() != null) {
-                    if (checkRouteLocation(mbi.getRouteLocation())) {
+                    if (!checkRouteLocationMoves(mbi.getRouteLocation(), car)) {
+                        continue;
+                    }
+                    if (!checkRouteLocation(mbi.getRouteLocation())) {
+                        addLine(ONE, BLANK_LINE);
+                        continue;
+                    } else {
                         findDestinationsFromLocation(mbi.getRouteLocation(), car, false);
                     }
-                } else
+                } else {
                     for (RouteLocation rl : getRouteList()) {
                         // start looking at car's location
                         if (rl.getLocation() == car.getLocation()) {
-                            if (checkRouteLocation(rl)) {
+                            if (!checkRouteLocationMoves(rl, car)) {
+                                continue;
+                            }
+                            if (!checkRouteLocation(rl)) {
+                                addLine(ONE, BLANK_LINE);
+                                continue;
+                            } else {
                                 findDestinationsFromLocation(rl, car, false);
-                                break;
+                                if (car.getTrain() != null) {
+                                    break; // done
+                                }
                             }
                         }
                     }
+                }
                 // if not assigned to train, clear final destination
                 if (car.getTrain() == null) {
                     car.setFinalDestination(null);
@@ -399,14 +414,27 @@ public class TrainBuilder extends TrainBuilderCars {
             if (count > 0 && mbi.isFailEnabled()) {
                 throw new BuildFailedException(
                         Bundle.getMessage("mbuildFail", manualBuild.getTrainName(), mbi.getId()));
-            }
-            else if (count > 0 && mbi.isWarnEnabled()) {
+            } else if (count > 0 && mbi.isWarnEnabled()) {
                 _warnings++;
                 addLine(ONE, Bundle.getMessage("mbuildWarn", manualBuild.getTrainName(), mbi.getId()));
             }
         }
         addLine(ONE, Bundle.getMessage("mbuildDone"));
         addLine(ONE, BLANK_LINE); // end of manual build
+    }
+
+    /*
+     * returns true if there are moves available
+     */
+    private boolean checkRouteLocationMoves(RouteLocation rl, Car car) {
+        if (rl.getCarMoves() < rl.getMaxCarMoves()) {
+            return true;
+        }
+        addLine(FIVE, Bundle.getMessage("mbuildRouteLocationMoves", rl.getName(), rl.getId(), rl.getMaxCarMoves(),
+                rl.getMaxCarMoves() - rl.getCarMoves()));
+        addLine(FIVE, Bundle.getMessage("buildNoDestForCar", car.toString()));
+        addLine(FIVE, BLANK_LINE);
+        return false;
     }
 
     /**

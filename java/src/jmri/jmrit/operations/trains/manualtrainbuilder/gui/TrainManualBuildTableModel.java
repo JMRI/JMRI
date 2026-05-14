@@ -121,6 +121,8 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
         _table.getColumnModel().getColumn(DEST_TRACK_COLUMN).setPreferredWidth(130);
         _table.getColumnModel().getColumn(PICKUP_DAY_COLUMN).setPreferredWidth(90);
         _table.getColumnModel().getColumn(COUNT_COLUMN).setPreferredWidth(45);
+        _table.getColumnModel().getColumn(WARN_COLUMN).setPreferredWidth(45);
+        _table.getColumnModel().getColumn(FAIL_COLUMN).setPreferredWidth(45);
         _table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         _table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         _table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
@@ -313,10 +315,10 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
                 setCount(value, mbi);
                 break;
             case WARN_COLUMN:
-                mbi.setWarnEnabled(((Boolean) value).booleanValue());
+                setWarn(value, mbi);
                 break;
             case FAIL_COLUMN:
-                mbi.setFailEnabled(((Boolean) value).booleanValue());
+                setFail(value, mbi);
                 break;
             case UP_COLUMN:
                 moveUpManualBuildItem(row);
@@ -331,15 +333,6 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
                 break;
         }
     }
-
-    //    @Override
-    //    protected Color getForegroundColor(int row) {
-    //        ManualBuildItem si = _list.get(row);
-    //        if (!_manualBuild.checkManualBuildItemValid(si, _track).equals(ManualBuild.SCHEDULE_OKAY)) {
-    //            return Color.red;
-    //        }
-    //        return super.getForegroundColor(row);
-    //    }
 
     private JComboBox<String> getTypeComboBox(TrainManualBuildItem mbi) {
         JComboBox<String> cb = new JComboBox<>();
@@ -397,6 +390,10 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
         }
         filterRouteLocations(cb, mbi.getTypeName());
         cb.setSelectedItem(mbi.getRouteLocation());
+        // fix if route location no longer exists
+        if (cb.getSelectedItem() != mbi.getRouteLocation()) {
+            mbi.setRouteLocation(null);
+        }
         return cb;
     }
 
@@ -409,6 +406,10 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
             filterTracks(loc, cb, mbi.getTypeName(), mbi.getRoadName(), mbi.getLoadName());
         }
         cb.setSelectedItem(mbi.getLocationTrack());
+        // fix if track no longer exists
+        if (cb.getSelectedItem() != mbi.getLocationTrack()) {
+            mbi.setLocationTrack(null);
+        }
         return cb;
     }
 
@@ -416,11 +417,9 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
         JComboBox<Location> cb = InstanceManager.getDefault(LocationManager.class).getComboBox();
         filterLocations(cb, mbi.getTypeName());
         cb.setSelectedItem(mbi.getDestination());
-        if (mbi.getDestination() != null && cb.getSelectedIndex() == -1) {
-            // user deleted destination, this is self correcting, when user restarts program, destination
-            // assignment will be gone.
-            cb.addItem(mbi.getDestination());
-            cb.setSelectedItem(mbi.getDestination());
+        // fix if destination no longer exists
+        if (cb.getSelectedItem() != mbi.getDestination()) {
+            mbi.setDestination(null);
         }
         return cb;
     }
@@ -434,6 +433,10 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
             filterTracks(dest, cb, mbi.getTypeName(), mbi.getRoadName(), mbi.getLoadName());
         }
         cb.setSelectedItem(mbi.getDestinationTrack());
+        // fix if track no longer exists
+        if (cb.getSelectedItem() != mbi.getDestinationTrack()) {
+            mbi.setDestinationTrack(null);
+        }
         return cb;
     }
 
@@ -442,16 +445,11 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
         TrainSchedule sch =
                 InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(mbi.getTrainScheduleId());
         cb.setSelectedItem(sch);
-        return cb;
-    }
-
-    private void setPickupDay(Object value, TrainManualBuildItem mbi) {
-        Object obj = ((JComboBox<?>) value).getSelectedItem();
-        if (obj == null) {
-            mbi.setTrainScheduleId(TrainManualBuildItem.NONE);
-        } else if (obj.getClass().equals(TrainSchedule.class)) {
-            mbi.setTrainScheduleId(((TrainSchedule) obj).getId());
+        // fix if schedule no longer exists
+        if (sch == null) {
+            mbi.setTrainScheduleId(NONE);
         }
+        return cb;
     }
 
     private void setType(Object value, TrainManualBuildItem mbi) {
@@ -469,15 +467,10 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
         mbi.setLoadName(load);
     }
 
-    private void setCount(Object value, TrainManualBuildItem mbi) {
-        mbi.setCount((int) value);
-    }
-
     private void setRouteLocation(Object value, TrainManualBuildItem mbi) {
         mbi.setLocationTrack(null);
         RouteLocation rl = (RouteLocation) ((JComboBox<?>) value).getSelectedItem();
         mbi.setRouteLocation(rl);
-        //        fireTableCellUpdated(row, DEST_TRACK_COLUMN);
     }
 
     private void setLocTrack(Object value, TrainManualBuildItem mbi) {
@@ -489,12 +482,38 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
         mbi.setDestinationTrack(null);
         Location dest = (Location) ((JComboBox<?>) value).getSelectedItem();
         mbi.setDestination(dest);
-        //        fireTableCellUpdated(row, DEST_TRACK_COLUMN);
     }
 
     private void setDestTrack(Object value, TrainManualBuildItem mbi) {
         Track track = (Track) ((JComboBox<?>) value).getSelectedItem();
         mbi.setDestinationTrack(track);
+    }
+
+    private void setPickupDay(Object value, TrainManualBuildItem mbi) {
+        Object obj = ((JComboBox<?>) value).getSelectedItem();
+        if (obj == null) {
+            mbi.setTrainScheduleId(TrainManualBuildItem.NONE);
+        } else if (obj.getClass().equals(TrainSchedule.class)) {
+            mbi.setTrainScheduleId(((TrainSchedule) obj).getId());
+        }
+    }
+
+    private void setCount(Object value, TrainManualBuildItem mbi) {
+        mbi.setCount((int) value);
+    }
+
+    private void setWarn(Object value, TrainManualBuildItem mbi) {
+        mbi.setWarnEnabled(((Boolean) value).booleanValue());
+        if (mbi.isWarnEnabled()) {
+            mbi.setFailEnabled(false);
+        }
+    }
+
+    private void setFail(Object value, TrainManualBuildItem mbi) {
+        mbi.setFailEnabled(((Boolean) value).booleanValue());
+        if (mbi.isFailEnabled()) {
+            mbi.setWarnEnabled(false);
+        }
     }
 
     private void moveUpManualBuildItem(int row) {
@@ -523,7 +542,7 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
         }
     }
 
-    // remove locations that don't service the car's type
+    // remove destinations that don't service the car's type
     private void filterLocations(JComboBox<Location> cb, String carType) {
         for (int i = 1; i < cb.getItemCount(); i++) {
             Location loc = cb.getItemAt(i);
@@ -557,13 +576,13 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
             updateList();
             fireTableDataChanged();
         }
-        if (e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
-            fireTableDataChanged();
-        }
+        //        if (e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY) ||
+        //                e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY) ||
+        //                e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY) ||
+        //                e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY) ||
+        //                e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
+        //            fireTableDataChanged();
+        //        }
         if (e.getSource().getClass().equals(TrainManualBuildItem.class)) {
             TrainManualBuildItem item = (TrainManualBuildItem) e.getSource();
             int row = _list.indexOf(item);

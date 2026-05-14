@@ -503,6 +503,7 @@
         <a id="Operations" name="Operations"></a>
         <ul>
           <li>Added the ability to set the additional line tab size for Manifest and Switch Lists. Useful when using the smaller page widths. See "More Print Options" in the help.</li>
+          <li>New feature, manual build for a train. See the OperationsPro help for more information.</li>
         </ul>
 
    <h3>Panel Editor</h3>
