@@ -94,11 +94,11 @@
             </li>
 
             <li>
-              <a href="dcc-ex/index.shtml">DCC-EX EX-CommandStation&lt; (arduino)</a>
+              <a href="dcc-ex/index.shtml">DCC-EX EX-CommandStation&lt; (Arduino)</a>
             </li>
 
             <li>
-              <a href="dccpp/index.shtml">DCC-EX&lt; (arduino)</a>
+              <a href="dccpp/index.shtml">DCC++&lt; (Arduino) - deprecated</a>
             </li>
 
             <li>
@@ -638,24 +638,7 @@
           </dt>
 
           <dd>
-            <p class="dl">Configure: <a href="dcc-ex/index.shtml">DCC-EX EX-CommandStation - Open Source Arduino Command Station</a>.</p>
-
-            <p>&nbsp;</p>
-          </dd>
-
-          <dt class="im">
-            <a href="https://www.youtube.com/channel/UCJmvQx-fe0OMAIH-_g-_rZw" target=
-            "_blank"><img src="dccpp/images/dccpp_logo.jpg" width="60" height="26" alt="DCC-EX"></a>
-          </dt>
-
-          <dt>
-            <a href="dccpp/index.shtml">DCC-EX</a>
-          </dt>
-
-          <dd>
-            <p class="dl">Configure: <a href="dccpp/index.shtml">DCC-EX Open Source Arduino Command
-            Station</a>.</p>
-
+            <p class="dl">Configure: <a href="dcc-ex/index.shtml">DCC-EX EX-CommandStation</a>.</p>
             <p>&nbsp;</p>
           </dd>
 
