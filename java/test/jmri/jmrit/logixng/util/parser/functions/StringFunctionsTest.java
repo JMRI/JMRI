@@ -70,6 +70,7 @@ public class StringFunctionsTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")  // Since this is a test class and not for production, it isn't a problem to suppress the warning. If the cast fails, the test will fail.
     public void testRegExFunction() throws JmriException {
         Function regexFunction = InstanceManager.getDefault(FunctionManager.class).get("regex");
         assertEquals( "regex", regexFunction.getName(), "strings matches");
