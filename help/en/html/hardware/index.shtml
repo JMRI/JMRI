@@ -98,7 +98,7 @@
             </li>
 
             <li>
-              <a href="dccpp/index.shtml">DCC++&lt; (arduino)</a>
+              <a href="dccpp/index.shtml">DCC-EX&lt; (arduino)</a>
             </li>
 
             <li>
@@ -645,15 +645,15 @@
 
           <dt class="im">
             <a href="https://www.youtube.com/channel/UCJmvQx-fe0OMAIH-_g-_rZw" target=
-            "_blank"><img src="dccpp/images/dccpp_logo.jpg" width="60" height="26" alt="DCC++"></a>
+            "_blank"><img src="dccpp/images/dccpp_logo.jpg" width="60" height="26" alt="DCC-EX"></a>
           </dt>
 
           <dt>
-            <a href="dccpp/index.shtml">DCC++</a>
+            <a href="dccpp/index.shtml">DCC-EX</a>
           </dt>
 
           <dd>
-            <p class="dl">Configure: <a href="dccpp/index.shtml">DCC++ Open Source Arduino Command
+            <p class="dl">Configure: <a href="dccpp/index.shtml">DCC-EX Open Source Arduino Command
             Station</a>.</p>
 
             <p>&nbsp;</p>
