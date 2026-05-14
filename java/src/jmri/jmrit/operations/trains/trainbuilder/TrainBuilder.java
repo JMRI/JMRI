@@ -323,9 +323,10 @@ public class TrainBuilder extends TrainBuilderCars {
         addLine(ONE, Bundle.getMessage("mbuildFound", getTrain().getName()));
         for (TrainManualBuildItem mbi : manualBuild.getItemsBySequenceList()) {
             addLine(THREE,
-                    Bundle.getMessage("mbuildRequest", mbi.getTypeName(), mbi.getRoadName(), mbi.getLoadName(),
-                            mbi.getLocationName(), mbi.getLocationTrackName(), mbi.getDestinationName(),
-                            mbi.getDestinationTrackName(), mbi.getTrainScheduleName(), mbi.getCount()));
+                    Bundle.getMessage("mbuildRequest", mbi.getId(), mbi.getTypeName(), mbi.getRoadName(),
+                            mbi.getLoadName(), mbi.getLocationName(), mbi.getLocationTrackName(),
+                            mbi.getDestinationName(), mbi.getDestinationTrackName(), mbi.getTrainScheduleName(),
+                            mbi.getCount()));
             // the number of cars requested by this line item
             int count = mbi.getCount();
             for (_carIndex = 0; _carIndex < getCarList().size(); _carIndex++) {
@@ -373,31 +374,15 @@ public class TrainBuilder extends TrainBuilderCars {
                 car.setFinalDestinationTrack(mbi.getDestinationTrack());
                 // case where there's a route location
                 if (mbi.getRouteLocation() != null) {
-                    if (!checkRouteLocationMoves(mbi.getRouteLocation(), car)) {
-                        continue;
-                    }
-                    if (!checkRouteLocation(mbi.getRouteLocation())) {
-                        addLine(ONE, BLANK_LINE);
-                        continue;
-                    } else {
-                        findDestinationsFromLocation(mbi.getRouteLocation(), car, false);
-                    }
+                    findDestinationForCar(mbi.getRouteLocation(), car);
                 } else {
                     for (RouteLocation rl : getRouteList()) {
                         // start looking at car's location
                         if (rl.getLocation() == car.getLocation()) {
-                            if (!checkRouteLocationMoves(rl, car)) {
-                                continue;
-                            }
-                            if (!checkRouteLocation(rl)) {
-                                addLine(ONE, BLANK_LINE);
-                                continue;
-                            } else {
-                                findDestinationsFromLocation(rl, car, false);
-                                if (car.getTrain() != null) {
-                                    break; // done
-                                }
-                            }
+                            findDestinationForCar(rl, car);
+                        }
+                        if (car.getTrain() != null) {
+                            break; // done
                         }
                     }
                 }
@@ -411,6 +396,11 @@ public class TrainBuilder extends TrainBuilderCars {
                     }
                 }
             }
+
+            addLine(THREE, Bundle.getMessage("mbuildCompleted", mbi.getId(), manualBuild.getTrainName(),
+                    mbi.getCount() - count, mbi.getCount()));
+            addLine(THREE, BLANK_LINE);
+
             if (count > 0 && mbi.isFailEnabled()) {
                 throw new BuildFailedException(
                         Bundle.getMessage("mbuildFail", manualBuild.getTrainName(), mbi.getId()));
@@ -421,6 +411,18 @@ public class TrainBuilder extends TrainBuilderCars {
         }
         addLine(ONE, Bundle.getMessage("mbuildDone"));
         addLine(ONE, BLANK_LINE); // end of manual build
+    }
+
+    private boolean findDestinationForCar(RouteLocation rl, Car car) throws BuildFailedException {
+        if (!checkRouteLocationMoves(rl, car)) {
+            return false;
+        }
+        if (!checkRouteLocation(rl)) {
+            addLine(ONE, BLANK_LINE);
+            return false;
+        }
+        findDestinationsFromLocation(rl, car, false);
+        return true;
     }
 
     /*
