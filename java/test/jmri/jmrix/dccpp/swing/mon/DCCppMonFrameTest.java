@@ -49,6 +49,40 @@ public class DCCppMonFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     @Test
+    public void testDirectionMarkerAndBrackets() {
+
+        ThreadingUtil.runOnGUI(() -> {
+            frame.initComponents();
+            frame.setVisible(true);
+        });
+        JFrameOperator jfo = new JFrameOperator(frame);
+        JCheckBoxOperator raw = new JCheckBoxOperator(jfo, Bundle.getMessage("ButtonShowRaw"));
+        JCheckBoxOperator translation = new JCheckBoxOperator(jfo, Bundle.getMessage("ButtonShowTranslation"));
+        raw.setSelected(true);
+        translation.setSelected(true);
+
+        // TX: marker plus DCC-EX-native angle brackets in the raw section.
+        ((DCCppMonFrame)frame).message(DCCppMessage.makeWriteOpsModeCVMsg(17, 4, 3));
+        JUnitUtil.waitFor(() -> ((DCCppMonFrame)frame).getTextArea().getText().contains("TX: <"),
+                "TX message renders with TX: marker and < bracket");
+
+        // RX: marker on incoming replies.
+        ((DCCppMonFrame)frame).message(DCCppReply.parseDCCppReply("* test 12345 *"));
+        JUnitUtil.waitFor(() -> ((DCCppMonFrame)frame).getTextArea().getText().contains("RX: <"),
+                "RX reply renders with RX: marker and < bracket");
+
+        // Direction marker stays visible even when the translation is hidden.
+        translation.setSelected(false);
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonClearScreen")).doClick();
+        ((DCCppMonFrame)frame).message(DCCppMessage.makeWriteOpsModeCVMsg(20, 5, 7));
+        JUnitUtil.waitFor(() -> ((DCCppMonFrame)frame).getTextArea().getText().contains("TX: <"),
+                "TX: marker still shown when only the raw form is displayed");
+
+        jfo.requestClose();
+        jfo.waitClosed();
+    }
+
+    @Test
     public void testCheckBoxesButtonsVisible(){
 
         ThreadingUtil.runOnGUI(() -> {
