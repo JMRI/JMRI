@@ -30,7 +30,7 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
     private final Map<Integer, List<JLabel>> linesMap = new HashMap<>();
 
     public VirtualLCDFrame(DCCppSystemConnectionMemo memo) {
-        super(false, true); // Save window position but now window size
+        super(false, true); // Save window position but not window size
         _tc = memo.getDCCppTrafficController();
         _memo = memo;
         _tc.sendDCCppMessage(DCCppMessage.makeLCDRequestMsg(), null);
@@ -101,7 +101,7 @@ public class VirtualLCDFrame extends JmriJFrame implements DCCppListener  {
                 log.warn("Received LCD message for line {}, but configured for TOTALLINES limit of {}",
                             lineNumber, TOTALLINES-1);
             }
-            log.debug("Received LCD message for display# {}, only display 0 supported at this time.", displayNumber);
+            log.debug("Received LCD message for display# {}.", displayNumber);
         }
     }
 
