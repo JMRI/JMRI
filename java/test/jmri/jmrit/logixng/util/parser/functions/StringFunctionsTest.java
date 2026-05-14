@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.util.parser.functions;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -66,6 +67,70 @@ public class StringFunctionsTest {
                         new Token(TokenType.NONE, "Number: %03d, String: %7s, Float: %7.4f", 0)),
                         expr12, expr_str_HELLO, expr0_95)),
                 "Strings are equal");
+    }
+
+    @Test
+    public void testRegExFunction() throws JmriException {
+        Function regexFunction = InstanceManager.getDefault(FunctionManager.class).get("regex");
+        assertEquals( "regex", regexFunction.getName(), "strings matches");
+
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+
+        // Test unsupported token type
+        WrongNumberOfParametersException e = assertThrows( WrongNumberOfParametersException.class, () ->
+            regexFunction.calculate(symbolTable, getParameterList()),
+                "exception is thrown");
+        assertNotNull(e);
+
+        org.junit.jupiter.api.Assertions.assertNull(
+                regexFunction.calculate(symbolTable, getParameterList(
+                        new ExpressionNodeString(new Token(TokenType.NONE, "Hello", 0)),
+                        new ExpressionNodeString(new Token(TokenType.NONE, "abcdef", 0)))
+                ),
+                "Regex doesn't match");
+
+        assertArrayEquals(new String[]{},
+                ((List<String>)
+                regexFunction.calculate(symbolTable, getParameterList(
+                        new ExpressionNodeString(new Token(TokenType.NONE, ".*", 0)),
+                        new ExpressionNodeString(new Token(TokenType.NONE, "abcdef", 0)))
+                )).toArray(String[]::new),
+                "Regex matches");
+
+        assertArrayEquals(new String[]{"abcdef"},
+                ((List<String>)
+                regexFunction.calculate(symbolTable, getParameterList(
+                        new ExpressionNodeString(new Token(TokenType.NONE, "(.*)", 0)),
+                        new ExpressionNodeString(new Token(TokenType.NONE, "abcdef", 0)))
+                )).toArray(String[]::new),
+                "Regex matches");
+
+        assertArrayEquals(new String[]{"bc"},
+                ((List<String>)
+                regexFunction.calculate(symbolTable, getParameterList(
+                        new ExpressionNodeString(new Token(TokenType.NONE, ".*(bc).*", 0)),
+                        new ExpressionNodeString(new Token(TokenType.NONE, "abcdef", 0)))
+                )).toArray(String[]::new),
+                "Regex matches");
+
+        // This regex matches but hasn't any groups
+        assertArrayEquals(new String[]{},
+                ((List<String>)
+                regexFunction.calculate(symbolTable, getParameterList(
+                        new ExpressionNodeString(new Token(TokenType.NONE, "\\$\\d+\\(\\w\\)", 0)),
+                        new ExpressionNodeString(new Token(TokenType.NONE, "$9886(L)", 0)))
+                )).toArray(String[]::new),
+                "Regex matches");
+
+        // Same regex as above, but has groups
+        assertArrayEquals(new String[]{"9886", "L"},
+                ((List<String>)
+                regexFunction.calculate(symbolTable, getParameterList(
+                        new ExpressionNodeString(new Token(TokenType.NONE, "\\$(\\d+)\\((\\w)\\)", 0)),
+                        new ExpressionNodeString(new Token(TokenType.NONE, "$9886(L)", 0)))
+                )).toArray(String[]::new),
+                "Regex matches");
+
     }
 
     @Test
