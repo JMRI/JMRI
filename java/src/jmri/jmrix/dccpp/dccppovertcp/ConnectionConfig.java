@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Definition of objects to handle configuring a DCC-EXOverTcp layout
+ * Definition of objects to handle configuring a DCC-EX Over TCP layout
  * connection via a DCCppTcpDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003

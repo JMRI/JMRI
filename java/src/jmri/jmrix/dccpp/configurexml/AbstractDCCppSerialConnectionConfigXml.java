@@ -5,7 +5,7 @@ import jmri.jmrix.dccpp.AbstractDCCppSerialConnectionConfig;
 
 /**
  * Abstract base class to Handle XML persistance of layout connections 
- * by persistening an DCC-EXSerial Adapter (and connections). Note this is
+ * by persisting a DCC-EX Serial Adapter (and connections). Note this is
  * named as the XML version of an AbstractDCCppSerialConnectionConfig object,
  * but it's actually persisting the DCC-EX Serial Adapter.
  * <p>

@@ -686,7 +686,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         return (reply);
     }
 
-    //calc speedByte value matching DCC-EXEX, then store it, so it can be used in the locoState replies
+    //calc speedByte value matching DCC-EX, then store it, so it can be used in the locoState replies
     private void storeLocoSpeedByte(int locoId, int speed, int dir) {
         if (speed>0) speed++; //add 1 to speed if not zero or estop
         if (speed<0) speed = 1; //eStop is actually 1
@@ -696,7 +696,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         if (!locoFunctions.containsKey(locoId)) locoFunctions.put(locoId, 0); //init functions if not set
     }
 
-    //stores the calculated value of the functionsByte as used by DCC-EXEX
+    //stores the calculated value of the functionsByte as used by DCC-EX
     private void storeLocoFunction(int locoId, int function, int state) {
         int functions = 0; //init functions to all off if not stored
         if (locoFunctions.containsKey(locoId))

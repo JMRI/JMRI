@@ -21,7 +21,7 @@ public class ServerAction
     }
 
     public ServerAction() {
-        this("DCC-EXOverTcp Server");
+        this("DCC-EX Over TCP Server");
     }
 
     @Override
