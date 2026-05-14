@@ -55,7 +55,7 @@
       <ol>
         <li>Click the "Add" button</li>
 
-        <li>Make sure "DCC-EX" is selected in the System Name chooser. (Unfortunatly JMRI has not been updated yet to the EX-CommandStation name.)</li>
+        <li>Make sure "DCC-EX" is selected in the System Name chooser.</li>
 
         <li>Enter the turnout's DCC address in the Hardware Address box</li>
 
@@ -96,7 +96,7 @@
           </tr>
         </tbody>
       </table>
-      <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
+      <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
         based on information from the Hardware help pages
         by Egbert Broerse @silverailscolo July 2017 -->
 
@@ -131,7 +131,7 @@
       <ol>
         <li>Click the "Add" button</li>
 
-        <li>Make sure "DCC-EX" is selected in the System Name chooser. (Unfortunatly JMRI has not been updated yet to the DCC-EX team name.)</li>
+        <li>Make sure "DCC-EX" is selected in the System Name chooser.</li>
 
         <li>Enter the turnout's ID value in the Hardware Address box</li>
 
@@ -151,9 +151,9 @@
 
       <h3>3: Configure the Base Station</h3>
 
-      <p>Use the JMRI/DCC-EX "Configure Base Station" (4.6.x: "Configure Sensors & Turnouts") tool to store the turnout ID and DCC Address in the Base Station. (Unfortunatly JMRI has not been updated yet to the EX-CommandStation name.)</p>
+      <p>Use the JMRI/DCC-EX "Configure Base Station" (4.6.x: "Configure Sensors & Turnouts") tool to store the turnout ID and DCC Address in the Base Station.</p>
 
-      <p>Note: EX-CommandStation (DCC-EX) does not require requires the use of an Address/Subaddress pair, however JMRI has not been updated to support this. (A holdover from the old DCC-EX.) If your Stationary Decoder does not have subaddresses, take the address and divide by 4. The result is the address, the remainder is the subaddress. For example, Address 51 (no subaddress) is DCC-EX Address 12, Subaddress 3.</p>
+      <p>Note: EX-CommandStation (DCC-EX) does not require requires the use of an Address/Subaddress pair. However, JMRI has not been updated to support this. (A holdover from the old DCC++.) If your Stationary Decoder does not have subaddresses, take the address and divide by 4. The result is the address, the remainder is the subaddress. For example, Address 51 (no subaddress) is DCC-EX Address 12, Subaddress 3.</p>
 
       <ol>
         <li>From the DCC-EX Menu, choose "Configure Base Station" (or "Configure Sensors & Turnouts")</li>

@@ -154,7 +154,7 @@
 
       <h3>Configuring an Arduino for use as an EX-CommandStation</h3>
 
-      <p>In order to use an Arduino as an EX-CommandStation, you must first assemble the device  and download the EX-CommandStation firmware to it. Please follow the <a href=
+      <p>In order to use an Arduino as an EX-CommandStation, you must first assemble the device and download the EX-CommandStation firmware to it. Please follow the <a href=
       "#documentation">instructions linked below under Other Info</a>.</p>
 
       <h3>Connecting to an EX-CommandStation via USB</h3>
