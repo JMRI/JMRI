@@ -532,7 +532,10 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>The Continue/Quit dialog shown at startup when the configured roster
+            location is unavailable now treats dismissing the dialog (the close button)
+            as Quit, matching the behavior of the profile chooser. Previously the close
+            button fell through to Continue (issue #15148).</li>
         </ul>
 
     <h3>Routes</h3>
