@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2017-01-23 -->
+<!-- Restructured to dcc-ex/ canonical page 2026 -->
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - DCC-EX</title>
+  <meta name="Author" content="Mark Underwood">
+  <meta name="keywords" content="DCC-EX EX-CommandStation java model railroad JMRI install">
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h1>Prise en Charge Mat&eacute;riel&nbsp;: EX-CommandStation (par DCC-EX)</h1>
+
+      <ul class="snav">
+        <li><a href="#hardware">Mat&eacute;riel</a></li>
+        <li><a href="#Limitations">Limitations</a></li>
+        <li><a href="#connecting">Connexion</a></li>
+        <li><a href="#tools">Outils JMRI</a></li>
+        <li><a href="#documentation">Documentation</a></li>
+      </ul>
+
+      <h2 id="overview">Aper&ccedil;u</h2>
+
+      <p>L'EX-CommandStation de l'&eacute;quipe DCC-EX est une Centrale DCC Open Source bas&eacute;e sur Arduino
+      <a href="#documentation">&Agrave; faire Soi-M&ecirc;me</a>.</p>
+
+      <p>Dans JMRI, s&eacute;lectionnez &laquo;&nbsp;DCC-EX&nbsp;&raquo; comme fabricant pour communiquer avec
+      l'EX-CommandStation. JMRI prend &eacute;galement en charge les anciennes Centrales DCC++ via la m&ecirc;me
+      connexion DCC-EX &mdash; voir <a href="../dccpp/index.shtml">DCC++ (d&eacute;pr&eacute;ci&eacute;)</a> pour des
+      informations historiques sur le projet original.</p>
+
+      <p>Note&nbsp;: DCC-EX est un projet s&eacute;par&eacute; de JMRI. Pour des informations &agrave; jour et du
+      support, consultez le <a href="https://dcc-ex.com/">site web DCC-EX</a>, le <a href=
+      "https://discord.com/invite/y2sB4Fp">serveur Discord DCC-EX</a>, ou le <a href=
+      "https://github.com/DCC-EX">d&eacute;p&ocirc;t GitHub DCC-EX</a>. Les groupes de discussion JMRI
+      ne peuvent fournir qu'un support limit&eacute; pour DCC-EX lui-m&ecirc;me.</p>
+
+      <p>Fonctionnalit&eacute;s incluses&nbsp;:</p>
+
+      <ul>
+        <li>Conformit&eacute; parfaite avec les standards DCC NMRA</li>
+        <li>Adressage des locomotives sur 2 ou 4 octets</li>
+        <li>Commande simultan&eacute;e de plusieurs locomotives</li>
+        <li>Commande de vitesse 128 crans</li>
+        <li>Commande de toutes les fonctions F0-F28</li>
+        <li>Activation et D&eacute;sactivation des fonctions accessoires 0-2048</li>
+        <li>Programmation sur la Voie de Programmation
+          <ul>
+            <li>&Eacute;criture des octets variables de configuration</li>
+            <li>D&eacute;finir/Effacer la configuration sp&eacute;cifiques des octets variables</li>
+            <li>Lire des octets variables de configuration</li>
+          </ul>
+        </li>
+        <li>Programmation sur la Voie d'Exploitation
+          <ul>
+            <li>&Eacute;criture des octets variables de configuration</li>
+            <li>D&eacute;finir/Effacer la configuration sp&eacute;cifiques des octets variables</li>
+          </ul>
+        </li>
+        <li>Commande des Aiguillages et Capteurs DCC</li>
+        <li>Acc&egrave;s et commandes directement par les bornes E/S de l'Arduino pour les fonctions et
+        les capteurs</li>
+      </ul>
+
+      <h2 id="hardware">Mat&eacute;riel pris en charge</h2>
+
+      <h3>Centrales</h3>
+
+      <p>Actuellement les EX-CommandStations peuvent &ecirc;tre construites depuis une plateforme Arduino
+      Uno ou Arduino M&eacute;ga. JMRI prend en charge la connexion via USB ou r&eacute;seau.</p>
+
+      <h3>Interfaces Informatiques</h3>
+
+      Actuellement quatre interfaces sont accept&eacute;es&nbsp;:
+      <ul>
+        <li>S&eacute;rie/USB&nbsp;: Connexion directe &agrave; un Arduino via un c&acirc;ble USB</li>
+        <li>Simulateur&nbsp;: Centrale simul&eacute;e pour une exploitation hors-ligne ou des tests</li>
+        <li>R&eacute;seau&nbsp;: connexion TCP/IP depuis JMRI &agrave; une centrale avec un Shield Ethernet ou WiFi</li>
+        <li>DCC-EX Over TCP&nbsp;: Connexion r&eacute;seau &agrave; distance &agrave; une instance JMRI locale connect&eacute;e &agrave; une Centrale</li>
+      </ul>
+
+      <h4>Simulateur</h4>
+
+      <p>Pour utiliser le simulateur, choisir simplement cette option dans les Pr&eacute;f&eacute;rences JMRI.
+      Notez que quelques fonctions ne travailleront pas dans ce mode. Par exemple, le Simulateur ne
+      prend pas (pour le moment) en charge les affectations, le stockage et le rappel des
+      affectations des Capteurs et des Aiguillages. L'interface Simulateur est assez fonctionnelle
+      pour garder JMRI disponible pour travailler sur des projets hors-ligne tels que
+      l'Exploitation ou la d&eacute;signation des Panneaux ou des Logix, mais n'est pas suffisante pour
+      &ecirc;tre un &eacute;mulateur de centrale &agrave; part enti&egrave;re.</p>
+
+      <h4>DCC-EX Over TCP</h4>
+
+      <p>Pour le DCC-EX Over TCP, un ordinateur h&ocirc;te doit &ecirc;tre connect&eacute; &agrave; l'EX-CommandStation &agrave; travers une
+      connexion S&eacute;rie ou R&eacute;seau (ou un simulateur). Cet ordinateur h&ocirc;te ex&eacute;cute le serveur DCC-EX
+      Over TCP. Un ordinateur distant (ou plusieurs) peut alors utiliser l'interface DCC-EX Over
+      TCP pour acc&eacute;der &agrave; distance et contr&ocirc;ler l'EX-CommandStation.</p>
+
+      <h2 id="Limitations">Limitations</h2>
+
+      <div class="list">
+        <dl>
+          <dt class="left">JMRI</dt>
+          <dd class="first">
+            <p>Actuellement JMRI prend en charge la version V1.1 de l'Interface Centrale. Quelques
+            commandes de V1.0 peuvent ne pas fonctionner.</p>
+          </dd>
+        </dl>
+      </div>
+
+      <h2 id="connecting">Connexion</h2>
+
+      <h3>Configurer un Arduino pour l'utiliser comme EX-CommandStation</h3>
+
+      <p>Dans le but d'utiliser un Arduino comme Centrale, premièrement vous devez assembler les
+      &eacute;quipements et t&eacute;l&eacute;charger le logiciel Centrale. S'il vous pla&icirc;t suivez les <a href=
+      "#documentation">instructions li&eacute;es ci-dessous sous Autres infos</a>.</p>
+
+      <h3>Connexion &agrave; un EX-CommandStation via USB</h3>
+
+      <ol>
+        <li>Pour connecter votre ordinateur &agrave; un EX-CommandStation, premièrement installer les
+        pilotes appropri&eacute;s.
+          <ul>
+            <li>Pour l'EX-CommandStation avec JMRI, vous pouvez avoir besoin d'installer un
+            &eacute;quipement pilote sur votre ordinateur. S'il vous pla&icirc;t r&eacute;f&eacute;rez-vous aux pages
+              <a href="https://www.arduino.cc/en/Guide/HomePage">D&eacute;marrage d'Arduino</a> pour les
+              instructions.
+              <ul>
+                <li><a href="https://www.arduino.cc/en/Guide/Windows">Windows</a> (Voir
+                <strong>Point 4</strong>)</li>
+                <li>Mac&nbsp;: pas besoin de drivers</li>
+                <li><a href="http://playground.arduino.cc/Learning/Linux">Linux</a></li>
+              </ul>
+            </li>
+          </ul>
+          <p><strong>Note&nbsp;:</strong> Si vous avez d&eacute;j&agrave; install&eacute; le logiciel Arduino IDE, les pilotes
+          de p&eacute;riph&eacute;rique doivent d&eacute;j&agrave; &ecirc;tre install&eacute;s.</p>
+          <p>Quand les pilotes de p&eacute;riph&eacute;riques sont install&eacute;s, connectez la Centrale Arduino &agrave;
+          votre ordinateur en utilisant un c&acirc;ble standard USB.</p>
+        </li>
+        <li>Une fois que les pilotes sont install&eacute;s, vous &ecirc;tes pr&ecirc;t &agrave; configurer JMRI. D&eacute;marrez un
+        des programmes JMRI, puis allez au panneau des Pr&eacute;f&eacute;rences. Celui-ci s'ouvre
+        automatiquement lors d'un premier d&eacute;marrage du programme, ou vous pouvez le s&eacute;lectionner
+        dans le menu &laquo;&nbsp;&Eacute;dition&nbsp;&raquo;.</li>
+        <li>S&eacute;lectionnez &laquo;&nbsp;DCC-EX&nbsp;&raquo; dans la fen&ecirc;tre de s&eacute;lection en haut
+        (&laquo;&nbsp;System Manufacturer&nbsp;&raquo;).</li>
+        <li>S&eacute;lectionnez &laquo;&nbsp;DCC-EX Serial Port&nbsp;&raquo; dans la seconde fen&ecirc;tre
+        (&laquo;&nbsp;System Connection&nbsp;&raquo;).</li>
+        <li>S&eacute;lectionnez le port USB/Serial appropri&eacute; dans la troisi&egrave;me fen&ecirc;tre
+        (&laquo;&nbsp;Serial Port&nbsp;&raquo;).</li>
+        <li>Cliquez &laquo;&nbsp;Enregistrer&nbsp;&raquo;. Il vous sera demand&eacute; si c'est OK pour quitter le
+        programme, cliquez &laquo;&nbsp;Oui&nbsp;&raquo;.</li>
+        <li>Red&eacute;marrez le programme. Vous devez &ecirc;tre op&eacute;rationnel.</li>
+      </ol>
+
+      <h3>Connexion &agrave; un DCC-EX &agrave; l'aide du R&eacute;seau</h3>
+
+      <ol>
+        <li>Premièrement, connectez l'EX-CommandStation &agrave; un r&eacute;seau c&acirc;bl&eacute; ou WiFi et enregistrez
+        l'adresse IP et le num&eacute;ro du Port. Vous pouvez avoir besoin de connecter l'Arduino &agrave; un
+        ordinateur temporairement et utiliser le Moniteur S&eacute;rie Arduino pour obtenir cette
+        information.</li>
+        <li>Maintenant vous &ecirc;tes pr&ecirc;t &agrave; configurer JMRI. D&eacute;marrez un des programmes JMRI, puis
+        allez au panneau des Pr&eacute;f&eacute;rences. Celui-ci s'ouvre automatiquement lors d'un premier
+        d&eacute;marrage du programme, ou vous pouvez le s&eacute;lectionner dans le menu &laquo;&nbsp;&Eacute;dition&nbsp;&raquo;
+        (depuis le menu Application sur OS X).</li>
+        <li>S&eacute;lectionnez &laquo;&nbsp;DCC-EX&nbsp;&raquo; dans la fen&ecirc;tre de s&eacute;lection en haut
+        (&laquo;&nbsp;System Manufacturer&nbsp;&raquo;).</li>
+        <li>S&eacute;lectionnez &laquo;&nbsp;DCC-EX Ethernet&nbsp;&raquo; dans la seconde fen&ecirc;tre
+        (&laquo;&nbsp;System Connection&nbsp;&raquo;).</li>
+        <li>Entrez l'adresse IP et le num&eacute;ro du Port de l'EX-CommandStation.</li>
+        <li>Cliquez &laquo;&nbsp;Enregistrer&nbsp;&raquo;. Il vous sera demand&eacute; si c'est OK pour quitter le
+        programme, cliquez &laquo;&nbsp;Oui&nbsp;&raquo;.</li>
+        <li>Red&eacute;marrez le programme. Vous devez &ecirc;tre op&eacute;rationnel.</li>
+      </ol>
+
+      <h3>Connexion &agrave; un DCC-EX &agrave; l'aide de Over TCP</h3>
+
+      <ol>
+        <li>Premièrement, connectez l'EX-CommandStation &agrave; un ordinateur h&ocirc;te via l'interface S&eacute;rie
+        ou le R&eacute;seau comme d&eacute;crit pr&eacute;c&eacute;demment.</li>
+        <li>Sur l'ordinateur h&ocirc;te s&eacute;lectionnez &laquo;&nbsp;DCC-EX Over TCP Server&nbsp;&raquo; depuis le menu DCC-EX.
+        V&eacute;rifiez les r&eacute;glages, puis pressez sur le bouton &laquo;&nbsp;Start Server&nbsp;&raquo;. Si vous voulez que le
+        serveur d&eacute;marre automatiquement quand JMRI est lanc&eacute;, cochez la case propos&eacute;e.</li>
+        <li>L'ordinateur H&ocirc;te doit &ecirc;tre ex&eacute;cut&eacute; avec le serveur DCC-EX actif avant le lancement de
+        l'ordinateur Client.</li>
+        <li>Sur l'ordinateur client, lancer JMRI.</li>
+        <li>Dans les Pr&eacute;f&eacute;rences connexion, s&eacute;lectionnez DCC-EX comme
+        &laquo;&nbsp;System Manufacturer&nbsp;&raquo;.</li>
+        <li>S&eacute;lectionnez &laquo;&nbsp;DCC-EX Over TCP&nbsp;&raquo; dans la seconde fen&ecirc;tre
+        &laquo;&nbsp;System Connection&nbsp;&raquo;.</li>
+        <li>Entrez le nom r&eacute;seau ou l'adresse IP de l'ordinateur h&ocirc;te et v&eacute;rifiez que le num&eacute;ro du
+        port est le m&ecirc;me sur l'ordinateur h&ocirc;te.</li>
+        <li>Enregistrez vos Pr&eacute;f&eacute;rences et red&eacute;marrez.</li>
+      </ol>
+
+      <p>Une fois que les instances h&ocirc;te et client de JMRI sont configur&eacute;es, vous pouvez utiliser
+      le client JMRI tout comme s'il &eacute;tait directement connect&eacute; &agrave; la centrale. L'instance client
+      JMRI peut &ecirc;tre sur le m&ecirc;me ordinateur, dans la m&ecirc;me maison, ou &agrave; travers le pays de
+      l'h&ocirc;te.</p>
+
+      <h3>Connexion au Simulateur DCC-EX</h3>
+
+      <ol>
+        <li>D&eacute;marrez un des programmes JMRI, puis allez au panneau des Pr&eacute;f&eacute;rences. Celui-ci s'ouvre
+        automatiquement lors d'un premier d&eacute;marrage du programme, ou vous pouvez le s&eacute;lectionner
+        dans le menu &laquo;&nbsp;&Eacute;dition&nbsp;&raquo;.</li>
+        <li>S&eacute;lectionnez &laquo;&nbsp;DCC-EX Simulator&nbsp;&raquo; dans la fen&ecirc;tre de s&eacute;lection du haut. Il n'y a pas
+        d'&eacute;tapes suppl&eacute;mentaires de configuration pour utiliser le Simulateur DCC-EX.</li>
+        <li>Cliquez sur &laquo;&nbsp;Enregistrer&nbsp;&raquo;, il vous sera demand&eacute; si vous voulez quitter le
+        programme, cliquez &laquo;&nbsp;Oui&nbsp;&raquo;.</li>
+        <li>Red&eacute;marrez le programme. Vous devez &ecirc;tre op&eacute;rationnel.</li>
+      </ol>
+
+      <h2 id="tools">Outils JMRI DCC-EX</h2>
+
+      <p>Le menu DCC-EX contient les outils suivants&nbsp;:</p>
+
+      <ul>
+        <li>Moniteur de trafic DCC-EX</li>
+        <li>Envoi Commande DCC-EX</li>
+        <li>Mesure Courant Voie</li>
+        <li>Configurer les Capteurs et Aiguillages</li>
+        <li>D&eacute;marrer DCC-EX TCP Server</li>
+      </ul>
+
+      <h2 id="documentation">Documentation</h2>
+
+      <h3>Aide JMRI</h3>
+
+      <p>Des informations suppl&eacute;mentaires peuvent &ecirc;tre trouv&eacute;es sur les pages suivantes&nbsp;:</p>
+
+      <h3>Autres Sources d'Information</h3>
+
+      Pour des informations suppl&eacute;mentaires sur la construction et la programmation d'un
+      EX-CommandStation, se r&eacute;f&eacute;rer aux documents suivants&nbsp;:
+      <ul>
+        <li><a href="https://github.com/DCC-EX">R&eacute;pertoire GitHub DCC-EX</a></li>
+        <li><a href="https://dcc-ex.com/begin/what-to-know.html">EX-CommandStation &mdash; D&eacute;marrage</a></li>
+        <li><a href="http://www.arduino.cc">Site du Projet Arduino</a></li>
+        <li><a href="http://www.sparkfun.com">Sparkfun</a> &mdash; Un des nombreux endroits o&ugrave; obtenir le
+        mat&eacute;riel</li>
+      </ul>
+
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>
