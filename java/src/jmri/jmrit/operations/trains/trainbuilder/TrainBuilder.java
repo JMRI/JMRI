@@ -308,10 +308,10 @@ public class TrainBuilder extends TrainBuilderCars {
     }
 
     /*
-     * Manually assigns a car that doesn't have a train, destination or final
-     * destination. Build item can request car type, road, load, route location,
-     * track, and pick up day. Build item can also provide a final destination,
-     * which allows for routing if needed.
+     * User can manually assigns cars that don't have a train, destination or
+     * final destination. Build items can request car type, road, load, route
+     * location, track, and pick up day. Build items can also provide a final
+     * destination, which allows for routing if needed.
      */
     private void manualBuild() throws BuildFailedException {
         // determine if there's a manual build available
@@ -395,6 +395,14 @@ public class TrainBuilder extends TrainBuilderCars {
                         break; // done
                     }
                 }
+            }
+            if (count > 0 && mbi.isFailEnabled()) {
+                throw new BuildFailedException(
+                        Bundle.getMessage("mbuildFail", manualBuild.getTrainName(), mbi.getId()));
+            }
+            else if (count > 0 && mbi.isWarnEnabled()) {
+                _warnings++;
+                addLine(ONE, Bundle.getMessage("mbuildWarn", manualBuild.getTrainName(), mbi.getId()));
             }
         }
         addLine(ONE, Bundle.getMessage("mbuildDone"));
