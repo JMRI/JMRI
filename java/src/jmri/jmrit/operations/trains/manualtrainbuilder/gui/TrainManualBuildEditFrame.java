@@ -8,8 +8,6 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.manualtrainbuilder.TrainManualBuild;
@@ -22,14 +20,13 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Dan Boudreau Copyright (C) 2026
  */
-public class TrainManualBuildEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public class TrainManualBuildEditFrame extends OperationsFrame {
 
     TrainManualBuildTableModel manualBuildModel = new TrainManualBuildTableModel();
     JTable manualBuildTable = new JTable(manualBuildModel);
     JScrollPane manualBuildPane;
 
     TrainManualBuildManager manualBuildManager;
-    LocationManagerXml locationManagerXml;
 
     TrainManualBuild _manualBuild = null;
 
@@ -38,7 +35,6 @@ public class TrainManualBuildEditFrame extends OperationsFrame implements java.b
     JButton addButton = new JButton(Bundle.getMessage("AddCar"));
     JButton saveManualBuildButton = new JButton(Bundle.getMessage("SaveManualBuild"));
     JButton deleteManualBuildButton = new JButton(Bundle.getMessage("DeleteManualBuild"));
-    JButton addManualBuildButton = new JButton(Bundle.getMessage("AddManualBuild"));
 
     // check boxes
     JCheckBox checkBox;
@@ -51,16 +47,11 @@ public class TrainManualBuildEditFrame extends OperationsFrame implements java.b
     // text field
     JTextField commentTextField = new JTextField(45);
 
-    public static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
-    public static final String NAME = Bundle.getMessage("Name");
-    public static final String DISPOSE = "dispose"; // NOI18N
-
     public TrainManualBuildEditFrame(String trainId) {
         super(Bundle.getMessage("TitleManualBuild"));
 
         // load managers
         manualBuildManager = InstanceManager.getDefault(TrainManualBuildManager.class);
-        locationManagerXml = InstanceManager.getDefault(LocationManagerXml.class);
 
         // creates a new one or returns one that already exists
         _manualBuild = manualBuildManager.newManualBuild(trainId);
@@ -70,12 +61,7 @@ public class TrainManualBuildEditFrame extends OperationsFrame implements java.b
         manualBuildPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         manualBuildModel.initTable(this, manualBuildTable, _manualBuild);
-        if (_manualBuild != null) {
-            commentTextField.setText(_manualBuild.getComment());
-            enableButtons(true);
-        } else {
-            enableButtons(false);
-        }
+        commentTextField.setText(_manualBuild.getComment());
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -85,7 +71,7 @@ public class TrainManualBuildEditFrame extends OperationsFrame implements java.b
 
         JScrollPane p1Pane = new JScrollPane(p1);
         p1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        
+
         p1Pane.setMaximumSize(new Dimension(2000, 200));
 
         // row 1a name
@@ -127,8 +113,7 @@ public class TrainManualBuildEditFrame extends OperationsFrame implements java.b
 
         // row 13
         addItem(pB, deleteManualBuildButton, 0, 0);
-        addItem(pB, addManualBuildButton, 1, 0);
-        addItem(pB, saveManualBuildButton, 3, 0);
+        addItem(pB, saveManualBuildButton, 1, 0);
 
         getContentPane().add(p1Pane);
         getContentPane().add(manualBuildPane);
@@ -138,7 +123,6 @@ public class TrainManualBuildEditFrame extends OperationsFrame implements java.b
         // set up buttons
         addButtonAction(addButton);
         addButtonAction(deleteManualBuildButton);
-        addButtonAction(addManualBuildButton);
         addButtonAction(saveManualBuildButton);
 
         // build menu
@@ -148,10 +132,7 @@ public class TrainManualBuildEditFrame extends OperationsFrame implements java.b
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_ManualBuilds", true); // NOI18N
 
-        // get notified if car types or roads are changed
-        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
-
-        // set frame size and manualBuild for display
+        // set frame size
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight400));
     }
 
@@ -178,10 +159,9 @@ public class TrainManualBuildEditFrame extends OperationsFrame implements java.b
             }
             manualBuildManager.deregister(_manualBuild);
             _manualBuild = null;
-
-            enableButtons(false);
-            // save manual build
+            
             OperationsXml.save();
+            dispose();
         }
     }
 
@@ -216,46 +196,13 @@ public class TrainManualBuildEditFrame extends OperationsFrame implements java.b
         OperationsXml.save();
     }
 
-    /*
-     * only load car types serviced by the track
-     */
-    //    private void loadTypeComboBox() {
-    //        typeBox.removeAllItems();
-    //        for (String typeName : InstanceManager.getDefault(CarTypes.class).getNames()) {
-    //            if (_track.isTypeNameAccepted(typeName)) {
-    //                typeBox.addItem(typeName);
-    //            }
-    //        }
-    //    }
-
-    private void enableButtons(boolean enabled) {
-        addButton.setEnabled(enabled);
-        addLocAtTop.setEnabled(enabled);
-        addLocAtMiddle.setEnabled(enabled);
-        addLocAtBottom.setEnabled(enabled);
-        saveManualBuildButton.setEnabled(enabled);
-        deleteManualBuildButton.setEnabled(enabled);
-        manualBuildTable.setEnabled(enabled);
-        // the inverse!
-        addManualBuildButton.setEnabled(!enabled);
-    }
-
     @Override
     public void dispose() {
-        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {
             tpm.stopPersisting(manualBuildTable);
         });
         manualBuildModel.dispose();
         super.dispose();
-    }
-
-    @Override
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.SHOW_PROPERTY) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                    .getNewValue());
-        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrainManualBuildEditFrame.class);
