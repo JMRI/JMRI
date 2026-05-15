@@ -46,6 +46,10 @@
                 &quot;RX:&quot; direction marker regardless of whether the translated text or raw
                 form is displayed, and the raw form is wrapped in &lt;&hellip;&gt; rather than
                 [&hellip;] to match DCC-EX's native command syntax.</li>
+                <li>The <strong>Virtual LCD</strong> window now supports
+                    more than one display. Each display is shown in a single
+                    row in the <strong>Virtual LCD</strong> window, with
+                    the first display at the left.</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -533,7 +537,10 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>The Continue/Quit dialog shown at startup when the configured roster
+            location is unavailable now treats dismissing the dialog (the close button)
+            as Quit, matching the behavior of the profile chooser. Previously the close
+            button fell through to Continue (<a href="https://github.com/JMRI/JMRI/issues/15148">issue #15148</a>).</li>
         </ul>
 
     <h3>Routes</h3>
