@@ -141,15 +141,7 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
     public void setRouteLocation(RouteLocation rl) {
         RouteLocation old = _routeLocation;
         _routeLocation = rl;
-        String oldName = "null"; // NOI18N
-        if (old != null) {
-            oldName = old.getName();
-        }
-        String newName = "null"; // NOI18N
-        if (_routeLocation != null) {
-            newName = _routeLocation.getName();
-        }
-        setDirtyAndFirePropertyChange(ROUTE_LOCATION_CHANGED_PROPERTY, oldName, newName);
+        setDirtyAndFirePropertyChange(ROUTE_LOCATION_CHANGED_PROPERTY, old, rl);
     }
 
     public String getLocationName() {
@@ -173,15 +165,7 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
     public void setLocationTrack(Track track) {
         Track old = _trackLocation;
         _trackLocation = track;
-        String oldName = "null"; // NOI18N
-        if (old != null) {
-            oldName = old.getName();
-        }
-        String newName = "null"; // NOI18N
-        if (_trackLocation != null) {
-            newName = _trackLocation.getName();
-        }
-        setDirtyAndFirePropertyChange(LOCATION_TRACK_CHANGED_PROPERTY, oldName, newName);
+        setDirtyAndFirePropertyChange(LOCATION_TRACK_CHANGED_PROPERTY, old, track);
     }
 
     public String getLocationTrackName() {
@@ -205,15 +189,7 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
     public void setDestination(Location destination) {
         Location old = _destination;
         _destination = destination;
-        String oldName = "null"; // NOI18N
-        if (old != null) {
-            oldName = old.getName();
-        }
-        String newName = "null"; // NOI18N
-        if (_destination != null) {
-            newName = _destination.getName();
-        }
-        setDirtyAndFirePropertyChange(DESTINATION_CHANGED_PROPERTY, oldName, newName);
+        setDirtyAndFirePropertyChange(DESTINATION_CHANGED_PROPERTY, old, destination);
     }
 
     public String getDestinationName() {
@@ -237,15 +213,7 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
     public void setDestinationTrack(Track track) {
         Track old = _trackDestination;
         _trackDestination = track;
-        String oldName = "null"; // NOI18N
-        if (old != null) {
-            oldName = old.getName();
-        }
-        String newName = "null"; // NOI18N
-        if (_trackDestination != null) {
-            newName = _trackDestination.getName();
-        }
-        setDirtyAndFirePropertyChange(DESTINATION_TRACK_CHANGED_PROPERTY, oldName, newName);
+        setDirtyAndFirePropertyChange(DESTINATION_TRACK_CHANGED_PROPERTY, old, track);
     }
 
     public String getDestinationTrackName() {
