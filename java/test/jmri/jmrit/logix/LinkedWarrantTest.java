@@ -1,8 +1,10 @@
 package jmri.jmrit.logix;
 
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.*;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
@@ -65,7 +67,7 @@ public class LinkedWarrantTest {
             return lookingFor.equals(tableFrame.getStatus());
         }, "LoopDeLoop started first leg expected \"" + lookingFor + "\" but was \"" + tableFrame.getStatus()+"\"");
 
-        JUnitUtil.waitFor(() -> atOrPastCommand(warrant, 8), "Loopy 1 starts to move at 8th command");
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(warrant, 8), "Loopy 1 starts to move at 8th command");
 
         // Run the train, then checks end location
         assertDoesNotThrow( () -> {
@@ -77,7 +79,17 @@ public class LinkedWarrantTest {
         // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
         // i.e. wait at least 600 * route.length for return
 
-        JUnitUtil.waitFor(() -> atOrPastCommand(warrant, 8), "Loopy 2 starts to move at 8th command");
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(warrant, 8), "Loopy 2 starts to move at 8th command");
+
+        // listener avoids polling a status that leg 3's immediate re-launch overwrites
+        AtomicBoolean leg2Done = new AtomicBoolean(false);
+        PropertyChangeListener legDone = evt -> {
+            if (Warrant.PROPERTY_STOP_WARRANT.equals(evt.getPropertyName())
+                    && "warrantComplete".equals(evt.getNewValue())) {
+                leg2Done.set(true);
+            }
+        };
+        warrant.addPropertyChangeListener(legDone);
 
         assertDoesNotThrow( () -> {
             assertEquals(block.getSensor(),
@@ -85,12 +97,10 @@ public class LinkedWarrantTest {
                 "LoopDeLoop Completes Second Leg");
         }, ("LoopDeLoop after Second leg Exception"));
 
-        String linkMsg = Bundle.getMessage("warrantComplete", warrant.getTrainName(), warrant.getDisplayName(), block.getDisplayName());
-        JUnitUtil.waitFor(() -> {
-            return linkMsg.equals(tableFrame.getStatus());
-        }, "LoopDeLoop finished second leg");
+        JUnitUtil.waitFor(leg2Done::get, "LoopDeLoop finished second leg");
+        warrant.removePropertyChangeListener(legDone);
 
-        JUnitUtil.waitFor(() -> atOrPastCommand(warrant, 8), "Loopy 3 starts to move at 8th command");
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(warrant, 8), "Loopy 3 starts to move at 8th command");
 
         assertDoesNotThrow( () -> {
             assertEquals(block.getSensor(),
@@ -148,7 +158,7 @@ public class LinkedWarrantTest {
         assertNull( ThreadingUtil.runOnGUIwithReturn(() ->
             tableFrame.runTrain(warrant, Warrant.MODE_RUN)),"Warrant starts"); // start run
 
-        JUnitUtil.waitFor(() -> atOrPastCommand(warrant, 8),
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(warrant, 8),
             () -> "Train starts to move at 8th command, but running message was " + warrant.getRunningMessage());
 
        // OBlock of route
@@ -169,7 +179,7 @@ public class LinkedWarrantTest {
         Warrant ww = _warrantMgr.getWarrant("WestToEast");
         assertNotNull(ww,"warrant WestToEast exists");
 
-        JUnitUtil.waitFor(() -> atOrPastCommand(ww, 9),
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(ww, 9),
             () -> "Train Fred starts to move at 9th command, was: " + ww.getRunningMessage());
 
         String[] route2 = {"OB1", "OB3", "OB5", "OB6", "OB7", "OB9", "OB11"};
@@ -242,7 +252,7 @@ public class LinkedWarrantTest {
         assertNull(ThreadingUtil.runOnGUIwithReturn( () ->
             tableFrame.runTrain(outWarrant, Warrant.MODE_RUN)),"Warrant starts"); // start run
 
-        JUnitUtil.waitFor(() -> atOrPastCommand(outWarrant, 8), "WestToEastLink starts to move at 8th command");
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(outWarrant, 8), "WestToEastLink starts to move at 8th command");
 
         // Run the train, then checks end location
         assertDoesNotThrow( () -> {
@@ -261,7 +271,7 @@ public class LinkedWarrantTest {
                                 outBlockName));
         }, "WestToEastLink finished first leg out");
 
-        JUnitUtil.waitFor(() -> atOrPastCommand(backWarrant, 8), "EastToWestLink starts to move at 8th command");
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(backWarrant, 8), "EastToWestLink starts to move at 8th command");
 
         assertDoesNotThrow( () -> {
             assertEquals(backEndSensor,
@@ -277,7 +287,7 @@ public class LinkedWarrantTest {
                     block1.getDisplayName()));
         }, "EastToWestLink finished second leg back");
 
-        JUnitUtil.waitFor(() -> atOrPastCommand(outWarrant, 8), "WestToEastLink starts to move at 8th command");
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(outWarrant, 8), "WestToEastLink starts to move at 8th command");
 
         assertDoesNotThrow( () -> {
             assertEquals(outEndSensor,
@@ -293,7 +303,7 @@ public class LinkedWarrantTest {
                     outBlockName));
         }, "WestToEastLink finished third leg");
 
-        JUnitUtil.waitFor(() -> atOrPastCommand(backWarrant, 8), "EastToWestLink starts to move at 8th command");
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(backWarrant, 8), "EastToWestLink starts to move at 8th command");
 
         assertDoesNotThrow( () -> {
             assertEquals(backEndSensor,
@@ -355,7 +365,8 @@ public class LinkedWarrantTest {
         // warrant can't be started
         assertNull(tableFrame.runTrain(w, Warrant.MODE_RUN),"Warrant starts"); // start run
 
-        JUnitUtil.waitFor(() -> atOrPastCommand(w, 8), "Tinker starts to move at 8th command");
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(w, 8),
+            () -> "Tinker starts to move at 8th command but was: " + w.getRunningMessage());
 
        // OBlock of route
         String[] route1 = {"OB0", "OB1", "OB2", "OB3", "OB4", "OB5", "OB10"};
@@ -373,7 +384,7 @@ public class LinkedWarrantTest {
 
         Warrant ww = _warrantMgr.getWarrant("Evers");
 
-        JUnitUtil.waitFor(() -> atOrPastCommand(ww, 8),
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(ww, 8),
             () -> "Evers starts to move at 8th command but was: " + ww.getRunningMessage());
 
         String[] route2 = {"OB7", "OB3", "OB2", "OB1"};
@@ -389,7 +400,7 @@ public class LinkedWarrantTest {
 
         Warrant www = _warrantMgr.getWarrant("Chance");
 
-        JUnitUtil.waitFor(() -> atOrPastCommand(www, 8),
+        JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(www, 8),
             () -> "Chance starts to move at 8th command but was: " + www.getRunningMessage());
 
         String[] route3 = {"OB6", "OB3", "OB4", "OB5"};
@@ -422,26 +433,6 @@ public class LinkedWarrantTest {
 
     }
 
-    /**
-     * Returns true when the warrant's running message shows it is at or past
-     * the given command index (1-based). All warrant running messages that
-     * include a command position end with "Cmd #N." so parsing the trailing
-     * number avoids the race condition where the warrant advances past exactly
-     * command N before the polling loop wakes up.
-     */
-    private static boolean atOrPastCommand(Warrant w, int minCmd) {
-        String m = w.getRunningMessage();
-        int i = m.lastIndexOf("Cmd #");
-        if (i < 0) return false;
-        String rest = m.substring(i + 5);
-        int dot = rest.indexOf('.');
-        if (dot < 0) return false;
-        try {
-            return Integer.parseInt(rest.substring(0, dot)) >= minCmd;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
 
     @BeforeEach
     public void setUp() {

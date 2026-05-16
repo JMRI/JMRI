@@ -947,27 +947,20 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         _addTracker = false;
 
+        // capture before runOnGUI — deAllocate is async; CheckForTermination may reset _idxCurrentOrder on the GUI thread
+        final int capturedIdx = _idxCurrentOrder;
+        final String capturedBlockName = abort ? null : getCurrentBlockName();
+
         // insulate possible non-GUI thread making this call (e.g. Engineer)
         ThreadingUtil.runOnGUI(this::deAllocate);
 
         String bundleKey;
-        String blockName;
         if (abort) {
-            blockName = null;
-            if (_idxCurrentOrder <= 0) {
-                bundleKey = "warrantAnnull";
-            } else {
-                bundleKey = "warrantAbort";
-            }
+            bundleKey = capturedIdx <= 0 ? "warrantAnnull" : "warrantAbort";
         } else {
-            blockName = getCurrentBlockName();
-            if (_idxCurrentOrder == _orders.size() - 1) {
-                bundleKey = "warrantComplete";
-            } else {
-                bundleKey = "warrantEnd";
-            }
+            bundleKey = (capturedIdx == _orders.size() - 1) ? "warrantComplete" : "warrantEnd";
         }
-        fireRunStatus(PROPERTY_STOP_WARRANT, blockName, bundleKey);
+        fireRunStatus(PROPERTY_STOP_WARRANT, capturedBlockName, bundleKey);
     }
 
     /**
