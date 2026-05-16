@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Defines the standard/common routines used in multiple classes related to the
- * DCC++ Command Station, on a DCC++ network.
+ * DCC-EX Command Station, on a DCC-EX network.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Portions by Paul Bender Copyright (C) 2003
@@ -100,7 +100,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     /**
-     * Parse the DCC++ CS status response to pull out the base station version
+     * Parse the DCC-EX CS status response to pull out the base station version
      * and software version.
      * @param l status response to query.
      */
@@ -112,8 +112,8 @@ public class DCCppCommandStation implements jmri.CommandStation {
  // V1.0/V1.1 Simplified
  //String syntax = "iDCC\\+\\+(.*): BUILD (.*)";
         // V1.2.1 Syntax
-        // String syntax = "iDCC++ BASE STATION FOR ARDUINO \\b(\\w+)\\b \\/ (ARDUINO|POLOLU\\sMC33926) MOTOR SHIELD: ((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
-        // Changes from v1.1: space between "DCC++" and "BASE", and "BUILD" is removed.
+        // String syntax = "iDCC-EX BASE STATION FOR ARDUINO \\b(\\w+)\\b \\/ (ARDUINO|POLOLU\\sMC33926) MOTOR SHIELD: ((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
+        // Changes from v1.1: space between "DCC-EX" and "BASE", and "BUILD" is removed.
         // V1.0/V1.1/V1.2 Simplified
         // String syntax = "iDCC\\+\\+\\s?(.*):\\s?(?:BUILD)? (.*)";
 
@@ -154,7 +154,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     boolean mInServiceMode = false;
 
     /**
-     * DCC++ command station does provide Ops Mode.
+     * DCC-EX command station does provide Ops Mode.
      * @return always true.
      */
     public boolean isOpsModePossible() {
@@ -340,7 +340,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
         }
 
         int reg = 0;  // register 0, so this doesn't repeat
-        //  DCC++ BaseStation code appends its own error-correction byte.
+        //  DCC-EX BaseStation code appends its own error-correction byte.
         // So we have to omit the JMRI-generated one.
         DCCppMessage msg = DCCppMessage.makeWriteDCCPacketMainMsg(reg, packet.length - 1, packet);
         assert msg != null;
@@ -381,7 +381,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     @Override
     public String getUserName() {
         if (adaptermemo == null) {
-            return "DCC++";
+            return "DCC-EX";
         }
         return adaptermemo.getUserName();
     }

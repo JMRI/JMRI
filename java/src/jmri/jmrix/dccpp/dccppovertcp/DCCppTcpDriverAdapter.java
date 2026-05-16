@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Implements DCCppPortController for the DCCppOverTcp system network
  * connection.
  * <p>
- * This connects a DCC++ via a telnet connection. Normally controlled by the
+ * This connects a DCC-EX via a telnet connection. Normally controlled by the
  * DCCppTcpDriverFrame class. Based on LnTcpDriverAdapter.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003
@@ -30,7 +30,7 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController {
     }
     
     /**
-     * Set up all of the other objects to operate with a DCC++ connected via
+     * Set up all of the other objects to operate with a DCC-EX connected via
      * this class.
      */
     @Override

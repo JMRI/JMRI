@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of DccThrottle with code specific to a DCC++
+ * An implementation of DccThrottle with code specific to a DCC-EX
  * connection.
  *
  * @author Paul Bender (C) 2002-2010
@@ -100,7 +100,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
    
     /**
-     * Send the DCC++  message to set the state of locomotive direction and
+     * Send the DCC-EX  message to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4
      */
     @Override
@@ -116,7 +116,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Send the DCC++ message to set the state of functions F5, F6, F7, F8
+     * Send the DCC-EX message to set the state of functions F5, F6, F7, F8
      */
     @Override
     protected void sendFunctionGroup2() {
@@ -128,7 +128,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Send the DCC++ message to set the state of functions F9, F10, F11,
+     * Send the DCC-EX message to set the state of functions F9, F10, F11,
      * F12
      */
     @Override
@@ -141,7 +141,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Send the DCC++ message to set the state of functions F13, F14, F15,
+     * Send the DCC-EX message to set the state of functions F13, F14, F15,
      * F16, F17, F18, F19, F20
      */
     @Override
@@ -155,7 +155,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Send the DCC++ message to set the state of functions F21, F22, F23,
+     * Send the DCC-EX message to set the state of functions F21, F22, F23,
      * F24, F25, F26, F27, F28
      */
     @Override
@@ -211,7 +211,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         }
     }
 
-    /* Since DCC++ has a separate Opcode for emergency stop,
+    /* Since DCC-EX has a separate Opcode for emergency stop,
      * We're setting this up as a separate protected function
      */
     protected void sendEmergencyStop() {
@@ -227,7 +227,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         queueMessage(msg, THROTTLEIDLE);
     }
 
-    /* Since there is only one "throttle" command to the DCC++ base station,
+    /* Since there is only one "throttle" command to the DCC-EX base station,
      * when we change the direction, we must also re-set the speed.
      */
     @Override
@@ -245,7 +245,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * @param Mode  the current speed step mode - default should be 128
      *              speed step mode in most cases
      *
-     * NOTE: DCC++ only supports 128-step mode.  So we ignore the speed
+     * NOTE: DCC-EX only supports 128-step mode.  So we ignore the speed
      * setting, even though we store it.
      */
     @Override

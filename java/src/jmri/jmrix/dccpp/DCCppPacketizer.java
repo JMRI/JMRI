@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts Stream-based I/O to/from DCC++ messages. The "DCCppInterface" side
+ * Converts Stream-based I/O to/from DCC-EX messages. The "DCCppInterface" side
  * sends/receives DCCppMessage objects. The connection to a DCCppPortController
  * is via a pair of *Streams, which then carry sequences of characters for
  * transmission.
@@ -118,7 +118,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
             ((DCCppPortController) p).setOutputBufferEmpty(false);
             return true;
         } else {
-            log.warn("DCC++ port not ready to send");
+            log.warn("DCC-EX port not ready to send");
             return false;
         }
     }
