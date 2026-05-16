@@ -57,6 +57,7 @@ public class TrainManualBuildEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testAddCarButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         setupTest();
         JemmyUtil.enterClickAndLeave(tmbef.addLocAtTop);
         JemmyUtil.enterClickAndLeave(tmbef.addButton);
