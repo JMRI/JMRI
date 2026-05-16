@@ -298,6 +298,7 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
     }
 
     public void copyManualBuildItem(TrainManualBuildItem mbi) {
+        setCount(mbi.getCount());
         setTypeName(mbi.getTypeName());
         setLoadName(mbi.getLoadName());
         setRoadName(mbi.getRoadName());
@@ -306,6 +307,8 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
         setDestination(mbi.getDestination());
         setDestinationTrack(mbi.getDestinationTrack());
         setTrainScheduleId(mbi.getTrainScheduleId());
+        setFailEnabled(mbi.isFailEnabled());
+        setWarnEnabled(mbi.isWarnEnabled());
     }
 
     public void dispose() {
