@@ -7,12 +7,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Extends jmri.AbstractTurnout for DCCpp layouts
  * <p>
- * Turnouts on DCC++ are controlled (as of V1.5 Firmware)
+ * Turnouts on DCC-EX are controlled (as of V1.5 Firmware)
  * with unidirectional Stationary Decoder commands, or with bidirectional
  * (predefined) Turnout commands, or with bidirectional (predefined) Output
  * commands.
  * 
- * DCC++ Has three ways to activate a turnout (output)
+ * DCC-EX Has three ways to activate a turnout (output)
  * <ul>
  * <li> Accessory Command "a" : sends a DCC packet to a stationary decoder
  *      out there on the bus somewhere. NO RETURN VALUE to JMRI.
@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  *
  * It also supports "NO FEEDBACK" by treating it like "DIRECT".
  * 
- * Turnout operation on DCC++ based systems goes through the following
+ * Turnout operation on DCC-EX based systems goes through the following
  * sequence:
  * <ul>
  * <li> set the commanded state, and, Send request to command station to start
@@ -65,7 +65,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     protected static final int IDLE = 0;
     protected int internalState = IDLE;
 
-    /* Static arrays to hold DCC++ specific feedback mode information */
+    /* Static arrays to hold DCC-EX specific feedback mode information */
     static String[] modeNames = null;
     static int[] modeValues = null;
 
@@ -104,10 +104,10 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         tc.getTurnoutReplyCache().requestCachedStateFromLayout(this);
     }
 
-    //Set the mode information for DCC++ Turnouts.
+    //Set the mode information for DCC-EX Turnouts.
     synchronized private static void setModeInformation(String[] feedbackNames, int[] feedbackModes) {
         // if it hasn't been done already, create static arrays to hold 
-        // the DCC++ specific feedback information.
+        // the DCC-EX specific feedback information.
         if (modeNames == null) {
             if (feedbackNames.length != feedbackModes.length) {
                 log.error("int and string feedback arrays different length");
@@ -166,7 +166,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
 
     /**
      * {@inheritDoc}
-     * Sends a DCC++ command.
+     * Sends a DCC-EX command.
      */
     @Override
     synchronized protected void forwardCommandChangeToLayout(int s) {
@@ -184,24 +184,24 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         switch (_activeFeedbackType) {
             case EXACT: // Use <z ... > command
                 // mNumber is the index ID into the Base Station's internal table of outputs.
-                // Convert the integer Turnout value to boolean for DCC++ internal code.
+                // Convert the integer Turnout value to boolean for DCC-EX internal code.
                 // Assume if it's not THROWN (true), it must be CLOSED (false).
                 // Note for Outputs (EXACT mode), LOW is THROWN, HIGH is CLOSED
-                // As defined in DCC++ Base Station SerialCommand.cpp, so newstate
+                // As defined in DCC-EX Base Station SerialCommand.cpp, so newstate
                 // is inverted when making the message
                 msg = DCCppMessage.makeOutputCmdMsg(mNumber, !newState);
                 internalState = COMMANDSENT;
                 break;
             case MONITORING: // Use <T ... > command
                 // mNumber is the index ID into the Base Station's internal table of Turnouts.
-                // Convert the integer Turnout value to boolean for DCC++ internal code.
+                // Convert the integer Turnout value to boolean for DCC-EX internal code.
                 // Assume if it's not THROWN (true), it must be CLOSED (false).
                 msg = DCCppMessage.makeTurnoutCommandMsg(mNumber, newState);
                 internalState = COMMANDSENT;
                 break;
             default: // DIRECT -- use <a ... > command
                 // mNumber is the DCC address of the device.
-                // Convert the integer Turnout value to boolean for DCC++ internal code.
+                // Convert the integer Turnout value to boolean for DCC-EX internal code.
                 // Assume if it's not THROWN (true), it must be CLOSED (false).
                 msg = DCCppMessage.makeAccessoryDecoderMsg(mNumber, newState);
             internalState = IDLE;
@@ -217,7 +217,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     }
     
     /**
-     * request an update on status by sending a DCC++ message
+     * request an update on status by sending a DCC-EX message
      */
     @Override
     public void requestUpdateFromLayout() {
@@ -256,7 +256,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     }
 
     /*
-     *  Handle an incoming message from the DCC++
+     *  Handle an incoming message from the DCC-EX
      */
     @Override
     synchronized public void message(DCCppReply l) {
@@ -325,7 +325,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     synchronized private void handleExactModeFeedback(DCCppReply l) {
         /* 
            Note for Outputs (EXACT mode), LOW is THROWN, HIGH is CLOSED
-           As defined in DCC++ Base Station SerialCommand.cpp
+           As defined in DCC-EX Base Station SerialCommand.cpp
         */
         log.debug("Handle Message for turnout {} in EXACT feedback mode", mNumber);
         if (l.isOutputCmdReply() && (l.getOutputNumInt() == mNumber)) {

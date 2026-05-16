@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class performs initialization for DCC++. It
+ * This class performs initialization for DCC-EX. It
  * adds the appropriate Managers via the Initialization Manager.
  *
  * @author Paul Bender Copyright (C) 2003-2010
@@ -25,7 +25,7 @@ public class DCCppInitializationManager {
 
         systemMemo = memo;
 
-        log.debug("Starting DCC++/DCC-EX Initialization Process");
+        log.debug("Starting DCC-EX/DCC-EX Initialization Process");
 
         jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
         systemMemo.setProgrammerManager(new DCCppProgrammerManager(new DCCppProgrammer(systemMemo.getDCCppTrafficController()), systemMemo));
@@ -50,7 +50,7 @@ public class DCCppInitializationManager {
 
         systemMemo.register();
 
-        log.info("DCC++/DCC-EX Initialization Complete");
+        log.info("DCC-EX/DCC-EX Initialization Complete");
     }
 
     private static final Logger log = LoggerFactory.getLogger(DCCppInitializationManager.class);

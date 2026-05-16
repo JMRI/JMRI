@@ -12,7 +12,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 /**
- * Represents a single command or response on the DCC++.
+ * Represents a single command or response on the DCC-EX.
  * <p>
  * Content is represented with ints to avoid the problems with sign-extension
  * that bytes have, and because a Java char is actually a variable number of
@@ -47,10 +47,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     private static int _nRetries = 3;
 
-    /* According to the specification, DCC++ has a maximum timing
+    /* According to the specification, DCC-EX has a maximum timing
      interval of 500 milliseconds during normal communications */
-    protected static final int DCCppProgrammingTimeout = 10000;  // TODO: Appropriate value for DCC++?
-    private static int DCCppMessageTimeout = 5000;  // TODO: Appropriate value for DCC++?
+    protected static final int DCCppProgrammingTimeout = 10000;  // TODO: Appropriate value for DCC-EX?
+    private static int DCCppMessageTimeout = 5000;  // TODO: Appropriate value for DCC-EX?
 
     private StringBuilder myMessage;
     private String myRegex;
@@ -113,7 +113,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * <p>
      * NOTE 15-Feb-17: un-Deprecating this function so that it can be used in
      * the DCCppOverTCP server/client interface.
-     * Messages shouldn't be parsed, they are already in DCC++ format,
+     * Messages shouldn't be parsed, they are already in DCC-EX format,
      * so we need the string constructor to generate a DCCppMessage from
      * the incoming byte stream.
      * @param s message in string form.
@@ -651,7 +651,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         }
         toStringCache = null;
     }
-    // For DCC++, the opcode is the first character in the
+    // For DCC-EX, the opcode is the first character in the
     // command (after the < ).
 
     // note that the opcode is part of the message, so we treat it
@@ -733,7 +733,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Change the default number of retries for an DCC++ message.
+     * Change the default number of retries for an DCC-EX message.
      *
      * @param t number of retries to attempt
      */
@@ -742,7 +742,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Change the default timeout for a DCC++ message.
+     * Change the default timeout for a DCC-EX message.
      *
      * @param t Timeout in milliseconds
      */
@@ -793,7 +793,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             return m;
 
         } catch (PatternSyntaxException e) {
-            log.error("Malformed DCC++ message syntax! s = {}", pat);
+            log.error("Malformed DCC-EX message syntax! s = {}", pat);
             return (null);
         } catch (IllegalStateException e) {
             log.error("Group called before match operation executed string= {}", s);
@@ -1738,7 +1738,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * a broadcast message, because the reply usually comes to us
      * that way.
      */
-    // TODO: Not sure this is useful in DCC++
+    // TODO: Not sure this is useful in DCC-EX
     @Override
     public boolean replyExpected() {
         boolean retv;
@@ -2090,7 +2090,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * Station and is simply echoed back in the output - useful for external
      * programs that call this function CALLBACKSUB: a second arbitrary integer
      * (0-32767) that is ignored by the Base Station and is simply echoed back
-     * in the output - useful for external programs (e.g. DCC++ Interface) that
+     * in the output - useful for external programs (e.g. DCC-EX Interface) that
      * call this function
      * <p>
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in
@@ -2168,7 +2168,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * by the Base Station and is simply echoed back in the output - useful for
      * external programs that call this function CALLBACKSUB: a second arbitrary
      * integer (0-32767) that is ignored by the Base Station and is simply
-     * echoed back in the output - useful for external programs (e.g. DCC++
+     * echoed back in the output - useful for external programs (e.g. DCC-EX
      * Interface) that call this function
      * <p>
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in
@@ -2250,7 +2250,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * output - useful for external programs that call this function
      * CALLBACKSUB: a second arbitrary integer (0-32767) that is ignored by the
      * Base Station and is simply echoed back in the output - useful for
-     * external programs (e.g. DCC++ Interface) that call this function
+     * external programs (e.g. DCC-EX Interface) that call this function
      * <p>
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in
      * decoding the responses.
@@ -2449,7 +2449,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * Read DCC++ Base Station Status
+     * Read DCC-EX Base Station Status
      * <p>
      * Format: {@code <s>}
      * <p>
@@ -2460,14 +2460,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * settings
      *
      * @return series of status messages that can be read by an interface to
-     * determine status of DCC++ Base Station and important settings
+     * determine status of DCC-EX Base Station and important settings
      */
     public static DCCppMessage makeCSStatusMsg() {
         return (new DCCppMessage(DCCppConstants.READ_CS_STATUS, DCCppConstants.READ_CS_STATUS_REGEX));
     }
 
     /**
-     * Get number of supported slots for this DCC++ Base Station Status
+     * Get number of supported slots for this DCC-EX Base Station Status
      * <p>
      * Format: {@code <N>}
      * <p>
@@ -2587,7 +2587,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     /**
      * Generate a Speed and Direction Request message
      *
-     * @param register  is the DCC++ base station register assigned.
+     * @param register  is the DCC-EX base station register assigned.
      * @param address   is the locomotive address
      * @param speed     a normalized speed value (a floating point number
      *                  between 0 and 1). A negative value indicates emergency
@@ -3152,10 +3152,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     /**
      * Write DCC Packet to a specified Register on the Main.
      * <br>
-     * DCC++ BaseStation code appends its own error-correction byte so we must
+     * DCC-EX BaseStation code appends its own error-correction byte so we must
      * not provide one.
      *
-     * @param register the DCC++ BaseStation main register number to use
+     * @param register the DCC-EX BaseStation main register number to use
      * @param numBytes the number of bytes in the packet
      * @param bytes    byte array representing the packet. The first
      *                 {@code num_bytes} are used.
@@ -3180,10 +3180,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     /**
      * Write DCC Packet to a specified Register on the Programming Track.
      * <br><br>
-     * DCC++ BaseStation code appends its own error-correction byte so we must
+     * DCC-EX BaseStation code appends its own error-correction byte so we must
      * not provide one.
      *
-     * @param register the DCC++ BaseStation main register number to use
+     * @param register the DCC-EX BaseStation main register number to use
      * @param numBytes the number of bytes in the packet
      * @param bytes    byte array representing the packet. The first
      *                 {@code num_bytes} are used.

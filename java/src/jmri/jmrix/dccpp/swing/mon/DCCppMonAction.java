@@ -21,7 +21,7 @@ public class DCCppMonAction extends DCCppSystemConnectionAction {
     }
 
     public DCCppMonAction(DCCppSystemConnectionMemo memo) {
-        this("DCC++ Traffic Monitor", memo);
+        this("DCC-EX Traffic Monitor", memo);
     }
 
     public DCCppMonAction() {

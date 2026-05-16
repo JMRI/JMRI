@@ -3,6 +3,7 @@ package jmri.jmrix.dccpp;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * JUnit tests for the DCCppSerialPortController class.
@@ -52,6 +53,14 @@ public class DCCppSerialPortControllerTest extends jmri.jmrix.AbstractSerialPort
             }
 
        };
+    }
+
+    @Test
+    public void testSetManufacturerLegacyMigration() {
+        apc.setManufacturer("DCC++");
+        assertEquals("DCC-EX", apc.getManufacturer(), "legacy DCC++ manufacturer should migrate to DCC-EX");
+        apc.setManufacturer("DCC-EX");
+        assertEquals("DCC-EX", apc.getManufacturer(), "DCC-EX manufacturer should be stored as-is");
     }
 
     @Override

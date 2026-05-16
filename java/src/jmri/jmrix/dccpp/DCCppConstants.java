@@ -3,7 +3,7 @@ package jmri.jmrix.dccpp;
 /**
  * DCCppConstants.java
  *
- * Constants to represent values seen in DCC++ traffic
+ * Constants to represent values seen in DCC-EX traffic
  *
  * @author Paul Bender Copyright (C) 2003-2009
  * @author Mark Underwood Copyright (C) 2015
@@ -24,13 +24,13 @@ public final class DCCppConstants {
     }
 
     public static final int MAX_MESSAGE_SIZE = 30;
-    public static final int MAX_REPLY_SIZE = 2048; //max size of DCC++EX wifi send buffer
+    public static final int MAX_REPLY_SIZE = 2048; //max size of DCC-EX WiFi send buffer
     public static final int MAX_MAIN_REGISTERS = 12;
     public static final int MAX_FUNCTION_NUMBER = 68; //
     public static final int REGISTER_UNALLOCATED = -1;
     public static final int NO_REGISTER_FREE = -1; // TODO: Should this be a unique value?
 
-    // DCC++ over TCP Port Number
+    // DCC-EX over TCP Port Number
     public static final int DCCPP_OVER_TCP_PORT = 1235;
 
     // Communications Port Info
@@ -49,7 +49,7 @@ public final class DCCppConstants {
     public static final String VOLTAGE = "V";
     public static final String CURRENT = "C";
 
-    // DCC++ Command OpCodes
+    // DCC-EX Command OpCodes
     public static final char THROTTLE_CMD           = 't'; // Throttle command <t reg cab speed dir>
     public static final char FUNCTION_CMD           = 'f'; // F0-F28 <f cab byte1 [byte2]>
     public static final char FUNCTION_V4_CMD        = 'F'; // F0-F68 <F CAB FUNC 1|0>

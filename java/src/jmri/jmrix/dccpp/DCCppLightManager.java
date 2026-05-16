@@ -7,7 +7,7 @@ import jmri.Light;
 import jmri.managers.AbstractLightManager;
 
 /**
- * Implement LightManager for DCC++ systems.
+ * Implement LightManager for DCC-EX systems.
  * <p>
  * System names are "DxppSnnn", where Dx is the system prefix and nnn is the sensor number without padding.
  * <p>
@@ -21,8 +21,8 @@ public class DCCppLightManager extends AbstractLightManager {
     private DCCppTrafficController tc = null;
 
     /**
-     * Create an new DCC++ LightManager.
-     * Has to register for DCC++ events.
+     * Create an new DCC-EX LightManager.
+     * Has to register for DCC-EX events.
      *
      * @param memo the supporting system connection memo
      */

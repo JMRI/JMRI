@@ -126,6 +126,15 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
         this.getSystemConnectionMemo().getDCCppTrafficController().connectPort(this);
     }
 
+    // Legacy "DCC++" remap for saved configs prior to the DCC++ -> DCC-EX rename (issue #15136).
+    @Override
+    public void setManufacturer(String manufacturer) {
+        if ("DCC++".equals(manufacturer)) {
+            manufacturer = DCCppConnectionTypeList.DCCPP;
+        }
+        super.setManufacturer(manufacturer);
+    }
+
 }
 
 

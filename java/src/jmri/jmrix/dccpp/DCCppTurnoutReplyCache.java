@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement a feedback message cache for DCC++ turnouts.
+ * Implement a feedback message cache for DCC-EX turnouts.
  *
  * @author Paul Bender Copyright (C) 2012
  * @author Mark Underwood Copyright (C) 2015

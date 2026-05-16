@@ -53,6 +53,15 @@ public abstract class DCCppSimulatorPortController extends jmri.jmrix.AbstractSe
         return (DCCppSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
+    // Legacy "DCC++" remap for saved configs prior to the DCC++ -> DCC-EX rename (issue #15136).
+    @Override
+    public void setManufacturer(String manufacturer) {
+        if ("DCC++".equals(manufacturer)) {
+            manufacturer = DCCppConnectionTypeList.DCCPP;
+        }
+        super.setManufacturer(manufacturer);
+    }
+
 }
 
 

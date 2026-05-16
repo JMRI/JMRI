@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Definition of objects to handle configuring a DCC++OverTcp layout
+ * Definition of objects to handle configuring a DCC-EX Over TCP layout
  * connection via a DCCppTcpDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
@@ -31,12 +31,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
-        log.info("NetworkPortAdapter opening. Is DCC++ Over TCP Server running on host?");
+        log.info("NetworkPortAdapter opening. Is DCC-EX Over TCP Server running on host?");
     }
 
     @Override
     public String name() {
-        return "DCC++ Server";
+        return "DCC-EX Server";
     }
 
     public boolean isOptList1Advanced() {
