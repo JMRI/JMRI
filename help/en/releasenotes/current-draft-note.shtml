@@ -471,7 +471,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Improved the layout of the edit tools to reduce the need for 
+                vertical scrolling when they're at the top or bottom of the window.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
