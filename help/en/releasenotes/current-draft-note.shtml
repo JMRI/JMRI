@@ -494,6 +494,12 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>The LogixNG function <strong>regex()</strong> has been
+              added. It lets you use a regular expression to extract
+              information from a string.<br/>
+              For more information about regular expressions, see the
+              Java class 
+              <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/regex/Pattern.html"></a>Pattern</li>.
           <li></li>
         </ul>
 
