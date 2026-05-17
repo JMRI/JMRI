@@ -680,6 +680,7 @@
             <li>The class <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionStatus.html">jmri.jmrix.ConnectionStatus</a>
                 has been refactorized to use <a href="https://www.jmri.org/JavaDoc/doc/jmri/SystemConnectionMemo.html">SystemConnectionMemo</a>
                 instead of <strong>systemName</strong> and <strong>portName</strong>.</li>
-            <li></li>
+            <li>Reading and writing of the user-interface.xml preferences file has been made more efficient.  This shouldn't have
+                any effect on users.</li>
         </ul>
 
