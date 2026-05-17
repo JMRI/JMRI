@@ -61,6 +61,20 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
         ConnectionStatus.instance().addPropertyChangeListener(_memo, _listener);
     }
 
+    public void initComponents() {
+        _tc.addDCCppListener(DCCppInterface.CS_INFO, this);
+
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+
+        // load the custom 5x8 found
+        try {
+            InputStream stream = new FileInputStream(new File("resources/fonts/5x8_lcd_hd44780u_a02.ttf"));
+            font = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(16f).deriveFont(Font.BOLD);
+        } catch (IOException e1) { log.error("failed to find or open font file");
+        } catch (FontFormatException e2) { log.error("font file not valid");
+        }
+    }
+
     public void dispose() {
         ConnectionStatus.instance().removePropertyChangeListener(_memo, _listener);
     }
@@ -134,23 +148,6 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
      */
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void initComponents() {
-        _tc.addDCCppListener(DCCppInterface.CS_INFO, this);
-
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-
-        // load the custom 5x8 found
-        try {
-            InputStream stream = new FileInputStream(new File("resources/fonts/5x8_lcd_hd44780u_a02.ttf"));
-            font = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(16f).deriveFont(Font.BOLD);
-        } catch (IOException e1) { log.error("failed to find or open font file");
-        } catch (FontFormatException e2) { log.error("font file not valid");
-        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VirtualLCDPanel.class);
