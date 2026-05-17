@@ -98,8 +98,7 @@ public class VirtualLcdPositionableXml
         }
 
         if (memo == null) {
-            throw new IllegalArgumentException("Cannot find connection: " + systemConnectionName);
- //           throw new JmriConfigureXmlException("Cannot find connection: " + systemConnectionName);
+            throw new JmriConfigureXmlException("Cannot find connection: " + systemConnectionName);
         }
 
         Element displayNoElement = element.getChild("displayNo");
