@@ -1,10 +1,8 @@
 package jmri.jmrit.logix;
 
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.*;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
@@ -81,24 +79,15 @@ public class LinkedWarrantTest {
 
         JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(warrant, 8), "Loopy 2 starts to move at 8th command");
 
-        // listener avoids polling a status that leg 3's immediate re-launch overwrites
-        AtomicBoolean leg2Done = new AtomicBoolean(false);
-        PropertyChangeListener legDone = evt -> {
-            if (Warrant.PROPERTY_STOP_WARRANT.equals(evt.getPropertyName())
-                    && "warrantComplete".equals(evt.getNewValue())) {
-                leg2Done.set(true);
-            }
-        };
-        warrant.addPropertyChangeListener(legDone);
-
         assertDoesNotThrow( () -> {
             assertEquals(block.getSensor(),
                 NXFrameTest.runtimes(route, _OBlockMgr),
                 "LoopDeLoop Completes Second Leg");
         }, ("LoopDeLoop after Second leg Exception"));
 
-        JUnitUtil.waitFor(leg2Done::get, "LoopDeLoop finished second leg");
-        warrant.removePropertyChangeListener(legDone);
+        // leg 3's setRunMode(MODE_RUN) resets getCurrentOrderIndex() to 0 — use that as the signal
+        JUnitUtil.waitFor(() -> warrant.getCurrentOrderIndex() == 0 && warrant.getRunMode() == Warrant.MODE_RUN,
+                "LoopDeLoop finished second leg");
 
         JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(warrant, 8), "Loopy 3 starts to move at 8th command");
 
