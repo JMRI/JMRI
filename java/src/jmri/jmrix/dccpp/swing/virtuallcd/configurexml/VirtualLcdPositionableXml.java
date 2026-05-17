@@ -80,11 +80,14 @@ public class VirtualLcdPositionableXml
         Editor ed = (Editor) o;
         DCCppSystemConnectionMemo memo = null;
 
+        List<DCCppSystemConnectionMemo> systemConnections =
+                jmri.InstanceManager.getList(DCCppSystemConnectionMemo.class);
+
+        String systemConnectionName = "Unknown connection";
+
         Element systemConnection = element.getChild("systemConnection");
         if (systemConnection != null) {
-            String systemConnectionName = systemConnection.getTextTrim();
-            List<DCCppSystemConnectionMemo> systemConnections =
-                    jmri.InstanceManager.getList(DCCppSystemConnectionMemo.class);
+            systemConnectionName = systemConnection.getTextTrim();
 
             for (DCCppSystemConnectionMemo m : systemConnections) {
                 if (m.getSystemPrefix().equals(systemConnectionName)) {
@@ -92,6 +95,11 @@ public class VirtualLcdPositionableXml
                     break;
                 }
             }
+        }
+
+        if (memo == null) {
+            throw new IllegalArgumentException("Cannot find connection: " + systemConnectionName);
+ //           throw new JmriConfigureXmlException("Cannot find connection: " + systemConnectionName);
         }
 
         Element displayNoElement = element.getChild("displayNo");
