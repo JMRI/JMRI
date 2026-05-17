@@ -2013,6 +2013,10 @@ public abstract class Editor extends JmriJFrameWithPermissions
         return _iconEditorFrame.get(name).getEditor();
     }
 
+    public void putIconEditor(String name, Editor.JFrameItem frame) {
+        _iconEditorFrame.put(name, frame);
+    }
+
     /**
      * Add a label to the target.
      */
@@ -2919,7 +2923,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
      * @param editor parent frame of the image frame
      * @return JFrame connected to the editor,  to be filled with icons
      */
-    protected JFrameItem makeAddIconFrame(String name, boolean add, boolean table, IconAdder editor) {
+    public JFrameItem makeAddIconFrame(String name, boolean add, boolean table, IconAdder editor) {
         log.debug("makeAddIconFrame for {}, add= {}, table= {}", name, add, table);
         String txt;
         String bundleName;
@@ -3669,7 +3673,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
      *
      * @param obj the object to locate
      */
-    protected abstract void setNextLocation(Positionable obj);
+    public abstract void setNextLocation(Positionable obj);
 
     /**
      * After construction, initialize all the widgets to their saved config

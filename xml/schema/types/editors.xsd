@@ -1392,6 +1392,28 @@
       <xs:attribute name="text" type="xs:string"></xs:attribute>
     </xs:complexType>
 
+    <xs:complexType name="EditorDccExVirtualLcdIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a DCC-EX VirtualLCD
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrix.dccpp.swing.virtuallcd.configurexml.VirtualLcdPositionableXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="systemConnection"  type="xs:string" minOccurs="1" maxOccurs="1" />
+        <xs:element name="displayNo"  type="xs:int" minOccurs="1" maxOccurs="1" />
+        <xs:element name="LogixNG"  type="InlineLogixNGType" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="x" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="y" type="xs:int" use="required"></xs:attribute>
+
+    </xs:complexType>
+
 
     <xs:simpleType name="LayoutTurnoutType">
       <xs:annotation>
