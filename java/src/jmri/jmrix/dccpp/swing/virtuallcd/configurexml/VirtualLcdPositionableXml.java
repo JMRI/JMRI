@@ -128,7 +128,7 @@ public class VirtualLcdPositionableXml
         // add the Virtual LCD to the panel
         l.setDisplayLevel(Editor.CLOCK);
         try {
-            ed.putItem(l);
+            ed.putItem(l, true);
         } catch (Positionable.DuplicateIdException e) {
             throw new JmriConfigureXmlException("Positionable id is not unique", e);
         }

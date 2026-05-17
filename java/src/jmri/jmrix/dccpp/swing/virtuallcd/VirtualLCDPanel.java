@@ -30,6 +30,7 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
     private final DCCppSystemConnectionMemo _memo;
     private final int _displayNo;
     private final PropertyChangeListener _listener;
+    private final Dimension size = new Dimension(0,0);
     private Font font;
 
     static final int TOTALLINES = 64;
@@ -128,11 +129,23 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
                 int lineNumber = msg.getLCDLineNumInt();
                 if (lineNumber < TOTALLINES) {
                     lines.get(lineNumber).setText(msg.getLCDTextString()+"   "); // padding for appearance
-                    _frame.pack();
+                    for (int i=lineNumber; i>=0; i--) {
+                        if (lines.get(i).getText().isEmpty()) {
+//                            lines.get(i).setText(" ");
+                        }
+                    }
                     if (_positionable != null) {
                         var d = this.getPreferredSize();
-                        this.setSize(d.width, d.height);
-                        _positionable.setSize(d.width, d.height);
+
+                        if (size.width < d.width) {
+                            size.width = d.width;
+                        }
+                        if (size.height < d.height) {
+                            size.height = d.height;
+                        }
+
+                        this.setSize(size.width, size.height);
+                        _positionable.setSize(size.width, size.height);
                     }
                 } else {
                     log.warn("Received LCD message for line {}, but configured for TOTALLINES limit of {}",

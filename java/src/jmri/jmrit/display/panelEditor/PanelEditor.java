@@ -492,7 +492,7 @@ public class PanelEditor extends Editor implements ItemListener {
                         }
                     }
                     if (positionableFactory != null) {
-                        positionableFactory.addPositionable(this);
+                        positionableFactory.addPositionable(this, null);
                     } else {
                         log.error("Unable to open Icon Editor \"{}\"", item.getName());
                     }
@@ -1092,7 +1092,7 @@ public class PanelEditor extends Editor implements ItemListener {
                     _add,
                     (ActionEvent e) -> {
                         addItemViaMouseClick = true;
-                        positionableFactory.addPositionable(this);
+                        positionableFactory.addPositionable(this, null);
                     });
         }
 
@@ -1128,7 +1128,15 @@ public class PanelEditor extends Editor implements ItemListener {
 
     @Override
     public void putItem(Positionable l) throws Positionable.DuplicateIdException {
-        super.putItem(l);
+        putItem(l, false);
+    }
+
+    @Override
+    public void putItem(Positionable l, boolean factoryPositionable)
+            throws Positionable.DuplicateIdException {
+
+        super.putItem(l, factoryPositionable);
+
         /*This allows us to catch any new items that are being pasted into the panel
          and add them to the selection group, so that the user can instantly move them around*/
         //!!!

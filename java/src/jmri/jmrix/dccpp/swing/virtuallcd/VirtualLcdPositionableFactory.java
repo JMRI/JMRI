@@ -62,7 +62,7 @@ public class VirtualLcdPositionableFactory implements PositionableFactory {
     }
 
     @Override
-    public void addPositionable(@Nonnull Editor editor) {
+    public void addPositionable(@Nonnull Editor editor, DoAfter doAfter) {
         if (addPositionableFrame != null) {
             this.closeDialog(editor);
         }
@@ -135,7 +135,7 @@ public class VirtualLcdPositionableFactory implements PositionableFactory {
             var memo = _memoComboBox.getItemAt(_memoComboBox.getSelectedIndex())._memo;
             try {
                 int displayNo = Integer.parseInt(displayNoTextField.getText());
-                addVirtualLCD(editor, memo, displayNo);
+                addVirtualLCD(editor, memo, displayNo, doAfter);
                 closeDialog(editor);
             } catch (NumberFormatException ex) {
                 JmriJOptionPane.showMessageDialog(
@@ -167,17 +167,24 @@ public class VirtualLcdPositionableFactory implements PositionableFactory {
         editor.setVisible(true);
     }
 
-    public void addVirtualLCD(Editor editor, DCCppSystemConnectionMemo memo, int displayNo) {
+    public void addVirtualLCD(
+            Editor editor,
+            DCCppSystemConnectionMemo memo,
+            int displayNo,
+            DoAfter doAfter) {
 
         VirtualLcdPositionable virtualLcdPositionable =
                 new VirtualLcdPositionable(editor, memo, displayNo);
         virtualLcdPositionable.setDisplayLevel(ICONS);
         editor.setNextLocation(virtualLcdPositionable);
         try {
-            editor.putItem(virtualLcdPositionable);
+            editor.putItem(virtualLcdPositionable, true);
         } catch (Positionable.DuplicateIdException e) {
             // This should never happen
             log.error("Editor.putItem() with null id has thrown DuplicateIdException", e);
+        }
+        if (doAfter != null) {
+            doAfter.doAfter(virtualLcdPositionable);
         }
     }
 

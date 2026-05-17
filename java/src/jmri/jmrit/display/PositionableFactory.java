@@ -43,8 +43,23 @@ public interface PositionableFactory {
     /**
      * Add a positionable to the panel.
      * The method might show a dialog to let the user configure the positionable.
-     * @param editor the editor to which the new positionable should be added
+     * @param editor   the editor to which the new positionable should be added
+     * @param doAfter  an optional task to run after the positionable is added
+     *                 to the editor, or null if no task is needed
      */
-    void addPositionable(@Nonnull Editor editor);
+    void addPositionable(@Nonnull Editor editor, DoAfter doAfter);
+
+
+    /**
+     * A task to do after the positionable is added to the editor.
+     */
+    interface DoAfter {
+
+        /**
+         * The task to do.
+         * @param p the positionable
+         */
+        void doAfter(Positionable p);
+    }
 
 }

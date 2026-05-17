@@ -1897,6 +1897,12 @@ public abstract class Editor extends JmriJFrameWithPermissions
     }
 
     public void putItem(@Nonnull Positionable l) throws Positionable.DuplicateIdException {
+        putItem(l, false);
+    }
+
+    public void putItem(@Nonnull Positionable l, boolean factoryPositionable)
+            throws Positionable.DuplicateIdException {
+
         ThreadingUtil.runOnGUI( () -> {
             l.invalidate();
             l.setPositionable(true);
