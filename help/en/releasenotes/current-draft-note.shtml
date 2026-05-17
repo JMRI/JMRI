@@ -50,6 +50,7 @@
                     more than one display. Each display is shown in a single
                     row in the <strong>Virtual LCD</strong> window, with
                     the first display at the left.</li>
+                <li><strong>Virtual LCD</strong> can now be added to Panel Editor.</li>
             </ul>
 
         <h4>DCC4pc</h4>
