@@ -1,6 +1,8 @@
 package jmri.jmrit.logix;
 
 import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import jmri.ShutDownTask;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.Assume;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,9 +37,9 @@ public class RouteFinderTest {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir File tempDir) throws IOException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(tempDir));
         JUnitUtil.initRosterConfigManager();
     }
 

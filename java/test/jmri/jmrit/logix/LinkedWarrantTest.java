@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import jmri.*;
@@ -12,6 +13,7 @@ import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -424,10 +426,10 @@ public class LinkedWarrantTest {
 
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir File tempDir) throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(tempDir));
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
@@ -452,6 +454,15 @@ public class LinkedWarrantTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.removeMatchingThreads("Engineer(");
+
+        // CheckForTermination calls runTrain() on finish, poisoning the next test's WarrantTableFrame.lastClicktime; evict after they complete
+        JUnitUtil.waitFor(() -> Thread.getAllStackTraces().keySet().stream()
+                .noneMatch(t -> t.isAlive() && t.getName().startsWith("CheckForTermination")),
+                "CheckForTermination threads to terminate");
+        WarrantTableFrame wtf = InstanceManager.getNullableDefault(WarrantTableFrame.class);
+        if (wtf != null) {
+            InstanceManager.deregister(wtf, WarrantTableFrame.class);
+        }
 
         _warrantMgr.dispose();
         _warrantMgr = null;
