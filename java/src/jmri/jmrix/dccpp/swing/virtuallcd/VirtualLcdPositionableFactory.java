@@ -169,9 +169,6 @@ public class VirtualLcdPositionableFactory implements PositionableFactory {
 
     public void addVirtualLCD(Editor editor, DCCppSystemConnectionMemo memo, int displayNo) {
 
-        List<DCCppSystemConnectionMemo> list = jmri.InstanceManager.getList(DCCppSystemConnectionMemo.class);
-        memo = list.getFirst();
-
         VirtualLcdPositionable virtualLcdPositionable =
                 new VirtualLcdPositionable(editor, memo, displayNo);
         virtualLcdPositionable.setDisplayLevel(ICONS);
