@@ -129,11 +129,6 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
                 int lineNumber = msg.getLCDLineNumInt();
                 if (lineNumber < TOTALLINES) {
                     lines.get(lineNumber).setText(msg.getLCDTextString()+"   "); // padding for appearance
-                    for (int i=lineNumber; i>=0; i--) {
-                        if (lines.get(i).getText().isEmpty()) {
-//                            lines.get(i).setText(" ");
-                        }
-                    }
                     if (_positionable != null) {
                         var d = this.getPreferredSize();
 
