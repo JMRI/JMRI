@@ -331,8 +331,14 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 waitForSensor(ts.getNamedBeanHandle(), cmdVal);
                 break;
             case RUN_WARRANT:
-                ThreadingUtil.runOnGUIEventually(() ->
-                    runWarrant(ts.getNamedBeanHandle(), cmdVal));
+                NamedBean runBean = ts.getNamedBeanHandle().getBean();
+                if (runBean instanceof Warrant && _warrant.getSpeedUtil().getDccAddress()
+                        .equals(((Warrant) runBean).getSpeedUtil().getDccAddress())) {
+                    runWarrant(ts.getNamedBeanHandle(), cmdVal); // same loco — no EDT needed
+                } else {
+                    ThreadingUtil.runOnGUIEventually(() ->
+                        runWarrant(ts.getNamedBeanHandle(), cmdVal)); // different loco — needs EDT
+                }
                 break;
             case SPEEDSTEP:
                 break;
