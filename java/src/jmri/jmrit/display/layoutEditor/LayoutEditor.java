@@ -3816,7 +3816,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             Positionable s = factoryPositionables.get(i);
             Rectangle2D r = s.getBounds();
             if (r.contains(loc)) {
-                result = (Positionable) s;
+                result = s;
                 break;
             }
         }
@@ -6415,7 +6415,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         }
 
-        super.removeFromContents((Positionable) s);
+        super.removeFromContents(s);
 
         if (found) {
             setDirty();
