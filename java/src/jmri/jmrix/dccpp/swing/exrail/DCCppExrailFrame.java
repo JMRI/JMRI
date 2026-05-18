@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,8 +72,11 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
             public Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus, int row, int column) {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                DCCppExrailEntry entry = _tableModel.getEntryForRow(table.convertRowIndexToModel(row));
+                boolean disabled = entry != null && entry.getState() == 4;
                 if (!isSelected) {
                     setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 240, 240));
+                    setForeground(disabled ? Color.GRAY : table.getForeground());
                 }
                 return this;
             }
@@ -98,8 +102,15 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     private void triggerSelected() {
         int row = _table.getSelectedRow();
         if (row < 0) return;
-        List<DCCppExrailEntry> entries = List.copyOf(_entries.values());
-        DCCppExrailEntry entry = entries.get(_table.convertRowIndexToModel(row));
+        DCCppExrailEntry entry = _tableModel.getEntryForRow(_table.convertRowIndexToModel(row));
+        if (entry == null) return;
+        if (entry.getState() == 4) {
+            JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("ExrailDisabledAlert"),
+                    Bundle.getMessage("ExrailDisabledTitle"),
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         if (entry.isAutomation()) {
             String input = JOptionPane.showInputDialog(this,
                     Bundle.getMessage("ExrailLabelLocoAddress"),
@@ -173,8 +184,23 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
             Bundle.getMessage("ExrailColState")
         };
 
+        /** Entries visible in the table — Hidden (state 2) are excluded. */
+        private List<DCCppExrailEntry> visibleEntries() {
+            List<DCCppExrailEntry> list = new ArrayList<>();
+            for (DCCppExrailEntry e : _entries.values()) {
+                if (e.getState() != 2) list.add(e);
+            }
+            return list;
+        }
+
+        DCCppExrailEntry getEntryForRow(int modelRow) {
+            List<DCCppExrailEntry> list = visibleEntries();
+            if (modelRow < 0 || modelRow >= list.size()) return null;
+            return list.get(modelRow);
+        }
+
         @Override
-        public int getRowCount() { return _entries.size(); }
+        public int getRowCount() { return visibleEntries().size(); }
 
         @Override
         public int getColumnCount() { return COLUMNS.length; }
@@ -189,7 +215,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
 
         @Override
         public Object getValueAt(int row, int col) {
-            List<DCCppExrailEntry> list = List.copyOf(_entries.values());
+            List<DCCppExrailEntry> list = visibleEntries();
             if (row >= list.size()) return "";
             DCCppExrailEntry e = list.get(row);
             if (col == 0) return e.getId();
@@ -199,10 +225,8 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
             if (col == 2) return e.getDisplayName();
             if (col == 3) {
                 int s = e.getState();
-                if (s < 0) return "";
-                if (s == 0) return Bundle.getMessage("ExrailStateIdle");
+                if (s <= 0) return Bundle.getMessage("ExrailStateIdle");
                 if (s == 1) return Bundle.getMessage("ExrailStateRunning");
-                if (s == 2) return Bundle.getMessage("ExrailStateHidden");
                 if (s == 4) return Bundle.getMessage("ExrailStateDisabled");
                 return String.valueOf(s);
             }
