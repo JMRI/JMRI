@@ -12,6 +12,7 @@ import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.manualtrainbuilder.TrainManualBuildManager;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.FileUtil;
 
@@ -67,6 +68,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         doc.addContent(0, p);
 
         InstanceManager.getDefault(TrainManager.class).store(root);
+        InstanceManager.getDefault(TrainManualBuildManager.class).store(root);
         InstanceManager.getDefault(TrainScheduleManager.class).store(root);
         InstanceManager.getDefault(AutomationManager.class).store(root);
 
@@ -102,6 +104,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         }
 
         InstanceManager.getDefault(TrainManager.class).load(root);
+        InstanceManager.getDefault(TrainManualBuildManager.class).load(root);
         InstanceManager.getDefault(TrainScheduleManager.class).load(root);
 
         fileLoaded = true; // set flag trains are loaded

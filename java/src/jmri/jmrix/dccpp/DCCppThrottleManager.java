@@ -11,7 +11,7 @@ import jmri.ThrottleListener;
 import jmri.jmrix.AbstractThrottleManager;
 
 /**
- * DCC++ implementation of a ThrottleManager based on the
+ * DCC-EX implementation of a ThrottleManager based on the
  * AbstractThrottleManager.
  *
  * @author Paul Bender Copyright (C) 2002-2004
@@ -64,7 +64,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     }
 
     /**
-     * DCC++ based systems DO NOT use the Dispatch Function
+     * DCC-EX based systems DO NOT use the Dispatch Function
      * (do they?)
      * {@inheritDoc }
      */
@@ -74,7 +74,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     }
 
     /**
-     * DCC++ based systems can have multiple throttles for the same 
+     * DCC-EX based systems can have multiple throttles for the same 
      * device
      * <p>
      * {@inheritDoc}
@@ -122,7 +122,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
 
     /**
      * {@inheritDoc }
-     * DCC++ supports 14,27,28 and 128 speed step modes
+     * DCC-EX supports 14,27,28 and 128 speed step modes
      */
     @Override
     public EnumSet<SpeedStepMode> supportedSpeedModes() {

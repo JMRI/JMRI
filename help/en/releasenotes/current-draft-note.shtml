@@ -36,7 +36,20 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>DCC-EX Traffic Monitor: controls now wrap onto additional rows when the
+                window is narrowed and the controls area grows upward to keep everything visible,
+                rather than clipping checkboxes off the bottom
+                (<a href="https://github.com/JMRI/JMRI/issues/15134">#15134</a>).
+                The window title and menu action label also now read &quot;DCC-EX&quot; rather
+                than &quot;DCC++&quot;.</li>
+                <li>DCC-EX Traffic Monitor: traffic lines now show an explicit &quot;TX:&quot; or
+                &quot;RX:&quot; direction marker regardless of whether the translated text or raw
+                form is displayed, and the raw form is wrapped in &lt;&hellip;&gt; rather than
+                [&hellip;] to match DCC-EX's native command syntax.</li>
+                <li>The <strong>Virtual LCD</strong> window now supports
+                    more than one display. Each display is shown in a single
+                    row in the <strong>Virtual LCD</strong> window, with
+                    the first display at the left.</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -458,7 +471,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Improved the layout of the edit tools to reduce the need for 
+                vertical scrolling when they're at the top or bottom of the window.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -481,6 +495,12 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>The LogixNG function <strong>regex()</strong> has been
+              added. It lets you use a regular expression to extract
+              information from a string.<br/>
+              For more information about regular expressions, see the
+              Java class 
+              <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/regex/Pattern.html"></a>Pattern</li>.
           <li></li>
         </ul>
 
@@ -494,6 +514,7 @@
         <a id="Operations" name="Operations"></a>
         <ul>
           <li>Added the ability to set the additional line tab size for Manifest and Switch Lists. Useful when using the smaller page widths. See "More Print Options" in the help.</li>
+          <li>New feature, manual build for a train. See the OperationsPro help for more information.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -523,7 +544,10 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>The Continue/Quit dialog shown at startup when the configured roster
+            location is unavailable now treats dismissing the dialog (the close button)
+            as Quit, matching the behavior of the profile chooser. Previously the close
+            button fell through to Continue (<a href="https://github.com/JMRI/JMRI/issues/15148">issue #15148</a>).</li>
         </ul>
 
     <h3>Routes</h3>
@@ -656,6 +680,7 @@
             <li>The class <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionStatus.html">jmri.jmrix.ConnectionStatus</a>
                 has been refactorized to use <a href="https://www.jmri.org/JavaDoc/doc/jmri/SystemConnectionMemo.html">SystemConnectionMemo</a>
                 instead of <strong>systemName</strong> and <strong>portName</strong>.</li>
-            <li></li>
+            <li>Reading and writing of the user-interface.xml preferences file has been made more efficient.  This shouldn't have
+                any effect on users.</li>
         </ul>
 

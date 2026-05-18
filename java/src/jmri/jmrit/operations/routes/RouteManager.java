@@ -173,6 +173,17 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
         return out;
     }
     
+    public RouteLocation getRouteLocationById(String id) {
+        for (Route route : getList()) {
+            for (RouteLocation rl : route.getLocationsBySequenceList()) {
+                if (rl.getId().equals(id)) {
+                    return rl;
+                }
+            }
+        }
+        return null; // not found
+    }
+    
     /**
      * Used to determine if a location is part of any route.
      * 

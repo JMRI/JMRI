@@ -3058,6 +3058,30 @@ public class TrainBuilderBase extends TrainCommon {
             addLine(FIVE, BLANK_LINE);
         }
     }
+    
+    protected boolean checkRouteLocation(RouteLocation rl) {
+        if (getTrain().isLocationSkipped(rl)) {
+            addLine(ONE,
+                    Bundle.getMessage("buildLocSkipped", rl.getName(), rl.getId(), getTrain().getName()));
+            return false;
+        }
+        if (!rl.isPickUpAllowed() && !rl.isLocalMovesAllowed()) {
+            addLine(ONE,
+                    Bundle.getMessage("buildLocNoPickups", getTrain().getRoute().getName(), rl.getId(), rl.getName()));
+            return false;
+        }
+        // no pick ups from staging unless at the start of the train's route
+        if (rl != getTrain().getTrainDepartsRouteLocation() && rl.getLocation().isStaging()) {
+            addLine(ONE, Bundle.getMessage("buildNoPickupsFromStaging", rl.getName()));
+            return false;
+        }
+        // the next check provides a build report message if there's an
+        // issue with the train direction
+        if (!checkPickUpTrainDirection(rl)) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Checks to see if rolling stock is departing a quick service track and is
