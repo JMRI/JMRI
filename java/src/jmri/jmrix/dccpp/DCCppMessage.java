@@ -1985,6 +1985,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         m._nDataChars = m.toString().length();
         return (m);
     }
+    public static DCCppMessage makeStartExrailMsg(int id) {
+        DCCppMessage m = makeMessage("/ " + id); // </id>
+        m.myRegex = DCCppConstants.CONTROL_CMD_REGEX;
+        m._nDataChars = m.toString().length();
+        return m;
+    }
+    public static DCCppMessage makeStartExrailMsg(int id, int address) {
+        DCCppMessage m = makeMessage("/ " + id + " " + address); // </id address>
+        m.myRegex = DCCppConstants.CONTROL_CMD_REGEX;
+        m._nDataChars = m.toString().length();
+        return m;
+    }
     public static DCCppMessage makeCurrentMaxesMsg() {
         DCCppMessage m = makeMessage(DCCppConstants.CURRENT_MAXES); // <JG>
         m.myRegex = DCCppConstants.CURRENT_MAXES_REGEX;

@@ -567,6 +567,19 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
+    public void testMakeStartExrailMsg() {
+        msg = DCCppMessage.makeStartExrailMsg(42);
+        Assert.assertNotNull(msg);
+        Assert.assertEquals("message content", "/ 42", msg.toString());
+        Assert.assertEquals("monitor string", "Control Cmd: '/ 42'", msg.toMonitorString());
+
+        msg = DCCppMessage.makeStartExrailMsg(7, 1234);
+        Assert.assertNotNull(msg);
+        Assert.assertEquals("message content", "/ 7 1234", msg.toString());
+        Assert.assertEquals("monitor string", "Control Cmd: '/ 7 1234'", msg.toMonitorString());
+    }
+
+    @Test
     public void testGetBitWriteOpsModeCVMsg() {
         msg = DCCppMessage.makeBitWriteOpsModeCVMsg(17, 4, 3, 1);
         log.debug("write ops bit cv message = '{}'", msg);
