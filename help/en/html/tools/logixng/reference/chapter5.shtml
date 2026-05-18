@@ -958,6 +958,11 @@ LogixNG: IQ:AUTO:0001
         <li><strong>Toggle:</strong> Toggle the lock state for the selected turnout.</li>
       </ul>
 
+      <p>Note: Turnout locking refers to preventing external turnout position changes.  It does not
+      affect JMRI turnout actions.  For details, see
+      <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_lock_feature">
+      Turnout Table Locking</a>.</p>
+
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h4 id="WarrantAction">Warrant</h4>
