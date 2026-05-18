@@ -50,6 +50,7 @@
                     more than one display. Each display is shown in a single
                     row in the <strong>Virtual LCD</strong> window, with
                     the first display at the left.</li>
+                <li>Change default DCCppOverTCP port from 1235 to 2560 to match DCC-EX default.</li>
             </ul>
 
         <h4>DCC4pc</h4>
