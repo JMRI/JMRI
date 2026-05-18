@@ -1,6 +1,5 @@
 package jmri.jmrit.logix;
 
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
