@@ -426,7 +426,8 @@ public class TrainBuilder extends TrainBuilderCars {
     }
 
     /*
-     * returns true if there are moves available
+     * returns true if there are moves available at the car's departure route
+     * location
      */
     private boolean checkRouteLocationMoves(RouteLocation rl, Car car) {
         if (rl.getCarMoves() < rl.getMaxCarMoves()) {
