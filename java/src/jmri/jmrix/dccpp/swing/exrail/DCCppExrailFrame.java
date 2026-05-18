@@ -1,7 +1,10 @@
 package jmri.jmrix.dccpp.swing.exrail;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import jmri.jmrix.dccpp.DCCppExrailEntry;
 import jmri.jmrix.dccpp.DCCppInterface;
@@ -38,7 +42,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     private JTable _table;
 
     public DCCppExrailFrame(DCCppSystemConnectionMemo memo) {
-        super(false, false);
+        super(true, false); // save position; let user resize freely
         _memo = memo;
         _tc = memo.getDCCppTrafficController();
         _tableModel = new ExrailTableModel();
@@ -52,6 +56,27 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         _table.setFillsViewportHeight(true);
         _table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         _table.setPreferredScrollableViewportSize(new Dimension(500, 200));
+        _table.setAutoCreateRowSorter(true);
+
+        _table.getColumnModel().getColumn(0).setPreferredWidth(40);
+        _table.getColumnModel().getColumn(0).setMaxWidth(60);
+        _table.getColumnModel().getColumn(1).setPreferredWidth(90);
+        _table.getColumnModel().getColumn(1).setMaxWidth(110);
+
+        _table.getTableHeader().setFont(
+                _table.getTableHeader().getFont().deriveFont(Font.BOLD));
+
+        _table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 240, 240));
+                }
+                return this;
+            }
+        });
 
         JScrollPane scrollPane = new JScrollPane(_table);
 
@@ -65,6 +90,9 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         getContentPane().add(scrollPane, BorderLayout.CENTER);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
         pack();
+        if (getX() == 0 && getY() == 0) {
+            setLocationRelativeTo(null); // center on first-ever open
+        }
     }
 
     private void triggerSelected() {
@@ -139,6 +167,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     private class ExrailTableModel extends AbstractTableModel {
 
         private final String[] COLUMNS = {
+            Bundle.getMessage("ExrailColId"),
             Bundle.getMessage("ExrailColType"),
             Bundle.getMessage("ExrailColName"),
             Bundle.getMessage("ExrailColState")
@@ -154,15 +183,29 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         public String getColumnName(int col) { return COLUMNS[col]; }
 
         @Override
+        public Class<?> getColumnClass(int col) {
+            return col == 0 ? Integer.class : String.class;
+        }
+
+        @Override
         public Object getValueAt(int row, int col) {
             List<DCCppExrailEntry> list = List.copyOf(_entries.values());
             if (row >= list.size()) return "";
             DCCppExrailEntry e = list.get(row);
-            if (col == 0) return e.isRoute()
+            if (col == 0) return e.getId();
+            if (col == 1) return e.isRoute()
                     ? Bundle.getMessage("ExrailTypeRoute")
                     : Bundle.getMessage("ExrailTypeAutomation");
-            if (col == 1) return e.getDisplayName();
-            if (col == 2) return e.getState() < 0 ? "" : String.valueOf(e.getState());
+            if (col == 2) return e.getDisplayName();
+            if (col == 3) {
+                int s = e.getState();
+                if (s < 0) return "";
+                if (s == 0) return Bundle.getMessage("ExrailStateIdle");
+                if (s == 1) return Bundle.getMessage("ExrailStateRunning");
+                if (s == 2) return Bundle.getMessage("ExrailStateHidden");
+                if (s == 4) return Bundle.getMessage("ExrailStateDisabled");
+                return String.valueOf(s);
+            }
             return "";
         }
     }
