@@ -17,6 +17,7 @@ import org.junit.jupiter.api.*;
 @DisabledIfHeadless
 public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
 
+    private DCCppInterfaceScaffold tc;
     private DCCppSystemConnectionMemo memo;
 
     @Test
@@ -56,11 +57,29 @@ public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
         Assertions.assertEquals(2, f.getEntry(1).getState());
     }
 
+    @Test
+    public void testTriggerDisabledAtStartup() {
+        Assertions.assertFalse(((DCCppExrailFrame) frame).isTriggerEnabled(), "trigger should be disabled when power is unknown");
+    }
+
+    @Test
+    public void testTriggerEnabledWhenPowerOn() {
+        tc.sendTestMessage(DCCppReply.parseDCCppReply("p 1"));
+        Assertions.assertTrue(((DCCppExrailFrame) frame).isTriggerEnabled(), "trigger should be enabled when power is on");
+    }
+
+    @Test
+    public void testTriggerDisabledWhenPowerOff() {
+        tc.sendTestMessage(DCCppReply.parseDCCppReply("p 1"));
+        tc.sendTestMessage(DCCppReply.parseDCCppReply("p 0"));
+        Assertions.assertFalse(((DCCppExrailFrame) frame).isTriggerEnabled(), "trigger should be disabled when power is off");
+    }
+
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
         memo = new DCCppSystemConnectionMemo(tc);
         frame = new DCCppExrailFrame(memo);
         frame.initComponents();

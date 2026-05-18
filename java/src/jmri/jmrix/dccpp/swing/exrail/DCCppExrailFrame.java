@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import jmri.PowerManager;
 import jmri.jmrix.dccpp.DCCppExrailEntry;
 import jmri.jmrix.dccpp.DCCppInterface;
 import jmri.jmrix.dccpp.DCCppListener;
@@ -41,6 +43,9 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     private final Map<Integer, DCCppExrailEntry> _entries = new LinkedHashMap<>();
     private ExrailTableModel _tableModel;
     private JTable _table;
+    private JButton _triggerButton;
+    private PowerManager _powerManager;
+    private PropertyChangeListener _powerListener;
 
     public DCCppExrailFrame(DCCppSystemConnectionMemo memo) {
         super(true, false); // save position; let user resize freely
@@ -84,11 +89,18 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
 
         JScrollPane scrollPane = new JScrollPane(_table);
 
-        JButton triggerButton = new JButton(Bundle.getMessage("ExrailButtonTrigger"));
-        triggerButton.addActionListener(e -> triggerSelected());
+        _triggerButton = new JButton(Bundle.getMessage("ExrailButtonTrigger"));
+        _triggerButton.addActionListener(e -> triggerSelected());
+
+        _powerManager = _memo.getPowerManager();
+        if (_powerManager != null) {
+            _powerListener = evt -> updateTriggerEnabled();
+            _powerManager.addPropertyChangeListener(PowerManager.POWER, _powerListener);
+            updateTriggerEnabled();
+        }
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(triggerButton);
+        buttonPanel.add(_triggerButton);
 
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -97,6 +109,10 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         if (getX() == 0 && getY() == 0) {
             setLocationRelativeTo(null); // center on first-ever open
         }
+    }
+
+    private void updateTriggerEnabled() {
+        _triggerButton.setEnabled(_powerManager.getPower() == PowerManager.ON);
     }
 
     private void triggerSelected() {
@@ -161,6 +177,10 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
 
     @Override
     public void dispose() {
+        if (_powerListener != null && _powerManager != null) {
+            _powerManager.removePropertyChangeListener(PowerManager.POWER, _powerListener);
+            _powerListener = null;
+        }
         _tc.removeDCCppListener(DCCppInterface.FEEDBACK, this);
         super.dispose();
     }
@@ -173,6 +193,11 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     /** Returns entry by id; used by tests. */
     public DCCppExrailEntry getEntry(int id) {
         return _entries.get(id);
+    }
+
+    /** Returns whether the trigger button is enabled; used by tests. */
+    boolean isTriggerEnabled() {
+        return _triggerButton.isEnabled();
     }
 
     private class ExrailTableModel extends AbstractTableModel {
