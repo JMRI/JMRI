@@ -1,9 +1,11 @@
 package jmri.jmrit.logix;
 
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 import jmri.*;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
@@ -58,6 +60,10 @@ public class LinkedWarrantTest {
         OBlock block = _OBlockMgr.getOBlock("OB12");
         assertNotNull(block);
 
+        AtomicInteger startCount = new AtomicInteger(0);
+        warrant.addPropertyChangeListener(Warrant.PROPERTY_WARRANT_START,
+                evt -> startCount.incrementAndGet());
+
         // WarrantTable.runTrain() returns a string that is not null if the
         // warrant can't be started
         assertNull(tableFrame.runTrain(warrant, Warrant.MODE_RUN),"Warrant starts"); // start run
@@ -79,6 +85,7 @@ public class LinkedWarrantTest {
         // It takes 600+ milliseconds per block to execute NXFrameTest.runtimes()
         // i.e. wait at least 600 * route.length for return
 
+        JUnitUtil.waitFor(() -> startCount.get() >= 2, "Loopy 2 started");
         JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(warrant, 8), "Loopy 2 starts to move at 8th command");
 
         assertDoesNotThrow( () -> {
@@ -87,10 +94,7 @@ public class LinkedWarrantTest {
                 "LoopDeLoop Completes Second Leg");
         }, ("LoopDeLoop after Second leg Exception"));
 
-        // leg 3's setRunMode(MODE_RUN) resets getCurrentOrderIndex() to 0 — use that as the signal
-        JUnitUtil.waitFor(() -> warrant.getCurrentOrderIndex() == 0 && warrant.getRunMode() == Warrant.MODE_RUN,
-                "LoopDeLoop finished second leg");
-
+        JUnitUtil.waitFor(() -> startCount.get() >= 3, "LoopDeLoop finished second leg");
         JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(warrant, 8), "Loopy 3 starts to move at 8th command");
 
         assertDoesNotThrow( () -> {
@@ -238,6 +242,13 @@ public class LinkedWarrantTest {
         String[] routeBack = {"OB11", "OB9", "OB7", "OB6", "OB5", "OB3", "OB1"};
         Sensor backEndSensor = block1.getSensor();
 
+        AtomicInteger outStartCount = new AtomicInteger(0);
+        outWarrant.addPropertyChangeListener(Warrant.PROPERTY_WARRANT_START,
+                evt -> outStartCount.incrementAndGet());
+        AtomicInteger backStartCount = new AtomicInteger(0);
+        backWarrant.addPropertyChangeListener(Warrant.PROPERTY_WARRANT_START,
+                evt -> backStartCount.incrementAndGet());
+
         // WarrantTable.runTrain() returns a string that is not null if the
         // warrant can't be started
         assertNull(ThreadingUtil.runOnGUIwithReturn( () ->
@@ -262,6 +273,7 @@ public class LinkedWarrantTest {
                                 outBlockName));
         }, "WestToEastLink finished first leg out");
 
+        JUnitUtil.waitFor(() -> backStartCount.get() >= 1, "EastToWestLink started");
         JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(backWarrant, 8), "EastToWestLink starts to move at 8th command");
 
         assertDoesNotThrow( () -> {
@@ -278,6 +290,7 @@ public class LinkedWarrantTest {
                     block1.getDisplayName()));
         }, "EastToWestLink finished second leg back");
 
+        JUnitUtil.waitFor(() -> outStartCount.get() >= 2, "WestToEastLink started second run");
         JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(outWarrant, 8), "WestToEastLink starts to move at 8th command");
 
         assertDoesNotThrow( () -> {
@@ -294,6 +307,7 @@ public class LinkedWarrantTest {
                     outBlockName));
         }, "WestToEastLink finished third leg");
 
+        JUnitUtil.waitFor(() -> backStartCount.get() >= 2, "EastToWestLink started second run");
         JUnitUtil.waitFor(() -> WarrantTest.atOrPastCommand(backWarrant, 8), "EastToWestLink starts to move at 8th command");
 
         assertDoesNotThrow( () -> {

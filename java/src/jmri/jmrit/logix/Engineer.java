@@ -197,15 +197,18 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                         log.debug("{}: Wait for train to enter \"{}\".",
                                 _warrant.getDisplayName(), _synchBlock.getDisplayName());
                     }
-                    try {
-                        _synchLockObject.wait();
-                        _synchBlock = null;
-                    } catch (InterruptedException ie) {
-                        log.debug("InterruptedException during _waitForSync", ie);
-                        _warrant.debugInfo();
-                        Thread.currentThread().interrupt();
-                        _abort = true;
+                    // Re-check under lock: block may have fired between the outer check and here
+                    if (cmdBlockIdx > _warrant.getCurrentOrderIndex()) {
+                        try {
+                            _synchLockObject.wait();
+                        } catch (InterruptedException ie) {
+                            log.debug("InterruptedException during _waitForSync", ie);
+                            _warrant.debugInfo();
+                            Thread.currentThread().interrupt();
+                            _abort = true;
+                        }
                     }
+                    _synchBlock = null;
                 }
                 if (_abort) {
                     break;
@@ -332,8 +335,9 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 break;
             case RUN_WARRANT:
                 NamedBean runBean = ts.getNamedBeanHandle().getBean();
-                if (runBean instanceof Warrant && _warrant.getSpeedUtil().getDccAddress()
-                        .equals(((Warrant) runBean).getSpeedUtil().getDccAddress())) {
+                if (runBean instanceof Warrant &&
+                        _warrant.getSpeedUtil().getDccAddress()
+                                .equals(((Warrant) runBean).getSpeedUtil().getDccAddress())) {
                     runWarrant(ts.getNamedBeanHandle(), cmdVal); // same loco — no EDT needed
                 } else {
                     ThreadingUtil.runOnGUIEventually(() ->

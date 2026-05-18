@@ -133,9 +133,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private boolean _lost;      // helps recovery if _idxCurrentOrder block goes inactive
     private boolean _overrun;   // train overran a signal or warrant stop
     private boolean _rampBlkOccupied;  // test for overruns when speed change block occupied by another train
-    private int _idxCurrentOrder; // Index of block at head of train (if running)
-
-    protected int _runMode = MODE_NONE;
+    private volatile int _idxCurrentOrder; // volatile: written on EDT, read by Engineer thread without lock coverage
+    protected volatile int _runMode = MODE_NONE; // volatile: polled by CheckForTermination from its own thread
     private Engineer _engineer; // thread that runs the train
     @GuardedBy("this")
     private CommandDelay _delayCommand; // thread for delayed ramp down
