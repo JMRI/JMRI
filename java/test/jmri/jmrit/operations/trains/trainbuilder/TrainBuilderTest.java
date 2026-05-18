@@ -22184,21 +22184,24 @@ public class TrainBuilderTest extends OperationsTestCase {
 
     @Test
     public void testManualBuild() {
-        // build a set of trains servicing multiple locations.
+        // build two sets of trains servicing multiple locations.
         JUnitOperationsUtil.createSevenNormalLocations();
         // disable routing through yard
         Setup.setCarRoutingViaYardsEnabled(false);
 
         Location acton = lmanager.getLocationByName("Acton");
         Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        Track actonInterchange1 = acton.getTrackByName("Acton Interchange 1", null);
         Location boston = lmanager.getLocationByName("Boston");
         Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
         Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", null);
         Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Track chelmsfordInterchange1 = chelmsford.getTrackByName("Chelmsford Interchange 1", null);
+        Track chelmsfordInterchange2 = chelmsford.getTrackByName("Chelmsford Interchange 2", null);
         Location danvers = lmanager.getLocationByName("Danvers");
         Location essex = lmanager.getLocationByName("Essex");
-        Location foxboro = lmanager.getLocationByName("Foxboro");
         Location gulf = lmanager.getLocationByName("Gulf");
+        Track gulfYard2 = gulf.getTrackByName("Gulf Yard 2", null);
 
         // Create the turn Acton-Chelmsford-Boston-Acton
         Route acbaRoute = rmanager.newRoute("Acton-Chelmsford-Boston-Acton");
@@ -22209,22 +22212,17 @@ public class TrainBuilderTest extends OperationsTestCase {
         Train acbaTrain = tmanager.newTrain("Acton-Chelmsford-Boston-Acton");
         acbaTrain.setRoute(acbaRoute);
 
-        // Create the turn Danvers-Essex-Chelmsford-Danvers
-        Route decdRoute = rmanager.newRoute("Danvers-Essex-Chelmsford-Danvers");
-        decdRoute.addLocation(danvers);
-        decdRoute.addLocation(essex);
-        decdRoute.addLocation(chelmsford);
-        decdRoute.addLocation(danvers);
-        Train decdTrain = tmanager.newTrain("Danvers-Essex-Chelmsford-Danvers");
-        decdTrain.setRoute(decdRoute);
+        // cars from Boston need to be routed through Acton interchange
+        actonInterchange1.setPickupOption(Track.TRAINS);
+        actonInterchange1.addPickupId(acbaTrain.getId());
 
-        // Create the turn Foxboro-Gulf-Essex-Foxboro
-        Route fgefRoute = rmanager.newRoute("Foxboro-Gulf-Essex-Foxboro");
-        fgefRoute.addLocation(foxboro);
+        // Create Chelmsford-Davers-Gulf-Essex
+        Route fgefRoute = rmanager.newRoute("Chelmsford-Danvers-Gulf-Essex");
+        fgefRoute.addLocation(chelmsford);
+        fgefRoute.addLocation(danvers);
         fgefRoute.addLocation(gulf);
         fgefRoute.addLocation(essex);
-        fgefRoute.addLocation(foxboro);
-        Train fgefTrain = tmanager.newTrain("Foxboro-Gulf-Essex-Foxboro");
+        Train fgefTrain = tmanager.newTrain("Chelmsford-Danvers-Gulf-Essex");
         fgefTrain.setRoute(fgefRoute);
 
         // place cars
@@ -22257,9 +22255,19 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("final destination", gulf, c7.getFinalDestination());
         Assert.assertEquals("final destination", gulf, c8.getFinalDestination());
 
+        Assert.assertEquals("final destination track", null, c1.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", null, c2.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", null, c3.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", null, c4.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", null, c5.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", null, c6.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", null, c7.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", null, c8.getFinalDestinationTrack());
+
         acbaTrain.reset();
         // now only do Boxcars
         tmbi.setTypeName("Boxcar");
+        tmbi.setDestinationTrack(gulfYard2);
         tb.build(acbaTrain);
 
         Assert.assertEquals("final destination", null, c1.getFinalDestination());
@@ -22270,6 +22278,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("final destination", gulf, c6.getFinalDestination());
         Assert.assertEquals("final destination", null, c7.getFinalDestination());
         Assert.assertEquals("final destination", gulf, c8.getFinalDestination());
+
+        Assert.assertEquals("final destination track", null, c1.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", gulfYard2, c2.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", null, c3.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", null, c4.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", gulfYard2, c5.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", gulfYard2, c6.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", null, c7.getFinalDestinationTrack());
+        Assert.assertEquals("final destination track", gulfYard2, c8.getFinalDestinationTrack());
 
         acbaTrain.reset();
         // now only do Boxcars with road AB
@@ -22298,7 +22315,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("final destination", gulf, c6.getFinalDestination());
         Assert.assertEquals("final destination", null, c7.getFinalDestination());
         Assert.assertEquals("final destination", gulf, c8.getFinalDestination());
-        
+
         acbaTrain.reset();
         // only cars from Boston spur 1
         tmbi.setLocationTrack(bostonSpur1);
@@ -22312,6 +22329,189 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("final destination", gulf, c6.getFinalDestination());
         Assert.assertEquals("final destination", null, c7.getFinalDestination());
         Assert.assertEquals("final destination", null, c8.getFinalDestination());
+
+        acbaTrain.reset();
+        // only cars with load name L, all cars have the "E" load name
+        tmbi.setLocationTrack(null); // two cars for consideration
+        tmbi.setLoadName("L");
+        c8.setLoadName("L");
+        tb.build(acbaTrain);
+
+        Assert.assertEquals("final destination", null, c1.getFinalDestination());
+        Assert.assertEquals("final destination", null, c2.getFinalDestination());
+        Assert.assertEquals("final destination", null, c3.getFinalDestination());
+        Assert.assertEquals("final destination", null, c4.getFinalDestination());
+        Assert.assertEquals("final destination", null, c5.getFinalDestination());
+        Assert.assertEquals("final destination", null, c6.getFinalDestination());
+        Assert.assertEquals("final destination", null, c7.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c8.getFinalDestination());
+
+        // clear all of the current requests
+        tmbi.setTypeName(Car.NONE);
+        tmbi.setLoadName(Car.NONE);
+        tmbi.setRoadName(Car.NONE);
+        tmbi.setRouteLocation(null);
+
+        acbaTrain.reset();
+
+        // cars assigned to this train are ignored
+        c1.setTrain(acbaTrain);
+        // cars with a destination are ignored
+        c3.setDestination(boston, bostonSpur1);
+        // cars with a final destination are ignored
+        c5.setFinalDestination(danvers);
+        // set pick up day
+        TrainScheduleManager tsm = InstanceManager.getDefault(TrainScheduleManager.class);
+        tsm.setTrainScheduleActiveId(tsm.getSchedulesByIdList().get(0).getId());
+        tmbi.setTrainScheduleId(tsm.getSchedulesByIdList().get(0).getId());
+
+        tb.build(acbaTrain);
+
+        Assert.assertEquals("final destination", null, c1.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c2.getFinalDestination());
+        Assert.assertEquals("final destination", null, c3.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c4.getFinalDestination());
+        Assert.assertEquals("final destination", danvers, c5.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c6.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c7.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c8.getFinalDestination());
+
+        // change pick up day
+        tmbi.setTrainScheduleId(tsm.getSchedulesByIdList().get(1).getId());
+
+        acbaTrain.reset();
+        tb.build(acbaTrain);
+
+        Assert.assertEquals("final destination", null, c1.getFinalDestination());
+        Assert.assertEquals("final destination", null, c2.getFinalDestination());
+        Assert.assertEquals("final destination", null, c3.getFinalDestination());
+        Assert.assertEquals("final destination", null, c4.getFinalDestination());
+        Assert.assertEquals("final destination", danvers, c5.getFinalDestination());
+        Assert.assertEquals("final destination", null, c6.getFinalDestination());
+        Assert.assertEquals("final destination", null, c7.getFinalDestination());
+        Assert.assertEquals("final destination", null, c8.getFinalDestination());
+
+        // enable build fail
+        tmbi.setFailEnabled(true);
+        tb.build(acbaTrain);
+        Assert.assertTrue(acbaTrain.isBuildFailed());
+
+        acbaTrain.reset();
+        // clear all of the requests
+        tmbi.setFailEnabled(false);
+        c1.setTrain(null);
+        c3.setDestination(null, null);
+        c5.setFinalDestination(null);
+        tmbi.setTrainScheduleId(TrainManualBuildItem.NONE);
+
+        // not enough room at interchange for all cars
+        // 40' cars
+        chelmsfordInterchange1.setLength(100);
+        chelmsfordInterchange2.setLength(0);
+        // warning
+        tmbi.setWarnEnabled(true);
+
+        // need to reset warnings in tb
+        tb = new TrainBuilder();
+        tb.build(acbaTrain);
+
+        Assert.assertEquals("final destination", gulf, c1.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c2.getFinalDestination());
+        Assert.assertEquals("final destination", null, c3.getFinalDestination());
+        Assert.assertEquals("final destination", null, c4.getFinalDestination());
+        // cars c5 thought c8 are at boston and being routed to acton
+        Assert.assertEquals("final destination", gulf, c5.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c6.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c7.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c8.getFinalDestination());
+        // 1 manual build failure
+        Assert.assertEquals("Warn", 1, tb._warnings);
+
+        acbaTrain.reset();
+        // restore interchange length
+        chelmsfordInterchange1.setLength(500);
+        // limit the number of moves available at Boston
+        rBoston.setMaxCarMoves(2);
+        tb.build(acbaTrain);
+
+        Assert.assertEquals("final destination", gulf, c1.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c2.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c3.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c4.getFinalDestination());
+        // cars c5 thought c8 are at boston and being routed to acton
+        Assert.assertEquals("final destination", gulf, c5.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c6.getFinalDestination());
+        Assert.assertEquals("final destination", null, c7.getFinalDestination());
+        Assert.assertEquals("final destination", null, c8.getFinalDestination());
+
+        acbaTrain.reset();
+        // don't allow pulls from Boston
+        rBoston.setPickUpAllowed(false);
+        rBoston.setLocalMovesAllowed(false);
+        tb.build(acbaTrain);
+
+        Assert.assertEquals("final destination", gulf, c1.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c2.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c3.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c4.getFinalDestination());
+        // cars c5 thought c8 are at boston and being routed to acton
+        Assert.assertEquals("final destination", null, c5.getFinalDestination());
+        Assert.assertEquals("final destination", null, c6.getFinalDestination());
+        Assert.assertEquals("final destination", null, c7.getFinalDestination());
+        Assert.assertEquals("final destination", null, c8.getFinalDestination());
+
+        acbaTrain.reset();
+        rBoston.setMaxCarMoves(4);
+        rBoston.setPickUpAllowed(true);
+        rBoston.setLocalMovesAllowed(true);
+        tb.build(acbaTrain);
+
+        // confirm that all cars have a final destination
+        Assert.assertEquals("final destination", gulf, c1.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c2.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c3.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c4.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c5.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c6.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c7.getFinalDestination());
+        Assert.assertEquals("final destination", gulf, c8.getFinalDestination());
+
+        // now terminate train, confirm car movements
+        acbaTrain.terminate();
+        Assert.assertEquals("location", chelmsford, c1.getLocation());
+        Assert.assertEquals("location", chelmsford, c2.getLocation());
+        Assert.assertEquals("location", chelmsford, c3.getLocation());
+        Assert.assertEquals("location", chelmsford, c4.getLocation());
+        Assert.assertEquals("location", acton, c5.getLocation());
+        Assert.assertEquals("location", acton, c6.getLocation());
+        Assert.assertEquals("location", acton, c7.getLocation());
+        Assert.assertEquals("location", acton, c8.getLocation());
+        
+        Assert.assertEquals("track", chelmsfordInterchange1, c1.getTrack());
+        Assert.assertEquals("track", chelmsfordInterchange1, c2.getTrack());
+        Assert.assertEquals("track", chelmsfordInterchange1, c3.getTrack());
+        Assert.assertEquals("track", chelmsfordInterchange1, c4.getTrack());
+        Assert.assertEquals("track", actonInterchange1, c5.getTrack());
+        Assert.assertEquals("track", actonInterchange1, c6.getTrack());
+        Assert.assertEquals("track", actonInterchange1, c7.getTrack());
+        Assert.assertEquals("track", actonInterchange1, c8.getTrack());
+
+        tb.build(acbaTrain);
+        acbaTrain.terminate();
+
+        Assert.assertEquals("location", chelmsford, c1.getLocation());
+        Assert.assertEquals("location", chelmsford, c2.getLocation());
+        Assert.assertEquals("location", chelmsford, c3.getLocation());
+        Assert.assertEquals("location", chelmsford, c4.getLocation());
+        Assert.assertEquals("location", chelmsford, c5.getLocation());
+        Assert.assertEquals("location", chelmsford, c6.getLocation());
+        Assert.assertEquals("location", chelmsford, c7.getLocation());
+        Assert.assertEquals("location", chelmsford, c8.getLocation());
+        
+        Assert.assertEquals("track", chelmsfordInterchange1, c5.getTrack());
+        Assert.assertEquals("track", chelmsfordInterchange1, c6.getTrack());
+        Assert.assertEquals("track", chelmsfordInterchange1, c7.getTrack());
+        Assert.assertEquals("track", chelmsfordInterchange1, c8.getTrack());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
