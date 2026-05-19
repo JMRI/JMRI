@@ -504,9 +504,9 @@
               added. It lets you use a regular expression to extract
               information from a string.<br/>
               For more information about regular expressions, see the
-              Java class 
+              Java class
               <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/regex/Pattern.html"></a>Pattern</li>.
-          <li></li>
+          <li>Update the Turnout Lock action description.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

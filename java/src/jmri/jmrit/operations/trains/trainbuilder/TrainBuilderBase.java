@@ -713,6 +713,8 @@ public class TrainBuilderBase extends TrainCommon {
             if (selected != null) {
                 addLine(FIVE, Bundle.getMessage("buildUserSelectedDeparture", selected.getName(),
                         selected.getLocation().getName()));
+            } else {
+                addLine(FIVE, Bundle.getMessage("buildUserCanceledDeparture"));
             }
             return selected;
         } else if (validTracks.size() == 1) {

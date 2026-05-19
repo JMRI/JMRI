@@ -446,7 +446,7 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
                 InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(mbi.getTrainScheduleId());
         cb.setSelectedItem(sch);
         // fix if schedule no longer exists
-        if (sch == null) {
+        if (cb.getSelectedItem() != sch) {
             mbi.setTrainScheduleId(NONE);
         }
         return cb;
@@ -576,13 +576,6 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
             updateList();
             fireTableDataChanged();
         }
-        //        if (e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY) ||
-        //                e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY) ||
-        //                e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY) ||
-        //                e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY) ||
-        //                e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
-        //            fireTableDataChanged();
-        //        }
         if (e.getSource().getClass().equals(TrainManualBuildItem.class)) {
             TrainManualBuildItem item = (TrainManualBuildItem) e.getSource();
             int row = _list.indexOf(item);
