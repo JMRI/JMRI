@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (trains | options | schedules | trainScheduleOptions | automations | automationOptions)*>
+<!ELEMENT operations-config (trains | options | schedules | manualBuilds | trainScheduleOptions | automations | automationOptions)*>
 
 <!ELEMENT options (trainOptions | conductorOptions | rowColorOptions | trainEditOptions | scripts | manifestCreator 
 | switchlistCreator)*>
@@ -84,6 +84,9 @@
 
 <!ELEMENT schedules (schedule)*>
 <!ELEMENT schedule EMPTY>
+
+<!ELEMENT manualBuilds (manualBuild)*>
+<!ELEMENT manualBuild (item)*>
 
 <!ATTLIST train id					CDATA #REQUIRED>          
 <!ATTLIST train name				CDATA #REQUIRED>
@@ -179,6 +182,15 @@
 <!ATTLIST schedule comment			CDATA #IMPLIED>
 <!ATTLIST schedule trainIds			CDATA #IMPLIED>
 
+<!ATTLIST manualBuild id			CDATA #REQUIRED>          
+<!ATTLIST manualBuild name			CDATA #IMPLIED>
+<!ATTLIST manualBuild comment		CDATA #IMPLIED>
+<!ATTLIST manualBuild trainId		CDATA #IMPLIED>
+
+<!ATTLIST item trainScheduleId		CDATA #IMPLIED>
+<!ATTLIST item routeLocationId		CDATA #IMPLIED>
+
+
 <!ATTLIST route id					CDATA #REQUIRED>          
 <!ATTLIST route name				CDATA #IMPLIED>
 
@@ -199,8 +211,8 @@
 
 <!ATTLIST item id					CDATA #REQUIRED>          
 <!ATTLIST item sequenceId			CDATA #REQUIRED>
-<!ATTLIST item name					CDATA #REQUIRED>
-<!ATTLIST item actionCode			CDATA #REQUIRED>
+<!ATTLIST item name					CDATA #IMPLIED>
+<!ATTLIST item actionCode			CDATA #IMPLIED>
 <!ATTLIST item trainId				CDATA #IMPLIED>
 <!ATTLIST item routeLocationId		CDATA #IMPLIED>
 <!ATTLIST item automationId			CDATA #IMPLIED>
@@ -210,6 +222,16 @@
 <!ATTLIST item haltFail				(true | false) "true">
 <!ATTLIST item actionRan			(true | false) "false">
 <!ATTLIST item actionSuccessful		(true | false) "false">
+
+<!ATTLIST item type					CDATA #IMPLIED>
+<!ATTLIST item road					CDATA #IMPLIED>
+<!ATTLIST item load					CDATA #IMPLIED>
+<!ATTLIST item count				CDATA #IMPLIED>
+<!ATTLIST item trainScheduleId		CDATA #IMPLIED>
+<!ATTLIST item routeLocationId		CDATA #IMPLIED>
+<!ATTLIST item fail					(true | false) "false">
+<!ATTLIST item warn					(true | false) "false">
+<!ATTLIST item remove				(true | false) "false">
 
 <!ATTLIST messageOk message			CDATA #IMPLIED>
 <!ATTLIST messageFail message		CDATA #IMPLIED>
