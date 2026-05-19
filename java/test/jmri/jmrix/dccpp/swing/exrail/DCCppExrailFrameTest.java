@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp.swing.exrail;
 
+import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppExrailEntry;
 import jmri.jmrix.dccpp.DCCppExrailEntry.State;
@@ -117,6 +118,35 @@ public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     @Test
+    public void testReconnectClearsEntriesAndRefetches() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 2"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 2 A \"Yard Switcher\""));
+        Assertions.assertEquals(2, exrailFrame.getEntryCount(), "should have entries before reconnect");
+
+        ConnectionStatus.instance().setConnectionState(memo, ConnectionStatus.CONNECTION_UP);
+
+        Assertions.assertEquals(0, exrailFrame.getEntryCount(), "entries should be cleared on reconnect");
+        Assertions.assertTrue(tc.outbound.lastElement().isAutomationIDsMessage(),
+                "should re-send <JA> on reconnect");
+    }
+
+    @Test
+    public void testReconnectNotTriggeredOnDisconnect() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 2"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 2 A \"Yard Switcher\""));
+        int outboundBefore = tc.outbound.size();
+
+        ConnectionStatus.instance().setConnectionState(memo, ConnectionStatus.CONNECTION_DOWN);
+
+        Assertions.assertEquals(2, exrailFrame.getEntryCount(), "entries should be preserved on disconnect");
+        Assertions.assertEquals(outboundBefore, tc.outbound.size(), "should not re-send <JA> on disconnect");
+    }
+
+    @Test
     public void testTriggerDisabledWhenPowerOff() {
         tc.sendTestMessage(DCCppReply.parseDCCppReply("p 1"));
         tc.sendTestMessage(DCCppReply.parseDCCppReply("p 0"));
@@ -139,6 +169,7 @@ public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
         memo.getDCCppTrafficController().terminateThreads();
         memo.dispose();
         memo = null;
+        tc = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();
     }

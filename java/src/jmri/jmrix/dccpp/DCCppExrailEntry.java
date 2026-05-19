@@ -1,9 +1,7 @@
 package jmri.jmrix.dccpp;
 
 /**
- * Represents a single DCC-EX EXRAIL Route or Automation entry from a {@code <jA>} reply.
- * <p>
- * State and caption may be updated later via {@code <jB>} replies.
+ * A single DCC-EX EXRAIL Route or Automation entry; state and caption updated via {@code <jB>} replies.
  *
  * @author Chad Francis Copyright (C) 2026
  */

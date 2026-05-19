@@ -69,6 +69,7 @@ public class DCCppExrailActionTest {
         _memo.getDCCppTrafficController().terminateThreads();
         _memo.dispose();
         _memo = null;
+        _tc = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

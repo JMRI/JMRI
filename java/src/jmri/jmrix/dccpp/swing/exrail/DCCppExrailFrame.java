@@ -20,6 +20,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import jmri.PowerManager;
+import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.dccpp.DCCppExrailEntry;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.ThreadingUtil;
@@ -47,6 +48,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     private JButton _triggerButton;
     private PowerManager _powerManager;
     private PropertyChangeListener _powerListener;
+    private PropertyChangeListener _connListener;
 
     public DCCppExrailFrame(DCCppSystemConnectionMemo memo) {
         super(true, false); // save position; let user resize freely
@@ -102,6 +104,16 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
             _powerManager.addPropertyChangeListener(PowerManager.POWER, _powerListener);
             updateTriggerEnabled();
         }
+
+        _connListener = evt -> {
+            if (ConnectionStatus.CONNECTION_UP.equals(
+                    ConnectionStatus.instance().getConnectionState(_memo))) {
+                _entries.clear();
+                _tc.sendDCCppMessage(DCCppMessage.makeAutomationIDsMsg(), this);
+                ThreadingUtil.runOnGUI(() -> _tableModel.fireTableDataChanged());
+            }
+        };
+        ConnectionStatus.instance().addPropertyChangeListener(_memo, _connListener);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(_triggerButton);
@@ -191,6 +203,10 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         if (_powerListener != null && _powerManager != null) {
             _powerManager.removePropertyChangeListener(PowerManager.POWER, _powerListener);
             _powerListener = null;
+        }
+        if (_connListener != null) {
+            ConnectionStatus.instance().removePropertyChangeListener(_memo, _connListener);
+            _connListener = null;
         }
         _tc.removeDCCppListener(DCCppInterface.FEEDBACK, this);
         super.dispose();
