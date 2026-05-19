@@ -639,9 +639,6 @@
                     <li><code>stopWarrant()</code> now captures <code>_idxCurrentOrder</code> before
                         dispatching <code>deAllocate</code> asynchronously, so looped warrants correctly
                         report <code>warrantComplete</code> rather than <code>warrantEnd</code>.</li>
-                    <li>Same-loco linked warrants now call <code>runWarrant()</code> directly on the
-                        engineer thread instead of the EDT, eliminating a debounce race in
-                        <code>WarrantTableFrame.runTrain()</code>.</li>
                     <li>Fixed a missed-wakeup race in the Engineer block-sync wait: the block entry
                         check is now re-evaluated inside the <code>synchronized</code> block, so a sensor
                         that fires between the outer check and <code>wait()</code> can no longer leave the
@@ -653,6 +650,7 @@
                     <li>Six logix test classes now use an isolated <code>NullProfile</code> per test
                         rather than the shared <code>./temp/</code> directory, preventing
                         <code>RosterConfigManager</code> failures on developer machines with real profile data.</li>
+                    <li>The changes above are done in <a href="https://github.com/JMRI/JMRI/pull/15151">PR #15151</a></li>
                 </ul>
             </li>
         </ul>

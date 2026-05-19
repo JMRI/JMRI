@@ -334,15 +334,9 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 waitForSensor(ts.getNamedBeanHandle(), cmdVal);
                 break;
             case RUN_WARRANT:
-                NamedBean runBean = ts.getNamedBeanHandle().getBean();
-                if (runBean instanceof Warrant &&
-                        _warrant.getSpeedUtil().getDccAddress()
-                                .equals(((Warrant) runBean).getSpeedUtil().getDccAddress())) {
-                    runWarrant(ts.getNamedBeanHandle(), cmdVal); // same loco — no EDT needed
-                } else {
-                    ThreadingUtil.runOnGUIEventually(() ->
-                        runWarrant(ts.getNamedBeanHandle(), cmdVal)); // different loco — needs EDT
-                }
+                // must run on the GUI thread because runWarrant() calls WarrantTableFrame.runTrain() directly
+                ThreadingUtil.runOnGUIEventually(() ->
+                    runWarrant(ts.getNamedBeanHandle(), cmdVal));
                 break;
             case SPEEDSTEP:
                 break;
@@ -1162,6 +1156,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         }
 
         // send the messages on success of linked launch completion
+        // runs on CheckForTermination thread, not the GUI thread — avoid Swing calls here as they may cause race conditions or non-deterministic behavior
         private void checkerDone(Warrant oldWarrant, Warrant newWarrant) {
             OBlock endBlock = oldWarrant.getLastOrder().getBlock();
             if (oldWarrant.getRunMode() != Warrant.MODE_NONE) {
