@@ -1,7 +1,9 @@
 package jmri.jmrix.dccpp.swing.exrail;
 
 import jmri.jmrix.dccpp.DCCppCommandStation;
+import jmri.jmrix.dccpp.DCCppExrailEntry;
 import jmri.jmrix.dccpp.DCCppInterfaceScaffold;
+import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.util.JUnitUtil;
@@ -66,6 +68,51 @@ public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
     public void testTriggerEnabledWhenPowerOn() {
         tc.sendTestMessage(DCCppReply.parseDCCppReply("p 1"));
         Assertions.assertTrue(((DCCppExrailFrame) frame).isTriggerEnabled(), "trigger should be enabled when power is on");
+    }
+
+    @Test
+    public void testInitSendsAutomationIDsRequest() {
+        Assertions.assertFalse(tc.outbound.isEmpty(), "should have sent <JA> on initComponents");
+        Assertions.assertTrue(tc.outbound.get(0).isAutomationIDsMessage(), "first outbound should be <JA>");
+    }
+
+    @Test
+    public void testListenerRegisteredOnInit() {
+        Assertions.assertTrue(tc.numListeners() > 0, "frame should register as listener on initComponents");
+    }
+
+    @Test
+    public void testHiddenEntriesNotCounted() {
+        DCCppExrailFrame f = (DCCppExrailFrame) frame;
+        f.message(DCCppReply.parseDCCppReply("jA 1 2"));
+        f.message(DCCppReply.parseDCCppReply("jA 1 R \"Visible Route\""));
+        f.message(DCCppReply.parseDCCppReply("jA 2 A \"Hidden Auto\""));
+        f.message(DCCppReply.parseDCCppReply("jB 2 2")); // state=2 → hidden
+        Assertions.assertEquals(1, f.getEntryCount(), "hidden entry should be excluded from count");
+    }
+
+    @Test
+    public void testTriggerRoute() {
+        DCCppExrailFrame f = (DCCppExrailFrame) frame;
+        f.message(DCCppReply.parseDCCppReply("jA 1 2"));
+        f.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
+        DCCppExrailEntry entry = f.getEntry(1);
+        Assertions.assertNotNull(entry);
+        f.triggerEntry(entry, 0);
+        Assertions.assertEquals(DCCppMessage.makeStartExrailMsg(1).toString(),
+                tc.outbound.lastElement().toString(), "should send route start command");
+    }
+
+    @Test
+    public void testTriggerAutomation() {
+        DCCppExrailFrame f = (DCCppExrailFrame) frame;
+        f.message(DCCppReply.parseDCCppReply("jA 2 3"));
+        f.message(DCCppReply.parseDCCppReply("jA 2 A \"Yard Switcher\""));
+        DCCppExrailEntry entry = f.getEntry(2);
+        Assertions.assertNotNull(entry);
+        f.triggerEntry(entry, 1234);
+        Assertions.assertEquals(DCCppMessage.makeStartExrailMsg(2, 1234).toString(),
+                tc.outbound.lastElement().toString(), "should send automation start command with loco address");
     }
 
     @Test

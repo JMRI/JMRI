@@ -4,10 +4,7 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 
 import jmri.InstanceManager;
-import jmri.jmrix.dccpp.DCCppInterface;
-import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
-import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.jmrix.dccpp.swing.DCCppSystemConnectionAction;
 
 /**
@@ -40,10 +37,7 @@ public class DCCppExrailAction extends DCCppSystemConnectionAction {
                 return;
             }
             f = new DCCppExrailFrame(memo);
-            DCCppTrafficController tc = memo.getDCCppTrafficController();
-            tc.addDCCppListener(DCCppInterface.FEEDBACK, f);
             f.initComponents();
-            tc.sendDCCppMessage(DCCppMessage.makeAutomationIDsMsg(), f);
             f.setVisible(true);
         }
         f.setExtendedState(Frame.NORMAL);

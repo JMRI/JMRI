@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import jmri.PowerManager;
 import jmri.jmrix.dccpp.DCCppExrailEntry;
+import jmri.util.ThreadingUtil;
 import jmri.jmrix.dccpp.DCCppInterface;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
@@ -92,9 +93,12 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         _triggerButton = new JButton(Bundle.getMessage("ExrailButtonTrigger"));
         _triggerButton.addActionListener(e -> triggerSelected());
 
+        _tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
+        _tc.sendDCCppMessage(DCCppMessage.makeAutomationIDsMsg(), this);
+
         _powerManager = _memo.getPowerManager();
         if (_powerManager != null) {
-            _powerListener = evt -> updateTriggerEnabled();
+            _powerListener = evt -> ThreadingUtil.runOnGUI(this::updateTriggerEnabled);
             _powerManager.addPropertyChangeListener(PowerManager.POWER, _powerListener);
             updateTriggerEnabled();
         }
@@ -134,11 +138,18 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
                     JOptionPane.QUESTION_MESSAGE);
             if (input == null) return;
             try {
-                int address = Integer.parseInt(input.trim());
-                _tc.sendDCCppMessage(DCCppMessage.makeStartExrailMsg(entry.getId(), address), null);
+                triggerEntry(entry, Integer.parseInt(input.trim()));
             } catch (NumberFormatException ex) {
                 log.warn("Invalid loco address entered: {}", input);
             }
+        } else {
+            triggerEntry(entry, 0);
+        }
+    }
+
+    void triggerEntry(DCCppExrailEntry entry, int locoAddress) {
+        if (entry.isAutomation()) {
+            _tc.sendDCCppMessage(DCCppMessage.makeStartExrailMsg(entry.getId(), locoAddress), null);
         } else {
             _tc.sendDCCppMessage(DCCppMessage.makeStartExrailMsg(entry.getId()), null);
         }
@@ -153,18 +164,18 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         } else if (r.isAutomationIDReply()) {
             int id = r.getAutomationIDInt();
             _entries.put(id, new DCCppExrailEntry(id, r.getAutomationTypeString(), r.getAutomationDescString()));
-            _tableModel.fireTableDataChanged();
+            ThreadingUtil.runOnGUIEventually(() -> _tableModel.fireTableDataChanged());
         } else if (r.isAutomationStateReply()) {
             DCCppExrailEntry e = _entries.get(r.getAutomationIDInt());
             if (e != null) {
                 e.setState(Integer.parseInt(r.getAutomationStateString()));
-                _tableModel.fireTableDataChanged();
+                ThreadingUtil.runOnGUIEventually(() -> _tableModel.fireTableDataChanged());
             }
         } else if (r.isAutomationCaptionReply()) {
             DCCppExrailEntry e = _entries.get(r.getAutomationIDInt());
             if (e != null) {
                 e.setCaption(r.getAutomationCaptionString());
-                _tableModel.fireTableDataChanged();
+                ThreadingUtil.runOnGUIEventually(() -> _tableModel.fireTableDataChanged());
             }
         }
     }
@@ -185,9 +196,9 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         super.dispose();
     }
 
-    /** Returns number of loaded entries; used by tests. */
+    /** Returns number of visible (non-hidden) entries; used by tests. */
     public int getEntryCount() {
-        return _entries.size();
+        return _tableModel.getRowCount();
     }
 
     /** Returns entry by id; used by tests. */
