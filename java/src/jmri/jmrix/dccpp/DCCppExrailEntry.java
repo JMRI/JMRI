@@ -9,11 +9,27 @@ package jmri.jmrix.dccpp;
  */
 public class DCCppExrailEntry {
 
+    /** EXRAIL state values from {@code <jB id state>} replies. */
+    public enum State {
+        INACTIVE(0), ACTIVE(1), HIDDEN(2), DISABLED(4);
+
+        public final int value;
+        State(int value) { this.value = value; }
+
+        /** Returns the matching State, or null if the value is unrecognised. */
+        public static State fromValue(int value) {
+            for (State s : values()) {
+                if (s.value == value) return s;
+            }
+            return null;
+        }
+    }
+
     private final int id;
     private final String type;
     private final String description;
     private String caption;
-    private int state = -1; // -1 = unknown until first <jB> state reply
+    private State state = null; // null = unknown until first <jB> state reply
 
     public DCCppExrailEntry(int id, String type, String description) {
         this.id = id;
@@ -41,8 +57,8 @@ public class DCCppExrailEntry {
         return caption != null ? caption : description;
     }
 
-    /** State from {@code <jB id state>}; -1 if not yet received. */
-    public int getState() { return state; }
+    /** State from {@code <jB id state>}; null if not yet received. */
+    public State getState() { return state; }
 
-    public void setState(int state) { this.state = state; }
+    public void setState(State state) { this.state = state; }
 }

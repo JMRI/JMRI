@@ -12,58 +12,58 @@ public class DCCppExrailEntryTest {
 
     @Test
     public void testRouteEntry() {
-        DCCppExrailEntry e = new DCCppExrailEntry(42, "R", "Station Loop");
-        Assertions.assertEquals(42, e.getId());
-        Assertions.assertEquals("R", e.getType());
-        Assertions.assertEquals("Station Loop", e.getDescription());
-        Assertions.assertTrue(e.isRoute());
-        Assertions.assertFalse(e.isAutomation());
+        DCCppExrailEntry entry = new DCCppExrailEntry(42, "R", "Station Loop");
+        Assertions.assertEquals(42, entry.getId());
+        Assertions.assertEquals("R", entry.getType());
+        Assertions.assertEquals("Station Loop", entry.getDescription());
+        Assertions.assertTrue(entry.isRoute());
+        Assertions.assertFalse(entry.isAutomation());
     }
 
     @Test
     public void testAutomationEntry() {
-        DCCppExrailEntry e = new DCCppExrailEntry(7, "A", "Yard Switcher");
-        Assertions.assertEquals(7, e.getId());
-        Assertions.assertEquals("A", e.getType());
-        Assertions.assertTrue(e.isAutomation());
-        Assertions.assertFalse(e.isRoute());
+        DCCppExrailEntry entry = new DCCppExrailEntry(7, "A", "Yard Switcher");
+        Assertions.assertEquals(7, entry.getId());
+        Assertions.assertEquals("A", entry.getType());
+        Assertions.assertTrue(entry.isAutomation());
+        Assertions.assertFalse(entry.isRoute());
     }
 
     @Test
     public void testNegativeId() {
-        DCCppExrailEntry e = new DCCppExrailEntry(-5, "R", "Reverse Loop");
-        Assertions.assertEquals(-5, e.getId());
+        DCCppExrailEntry entry = new DCCppExrailEntry(-5, "R", "Reverse Loop");
+        Assertions.assertEquals(-5, entry.getId());
     }
 
     @Test
     public void testDisplayNameDefaultsToDescription() {
-        DCCppExrailEntry e = new DCCppExrailEntry(1, "R", "My Route");
-        Assertions.assertEquals("My Route", e.getDisplayName());
+        DCCppExrailEntry entry = new DCCppExrailEntry(1, "R", "My Route");
+        Assertions.assertEquals("My Route", entry.getDisplayName());
     }
 
     @Test
     public void testCaptionOverridesDisplayName() {
-        DCCppExrailEntry e = new DCCppExrailEntry(1, "R", "My Route");
-        e.setCaption("Platform 1");
-        Assertions.assertEquals("Platform 1", e.getDisplayName());
-        Assertions.assertEquals("Platform 1", e.getCaption());
+        DCCppExrailEntry entry = new DCCppExrailEntry(1, "R", "My Route");
+        entry.setCaption("Platform 1");
+        Assertions.assertEquals("Platform 1", entry.getDisplayName());
+        Assertions.assertEquals("Platform 1", entry.getCaption());
     }
 
     @Test
     public void testClearCaptionRestoresDescription() {
-        DCCppExrailEntry e = new DCCppExrailEntry(1, "R", "My Route");
-        e.setCaption("Platform 1");
-        e.setCaption(null);
-        Assertions.assertEquals("My Route", e.getDisplayName());
-        Assertions.assertNull(e.getCaption());
+        DCCppExrailEntry entry = new DCCppExrailEntry(1, "R", "My Route");
+        entry.setCaption("Platform 1");
+        entry.setCaption(null);
+        Assertions.assertEquals("My Route", entry.getDisplayName());
+        Assertions.assertNull(entry.getCaption());
     }
 
     @Test
     public void testState() {
-        DCCppExrailEntry e = new DCCppExrailEntry(1, "R", "My Route");
-        Assertions.assertEquals(-1, e.getState()); // default: unknown
-        e.setState(2);
-        Assertions.assertEquals(2, e.getState());
+        DCCppExrailEntry entry = new DCCppExrailEntry(1, "R", "My Route");
+        Assertions.assertNull(entry.getState()); // default: unknown
+        entry.setState(DCCppExrailEntry.State.HIDDEN);
+        Assertions.assertEquals(DCCppExrailEntry.State.HIDDEN, entry.getState());
     }
 
     @BeforeEach

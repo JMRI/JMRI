@@ -14,7 +14,7 @@ import jmri.jmrix.dccpp.swing.DCCppSystemConnectionAction;
  */
 public class DCCppExrailAction extends DCCppSystemConnectionAction {
 
-    private DCCppExrailFrame f = null;
+    private DCCppExrailFrame frame = null;
 
     public DCCppExrailAction(String name, DCCppSystemConnectionMemo memo) {
         super(name, memo);
@@ -30,18 +30,18 @@ public class DCCppExrailAction extends DCCppSystemConnectionAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (f == null || !f.isVisible()) {
+        if (frame == null || !frame.isVisible()) {
             DCCppSystemConnectionMemo memo = getSystemConnectionMemo();
             if (memo == null) {
                 log.error("connection memo was null!");
                 return;
             }
-            f = new DCCppExrailFrame(memo);
-            f.initComponents();
-            f.setVisible(true);
+            frame = new DCCppExrailFrame(memo);
+            frame.initComponents();
+            frame.setVisible(true);
         }
-        f.setExtendedState(Frame.NORMAL);
-        f.toFront();
+        frame.setExtendedState(Frame.NORMAL);
+        frame.toFront();
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppExrailAction.class);

@@ -1989,13 +1989,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         DCCppMessage m = makeMessage("/ START " + id); // </ START id>
         m.myRegex = DCCppConstants.CONTROL_CMD_REGEX;
         m._nDataChars = m.toString().length();
-        return m;
+        return (m);
     }
     public static DCCppMessage makeStartExrailMsg(int id, int address) {
         DCCppMessage m = makeMessage("/ START " + address + " " + id); // </ START cab id>
         m.myRegex = DCCppConstants.CONTROL_CMD_REGEX;
         m._nDataChars = m.toString().length();
-        return m;
+        return (m);
     }
     public static DCCppMessage makeCurrentMaxesMsg() {
         DCCppMessage m = makeMessage(DCCppConstants.CURRENT_MAXES); // <JG>

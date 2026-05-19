@@ -46,6 +46,11 @@
                 &quot;RX:&quot; direction marker regardless of whether the translated text or raw
                 form is displayed, and the raw form is wrapped in &lt;&hellip;&gt; rather than
                 [&hellip;] to match DCC-EX's native command syntax.</li>
+                <li>A new <strong>EXRAIL Automations</strong> window (under the DCC-EX
+                menu) lists the Routes and Automations defined in your
+                EX-CommandStation's <code>myAutomation.h</code>. Select an entry
+                and click <strong>Trigger</strong> to run it; the button is disabled
+                when track power is off.</li>
                 <li>The <strong>Virtual LCD</strong> window now supports
                     more than one display. Each display is shown in a single
                     row in the <strong>Virtual LCD</strong> window, with

@@ -2,6 +2,7 @@ package jmri.jmrix.dccpp.swing.exrail;
 
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppExrailEntry;
+import jmri.jmrix.dccpp.DCCppExrailEntry.State;
 import jmri.jmrix.dccpp.DCCppInterfaceScaffold;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
@@ -29,34 +30,34 @@ public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @Test
     public void testPopulatesOnIdListReply() {
-        DCCppExrailFrame f = (DCCppExrailFrame) frame;
-        Assertions.assertEquals(0, f.getEntryCount(), "should start empty");
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        Assertions.assertEquals(0, exrailFrame.getEntryCount(), "should start empty");
 
-        f.message(DCCppReply.parseDCCppReply("jA 1 2"));
-        f.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
-        f.message(DCCppReply.parseDCCppReply("jA 2 A \"Yard Switcher\""));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 2"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 2 A \"Yard Switcher\""));
 
-        Assertions.assertEquals(2, f.getEntryCount(), "should have two entries after replies");
+        Assertions.assertEquals(2, exrailFrame.getEntryCount(), "should have two entries after replies");
     }
 
     @Test
     public void testCaptionUpdateApplied() {
-        DCCppExrailFrame f = (DCCppExrailFrame) frame;
-        f.message(DCCppReply.parseDCCppReply("jA 1"));
-        f.message(DCCppReply.parseDCCppReply("jA 1 R \"Original\""));
-        f.message(DCCppReply.parseDCCppReply("jB 1 \"Updated Caption\""));
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Original\""));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jB 1 \"Updated Caption\""));
 
-        Assertions.assertEquals("Updated Caption", f.getEntry(1).getDisplayName());
+        Assertions.assertEquals("Updated Caption", exrailFrame.getEntry(1).getDisplayName());
     }
 
     @Test
     public void testStateUpdateApplied() {
-        DCCppExrailFrame f = (DCCppExrailFrame) frame;
-        f.message(DCCppReply.parseDCCppReply("jA 1"));
-        f.message(DCCppReply.parseDCCppReply("jA 1 R \"Loop\""));
-        f.message(DCCppReply.parseDCCppReply("jB 1 2"));
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Loop\""));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jB 1 2"));
 
-        Assertions.assertEquals(2, f.getEntry(1).getState());
+        Assertions.assertEquals(State.HIDDEN, exrailFrame.getEntry(1).getState());
     }
 
     @Test
@@ -83,34 +84,34 @@ public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @Test
     public void testHiddenEntriesNotCounted() {
-        DCCppExrailFrame f = (DCCppExrailFrame) frame;
-        f.message(DCCppReply.parseDCCppReply("jA 1 2"));
-        f.message(DCCppReply.parseDCCppReply("jA 1 R \"Visible Route\""));
-        f.message(DCCppReply.parseDCCppReply("jA 2 A \"Hidden Auto\""));
-        f.message(DCCppReply.parseDCCppReply("jB 2 2")); // state=2 → hidden
-        Assertions.assertEquals(1, f.getEntryCount(), "hidden entry should be excluded from count");
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 2"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Visible Route\""));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 2 A \"Hidden Auto\""));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jB 2 2")); // state=2 → hidden
+        Assertions.assertEquals(1, exrailFrame.getEntryCount(), "hidden entry should be excluded from count");
     }
 
     @Test
     public void testTriggerRoute() {
-        DCCppExrailFrame f = (DCCppExrailFrame) frame;
-        f.message(DCCppReply.parseDCCppReply("jA 1 2"));
-        f.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
-        DCCppExrailEntry entry = f.getEntry(1);
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 2"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
+        DCCppExrailEntry entry = exrailFrame.getEntry(1);
         Assertions.assertNotNull(entry);
-        f.triggerEntry(entry, 0);
+        exrailFrame.triggerEntry(entry, 0);
         Assertions.assertEquals(DCCppMessage.makeStartExrailMsg(1).toString(),
                 tc.outbound.lastElement().toString(), "should send route start command");
     }
 
     @Test
     public void testTriggerAutomation() {
-        DCCppExrailFrame f = (DCCppExrailFrame) frame;
-        f.message(DCCppReply.parseDCCppReply("jA 2 3"));
-        f.message(DCCppReply.parseDCCppReply("jA 2 A \"Yard Switcher\""));
-        DCCppExrailEntry entry = f.getEntry(2);
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 2 3"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 2 A \"Yard Switcher\""));
+        DCCppExrailEntry entry = exrailFrame.getEntry(2);
         Assertions.assertNotNull(entry);
-        f.triggerEntry(entry, 1234);
+        exrailFrame.triggerEntry(entry, 1234);
         Assertions.assertEquals(DCCppMessage.makeStartExrailMsg(2, 1234).toString(),
                 tc.outbound.lastElement().toString(), "should send automation start command with loco address");
     }

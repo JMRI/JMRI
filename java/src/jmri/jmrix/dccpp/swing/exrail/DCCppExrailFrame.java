@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,6 +21,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import jmri.PowerManager;
 import jmri.jmrix.dccpp.DCCppExrailEntry;
+import jmri.util.swing.JmriJOptionPane;
 import jmri.util.ThreadingUtil;
 import jmri.jmrix.dccpp.DCCppInterface;
 import jmri.jmrix.dccpp.DCCppListener;
@@ -79,7 +79,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
                     boolean isSelected, boolean hasFocus, int row, int column) {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 DCCppExrailEntry entry = _tableModel.getEntryForRow(table.convertRowIndexToModel(row));
-                boolean disabled = entry != null && entry.getState() == 4;
+                boolean disabled = entry != null && entry.getState() == DCCppExrailEntry.State.DISABLED;
                 if (!isSelected) {
                     setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 240, 240));
                     setForeground(disabled ? Color.GRAY : table.getForeground());
@@ -124,18 +124,18 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         if (row < 0) return;
         DCCppExrailEntry entry = _tableModel.getEntryForRow(_table.convertRowIndexToModel(row));
         if (entry == null) return;
-        if (entry.getState() == 4) {
-            JOptionPane.showMessageDialog(this,
+        if (entry.getState() == DCCppExrailEntry.State.DISABLED) {
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ExrailDisabledAlert"),
                     Bundle.getMessage("ExrailDisabledTitle"),
-                    JOptionPane.WARNING_MESSAGE);
+                    JmriJOptionPane.WARNING_MESSAGE);
             return;
         }
         if (entry.isAutomation()) {
-            String input = JOptionPane.showInputDialog(this,
+            String input = JmriJOptionPane.showInputDialog(this,
                     Bundle.getMessage("ExrailLabelLocoAddress"),
                     Bundle.getMessage("ExrailTitleLocoDialog"),
-                    JOptionPane.QUESTION_MESSAGE);
+                    JmriJOptionPane.QUESTION_MESSAGE);
             if (input == null) return;
             try {
                 triggerEntry(entry, Integer.parseInt(input.trim()));
@@ -156,35 +156,35 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     }
 
     @Override
-    public void message(DCCppReply r) {
-        if (r.isAutomationIDsReply()) {
-            for (int id : r.getAutomationIDList()) {
+    public void message(DCCppReply reply) {
+        if (reply.isAutomationIDsReply()) {
+            for (int id : reply.getAutomationIDList()) {
                 _tc.sendDCCppMessage(DCCppMessage.makeAutomationIDMsg(id), this);
             }
-        } else if (r.isAutomationIDReply()) {
-            int id = r.getAutomationIDInt();
-            _entries.put(id, new DCCppExrailEntry(id, r.getAutomationTypeString(), r.getAutomationDescString()));
+        } else if (reply.isAutomationIDReply()) {
+            int id = reply.getAutomationIDInt();
+            _entries.put(id, new DCCppExrailEntry(id, reply.getAutomationTypeString(), reply.getAutomationDescString()));
             ThreadingUtil.runOnGUIEventually(() -> _tableModel.fireTableDataChanged());
-        } else if (r.isAutomationStateReply()) {
-            DCCppExrailEntry e = _entries.get(r.getAutomationIDInt());
-            if (e != null) {
-                e.setState(Integer.parseInt(r.getAutomationStateString()));
+        } else if (reply.isAutomationStateReply()) {
+            DCCppExrailEntry entry = _entries.get(reply.getAutomationIDInt());
+            if (entry != null) {
+                entry.setState(DCCppExrailEntry.State.fromValue(Integer.parseInt(reply.getAutomationStateString())));
                 ThreadingUtil.runOnGUIEventually(() -> _tableModel.fireTableDataChanged());
             }
-        } else if (r.isAutomationCaptionReply()) {
-            DCCppExrailEntry e = _entries.get(r.getAutomationIDInt());
-            if (e != null) {
-                e.setCaption(r.getAutomationCaptionString());
+        } else if (reply.isAutomationCaptionReply()) {
+            DCCppExrailEntry entry = _entries.get(reply.getAutomationIDInt());
+            if (entry != null) {
+                entry.setCaption(reply.getAutomationCaptionString());
                 ThreadingUtil.runOnGUIEventually(() -> _tableModel.fireTableDataChanged());
             }
         }
     }
 
     @Override
-    public void message(DCCppMessage m) {}
+    public void message(DCCppMessage msg) {}
 
     @Override
-    public void notifyTimeout(DCCppMessage m) {}
+    public void notifyTimeout(DCCppMessage msg) {}
 
     @Override
     public void dispose() {
@@ -197,12 +197,12 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     }
 
     /** Returns number of visible (non-hidden) entries; used by tests. */
-    public int getEntryCount() {
+    int getEntryCount() {
         return _tableModel.getRowCount();
     }
 
     /** Returns entry by id; used by tests. */
-    public DCCppExrailEntry getEntry(int id) {
+    DCCppExrailEntry getEntry(int id) {
         return _entries.get(id);
     }
 
@@ -213,7 +213,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
 
     private class ExrailTableModel extends AbstractTableModel {
 
-        private final String[] COLUMNS = {
+        private final String[] columns = {
             Bundle.getMessage("ExrailColId"),
             Bundle.getMessage("ExrailColType"),
             Bundle.getMessage("ExrailColName"),
@@ -223,8 +223,8 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         /** Entries visible in the table — Hidden (state 2) are excluded. */
         private List<DCCppExrailEntry> visibleEntries() {
             List<DCCppExrailEntry> list = new ArrayList<>();
-            for (DCCppExrailEntry e : _entries.values()) {
-                if (e.getState() != 2) list.add(e);
+            for (DCCppExrailEntry entry : _entries.values()) {
+                if (entry.getState() != DCCppExrailEntry.State.HIDDEN) list.add(entry);
             }
             return list;
         }
@@ -239,10 +239,10 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         public int getRowCount() { return visibleEntries().size(); }
 
         @Override
-        public int getColumnCount() { return COLUMNS.length; }
+        public int getColumnCount() { return columns.length; }
 
         @Override
-        public String getColumnName(int col) { return COLUMNS[col]; }
+        public String getColumnName(int col) { return columns[col]; }
 
         @Override
         public Class<?> getColumnClass(int col) {
@@ -253,18 +253,18 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         public Object getValueAt(int row, int col) {
             List<DCCppExrailEntry> list = visibleEntries();
             if (row >= list.size()) return "";
-            DCCppExrailEntry e = list.get(row);
-            if (col == 0) return e.getId();
-            if (col == 1) return e.isRoute()
+            DCCppExrailEntry entry = list.get(row);
+            if (col == 0) return entry.getId();
+            if (col == 1) return entry.isRoute()
                     ? Bundle.getMessage("ExrailTypeRoute")
                     : Bundle.getMessage("ExrailTypeAutomation");
-            if (col == 2) return e.getDisplayName();
+            if (col == 2) return entry.getDisplayName();
             if (col == 3) {
-                int s = e.getState();
-                if (s <= 0) return Bundle.getMessage("ExrailStateIdle");
-                if (s == 1) return Bundle.getMessage("ExrailStateRunning");
-                if (s == 4) return Bundle.getMessage("ExrailStateDisabled");
-                return String.valueOf(s);
+                DCCppExrailEntry.State state = entry.getState();
+                if (state == null || state == DCCppExrailEntry.State.INACTIVE) return Bundle.getMessage("ExrailStateIdle");
+                if (state == DCCppExrailEntry.State.ACTIVE)   return Bundle.getMessage("ExrailStateRunning");
+                if (state == DCCppExrailEntry.State.DISABLED) return Bundle.getMessage("ExrailStateDisabled");
+                return String.valueOf(state.value);
             }
             return "";
         }
