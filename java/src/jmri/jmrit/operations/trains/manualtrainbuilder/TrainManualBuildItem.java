@@ -356,7 +356,7 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
      * @return Contents in a JDOM Element
      */
     public org.jdom2.Element store() {
-        org.jdom2.Element e = new org.jdom2.Element(Xml.ITEM);
+        org.jdom2.Element e = new org.jdom2.Element(Xml.MANUAL_BUILD_ITEM);
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.SEQUENCE_ID, Integer.toString(getSequenceId()));
         e.setAttribute(Xml.TRAIN_SCHEDULE_ID, getTrainScheduleId());

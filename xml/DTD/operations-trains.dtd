@@ -86,7 +86,7 @@
 <!ELEMENT schedule EMPTY>
 
 <!ELEMENT manualBuilds (manualBuild)*>
-<!ELEMENT manualBuild (item)*>
+<!ELEMENT manualBuild (mbItem)*>
 
 <!ATTLIST train id					CDATA #REQUIRED>          
 <!ATTLIST train name				CDATA #REQUIRED>
@@ -182,15 +182,6 @@
 <!ATTLIST schedule comment			CDATA #IMPLIED>
 <!ATTLIST schedule trainIds			CDATA #IMPLIED>
 
-<!ATTLIST manualBuild id			CDATA #REQUIRED>          
-<!ATTLIST manualBuild name			CDATA #IMPLIED>
-<!ATTLIST manualBuild comment		CDATA #IMPLIED>
-<!ATTLIST manualBuild trainId		CDATA #IMPLIED>
-
-<!ATTLIST item trainScheduleId		CDATA #IMPLIED>
-<!ATTLIST item routeLocationId		CDATA #IMPLIED>
-
-
 <!ATTLIST route id					CDATA #REQUIRED>          
 <!ATTLIST route name				CDATA #IMPLIED>
 
@@ -211,8 +202,8 @@
 
 <!ATTLIST item id					CDATA #REQUIRED>          
 <!ATTLIST item sequenceId			CDATA #REQUIRED>
-<!ATTLIST item name					CDATA #IMPLIED>
-<!ATTLIST item actionCode			CDATA #IMPLIED>
+<!ATTLIST item name					CDATA #REQUIRED>
+<!ATTLIST item actionCode			CDATA #REQUIRED>
 <!ATTLIST item trainId				CDATA #IMPLIED>
 <!ATTLIST item routeLocationId		CDATA #IMPLIED>
 <!ATTLIST item automationId			CDATA #IMPLIED>
@@ -223,18 +214,29 @@
 <!ATTLIST item actionRan			(true | false) "false">
 <!ATTLIST item actionSuccessful		(true | false) "false">
 
-<!ATTLIST item type					CDATA #IMPLIED>
-<!ATTLIST item road					CDATA #IMPLIED>
-<!ATTLIST item load					CDATA #IMPLIED>
-<!ATTLIST item count				CDATA #IMPLIED>
-<!ATTLIST item trainScheduleId		CDATA #IMPLIED>
-<!ATTLIST item routeLocationId		CDATA #IMPLIED>
-<!ATTLIST item fail					(true | false) "false">
-<!ATTLIST item warn					(true | false) "false">
-<!ATTLIST item remove				(true | false) "false">
-
 <!ATTLIST messageOk message			CDATA #IMPLIED>
 <!ATTLIST messageFail message		CDATA #IMPLIED>
 
 <!ATTLIST automationOptions automationStartupId		CDATA #IMPLIED>
+
+<!ATTLIST manualBuild id			CDATA #REQUIRED>          
+<!ATTLIST manualBuild name			CDATA #IMPLIED>
+<!ATTLIST manualBuild comment		CDATA #IMPLIED>
+<!ATTLIST manualBuild trainId		CDATA #IMPLIED>
+
+<!ELEMENT mbItem EMPTY>
+
+<!ATTLIST mbItem id					CDATA #REQUIRED>          
+<!ATTLIST mbItem sequenceId			CDATA #REQUIRED>
+<!ATTLIST mbItem type				CDATA #IMPLIED>
+<!ATTLIST mbItem road				CDATA #IMPLIED>
+<!ATTLIST mbItem load				CDATA #IMPLIED>
+<!ATTLIST mbItem count				CDATA #IMPLIED>
+<!ATTLIST mbItem trainScheduleId	CDATA #IMPLIED>
+<!ATTLIST mbItem routeLocationId	CDATA #IMPLIED>
+<!ATTLIST mbItem destinationId		CDATA #IMPLIED>
+<!ATTLIST mbItem destTrackId		CDATA #IMPLIED>
+<!ATTLIST mbItem fail				(true | false) "false">
+<!ATTLIST mbItem warn				(true | false) "false">
+<!ATTLIST mbItem remove				(true | false) "false">
 

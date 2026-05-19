@@ -27,7 +27,7 @@ public class Xml {
     protected static final String MANUAL_BUILDS = "manualBuilds"; // NOI18N
 
     // TrainManualBuildItem.java
-    protected static final String ITEM = "item"; // NOI18N
+    protected static final String MANUAL_BUILD_ITEM = "mbItem"; // NOI18N
     protected static final String SEQUENCE_ID = "sequenceId"; // NOI18N
     protected static final String TRAIN_SCHEDULE_ID = "trainScheduleId"; // NOI18N
     protected static final String TYPE = "type"; // NOI18N

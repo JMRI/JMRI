@@ -302,8 +302,8 @@ public class TrainManualBuild extends PropertyChangeSupport implements java.bean
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
             _comment = a.getValue();
         }
-        if (e.getChildren(Xml.ITEM) != null) {
-            List<Element> eManualBuildItems = e.getChildren(Xml.ITEM);
+        if (e.getChildren(Xml.MANUAL_BUILD_ITEM) != null) {
+            List<Element> eManualBuildItems = e.getChildren(Xml.MANUAL_BUILD_ITEM);
             log.debug("manualBuild: {} has {} items", getTrainId(), eManualBuildItems.size());
             for (Element eManualBuildItem : eManualBuildItems) {
                 register(new TrainManualBuildItem(eManualBuildItem));
