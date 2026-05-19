@@ -140,7 +140,7 @@ public class MqttThrottleManager extends AbstractThrottleManager {
 
     /**
      * What speed modes are supported by this system? value should be xor of
-     * possible modes specifed by the DccThrottle interface DCC++ supports
+     * possible modes specifed by the DccThrottle interface DCC-EX supports
      * 14,27,28 and 128 speed step modes
      */
     @Override

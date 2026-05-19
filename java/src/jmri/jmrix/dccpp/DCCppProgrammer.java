@@ -9,7 +9,7 @@ import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 
 /**
- * Programmer support for DCC++.
+ * Programmer support for DCC-EX.
  * <p>
  * The read operation state sequence is:
  * <ul>
@@ -32,7 +32,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     // keep track of whether or not the command station is in service 
     // mode.  Used for determining if "OK" message is an aproriate 
     // response to a request to a programming request. 
-    protected boolean _service_mode = false;  // TODO: Is this even meaningful for DCC++?
+    protected boolean _service_mode = false;  // TODO: Is this even meaningful for DCC-EX?
 
     protected static final int LISTENER_MASK = DCCppInterface.CS_INFO | DCCppInterface.COMMINFO | DCCppInterface.INTERFACE;
 
@@ -229,7 +229,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
                 m.getElement(0) == DCCppConstants.VERIFY_REPLY) {
             if (log.isDebugEnabled()) {
                 log.debug("reply in REQUESTSENT state");
-                log.debug("DCC++ Program or Verify Reply value = {}", m.getCVString());
+                log.debug("DCC-EX Program or Verify Reply value = {}", m.getCVString());
             }
             _val = m.getReadValueInt();
             progState = NOTPROGRAMMING;

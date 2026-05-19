@@ -124,7 +124,7 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
     @Override
     public void testPortReadyToSendNullController() {
         super.testPortReadyToSendNullController();
-        JUnitAppender.suppressWarnMessageStartsWith("DCC++ port not ready to send");
+        JUnitAppender.suppressWarnMessageStartsWith("DCC-EX port not ready to send");
     }
 
     @BeforeEach

@@ -412,6 +412,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#TrainLoadOptions">Train Load Options</a></li>
                 <li><a href="#TrainRoadOptions">Train Road Options</a></li>
                 <li><a href="#TrainManifestOptions">Train Manifest Options</a></li>
+                <li><a href="#TrainManualBuild">Train Manual Build</a></li>
                 <li><a href="#CopyTrain">Copy Train</a></li>
                 <li><a href="#EditTrainScripts">Scripts</a></li>
                 <li><a href="#TrainConductor">Train Conductor</a>
@@ -680,7 +681,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Car" button to create a new car, or to copy an existing one. Use the "Save" button to make
         changes to an existing car. Be sure to place the cars on a track using the "Location and
         Track" field found in either the <a href="#CarsEdit">add / edit car</a> or <a
-          href="#CarsSet">set car</a> window. The program works best if you keep at least 20% of
+          href="#CarsSet">Set Car</a> window. The program works best if you keep at least 20% of
         your tracks empty, so don't place too many cars on tracks until you understand how the
         program builds trains.
       </p>
@@ -4659,16 +4660,21 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4 id="SetCarAdd">Add car to train</h4>
       To manually add a car to a train, select the train you want and press "Save". If the train is
       built, the destination and track fields will become enabled. Now select the car's destination
-      and track and press "Save" to add the car to the train. See
-      <a href="#OptionalNormallySet">Optional -- Normally Set by Program</a> for more information.
+      and track and press "Save" to assign the car to the train. If the train isn't built, optionally
+      use the "Final Destination and Track" fields to set the car's destination.
+
+      <p>
+        See <a href="#OptionalNormallySet">Optional -- Normally Set by Program</a> for more
+        information.
+      </p>
 
       <h4>Status</h4>
-      In the upper right hand corner of the set car window is a checkbox labeled "Location Unknown".
+      In the upper right hand corner of the Set Car window is a checkbox labeled "Location Unknown".
       Selecting the location unknown checkbox does several things. First the program will ignore the
       car when building new trains. Second, on Manifests and switch lists, the program will list all
       of the misplaced cars. Now your crew can help you find cars that have been <a
         href="#MisplacedCarsComment">misplaced</a>. And finally, when this checkbox is selected, the
-      other fields in the set car window are disabled.
+      other fields in the Set Car window are disabled.
       <p>The "Out of Service" checkbox when selected instructs the program to ignore the car
         when building new trains. Many operators have a RIP (Repair In Place) track and use this
         feature to hold the car there until repairs have been made.</p>
@@ -5995,6 +6001,47 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       also decide if your Manifests show the train's arrival and departure times. Use the "Edit
       Train&rArr;Tools&rArr;Manifest Options" to set these options.
 
+      <h4 id="TrainManualBuild">Train Manual Build</h4>
+      OperationsPro gives you two methods to manually assign cars to a train. The
+      <a href="#CarsSet">Set Car</a> window allows you to select a specific car and assign it to a
+      train. You can do this before or after building a train.
+
+      <p>The other option is to use the Train Manual Build tool to create the car movements you
+        desire when building a train.</p>
+
+      <img src="images/TrainManualBuild.png" alt="">
+
+      <p>After selecting the "Train Manual Build" tool in the "Edit Train" window, a new window
+        called Train Manual Build should appear. Press the "Add Car" button in the lower left corner
+        to add a line item to the train manual build. All fields in the line item are optional,
+        including the type of car. For example, you could select only the car's road name you wish
+        the program for search for, and then when building the train assign that car to the train.
+        The "Location" combo box shows the train's route, so you can select where in the train's
+        route you want the car pulled. The "Count" field allows you to select the number of cars you
+        want pulled. Click on the field to change the number of cars to pick up.</p>
+
+      <p>In the example window above, item line "1m1" will search for a "Boxcar" at the train's
+        route location "Bakersfield" and send the car to "Danville". Note that the destination
+        doesn't have to be in the train's route. If the destination isn't in train's route, the
+        program will route the car to that destination. If the destination isn't provided, the program
+        will search for a destination after the line item route location if there's one provided, or
+        after the car's current location.</p>
+
+      <p>In the next line item "1m2", the program will search for a "Coilcar" with the road name
+        "C&amp;O" anywhere along the train's route, and send the car to "Susanville" but only on
+        "Tuesdays". If the program wasn't able to assign a Coilcar to the train with the destination
+        being Susanville, a warning message would be included in the train's build report. The other
+        option is to select the "Fail" checkbox which will cause a build failure if the Coilcar
+        wasn't assigned to the train.</p>
+
+      <p>After completing the manual build without a build failure, the program will then
+        proceed to automatically build the train. A good example of how this can be useful, is say
+        you have a track that you want all of the cars pulled before the automatic build begins. You
+        would not specify a car type, but provide the location and track to pull from, and set the
+        "Count" to a number equal to or greater than the possible number of cars that could reside
+        on the track. Now the manual build will pull all of the cars from the track, and attempt to
+        find destinations for those cars along the train's route.</p>
+
       <h4 id="CopyTrain">Copy Train</h4>
       Use this tool to make a copy of an existing train. You will need to enter a name for the new
       train.
@@ -6023,18 +6070,21 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       of the location when using the <a href="#AddLocation">hyphen</a> feature.
 
       <h5 id="ModifyingBuiltTrain">Modifying a built train</h5>
-      You can also modify the train's manifest by pressing the "Modify" button in the Conductor or <a
-        href="#Yardmaster">Yardmaster</a> window. The modify button once pressed will ask you if you
-      want to add cars to the train. If you answer yes a "Cars" window will appear for the location
-      being serviced. Press the "Set" button for the car you want to add, and in the "Set Car"
-      window under the section "Optional -- Normally Set by Program" enter a destination,
-      destination track, and train for that car. Note that by default, a car's destination and track
-      is disabled, but you can enable it under the "Tools" menu in the set car window. Pressing
-      "Save" should cause the program to ask you if you want to add the car to the train.
+      You can also modify the train's manifest by pressing the "Modify" button in the Conductor or
+      <a href="#Yardmaster">Yardmaster</a> window. The modify button once pressed will ask you if
+      you want to add cars to the train. If you answer yes a "Cars" window will appear for the
+      location being serviced. Press the "Set" button for the car you want to add, and in the
+      <a href="#CarsSet">Set Car</a> window under the section "Optional -- Normally Set by Program"
+      enter a destination, destination track, and train for that car. Note that by default, a car's
+      destination and track is disabled, but you can enable it under the "Tools" menu in the
+      <a href="#CarsSet">Set Car</a> window. Pressing "Save" should cause the program to ask you if
+      you want to add the car to the train.
 
-      <p>To remove a car from the train, press the "Set" button, and the "Set Car" window should
-        appear. Pressing the set car "Save" button will ask you if you really want to remove the car
-        from the train.</p>
+      <p>
+        To remove a car from the train, press the "Set" button, and the <a href="#CarsSet">Set
+          Car</a> window should appear. Pressing the set car "Save" button will ask you if you really
+        want to remove the car from the train.
+      </p>
 
       <h4 id="ShowCarTypesServiced">Show Car Types Serviced</h4>
       See <a href="#TrainShowCarTypesServiced">Show Car Types Serviced</a> train tool below for more

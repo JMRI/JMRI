@@ -602,12 +602,18 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
         if (toolBarIsVertical) {
             leToolBarPanel = new LayoutEditorVerticalToolBarPanel(this);
+            leToolBarPanel.setPreferredSize(leToolBarPanel.getMinimumSize());
             editToolBarScrollPane = new JScrollPane(leToolBarPanel);
             toolbarWidth = editToolBarScrollPane.getPreferredSize().width;
             toolbarHeight = screenDim.height;
         } else {
             leToolBarPanel = new LayoutEditorHorizontalToolBarPanel(this);
+            leToolBarPanel.revalidate();
+            leToolBarPanel.setPreferredSize(leToolBarPanel.getMinimumSize());
             editToolBarScrollPane = new JScrollPane(leToolBarPanel);
+            editToolBarScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+            editToolBarScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+            editToolBarScrollPane.revalidate();
             toolbarWidth = screenDim.width;
             toolbarHeight = editToolBarScrollPane.getPreferredSize().height;
         }
@@ -620,6 +626,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         // editToolBarScroll.getViewport().addChangeListener(e -> {
         // log.warn("scrollbars visible: " + editToolBarScroll.getHorizontalScrollBar().isVisible());
         //});
+        
         editToolBarContainerPanel.setMinimumSize(new Dimension(toolbarWidth, toolbarHeight));
         editToolBarContainerPanel.setPreferredSize(new Dimension(toolbarWidth, toolbarHeight));
 

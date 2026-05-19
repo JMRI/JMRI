@@ -323,9 +323,10 @@ public class TrainBuilder extends TrainBuilderCars {
         addLine(ONE, Bundle.getMessage("mbuildFound", getTrain().getName()));
         for (TrainManualBuildItem mbi : manualBuild.getItemsBySequenceList()) {
             addLine(THREE,
-                    Bundle.getMessage("mbuildRequest", mbi.getTypeName(), mbi.getRoadName(), mbi.getLoadName(),
-                            mbi.getLocationName(), mbi.getLocationTrackName(), mbi.getDestinationName(),
-                            mbi.getDestinationTrackName(), mbi.getTrainScheduleName(), mbi.getCount()));
+                    Bundle.getMessage("mbuildRequest", mbi.getId(), mbi.getTypeName(), mbi.getRoadName(),
+                            mbi.getLoadName(), mbi.getLocationName(), mbi.getLocationTrackName(),
+                            mbi.getDestinationName(), mbi.getDestinationTrackName(), mbi.getTrainScheduleName(),
+                            mbi.getCount()));
             // the number of cars requested by this line item
             int count = mbi.getCount();
             for (_carIndex = 0; _carIndex < getCarList().size(); _carIndex++) {
@@ -373,19 +374,18 @@ public class TrainBuilder extends TrainBuilderCars {
                 car.setFinalDestinationTrack(mbi.getDestinationTrack());
                 // case where there's a route location
                 if (mbi.getRouteLocation() != null) {
-                    if (checkRouteLocation(mbi.getRouteLocation())) {
-                        findDestinationsFromLocation(mbi.getRouteLocation(), car, false);
-                    }
-                } else
+                    findDestinationForCar(mbi.getRouteLocation(), car);
+                } else {
                     for (RouteLocation rl : getRouteList()) {
                         // start looking at car's location
                         if (rl.getLocation() == car.getLocation()) {
-                            if (checkRouteLocation(rl)) {
-                                findDestinationsFromLocation(rl, car, false);
-                                break;
-                            }
+                            findDestinationForCar(rl, car);
+                        }
+                        if (car.getTrain() != null) {
+                            break; // done
                         }
                     }
+                }
                 // if not assigned to train, clear final destination
                 if (car.getTrain() == null) {
                     car.setFinalDestination(null);
@@ -396,17 +396,48 @@ public class TrainBuilder extends TrainBuilderCars {
                     }
                 }
             }
+
+            addLine(THREE, Bundle.getMessage("mbuildCompleted", mbi.getId(), manualBuild.getTrainName(),
+                    mbi.getCount() - count, mbi.getCount()));
+            addLine(THREE, BLANK_LINE);
+
             if (count > 0 && mbi.isFailEnabled()) {
                 throw new BuildFailedException(
                         Bundle.getMessage("mbuildFail", manualBuild.getTrainName(), mbi.getId()));
-            }
-            else if (count > 0 && mbi.isWarnEnabled()) {
+            } else if (count > 0 && mbi.isWarnEnabled()) {
                 _warnings++;
                 addLine(ONE, Bundle.getMessage("mbuildWarn", manualBuild.getTrainName(), mbi.getId()));
             }
         }
         addLine(ONE, Bundle.getMessage("mbuildDone"));
         addLine(ONE, BLANK_LINE); // end of manual build
+    }
+
+    private boolean findDestinationForCar(RouteLocation rl, Car car) throws BuildFailedException {
+        if (!checkRouteLocationMoves(rl, car)) {
+            return false;
+        }
+        if (!checkRouteLocation(rl)) {
+            addLine(ONE, BLANK_LINE);
+            return false;
+        }
+        findDestinationsFromLocation(rl, car, false);
+        return true;
+    }
+
+    /*
+     * returns true if there are moves available at the car's departure route
+     * location
+     */
+    private boolean checkRouteLocationMoves(RouteLocation rl, Car car) {
+        if (rl.getCarMoves() < rl.getMaxCarMoves()) {
+            return true;
+        }
+        addLine(FIVE, Bundle.getMessage("mbuildRouteLocationMoves", rl.getName(), rl.getId(), rl.getMaxCarMoves(),
+                rl.getMaxCarMoves() - rl.getCarMoves()));
+        addLine(FIVE, Bundle.getMessage("buildNoDestForCar", car.toString()));
+        addLine(FIVE, BLANK_LINE);
+        return false;
     }
 
     /**

@@ -472,6 +472,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
+            <li>Improved the layout of the edit tools to reduce the need for 
+                vertical scrolling when they're at the top or bottom of the window.</li>
             <li>Fixed a bug where the panel bounds wasn't updated when
                 an icon was moved using the popup menu item
                 <strong>Set Location</strong>.</li>
@@ -497,7 +499,13 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>The LogixNG function <strong>regex()</strong> has been
+              added. It lets you use a regular expression to extract
+              information from a string.<br/>
+              For more information about regular expressions, see the
+              Java class
+              <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/regex/Pattern.html"></a>Pattern</li>.
+          <li>Update the Turnout Lock action description.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -510,6 +518,7 @@
         <a id="Operations" name="Operations"></a>
         <ul>
           <li>Added the ability to set the additional line tab size for Manifest and Switch Lists. Useful when using the smaller page widths. See "More Print Options" in the help.</li>
+          <li>New feature, manual build for a train. See the OperationsPro help for more information.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -675,6 +684,7 @@
             <li>The class <a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionStatus.html">jmri.jmrix.ConnectionStatus</a>
                 has been refactorized to use <a href="https://www.jmri.org/JavaDoc/doc/jmri/SystemConnectionMemo.html">SystemConnectionMemo</a>
                 instead of <strong>systemName</strong> and <strong>portName</strong>.</li>
-            <li></li>
+            <li>Reading and writing of the user-interface.xml preferences file has been made more efficient.  This shouldn't have
+                any effect on users.</li>
         </ul>
 
