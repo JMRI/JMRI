@@ -86,7 +86,8 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         /* Add additional feedback types information */
         // Note DIRECT, ONESENSOR and TWOSENSOR are already OR'ed in.
         _validFeedbackTypes |= MONITORING;   // uses the Turnout command <T...>
-        _validFeedbackTypes |= EXACT; // uses the Output command <z...>
+        _validFeedbackTypes |= EXACT;        // uses the Output command <Z...>
+        _validFeedbackTypes |= DIRECTPIN;    // uses the pin control command <z...>
         
         // Default feedback mode is DIRECT
         _activeFeedbackType = DIRECT;
@@ -106,7 +107,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
 
     //Set the mode information for DCC-EX Turnouts.
     synchronized private static void setModeInformation(String[] feedbackNames, int[] feedbackModes) {
-        // if it hasn't been done already, create static arrays to hold 
+        // if it hasn't been done already, create static arrays to hold
         // the DCC-EX specific feedback information.
         if (modeNames == null) {
             if (feedbackNames.length != feedbackModes.length) {
@@ -114,8 +115,8 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             }
             // NOTE: What we are doing here is tacking extra modes to the list
             // *beyond* the defaults of DIRECT, ONESENSOR and TWOSENSOR
-            modeNames = new String[feedbackNames.length + 2];
-            modeValues = new int[feedbackNames.length + 2];
+            modeNames = new String[feedbackNames.length + 3];
+            modeValues = new int[feedbackNames.length + 3];
             for (int i = 0; i < feedbackNames.length; i++) {
                 modeNames[i] = feedbackNames[i];
                 modeValues[i] = feedbackModes[i];
@@ -124,6 +125,8 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             modeValues[feedbackNames.length] = MONITORING;
             modeNames[feedbackNames.length+1] = "BSOUTPUT";
             modeValues[feedbackNames.length+1] = EXACT;
+            modeNames[feedbackNames.length+2] = "CS VPIN";
+            modeValues[feedbackNames.length+2] = DIRECTPIN;
         }
     }
 
@@ -157,7 +160,9 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             synchronized (this) {
                 newKnownState(INCONSISTENT);
             }
-        } else if( _activeFeedbackType == DIRECT ){
+        } else if (_activeFeedbackType == DIRECT || _activeFeedbackType == DIRECTPIN) {
+            // DIRECTPIN: no guaranteed reply from <z>; update optimistically.
+            // An EXRAIL-broadcast <Y> reply may also update KnownState later.
             synchronized (this) {
                 newKnownState(s);
             }
@@ -182,7 +187,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             newState = !newState;
         }
         switch (_activeFeedbackType) {
-            case EXACT: // Use <z ... > command
+            case EXACT: // Use <Z ... > command
                 // mNumber is the index ID into the Base Station's internal table of outputs.
                 // Convert the integer Turnout value to boolean for DCC-EX internal code.
                 // Assume if it's not THROWN (true), it must be CLOSED (false).
@@ -191,6 +196,12 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
                 // is inverted when making the message
                 msg = DCCppMessage.makeOutputCmdMsg(mNumber, !newState);
                 internalState = COMMANDSENT;
+                break;
+            case DIRECTPIN: // Use <z vpin> / <z -vpin> pin control command
+                // mNumber is the DCC-EX vpin number; no pre-definition required.
+                // Polarity matches EXACT: LOW = THROWN, HIGH = CLOSED — invert newState.
+                msg = DCCppMessage.makeOutputCmdMsgLC(mNumber, !newState);
+                internalState = IDLE; // no guaranteed reply
                 break;
             case MONITORING: // Use <T ... > command
                 // mNumber is the index ID into the Base Station's internal table of Turnouts.
