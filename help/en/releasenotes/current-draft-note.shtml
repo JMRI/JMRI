@@ -472,7 +472,9 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug where the panel bounds wasn't updated when
+                an icon was moved using the popup menu item
+                <strong>Set Location</strong>.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>

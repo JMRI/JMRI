@@ -362,6 +362,7 @@ public class CoordinateEdit extends JmriJFrame {
             int x = ((Number) spinX.getValue()).intValue();
             int y = ((Number) spinY.getValue()).intValue();
             pl.setLocation(x, y);
+            pl.getEditor().resizePanelBounds(true);
             textX.setText("X: " + pl.getX());
             textY.setText("Y: " + pl.getY());
             dispose();

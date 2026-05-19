@@ -2381,7 +2381,8 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param forceFlag if false only grow bigger
      * @return the new (?) panel bounds
      */
-    private Rectangle2D resizePanelBounds(boolean forceFlag) {
+    @Override
+    public Rectangle2D resizePanelBounds(boolean forceFlag) {
         Rectangle2D panelBounds = getPanelBounds();
         Rectangle2D layoutBounds = calculateMinimumLayoutBounds();
 

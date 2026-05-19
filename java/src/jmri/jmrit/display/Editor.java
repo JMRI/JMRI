@@ -3694,6 +3694,11 @@ public abstract class Editor extends JmriJFrameWithPermissions
      */
     protected abstract void copyItem(Positionable p);
 
+    public Rectangle2D resizePanelBounds(boolean forceFlag) {
+        // Do nothing. This method is overridden by LayoutEditor.
+        return null;
+    }
+
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
         List<NamedBeanUsageReport> report = new ArrayList<>();
         if (bean != null) {
