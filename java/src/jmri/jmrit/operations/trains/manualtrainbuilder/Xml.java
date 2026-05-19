@@ -40,4 +40,6 @@ public class Xml {
     protected static final String COUNT = "count"; // NOI18N
     protected static final String WARN = "warn"; // NOI18N
     protected static final String FAIL = "fail"; // NOI18N
+    protected static final String REMOVE = "remove"; // NOI18N
+    
 }

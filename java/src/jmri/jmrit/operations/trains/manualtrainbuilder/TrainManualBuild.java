@@ -47,7 +47,7 @@ public class TrainManualBuild extends PropertyChangeSupport implements java.bean
         String old = _trainId;
         _trainId = trainId;
         if (!old.equals(trainId)) {
-            setDirtyAndFirePropertyChange("ManualBuildName", old, trainId); // NOI18N
+            setDirtyAndFirePropertyChange("ManualBuildId", old, trainId); // NOI18N
         }
     }
 
@@ -96,10 +96,10 @@ public class TrainManualBuild extends PropertyChangeSupport implements java.bean
         log.debug("Adding new item to ({}) id: {}", getTrainId(), id);
         TrainManualBuildItem mbi = new TrainManualBuildItem(id);
         mbi.setSequenceId(_sequenceNum);
-        Integer old = Integer.valueOf(_manualBuildHashTable.size());
+        int old = _manualBuildHashTable.size();
         _manualBuildHashTable.put(mbi.getId(), mbi);
 
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_manualBuildHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, _manualBuildHashTable.size());
         // listen for set out and pick up changes to forward
         mbi.addPropertyChangeListener(this);
         return mbi;
@@ -130,7 +130,7 @@ public class TrainManualBuild extends PropertyChangeSupport implements java.bean
      * @param mbi The manual build item to add.
      */
     public void register(TrainManualBuildItem mbi) {
-        Integer old = Integer.valueOf(_manualBuildHashTable.size());
+        int old = _manualBuildHashTable.size();
         _manualBuildHashTable.put(mbi.getId(), mbi);
 
         // find last id created
@@ -143,7 +143,7 @@ public class TrainManualBuild extends PropertyChangeSupport implements java.bean
         if (mbi.getSequenceId() > _sequenceNum) {
             _sequenceNum = mbi.getSequenceId();
         }
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_manualBuildHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, _manualBuildHashTable.size());
         // listen for set out and pick up changes to forward
         mbi.addPropertyChangeListener(this);
     }
@@ -159,11 +159,10 @@ public class TrainManualBuild extends PropertyChangeSupport implements java.bean
             // subtract from the items's available track length
             String id = mbi.getId();
             mbi.dispose();
-            Integer old = Integer.valueOf(_manualBuildHashTable.size());
+            int old = _manualBuildHashTable.size();
             _manualBuildHashTable.remove(id);
             resequenceIds();
-            setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old,
-                    Integer.valueOf(_manualBuildHashTable.size()));
+            setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, _manualBuildHashTable.size());
         }
     }
 
@@ -249,7 +248,7 @@ public class TrainManualBuild extends PropertyChangeSupport implements java.bean
                 resequenceIds(); // error the sequence number is missing
             }
         }
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, sequenceId);
     }
 
     /**
@@ -272,7 +271,7 @@ public class TrainManualBuild extends PropertyChangeSupport implements java.bean
                 resequenceIds(); // error the sequence number is missing
             }
         }
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, sequenceId);
     }
 
     public TrainManualBuildItem getItemBySequenceId(int sequenceId) {

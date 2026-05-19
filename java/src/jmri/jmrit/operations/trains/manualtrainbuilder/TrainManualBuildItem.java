@@ -34,6 +34,7 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
     protected int _count = 1;
     protected boolean _warn = false; // when true issue warning
     protected boolean _fail = false; // when true issue build failure
+    protected boolean _remove = false; // when true issue build failure
 
     public static final String TRAIN_SCHEDULE_CHANGED_PROPERTY = "trainScheduleProteryId"; // NOI18N
     public static final String TYPE_CHANGED_PROPERTY = "manualItemType"; // NOI18N
@@ -46,6 +47,7 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
     public static final String COUNT_CHANGED_PROPERTY = "manualItemCount"; // NOI18N
     public static final String WARN_CHANGED_PROPERTY = "manualItemWarn"; // NOI18N
     public static final String FAIL_CHANGED_PROPERTY = "manualItemFail"; // NOI18N
+    public static final String REMOVE_CHANGED_PROPERTY = "manualItemRemove"; // NOI18N
     public static final String DISPOSE = "manualItemDispose"; // NOI18N
 
     /**
@@ -260,6 +262,16 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
         setDirtyAndFirePropertyChange(FAIL_CHANGED_PROPERTY, old, fail);
     }
     
+    public boolean isRemoveEnabled() {
+        return _remove;
+    }
+    
+    public void setRemoveEnabled(boolean fail) {
+        boolean old = _remove;
+        _remove = fail;
+        setDirtyAndFirePropertyChange(REMOVE_CHANGED_PROPERTY, old, fail);
+    }
+    
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
         firePropertyChange(p, old, n);
@@ -332,6 +344,9 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
         if ((a = e.getAttribute(Xml.FAIL)) != null) {
             _fail = a.getValue().equals(Xml.TRUE);
         }
+        if ((a = e.getAttribute(Xml.REMOVE)) != null) {
+            _remove = a.getValue().equals(Xml.TRUE);
+        }
     }
 
     /**
@@ -363,6 +378,7 @@ public class TrainManualBuildItem extends PropertyChangeSupport {
         e.setAttribute(Xml.COUNT, Integer.toString(getCount()));
         e.setAttribute(Xml.WARN, isWarnEnabled() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.FAIL, isFailEnabled() ? Xml.TRUE : Xml.FALSE);
+        e.setAttribute(Xml.REMOVE, isRemoveEnabled() ? Xml.TRUE : Xml.FALSE);
         return e;
     }
 

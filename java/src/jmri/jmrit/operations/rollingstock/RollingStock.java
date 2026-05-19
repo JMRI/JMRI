@@ -739,7 +739,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         boolean old = _clone;
         _clone = clone;
         if (!old == clone) {
-            setDirtyAndFirePropertyChange("clone", old ? "true" : "false", clone ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("clone", old, clone); // NOI18N
         }
     }
 
@@ -759,7 +759,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         Division old = _division;
         _division = division;
         if (old != _division) {
-            setDirtyAndFirePropertyChange("homeDivisionChange", old, division);
+            setDirtyAndFirePropertyChange("homeDivisionChange", old, division); // NOI18N
         }
     }
 
@@ -826,8 +826,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         int old = _moves;
         _moves = moves;
         if (old != moves) {
-            setDirtyAndFirePropertyChange("rolling stock moves", Integer.toString(old), // NOI18N
-                    Integer.toString(moves));
+            setDirtyAndFirePropertyChange("rolling stock moves", old, moves); // NOI18N
         }
     }
 
@@ -1275,8 +1274,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         boolean old = _locationUnknown;
         _locationUnknown = unknown;
         if (!old == unknown) {
-            setDirtyAndFirePropertyChange("car location known", old ? "true" : "false", unknown ? "true" // NOI18N
-                    : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("car location known", old, unknown); // NOI18N
         }
     }
 
@@ -1299,8 +1297,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         boolean old = _outOfService;
         _outOfService = outOfService;
         if (!old == outOfService) {
-            setDirtyAndFirePropertyChange("car out of service", old ? "true" : "false", outOfService ? "true" // NOI18N
-                    : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("car out of service", old, outOfService); // NOI18N
         }
     }
 
@@ -1316,8 +1313,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         boolean old = _selected;
         _selected = selected;
         if (!old == selected) {
-            setDirtyAndFirePropertyChange("selected", old ? "true" : "false", selected ? "true" // NOI18N
-                    : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("selected", old, selected); // NOI18N
         }
     }
 
@@ -1333,7 +1329,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         String old = _comment;
         _comment = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange(COMMENT_CHANGED_PROPERTY, old, comment); // NOI18N
+            setDirtyAndFirePropertyChange(COMMENT_CHANGED_PROPERTY, old, comment);
         }
     }
 
