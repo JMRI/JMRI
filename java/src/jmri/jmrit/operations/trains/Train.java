@@ -578,8 +578,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         int old = _requires;
         _requires = requires;
         if (old != requires) {
-            setDirtyAndFirePropertyChange(TRAIN_REQUIREMENTS_CHANGED_PROPERTY, Integer.toString(old),
-                    Integer.toString(requires));
+            setDirtyAndFirePropertyChange(TRAIN_REQUIREMENTS_CHANGED_PROPERTY, old, requires);
         }
     }
 
@@ -707,7 +706,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         RouteLocation old = _current;
         _current = location;
         if ((old != null && !old.equals(location)) || (old == null && location != null)) {
-            setDirtyAndFirePropertyChange(TRAIN_CURRENT_CHANGED_PROPERTY, old, location); // NOI18N
+            setDirtyAndFirePropertyChange(TRAIN_CURRENT_CHANGED_PROPERTY, old, location);
         }
     }
 
@@ -2976,8 +2975,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _showTimes;
         _showTimes = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("showArrivalAndDepartureTimes", old ? "true" : "false", // NOI18N
-                    enable ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("showArrivalAndDepartureTimes", old, enable); // NOI18N
         }
     }
 
@@ -2989,8 +2987,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _sendToTerminal;
         _sendToTerminal = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("send cars to terminal", old ? "true" : "false", enable ? "true" // NOI18N
-                    : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("send cars to terminal", old, enable); // NOI18N
         }
     }
 
@@ -3007,8 +3004,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _allowLocalMoves;
         _allowLocalMoves = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("allow local moves", old ? "true" : "false", enable ? "true" // NOI18N
-                    : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("allow local moves", old, enable); // NOI18N
         }
     }
 
@@ -3020,8 +3016,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _allowThroughCars;
         _allowThroughCars = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("allow through cars", old ? "true" : "false", enable ? "true" // NOI18N
-                    : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("allow through cars", old, enable); // NOI18N
         }
     }
 
@@ -3033,8 +3028,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _buildNormal;
         _buildNormal = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("build train normal", old ? "true" : "false", enable ? "true" // NOI18N
-                    : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("build train normal", old, enable); // NOI18N
         }
     }
 
@@ -3052,8 +3046,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _allowCarsReturnStaging;
         _allowCarsReturnStaging = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("allow cars to return to staging", old ? "true" : "false", // NOI18N
-                    enable ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("allow cars to return to staging", old, enable); // NOI18N
         }
     }
 
@@ -3065,8 +3058,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _serviceAllCarsWithFinalDestinations;
         _serviceAllCarsWithFinalDestinations = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("TrainServiceAllCarsWithFinalDestinations", old ? "true" : "false", // NOI18N
-                    enable ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("TrainServiceAllCarsWithFinalDestinations", old, enable); // NOI18N
         }
     }
 
@@ -3078,8 +3070,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _buildConsist;
         _buildConsist = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("TrainBuildConsist", old ? "true" : "false", // NOI18N
-                    enable ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("TrainBuildConsist", old, enable); // NOI18N
         }
     }
 
@@ -3091,8 +3082,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _sendCarsWithCustomLoadsToStaging;
         _sendCarsWithCustomLoadsToStaging = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("SendCarsWithCustomLoadsToStaging", old ? "true" : "false", // NOI18N
-                    enable ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("SendCarsWithCustomLoadsToStaging", old, enable); // NOI18N
         }
     }
     
@@ -3294,7 +3284,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _buildFailed;
         _buildFailed = status;
         if (old != status) {
-            setDirtyAndFirePropertyChange("buildFailed", old ? "true" : "false", status ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("buildFailed", old, status); // NOI18N
         }
     }
 
@@ -3448,7 +3438,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         boolean old = _printed;
         _printed = printed;
         if (old != printed) {
-            setDirtyAndFirePropertyChange("trainPrinted", old ? "true" : "false", printed ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("trainPrinted", old, printed); // NOI18N
         }
     }
 

@@ -50,10 +50,9 @@ public class KernelManager extends RollingStockGroupManager implements InstanceM
         Kernel kernel = getKernelByName(name);
         if (kernel != null) {
             kernel.dispose();
-            Integer oldSize = Integer.valueOf(_groupHashTable.size());
+            int oldSize = _groupHashTable.size();
             _groupHashTable.remove(name);
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_groupHashTable
-                    .size()));
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _groupHashTable.size());
         }
     }
 

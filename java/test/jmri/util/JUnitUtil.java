@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -1297,6 +1298,21 @@ public class JUnitUtil {
             log.error("Settings directory \"{}\" does not exist", FileUtil.SETTINGS);
         } catch (IOException | IllegalArgumentException ex) {
             log.error("Unable to create profile", ex);
+        }
+    }
+
+    /**
+     * Use when an isolated per-test profile directory is available (e.g. from
+     * {@literal @TempDir}). Guarantees a clean profile regardless of the host
+     * machine's JMRI settings directory.
+     *
+     * @param tempDir a writable directory for the profile, typically from {@literal @TempDir}
+     */
+    public static void resetProfileManager(File tempDir) {
+        try {
+            resetProfileManager(new NullProfile(tempDir));
+        } catch (IOException ex) {
+            log.error("Unable to create profile in {}", tempDir, ex);
         }
     }
 
