@@ -1,10 +1,15 @@
 package jmri.server.json.operations;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Arrays;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import java.util.Arrays;
 
 import jmri.*;
 import jmri.jmrit.operations.locations.*;
@@ -15,18 +20,6 @@ import jmri.server.json.*;
 import jmri.server.json.consist.JsonConsist;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.util.*;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonOperationsHttpService> {
 
@@ -93,7 +86,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         JsonNode data = result.path(JSON.DATA);
-        assertEquals( 39, data.size(), "Number of properties in Car");
+        assertEquals( 40, data.size(), "Number of properties in Car");
         assertEquals(car.getId(), data.path(JSON.NAME).asText());
         assertEquals(car.getRoadName(), data.path(JsonOperations.ROAD).asText());
         assertEquals(car.getNumber(), data.path(JsonOperations.NUMBER).asText());
@@ -162,7 +155,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         data = result.path(JSON.DATA);
-        assertEquals( 39, data.size(), "Number of properties in Car");
+        assertEquals( 40, data.size(), "Number of properties in Car");
         assertEquals(car.getId(), data.path(JSON.NAME).asText());
         assertEquals(car.getRoadName(), data.path(JsonOperations.ROAD).asText());
         assertEquals(car.getNumber(), data.path(JsonOperations.NUMBER).asText());
@@ -272,7 +265,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(42, result.path(JSON.ID).asInt());
         data = result.path(JSON.DATA);
         // rename not always present
-        assertEquals( 40, data.size(), "Number of properties in Car");
+        assertEquals( 41, data.size(), "Number of properties in Car");
         // TODO: verify against car and known values
         assertEquals(car.getId(), data.path(JSON.NAME).asText());
         assertEquals(car.getRoadName(), data.path(JsonOperations.ROAD).asText());

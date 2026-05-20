@@ -378,6 +378,7 @@ public class TrainBuilder extends TrainBuilderCars {
             } else if (count > 0 && mbi.isWarnEnabled()) {
                 _warnings++;
                 addLine(ONE, Bundle.getMessage("mbuildWarn", manualBuild.getTrainName(), mbi.getId()));
+                addLine(ONE, BLANK_LINE);
             }
 
             if (mbi.isRemoveEnabled()) {

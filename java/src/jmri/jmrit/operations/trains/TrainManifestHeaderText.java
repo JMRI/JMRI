@@ -39,6 +39,7 @@ public class TrainManifestHeaderText {
     private static String pickup_comment = Bundle.getMessage("PickUp_Msg");
     private static String hazardous = Bundle.getMessage("Hazardous");
     private static String lastTrain = Bundle.getMessage("LastTrain");
+    private static String lastMoved = Bundle.getMessage("LastMoved");
 
     public static String getStringHeader_Road() {
         return road;
@@ -262,6 +263,14 @@ public class TrainManifestHeaderText {
 
     public static void setStringHeader_Last_Train(String s) {
         lastTrain = s;
+    }
+    
+    public static String getStringHeader_Last_Moved() {
+        return lastMoved;
+    }
+
+    public static void setStringHeader_Last_Moved(String s) {
+        lastMoved = s;
     }
 
     // must synchronize changes with operation-config.dtd
