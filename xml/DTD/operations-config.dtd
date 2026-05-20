@@ -185,6 +185,7 @@
 <!ATTLIST tab length					CDATA #IMPLIED>
 <!ATTLIST tab tab2Length				CDATA #IMPLIED>
 <!ATTLIST tab tab3Length				CDATA #IMPLIED>
+<!ATTLIST tab manifestTabLength			CDATA #IMPLIED>
 
 <!ATTLIST manifest printLocComments		(true | false ) "false"> 
 <!ATTLIST manifest printValid			(true | false ) "true"> 
