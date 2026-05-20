@@ -50,6 +50,7 @@
                     more than one display. Each display is shown in a single
                     row in the <strong>Virtual LCD</strong> window, with
                     the first display at the left.</li>
+                <li>Change default DCCppOverTCP port from 1235 to 2560 to match DCC-EX default.</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -515,6 +516,8 @@
         <ul>
           <li>Added the ability to set the additional line tab size for Manifest and Switch Lists. Useful when using the smaller page widths. See "More Print Options" in the help.</li>
           <li>New feature, manual build for a train. See the OperationsPro help for more information.</li>
+          <li>Operations tests now use an isolated <code>NullProfile</code> per test via <code>@TempDir</code>,
+              preventing intermittent <code>RosterConfigManager</code> failures on machines with real JMRI profile data.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -635,7 +638,25 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Fixed intermittent CI failures in linked/looped warrant tests caused by race conditions and test isolation issues:
+                <ul>
+                    <li><code>stopWarrant()</code> now captures <code>_idxCurrentOrder</code> before
+                        dispatching <code>deAllocate</code> asynchronously, so looped warrants correctly
+                        report <code>warrantComplete</code> rather than <code>warrantEnd</code>.</li>
+                    <li>Fixed a missed-wakeup race in the Engineer block-sync wait: the block entry
+                        check is now re-evaluated inside the <code>synchronized</code> block, so a sensor
+                        that fires between the outer check and <code>wait()</code> can no longer leave the
+                        engineer stuck indefinitely.</li>
+                    <li>Warrant tests now wait for <code>PROPERTY_WARRANT_START</code> before firing
+                        block sensors for the next leg, ensuring sensors are not delivered before the
+                        new leg's engineer has started.</li>
+                    <li><code>IndicatorTrackPaths</code> now skips paint callbacks on disposed editor panels.</li>
+                    <li>Six logix test classes now use an isolated <code>NullProfile</code> per test
+                        rather than the shared <code>./temp/</code> directory, preventing
+                        <code>RosterConfigManager</code> failures on developer machines with real profile data.</li>
+                    <li>The changes above are done in <a href="https://github.com/JMRI/JMRI/pull/15151">PR #15151</a></li>
+                </ul>
+            </li>
         </ul>
 
    <h3>Web Access</h3>
