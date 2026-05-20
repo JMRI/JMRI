@@ -12,18 +12,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellEditor;
 
 import jmri.PowerManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.dccpp.DCCppExrailEntry;
-import jmri.util.swing.JmriJOptionPane;
-import jmri.util.ThreadingUtil;
 import jmri.jmrix.dccpp.DCCppInterface;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
@@ -31,6 +28,10 @@ import jmri.jmrix.dccpp.DCCppReply;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.util.JmriJFrame;
+import jmri.util.ThreadingUtil;
+import jmri.util.swing.JmriJOptionPane;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
 
 /**
  * Displays DCC-EX EXRAIL Routes and Automations and allows triggering them.
@@ -39,13 +40,18 @@ import jmri.util.JmriJFrame;
  */
 public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
 
+    private static final int COL_ID = 0;
+    private static final int COL_TYPE = 1;
+    private static final int COL_NAME = 2;
+    private static final int COL_STATE = 3;
+    private static final int COL_TRIGGER = 4;
+
     private final DCCppTrafficController _tc;
     private final DCCppSystemConnectionMemo _memo;
 
     private final Map<Integer, DCCppExrailEntry> _entries = new LinkedHashMap<>();
     private ExrailTableModel _tableModel;
     private JTable _table;
-    private JButton _triggerButton;
     private PowerManager _powerManager;
     private PropertyChangeListener _powerListener;
     private PropertyChangeListener _connListener;
@@ -61,48 +67,64 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     @Override
     public void initComponents() {
         super.initComponents();
-        _table = new JTable(_tableModel);
+        // Override prepareRenderer so row striping + disabled-row gray apply
+        // uniformly to every column, including Integer (ID) and JButton (Set).
+        _table = new JTable(_tableModel) {
+            @Override
+            public Component prepareRenderer(javax.swing.table.TableCellRenderer renderer, int row, int column) {
+                Component c = super.prepareRenderer(renderer, row, column);
+                DCCppExrailEntry entry = _tableModel.getEntryForRow(convertRowIndexToModel(row));
+                boolean disabled = entry != null && entry.getState() == DCCppExrailEntry.State.DISABLED;
+                c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 240, 240));
+                if (column != COL_TRIGGER) {
+                    c.setForeground(disabled ? Color.GRAY : getForeground());
+                }
+                return c;
+            }
+        };
         _table.setFillsViewportHeight(true);
-        _table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        _table.setPreferredScrollableViewportSize(new Dimension(500, 200));
+        _table.setPreferredScrollableViewportSize(new Dimension(560, 200));
         _table.setAutoCreateRowSorter(true);
+        // Each row has its own Set button, so row selection no longer drives anything.
+        _table.setRowSelectionAllowed(false);
+        _table.setColumnSelectionAllowed(false);
+        _table.setCellSelectionEnabled(false);
 
-        _table.getColumnModel().getColumn(0).setPreferredWidth(40);
-        _table.getColumnModel().getColumn(0).setMaxWidth(60);
-        _table.getColumnModel().getColumn(1).setPreferredWidth(90);
-        _table.getColumnModel().getColumn(1).setMaxWidth(110);
+        _table.getColumnModel().getColumn(COL_ID).setPreferredWidth(40);
+        _table.getColumnModel().getColumn(COL_ID).setMaxWidth(60);
+        _table.getColumnModel().getColumn(COL_TYPE).setPreferredWidth(90);
+        _table.getColumnModel().getColumn(COL_TYPE).setMaxWidth(110);
 
         _table.getTableHeader().setFont(
                 _table.getTableHeader().getFont().deriveFont(Font.BOLD));
 
-        _table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        // Per-row trigger button column. Renderer subclass honours isCellEditable
+        // so disabled rows / power-off render the button grayed out.
+        ButtonRenderer triggerRenderer = new ButtonRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus, int row, int column) {
-                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                DCCppExrailEntry entry = _tableModel.getEntryForRow(table.convertRowIndexToModel(row));
-                boolean disabled = entry != null && entry.getState() == DCCppExrailEntry.State.DISABLED;
-                if (!isSelected) {
-                    setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 240, 240));
-                    setForeground(disabled ? Color.GRAY : table.getForeground());
-                }
-                return this;
+                Component c = super.getTableCellRendererComponent(
+                        table, value, isSelected, hasFocus, row, column);
+                c.setEnabled(table.isCellEditable(row, column));
+                return c;
             }
-        });
-
-        JScrollPane scrollPane = new JScrollPane(_table);
-
-        _triggerButton = new JButton(Bundle.getMessage("ExrailButtonTrigger"));
-        _triggerButton.addActionListener(e -> triggerSelected());
+        };
+        _table.setDefaultRenderer(JButton.class, triggerRenderer);
+        TableCellEditor triggerEditor = new ButtonEditor(new JButton());
+        _table.setDefaultEditor(JButton.class, triggerEditor);
+        JButton sample = new JButton(Bundle.getMessage("ExrailButtonSet"));
+        _table.setRowHeight(sample.getPreferredSize().height);
+        _table.getColumnModel().getColumn(COL_TRIGGER).setPreferredWidth(sample.getPreferredSize().width + 8);
+        _table.getColumnModel().getColumn(COL_TRIGGER).setMaxWidth(sample.getPreferredSize().width + 20);
 
         _tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
         _tc.sendDCCppMessage(DCCppMessage.makeAutomationIDsMsg(), this);
 
         _powerManager = _memo.getPowerManager();
         if (_powerManager != null) {
-            _powerListener = evt -> ThreadingUtil.runOnGUI(this::updateTriggerEnabled);
+            _powerListener = evt -> ThreadingUtil.runOnGUI(this::redrawTable);
             _powerManager.addPropertyChangeListener(PowerManager.POWER, _powerListener);
-            updateTriggerEnabled();
         }
 
         _connListener = evt -> {
@@ -110,39 +132,29 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
                     ConnectionStatus.instance().getConnectionState(_memo))) {
                 _entries.clear();
                 _tc.sendDCCppMessage(DCCppMessage.makeAutomationIDsMsg(), this);
-                ThreadingUtil.runOnGUI(() -> _tableModel.fireTableDataChanged());
+                ThreadingUtil.runOnGUI(this::redrawTable);
             }
         };
         ConnectionStatus.instance().addPropertyChangeListener(_memo, _connListener);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(_triggerButton);
-
         getContentPane().setLayout(new BorderLayout());
-        getContentPane().add(scrollPane, BorderLayout.CENTER);
-        getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        getContentPane().add(new JScrollPane(_table), BorderLayout.CENTER);
         pack();
         if (getX() == 0 && getY() == 0) {
             setLocationRelativeTo(null); // center on first-ever open
         }
     }
 
-    private void updateTriggerEnabled() {
-        _triggerButton.setEnabled(_powerManager.getPower() == PowerManager.ON);
+    private void redrawTable() {
+        _tableModel.fireTableDataChanged();
     }
 
-    private void triggerSelected() {
-        int row = _table.getSelectedRow();
-        if (row < 0) return;
-        DCCppExrailEntry entry = _tableModel.getEntryForRow(_table.convertRowIndexToModel(row));
+    /**
+     * Prompt for loco address if needed and fire the entry. Called from the
+     * table model when a row's trigger button is clicked.
+     */
+    private void handleRowTrigger(DCCppExrailEntry entry) {
         if (entry == null) return;
-        if (entry.getState() == DCCppExrailEntry.State.DISABLED) {
-            JmriJOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("ExrailDisabledAlert"),
-                    Bundle.getMessage("ExrailDisabledTitle"),
-                    JmriJOptionPane.WARNING_MESSAGE);
-            return;
-        }
         if (entry.isAutomation()) {
             String input = JmriJOptionPane.showInputDialog(this,
                     Bundle.getMessage("ExrailLabelLocoAddress"),
@@ -176,18 +188,18 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         } else if (reply.isAutomationIDReply()) {
             int id = reply.getAutomationIDInt();
             _entries.put(id, new DCCppExrailEntry(id, reply.getAutomationTypeString(), reply.getAutomationDescString()));
-            ThreadingUtil.runOnGUIEventually(() -> _tableModel.fireTableDataChanged());
+            ThreadingUtil.runOnGUIEventually(this::redrawTable);
         } else if (reply.isAutomationStateReply()) {
             DCCppExrailEntry entry = _entries.get(reply.getAutomationIDInt());
             if (entry != null) {
                 entry.setState(DCCppExrailEntry.State.fromValue(Integer.parseInt(reply.getAutomationStateString())));
-                ThreadingUtil.runOnGUIEventually(() -> _tableModel.fireTableDataChanged());
+                ThreadingUtil.runOnGUIEventually(this::redrawTable);
             }
         } else if (reply.isAutomationCaptionReply()) {
             DCCppExrailEntry entry = _entries.get(reply.getAutomationIDInt());
             if (entry != null) {
                 entry.setCaption(reply.getAutomationCaptionString());
-                ThreadingUtil.runOnGUIEventually(() -> _tableModel.fireTableDataChanged());
+                ThreadingUtil.runOnGUIEventually(this::redrawTable);
             }
         }
     }
@@ -222,9 +234,14 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         return _entries.get(id);
     }
 
-    /** Returns whether the trigger button is enabled; used by tests. */
-    boolean isTriggerEnabled() {
-        return _triggerButton.isEnabled();
+    /** Returns whether the trigger button on the given visible row is enabled; used by tests. */
+    boolean isRowTriggerEnabled(int row) {
+        return _tableModel.isCellEditable(row, COL_TRIGGER);
+    }
+
+    /** Simulate a click on the trigger button for the given visible row; used by tests. */
+    void triggerRowForTest(int row) {
+        _tableModel.setValueAt(null, row, COL_TRIGGER);
     }
 
     private class ExrailTableModel extends AbstractTableModel {
@@ -233,7 +250,8 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
             Bundle.getMessage("ExrailColId"),
             Bundle.getMessage("ExrailColType"),
             Bundle.getMessage("ExrailColName"),
-            Bundle.getMessage("ExrailColState")
+            Bundle.getMessage("ExrailColState"),
+            "" // trigger button column, no header
         };
 
         /** Entries visible in the table — Hidden (state 2) are excluded. */
@@ -262,7 +280,18 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
 
         @Override
         public Class<?> getColumnClass(int col) {
-            return col == 0 ? Integer.class : String.class;
+            if (col == COL_ID) return Integer.class;
+            if (col == COL_TRIGGER) return JButton.class;
+            return String.class;
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int col) {
+            if (col != COL_TRIGGER) return false;
+            DCCppExrailEntry entry = getEntryForRow(row);
+            if (entry == null) return false;
+            if (entry.getState() == DCCppExrailEntry.State.DISABLED) return false;
+            return _powerManager != null && _powerManager.getPower() == PowerManager.ON;
         }
 
         @Override
@@ -270,19 +299,28 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
             List<DCCppExrailEntry> list = visibleEntries();
             if (row >= list.size()) return "";
             DCCppExrailEntry entry = list.get(row);
-            if (col == 0) return entry.getId();
-            if (col == 1) return entry.isRoute()
+            if (col == COL_ID) return entry.getId();
+            if (col == COL_TYPE) return entry.isRoute()
                     ? Bundle.getMessage("ExrailTypeRoute")
                     : Bundle.getMessage("ExrailTypeAutomation");
-            if (col == 2) return entry.getDisplayName();
-            if (col == 3) {
+            if (col == COL_NAME) return entry.getDisplayName();
+            if (col == COL_STATE) {
                 DCCppExrailEntry.State state = entry.getState();
                 if (state == null || state == DCCppExrailEntry.State.INACTIVE) return Bundle.getMessage("ExrailStateIdle");
                 if (state == DCCppExrailEntry.State.ACTIVE)   return Bundle.getMessage("ExrailStateRunning");
                 if (state == DCCppExrailEntry.State.DISABLED) return Bundle.getMessage("ExrailStateDisabled");
                 return String.valueOf(state.value);
             }
+            if (col == COL_TRIGGER) return Bundle.getMessage("ExrailButtonSet");
             return "";
+        }
+
+        @Override
+        public void setValueAt(Object value, int row, int col) {
+            if (col != COL_TRIGGER) return;
+            DCCppExrailEntry entry = getEntryForRow(row);
+            if (entry == null) return;
+            SwingUtilities.invokeLater(() -> handleRowTrigger(entry));
         }
     }
 

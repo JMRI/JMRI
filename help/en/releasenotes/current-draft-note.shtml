@@ -48,9 +48,11 @@
                 [&hellip;] to match DCC-EX's native command syntax.</li>
                 <li>A new <strong>EXRAIL Automations</strong> window (under the DCC-EX
                 menu) lists the Routes and Automations defined in your
-                EX-CommandStation's <code>myAutomation.h</code>. Select an entry
-                and click <strong>Trigger</strong> to run it; the button is disabled
-                when track power is off
+                EX-CommandStation's <code>myAutomation.h</code>. Each row has its own
+                <strong>Set</strong> button to fire that entry; buttons gray out when
+                track power is off or for routes that EXRAIL has marked disabled.
+                The window can also be added as a Startup Action under
+                Edit &rarr; Preferences &rarr; Start Up
                 (<a href="https://github.com/JMRI/JMRI/pull/15160">PR #15160</a>).</li>
                 <li>The <strong>Virtual LCD</strong> window now supports
                     more than one display. Each display is shown in a single

@@ -63,13 +63,21 @@ public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @Test
     public void testTriggerDisabledAtStartup() {
-        Assertions.assertFalse(((DCCppExrailFrame) frame).isTriggerEnabled(), "trigger should be disabled when power is unknown");
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
+        Assertions.assertFalse(exrailFrame.isRowTriggerEnabled(0),
+                "row trigger should be disabled when power is unknown");
     }
 
     @Test
     public void testTriggerEnabledWhenPowerOn() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
         tc.sendTestMessage(DCCppReply.parseDCCppReply("p 1"));
-        Assertions.assertTrue(((DCCppExrailFrame) frame).isTriggerEnabled(), "trigger should be enabled when power is on");
+        Assertions.assertTrue(exrailFrame.isRowTriggerEnabled(0),
+                "row trigger should be enabled when power is on");
     }
 
     @Test
@@ -148,9 +156,42 @@ public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @Test
     public void testTriggerDisabledWhenPowerOff() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
         tc.sendTestMessage(DCCppReply.parseDCCppReply("p 1"));
         tc.sendTestMessage(DCCppReply.parseDCCppReply("p 0"));
-        Assertions.assertFalse(((DCCppExrailFrame) frame).isTriggerEnabled(), "trigger should be disabled when power is off");
+        Assertions.assertFalse(exrailFrame.isRowTriggerEnabled(0),
+                "row trigger should be disabled when power is off");
+    }
+
+    @Test
+    public void testRowClickFiresRoute() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
+        tc.sendTestMessage(DCCppReply.parseDCCppReply("p 1"));
+        int outboundBefore = tc.outbound.size();
+
+        exrailFrame.triggerRowForTest(0);
+
+        // setValueAt wraps the trigger call in SwingUtilities.invokeLater, so wait for it.
+        String expected = DCCppMessage.makeStartExrailMsg(1).toString();
+        JUnitUtil.waitFor(() ->
+                tc.outbound.size() > outboundBefore
+                && tc.outbound.lastElement().toString().equals(expected),
+                "row click should enqueue the route start command");
+    }
+
+    @Test
+    public void testDisabledEntryButtonNotEditable() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jB 1 4")); // state=4 -> DISABLED
+        tc.sendTestMessage(DCCppReply.parseDCCppReply("p 1"));
+        Assertions.assertFalse(exrailFrame.isRowTriggerEnabled(0),
+                "row trigger should be disabled for entries in DISABLED state, even when power is on");
     }
 
     @BeforeEach
