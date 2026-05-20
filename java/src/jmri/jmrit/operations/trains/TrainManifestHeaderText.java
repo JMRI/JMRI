@@ -390,6 +390,10 @@ public class TrainManifestHeaderText {
             e.addContent(values = new Element(Xml.LAST_TRAIN));
             values.setAttribute(Xml.TEXT, getStringHeader_Last_Train());
         }
+        if (!getStringHeader_Last_Moved().equals(Bundle.getMessage("LastMoved"))) {
+            e.addContent(values = new Element(Xml.LAST_MOVED));
+            values.setAttribute(Xml.TEXT, getStringHeader_Last_Moved());
+        }
 
         return e;
     }
@@ -538,6 +542,11 @@ public class TrainManifestHeaderText {
         if (emts.getChild(Xml.LAST_TRAIN) != null) {
             if ((a = emts.getChild(Xml.LAST_TRAIN).getAttribute(Xml.TEXT)) != null) {
                 setStringHeader_Last_Train(a.getValue());
+            }
+        }
+        if (emts.getChild(Xml.LAST_MOVED) != null) {
+            if ((a = emts.getChild(Xml.LAST_MOVED).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_Last_Moved(a.getValue());
             }
         }
     }
