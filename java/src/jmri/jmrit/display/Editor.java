@@ -22,6 +22,8 @@ import javax.swing.event.ListSelectionEvent;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import javax.annotation.CheckForNull;
+
 import jmri.*;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.DirectorySearcher;
@@ -3694,6 +3696,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
      */
     protected abstract void copyItem(Positionable p);
 
+    @CheckForNull
     public Rectangle2D resizePanelBounds(boolean forceFlag) {
         // Do nothing. This method is overridden by LayoutEditor.
         return null;
