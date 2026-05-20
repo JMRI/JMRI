@@ -133,9 +133,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private boolean _lost;      // helps recovery if _idxCurrentOrder block goes inactive
     private boolean _overrun;   // train overran a signal or warrant stop
     private boolean _rampBlkOccupied;  // test for overruns when speed change block occupied by another train
-    private int _idxCurrentOrder; // Index of block at head of train (if running)
-
-    protected int _runMode = MODE_NONE;
+    private int _idxCurrentOrder;
+    protected volatile int _runMode = MODE_NONE; // volatile: polled by CheckForTermination from its own thread
     private Engineer _engineer; // thread that runs the train
     @GuardedBy("this")
     private CommandDelay _delayCommand; // thread for delayed ramp down
@@ -947,27 +946,20 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         _addTracker = false;
 
+        // capture before runOnGUI — deAllocate is async; CheckForTermination may reset _idxCurrentOrder on the GUI thread
+        final int capturedIdx = _idxCurrentOrder;
+        final String capturedBlockName = abort ? null : getCurrentBlockName();
+
         // insulate possible non-GUI thread making this call (e.g. Engineer)
         ThreadingUtil.runOnGUI(this::deAllocate);
 
         String bundleKey;
-        String blockName;
         if (abort) {
-            blockName = null;
-            if (_idxCurrentOrder <= 0) {
-                bundleKey = "warrantAnnull";
-            } else {
-                bundleKey = "warrantAbort";
-            }
+            bundleKey = capturedIdx <= 0 ? "warrantAnnull" : "warrantAbort";
         } else {
-            blockName = getCurrentBlockName();
-            if (_idxCurrentOrder == _orders.size() - 1) {
-                bundleKey = "warrantComplete";
-            } else {
-                bundleKey = "warrantEnd";
-            }
+            bundleKey = (capturedIdx == _orders.size() - 1) ? "warrantComplete" : "warrantEnd";
         }
-        fireRunStatus(PROPERTY_STOP_WARRANT, blockName, bundleKey);
+        fireRunStatus(PROPERTY_STOP_WARRANT, capturedBlockName, bundleKey);
     }
 
     /**

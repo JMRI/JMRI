@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 public class LocationManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength"; // NOI18N
-    
+
     protected boolean _showId = false; // when true show location ids 
 
     public LocationManager() {
@@ -65,9 +65,10 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
     public Location getLocationById(String id) {
         return _locationHashTable.get(id);
     }
-    
+
     /**
      * Used to determine if a division name has been assigned to a location
+     * 
      * @return true if a location has a division name
      */
     public boolean hasDivisions() {
@@ -78,7 +79,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         }
         return false;
     }
-    
+
     public boolean hasWork() {
         for (Location location : getList()) {
             if (location.hasWork()) {
@@ -87,9 +88,10 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         }
         return false;
     }
-    
+
     /**
      * Used to determine if a reporter has been assigned to a location
+     * 
      * @return true if a location has a RFID reporter
      */
     public boolean hasReporters() {
@@ -100,11 +102,11 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         }
         return false;
     }
-    
+
     public void setShowIdEnabled(boolean showId) {
         _showId = showId;
     }
-    
+
     public boolean isShowIdEnabled() {
         return _showId;
     }
@@ -148,8 +150,6 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
      * location's name creates a unique id for this location
      *
      * @param name The string name for a new Location.
-     *
-     *
      * @return new location or existing location
      */
     public Location newLocation(String name) {
@@ -160,8 +160,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
             int oldSize = _locationHashTable.size();
             _locationHashTable.put(location.getId(), location);
             resetNameLengths();
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                    _locationHashTable.size());
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _locationHashTable.size());
         }
         return location;
     }
@@ -220,7 +219,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         }
         return out;
     }
-    
+
     /**
      * Get unique locations list by location name.
      *
@@ -233,7 +232,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         List<Location> locations = getLocationsByNameList();
         List<Location> out = new ArrayList<Location>();
         Location mainLocation = null;
-        
+
         // also update the primary location for locations with similar names
         for (Location location : locations) {
             String name = location.getSplitName();
@@ -313,8 +312,8 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
     }
 
     /**
-     * Returns all tracks of type sorted by use. Alternate tracks
-     * are not included.
+     * Returns all tracks of type sorted by use. Alternate tracks are not
+     * included.
      *
      * @param type Spur (Track.SPUR), Yard (Track.YARD), Interchange
      *             (Track.INTERCHANGE), Staging (Track.STAGING), or null
@@ -356,6 +355,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
 
     /**
      * Returns a JComboBox with locations sorted alphabetically.
+     * 
      * @return locations for this railroad
      */
     public JComboBox<Location> getComboBox() {
@@ -367,6 +367,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
 
     /**
      * Updates JComboBox alphabetically with a list of locations.
+     * 
      * @param box The JComboBox to update.
      */
     public void updateComboBox(JComboBox<Location> box) {
@@ -380,7 +381,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
     /**
      * Replace all track car load names for a given type of car
      * 
-     * @param type type of car
+     * @param type        type of car
      * @param oldLoadName load name to replace
      * @param newLoadName new load name
      */
@@ -477,11 +478,11 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
                 maxLocationName = track.getLocation().getName();
                 _maxLocationNameLength = track.getLocation().getSplitName().length();
             }
-            if (track.getLocation().getSplitName().length()
-                    + track.getSplitName().length() > _maxLocationAndTrackNameLength) {
+            if (track.getLocation().getSplitName().length() +
+                    track.getSplitName().length() > _maxLocationAndTrackNameLength) {
                 maxLocationAndTrackName = track.getLocation().getName() + ", " + track.getName();
-                _maxLocationAndTrackNameLength = track.getLocation().getSplitName().length()
-                        + track.getSplitName().length();
+                _maxLocationAndTrackNameLength =
+                        track.getLocation().getSplitName().length() + track.getSplitName().length();
             }
         }
         log.info(Bundle.getMessage("InfoMaxTrackName", maxTrackName, _maxTrackNameLength, maxLocNameForTrack));
@@ -491,6 +492,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
 
     /**
      * Load the locations from a xml file.
+     * 
      * @param root xml file
      */
     public void load(Element root) {

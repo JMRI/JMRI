@@ -77,10 +77,9 @@ public class DivisionManager extends PropertyChangeSupport implements InstanceMa
         if (division == null) {
             _id++;
             division = new Division(Integer.toString(_id), name);
-            Integer oldSize = Integer.valueOf(_divisionHashTable.size());
+            int oldSize = _divisionHashTable.size();
             _divisionHashTable.put(division.getId(), division);
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                    Integer.valueOf(_divisionHashTable.size()));
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _divisionHashTable.size());
         }
         return division;
     }
@@ -91,14 +90,14 @@ public class DivisionManager extends PropertyChangeSupport implements InstanceMa
      * @param division The Division to add.
      */
     public void register(Division division) {
-        Integer oldSize = Integer.valueOf(_divisionHashTable.size());
+        int oldSize = _divisionHashTable.size();
         _divisionHashTable.put(division.getId(), division);
         // find last id created
         int id = Integer.parseInt(division.getId());
         if (id > _id) {
             _id = id;
         }
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_divisionHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _divisionHashTable.size());
     }
 
     /**
@@ -110,9 +109,9 @@ public class DivisionManager extends PropertyChangeSupport implements InstanceMa
         if (division == null) {
             return;
         }
-        Integer oldSize = Integer.valueOf(_divisionHashTable.size());
+        int oldSize = _divisionHashTable.size();
         _divisionHashTable.remove(division.getId());
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_divisionHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _divisionHashTable.size());
     }
 
     /**
