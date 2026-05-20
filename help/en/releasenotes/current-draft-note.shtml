@@ -1,7 +1,10 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+          <li>The list of ports on a connection configuration page is now updated
+            event time to click on it to open it.  This lets you e.g. pull out your
+            command station port, note the list of remaining ones, then reconnect
+            your command station and select the new port that just appeared.</li>
         </ul>
 
         <h4>Acela CTI</h4>
