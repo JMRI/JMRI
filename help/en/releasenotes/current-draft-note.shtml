@@ -56,7 +56,9 @@
                 entry's caption if the CommandStation has defined one. Entries that
                 EXRAIL has marked disabled are grayed out.
                 The window can also be added as a Startup Action under
-                Edit &rarr; Preferences &rarr; Start Up
+                Edit &rarr; Preferences &rarr; Start Up.
+                Entry details are now fetched sequentially, improving reliability
+                on hardware with small WiFi buffers such as the Mega+WiFi
                 (<a href="https://github.com/JMRI/JMRI/pull/15160">PR #15160</a>).</li>
                 <li>The <strong>Virtual LCD</strong> window now supports
                     more than one display. Each display is shown in a single

@@ -6,10 +6,12 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -49,6 +51,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     private final DCCppSystemConnectionMemo _memo;
 
     private final Map<Integer, DCCppExrailEntry> _entries = new LinkedHashMap<>();
+    private final Queue<Integer> _pendingIds = new ArrayDeque<>();
     private ExrailTableModel _tableModel;
     private JTable _table;
     private PropertyChangeListener _connListener;
@@ -121,6 +124,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
             if (ConnectionStatus.CONNECTION_UP.equals(
                     ConnectionStatus.instance().getConnectionState(_memo))) {
                 _entries.clear();
+                _pendingIds.clear();
                 _tc.sendDCCppMessage(DCCppMessage.makeAutomationIDsMsg(), this);
                 ThreadingUtil.runOnGUI(this::redrawTable);
             }
@@ -169,16 +173,27 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         }
     }
 
+    private void requestNextId() {
+        Integer id = _pendingIds.poll();
+        if (id != null) {
+            _tc.sendDCCppMessage(DCCppMessage.makeAutomationIDMsg(id), this);
+        }
+    }
+
     @Override
     public void message(DCCppReply reply) {
         if (reply.isAutomationIDsReply()) {
             for (int id : reply.getAutomationIDList()) {
-                _tc.sendDCCppMessage(DCCppMessage.makeAutomationIDMsg(id), this);
+                if (!_entries.containsKey(id) && !_pendingIds.contains(id)) {
+                    _pendingIds.add(id);
+                }
             }
+            requestNextId();
         } else if (reply.isAutomationIDReply()) {
             int id = reply.getAutomationIDInt();
             _entries.put(id, new DCCppExrailEntry(id, reply.getAutomationTypeString(), reply.getAutomationDescString()));
             ThreadingUtil.runOnGUIEventually(this::redrawTable);
+            requestNextId();
         } else if (reply.isAutomationStateReply()) {
             DCCppExrailEntry entry = _entries.get(reply.getAutomationIDInt());
             if (entry != null) {

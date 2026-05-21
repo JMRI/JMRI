@@ -42,6 +42,43 @@ public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     @Test
+    public void testSequentialRequestDispatch() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        int outboundBefore = tc.outbound.size();
+
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 2"));
+
+        Assertions.assertEquals(outboundBefore + 1, tc.outbound.size(),
+                "only first <JA id> should be sent immediately after IDs list");
+        Assertions.assertEquals(DCCppMessage.makeAutomationIDMsg(1).toString(),
+                tc.outbound.lastElement().toString(), "first request should be for ID 1");
+
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
+
+        Assertions.assertEquals(outboundBefore + 2, tc.outbound.size(),
+                "second <JA id> should be sent only after first reply arrives");
+        Assertions.assertEquals(DCCppMessage.makeAutomationIDMsg(2).toString(),
+                tc.outbound.lastElement().toString(), "second request should be for ID 2");
+
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 2 A \"Yard Switcher\""));
+        Assertions.assertEquals(outboundBefore + 2, tc.outbound.size(),
+                "no further requests once queue is drained");
+    }
+
+    @Test
+    public void testKnownIdNotRequeued() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
+
+        int outboundBefore = tc.outbound.size();
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+
+        Assertions.assertEquals(outboundBefore, tc.outbound.size(),
+                "already-known ID should not be re-requested");
+    }
+
+    @Test
     public void testCaptionUpdateApplied() {
         DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
         exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
