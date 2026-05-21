@@ -90,7 +90,6 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
     }
 
     public void setMemo(DCCppSystemConnectionMemo memo) {
-        System.out.format("Old memo: %s, new memo: %s%n", _memo.getUserName(), memo.getUserName());
         ConnectionStatus.instance().removePropertyChangeListener(_memo, _listener);
         _tc.removeDCCppListener(DCCppInterface.CS_INFO, this);
         _memo = memo;
