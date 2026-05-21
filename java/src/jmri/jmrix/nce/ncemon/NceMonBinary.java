@@ -19,6 +19,8 @@ import jmri.util.StringUtil;
  */
 public class NceMonBinary {
 
+    public static final NceMonBinary INSTANCE = new NceMonBinary();
+
     private static final Logger log = LoggerFactory.getLogger(NceMonBinary.class);
 
     private static final int REPLY_UNKNOWN = 0;
@@ -34,7 +36,7 @@ public class NceMonBinary {
     private static final int REPLY_FOUR = '4'; // byte count out of range
     private static final int REPLY_OK = '!'; // command completed successfully
 
-    private static int _replyType = REPLY_UNKNOWN;
+    private int _replyType = REPLY_UNKNOWN;
 
     /**
      * Creates a command message for the log, in a human-friendly form if
@@ -378,11 +380,11 @@ public class NceMonBinary {
      * Static access needed since there are two instances of this class, one for
      * transmitting and one for receiving.
      */
-    private static void setReplyType(int replyType) {
+    private void setReplyType(int replyType) {
         _replyType = replyType;
     }
 
-    private static int getReplyType() {
+    private int getReplyType() {
         return _replyType;
     }
 
@@ -563,5 +565,4 @@ public class NceMonBinary {
         }
         return MessageFormat.format(Bundle.getMessage("NceReply"), new Object[]{r.toString()});
     }
-
 }
