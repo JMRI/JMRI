@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - Petr Sidlo 2026-05-20 -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <name>Basic</name>
+    <name xml:lang="cs">Základní</name>
+
+    <column>
+        <dccaddress/>
+        <label>
+            <text> </text>
+        </label>
+        <display item="Short Address" tooltip="Sets the primary (short) address">
+            <tooltip xml:lang="cs">Nastavit primární (krátkou) adresu</tooltip>
+        </display>
+        <display item="Long Address" tooltip="Sets the extended (long) address">
+            <tooltip xml:lang="cs">Nastavit rozšířenou (dlouhou) adresu</tooltip>
+        </display>
+        <display item="Address Format" tooltip="Determines whether loco will use short or long address">
+          <tooltip xml:lang="cs">Určuje zdali bude lokomotiva používat krátkou nebo dlouhou adresu</tooltip>
+        </display>
+        <label>
+            <text> </text>
+        </label>
+        <display item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
+            <tooltip xml:lang="cs">Nastaví relativní směr lokomotivy pro příkaz pohyb vpřed</tooltip>
+        </display>
+        <display item="Speed Step Mode" tooltip="Sets the speed step mode for headlight control">
+            <tooltip xml:lang="cs">Nastaví počet rychlostních stupňů</tooltip>
+        </display>
+        <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
+            <tooltip xml:lang="cs">Určuje zdali lokomotiva může být provozována se stejnosměrným (DC) napájením (povoluje změnu napájecího zdroje)</tooltip>
+        </display>
+
+    </column>
+
+    <column>
+        <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
+            <tooltip xml:lang="cs">ID číslo výrobce (pouze pro čtení)</tooltip>
+        </display>
+        <display item="Decoder Version" tooltip="The decoder version number (read only)">
+            <tooltip xml:lang="cs">Číslo verze dekodéru (pouze pro čtení)</tooltip>
+        </display>
+        <display item="Firmware" />
+        <label>
+            <text> </text>
+        </label>
+        <separator/>
+        <label>
+            <text> </text>
+        </label>
+        <display item="Key" />
+        <display item="Lock" /> 
+    </column>
+
+</pane>

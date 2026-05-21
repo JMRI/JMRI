@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - Petr Sidlo 2026-05-20 -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+
+    <name>Basic Speed Control</name>
+    <name xml:lang="cs">Základní řízení rychlosti</name>
+    <column>
+        <row>
+            <column>
+                <grid ipadx="10" ipady="2">
+                    <!-- default padding for all grid items -->
+                    <griditem gridx="0" gridy="0" weightx="1" anchor="LINE_END">
+                        <display item="Vstart" >
+                            <tooltip>&lt;html&gt;Sets the starting voltage at throttle speed step 1.&lt;br&gt;A value of 255 corresponds to 100%, the maximum allowed is 25%, i.e. 64.&lt;/html&gt;</tooltip>
+                            <tooltip xml:lang="cs">&lt;html&gt;Nastavení rozjezdového napětí pro 1. rychlostní krok ovladače.&lt;br&gt;Hodnota 255 odpovídá 100 %, max. povoleno 25 %, tj. 64".&lt;/html&gt;</tooltip>
+                        </display>
+                    </griditem>
+                    <griditem gridx="1" gridy="0" weightx="1" anchor="LINE_END">
+                        <display item="Vstart" format="hslider" label="" >
+                            <tooltip>&lt;html&gt;Sets the starting voltage at throttle speed step 1.&lt;br&gt;A value of 255 corresponds to 100%, the maximum allowed is 25%, i.e. 64.&lt;/html&gt;</tooltip>
+                            <tooltip xml:lang="cs">&lt;html&gt;Nastavení rozjezdového napětí pro 1. rychlostní krok ovladače.&lt;br&gt;Hodnota 255 odpovídá 100 %, max. povoleno 25 %, tj. 64.&lt;/html&gt;</tooltip>
+                        </display>
+                    </griditem>
+
+                    <griditem gridx="0" gridy="1" weightx="1" anchor="LINE_END">
+                        <display item="Vmid" >
+                            <tooltip>&lt;html&gt;Sets the voltage at mid throttle.&lt;br&gt;Not used.&lt;/html&gt;</tooltip>
+                            <tooltip xml:lang="cs">&lt;html&gt;Nastavení napětí pro střední rychlostní krok ovladače.&lt;br&gt;Nepoužito.&lt;/html&gt;</tooltip>
+                        </display>
+                    </griditem>
+                    <griditem gridx="1" gridy="1" weightx="1" anchor="LINE_END">
+                        <!--
+                        <display item="Vmid" format="hslider" label="" >
+                            <tooltip>&lt;html&gt;Sets the voltage at mid throttle.&lt;br&gt;Not used.&lt;/html&gt;</tooltip>
+                            <tooltip xml:lang="cs">&lt;html&gt;Nastavení napětí pro střední rychlostní krok ovladače.&lt;br&gt;Nepoužito.&lt;/html&gt;</tooltip>
+                        </display>
+                        -->
+                    </griditem>
+
+                    <griditem gridx="0" gridy="2" weightx="1" anchor="LINE_END">
+                        <display item="Vhigh" >
+                            <tooltip>&lt;html&gt;Sets the maximum voltage at full throttle.&lt;br&gt;A value of 255 corresponds to 100%, the maximum allowed is 50%, i.e. 128.&lt;/html&gt;</tooltip>
+                            <tooltip xml:lang="cs">&lt;html&gt;Nastavení napětí pro poslední rychlostní krok ovladače.&lt;br&gt;Hodnota 255 odpovídá 100 %, min. povoleno 50 %, tj. 128.&lt;/html&gt;</tooltip>
+                        </display>
+                    </griditem>
+                    <griditem gridx="1" gridy="2" weightx="1" anchor="LINE_END">
+                        <display item="Vhigh" format="hslider" label="" >
+                            <tooltip>&lt;html&gt;Sets the maximum voltage at full throttle.&lt;br&gt;A value of 255 corresponds to 100%, the maximum allowed is 50%, i.e. 128.&lt;/html&gt;</tooltip>
+                            <tooltip xml:lang="cs">&lt;html&gt;Nastavení napětí pro poslední rychlostní krok ovladače.&lt;br&gt;Hodnota 255 odpovídá 100 %, min. povoleno 50 %, tj. 128.&lt;/html&gt;</tooltip>
+                        </display>
+                    </griditem>
+                </grid>
+            </column>
+        </row>
+        <row>
+            <label>
+                <text> </text>
+            </label>
+        </row>
+        <row>
+            <label>
+                <text> </text>
+            </label>
+        </row>
+        <row>
+            <column>
+                <display item="Forward Trim MTB" />
+                <display item="Reverse Trim MTB" />
+            </column>
+        </row>
+    </column>
+
+</pane>

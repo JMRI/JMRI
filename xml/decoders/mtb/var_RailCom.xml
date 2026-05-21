@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2026 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2026</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Petr</firstname>
+                <surname>Sidlo</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2026-05-20</date>
+            <authorinitials>PS</authorinitials>
+            <revremark>Initial version</revremark>
+        </revision>
+    </revhistory>
+
+        <variable item="RailCom Broadcast Channel 1" CV="28" mask="XXXXXXXV" default="0" >
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NotusedEnabled.xml"/>
+            <label>RailCom Broadcast Channel 1</label>
+            <label xml:lang="cs">RailCom vysílání v kanálu 1</label>
+            <tooltip>RailCom Broadcast Channel 1</tooltip>
+            <tooltip xml:lang="cs">RailCom vysílání v kanálu 1</tooltip>
+        </variable>
+
+        <variable item="RailCom Broadcast Channel 2" CV="28" mask="XXXXXXVX" default="0" >
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NotusedEnabled.xml"/>
+            <label>RailCom Broadcast Channel 2</label>
+            <label xml:lang="cs">RailCom vysílání v kanálu 2</label>
+            <tooltip>RailCom Broadcast Channel 2</tooltip>
+            <tooltip xml:lang="cs">RailCom vysílání v kanálu 2</tooltip>
+        </variable>
+
+</variables>

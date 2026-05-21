@@ -1,0 +1,1135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2026 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2026</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Petr</firstname>
+                <surname>Sidlo</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2026-05-15</date>
+            <authorinitials>PS</authorinitials>
+            <revremark>Initial version</revremark>
+        </revision>
+    </revhistory>
+    
+    
+    <variable item="F1 controls special features" CV="35" mask="VXXXXXXX" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F1 controls special features</tooltip>
+        <tooltip xml:lang="cs">F1 řídí zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F2 controls special features" CV="36" mask="VXXXXXXX" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F2 controls special features</tooltip>
+        <tooltip xml:lang="cs">F2 řídí zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F3 controls special features" CV="37" mask="VXXXXXXX" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F3 controls special features</tooltip>
+        <tooltip xml:lang="cs">F3 řídí zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F4 controls special features" CV="38" mask="VXXXXXXX" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F4 controls special features</tooltip>
+        <tooltip xml:lang="cs">F4 řídí zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F5 controls special features" CV="39" mask="VXXXXXXX" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F5 controls special features</tooltip>
+        <tooltip xml:lang="cs">F5 řídí zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F6 controls special features" CV="40" mask="VXXXXXXX" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F6 controls special features</tooltip>
+        <tooltip xml:lang="cs">F6 řídí zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F7 controls special features" CV="41" mask="VXXXXXXX" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F7 controls special features</tooltip>
+        <tooltip xml:lang="cs">F7 řídí zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F8 controls special features" CV="42" mask="VXXXXXXX" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F8 controls special features</tooltip>
+        <tooltip xml:lang="cs">F8 řídí zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F9 controls special features" CV="43" mask="VXXXXXXX" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F9 controls special features</tooltip>
+        <tooltip xml:lang="cs">F9 řídí zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F10 controls special features" CV="44" mask="VXXXXXXX" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F10 controls special features</tooltip>
+        <tooltip xml:lang="cs">F10 řídí zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F11 controls special features" CV="45" mask="VXXXXXXX" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F11 controls special features</tooltip>
+        <tooltip xml:lang="cs">F11 řídí zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F12 controls special features" CV="46" mask="VXXXXXXX" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F12 controls special features</tooltip>
+        <tooltip xml:lang="cs">F12 řídí zvláštní funkce</tooltip>
+    </variable>
+    
+    
+    
+    <variable item="F1 controls output AUX1" CV="35" mask="XXXXXXXV" minFn="1">
+        <qualifier>
+            <variableref>F1 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F1 controls output AUX1</tooltip>
+        <tooltip xml:lang="cs">F1 řídí výstup AUX1</tooltip>
+    </variable>
+    <variable item="F1 controls output AUX2" CV="35" mask="XXXXXXVX" minFn="1">
+        <qualifier>
+            <variableref>F1 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F1 controls output AUX2</tooltip>
+        <tooltip xml:lang="cs">F1 řídí výstup AUX2</tooltip>
+    </variable>
+    <variable item="F1 controls output AUX3" CV="35" mask="XXXXXVXX" minFn="1" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F1 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F1 controls output AUX3</tooltip>
+        <tooltip xml:lang="cs">F1 řídí výstup AUX3</tooltip>
+    </variable>
+    <variable item="F1 controls output AUX4" CV="35" mask="XXXXVXXX" minFn="1" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F1 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F1 controls output AUX4</tooltip>
+        <tooltip xml:lang="cs">F1 řídí výstup AUX4</tooltip>
+    </variable>
+    <variable item="F1 controls output AUX5" CV="35" mask="XXXVXXXX" minFn="1" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F1 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F1 controls output AUX5</tooltip>
+        <tooltip xml:lang="cs">F1 řídí výstup AUX5</tooltip>
+    </variable>
+    <variable item="F1 controls output AUX6" CV="35" mask="XXVXXXXX" minFn="1" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F1 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F1 controls output AUX6</tooltip>
+        <tooltip xml:lang="cs">F1 řídí výstup AUX6</tooltip>
+    </variable>
+    <variable item="F1 controls output AUX7" CV="35" mask="XVXXXXXX" minFn="1" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>F1 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F1 controls output AUX7</tooltip>
+        <tooltip xml:lang="cs">F1 řídí výstup AUX7</tooltip>
+    </variable>
+
+        
+    <variable item="F2 controls output AUX1" CV="36" mask="XXXXXXXV" minFn="2">
+        <qualifier>
+            <variableref>F2 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F2 controls output AUX1</tooltip>
+        <tooltip xml:lang="cs">F2 řídí výstup AUX1</tooltip>
+    </variable>
+    <variable item="F2 controls output AUX2" CV="36" mask="XXXXXXVX" minFn="2">
+        <qualifier>
+            <variableref>F2 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F2 controls output AUX2</tooltip>
+        <tooltip xml:lang="cs">F2 řídí výstup AUX2</tooltip>
+    </variable>
+    <variable item="F2 controls output AUX3" CV="36" mask="XXXXXVXX" minFn="2" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F2 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F2 controls output AUX3</tooltip>
+        <tooltip xml:lang="cs">F2 řídí výstup AUX3</tooltip>
+    </variable>
+    <variable item="F2 controls output AUX4" CV="36" mask="XXXXVXXX" minFn="2" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F2 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F2 controls output AUX4</tooltip>
+        <tooltip xml:lang="cs">F2 řídí výstup AUX4</tooltip>
+    </variable>
+    <variable item="F2 controls output AUX5" CV="36" mask="XXXVXXXX" minFn="2" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F2 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F2 controls output AUX5</tooltip>
+        <tooltip xml:lang="cs">F2 řídí výstup AUX5</tooltip>
+    </variable>
+    <variable item="F2 controls output AUX6" CV="36" mask="XXVXXXXX" minFn="2" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F2 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F2 controls output AUX6</tooltip>
+        <tooltip xml:lang="cs">F2 řídí výstup AUX6</tooltip>
+    </variable>
+    <variable item="F2 controls output AUX7" CV="36" mask="XVXXXXXX" minFn="2" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>F2 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F2 controls output AUX7</tooltip>
+        <tooltip xml:lang="cs">F2 řídí výstup AUX7</tooltip>
+    </variable>
+    
+    
+    <variable item="F3 controls output AUX1" CV="37" mask="XXXXXXXV" minFn="3">
+        <qualifier>
+            <variableref>F3 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F3 controls output AUX1</tooltip>
+        <tooltip xml:lang="cs">F3 řídí výstup AUX1</tooltip>
+    </variable>
+    <variable item="F3 controls output AUX2" CV="37" mask="XXXXXXVX" minFn="3">
+        <qualifier>
+            <variableref>F3 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F3 controls output AUX2</tooltip>
+        <tooltip xml:lang="cs">F3 řídí výstup AUX2</tooltip>
+    </variable>
+    <variable item="F3 controls output AUX3" CV="37" mask="XXXXXVXX" minFn="3" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F3 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F3 controls output AUX3</tooltip>
+        <tooltip xml:lang="cs">F3 řídí výstup AUX3</tooltip>
+    </variable>
+    <variable item="F3 controls output AUX4" CV="37" mask="XXXXVXXX" minFn="3" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F3 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F3 controls output AUX4</tooltip>
+        <tooltip xml:lang="cs">F3 řídí výstup AUX4</tooltip>
+    </variable>
+    <variable item="F3 controls output AUX5" CV="37" mask="XXXVXXXX" minFn="3" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F3 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F3 controls output AUX5</tooltip>
+        <tooltip xml:lang="cs">F3 řídí výstup AUX5</tooltip>
+    </variable>
+    <variable item="F3 controls output AUX6" CV="37" mask="XXVXXXXX" minFn="3" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F3 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F3 controls output AUX6</tooltip>
+        <tooltip xml:lang="cs">F3 řídí výstup AUX6</tooltip>
+    </variable>
+    <variable item="F3 controls output AUX7" CV="37" mask="XVXXXXXX" minFn="3" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>F3 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F3 controls output AUX7</tooltip>
+        <tooltip xml:lang="cs">F3 řídí výstup AUX7</tooltip>
+    </variable>
+
+
+    <variable item="F4 controls output AUX1" CV="38" mask="XXXXXXXV" minFn="4">
+        <qualifier>
+            <variableref>F4 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F4 controls output AUX1</tooltip>
+        <tooltip xml:lang="cs">F4 řídí výstup AUX1</tooltip>
+    </variable>
+    <variable item="F4 controls output AUX2" CV="38" mask="XXXXXXVX" minFn="4">
+        <qualifier>
+            <variableref>F4 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F4 controls output AUX2</tooltip>
+        <tooltip xml:lang="cs">F4 řídí výstup AUX2</tooltip>
+    </variable>
+    <variable item="F4 controls output AUX3" CV="38" mask="XXXXXVXX" minFn="4" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F4 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F4 controls output AUX3</tooltip>
+        <tooltip xml:lang="cs">F4 řídí výstup AUX3</tooltip>
+    </variable>
+    <variable item="F4 controls output AUX4" CV="38" mask="XXXXVXXX" minFn="4" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F4 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F4 controls output AUX4</tooltip>
+        <tooltip xml:lang="cs">F4 řídí výstup AUX4</tooltip>
+    </variable>
+    <variable item="F4 controls output AUX5" CV="38" mask="XXXVXXXX" minFn="4" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F4 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F4 controls output AUX5</tooltip>
+        <tooltip xml:lang="cs">F4 řídí výstup AUX5</tooltip>
+    </variable>
+    <variable item="F4 controls output AUX6" CV="38" mask="XXVXXXXX" minFn="4" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F4 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F4 controls output AUX6</tooltip>
+        <tooltip xml:lang="cs">F4 řídí výstup AUX6</tooltip>
+    </variable>
+    <variable item="F4 controls output AUX7" CV="38" mask="XVXXXXXX" minFn="4" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>F4 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F4 controls output AUX7</tooltip>
+        <tooltip xml:lang="cs">F4 řídí výstup AUX7</tooltip>
+    </variable>
+
+
+    <variable item="F5 controls output AUX1" CV="39" mask="XXXXXXXV" minFn="5">
+        <qualifier>
+            <variableref>F5 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F5 controls output AUX1</tooltip>
+        <tooltip xml:lang="cs">F5 řídí výstup AUX1</tooltip>
+    </variable>
+    <variable item="F5 controls output AUX2" CV="39" mask="XXXXXXVX" minFn="5">
+        <qualifier>
+            <variableref>F5 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F5 controls output AUX2</tooltip>
+        <tooltip xml:lang="cs">F5 řídí výstup AUX2</tooltip>
+    </variable>
+    <variable item="F5 controls output AUX3" CV="39" mask="XXXXXVXX" minFn="5" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F5 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F5 controls output AUX3</tooltip>
+        <tooltip xml:lang="cs">F5 řídí výstup AUX3</tooltip>
+    </variable>
+    <variable item="F5 controls output AUX4" CV="39" mask="XXXXVXXX" minFn="5" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F5 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F5 controls output AUX4</tooltip>
+        <tooltip xml:lang="cs">F5 řídí výstup AUX4</tooltip>
+    </variable>
+    <variable item="F5 controls output AUX5" CV="39" mask="XXXVXXXX" minFn="5" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F5 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F5 controls output AUX5</tooltip>
+        <tooltip xml:lang="cs">F5 řídí výstup AUX5</tooltip>
+    </variable>
+    <variable item="F5 controls output AUX6" CV="39" mask="XXVXXXXX" minFn="5" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F5 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F5 controls output AUX6</tooltip>
+        <tooltip xml:lang="cs">F5 řídí výstup AUX6</tooltip>
+    </variable>
+    <variable item="F5 controls output AUX7" CV="39" mask="XVXXXXXX" minFn="5" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>F5 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F5 controls output AUX7</tooltip>
+        <tooltip xml:lang="cs">F5 řídí výstup AUX7</tooltip>
+    </variable>
+
+
+    <variable item="F6 controls output AUX1" CV="40" mask="XXXXXXXV" minFn="6">
+        <qualifier>
+            <variableref>F6 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F6 controls output AUX1</tooltip>
+        <tooltip xml:lang="cs">F6 řídí výstup AUX1</tooltip>
+    </variable>
+    <variable item="F6 controls output AUX2" CV="40" mask="XXXXXXVX" minFn="6">
+        <qualifier>
+            <variableref>F6 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F6 controls output AUX2</tooltip>
+        <tooltip xml:lang="cs">F6 řídí výstup AUX2</tooltip>
+    </variable>
+    <variable item="F6 controls output AUX3" CV="40" mask="XXXXXVXX" minFn="6" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F6 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F6 controls output AUX3</tooltip>
+        <tooltip xml:lang="cs">F6 řídí výstup AUX3</tooltip>
+    </variable>
+    <variable item="F6 controls output AUX4" CV="40" mask="XXXXVXXX" minFn="6" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F6 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F6 controls output AUX4</tooltip>
+        <tooltip xml:lang="cs">F6 řídí výstup AUX4</tooltip>
+    </variable>
+    <variable item="F6 controls output AUX5" CV="40" mask="XXXVXXXX" minFn="6" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F6 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F6 controls output AUX5</tooltip>
+        <tooltip xml:lang="cs">F6 řídí výstup AUX5</tooltip>
+    </variable>
+    <variable item="F6 controls output AUX6" CV="40" mask="XXVXXXXX" minFn="6" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F6 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F6 controls output AUX6</tooltip>
+        <tooltip xml:lang="cs">F6 řídí výstup AUX6</tooltip>
+    </variable>
+    <variable item="F6 controls output AUX7" CV="40" mask="XVXXXXXX" minFn="6" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>F6 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F6 controls output AUX7</tooltip>
+        <tooltip xml:lang="cs">F6 řídí výstup AUX7</tooltip>
+    </variable>
+
+
+    <variable item="F7 controls output AUX1" CV="41" mask="XXXXXXXV" minFn="7">
+        <qualifier>
+            <variableref>F7 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F7 controls output AUX1</tooltip>
+        <tooltip xml:lang="cs">F7 řídí výstup AUX1</tooltip>
+    </variable>
+    <variable item="F7 controls output AUX2" CV="41" mask="XXXXXXVX" minFn="7">
+        <qualifier>
+            <variableref>F7 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F7 controls output AUX2</tooltip>
+        <tooltip xml:lang="cs">F7 řídí výstup AUX2</tooltip>
+    </variable>
+    <variable item="F7 controls output AUX3" CV="41" mask="XXXXXVXX" minFn="7" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F7 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F7 controls output AUX3</tooltip>
+        <tooltip xml:lang="cs">F7 řídí výstup AUX3</tooltip>
+    </variable>
+    <variable item="F7 controls output AUX4" CV="41" mask="XXXXVXXX" minFn="7" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F7 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F7 controls output AUX4</tooltip>
+        <tooltip xml:lang="cs">F7 řídí výstup AUX4</tooltip>
+    </variable>
+    <variable item="F7 controls output AUX5" CV="41" mask="XXXVXXXX" minFn="7" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F7 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F7 controls output AUX5</tooltip>
+        <tooltip xml:lang="cs">F7 řídí výstup AUX5</tooltip>
+    </variable>
+    <variable item="F7 controls output AUX6" CV="41" mask="XXVXXXXX" minFn="7" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F7 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F7 controls output AUX6</tooltip>
+        <tooltip xml:lang="cs">F7 řídí výstup AUX6</tooltip>
+    </variable>
+    <variable item="F7 controls output AUX7" CV="41" mask="XVXXXXXX" minFn="7" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>F7 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F7 controls output AUX7</tooltip>
+        <tooltip xml:lang="cs">F7 řídí výstup AUX7</tooltip>
+    </variable>
+
+
+    <variable item="F8 controls output AUX1" CV="42" mask="XXXXXXXV" minFn="8">
+        <qualifier>
+            <variableref>F8 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F8 controls output AUX1</tooltip>
+        <tooltip xml:lang="cs">F8 řídí výstup AUX1</tooltip>
+    </variable>
+    <variable item="F8 controls output AUX2" CV="42" mask="XXXXXXVX" minFn="8">
+        <qualifier>
+            <variableref>F8 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F8 controls output AUX2</tooltip>
+        <tooltip xml:lang="cs">F8 řídí výstup AUX2</tooltip>
+    </variable>
+    <variable item="F8 controls output AUX3" CV="42" mask="XXXXXVXX" minFn="8" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F8 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F8 controls output AUX3</tooltip>
+        <tooltip xml:lang="cs">F8 řídí výstup AUX3</tooltip>
+    </variable>
+    <variable item="F8 controls output AUX4" CV="42" mask="XXXXVXXX" minFn="8" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F8 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F8 controls output AUX4</tooltip>
+        <tooltip xml:lang="cs">F8 řídí výstup AUX4</tooltip>
+    </variable>
+    <variable item="F8 controls output AUX5" CV="42" mask="XXXVXXXX" minFn="8" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F8 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F8 controls output AUX5</tooltip>
+        <tooltip xml:lang="cs">F8 řídí výstup AUX5</tooltip>
+    </variable>
+    <variable item="F8 controls output AUX6" CV="42" mask="XXVXXXXX" minFn="8" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F8 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F8 controls output AUX6</tooltip>
+        <tooltip xml:lang="cs">F8 řídí výstup AUX6</tooltip>
+    </variable>
+    <variable item="F8 controls output AUX7" CV="42" mask="XVXXXXXX" minFn="8" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>F8 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F8 controls output AUX7</tooltip>
+        <tooltip xml:lang="cs">F8 řídí výstup AUX7</tooltip>
+    </variable>
+
+
+    <variable item="F9 controls output AUX1" CV="43" mask="XXXXXXXV" minFn="9">
+        <qualifier>
+            <variableref>F9 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F9 controls output AUX1</tooltip>
+        <tooltip xml:lang="cs">F9 řídí výstup AUX1</tooltip>
+    </variable>
+    <variable item="F9 controls output AUX2" CV="43" mask="XXXXXXVX" minFn="9">
+        <qualifier>
+            <variableref>F9 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F9 controls output AUX2</tooltip>
+        <tooltip xml:lang="cs">F9 řídí výstup AUX2</tooltip>
+    </variable>
+    <variable item="F9 controls output AUX3" CV="43" mask="XXXXXVXX" minFn="9" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F9 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F9 controls output AUX3</tooltip>
+        <tooltip xml:lang="cs">F9 řídí výstup AUX3</tooltip>
+    </variable>
+    <variable item="F9 controls output AUX4" CV="43" mask="XXXXVXXX" minFn="9" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F9 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F9 controls output AUX4</tooltip>
+        <tooltip xml:lang="cs">F9 řídí výstup AUX4</tooltip>
+    </variable>
+    <variable item="F9 controls output AUX5" CV="43" mask="XXXVXXXX" minFn="9" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F9 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F9 controls output AUX5</tooltip>
+        <tooltip xml:lang="cs">F9 řídí výstup AUX5</tooltip>
+    </variable>
+    <variable item="F9 controls output AUX6" CV="43" mask="XXVXXXXX" minFn="9" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F9 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F9 controls output AUX6</tooltip>
+        <tooltip xml:lang="cs">F9 řídí výstup AUX6</tooltip>
+    </variable>
+    <variable item="F9 controls output AUX7" CV="43" mask="XVXXXXXX" minFn="9" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>F9 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F9 controls output AUX7</tooltip>
+        <tooltip xml:lang="cs">F9 řídí výstup AUX7</tooltip>
+    </variable>
+
+
+    <variable item="F10 controls output AUX1" CV="44" mask="XXXXXXXV" minFn="10">
+        <qualifier>
+            <variableref>F10 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F10 controls output AUX1</tooltip>
+        <tooltip xml:lang="cs">F10 řídí výstup AUX1</tooltip>
+    </variable>
+    <variable item="F10 controls output AUX2" CV="44" mask="XXXXXXVX" minFn="10">
+        <qualifier>
+            <variableref>F10 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F10 controls output AUX2</tooltip>
+        <tooltip xml:lang="cs">F10 řídí výstup AUX2</tooltip>
+    </variable>
+    <variable item="F10 controls output AUX3" CV="44" mask="XXXXXVXX" minFn="10" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F10 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F10 controls output AUX3</tooltip>
+        <tooltip xml:lang="cs">F10 řídí výstup AUX3</tooltip>
+    </variable>
+    <variable item="F10 controls output AUX4" CV="44" mask="XXXXVXXX" minFn="10" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F10 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F10 controls output AUX4</tooltip>
+        <tooltip xml:lang="cs">F10 řídí výstup AUX4</tooltip>
+    </variable>
+    <variable item="F10 controls output AUX5" CV="44" mask="XXXVXXXX" minFn="10" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F10 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F10 controls output AUX5</tooltip>
+        <tooltip xml:lang="cs">F10 řídí výstup AUX5</tooltip>
+    </variable>
+    <variable item="F10 controls output AUX6" CV="44" mask="XXVXXXXX" minFn="10" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F10 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F10 controls output AUX6</tooltip>
+        <tooltip xml:lang="cs">F10 řídí výstup AUX6</tooltip>
+    </variable>
+    <variable item="F10 controls output AUX7" CV="44" mask="XVXXXXXX" minFn="10" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>F10 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F10 controls output AUX7</tooltip>
+        <tooltip xml:lang="cs">F10 řídí výstup AUX7</tooltip>
+    </variable>
+
+
+    <variable item="F11 controls output AUX1" CV="45" mask="XXXXXXXV" minFn="11">
+        <qualifier>
+            <variableref>F11 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F11 controls output AUX1</tooltip>
+        <tooltip xml:lang="cs">F11 řídí výstup AUX1</tooltip>
+    </variable>
+    <variable item="F11 controls output AUX2" CV="45" mask="XXXXXXVX" minFn="11">
+        <qualifier>
+            <variableref>F11 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F11 controls output AUX2</tooltip>
+        <tooltip xml:lang="cs">F11 řídí výstup AUX2</tooltip>
+    </variable>
+    <variable item="F11 controls output AUX3" CV="45" mask="XXXXXVXX" minFn="11" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F11 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F11 controls output AUX3</tooltip>
+        <tooltip xml:lang="cs">F11 řídí výstup AUX3</tooltip>
+    </variable>
+    <variable item="F11 controls output AUX4" CV="45" mask="XXXXVXXX" minFn="11" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F11 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F11 controls output AUX4</tooltip>
+        <tooltip xml:lang="cs">F11 řídí výstup AUX4</tooltip>
+    </variable>
+    <variable item="F11 controls output AUX5" CV="45" mask="XXXVXXXX" minFn="11" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F11 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F11 controls output AUX5</tooltip>
+        <tooltip xml:lang="cs">F11 řídí výstup AUX5</tooltip>
+    </variable>
+    <variable item="F11 controls output AUX6" CV="45" mask="XXVXXXXX" minFn="11" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F11 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F11 controls output AUX6</tooltip>
+        <tooltip xml:lang="cs">F11 řídí výstup AUX6</tooltip>
+    </variable>
+    <variable item="F11 controls output AUX7" CV="45" mask="XVXXXXXX" minFn="11" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>F11 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F11 controls output AUX7</tooltip>
+        <tooltip xml:lang="cs">F11 řídí výstup AUX7</tooltip>
+    </variable>
+
+
+    <variable item="F12 controls output AUX1" CV="46" mask="XXXXXXXV" minFn="12">
+        <qualifier>
+            <variableref>F12 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F12 controls output AUX1</tooltip>
+        <tooltip xml:lang="cs">F12 řídí výstup AUX1</tooltip>
+    </variable>
+    <variable item="F12 controls output AUX2" CV="46" mask="XXXXXXVX" minFn="12">
+        <qualifier>
+            <variableref>F12 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F12 controls output AUX2</tooltip>
+        <tooltip xml:lang="cs">F12 řídí výstup AUX2</tooltip>
+    </variable>
+    <variable item="F12 controls output AUX3" CV="46" mask="XXXXXVXX" minFn="12" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F12 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F12 controls output AUX3</tooltip>
+        <tooltip xml:lang="cs">F12 řídí výstup AUX3</tooltip>
+    </variable>
+    <variable item="F12 controls output AUX4" CV="46" mask="XXXXVXXX" minFn="12" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F12 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F12 controls output AUX4</tooltip>
+        <tooltip xml:lang="cs">F12 řídí výstup AUX4</tooltip>
+    </variable>
+    <variable item="F12 controls output AUX5" CV="46" mask="XXXVXXXX" minFn="12" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F12 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F12 controls output AUX5</tooltip>
+        <tooltip xml:lang="cs">F12 řídí výstup AUX5</tooltip>
+    </variable>
+    <variable item="F12 controls output AUX6" CV="46" mask="XXVXXXXX" minFn="12" 
+              include="MND25-P22,MSD25-P22,MND25-N18,MSD25-N18">
+        <qualifier>
+            <variableref>F12 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F12 controls output AUX6</tooltip>
+        <tooltip xml:lang="cs">F12 řídí výstup AUX6</tooltip>
+    </variable>
+    <variable item="F12 controls output AUX7" CV="46" mask="XVXXXXXX" minFn="12" 
+              include="MND25-P22,MSD25-P22">
+        <qualifier>
+            <variableref>F12 controls special features</variableref>
+                <relation>eq</relation>
+            <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>F12 controls output AUX7</tooltip>
+        <tooltip xml:lang="cs">F12 řídí výstup AUX7</tooltip>
+    </variable>
+    
+    
+    <variable item="F1 special features" CV="35" minFn="1">
+        <qualifier>
+            <variableref>F1 controls special features</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/mtb/enum_specialFunctions.xml"/>
+        <tooltip>F1 special features</tooltip>
+        <tooltip xml:lang="cs">F1 zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F2 special features" CV="36" minFn="2">
+        <qualifier>
+            <variableref>F2 controls special features</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/mtb/enum_specialFunctions.xml"/>
+        <tooltip>F2 special features</tooltip>
+        <tooltip xml:lang="cs">F2 zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F3 special features" CV="37" minFn="3">
+        <qualifier>
+            <variableref>F3 controls special features</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/mtb/enum_specialFunctions.xml"/>
+        <tooltip>F3 special features</tooltip>
+        <tooltip xml:lang="cs">F3 zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F4 special features" CV="38" minFn="4">
+        <qualifier>
+            <variableref>F4 controls special features</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/mtb/enum_specialFunctions.xml"/>
+        <tooltip>F4 special features</tooltip>
+        <tooltip xml:lang="cs">F4 zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F5 special features" CV="39" minFn="5">
+        <qualifier>
+            <variableref>F5 controls special features</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/mtb/enum_specialFunctions.xml"/>
+        <tooltip>F5 special features</tooltip>
+        <tooltip xml:lang="cs">F5 zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F6 special features" CV="40" minFn="6">
+        <qualifier>
+            <variableref>F6 controls special features</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/mtb/enum_specialFunctions.xml"/>
+        <tooltip>F6 special features</tooltip>
+        <tooltip xml:lang="cs">F6 zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F7 special features" CV="41" minFn="7">
+        <qualifier>
+            <variableref>F7 controls special features</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/mtb/enum_specialFunctions.xml"/>
+        <tooltip>F7 special features</tooltip>
+        <tooltip xml:lang="cs">F7 zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F8 special features" CV="42" minFn="8">
+        <qualifier>
+            <variableref>F8 controls special features</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/mtb/enum_specialFunctions.xml"/>
+        <tooltip>F8 special features</tooltip>
+        <tooltip xml:lang="cs">F8 zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F9 special features" CV="43" minFn="9">
+        <qualifier>
+            <variableref>F9 controls special features</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/mtb/enum_specialFunctions.xml"/>
+        <tooltip>F9 special features</tooltip>
+        <tooltip xml:lang="cs">F9 zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F10 special features" CV="44" minFn="10">
+        <qualifier>
+            <variableref>F10 controls special features</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/mtb/enum_specialFunctions.xml"/>
+        <tooltip>F10 special features</tooltip>
+        <tooltip xml:lang="cs">F10 zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F11 special features" CV="45" minFn="11">
+        <qualifier>
+            <variableref>F11 controls special features</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/mtb/enum_specialFunctions.xml"/>
+        <tooltip>F11 special features</tooltip>
+        <tooltip xml:lang="cs">F11 zvláštní funkce</tooltip>
+    </variable>
+    <variable item="F12 special features" CV="46" minFn="12">
+        <qualifier>
+            <variableref>F12 controls special features</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/mtb/enum_specialFunctions.xml"/>
+        <tooltip>F12 special features</tooltip>
+        <tooltip xml:lang="cs">F12 zvláštní funkce</tooltip>
+    </variable>
+
+</variables>
