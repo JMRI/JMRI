@@ -26,9 +26,9 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
 
     private final JmriJFrame _frame;
     private final Positionable _positionable;
-    private final DCCppTrafficController _tc;
-    private final DCCppSystemConnectionMemo _memo;
-    private final int _displayNo;
+    private DCCppTrafficController _tc;
+    private DCCppSystemConnectionMemo _memo;
+    private int _displayNo;
     private final PropertyChangeListener _listener;
     private final Dimension size = new Dimension(0,0);
     private Font font;
@@ -76,8 +76,34 @@ public class VirtualLCDPanel extends JPanel implements DCCppListener  {
         }
     }
 
+    public void reset() {
+        for (List<JLabel> list : linesMap.values()) {
+            for (JLabel label : list) {
+                label.getParent().remove(label);
+            }
+        }
+        linesMap.clear();
+    }
+
     public void dispose() {
         ConnectionStatus.instance().removePropertyChangeListener(_memo, _listener);
+    }
+
+    public void setMemo(DCCppSystemConnectionMemo memo) {
+        System.out.format("Old memo: %s, new memo: %s%n", _memo.getUserName(), memo.getUserName());
+        ConnectionStatus.instance().removePropertyChangeListener(_memo, _listener);
+        _tc.removeDCCppListener(DCCppInterface.CS_INFO, this);
+        _memo = memo;
+        _tc = memo.getDCCppTrafficController();
+        _tc.addDCCppListener(DCCppInterface.CS_INFO, this);
+        _tc.sendDCCppMessage(DCCppMessage.makeLCDRequestMsg(), null);
+        ConnectionStatus.instance().addPropertyChangeListener(_memo, _listener);
+        reset();
+    }
+
+    public void setDisplayNo(int displayNo) {
+        _displayNo = displayNo;
+        reset();
     }
 
     /**

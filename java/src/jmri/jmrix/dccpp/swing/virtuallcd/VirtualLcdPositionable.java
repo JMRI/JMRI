@@ -1,9 +1,14 @@
 package jmri.jmrix.dccpp.swing.virtuallcd;
 
+import java.awt.event.ActionEvent;
+
 import javax.annotation.Nonnull;
+import javax.swing.AbstractAction;
+import javax.swing.JPopupMenu;
 
 import jmri.jmrit.display.*;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
+import jmri.util.JmriJFrame;
 
 /**
  * A VirtualLCD that can be put on a panel.
@@ -13,8 +18,9 @@ import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 public class VirtualLcdPositionable extends PositionableJComponent {
 
     private final VirtualLCDPanel _virtualLCDPanel;
-    private final DCCppSystemConnectionMemo _memo;
-    private final int _displayNo;
+    private DCCppSystemConnectionMemo _memo;
+    private int _displayNo;
+    private JmriJFrame editPositionableFrame = null;
 
     public VirtualLcdPositionable(
             Editor editor,
@@ -43,18 +49,60 @@ public class VirtualLcdPositionable extends PositionableJComponent {
         return super.finishClone(pos);
     }
 */
+    public void setMemo(DCCppSystemConnectionMemo memo) {
+        _memo = memo;
+        _virtualLCDPanel.setMemo(memo);
+    }
+
     public DCCppSystemConnectionMemo getMemo() {
         return _memo;
+    }
+
+    public void setDisplayNo(int displayNo) {
+        _displayNo = displayNo;
+        _virtualLCDPanel.setDisplayNo(displayNo);
     }
 
     public int getDisplayNo() {
         return _displayNo;
     }
 
+    /**
+     * Pop-up just displays the sensor name.
+     *
+     * @param popup the menu to display
+     * @return always true
+     */
+    @Override
+    public boolean showPopUp(JPopupMenu popup) {
+        if (isEditable()) {
+            popup.add(new AbstractAction(Bundle.getMessage("EditVirtualLCD")) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (editPositionableFrame != null) {
+                        closeDialog(getEditor());
+                    }
+                    editPositionableFrame = new ConfigureVirtualLCD(
+                            getEditor(), VirtualLcdPositionable.this,
+                            VirtualLcdPositionable.this::closeDialog);
+                    editPositionableFrame.initComponents();
+                }
+            });
+        }
+        return true;
+    }
+
+    private void closeDialog(@Nonnull Editor editor) {
+        editPositionableFrame.setVisible(false);
+        editPositionableFrame.dispose();
+        editPositionableFrame = null;
+        editor.setVisible(true);
+    }
+
     @Override
     @Nonnull
     public String getTypeString() {
-        return Bundle.getMessage("PositionableType_");
+        return Bundle.getMessage("PositionableType_VirtualLcd");
     }
 
     @Override
