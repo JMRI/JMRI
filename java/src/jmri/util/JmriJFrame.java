@@ -1031,7 +1031,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         synchronized (m) {
             m.remove(this);
         }
-        
+
         // workaround for code that directly calls dispose()
         // instead of dispatching a WINDOW_CLOSED event.  This
         // causes the windowClosing method to not be called. This in turn is an
@@ -1040,9 +1040,8 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         ThreadingUtil.runOnGUIDelayed(() -> {
             removeWindowListener(this);
             removeComponentListener(this);
+            super.dispose();
         }, 500);
-        
-        super.dispose();
     }
 
     /*
