@@ -1729,10 +1729,12 @@ public class TrainCommon {
                         InstanceManager.getDefault(TrainManager.class).getMaxTrainNameLength());
                 return Setup.isPrintHeadersEnabled() ? lastTrainName
                         : TrainManifestHeaderText.getStringHeader_Last_Train() + SPACE + lastTrainName;
-            }
+            } else if (attribute.equals(Setup.LAST_MOVED)) {
+                // date format: 05/19/2026 07:12:58
+                return padAndTruncateIfNeeded(rs.getLastDate(), 19);
             // the three utility attributes that don't get printed but need to
             // be tabbed out
-            else if (attribute.equals(Setup.NO_NUMBER)) {
+            } else if (attribute.equals(Setup.NO_NUMBER)) {
                 return padAndTruncateIfNeeded("",
                         Control.max_len_string_print_road_number - (UTILITY_CAR_COUNT_FIELD_SIZE + 1));
             } else if (attribute.equals(Setup.NO_ROAD)) {
@@ -2026,6 +2028,8 @@ public class TrainCommon {
             } else if (attribute.equals(Setup.LAST_TRAIN)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Last_Train(),
                         InstanceManager.getDefault(TrainManager.class).getMaxTrainNameLength()) + SPACE);
+            } else if (attribute.equals(Setup.LAST_MOVED)) {
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Last_Moved(), 19) + SPACE);
             } else if (attribute.equals(Setup.TAB)) {
                 buf.append(createTabIfNeeded(Setup.getTab1Length()));
             } else if (attribute.equals(Setup.TAB2)) {

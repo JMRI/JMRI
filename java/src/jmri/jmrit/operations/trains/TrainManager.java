@@ -418,6 +418,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         if (id > _id) {
             _id = id;
         }
+        train.addPropertyChangeListener(this);
         setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, getNumEntries());
     }
 
@@ -1379,6 +1380,10 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("TrainManager sees property change: {} old: {} new: {}", e.getPropertyName(), e.getOldValue(),
                 e.getNewValue());
+        if (e.getPropertyName().equals(Train.NAME_CHANGED_PROPERTY)) {
+            // reset max train name length
+            _maxTrainNameLength = 0;
+        }
     }
 
     private void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
