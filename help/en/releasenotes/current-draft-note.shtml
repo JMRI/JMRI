@@ -521,6 +521,7 @@
           <li>New feature, manual build for a train. See the OperationsPro help for more information.</li>
           <li>Operations tests now use an isolated <code>NullProfile</code> per test via <code>@TempDir</code>,
               preventing intermittent <code>RosterConfigManager</code> failures on machines with real JMRI profile data.</li>
+          <li>New feature, Manifest and switch lists can now display rolling stock last moved date & time.</li>
         </ul>
 
    <h3>Panel Editor</h3>

@@ -34,7 +34,7 @@ public class NceMonBinary {
     private static final int REPLY_FOUR = '4'; // byte count out of range
     private static final int REPLY_OK = '!';   // command completed successfully
 
-    private int replyType = REPLY_UNKNOWN;
+    private static int replyType = REPLY_UNKNOWN;
 
     /**
      * Creates a command message for the log, in a human-friendly form if
