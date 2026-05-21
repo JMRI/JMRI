@@ -62,22 +62,22 @@ public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     @Test
-    public void testTriggerDisabledAtStartup() {
+    public void testTriggerEnabledForActiveEntry() {
         DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
         exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
         exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
-        Assertions.assertFalse(exrailFrame.isRowTriggerEnabled(0),
-                "row trigger should be disabled when power is unknown");
+        Assertions.assertTrue(exrailFrame.isRowTriggerEnabled(0),
+                "row trigger should be enabled for a non-DISABLED entry regardless of power state");
     }
 
     @Test
-    public void testTriggerEnabledWhenPowerOn() {
+    public void testTriggerEnabledWhenPowerOff() {
         DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
         exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
         exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
-        tc.sendTestMessage(DCCppReply.parseDCCppReply("p 1"));
+        tc.sendTestMessage(DCCppReply.parseDCCppReply("p 0"));
         Assertions.assertTrue(exrailFrame.isRowTriggerEnabled(0),
-                "row trigger should be enabled when power is on");
+                "row trigger should be enabled regardless of track power state");
     }
 
     @Test
@@ -155,22 +155,10 @@ public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     @Test
-    public void testTriggerDisabledWhenPowerOff() {
-        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
-        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
-        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
-        tc.sendTestMessage(DCCppReply.parseDCCppReply("p 1"));
-        tc.sendTestMessage(DCCppReply.parseDCCppReply("p 0"));
-        Assertions.assertFalse(exrailFrame.isRowTriggerEnabled(0),
-                "row trigger should be disabled when power is off");
-    }
-
-    @Test
     public void testRowClickFiresRoute() {
         DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
         exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
         exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
-        tc.sendTestMessage(DCCppReply.parseDCCppReply("p 1"));
         int outboundBefore = tc.outbound.size();
 
         exrailFrame.triggerRowForTest(0);
@@ -189,9 +177,37 @@ public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
         exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
         exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
         exrailFrame.message(DCCppReply.parseDCCppReply("jB 1 4")); // state=4 -> DISABLED
-        tc.sendTestMessage(DCCppReply.parseDCCppReply("p 1"));
         Assertions.assertFalse(exrailFrame.isRowTriggerEnabled(0),
-                "row trigger should be disabled for entries in DISABLED state, even when power is on");
+                "row trigger should be disabled for entries in DISABLED state");
+    }
+
+    @Test
+    public void testButtonLabelDefaultsToSet() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
+        Assertions.assertEquals("Set", exrailFrame.getRowButtonLabel(0),
+                "button label should default to 'Set' when no caption");
+    }
+
+    @Test
+    public void testCaptionUsedAsButtonLabel() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jB 1 \"Go!\""));
+        Assertions.assertEquals("Go!", exrailFrame.getRowButtonLabel(0),
+                "caption should be used as button label");
+    }
+
+    @Test
+    public void testNameColumnShowsDescriptionWhenCaptionSet() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 R \"Station Loop\""));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jB 1 \"Go!\""));
+        Assertions.assertEquals("Station Loop", exrailFrame.getRowName(0),
+                "name column should always show description, not caption");
     }
 
     @BeforeEach

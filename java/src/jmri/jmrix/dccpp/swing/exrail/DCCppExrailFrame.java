@@ -18,7 +18,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 
-import jmri.PowerManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.dccpp.DCCppExrailEntry;
 import jmri.jmrix.dccpp.DCCppInterface;
@@ -52,8 +51,6 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     private final Map<Integer, DCCppExrailEntry> _entries = new LinkedHashMap<>();
     private ExrailTableModel _tableModel;
     private JTable _table;
-    private PowerManager _powerManager;
-    private PropertyChangeListener _powerListener;
     private PropertyChangeListener _connListener;
 
     public DCCppExrailFrame(DCCppSystemConnectionMemo memo) {
@@ -99,13 +96,13 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
                 _table.getTableHeader().getFont().deriveFont(Font.BOLD));
 
         // Per-row trigger button column. Renderer subclass honours isCellEditable
-        // so disabled rows / power-off render the button grayed out.
+        // so DISABLED-state rows render the button grayed out.
         ButtonRenderer triggerRenderer = new ButtonRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(
-                        table, value, isSelected, hasFocus, row, column);
+                        table, value, isSelected, false, row, column);
                 c.setEnabled(table.isCellEditable(row, column));
                 return c;
             }
@@ -115,17 +112,10 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         _table.setDefaultEditor(JButton.class, triggerEditor);
         JButton sample = new JButton(Bundle.getMessage("ExrailButtonSet"));
         _table.setRowHeight(sample.getPreferredSize().height);
-        _table.getColumnModel().getColumn(COL_TRIGGER).setPreferredWidth(sample.getPreferredSize().width + 8);
-        _table.getColumnModel().getColumn(COL_TRIGGER).setMaxWidth(sample.getPreferredSize().width + 20);
+        _table.getColumnModel().getColumn(COL_TRIGGER).setPreferredWidth(80);
 
         _tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
         _tc.sendDCCppMessage(DCCppMessage.makeAutomationIDsMsg(), this);
-
-        _powerManager = _memo.getPowerManager();
-        if (_powerManager != null) {
-            _powerListener = evt -> ThreadingUtil.runOnGUI(this::redrawTable);
-            _powerManager.addPropertyChangeListener(PowerManager.POWER, _powerListener);
-        }
 
         _connListener = evt -> {
             if (ConnectionStatus.CONNECTION_UP.equals(
@@ -212,10 +202,6 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
 
     @Override
     public void dispose() {
-        if (_powerListener != null && _powerManager != null) {
-            _powerManager.removePropertyChangeListener(PowerManager.POWER, _powerListener);
-            _powerListener = null;
-        }
         if (_connListener != null) {
             ConnectionStatus.instance().removePropertyChangeListener(_memo, _connListener);
             _connListener = null;
@@ -237,6 +223,16 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     /** Returns whether the trigger button on the given visible row is enabled; used by tests. */
     boolean isRowTriggerEnabled(int row) {
         return _tableModel.isCellEditable(row, COL_TRIGGER);
+    }
+
+    /** Returns the trigger button label for the given visible row; used by tests. */
+    String getRowButtonLabel(int row) {
+        return (String) _tableModel.getValueAt(row, COL_TRIGGER);
+    }
+
+    /** Returns the Name column value for the given visible row; used by tests. */
+    String getRowName(int row) {
+        return (String) _tableModel.getValueAt(row, COL_NAME);
     }
 
     /** Simulate a click on the trigger button for the given visible row; used by tests. */
@@ -290,8 +286,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
             if (col != COL_TRIGGER) return false;
             DCCppExrailEntry entry = getEntryForRow(row);
             if (entry == null) return false;
-            if (entry.getState() == DCCppExrailEntry.State.DISABLED) return false;
-            return _powerManager != null && _powerManager.getPower() == PowerManager.ON;
+            return entry.getState() != DCCppExrailEntry.State.DISABLED;
         }
 
         @Override
@@ -303,7 +298,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
             if (col == COL_TYPE) return entry.isRoute()
                     ? Bundle.getMessage("ExrailTypeRoute")
                     : Bundle.getMessage("ExrailTypeAutomation");
-            if (col == COL_NAME) return entry.getDisplayName();
+            if (col == COL_NAME) return entry.getDescription();
             if (col == COL_STATE) {
                 DCCppExrailEntry.State state = entry.getState();
                 if (state == null || state == DCCppExrailEntry.State.INACTIVE) return Bundle.getMessage("ExrailStateIdle");
@@ -311,7 +306,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
                 if (state == DCCppExrailEntry.State.DISABLED) return Bundle.getMessage("ExrailStateDisabled");
                 return String.valueOf(state.value);
             }
-            if (col == COL_TRIGGER) return Bundle.getMessage("ExrailButtonSet");
+            if (col == COL_TRIGGER) return entry.getCaption() != null ? entry.getCaption() : Bundle.getMessage("ExrailButtonSet");
             return "";
         }
 
