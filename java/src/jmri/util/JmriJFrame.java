@@ -1037,7 +1037,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         // causes the windowClosing method to not be called. This in turn is an
         // issue because people have put code in the windowClosed method that
         // should really be in windowClosing.
-        Runnable r = () -> {
+        jmri.util.ThreadingUtil.ThreadAction r = () -> {
             removeWindowListener(this);
             removeComponentListener(this);
             super.dispose();
@@ -1045,7 +1045,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         if (ThreadingUtil.isGUIThread()) {
             r.run();
         } else {
-            ThreadingUtil.runOnGUIDelayed(r, 500);
+            ThreadingUtil.runOnGUI(r);
         }
     }
 
