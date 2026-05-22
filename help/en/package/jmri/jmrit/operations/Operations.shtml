@@ -1062,9 +1062,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h4>Save</h4>
       When you're finished with the settings window, press the save button to store your settings in
-      a file named "Operations.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
-      operations. OperationsPro&trade; will also create a backup file "Operations.xml.bak" each time
-      you press the save button.
+      a file named "Operations.xml". OperationsPro&trade; will also create a backup file
+      "Operations.xml.bak" each time you press the save button. You can find the files in JMRI&rArr;
+      "profile name" &rArr; operations. You can quickly find the operations directory using the
+      "File Locations" tool under "Help". Then press the "Open User Files Location" button.
 
       <h3 id="Backup">Backup</h3>
       Copies of the operations files can be made to provide backups for both error recovery and for
@@ -4527,7 +4528,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>Press "Save" to store the car's attributes after you've made changes. The program will
         create a file named "OperationsCarRoster.xml". You can find this file in JMRI&rArr; "profile
         name" &rArr; operations. A backup file "OperationsCarRoster.xml.bak" with the last settings
-        for all of your cars is also created each time the "Save" button is pressed.</p>
+        for all of your cars is also created each time the "Save" button is pressed. You can quickly
+        find the operations directory using the "File Locations" tool under "Help". Then press the
+        "Open User Files Location" button.</p>
 
       <h3 id="EditCarAttributes">Edit Car Attribute Names</h3>
       To the right of each of the car attributes (Road, Type, Length, Color, Kernel, Load, Owner) in
@@ -5029,8 +5032,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       Press "Save" to store the locomotive's settings. The program will create a file named
       "OperationsEngineRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
       operations. A backup file "OperationsEngineRoster.xml.bak" with the last settings for all of
-      your locomotives is also created each time the "Save" button is pressed.
-      
+      your locomotives is also created each time the "Save" button is pressed. You can quickly find
+      the operations directory using the "File Locations" tool under "Help". Then press the "Open
+      User Files Location" button.
+
       <h3 id="LocomotivesSet">Set Locomotive</h3>
       After creating a locomotive, you can set the locomotive's location, consist, and optionally
       the locomotive's destination and train. Normally the locomotive's destination and assigned
@@ -5402,7 +5407,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       Press "Save Route" to save your route. The program will create a file named
       "OperationsRouteRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
       operations. A backup file "OperationsRouteRoster.xml.bak" with the last settings for all of
-      your routes is also created each time the "Save Route" button is pressed.
+      your routes is also created each time the "Save Route" button is pressed. You can quickly find
+      the operations directory using the "File Locations" tool under "Help". Then press the "Open
+      User Files Location" button.
 
       <h3 id="TrainTurnRoute">Train Turn Route</h3>
       A train that returns to its departure location is normally referred to as a "turn". The image
@@ -5748,7 +5755,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       Press "Save Train" to save your train. The program will create a file named
       "OperationsTrainRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
       operations. A backup file "OperationsTrainRoster.xml.bak" with the last settings for all of
-      your trains is also created each time the "Save Train" button is pressed.
+      your trains is also created each time the "Save Train" button is pressed. You can quickly find
+      the operations directory using the "File Locations" tool under "Help". Then press the "Open
+      User Files Location" button.
 
       <h3 id="EditTrainTools">Edit Train Tools</h3>
       <img src="images/EditTrainTools.png" alt="Operations Edit Train Tools Menu">

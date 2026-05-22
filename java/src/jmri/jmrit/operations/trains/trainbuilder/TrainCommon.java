@@ -1731,7 +1731,7 @@ public class TrainCommon {
                         : TrainManifestHeaderText.getStringHeader_Last_Train() + SPACE + lastTrainName;
             } else if (attribute.equals(Setup.LAST_MOVED)) {
                 // date format: 05/19/2026 07:12:58
-                return padAndTruncateIfNeeded(rs.getLastDate(), 19);
+                return padAndTruncateIfNeeded(rs.getLastDate(), RollingStock.DATE_TIME_LENGTH);
             // the three utility attributes that don't get printed but need to
             // be tabbed out
             } else if (attribute.equals(Setup.NO_NUMBER)) {
@@ -2029,7 +2029,8 @@ public class TrainCommon {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Last_Train(),
                         InstanceManager.getDefault(TrainManager.class).getMaxTrainNameLength()) + SPACE);
             } else if (attribute.equals(Setup.LAST_MOVED)) {
-                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Last_Moved(), 19) + SPACE);
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Last_Moved(),
+                        RollingStock.DATE_TIME_LENGTH) + SPACE);
             } else if (attribute.equals(Setup.TAB)) {
                 buf.append(createTabIfNeeded(Setup.getTab1Length()));
             } else if (attribute.equals(Setup.TAB2)) {

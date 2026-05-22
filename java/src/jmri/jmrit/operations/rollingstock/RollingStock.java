@@ -1160,6 +1160,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return format.format(_lastDate);
     }
 
+    public static final int DATE_TIME_LENGTH = 19;
     /**
      * Provides the last date when this rolling stock was moved
      *
