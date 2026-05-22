@@ -155,10 +155,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
             }
         }
         log.trace("Message started");
-        // Pick up the rest of the command. A '>' inside a quoted string
-        // (e.g. <jA 4 A "Round > the bend">) is part of the caption, not
-        // the end of the message, so only treat '>' as terminator when
-        // we are not currently between a pair of double quotes.
+        // Read until '>'; ignore '>' inside quoted strings (e.g. captions).
         boolean inQuotes = false;
         for (i = 0; i < msg.maxSize(); i++) {
             char1 = readByteProtected(istream);

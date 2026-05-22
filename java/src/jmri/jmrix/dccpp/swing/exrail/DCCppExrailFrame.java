@@ -17,7 +17,6 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
-import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -67,24 +66,17 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     @Override
     public void initComponents() {
         super.initComponents();
-        // Override prepareRenderer so row striping + disabled-row gray apply to every
-        // column except COL_TRIGGER, which the TriggerRenderer paints natively.
         _table = new JTable(_tableModel) {
             @Override
             public Component prepareRenderer(javax.swing.table.TableCellRenderer renderer, int row, int column) {
                 Component c = super.prepareRenderer(renderer, row, column);
-                if (column == COL_TRIGGER) return c; // let toggle button render naturally
-                DCCppExrailEntry entry = _tableModel.getEntryForRow(convertRowIndexToModel(row));
-                boolean disabled = entry != null && entry.getState() == DCCppExrailEntry.State.DISABLED;
                 c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 240, 240));
-                c.setForeground(disabled ? Color.GRAY : getForeground());
                 return c;
             }
         };
         _table.setFillsViewportHeight(true);
         _table.setPreferredScrollableViewportSize(new Dimension(560, 200));
         _table.setAutoCreateRowSorter(true);
-        // Each row has its own Set button, so row selection no longer drives anything.
         _table.setRowSelectionAllowed(false);
         _table.setColumnSelectionAllowed(false);
         _table.setCellSelectionEnabled(false);
@@ -97,8 +89,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         _table.getTableHeader().setFont(
                 _table.getTableHeader().getFont().deriveFont(Font.BOLD));
 
-        // Toggle button renderer: ACTIVE state shows as selected (pressed look),
-        // INACTIVE as unselected. DISABLED entries are grayed out via isCellEditable.
+        // Active entries show the trigger button pressed; disabled entries gray it out.
         _table.setDefaultRenderer(TriggerCellValue.class, new TriggerRenderer());
         _table.setDefaultEditor(TriggerCellValue.class, new ButtonEditor(new JButton()));
         JToggleButton sample = new JToggleButton(Bundle.getMessage("ExrailButtonSet"));
@@ -131,10 +122,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
         _tableModel.fireTableDataChanged();
     }
 
-    /**
-     * Prompt for loco address if needed and fire the entry. Called from the
-     * table model when a row's trigger button is clicked.
-     */
+    /** Prompt for loco address if needed and fire the entry. */
     private void handleRowTrigger(DCCppExrailEntry entry) {
         if (entry == null) return;
         if (entry.isAutomation()) {
@@ -340,7 +328,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
             if (col != COL_TRIGGER) return;
             DCCppExrailEntry entry = getEntryForRow(row);
             if (entry == null) return;
-            SwingUtilities.invokeLater(() -> handleRowTrigger(entry));
+            ThreadingUtil.runOnGUIEventually(() -> handleRowTrigger(entry));
         }
     }
 
