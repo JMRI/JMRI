@@ -1635,13 +1635,22 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public ArrayList<Integer> getTurnoutIDList() {
-        ArrayList<Integer> ids=new ArrayList<Integer>(); 
+        ArrayList<Integer> ids=new ArrayList<Integer>();
         if (this.isTurnoutIDsReply()) {
             String idList = this.getValueString(1);
             if (!idList.isEmpty()) {
                 String[] idStrings = idList.split(" ");
                 for (String idString : idStrings) {
-                    ids.add(Integer.parseInt(idString));
+                    try {
+                        int id = Integer.parseInt(idString);
+                        if (id >= 1 && id <= DCCppConstants.MAX_TURNOUT_ADDRESS) {
+                            ids.add(id);
+                        } else {
+                            log.warn("Ignoring out-of-range turnout ID {} in jT response (buffer overflow?)", id);
+                        }
+                    } catch (NumberFormatException e) {
+                        log.warn("Ignoring malformed token '{}' in jT response", idString);
+                    }
                 }
             }
         } else {

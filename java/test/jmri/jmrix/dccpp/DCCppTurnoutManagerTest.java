@@ -52,6 +52,34 @@ public class DCCppTurnoutManagerTest {
         
     }
     
+    @Test
+    public void testSerialQueueSendsOneRequestOnIDsReply() {
+        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
+        DCCppTurnoutManager tm = new DCCppTurnoutManager(memo);
+        int baseline = tc.outbound.size();
+
+        tc.sendTestMessage(DCCppReply.parseDCCppReply("jT 146 147 201"));
+
+        Assert.assertEquals("only one detail request sent", baseline + 1, tc.outbound.size());
+        Assert.assertEquals("first ID requested", "J T 146", tc.outbound.get(baseline).toString());
+    }
+
+    @Test
+    public void testSerialQueueAdvancesOnIDReply() {
+        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
+        DCCppTurnoutManager tm = new DCCppTurnoutManager(memo);
+        int baseline = tc.outbound.size();
+
+        tc.sendTestMessage(DCCppReply.parseDCCppReply("jT 146 147"));
+        Assert.assertEquals(baseline + 1, tc.outbound.size());
+
+        tc.sendTestMessage(DCCppReply.parseDCCppReply("jT 146 C \"Test turnout\""));
+        Assert.assertEquals("queue advanced to second ID", baseline + 2, tc.outbound.size());
+        Assert.assertEquals("second ID requested", "J T 147", tc.outbound.get(baseline + 1).toString());
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
