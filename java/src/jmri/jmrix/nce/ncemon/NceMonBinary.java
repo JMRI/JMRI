@@ -37,6 +37,10 @@ public class NceMonBinary {
     private static final int REPLY_OK = '!'; // command completed successfully
 
     private int _replyType = REPLY_UNKNOWN;
+    
+    // private constructor since this class is a singleton
+    private NceMonBinary() {
+    }
 
     /**
      * Creates a command message for the log, in a human-friendly form if
