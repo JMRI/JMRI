@@ -57,7 +57,7 @@
                 <li>DCC-EX: turnout details are now fetched one at a time after startup rather than
                 all at once, preventing the command station's WiFi buffer from being overwhelmed
                 on layouts with many turnouts
-                (<a href="https://github.com/JMRI/JMRI/issues/15166">#15166</a>).</li>
+                (<a href="https://github.com/JMRI/JMRI/pull/15168">PR #15168</a>).</li>
                 <li>DCC-EX: out-of-range turnout IDs in the &lt;jT&gt; response (caused by WiFi
                 buffer overflow on Mega+WiFi) are now ignored with a warning rather than being
                 registered as bogus turnouts.</li>
