@@ -222,4 +222,5 @@ public class Xml {
     protected static final String PICKUP_COMMENT = "pickUp_msg"; // NOI18N
     protected static final String HAZARDOUS = "hazardous"; // NOI18N
     protected static final String LAST_TRAIN = "last_train"; // NOI18N
+    protected static final String LAST_MOVED = "last_moved"; // NOI18N
 }
