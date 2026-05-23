@@ -18,8 +18,8 @@
       to help with the automatic running of a loco within JMRI using either <a href=
       "../../../dispatcher/NewTrain.shtml">DispatcherPro</a> or <a href=
       "../../../logix/SpeedChanges.shtml">Warrants</a>.<br>
-      Primary goal is to help getting a loco to stop within a specific distance using a known
-      Throttle setting.</p>
+      Primary goal is to help getting a loco to stop, or change speed (Ramping) within a specific distance using known
+      Throttle settings.</p>
 
       <p>The tool is accessed through the Roster -&gt; Speed Profiling menu item.<br>
       It works on the principle of timing a loco over a known distance at a given speed step, in
@@ -46,7 +46,7 @@
         after the timed section.</li>
 
         <li><strong>Roster Entry</strong> - Select the loco that the profiling is to be performed
-        on.</li>
+        on. When the entry is updated a temporary throttle is used to determine speed step mode being used.</li>
 
         <li><strong>Start</strong> - Starts the profiling</li>
 
@@ -54,7 +54,23 @@
 
         <li><strong>Cancel</strong> - Cancels a profiling or test run</li>
 
-        <li><strong>View</strong> - Opens a table of the speed profile</li>
+        <li><strong>View New</strong> - Opens a table of the speed profile captured in the current session.</li>
+
+        <li><strong>View Merged</strong> - Opens a table of the speed profile captured in the current session
+                 merged with the current profile.</li>
+
+        <li><strong>View Current</strong> - Opens a table of the speed profile currently saved to the entry.</li>
+
+        <li><strong>Profile Start Step</strong> - The first speed step to profile.</li>
+
+        <li><strong>Profile End Step</strong> - The last speed step to profile.</li>
+
+        <li><strong>Increment/Decrement Steps By</strong> - The amount add or subtract to get the next step.
+        Note that the description Increment/Decrement will automatically be changed depending on
+        whether the start is greater or less that the finish</li>
+
+        <li>The speed step values must between 1 and the Maximum number of speed steps for the throttle.
+        If values are not entered they default to start at 1 and finish at Max Speed Steps, incrementing at 1.</li>
       </ul>
 
       <p>To profile the loco, fill the above details into the pane, place the loco in the starting
@@ -63,16 +79,16 @@
       <img src="images/SpeedProfilingTerms.png" width="377" height="89" alt=
       "Speed Profiling Setup">
       <p>What happens is that the tool will set the loco off running in the forward direction at
-      speed step 1, when it activates the timed section sensor it starts a timer. Once the finish
+      the <strong>Profile Start Step</strong>, when it activates the timed section sensor it starts a timer. Once the finish
       section sensor is activated the timer is stopped, and the speed is calculated in Millimetres
       per Second, this is then recorded against the roster. The tool will then ensure that the loco
       is clear of the timed section sensor, then repeat the procedure again but in the reverse
       direction. Once the loco is back at the initial start section, the whole procedure is
-      repeated again for the next speed step, this occurs until a profile of all speed steps has
+      repeated again for the next speed step, this occurs until the <strong>Profile End Step</strong> has
       been completed.</p>
 
       <p>Profiles can be made with fewer speed steps by choosing the steps to start and end on, and
-      how many steps to increment to the next sampling step. When a starting step is larger than 4
+      how many steps to increment/decrement to the next sampling step. When a starting step is larger than 4
       be sure to place the loco in a position that will allow it to achieve full speed before
       reaching the block sensor.</p>
 

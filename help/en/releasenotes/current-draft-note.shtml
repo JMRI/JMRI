@@ -549,7 +549,10 @@
             as Quit, matching the behavior of the profile chooser. Previously the close
             button fell through to Continue (<a href="https://github.com/JMRI/JMRI/issues/15148">issue #15148</a>).</li>
         </ul>
-
+		<ul>
+			<li>Roster Speed Profiling has been updated to allow profiling from either
+			High to Low or Low to High and should work for non NMRA speed steps.</li>
+        </ul>
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
