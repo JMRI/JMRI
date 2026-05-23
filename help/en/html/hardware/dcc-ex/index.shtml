@@ -316,7 +316,7 @@
       <p>Lists the Routes and Automations defined on your EX-CommandStation and lets you
       trigger them from JMRI. Each entry has a trigger button; active entries show it
       pressed, disabled entries gray it out.</p>
-      <img src="images/dcc-ex_ExrailAutomations.png" width="756" height="515" alt="DCC-EX EXRAIL Automations window">
+      <img src="images/dcc-ex_ExrailAutomations.png" width="625" height="471" alt="DCC-EX EXRAIL Automations window">
 
       <h3 id="meter">Voltage / Current Meter</h3>
       <p>Displays live track voltage and current readings reported by the CommandStation.</p>

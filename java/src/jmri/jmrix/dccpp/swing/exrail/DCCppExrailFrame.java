@@ -69,7 +69,9 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
             @Override
             public Component prepareRenderer(javax.swing.table.TableCellRenderer renderer, int row, int column) {
                 Component c = super.prepareRenderer(renderer, row, column);
-                c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 240, 240));
+                if (column != COL_TRIGGER) {
+                    c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 240, 240));
+                }
                 return c;
             }
         };
@@ -242,6 +244,13 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     }
 
     private static final class TriggerRenderer extends JToggleButton implements TableCellRenderer {
+
+        TriggerRenderer() {
+            setOpaque(true);
+            putClientProperty("JComponent.sizeVariant", "small");
+            putClientProperty("JButton.buttonType", "square");
+        }
+
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
