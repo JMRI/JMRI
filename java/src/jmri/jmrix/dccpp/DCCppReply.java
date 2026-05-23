@@ -1646,6 +1646,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                         if (id >= 1 && id <= DCCppConstants.MAX_TURNOUT_ADDRESS) {
                             ids.add(id);
                         } else {
+                            // DCC-EX WiFi buffer overflow (Mega+WiFi) can corrupt the jT reply, producing out-of-range IDs
                             log.warn("Ignoring out-of-range turnout ID {} in jT response (buffer overflow?)", id);
                         }
                     } catch (NumberFormatException e) {

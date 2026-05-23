@@ -56,8 +56,7 @@
                 <li>Change default DCCppOverTCP port from 1235 to 2560 to match DCC-EX default.</li>
                 <li>DCC-EX: turnout details are now fetched one at a time after startup rather than
                 all at once, preventing the command station's WiFi buffer from being overwhelmed
-                on layouts with many turnouts
-                (<a href="https://github.com/JMRI/JMRI/pull/15168">PR #15168</a>).</li>
+                on layouts with many turnouts.</li>
                 <li>DCC-EX: out-of-range turnout IDs in the &lt;jT&gt; response (caused by WiFi
                 buffer overflow on Mega+WiFi) are now ignored with a warning rather than being
                 registered as bogus turnouts.</li>

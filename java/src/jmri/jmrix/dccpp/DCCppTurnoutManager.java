@@ -3,7 +3,6 @@ package jmri.jmrix.dccpp;
 import static jmri.jmrix.dccpp.DCCppConstants.MAX_TURNOUT_ADDRESS;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Queue;
 
