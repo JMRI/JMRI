@@ -64,8 +64,6 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
      * name creates a unique id for this route
      *
      * @param name The string name of the new Route.
-     *
-     *
      * @return new route or existing route
      */
     public Route newRoute(String name) {
@@ -75,8 +73,7 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
             route = new Route(Integer.toString(_id), name);
             int oldSize = _routeHashTable.size();
             _routeHashTable.put(route.getId(), route);
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                    _routeHashTable.size());
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _routeHashTable.size());
         }
         return route;
     }
@@ -172,7 +169,7 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
         }
         return out;
     }
-    
+
     public RouteLocation getRouteLocationById(String id) {
         for (Route route : getList()) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
@@ -183,7 +180,7 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
         }
         return null; // not found
     }
-    
+
     /**
      * Used to determine if a location is part of any route.
      * 
@@ -194,9 +191,9 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
     public Route isLocationInUse(Location loc) {
         for (Route route : getList()) {
             RouteLocation rl = route.getLastLocationByName(loc.getName());
-           if (rl != null) {
-               return route;
-           }
+            if (rl != null) {
+                return route;
+            }
         }
         return null;
     }

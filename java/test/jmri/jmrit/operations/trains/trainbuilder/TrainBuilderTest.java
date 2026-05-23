@@ -22515,6 +22515,81 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    @Test
+    public void testManualBuildRemove() {
+        // build two sets of trains servicing multiple locations.
+        JUnitOperationsUtil.createSevenNormalLocations();
+        // disable routing through yard
+        Setup.setCarRoutingViaYardsEnabled(false);
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", null);
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+
+        // Create the turn Acton-Chelmsford-Boston-Acton
+        Route acbaRoute = rmanager.newRoute("Acton-Chelmsford-Boston-Acton");
+        acbaRoute.addLocation(acton);
+        acbaRoute.addLocation(chelmsford);
+        acbaRoute.addLocation(boston);
+        acbaRoute.addLocation(acton);
+        Train acbaTrain = tmanager.newTrain("Acton-Chelmsford-Boston-Acton");
+        acbaTrain.setRoute(acbaRoute);
+
+        // place cars
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Coilcar", "40", "DAB", "1958", actonSpur1, 1);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("AB", "2", "Boxcar", "40", "DAB", "1958", actonSpur1, 2);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("A", "3", "Caboose", "40", "DAB", "1958", actonSpur1, 3);
+        Car c4 = JUnitOperationsUtil.createAndPlaceCar("A", "4", "Coilcar", "40", "DAB", "1958", actonSpur1, 4);
+        Car c5 = JUnitOperationsUtil.createAndPlaceCar("A", "5", "Boxcar", "40", "DAB", "1958", bostonSpur1, 5);
+        Car c6 = JUnitOperationsUtil.createAndPlaceCar("AB", "6", "Boxcar", "40", "DAB", "1958", bostonSpur1, 6);
+        Car c7 = JUnitOperationsUtil.createAndPlaceCar("AB", "7", "Coilcar", "40", "DAB", "1958", bostonSpur1, 7);
+        Car c8 = JUnitOperationsUtil.createAndPlaceCar("AB", "8", "Boxcar", "40", "DAB", "1958", bostonSpur2, 8);
+
+        TrainBuilder tb = new TrainBuilder();
+        tb.build(acbaTrain);
+
+        Assert.assertEquals("train", acbaTrain, c1.getTrain());
+        Assert.assertEquals("train", acbaTrain, c2.getTrain());
+        Assert.assertEquals("train", acbaTrain, c3.getTrain());
+        Assert.assertEquals("train", acbaTrain, c4.getTrain());
+        Assert.assertEquals("train", acbaTrain, c5.getTrain());
+        Assert.assertEquals("train", acbaTrain, c6.getTrain());
+        Assert.assertEquals("train", acbaTrain, c7.getTrain());
+        Assert.assertEquals("train", acbaTrain, c8.getTrain());
+        
+        // create the manual build
+        TrainManualBuild manualBuild =
+                InstanceManager.getDefault(TrainManualBuildManager.class).newManualBuild(acbaTrain.getId());
+        TrainManualBuildItem tmbi = manualBuild.addItem();
+        // now remove coil cars
+        tmbi.setTypeName("Coilcar");
+        tmbi.setCount(0);
+        tmbi.setRemoveEnabled(true);
+        
+        acbaTrain.reset();
+        tb.build(acbaTrain);
+        
+        // confirm all of the coil cars were removed from the build
+        Assert.assertEquals("Coilcar", null, c1.getTrain());
+        Assert.assertEquals("train", acbaTrain, c2.getTrain());
+        Assert.assertEquals("train", acbaTrain, c3.getTrain());
+        Assert.assertEquals("Coilcar", null, c4.getTrain());
+        Assert.assertEquals("train", acbaTrain, c5.getTrain());
+        Assert.assertEquals("train", acbaTrain, c6.getTrain());
+        Assert.assertEquals("Coilcar", null, c7.getTrain());
+        Assert.assertEquals("train", acbaTrain, c8.getTrain());
+        
+        
+
+
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
 
     private void setupCustomCarLoad() {
 

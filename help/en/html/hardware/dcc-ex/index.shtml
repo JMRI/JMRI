@@ -271,30 +271,66 @@
       </ol>
 
       <h2 id="tools">JMRI DCC-EX Tools</h2>
-      <img src="images/dcc-ex_Menu.png" width="199" height="160" class="floatRight" alt="DCC-EX menu">
-      <p>The DCC-EX menu contains 7 tools:</p>
+      <img src="images/dcc-ex_Menu.png" width="270" height="211" class="floatRight" alt="DCC-EX menu">
+      <p>The DCC-EX menu contains 8 tools:</p>
 
       <ul>
-        <li>DCC-EX Traffic Monitor</li>
+        <li><a href="#monitor">DCC-EX Traffic Monitor</a></li>
 
-        <li>Send DCC-EX Command</li>
+        <li><a href="#send">Send DCC-EX Command</a></li>
 
-        <li>Configure Base Station</li>
+        <li><a href="#config">Configure Base Station</a></li>
 
-        <li>Open DCC-EX Virtual LCD</li>
+        <li><a href="#lcd">Open DCC-EX Virtual LCD</a></li>
 
-        <li>Voltage / Current Meter</li>
+        <li><a href="#exrail">EXRAIL Automations</a></li>
 
-        <li>Roster Export to DCC-EX</li>
+        <li><a href="#meter">Voltage / Current Meter</a></li>
 
-        <li>Load DCC-EX over TCP Server</li>
+        <li><a href="#roster">Roster Export to DCC-EX</a></li>
+
+        <li><a href="#tcp">Load DCC-EX over TCP Server</a></li>
       </ul>
-      <img src="images/dcc-ex_SendCommand.png" width="296" height="91" alt="Send DCC-EX Command">
-      <img src="images/dcc-ex_VoltageCurrentMeter.png" width="363" height="233" alt="Voltage/Current Meter">
-      <img src="images/dcc-ex_ConfigureBaseStation.png" width="455" height="218" alt="Configure Base Station">
-      <img src="images/dcc-ex_OverTcpServer.png" width="406" height="93" alt="DCC-EX over TCP Server">
-      <img src="images/dcc-ex_VirtualLCD.png" width="258" height="174" alt="DCC-EX Virtual LCD">
-      <img src="images/dcc-ex_RosterExport.png" width="495" height="159" alt="Roster Export to DCC-EX">
+
+      <h3 id="monitor">DCC-EX Traffic Monitor</h3>
+      <p>Shows all commands and replies passing between JMRI and the EX-CommandStation in
+      real time. Useful for troubleshooting.</p>
+      <img src="images/dcc-ex_TrafficMonitor.png" width="843" height="414" alt="DCC-EX Traffic Monitor">
+
+      <h3 id="send">Send DCC-EX Command</h3>
+      <p>Lets you type and send a raw DCC-EX command directly to the CommandStation.
+      Enter the command without the surrounding &lt;&hellip;&gt; brackets.</p>
+      <img src="images/dcc-ex_SendCommand.png" width="459" height="216" alt="Send DCC-EX Command">
+
+      <h3 id="config">Configure Base Station</h3>
+      <p>Shows the CommandStation's defined sensors, turnouts, and outputs in tabbed tables.
+      Displays the firmware version at the top of the window.</p>
+      <img src="images/dcc-ex_ConfigureBaseStation.png" width="629" height="351" alt="Configure Base Station">
+
+      <h3 id="lcd">Open DCC-EX Virtual LCD</h3>
+      <p>Mirrors the OLED display(s) on the EX-CommandStation in a JMRI window,
+      showing the same status text the physical display shows.</p>
+      <img src="images/dcc-ex_VirtualLCD.png" width="370" height="270" alt="DCC-EX Virtual LCD">
+
+      <h3 id="exrail">EXRAIL Automations</h3>
+      <p>Lists the Routes and Automations defined on your EX-CommandStation and lets you
+      trigger them from JMRI. Each entry has a trigger button; active entries show it
+      pressed, disabled entries gray it out.</p>
+      <img src="images/dcc-ex_ExrailAutomations.png" width="625" height="471" alt="DCC-EX EXRAIL Automations window">
+
+      <h3 id="meter">Voltage / Current Meter</h3>
+      <p>Displays live track voltage and current readings reported by the CommandStation.</p>
+      <img src="images/dcc-ex_VoltageCurrentMeter.png" width="505" height="282" alt="Voltage/Current Meter">
+
+      <h3 id="roster">Roster Export to DCC-EX</h3>
+      <p>Generates <code>ROSTER()</code> macro lines for all JMRI roster entries, ready to
+      paste into your EX-CommandStation's <code>myAutomation.h</code>.</p>
+      <img src="images/dcc-ex_RosterExport.png" width="683" height="269" alt="Roster Export to DCC-EX">
+
+      <h3 id="tcp">Load DCC-EX over TCP Server</h3>
+      <p>Starts a TCP server that lets other DCC-EX clients connect to the CommandStation
+      through JMRI over the network.</p>
+      <img src="images/dcc-ex_OverTcpServer.png" width="547" height="215" alt="DCC-EX over TCP Server">
       <h2 id="documentation">Documentation</h2>
 
       <h3>JMRI Help</h3>

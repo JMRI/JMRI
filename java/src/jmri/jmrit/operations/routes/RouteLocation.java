@@ -181,8 +181,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _trainDir;
         _trainDir = direction;
         if (old != direction) {
-            setDirtyAndFirePropertyChange(TRAIN_DIRECTION_CHANGED_PROPERTY, Integer.toString(old), Integer
-                    .toString(direction));
+            setDirtyAndFirePropertyChange(TRAIN_DIRECTION_CHANGED_PROPERTY, old, direction);
         }
     }
 
@@ -208,7 +207,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _maxTrainLength;
         _maxTrainLength = length;
         if (old != length) {
-            setDirtyAndFirePropertyChange(MAX_LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length)); // NOI18N
+            setDirtyAndFirePropertyChange(MAX_LENGTH_CHANGED_PROPERTY, old, length);
         }
     }
 
@@ -225,7 +224,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _trainLength;
         _trainLength = length;
         if (old != length) {
-            firePropertyChange("trainLength", Integer.toString(old), Integer.toString(length)); // NOI18N
+            firePropertyChange("trainLength", old, length); // NOI18N
         }
     }
 
@@ -242,7 +241,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _trainWeight;
         _trainWeight = weight;
         if (old != weight) {
-            firePropertyChange("trainWeight", Integer.toString(old), Integer.toString(weight)); // NOI18N
+            firePropertyChange("trainWeight", old, weight); // NOI18N
         }
     }
 
@@ -254,7 +253,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _maxCarMoves;
         _maxCarMoves = moves;
         if (old != moves) {
-            setDirtyAndFirePropertyChange(MAX_MOVES_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(moves));
+            setDirtyAndFirePropertyChange(MAX_MOVES_CHANGED_PROPERTY, old, moves);
         }
     }
 
@@ -288,7 +287,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         boolean old = _drops;
         _drops = drops;
         if (old != drops) {
-            setDirtyAndFirePropertyChange(DROP_CHANGED_PROPERTY, old ? "true" : "false", drops ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange(DROP_CHANGED_PROPERTY, old, drops);
         }
     }
 
@@ -305,7 +304,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         boolean old = _pickups;
         _pickups = pickups;
         if (old != pickups) {
-            setDirtyAndFirePropertyChange(PICKUP_CHANGED_PROPERTY, old ? "true" : "false", pickups ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange(PICKUP_CHANGED_PROPERTY, old, pickups);
         }
     }
 
@@ -322,8 +321,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         boolean old = _localMoves;
         _localMoves = local;
         if (old != local) {
-            setDirtyAndFirePropertyChange(LOCAL_MOVES_CHANGED_PROPERTY, old ? "true" : "false",
-                    local ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange(LOCAL_MOVES_CHANGED_PROPERTY, old, local);
         }
     }
 
@@ -340,7 +338,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _carMoves;
         _carMoves = moves;
         if (old != moves) {
-            firePropertyChange("carMoves", Integer.toString(old), Integer.toString(moves)); // NOI18N
+            firePropertyChange("carMoves", old, moves); // NOI18N
         }
     }
 
@@ -352,7 +350,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _wait;
         _wait = time;
         if (old != time) {
-            setDirtyAndFirePropertyChange("waitTime", Integer.toString(old), Integer.toString(time)); // NOI18N
+            setDirtyAndFirePropertyChange("waitTime", old, time); // NOI18N
         }
     }
 
@@ -472,7 +470,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         double old = _grade;
         _grade = grade;
         if (old != grade) {
-            setDirtyAndFirePropertyChange("grade", Double.toString(old), Double.toString(grade)); // NOI18N
+            setDirtyAndFirePropertyChange("grade", old, grade); // NOI18N
         }
     }
 
@@ -484,7 +482,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _trainIconX;
         _trainIconX = x;
         if (old != x) {
-            setDirtyAndFirePropertyChange("trainIconX", Integer.toString(old), Integer.toString(x)); // NOI18N
+            setDirtyAndFirePropertyChange("trainIconX", old, x); // NOI18N
         }
     }
 
@@ -496,7 +494,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         int old = _trainIconY;
         _trainIconY = y;
         if (old != y) {
-            setDirtyAndFirePropertyChange("trainIconY", Integer.toString(old), Integer.toString(y)); // NOI18N
+            setDirtyAndFirePropertyChange("trainIconY", old, y); // NOI18N
         }
     }
 

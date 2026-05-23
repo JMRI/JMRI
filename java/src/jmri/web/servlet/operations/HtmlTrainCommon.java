@@ -317,6 +317,9 @@ public class HtmlTrainCommon extends TrainCommon {
         } else if (attribute.equals(Setup.LAST_TRAIN)) {
             return String.format(locale, strings.getProperty("LastTrain"),
                     StringEscapeUtils.escapeHtml4(rs.getLastTrainName()));
+        } else if (attribute.equals(Setup.LAST_MOVED)) {
+            return String.format(locale, strings.getProperty("LastMoved"),
+                    StringEscapeUtils.escapeHtml4(rs.getLastDate()));
         } else if (attribute.equals(Setup.BLANK) || attribute.equals(Setup.NO_NUMBER)
                 || attribute.equals(Setup.NO_ROAD) || attribute.equals(Setup.NO_COLOR)
                 || attribute.equals(Setup.NO_DESTINATION) || attribute.equals(Setup.NO_DEST_TRACK)

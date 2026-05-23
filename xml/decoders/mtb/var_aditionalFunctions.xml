@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2026 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2026</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Petr</firstname>
+                <surname>Sidlo</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2026-05-15</date>
+            <authorinitials>PS</authorinitials>
+            <revremark>Initial version</revremark>
+        </revision>
+    </revhistory>
+
+    <!-- Global enable ===================================================== -->
+    <variable CV="50" item="Additional functions global enable" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Additiona masking functions global enabled</tooltip>
+        <tooltip xml:lang="cs">Dodatečné funkce maskování globální povolení</tooltip>
+    </variable>
+    <variable CV="50" item="Mask forward reverse" mask="XXXXXXVX" default="1">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward and reverse</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed a vzad</tooltip>
+    </variable>
+    <variable CV="50" item="Mask moving" mask="XXXXXVXX" default="1">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu</tooltip>
+    </variable>
+    <variable CV="50" item="Mask moving and delay" mask="XXXXVXXX" default="1">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus Čas prodlevy</tooltip>
+    </variable>
+    <variable CV="50" item="Mask stop and delay" mask="XXXVXXXX" default="0">
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při stání plus Čas prodlevy</tooltip>
+    </variable>
+
+    <!-- Delay time ======================================================== -->
+    <variable CV="56" item="Delay time" default="24">
+        <decVal max="64" />
+        <label>Delay time</label>
+        <label xml:lang="cs">Čas prodlevy</label>
+        <tooltip>Entered value × 0.08 sec</tooltip>
+        <tooltip xml:lang="cs">Zadaná hodnota × 0,08 s</tooltip>
+    </variable>
+
+
+    <!-- Driving forward =================================================== -->
+    <variable CV="52" item="Mask forward F1" mask="XXXXXXXV" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for F1</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro F1</tooltip>
+    </variable>
+    <variable CV="52" item="Mask forward F2" mask="XXXXXXVX" default="0" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for F2</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro F2</tooltip>
+    </variable>
+    <variable CV="52" item="Mask forward F3" mask="XXXXXVXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for F3</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro F3</tooltip>
+    </variable>
+    <variable CV="52" item="Mask forward F4" mask="XXXXVXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for F4</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro F4</tooltip>
+    </variable>
+    <variable CV="52" item="Mask forward F5" mask="XXXVXXXX" default="0" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for F5</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro F5</tooltip>
+    </variable>
+    <variable CV="52" item="Mask forward F6" mask="XXVXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for F6</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro F6</tooltip>
+    </variable>
+    <variable CV="52" item="Mask forward F7" mask="XVXXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for F7</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro F7</tooltip>
+    </variable>
+    <variable CV="52" item="Mask forward F8" mask="VXXXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction forward for F8</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vpřed pro F8</tooltip>
+    </variable>
+    
+    <!-- Driving reverse =================================================== -->    
+    <variable CV="53" item="Mask reverse F1" mask="XXXXXXXV" default="0" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for F1</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro F1</tooltip>
+    </variable>
+    <variable CV="53" item="Mask reverse F2" mask="XXXXXXVX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for F2</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro F2</tooltip>
+    </variable>
+    <variable CV="53" item="Mask reverse F3" mask="XXXXXVXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for F3</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro F3</tooltip>
+    </variable>
+    <variable CV="53" item="Mask reverse F4" mask="XXXXVXXX" default="0" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for F4</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro F4</tooltip>
+    </variable>
+    <variable CV="53" item="Mask reverse F5" mask="XXXVXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for F5</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro F5</tooltip>
+    </variable>
+    <variable CV="53" item="Mask reverse F6" mask="XXVXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for F6</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro F6</tooltip>
+    </variable>
+    <variable CV="53" item="Mask reverse F7" mask="XVXXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for F7</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro F7</tooltip>
+    </variable>
+    <variable CV="53" item="Mask reverse F8" mask="VXXXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask forward reverse</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Enabled masking while direction reverse for F8</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při směru vzad pro F8</tooltip>
+    </variable>
+    
+    
+    
+    <!-- Moving ============================================================ -->
+    <variable CV="54" item="Mask moving F1" mask="XXXXXXXV" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for F1</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro F1</tooltip>
+    </variable>
+    <variable CV="54" item="Mask moving F2" mask="XXXXXXVX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for F2</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro F2</tooltip>
+    </variable>
+    <variable CV="54" item="Mask moving F3" mask="XXXXXVXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for F3</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro F3</tooltip>
+    </variable>
+    <variable CV="54" item="Mask moving F4" mask="XXXXVXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for F4</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro F4</tooltip>
+    </variable>
+    <variable CV="54" item="Mask moving F5" mask="XXXVXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for F5</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro F5</tooltip>
+    </variable>
+    <variable CV="54" item="Mask moving F6" mask="XXVXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for F6</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro F6</tooltip>
+    </variable>
+    <variable CV="54" item="Mask moving F7" mask="XVXXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for F7</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro F7</tooltip>
+    </variable>
+    <variable CV="54" item="Mask moving F8" mask="VXXXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving only for F8</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pouze pohybu pro F8</tooltip>
+    </variable>
+    
+    
+    
+    <!-- Moving and delay ================================================== -->
+    <variable CV="55" item="Mask moving and delay F1" mask="XXXXXXXV" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for F1</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro F1</tooltip>
+    </variable>
+    <variable CV="55" item="Mask moving and delay F2" mask="XXXXXXVX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for F2</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro F2</tooltip>
+    </variable>
+    <variable CV="55" item="Mask moving and delay F3" mask="XXXXXVXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for F3</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro F3</tooltip>
+    </variable>
+    <variable CV="55" item="Mask moving and delay F4" mask="XXXXVXXX" default="0" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for F4</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro F4</tooltip>
+    </variable>
+    <variable CV="55" item="Mask moving and delay F5" mask="XXXVXXXX" default="0" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for F5</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro F5</tooltip>
+    </variable>
+    <variable CV="55" item="Mask moving and delay F6" mask="XXVXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for F6</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro F6</tooltip>
+    </variable>
+    <variable CV="55" item="Mask moving and delay F7" mask="XVXXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for F7</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro F7</tooltip>
+    </variable>
+    <variable CV="55" item="Mask moving and delay F8" mask="VXXXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask moving and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when moving plus additional time for F8</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při pohybu plus přídavný čas pro F8</tooltip>
+    </variable>
+    
+    <!-- Stop and delay ==================================================== -->
+    <variable CV="57" item="Mask stop and delay F1" mask="XXXXXXXV" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for F1</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro F1</tooltip>
+    </variable>
+    <variable CV="57" item="Mask stop and delay F2" mask="XXXXXXVX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for F2</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro F2</tooltip>
+    </variable>
+    <variable CV="57" item="Mask stop and delay F3" mask="XXXXXVXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for F3</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro F3</tooltip>
+    </variable>
+    <variable CV="57" item="Mask stop and delay F4" mask="XXXXVXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for F4</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro F4</tooltip>
+    </variable>
+    <variable CV="57" item="Mask stop and delay F5" mask="XXXVXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for F5</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro F5</tooltip>
+    </variable>
+    <variable CV="57" item="Mask stop and delay F6" mask="XXVXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for F6</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro F6</tooltip>
+    </variable>
+    <variable CV="57" item="Mask stop and delay F7" mask="XVXXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for F7</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro F7</tooltip>
+    </variable>
+    <variable CV="57" item="Mask stop and delay F8" mask="VXXXXXXX" default="1" >
+        <qualifier>
+            <variableref>Additional functions global enable</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Mask stop and delay</variableref>
+                <relation>eq</relation>
+            <value>1</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <tooltip>Masking enabled when stopping plus additional time for F8</tooltip>
+        <tooltip xml:lang="cs">Povolené maskování při zastavení plus přídavný čas pro F8</tooltip>
+    </variable>
+    
+</variables>

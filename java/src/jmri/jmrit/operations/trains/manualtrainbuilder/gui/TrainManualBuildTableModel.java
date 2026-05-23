@@ -48,7 +48,8 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
     private static final int COUNT_COLUMN = PICKUP_DAY_COLUMN + 1;
     private static final int WARN_COLUMN = COUNT_COLUMN + 1;
     private static final int FAIL_COLUMN = WARN_COLUMN + 1;
-    private static final int UP_COLUMN = FAIL_COLUMN + 1;
+    private static final int REMOVE_COLUMN = FAIL_COLUMN + 1;
+    private static final int UP_COLUMN = REMOVE_COLUMN + 1;
     private static final int DOWN_COLUMN = UP_COLUMN + 1;
     private static final int DELETE_COLUMN = DOWN_COLUMN + 1;
 
@@ -123,6 +124,7 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
         _table.getColumnModel().getColumn(COUNT_COLUMN).setPreferredWidth(45);
         _table.getColumnModel().getColumn(WARN_COLUMN).setPreferredWidth(45);
         _table.getColumnModel().getColumn(FAIL_COLUMN).setPreferredWidth(45);
+        _table.getColumnModel().getColumn(REMOVE_COLUMN).setPreferredWidth(60);
         _table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         _table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         _table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
@@ -172,6 +174,8 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
                 return Bundle.getMessage("Warn");
             case FAIL_COLUMN:
                 return Bundle.getMessage("Fail");
+            case REMOVE_COLUMN:
+                return Bundle.getMessage("Remove");
             case UP_COLUMN:
                 return Bundle.getMessage("Up");
             case DOWN_COLUMN:
@@ -201,6 +205,7 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
                 return Integer.class;
             case WARN_COLUMN:
             case FAIL_COLUMN:
+            case REMOVE_COLUMN:
                 return Boolean.class;
             case UP_COLUMN:
             case DOWN_COLUMN:
@@ -225,6 +230,7 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
             case COUNT_COLUMN:
             case WARN_COLUMN:
             case FAIL_COLUMN:
+            case REMOVE_COLUMN:
             case UP_COLUMN:
             case DOWN_COLUMN:
             case DELETE_COLUMN:
@@ -268,6 +274,8 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
                 return mbi.isWarnEnabled();
             case FAIL_COLUMN:
                 return mbi.isFailEnabled();
+            case REMOVE_COLUMN:
+                return mbi.isRemoveEnabled();
             case UP_COLUMN:
                 return Bundle.getMessage("Up");
             case DOWN_COLUMN:
@@ -319,6 +327,9 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
                 break;
             case FAIL_COLUMN:
                 setFail(value, mbi);
+                break;
+            case REMOVE_COLUMN:
+                mbi.setRemoveEnabled(((Boolean) value).booleanValue());
                 break;
             case UP_COLUMN:
                 moveUpManualBuildItem(row);
@@ -446,7 +457,7 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
                 InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(mbi.getTrainScheduleId());
         cb.setSelectedItem(sch);
         // fix if schedule no longer exists
-        if (sch == null) {
+        if (cb.getSelectedItem() != sch) {
             mbi.setTrainScheduleId(NONE);
         }
         return cb;
@@ -576,13 +587,6 @@ public class TrainManualBuildTableModel extends OperationsTableModel implements 
             updateList();
             fireTableDataChanged();
         }
-        //        if (e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY) ||
-        //                e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY) ||
-        //                e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY) ||
-        //                e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY) ||
-        //                e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
-        //            fireTableDataChanged();
-        //        }
         if (e.getSource().getClass().equals(TrainManualBuildItem.class)) {
             TrainManualBuildItem item = (TrainManualBuildItem) e.getSource();
             int row = _list.indexOf(item);

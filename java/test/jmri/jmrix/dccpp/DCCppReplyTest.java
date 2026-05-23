@@ -756,6 +756,38 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "Turnout ID:3456 State:C Desc:''", l.toMonitorString());
     }
 
+    @Test
+    public void testAutomationReplyProperties() {
+        DCCppReply r;
+
+        r = DCCppReply.parseDCCppReply("jA 42 R \"Station Loop\"");
+        Assert.assertTrue(r.isAutomationIDReply());
+        Assert.assertEquals(42, r.getAutomationIDInt());
+        Assert.assertEquals("42", r.getAutomationIDString());
+        Assert.assertEquals("R", r.getAutomationTypeString());
+        Assert.assertEquals("Station Loop", r.getAutomationDescString());
+
+        r = DCCppReply.parseDCCppReply("jA 7 A \"Yard Switcher\"");
+        Assert.assertTrue(r.isAutomationIDReply());
+        Assert.assertEquals(7, r.getAutomationIDInt());
+        Assert.assertEquals("A", r.getAutomationTypeString());
+        Assert.assertEquals("Yard Switcher", r.getAutomationDescString());
+
+        r = DCCppReply.parseDCCppReply("jA -5 R \"Reverse Loop\"");
+        Assert.assertTrue(r.isAutomationIDReply());
+        Assert.assertEquals(-5, r.getAutomationIDInt());
+
+        r = DCCppReply.parseDCCppReply("jB 42 2");
+        Assert.assertTrue(r.isAutomationStateReply());
+        Assert.assertEquals(42, r.getAutomationIDInt());
+        Assert.assertEquals("2", r.getAutomationStateString());
+
+        r = DCCppReply.parseDCCppReply("jB 42 \"Platform 1\"");
+        Assert.assertTrue(r.isAutomationCaptionReply());
+        Assert.assertEquals(42, r.getAutomationIDInt());
+        Assert.assertEquals("Platform 1", r.getAutomationCaptionString());
+    }
+
     @BeforeEach
     @Override
     public void setUp() {

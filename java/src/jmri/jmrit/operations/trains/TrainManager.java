@@ -125,8 +125,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     public void setOpenFileEnabled(boolean enable) {
         boolean old = _openFile;
         _openFile = enable;
-        setDirtyAndFirePropertyChange(OPEN_FILE_CHANGED_PROPERTY, old ? "true" : "false", enable ? "true" // NOI18N
-                : "false"); // NOI18N
+        setDirtyAndFirePropertyChange(OPEN_FILE_CHANGED_PROPERTY, old, enable);
     }
 
     /**
@@ -139,8 +138,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     public void setRunFileEnabled(boolean enable) {
         boolean old = _runFile;
         _runFile = enable;
-        setDirtyAndFirePropertyChange(RUN_FILE_CHANGED_PROPERTY, old ? "true" : "false", enable ? "true" // NOI18N
-                : "false"); // NOI18N
+        setDirtyAndFirePropertyChange(RUN_FILE_CHANGED_PROPERTY, old, enable);
     }
 
     /**
@@ -402,8 +400,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
             train = new Train(Integer.toString(_id), name);
             int oldSize = getNumEntries();
             _trainHashTable.put(train.getId(), train);
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                    getNumEntries());
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, getNumEntries());
         }
         return train;
     }
@@ -421,6 +418,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         if (id > _id) {
             _id = id;
         }
+        train.addPropertyChangeListener(this);
         setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, getNumEntries());
     }
 
@@ -1065,8 +1063,8 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
      * @param train the train wanting to be built
      * @return true if okay to build train
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-            justification="I18N of warning message")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "I18N of warning message")
     public boolean checkBuildOrder(Train train) {
         if (Setup.isBuildOnTime()) {
             Train t = getLastTrainBuiltByDepartureTime();
@@ -1197,8 +1195,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         }
         return _maxTrainNameLength;
     }
-    
-    
+
     private final Hashtable<String, Integer> _HardcopyWriterHashTable = new Hashtable<>();
 
     public Integer getHardcopyWriterLineLength(String fontName, Integer fontStyle, Integer fontsize, Dimension pagesize,
@@ -1383,6 +1380,10 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("TrainManager sees property change: {} old: {} new: {}", e.getPropertyName(), e.getOldValue(),
                 e.getNewValue());
+        if (e.getPropertyName().equals(Train.NAME_CHANGED_PROPERTY)) {
+            // reset max train name length
+            _maxTrainNameLength = 0;
+        }
     }
 
     private void setDirtyAndFirePropertyChange(String p, Object old, Object n) {

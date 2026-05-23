@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no" >
+    <version version="1" author="Petr Šídlo sidlo64@hotmail.com" lastUpdated="20260515"/>
+    <!-- Locomotive decoder  -->
+    <!-- Description https://mtb-model.com -->
+    
+    <decoder>
+
+        <family name="Locomotive Decoders" mfg="MTB Model" >  
+            <model model="MND25-P22" lowVersionID="30" highVersionID="30" maxInputVolts="12V AC" maxTotalCurrent="1.0A" 
+                numOuts="9" connector="PluX22" > 
+                <output name="1" label="Front Light">
+                  <label xml:lang="cs">Světla přední</label>
+                </output>
+                <output name="2" label="Rear Light">
+                  <label xml:lang="cs">Světla zadní</label>
+                </output>
+                <output name="3" label="AUX1" />
+                <output name="4" label="AUX2" />
+                <output name="5" label="AUX3" />
+                <output name="6" label="AUX4" />
+                <output name="7" label="AUX5" />
+                <output name="8" label="AUX6" />
+                <output name="9" label="AUX7" />
+                <protocols>
+                    <protocol>dcc</protocol>
+                </protocols>
+            </model>            
+            <model model="MND25-P16" lowVersionID="30" highVersionID="30" maxInputVolts="12V AC" maxTotalCurrent="1.0A" 
+                numOuts="4" connector="PluX16" > 
+                <output name="1" label="Front Light">
+                  <label xml:lang="cs">Světla přední</label>
+                </output>
+                <output name="2" label="Rear Light">
+                  <label xml:lang="cs">Světla zadní</label>
+                </output>
+                <output name="3" label="AUX1" />
+                <output name="4" label="AUX2" />
+                <protocols>
+                    <protocol>dcc</protocol>
+                </protocols>
+            </model>            
+            <model model="MND25-N18" lowVersionID="30" highVersionID="30" maxInputVolts="12V AC" maxTotalCurrent="1.0A" 
+                numOuts="8" connector="Next18" > 
+                <output name="1" label="Front Light">
+                  <label xml:lang="cs">Světla přední</label>
+                </output>
+                <output name="2" label="Rear Light">
+                  <label xml:lang="cs">Světla zadní</label>
+                </output>
+                <output name="3" label="AUX1" />
+                <output name="4" label="AUX2" />
+                <output name="5" label="AUX3" />
+                <output name="6" label="AUX4" />
+                <output name="7" label="AUX5" />
+                <output name="8" label="AUX6" />
+                <protocols>
+                    <protocol>dcc</protocol>
+                </protocols>
+            </model>            
+            <model model="MSD25-P22" lowVersionID="32" highVersionID="32" maxInputVolts="12V AC" maxTotalCurrent="1.0A" 
+                numOuts="9" connector="PluX22" > 
+                <output name="1" label="Front Light">
+                  <label xml:lang="cs">Světla přední</label>
+                </output>
+                <output name="2" label="Rear Light">
+                  <label xml:lang="cs">Světla zadní</label>
+                </output>
+                <output name="3" label="AUX1" />
+                <output name="4" label="AUX2" />
+                <output name="5" label="AUX3" />
+                <output name="6" label="AUX4" />
+                <output name="7" label="AUX5" />
+                <output name="8" label="AUX6" />
+                <output name="9" label="AUX7" />
+                <protocols>
+                    <protocol>dcc</protocol>
+                </protocols>
+            </model>            
+            <model model="MSD25-P16" lowVersionID="32" highVersionID="32" maxInputVolts="12V AC" maxTotalCurrent="1.0A" 
+                numOuts="4" connector="PluX16" > 
+                <output name="1" label="Front Light">
+                  <label xml:lang="cs">Světla přední</label>
+                </output>
+                <output name="2" label="Rear Light">
+                  <label xml:lang="cs">Světla zadní</label>
+                </output>
+                <output name="3" label="AUX1" />
+                <output name="4" label="AUX2" />
+                <protocols>
+                    <protocol>dcc</protocol>
+                </protocols>
+            </model>            
+            <model model="MSD25-N18" lowVersionID="32" highVersionID="32" maxInputVolts="12V AC" maxTotalCurrent="1.0A" 
+                numOuts="8" connector="Next18" > 
+                <output name="1" label="Front Light">
+                  <label xml:lang="cs">Světla přední</label>
+                </output>
+                <output name="2" label="Rear Light">
+                  <label xml:lang="cs">Světla zadní</label>
+                </output>
+                <output name="3" label="AUX1" />
+                <output name="4" label="AUX2" />
+                <output name="5" label="AUX3" />
+                <output name="6" label="AUX4" />
+                <output name="7" label="AUX5" />
+                <output name="8" label="AUX6" />
+                <protocols>
+                    <protocol>dcc</protocol>
+                </protocols>
+            </model>            
+        </family>
+
+        <programming direct="yes" paged="no" register="no" ops="yes" />
+        
+<!--  ====================================================================== -->
+
+        <variables>
+
+            <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>    	
+            <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
+
+            <xi:include href="http://jmri.org/xml/decoders/mtb/var_functionmap_F0.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/mtb/var_functionmap_F1_F12.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/mtb/var_aditionalFunctions.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/mtb/var_basicSpeedControl.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/mtb/var_motor.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/mtb/var_consist.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/mtb/var_ABC.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/mtb/var_RailCom.xml"/>
+
+
+            <variable item="Key" CV="15" default="0">
+                <decVal/>
+                <label>Key</label>
+                <label xml:lang="cs">Klíč</label>
+                <tooltip>Key for lock.</tooltip>
+                <tooltip xml:lang="cs">Klíč k zámku.</tooltip>
+            </variable>
+
+            <variable item="Lock" CV="16" default="0">
+                <decVal/>
+                <label>Lock</label>
+                <label xml:lang="cs">Zámek</label>
+                <tooltip>Unlocked when Key = Lock.</tooltip>
+                <tooltip xml:lang="cs">Odemčeno když Klíč = Zámek.</tooltip>
+            </variable>
+
+            <variable CV="47" item="Firmware" readOnly="yes" >
+                <decVal/>
+                <label>Firmware</label>
+                <label xml:lang="cs">Firmware</label>
+            </variable>
+
+        </variables> 
+
+        <resets>
+            <factReset CV="8" default="8">
+                <label>Reset All CVs</label>
+                <label xml:lang="cs">Reset všech CV</label>
+            </factReset>
+        </resets>
+
+    </decoder>
+
+<!--  ====================================================================== -->
+    <xi:include href="http://jmri.org/xml/decoders/mtb/pane_Basic.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/mtb/pane_Motor.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/mtb/pane_BasicSpeedControl.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/mtb/pane_FunctionMap.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/mtb/pane_AditionalFunctions.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/mtb/pane_Consist.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/mtb/pane_ABC.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/mtb/pane_RailCom.xml"/>
+
+</decoder-config>

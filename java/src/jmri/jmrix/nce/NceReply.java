@@ -1,5 +1,6 @@
 package jmri.jmrix.nce;
 
+import jmri.jmrix.nce.ncemon.NceMonBinary;
 
 /**
  * Carries the reply to an NceMessage.
@@ -12,7 +13,6 @@ package jmri.jmrix.nce;
 public class NceReply extends jmri.jmrix.AbstractMRReply {
 
     NceTrafficController tc;
-    private static final jmri.jmrix.nce.ncemon.NceMonBinary nceMon = new jmri.jmrix.nce.ncemon.NceMonBinary();
 
     // create a new one
     public NceReply(NceTrafficController tc) {
@@ -101,7 +101,7 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
      */
     @Override
     public String toMonitorString() {
-        return nceMon.displayReply(this);
+        return NceMonBinary.INSTANCE.displayReply(this);
     }
 
 }
