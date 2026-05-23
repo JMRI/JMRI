@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2026 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2026</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Petr</firstname>
+                <surname>Sidlo</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2026-05-20</date>
+            <authorinitials>PS</authorinitials>
+            <revremark>Initial version</revremark>
+        </revision>
+    </revhistory>
+
+        <variable item="Vstart" CV="2" default="4">
+            <decVal max="64" />
+            <label>Vstart</label>
+            <label xml:lang="cs">Rozjezdová rychlost</label>
+            <tooltip>&lt;html&gt;A value of 255 corresponds to 100%.&lt;br&gt;The maximum allowed is 25%, i.e. 64.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="cs">&lt;html&gt;Hodnota 255 odpovídá 100 %.&lt;br&gt;Povolené maximum je 25 %, tj. 64.&lt;/html&gt;</tooltip>
+        </variable>
+
+        <variable item="Vhigh" CV="5" default="255">
+            <decVal min="128" />
+            <label>Vhigh</label>
+            <label xml:lang="cs">Maximální rychlost</label>
+            <tooltip>&lt;html&gt;A value of 255 corresponds to 100%.&lt;br&gt;The minimum allowed is 50%, i.e. 128.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="cs">&lt;html&gt;Hodnota 255 odpovídá 100 %.&lt;br&gt;Povolené minimum je 50 %, tj. 128.&lt;/html&gt;</tooltip>
+        </variable>
+
+        <variable item="Vmid" CV="6" default="0" readOnly="yes" >
+            <decVal min="0" max="255" />
+            <label>Vmid</label>
+            <label xml:lang="cs">Střední rychlost</label>
+            <tooltip>Not used</tooltip>
+            <tooltip xml:lang="cs">Nepoužito</tooltip>
+        </variable>
+        
+        <variable item="Forward Trim MTB" CV="66" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/mtb/enum_trim64.xml"/>
+            <label>Forward Trim</label>
+            <label xml:lang="cs">Koeficient rychlosti vpřed</label>
+            <tooltip>&lt;html&gt;Forward speed coefficient.&lt;br&gt;Zero is off.&lt;br&gt;Minimum value is 64.&lt;br&gt;Maximum value is 255.&lt;br&gt;The coefficient is calculated as Value /128, that is 128 = 100%.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="cs">&lt;html&gt;Koeficient rychlosti vpřed.&lt;br&gt;Nula je vypnuto.&lt;br&gt;Minimální hodnota je 64.&lt;br&gt;Maximální hodnota je 255.&lt;br&gt;Koeficient se vypočte jako Hodota /128, to je 128 = 100 %.&lt;/html&gt;</tooltip>
+        </variable>
+
+        <variable item="Reverse Trim MTB" CV="95" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/mtb/enum_trim64.xml"/>
+            <label>Reverse Trim</label>
+            <label xml:lang="cs">Koeficient rychlosti vzad</label>
+            <tooltip>&lt;html&gt;Reverse speed coefficient.&lt;br&gt;Zero is off.&lt;br&gt;Minimum value is 64.&lt;br&gt;Maximum value is 255.&lt;br&gt;The coefficient is calculated as Value /128, that is 128 = 100%.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="cs">&lt;html&gt;Koeficient rychlosti vzad.&lt;br&gt;Nula je vypnuto.&lt;br&gt;Minimální hodnota je 64.&lt;br&gt;Maximální hodnota je 255.&lt;br&gt;Koeficient se vypočte jako Hodota /128, to je 128 = 100 %.&lt;/html&gt;</tooltip>
+        </variable>
+
+</variables>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2026 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2026</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Petr</firstname>
+                <surname>Sidlo</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2026-05-15</date>
+            <authorinitials>PS</authorinitials>
+            <revremark>Initial version</revremark>
+        </revision>
+    </revhistory>
+
+    <variable item="FL(f) controls F0f" CV="33" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(f) controls F0f</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vpřed) řídí F0f</tooltip>
+    </variable>
+    <variable item="FL(f) controls F0r" CV="33" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(f) controls F0r</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vpřed) řídí F0r</tooltip>
+    </variable>
+    <variable item="FL(f) controls AUX1" CV="33" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(f) controls AUX1</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vpřed) řídí AUX1</tooltip>
+    </variable>
+    <variable item="FL(f) controls AUX2" CV="33" mask="XXXXVXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(f) controls AUX2</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vpřed) řídí AUX2</tooltip>
+    </variable>
+    <variable item="FL(f) controls AUX3" CV="33" mask="XXXVXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(f) controls AUX3</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vpřed) řídí AUX3</tooltip>
+    </variable>
+    <variable item="FL(f) controls AUX4" CV="33" mask="XXVXXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(f) controls AUX4</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vpřed) řídí AUX4</tooltip>
+    </variable>
+    <variable item="FL(f) controls AUX5" CV="33" mask="XVXXXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(f) controls AUX5</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vpřed) řídí AUX5</tooltip>
+    </variable>
+    <variable item="FL(f) controls AUX6" CV="33" mask="VXXXXXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(f) controls AUX6</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vpřed) řídí AUX6</tooltip>
+    </variable>
+    <variable item="FL(r) controls F0f" CV="34" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(r) controls F0f</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vzad) řídí F0f</tooltip>
+    </variable>
+    <variable item="FL(r) controls F0r" CV="34" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(r) controls F0r</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vzad) řídí F0r</tooltip>
+    </variable>
+    <variable item="FL(r) controls AUX1" CV="34" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(r) controls AUX1</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vzad) řídí AUX1</tooltip>
+    </variable>
+    <variable item="FL(r) controls AUX2" CV="34" mask="XXXXVXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(r) controls AUX2</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vzad) řídí AUX2</tooltip>
+    </variable>
+    <variable item="FL(r) controls AUX3" CV="34" mask="XXXVXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(r) controls AUX3</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vzad) řídí AUX3</tooltip>
+    </variable>
+    <variable item="FL(r) controls AUX4" CV="34" mask="XXVXXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(r) controls AUX4</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vzad) řídí AUX4</tooltip>
+    </variable>
+    <variable item="FL(r) controls AUX5" CV="34" mask="XVXXXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(r) controls AUX5</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vzad) řídí AUX5</tooltip>
+    </variable>
+    <variable item="FL(r) controls AUX6" CV="34" mask="VXXXXXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <tooltip>FL(r) controls AUX6</tooltip>
+        <tooltip xml:lang="cs">F0 světla (vzad) řídí AUX6</tooltip>
+    </variable>
+</variables>
