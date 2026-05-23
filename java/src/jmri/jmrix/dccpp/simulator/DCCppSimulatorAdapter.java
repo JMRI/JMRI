@@ -665,6 +665,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     reply = DCCppReply.parseDCCppReply("jG 4998 4998 4998 4998");
                 } else if (msg.isCurrentValuesMessage()) {
                     generateCurrentValuesReply(); // Handle this special.
+                } else if (msg.isAutomationIDsMessage()) {
+                    reply = DCCppReply.parseDCCppReply("jA 1 2");
+                } else if (msg.isAutomationIDMessage()) {
+                    reply = generateAutomationIDReply(msg.getAutomationIDInt());
                 }
                 break;
 
@@ -719,6 +723,14 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         int functions = locoFunctions.get(locoId);
         s = "l " + locoId + " 0 " + speedByte + " " + functions;  //<l loco slot speedByte functions>
         return s;
+    }
+
+    private DCCppReply generateAutomationIDReply(int id) {
+        switch (id) {
+            case 1: return DCCppReply.parseDCCppReply("jA 1 R \"Simulator Route\"");
+            case 2: return DCCppReply.parseDCCppReply("jA 2 A \"Simulator Auto\"");
+            default: return null;
+        }
     }
 
     /* 's'tatus message gets multiple reply messages */
