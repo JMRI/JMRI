@@ -49,6 +49,11 @@
                 &quot;RX:&quot; direction marker regardless of whether the translated text or raw
                 form is displayed, and the raw form is wrapped in &lt;&hellip;&gt; rather than
                 [&hellip;] to match DCC-EX's native command syntax.</li>
+                <li>A new <strong>EXRAIL Automations</strong> window (under the DCC-EX menu)
+                lists your CommandStation's Routes and Automations and lets you trigger them.
+                Entry details are fetched sequentially for reliability on hardware with small
+                WiFi buffers (Mega+WiFi)
+                (<a href="https://github.com/JMRI/JMRI/pull/15160">PR #15160</a>).</li>
                 <li>The <strong>Virtual LCD</strong> window now supports
                     more than one display. Each display is shown in a single
                     row in the <strong>Virtual LCD</strong> window, with

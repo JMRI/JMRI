@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - Petr Sidlo 2026-05-20 -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+
+    <name>Additional Functions</name>
+    <name xml:lang="cs">Dodatečné funkce</name>
+
+    <column>
+        <grid ipadx="10" ipady="2">
+
+            <griditem gridx="0" gridy="0">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="0">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="2" gridy="0">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="3" gridy="0">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="4" gridy="0">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="5" gridy="0">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="6" gridy="0">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="7" gridy="0">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="8" gridy="0">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="9" gridy="0">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="10" gridy="0">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="11" gridy="0">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+
+            <griditem gridx="0" gridy="1">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="1">
+                <label>
+                    <text>Povoleno</text>
+                </label>
+            </griditem>
+            <griditem gridx="2" gridy="1">
+                <label>
+                    <text>F1</text>
+                </label>
+            </griditem>
+            <griditem gridx="3" gridy="1">
+                <label>
+                    <text>F2</text>
+                </label>
+            </griditem>
+            <griditem gridx="4" gridy="1">
+                <label>
+                    <text>F3</text>
+                </label>
+            </griditem>
+            <griditem gridx="5" gridy="1">
+                <label>
+                    <text>F4</text>
+                </label>
+            </griditem>
+            <griditem gridx="6" gridy="1">
+                <label>
+                    <text>F5</text>
+                </label>
+            </griditem>
+            <griditem gridx="7" gridy="1">
+                <label>
+                    <text>F6</text>
+                </label>
+            </griditem>
+            <griditem gridx="8" gridy="1">
+                <label>
+                    <text>F7</text>
+                </label>
+            </griditem>
+            <griditem gridx="9" gridy="1">
+                <label>
+                    <text>F8</text>
+                </label>
+            </griditem>
+
+            <griditem gridx="0" gridy="2" anchor="LINE_START">
+                <label>
+                    <text>Additiona masking functions global enabled</text>
+                    <text xml:lang="cs">Dodatečné funkce maskování globální povolení</text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="2">
+                <display item="Additional functions global enable" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="2" gridy="2">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="3" gridy="2">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="4" gridy="2">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="5" gridy="2">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="6" gridy="2">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="7" gridy="2">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="8" gridy="2">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="9" gridy="2">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+
+            <griditem gridx="0" gridy="3" anchor="LINE_START">
+                <label>
+                    <text>Enabled masking while direction forward</text>
+                    <text xml:lang="cs">Povolené maskování při směru vpřed</text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="3">
+                <display item="Mask forward reverse" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="2" gridy="3">
+                <display item="Mask forward F1" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="3" gridy="3">
+                <display item="Mask forward F2" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="4" gridy="3">
+                <display item="Mask forward F3" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="5" gridy="3">
+                <display item="Mask forward F4" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="6" gridy="3">
+                <display item="Mask forward F5" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="7" gridy="3">
+                <display item="Mask forward F6" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="8" gridy="3">
+                <display item="Mask forward F7" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="9" gridy="3">
+                <display item="Mask forward F8" label="" format="checkbox" />
+            </griditem>
+
+
+            <griditem gridx="0" gridy="4" anchor="LINE_START">
+                <label>
+                    <text>and reverse</text>
+                    <text xml:lang="cs">a vzad</text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="4">
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="2" gridy="4">
+                <display item="Mask reverse F1" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="3" gridy="4">
+                <display item="Mask reverse F2" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="4" gridy="4">
+                <display item="Mask reverse F3" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="5" gridy="4">
+                <display item="Mask reverse F4" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="6" gridy="4">
+                <display item="Mask reverse F5" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="7" gridy="4">
+                <display item="Mask reverse F6" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="8" gridy="4">
+                <display item="Mask reverse F7" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="9" gridy="4">
+                <display item="Mask reverse F8" label="" format="checkbox" />
+            </griditem>
+
+            <griditem gridx="0" gridy="5" anchor="LINE_START" >
+                <label>
+                    <text>Masking enabled when moving only</text>
+                    <text xml:lang="cs">Povolené maskování při pouze pohybu</text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="5">
+                <display item="Mask moving" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="2" gridy="5">
+                <display item="Mask moving F1" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="3" gridy="5">
+                <display item="Mask moving F2" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="4" gridy="5">
+                <display item="Mask moving F3" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="5" gridy="5">
+                <display item="Mask moving F4" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="6" gridy="5">
+                <display item="Mask moving F5" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="7" gridy="5">
+                <display item="Mask moving F6" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="8" gridy="5">
+                <display item="Mask moving F7" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="9" gridy="5">
+                <display item="Mask moving F8" label="" format="checkbox" />
+            </griditem>
+
+            <griditem gridx="0" gridy="6" anchor="LINE_START" >
+                <label>
+                    <text>Masking enabled when moving plus Delay Time</text>
+                    <text xml:lang="cs">Povolené maskování při pohybu plus Čas prodlevy</text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="6">
+                <display item="Mask moving and delay" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="2" gridy="6">
+                <display item="Mask moving and delay F1" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="3" gridy="6">
+                <display item="Mask moving and delay F2" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="4" gridy="6">
+                <display item="Mask moving and delay F3" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="5" gridy="6">
+                <display item="Mask moving and delay F4" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="6" gridy="6">
+                <display item="Mask moving and delay F5" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="7" gridy="6">
+                <display item="Mask moving and delay F6" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="8" gridy="6">
+                <display item="Mask moving and delay F7" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="9" gridy="6">
+                <display item="Mask moving and delay F8" label="" format="checkbox" />
+            </griditem>
+
+            <griditem gridx="0" gridy="7" anchor="LINE_START" >
+                <label>
+                    <text>Allowed masking while standing plus Delay Time</text>
+                    <text xml:lang="cs">Povolené maskování při stání plus Čas prodlevy</text>
+                </label>
+            </griditem>
+            <griditem gridx="1" gridy="7">
+                <display item="Mask stop and delay" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="2" gridy="7">
+                <display item="Mask stop and delay F1" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="3" gridy="7">
+                <display item="Mask stop and delay F2" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="4" gridy="7">
+                <display item="Mask stop and delay F3" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="5" gridy="7">
+                <display item="Mask stop and delay F4" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="6" gridy="7">
+                <display item="Mask stop and delay F5" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="7" gridy="7">
+                <display item="Mask stop and delay F6" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="8" gridy="7">
+                <display item="Mask stop and delay F7" label="" format="checkbox" />
+            </griditem>
+            <griditem gridx="9" gridy="7">
+                <display item="Mask stop and delay F8" label="" format="checkbox" />
+            </griditem>
+
+
+        </grid>
+
+        <row>
+            <label>
+              <text> </text>
+            </label>
+        </row>
+        <row>
+            <label>
+              <text> </text>
+            </label>
+        </row>
+        <row>
+            <display item="Delay time" />
+        </row>
+        <row>
+            <label>
+              <text> </text>
+            </label>
+        </row>
+        <row>
+            <label>
+              <text> </text>
+            </label>
+        </row>
+
+        <grid ipadx="10" ipady="2">    
+            <griditem gridx="0" gridy="0" anchor="LINE_START" >
+                <label>
+                <text>The delay time is calculated as input value × 0.08 sec.</text>
+                <text xml:lang="cs">Čas prodlevy se vypočte jako zadaná hodnota × 0,08 s.</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="1" anchor="LINE_START" >
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="2" anchor="LINE_START" >
+                <label>
+                <text>The resulting mask value is calculated as the logical AND of all sub-masks.</text>
+                <text xml:lang="cs">Výsledná hodnota masky se vypočte jako logický součin AND všech dílčích masek.</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="3" anchor="LINE_START" >
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="4" anchor="LINE_START" >
+                <label>
+                <text>Directional masking allows you to disable the function in the selected direction.</text>
+                <text xml:lang="cs">Směrové maskování umožní zakázat funkci ve zvoleném směru.</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="5" anchor="LINE_START" >
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="6" anchor="LINE_START" >
+                <label>
+                <text>Masking on the move will disable the function when driving</text>
+                <text xml:lang="cs">Maskování za pohybu umožní zakázat funkci při jízdě</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="7" anchor="LINE_START" >
+                <label>
+                <text>and enable it when stationary.</text>
+                <text xml:lang="cs">a povolit při stání.</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="8" anchor="LINE_START" >
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="9" anchor="LINE_START" >
+                <label>
+                <text>Masking on the move with a time delay will allow you to disable the function while driving (and enable it when stationary after a time delay).</text>
+                <text xml:lang="cs">Maskování při pohybu s časovou prodlevou umožní zakázat funkci při jízdě</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="10" anchor="LINE_START" >
+                <label>
+                <text>Masking on the move with a time delay will allow you to disable the function while driving (and enable it when stationary after a time delay).</text>
+                <text xml:lang="cs">a povolit při zastavení po uplynutí časové prodlevy.</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="11" anchor="LINE_START" >
+                <label>
+                    <text> </text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="12" anchor="LINE_START" >
+                <label>
+                <text>Masking while stationary with a time delay allows you to disable the function while stationary</text>
+                <text xml:lang="cs">Maskování při stání s časovou prodlevou umožní zakázat funkci při stání</text>
+                </label>
+            </griditem>
+            <griditem gridx="0" gridy="13" anchor="LINE_START" >
+                <label>
+                <text>and enable it while driving and after stopping for the duration of the time delay.</text>
+                <text xml:lang="cs">a povolit při jízdě a po zastavení po dobu uplynutí časové prodlevy.</text>
+                </label>
+            </griditem>
+        </grid>
+
+    </column>
+        
+</pane>

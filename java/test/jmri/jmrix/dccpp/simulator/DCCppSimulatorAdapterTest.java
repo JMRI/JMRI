@@ -71,7 +71,22 @@ public class DCCppSimulatorAdapterTest {
         Assert.assertEquals("Loco State: LocoId:1234 Dir:Reverse Speed:0 F0-28:00000000000010000000000000000", r.toMonitorString());
     }
 
-    // setup and teardown    
+    @Test
+    public void testAutomationReplies() {
+        DCCppReply r = getReplyForMessage(DCCppMessage.makeAutomationIDsMsg());
+        Assertions.assertNotNull(r, "reply to <JA> should not be null");
+        Assertions.assertTrue(r.isAutomationIDsReply(), "should be AutomationIDs reply");
+        Assertions.assertFalse(r.getAutomationIDList().isEmpty(), "simulator should return at least one entry");
+
+        int firstId = r.getAutomationIDList().get(0);
+        DCCppReply r2 = getReplyForMessage(DCCppMessage.makeAutomationIDMsg(firstId));
+        Assertions.assertNotNull(r2, "reply to <JA id> should not be null");
+        Assertions.assertTrue(r2.isAutomationIDReply(), "should be AutomationID detail reply");
+        Assertions.assertEquals(firstId, r2.getAutomationIDInt());
+        Assertions.assertFalse(r2.getAutomationDescString().isEmpty(), "description should not be empty");
+    }
+
+    // setup and teardown
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

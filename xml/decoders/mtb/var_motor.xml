@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2026 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2026</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Petr</firstname>
+                <surname>Sidlo</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2026-05-20</date>
+            <authorinitials>PS</authorinitials>
+            <revremark>Initial version</revremark>
+        </revision>
+    </revhistory>
+
+        <variable item="Mode EMF" CV="10" default="0">
+            <enumVal>
+                <enumChoice choice="Deactivated" value="0">
+                    <choice>Deactivated</choice>
+                    <choice xml:lang="cs">Vypnuto</choice>
+                </enumChoice>
+                <enumChoice choice="Activated Short" value="1">
+                    <choice>Activated for short motors MTB</choice>
+                    <choice xml:lang="cs">Zapnuto pro krátké motory MTB</choice>
+                </enumChoice>
+                <enumChoice choice="Activated Long" value="2">
+                    <choice>Activated for long motors MTB</choice>
+                    <choice xml:lang="cs">Zapnuto pro dlouhé motory MTB</choice>
+                </enumChoice>
+            </enumVal>
+            <label>Mode EMF</label>
+            <label xml:lang="cs">EMF režim</label>
+            <tooltip>When EMF mode is on, the Vstart ​​is ignored.</tooltip>
+            <tooltip xml:lang="cs">Při zapnutém režimu EMF se ignoruje Rozjezdová rychlost.</tooltip>
+        </variable>
+
+        <variable item="Power failure timeout" CV="11" default="100">
+            <decVal/>
+            <label>Power Failure Timeout</label>
+            <label xml:lang="cs">Časový limit výpadku napájení</label>
+            <tooltip>&lt;html&gt;Value × 10 ms after the loss of the DCC targeted packet, the drive stops.&lt;br&gt;If any packet is lost, it switches to analog mode.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="cs">&lt;html&gt;Hodnota × 10 ms po ztrátě DCC cíleného paketu zastaví jízdu.&lt;br&gt;Při ztrátě libovolného paketu se přepne do analogového režimu.&lt;/html&gt;</tooltip>
+        </variable>
+    
+        <variable CV="48" item="Keepalive">
+            <enumVal>
+                <enumChoice choice="not used" value="0">
+                    <choice xml:lang="cs">nepoužit</choice>
+                </enumChoice>
+                <enumChoice choice="connected" value="1">
+                    <choice xml:lang="cs">připojen</choice>
+                </enumChoice>
+            </enumVal>
+            <label>Keep alive capacitor</label>
+            <label xml:lang="cs">Zálohovací kondenzátor</label>
+            <tooltip>&lt;html&gt;If the Keep alive capacitor is not used the decoder will go into power-save mode due to power loss.&lt;br&gt;If the SuperCap/LiPol capacitor is used the decoder will continue to drive according to the Power Failure Timeout and then stop.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="cs">&lt;html&gt;Pokud není použit zálohovací kondenzátor, tak pro ztrátě napájení dekodér přejde do režimu power-save.&lt;br&gt;Pokud je použit kondenzátor SuperCap/LiPol dekodér pokračuje v jízdě podle času Časový limit výpadku napájení a poté zastaví.&lt;/html&gt;</tooltip>
+        </variable>
+
+
+</variables>
