@@ -329,70 +329,41 @@ public class TrainBuilder extends TrainBuilderCars {
                             mbi.getCount()));
             // the number of cars requested by this line item
             int count = mbi.getCount();
-            for (_carIndex = 0; _carIndex < getCarList().size(); _carIndex++) {
-                Car car = getCarList().get(_carIndex);
-                // find a car
-                if (car.getTrain() != null) {
-                    log.debug("Car ({}) is assigned to train ({})", car.toString(), car.getTrain().getName());
-                    continue;
-                }
-                if (car.getDestination() != null) {
-                    log.debug("Car ({}) has destination ({})", car.toString(), car.getDestination().getName());
-                    continue;
-                }
-                if (car.getFinalDestination() != null) {
-                    log.debug("Car ({}) has final destination ({})", car.toString(),
-                            car.getFinalDestination().getName());
-                    continue;
-                }
-                if (!mbi.getTypeName().equals(Car.NONE) && !car.getTypeName().equals(mbi.getTypeName())) {
-                    continue;
-                }
-                if (!mbi.getRoadName().equals(Car.NONE) && !car.getRoadName().equals(mbi.getRoadName())) {
-                    continue;
-                }
-                if (!mbi.getLoadName().equals(Car.NONE) && !car.getLoadName().equals(mbi.getLoadName())) {
-                    continue;
-                }
-                if (mbi.getRouteLocation() != null && car.getLocation() != mbi.getRouteLocation().getLocation()) {
-                    continue;
-                }
-                if (mbi.getLocationTrack() != null && car.getTrack() != mbi.getLocationTrack()) {
-                    continue;
-                }
-                // pick up day
-                if (trainScheduleManager.getActiveSchedule() != null &&
-                        !mbi.getTrainScheduleName().equals(TrainManualBuildItem.NONE) &&
-                        !trainScheduleManager.getActiveSchedule().getId().equals(mbi.getTrainScheduleId())) {
-                    continue;
-                }
-                addLine(FIVE,
-                        Bundle.getMessage("mbuildFoundCar", car.getTypeName(), car.getRoadName(), car.getLoadName(),
-                                car.getLocationName(), car.getTrackName()));
-                // there could be a an optional destination
-                car.setFinalDestination(mbi.getDestination());
-                car.setFinalDestinationTrack(mbi.getDestinationTrack());
-                // case where there's a route location
-                if (mbi.getRouteLocation() != null) {
-                    findDestinationForCar(mbi.getRouteLocation(), car);
-                } else {
-                    for (RouteLocation rl : getRouteList()) {
-                        // start looking at car's location
-                        if (rl.getLocation() == car.getLocation()) {
-                            findDestinationForCar(rl, car);
-                        }
-                        if (car.getTrain() != null) {
-                            break; // done
+            if (count > 0) {
+                for (_carIndex = 0; _carIndex < getCarList().size(); _carIndex++) {
+                    Car car = getCarList().get(_carIndex);
+                    // find a car that meets the user's requests
+                    if (!checkItem(mbi, car)) {
+                        continue;
+                    }
+                    addLine(FIVE,
+                            Bundle.getMessage("mbuildFoundCar", car.getTypeName(), car.getRoadName(), car.getLoadName(),
+                                    car.getLocationName(), car.getTrackName()));
+                    // there could be a an optional destination
+                    car.setFinalDestination(mbi.getDestination());
+                    car.setFinalDestinationTrack(mbi.getDestinationTrack());
+                    // case where the user specified a route location
+                    if (mbi.getRouteLocation() != null) {
+                        findDestinationForCar(mbi.getRouteLocation(), car);
+                    } else {
+                        for (RouteLocation rl : getRouteList()) {
+                            // start looking at car's location
+                            if (rl.getLocation() == car.getLocation()) {
+                                findDestinationForCar(rl, car);
+                            }
+                            if (car.getTrain() != null) {
+                                break; // done
+                            }
                         }
                     }
-                }
-                // if not assigned to train, clear final destination
-                if (car.getTrain() == null) {
-                    car.setFinalDestination(null);
-                    car.setFinalDestinationTrack(null);
-                } else {
-                    if (--count <= 0) {
-                        break; // done
+                    // if not assigned to train, clear final destination
+                    if (car.getTrain() == null) {
+                        car.setFinalDestination(null);
+                        car.setFinalDestinationTrack(null);
+                    } else {
+                        if (--count <= 0) {
+                            break; // done
+                        }
                     }
                 }
             }
@@ -407,10 +378,66 @@ public class TrainBuilder extends TrainBuilderCars {
             } else if (count > 0 && mbi.isWarnEnabled()) {
                 _warnings++;
                 addLine(ONE, Bundle.getMessage("mbuildWarn", manualBuild.getTrainName(), mbi.getId()));
+                addLine(ONE, BLANK_LINE);
+            }
+
+            if (mbi.isRemoveEnabled()) {
+                for (_carIndex = 0; _carIndex < getCarList().size(); _carIndex++) {
+                    Car car = getCarList().get(_carIndex);
+                    // find a car that meets the user's requests
+                    if (checkItem(mbi, car)) {
+                        addLine(FIVE, Bundle.getMessage("mbuildRemove", mbi.getId(), car.toString(), car.getTrackType(),
+                                car.getLocationName(), car.getTrackName()));
+                        remove(car);
+                    }
+                }
+                addLine(FIVE, BLANK_LINE);
             }
         }
         addLine(ONE, Bundle.getMessage("mbuildDone"));
         addLine(ONE, BLANK_LINE); // end of manual build
+    }
+
+    /*
+     * Returns true if the car matches the user's request. Car can not be
+     * assigned to this train, have a destination, or a final destination.
+     */
+    private boolean checkItem(TrainManualBuildItem mbi, Car car) {
+        if (car.getTrain() != null) {
+            log.debug("Car ({}) is assigned to train ({})", car.toString(), car.getTrain().getName());
+            return false;
+        }
+        if (car.getDestination() != null) {
+            log.debug("Car ({}) has destination ({})", car.toString(), car.getDestination().getName());
+            return false;
+        }
+        if (car.getFinalDestination() != null) {
+            log.debug("Car ({}) has final destination ({})", car.toString(),
+                    car.getFinalDestination().getName());
+            return false;
+        }
+        if (!mbi.getTypeName().equals(Car.NONE) && !car.getTypeName().equals(mbi.getTypeName())) {
+            return false;
+        }
+        if (!mbi.getRoadName().equals(Car.NONE) && !car.getRoadName().equals(mbi.getRoadName())) {
+            return false;
+        }
+        if (!mbi.getLoadName().equals(Car.NONE) && !car.getLoadName().equals(mbi.getLoadName())) {
+            return false;
+        }
+        if (mbi.getRouteLocation() != null && car.getLocation() != mbi.getRouteLocation().getLocation()) {
+            return false;
+        }
+        if (mbi.getLocationTrack() != null && car.getTrack() != mbi.getLocationTrack()) {
+            return false;
+        }
+        // pick up day
+        if (trainScheduleManager.getActiveSchedule() != null &&
+                !mbi.getTrainScheduleName().equals(TrainManualBuildItem.NONE) &&
+                !trainScheduleManager.getActiveSchedule().getId().equals(mbi.getTrainScheduleId())) {
+            return false;
+        }
+        return true;
     }
 
     private boolean findDestinationForCar(RouteLocation rl, Car car) throws BuildFailedException {

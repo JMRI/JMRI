@@ -152,7 +152,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public String getName() {
         return _name;
     }
-    
+
     public String getSplitName() {
         return TrainCommon.splitString(getName());
     }
@@ -213,7 +213,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         int old = _length;
         _length = length;
         if (old != length) {
-            setDirtyAndFirePropertyChange(LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
+            setDirtyAndFirePropertyChange(LENGTH_CHANGED_PROPERTY, old, length);
         }
     }
 
@@ -228,7 +228,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         int old = _usedLength;
         _usedLength = length;
         if (old != length) {
-            setDirtyAndFirePropertyChange(USEDLENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
+            setDirtyAndFirePropertyChange(USEDLENGTH_CHANGED_PROPERTY, old, length);
         }
     }
 
@@ -312,8 +312,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         int old = _trainDir;
         _trainDir = direction;
         if (old != direction) {
-            setDirtyAndFirePropertyChange(TRAIN_DIRECTION_CHANGED_PROPERTY, Integer.toString(old),
-                    Integer.toString(direction));
+            setDirtyAndFirePropertyChange(TRAIN_DIRECTION_CHANGED_PROPERTY, old, direction);
         }
     }
 
@@ -337,7 +336,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         int old = _numberRS;
         _numberRS = number;
         if (old != number) {
-            setDirtyAndFirePropertyChange("locationNumberRS", Integer.toString(old), Integer.toString(number)); // NOI18N
+            setDirtyAndFirePropertyChange("locationNumberRS", old, number); // NOI18N
         }
     }
 
@@ -357,8 +356,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         int old = _numberCars;
         _numberCars = number;
         if (old != number) {
-            setDirtyAndFirePropertyChange("locationNumberCars", Integer.toString(old), // NOI18N
-                    Integer.toString(number)); // NOI18N
+            setDirtyAndFirePropertyChange("locationNumberCars", old, number); // NOI18N
         }
     }
 
@@ -376,8 +374,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         int old = _numberEngines;
         _numberEngines = number;
         if (old != number) {
-            setDirtyAndFirePropertyChange("locationNumberEngines", Integer.toString(old), // NOI18N
-                    Integer.toString(number)); // NOI18N
+            setDirtyAndFirePropertyChange("locationNumberEngines", old, number); // NOI18N
         }
     }
 
@@ -398,8 +395,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         boolean old = _switchList;
         _switchList = switchList;
         if (old != switchList) {
-            setDirtyAndFirePropertyChange(SWITCHLIST_CHANGED_PROPERTY, old ? "true" : "false", // NOI18N
-                    switchList ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange(SWITCHLIST_CHANGED_PROPERTY, old, switchList);
         }
     }
 
@@ -475,7 +471,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public void setTrainIconEast(Point point) {
         Point old = _trainIconEast;
         _trainIconEast = point;
-        setDirtyAndFirePropertyChange("locationTrainIconEast", old.toString(), point.toString()); // NOI18N
+        setDirtyAndFirePropertyChange("locationTrainIconEast", old, point); // NOI18N
     }
 
     public Point getTrainIconEast() {
@@ -485,7 +481,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public void setTrainIconWest(Point point) {
         Point old = _trainIconWest;
         _trainIconWest = point;
-        setDirtyAndFirePropertyChange("locationTrainIconWest", old.toString(), point.toString()); // NOI18N
+        setDirtyAndFirePropertyChange("locationTrainIconWest", old, point); // NOI18N
     }
 
     public Point getTrainIconWest() {
@@ -495,7 +491,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public void setTrainIconNorth(Point point) {
         Point old = _trainIconNorth;
         _trainIconNorth = point;
-        setDirtyAndFirePropertyChange("locationTrainIconNorth", old.toString(), point.toString()); // NOI18N
+        setDirtyAndFirePropertyChange("locationTrainIconNorth", old, point); // NOI18N
     }
 
     public Point getTrainIconNorth() {
@@ -505,7 +501,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public void setTrainIconSouth(Point point) {
         Point old = _trainIconSouth;
         _trainIconSouth = point;
-        setDirtyAndFirePropertyChange("locationTrainIconSouth", old.toString(), point.toString()); // NOI18N
+        setDirtyAndFirePropertyChange("locationTrainIconSouth", old, point); // NOI18N
     }
 
     public Point getTrainIconSouth() {
@@ -521,7 +517,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         int old = _trainIconRangeX;
         _trainIconRangeX = x;
         if (old != x) {
-            setDirtyAndFirePropertyChange("trainIconRangeX", Integer.toString(old), Integer.toString(x)); // NOI18N
+            setDirtyAndFirePropertyChange("trainIconRangeX", old, x); // NOI18N
         }
     }
 
@@ -544,7 +540,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         int old = _trainIconRangeY;
         _trainIconRangeY = y;
         if (old != y) {
-            setDirtyAndFirePropertyChange("trainIconRangeY", Integer.toString(old), Integer.toString(y)); // NOI18N
+            setDirtyAndFirePropertyChange("trainIconRangeY", old, y); // NOI18N
         }
     }
 
@@ -590,7 +586,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public void addPickupRS() {
         int old = _pickupRS;
         _pickupRS++;
-        setDirtyAndFirePropertyChange("locationAddPickupRS", Integer.toString(old), Integer.toString(_pickupRS)); // NOI18N
+        setDirtyAndFirePropertyChange("locationAddPickupRS", old, _pickupRS); // NOI18N
     }
 
     /**
@@ -600,7 +596,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public void deletePickupRS() {
         int old = _pickupRS;
         _pickupRS--;
-        setDirtyAndFirePropertyChange("locationDeletePickupRS", Integer.toString(old), Integer.toString(_pickupRS)); // NOI18N
+        setDirtyAndFirePropertyChange("locationDeletePickupRS", old, _pickupRS); // NOI18N
     }
 
     /**
@@ -610,7 +606,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public void addDropRS() {
         int old = _dropRS;
         _dropRS++;
-        setDirtyAndFirePropertyChange("locationAddDropRS", Integer.toString(old), Integer.toString(_dropRS)); // NOI18N
+        setDirtyAndFirePropertyChange("locationAddDropRS", old, _dropRS); // NOI18N
     }
 
     /**
@@ -620,7 +616,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public void deleteDropRS() {
         int old = _dropRS;
         _dropRS--;
-        setDirtyAndFirePropertyChange("locationDeleteDropRS", Integer.toString(old), Integer.toString(_dropRS)); // NOI18N
+        setDirtyAndFirePropertyChange("locationDeleteDropRS", old, _dropRS); // NOI18N
     }
 
     /**
@@ -792,7 +788,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * @param track The Track to be loaded at this location.
      */
     public void register(Track track) {
-        Integer old = Integer.valueOf(getNumberOfTracks());
+        int old = getNumberOfTracks();
         _trackHashTable.put(track.getId(), track);
         // add to the locations's available track length
         setLength(getLength() + track.getLength());
@@ -802,7 +798,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         if (id > _IdNumber) {
             _IdNumber = id;
         }
-        setDirtyAndFirePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(getNumberOfTracks()));
+        setDirtyAndFirePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, old, getNumberOfTracks());
         // listen for name and state changes to forward
         track.addPropertyChangeListener(this);
     }
@@ -813,10 +809,9 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             // subtract from the locations's available track length
             setLength(getLength() - track.getLength());
             track.dispose();
-            Integer old = Integer.valueOf(getNumberOfTracks());
+            int old = getNumberOfTracks();
             _trackHashTable.remove(track.getId());
-            setDirtyAndFirePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, old,
-                    Integer.valueOf(getNumberOfTracks()));
+            setDirtyAndFirePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, old, getNumberOfTracks());
         }
     }
 
@@ -1126,8 +1121,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public void removePool(Pool pool) {
         if (pool != null) {
             _poolHashTable.remove(pool.getId());
-            setDirtyAndFirePropertyChange(POOL_LENGTH_CHANGED_PROPERTY, Integer.valueOf(_poolHashTable.size() + 1),
-                    Integer.valueOf(_poolHashTable.size()));
+            setDirtyAndFirePropertyChange(POOL_LENGTH_CHANGED_PROPERTY, _poolHashTable.size() + 1,
+                    _poolHashTable.size());
         }
     }
 
@@ -1144,7 +1139,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     public void register(Pool pool) {
-        Integer old = Integer.valueOf(_poolHashTable.size());
+        int old = _poolHashTable.size();
         _poolHashTable.put(pool.getId(), pool);
         // find last id created
         String[] getId = pool.getId().split("p");
@@ -1152,7 +1147,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         if (id > _idPoolNumber) {
             _idPoolNumber = id;
         }
-        setDirtyAndFirePropertyChange(POOL_LENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_poolHashTable.size()));
+        setDirtyAndFirePropertyChange(POOL_LENGTH_CHANGED_PROPERTY, old, _poolHashTable.size());
     }
 
     public void updatePoolComboBox(JComboBox<Pool> box) {
@@ -1310,7 +1305,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public boolean hasWork() {
         return (getDropRS() != 0 || getPickupRS() != 0);
     }
-    
+
     public boolean hasDisableLoadChange() {
         for (Track track : getTracksList()) {
             if (track.isSpur() && track.isDisableLoadChangeEnabled()) {
@@ -1319,7 +1314,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         }
         return false;
     }
-    
+
     public boolean hasQuickService() {
         for (Track track : getTracksList()) {
             if (track.isQuickServiceEnabled()) {
@@ -1705,13 +1700,11 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         }
         // update length of tracks at this location if track length changes
         if (e.getPropertyName().equals(Track.LENGTH_CHANGED_PROPERTY)) {
-            setLength(getLength() -
-                    Integer.parseInt((String) e.getOldValue()) +
-                    Integer.parseInt((String) e.getNewValue()));
+            setLength(getLength() - (int) e.getOldValue() + (int) e.getNewValue());
         }
         // if a track type change, must update all tables
         if (e.getPropertyName().equals(Track.TRACK_TYPE_CHANGED_PROPERTY)) {
-            setDirtyAndFirePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, null, null);
+            setDirtyAndFirePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, false, true);
         }
         if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY) ||

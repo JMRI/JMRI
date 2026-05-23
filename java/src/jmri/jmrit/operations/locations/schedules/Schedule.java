@@ -111,10 +111,10 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         log.debug("Adding new item to ({}) id: {}", getName(), id);
         ScheduleItem si = new ScheduleItem(id, type);
         si.setSequenceId(_sequenceNum);
-        Integer old = Integer.valueOf(_scheduleHashTable.size());
+        int old = _scheduleHashTable.size();
         _scheduleHashTable.put(si.getId(), si);
 
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, _scheduleHashTable.size());
         // listen for set out and pick up changes to forward
         si.addPropertyChangeListener(this);
         return si;
@@ -146,7 +146,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
      * @param si The schedule item to add.
      */
     public void register(ScheduleItem si) {
-        Integer old = Integer.valueOf(_scheduleHashTable.size());
+        int old = _scheduleHashTable.size();
         _scheduleHashTable.put(si.getId(), si);
 
         // find last id created
@@ -159,7 +159,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         if (si.getSequenceId() > _sequenceNum) {
             _sequenceNum = si.getSequenceId();
         }
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, _scheduleHashTable.size());
         // listen for set out and pick up changes to forward
         si.addPropertyChangeListener(this);
     }
@@ -175,10 +175,10 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
             // subtract from the items's available track length
             String id = si.getId();
             si.dispose();
-            Integer old = Integer.valueOf(_scheduleHashTable.size());
+            int old = _scheduleHashTable.size();
             _scheduleHashTable.remove(id);
             resequenceIds();
-            setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
+            setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, _scheduleHashTable.size());
         }
     }
 
@@ -283,7 +283,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                 resequenceIds(); // error the sequence number is missing
             }
         }
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, sequenceId);
     }
 
     /**
@@ -306,7 +306,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                 resequenceIds(); // error the sequence number is missing
             }
         }
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, sequenceId);
     }
 
     public ScheduleItem getItemBySequenceId(int sequenceId) {

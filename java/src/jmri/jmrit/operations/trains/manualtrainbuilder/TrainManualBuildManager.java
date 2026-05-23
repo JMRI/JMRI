@@ -76,10 +76,9 @@ public class TrainManualBuildManager extends PropertyChangeSupport implements In
         if (mb == null && !trainId.isBlank()) {
             _id++;
             mb = new TrainManualBuild(Integer.toString(_id), trainId);
-            Integer oldSize = Integer.valueOf(_manualBuildHashTable.size());
+            int oldSize = _manualBuildHashTable.size();
             _manualBuildHashTable.put(mb.getId(), mb);
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_manualBuildHashTable
-                    .size()));
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _manualBuildHashTable.size());
         }
         return mb;
     }
@@ -90,14 +89,14 @@ public class TrainManualBuildManager extends PropertyChangeSupport implements In
      * @param manualBuild The ManualBuild to add.
      */
     public void register(TrainManualBuild manualBuild) {
-        Integer oldSize = Integer.valueOf(_manualBuildHashTable.size());
+        int oldSize = _manualBuildHashTable.size();
         _manualBuildHashTable.put(manualBuild.getId(), manualBuild);
         // find last id created
         int id = Integer.parseInt(manualBuild.getId());
         if (id > _id) {
             _id = id;
         }
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_manualBuildHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _manualBuildHashTable.size());
     }
 
     /**
@@ -110,9 +109,9 @@ public class TrainManualBuildManager extends PropertyChangeSupport implements In
             return;
         }
         manualBuild.dispose();
-        Integer oldSize = Integer.valueOf(_manualBuildHashTable.size());
+        int oldSize = _manualBuildHashTable.size();
         _manualBuildHashTable.remove(manualBuild.getId());
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_manualBuildHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _manualBuildHashTable.size());
     }
 
     /**

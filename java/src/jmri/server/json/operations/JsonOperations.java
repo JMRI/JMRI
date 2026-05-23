@@ -170,6 +170,10 @@ public class JsonOperations {
      */
     public static final String LAST_TRAIN = "last train";
     /**
+     * {@value #LAST_MOVED}
+     */
+    public static final String LAST_MOVED = "last moved";
+    /**
      * {@value #BLOCKING_ORDER}
      */
     public static final String BLOCKING_ORDER = "block order";

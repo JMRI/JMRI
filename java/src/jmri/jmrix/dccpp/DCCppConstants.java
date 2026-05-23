@@ -31,7 +31,7 @@ public final class DCCppConstants {
     public static final int NO_REGISTER_FREE = -1; // TODO: Should this be a unique value?
 
     // DCC-EX over TCP Port Number
-    public static final int DCCPP_OVER_TCP_PORT = 1235;
+    public static final int DCCPP_OVER_TCP_PORT = 2560;
 
     // Communications Port Info
     public static final int COMM_TYPE_SERIAL = 0;
