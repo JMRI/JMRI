@@ -286,7 +286,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                       labelSpeedStepIncrement.updateLabel(Bundle.getMessage("LabelStepIncr"));
                   } else {
                       labelSpeedStepIncrement.updateLabel(Bundle.getMessage("LabelStepDecr"));
-                  };
+                  }
               }
         };
 
