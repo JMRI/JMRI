@@ -56,7 +56,7 @@ public class DCCppTurnoutManagerTest {
     public void testSerialQueueSendsOneRequestOnIDsReply() {
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
-        DCCppTurnoutManager tm = new DCCppTurnoutManager(memo);
+        new DCCppTurnoutManager(memo);
         int baseline = tc.outbound.size();
 
         tc.sendTestMessage(DCCppReply.parseDCCppReply("jT 146 147 201"));
@@ -69,7 +69,7 @@ public class DCCppTurnoutManagerTest {
     public void testSerialQueueAdvancesOnIDReply() {
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
-        DCCppTurnoutManager tm = new DCCppTurnoutManager(memo);
+        new DCCppTurnoutManager(memo);
         int baseline = tc.outbound.size();
 
         tc.sendTestMessage(DCCppReply.parseDCCppReply("jT 146 147"));
