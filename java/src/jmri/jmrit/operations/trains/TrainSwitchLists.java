@@ -135,6 +135,10 @@ public class TrainSwitchLists extends TrainCommon {
                 for (RouteLocation rl : routeList) {
                     if (!rl.getSplitName().equals(location.getSplitName())) {
                         rlPrevious = rl;
+                        if (Setup.getSwitchListPageFormat().equals(Setup.PAGE_PER_TRAIN)) {
+                            _pickupCars = false; // reset
+                            _dropCars = false;
+                        }
                         continue;
                     }
 
