@@ -63,6 +63,14 @@
                     row in the <strong>Virtual LCD</strong> window, with
                     the first display at the left.</li>
                 <li>Change default DCCppOverTCP port from 1235 to 2560 to match DCC-EX default.</li>
+                <li>DCC-EX: turnout details are now fetched one at a time after startup rather than
+                all at once, preventing the command station's WiFi buffer from being overwhelmed
+                on layouts with many turnouts.</li>
+                <li>DCC-EX: out-of-range turnout IDs in the &lt;jT&gt; response (caused by WiFi
+                buffer overflow on Mega+WiFi) are now ignored with a warning rather than being
+                registered as bogus turnouts.</li>
+                <li>DCC-EX Traffic Monitor: the display limit has been raised from 500 to 2000
+                lines, sufficient for large layouts that enumerate many turnouts on startup.</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -531,6 +539,7 @@
           <li>Operations tests now use an isolated <code>NullProfile</code> per test via <code>@TempDir</code>,
               preventing intermittent <code>RosterConfigManager</code> failures on machines with real JMRI profile data.</li>
           <li>New feature, Manifest and switch lists can now display rolling stock last moved date & time.</li>
+          <li>Changed switch lists to now list trains arrivals by time, including turns. Previously a turns work was listed consecutively.</li>
         </ul>
 
    <h3>Panel Editor</h3>

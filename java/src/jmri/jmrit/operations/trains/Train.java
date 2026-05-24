@@ -206,6 +206,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     public static final String AUTO = Bundle.getMessage("Auto");
     public static final String AUTO_HPT = Bundle.getMessage("AutoHPT");
+    
+    // Train has serviced a location
+    public static final int SERVICED = -1;
 
     public Train(String id, String name) {
         //       log.debug("New train ({}) id: {}", name, id);
@@ -387,7 +390,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     public String getExpectedArrivalTime(RouteLocation routeLocation, boolean isSortFormat) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
-        if (minutes == -1) {
+        if (minutes == Train.SERVICED) {
             return ALREADY_SERVICED;
         }
         log.debug("Expected arrival time for train ({}) at ({}), {} minutes", getName(), routeLocation.getName(),
@@ -403,7 +406,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     public String getExpectedDepartureTime(RouteLocation routeLocation, boolean isSortFormat) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
-        if (minutes == -1) {
+        if (minutes == Train.SERVICED) {
             minutes = 0; // provide the work time at routeLocation
         }
         if (routeLocation != null && !routeLocation.getDepartureTimeHourMinutes().equals(RouteLocation.NONE)) {
@@ -462,7 +465,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (!isTrainEnRoute()) {
             minutes += getDepartTimeMinutes();
         } else {
-            minutes = -1; // -1 means train has already served the location
+            minutes = SERVICED; // -1 means train has already served the location
         }
         // boolean trainAt = false;
         boolean trainLocFound = false;

@@ -361,13 +361,14 @@
 <!ATTLIST cabooseChange text		CDATA #IMPLIED>
 <!ATTLIST locoCabooseChange text	CDATA #IMPLIED>
 
-<!ELEMENT switchListTextStrings (switchListFor | scheduledWorkTrain | departsAt | departsExpectedArrival
+<!ELEMENT switchListTextStrings (switchListFor | scheduledWorkTrain | trainVisits | departsAt | departsExpectedArrival
 | departedExpected | visitNumber | visitNumberDeparted | visitNumberTerminates | visitNumberTerminatesDeparted
 | visitNumberDone | trainDirectionChange | noCarPickUps | noCarSetOuts | trainDone | trainDepartsCars | trainDepartsLoads
 | switchListTrack | holdCar)*>
 
 <!ELEMENT switchListFor EMPTY>
 <!ELEMENT scheduledWorkTrain EMPTY>
+<!ELEMENT trainVisits EMPTY>
 <!ELEMENT departsAt EMPTY>
 <!ELEMENT departsExpectedArrival EMPTY>
 <!ELEMENT departedExpected EMPTY>
@@ -386,6 +387,7 @@
 <!ATTLIST switchListFor text			CDATA #IMPLIED>
 <!ATTLIST scheduledWorkTrain text		CDATA #IMPLIED>
 <!ATTLIST departsAt text				CDATA #IMPLIED>
+<!ATTLIST trainVisits text				CDATA #IMPLIED>
 <!ATTLIST departsExpectedArrival text	CDATA #IMPLIED>
 <!ATTLIST departedExpected text			CDATA #IMPLIED>
 <!ATTLIST visitNumber text				CDATA #IMPLIED>
