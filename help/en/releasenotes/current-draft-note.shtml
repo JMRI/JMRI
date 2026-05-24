@@ -721,5 +721,6 @@
                 instead of <strong>systemName</strong> and <strong>portName</strong>.</li>
             <li>Reading and writing of the user-interface.xml preferences file has been made more efficient.  This shouldn't have
                 any effect on users.</li>
+            <li>Fixed the bug <strong>"Premature end of file" in user-interface.xml</strong>.</li>
         </ul>
 
