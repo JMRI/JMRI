@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp;
 
+import jmri.HasLightMode;
 import jmri.implementation.AbstractLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +14,18 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2008-2010
  * @author Mark Underwood Copyright (C) 2015
+ * @author Chad Francis Copyright (C) 2026
  */
-public class DCCppLight extends AbstractLight implements DCCppListener {
+public class DCCppLight extends AbstractLight implements DCCppListener, HasLightMode {
+
+    /** Sends an accessory decoder command {@code <a>} (default). */
+    public static final int STANDARD = 0;
+
+    /** Sends a CS VPIN pin control command {@code <z vpin>} (DCC-EX v4.2.35+). */
+    public static final int CS_VPIN = 1;
+
+    private static final String[] MODE_NAMES = {"Accessory Decoder", "CS VPIN"};
+    private static final int[] MODE_VALUES = {STANDARD, CS_VPIN};
 
     private DCCppTrafficController tc = null;
     private DCCppLightManager lm = null;
@@ -32,7 +43,6 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         super(systemName);
         this.tc = tc;
         this.lm = lm;
-        // Initialize the Light
         initializeLight(systemName);
     }
 
@@ -50,7 +60,6 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         super(systemName, userName);
         this.tc = tc;
         this.lm = lm;
-        // Initialize the Light
         initializeLight(systemName);
     }
 
@@ -67,33 +76,69 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
      * Initialize the light object's parameters.
      */
     private synchronized void initializeLight(String systemName) {
-        // Extract the Bit from the name
         mAddress = lm.getBitFromSystemName(systemName);
-        // Set initial state
         setState(OFF);
-        // At construction, register for messages
         tc.addDCCppListener(DCCppInterface.FEEDBACK | DCCppInterface.COMMINFO | DCCppInterface.CS_INFO, this);
     }
 
-    /**
-     * Sets up system dependent instance variables and set system independent
-     * instance variables to default values.
-     * <p>
-     * Note: most instance variables are in AbstractLight.java
-     */
-
-    /**
-     * System dependent instance variables
-     */
-    //protected int mState = OFF;  // current state of this light
-    //private int mOldState =mState; // save the old state
     int mAddress = 0;            // accessory output address
 
     /* Internal State Machine states. */
     static final int OFFSENT = 1;
     static final int COMMANDSENT = 2;
     static final int IDLE = 0;
-    //private int InternalState = IDLE;
+
+    // --- HasLightMode ---
+
+    private int mMode = STANDARD;
+
+    /** {@inheritDoc} */
+    @Override
+    public int getMode() {
+        return mMode;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getModeName() {
+        return MODE_NAMES[mMode];
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String[] getValidModeNames() {
+        return MODE_NAMES.clone();
+    }
+
+    /**
+     * {@inheritDoc}
+     * Silently ignores unknown mode names.
+     */
+    @Override
+    public void setModeByName(String modeName) {
+        for (int i = 0; i < MODE_NAMES.length; i++) {
+            if (MODE_NAMES[i].equals(modeName)) {
+                setMode(MODE_VALUES[i]);
+                return;
+            }
+        }
+        log.warn("Unknown light mode '{}' for {}", modeName, getSystemName());
+    }
+
+    /**
+     * Set the output mode for this Light.
+     *
+     * @param mode {@link #STANDARD} or {@link #CS_VPIN}
+     */
+    public void setMode(int mode) {
+        int oldMode = mMode;
+        mMode = mode;
+        if (oldMode != mode) {
+            firePropertyChange("Mode", oldMode, mode);
+        }
+    }
+
+    // --- Light state ---
 
     /**
      * Set the current state of this Light.
@@ -102,24 +147,26 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     @Override
     synchronized public void setState(int newState) {
         if (newState != ON && newState != OFF) {
-            // Unsupported state
             log.warn("Unsupported state {} requested for light {}", newState, getSystemName());
             return;
         }
 
         log.debug("Light Set State: mstate = {} newstate = {}", mState, newState);
 
-        // get the right packet
         if (mAddress > 0) {
             boolean state = (newState == jmri.Light.ON);
-            DCCppMessage msg = DCCppMessage.makeAccessoryDecoderMsg(mAddress, state);
-            //InternalState = COMMANDSENT;
+            DCCppMessage msg;
+            if (mMode == CS_VPIN) {
+                // CS VPIN: HIGH = ON, LOW = OFF
+                msg = DCCppMessage.makeOutputCmdMsgLC(mAddress, state);
+            } else {
+                msg = DCCppMessage.makeAccessoryDecoderMsg(mAddress, state);
+            }
             tc.sendDCCppMessage(msg, this);
 
             if (newState != mState) {
                 int oldState = mState;
                 mState = newState;
-                // notify listeners, if any
                 firePropertyChange("KnownState", oldState, newState);
             }
         }
