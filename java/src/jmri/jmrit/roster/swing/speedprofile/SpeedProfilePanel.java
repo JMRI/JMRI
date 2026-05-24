@@ -93,7 +93,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     JTextField speedStepFrom = new JTextField(5);
     JTextField speedStepTo = new JTextField(5);
     JTextField speedStepIncr = new JTextField(5);
-    makeLabelPanel labelSpeedStepIncrement;
+    MakeLabelPanel labelSpeedStepIncrement;
     JLabel warrentScaleLabel = new JLabel();
 
     // Start or finish sensor
@@ -185,12 +185,12 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         left = new JPanel();
         left.add(Box.createRigidArea(new java.awt.Dimension(20, 10)));
         left.setLayout(new BoxLayout(left, BoxLayout.PAGE_AXIS));
-        left.add(new makeLabelPanel("LabelStartStep", speedStepFrom));
+        left.add(new MakeLabelPanel("LabelStartStep", speedStepFrom));
         speedStepFrom.setToolTipText(Bundle.getMessage("StartStepToolTip"));
-        left.add(new makeLabelPanel("LabelFinishStep", speedStepTo));
+        left.add(new MakeLabelPanel("LabelFinishStep", speedStepTo));
         speedStepTo.setToolTipText(Bundle.getMessage("FinishStepToolTip"));
         // we will be updating this one, so we need to save it.
-        labelSpeedStepIncrement = new makeLabelPanel("LabelStepIncr", speedStepIncr);
+        labelSpeedStepIncrement = new MakeLabelPanel("LabelStepIncr", speedStepIncr);
         left.add(labelSpeedStepIncrement);
         speedStepIncr.setToolTipText(Bundle.getMessage("StepIncrToolTip"));
         left.add(useCurrentSpeedStepsCheckBox);
@@ -201,13 +201,13 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         JPanel testDataPanel = new JPanel();
         testDataPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TestProfileData")));
         testDataPanel.setLayout(new BoxLayout(testDataPanel, BoxLayout.LINE_AXIS));
-        testDataPanel.add(new makeLabelPanel("LabelTestStep", speedStepTest));
+        testDataPanel.add(new MakeLabelPanel("LabelTestStep", speedStepTest));
         speedStepTest.setToolTipText(Bundle.getMessage("StepTestToolTip"));
         speedStepTestFwd.setEnabled(false);
-        testDataPanel.add(new makeLabelPanel("LabelTestStepFwd", speedStepTestFwd));
+        testDataPanel.add(new MakeLabelPanel("LabelTestStepFwd", speedStepTestFwd));
         speedStepTestFwd.setToolTipText(Bundle.getMessage("ForwardTestToolTip"));
         speedStepTestRev.setEnabled(false);
-        testDataPanel.add(new makeLabelPanel("LabelTestStepRev", speedStepTestRev));
+        testDataPanel.add(new MakeLabelPanel("LabelTestStepRev", speedStepTestRev));
         speedStepTestRev.setToolTipText(Bundle.getMessage("ReverseTestToolTip"));
         left = makePadPanel(testDataPanel);
 
@@ -362,11 +362,11 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         return panel;
     }
 
-    class makeLabelPanel extends JPanel
+    private static class MakeLabelPanel extends JPanel
     {
         private Component comp;
         private JLabel label;
-        public makeLabelPanel (String text, Component comp) {
+        public MakeLabelPanel (String text, Component comp) {
             this.comp = comp;
             this.label = new JLabel(Bundle.getMessage(text));
             this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
@@ -532,20 +532,20 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         if (text != null && text.trim().length() > 0) {
             try {
                 stepIncr = Integer.parseInt(text);
-                // just incase someone uses the old way.
-                stepIncr = Math.abs(stepIncr);
-                if (!speedStepNumOK(stepIncr, "LabelStepIncr")) {
-                    setButtonStates(true);
-                    return;
-                }
-                // now set the increment negative if required.
-                if (profileStep > finishSpeedStep ) {
-                    stepIncr *= -1;
-                }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSpeedStep", Bundle.getMessage("LabelStepIncr")));
                 setButtonStates(true);
                 return;
+            }
+            // just incase someone uses the old way.
+            stepIncr = Math.abs(stepIncr);
+            if (!speedStepNumOK(stepIncr, "LabelStepIncr")) {
+                setButtonStates(true);
+                return;
+            }
+            // now set the increment negative if required.
+            if (profileStep > finishSpeedStep ) {
+                stepIncr *= -1;
             }
         } else {
             speedSettingsToUse = new ArrayList<Integer>();
