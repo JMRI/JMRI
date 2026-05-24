@@ -11,7 +11,13 @@ import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.QueueTool;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
+import org.netbeans.jemmy.operators.JTextFieldOperator;
 
 /**
  * Tests for DCCppExrailFrame.
@@ -245,6 +251,108 @@ public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
         exrailFrame.message(DCCppReply.parseDCCppReply("jB 1 \"Go!\""));
         Assertions.assertEquals("Station Loop", exrailFrame.getRowName(0),
                 "name column should always show description, not caption");
+    }
+
+    @Test
+    public void testLocoAddressStoredAfterSuccessfulTrigger() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 A \"Yard Switcher\""));
+
+        Thread t = new Thread(() -> {
+            JDialogOperator d = new JDialogOperator("Start Automation");
+            new JTextFieldOperator(d).setText("1234");
+            new JButtonOperator(d, "OK").push();
+        });
+        t.start();
+        exrailFrame.triggerRowForTest(0);
+        JUnitUtil.waitFor(() -> !t.isAlive(), "jemmy thread finished");
+        new QueueTool().waitEmpty();
+
+        Assertions.assertEquals("1234", exrailFrame.getLastLocoAddress(),
+                "last loco address should be stored after successful trigger");
+    }
+
+    @Test
+    public void testLocoAddressPrefilledOnSecondTrigger() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 A \"Yard Switcher\""));
+
+        Thread t1 = new Thread(() -> {
+            JDialogOperator d = new JDialogOperator("Start Automation");
+            new JTextFieldOperator(d).setText("1234");
+            new JButtonOperator(d, "OK").push();
+        });
+        t1.start();
+        exrailFrame.triggerRowForTest(0);
+        JUnitUtil.waitFor(() -> !t1.isAlive(), "first jemmy thread finished");
+        new QueueTool().waitEmpty();
+
+        AtomicReference<String> capturedInitial = new AtomicReference<>();
+        Thread t2 = new Thread(() -> {
+            JDialogOperator d = new JDialogOperator("Start Automation");
+            capturedInitial.set(new JTextFieldOperator(d).getText());
+            new JButtonOperator(d, "OK").push();
+        });
+        t2.start();
+        exrailFrame.triggerRowForTest(0);
+        JUnitUtil.waitFor(() -> !t2.isAlive(), "second jemmy thread finished");
+        new QueueTool().waitEmpty();
+
+        Assertions.assertEquals("1234", capturedInitial.get(),
+                "second dialog should pre-fill the last entered address");
+    }
+
+    @Test
+    public void testInvalidLocoAddressShowsErrorAndRePrompts() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 A \"Yard Switcher\""));
+
+        Thread t = new Thread(() -> {
+            JDialogOperator input1 = new JDialogOperator("Start Automation");
+            new JTextFieldOperator(input1).setText("0");
+            new JButtonOperator(input1, "OK").push();
+
+            new JButtonOperator(new JDialogOperator("Invalid Loco Address"), "OK").push();
+
+            JDialogOperator input2 = new JDialogOperator("Start Automation");
+            new JTextFieldOperator(input2).setText("1234");
+            new JButtonOperator(input2, "OK").push();
+        });
+        t.start();
+        exrailFrame.triggerRowForTest(0);
+        JUnitUtil.waitFor(() -> !t.isAlive(), "jemmy thread finished");
+        new QueueTool().waitEmpty();
+
+        Assertions.assertEquals("1234", exrailFrame.getLastLocoAddress(),
+                "valid address entered after retry should be stored");
+    }
+
+    @Test
+    public void testCancelAfterErrorExitsWithoutSending() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 A \"Yard Switcher\""));
+        int outboundBefore = tc.outbound.size();
+
+        Thread t = new Thread(() -> {
+            JDialogOperator input1 = new JDialogOperator("Start Automation");
+            new JTextFieldOperator(input1).setText("abc");
+            new JButtonOperator(input1, "OK").push();
+
+            new JButtonOperator(new JDialogOperator("Invalid Loco Address"), "OK").push();
+
+            new JButtonOperator(new JDialogOperator("Start Automation"), "Cancel").push();
+        });
+        t.start();
+        exrailFrame.triggerRowForTest(0);
+        JUnitUtil.waitFor(() -> !t.isAlive(), "dialog sequence complete");
+        new QueueTool().waitEmpty();
+
+        Assertions.assertEquals(outboundBefore, tc.outbound.size(), "cancel after error should not send a command");
+        Assertions.assertNull(exrailFrame.getLastLocoAddress(), "cancel after error should not store an address");
     }
 
     @BeforeEach

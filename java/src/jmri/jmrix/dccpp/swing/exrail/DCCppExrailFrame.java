@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalInt;
 import java.util.Queue;
 
 import javax.swing.JButton;
@@ -21,6 +22,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import jmri.jmrix.ConnectionStatus;
+import jmri.jmrix.dccpp.DCCppConstants;
 import jmri.jmrix.dccpp.DCCppExrailEntry;
 import jmri.jmrix.dccpp.DCCppInterface;
 import jmri.jmrix.dccpp.DCCppListener;
@@ -53,6 +55,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     private ExrailTableModel _tableModel;
     private JTable _table;
     private PropertyChangeListener _connListener;
+    private String _lastLocoAddress; // last valid address entered this session; null until first successful trigger
 
     public DCCppExrailFrame(DCCppSystemConnectionMemo memo) {
         super(true, false); // save position; let user resize freely
@@ -127,25 +130,53 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     private void handleRowTrigger(DCCppExrailEntry entry) {
         if (entry == null) return;
         if (entry.isAutomation()) {
-            String input = JmriJOptionPane.showInputDialog(this,
-                    Bundle.getMessage("ExrailLabelLocoAddress"),
-                    Bundle.getMessage("ExrailTitleLocoDialog"),
-                    JmriJOptionPane.QUESTION_MESSAGE);
-            if (input == null) return;
-            try {
-                triggerEntry(entry, Integer.parseInt(input.trim()));
-            } catch (NumberFormatException ex) {
-                log.warn("Invalid loco address entered: {}", input);
-            }
+            OptionalInt addr = promptLocoAddress();
+            if (addr.isPresent()) triggerEntry(entry, addr.getAsInt());
         } else {
             triggerEntry(entry, 0);
         }
     }
 
+    /** Prompts repeatedly until a valid loco address is entered or the user cancels. */
+    private OptionalInt promptLocoAddress() {
+        while (true) {
+            String input = (String) JmriJOptionPane.showInputDialog(this,
+                    Bundle.getMessage("ExrailLabelLocoAddress"),
+                    Bundle.getMessage("ExrailTitleLocoDialog"),
+                    JmriJOptionPane.QUESTION_MESSAGE,
+                    null, null, _lastLocoAddress);
+            if (input == null) return OptionalInt.empty();
+            try {
+                int addr = Integer.parseInt(input.trim());
+                if (addr >= 1 && addr <= DCCppConstants.MAX_LOCO_ADDRESS) {
+                    _lastLocoAddress = input.trim();
+                    return OptionalInt.of(addr);
+                }
+            } catch (NumberFormatException ex) { // invalid input — fall through to error dialog
+            }
+            showLocoAddressError();
+        }
+    }
+
+    /** Shows an error dialog when the entered loco address is out of range or non-numeric. */
+    private void showLocoAddressError() {
+        JmriJOptionPane.showMessageDialog(this,
+                Bundle.getMessage("ExrailLocoAddressInvalid", DCCppConstants.MAX_LOCO_ADDRESS),
+                Bundle.getMessage("ExrailLocoAddressInvalidTitle"),
+                JmriJOptionPane.ERROR_MESSAGE);
+    }
+
+    /** Returns the last loco address entered this session; used by tests. */
+    String getLastLocoAddress() {
+        return _lastLocoAddress;
+    }
+
     void triggerEntry(DCCppExrailEntry entry, int locoAddress) {
         if (entry.isAutomation()) {
+            log.debug("Triggering EXRAIL automation id={} locoAddress={}", entry.getId(), locoAddress);
             _tc.sendDCCppMessage(DCCppMessage.makeStartExrailMsg(entry.getId(), locoAddress), null);
         } else {
+            log.debug("Triggering EXRAIL route id={}", entry.getId());
             _tc.sendDCCppMessage(DCCppMessage.makeStartExrailMsg(entry.getId()), null);
         }
     }
