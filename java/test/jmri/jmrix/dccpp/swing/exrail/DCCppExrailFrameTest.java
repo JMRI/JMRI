@@ -254,6 +254,22 @@ public class DCCppExrailFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     @Test
+    public void testNoDialogAfterWindowDisposed() {
+        DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));
+        exrailFrame.message(DCCppReply.parseDCCppReply("jA 1 A \"Yard Switcher\""));
+
+        // Dispose the frame, then fire a trigger — no dialog should appear.
+        exrailFrame.dispose();
+        exrailFrame.triggerRowForTest(0);
+        new QueueTool().waitEmpty();
+
+        // If a dialog had appeared it would block the test; reaching here means it didn't.
+        Assertions.assertNull(exrailFrame.getLastLocoAddress(),
+                "no address should be stored when window is disposed before trigger fires");
+    }
+
+    @Test
     public void testLocoAddressStoredAfterSuccessfulTrigger() {
         DCCppExrailFrame exrailFrame = (DCCppExrailFrame) frame;
         exrailFrame.message(DCCppReply.parseDCCppReply("jA 1"));

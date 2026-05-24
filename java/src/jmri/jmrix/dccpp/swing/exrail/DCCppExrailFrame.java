@@ -129,6 +129,7 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
     /** Prompt for loco address if needed and fire the entry. */
     private void handleRowTrigger(DCCppExrailEntry entry) {
         if (entry == null) return;
+        if (!isDisplayable()) return; // window already closing
         if (entry.isAutomation()) {
             OptionalInt addr = promptLocoAddress();
             if (addr.isPresent()) triggerEntry(entry, addr.getAsInt());
@@ -225,6 +226,9 @@ public class DCCppExrailFrame extends JmriJFrame implements DCCppListener {
 
     @Override
     public void dispose() {
+        if (_table != null && _table.isEditing()) {
+            _table.getCellEditor().cancelCellEditing(); // prevent spurious trigger on window close
+        }
         if (_connListener != null) {
             ConnectionStatus.instance().removePropertyChangeListener(_memo, _connListener);
             _connListener = null;
