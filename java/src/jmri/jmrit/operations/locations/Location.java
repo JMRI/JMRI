@@ -680,7 +680,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * @return the comment text
      */
     public String getComment() {
-        return TrainCommon.getTextColorString(getCommentWithColor());
+        return TrainCommon.getOnlyText(getCommentWithColor());
     }
 
     /**
@@ -706,7 +706,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * @return the comment text
      */
     public String getSwitchListComment() {
-        return TrainCommon.getTextColorString(getSwitchListCommentWithColor());
+        return TrainCommon.getOnlyText(getSwitchListCommentWithColor());
     }
 
     /**

@@ -348,7 +348,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     }
 
     protected void loadTrainDescription() {
-        textTrainDescription.setText(TrainCommon.getTextColorString(_train.getDescription()));
+        textTrainDescription.setText(TrainCommon.getOnlyText(_train.getDescription()));
         textTrainDescription.setForeground(TrainCommon.getTextColor(_train.getDescription()));
     }
 
@@ -368,7 +368,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected void loadRailroadName() {
         // Does this train have a unique railroad name?
         if (!_train.getRailroadName().equals(Train.NONE)) {
-            textRailRoadName.setText(TrainCommon.getTextColorString(_train.getRailroadName()));
+            textRailRoadName.setText(TrainCommon.getOnlyText(_train.getRailroadName()));
             textRailRoadName.setForeground(TrainCommon.getTextColor(_train.getRailroadName()));
         } else {
             textRailRoadName.setText(Setup.getRailroadName());
@@ -401,7 +401,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             textTrainRouteCommentPane.setVisible(false);
         } else {
             textTrainRouteCommentPane.setVisible(true);
-            textTrainRouteCommentPane.setText(TrainCommon.getTextColorString(_train.getRoute().getComment()));
+            textTrainRouteCommentPane.setText(TrainCommon.getOnlyText(_train.getRoute().getComment()));
             textTrainRouteCommentPane.setForeground(TrainCommon.getTextColor(_train.getRoute().getComment()));
         }
     }
