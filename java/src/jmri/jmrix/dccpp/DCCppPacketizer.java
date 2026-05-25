@@ -155,10 +155,14 @@ public class DCCppPacketizer extends DCCppTrafficController {
             }
         }
         log.trace("Message started");
-        // Pick up the rest of the command
+        // Read until '>'; ignore '>' inside quoted strings (e.g. captions).
+        boolean inQuotes = false;
         for (i = 0; i < msg.maxSize(); i++) {
             char1 = readByteProtected(istream);
-            if (char1 == '>') {
+            if (char1 == '"') {
+                inQuotes = !inQuotes;
+                m.append((char) char1);
+            } else if (char1 == '>' && !inQuotes) {
                 log.debug("Received: '{}'", m);
                 // NOTE: Cast is OK because we checked runtime type of msg above.
                 ((DCCppReply) msg).parseReply(m.toString());

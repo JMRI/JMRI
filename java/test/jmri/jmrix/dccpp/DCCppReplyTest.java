@@ -4,6 +4,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 
 import jmri.util.JUnitAppender;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import org.junit.Assert;
@@ -754,6 +755,55 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "Turnout IDs:[]", l.toMonitorString());
         l = DCCppReply.parseDCCppReply("jT 3456 C \"\""); //no description defined
         Assert.assertEquals("Monitor string", "Turnout ID:3456 State:C Desc:''", l.toMonitorString());
+    }
+
+    @Test
+    public void testTurnoutIDListValidation() {
+        // zero is out-of-range and filtered
+        DCCppReply r = DCCppReply.parseDCCppReply("jT 0 123");
+        ArrayList<Integer> ids = r.getTurnoutIDList();
+        Assert.assertEquals(1, ids.size());
+        Assert.assertEquals(123, (int) ids.get(0));
+        JUnitAppender.assertWarnMessage("Ignoring out-of-range turnout ID 0 in jT response (buffer overflow?)");
+
+        // ID above MAX_TURNOUT_ADDRESS is filtered
+        r = DCCppReply.parseDCCppReply("jT 123 32768");
+        ids = r.getTurnoutIDList();
+        Assert.assertEquals(1, ids.size());
+        Assert.assertEquals(123, (int) ids.get(0));
+        JUnitAppender.assertWarnMessage("Ignoring out-of-range turnout ID 32768 in jT response (buffer overflow?)");
+    }
+
+    @Test
+    public void testAutomationReplyProperties() {
+        DCCppReply r;
+
+        r = DCCppReply.parseDCCppReply("jA 42 R \"Station Loop\"");
+        Assert.assertTrue(r.isAutomationIDReply());
+        Assert.assertEquals(42, r.getAutomationIDInt());
+        Assert.assertEquals("42", r.getAutomationIDString());
+        Assert.assertEquals("R", r.getAutomationTypeString());
+        Assert.assertEquals("Station Loop", r.getAutomationDescString());
+
+        r = DCCppReply.parseDCCppReply("jA 7 A \"Yard Switcher\"");
+        Assert.assertTrue(r.isAutomationIDReply());
+        Assert.assertEquals(7, r.getAutomationIDInt());
+        Assert.assertEquals("A", r.getAutomationTypeString());
+        Assert.assertEquals("Yard Switcher", r.getAutomationDescString());
+
+        r = DCCppReply.parseDCCppReply("jA -5 R \"Reverse Loop\"");
+        Assert.assertTrue(r.isAutomationIDReply());
+        Assert.assertEquals(-5, r.getAutomationIDInt());
+
+        r = DCCppReply.parseDCCppReply("jB 42 2");
+        Assert.assertTrue(r.isAutomationStateReply());
+        Assert.assertEquals(42, r.getAutomationIDInt());
+        Assert.assertEquals("2", r.getAutomationStateString());
+
+        r = DCCppReply.parseDCCppReply("jB 42 \"Platform 1\"");
+        Assert.assertTrue(r.isAutomationCaptionReply());
+        Assert.assertEquals(42, r.getAutomationIDInt());
+        Assert.assertEquals("Platform 1", r.getAutomationCaptionString());
     }
 
     @BeforeEach

@@ -306,6 +306,10 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             // wait for parallel tasks to complete
             runShutDownTasks(runnables, "JMRI ShutDown - Main Tasks");
 
+            // We must wait for the GUI thread before we continue. If we don't,
+            // the user-interface.xml might end up with being empty.
+            ThreadingUtil.runOnGUI(() -> {});
+
             // success
             log.debug("Shutdown took {} milliseconds.", System.currentTimeMillis() - start);
             log.info("Normal termination complete");

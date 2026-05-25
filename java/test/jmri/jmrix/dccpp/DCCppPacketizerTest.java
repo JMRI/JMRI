@@ -105,6 +105,50 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
         assertEquals( '1', l.rcvdRply.getElement(5) & 0xFF, "Char 5 ");
     }
 
+    @Test
+    public void testInboundCaptionWithGreaterThan() throws IOException {
+        // A '>' inside the quoted caption must not terminate the message early.
+        checkAutomationCaption("Round > the bend");
+    }
+
+    @Test
+    public void testInboundCaptionWithLessThan() throws IOException {
+        // A '<' inside the quoted caption must pass through unchanged.
+        checkAutomationCaption("Less < than");
+    }
+
+    @Test
+    public void testInboundCaptionWithBothAngleBrackets() throws IOException {
+        // Both characters in the same caption.
+        checkAutomationCaption("Round > and < the bend");
+    }
+
+    /**
+     * Feed a <jA ...> automation-id reply with the given caption through the
+     * packetizer and assert the full body is delivered, the reply still matches
+     * AUTOMATION_ID_REPLY_REGEX, and the caption is preserved verbatim.
+     */
+    private void checkAutomationCaption(String caption) throws IOException {
+        DCCppPacketizer c = (DCCppPacketizer) tc;
+        DCCppPortControllerScaffold p = new DCCppPortControllerScaffold();
+        c.connectPort(p);
+
+        DCCppListenerScaffold l = new DCCppListenerScaffold();
+        c.addDCCppListener(~0, l);
+
+        String body = "jA 4 A \"" + caption + "\"";
+        p.tistream.write('<');
+        for (byte b : body.getBytes(java.nio.charset.StandardCharsets.US_ASCII)) {
+            p.tistream.write(b);
+        }
+        p.tistream.write('>');
+
+        assertTrue( waitForReply(l), "reply received");
+        assertEquals( body, l.rcvdRply.toString(), "full body delivered");
+        assertTrue( l.rcvdRply.isAutomationIDReply(), "reply still matches AUTOMATION_ID_REPLY_REGEX");
+        assertEquals( caption, l.rcvdRply.getAutomationDescString(), "caption preserved verbatim");
+    }
+
     private boolean waitForReply(DCCppListenerScaffold l) {
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;

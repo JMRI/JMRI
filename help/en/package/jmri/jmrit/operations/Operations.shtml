@@ -1062,9 +1062,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h4>Save</h4>
       When you're finished with the settings window, press the save button to store your settings in
-      a file named "Operations.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
-      operations. OperationsPro&trade; will also create a backup file "Operations.xml.bak" each time
-      you press the save button.
+      a file named "Operations.xml". OperationsPro&trade; will also create a backup file
+      "Operations.xml.bak" each time you press the save button. You can find the files in JMRI&rArr;
+      "profile name" &rArr; operations. You can quickly find the operations directory using the
+      "File Locations" tool under "Help". Then press the "Open User Files Location" button.
 
       <h3 id="Backup">Backup</h3>
       Copies of the operations files can be made to provide backups for both error recovery and for
@@ -2182,7 +2183,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>You can also modify the color of the text by adding the color control text &lt;FONT
         color="red"&gt; at the start of the line, where "red" is the color text you want. Complete
         the color change by placing &lt;/FONT&gt; at the end of the line.</p>
-        
+
+      <p>If you want your text in bold, at the start of the line add &lt;b&gt; and &lt;/b&gt;
+        at the end of the line.</p>
+
       <h3 id="ManifestDayNameMapping">Edit Day to Name Mapping</h3>
 
       When an arrival or departure time is provided on a Manifest or switch list, the normal format
@@ -4527,7 +4531,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>Press "Save" to store the car's attributes after you've made changes. The program will
         create a file named "OperationsCarRoster.xml". You can find this file in JMRI&rArr; "profile
         name" &rArr; operations. A backup file "OperationsCarRoster.xml.bak" with the last settings
-        for all of your cars is also created each time the "Save" button is pressed.</p>
+        for all of your cars is also created each time the "Save" button is pressed. You can quickly
+        find the operations directory using the "File Locations" tool under "Help". Then press the
+        "Open User Files Location" button.</p>
 
       <h3 id="EditCarAttributes">Edit Car Attribute Names</h3>
       To the right of each of the car attributes (Road, Type, Length, Color, Kernel, Load, Owner) in
@@ -5029,8 +5035,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       Press "Save" to store the locomotive's settings. The program will create a file named
       "OperationsEngineRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
       operations. A backup file "OperationsEngineRoster.xml.bak" with the last settings for all of
-      your locomotives is also created each time the "Save" button is pressed.
-      
+      your locomotives is also created each time the "Save" button is pressed. You can quickly find
+      the operations directory using the "File Locations" tool under "Help". Then press the "Open
+      User Files Location" button.
+
       <h3 id="LocomotivesSet">Set Locomotive</h3>
       After creating a locomotive, you can set the locomotive's location, consist, and optionally
       the locomotive's destination and train. Normally the locomotive's destination and assigned
@@ -5402,7 +5410,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       Press "Save Route" to save your route. The program will create a file named
       "OperationsRouteRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
       operations. A backup file "OperationsRouteRoster.xml.bak" with the last settings for all of
-      your routes is also created each time the "Save Route" button is pressed.
+      your routes is also created each time the "Save Route" button is pressed. You can quickly find
+      the operations directory using the "File Locations" tool under "Help". Then press the "Open
+      User Files Location" button.
 
       <h3 id="TrainTurnRoute">Train Turn Route</h3>
       A train that returns to its departure location is normally referred to as a "turn". The image
@@ -5748,7 +5758,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       Press "Save Train" to save your train. The program will create a file named
       "OperationsTrainRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
       operations. A backup file "OperationsTrainRoster.xml.bak" with the last settings for all of
-      your trains is also created each time the "Save Train" button is pressed.
+      your trains is also created each time the "Save Train" button is pressed. You can quickly find
+      the operations directory using the "File Locations" tool under "Help". Then press the "Open
+      User Files Location" button.
 
       <h3 id="EditTrainTools">Edit Train Tools</h3>
       <img src="images/EditTrainTools.png" alt="Operations Edit Train Tools Menu">
@@ -6020,6 +6032,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         route you want the car pulled. The "Count" field allows you to select the number of cars you
         want pulled. Click on the field to change the number of cars to pick up.</p>
 
+      <p>The first two of the three checkboxes allow you to create a warning or build failure if
+        the requested number of cars couldn't be completed by the manual build process. The last
+        checkbox, "Remove" will after completing the manual build process for the line item, remove
+        all cars that meet the requests, but were not manually added to the train.</p>
+
+      <p>The manual build process will only examine or remove cars that don't have a train,
+        destination or final destination assigned to them.</p>
+
       <p>In the example window above, item line "1m1" will search for a "Boxcar" at the train's
         route location "Bakersfield" and send the car to "Danville". Note that the destination
         doesn't have to be in the train's route. If the destination isn't in train's route, the
@@ -6028,11 +6048,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         after the car's current location.</p>
 
       <p>In the next line item "1m2", the program will search for a "Coilcar" with the road name
-        "C&amp;O" anywhere along the train's route, and send the car to "Susanville" but only on
-        "Tuesdays". If the program wasn't able to assign a Coilcar to the train with the destination
-        being Susanville, a warning message would be included in the train's build report. The other
-        option is to select the "Fail" checkbox which will cause a build failure if the Coilcar
-        wasn't assigned to the train.</p>
+        "C&amp;O", and a load name of "EMPTY", anywhere along the train's route, and send the car to
+        "Susanville", but only on "Tuesdays". If the program wasn't able to assign a Coilcar to the
+        train with the destination being Susanville, a warning message would be included in the
+        train's build report. The other option is to select the "Fail" checkbox which will cause a
+        build failure if the Coilcar wasn't assigned to the train.</p>
+        
+        <p>The last line item "1m3" will remove all cars from the build process that aren't assigned
+        to this train, or have a destination or final destination. Note that in this line item, the
+        count is set to 0.  This means no cars were manually assigned, but all other cars meeting
+        this line item are removed. Since there aren't any specific requests in the line item, all
+        other cars are removed from the build processes once this line item completes.</p>
 
       <p>After completing the manual build without a build failure, the program will then
         proceed to automatically build the train. A good example of how this can be useful, is say

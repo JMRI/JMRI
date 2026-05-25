@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2026 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2026</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Petr</firstname>
+                <surname>Sidlo</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2026-05-20</date>
+            <authorinitials>PS</authorinitials>
+            <revremark>Initial version</revremark>
+        </revision>
+    </revhistory>
+
+        <variable item="ABC right" CV="27" mask="XXXXXXXV" default="0" >
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-0_1.xml"/>
+            <label>ABC right rail higher voltage</label>
+            <label xml:lang="cs">ABC pravá kolejnice vyšší napětí</label>
+            <tooltip>The locomotive stops when the right rail has a higher voltage.</tooltip>
+            <tooltip xml:lang="cs">Lokomotiva zastaví, když je v pravé kolejnici vyšší napětí.</tooltip>
+        </variable>
+
+        <variable item="ABC left" CV="27" mask="XXXXXXVX" default="0" >
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-0_1.xml"/>
+            <label>ABC left rail higher voltage</label>
+            <label xml:lang="cs">ABC levá kolejnice vyšší napětí</label>
+            <tooltip>The locomotive stops when the left rail has a higher voltage.</tooltip>
+            <tooltip xml:lang="cs">Lokomotiva zastaví, když je v levé kolejnici vyšší napětí.</tooltip>
+        </variable>
+
+        <variable item="ABC Deceleration" CV="64" default="1">
+            <decVal/>
+            <label>ABC Deceleration</label>
+            <label xml:lang="cs">ABC zpomalení</label>
+            <tooltip>&lt;html&gt;The value is the time in seconds to stop from 100% speed.&lt;br&gt;At other speeds it is converted to an approximately constant path.&lt;/html&gt;</tooltip>
+            <tooltip xml:lang="cs">&lt;html&gt;Hodnota je čas v sekundách pro zastavení z 100 % rychlosti.&lt;br&gt;Při jiné rychlosti se přepočte na přibližně konstantní dráhu.&lt;/html&gt;</tooltip>
+        </variable>
+
+</variables>

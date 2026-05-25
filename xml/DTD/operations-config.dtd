@@ -255,7 +255,7 @@
 <!ELEMENT manifestHeaderTextStrings (road | number | engineNumber | type | model | hp
 | length | load | color | track | destination | dest_Track | finalDest | fd_Track | location | consist
 | kernel | owner | rwe | comment | setOut_msg | pickUp_msg | hazardous | weight | load_type | dcc_addr
-| division | last_train)*>
+| division | last_train | last_moved)*>
 
 <!ELEMENT road EMPTY>
 <!ELEMENT number EMPTY>
@@ -282,6 +282,7 @@
 <!ELEMENT dcc_addr EMPTY>
 <!ELEMENT division EMPTY>
 <!ELEMENT last_train EMPTY>
+<!ELEMENT last_moved EMPTY>
 
 <!ATTLIST road text				CDATA #IMPLIED>
 <!ATTLIST number text			CDATA #IMPLIED>
@@ -309,6 +310,7 @@
 <!ATTLIST dcc_addr text			CDATA #IMPLIED>
 <!ATTLIST division text			CDATA #IMPLIED>
 <!ATTLIST last_train text		CDATA #IMPLIED>
+<!ATTLIST last_moved text		CDATA #IMPLIED>
 
 <!ELEMENT manifestTextStrings (manifestForTrain | valid | scheduledWork 
 | workDepartureTime | workArrivalTime | noScheduledWork | noScheduledWorkRouteComment | departTime 
@@ -359,13 +361,14 @@
 <!ATTLIST cabooseChange text		CDATA #IMPLIED>
 <!ATTLIST locoCabooseChange text	CDATA #IMPLIED>
 
-<!ELEMENT switchListTextStrings (switchListFor | scheduledWorkTrain | departsAt | departsExpectedArrival
+<!ELEMENT switchListTextStrings (switchListFor | scheduledWorkTrain | trainVisits | departsAt | departsExpectedArrival
 | departedExpected | visitNumber | visitNumberDeparted | visitNumberTerminates | visitNumberTerminatesDeparted
 | visitNumberDone | trainDirectionChange | noCarPickUps | noCarSetOuts | trainDone | trainDepartsCars | trainDepartsLoads
 | switchListTrack | holdCar)*>
 
 <!ELEMENT switchListFor EMPTY>
 <!ELEMENT scheduledWorkTrain EMPTY>
+<!ELEMENT trainVisits EMPTY>
 <!ELEMENT departsAt EMPTY>
 <!ELEMENT departsExpectedArrival EMPTY>
 <!ELEMENT departedExpected EMPTY>
@@ -384,6 +387,7 @@
 <!ATTLIST switchListFor text			CDATA #IMPLIED>
 <!ATTLIST scheduledWorkTrain text		CDATA #IMPLIED>
 <!ATTLIST departsAt text				CDATA #IMPLIED>
+<!ATTLIST trainVisits text				CDATA #IMPLIED>
 <!ATTLIST departsExpectedArrival text	CDATA #IMPLIED>
 <!ATTLIST departedExpected text			CDATA #IMPLIED>
 <!ATTLIST visitNumber text				CDATA #IMPLIED>

@@ -205,6 +205,10 @@
         "last train": {
             "type": "string",
             "description": "Last train to carry car"
+        },
+        "last moved": {
+            "type": "string",
+            "description": "date the car was last moved"
         }
     },
     "additionalProperties": false,
