@@ -488,7 +488,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Improved the layout of the edit tools to reduce the need for 
+            <li>Improved the layout of the edit tools to reduce the need for
                 vertical scrolling when they're at the top or bottom of the window.</li>
         </ul>
 
@@ -584,7 +584,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Update the debugging section of Getting Started with Scripting to include the
+            process to get the script line number from the Java exception report.</li>
         </ul>
 
     <h3>Signals</h3>
