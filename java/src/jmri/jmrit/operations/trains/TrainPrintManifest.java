@@ -18,13 +18,16 @@ import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.CompatibleHardcopyWriter;
 
 /**
- * Used for train Manifests and switch lists.
+ * Used for printing train Manifests and switch lists.
  *
  * @author Daniel Boudreau (C) 2025
  */
 public class TrainPrintManifest extends TrainCommon {
 
     protected static final char SPACE = ' ';
+    private static boolean isPrintingBoldDone = false;
+    private static boolean isPrintingColor = false;
+    private static Color color;
 
     /**
      * Print or preview a train Manifest or switch list.
@@ -42,22 +45,23 @@ public class TrainPrintManifest extends TrainCommon {
      */
     public static void printReport(File file, String name, boolean isPreview, String fontName, String logoURL,
             String printerName, String orientation, int fontSize, boolean isPrintHeader, Sides sides) {
-        
+
         double leftmargin = .5;
         double rightmargin = .5;
         double topmargin = .5;
         double bottommargin = .5;
-        
+
         // get hand held or half page dimensions in DPI
         Dimension pageSize = getFullPageSizeDPI(orientation);
-        
+
         if (orientation.equals(Setup.RECEIPT)) {
             leftmargin = .2;
             rightmargin = .2;
         }
-        
+
         try (CompatibleHardcopyWriter writer = new CompatibleHardcopyWriter(new Frame(), name, fontSize, leftmargin,
-                rightmargin, topmargin, bottommargin, isPreview, printerName, orientation.equals(Setup.LANDSCAPE), isPrintHeader, sides, pageSize);
+                rightmargin, topmargin, bottommargin, isPreview, printerName, orientation.equals(Setup.LANDSCAPE),
+                isPrintHeader, sides, pageSize);
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         new FileInputStream(file), StandardCharsets.UTF_8));) {
 
@@ -122,56 +126,40 @@ public class TrainPrintManifest extends TrainCommon {
             lastBlock = false; // yes
         }
 
-        Color color = null;
-        boolean printingColor = false;
+        isPrintingColor = false;
+        color = null;
+
         for (String line : lines) {
             // determine if there's a line separator
             if (printHorizontialLineSeparator(writer, line)) {
                 color = null;
                 continue;
             }
-            // color text?
-            if (line.contains(TEXT_COLOR_START)) {
-                color = getTextColor(line);
-                if (line.contains(TEXT_COLOR_END)) {
-                    printingColor = false;
-                } else {
-                    // printing multiple lines in color
-                    printingColor = true;
-                }
-                // could be a color change when using two column format
-                if (line.contains(Character.toString(VERTICAL_LINE_CHAR))) {
-                    String s = line.substring(0, line.indexOf(VERTICAL_LINE_CHAR));
-                    s = getTextColorString(s);
-                    writer.write(color, s); // 1st half of line printed
-                    // get the new color and text
-                    line = line.substring(line.indexOf(VERTICAL_LINE_CHAR));
-                    color = getTextColor(line);
-                    // pad out string
-                    line = tabString(getTextColorString(line), s.length());
-                } else {
-                    // simple case only one color
-                    line = getTextColorString(line);
-                }
-            } else if (line.contains(TEXT_COLOR_END)) {
-                printingColor = false;
-                line = getTextColorString(line);
-            } else if (!printingColor) {
-                color = null;
-            }
 
-            printVerticalLineSeparator(writer, line);
-            line = line.replace(VERTICAL_LINE_CHAR, SPACE);
+            // bold text?
+            line = printBold(writer, line);
+
+            // color text?
+            line = printColor(writer, line);
+
+            line = printVerticalLineSeparator(writer, line);
 
             if (color != null) {
-                writer.write(color, line + NEW_LINE);
-                continue;
+                writer.write(color, line);
+            } else {
+                writer.write(line);
             }
-            writer.write(line);
+            
             // no line feed if last line of file, eliminates blank page
             if (!lastBlock ||
                     writer.getCurrentLineNumber() < writer.getLinesPerPage() - 1) {
                 writer.write(NEW_LINE);
+            }
+
+            // done bold text?
+            if (isPrintingBoldDone) {
+                writer.setFontStyle(Font.PLAIN);
+                isPrintingBoldDone = false;
             }
         }
         lines.clear();
@@ -207,7 +195,7 @@ public class TrainPrintManifest extends TrainCommon {
                 }
             }
             if (horizontialLineSeparatorFound) {
-                int endCol = writer.getCharactersPerLine() + 2;
+                int endCol = writer.getCharactersPerLine() + 1;
                 writer.write(writer.getCurrentLineNumber(), 0, writer.getCurrentLineNumber(),
                         endCol);
             }
@@ -215,7 +203,7 @@ public class TrainPrintManifest extends TrainCommon {
         return horizontialLineSeparatorFound;
     }
 
-    private static void printVerticalLineSeparator(CompatibleHardcopyWriter writer, String line) {
+    private static String printVerticalLineSeparator(CompatibleHardcopyWriter writer, String line) {
         for (int i = 0; i < line.length(); i++) {
             if (line.charAt(i) == VERTICAL_LINE_CHAR) {
                 // make a frame (two column format)
@@ -229,6 +217,53 @@ public class TrainPrintManifest extends TrainCommon {
                         i + 1);
             }
         }
+        line = line.replace(VERTICAL_LINE_CHAR, SPACE);
+        return line;
+    }
+
+    private static String printBold(CompatibleHardcopyWriter writer, String line) {
+        if (line.contains(TEXT_BOLD_END)) {
+            isPrintingBoldDone = true;
+        }
+        if (line.contains(TEXT_BOLD)) {
+            writer.setFontStyle(Font.BOLD);
+        }
+        if (line.contains(TEXT_BOLD) || line.contains(TEXT_BOLD_END)) {
+            line = getTextBoldString(line);
+        }
+        return line;
+    }
+
+    private static String printColor(CompatibleHardcopyWriter writer, String line) throws IOException {
+        if (line.contains(TEXT_COLOR_START)) {
+            color = getTextColor(line);
+            if (line.contains(TEXT_COLOR_END)) {
+                isPrintingColor = false;
+            } else {
+                // printing multiple lines in color
+                isPrintingColor = true;
+            }
+            // could be a color change when using two column format
+            if (line.contains(Character.toString(VERTICAL_LINE_CHAR))) {
+                String s = line.substring(0, line.indexOf(VERTICAL_LINE_CHAR));
+                s = getTextColorString(s);
+                writer.write(color, s); // 1st half of line printed
+                // get the new color and text
+                line = line.substring(line.indexOf(VERTICAL_LINE_CHAR));
+                color = getTextColor(line);
+                // pad out string
+                line = tabString(getTextColorString(line), s.length());
+            } else {
+                // simple case only one color
+                line = getTextColorString(line);
+            }
+        } else if (line.contains(TEXT_COLOR_END)) {
+            isPrintingColor = false;
+            line = getTextColorString(line);
+        } else if (!isPrintingColor) {
+            color = null;
+        }
+        return line;
     }
 
     private static final Logger log = LoggerFactory.getLogger(TrainPrintManifest.class);
