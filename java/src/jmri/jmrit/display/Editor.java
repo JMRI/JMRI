@@ -750,7 +750,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
 
     /**
      * Control whether loco markers are editable. Does this by invoke the
-     * {@link Positionable#setLocoMarkerEditable(boolean)} function of each
+     * {@link LocoIcon#setLocoMarkerEditable(boolean)} function of each
      * loco marker on the target panel. This also controls the relevant pop-up
      * menu items (which are the primary way that items are edited).
      *
