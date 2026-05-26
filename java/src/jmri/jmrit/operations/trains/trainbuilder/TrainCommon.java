@@ -46,6 +46,9 @@ public class TrainCommon {
     protected static final String TEXT_COLOR_START = "<FONT color=\"";
     protected static final String TEXT_COLOR_DONE = "\">";
     protected static final String TEXT_COLOR_END = "</FONT>";
+    protected static final String TEXT_BOLD = "<b>";
+    protected static final String TEXT_BOLD_END = "</b>";
+    
 
     // when true a pick up, when false a set out
     protected static final boolean PICKUP = true;
@@ -2378,13 +2381,10 @@ public class TrainCommon {
      * @return false if string length is longer than page width.
      */
     private boolean checkStringLength(String string, boolean isManifest) {
+        // ignore bold controls when determining line length
+        string = getTextBoldString(string);
         // ignore text color controls when determining line length
-        if (string.startsWith(TEXT_COLOR_START) && string.contains(TEXT_COLOR_DONE)) {
-            string = string.substring(string.indexOf(TEXT_COLOR_DONE) + 2);
-        }
-        if (string.contains(TEXT_COLOR_END)) {
-            string = string.substring(0, string.indexOf(TEXT_COLOR_END));
-        }
+        string = getTextColorString(string);
         return string.length() <= getLineLength(isManifest);
     }
 
@@ -2465,7 +2465,7 @@ public class TrainCommon {
         String text = string;
         if (string.contains(TEXT_COLOR_START)) {
             text = string.substring(0, string.indexOf(TEXT_COLOR_START)) +
-                    string.substring(string.indexOf(TEXT_COLOR_DONE) + 2);
+                    string.substring(string.indexOf(TEXT_COLOR_DONE) + TEXT_COLOR_DONE.length());
         }
         if (text.contains(TEXT_COLOR_END)) {
             text = text.substring(0, text.indexOf(TEXT_COLOR_END)) +
@@ -2490,6 +2490,19 @@ public class TrainCommon {
 
     public static String getTextColorName(String string) {
         return ColorUtil.colorToColorName(getTextColor(string));
+    }
+    
+    public static String getTextBoldString(String string) {
+        String text = string;
+        if (string.contains(TEXT_BOLD)) {
+            text = text.substring(0, text.indexOf(TEXT_BOLD)) +
+                    string.substring(string.indexOf(TEXT_BOLD) + TEXT_BOLD.length());
+        }
+        if (text.contains(TEXT_BOLD_END)) {
+            text = text.substring(0, text.indexOf(TEXT_BOLD_END)) +
+                    string.substring(string.indexOf(TEXT_BOLD_END) + TEXT_BOLD_END.length());
+        }
+        return text;
     }
 
     private static final Logger log = LoggerFactory.getLogger(TrainCommon.class);

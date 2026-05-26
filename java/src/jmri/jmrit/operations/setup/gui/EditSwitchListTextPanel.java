@@ -30,6 +30,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
     // text fields
     JTextField switchListForTextField = new JTextField(60);
     JTextField scheduledWorkTextField = new JTextField(60);
+    JTextField trainVisitsTextField = new JTextField(60);
 
     JTextField departsAtTextField = new JTextField(60);
     JTextField departsAtExpectedArrivalTextField = new JTextField(60);
@@ -76,6 +77,13 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
         scheduledWorkTextField.setText(TrainSwitchListText.getStringScheduledWork());
         scheduledWorkTextField.setToolTipText(rb.getString("ToolTipManifestForTrain"));
         pSwitchList.add(pScheduledWorkTextField);
+        
+        JPanel pTrainVisitsField = new JPanel();
+        pTrainVisitsField.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainVisits")));
+        pTrainVisitsField.add(trainVisitsTextField);
+        trainVisitsTextField.setText(TrainSwitchListText.getStringTrainVisits());
+        trainVisitsTextField.setToolTipText(rb.getString("ToolTipManifestForTrain"));
+        pSwitchList.add(pTrainVisitsField);
 
         JPanel pDepartsAtTextField = new JPanel();
         pDepartsAtTextField.setBorder(BorderFactory.createTitledBorder(rb
@@ -217,6 +225,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
         if (ae.getSource() == resetButton) {
             switchListForTextField.setText(rb.getString("SwitchListFor"));
             scheduledWorkTextField.setText(rb.getString("ScheduledWork"));
+            trainVisitsTextField.setText(rb.getString("TrainVisits"));
 
             departsAtTextField.setText(rb.getString("DepartsAt"));
             departsAtExpectedArrivalTextField.setText(rb.getString("DepartsAtExpectedArrival"));
@@ -261,6 +270,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
     public void savePreferences() {
         TrainSwitchListText.setStringSwitchListFor(switchListForTextField.getText());
         TrainSwitchListText.setStringScheduledWork(scheduledWorkTextField.getText());
+        TrainSwitchListText.setStringTrainVisits(trainVisitsTextField.getText());
 
         TrainSwitchListText.setStringDepartsAt(departsAtTextField.getText());
         TrainSwitchListText.setStringDepartsAtExpectedArrival(departsAtExpectedArrivalTextField.getText());
@@ -289,6 +299,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
     public boolean isDirty() {
         return !(TrainSwitchListText.getStringSwitchListFor().equals(switchListForTextField.getText())
                 && TrainSwitchListText.getStringScheduledWork().equals(scheduledWorkTextField.getText())
+                && TrainSwitchListText.getStringTrainVisits().equals(trainVisitsTextField.getText())
                 && TrainSwitchListText.getStringDepartsAt().equals(departsAtTextField.getText())
                 && TrainSwitchListText.getStringDepartsAtExpectedArrival().equals(departsAtExpectedArrivalTextField.getText())
                 && TrainSwitchListText.getStringDepartedExpected().equals(departedExpectedTextField.getText())

@@ -931,12 +931,18 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     }
 
     /**
-     * Provides a list of trains ordered by arrival time to a location
+     * Provides a list of trains ordered by arrival time to a location. The list
+     * can contain a train multiple times if the train also services the
+     * location more than once.
      *
      * @param location The location
      * @return A list of trains ordered by arrival time.
      */
     public List<Train> getTrainsArrivingThisLocationList(Location location) {
+        return getTrainsArrivingThisLocationList(location, false);
+    }
+
+    public List<Train> getTrainsArrivingThisLocationList(Location location, boolean multiple) {
         // get a list of trains
         List<Train> out = new ArrayList<>();
         List<Integer> arrivalTimes = new ArrayList<>();
@@ -948,13 +954,22 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
             if (route == null) {
                 continue; // no route for this train
             }
+            RouteLocation rlPrevious = null;
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
+                if (rlPrevious != null &&
+                        rl.getLocation().getSplitName().equals(rlPrevious.getLocation().getSplitName())) {
+                    continue;
+                }
+                // ignore back to back location with the same name
+                rlPrevious = rl;
                 if (rl.getSplitName().equals(location.getSplitName())) {
+                    boolean trainAdded = false;
                     int expectedArrivalTime = train.getExpectedTravelTimeInMinutes(rl);
-                    // is already serviced then "-1"
-                    if (expectedArrivalTime == -1) {
+                    // is already serviced then -1
+                    if (expectedArrivalTime == Train.SERVICED) {
                         out.add(0, train); // place all trains that have already been serviced at the start
                         arrivalTimes.add(0, expectedArrivalTime);
+                        trainAdded = true;
                     } // if the train is in route, then expected arrival time is in minutes
                     else if (train.isTrainEnRoute()) {
                         for (int j = 0; j < out.size(); j++) {
@@ -963,11 +978,13 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
                             if (t.isTrainEnRoute() && expectedArrivalTime < time) {
                                 out.add(j, train);
                                 arrivalTimes.add(j, expectedArrivalTime);
+                                trainAdded = true;
                                 break;
                             }
                             if (!t.isTrainEnRoute()) {
                                 out.add(j, train);
                                 arrivalTimes.add(j, expectedArrivalTime);
+                                trainAdded = true;
                                 break;
                             }
                         }
@@ -979,15 +996,18 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
                             if (!t.isTrainEnRoute() && expectedArrivalTime < time) {
                                 out.add(j, train);
                                 arrivalTimes.add(j, expectedArrivalTime);
+                                trainAdded = true;
                                 break;
                             }
                         }
                     }
-                    if (!out.contains(train)) {
+                    if (!trainAdded) {
                         out.add(train);
                         arrivalTimes.add(expectedArrivalTime);
                     }
-                    break; // done
+                    if (!multiple) {
+                        break; // done
+                    }
                 }
             }
         }
