@@ -546,7 +546,11 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>The option <strong>Loco marker popup menus active</strong> has been added
+                to the Panel Editor editor. If it's deselected, it's possible to move around
+                loco markers but it's not possible to open the popup menu for loco markers.
+                This is useful for dispatcher that wants to move the loco markers but doesn't
+                want to edit the loco markers.</li>
         </ul>
 
     <h3>Permissions</h3>
