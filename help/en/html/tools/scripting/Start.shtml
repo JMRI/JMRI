@@ -114,31 +114,51 @@ window immediately:
       <!--Section added by Jerry Grochow 2018-10-18 based on comments found in the JMRI Users online forum from
       Cliff in BajaSoCal and Bob Jacobson-->
 
-      <div class="para">
-        <p>JMRI does not provide a full "development environment," but it does provide some basic
-        information that can help with debugging your scripts.</p>
+      <p>JMRI does not provide a full "development environment," but it does provide some basic
+      information that can help with debugging your scripts.</p>
 
-        <p>Open the JMRI System Console window (<strong>Help &rArr; System Console</strong>). This will
-        give you instant information pertaining to WARN and ERROR messages. Text can be copied to a
-        text editor for further review.</p>
+      <p>Open the JMRI System Console window (<strong>Help &rArr; System Console</strong>). This will
+      give you instant information pertaining to WARN and ERROR messages. Text can be copied to a
+      text editor for further review.</p>
 
-        <p>Open the Script Output window (<strong>Scripting</strong> {<em>Old:
-        <strong>Panels</strong></em>} <strong>&rArr; Script Output</strong>). This will display the
-        results of any "print" statements in your script as well as some error messages (NOTE that
-        some errors go here and some to the System Console so you you should have both windows open
-        when you are debugging). Text can be copied to a text editor for further review.</p>
+      <p>Some Jython errors create a Java exception which will be displayed in the System Console.
+      If the Java error does not include the script line number, finding the source of the problem
+      can be difficult.</p>
 
-        <p>Investigate the information found in the <a href="../../doc/Technical/Logging.shtml"
-        target="_blank">technical reference</a> to be better able to insert more of your own DEBUG
-        and INFO messages into the session.log file, and also the JMRI System Console window. You
-        might also investigate the "default_lcf.xml" file that is described in that link.</p>
+      <p>The Java exception will normally contain a line that points to the current Python
+      <strong>def</strong> or the implied <strong>def</strong> for the first level code. Look for the
+      <strong>at</strong> line that contains <strong>&lt;script&gt;:</strong> followed by a number.
+      The number is the line number of the last line in the current <strong>def</strong>.  This helps
+      narrow the scope of code to be reviewed.</p>
 
-        <p>Note to Mac OS users: BBEdit and similar tools do some syntax checking. For PC users,
-        Notepad++ is a good tool for getting indentation correct.</p>
+      <pre>
+12:41:20,129 jmri.jmrit.automat.AbstractAutomaton  WARN  - Unexpected Exception ends AbstractAutomaton thread [theInstan20]
+org.python.core.PyException: TypeError: cannot concatenate 'str' and 'int' objects
+                at org.python.core.Py.TypeError(Py.java:236) ~[jython-standalone-2.7.2.jar:2.7.2]
+                at org.python.core.PyObject._basic_add(PyObject.java:2091) ~[jython-standalone-2.7.2.jar:2.7.2]
+                at org.python.core.PyObject._add(PyObject.java:2068) ~[jython-standalone-2.7.2.jar:2.7.2]
+                at org.python.pycode._pyx11.handle$4(<strong>&lt;script&gt;:993</strong>) ~[?:?]
+                at org.python.pycode._pyx11.call_function(&lt;script&gt;) ~[?:?]
+                at org.python.core.PyTableCode.call(PyTableCode.java:173) ~[jython-standalone-2.7.2.jar:2.7.2]
+...
+      </pre>
 
-        <p><a href="#StartTopOfPage">[Go to top of page]</a>
-        </p>
-      </div>
+
+      <p>Open the Script Output window (<strong>Scripting</strong> {<em>Old:
+      <strong>Panels</strong></em>} <strong>&rArr; Script Output</strong>). This will display the
+      results of any "print" statements in your script as well as some error messages (NOTE that
+      some errors go here and some to the System Console so you you should have both windows open
+      when you are debugging). Text can be copied to a text editor for further review.</p>
+
+      <p>Investigate the information found in the <a href="../../doc/Technical/Logging.shtml"
+      target="_blank">technical reference</a> to be better able to insert more of your own DEBUG
+      and INFO messages into the session.log file, and also the JMRI System Console window. You
+      might also investigate the "default_lcf.xml" file that is described in that link.</p>
+
+      <p>Note to Mac OS users: BBEdit and similar tools do some syntax checking. For PC users,
+      Notepad++ is a good tool for getting indentation correct.</p>
+
+      <p><a href="#StartTopOfPage">[Go to top of page]</a></p>
 
       <h2><a id="layoutcommands">Sample layout commands</a>
       </h2>

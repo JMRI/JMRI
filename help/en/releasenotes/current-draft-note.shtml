@@ -54,6 +54,10 @@
                 Entry details are fetched sequentially for reliability on hardware with small
                 WiFi buffers (Mega+WiFi)
                 (<a href="https://github.com/JMRI/JMRI/pull/15160">PR #15160</a>).</li>
+                <li>The <strong>EXRAIL Automations</strong> window now remembers the last loco
+                address you entered during the session - the prompt pre-fills it the next time
+                you trigger an automation. The dialog also validates the address (1-10293)
+                and re-prompts if the input is out of range or not a number.</li>
                 <li>The <strong>Virtual LCD</strong> window now supports
                     more than one display. Each display is shown in a single
                     row in the <strong>Virtual LCD</strong> window, with
@@ -488,7 +492,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Improved the layout of the edit tools to reduce the need for 
+            <li>Improved the layout of the edit tools to reduce the need for
                 vertical scrolling when they're at the top or bottom of the window.</li>
         </ul>
 
@@ -536,6 +540,7 @@
               preventing intermittent <code>RosterConfigManager</code> failures on machines with real JMRI profile data.</li>
           <li>New feature, Manifest and switch lists can now display rolling stock last moved date & time.</li>
           <li>Changed switch lists to now list trains arrivals by time, including turns. Previously a turns work was listed consecutively.</li>
+          <li>You can now bold a Manifest or switch list text line. At the start of the line add &lt;b&gt; and &lt;/b&gt; at the end of the line.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -570,7 +575,10 @@
             as Quit, matching the behavior of the profile chooser. Previously the close
             button fell through to Continue (<a href="https://github.com/JMRI/JMRI/issues/15148">issue #15148</a>).</li>
         </ul>
-
+        <ul>
+            <li>Roster Speed Profiling has been updated to allow profiling from either
+            High to Low or Low to High and should now work for both NMRA and non NMRA speed steps.</li>
+        </ul>
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
@@ -580,7 +588,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Update the debugging section of Getting Started with Scripting to include the
+            process to get the script line number from the Java exception report.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -721,5 +730,6 @@
                 instead of <strong>systemName</strong> and <strong>portName</strong>.</li>
             <li>Reading and writing of the user-interface.xml preferences file has been made more efficient.  This shouldn't have
                 any effect on users.</li>
+            <li>Fixed the bug <strong>"Premature end of file" in user-interface.xml</strong>.</li>
         </ul>
 
