@@ -125,6 +125,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
     // Option menu items
     protected int _scrollState = SCROLL_NONE;
     protected boolean _editable = true;
+    private boolean _locoMarkerEditable = true;
     private boolean _positionable = true;
     private boolean _controlLayout = true;
     private boolean _showHidden = true;
@@ -747,6 +748,23 @@ public abstract class Editor extends JmriJFrameWithPermissions
         }
     }
 
+    /**
+     * Control whether loco markers are editable. Does this by invoke the
+     * {@link Positionable#setLocoMarkerEditable(boolean)} function of each
+     * loco marker on the target panel. This also controls the relevant pop-up
+     * menu items (which are the primary way that items are edited).
+     *
+     * @param state true for editable.
+     */
+    public void setLocoMarkerEditable(boolean state) {
+        _locoMarkerEditable = state;
+        for (Positionable _content : _contents) {
+            if (_content instanceof LocoIcon) {
+                ((LocoIcon)_content).setLocoMarkerEditable(state);
+            }
+        }
+    }
+
     public void deselectSelectionGroup() {
         if (_selectionGroup == null) {
             return;
@@ -763,6 +781,10 @@ public abstract class Editor extends JmriJFrameWithPermissions
     // accessor routines for persistent information
     public boolean isEditable() {
         return _editable;
+    }
+
+    public boolean isLocoMarkerEditable() {
+        return _locoMarkerEditable;
     }
 
     /**

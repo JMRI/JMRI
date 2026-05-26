@@ -84,6 +84,7 @@
         <xs:annotation><xs:documentation>Optional as of JMRI 4.15.6</xs:documentation></xs:annotation>
       </xs:attribute>
       <xs:attribute name="editable" type="yesNoType" default="yes"></xs:attribute>
+      <xs:attribute name="locoMarkerEditable" type="yesNoType" default="yes"></xs:attribute>
       <xs:attribute name="positionable" type="yesNoType" default="yes"></xs:attribute>
       <xs:attribute name="controlling" type="yesNoType" default="yes"></xs:attribute>
       <xs:attribute name="hide" type="yesNoType" default="no"></xs:attribute>

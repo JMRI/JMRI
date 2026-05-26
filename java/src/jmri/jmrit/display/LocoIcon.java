@@ -41,6 +41,7 @@ public class LocoIcon extends PositionableLabel {
 
     public static final Color COLOR_BLUE = new Color(40, 140, 255);
 
+    private boolean _locoMarkerEditable = true;
     private int _dockX = 0;
     private int _dockY = 0;
     private Color _locoColor;
@@ -80,11 +81,21 @@ public class LocoIcon extends PositionableLabel {
     }
 
     protected Positionable finishClone(LocoIcon pos) {
+        pos._locoMarkerEditable = _locoMarkerEditable;
         if (_entry != null) {
             pos.setRosterEntry(getRosterEntry());
         }
         pos.setText(getText());
         return super.finishClone(pos);
+    }
+
+    public void setLocoMarkerEditable(boolean enabled) {
+        _locoMarkerEditable = enabled;
+        showHidden();
+    }
+
+    public boolean isLocoMarkerEditable() {
+        return _locoMarkerEditable;
     }
 
     // Marker tool tips are always disabled
@@ -112,6 +123,9 @@ public class LocoIcon extends PositionableLabel {
      */
     @Override
     public boolean showPopUp(JPopupMenu popup) {
+        if (!_locoMarkerEditable) {
+            return true;
+        }
         if (_entry != null) {
             popup.add(new AbstractAction("Throttle") {
                 @Override

@@ -52,6 +52,9 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("height", "" + size.height);
         panel.setAttribute("width", "" + size.width);
         panel.setAttribute("editable", "" + (p.isEditable() ? "yes" : "no"));
+        if (!p.isLocoMarkerEditable()) {
+            panel.setAttribute("locoMarkerEditable", "no");
+        }
         panel.setAttribute("positionable", "" + (p.allPositionable() ? "yes" : "no"));
         //panel.setAttribute("showcoordinates", ""+(p.showCoordinates()?"yes":"no"));
         panel.setAttribute("showtooltips", "" + (p.showToolTip() ? "yes" : "no"));
@@ -164,6 +167,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         // Load editor option flags. This has to be done before the content
         // items are loaded, to preserve the individual item settings
         panel.setAllEditable(!shared.getAttributeValue("editable","yes").equals("no"));
+        panel.setLocoMarkerEditable(!shared.getAttributeValue("locoMarkerEditable","yes").equals("no"));
         panel.setAllPositionable(!shared.getAttributeValue("positionable","yes").equals("no"));
         //panel.setShowCoordinates(shared.getAttributeValue("showcoordinates","no").equals("yes"));
         panel.setAllShowToolTip(!shared.getAttributeValue("showtooltips","yes").equals("no"));
@@ -209,6 +213,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         // display the results, with the editor in back
         panel.pack();
         panel.setAllEditable(panel.isEditable());
+        panel.setLocoMarkerEditable(panel.isLocoMarkerEditable());
 
         // we don't pack the target frame here, because size was specified
         // TODO: Work out why, when calling this method, panel size is increased

@@ -7,6 +7,7 @@ import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
+import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,9 @@ public class LocoIconXml extends PositionableLabelXml {
         }
         storeTextInfo(p, element);
         element.setAttribute("icon", "yes");
+        if (!p.isLocoMarkerEditable()) {
+            element.setAttribute("locoMarkerEditable", "no");
+        }
         element.setAttribute("dockX", "" + p.getDockX());
         element.setAttribute("dockY", "" + p.getDockY());
         element.addContent(storeIcon("icon", (NamedIcon) p.getIcon()));
@@ -99,6 +103,13 @@ public class LocoIconXml extends PositionableLabelXml {
         }
         l.updateIcon(icon);
 
+        try {
+            l.setLocoMarkerEditable(element.getAttribute("locoMarkerEditable").getBooleanValue());
+        } catch (DataConversionException e) {
+            log.warn("unable to convert positionable label editable attribute");
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
+        }
         try {
             int x = element.getAttribute("dockX").getIntValue();
             int y = element.getAttribute("dockY").getIntValue();

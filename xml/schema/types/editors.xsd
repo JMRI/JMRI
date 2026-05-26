@@ -1612,6 +1612,7 @@
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="icon" type="xs:string"></xs:attribute>
+      <xs:attribute name="locoMarkerEditable" type="yesNoType"></xs:attribute>
       <xs:attribute name="dockX" type="xs:string"></xs:attribute>
       <xs:attribute name="dockY" type="xs:string"></xs:attribute>
       <xs:attribute name="text" type="xs:string"></xs:attribute>

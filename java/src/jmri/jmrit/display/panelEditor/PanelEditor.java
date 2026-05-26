@@ -114,6 +114,7 @@ public class PanelEditor extends Editor implements ItemListener {
     private final JTextField nextY = new JTextField("0", 4);
 
     private final JCheckBox editableBox = new JCheckBox(Bundle.getMessage("CheckBoxEditable"));
+    private final JCheckBox locoMarkerEditableBox = new JCheckBox(Bundle.getMessage("CheckBoxLocoMarkerEditable"));
     private final JCheckBox positionableBox = new JCheckBox(Bundle.getMessage("CheckBoxPositionable"));
     private final JCheckBox controllingBox = new JCheckBox(Bundle.getMessage("CheckBoxControlling"));
     //private JCheckBox showCoordinatesBox = new JCheckBox(Bundle.getMessage("CheckBoxShowCoordinates"));
@@ -149,6 +150,7 @@ public class PanelEditor extends Editor implements ItemListener {
         common.add(nextY);
         contentPane.add(common);
         setAllEditable(true);
+        setLocoMarkerEditable(true);
         setShowHidden(true);
         super.setTargetPanel(null, makeFrame(name));
         super.setTargetPanelSize(400, 300);
@@ -305,6 +307,12 @@ public class PanelEditor extends Editor implements ItemListener {
                 hiddenCheckBoxListener();
             });
             editableBox.setSelected(isEditable());
+            // loco marker editable
+            contentPane.add(locoMarkerEditableBox);
+            locoMarkerEditableBox.addActionListener(event -> {
+                setLocoMarkerEditable(locoMarkerEditableBox.isSelected());
+            });
+            locoMarkerEditableBox.setSelected(isLocoMarkerEditable());
             // positionable item
             contentPane.add(positionableBox);
             positionableBox.addActionListener(event -> setAllPositionable(positionableBox.isSelected()));
@@ -406,6 +414,7 @@ public class PanelEditor extends Editor implements ItemListener {
     @Override
     public void initView() {
         editableBox.setSelected(isEditable());
+        locoMarkerEditableBox.setSelected(isLocoMarkerEditable());
         positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
         //showCoordinatesBox.setSelected(showCoordinates());
