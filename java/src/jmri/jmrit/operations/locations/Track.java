@@ -868,7 +868,7 @@ public class Track extends PropertyChangeSupport {
     }
 
     public String getCommentPickup() {
-        return TrainCommon.getTextColorString(getCommentPickupWithColor());
+        return TrainCommon.getOnlyText(getCommentPickupWithColor());
     }
 
     public String getCommentPickupWithColor() {
@@ -884,7 +884,7 @@ public class Track extends PropertyChangeSupport {
     }
 
     public String getCommentSetout() {
-        return TrainCommon.getTextColorString(getCommentSetoutWithColor());
+        return TrainCommon.getOnlyText(getCommentSetoutWithColor());
     }
 
     public String getCommentSetoutWithColor() {
@@ -900,7 +900,7 @@ public class Track extends PropertyChangeSupport {
     }
 
     public String getCommentBoth() {
-        return TrainCommon.getTextColorString(getCommentBothWithColor());
+        return TrainCommon.getOnlyText(getCommentBothWithColor());
     }
 
     public String getCommentBothWithColor() {

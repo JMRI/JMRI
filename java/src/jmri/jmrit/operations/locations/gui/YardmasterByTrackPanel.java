@@ -21,7 +21,8 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainSwitchListText;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
@@ -155,7 +156,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         pTrack.removeAll();
         if (_track != null) {
             pTrackPane.setBorder(BorderFactory.createTitledBorder(_track.getName()));
-            textTrackCommentPane.setText(TrainCommon.getTextColorString(_track.getComment()));
+            textTrackCommentPane.setText(TrainCommon.getOnlyText(_track.getComment()));
             textTrackCommentPane.setForeground(TrainCommon.getTextColor(_track.getComment()));
             textTrackCommentPane.setVisible(!_track.getComment().equals(Track.NONE));
             for (Train train : trainManager.getTrainsArrivingThisLocationList(_track.getLocation())) {

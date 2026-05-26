@@ -2832,7 +2832,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     public String getComment() {
-        return TrainCommon.getTextColorString(getCommentWithColor());
+        return TrainCommon.getOnlyText(getCommentWithColor());
     }
 
     public String getCommentWithColor() {

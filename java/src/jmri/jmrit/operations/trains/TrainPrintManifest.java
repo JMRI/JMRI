@@ -246,20 +246,20 @@ public class TrainPrintManifest extends TrainCommon {
             // could be a color change when using two column format
             if (line.contains(Character.toString(VERTICAL_LINE_CHAR))) {
                 String s = line.substring(0, line.indexOf(VERTICAL_LINE_CHAR));
-                s = getTextColorString(s);
+                s = getOnlyText(s);
                 writer.write(color, s); // 1st half of line printed
                 // get the new color and text
                 line = line.substring(line.indexOf(VERTICAL_LINE_CHAR));
                 color = getTextColor(line);
                 // pad out string
-                line = tabString(getTextColorString(line), s.length());
+                line = tabString(getOnlyText(line), s.length());
             } else {
                 // simple case only one color
-                line = getTextColorString(line);
+                line = getOnlyText(line);
             }
         } else if (line.contains(TEXT_COLOR_END)) {
             isPrintingColor = false;
-            line = getTextColorString(line);
+            line = getOnlyText(line);
         } else if (!isPrintingColor) {
             color = null;
         }
