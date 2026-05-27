@@ -542,7 +542,8 @@
               preventing intermittent <code>RosterConfigManager</code> failures on machines with real JMRI profile data.</li>
           <li>New feature, Manifest and switch lists can now display rolling stock last moved date & time.</li>
           <li>Changed switch lists to now list trains arrivals by time, including turns. Previously a turns work was listed consecutively.</li>
-          <li>You can now bold a Manifest or switch list text line. At the start of the line add &lt;b&gt; and &lt;/b&gt; at the end of the line.</li>
+          <li>You can now bold a Manifest or switch list word or line. At the start of the text add &lt;b&gt; and &lt;/b&gt; at the end of the text.</li>
+          <li>Manifest and switch list can now show the rolling stocks last location.</li>
         </ul>
 
    <h3>Panel Editor</h3>

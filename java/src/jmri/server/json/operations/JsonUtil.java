@@ -145,6 +145,7 @@ public class JsonUtil {
         data.put(JsonOperations.IS_LOCAL, car.isLocalMove());
         data.put(JsonOperations.LAST_TRAIN, car.getLastTrainName());
         data.put(JsonOperations.LAST_MOVED, car.getLastDate());
+        data.put(JsonOperations.LAST_LOCATION, car.getLastLocationName());
         if (car.getFinalDestinationTrack() != null) {
             data.set(JsonOperations.FINAL_DESTINATION, this.getRSLocationAndTrack(car.getFinalDestinationTrack(), null, locale));
         } else if (car.getFinalDestination() != null) {
