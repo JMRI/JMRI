@@ -2474,8 +2474,8 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     private void enableDisableLocoMarkerPopups() {
         if (disableLocoMarkerPopupMenuItem != null) {
-            boolean enabled = disableLocoMarkerPopupMenuItem.isSelected();
-            setLocoMarkerPopupDisabled(enabled);
+            boolean selected = disableLocoMarkerPopupMenuItem.isSelected();
+            setLocoMarkerPopupDisabled(selected);
         }
     }
 

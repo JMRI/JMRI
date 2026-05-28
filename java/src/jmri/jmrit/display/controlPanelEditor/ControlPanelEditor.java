@@ -384,8 +384,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     private void enableDisableLocoMarkerPopups() {
         if (disableLocoMarkerPopupMenuItem != null) {
-            boolean enabled = disableLocoMarkerPopupMenuItem.isSelected();
-            setLocoMarkerPopupDisabled(enabled);
+            boolean selected = disableLocoMarkerPopupMenuItem.isSelected();
+            setLocoMarkerPopupDisabled(selected);
         }
     }
 
