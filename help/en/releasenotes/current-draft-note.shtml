@@ -120,7 +120,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>LocoNet-over-TCP connections now automatically reconnect if the server goes away and comes back. Detection relies on a clean TCP close from the server; hard disconnects (network drop with no TCP FIN) are only detected when JMRI next tries to send a message.</li>
             </ul>
 
         <h4>Maple</h4>

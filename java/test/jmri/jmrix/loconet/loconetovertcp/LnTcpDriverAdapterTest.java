@@ -26,6 +26,15 @@ public class LnTcpDriverAdapterTest {
         Assert.assertNotNull("exists", tm);
     }
 
+    @Test
+    public void testReconnectDefaultsOn() {
+        LnTcpDriverAdapter a = new LnTcpDriverAdapter();
+        Assert.assertTrue("automatic reconnect should be enabled by default",
+                a.getAllowConnectionRecovery());
+        Assert.assertEquals("default reconnect attempts should be unlimited",
+                -1, a.getReconnectMaxAttempts());
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
