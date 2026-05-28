@@ -149,7 +149,7 @@ public class TrainPrintManifest extends TrainCommon {
             } else {
                 writer.write(line);
             }
-            
+
             // no line feed if last line of file, eliminates blank page
             if (!lastBlock ||
                     writer.getCurrentLineNumber() < writer.getLinesPerPage() - 1) {
@@ -221,17 +221,56 @@ public class TrainPrintManifest extends TrainCommon {
         return line;
     }
 
-    private static String printBold(CompatibleHardcopyWriter writer, String line) {
+    private static String printBold(CompatibleHardcopyWriter writer, String line) throws IOException {
         if (line.contains(TEXT_BOLD_END)) {
             isPrintingBoldDone = true;
         }
-        if (line.contains(TEXT_BOLD)) {
-            writer.setFontStyle(Font.BOLD);
-        }
-        if (line.contains(TEXT_BOLD) || line.contains(TEXT_BOLD_END)) {
-            line = getTextBoldString(line);
+        // if monospaced font, it is possible to only bold a subset of words in the line
+        // can't combine color and bold words
+        if (writer.isMonospaced() &&
+                line.contains(TEXT_BOLD) &&
+                line.contains(TEXT_BOLD_END) &&
+                !line.contains(TEXT_COLOR_START) &&
+                !line.contains(TEXT_COLOR_END)) {
+            printBoldWords(writer, line);
+            line = ""; // done
+        } else {
+            if (line.contains(TEXT_BOLD)) {
+                writer.setFontStyle(Font.BOLD); // bold the entire line
+            }
+            if (line.contains(TEXT_BOLD) || line.contains(TEXT_BOLD_END)) {
+                line = getTextBoldString(line); // strip the bold characters
+            }
         }
         return line;
+    }
+
+    // where in the line to add words
+    private static int offset;
+
+    private static void printBoldWords(CompatibleHardcopyWriter writer, String line) throws IOException {
+        offset = 0;
+        // determine how many bold words to print
+        String[] strings = line.split(TEXT_BOLD);
+        for (String s : strings) {
+            if (s.contains(TEXT_BOLD_END)) {
+                writer.setFontStyle(Font.BOLD);
+                String text = s.substring(0, s.indexOf(TEXT_BOLD_END));
+                writeWords(writer, text); // bold text
+
+                writer.setFontStyle(Font.PLAIN);
+                text = s.substring(s.indexOf(TEXT_BOLD_END) + TEXT_BOLD_END.length());
+                writeWords(writer, text); // plain text
+            } else {
+                writeWords(writer, s); // plain text
+            }
+        }
+    }
+
+    private static void writeWords(CompatibleHardcopyWriter writer, String s) throws IOException {
+        String text = tabString(s, offset);
+        writer.write(text);
+        offset = +text.length();
     }
 
     private static String printColor(CompatibleHardcopyWriter writer, String line) throws IOException {
@@ -246,20 +285,20 @@ public class TrainPrintManifest extends TrainCommon {
             // could be a color change when using two column format
             if (line.contains(Character.toString(VERTICAL_LINE_CHAR))) {
                 String s = line.substring(0, line.indexOf(VERTICAL_LINE_CHAR));
-                s = getTextColorString(s);
+                s = getOnlyText(s);
                 writer.write(color, s); // 1st half of line printed
                 // get the new color and text
                 line = line.substring(line.indexOf(VERTICAL_LINE_CHAR));
                 color = getTextColor(line);
                 // pad out string
-                line = tabString(getTextColorString(line), s.length());
+                line = tabString(getOnlyText(line), s.length());
             } else {
                 // simple case only one color
-                line = getTextColorString(line);
+                line = getOnlyText(line);
             }
         } else if (line.contains(TEXT_COLOR_END)) {
             isPrintingColor = false;
-            line = getTextColorString(line);
+            line = getOnlyText(line);
         } else if (!isPrintingColor) {
             color = null;
         }

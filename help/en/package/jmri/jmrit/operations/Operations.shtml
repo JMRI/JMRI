@@ -2184,8 +2184,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         color="red"&gt; at the start of the line, where "red" is the color text you want. Complete
         the color change by placing &lt;/FONT&gt; at the end of the line.</p>
 
-      <p>If you want your text in bold, at the start of the line add &lt;b&gt; and &lt;/b&gt;
-        at the end of the line.</p>
+      <p>If you want your text in bold, at the start of the text add &lt;b&gt; and &lt;/b&gt;
+        at the end of the text.
 
       <h3 id="ManifestDayNameMapping">Edit Day to Name Mapping</h3>
 

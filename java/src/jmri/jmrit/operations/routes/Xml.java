@@ -47,6 +47,7 @@ public class Xml {
     protected static final String SEQUENCE_ID = "sequenceId"; // NOI18N
     protected static final String BLOCKING_ORDER = "order";
     protected static final String COMMENT_COLOR = "commentColor";
+    protected static final String COMMENT_BOLD = "commentBold";
 
     // RouteManagerXml.java
     protected static final String ROUTES = "routes"; // NOI18N
